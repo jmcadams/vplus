@@ -1,0 +1,36 @@
+<VisualStudioProject>
+  <CSHARP ProjectType="local" ProjectVersion="7.10.3077" SchemaVersion="2.0" ProjectGuid="cd486e11-f681-4d42-a786-d39856d23295">
+    <Build>
+      <Settings AssemblyName="StandardScript" DefaultClientScript="JScript" DefaultHTMLPageLayout="Grid" DefaultTargetSchema="IE50" DelaySign="false" OutputType="Library">
+        <Config Name="Debug" AllowUnsafeBlocks="true" DefineConstants="DEBUG;TRACE" DebugSymbols="true" IncrementalBuild="false" NoStdLib="false" Optimize="false" OutputPath="bin\Debug\" WarningLevel="4" />
+        <Config Name="Release" AllowUnsafeBlocks="true" DefineConstants="TRACE" DebugSymbols="false" IncrementalBuild="false" NoStdLib="false" Optimize="true" OutputPath="bin\Release\" WarningLevel="4" />
+      </Settings>
+      <References>
+        <Reference Name="System.Windows.Forms" AssemblyName="System.Windows.Forms" />
+        <Reference Name="Vixen" AssemblyName="Vixen" />
+        <Reference Name="System" AssemblyName="System" />
+        <Reference Name="System.Xml" AssemblyName="System.Xml" />
+        <Reference Name="ScriptEngine" AssemblyName="ScriptEngine" />
+        <Reference Name="System.Drawing" AssemblyName="System.Drawing" />
+      </References>
+    </Build>
+    <Files>
+      <Include>
+        <File RelPath="AssemblyInfo.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="Global.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="StandardScript\ChannelNameEditDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="StandardScript\ModuleListDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="StandardScript\Properties\Resources.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="StandardScript\StandardScript.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="StandardScript\TabPageDoc.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="StandardScript\TextListDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="StandardScript.ChannelNameEditDialog.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="StandardScript.ModuleListDialog.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="StandardScript.Properties.Resources.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="StandardScript.StandardScript.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="StandardScript.TabPageDoc.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="StandardScript.TextListDialog.resources" BuildAction="EmbeddedResource" />
+      </Include>
+    </Files>
+  </CSHARP>
+</VisualStudioProject>

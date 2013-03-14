@@ -1,0 +1,41 @@
+<VisualStudioProject>
+  <CSHARP ProjectType="local" ProjectVersion="7.10.3077" SchemaVersion="2.0" ProjectGuid="a230a2f9-0d4e-4dcc-86d0-84a9c1dafad4">
+    <Build>
+      <Settings AssemblyName="MIDIReader" DefaultClientScript="JScript" DefaultHTMLPageLayout="Grid" DefaultTargetSchema="IE50" DelaySign="false" OutputType="Library">
+        <Config Name="Debug" AllowUnsafeBlocks="true" DefineConstants="DEBUG;TRACE" DebugSymbols="true" IncrementalBuild="false" NoStdLib="false" Optimize="false" OutputPath="bin\Debug\" WarningLevel="4" />
+        <Config Name="Release" AllowUnsafeBlocks="true" DefineConstants="TRACE" DebugSymbols="false" IncrementalBuild="false" NoStdLib="false" Optimize="true" OutputPath="bin\Release\" WarningLevel="4" />
+      </Settings>
+      <References>
+        <Reference Name="System.Windows.Forms" AssemblyName="System.Windows.Forms" />
+        <Reference Name="Vixen" AssemblyName="Vixen" />
+        <Reference Name="System" AssemblyName="System" />
+        <Reference Name="System.Drawing" AssemblyName="System.Drawing" />
+        <Reference Name="System.Xml" AssemblyName="System.Xml" />
+      </References>
+    </Build>
+    <Files>
+      <Include>
+        <File RelPath="AssemblyInfo.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="Global.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="MIDIReader\TranscribeProgressDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="MIDIReader\MIDIReaderDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="MIDIReader\Pitch.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="MIDIReader\Key.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="MIDIReader\KeyChannelMapping.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="MIDIReader\MIDIFormat.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="MIDIReader\MIDIFile.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="MIDIReader\Chunk.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="MIDIReader\MThd.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="MIDIReader\MTrk.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="MIDIReader\MIDITrack.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="MIDIReader\Helpers.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="MIDIReader\MIDIEventType.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="MIDIReader\MIDIMetaEventType.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="MIDIReader\MIDIEvent.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="MIDIReader\MIDIReader.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="MIDIReader.MIDIReaderDialog.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="MIDIReader.TranscribeProgressDialog.resources" BuildAction="EmbeddedResource" />
+      </Include>
+    </Files>
+  </CSHARP>
+</VisualStudioProject>

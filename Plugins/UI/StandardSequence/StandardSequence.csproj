@@ -1,0 +1,64 @@
+<VisualStudioProject>
+  <CSHARP ProjectType="local" ProjectVersion="7.10.3077" SchemaVersion="2.0" ProjectGuid="48d6f2af-ad35-4ca5-8ba0-ba8a48fd2fa1">
+    <Build>
+      <Settings AssemblyName="StandardSequence" DefaultClientScript="JScript" DefaultHTMLPageLayout="Grid" DefaultTargetSchema="IE50" DelaySign="false" OutputType="Library">
+        <Config Name="Debug" AllowUnsafeBlocks="true" DefineConstants="DEBUG;TRACE" DebugSymbols="true" IncrementalBuild="false" NoStdLib="false" Optimize="false" OutputPath="bin\Debug\" WarningLevel="4" />
+        <Config Name="Release" AllowUnsafeBlocks="true" DefineConstants="TRACE" DebugSymbols="false" IncrementalBuild="false" NoStdLib="false" Optimize="true" OutputPath="bin\Release\" WarningLevel="4" />
+      </Settings>
+      <References>
+        <Reference Name="System.Windows.Forms" AssemblyName="System.Windows.Forms" />
+        <Reference Name="Vixen" AssemblyName="Vixen" />
+        <Reference Name="System" AssemblyName="System" />
+        <Reference Name="System.Drawing" AssemblyName="System.Drawing" />
+        <Reference Name="System.Xml" AssemblyName="System.Xml" />
+        <Reference Name="fmod" AssemblyName="fmod" />
+      </References>
+    </Build>
+    <Files>
+      <Include>
+        <File RelPath="AssemblyInfo.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="Global.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="VixenEditor\AudioSpeedDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="VixenEditor\ChannelCopyDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="VixenEditor\ConsoleTrackBar.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="VixenEditor\DelayedStartDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="VixenEditor\DrawingIntensityDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="VixenEditor\EffectFrequencyDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="VixenEditor\FindAndReplaceDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="VixenEditor\IntensityAdjustDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="VixenEditor\ProgressDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="VixenEditor\Properties\Resources.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="VixenEditor\RampQueryDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="VixenEditor\RandomParametersDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="VixenEditor\SelectablePictureBox.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="VixenEditor\SparkleParamsDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="VixenEditor\FrequencyEffectGenerator.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="VixenEditor\AffectGridDelegate.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="VixenEditor\StandardSequence.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="VixenEditor\TestChannelsDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="VixenEditor\TestConsoleDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="VixenEditor\ThinSelection.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="VixenEditor\ToolStripManager.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="Vixen\UndoOriginalBehavior.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="Vixen\UndoItem.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="VixenEditor.AudioSpeedDialog.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="VixenEditor.ChannelCopyDialog.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="VixenEditor.ConsoleTrackBar.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="VixenEditor.DelayedStartDialog.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="VixenEditor.DrawingIntensityDialog.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="VixenEditor.EffectFrequencyDialog.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="VixenEditor.FindAndReplaceDialog.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="VixenEditor.IntensityAdjustDialog.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="VixenEditor.ProgressDialog.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="VixenEditor.Properties.Resources.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="VixenEditor.RampQueryDialog.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="VixenEditor.RandomParametersDialog.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="VixenEditor.SparkleParamsDialog.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="VixenEditor.StandardSequence.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="VixenEditor.TestChannelsDialog.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="VixenEditor.TestConsoleDialog.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="VixenEditor.ThinSelection.resources" BuildAction="EmbeddedResource" />
+      </Include>
+    </Files>
+  </CSHARP>
+</VisualStudioProject>

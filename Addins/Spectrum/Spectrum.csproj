@@ -1,0 +1,119 @@
+<VisualStudioProject>
+  <CSHARP ProjectType="local" ProjectVersion="7.10.3077" SchemaVersion="2.0" ProjectGuid="870b74f0-f314-4350-bc41-6c2bf26b7eab">
+    <Build>
+      <Settings AssemblyName="Spectrum" DefaultClientScript="JScript" DefaultHTMLPageLayout="Grid" DefaultTargetSchema="IE50" DelaySign="false" OutputType="Library">
+        <Config Name="Debug" AllowUnsafeBlocks="true" DefineConstants="DEBUG;TRACE" DebugSymbols="true" IncrementalBuild="false" NoStdLib="false" Optimize="false" OutputPath="bin\Debug\" WarningLevel="4" />
+        <Config Name="Release" AllowUnsafeBlocks="true" DefineConstants="TRACE" DebugSymbols="false" IncrementalBuild="false" NoStdLib="false" Optimize="true" OutputPath="bin\Release\" WarningLevel="4" />
+      </Settings>
+      <References>
+        <Reference Name="System.Windows.Forms" AssemblyName="System.Windows.Forms" />
+        <Reference Name="Vixen" AssemblyName="Vixen" />
+        <Reference Name="System" AssemblyName="System" />
+        <Reference Name="System.Xml" AssemblyName="System.Xml" />
+        <Reference Name="System.Drawing" AssemblyName="System.Drawing" />
+      </References>
+    </Build>
+    <Files>
+      <Include>
+        <File RelPath="AssemblyInfo.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="Global.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="Spectrum\TranscribeDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="Spectrum\Properties\Resources.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="Spectrum\AutoMapDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_CREATECALLBACK.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_RELEASECALLBACK.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_RESETCALLBACK.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_READCALLBACK.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_SETPOSITIONCALLBACK.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_SETPARAMCALLBACK.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_GETPARAMCALLBACK.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_DIALOGCALLBACK.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_TYPE.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_PARAMETERDESC.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_DESCRIPTION.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_STATE.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_OSCILLATOR.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_LOWPASS.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_ITLOWPASS.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_HIGHPASS.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_ECHO.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_FLANGE.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_DISTORTION.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_NORMALIZE.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_PARAMEQ.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_PITCHSHIFT.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_CHORUS.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_REVERB.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_ITECHO.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_COMPRESSOR.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_SFXREVERB.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\Error.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\VERSION.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\Platform.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\VECTOR.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\GUID.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\RESULT.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\OUTPUTTYPE.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\CAPS.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DEBUGLEVEL.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\MEMORY_TYPE.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\SPEAKERMODE.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\SPEAKER.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\PLUGINTYPE.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\INITFLAG.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\SOUND_TYPE.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\SOUND_FORMAT.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\MODE.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\OPENSTATE.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\SOUNDGROUP_BEHAVIOR.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\SYSTEM_CALLBACKTYPE.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\CHANNEL_CALLBACKTYPE.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\CHANNEL_CALLBACK.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\SOUND_NONBLOCKCALLBACK.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\SOUND_PCMREADCALLBACK.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\SOUND_PCMSETPOSCALLBACK.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\FILE_OPENCALLBACK.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\FILE_CLOSECALLBACK.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\FILE_READCALLBACK.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\FILE_SEEKCALLBACK.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\CB_3D_ROLLOFFCALLBACK.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_FFT_WINDOW.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP_RESAMPLER.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\TAGTYPE.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\TAGDATATYPE.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DELAYTYPE.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DELAYTYPE_UTILITY.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\TAG.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\CDTOC.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\TIMEUNIT.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\SPEAKERMAPTYPE.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\CREATESOUNDEXINFO.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\REVERB_PROPERTIES.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\REVERB_FLAGS.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\PRESET.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\REVERB_CHANNELPROPERTIES.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\REVERB_CHANNELFLAGS.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\ADVANCEDSETTINGS.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\CHANNELINDEX.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\Factory.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\Memory.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\_System.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\Sound.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\Channel.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\ChannelGroup.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\SoundGroup.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSP.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\DSPConnection.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="FMOD\Geometry.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="Spectrum\Spectrum.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="Spectrum\SpectrumDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="Spectrum\FrequencyBand.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="Spectrum\FrequencyBandMapping.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="Spectrum.Properties.Resources.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="Spectrum.AutoMapDialog.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="Spectrum.TranscribeDialog.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="Spectrum.SpectrumDialog.resources" BuildAction="EmbeddedResource" />
+      </Include>
+    </Files>
+  </CSHARP>
+</VisualStudioProject>

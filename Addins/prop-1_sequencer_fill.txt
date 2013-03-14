@@ -1,0 +1,42 @@
+Selections:
+86,EFX-TEK AP-8 :: Slot 0
+100,Contact closure (e.g. Cowlacious)
+102,No audio player
+
+MAX EE Table entries:
+  0 (AP8) = 86
+  1 (C/C) = 100
+  2 (N/A) = 102
+
+
+
+
+<reset_audio_0>
+  ' kill audio if playing
+  SEROUT AudioStart, OT2400, ("!!!!!!!AP8", %00, "X")
+</reset_audio_0>
+
+<reset_audio_1>
+  ' no audio reset available
+</reset_audio_1>
+
+<reset_audio_2>
+  ' no audio device selected
+</reset_audio_2>
+
+
+
+
+<audio_play_0>
+  SEROUT AudioStart, OT2400, ("!AP8", %00, "P", 0)
+</audio_play_0>
+
+<audio_play_1>
+  HIGH AudioStart                               ' activate player
+  PAUSE 30                                      ' let it start
+  INPUT AudioStart                              ' release C/C pin
+</audio_play_1>
+
+<audio_play_2>
+  ' no audio device selected
+</audio_play_2>

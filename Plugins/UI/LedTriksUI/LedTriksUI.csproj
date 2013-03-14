@@ -1,0 +1,37 @@
+<VisualStudioProject>
+  <CSHARP ProjectType="local" ProjectVersion="7.10.3077" SchemaVersion="2.0" ProjectGuid="8cfe2c29-0f88-404b-8a73-da844800dbb1">
+    <Build>
+      <Settings AssemblyName="LedTriksUI" DefaultClientScript="JScript" DefaultHTMLPageLayout="Grid" DefaultTargetSchema="IE50" DelaySign="false" OutputType="Library">
+        <Config Name="Debug" AllowUnsafeBlocks="true" DefineConstants="DEBUG;TRACE" DebugSymbols="true" IncrementalBuild="false" NoStdLib="false" Optimize="false" OutputPath="bin\Debug\" WarningLevel="4" />
+        <Config Name="Release" AllowUnsafeBlocks="true" DefineConstants="TRACE" DebugSymbols="false" IncrementalBuild="false" NoStdLib="false" Optimize="true" OutputPath="bin\Release\" WarningLevel="4" />
+      </Settings>
+      <References>
+        <Reference Name="System.Windows.Forms" AssemblyName="System.Windows.Forms" />
+        <Reference Name="Vixen" AssemblyName="Vixen" />
+        <Reference Name="LedTriksUtil" AssemblyName="LedTriksUtil" />
+        <Reference Name="System.Drawing" AssemblyName="System.Drawing" />
+        <Reference Name="System" AssemblyName="System" />
+        <Reference Name="System.Xml" AssemblyName="System.Xml" />
+      </References>
+    </Build>
+    <Files>
+      <Include>
+        <File RelPath="AssemblyInfo.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="Global.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="LedTriks\AutoTextOptionsDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="LedTriks\BoardLayoutDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="LedTriks\FrameOrganizationDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="LedTriks\FrameSelection.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="LedTriks\KeyState.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="LedTriks\LedTriks.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="LedTriks\Properties\Resources.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="LedTriks\Win32.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="LedTriks.AutoTextOptionsDialog.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="LedTriks.BoardLayoutDialog.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="LedTriks.FrameOrganizationDialog.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="LedTriks.LedTriks.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="LedTriks.Properties.Resources.resources" BuildAction="EmbeddedResource" />
+      </Include>
+    </Files>
+  </CSHARP>
+</VisualStudioProject>

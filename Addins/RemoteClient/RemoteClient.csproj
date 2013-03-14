@@ -1,0 +1,47 @@
+<VisualStudioProject>
+  <CSHARP ProjectType="local" ProjectVersion="7.10.3077" SchemaVersion="2.0" ProjectGuid="c3ad589d-0fa3-43ff-be9e-6d2a20791b5d">
+    <Build>
+      <Settings AssemblyName="RemoteClient" DefaultClientScript="JScript" DefaultHTMLPageLayout="Grid" DefaultTargetSchema="IE50" DelaySign="false" OutputType="Library">
+        <Config Name="Debug" AllowUnsafeBlocks="true" DefineConstants="DEBUG;TRACE" DebugSymbols="true" IncrementalBuild="false" NoStdLib="false" Optimize="false" OutputPath="bin\Debug\" WarningLevel="4" />
+        <Config Name="Release" AllowUnsafeBlocks="true" DefineConstants="TRACE" DebugSymbols="false" IncrementalBuild="false" NoStdLib="false" Optimize="true" OutputPath="bin\Release\" WarningLevel="4" />
+      </Settings>
+      <References>
+        <Reference Name="System.Windows.Forms" AssemblyName="System.Windows.Forms" />
+        <Reference Name="Vixen" AssemblyName="Vixen" />
+        <Reference Name="System" AssemblyName="System" />
+        <Reference Name="System.Xml" AssemblyName="System.Xml" />
+        <Reference Name="System.Drawing" AssemblyName="System.Drawing" />
+      </References>
+    </Build>
+    <Files>
+      <Include>
+        <File RelPath="AssemblyInfo.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="Global.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="RemoteClient\ClientUI.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="RemoteClient\Sockets.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="RemoteClient\ClientControlDialog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="RemoteClient\ExecutionClient.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="RemoteClient\ControlClientUI.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="RemoteClient\ExecutionClientUI.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="RemoteClient\VixenExecutionClientStub.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="RemoteClient\Ports.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="RemoteClient\RequestType.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="RemoteClient\RemoteClient.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="RemoteClient\LocalClient.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="RemoteClient\FindRequest.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="RemoteClient\FindResult.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="RemoteClient\ObjectType.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="RemoteClient\ClientCommandHandlers.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="RemoteClient\ControlClient.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="RemoteClient\ExecutionStatus.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="RemoteClient\ClientStatus.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="RemoteClient\ErrorLog.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="RemoteClient\ClientContext.cs" SubType="Code" BuildAction="Compile" />
+        <File RelPath="RemoteClient.ExecutionClientUI.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="RemoteClient.ClientUI.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="RemoteClient.ClientControlDialog.resources" BuildAction="EmbeddedResource" />
+        <File RelPath="RemoteClient.ControlClientUI.resources" BuildAction="EmbeddedResource" />
+      </Include>
+    </Files>
+  </CSHARP>
+</VisualStudioProject>
