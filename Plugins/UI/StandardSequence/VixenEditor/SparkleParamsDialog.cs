@@ -1,4 +1,4 @@
-﻿namespace VixenEditor
+namespace VixenEditor
 {
     using System;
     using System.ComponentModel;
@@ -114,7 +114,7 @@
             this.trackBarFrequency.BeginInit();
             base.SuspendLayout();
             this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(0x125, 0x117);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -122,7 +122,7 @@
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(0xd4, 0x117);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(0x4b, 0x17);
@@ -207,13 +207,13 @@
             this.trackBarFrequency.TickStyle = TickStyle.Both;
             this.trackBarFrequency.Scroll += new EventHandler(this.trackBarFrequency_Scroll);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.buttonCancel;
             base.ClientSize = new Size(380, 0x138);
             base.Controls.Add(this.buttonCancel);
             base.Controls.Add(this.buttonOK);
             base.Controls.Add(this.groupBox1);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.Name = "SparkleParamsDialog";
             base.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Sparkle";

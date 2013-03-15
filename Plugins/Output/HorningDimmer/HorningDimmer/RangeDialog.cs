@@ -1,4 +1,4 @@
-﻿namespace HorningDimmer
+namespace HorningDimmer
 {
     using System;
     using System.ComponentModel;
@@ -105,7 +105,7 @@
             this.radioButtonUnselected.Text = "Unselected";
             this.radioButtonUnselected.UseVisualStyleBackColor = true;
             this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(0x59, 0x84);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(0x4b, 0x17);
@@ -114,7 +114,7 @@
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new EventHandler(this.buttonOK_Click);
             this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(170, 0x84);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -124,7 +124,7 @@
             this.buttonCancel.Click += new EventHandler(this.buttonCancel_Click);
             base.AcceptButton = this.buttonOK;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.buttonCancel;
             base.ClientSize = new Size(0x101, 0xa7);
             base.Controls.Add(this.buttonCancel);
@@ -136,7 +136,7 @@
             base.Controls.Add(this.label2);
             base.Controls.Add(this.textBoxFrom);
             base.Controls.Add(this.label1);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.MaximizeBox = false;
             base.MinimizeBox = false;
             base.Name = "RangeDialog";

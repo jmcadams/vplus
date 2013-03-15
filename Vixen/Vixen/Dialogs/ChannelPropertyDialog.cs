@@ -1,4 +1,4 @@
-﻿namespace Vixen.Dialogs
+namespace Vixen.Dialogs
 {
     using System;
     using System.Collections.Generic;
@@ -214,7 +214,7 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Name:";
             this.buttonClose.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonClose.DialogResult = DialogResult.OK;
+            this.buttonClose.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonClose.Location = new Point(0xcd, 0xef);
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Size = new Size(0x4b, 0x17);
@@ -253,7 +253,7 @@
             this.buttonDimmingCurve.UseVisualStyleBackColor = true;
             this.buttonDimmingCurve.Click += new EventHandler(this.buttonDimmingCurve_Click);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.buttonClose;
             base.ClientSize = new Size(0x124, 0x112);
             base.Controls.Add(this.comboBoxChannels);
@@ -261,7 +261,7 @@
             base.Controls.Add(this.buttonClose);
             base.Controls.Add(this.buttonPrev);
             base.Controls.Add(this.groupBox1);
-            base.FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             base.KeyPreview = true;
             base.Name = "ChannelPropertyDialog";
             base.StartPosition = FormStartPosition.CenterScreen;

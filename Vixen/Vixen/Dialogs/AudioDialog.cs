@@ -1,4 +1,4 @@
-﻿namespace Vixen.Dialogs
+namespace Vixen.Dialogs
 {
     using FMOD;
     using System;
@@ -650,7 +650,7 @@
             this.channel0ToolStripMenuItem.Tag = "10";
             this.channel0ToolStripMenuItem.SelectedIndexChanged += new EventHandler(this.channelMapItem_SelectedIndexChanged);
             this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(0x114, 0x21f);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(0x4b, 0x17);
@@ -659,7 +659,7 @@
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new EventHandler(this.buttonOK_Click);
             this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(0x165, 0x21f);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -693,7 +693,7 @@
             this.radioButtonSingleEvent.Text = "Create a single event when a key is pressed";
             this.radioButtonSingleEvent.UseVisualStyleBackColor = true;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.buttonCancel;
             base.ClientSize = new Size(0x1bc, 0x23e);
             base.Controls.Add(this.groupBox3);
@@ -701,7 +701,7 @@
             base.Controls.Add(this.buttonOK);
             base.Controls.Add(this.groupBox1);
             base.Controls.Add(this.groupBox2);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.KeyPreview = true;
             base.MaximizeBox = false;
             base.MinimizeBox = false;

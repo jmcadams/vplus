@@ -1,4 +1,4 @@
-﻿namespace Launcher
+namespace Launcher
 {
     using System;
     using System.ComponentModel;
@@ -168,7 +168,7 @@
             this.columnHeader3.Text = "Trigger level (%)";
             this.columnHeader3.Width = 90;
             this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(0x1f7, 0xcb);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(0x4b, 0x17);
@@ -176,7 +176,7 @@
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(0x248, 0xcb);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -187,13 +187,13 @@
             this.openFileDialog.Filter = "Executable files | *.exe";
             this.openFileDialog.Title = "Select Program To Launch";
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.buttonCancel;
             base.ClientSize = new Size(0x29f, 0xee);
             base.Controls.Add(this.buttonCancel);
             base.Controls.Add(this.buttonOK);
             base.Controls.Add(this.groupBox1);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.Name = "SetupDialog";
             base.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Setup";

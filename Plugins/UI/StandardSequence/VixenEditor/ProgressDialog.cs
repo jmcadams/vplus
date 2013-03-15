@@ -1,4 +1,4 @@
-﻿namespace VixenEditor
+namespace VixenEditor
 {
     using System;
     using System.ComponentModel;
@@ -46,11 +46,11 @@
             this.panel1.Size = new Size(0x14d, 0x48);
             this.panel1.TabIndex = 1;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             base.ClientSize = new Size(0x14d, 0x48);
             base.Controls.Add(this.panel1);
-            base.FormBorderStyle = FormBorderStyle.None;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             base.Name = "ProgressDialog";
             base.ShowInTaskbar = false;
             base.StartPosition = FormStartPosition.CenterScreen;

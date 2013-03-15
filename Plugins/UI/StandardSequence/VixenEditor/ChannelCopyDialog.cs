@@ -1,4 +1,4 @@
-﻿namespace VixenEditor
+namespace VixenEditor
 {
     using System;
     using System.Collections.Generic;
@@ -102,7 +102,7 @@
             this.comboBoxDestinationChannel.Name = "comboBoxDestinationChannel";
             this.comboBoxDestinationChannel.Size = new Size(0x79, 0x15);
             this.comboBoxDestinationChannel.TabIndex = 3;
-            this.buttonCopy.DialogResult = DialogResult.OK;
+            this.buttonCopy.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonCopy.Location = new Point(0xcd, 0x48);
             this.buttonCopy.Name = "buttonCopy";
             this.buttonCopy.Size = new Size(0x4b, 0x17);
@@ -111,7 +111,7 @@
             this.buttonCopy.UseVisualStyleBackColor = true;
             this.buttonCopy.Click += new EventHandler(this.buttonCopy_Click);
             this.buttonDone.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonDone.DialogResult = DialogResult.Cancel;
+            this.buttonDone.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonDone.Location = new Point(0xcd, 0x83);
             this.buttonDone.Name = "buttonDone";
             this.buttonDone.Size = new Size(0x4b, 0x17);
@@ -120,7 +120,7 @@
             this.buttonDone.UseVisualStyleBackColor = true;
             this.buttonDone.Click += new EventHandler(this.buttonDone_Click);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.buttonDone;
             base.ClientSize = new Size(0x124, 0xa6);
             base.Controls.Add(this.buttonDone);
@@ -129,7 +129,7 @@
             base.Controls.Add(this.label2);
             base.Controls.Add(this.comboBoxSourceChannel);
             base.Controls.Add(this.label1);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.MaximizeBox = false;
             base.MinimizeBox = false;
             base.Name = "ChannelCopyDialog";

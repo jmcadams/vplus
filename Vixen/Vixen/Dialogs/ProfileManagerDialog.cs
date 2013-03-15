@@ -1,4 +1,4 @@
-﻿namespace Vixen.Dialogs
+namespace Vixen.Dialogs
 {
     using System;
     using System.Collections.Generic;
@@ -133,7 +133,7 @@
             {
                 if (!(!(profile.FileName == string.Empty) || this.ChangeProfileName()))
                 {
-                    base.DialogResult = DialogResult.None;
+                    base.DialogResult = System.Windows.Forms.DialogResult.None;
                     break;
                 }
                 profile.SaveToFile();
@@ -298,7 +298,7 @@
             this.panel1.Size = new Size(0x256, 40);
             this.panel1.TabIndex = 1;
             this.buttonDone.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonDone.DialogResult = DialogResult.OK;
+            this.buttonDone.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonDone.Location = new Point(430, 6);
             this.buttonDone.Name = "buttonDone";
             this.buttonDone.Size = new Size(0x4b, 0x17);
@@ -558,7 +558,7 @@
             this.label4.Size = new Size(0x88, 0x18);
             this.label4.TabIndex = 1;
             this.label4.Text = "Edit a profile";
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(0x1ff, 6);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -566,7 +566,7 @@
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.buttonDone;
             base.ClientSize = new Size(0x256, 0x1d0);
             base.Controls.Add(this.tabControl);

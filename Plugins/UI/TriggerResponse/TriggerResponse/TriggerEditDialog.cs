@@ -1,4 +1,4 @@
-﻿namespace TriggerResponse
+namespace TriggerResponse
 {
     using System;
     using System.Collections.Generic;
@@ -58,7 +58,7 @@
             if ((((this.comboBoxTriggers.SelectedIndex == -1) || (this.comboBoxLines.SelectedIndex == -1)) || (this.textBoxDescription.Text.Length == 0)) || (this.textBoxSequence.Text.Length == 0))
             {
                 MessageBox.Show("All items are required.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                base.DialogResult = DialogResult.None;
+                base.DialogResult = System.Windows.Forms.DialogResult.None;
             }
             else
             {
@@ -152,7 +152,7 @@
             this.textBoxDescription.Size = new Size(0xd0, 20);
             this.textBoxDescription.TabIndex = 5;
             this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(0x13a, 0xef);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(0x4b, 0x17);
@@ -161,7 +161,7 @@
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new EventHandler(this.buttonOK_Click);
             this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(0x18b, 0xef);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -224,14 +224,14 @@
             this.label5.Text = "Audio device";
             base.AcceptButton = this.buttonOK;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.buttonCancel;
             base.ClientSize = new Size(0x1e2, 0x112);
             base.Controls.Add(this.groupBox2);
             base.Controls.Add(this.groupBox1);
             base.Controls.Add(this.buttonCancel);
             base.Controls.Add(this.buttonOK);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.Name = "TriggerEditDialog";
             base.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Trigger Response Edit";

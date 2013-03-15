@@ -1,4 +1,4 @@
-﻿namespace Icicles
+namespace Icicles
 {
     using System;
     using System.ComponentModel;
@@ -126,7 +126,7 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Board ID will be";
             this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(0xc1, 0xea);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(0x4b, 0x17);
@@ -134,7 +134,7 @@
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(0x112, 0xea);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -164,7 +164,7 @@
             this.comboBoxVersion.Size = new Size(0x42, 0x15);
             this.comboBoxVersion.TabIndex = 1;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.buttonCancel;
             base.ClientSize = new Size(0x169, 0x109);
             base.Controls.Add(this.groupBox2);
@@ -172,7 +172,7 @@
             base.Controls.Add(this.buttonOK);
             base.Controls.Add(this.groupBox1);
             base.Controls.Add(this.buttonSerialSetup);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.Name = "SetupDialog";
             base.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Setup";

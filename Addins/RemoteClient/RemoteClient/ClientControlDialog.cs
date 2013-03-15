@@ -1,4 +1,4 @@
-﻿namespace RemoteClient
+namespace RemoteClient
 {
     using System;
     using System.ComponentModel;
@@ -362,7 +362,7 @@
             this.buttonPlay.UseVisualStyleBackColor = true;
             this.buttonPlay.Click += new EventHandler(this.buttonPlay_Click);
             this.buttonDone.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonDone.DialogResult = DialogResult.OK;
+            this.buttonDone.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonDone.Location = new Point(0x16c, 0x15f);
             this.buttonDone.Name = "buttonDone";
             this.buttonDone.Size = new Size(0x4b, 0x17);
@@ -397,7 +397,7 @@
             this.textBoxPassword.Enter += new EventHandler(this.textBoxPassword_Enter);
             this.textBoxPassword.Leave += new EventHandler(this.textBoxPassword_Leave);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x1c3, 0x182);
             base.Controls.Add(this.groupBoxPassword);
             base.Controls.Add(this.labelServerData);
@@ -405,7 +405,7 @@
             base.Controls.Add(this.groupBoxExecutionControl);
             base.Controls.Add(this.groupBoxChannels);
             base.Controls.Add(this.groupBoxClients);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.Name = "ClientControlDialog";
             base.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Client Control";

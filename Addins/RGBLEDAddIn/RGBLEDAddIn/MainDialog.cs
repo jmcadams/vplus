@@ -1,4 +1,4 @@
-﻿namespace RGBLEDAddIn
+namespace RGBLEDAddIn
 {
     using System;
     using System.ComponentModel;
@@ -103,7 +103,7 @@
         {
             if (this.comboBoxRGBChannel.SelectedIndex == -1)
             {
-                base.DialogResult = DialogResult.None;
+                base.DialogResult = System.Windows.Forms.DialogResult.None;
                 MessageBox.Show("Please select an RGB channel, if one is available.\nOtherwise cancel the operation.", "RGBLED", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 base.ActiveControl = this.comboBoxRGBChannel;
             }
@@ -453,7 +453,7 @@
             this.label5.TabIndex = 0;
             this.label5.Text = "Use this to create color gradients within the sequence";
             this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(0xb9, 0x1d2);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(0x4b, 0x17);
@@ -462,7 +462,7 @@
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new EventHandler(this.buttonOK_Click);
             this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(0x10a, 0x1d2);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -470,14 +470,14 @@
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.buttonCancel;
             base.ClientSize = new Size(0x161, 0x1f5);
             base.Controls.Add(this.buttonCancel);
             base.Controls.Add(this.buttonOK);
             base.Controls.Add(this.groupBox2);
             base.Controls.Add(this.groupBox1);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.Name = "MainDialog";
             base.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "RGBLED";

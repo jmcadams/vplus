@@ -1,4 +1,4 @@
-﻿namespace EZ_8_Output
+namespace EZ_8_Output
 {
     using System;
     using System.ComponentModel;
@@ -25,7 +25,7 @@
         private void InitializeComponent()
         {
             this.components = new Container();
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Text = "SetupDialog";
         }
     }

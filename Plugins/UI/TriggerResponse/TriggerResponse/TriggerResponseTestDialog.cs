@@ -1,4 +1,4 @@
-﻿namespace TriggerResponse
+namespace TriggerResponse
 {
     using System;
     using System.Collections.Generic;
@@ -81,12 +81,12 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Triggers with responses";
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x124, 0x72);
             base.Controls.Add(this.label1);
             base.Controls.Add(this.buttonTest);
             base.Controls.Add(this.comboBoxTriggerResponses);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.KeyPreview = true;
             base.Name = "TriggerResponseTestDialog";
             base.StartPosition = FormStartPosition.CenterScreen;
@@ -110,7 +110,7 @@
         {
             if (e.KeyCode == Keys.Escape)
             {
-                base.DialogResult = DialogResult.Cancel;
+                base.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             }
         }
     }

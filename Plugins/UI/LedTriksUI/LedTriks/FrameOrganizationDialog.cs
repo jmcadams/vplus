@@ -1,4 +1,4 @@
-﻿namespace LedTriks
+namespace LedTriks
 {
     using LedTriksUtil;
     using System;
@@ -528,7 +528,7 @@
             this.hScrollBar.TabIndex = 0;
             this.hScrollBar.ValueChanged += new EventHandler(this.hScrollBar_ValueChanged);
             this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(0x25d, 0x1c3);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(0x4b, 0x17);
@@ -536,7 +536,7 @@
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(0x2ae, 0x1c3);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -569,7 +569,7 @@
             this.pictureBoxFolder.Visible = false;
             this.AllowDrop = true;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = Color.White;
             base.CancelButton = this.buttonCancel;
             base.ClientSize = new Size(0x305, 0x1e6);

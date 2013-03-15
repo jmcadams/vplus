@@ -1,4 +1,4 @@
-﻿namespace JoystickInput
+namespace JoystickInput
 {
     using System;
     using System.ComponentModel;
@@ -103,7 +103,7 @@
             this.radioButtonDigital.Text = "Treat POV controls as 4 digital inputs";
             this.radioButtonDigital.UseVisualStyleBackColor = true;
             this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(0x83, 0x132);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(0x4b, 0x17);
@@ -112,7 +112,7 @@
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new EventHandler(this.buttonOK_Click);
             this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(0xd4, 0x132);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -160,14 +160,14 @@
             this.linkLabelButtons.VisitedLinkColor = Color.Blue;
             this.linkLabelButtons.LinkClicked += new LinkLabelLinkClickedEventHandler(this.linkLabelButtons_LinkClicked);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.buttonCancel;
             base.ClientSize = new Size(0x12b, 0x155);
             base.Controls.Add(this.groupBox2);
             base.Controls.Add(this.buttonCancel);
             base.Controls.Add(this.buttonOK);
             base.Controls.Add(this.groupBox1);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.MaximizeBox = false;
             base.MinimizeBox = false;
             base.Name = "SetupDialog";

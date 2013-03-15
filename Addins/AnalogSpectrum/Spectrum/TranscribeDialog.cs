@@ -1,4 +1,4 @@
-﻿namespace Spectrum
+namespace Spectrum
 {
     using System;
     using System.ComponentModel;
@@ -34,11 +34,11 @@
             this.progressBar.Size = new Size(0x13a, 0x17);
             this.progressBar.TabIndex = 0;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x152, 0x42);
             base.ControlBox = false;
             base.Controls.Add(this.progressBar);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.Name = "TranscribeDialog";
             base.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Transcribing...";

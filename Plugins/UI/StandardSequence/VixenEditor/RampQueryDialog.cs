@@ -1,4 +1,4 @@
-﻿namespace VixenEditor
+namespace VixenEditor
 {
     using System;
     using System.ComponentModel;
@@ -92,14 +92,14 @@
             this.numericUpDownEnd.TabIndex = 3;
             this.numericUpDownEnd.Enter += new EventHandler(this.numericUpDownEnd_Enter);
             this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(0x18, 0x55);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(0x4b, 0x17);
             this.buttonOK.TabIndex = 4;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(0x69, 0x55);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -108,7 +108,7 @@
             this.buttonCancel.UseVisualStyleBackColor = true;
             base.AcceptButton = this.buttonOK;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.buttonCancel;
             base.ClientSize = new Size(0xc0, 120);
             base.ControlBox = false;
@@ -118,7 +118,7 @@
             base.Controls.Add(this.label2);
             base.Controls.Add(this.numericUpDownStart);
             base.Controls.Add(this.label1);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.Name = "RampQueryDialog";
             base.ShowInTaskbar = false;
             base.StartPosition = FormStartPosition.CenterScreen;

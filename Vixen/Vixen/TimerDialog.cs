@@ -1,4 +1,4 @@
-﻿namespace Vixen
+namespace Vixen
 {
     using System;
     using System.ComponentModel;
@@ -319,7 +319,7 @@
         Label_054B:
             if (builder.Length > 0)
             {
-                base.DialogResult = DialogResult.None;
+                base.DialogResult = System.Windows.Forms.DialogResult.None;
                 MessageBox.Show("The following items need to be corrected before\na timer can be created:\n\n" + builder.ToString(), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
@@ -840,7 +840,7 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "On";
             this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(0xf7, 0x1cf);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(0x4b, 0x17);
@@ -849,7 +849,7 @@
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new EventHandler(this.buttonOK_Click);
             this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(0x148, 0x1cf);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -857,13 +857,13 @@
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.buttonCancel;
             base.ClientSize = new Size(0x19f, 0x1f2);
             base.Controls.Add(this.buttonCancel);
             base.Controls.Add(this.buttonOK);
             base.Controls.Add(this.panel1);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.MaximizeBox = false;
             base.MinimizeBox = false;
             base.Name = "TimerDialog";

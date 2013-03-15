@@ -1,4 +1,4 @@
-﻿namespace Vixen.Dialogs
+namespace Vixen.Dialogs
 {
     using System;
     using System.Collections.Generic;
@@ -150,7 +150,7 @@
             this.buttonNewColor.UseVisualStyleBackColor = true;
             this.buttonNewColor.Click += new EventHandler(this.buttonNewColor_Click);
             this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(0x130, 0x1db);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -158,7 +158,7 @@
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(0xdf, 0x1db);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(0x4b, 0x17);
@@ -168,7 +168,7 @@
             this.colorDialog.AnyColor = true;
             this.colorDialog.FullOpen = true;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.buttonCancel;
             base.ClientSize = new Size(0x187, 510);
             base.Controls.Add(this.buttonCancel);
@@ -176,7 +176,7 @@
             base.Controls.Add(this.buttonNewColor);
             base.Controls.Add(this.groupBox2);
             base.Controls.Add(this.groupBox1);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.HelpButton = true;
             base.MaximizeBox = false;
             base.MinimizeBox = false;

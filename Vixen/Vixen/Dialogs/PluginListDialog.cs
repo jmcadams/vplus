@@ -1,4 +1,4 @@
-﻿namespace Vixen.Dialogs
+namespace Vixen.Dialogs
 {
     using System;
     using System.Collections.Generic;
@@ -218,7 +218,7 @@
             this.buttonPluginSetup.UseVisualStyleBackColor = true;
             this.buttonPluginSetup.Click += new EventHandler(this.buttonPluginSetup_Click);
             this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(0x1fb, 0x111);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(0x4b, 0x17);
@@ -226,7 +226,7 @@
             this.buttonOK.Text = "Done";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(0x1fb, 0xf4);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -335,7 +335,7 @@
             this.listViewPlugins.SelectedIndexChanged += new EventHandler(this.listViewPlugins_SelectedIndexChanged);
             this.listViewPlugins.DoubleClick += new EventHandler(this.listViewPlugins_DoubleClick);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x252, 0x134);
             base.Controls.Add(this.listViewPlugins);
             base.Controls.Add(this.buttonInput);
@@ -354,7 +354,7 @@
             base.Controls.Add(this.textBoxChannelFrom);
             base.Controls.Add(this.label1);
             base.Controls.Add(this.buttonUse);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.MaximizeBox = false;
             base.MinimizeBox = false;
             base.Name = "PluginListDialog";

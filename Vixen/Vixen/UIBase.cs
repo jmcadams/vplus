@@ -7,9 +7,8 @@
     using System.Windows.Forms;
 
     [TypeDescriptionProvider(typeof(GeneralConcreteClassProvider)), ConcreteClass(typeof(UIBaseConcreteForm))]
-    public abstract class UIBase : Form, IUIPlugIn, VixenMDI, IPlugIn
+    public abstract partial class UIBase : Form, IUIPlugIn, VixenMDI, IPlugIn
     {
-        private IContainer components = null;
         private bool m_isDirty = false;
 
         public event EventHandler DirtyChanged;
@@ -19,25 +18,9 @@
             this.InitializeComponent();
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (this.components != null))
-            {
-                this.components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        
 
-        private void InitializeComponent()
-        {
-            base.SuspendLayout();
-            base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
-            base.ClientSize = new Size(740, 0x1bc);
-            base.Name = "UIBase";
-            this.Text = "UIBase";
-            base.ResumeLayout(false);
-        }
+        
 
         public abstract EventSequence New();
         public abstract EventSequence New(EventSequence seedSequence);

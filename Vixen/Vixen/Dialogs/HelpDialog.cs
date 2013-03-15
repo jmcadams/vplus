@@ -1,4 +1,4 @@
-﻿namespace Vixen.Dialogs
+namespace Vixen.Dialogs
 {
     using System;
     using System.ComponentModel;
@@ -68,12 +68,12 @@
             this.linkLabelClose.Text = "Close";
             this.linkLabelClose.LinkClicked += new LinkLabelLinkClickedEventHandler(this.linkLabelClose_LinkClicked);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = Color.White;
             base.ClientSize = new Size(0x1ed, 0xfc);
             base.ControlBox = false;
             base.Controls.Add(this.linkLabelClose);
-            base.FormBorderStyle = FormBorderStyle.None;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             base.KeyPreview = true;
             base.Name = "HelpDialog";
             base.StartPosition = FormStartPosition.CenterScreen;

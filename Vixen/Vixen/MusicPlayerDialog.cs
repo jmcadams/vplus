@@ -1,4 +1,4 @@
-﻿namespace Vixen
+namespace Vixen
 {
     using FMOD;
     using System;
@@ -115,7 +115,7 @@
                         {
                             if (MessageBox.Show("You enabled the narrative but didn't specify a narrative file.  Do you want to continue?\n\nIf you choose Yes, the narrative will be disabled.", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                             {
-                                base.DialogResult = DialogResult.None;
+                                base.DialogResult = System.Windows.Forms.DialogResult.None;
                             }
                             else
                             {
@@ -125,7 +125,7 @@
                     }
                     else if (MessageBox.Show("An interval count less than 2 is not usable.  Do you want to continue?\n\nIf you choose Yes, the narrative will be disabled.", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                     {
-                        base.DialogResult = DialogResult.None;
+                        base.DialogResult = System.Windows.Forms.DialogResult.None;
                     }
                     else
                     {
@@ -137,7 +137,7 @@
                 {
                     if (MessageBox.Show("The interval count is not a valid number.  Do you want to continue?\n\nIf you choose Yes, the narrative will be disabled.", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                     {
-                        base.DialogResult = DialogResult.None;
+                        base.DialogResult = System.Windows.Forms.DialogResult.None;
                     }
                     else
                     {
@@ -277,7 +277,7 @@
             this.listBoxPlaylist.SelectedIndexChanged += new EventHandler(this.listBoxPlaylist_SelectedIndexChanged);
             this.listBoxPlaylist.KeyDown += new KeyEventHandler(this.listBoxPlaylist_KeyDown);
             this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(0x7c, 0x1ab);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(0x4b, 0x17);
@@ -286,7 +286,7 @@
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new EventHandler(this.buttonOK_Click);
             this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(0xcd, 0x1ab);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -354,7 +354,7 @@
             this.checkBoxEnableNarrative.UseVisualStyleBackColor = true;
             this.checkBoxEnableNarrative.CheckedChanged += new EventHandler(this.checkBoxEnableNarrative_CheckedChanged);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.buttonCancel;
             base.ClientSize = new Size(0x124, 0x1ce);
             base.Controls.Add(this.checkBoxEnableNarrative);
@@ -362,7 +362,7 @@
             base.Controls.Add(this.buttonCancel);
             base.Controls.Add(this.buttonOK);
             base.Controls.Add(this.groupBox1);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.Name = "MusicPlayerDialog";
             base.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Music Player";

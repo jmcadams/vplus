@@ -1,4 +1,4 @@
-﻿namespace DMXAddIn
+namespace DMXAddIn
 {
     using System;
     using System.ComponentModel;
@@ -37,7 +37,7 @@
             this.groupBox2.SuspendLayout();
             base.SuspendLayout();
             this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(0x4a, 0x5d);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(0x4b, 0x17);
@@ -45,7 +45,7 @@
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(0x9b, 0x5d);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -68,13 +68,13 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "General";
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.buttonCancel;
             base.ClientSize = new Size(0xf2, 0x80);
             base.Controls.Add(this.groupBox2);
             base.Controls.Add(this.buttonCancel);
             base.Controls.Add(this.buttonOK);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.Name = "SetupDialog";
             base.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "DMX";

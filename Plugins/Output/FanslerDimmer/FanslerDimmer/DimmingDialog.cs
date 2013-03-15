@@ -1,4 +1,4 @@
-﻿namespace FanslerDimmer
+namespace FanslerDimmer
 {
     using System;
     using System.ComponentModel;
@@ -112,7 +112,7 @@
             this.checkedListBoxChannels.Size = new Size(0x159, 0xb8);
             this.checkedListBoxChannels.TabIndex = 1;
             this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(0x11d, 0x111);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -144,7 +144,7 @@
             this.buttonRange.UseVisualStyleBackColor = true;
             this.buttonRange.Click += new EventHandler(this.buttonRange_Click);
             this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(0xcc, 0x111);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(0x4b, 0x17);
@@ -154,7 +154,7 @@
             this.buttonOK.Click += new EventHandler(this.buttonOK_Click);
             base.AcceptButton = this.buttonOK;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.buttonCancel;
             base.ClientSize = new Size(0x175, 0x134);
             base.Controls.Add(this.buttonOK);

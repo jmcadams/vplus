@@ -1,4 +1,4 @@
-﻿namespace Vixen.Dialogs
+namespace Vixen.Dialogs
 {
     using System;
     using System.ComponentModel;
@@ -115,7 +115,7 @@
             this.panel3.Size = new Size(0x99, 0x13c);
             this.panel3.TabIndex = 5;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x318, 0x236);
             base.Controls.Add(this.panel2);
             base.Controls.Add(this.toolbox1);

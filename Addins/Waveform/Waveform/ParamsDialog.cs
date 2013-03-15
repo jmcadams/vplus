@@ -1,4 +1,4 @@
-﻿namespace Waveform
+namespace Waveform
 {
     using FMOD;
     using System;
@@ -191,7 +191,7 @@
             this.label1.Text = "Completed";
             this.m_completed = true;
             MessageBox.Show("Done.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-            base.DialogResult = DialogResult.OK;
+            base.DialogResult = System.Windows.Forms.DialogResult.OK;
             base.Close();
         }
 
@@ -328,14 +328,14 @@
             this.checkBoxAutoScale.UseVisualStyleBackColor = true;
             this.checkBoxAutoScale.CheckedChanged += new EventHandler(this.checkBoxAutoScale_CheckedChanged);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x1cf, 0xf2);
             base.Controls.Add(this.label1);
             base.Controls.Add(this.progressBar1);
             base.Controls.Add(this.buttonStart);
             base.Controls.Add(this.listBoxChannels);
             base.Controls.Add(this.groupBox1);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.MaximizeBox = false;
             base.MinimizeBox = false;
             base.Name = "ParamsDialog";

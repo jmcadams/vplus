@@ -1,4 +1,4 @@
-﻿namespace Vixen
+namespace Vixen
 {
     using FMOD;
     using System;
@@ -80,7 +80,7 @@
             this.comboBoxDevice.Size = new Size(220, 0x15);
             this.comboBoxDevice.TabIndex = 0;
             this.comboBoxDevice.SelectedIndexChanged += new EventHandler(this.comboBoxDevice_SelectedIndexChanged);
-            this.buttonDone.DialogResult = DialogResult.OK;
+            this.buttonDone.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonDone.Location = new Point(0xc7, 0x8b);
             this.buttonDone.Name = "buttonDone";
             this.buttonDone.Size = new Size(0x4b, 0x17);
@@ -88,11 +88,11 @@
             this.buttonDone.Text = "Done";
             this.buttonDone.UseVisualStyleBackColor = true;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x11f, 0xa8);
             base.Controls.Add(this.buttonDone);
             base.Controls.Add(this.groupBox1);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.Name = "SoundDeviceDialog";
             base.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Sound Device";

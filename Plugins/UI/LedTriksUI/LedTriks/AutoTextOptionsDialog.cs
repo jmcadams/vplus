@@ -1,4 +1,4 @@
-﻿namespace LedTriks
+namespace LedTriks
 {
     using LedTriksUtil;
     using System;
@@ -72,7 +72,7 @@
             if (!this.ValidatePositionValue())
             {
                 MessageBox.Show("Please fix the error shown before continuing.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                base.DialogResult = DialogResult.None;
+                base.DialogResult = System.Windows.Forms.DialogResult.None;
             }
             else
             {
@@ -92,7 +92,7 @@
                     this.m_generator.TextVertPosition = VertPosition.Percent;
                     if (((((this.m_textPositionValue * this.m_generator.BoardPixelHeight) / 100) + this.m_generator.TextHeight) > this.m_generator.BoardPixelHeight) && (MessageBox.Show("Text position's percent value will put the text partially off of the board.\nIs this okay?", "Vixen", MessageBoxButtons.YesNo, MessageBoxIcon.Hand) == DialogResult.No))
                     {
-                        base.DialogResult = DialogResult.None;
+                        base.DialogResult = System.Windows.Forms.DialogResult.None;
                     }
                     this.m_generator.TextVertPositionValue = this.m_textPositionValue;
                 }
@@ -276,7 +276,7 @@
             this.radioButtonScrollOn.UseVisualStyleBackColor = true;
             this.radioButtonScrollOn.CheckedChanged += new EventHandler(this.RespondToChange);
             this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(0x52, 0x1b2);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(0x4b, 0x17);
@@ -285,7 +285,7 @@
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new EventHandler(this.buttonOK_Click);
             this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(0xa3, 0x1b2);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -337,7 +337,7 @@
             this.errorProvider.ContainerControl = this;
             base.AcceptButton = this.buttonOK;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.buttonCancel;
             base.ClientSize = new Size(250, 0x1d5);
             base.Controls.Add(this.groupBox3);
@@ -352,7 +352,7 @@
             base.Controls.Add(this.pictureBoxScrollLeft);
             base.Controls.Add(this.pictureBoxScrollDown);
             base.Controls.Add(this.pictureBoxScrollUp);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.MaximizeBox = false;
             base.MinimizeBox = false;
             base.Name = "AutoTextOptionsDialog";

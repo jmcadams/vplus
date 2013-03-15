@@ -1,4 +1,4 @@
-﻿namespace VixenEditor
+namespace VixenEditor
 {
     using System;
     using System.Collections.Generic;
@@ -94,7 +94,7 @@
             this.trackBar.BeginInit();
             base.SuspendLayout();
             this.buttonDone.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonDone.DialogResult = DialogResult.OK;
+            this.buttonDone.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonDone.Location = new Point(0xff, 0x14b);
             this.buttonDone.Name = "buttonDone";
             this.buttonDone.Size = new Size(0x4b, 0x17);
@@ -151,12 +151,12 @@
             this.buttonSelectAll.Click += new EventHandler(this.buttonAllOn_Click);
             base.AcceptButton = this.buttonDone;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.buttonDone;
             base.ClientSize = new Size(0x156, 0x16e);
             base.Controls.Add(this.groupBox1);
             base.Controls.Add(this.buttonDone);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.Name = "TestChannelsDialog";
             base.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Test Channels";

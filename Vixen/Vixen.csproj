@@ -1,229 +1,703 @@
-<VisualStudioProject>
-  <CSHARP ProjectType="local" ProjectVersion="7.10.3077" SchemaVersion="2.0" ProjectGuid="7d2c1ef5-1d7b-44cf-bddf-1629a3205178">
-    <Build>
-      <Settings AssemblyName="Vixen" DefaultClientScript="JScript" DefaultHTMLPageLayout="Grid" DefaultTargetSchema="IE50" DelaySign="false" OutputType="WinExe">
-        <Config Name="Debug" AllowUnsafeBlocks="true" DefineConstants="DEBUG;TRACE" DebugSymbols="true" IncrementalBuild="false" NoStdLib="false" Optimize="false" OutputPath="bin\Debug\" WarningLevel="4" />
-        <Config Name="Release" AllowUnsafeBlocks="true" DefineConstants="TRACE" DebugSymbols="false" IncrementalBuild="false" NoStdLib="false" Optimize="true" OutputPath="bin\Release\" WarningLevel="4" />
-      </Settings>
-      <References>
-        <Reference Name="System.Windows.Forms" AssemblyName="System.Windows.Forms" />
-        <Reference Name="VixenControls" AssemblyName="VixenControls" />
-        <Reference Name="System" AssemblyName="System" />
-        <Reference Name="System.Drawing" AssemblyName="System.Drawing" />
-        <Reference Name="System.Xml" AssemblyName="System.Xml" />
-        <Reference Name="System.Data" AssemblyName="System.Data" />
-        <Reference Name="fmod" AssemblyName="fmod" />
-        <Reference Name="FtpClientVB" AssemblyName="FtpClientVB" />
-        <Reference Name="AppUpdate" AssemblyName="AppUpdate" />
-      </References>
-    </Build>
-    <Files>
-      <Include>
-        <File RelPath="AssemblyInfo.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Global.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\AboutDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\AddEditRemove.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\VixenSimpleButtonType.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\VixenSimpleButton.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Dialogs\AllChannelsColorDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\AllPluginsDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\IObjectQuery.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Async.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Dialogs\ChannelLayoutDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Dialogs\HardwarePlugin.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Dialogs\HardwareObject.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Dialogs\Controller.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Dialogs\SSR.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Dialogs\ChannelOutputMaskDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\CurveConflictResolutionDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\CurveFileImportExportDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\CurveLibrary.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\CurveLibraryDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\CurveLibraryRecord.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\CurveLibraryRecordEditDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\DiagnosticsDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\DimmingCurveDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Engines.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\EngineDescriptor.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\ITickSource.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\EngineTimer.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\EventAverageDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\ExecutionContext.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\ConcreteClassAttribute.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\GeneralConcreteClassProvider.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Dialogs\HelpDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\IPlugIn.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\ILoadable.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\IAddIn.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Channel.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Dialogs\ChannelOrderDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Dialogs\ChannelPropertyDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\ChannelRangeFixDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\PlugInMapping.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\CopyChannelColorsDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\CopyDataDialog2.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\DataExtension.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\CopySequenceDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\IQueryable.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Engine8.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\EngineContext.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\ExecutingTimerControlDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\ISetup.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\IHardwarePlugin.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\IInputPlugin.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\IOutputPlugIn.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\IEventDrivenOutputPlugIn.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\IBidirectionalPlugin.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\IEventlessOutputPlugIn.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\IMaskable.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\IExecutable.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\IExecution.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\IExecutionImpl.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\LoadableDataLocation.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\IMedia.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Input.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\InputPlugin.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\InputPluginDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\HardwarePlugins.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\InputPlugins.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\HardwareMap.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\ITrigger.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\ITriggerImpl.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\RegisteredResponse.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\ListViewItemSorter.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\ListViewSortIcons.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\LoadableData.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\MappingSet.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\MappingSets.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\OutputPlugins.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\ISystem.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Form1.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\LoadedObject.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\CheckableToolStripMenuItem.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Interfaces.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Group.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\GroupDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Host.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Paths.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\IScheduledObject.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\EventSequence.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\IEngine.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\EngineType.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\HardwareUpdateDelegate.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\OnEngineError.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\EngineErrorHandler.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\IEngine2.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\ProgramChange.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\ProgramChangeHandler.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\BackgroundSequenceDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\VixenMDI.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\IUIPlugIn.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\ITriggerPlugin.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\MusicPlayer.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\MusicPlayerDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Dialogs\NewSequenceWizardDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\OutputPlugInUIBase.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\PluginEnabledFixDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Dialogs\PluginListDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Dialogs\OutputPort.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\PlugInRouter.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\MappedOutputPlugIn.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\RouterContext.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Preference2.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\PreferencesDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Profile.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Dialogs\ProfileManagerDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\ProgramManagerDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\ProgressDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Dialogs\RoutineSelectDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Dialogs\Routine.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\ScheduleDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\SequenceExtensions.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\SequenceProgram.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\EventSequenceStub.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Dialogs\SequenceSettingsDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Dialogs\SerialSetupDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\SetupData.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\OutputPlugin.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Dialogs\ParallelSetupDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\ShutdownDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Sockets.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Audio.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Program.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Properties\Resources.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Properties\Settings.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Dialogs\AudioDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\SortOrders.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\SortOrder.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\SoundDeviceDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Splash.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\TabControl.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\TextListDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Dialogs\TextQueryDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\ObjectType.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Timers.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\RecurrenceType.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Timer.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\ReferenceRectF.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\TimerDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\TimerExecutor.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\TimerContext.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\TriggerResponseRegistrationsDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\UIBase.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\UIBaseConcreteForm.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Vendor.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Notification.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Web.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen\Xml.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Vixen.AboutDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.AddEditRemove.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.Dialogs.AllChannelsColorDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.AllPluginsDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.Dialogs.ChannelLayoutDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.Dialogs.ChannelOrderDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.Dialogs.ChannelOutputMaskDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.Dialogs.ChannelPropertyDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.ChannelRangeFixDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.CopyChannelColorsDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.CopyDataDialog2.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.CopySequenceDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.CurveConflictResolutionDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.CurveFileImportExportDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.CurveLibraryDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.CurveLibraryRecordEditDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.DiagnosticsDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.DimmingCurveDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.EventAverageDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.ExecutingTimerControlDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.Form1.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.GroupDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.BackgroundSequenceDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.Dialogs.HelpDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.InputPluginDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.MusicPlayerDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.Dialogs.NewSequenceWizardDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.PluginEnabledFixDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.Dialogs.PluginListDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.PreferencesDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.Dialogs.ProfileManagerDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.ProgramManagerDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.ProgressDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.Dialogs.RoutineSelectDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.ScheduleDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.Dialogs.SequenceSettingsDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.Properties.Resources.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.Dialogs.AudioDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.Dialogs.SerialSetupDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.Dialogs.ParallelSetupDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.ShutdownDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.SoundDeviceDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.Splash.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.TextListDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.Dialogs.TextQueryDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.TimerDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.TriggerResponseRegistrationsDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="Vixen.UIBase.resources" BuildAction="EmbeddedResource" />
-      </Include>
-    </Files>
-  </CSHARP>
-</VisualStudioProject>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>local</ProjectType>
+    <ProjectVersion>7.10.3077</ProjectVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FA99E3F3-4783-485F-A37E-0E24F823E5AE}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <AssemblyName>Vixen</AssemblyName>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>WinExe</OutputType>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <OldToolsVersion>0.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>http://localhost/Vixen/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugSymbols>true</DebugSymbols>
+    <NoStdLib>false</NoStdLib>
+    <Optimize>false</Optimize>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>TRACE</DefineConstants>
+    <DebugSymbols>false</DebugSymbols>
+    <NoStdLib>false</NoStdLib>
+    <Optimize>true</Optimize>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AppUpdate">
+      <Name>AppUpdate</Name>
+    </Reference>
+    <Reference Include="fmod">
+      <Name>fmod</Name>
+    </Reference>
+    <Reference Include="FtpClientVB">
+      <Name>FtpClientVB</Name>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.Xml</Name>
+    </Reference>
+    <Reference Include="VixenControls">
+      <Name>VixenControls</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Global.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\AboutDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\AboutDialog.Designer.cs">
+      <DependentUpon>AboutDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\AddEditRemove.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Vixen\AllPluginsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\AllPluginsDialog.Designer.cs">
+      <DependentUpon>AllPluginsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\Async.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\Audio.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\BackgroundSequenceDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\BackgroundSequenceDialog.Designer.cs">
+      <DependentUpon>BackgroundSequenceDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\Channel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\ChannelRangeFixDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\ChannelRangeFixDialog.Designer.cs">
+      <DependentUpon>ChannelRangeFixDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\CheckableToolStripMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Vixen\ConcreteClassAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\CopyChannelColorsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\CopyChannelColorsDialog.Designer.cs">
+      <DependentUpon>CopyChannelColorsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\CopyDataDialog2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\CopyDataDialog2.Designer.cs">
+      <DependentUpon>CopyDataDialog2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\CopySequenceDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\CopySequenceDialog.Designer.cs">
+      <DependentUpon>CopySequenceDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\CurveConflictResolutionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\CurveConflictResolutionDialog.Designer.cs">
+      <DependentUpon>CurveConflictResolutionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\CurveFileImportExportDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\CurveFileImportExportDialog.Designer.cs">
+      <DependentUpon>CurveFileImportExportDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\CurveLibrary.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\CurveLibraryDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\CurveLibraryDialog.Designer.cs">
+      <DependentUpon>CurveLibraryDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\CurveLibraryRecord.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\CurveLibraryRecordEditDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\CurveLibraryRecordEditDialog.Designer.cs">
+      <DependentUpon>CurveLibraryRecordEditDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\DataExtension.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\DiagnosticsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\DiagnosticsDialog.Designer.cs">
+      <DependentUpon>DiagnosticsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\Dialogs\AllChannelsColorDialog.cs" />
+    <Compile Include="Vixen\Dialogs\AudioDialog.cs" />
+    <Compile Include="Vixen\Dialogs\ChannelLayoutDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\Dialogs\ChannelOrderDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\Dialogs\ChannelOutputMaskDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\Dialogs\ChannelPropertyDialog.cs" />
+    <Compile Include="Vixen\Dialogs\Controller.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\Dialogs\HardwareObject.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\Dialogs\HardwarePlugin.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\Dialogs\HelpDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\Dialogs\NewSequenceWizardDialog.cs" />
+    <Compile Include="Vixen\Dialogs\OutputPort.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\Dialogs\ParallelSetupDialog.cs" />
+    <Compile Include="Vixen\Dialogs\PluginListDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\Dialogs\ProfileManagerDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\Dialogs\Routine.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\Dialogs\RoutineSelectDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\Dialogs\SequenceSettingsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\Dialogs\SerialSetupDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\Dialogs\SSR.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\Dialogs\TextQueryDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\DimmingCurveDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\DimmingCurveDialog.Designer.cs">
+      <DependentUpon>DimmingCurveDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\Engine8.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\EngineContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\EngineDescriptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\EngineErrorHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\Engines.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\EngineTimer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\EngineType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\EventAverageDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\EventAverageDialog.Designer.cs">
+      <DependentUpon>EventAverageDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\EventSequence.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\EventSequenceStub.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\ExecutingTimerControlDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\ExecutingTimerControlDialog.Designer.cs">
+      <DependentUpon>ExecutingTimerControlDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\ExecutionContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\GeneralConcreteClassProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\Group.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\GroupDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\GroupDialog.Designer.cs">
+      <DependentUpon>GroupDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\HardwareMap.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\HardwarePlugins.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\HardwareUpdateDelegate.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\Host.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\IAddIn.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\IBidirectionalPlugin.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\IEngine.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\IEngine2.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\IEventDrivenOutputPlugIn.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\IEventlessOutputPlugIn.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\IExecutable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\IExecution.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\IExecutionImpl.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\IHardwarePlugin.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\IInputPlugin.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\ILoadable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\IMaskable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\IMedia.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\Input.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\InputPlugin.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\InputPluginDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\InputPluginDialog.Designer.cs">
+      <DependentUpon>InputPluginDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\InputPlugins.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\Interfaces.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\IObjectQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\IOutputPlugIn.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\IPlugIn.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\IQueryable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\IScheduledObject.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\ISetup.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\ISystem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\ITickSource.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\ITrigger.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\ITriggerImpl.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\ITriggerPlugin.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\IUIPlugIn.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\ListViewItemSorter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\ListViewSortIcons.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\LoadableData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\LoadableDataLocation.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\LoadedObject.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\MappedOutputPlugIn.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\MappingSet.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\MappingSets.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\MusicPlayer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\MusicPlayerDialog.cs" />
+    <Compile Include="Vixen\Notification.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\ObjectType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\OnEngineError.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\OutputPlugin.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\OutputPlugins.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\OutputPlugInUIBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\OutputPlugInUIBase.Designer.cs">
+      <DependentUpon>OutputPlugInUIBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\Paths.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\PluginEnabledFixDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\PluginEnabledFixDialog.Designer.cs">
+      <DependentUpon>PluginEnabledFixDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\PlugInMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\PlugInRouter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\Preference2.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\PreferencesDialog.cs" />
+    <Compile Include="Vixen\Profile.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\Program.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\ProgramChange.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\ProgramChangeHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\ProgramManagerDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\ProgressDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\ProgressDialog.Designer.cs">
+      <DependentUpon>ProgressDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\Properties\Resources.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\Properties\Settings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\RecurrenceType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\ReferenceRectF.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\RegisteredResponse.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\RouterContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\ScheduleDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\ScheduleDialog.Designer.cs">
+      <DependentUpon>ScheduleDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\SequenceExtensions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\SequenceProgram.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\SetupData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\ShutdownDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\ShutdownDialog.Designer.cs">
+      <DependentUpon>ShutdownDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\Sockets.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\SortOrder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\SortOrders.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\SoundDeviceDialog.cs" />
+    <Compile Include="Vixen\Splash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\Splash.Designer.cs">
+      <DependentUpon>Splash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\TabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Vixen\TextListDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\TextListDialog.Designer.cs">
+      <DependentUpon>TextListDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\Timer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\TimerContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\TimerDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\TimerExecutor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\Timers.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\TriggerResponseRegistrationsDialog.cs" />
+    <Compile Include="Vixen\UIBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\UIBase.Designer.cs">
+      <DependentUpon>UIBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vixen\UIBaseConcreteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\Vendor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\VixenMDI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\VixenSimpleButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Vixen\VixenSimpleButtonType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\Web.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vixen\Xml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <EmbeddedResource Include="Vixen.AboutDialog.resources" />
+    <EmbeddedResource Include="Vixen.AddEditRemove.resources" />
+    <EmbeddedResource Include="Vixen.AllPluginsDialog.resources" />
+    <EmbeddedResource Include="Vixen.BackgroundSequenceDialog.resources" />
+    <EmbeddedResource Include="Vixen.ChannelRangeFixDialog.resources" />
+    <EmbeddedResource Include="Vixen.CopyChannelColorsDialog.resources" />
+    <EmbeddedResource Include="Vixen.CopyDataDialog2.resources" />
+    <EmbeddedResource Include="Vixen.CopySequenceDialog.resources" />
+    <EmbeddedResource Include="Vixen.CurveConflictResolutionDialog.resources" />
+    <EmbeddedResource Include="Vixen.CurveFileImportExportDialog.resources" />
+    <EmbeddedResource Include="Vixen.CurveLibraryDialog.resources" />
+    <EmbeddedResource Include="Vixen.CurveLibraryRecordEditDialog.resources" />
+    <EmbeddedResource Include="Vixen.DiagnosticsDialog.resources" />
+    <EmbeddedResource Include="Vixen.Dialogs.AllChannelsColorDialog.resources" />
+    <EmbeddedResource Include="Vixen.Dialogs.AudioDialog.resources" />
+    <EmbeddedResource Include="Vixen.Dialogs.ChannelLayoutDialog.resources" />
+    <EmbeddedResource Include="Vixen.Dialogs.ChannelOrderDialog.resources" />
+    <EmbeddedResource Include="Vixen.Dialogs.ChannelOutputMaskDialog.resources" />
+    <EmbeddedResource Include="Vixen.Dialogs.ChannelPropertyDialog.resources" />
+    <EmbeddedResource Include="Vixen.Dialogs.HelpDialog.resources" />
+    <EmbeddedResource Include="Vixen.Dialogs.NewSequenceWizardDialog.resources" />
+    <EmbeddedResource Include="Vixen.Dialogs.ParallelSetupDialog.resources" />
+    <EmbeddedResource Include="Vixen.Dialogs.PluginListDialog.resources" />
+    <EmbeddedResource Include="Vixen.Dialogs.ProfileManagerDialog.resources" />
+    <EmbeddedResource Include="Vixen.Dialogs.RoutineSelectDialog.resources" />
+    <EmbeddedResource Include="Vixen.Dialogs.SequenceSettingsDialog.resources" />
+    <EmbeddedResource Include="Vixen.Dialogs.SerialSetupDialog.resources" />
+    <EmbeddedResource Include="Vixen.Dialogs.TextQueryDialog.resources" />
+    <EmbeddedResource Include="Vixen.DimmingCurveDialog.resources" />
+    <EmbeddedResource Include="Vixen.EventAverageDialog.resources" />
+    <EmbeddedResource Include="Vixen.ExecutingTimerControlDialog.resources" />
+    <EmbeddedResource Include="Vixen.Form1.resources" />
+    <EmbeddedResource Include="Vixen.GroupDialog.resources" />
+    <EmbeddedResource Include="Vixen.InputPluginDialog.resources" />
+    <EmbeddedResource Include="Vixen.MusicPlayerDialog.resources" />
+    <EmbeddedResource Include="Vixen.PluginEnabledFixDialog.resources" />
+    <EmbeddedResource Include="Vixen.PreferencesDialog.resources" />
+    <EmbeddedResource Include="Vixen.ProgramManagerDialog.resources" />
+    <EmbeddedResource Include="Vixen.ProgressDialog.resources" />
+    <EmbeddedResource Include="Vixen.Properties.Resources.resources" />
+    <EmbeddedResource Include="Vixen.ScheduleDialog.resources" />
+    <EmbeddedResource Include="Vixen.ShutdownDialog.resources" />
+    <EmbeddedResource Include="Vixen.SoundDeviceDialog.resources" />
+    <EmbeddedResource Include="Vixen.Splash.resources" />
+    <EmbeddedResource Include="Vixen.TextListDialog.resources" />
+    <EmbeddedResource Include="Vixen.TimerDialog.resources" />
+    <EmbeddedResource Include="Vixen.TriggerResponseRegistrationsDialog.resources" />
+    <EmbeddedResource Include="Vixen.UIBase.resources" />
+    <EmbeddedResource Include="Vixen\AboutDialog.resx">
+      <DependentUpon>AboutDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vixen\AllPluginsDialog.resx">
+      <DependentUpon>AllPluginsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vixen\BackgroundSequenceDialog.resx">
+      <DependentUpon>BackgroundSequenceDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vixen\CurveLibraryDialog.resx">
+      <DependentUpon>CurveLibraryDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vixen\InputPluginDialog.resx">
+      <DependentUpon>InputPluginDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vixen\Splash.resx">
+      <DependentUpon>Splash.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent />
+    <PostBuildEvent />
+  </PropertyGroup>
+</Project>

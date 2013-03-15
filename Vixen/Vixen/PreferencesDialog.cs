@@ -1,4 +1,4 @@
-﻿namespace Vixen
+namespace Vixen
 {
     using FMOD;
     using System;
@@ -1010,7 +1010,7 @@
             this.textBoxDefaultSequenceSaveDirectory.TabIndex = 12;
             this.toolTip.SetToolTip(this.textBoxDefaultSequenceSaveDirectory, @"Application default is My Documents\Vixen\Sequences");
             this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(0x1d5, 0x1bd);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(0x4b, 0x17);
@@ -1019,7 +1019,7 @@
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new EventHandler(this.buttonOK_Click);
             this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(550, 0x1bd);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -1349,7 +1349,7 @@
             this.textBoxEngine.Size = new Size(0x16d, 20);
             this.textBoxEngine.TabIndex = 0;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x27d, 0x1e4);
             base.ControlBox = false;
             base.Controls.Add(this.buttonCancel);
@@ -1357,7 +1357,7 @@
             base.Controls.Add(this.panel1);
             base.Controls.Add(this.tabControl);
             base.Controls.Add(this.treeView);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.Name = "PreferencesDialog";
             base.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Preferences";

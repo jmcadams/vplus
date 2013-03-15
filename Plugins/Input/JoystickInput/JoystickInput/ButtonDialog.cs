@@ -1,4 +1,4 @@
-﻿namespace JoystickInput
+namespace JoystickInput
 {
     using JoystickManager;
     using System;
@@ -62,7 +62,7 @@
             this.listViewJoystickButtons.TabIndex = 0;
             this.listViewJoystickButtons.UseCompatibleStateImageBehavior = false;
             this.buttonClose.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonClose.DialogResult = DialogResult.OK;
+            this.buttonClose.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonClose.Location = new Point(0xe1, 0x10c);
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Size = new Size(0x4b, 0x17);
@@ -73,7 +73,7 @@
             this.timerPoll.Tick += new EventHandler(this.timerPoll_Tick);
             base.AcceptButton = this.buttonClose;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.buttonClose;
             base.ClientSize = new Size(0x138, 0x12f);
             base.Controls.Add(this.buttonClose);

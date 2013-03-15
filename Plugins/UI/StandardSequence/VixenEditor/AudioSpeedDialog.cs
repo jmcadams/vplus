@@ -1,4 +1,4 @@
-﻿namespace VixenEditor
+namespace VixenEditor
 {
     using System;
     using System.ComponentModel;
@@ -22,11 +22,11 @@
             e.Handled = true;
             if (e.KeyChar == '\r')
             {
-                base.DialogResult = DialogResult.OK;
+                base.DialogResult = System.Windows.Forms.DialogResult.OK;
             }
             else if (e.KeyChar == '\x001b')
             {
-                base.DialogResult = DialogResult.Cancel;
+                base.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             }
         }
 
@@ -63,7 +63,7 @@
             this.labelValue.TabIndex = 1;
             this.labelValue.Text = "100%";
             this.buttonSet.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
-            this.buttonSet.DialogResult = DialogResult.OK;
+            this.buttonSet.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonSet.Location = new Point(0x1a, 0x106);
             this.buttonSet.Name = "buttonSet";
             this.buttonSet.Size = new Size(0x4b, 0x17);
@@ -71,13 +71,13 @@
             this.buttonSet.Text = "Set";
             this.buttonSet.UseVisualStyleBackColor = true;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x7f, 0x129);
             base.ControlBox = false;
             base.Controls.Add(this.buttonSet);
             base.Controls.Add(this.labelValue);
             base.Controls.Add(this.trackBar);
-            base.FormBorderStyle = FormBorderStyle.FixedSingle;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             base.KeyPreview = true;
             base.Name = "AudioSpeedDialog";
             base.StartPosition = FormStartPosition.Manual;

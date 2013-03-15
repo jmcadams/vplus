@@ -1,4 +1,4 @@
-﻿namespace Preview
+namespace Preview
 {
     using System;
     using System.Collections.Generic;
@@ -131,7 +131,7 @@
             this.pictureBoxShowGrid.TabStop = false;
             this.pictureBoxShowGrid.Paint += new PaintEventHandler(this.pictureBoxShowGrid_Paint);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = Color.Black;
             base.ClientSize = new Size(0x240, 0x11e);
             base.ControlBox = false;

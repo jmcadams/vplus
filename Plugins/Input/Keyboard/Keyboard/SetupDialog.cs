@@ -1,4 +1,4 @@
-﻿namespace Keyboard
+namespace Keyboard
 {
     using System;
     using System.Collections.Generic;
@@ -206,7 +206,7 @@
             this.label2.TabIndex = 4;
             this.label2.Text = "Latching input";
             this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(0x2d6, 0x141);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(0x4b, 0x17);
@@ -216,7 +216,7 @@
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new EventHandler(this.buttonOK_Click);
             this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(0x327, 0x141);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -247,7 +247,7 @@
             this.pictureBox3.TabStop = false;
             this.pictureBox3.Paint += new PaintEventHandler(this.pictureBox3_Paint);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x37e, 0x164);
             base.Controls.Add(this.label3);
             base.Controls.Add(this.pictureBox3);
@@ -259,7 +259,7 @@
             base.Controls.Add(this.pictureBox2);
             base.Controls.Add(this.pictureBox1);
             base.Controls.Add(this.pictureBoxKeyboard);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.KeyPreview = true;
             base.Name = "SetupDialog";
             base.StartPosition = FormStartPosition.CenterScreen;

@@ -1,4 +1,4 @@
-﻿namespace MIDIReader
+namespace MIDIReader
 {
     using System;
     using System.ComponentModel;
@@ -54,11 +54,11 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Track";
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x1a7, 0x69);
             base.ControlBox = false;
             base.Controls.Add(this.groupBox1);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.MaximizeBox = false;
             base.MinimizeBox = false;
             base.Name = "TranscribeProgressDialog";

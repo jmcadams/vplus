@@ -1,4 +1,4 @@
-﻿namespace Preview
+namespace Preview
 {
     using System;
     using System.Collections.Generic;
@@ -161,7 +161,7 @@
             this.panelPictureBoxContainer.SuspendLayout();
             base.SuspendLayout();
             this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(0x196, 0x20);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(0x4b, 0x17);
@@ -170,7 +170,7 @@
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new EventHandler(this.buttonOK_Click);
             this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(0x1e7, 0x20);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -345,7 +345,7 @@
             this.panelPictureBoxContainer.Size = new Size(0x240, 0x120);
             this.panelPictureBoxContainer.TabIndex = 15;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x240, 0x197);
             base.Controls.Add(this.panelPictureBoxContainer);
             base.Controls.Add(this.panel1);

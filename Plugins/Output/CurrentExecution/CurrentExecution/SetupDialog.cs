@@ -1,4 +1,4 @@
-﻿namespace CurrentExecution
+namespace CurrentExecution
 {
     using LedTriksUtil;
     using System;
@@ -259,7 +259,7 @@
             this.labelPortAddress.TabIndex = 2;
             this.labelPortAddress.Text = "Select the base address of the parallel port.";
             this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(0x11f, 0x180);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(0x4b, 0x17);
@@ -268,7 +268,7 @@
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new EventHandler(this.buttonOK_Click);
             this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(0x170, 0x180);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -292,7 +292,7 @@
             this.buttonVirtualDisplaySetup.UseVisualStyleBackColor = true;
             this.buttonVirtualDisplaySetup.Click += new EventHandler(this.buttonVirtualDisplaySetup_Click);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.buttonCancel;
             base.ClientSize = new Size(0x1c7, 0x1a3);
             base.Controls.Add(this.buttonCancel);
@@ -300,7 +300,7 @@
             base.Controls.Add(this.groupBox3);
             base.Controls.Add(this.groupBox2);
             base.Controls.Add(this.groupBox1);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.Name = "SetupDialog";
             base.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Setup";

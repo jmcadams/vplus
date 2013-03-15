@@ -1,4 +1,4 @@
-﻿namespace JWAC
+namespace JWAC
 {
     using System;
     using System.ComponentModel;
@@ -198,7 +198,7 @@
             this.lblThreshold.TabIndex = 0;
             this.lblThreshold.Text = "Digital Threshold";
             this.btnCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.btnCancel.DialogResult = DialogResult.Cancel;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new Point(160, 0xb1);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new Size(0x4b, 0x17);
@@ -206,7 +206,7 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.btnOK.DialogResult = DialogResult.OK;
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Location = new Point(0x4f, 0xb0);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new Size(0x4b, 0x17);
@@ -215,14 +215,14 @@
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new EventHandler(this.btnOK_Click);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.btnCancel;
             base.ClientSize = new Size(0xf8, 0xd4);
             base.Controls.Add(this.btnOK);
             base.Controls.Add(this.btnCancel);
             base.Controls.Add(this.grpAdvanced);
             base.Controls.Add(this.grpPort);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.Name = "frmSetupDialog";
             base.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Setup";

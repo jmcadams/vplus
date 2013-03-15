@@ -1,4 +1,4 @@
-﻿namespace VixenEditor
+namespace VixenEditor
 {
     using System;
     using System.ComponentModel;
@@ -47,11 +47,11 @@
             this.labelDelta.TabIndex = 0;
             this.labelDelta.Text = "+100%";
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x7b, 50);
             base.ControlBox = false;
             base.Controls.Add(this.labelDelta);
-            base.FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             base.KeyPreview = true;
             base.Name = "IntensityAdjustDialog";
             base.StartPosition = FormStartPosition.CenterScreen;

@@ -1,4 +1,4 @@
-﻿namespace StandardScript
+namespace StandardScript
 {
     using System;
     using System.Collections.Generic;
@@ -64,7 +64,7 @@
             this.buttonCancel = new Button();
             base.SuspendLayout();
             this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(0x76, 0x11b);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(0x4b, 0x17);
@@ -80,7 +80,7 @@
             this.textBoxItems.Size = new Size(0x106, 0x102);
             this.textBoxItems.TabIndex = 0;
             this.textBoxItems.WordWrap = false;
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(0xc7, 0x11b);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -88,13 +88,13 @@
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.buttonCancel;
             base.ClientSize = new Size(0x11e, 0x13e);
             base.Controls.Add(this.buttonCancel);
             base.Controls.Add(this.textBoxItems);
             base.Controls.Add(this.buttonOK);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.MaximizeBox = false;
             base.MinimizeBox = false;
             base.Name = "TextListDialog";

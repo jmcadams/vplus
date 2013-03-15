@@ -1,4 +1,4 @@
-﻿namespace FC4_RC4
+namespace FC4_RC4
 {
     using System;
     using System.Collections.Generic;
@@ -234,14 +234,14 @@
             this.lblPort.Size = new Size(0x1f, 13);
             this.lblPort.TabIndex = 0;
             this.lblPort.Text = "COM";
-            this.btnCancel.DialogResult = DialogResult.Cancel;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new Point(260, 0x182);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new Size(0x4b, 0x17);
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnOK.DialogResult = DialogResult.OK;
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Location = new Point(260, 0x165);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new Size(0x4b, 0x17);
@@ -479,7 +479,7 @@
             this.lblChGrp1.TabIndex = 0x20;
             this.lblChGrp1.Text = "Ch 1 - 4";
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.btnCancel;
             base.ClientSize = new Size(0x15a, 0x1a9);
             base.Controls.Add(this.grpChannels);
@@ -487,7 +487,7 @@
             base.Controls.Add(this.btnOK);
             base.Controls.Add(this.btnCancel);
             base.Controls.Add(this.grpPort);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.Name = "frmSetupDialog";
             base.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Setup";

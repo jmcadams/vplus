@@ -8,9 +8,8 @@
     using System.Windows.Forms;
     using System.Xml;
 
-    internal class Splash : Form
+    internal partial class Splash : Form
     {
-        private IContainer components = null;
         private Bitmap m_backgroundPicture = null;
         private SolidBrush m_bgBrush = null;
         private Pen m_borderPen = null;
@@ -32,38 +31,7 @@
             this.m_textBrush = new SolidBrush(Color.FromArgb(0xfe, 0xfe, 0xfe));
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (this.components != null))
-            {
-                this.components.Dispose();
-            }
-            if (this.m_backgroundPicture != null)
-            {
-                this.m_backgroundPicture.Dispose();
-            }
-            if (this.m_bulbOff != null)
-            {
-                this.m_bulbOff.Dispose();
-            }
-            if (this.m_bulbOn != null)
-            {
-                this.m_bulbOn.Dispose();
-            }
-            if (this.m_bgBrush != null)
-            {
-                this.m_bgBrush.Dispose();
-            }
-            if (this.m_borderPen != null)
-            {
-                this.m_borderPen.Dispose();
-            }
-            if (this.m_textBrush != null)
-            {
-                this.m_textBrush.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        
 
         private Color GetColor(XmlNode node, Color defaultColor)
         {
@@ -82,23 +50,7 @@
             return defaultColor;
         }
 
-        private void InitializeComponent()
-        {
-            base.SuspendLayout();
-            base.AutoScaleMode = AutoScaleMode.None;
-            this.BackColor = Color.White;
-            base.ClientSize = new Size(300, 0x181);
-            this.DoubleBuffered = true;
-            this.Font = new Font("Arial", 14f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            base.FormBorderStyle = FormBorderStyle.None;
-            base.Margin = new Padding(7, 6, 7, 6);
-            base.Name = "Splash";
-            base.StartPosition = FormStartPosition.CenterScreen;
-            base.TopMost = true;
-            base.TransparencyKey = Color.Transparent;
-            base.Load += new EventHandler(this.Splash_Load);
-            base.ResumeLayout(false);
-        }
+        
 
         protected override void OnPaint(PaintEventArgs e)
         {

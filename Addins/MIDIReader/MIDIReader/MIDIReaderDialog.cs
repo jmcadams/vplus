@@ -1,4 +1,4 @@
-﻿namespace MIDIReader
+namespace MIDIReader
 {
     using System;
     using System.Collections.Generic;
@@ -243,7 +243,7 @@
             this.buttonAutoMap = new Button();
             base.SuspendLayout();
             this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(0x275, 0x19e);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(0x4b, 0x17);
@@ -251,7 +251,7 @@
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(710, 0x19e);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -266,7 +266,7 @@
             this.buttonAutoMap.UseVisualStyleBackColor = true;
             this.buttonAutoMap.Click += new EventHandler(this.buttonAutoMap_Click);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = Color.White;
             base.CancelButton = this.buttonCancel;
             base.ClientSize = new Size(0x31d, 0x1c1);

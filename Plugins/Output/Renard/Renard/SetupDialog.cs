@@ -1,4 +1,4 @@
-﻿namespace Renard
+namespace Renard
 {
     using System;
     using System.ComponentModel;
@@ -57,7 +57,7 @@
             this.groupBox1.SuspendLayout();
             base.SuspendLayout();
             this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(0x71, 0xa8);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(0x4b, 0x17);
@@ -65,7 +65,7 @@
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(0xc2, 0xa8);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(0x4b, 0x17);
@@ -111,13 +111,13 @@
             this.checkBoxHoldPort.UseVisualStyleBackColor = true;
             base.AcceptButton = this.buttonOK;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.buttonCancel;
             base.ClientSize = new Size(0x119, 0xcb);
             base.Controls.Add(this.groupBox1);
             base.Controls.Add(this.buttonCancel);
             base.Controls.Add(this.buttonOK);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.Name = "SetupDialog";
             base.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Setup";

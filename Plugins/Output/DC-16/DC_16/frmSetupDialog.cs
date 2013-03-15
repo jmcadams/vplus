@@ -1,4 +1,4 @@
-﻿namespace DC_16
+namespace DC_16
 {
     using System;
     using System.ComponentModel;
@@ -64,7 +64,7 @@
         {
             if (((((this.cboGrp1Addr.SelectedIndex == -1) && (this.cboGrp2Addr.SelectedIndex == -1)) && (this.cboGrp3Addr.SelectedIndex == -1)) && (this.cboGrp4Addr.SelectedIndex == -1)) && (MessageBox.Show("No controllers have been selected to receive any of channel groupings.\nAre you sure that this is what you want to do?", "Vixen", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes))
             {
-                base.DialogResult = DialogResult.None;
+                base.DialogResult = System.Windows.Forms.DialogResult.None;
             }
             else
             {
@@ -148,7 +148,7 @@
             this.lblPort.TabIndex = 0;
             this.lblPort.Text = "COM";
             this.btnCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.btnCancel.DialogResult = DialogResult.Cancel;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new Point(170, 0x131);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new Size(0x4b, 0x17);
@@ -156,7 +156,7 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.btnOK.DialogResult = DialogResult.OK;
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Location = new Point(0x59, 0x131);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new Size(0x4b, 0x17);
@@ -255,7 +255,7 @@
             this.lblChGrp1.TabIndex = 0x20;
             this.lblChGrp1.Text = "Channels 1 - 16";
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.btnCancel;
             base.ClientSize = new Size(0x101, 340);
             base.Controls.Add(this.grpChannels);
@@ -263,7 +263,7 @@
             base.Controls.Add(this.btnOK);
             base.Controls.Add(this.btnCancel);
             base.Controls.Add(this.grpPort);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.Name = "frmSetupDialog";
             base.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Setup";
