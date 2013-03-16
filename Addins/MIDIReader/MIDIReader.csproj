@@ -131,6 +131,9 @@
     <Compile Include="MIDIReader\TranscribeProgressDialog.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="MIDIReader\TranscribeProgressDialog.Designer.cs">
+      <DependentUpon>TranscribeProgressDialog.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MIDIReader.MIDIReaderDialog.resources" />
     <EmbeddedResource Include="MIDIReader.TranscribeProgressDialog.resources" />
   </ItemGroup>
