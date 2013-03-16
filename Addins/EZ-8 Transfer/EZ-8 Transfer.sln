@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EZ-8 Transfer", "EZ-8 Transfer.csproj", "{EACCAE8B-117D-4B3F-8B60-BCA35E5FA09B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EACCAE8B-117D-4B3F-8B60-BCA35E5FA09B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EACCAE8B-117D-4B3F-8B60-BCA35E5FA09B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EACCAE8B-117D-4B3F-8B60-BCA35E5FA09B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EACCAE8B-117D-4B3F-8B60-BCA35E5FA09B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
