@@ -1,33 +1,10 @@
-namespace EZ_8_Output
-{
-    using System;
-    using System.ComponentModel;
-    using System.Windows.Forms;
+namespace EZ_8_Output {
+	using System.Windows.Forms;
 
-    internal class SetupDialog : Form
-    {
-        private IContainer components = null;
+	internal partial class SetupDialog : Form {
 
-        public SetupDialog()
-        {
-            this.InitializeComponent();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (this.components != null))
-            {
-                this.components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private void InitializeComponent()
-        {
-            this.components = new Container();
-            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "SetupDialog";
-        }
-    }
+		public SetupDialog() {
+			this.InitializeComponent();
+		}
+	}
 }
-

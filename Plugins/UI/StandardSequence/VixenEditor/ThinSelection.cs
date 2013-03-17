@@ -4,7 +4,7 @@
 	using System.Drawing;
 	using System.Windows.Forms;
 
-	internal class ThinSelection : Form {
+	internal partial class ThinSelection : Form {
 		private int m_selectedIndex = -1;
 
 		public ThinSelection(string[] values) {

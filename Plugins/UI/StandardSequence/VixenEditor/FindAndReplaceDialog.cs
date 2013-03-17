@@ -4,7 +4,7 @@ namespace VixenEditor {
 	using System.Drawing;
 	using System.Windows.Forms;
 
-	public class FindAndReplaceDialog : Form {
+	public partial class FindAndReplaceDialog : Form {
 		private bool m_actualLevels;
 
 		public FindAndReplaceDialog(byte minimum, byte maximum, bool actualLevels) {

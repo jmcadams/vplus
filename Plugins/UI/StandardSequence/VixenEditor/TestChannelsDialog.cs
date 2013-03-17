@@ -6,7 +6,7 @@ namespace VixenEditor {
 	using System.Windows.Forms;
 	using Vixen;
 
-	internal class TestChannelsDialog : Form {
+	internal partial class TestChannelsDialog : Form {
 		private byte[] m_channelLevels;
 		private List<Channel> m_channels;
 		private int m_executionContextHandle;

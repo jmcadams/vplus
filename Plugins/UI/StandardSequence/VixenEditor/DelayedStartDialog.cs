@@ -4,7 +4,7 @@ namespace VixenEditor {
 	using System.Drawing;
 	using System.Windows.Forms;
 
-	public class DelayedStartDialog : Form {
+	public partial class DelayedStartDialog : Form {
 		private int m_countdown;
 
 		public DelayedStartDialog() {

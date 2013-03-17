@@ -1,31 +1,133 @@
-<VisualStudioProject>
-  <CSHARP ProjectType="local" ProjectVersion="7.10.3077" SchemaVersion="2.0" ProjectGuid="181e24d9-cfd7-47d4-bd2b-4f750683b6db">
-    <Build>
-      <Settings AssemblyName="HorningDimmer" DefaultClientScript="JScript" DefaultHTMLPageLayout="Grid" DefaultTargetSchema="IE50" DelaySign="false" OutputType="Library">
-        <Config Name="Debug" AllowUnsafeBlocks="true" DefineConstants="DEBUG;TRACE" DebugSymbols="true" IncrementalBuild="false" NoStdLib="false" Optimize="false" OutputPath="bin\Debug\" WarningLevel="4" />
-        <Config Name="Release" AllowUnsafeBlocks="true" DefineConstants="TRACE" DebugSymbols="false" IncrementalBuild="false" NoStdLib="false" Optimize="true" OutputPath="bin\Release\" WarningLevel="4" />
-      </Settings>
-      <References>
-        <Reference Name="System.Windows.Forms" AssemblyName="System.Windows.Forms" />
-        <Reference Name="Vixen" AssemblyName="Vixen" />
-        <Reference Name="System.Xml" AssemblyName="System.Xml" />
-        <Reference Name="System" AssemblyName="System" />
-        <Reference Name="System.Drawing" AssemblyName="System.Drawing" />
-      </References>
-    </Build>
-    <Files>
-      <Include>
-        <File RelPath="AssemblyInfo.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Global.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="HorningDimmer\DimmingDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="HorningDimmer\HorningDimmer.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="HorningDimmer\PortMapping.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="HorningDimmer\RangeDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="HorningDimmer\SetupDialog.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="HorningDimmer.DimmingDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="HorningDimmer.RangeDialog.resources" BuildAction="EmbeddedResource" />
-        <File RelPath="HorningDimmer.SetupDialog.resources" BuildAction="EmbeddedResource" />
-      </Include>
-    </Files>
-  </CSHARP>
-</VisualStudioProject>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>local</ProjectType>
+    <ProjectVersion>7.10.3077</ProjectVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D4DBDE77-41DB-489D-9B61-CFE9EAEB3DF5}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <AssemblyName>HorningDimmer</AssemblyName>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <OldToolsVersion>0.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugSymbols>true</DebugSymbols>
+    <NoStdLib>false</NoStdLib>
+    <Optimize>false</Optimize>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>TRACE</DefineConstants>
+    <DebugSymbols>false</DebugSymbols>
+    <NoStdLib>false</NoStdLib>
+    <Optimize>true</Optimize>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.Xml</Name>
+    </Reference>
+    <Reference Include="Vixen">
+      <Name>Vixen</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Global.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HorningDimmer\DimmingDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HorningDimmer\DimmingDialog.Designer.cs">
+      <DependentUpon>DimmingDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HorningDimmer\HorningDimmer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HorningDimmer\PortMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HorningDimmer\RangeDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HorningDimmer\RangeDialog.Designer.cs">
+      <DependentUpon>RangeDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HorningDimmer\SetupDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HorningDimmer\SetupDialog.Designer.cs">
+      <DependentUpon>SetupDialog.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="HorningDimmer.DimmingDialog.resources" />
+    <EmbeddedResource Include="HorningDimmer.RangeDialog.resources" />
+    <EmbeddedResource Include="HorningDimmer.SetupDialog.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent />
+    <PostBuildEvent />
+  </PropertyGroup>
+</Project>

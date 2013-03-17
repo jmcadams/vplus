@@ -7,7 +7,7 @@ namespace TriggerResponse {
 	using System.Windows.Forms;
 	using Vixen;
 
-	internal class TriggerEditDialog : Form {
+	internal partial class TriggerEditDialog : Form {
 		private MappedTriggerResponse m_item;
 		private string m_sequenceFile;
 

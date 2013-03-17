@@ -4,7 +4,7 @@ namespace VixenEditor {
 	using System.Drawing;
 	using System.Windows.Forms;
 
-	internal class RampQueryDialog : Form {
+	internal partial class RampQueryDialog : Form {
 		private bool m_actualLevels;
 
 		public RampQueryDialog(int minLevel, int maxLevel, bool descending, bool actualLevels) {

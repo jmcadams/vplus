@@ -1,0 +1,178 @@
+namespace MiniSSC {
+	using System;
+	using System.Windows.Forms;
+	using System.Drawing;
+	using System.ComponentModel;
+	using System.Collections;
+
+	public partial class frmSetupDialog {
+		private IContainer components;
+
+		#region Windows Form Designer generated code
+		private Button btnCancel;
+		private Button btnOK;
+		private ComboBox comboBoxBaud;
+		private GroupBox grpAdvanced;
+		private GroupBox grpPort;
+		private Label lblAnaMax;
+		private Label lblAnaMin;
+		private Label lblBaud;
+		private Label lblPort;
+		private NumericUpDown nudAnaMax;
+		private NumericUpDown nudAnaMin;
+		private NumericUpDown nudPort;
+
+		private void InitializeComponent() {
+			this.grpPort = new GroupBox();
+			this.comboBoxBaud = new ComboBox();
+			this.lblBaud = new Label();
+			this.nudPort = new NumericUpDown();
+			this.lblPort = new Label();
+			this.btnCancel = new Button();
+			this.btnOK = new Button();
+			this.grpAdvanced = new GroupBox();
+			this.lblAnaMax = new Label();
+			this.lblAnaMin = new Label();
+			this.nudAnaMax = new NumericUpDown();
+			this.nudAnaMin = new NumericUpDown();
+			this.grpPort.SuspendLayout();
+			this.nudPort.BeginInit();
+			this.grpAdvanced.SuspendLayout();
+			this.nudAnaMax.BeginInit();
+			this.nudAnaMin.BeginInit();
+			base.SuspendLayout();
+			this.grpPort.Controls.Add(this.comboBoxBaud);
+			this.grpPort.Controls.Add(this.lblBaud);
+			this.grpPort.Controls.Add(this.nudPort);
+			this.grpPort.Controls.Add(this.lblPort);
+			this.grpPort.Location = new Point(12, 12);
+			this.grpPort.Name = "grpPort";
+			this.grpPort.Size = new Size(0xdf, 50);
+			this.grpPort.TabIndex = 0;
+			this.grpPort.TabStop = false;
+			this.grpPort.Text = "Serial Port";
+			this.comboBoxBaud.DropDownStyle = ComboBoxStyle.DropDownList;
+			this.comboBoxBaud.FormattingEnabled = true;
+			this.comboBoxBaud.Items.AddRange(new object[] { "2400", "9600", "19200", "38400", "57600" });
+			this.comboBoxBaud.Location = new Point(0x94, 0x11);
+			this.comboBoxBaud.Name = "comboBoxBaud";
+			this.comboBoxBaud.Size = new Size(0x3f, 0x15);
+			this.comboBoxBaud.TabIndex = 3;
+			this.lblBaud.AutoSize = true;
+			this.lblBaud.Location = new Point(0x6a, 20);
+			this.lblBaud.Name = "lblBaud";
+			this.lblBaud.Size = new Size(0x20, 13);
+			this.lblBaud.TabIndex = 2;
+			this.lblBaud.Text = "Baud";
+			this.nudPort.Location = new Point(0x2b, 0x12);
+			int[] portMax = new int[4];
+			portMax[0] = 4;
+			this.nudPort.Maximum = new decimal(portMax);
+			int[] portMin = new int[4];
+			portMin[0] = 1;
+			this.nudPort.Minimum = new decimal(portMin);
+			this.nudPort.Name = "nudPort";
+			this.nudPort.Size = new Size(0x23, 20);
+			this.nudPort.TabIndex = 1;
+			int[] portValue = new int[4];
+			portValue[0] = 1;
+			this.nudPort.Value = new decimal(portValue);
+			this.lblPort.AutoSize = true;
+			this.lblPort.Location = new Point(6, 20);
+			this.lblPort.Name = "lblPort";
+			this.lblPort.Size = new Size(0x1f, 13);
+			this.lblPort.TabIndex = 0;
+			this.lblPort.Text = "COM";
+			this.btnCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.btnCancel.Location = new Point(160, 0x9a);
+			this.btnCancel.Name = "btnCancel";
+			this.btnCancel.Size = new Size(0x4b, 0x17);
+			this.btnCancel.TabIndex = 3;
+			this.btnCancel.Text = "Cancel";
+			this.btnCancel.UseVisualStyleBackColor = true;
+			this.btnOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+			this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.btnOK.Location = new Point(0x4f, 0x99);
+			this.btnOK.Name = "btnOK";
+			this.btnOK.Size = new Size(0x4b, 0x17);
+			this.btnOK.TabIndex = 4;
+			this.btnOK.Text = "OK";
+			this.btnOK.UseVisualStyleBackColor = true;
+			this.btnOK.Click += new EventHandler(this.btnOK_Click);
+			this.grpAdvanced.Controls.Add(this.lblAnaMax);
+			this.grpAdvanced.Controls.Add(this.lblAnaMin);
+			this.grpAdvanced.Controls.Add(this.nudAnaMax);
+			this.grpAdvanced.Controls.Add(this.nudAnaMin);
+			this.grpAdvanced.Location = new Point(13, 0x44);
+			this.grpAdvanced.Name = "grpAdvanced";
+			this.grpAdvanced.Size = new Size(0xdf, 80);
+			this.grpAdvanced.TabIndex = 5;
+			this.grpAdvanced.TabStop = false;
+			this.grpAdvanced.Text = "Advanced";
+			this.lblAnaMax.AutoSize = true;
+			this.lblAnaMax.Location = new Point(6, 0x33);
+			this.lblAnaMax.Name = "lblAnaMax";
+			this.lblAnaMax.Size = new Size(0x85, 13);
+			this.lblAnaMax.TabIndex = 6;
+			this.lblAnaMax.Text = "Analog Max (100%) Output";
+			this.lblAnaMin.AutoSize = true;
+			this.lblAnaMin.Location = new Point(6, 0x19);
+			this.lblAnaMin.Name = "lblAnaMin";
+			this.lblAnaMin.Size = new Size(0x76, 13);
+			this.lblAnaMin.TabIndex = 5;
+			this.lblAnaMin.Text = "Analog Min (0%) Output";
+			this.nudAnaMax.Location = new Point(0x94, 0x31);
+			int[] AnalogMaxMax = new int[4];
+			AnalogMaxMax[0] = 250;
+			this.nudAnaMax.Maximum = new decimal(AnalogMaxMax);
+			int[] AnalogMaxMin = new int[4];
+			AnalogMaxMin[0] = 200;
+			this.nudAnaMax.Minimum = new decimal(AnalogMaxMin);
+			this.nudAnaMax.Name = "nudAnaMax";
+			this.nudAnaMax.Size = new Size(0x2a, 20);
+			this.nudAnaMax.TabIndex = 4;
+			int[] AnalogMaxValue = new int[4];
+			AnalogMaxValue[0] = 200;
+			this.nudAnaMax.Value = new decimal(AnalogMaxValue);
+			this.nudAnaMin.Location = new Point(0x94, 0x17);
+			int[] AnalogMinMin = new int[4];
+			AnalogMinMin[0] = 50;
+			this.nudAnaMin.Minimum = new decimal(AnalogMinMin);
+			this.nudAnaMin.Name = "nudAnaMin";
+			this.nudAnaMin.Size = new Size(0x2a, 20);
+			this.nudAnaMin.TabIndex = 3;
+			int[] AnalogMinValue = new int[4];
+			AnalogMinValue[0] = 100;
+			this.nudAnaMin.Value = new decimal(AnalogMinValue);
+			base.AutoScaleDimensions = new SizeF(6f, 13f);
+			base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			base.CancelButton = this.btnCancel;
+			base.ClientSize = new Size(0xf8, 0xbd);
+			base.Controls.Add(this.grpAdvanced);
+			base.Controls.Add(this.btnOK);
+			base.Controls.Add(this.btnCancel);
+			base.Controls.Add(this.grpPort);
+			base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+			base.Name = "frmSetupDialog";
+			base.StartPosition = FormStartPosition.CenterScreen;
+			this.Text = "Setup";
+			this.grpPort.ResumeLayout(false);
+			this.grpPort.PerformLayout();
+			this.nudPort.EndInit();
+			this.grpAdvanced.ResumeLayout(false);
+			this.grpAdvanced.PerformLayout();
+			this.nudAnaMax.EndInit();
+			this.nudAnaMin.EndInit();
+			base.ResumeLayout(false);
+		}
+		#endregion
+
+		protected override void Dispose(bool disposing) {
+			if (disposing && (this.components != null)) {
+				this.components.Dispose();
+			}
+			base.Dispose(disposing);
+		}
+	}
+}

@@ -4,7 +4,7 @@ namespace VixenEditor {
 	using System.Drawing;
 	using System.Windows.Forms;
 
-	internal class RandomParametersDialog : Form {
+	internal partial class RandomParametersDialog : Form {
 		private bool m_actualLevels;
 
 		public RandomParametersDialog(int minLevel, int maxLevel, bool actualLevels) {

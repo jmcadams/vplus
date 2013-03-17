@@ -6,7 +6,7 @@ namespace TriggerResponse {
 	using System.Windows.Forms;
 	using Vixen;
 
-	internal class TriggerResponseTestDialog : Form {
+	internal partial class TriggerResponseTestDialog : Form {
 		private MappedTriggerResponse[] m_responsesRegistered;
 
 		public TriggerResponseTestDialog(MappedTriggerResponse[] responses, ITrigger triggerInterface) {

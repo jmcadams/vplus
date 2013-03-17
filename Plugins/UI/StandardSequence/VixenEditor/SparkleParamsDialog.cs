@@ -5,7 +5,7 @@ namespace VixenEditor {
 	using System.Timers;
 	using System.Windows.Forms;
 
-	internal class SparkleParamsDialog : Form {
+	internal partial class SparkleParamsDialog : Form {
 		private bool m_actualLevels;
 		private SolidBrush m_brush = null;
 		private int m_decay = 0;

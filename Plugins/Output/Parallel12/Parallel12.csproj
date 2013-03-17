@@ -1,22 +1,71 @@
-<VisualStudioProject>
-  <CSHARP ProjectType="local" ProjectVersion="7.10.3077" SchemaVersion="2.0" ProjectGuid="e79625c3-6248-4de0-aff0-54e75a79e28d">
-    <Build>
-      <Settings AssemblyName="Parallel12" DefaultClientScript="JScript" DefaultHTMLPageLayout="Grid" DefaultTargetSchema="IE50" DelaySign="false" OutputType="Library">
-        <Config Name="Debug" AllowUnsafeBlocks="true" DefineConstants="DEBUG;TRACE" DebugSymbols="true" IncrementalBuild="false" NoStdLib="false" Optimize="false" OutputPath="bin\Debug\" WarningLevel="4" />
-        <Config Name="Release" AllowUnsafeBlocks="true" DefineConstants="TRACE" DebugSymbols="false" IncrementalBuild="false" NoStdLib="false" Optimize="true" OutputPath="bin\Release\" WarningLevel="4" />
-      </Settings>
-      <References>
-        <Reference Name="Vixen" AssemblyName="Vixen" />
-        <Reference Name="System.Xml" AssemblyName="System.Xml" />
-        <Reference Name="System.Windows.Forms" AssemblyName="System.Windows.Forms" />
-      </References>
-    </Build>
-    <Files>
-      <Include>
-        <File RelPath="AssemblyInfo.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Global.cs" SubType="Code" BuildAction="Compile" />
-        <File RelPath="Parallel12\Parallel12.cs" SubType="Code" BuildAction="Compile" />
-      </Include>
-    </Files>
-  </CSHARP>
-</VisualStudioProject>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>local</ProjectType>
+    <ProjectVersion>7.10.3077</ProjectVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>e79625c3-6248-4de0-aff0-54e75a79e28d</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <AssemblyName>Parallel12</AssemblyName>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <OldToolsVersion>0.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugSymbols>true</DebugSymbols>
+    <NoStdLib>false</NoStdLib>
+    <Optimize>false</Optimize>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>TRACE</DefineConstants>
+    <DebugSymbols>false</DebugSymbols>
+    <NoStdLib>false</NoStdLib>
+    <Optimize>true</Optimize>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.Xml</Name>
+    </Reference>
+    <Reference Include="Vixen">
+      <Name>Vixen</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Global.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Parallel12\Parallel12.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent />
+    <PostBuildEvent />
+  </PropertyGroup>
+</Project>
