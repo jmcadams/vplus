@@ -57,9 +57,6 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="JoystickManager">
-      <Name>JoystickManager</Name>
-    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -71,9 +68,6 @@
     </Reference>
     <Reference Include="System.Xml">
       <Name>System.Xml</Name>
-    </Reference>
-    <Reference Include="Vixen">
-      <Name>Vixen</Name>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +117,16 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Vixen\Vixen.csproj">
+      <Project>{FA99E3F3-4783-485F-A37E-0E24F823E5AE}</Project>
+      <Name>Vixen</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JoystickManager\JoystickManager.csproj">
+      <Project>{17F6B0AF-B454-4301-BE13-DB71013EA053}</Project>
+      <Name>JoystickManager</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

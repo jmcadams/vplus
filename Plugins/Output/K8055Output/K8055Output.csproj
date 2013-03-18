@@ -57,9 +57,6 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="K8055">
-      <Name>K8055</Name>
-    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -71,9 +68,6 @@
     </Reference>
     <Reference Include="System.Xml">
       <Name>System.Xml</Name>
-    </Reference>
-    <Reference Include="Vixen">
-      <Name>Vixen</Name>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +104,16 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Vixen\Vixen.csproj">
+      <Project>{FA99E3F3-4783-485F-A37E-0E24F823E5AE}</Project>
+      <Name>Vixen</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\K8055\K8055.csproj">
+      <Project>{56CAA702-DEC0-4789-BB79-91F95B6257B7}</Project>
+      <Name>K8055</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

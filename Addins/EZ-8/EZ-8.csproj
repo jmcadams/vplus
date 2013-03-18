@@ -4,7 +4,7 @@
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.3077</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>8b0015e1-b6c4-4334-b86c-b18ed73a64a3</ProjectGuid>
+    <ProjectGuid>{23904FC3-1716-4F49-B940-2311C395A243}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <AssemblyName>EZ-8</AssemblyName>

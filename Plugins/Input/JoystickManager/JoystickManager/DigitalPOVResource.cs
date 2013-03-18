@@ -23,7 +23,7 @@
         {
             get
             {
-                return ((base.InternalValue == this.m_direction) ? 0xff : 0);
+                return ((base.InternalValue == (int)this.m_direction) ? 0xff : 0);
             }
         }
 

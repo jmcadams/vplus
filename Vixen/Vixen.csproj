@@ -57,14 +57,8 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AppUpdate">
-      <Name>AppUpdate</Name>
-    </Reference>
     <Reference Include="fmod">
-      <Name>fmod</Name>
-    </Reference>
-    <Reference Include="FtpClientVB">
-      <Name>FtpClientVB</Name>
+      <HintPath>..\externalLibs\fmod.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -80,9 +74,6 @@
     </Reference>
     <Reference Include="System.Xml">
       <Name>System.Xml</Name>
-    </Reference>
-    <Reference Include="VixenControls">
-      <Name>VixenControls</Name>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -191,8 +182,12 @@
     <Compile Include="Vixen\DiagnosticsDialog.Designer.cs">
       <DependentUpon>DiagnosticsDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Dialogs\AllChannelsColorDialog.cs" />
-    <Compile Include="Vixen\Dialogs\AudioDialog.cs" />
+    <Compile Include="Vixen\Dialogs\AllChannelsColorDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\Dialogs\AudioDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Vixen\Dialogs\ChannelLayoutDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -202,7 +197,9 @@
     <Compile Include="Vixen\Dialogs\ChannelOutputMaskDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\Dialogs\ChannelPropertyDialog.cs" />
+    <Compile Include="Vixen\Dialogs\ChannelPropertyDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Vixen\Dialogs\Controller.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -215,11 +212,15 @@
     <Compile Include="Vixen\Dialogs\HelpDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\Dialogs\NewSequenceWizardDialog.cs" />
+    <Compile Include="Vixen\Dialogs\NewSequenceWizardDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Vixen\Dialogs\OutputPort.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\Dialogs\ParallelSetupDialog.cs" />
+    <Compile Include="Vixen\Dialogs\ParallelSetupDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Vixen\Dialogs\PluginListDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -442,7 +443,9 @@
     <Compile Include="Vixen\MusicPlayer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\MusicPlayerDialog.cs" />
+    <Compile Include="Vixen\MusicPlayerDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Vixen\Notification.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -482,7 +485,9 @@
     <Compile Include="Vixen\Preference2.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\PreferencesDialog.cs" />
+    <Compile Include="Vixen\PreferencesDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Vixen\Profile.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -552,7 +557,9 @@
     <Compile Include="Vixen\SortOrders.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\SoundDeviceDialog.cs" />
+    <Compile Include="Vixen\SoundDeviceDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Vixen\Splash.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -583,7 +590,9 @@
     <Compile Include="Vixen\Timers.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\TriggerResponseRegistrationsDialog.cs" />
+    <Compile Include="Vixen\TriggerResponseRegistrationsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Vixen\UIBase.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -694,6 +703,20 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AppUpdate\AppUpdate.csproj">
+      <Project>{F3158DD2-126D-427C-891B-971EFAF1315A}</Project>
+      <Name>AppUpdate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FtpClientVB\FtpClientVB.csproj">
+      <Project>{B329CC47-2452-46D6-BA9F-1E56141537FE}</Project>
+      <Name>FtpClientVB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VixenControls\VixenControls.csproj">
+      <Project>{6B127E8D-35CC-409E-9E66-520FBA86E283}</Project>
+      <Name>VixenControls</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

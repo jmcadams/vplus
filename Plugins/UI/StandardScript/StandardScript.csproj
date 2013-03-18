@@ -57,9 +57,6 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ScriptEngine">
-      <Name>ScriptEngine</Name>
-    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -71,9 +68,6 @@
     </Reference>
     <Reference Include="System.Xml">
       <Name>System.Xml</Name>
-    </Reference>
-    <Reference Include="Vixen">
-      <Name>Vixen</Name>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -99,7 +93,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="StandardScript\StandardScript.cs">
-      <SubType>Code</SubType>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="StandardScript\TabPageDoc.cs">
       <SubType>Component</SubType>
@@ -133,6 +127,16 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\ScriptEngine\ScriptEngine.csproj">
+      <Project>{FAC218DC-5B18-416B-9646-2D4128E4D50D}</Project>
+      <Name>ScriptEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Vixen\Vixen.csproj">
+      <Project>{FA99E3F3-4783-485F-A37E-0E24F823E5AE}</Project>
+      <Name>Vixen</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

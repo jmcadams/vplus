@@ -4,7 +4,7 @@
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.3077</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>7f7c906b-b06c-425a-925a-01fbd55ed3b5</ProjectGuid>
+    <ProjectGuid>{60F5E77C-5AB6-4B1D-AAC3-07D96E990D64}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <AssemblyName>DMXUSBPro</AssemblyName>
@@ -51,9 +51,6 @@
     <Reference Include="System.Xml">
       <Name>System.Xml</Name>
     </Reference>
-    <Reference Include="Vixen">
-      <Name>Vixen</Name>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs">
@@ -74,6 +71,12 @@
     <Compile Include="Global.cs">
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Vixen\Vixen.csproj">
+      <Project>{FA99E3F3-4783-485F-A37E-0E24F823E5AE}</Project>
+      <Name>Vixen</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

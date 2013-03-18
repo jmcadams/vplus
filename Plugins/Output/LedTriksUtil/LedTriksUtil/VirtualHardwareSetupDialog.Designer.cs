@@ -1,0 +1,176 @@
+namespace LedTriksUtil {
+	using System;
+	using System.Windows.Forms;
+	using System.Drawing;
+	using System.ComponentModel;
+	using System.Collections;
+
+	public partial class VirtualHardwareSetupDialog {
+		private IContainer components;
+
+		#region Windows Form Designer generated code
+		private Button buttonBoardLayout;
+		private Button buttonCancel;
+		private Button buttonLEDColor;
+		private Button buttonOK;
+		private CheckBox checkBoxUseWithScript;
+		private ColorDialog colorDialog;
+		private GroupBox groupBox2;
+		private GroupBox gbLedTriksSetup;
+		private Label label1;
+		private Label label2;
+		private Label label3;
+		private Label labelBoardLayout;
+		private NumericUpDown numericUpDownDotPitch;
+		private NumericUpDown numericUpDownLEDSize;
+
+		private void InitializeComponent() {
+			this.gbLedTriksSetup = new GroupBox();
+			this.checkBoxUseWithScript = new CheckBox();
+			this.labelBoardLayout = new Label();
+			this.buttonBoardLayout = new Button();
+			this.buttonOK = new Button();
+			this.buttonCancel = new Button();
+			this.groupBox2 = new GroupBox();
+			this.numericUpDownDotPitch = new NumericUpDown();
+			this.label3 = new Label();
+			this.buttonLEDColor = new Button();
+			this.label2 = new Label();
+			this.numericUpDownLEDSize = new NumericUpDown();
+			this.label1 = new Label();
+			this.colorDialog = new ColorDialog();
+			this.gbLedTriksSetup.SuspendLayout();
+			this.groupBox2.SuspendLayout();
+			this.numericUpDownDotPitch.BeginInit();
+			this.numericUpDownLEDSize.BeginInit();
+			base.SuspendLayout();
+			this.gbLedTriksSetup.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
+			this.gbLedTriksSetup.Controls.Add(this.checkBoxUseWithScript);
+			this.gbLedTriksSetup.Controls.Add(this.labelBoardLayout);
+			this.gbLedTriksSetup.Controls.Add(this.buttonBoardLayout);
+			this.gbLedTriksSetup.Location = new Point(12, 12);
+			this.gbLedTriksSetup.Name = "groupBoxLedTriksSetup";
+			this.gbLedTriksSetup.Size = new Size(0xfc, 0x68);
+			this.gbLedTriksSetup.TabIndex = 0;
+			this.gbLedTriksSetup.TabStop = false;
+			this.gbLedTriksSetup.Text = "Virtual LedTriks Setup";
+			this.checkBoxUseWithScript.AutoSize = true;
+			this.checkBoxUseWithScript.Location = new Point(15, 70);
+			this.checkBoxUseWithScript.Name = "checkBoxUseWithScript";
+			this.checkBoxUseWithScript.Size = new Size(0xe1, 0x11);
+			this.checkBoxUseWithScript.TabIndex = 2;
+			this.checkBoxUseWithScript.Text = "This will be used with a scripted sequence";
+			this.checkBoxUseWithScript.UseVisualStyleBackColor = true;
+			this.checkBoxUseWithScript.Visible = false;
+			this.labelBoardLayout.AutoSize = true;
+			this.labelBoardLayout.Location = new Point(0x7c, 0x23);
+			this.labelBoardLayout.Name = "labelBoardLayout";
+			this.labelBoardLayout.Size = new Size(0x23, 13);
+			this.labelBoardLayout.TabIndex = 1;
+			this.labelBoardLayout.Text = "label1";
+			this.buttonBoardLayout.Location = new Point(15, 30);
+			this.buttonBoardLayout.Name = "buttonBoardLayout";
+			this.buttonBoardLayout.Size = new Size(0x4b, 0x17);
+			this.buttonBoardLayout.TabIndex = 0;
+			this.buttonBoardLayout.Text = "Board layout";
+			this.buttonBoardLayout.UseVisualStyleBackColor = true;
+			this.buttonBoardLayout.Click += new EventHandler(this.buttonBoardLayout_Click);
+			this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+			this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.buttonOK.Location = new Point(0x6c, 0x10b);
+			this.buttonOK.Name = "buttonOK";
+			this.buttonOK.Size = new Size(0x4b, 0x17);
+			this.buttonOK.TabIndex = 2;
+			this.buttonOK.Text = "OK";
+			this.buttonOK.UseVisualStyleBackColor = true;
+			this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.buttonCancel.Location = new Point(0xbd, 0x10b);
+			this.buttonCancel.Name = "buttonCancel";
+			this.buttonCancel.Size = new Size(0x4b, 0x17);
+			this.buttonCancel.TabIndex = 3;
+			this.buttonCancel.Text = "Cancel";
+			this.buttonCancel.UseVisualStyleBackColor = true;
+			this.groupBox2.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top;
+			this.groupBox2.Controls.Add(this.numericUpDownDotPitch);
+			this.groupBox2.Controls.Add(this.label3);
+			this.groupBox2.Controls.Add(this.buttonLEDColor);
+			this.groupBox2.Controls.Add(this.label2);
+			this.groupBox2.Controls.Add(this.numericUpDownLEDSize);
+			this.groupBox2.Controls.Add(this.label1);
+			this.groupBox2.Location = new Point(12, 0x7a);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new Size(0xfc, 0x8b);
+			this.groupBox2.TabIndex = 1;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "LED Setup";
+			this.numericUpDownDotPitch.Location = new Point(0x7f, 0x5e);
+			this.numericUpDownDotPitch.Name = "numericUpDownDotPitch";
+			this.numericUpDownDotPitch.Size = new Size(0x2f, 20);
+			this.numericUpDownDotPitch.TabIndex = 5;
+			this.label3.AutoSize = true;
+			this.label3.Location = new Point(12, 0x60);
+			this.label3.Name = "label3";
+			this.label3.Size = new Size(0x60, 13);
+			this.label3.TabIndex = 4;
+			this.label3.Text = "Dot pitch (in pixels)";
+			this.buttonLEDColor.BackColor = Color.Red;
+			this.buttonLEDColor.Location = new Point(0x7f, 0x39);
+			this.buttonLEDColor.Name = "buttonLEDColor";
+			this.buttonLEDColor.Size = new Size(0x4b, 0x17);
+			this.buttonLEDColor.TabIndex = 3;
+			this.buttonLEDColor.UseVisualStyleBackColor = false;
+			this.buttonLEDColor.Click += new EventHandler(this.buttonLEDColor_Click);
+			this.label2.AutoSize = true;
+			this.label2.Location = new Point(12, 0x3e);
+			this.label2.Name = "label2";
+			this.label2.Size = new Size(0x36, 13);
+			this.label2.TabIndex = 2;
+			this.label2.Text = "LED color";
+			this.numericUpDownLEDSize.Location = new Point(0x7f, 0x1a);
+			int[] LEDSizeMin = new int[4];
+			LEDSizeMin[0] = 1;
+			this.numericUpDownLEDSize.Minimum = new decimal(LEDSizeMin);
+			this.numericUpDownLEDSize.Name = "numericUpDownLEDSize";
+			this.numericUpDownLEDSize.Size = new Size(0x2f, 20);
+			this.numericUpDownLEDSize.TabIndex = 1;
+			int[] LEDSizeValue = new int[4];
+			LEDSizeValue[0] = 1;
+			this.numericUpDownLEDSize.Value = new decimal(LEDSizeValue);
+			this.label1.AutoSize = true;
+			this.label1.Location = new Point(12, 0x1c);
+			this.label1.Name = "label1";
+			this.label1.Size = new Size(0x4c, 13);
+			this.label1.TabIndex = 0;
+			this.label1.Text = "Pixels per LED";
+			this.colorDialog.AnyColor = true;
+			this.colorDialog.FullOpen = true;
+			base.AutoScaleDimensions = new SizeF(6f, 13f);
+			base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			base.ClientSize = new Size(0x114, 0x12e);
+			base.Controls.Add(this.groupBox2);
+			base.Controls.Add(this.buttonCancel);
+			base.Controls.Add(this.buttonOK);
+			base.Controls.Add(this.gbLedTriksSetup);
+			base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+			base.Name = "VirtualHardwareSetupDialog";
+			base.StartPosition = FormStartPosition.CenterScreen;
+			this.Text = "Setup";
+			this.gbLedTriksSetup.ResumeLayout(false);
+			this.gbLedTriksSetup.PerformLayout();
+			this.groupBox2.ResumeLayout(false);
+			this.groupBox2.PerformLayout();
+			this.numericUpDownDotPitch.EndInit();
+			this.numericUpDownLEDSize.EndInit();
+			base.ResumeLayout(false);
+		}
+		#endregion
+
+		protected override void Dispose(bool disposing) {
+			if (disposing && (this.components != null)) {
+				this.components.Dispose();
+			}
+			base.Dispose(disposing);
+		}
+	}
+}

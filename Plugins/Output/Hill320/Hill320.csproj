@@ -4,7 +4,7 @@
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.3077</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>9af2d99a-a063-4238-baeb-0633dfa8584c</ProjectGuid>
+    <ProjectGuid>{CF2DEA66-5201-4D7A-9BBE-FB76A45A0FA6}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <AssemblyName>Hill320</AssemblyName>
@@ -48,9 +48,6 @@
     <Reference Include="System.Xml">
       <Name>System.Xml</Name>
     </Reference>
-    <Reference Include="Vixen">
-      <Name>Vixen</Name>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs">
@@ -65,6 +62,12 @@
     <Compile Include="Hill320\PortMapping.cs">
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Vixen\Vixen.csproj">
+      <Project>{FA99E3F3-4783-485F-A37E-0E24F823E5AE}</Project>
+      <Name>Vixen</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

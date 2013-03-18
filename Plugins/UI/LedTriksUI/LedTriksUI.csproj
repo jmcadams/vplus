@@ -18,6 +18,7 @@
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <OldToolsVersion>0.0</OldToolsVersion>
     <UpgradeBackupLocation />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -30,7 +31,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -57,9 +57,6 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LedTriksUtil">
-      <Name>LedTriksUtil</Name>
-    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -71,9 +68,6 @@
     </Reference>
     <Reference Include="System.Xml">
       <Name>System.Xml</Name>
-    </Reference>
-    <Reference Include="Vixen">
-      <Name>Vixen</Name>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -108,7 +102,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="LedTriks\LedTriks.cs">
-      <SubType>Code</SubType>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="LedTriks\Properties\Resources.cs">
       <SubType>Code</SubType>
@@ -138,6 +132,16 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Vixen\Vixen.csproj">
+      <Project>{FA99E3F3-4783-485F-A37E-0E24F823E5AE}</Project>
+      <Name>Vixen</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Output\LedTriksUtil\LedTriksUtil.csproj">
+      <Project>{4BD289B2-B382-4BCD-9F81-026995D5BFD7}</Project>
+      <Name>LedTriksUtil</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
