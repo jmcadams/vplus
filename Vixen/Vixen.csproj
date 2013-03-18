@@ -18,6 +18,7 @@
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <OldToolsVersion>0.0</OldToolsVersion>
     <UpgradeBackupLocation />
+    <IsWebBootstrapper>true</IsWebBootstrapper>
     <PublishUrl>http://localhost/Vixen/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -30,7 +31,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>true</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -57,9 +57,6 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="fmod">
-      <HintPath>..\externalLibs\fmod.dll</HintPath>
-    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -708,6 +705,10 @@
     <ProjectReference Include="..\AppUpdate\AppUpdate.csproj">
       <Project>{F3158DD2-126D-427C-891B-971EFAF1315A}</Project>
       <Name>AppUpdate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\fmod\fmod.csproj">
+      <Project>{7B3F05AD-9943-4359-97FF-0AE22C225EB4}</Project>
+      <Name>fmod</Name>
     </ProjectReference>
     <ProjectReference Include="..\FtpClientVB\FtpClientVB.csproj">
       <Project>{B329CC47-2452-46D6-BA9F-1E56141537FE}</Project>
