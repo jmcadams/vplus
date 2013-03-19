@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Vixen
 {
-	public partial class ShutdownDialog
+	internal partial class ShutdownDialog
     {
         private IContainer components = null;
 

@@ -46,7 +46,8 @@ namespace __Line595 {
 				byte num = 0;
 				for (int i = 0; i < 8; i++) {
 					int num4 = i + 1;
-					num = (byte)(num | ((byte)(((((CheckBox)base.Controls.Find("checkBox" + num4.ToString(), 1)[0]).Checked != null) ? 1 : 0) << i)));
+					var control = base.Controls.Find("checkBox" + num4.ToString(), true);
+					num = (byte)(num | ((byte)((((CheckBox)control[0]).Checked ? 1 : 0) << i)));
 				}
 				return num;
 			}

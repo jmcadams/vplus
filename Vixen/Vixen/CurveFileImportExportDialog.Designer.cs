@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Vixen
 {
-	public partial class CurveFileImportExportDialog
+	internal partial class CurveFileImportExportDialog
     {
         private IContainer components = null;
 

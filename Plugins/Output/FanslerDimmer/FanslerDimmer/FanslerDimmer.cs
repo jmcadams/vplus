@@ -190,9 +190,9 @@
         {
         }
 
-        public List<Form> Startup()
+        public /*List<Form>*/ void Startup()
         {
-            return this.m_dialogList;
+            //return this.m_dialogList;
         }
 
         public override string ToString()
@@ -231,7 +231,7 @@
                 {
                     if (mapping.Mapped)
                     {
-                        mapArray[num++] = new Vixen.HardwareMap(0, this.IndexOfPort(mapping.DataPort));
+                        mapArray[num++] = new Vixen.HardwareMap("0", this.IndexOfPort(mapping.DataPort));
                     }
                 }
                 return mapArray;

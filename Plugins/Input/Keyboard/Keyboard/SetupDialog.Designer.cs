@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Keyboard
 {
-	public partial class SetupDialog {
+	internal partial class SetupDialog {
 
 		private IContainer components = null;
 

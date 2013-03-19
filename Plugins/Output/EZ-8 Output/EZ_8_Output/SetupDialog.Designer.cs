@@ -1,7 +1,7 @@
 namespace EZ_8_Output {
 	using System.ComponentModel;
 
-	public partial class SetupDialog {
+	internal partial class SetupDialog {
 		private IContainer components;
 
 		#region Windows Form Designer generated code

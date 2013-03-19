@@ -7,7 +7,7 @@
     using System.IO;
     using System.Windows.Forms;
 
-    internal class DiagnosticsDialog : Form
+    internal partial class DiagnosticsDialog : Form
     {
         private Timers m_timers;
 

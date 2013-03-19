@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Collections;
 
 namespace LedTriks {
-	public partial class FrameOrganizationDialog {
+	internal partial class FrameOrganizationDialog {
 		private IContainer components = null;
 
 		#region Windows Form Designer generated code

@@ -17,11 +17,7 @@
         {
             this.InitializeComponent();
         }
-
         
-
-        
-
         public abstract EventSequence New();
         public abstract EventSequence New(EventSequence seedSequence);
         public abstract void Notify(Notification notification, object data);
@@ -36,20 +32,21 @@
         public abstract EventSequence Open(string filePath);
         public abstract DialogResult RunWizard(ref EventSequence resultSequence);
         public abstract void SaveTo(string filePath);
-        string IPlugIn.get_Name()
-        {
-            return base.Name;
-        }
 
-        Form IUIPlugIn.get_MdiParent()
-        {
-            return base.MdiParent;
-        }
+        //string IPlugIn.get_Name()
+        //{
+        //    return base.Name;
+        //}
 
-        void IUIPlugIn.set_MdiParent(Form form1)
-        {
-            base.MdiParent = form1;
-        }
+        //Form IUIPlugIn.get_MdiParent()
+        //{
+        //    return base.MdiParent;
+        //}
+
+        //void IUIPlugIn.set_MdiParent(Form form1)
+        //{
+        //    base.MdiParent = form1;
+        //}
 
         void IUIPlugIn.Show()
         {

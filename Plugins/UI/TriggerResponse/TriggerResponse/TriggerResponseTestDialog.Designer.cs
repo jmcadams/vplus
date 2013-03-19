@@ -5,7 +5,7 @@ namespace TriggerResponse {
 	using System.ComponentModel;
 	using System.Collections;
 
-	public partial class TriggerResponseTestDialog {
+	internal partial class TriggerResponseTestDialog {
 		private IContainer components;
 
 		#region Windows Form Designer generated code

@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Vixen
 {
-	public partial class Splash
+	internal partial class Splash
     {
         private IContainer components = null;
 

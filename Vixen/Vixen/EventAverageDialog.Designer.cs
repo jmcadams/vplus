@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Vixen
 {
-	public partial class EventAverageDialog
+	internal partial class EventAverageDialog
 	{
 		#region Windows Form Designer generated code
 		private Button buttonDone;

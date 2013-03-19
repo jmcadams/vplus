@@ -4,7 +4,7 @@
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.3077</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>b7e7bb80-7002-4da1-ba41-b118c368e351</ProjectGuid>
+    <ProjectGuid>{7B3F05AD-9943-4359-97FF-0AE22C225EB4}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <AssemblyName>fmod</AssemblyName>

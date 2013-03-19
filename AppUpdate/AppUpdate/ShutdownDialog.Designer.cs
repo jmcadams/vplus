@@ -5,7 +5,7 @@ namespace AppUpdate {
 	using System.ComponentModel;
 	using System.Collections;
 
-	public partial class ShutdownDialog {
+	internal partial class ShutdownDialog {
 		private IContainer components;
 
 		#region Windows Form Designer generated code

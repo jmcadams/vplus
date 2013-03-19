@@ -149,7 +149,6 @@
             }
         }
 
-        [OptionText]
         public enum DirectoryEntryTypes
         {
             File,

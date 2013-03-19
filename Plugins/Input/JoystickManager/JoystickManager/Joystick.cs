@@ -1,8 +1,8 @@
 ﻿namespace JoystickManager
 {
-	using Microsoft.DirectX.DirectInput;
 	using System;
 	using System.Collections.Generic;
+	using Microsoft.DirectX.DirectInput;
 
 	public class Joystick
 	{
@@ -24,22 +24,22 @@
 			this.m_device = new Microsoft.DirectX.DirectInput.Device(this.m_instanceGuid);
 			DataFormat df = new DataFormat();
 			df.Flags = DataFormatFlags.RelativeAxis;
-			this.m_device.SetDataFormat(df); // was SetDataFormat(2);
-			this.m_device.get_Properties().set_AxisModeAbsolute(true);
+			this.m_device.SetDataFormat(df); 
+			this.m_device.Properties.AxisModeAbsolute = true;
 			this.m_device.SetCooperativeLevel(IntPtr.Zero, CooperativeLevelFlags.Background | CooperativeLevelFlags.NonExclusive);
 			int num = 0;
 			int num2 = 0;
 			List<ButtonResource> list = new List<ButtonResource>();
 			List<AxisResource> list2 = new List<AxisResource>();
 			List<POVResource> list3 = new List<POVResource>();
-			foreach (DeviceObjectInstance instance in this.m_device.get_Objects())
+			foreach (DeviceObjectInstance instance in this.m_device.Objects)
 			{
-				if ((instance.get_ObjectId() & 3) == 0)
+				if ((instance.ObjectId & 3) == 0)
 				{
 					goto Label_01D6;
 				}
-				string str = instance.get_Name().ToLower();
-				this.Device.get_Properties().SetRange(2, instance.get_ObjectId(), new InputRange(0, 0xff));
+				string str = instance.Name.ToLower();
+				this.Device.Properties.SetRange(ParameterHow.ById, instance.ObjectId, new InputRange(0, 0xff));
 				switch (str[0])
 				{
 					case 'x':
@@ -78,11 +78,11 @@
 				this.m_zAxis = new AxisResource(this, Axis.Z);
 				goto Label_0227;
 			Label_01D6:
-				if ((instance.get_ObjectId() & 12) != 0)
+				if ((instance.ObjectId & 12) != 0)
 				{
 					list.Add(new ButtonResource(this, num++));
 				}
-				else if ((instance.get_ObjectId() & 0x10) != 0)
+				else if ((instance.ObjectId & 0x10) != 0)
 				{
 					list3.Add(new POVResource(this, num2++));
 				}
@@ -183,7 +183,7 @@
 		{
 			get
 			{
-				return this.m_device.get_DeviceInformation().get_InstanceName();
+				return this.m_device.DeviceInformation.InstanceName;
 			}
 		}
 

@@ -318,7 +318,7 @@
                 reader.Close();
                 reader.Dispose();
             }
-            new AppUpdate.AppUpdate(updateServerURI, updateRootPath).ExecuteMigration();
+            new AppUpdate(updateServerURI, updateRootPath).ExecuteMigration();
         }
 
         private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)

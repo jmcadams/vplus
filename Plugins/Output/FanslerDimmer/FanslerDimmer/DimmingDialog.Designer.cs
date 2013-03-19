@@ -5,7 +5,7 @@ namespace FanslerDimmer {
 	using System.ComponentModel;
 	using System.Collections;
 
-	public partial class DimmingDialog {
+	internal partial class DimmingDialog {
 		private IContainer components;
 
 		#region Windows Form Designer generated code

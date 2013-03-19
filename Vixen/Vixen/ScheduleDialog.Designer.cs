@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Vixen
 {
-	public partial class ScheduleDialog
+	internal partial class ScheduleDialog
     {
         private IContainer components = null;
 

@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace JoystickInput
 {
-	public partial class SetupDialog {
+	internal partial class SetupDialog {
 		private IContainer components = null;
 
 		#region Windows Form Designer generated code

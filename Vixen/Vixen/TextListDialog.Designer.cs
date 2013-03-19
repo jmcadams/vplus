@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Vixen
 {
-	public partial class TextListDialog
+	internal partial class TextListDialog
     {
         private IContainer components = null;
 

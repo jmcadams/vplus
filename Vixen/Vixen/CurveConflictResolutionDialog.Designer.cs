@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Vixen
 {
-	public partial class CurveConflictResolutionDialog
+	internal partial class CurveConflictResolutionDialog
     {
         private IContainer components = null;
 

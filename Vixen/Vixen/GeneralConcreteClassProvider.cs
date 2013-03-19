@@ -8,7 +8,7 @@
         private Type _abstractType;
         private Type _concreteType;
 
-        public GeneralConcreteClassProvider() : base(TypeDescriptor.GetProvider(typeof(Form)))
+        public GeneralConcreteClassProvider() : base(TypeDescriptor.GetProvider(typeof(System.Windows.Forms.Form)))
         {
         }
 

@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Vixen
 {
-	public partial class ChannelRangeFixDialog
+	internal partial class ChannelRangeFixDialog
     {
         private IContainer components = null;
 

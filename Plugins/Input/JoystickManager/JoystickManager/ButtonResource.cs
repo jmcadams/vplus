@@ -23,7 +23,7 @@
         {
             get
             {
-                return (base.OwningDevice.Device.get_CurrentJoystickState().GetButtons()[this.ButtonIndex] >= 0x80);
+                return (base.OwningDevice.Device.CurrentJoystickState.GetButtons()[this.ButtonIndex] >= 0x80);
             }
         }
 

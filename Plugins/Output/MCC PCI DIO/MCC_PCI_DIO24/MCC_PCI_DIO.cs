@@ -30,19 +30,19 @@
         {
             MccBoard board;
             int num = 0;
-            this.m_boards = new MccBoard[GlobalConfig.get_NumBoards()];
-            this.m_boardPortType = new DigitalPortType[GlobalConfig.get_NumBoards()];
+            this.m_boards = new MccBoard[GlobalConfig.NumBoards];
+            this.m_boardPortType = new DigitalPortType[GlobalConfig.NumBoards];
             int index = 0;
-            while (index < GlobalConfig.get_NumBoards())
+            while (index < GlobalConfig.NumBoards)
             {
                 board = new MccBoard(index);
-                board.get_BoardConfig().GetBoardType(ref num);
+                board.BoardConfig.GetBoardType(out num);
                 if (num == 0)
                 {
                     break;
                 }
                 this.m_boards[index] = board;
-                this.m_boardPortType[index] = 1;
+                this.m_boardPortType[index] = (DigitalPortType)1;
                 index++;
             }
             Array.Resize<MccBoard>(ref this.m_boards, index);
@@ -58,24 +58,24 @@
                 Dictionary<string, int> dictionary2;
                 string str;
                 board = this.m_boards[index];
-                if (!dictionary.ContainsKey(board.get_BoardName()))
+                if (!dictionary.ContainsKey(board.BoardName))
                 {
-                    dictionary[board.get_BoardName()] = 0;
+                    dictionary[board.BoardName] = 0;
                 }
-                this.m_hardwareMap[index] = new Vixen.HardwareMap(board.get_BoardName(), dictionary[board.get_BoardName()]);
-                (dictionary2 = dictionary)[str = board.get_BoardName()] = dictionary2[str] + 1;
+                this.m_hardwareMap[index] = new Vixen.HardwareMap(board.BoardName, dictionary[board.BoardName]);
+                (dictionary2 = dictionary)[str = board.BoardName] = dictionary2[str] + 1;
                 int pinCount = this.m_pinCount;
-                board.get_BoardConfig().GetDiNumDevs(ref num3);
+                board.BoardConfig.GetDiNumDevs(out num3);
                 for (int i = 0; i < num3; i++)
                 {
                     int num5;
-                    board.get_DioConfig().GetDevType(i, ref num5);
+                    board.DioConfig.GetDevType(i, out num5);
                     if (num5 == 10)
                     {
-                        this.m_boardPortType[index] = 10;
+                        this.m_boardPortType[index] = (DigitalPortType)10;
                     }
-                    board.DConfigPort((DigitalPortType) num5, 1);
-                    board.get_DioConfig().GetNumBits(i, ref num6);
+                    board.DConfigPort((DigitalPortType) num5, DigitalPortDirection.DigitalOut);
+                    board.DioConfig.GetNumBits(i, out num6);
                     Array.Resize<int>(ref this.m_pinBoardIndex, this.m_pinBoardIndex.Length + num6);
                     Array.Resize<int>(ref this.m_pinBoardOffset, this.m_pinBoardOffset.Length + num6);
                     for (int j = 0; j < num6; j++)

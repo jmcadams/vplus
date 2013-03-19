@@ -137,10 +137,12 @@
     <ProjectReference Include="..\..\..\Vixen\Vixen.csproj">
       <Project>{FA99E3F3-4783-485F-A37E-0E24F823E5AE}</Project>
       <Name>Vixen</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Output\LedTriksUtil\LedTriksUtil.csproj">
       <Project>{4BD289B2-B382-4BCD-9F81-026995D5BFD7}</Project>
       <Name>LedTriksUtil</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

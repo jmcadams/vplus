@@ -15,7 +15,7 @@
         {
             get
             {
-                return base.OwningDevice.Device.get_CurrentJoystickState().GetPointOfView()[this.Index];
+                return base.OwningDevice.Device.CurrentJoystickState.GetPointOfView()[this.Index];
             }
         }
 

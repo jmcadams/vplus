@@ -617,54 +617,6 @@
     <Compile Include="Vixen\Xml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <EmbeddedResource Include="Vixen.AboutDialog.resources" />
-    <EmbeddedResource Include="Vixen.AddEditRemove.resources" />
-    <EmbeddedResource Include="Vixen.AllPluginsDialog.resources" />
-    <EmbeddedResource Include="Vixen.BackgroundSequenceDialog.resources" />
-    <EmbeddedResource Include="Vixen.ChannelRangeFixDialog.resources" />
-    <EmbeddedResource Include="Vixen.CopyChannelColorsDialog.resources" />
-    <EmbeddedResource Include="Vixen.CopyDataDialog2.resources" />
-    <EmbeddedResource Include="Vixen.CopySequenceDialog.resources" />
-    <EmbeddedResource Include="Vixen.CurveConflictResolutionDialog.resources" />
-    <EmbeddedResource Include="Vixen.CurveFileImportExportDialog.resources" />
-    <EmbeddedResource Include="Vixen.CurveLibraryDialog.resources" />
-    <EmbeddedResource Include="Vixen.CurveLibraryRecordEditDialog.resources" />
-    <EmbeddedResource Include="Vixen.DiagnosticsDialog.resources" />
-    <EmbeddedResource Include="Vixen.Dialogs.AllChannelsColorDialog.resources" />
-    <EmbeddedResource Include="Vixen.Dialogs.AudioDialog.resources" />
-    <EmbeddedResource Include="Vixen.Dialogs.ChannelLayoutDialog.resources" />
-    <EmbeddedResource Include="Vixen.Dialogs.ChannelOrderDialog.resources" />
-    <EmbeddedResource Include="Vixen.Dialogs.ChannelOutputMaskDialog.resources" />
-    <EmbeddedResource Include="Vixen.Dialogs.ChannelPropertyDialog.resources" />
-    <EmbeddedResource Include="Vixen.Dialogs.HelpDialog.resources" />
-    <EmbeddedResource Include="Vixen.Dialogs.NewSequenceWizardDialog.resources" />
-    <EmbeddedResource Include="Vixen.Dialogs.ParallelSetupDialog.resources" />
-    <EmbeddedResource Include="Vixen.Dialogs.PluginListDialog.resources" />
-    <EmbeddedResource Include="Vixen.Dialogs.ProfileManagerDialog.resources" />
-    <EmbeddedResource Include="Vixen.Dialogs.RoutineSelectDialog.resources" />
-    <EmbeddedResource Include="Vixen.Dialogs.SequenceSettingsDialog.resources" />
-    <EmbeddedResource Include="Vixen.Dialogs.SerialSetupDialog.resources" />
-    <EmbeddedResource Include="Vixen.Dialogs.TextQueryDialog.resources" />
-    <EmbeddedResource Include="Vixen.DimmingCurveDialog.resources" />
-    <EmbeddedResource Include="Vixen.EventAverageDialog.resources" />
-    <EmbeddedResource Include="Vixen.ExecutingTimerControlDialog.resources" />
-    <EmbeddedResource Include="Vixen.Form1.resources" />
-    <EmbeddedResource Include="Vixen.GroupDialog.resources" />
-    <EmbeddedResource Include="Vixen.InputPluginDialog.resources" />
-    <EmbeddedResource Include="Vixen.MusicPlayerDialog.resources" />
-    <EmbeddedResource Include="Vixen.PluginEnabledFixDialog.resources" />
-    <EmbeddedResource Include="Vixen.PreferencesDialog.resources" />
-    <EmbeddedResource Include="Vixen.ProgramManagerDialog.resources" />
-    <EmbeddedResource Include="Vixen.ProgressDialog.resources" />
-    <EmbeddedResource Include="Vixen.Properties.Resources.resources" />
-    <EmbeddedResource Include="Vixen.ScheduleDialog.resources" />
-    <EmbeddedResource Include="Vixen.ShutdownDialog.resources" />
-    <EmbeddedResource Include="Vixen.SoundDeviceDialog.resources" />
-    <EmbeddedResource Include="Vixen.Splash.resources" />
-    <EmbeddedResource Include="Vixen.TextListDialog.resources" />
-    <EmbeddedResource Include="Vixen.TimerDialog.resources" />
-    <EmbeddedResource Include="Vixen.TriggerResponseRegistrationsDialog.resources" />
-    <EmbeddedResource Include="Vixen.UIBase.resources" />
     <EmbeddedResource Include="Vixen\AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -705,18 +657,22 @@
     <ProjectReference Include="..\AppUpdate\AppUpdate.csproj">
       <Project>{F3158DD2-126D-427C-891B-971EFAF1315A}</Project>
       <Name>AppUpdate</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\fmod\fmod.csproj">
       <Project>{7B3F05AD-9943-4359-97FF-0AE22C225EB4}</Project>
       <Name>fmod</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\FtpClientVB\FtpClientVB.csproj">
       <Project>{B329CC47-2452-46D6-BA9F-1E56141537FE}</Project>
       <Name>FtpClientVB</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\VixenControls\VixenControls.csproj">
       <Project>{6B127E8D-35CC-409E-9E66-520FBA86E283}</Project>
       <Name>VixenControls</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

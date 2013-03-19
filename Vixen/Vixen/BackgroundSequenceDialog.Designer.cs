@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Vixen
 {
-	public partial class BackgroundSequenceDialog
+	internal partial class BackgroundSequenceDialog
 	{
 		private IContainer components = null;
 

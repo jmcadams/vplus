@@ -35,11 +35,11 @@
                     list2.Add(joystick.DeviceGuid);
                 }
             }
-            foreach (DeviceInstance instance in Manager.GetDevices(4, 1))
+            foreach (DeviceInstance instance in Manager.GetDevices(DeviceClass.GameControl, EnumDevicesFlags.AttachedOnly))
             {
-                if (!list2.Contains(instance.get_InstanceGuid()))
+                if (!list2.Contains(instance.InstanceGuid))
                 {
-                    list.Add(new Joystick(instance.get_InstanceGuid()));
+                    list.Add(new Joystick(instance.InstanceGuid));
                 }
             }
             m_joysticks = list.ToArray();

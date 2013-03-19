@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Vixen
 {
-	public partial class ExecutingTimerControlDialog
+	internal partial class ExecutingTimerControlDialog
 	{
 		private IContainer components = null;
 

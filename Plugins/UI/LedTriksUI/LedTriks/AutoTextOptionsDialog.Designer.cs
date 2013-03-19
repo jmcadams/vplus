@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace LedTriks
 {
-	public partial class AutoTextOptionsDialog {
+	internal partial class AutoTextOptionsDialog {
 		private IContainer components = null;
 
 		#region Windows Form Designer generated code

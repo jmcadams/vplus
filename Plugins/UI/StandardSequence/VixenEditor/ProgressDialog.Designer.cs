@@ -3,7 +3,7 @@ namespace VixenEditor {
 	using System.Drawing;
 	using System.Windows.Forms;
 
-	public partial class ProgressDialog {
+	internal partial class ProgressDialog {
 		private IContainer components;
 
 		#region Windows Form Designer generated code

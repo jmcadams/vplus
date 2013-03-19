@@ -210,7 +210,7 @@ namespace Vixen.Dialogs
                 for (int j = 0; j < num3; j++)
                 {
                     byte num1 = this.m_sequence.EventValues[i, j];
-                    num1[0] = (byte) (num1[0] | this.m_newEventValues[i, j]);
+                    num1 = (byte) (num1 | this.m_newEventValues[i, j]);
                 }
             }
         }
@@ -809,7 +809,7 @@ namespace Vixen.Dialogs
                 }
                 else
                 {
-                    int num2 = (int) (((ulong) position) / ((long) this.m_sequence.EventPeriod));
+                    int num2 = (int) (((long) position) / ((long) this.m_sequence.EventPeriod));
                     if (num2 != this.m_lastIndex)
                     {
                         this.m_lastIndex = num2;
@@ -932,7 +932,7 @@ namespace Vixen.Dialogs
             if (base.InvokeRequired)
             {
                 int milliseconds = 0;
-                base.Invoke(delegate {
+                base.Invoke((MethodInvoker) delegate { // TODO: Can change this to "base.Invoke(() => {" when we go to 3.x
                     milliseconds = this.UpdateTotalTime();
                 });
                 return milliseconds;

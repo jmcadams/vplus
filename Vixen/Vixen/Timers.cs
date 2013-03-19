@@ -34,7 +34,7 @@
                     Host.LogTo(Paths.TimerTraceFilePath, "Recurrence: " + timer.Recurrence.ToString());
                     if (timer.Recurrence == RecurrenceType.Weekly)
                     {
-                        Host.LogTo(Paths.TimerTraceFilePath, string.Format("  {0} & {1} != 0 ({2})", (int) timer.RecurrenceData, ((int) 1) << now.DayOfWeek, (((int) timer.RecurrenceData) & (((int) 1) << now.DayOfWeek)) != 0));
+                        Host.LogTo(Paths.TimerTraceFilePath, string.Format("  {0} & {1} != 0 ({2})", (int) timer.RecurrenceData, ((int) 1) << (int) now.DayOfWeek, (((int) timer.RecurrenceData) & (((int) 1) << (int) now.DayOfWeek)) != 0));
                     }
                     Host.LogTo(Paths.TimerTraceFilePath, "  Is executing? " + timer.IsExecuting.ToString());
                     Host.LogTo(Paths.TimerTraceFilePath, string.Format("  {0} > {1} ({2})", timer.RecurrenceStart, today.AddDays(1.0), timer.RecurrenceStart > today.AddDays(1.0)));
@@ -66,7 +66,7 @@
                             goto Label_04CB;
 
                         case RecurrenceType.Weekly:
-                            if ((((int) timer.RecurrenceData) & (((int) 1) << now.DayOfWeek)) != 0)
+                            if ((((int) timer.RecurrenceData) & (((int) 1) << (int) now.DayOfWeek)) != 0)
                             {
                                 list.Add(timer);
                             }

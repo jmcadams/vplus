@@ -28,7 +28,7 @@
                         num3 = (byte) (num3 >> 1);
                         num3 = (byte) (num3 | ((channelValues[num++] > 0) ? 0x80 : 0));
                     }
-                    K8055.K8055.Write(i, (long) num3);
+                    K8055.Write(i, (long) num3);
                 }
             }
         }
@@ -64,20 +64,20 @@
             {
                 if (this.m_validDevices[i])
                 {
-                    K8055.K8055.Close(i);
+                    K8055.Close(i);
                 }
             }
         }
 
         public void Startup()
         {
-            long num = K8055.K8055.SearchDevices();
+            long num = K8055.SearchDevices();
             for (int i = 0; i < 4; i++)
             {
                 this.m_validDevices[i] = (num & (((int) 1) << i)) != 0L;
                 if (this.m_validDevices[i])
                 {
-                    K8055.K8055.Open(i);
+                    K8055.Open(i);
                 }
             }
         }

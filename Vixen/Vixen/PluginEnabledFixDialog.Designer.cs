@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Vixen
 {
-	public partial class PluginEnabledFixDialog
+	internal partial class PluginEnabledFixDialog
 	{
 		private IContainer components = null;
 

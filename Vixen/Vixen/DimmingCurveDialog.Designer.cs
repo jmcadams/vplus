@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Vixen
 {
-	public partial class DimmingCurveDialog
+	internal partial class DimmingCurveDialog
 	{
 		private IContainer components;
 

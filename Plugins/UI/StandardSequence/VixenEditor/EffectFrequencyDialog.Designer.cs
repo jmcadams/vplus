@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Collections;
 
 namespace VixenEditor {
-	public partial class EffectFrequencyDialog {
+	internal partial class EffectFrequencyDialog {
 		private IContainer components = null;
 
 		#region Windows Form Designer generated code

@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Vixen
 {
-	public partial class ProgressDialog
+	internal partial class ProgressDialog
     {
         private IContainer components = null;
 

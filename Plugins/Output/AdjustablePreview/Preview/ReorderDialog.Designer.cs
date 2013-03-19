@@ -5,7 +5,7 @@ namespace Preview {
 	using System.ComponentModel;
 	using System.Collections;
 
-	public partial class ReorderDialog {
+	internal partial class ReorderDialog {
 		private IContainer components;
 
 		#region Windows Form Designer generated code

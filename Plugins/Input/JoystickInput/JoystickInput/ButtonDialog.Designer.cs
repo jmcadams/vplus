@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Collections;
 
 namespace JoystickInput {
-	public partial class ButtonDialog {
+	internal partial class ButtonDialog {
 		private IContainer components = null;
 
 		#region Windows Form Designer generated code

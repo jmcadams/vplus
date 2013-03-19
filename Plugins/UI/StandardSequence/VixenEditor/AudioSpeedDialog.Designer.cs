@@ -7,7 +7,7 @@ using System.Collections;
 namespace VixenEditor
 {        private IContainer components = null;
 
-	public partial class AudioSpeedDialog
+	internal partial class AudioSpeedDialog
 	{        
 		private IContainer components = null;
 

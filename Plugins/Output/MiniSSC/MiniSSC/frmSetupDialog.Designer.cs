@@ -5,7 +5,7 @@ namespace MiniSSC {
 	using System.ComponentModel;
 	using System.Collections;
 
-	public partial class frmSetupDialog {
+	internal partial class frmSetupDialog {
 		private IContainer components;
 
 		#region Windows Form Designer generated code

@@ -29,7 +29,7 @@ namespace Vixen
             this.m_internal = false;
             this.comboBoxSource.SelectedIndex = 0;
             this.listViewRecords.ListViewItemSorter = this.m_sorter = new ListViewItemSorter();
-            ListViewSortIcons.SetSortIcon(this.listViewRecords, 0, this.listViewRecords.Columns[0].Tag = System.Windows.Forms.SortOrder.Ascending);
+            ListViewSortIcons.SetSortIcon(this.listViewRecords, 0, /* this.listViewRecords.Columns[0].Tag = */ System.Windows.Forms.SortOrder.Ascending);
         }
 
         private void buttonChangeRemoteLocation_Click(object sender, EventArgs e)

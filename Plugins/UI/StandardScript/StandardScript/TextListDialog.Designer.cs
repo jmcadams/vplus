@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Collections;
 
 namespace StandardScript {
-	public partial class TextListDialog {
+	internal partial class TextListDialog {
 		private IContainer components = null;
 
 		#region Windows Form Designer generated code

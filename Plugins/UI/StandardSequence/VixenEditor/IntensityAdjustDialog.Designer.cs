@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Collections;
 
 namespace VixenEditor {
-	public partial class IntensityAdjustDialog {
+	internal partial class IntensityAdjustDialog {
 		private IContainer components;
 
 		#region Windows Form Designer generated code

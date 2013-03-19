@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Collections;
 
 namespace StandardScript {
-	public partial class ChannelNameEditDialog {
+	internal partial class ChannelNameEditDialog {
 		private IContainer components = null;
 
 		#region Windows Form Designer generated code

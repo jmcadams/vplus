@@ -19,3 +19,8 @@ The next generation of Vixen 2 compatible lighting control sequencer
     You should have received a copy of the GNU General Public License
     along with this program. (license.txt)  If not, see 
     <http://www.gnu.org/licenses/>
+    
+NOTES:
+======
+To download the DirectX runtimes, see: 
+http://www.microsoft.com/en-us/download/details.aspx?id=35

@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Vixen
 {
-	public partial class CurveLibraryRecordEditDialog
+	internal partial class CurveLibraryRecordEditDialog
 	{
 		private IContainer components = null;
 

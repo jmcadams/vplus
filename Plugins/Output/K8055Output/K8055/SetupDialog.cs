@@ -22,7 +22,7 @@ namespace K8055 {
 		}
 
 		private void buttonDriverVersion_Click(object sender, EventArgs e) {
-			K8055.K8055.Version();
+			K8055.Version();
 		}
 
 		private void buttonSearchDevices_Click(object sender, EventArgs e) {
@@ -49,7 +49,7 @@ namespace K8055 {
 			long num = 0L;
 			this.Cursor = Cursors.WaitCursor;
 			try {
-				num = K8055.K8055.SearchDevices();
+				num = K8055.SearchDevices();
 				this.checkBoxDev0.Checked = (num & 1L) != 0L;
 				this.checkBoxDev1.Checked = (num & 2L) != 0L;
 				this.checkBoxDev2.Checked = (num & 4L) != 0L;

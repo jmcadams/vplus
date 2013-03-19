@@ -18,6 +18,7 @@
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <OldToolsVersion>0.0</OldToolsVersion>
     <UpgradeBackupLocation />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -30,7 +31,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -105,10 +105,12 @@
     <ProjectReference Include="..\..\..\Addins\EZ-8\EZ-8.csproj">
       <Project>{23904FC3-1716-4F49-B940-2311C395A243}</Project>
       <Name>EZ-8</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Vixen\Vixen.csproj">
       <Project>{FA99E3F3-4783-485F-A37E-0E24F823E5AE}</Project>
       <Name>Vixen</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

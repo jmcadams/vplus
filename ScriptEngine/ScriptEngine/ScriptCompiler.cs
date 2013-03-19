@@ -40,7 +40,7 @@
             {
                 return true;
             }
-            ScriptEngine.CompilerParameters parameters = new ScriptEngine.CompilerParameters();
+            CompilerParameters parameters = new CompilerParameters();
             List<string> list = new List<string>();
             XmlNode projectNode = this.GetProjectNode(sequence);
             XmlNode node2 = projectNode.SelectSingleNode("Imports");
@@ -91,7 +91,7 @@
             return this.Compile(sequence, parameters, list.ToArray());
         }
 
-        private bool Compile(EventSequence sequence, ScriptEngine.CompilerParameters parameters, string[] sources)
+        private bool Compile(EventSequence sequence, CompilerParameters parameters, string[] sources)
         {
             using (CSharpCodeProvider provider = new CSharpCodeProvider())
             {

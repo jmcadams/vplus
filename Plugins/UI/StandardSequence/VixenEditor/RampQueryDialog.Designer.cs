@@ -5,7 +5,7 @@ namespace VixenEditor {
 	using System.ComponentModel;
 	using System.Collections;
 
-	public partial class RampQueryDialog {
+	internal partial class RampQueryDialog {
 		private IContainer components;
 
 		#region Windows Form Designer generated code

@@ -26,22 +26,22 @@
                 switch (this.m_axis)
                 {
                     case Joystick.Axis.X:
-                        return base.OwningDevice.Device.get_CurrentJoystickState().get_X();
+                        return base.OwningDevice.Device.CurrentJoystickState.X;
 
                     case Joystick.Axis.Y:
-                        return base.OwningDevice.Device.get_CurrentJoystickState().get_Y();
+                        return base.OwningDevice.Device.CurrentJoystickState.Y;
 
                     case Joystick.Axis.Z:
-                        return base.OwningDevice.Device.get_CurrentJoystickState().get_Z();
+                        return base.OwningDevice.Device.CurrentJoystickState.Z;
 
                     case Joystick.Axis.rX:
-                        return base.OwningDevice.Device.get_CurrentJoystickState().get_Rx();
+                        return base.OwningDevice.Device.CurrentJoystickState.Rx;
 
                     case Joystick.Axis.rY:
-                        return base.OwningDevice.Device.get_CurrentJoystickState().get_Ry();
+                        return base.OwningDevice.Device.CurrentJoystickState.Ry;
 
                     case Joystick.Axis.rZ:
-                        return base.OwningDevice.Device.get_CurrentJoystickState().get_Rz();
+                        return base.OwningDevice.Device.CurrentJoystickState.Rz;
                 }
                 return -1;
             }

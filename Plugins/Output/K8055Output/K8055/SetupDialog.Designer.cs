@@ -5,7 +5,7 @@ namespace K8055 {
 	using System.ComponentModel;
 	using System.Collections;
 
-	public partial class SetupDialog {
+	internal partial class SetupDialog {
 		private IContainer components;
 
 		#region Windows Form Designer generated code

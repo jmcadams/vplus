@@ -41,7 +41,7 @@
             {
                 if (this.m_display.InvokeRequired)
                 {
-                    this.m_display.Invoke(new MethodInvoker(this.DestroyDisplay));
+                    this.m_display.Invoke(new System.Windows.Forms.MethodInvoker(this.DestroyDisplay));
                 }
                 else
                 {
@@ -68,7 +68,7 @@
             {
                 lock (this.m_display)
                 {
-                    this.m_display.BeginInvoke(new MethodInvoker(this.RebuildDisplay));
+                    this.m_display.BeginInvoke(new System.Windows.Forms.MethodInvoker(this.RebuildDisplay));
                 }
             }
             else
