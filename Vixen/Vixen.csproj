@@ -293,6 +293,9 @@
     <Compile Include="Vixen\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Vixen\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Vixen\GeneralConcreteClassProvider.cs">
       <SubType>Code</SubType>
     </Compile>
