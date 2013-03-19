@@ -1,7 +1,5 @@
 ﻿namespace FMOD
 {
-    using System;
-
     public enum MODE
     {
         _2D = 8,

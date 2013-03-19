@@ -1,7 +1,5 @@
 ﻿namespace FMOD
 {
-    using System;
-
     public class ADVANCEDSETTINGS
     {
         public int cbsize;

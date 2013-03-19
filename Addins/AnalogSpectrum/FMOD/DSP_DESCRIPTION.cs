@@ -1,8 +1,8 @@
-﻿namespace FMOD
-{
-    using System;
-    using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 
+namespace FMOD
+{
     [StructLayout(LayoutKind.Sequential)]
     public struct DSP_DESCRIPTION
     {

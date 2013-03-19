@@ -6,7 +6,7 @@
 	using System.Xml;
 	using Vixen;
 
-	public class frmEfxSetup : Form {
+	public partial class frmEfxSetup : Form {
 
 		private XmlNode m_setupNode;
 

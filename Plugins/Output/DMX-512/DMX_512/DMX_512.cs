@@ -8,14 +8,14 @@
 
     public class DMX_512 : IEventDrivenOutputPlugIn, IOutputPlugIn, IHardwarePlugin, IPlugIn, ISetup
     {
-        private IDMX.IDMX m_dmxInterface = null;
+        private IDMX m_dmxInterface = null;
         private bool m_dmxRunning = false;
         private SetupData m_setupData = null;
         private XmlNode m_setupNode = null;
 
         public DMX_512()
         {
-            this.m_dmxInterface = new IDMX.IDMX();
+            this.m_dmxInterface = new IDMX();
         }
 
         public void Event(byte[] channelValues)

@@ -6,7 +6,7 @@ namespace GenericSerial {
 	using System.Xml;
 	using Vixen;
 
-	internal class SetupDialog : Form {
+	internal partial class SetupDialog : Form {
 		private XmlNode m_setupNode;
 		
 		public SetupDialog(XmlNode setupNode) {

@@ -1,7 +1,5 @@
 ﻿namespace FMOD
 {
-    using System;
-
     public enum INITFLAG
     {
         _3D_RIGHTHANDED = 2,

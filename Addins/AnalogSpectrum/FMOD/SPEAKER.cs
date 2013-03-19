@@ -1,7 +1,5 @@
 ﻿namespace FMOD
 {
-    using System;
-
     public enum SPEAKER
     {
         BACK_CENTER = 3,

@@ -322,7 +322,7 @@
         private void importsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             XmlNode contextNode = this.m_sequence.Extensions[this.FileExtension];
-            StandardScript.TextListDialog dialog = new StandardScript.TextListDialog(Xml.GetNodeAlways(contextNode, "Imports"), "Import", true);
+            TextListDialog dialog = new TextListDialog(Xml.GetNodeAlways(contextNode, "Imports"), "Import", true);
             dialog.Text = "Namespace Imports";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
@@ -346,7 +346,7 @@
         private void InitializeComponent()
         {
             this.components = new Container();
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(StandardScript.StandardScript));
+            ComponentResourceManager manager = new ComponentResourceManager(typeof(StandardScript));
             TreeNode node = new TreeNode("Node0");
             this.menuStrip = new MenuStrip();
             this.scriptToolStripMenuItem = new ToolStripMenuItem();
@@ -716,7 +716,7 @@
         private void referencesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             XmlNode contextNode = this.m_sequence.Extensions[this.FileExtension];
-            StandardScript.TextListDialog dialog = new StandardScript.TextListDialog(Xml.GetNodeAlways(contextNode, "AssemblyReferences"), "AssemblyReference", true);
+            TextListDialog dialog = new TextListDialog(Xml.GetNodeAlways(contextNode, "AssemblyReferences"), "AssemblyReference", true);
             dialog.Text = "References";
             if (dialog.ShowDialog() == DialogResult.OK)
             {

@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Collections;
 
 namespace WattMeter {
-	public partial class TextQueryDialog {
+	internal partial class TextQueryDialog {
 		private IContainer components = null;
 
 		#region Windows Form Designer generated code

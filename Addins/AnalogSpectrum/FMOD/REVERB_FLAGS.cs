@@ -1,7 +1,5 @@
 ﻿namespace FMOD
 {
-    using System;
-
     public class REVERB_FLAGS
     {
         public const uint DECAYHFLIMIT = 0x20;

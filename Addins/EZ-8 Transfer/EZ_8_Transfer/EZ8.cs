@@ -11,7 +11,7 @@
     public class EZ8 : IAddIn, ILoadable, IPlugIn
     {
         private XmlNode m_dataNode;
-        private EZ_8.EZ_8 m_hardware;
+        private EZ_8 m_hardware;
         private string m_portName = null;
         private EventSequence m_sequence;
         private EZ8_UI m_ui = null;
@@ -57,7 +57,7 @@
             {
                 this.m_portName = null;
             }
-            this.m_hardware = new EZ_8.EZ_8();
+            this.m_hardware = new EZ_8();
             this.m_hardware.PortName = this.m_portName;
             this.m_ui = new EZ8_UI(this.m_hardware);
         }

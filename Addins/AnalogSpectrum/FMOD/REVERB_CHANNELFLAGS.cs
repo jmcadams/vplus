@@ -1,7 +1,5 @@
 ﻿namespace FMOD
 {
-    using System;
-
     public class REVERB_CHANNELFLAGS
     {
         public const uint DEFAULT = 15;

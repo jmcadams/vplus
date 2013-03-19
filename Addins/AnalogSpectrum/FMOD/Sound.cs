@@ -1,9 +1,9 @@
-﻿namespace FMOD
-{
-    using System;
-    using System.Runtime.InteropServices;
-    using System.Text;
+﻿using System;
+using System.Runtime.InteropServices;
+using System.Text;
 
+namespace FMOD
+{
     public class Sound
     {
         private IntPtr soundraw;

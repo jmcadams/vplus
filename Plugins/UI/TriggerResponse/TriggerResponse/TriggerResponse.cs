@@ -110,7 +110,7 @@
 
         private void InitializeComponent()
         {
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(TriggerResponse.TriggerResponse));
+            ComponentResourceManager manager = new ComponentResourceManager(typeof(TriggerResponse));
             this.toolStripContainer1 = new ToolStripContainer();
             this.pictureBoxRedArrow = new PictureBox();
             this.labelStatus = new Label();

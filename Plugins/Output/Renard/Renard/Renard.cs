@@ -167,7 +167,7 @@
                 while (index <= num2)
                 {
                     byte num8 = channelValues[index];
-                    byte num9 = -num8;
+                    byte num9 = (byte)-num8;
                     if ((num8 >= 1) && (num8 <= 8))
                     {
                         array[num8 - 1] = 1;

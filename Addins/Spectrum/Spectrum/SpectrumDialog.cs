@@ -71,9 +71,9 @@ namespace Spectrum {
 			this.m_channelBandConnections = new Dictionary<int, FrequencyBand>();
 			this.UpdateScaleLabel();
 			int[] numArray = new int[] { 
-                20, 0x19, 0x1f, 40, 50, 0x3f, 80, 100, 0x7d, 160, 200, 250, 0x13b, 400, 500, 630, 
-                800, 0x3e8, 0x4e2, 0x640, 0x7d0, 0x9c4, 0xc4e, 0xfa0, 0x1388, 0x189c, 0x1f40, 0x2710, 0x30d4, 0x3e80, 0x4e20
-             };
+				20, 0x19, 0x1f, 40, 50, 0x3f, 80, 100, 0x7d, 160, 200, 250, 0x13b, 400, 500, 630, 
+				800, 0x3e8, 0x4e2, 0x640, 0x7d0, 0x9c4, 0xc4e, 0xfa0, 0x1388, 0x189c, 0x1f40, 0x2710, 0x30d4, 0x3e80, 0x4e20
+			 };
 			foreach (int num in numArray) {
 				this.m_bands.Add(new FrequencyBand(num));
 			}
@@ -125,7 +125,7 @@ namespace Spectrum {
 					this.channel.getPosition(ref position, TIMEUNIT.MS);
 					dialog.Progress = (int)position;
 					this.GetSpectrumData();
-					int num3 = (int)(((ulong)position) / ((long)this.m_sequence.EventPeriod));
+					int num3 = (int)(((long)position) / ((long)this.m_sequence.EventPeriod));
 					if (num3 >= this.m_sequence.TotalEventPeriods) {
 						break;
 					}

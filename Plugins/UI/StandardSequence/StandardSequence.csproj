@@ -205,7 +205,6 @@
     <EmbeddedResource Include="VixenEditor.StandardSequence.resources" />
     <EmbeddedResource Include="VixenEditor.TestChannelsDialog.resources" />
     <EmbeddedResource Include="VixenEditor.TestConsoleDialog.resources" />
-    <EmbeddedResource Include="VixenEditor.ThinSelection.resources" />
     <EmbeddedResource Include="VixenEditor\ThinSelection.resx">
       <DependentUpon>ThinSelection.cs</DependentUpon>
     </EmbeddedResource>

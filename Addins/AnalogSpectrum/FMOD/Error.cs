@@ -1,7 +1,5 @@
 ﻿namespace FMOD
 {
-    using System;
-
     internal class Error
     {
         public static string String(RESULT errcode)

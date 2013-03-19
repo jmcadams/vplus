@@ -1,7 +1,7 @@
-﻿namespace FMOD
-{
-    using System;
+﻿using System;
 
+namespace FMOD
+{
     public enum TAGTYPE
     {
         UNKNOWN,

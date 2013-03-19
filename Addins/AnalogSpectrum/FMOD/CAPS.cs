@@ -1,7 +1,5 @@
 ﻿namespace FMOD
 {
-    using System;
-
     public enum CAPS
     {
         HARDWARE = 1,

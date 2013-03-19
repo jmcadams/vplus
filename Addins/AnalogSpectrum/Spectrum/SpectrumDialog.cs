@@ -18,7 +18,7 @@ namespace Spectrum
 	//this.pictureBoxScaleDown.Image = (Image)manager.GetObject("pictureBoxScaleDown.Image");
 	//this.buttonAutoMap = new Button();
 
-	internal class SpectrumDialog : Form
+	internal partial class SpectrumDialog : Form
 	{
 		private const int BAND_HEIGHT = 100;
 		private const int BAND_LEVEL_GUTTER = 3;
@@ -64,7 +64,7 @@ namespace Spectrum
 		private Sound sound = null;
 		private float[] spectrum = new float[0x200];
 		private const int SPECTRUMSIZE = 0x200;
-		private System system = null;
+		private FMOD.System system = null;
 		private System.Windows.Forms.Timer timer;
 
 		public SpectrumDialog(EventSequence sequence)
@@ -183,7 +183,7 @@ namespace Spectrum
 					this.channel.getPosition(ref position, TIMEUNIT.MS);
 					dialog.Progress = (int) position;
 					this.GetSpectrumData();
-					int num3 = (int) (((ulong) position) / ((long) this.m_sequence.EventPeriod));
+					int num3 = (int) (((long) position) / ((long) this.m_sequence.EventPeriod));
 					if (num3 >= this.m_sequence.TotalEventPeriods)
 					{
 						break;

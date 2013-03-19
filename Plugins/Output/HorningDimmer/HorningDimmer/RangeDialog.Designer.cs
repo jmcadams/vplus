@@ -5,7 +5,7 @@ namespace HorningDimmer {
 	using System.ComponentModel;
 	using System.Collections;
 
-	internal partial class RangeDialog {
+	public partial class RangeDialog {
 		private IContainer components;
 
 		#region Windows Form Designer generated code

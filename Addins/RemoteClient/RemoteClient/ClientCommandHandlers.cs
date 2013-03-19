@@ -12,7 +12,7 @@
         public static void ChannelCount(Socket socket, ClientContext clientContext)
         {
             socket.Send(new byte[] { 0x13 });
-            RemoteClient.Sockets.SendSocketInt32(socket, clientContext.ChannelCount);
+            Sockets.SendSocketInt32(socket, clientContext.ChannelCount);
             socket.Close();
         }
 
@@ -48,7 +48,7 @@
             if (Interfaces.Available.TryGetValue("ISystem", out obj2))
             {
                 socket.Send(new byte[] { 0x13 });
-                RemoteClient.Sockets.SendSocketString(socket, ((ISystem) obj2).UserPreferences.GetString("ClientName"));
+                Sockets.SendSocketString(socket, ((ISystem) obj2).UserPreferences.GetString("ClientName"));
             }
             else
             {
@@ -62,13 +62,13 @@
             int num;
             try
             {
-                num = RemoteClient.Sockets.GetSocketInt32(socket);
+                num = Sockets.GetSocketInt32(socket);
             }
             catch
             {
                 num = 0;
             }
-            byte[] socketBytes = RemoteClient.Sockets.GetSocketBytes(socket, num);
+            byte[] socketBytes = Sockets.GetSocketBytes(socket, num);
             string path = Path.Combine(Paths.SequencePath, fileName);
             try
             {
@@ -85,7 +85,7 @@
         public static void CurrentPosition(Socket socket, ClientContext clientContext)
         {
             socket.Send(new byte[] { 0x13 });
-            RemoteClient.Sockets.SendSocketInt32(socket, clientContext.ExecutionInterface.GetCurrentPosition(clientContext.ExecutionContextHandle));
+            Sockets.SendSocketInt32(socket, clientContext.ExecutionInterface.GetCurrentPosition(clientContext.ExecutionContextHandle));
             socket.Close();
         }
 
@@ -96,7 +96,7 @@
             {
                 socket.Send(new byte[] { 0x13 });
                 byte[] buffer = System.IO.File.ReadAllBytes(path);
-                RemoteClient.Sockets.SendSocketInt32(socket, buffer.Length);
+                Sockets.SendSocketInt32(socket, buffer.Length);
                 socket.Send(buffer);
             }
             else
@@ -132,7 +132,7 @@
             socket.Close();
         }
 
-        public static void ListLocal(Socket socket, RemoteClient.ObjectType objectType, string fileSpec)
+        public static void ListLocal(Socket socket, ObjectType objectType, string fileSpec)
         {
             string path = null;
             string searchPattern = null;
@@ -140,11 +140,11 @@
             searchPattern = fileSpec;
             switch (objectType)
             {
-                case RemoteClient.ObjectType.Sequence:
+                case ObjectType.Sequence:
                     path = Paths.SequencePath;
                     break;
 
-                case RemoteClient.ObjectType.Program:
+                case ObjectType.Program:
                     path = Paths.ProgramPath;
                     break;
 
@@ -161,7 +161,7 @@
             socket.Send(buffer);
             foreach (string str3 in files)
             {
-                RemoteClient.Sockets.SendSocketString(socket, Path.GetFileName(str3));
+                Sockets.SendSocketString(socket, Path.GetFileName(str3));
             }
             socket.Close();
         }
@@ -179,13 +179,13 @@
             socket.Close();
         }
 
-        public static void RetrieveLocal(Socket socket, ClientContext clientContext, RemoteClient.ObjectType objectType, string objectFileName)
+        public static void RetrieveLocal(Socket socket, ClientContext clientContext, ObjectType objectType, string objectFileName)
         {
             byte num = 20;
             try
             {
                 string str;
-                if (objectType == RemoteClient.ObjectType.Program)
+                if (objectType == ObjectType.Program)
                 {
                     str = Path.Combine(Paths.ProgramPath, objectFileName);
                     if (System.IO.File.Exists(str))
@@ -212,9 +212,9 @@
             socket.Close();
         }
 
-        public static void RetrieveRemote(Socket socket, IPAddress serverAddress, ClientContext clientContext, RemoteClient.ObjectType objectType, string objectFileName)
+        public static void RetrieveRemote(Socket socket, IPAddress serverAddress, ClientContext clientContext, ObjectType objectType, string objectFileName)
         {
-            if (objectType == RemoteClient.ObjectType.Program)
+            if (objectType == ObjectType.Program)
             {
                 clientContext.ContextObject = RetrieveRemoteProgram(objectFileName, serverAddress);
             }
@@ -233,10 +233,10 @@
             array[2] = (byte) name.Length;
             Encoding.ASCII.GetBytes(name).CopyTo(array, 3);
             socket.Send(array);
-            if (RemoteClient.Sockets.GetSocketByte(socket) == 0x13)
+            if (Sockets.GetSocketByte(socket) == 0x13)
             {
                 int num2;
-                int num = RemoteClient.Sockets.GetSocketInt32(socket);
+                int num = Sockets.GetSocketInt32(socket);
                 byte[] buffer = new byte[num];
                 int offset = 0;
                 do
@@ -252,7 +252,7 @@
 
         public static SequenceProgram RetrieveRemoteProgram(string fileName, IPAddress serverAddress)
         {
-            TcpClient client = RemoteClient.Sockets.ConnectTo(serverAddress, 0xa1b9);
+            TcpClient client = Sockets.ConnectTo(serverAddress, 0xa1b9);
             client.LingerState = new LingerOption(true, 5);
             byte[] buffer = null;
             try
@@ -272,11 +272,11 @@
                 SequenceProgram program = new SequenceProgram(fileName);
                 System.IO.File.Delete(fileName);
                 program.ClearSequences();
-                int socketByte = RemoteClient.Sockets.GetSocketByte(client.Client);
+                int socketByte = Sockets.GetSocketByte(client.Client);
                 while (socketByte-- > 0)
                 {
-                    string socketString = RemoteClient.Sockets.GetSocketString(client.Client);
-                    byte[] socketBytes = RemoteClient.Sockets.GetSocketBytes(client.Client, RemoteClient.Sockets.GetSocketInt32(client.Client));
+                    string socketString = Sockets.GetSocketString(client.Client);
+                    byte[] socketBytes = Sockets.GetSocketBytes(client.Client, Sockets.GetSocketInt32(client.Client));
                     string tempFileName = Path.GetTempFileName();
                     System.IO.File.WriteAllBytes(tempFileName, socketBytes);
                     EventSequence sequence = new EventSequence(tempFileName);
@@ -301,7 +301,7 @@
 
         public static EventSequence RetrieveRemoteSequence(string fileName, IPAddress serverAddress)
         {
-            TcpClient client = RemoteClient.Sockets.ConnectTo(serverAddress, 0xa1b9);
+            TcpClient client = Sockets.ConnectTo(serverAddress, 0xa1b9);
             client.LingerState = new LingerOption(true, 5);
             byte[] buffer = null;
             try
@@ -359,13 +359,13 @@
                     int num2 = contextObject.EventValues.GetLength(1);
                     try
                     {
-                        num3 = RemoteClient.Sockets.GetSocketInt32(socket);
+                        num3 = Sockets.GetSocketInt32(socket);
                     }
                     catch
                     {
                         num3 = 0;
                     }
-                    byte[] socketBytes = RemoteClient.Sockets.GetSocketBytes(socket, num3);
+                    byte[] socketBytes = Sockets.GetSocketBytes(socket, num3);
                     if (num3 != (length * num2))
                     {
                         socket.Send(new byte[] { 20 });

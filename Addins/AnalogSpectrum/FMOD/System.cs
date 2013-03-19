@@ -1,8 +1,9 @@
-﻿namespace FMOD
+﻿using System;
+using System.Runtime.InteropServices;
+using System.Text;
+
+namespace FMOD
 {
-    using System;
-    using System.Runtime.InteropServices;
-    using System.Text;
 
     public class System
     {

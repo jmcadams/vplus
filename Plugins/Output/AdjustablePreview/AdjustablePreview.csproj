@@ -104,7 +104,6 @@
     <EmbeddedResource Include="AdjustablePreview.Properties.Resources.resources" />
     <EmbeddedResource Include="Preview.PreviewDialog.resources" />
     <EmbeddedResource Include="Preview.ReorderDialog.resources" />
-    <EmbeddedResource Include="Preview.SetupDialog.resources" />
     <EmbeddedResource Include="Preview\SetupDialog.resx">
       <DependentUpon>SetupDialog.cs</DependentUpon>
     </EmbeddedResource>

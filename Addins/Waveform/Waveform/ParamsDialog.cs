@@ -63,7 +63,7 @@ namespace Waveform {
 						this.m_sound.getLength(ref this.m_lenbytes, TIMEUNIT.PCMBYTES);
 						this.m_sound.getLength(ref this.m_lenMilliseconds, TIMEUNIT.MS);
 						this.buttonStart.Enabled = true;
-						this.progressBar1.Maximum = (int)(((ulong)this.m_lenMilliseconds) / ((long)this.m_sequence.EventPeriod));
+						this.progressBar1.Maximum = (int)(((long)this.m_lenMilliseconds) / ((long)this.m_sequence.EventPeriod));
 						this.progressBar1.Value = this.progressBar1.Minimum;
 						this.progressBar1.Visible = true;
 						this.label1.Text = "Calculating...";
@@ -199,7 +199,7 @@ namespace Waveform {
 		private void ParsePCM(object obj) {
 			double num = 1000.0 / ((double)this.m_sequence.EventPeriod);
 			double num2 = (((double)this.m_lenbytes) / ((double)this.m_channels)) / ((double)(this.m_bits / 8));
-			int num3 = (int)(((ulong)this.m_lenMilliseconds) / ((long)this.m_sequence.EventPeriod));
+			int num3 = (int)(((long)this.m_lenMilliseconds) / ((long)this.m_sequence.EventPeriod));
 			double num4 = num2 / ((double)num3);
 			this.m_levels = new short[num3];
 			this.m_run = RunState.Running;

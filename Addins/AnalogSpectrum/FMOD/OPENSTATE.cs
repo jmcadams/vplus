@@ -1,7 +1,5 @@
 ﻿namespace FMOD
 {
-    using System;
-
     public enum OPENSTATE
     {
         READY,

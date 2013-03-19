@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Collections;
 
 namespace VixenEditor {
-	internal partial class FindAndReplaceDialog {
+	public partial class FindAndReplaceDialog {
 		private IContainer components;
 
 		#region Windows Form Designer generated code

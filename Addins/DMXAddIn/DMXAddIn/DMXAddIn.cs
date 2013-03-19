@@ -10,7 +10,7 @@
     public class DMXAddIn : IAddIn, ILoadable, IPlugIn
     {
         private bool m_autoStart = false;
-        private IDMX.IDMX m_dmxInterface;
+        private IDMX m_dmxInterface;
         private bool m_DMXRunning = false;
 
         public bool Execute(EventSequence sequence)
@@ -35,7 +35,7 @@
 
         public void Loading(XmlNode dataNode)
         {
-            this.m_dmxInterface = new IDMX.IDMX();
+            this.m_dmxInterface = new IDMX();
             this.LoadSetup();
             if (this.m_autoStart)
             {

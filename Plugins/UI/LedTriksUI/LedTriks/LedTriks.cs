@@ -157,7 +157,7 @@
 
         private void boardLayoutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            LedTriks.BoardLayoutDialog dialog = new LedTriks.BoardLayoutDialog(this.m_boardLayout);
+            BoardLayoutDialog dialog = new BoardLayoutDialog(this.m_boardLayout);
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 this.SetBoardLayout(dialog.BoardLayout.Width, dialog.BoardLayout.Height);
@@ -345,7 +345,7 @@
         private void InitializeComponent()
         {
             this.components = new Container();
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(LedTriks.LedTriks));
+            ComponentResourceManager manager = new ComponentResourceManager(typeof(LedTriks));
             this.menuStrip = new MenuStrip();
             this.sequenceToolStripMenuItem = new ToolStripMenuItem();
             this.saveToolStripMenuItem = new ToolStripMenuItem();

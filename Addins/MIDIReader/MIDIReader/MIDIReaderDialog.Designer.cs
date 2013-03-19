@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace MIDIReader
 {
-	public partial class MIDIReaderDialog {
+	internal partial class MIDIReaderDialog {
 		private IContainer components = null;
 
 		#region Windows Form Designer generated code

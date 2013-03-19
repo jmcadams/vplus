@@ -1,11 +1,9 @@
 ﻿namespace FMOD
 {
-    using System;
-
-    public enum DSP_HIGHPASS
-    {
-        CUTOFF,
-        RESONANCE
-    }
+	public enum DSP_HIGHPASS
+	{
+		CUTOFF,
+		RESONANCE
+	}
 }
 

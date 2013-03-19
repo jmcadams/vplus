@@ -9,7 +9,7 @@
         private int m_id;
         private char m_note;
         private int m_octave;
-        private MIDIReader.Pitch m_pitch;
+        private Pitch m_pitch;
         private Rectangle m_region;
         private int m_signature;
 
@@ -27,10 +27,10 @@
         {
             switch (this.m_pitch)
             {
-                case MIDIReader.Pitch.Flat:
+                case Pitch.Flat:
                     return string.Format("{0}b{1}", this.m_note, this.m_octave);
 
-                case MIDIReader.Pitch.Sharp:
+                case Pitch.Sharp:
                     return string.Format("{0}#{1}", this.m_note, this.m_octave);
             }
             return string.Format("{0}{1}", this.m_note, this.m_octave);
@@ -86,7 +86,7 @@
             }
         }
 
-        public MIDIReader.Pitch Pitch
+        public Pitch Pitch
         {
             get
             {

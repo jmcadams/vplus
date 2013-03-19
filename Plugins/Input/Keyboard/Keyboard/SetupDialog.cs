@@ -112,7 +112,7 @@ namespace Keyboard {
 				else {
 					Dictionary<Keys, Inputs.InputType> dictionary;
 					Keys keys;
-					(dictionary = this.m_keyInputs)[keys = key] = ((Inputs.InputType)dictionary[keys]) + Inputs.InputType.First;
+					(dictionary = this.m_keyInputs)[keys = key] = ((Inputs.InputType)dictionary[keys]) | Inputs.InputType.First;
 				}
 			}
 			else {

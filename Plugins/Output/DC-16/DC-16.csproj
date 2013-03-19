@@ -92,7 +92,6 @@
     <Compile Include="Global.cs">
       <SubType>Code</SubType>
     </Compile>
-    <EmbeddedResource Include="DC_16.frmEfxSetup.resources" />
     <EmbeddedResource Include="DC_16.frmSetupDialog.resources" />
     <EmbeddedResource Include="DC_16\frmEfxSetup.resx">
       <DependentUpon>frmEfxSetup.cs</DependentUpon>

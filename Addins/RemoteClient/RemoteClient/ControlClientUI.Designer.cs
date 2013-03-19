@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Collections;
 
 namespace RemoteClient {
-	public partial class ControlClientUI {
+	internal partial class ControlClientUI {
 		private IContainer components = null;
 
 		#region Windows Form Designer generated code

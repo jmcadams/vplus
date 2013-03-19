@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Collections;
 
 namespace VixenEditor {
-	internal partial class DelayedStartDialog {
+	public partial class DelayedStartDialog {
 		private IContainer components = null;
 
 		#region Windows Form Designer generated code

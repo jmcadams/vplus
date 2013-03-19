@@ -5,7 +5,7 @@ namespace FC_4 {
 	using System.ComponentModel;
 	using System.Collections;
 
-	internal partial class frmEfxSetup {
+	public partial class frmEfxSetup {
 		private IContainer components;
 
 		#region Windows Form Designer generated code

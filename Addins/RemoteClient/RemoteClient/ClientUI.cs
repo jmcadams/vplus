@@ -181,10 +181,10 @@
 				address = IPAddress.Parse(ipString);
 			}
 			else {
-				address = RemoteClient.Sockets.GetIPV4AddressFor(serverNameAddress);
+				address = Sockets.GetIPV4AddressFor(serverNameAddress);
 			}
 			try {
-				TcpClient client = RemoteClient.Sockets.ConnectTo(address, 0xa1b9);
+				TcpClient client = Sockets.ConnectTo(address, 0xa1b9);
 				client.Client.Send(new byte[] { 0x12 });
 				byte[] buffer = new byte[1];
 				client.Client.Receive(buffer, 1, SocketFlags.None);

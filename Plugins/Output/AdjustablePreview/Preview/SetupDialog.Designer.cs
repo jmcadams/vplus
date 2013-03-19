@@ -5,7 +5,7 @@ namespace Preview {
 	using System.ComponentModel;
 	using System.Collections;
 
-	internal partial class SetupDialog {
+	public partial class SetupDialog {
 		private IContainer components;
 
 		#region Windows Form Designer generated code
@@ -120,16 +120,16 @@ namespace Preview {
 			// toolStrip1
 			// 
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel1,
-            this.toolStripTextBoxResolutionX,
-            this.toolStripLabel2,
-            this.toolStripTextBoxResolutionY,
-            this.toolStripSeparator1,
-            this.toolStripLabel3,
-            this.toolStripComboBoxPixelSize,
-            this.toolStripDropDownButtonUpdate,
-            this.toolStripSeparator3,
-            this.toolStripButtonResetSize});
+			this.toolStripLabel1,
+			this.toolStripTextBoxResolutionX,
+			this.toolStripLabel2,
+			this.toolStripTextBoxResolutionY,
+			this.toolStripSeparator1,
+			this.toolStripLabel3,
+			this.toolStripComboBoxPixelSize,
+			this.toolStripDropDownButtonUpdate,
+			this.toolStripSeparator3,
+			this.toolStripButtonResetSize});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.Size = new System.Drawing.Size(576, 25);
@@ -178,16 +178,16 @@ namespace Preview {
 			this.toolStripComboBoxPixelSize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.toolStripComboBoxPixelSize.DropDownWidth = 75;
 			this.toolStripComboBoxPixelSize.Items.AddRange(new object[] {
-            "1 pixel",
-            "2 pixels",
-            "3 pixels",
-            "4 pixels",
-            "5 pixels",
-            "6 pixels",
-            "7 pixels",
-            "8 pixels",
-            "9 pixels",
-            "10 pixels"});
+			"1 pixel",
+			"2 pixels",
+			"3 pixels",
+			"4 pixels",
+			"5 pixels",
+			"6 pixels",
+			"7 pixels",
+			"8 pixels",
+			"9 pixels",
+			"10 pixels"});
 			this.toolStripComboBoxPixelSize.MaxDropDownItems = 10;
 			this.toolStripComboBoxPixelSize.Name = "toolStripComboBoxPixelSize";
 			this.toolStripComboBoxPixelSize.Size = new System.Drawing.Size(75, 25);
@@ -222,14 +222,14 @@ namespace Preview {
 			// toolStrip2
 			// 
 			this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripComboBoxChannels,
-            this.toolStripDropDownButtonClear,
-            this.toolStripSeparator2,
-            this.toolStripButtonLoadImage,
-            this.toolStripButtonClearImage,
-            this.toolStripButtonSaveImage,
-            this.toolStripSeparator4,
-            this.toolStripButtonReorder});
+			this.toolStripComboBoxChannels,
+			this.toolStripDropDownButtonClear,
+			this.toolStripSeparator2,
+			this.toolStripButtonLoadImage,
+			this.toolStripButtonClearImage,
+			this.toolStripButtonSaveImage,
+			this.toolStripSeparator4,
+			this.toolStripButtonReorder});
 			this.toolStrip2.Location = new System.Drawing.Point(0, 25);
 			this.toolStrip2.Name = "toolStrip2";
 			this.toolStrip2.Size = new System.Drawing.Size(576, 25);
@@ -247,8 +247,8 @@ namespace Preview {
 			// 
 			this.toolStripDropDownButtonClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.toolStripDropDownButtonClear.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.allChannelsToolStripMenuItem,
-            this.selectedChannelToolStripMenuItem});
+			this.allChannelsToolStripMenuItem,
+			this.selectedChannelToolStripMenuItem});
 			this.toolStripDropDownButtonClear.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStripDropDownButtonClear.Name = "toolStripDropDownButtonClear";
 			this.toolStripDropDownButtonClear.Size = new System.Drawing.Size(47, 22);

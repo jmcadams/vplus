@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Collections;
 
 namespace Spectrum {
-	public partial class AutoMapDialog {
+	internal partial class AutoMapDialog {
 		private IContainer components = null;
 
 		#region Windows Form Designer generated code

@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Prop2SeqGen
 {
-	public partial class frmAddin {
+	internal partial class frmAddin {
 		private IContainer components = null;
 
 		#region Windows Form Designer generated code

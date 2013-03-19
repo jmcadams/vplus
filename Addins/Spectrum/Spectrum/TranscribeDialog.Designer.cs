@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Collections;
 
 namespace Spectrum {
-	public partial class TranscribeDialog {
+	internal partial class TranscribeDialog : Form {
 		private IContainer components = null;
 
 		#region Windows Form Designer generated code

@@ -51,10 +51,10 @@
         private void LocalClientRequestHandler(object state)
         {
             Socket socket = (Socket) state;
-            switch (((RequestType) RemoteClient.Sockets.GetSocketByte(socket)))
+            switch (((RequestType) Sockets.GetSocketByte(socket)))
             {
                 case RequestType.Execute:
-                    ClientCommandHandlers.Execute(socket, this.m_clientContext, RemoteClient.Sockets.GetSocketInt32(socket), RemoteClient.Sockets.GetSocketInt32(socket));
+                    ClientCommandHandlers.Execute(socket, this.m_clientContext, Sockets.GetSocketInt32(socket), Sockets.GetSocketInt32(socket));
                     break;
 
                 case RequestType.Stop:
@@ -62,19 +62,19 @@
                     break;
 
                 case RequestType.ChannelOn:
-                    ClientCommandHandlers.ChannelOn(socket, this.m_clientContext, RemoteClient.Sockets.GetSocketInt32(socket));
+                    ClientCommandHandlers.ChannelOn(socket, this.m_clientContext, Sockets.GetSocketInt32(socket));
                     break;
 
                 case RequestType.ChannelOff:
-                    ClientCommandHandlers.ChannelOff(socket, this.m_clientContext, RemoteClient.Sockets.GetSocketInt32(socket));
+                    ClientCommandHandlers.ChannelOff(socket, this.m_clientContext, Sockets.GetSocketInt32(socket));
                     break;
 
                 case RequestType.ListLocal:
-                    ClientCommandHandlers.ListLocal(socket, (RemoteClient.ObjectType) RemoteClient.Sockets.GetSocketByte(socket), RemoteClient.Sockets.GetSocketString(socket));
+                    ClientCommandHandlers.ListLocal(socket, (ObjectType) Sockets.GetSocketByte(socket), Sockets.GetSocketString(socket));
                     break;
 
                 case RequestType.RetrieveLocal:
-                    ClientCommandHandlers.RetrieveLocal(socket, this.m_clientContext, (RemoteClient.ObjectType) RemoteClient.Sockets.GetSocketByte(socket), RemoteClient.Sockets.GetSocketString(socket));
+                    ClientCommandHandlers.RetrieveLocal(socket, this.m_clientContext, (ObjectType) Sockets.GetSocketByte(socket), Sockets.GetSocketString(socket));
                     break;
 
                 case RequestType.LocalClientName:
@@ -86,11 +86,11 @@
                     break;
 
                 case RequestType.DownloadSequence:
-                    ClientCommandHandlers.DownloadSequence(socket, RemoteClient.Sockets.GetSocketString(socket));
+                    ClientCommandHandlers.DownloadSequence(socket, Sockets.GetSocketString(socket));
                     break;
 
                 case RequestType.CommitSequence:
-                    ClientCommandHandlers.CommitSequence(socket, RemoteClient.Sockets.GetSocketString(socket));
+                    ClientCommandHandlers.CommitSequence(socket, Sockets.GetSocketString(socket));
                     break;
 
                 case RequestType.CurrentPosition:
@@ -109,7 +109,7 @@
             int num = this.m_responseSocket.EndReceiveFrom(result, ref endPoint);
             FindRequest request = new FindRequest(this.m_findRequestBuffer);
             FindResult result2 = new FindResult();
-            result2.resultAddress = BitConverter.ToInt32(RemoteClient.Sockets.GetIPV4Address().GetAddressBytes(), 0);
+            result2.resultAddress = BitConverter.ToInt32(Sockets.GetIPV4Address().GetAddressBytes(), 0);
             result2.resultPort = 0xa1bc;
             int size = result2.SerializeToPacket(this.m_findResultBuffer);
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
@@ -133,7 +133,7 @@
                 this.m_running = true;
                 try
                 {
-                    this.m_clientListener = new TcpListener(new IPEndPoint(RemoteClient.Sockets.GetIPV4Address(), 0xa1bd));
+                    this.m_clientListener = new TcpListener(new IPEndPoint(Sockets.GetIPV4Address(), 0xa1bd));
                     this.m_clientListener.Start();
                     this.m_listenerThread = new Thread(new ThreadStart(this.LocalClientListener));
                     this.m_listenerThread.Start();

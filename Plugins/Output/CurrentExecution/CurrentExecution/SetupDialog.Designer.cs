@@ -5,7 +5,7 @@ namespace CurrentExecution {
 	using System.ComponentModel;
 	using System.Collections;
 
-	internal partial class SetupDialog {
+	public partial class SetupDialog {
 		private IContainer components;
 
 		#region Windows Form Designer generated code

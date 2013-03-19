@@ -597,14 +597,14 @@ namespace MIDIReader
             }
         }
 
-        public MIDIReader.KeyChannelMapping[] Mappings
+        public KeyChannelMapping[] Mappings
         {
             get
             {
-                List<MIDIReader.KeyChannelMapping> list = new List<MIDIReader.KeyChannelMapping>();
+                List<KeyChannelMapping> list = new List<KeyChannelMapping>();
                 foreach (Key key in this.m_keyChannelConnections.Keys)
                 {
-                    MIDIReader.KeyChannelMapping item = new MIDIReader.KeyChannelMapping(key.Id);
+                    KeyChannelMapping item = new KeyChannelMapping(key.Id);
                     list.Add(item);
                     item.ChannelList.AddRange(this.m_keyChannelConnections[key]);
                 }
@@ -612,7 +612,7 @@ namespace MIDIReader
             }
             set
             {
-                foreach (MIDIReader.KeyChannelMapping mapping in value)
+                foreach (KeyChannelMapping mapping in value)
                 {
                     Key item = this.m_keyLookup[mapping.KeyID];
                     List<int> list = this.m_keyChannelConnections[item] = new List<int>();

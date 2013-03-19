@@ -56,11 +56,11 @@
                 {
                     if ((num2 < this.m_boardLayout.Height) && (num < this.m_boardLayout.Width))
                     {
-                        *(this.m_boardMultipliers[num2, num]) = new Point(num * 0x30, num2 * 0x10);
+                        (this.m_boardMultipliers[num2, num]) = new Point(num * 0x30, num2 * 0x10);
                     }
                     else
                     {
-                        *(this.m_boardMultipliers[num2, num]) = new Point(-1, -1);
+                        (this.m_boardMultipliers[num2, num]) = new Point(-1, -1);
                     }
                 }
             }
@@ -113,7 +113,7 @@
                     for (int k = 0; k < this.m_boardsUsed; k++)
                     {
                         Point point = this.m_boardLocations[k];
-                        Point point2 = *(this.m_boardMultipliers[point.Y, point.X]);
+                        Point point2 = (this.m_boardMultipliers[point.Y, point.X]);
                         if ((num3 & num5) != 0)
                         {
                             this.m_cells.Add((uint) ((((j + point2.X) << 0x10) * this.m_cellSize) | ((i + point2.Y) * this.m_cellSize)));

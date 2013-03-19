@@ -41,7 +41,7 @@
                             }
                         }
                         document2.Load(innerText);
-                        EventSequence sequence2 = new EventSequence(null);
+                        EventSequence sequence2 = new EventSequence((Preference2)null);
                         sequence2.EventPeriod = dialog2.EventPeriod;
                         XmlNode node = document2.SelectSingleNode("//cometSong");
                         string path = string.Format("{0} - {1}.vix", Path.Combine(Paths.SequencePath, document.SelectSingleNode("//cometPlaylist").Attributes["playlistName"].Value), node.Attributes["songName"].Value);

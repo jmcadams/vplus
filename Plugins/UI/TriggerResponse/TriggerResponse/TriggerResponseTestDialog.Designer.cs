@@ -12,7 +12,7 @@ namespace TriggerResponse {
 		private Button buttonTest;
 		private ComboBox comboBoxTriggerResponses;
 		private Label label1;
-		private ITrigger m_triggerInterface;
+		private Vixen.ITrigger m_triggerInterface;
 
 		private void InitializeComponent() {
 			this.comboBoxTriggerResponses = new ComboBox();

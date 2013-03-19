@@ -4,10 +4,8 @@ using System.Drawing;
 using System.ComponentModel;
 using System.Collections;
 
-namespace Spectrum
-{
-	public partial class SpectrumDialog
-	{
+namespace Spectrum {
+	internal partial class SpectrumDialog {
 		private Button btnAutoMap;
 		private Button buttonCancel;
 		private Button buttonOK;
@@ -21,9 +19,8 @@ namespace Spectrum
 		private PictureBox pictureBoxStop;
 
 		#region Windows Form Designer generated code
-		
-		private void InitializeComponent()
-		{
+
+		private void InitializeComponent() {
 			this.components = new Container();
 			this.btnAutoMap = new Button();
 			this.buttonOK = new Button();
@@ -36,11 +33,11 @@ namespace Spectrum
 			this.timer = new System.Windows.Forms.Timer(this.components);
 			this.labelScaleFactor = new Label();
 			this.checkBoxLockSliders = new CheckBox();
-			((ISupportInitialize) this.pictureBoxPlay).BeginInit();
-			((ISupportInitialize) this.pictureBoxPause).BeginInit();
-			((ISupportInitialize) this.pictureBoxStop).BeginInit();
-			((ISupportInitialize) this.pictureBoxScaleUp).BeginInit();
-			((ISupportInitialize) this.pictureBoxScaleDown).BeginInit();
+			((ISupportInitialize)this.pictureBoxPlay).BeginInit();
+			((ISupportInitialize)this.pictureBoxPause).BeginInit();
+			((ISupportInitialize)this.pictureBoxStop).BeginInit();
+			((ISupportInitialize)this.pictureBoxScaleUp).BeginInit();
+			((ISupportInitialize)this.pictureBoxScaleDown).BeginInit();
 			base.SuspendLayout();
 			this.btnAutoMap.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
 			this.btnAutoMap.Location = new Point(12, 0x143);
@@ -143,33 +140,29 @@ namespace Spectrum
 			base.HelpButtonClicked += new CancelEventHandler(this.SpectrumParamsDialog_HelpButtonClicked);
 			base.FormClosing += new FormClosingEventHandler(this.SpectrumDialog_FormClosing);
 			base.Load += new EventHandler(this.SpectrumDialog_Load);
-			((ISupportInitialize) this.pictureBoxPlay).EndInit();
-			((ISupportInitialize) this.pictureBoxPause).EndInit();
-			((ISupportInitialize) this.pictureBoxStop).EndInit();
-			((ISupportInitialize) this.pictureBoxScaleUp).EndInit();
-			((ISupportInitialize) this.pictureBoxScaleDown).EndInit();
+			((ISupportInitialize)this.pictureBoxPlay).EndInit();
+			((ISupportInitialize)this.pictureBoxPause).EndInit();
+			((ISupportInitialize)this.pictureBoxStop).EndInit();
+			((ISupportInitialize)this.pictureBoxScaleUp).EndInit();
+			((ISupportInitialize)this.pictureBoxScaleDown).EndInit();
 			base.ResumeLayout(false);
 			base.PerformLayout();
 		}
 		#endregion
 
-		protected override void Dispose(bool disposing)
-		{
-			RESULT result;
-			if (this.sound != null)
-			{
+		protected override void Dispose(bool disposing) {
+			FMOD.RESULT result;
+			if (this.sound != null) {
 				result = this.sound.release();
 				this.ERRCHECK(result);
 			}
-			if (this.system != null)
-			{
+			if (this.system != null) {
 				result = this.system.close();
 				this.ERRCHECK(result);
 				result = this.system.release();
 				this.ERRCHECK(result);
 			}
-			if (disposing && (this.components != null))
-			{
+			if (disposing && (this.components != null)) {
 				this.components.Dispose();
 			}
 			this.m_textFont.Dispose();

@@ -4,7 +4,7 @@
 
     public class ClientStatus
     {
-        public RemoteClient.ExecutionStatus ExecutionStatus;
+        public ExecutionStatus ExecutionStatus;
         public int ProgramLength;
         public string ProgramName;
         public int SequenceLength;

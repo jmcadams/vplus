@@ -1,7 +1,5 @@
 ﻿namespace FMOD
 {
-    using System;
-
     internal class PRESET
     {
         public REVERB_PROPERTIES ALLEY()

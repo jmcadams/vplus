@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Collections;
 
 namespace Spectrum {
-	public partial class SpectrumDialog {
+	internal partial class SpectrumDialog {
 		private IContainer components = null;
 
 		#region Windows Form Designer generated code
@@ -152,7 +152,7 @@ namespace Spectrum {
 		#endregion
 
 		protected override void Dispose(bool disposing) {
-			RESULT result;
+			FMOD.RESULT result;
 			if (this.sound != null) {
 				result = this.sound.release();
 				this.ERRCHECK(result);

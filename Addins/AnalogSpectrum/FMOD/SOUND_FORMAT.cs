@@ -1,7 +1,5 @@
 ﻿namespace FMOD
 {
-    using System;
-
     public enum SOUND_FORMAT
     {
         NONE,

@@ -6,7 +6,7 @@ namespace FC_4 {
 	using System.Xml;
 	using Vixen;
 
-	internal class frmSetupDialog : Form {
+	internal partial class frmSetupDialog : Form {
 
 		private XmlNode m_setupNode;
 

@@ -412,11 +412,11 @@ namespace Preview {
 		}
 
 		private void UpdateSetup() {
-			XmlNode contextNode = Preview.Xml.SetValue(this.m_setupNode, "Display", string.Empty);
-			Preview.Xml.SetValue(contextNode, "Height", this.toolStripTextBoxResolutionY.Text);
-			Preview.Xml.SetValue(contextNode, "Width", this.toolStripTextBoxResolutionX.Text);
-			Preview.Xml.SetValue(contextNode, "PixelSize", this.m_cellSize.ToString());
-			Preview.Xml.SetValue(contextNode, "Brightness", this.trackBarBrightness.Value.ToString());
+			XmlNode contextNode = Xml.SetValue(this.m_setupNode, "Display", string.Empty);
+			Xml.SetValue(contextNode, "Height", this.toolStripTextBoxResolutionY.Text);
+			Xml.SetValue(contextNode, "Width", this.toolStripTextBoxResolutionX.Text);
+			Xml.SetValue(contextNode, "PixelSize", this.m_cellSize.ToString());
+			Xml.SetValue(contextNode, "Brightness", this.trackBarBrightness.Value.ToString());
 			if (this.m_originalBackground != null) {
 				if (this.m_backgroundImageFileName != string.Empty) {
 					FileStream stream = new FileStream(this.m_backgroundImageFileName, FileMode.Open, FileAccess.Read, FileShare.Read);
@@ -430,12 +430,12 @@ namespace Preview {
 			else {
 				this.m_setupNode.SelectSingleNode("BackgroundImage").InnerText = Convert.ToBase64String(new byte[0]);
 			}
-			XmlNode emptyNodeAlways = Preview.Xml.GetEmptyNodeAlways(this.m_setupNode, "Channels");
+			XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(this.m_setupNode, "Channels");
 			List<byte> list = new List<byte>();
 			foreach (int num in this.m_channelDictionary.Keys) {
 				list.Clear();
-				XmlNode node = Preview.Xml.SetNewValue(emptyNodeAlways, "Channel", string.Empty);
-				Preview.Xml.SetAttribute(node, "number", (num + this.m_startChannel).ToString());
+				XmlNode node = Xml.SetNewValue(emptyNodeAlways, "Channel", string.Empty);
+				Xml.SetAttribute(node, "number", (num + this.m_startChannel).ToString());
 				foreach (uint num2 in this.m_channelDictionary[num]) {
 					list.AddRange(BitConverter.GetBytes(num2));
 				}

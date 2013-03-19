@@ -1,7 +1,6 @@
-﻿namespace FMOD
+﻿
+namespace FMOD
 {
-    using System;
-
     public enum CHANNELINDEX
     {
         FREE = -1,

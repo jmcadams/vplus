@@ -11,7 +11,7 @@
     public class EZ_8_Output : IEventDrivenOutputPlugIn, IOutputPlugIn, IHardwarePlugin, IPlugIn, ISetup
     {
         private XmlNode m_dataNode;
-        private EZ_8.EZ_8 m_hardware = null;
+        private EZ_8 m_hardware = null;
 
         public void Event(byte[] channelValues)
         {
@@ -29,7 +29,7 @@
             this.m_dataNode = setupNode;
             if (this.m_hardware == null)
             {
-                this.m_hardware = new EZ_8.EZ_8();
+                this.m_hardware = new EZ_8();
             }
             string innerText = Xml.GetNodeAlways(this.m_dataNode, "Port").InnerText;
             this.m_hardware.PortName = (innerText.Length != 0) ? innerText : null;
