@@ -1,11 +1,11 @@
-﻿namespace LedTriks
-{
-    using LedTriksUtil;
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using Vixen;
+﻿using LedTriksUtil;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using Vixen;
 
+namespace LedTriks
+{
     public class Context : IDisposable
     {
         private const int BOARD_HEIGHT = 0x10;

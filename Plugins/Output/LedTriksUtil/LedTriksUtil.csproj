@@ -35,7 +35,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\Build\Plugins\Output\</OutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugSymbols>true</DebugSymbols>
@@ -44,6 +44,7 @@
     <WarningLevel>4</WarningLevel>
     <DebugType>full</DebugType>
     <ErrorReport>prompt</ErrorReport>
+    <RegisterForComInterop>false</RegisterForComInterop>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -79,6 +80,9 @@
     </Compile>
     <Compile Include="LedTriksUtil\BoardLayoutDialog.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LedTriksUtil\BoardLayoutDialog.Designer.cs">
+      <DependentUpon>BoardLayoutDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="LedTriksUtil\Frame.cs">
       <SubType>Code</SubType>
@@ -118,6 +122,9 @@
     </Compile>
     <Compile Include="LedTriksUtil\VirtualHardwareDisplayDialog.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LedTriksUtil\VirtualHardwareDisplayDialog.Designer.cs">
+      <DependentUpon>VirtualHardwareDisplayDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="LedTriksUtil\VirtualHardwareSetupDialog.cs">
       <SubType>Form</SubType>

@@ -556,6 +556,7 @@
 							foreach (System.Type type2 in type.GetInterfaces()) {
 								if (type2.Name == "IUIPlugIn") {
 									try {
+                                        Debug.WriteLine("Type: " + type.Name + " Type2: " + type2.Name + " Path: " + type.FullName());
 										IUIPlugIn inputPlugin = (IUIPlugIn)Activator.CreateInstance(type);
 										if (!this.RegisterFileType(inputPlugin.FileExtension, inputPlugin)) {
 											MessageBox.Show(string.Format("Could not register UI plugin {0}.\nFile type is already handled.", inputPlugin.Name), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -563,7 +564,7 @@
 									}
 									catch (Exception exception1) {
 										exception = exception1;
-										MessageBox.Show(string.Format("Error when loading UI plugin from {0}:\n{1}", Path.GetFileNameWithoutExtension(str), exception.Message), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+										MessageBox.Show(string.Format("Error when loading UI plugin from {0}:\n{1}", Path.GetFileNameWithoutExtension(str), exception.StackTrace), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 									}
 								}
 							}

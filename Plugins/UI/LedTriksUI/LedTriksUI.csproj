@@ -35,7 +35,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\Build\Plugins\UI\</OutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugSymbols>true</DebugSymbols>
@@ -103,6 +103,9 @@
     </Compile>
     <Compile Include="LedTriks\LedTriks.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LedTriks\LedTriks.Designer.cs">
+      <DependentUpon>LedTriks.cs</DependentUpon>
     </Compile>
     <Compile Include="LedTriks\Properties\Resources.cs">
       <SubType>Code</SubType>

@@ -7,11 +7,10 @@
     using System.Windows.Forms;
     using Vixen;
 
-    internal class VirtualHardwareDisplayDialog : OutputPlugInUIBase
+    internal partial class VirtualHardwareDisplayDialog : OutputPlugInUIBase
     {
         private const int BOARD_HEIGHT = 0x10;
         private const int BOARD_WIDTH = 0x30;
-        private IContainer components;
         private Size m_boardLayout;
         private Point[] m_boardLocations;
         private Point[,] m_boardMultipliers;
@@ -66,28 +65,9 @@
             }
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (this.components != null))
-            {
-                this.components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
 
-        private void InitializeComponent()
-        {
-            base.SuspendLayout();
-            base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
-            base.ClientSize = new Size(0x11c, 0x108);
-            base.ControlBox = false;
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
-            base.Name = "DisplayDialog";
-            base.StartPosition = FormStartPosition.Manual;
-            this.Text = "LedTriks Virtual Display";
-            base.ResumeLayout(false);
-        }
+
+
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -95,8 +75,8 @@
             graphics.FillRectangle(Brushes.Black, e.ClipRectangle);
             foreach (uint num3 in this.m_cells)
             {
-                int x = (int) (num3 >> 0x10);
-                int y = ((int) num3) & 0xffff;
+                int x = (int)(num3 >> 0x10);
+                int y = ((int)num3) & 0xffff;
                 graphics.FillRectangle(this.m_ledBrush, x, y, this.m_ledSize, this.m_ledSize);
             }
         }
@@ -104,9 +84,9 @@
         public void OutputFrame(ParsedFrame frame)
         {
             this.m_cells.Clear();
-            for (short i = 0; i < 0x10; i = (short) (i + 1))
+            for (short i = 0; i < 0x10; i = (short)(i + 1))
             {
-                for (short j = 0; j < 0x30; j = (short) (j + 1))
+                for (short j = 0; j < 0x30; j = (short)(j + 1))
                 {
                     byte num3 = frame.CellData(i, j);
                     byte num5 = 1;
@@ -116,9 +96,9 @@
                         Point point2 = (this.m_boardMultipliers[point.Y, point.X]);
                         if ((num3 & num5) != 0)
                         {
-                            this.m_cells.Add((uint) ((((j + point2.X) << 0x10) * this.m_cellSize) | ((i + point2.Y) * this.m_cellSize)));
+                            this.m_cells.Add((uint)((((j + point2.X) << 0x10) * this.m_cellSize) | ((i + point2.Y) * this.m_cellSize)));
                         }
-                        num5 = (byte) (num5 << 1);
+                        num5 = (byte)(num5 << 1);
                     }
                 }
             }
