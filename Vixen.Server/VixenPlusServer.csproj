@@ -4,21 +4,20 @@
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.3077</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{ADE456A7-967C-4542-ADD0-4B3225B16222}</ProjectGuid>
+    <ProjectGuid>{8CD1E398-801A-4E60-9BA7-510EF5786C4F}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <AssemblyName>VixenServerUI</AssemblyName>
+    <AssemblyName>Vixen.Server</AssemblyName>
     <DefaultClientScript>JScript</DefaultClientScript>
     <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
     <DelaySign>false</DelaySign>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <OldToolsVersion>0.0</OldToolsVersion>
     <UpgradeBackupLocation />
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -31,11 +30,12 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Build\Server\</OutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugSymbols>true</DebugSymbols>
@@ -60,17 +60,14 @@
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
-    <Reference Include="System.Drawing">
-      <Name>System.Drawing</Name>
+    <Reference Include="System.Web">
+      <Name>System.Web</Name>
     </Reference>
     <Reference Include="System.Windows.Forms">
       <Name>System.Windows.Forms</Name>
     </Reference>
     <Reference Include="System.Xml">
       <Name>System.Xml</Name>
-    </Reference>
-    <Reference Include="Vixen.Server">
-      <Name>Vixen.Server</Name>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -80,33 +77,21 @@
     <Compile Include="Global.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenServerUI\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VixenServerUI\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="VixenServerUI\PasswordDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VixenServerUI\PasswordDialog.Designer.cs">
-      <DependentUpon>PasswordDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="VixenServerUI\Program.cs">
+    <Compile Include="Vixen\ExecutionClientStub.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenServerUI\Properties\Resources.cs">
+    <Compile Include="Vixen\ListenerParams.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenServerUI\Properties\Settings.cs">
+    <Compile Include="Vixen\Server.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenServerUI\Xml.cs">
+    <Compile Include="Vixen\VixenSequenceProgram.cs">
       <SubType>Code</SubType>
     </Compile>
-    <EmbeddedResource Include="VixenServerUI.Form1.resources" />
-    <EmbeddedResource Include="VixenServerUI.PasswordDialog.resources" />
-    <EmbeddedResource Include="VixenServerUI.Properties.Resources.resources" />
+    <Compile Include="Vixen\Xml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -126,9 +111,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Vixen\VixenPlus.csproj">
-      <Project>{FA99E3F3-4783-485F-A37E-0E24F823E5AE}</Project>
-      <Name>VixenPlus</Name>
+    <ProjectReference Include="..\Vixen.Base\VixenPlusBase.csproj">
+      <Project>{E3EAE372-FCEB-43A2-988F-3998D6D51536}</Project>
+      <Name>VixenPlusBase</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
