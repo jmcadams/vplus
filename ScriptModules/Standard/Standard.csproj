@@ -155,9 +155,9 @@
       <Name>ScriptEngine</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Vixen\Vixen.csproj">
+    <ProjectReference Include="..\..\Vixen\VixenPlus.csproj">
       <Project>{FA99E3F3-4783-485F-A37E-0E24F823E5AE}</Project>
-      <Name>Vixen</Name>
+      <Name>VixenPlus</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>

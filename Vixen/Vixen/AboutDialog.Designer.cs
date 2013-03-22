@@ -46,7 +46,7 @@ private System.Windows.Forms.Label labelVersion;
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(55, 23);
 			this.label1.TabIndex = 1;
-			this.label1.Text = "Vixen";
+			this.label1.Text = "VixenPlus";
 			// 
 			// label2
 			// 
@@ -56,7 +56,7 @@ private System.Windows.Forms.Label labelVersion;
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(132, 17);
 			this.label2.TabIndex = 2;
-			this.label2.Text = "Sequence Authoring";
+			this.label2.Text = "Lighting Control";
 			// 
 			// label3
 			// 
@@ -66,7 +66,7 @@ private System.Windows.Forms.Label labelVersion;
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(126, 13);
 			this.label3.TabIndex = 3;
-			this.label3.Text = "(c) 2005-2009 K.C. Oaks";
+			this.label3.Text = "Copyleft 2013 Vixen Developers";
 			// 
 			// label4
 			// 
@@ -76,7 +76,7 @@ private System.Windows.Forms.Label labelVersion;
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(109, 13);
 			this.label4.TabIndex = 4;
-			this.label4.Text = "www.vixenlights.com";
+			this.label4.Text = "www.vixenplus.com";
 			// 
 			// labelVersion
 			// 

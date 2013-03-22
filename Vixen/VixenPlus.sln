@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vixen", "Vixen.csproj", "{FA99E3F3-4783-485F-A37E-0E24F823E5AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VixenPlus", "VixenPlus.csproj", "{FA99E3F3-4783-485F-A37E-0E24F823E5AE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppUpdate", "..\AppUpdate\AppUpdate.csproj", "{F3158DD2-126D-427C-891B-971EFAF1315A}"
 EndProject

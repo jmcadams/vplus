@@ -256,7 +256,7 @@
         {
             get
             {
-                return "K.C. Oaks and Phil Short";
+                return "Phil Short";
             }
         }
 

@@ -7,7 +7,7 @@
     <ProjectGuid>{FA99E3F3-4783-485F-A37E-0E24F823E5AE}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <AssemblyName>Vixen</AssemblyName>
+    <AssemblyName>VixenPlus</AssemblyName>
     <DefaultClientScript>JScript</DefaultClientScript>
     <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
