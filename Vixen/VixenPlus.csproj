@@ -85,635 +85,636 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\AboutDialog.cs">
+    <Compile Include="VixenPlus\AboutDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\AboutDialog.Designer.cs">
+    <Compile Include="VixenPlus\AboutDialog.Designer.cs">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\AddEditRemove.cs">
+    <Compile Include="VixenPlus\AddEditRemove.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Vixen\AllPluginsDialog.cs">
+    <Compile Include="VixenPlus\AllPluginsDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\AllPluginsDialog.Designer.cs">
+    <Compile Include="VixenPlus\AllPluginsDialog.Designer.cs">
       <DependentUpon>AllPluginsDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Async.cs">
+    <Compile Include="VixenPlus\Async.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\Audio.cs">
+    <Compile Include="VixenPlus\Audio.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\BackgroundSequenceDialog.cs">
+    <Compile Include="VixenPlus\BackgroundSequenceDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\BackgroundSequenceDialog.Designer.cs">
+    <Compile Include="VixenPlus\BackgroundSequenceDialog.Designer.cs">
       <DependentUpon>BackgroundSequenceDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Channel.cs">
+    <Compile Include="VixenPlus\Channel.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\ChannelRangeFixDialog.cs">
+    <Compile Include="VixenPlus\ChannelRangeFixDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\ChannelRangeFixDialog.Designer.cs">
+    <Compile Include="VixenPlus\ChannelRangeFixDialog.Designer.cs">
       <DependentUpon>ChannelRangeFixDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\CheckableToolStripMenuItem.cs">
+    <Compile Include="VixenPlus\CheckableToolStripMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Vixen\ConcreteClassAttribute.cs">
+    <Compile Include="VixenPlus\ConcreteClassAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\CopyChannelColorsDialog.cs">
+    <Compile Include="VixenPlus\CopyChannelColorsDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\CopyChannelColorsDialog.Designer.cs">
+    <Compile Include="VixenPlus\CopyChannelColorsDialog.Designer.cs">
       <DependentUpon>CopyChannelColorsDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\CopyDataDialog2.cs">
+    <Compile Include="VixenPlus\CopyDataDialog2.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\CopyDataDialog2.Designer.cs">
+    <Compile Include="VixenPlus\CopyDataDialog2.Designer.cs">
       <DependentUpon>CopyDataDialog2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\CopySequenceDialog.cs">
+    <Compile Include="VixenPlus\CopySequenceDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\CopySequenceDialog.Designer.cs">
+    <Compile Include="VixenPlus\CopySequenceDialog.Designer.cs">
       <DependentUpon>CopySequenceDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\CurveConflictResolutionDialog.cs">
+    <Compile Include="VixenPlus\CurveConflictResolutionDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\CurveConflictResolutionDialog.Designer.cs">
+    <Compile Include="VixenPlus\CurveConflictResolutionDialog.Designer.cs">
       <DependentUpon>CurveConflictResolutionDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\CurveFileImportExportDialog.cs">
+    <Compile Include="VixenPlus\CurveFileImportExportDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\CurveFileImportExportDialog.Designer.cs">
+    <Compile Include="VixenPlus\CurveFileImportExportDialog.Designer.cs">
       <DependentUpon>CurveFileImportExportDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\CurveLibrary.cs">
+    <Compile Include="VixenPlus\CurveLibrary.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\CurveLibraryDialog.cs">
+    <Compile Include="VixenPlus\CurveLibraryDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\CurveLibraryDialog.Designer.cs">
+    <Compile Include="VixenPlus\CurveLibraryDialog.Designer.cs">
       <DependentUpon>CurveLibraryDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\CurveLibraryRecord.cs">
+    <Compile Include="VixenPlus\CurveLibraryRecord.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\CurveLibraryRecordEditDialog.cs">
+    <Compile Include="VixenPlus\CurveLibraryRecordEditDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\CurveLibraryRecordEditDialog.Designer.cs">
+    <Compile Include="VixenPlus\CurveLibraryRecordEditDialog.Designer.cs">
       <DependentUpon>CurveLibraryRecordEditDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\DataExtension.cs">
+    <Compile Include="VixenPlus\DataExtension.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\DiagnosticsDialog.cs">
+    <Compile Include="VixenPlus\DiagnosticsDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\DiagnosticsDialog.Designer.cs">
+    <Compile Include="VixenPlus\DiagnosticsDialog.Designer.cs">
       <DependentUpon>DiagnosticsDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Dialogs\AllChannelsColorDialog.cs">
+    <Compile Include="VixenPlus\Dialogs\AllChannelsColorDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\Dialogs\AllChannelsColorDialog.Designer.cs">
+    <Compile Include="VixenPlus\Dialogs\AllChannelsColorDialog.Designer.cs">
       <DependentUpon>AllChannelsColorDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Dialogs\AudioDialog.cs">
+    <Compile Include="VixenPlus\Dialogs\AudioDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\Dialogs\AudioDialog.Designer.cs">
+    <Compile Include="VixenPlus\Dialogs\AudioDialog.Designer.cs">
       <DependentUpon>AudioDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Dialogs\ChannelLayoutDialog.cs">
+    <Compile Include="VixenPlus\Dialogs\ChannelLayoutDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\Dialogs\ChannelLayoutDialog.Designer.cs">
+    <Compile Include="VixenPlus\Dialogs\ChannelLayoutDialog.Designer.cs">
       <DependentUpon>ChannelLayoutDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Dialogs\ChannelOrderDialog.cs">
+    <Compile Include="VixenPlus\Dialogs\ChannelOrderDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\Dialogs\ChannelOrderDialog.Designer.cs">
+    <Compile Include="VixenPlus\Dialogs\ChannelOrderDialog.Designer.cs">
       <DependentUpon>ChannelOrderDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Dialogs\ChannelOutputMaskDialog.cs">
+    <Compile Include="VixenPlus\Dialogs\ChannelOutputMaskDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\Dialogs\ChannelOutputMaskDialog.Designer.cs">
+    <Compile Include="VixenPlus\Dialogs\ChannelOutputMaskDialog.Designer.cs">
       <DependentUpon>ChannelOutputMaskDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Dialogs\ChannelPropertyDialog.cs">
+    <Compile Include="VixenPlus\Dialogs\ChannelPropertyDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\Dialogs\ChannelPropertyDialog.Designer.cs">
+    <Compile Include="VixenPlus\Dialogs\ChannelPropertyDialog.Designer.cs">
       <DependentUpon>ChannelPropertyDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Dialogs\Controller.cs">
+    <Compile Include="VixenPlus\Dialogs\Controller.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\Dialogs\HardwareObject.cs">
+    <Compile Include="VixenPlus\Dialogs\HardwareObject.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\Dialogs\HardwarePlugin.cs">
+    <Compile Include="VixenPlus\Dialogs\HardwarePlugin.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\Dialogs\HelpDialog.cs">
+    <Compile Include="VixenPlus\Dialogs\HelpDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\Dialogs\HelpDialog.Designer.cs">
+    <Compile Include="VixenPlus\Dialogs\HelpDialog.Designer.cs">
       <DependentUpon>HelpDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Dialogs\NewSequenceWizardDialog.cs">
+    <Compile Include="VixenPlus\Dialogs\NewSequenceWizardDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\Dialogs\NewSequenceWizardDialog.Designer.cs">
+    <Compile Include="VixenPlus\Dialogs\NewSequenceWizardDialog.Designer.cs">
       <DependentUpon>NewSequenceWizardDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Dialogs\OutputPort.cs">
+    <Compile Include="VixenPlus\Dialogs\OutputPort.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\Dialogs\ParallelSetupDialog.cs">
+    <Compile Include="VixenPlus\Dialogs\ParallelSetupDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\Dialogs\ParallelSetupDialog.Designer.cs">
+    <Compile Include="VixenPlus\Dialogs\ParallelSetupDialog.Designer.cs">
       <DependentUpon>ParallelSetupDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Dialogs\PluginListDialog.cs">
+    <Compile Include="VixenPlus\Dialogs\PluginListDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\Dialogs\PluginListDialog.Designer.cs">
+    <Compile Include="VixenPlus\Dialogs\PluginListDialog.Designer.cs">
       <DependentUpon>PluginListDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Dialogs\ProfileManagerDialog.cs">
+    <Compile Include="VixenPlus\Dialogs\ProfileManagerDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\Dialogs\ProfileManagerDialog.Designer.cs">
+    <Compile Include="VixenPlus\Dialogs\ProfileManagerDialog.Designer.cs">
       <DependentUpon>ProfileManagerDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Dialogs\Routine.cs">
+    <Compile Include="VixenPlus\Dialogs\Routine.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\Dialogs\RoutineSelectDialog.cs">
+    <Compile Include="VixenPlus\Dialogs\RoutineSelectDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\Dialogs\RoutineSelectDialog.Designer.cs">
+    <Compile Include="VixenPlus\Dialogs\RoutineSelectDialog.Designer.cs">
       <DependentUpon>RoutineSelectDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Dialogs\SequenceSettingsDialog.cs">
+    <Compile Include="VixenPlus\Dialogs\SequenceSettingsDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\Dialogs\SequenceSettingsDialog.Designer.cs">
+    <Compile Include="VixenPlus\Dialogs\SequenceSettingsDialog.Designer.cs">
       <DependentUpon>SequenceSettingsDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Dialogs\SerialSetupDialog.cs">
+    <Compile Include="VixenPlus\Dialogs\SerialSetupDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\Dialogs\SerialSetupDialog.Designer.cs">
+    <Compile Include="VixenPlus\Dialogs\SerialSetupDialog.Designer.cs">
       <DependentUpon>SerialSetupDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Dialogs\SSR.cs">
+    <Compile Include="VixenPlus\Dialogs\SSR.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\Dialogs\TextQueryDialog.cs">
+    <Compile Include="VixenPlus\Dialogs\TextQueryDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\Dialogs\TextQueryDialog.Designer.cs">
+    <Compile Include="VixenPlus\Dialogs\TextQueryDialog.Designer.cs">
       <DependentUpon>TextQueryDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\DimmingCurveDialog.cs">
+    <Compile Include="VixenPlus\DimmingCurveDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\DimmingCurveDialog.Designer.cs">
+    <Compile Include="VixenPlus\DimmingCurveDialog.Designer.cs">
       <DependentUpon>DimmingCurveDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Engine8.cs">
+    <Compile Include="VixenPlus\Engine8.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\EngineContext.cs">
+    <Compile Include="VixenPlus\EngineContext.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\EngineDescriptor.cs">
+    <Compile Include="VixenPlus\EngineDescriptor.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\EngineErrorHandler.cs">
+    <Compile Include="VixenPlus\EngineErrorHandler.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\Engines.cs">
+    <Compile Include="VixenPlus\Engines.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\EngineTimer.cs">
+    <Compile Include="VixenPlus\EngineTimer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\EngineType.cs">
+    <Compile Include="VixenPlus\EngineType.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\EventAverageDialog.cs">
+    <Compile Include="VixenPlus\EventAverageDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\EventAverageDialog.Designer.cs">
+    <Compile Include="VixenPlus\EventAverageDialog.Designer.cs">
       <DependentUpon>EventAverageDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\EventSequence.cs">
+    <Compile Include="VixenPlus\EventSequence.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\EventSequenceStub.cs">
+    <Compile Include="VixenPlus\EventSequenceStub.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\ExecutingTimerControlDialog.cs">
+    <Compile Include="VixenPlus\ExecutingTimerControlDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\ExecutingTimerControlDialog.Designer.cs">
+    <Compile Include="VixenPlus\ExecutingTimerControlDialog.Designer.cs">
       <DependentUpon>ExecutingTimerControlDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\ExecutionContext.cs">
+    <Compile Include="VixenPlus\ExecutionContext.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\Form1.cs">
+    <Compile Include="VixenPlus\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\Form1.Designer.cs">
+    <Compile Include="VixenPlus\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\GeneralConcreteClassProvider.cs">
+    <Compile Include="VixenPlus\GeneralConcreteClassProvider.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\Group.cs">
+    <Compile Include="VixenPlus\Group.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\GroupDialog.cs">
+    <Compile Include="VixenPlus\GroupDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\GroupDialog.Designer.cs">
+    <Compile Include="VixenPlus\GroupDialog.Designer.cs">
       <DependentUpon>GroupDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\HardwareMap.cs">
+    <Compile Include="VixenPlus\HardwareMap.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\HardwarePlugins.cs">
+    <Compile Include="VixenPlus\HardwarePlugins.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\HardwareUpdateDelegate.cs">
+    <Compile Include="VixenPlus\HardwareUpdateDelegate.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\Host.cs">
+    <Compile Include="VixenPlus\Host.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\IAddIn.cs">
+    <Compile Include="VixenPlus\IAddIn.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\IBidirectionalPlugin.cs">
+    <Compile Include="VixenPlus\IBidirectionalPlugin.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\IEngine.cs">
+    <Compile Include="VixenPlus\IEngine.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\IEngine2.cs">
+    <Compile Include="VixenPlus\IEngine2.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\IEventDrivenOutputPlugIn.cs">
+    <Compile Include="VixenPlus\IEventDrivenOutputPlugIn.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\IEventlessOutputPlugIn.cs">
+    <Compile Include="VixenPlus\IEventlessOutputPlugIn.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\IExecutable.cs">
+    <Compile Include="VixenPlus\IExecutable.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\IExecution.cs">
+    <Compile Include="VixenPlus\IExecution.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\IExecutionImpl.cs">
+    <Compile Include="VixenPlus\IExecutionImpl.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\IHardwarePlugin.cs">
+    <Compile Include="VixenPlus\IHardwarePlugin.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\IInputPlugin.cs">
+    <Compile Include="VixenPlus\IInputPlugin.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\ILoadable.cs">
+    <Compile Include="VixenPlus\ILoadable.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\IMaskable.cs">
+    <Compile Include="VixenPlus\IMaskable.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\IMedia.cs">
+    <Compile Include="VixenPlus\IMedia.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\Input.cs">
+    <Compile Include="VixenPlus\Input.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\InputPlugin.cs">
+    <Compile Include="VixenPlus\InputPlugin.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\InputPluginDialog.cs">
+    <Compile Include="VixenPlus\InputPluginDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\InputPluginDialog.Designer.cs">
+    <Compile Include="VixenPlus\InputPluginDialog.Designer.cs">
       <DependentUpon>InputPluginDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\InputPlugins.cs">
+    <Compile Include="VixenPlus\InputPlugins.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\Interfaces.cs">
+    <Compile Include="VixenPlus\Interfaces.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\IObjectQuery.cs">
+    <Compile Include="VixenPlus\IObjectQuery.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\IOutputPlugIn.cs">
+    <Compile Include="VixenPlus\IOutputPlugIn.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\IPlugIn.cs">
+    <Compile Include="VixenPlus\IPlugIn.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\IQueryable.cs">
+    <Compile Include="VixenPlus\IQueryable.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\IScheduledObject.cs">
+    <Compile Include="VixenPlus\IScheduledObject.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\ISetup.cs">
+    <Compile Include="VixenPlus\ISetup.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\ISystem.cs">
+    <Compile Include="VixenPlus\ISystem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\ITickSource.cs">
+    <Compile Include="VixenPlus\ITickSource.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\ITrigger.cs">
+    <Compile Include="VixenPlus\ITrigger.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\ITriggerImpl.cs">
+    <Compile Include="VixenPlus\ITriggerImpl.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\ITriggerPlugin.cs">
+    <Compile Include="VixenPlus\ITriggerPlugin.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\IUIPlugIn.cs">
+    <Compile Include="VixenPlus\IUIPlugIn.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\ListViewItemSorter.cs">
+    <Compile Include="VixenPlus\ListViewItemSorter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\ListViewSortIcons.cs">
+    <Compile Include="VixenPlus\ListViewSortIcons.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\LoadableData.cs">
+    <Compile Include="VixenPlus\LoadableData.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\LoadableDataLocation.cs">
+    <Compile Include="VixenPlus\LoadableDataLocation.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\LoadedObject.cs">
+    <Compile Include="VixenPlus\LoadedObject.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\MappedOutputPlugIn.cs">
+    <Compile Include="VixenPlus\MappedOutputPlugIn.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\MappingSet.cs">
+    <Compile Include="VixenPlus\MappingSet.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\MappingSets.cs">
+    <Compile Include="VixenPlus\MappingSets.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\MusicPlayer.cs">
+    <Compile Include="VixenPlus\MusicPlayer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\MusicPlayerDialog.cs">
+    <Compile Include="VixenPlus\MusicPlayerDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\MusicPlayerDialog.Designer.cs">
+    <Compile Include="VixenPlus\MusicPlayerDialog.Designer.cs">
       <DependentUpon>MusicPlayerDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Notification.cs">
+    <Compile Include="VixenPlus\Notification.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\ObjectType.cs">
+    <Compile Include="VixenPlus\ObjectType.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\OnEngineError.cs">
+    <Compile Include="VixenPlus\OnEngineError.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\OutputPlugin.cs">
+    <Compile Include="VixenPlus\OutputPlugin.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\OutputPlugins.cs">
+    <Compile Include="VixenPlus\OutputPlugins.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\OutputPlugInUIBase.cs">
+    <Compile Include="VixenPlus\OutputPlugInUIBase.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\OutputPlugInUIBase.Designer.cs">
+    <Compile Include="VixenPlus\OutputPlugInUIBase.Designer.cs">
       <DependentUpon>OutputPlugInUIBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Paths.cs">
+    <Compile Include="VixenPlus\Paths.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\PluginEnabledFixDialog.cs">
+    <Compile Include="VixenPlus\PluginEnabledFixDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\PluginEnabledFixDialog.Designer.cs">
+    <Compile Include="VixenPlus\PluginEnabledFixDialog.Designer.cs">
       <DependentUpon>PluginEnabledFixDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\PlugInMapping.cs">
+    <Compile Include="VixenPlus\PlugInMapping.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\PlugInRouter.cs">
+    <Compile Include="VixenPlus\PlugInRouter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\Preference2.cs">
+    <Compile Include="VixenPlus\Preference2.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\PreferencesDialog.cs">
+    <Compile Include="VixenPlus\PreferencesDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\PreferencesDialog.Designer.cs">
+    <Compile Include="VixenPlus\PreferencesDialog.Designer.cs">
       <DependentUpon>PreferencesDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Profile.cs">
+    <Compile Include="VixenPlus\Profile.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\Program.cs">
+    <Compile Include="VixenPlus\Program.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\ProgramChange.cs">
+    <Compile Include="VixenPlus\ProgramChange.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\ProgramChangeHandler.cs">
+    <Compile Include="VixenPlus\ProgramChangeHandler.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\ProgramManagerDialog.cs">
+    <Compile Include="VixenPlus\ProgramManagerDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\ProgramManagerDialog.Designer.cs">
+    <Compile Include="VixenPlus\ProgramManagerDialog.Designer.cs">
       <DependentUpon>ProgramManagerDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\ProgressDialog.cs">
+    <Compile Include="VixenPlus\ProgressDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\ProgressDialog.Designer.cs">
+    <Compile Include="VixenPlus\ProgressDialog.Designer.cs">
       <DependentUpon>ProgressDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Properties\Resources.cs">
+    <Compile Include="VixenPlus\Properties\Resources.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\Properties\Settings.cs">
+    <Compile Include="VixenPlus\Properties\Settings.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\RecurrenceType.cs">
+    <Compile Include="VixenPlus\RecurrenceType.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\ReferenceRectF.cs">
+    <Compile Include="VixenPlus\ReferenceRectF.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\RegisteredResponse.cs">
+    <Compile Include="VixenPlus\RegisteredResponse.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\RouterContext.cs">
+    <Compile Include="VixenPlus\RouterContext.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\ScheduleDialog.cs">
+    <Compile Include="VixenPlus\ScheduleDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\ScheduleDialog.Designer.cs">
+    <Compile Include="VixenPlus\ScheduleDialog.Designer.cs">
       <DependentUpon>ScheduleDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\SequenceExtensions.cs">
+    <Compile Include="VixenPlus\SequenceExtensions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\SequenceProgram.cs">
+    <Compile Include="VixenPlus\SequenceProgram.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\SetupData.cs">
+    <Compile Include="VixenPlus\SetupData.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\ShutdownDialog.cs">
+    <Compile Include="VixenPlus\ShutdownDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\ShutdownDialog.Designer.cs">
+    <Compile Include="VixenPlus\ShutdownDialog.Designer.cs">
       <DependentUpon>ShutdownDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Sockets.cs">
+    <Compile Include="VixenPlus\Sockets.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\SortOrder.cs">
+    <Compile Include="VixenPlus\SortOrder.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\SortOrders.cs">
+    <Compile Include="VixenPlus\SortOrders.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\SoundDeviceDialog.cs">
+    <Compile Include="VixenPlus\SoundDeviceDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\SoundDeviceDialog.Designer.cs">
+    <Compile Include="VixenPlus\SoundDeviceDialog.Designer.cs">
       <DependentUpon>SoundDeviceDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Splash.cs">
+    <Compile Include="VixenPlus\Splash.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\Splash.Designer.cs">
+    <Compile Include="VixenPlus\Splash.Designer.cs">
       <DependentUpon>Splash.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\TabControl.cs">
+    <Compile Include="VixenPlus\TabControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Vixen\TextListDialog.cs">
+    <Compile Include="VixenPlus\TextListDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\TextListDialog.Designer.cs">
+    <Compile Include="VixenPlus\TextListDialog.Designer.cs">
       <DependentUpon>TextListDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\Timer.cs">
+    <Compile Include="VixenPlus\Timer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\TimerContext.cs">
+    <Compile Include="VixenPlus\TimerContext.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\TimerDialog.cs">
+    <Compile Include="VixenPlus\TimerDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\TimerDialog.Designer.cs">
+    <Compile Include="VixenPlus\TimerDialog.Designer.cs">
       <DependentUpon>TimerDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\TimerExecutor.cs">
+    <Compile Include="VixenPlus\TimerExecutor.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\Timers.cs">
+    <Compile Include="VixenPlus\Timers.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\TriggerResponseRegistrationsDialog.cs">
+    <Compile Include="VixenPlus\TriggerResponseRegistrationsDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\TriggerResponseRegistrationsDialog.Designer.cs">
+    <Compile Include="VixenPlus\TriggerResponseRegistrationsDialog.Designer.cs">
       <DependentUpon>TriggerResponseRegistrationsDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\UIBase.cs">
+    <Compile Include="VixenPlus\UIBase.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\UIBase.Designer.cs">
+    <Compile Include="VixenPlus\UIBase.Designer.cs">
       <DependentUpon>UIBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vixen\UIBaseConcreteForm.cs">
+    <Compile Include="VixenPlus\UIBaseConcreteForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vixen\Vendor.cs">
+    <Compile Include="VixenPlus\Vendor.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\VixenMDI.cs">
+    <Compile Include="VixenPlus\VixenMDI.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\VixenSimpleButton.cs">
+    <Compile Include="VixenPlus\VixenSimpleButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Vixen\VixenSimpleButtonType.cs">
+    <Compile Include="VixenPlus\VixenSimpleButtonType.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\Web.cs">
+    <Compile Include="VixenPlus\Web.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\Xml.cs">
+    <Compile Include="VixenPlus\Xml.cs">
       <SubType>Code</SubType>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Vixen\AboutDialog.resx">
+    <EmbeddedResource Include="VixenPlus\AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Vixen\AllPluginsDialog.resx">
+    <EmbeddedResource Include="VixenPlus\AllPluginsDialog.resx">
       <DependentUpon>AllPluginsDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Vixen\BackgroundSequenceDialog.resx">
+    <EmbeddedResource Include="VixenPlus\BackgroundSequenceDialog.resx">
       <DependentUpon>BackgroundSequenceDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Vixen\CurveLibraryDialog.resx">
+    <EmbeddedResource Include="VixenPlus\CurveLibraryDialog.resx">
       <DependentUpon>CurveLibraryDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Vixen\Dialogs\ChannelLayoutDialog.resx">
+    <EmbeddedResource Include="VixenPlus\Dialogs\ChannelLayoutDialog.resx">
       <DependentUpon>ChannelLayoutDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Vixen\Dialogs\ProfileManagerDialog.resx">
+    <EmbeddedResource Include="VixenPlus\Dialogs\ProfileManagerDialog.resx">
       <DependentUpon>ProfileManagerDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Vixen\InputPluginDialog.resx">
+    <EmbeddedResource Include="VixenPlus\InputPluginDialog.resx">
       <DependentUpon>InputPluginDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Vixen\Splash.resx">
+    <EmbeddedResource Include="VixenPlus\Splash.resx">
       <DependentUpon>Splash.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

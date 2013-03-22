@@ -1,13 +1,13 @@
-﻿// Assembly Icicle, Version 2.5.0.0
+// Assembly Icicle, Version 1.0.0.0
 
-[assembly: System.Reflection.AssemblyVersion("2.5.0.0")]
+[assembly: System.Reflection.AssemblyVersion("1.0.0.0")]
 [assembly: System.Reflection.AssemblyCompany("")]
 [assembly: System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 [assembly: System.Reflection.AssemblyTrademark("")]
 [assembly: System.Reflection.AssemblyCopyright("Copyleft 2013 VixenPlus Devs")]
 [assembly: System.Reflection.AssemblyProduct("Vixen")]
-[assembly: System.Reflection.AssemblyFileVersion("2.5.0.0")]
+[assembly: System.Reflection.AssemblyFileVersion("1.0.0.0")]
 [assembly: System.Reflection.AssemblyConfiguration("")]
 [assembly: System.Reflection.AssemblyDescription("Vixen+ Lighting Control")]
 [assembly: System.Reflection.AssemblyTitle("Vixen")]

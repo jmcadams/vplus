@@ -1,11 +1,11 @@
-﻿// Assembly FanslerDimmer, Version 2.0.0.3
+// Assembly FanslerDimmer, Version 1.0.0.0
 
-[assembly: System.Reflection.AssemblyVersion("2.0.0.3")]
-[assembly: System.Reflection.AssemblyFileVersion("2.0.0.3")]
+[assembly: System.Reflection.AssemblyVersion("1.0.0.0")]
+[assembly: System.Reflection.AssemblyFileVersion("1.0.0.0")]
 [assembly: System.Runtime.InteropServices.Guid("0c8f1205-7b0f-41b7-ba4c-4dae80bd9548")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 [assembly: System.Reflection.AssemblyTrademark("")]
-[assembly: System.Reflection.AssemblyCopyright("Copyright \x00a9  2006-2007")]
+[assembly: System.Reflection.AssemblyCopyright("Copyleft 2013 Vixen Developers")]
 [assembly: System.Reflection.AssemblyProduct("Vixen")]
 [assembly: System.Reflection.AssemblyCompany("")]
 [assembly: System.Reflection.AssemblyConfiguration("")]

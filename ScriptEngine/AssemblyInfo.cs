@@ -1,7 +1,7 @@
-﻿// Assembly ScriptEngine, Version 2.5.0.6
+// Assembly ScriptEngine, Version 1.0.0.0
 
-[assembly: System.Reflection.AssemblyVersion("2.5.0.6")]
-[assembly: System.Reflection.AssemblyFileVersion("2.5.0.6")]
+[assembly: System.Reflection.AssemblyVersion("1.0.0.0")]
+[assembly: System.Reflection.AssemblyFileVersion("1.0.0.0")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 [assembly: System.Reflection.AssemblyTrademark("")]
 [assembly: System.Reflection.AssemblyCopyright("Copyleft 2013 VixenPlus Devs")]
