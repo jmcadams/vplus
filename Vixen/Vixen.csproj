@@ -80,6 +80,11 @@
     <Compile Include="Global.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Vixen\AboutDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -182,20 +187,38 @@
     <Compile Include="Vixen\Dialogs\AllChannelsColorDialog.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Vixen\Dialogs\AllChannelsColorDialog.Designer.cs">
+      <DependentUpon>AllChannelsColorDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Vixen\Dialogs\AudioDialog.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\Dialogs\AudioDialog.Designer.cs">
+      <DependentUpon>AudioDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Vixen\Dialogs\ChannelLayoutDialog.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Vixen\Dialogs\ChannelLayoutDialog.Designer.cs">
+      <DependentUpon>ChannelLayoutDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Vixen\Dialogs\ChannelOrderDialog.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\Dialogs\ChannelOrderDialog.Designer.cs">
+      <DependentUpon>ChannelOrderDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Vixen\Dialogs\ChannelOutputMaskDialog.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Vixen\Dialogs\ChannelOutputMaskDialog.Designer.cs">
+      <DependentUpon>ChannelOutputMaskDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Vixen\Dialogs\ChannelPropertyDialog.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\Dialogs\ChannelPropertyDialog.Designer.cs">
+      <DependentUpon>ChannelPropertyDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Vixen\Dialogs\Controller.cs">
       <SubType>Code</SubType>
@@ -209,8 +232,14 @@
     <Compile Include="Vixen\Dialogs\HelpDialog.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Vixen\Dialogs\HelpDialog.Designer.cs">
+      <DependentUpon>HelpDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Vixen\Dialogs\NewSequenceWizardDialog.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\Dialogs\NewSequenceWizardDialog.Designer.cs">
+      <DependentUpon>NewSequenceWizardDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Vixen\Dialogs\OutputPort.cs">
       <SubType>Code</SubType>
@@ -218,11 +247,20 @@
     <Compile Include="Vixen\Dialogs\ParallelSetupDialog.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Vixen\Dialogs\ParallelSetupDialog.Designer.cs">
+      <DependentUpon>ParallelSetupDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Vixen\Dialogs\PluginListDialog.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Vixen\Dialogs\PluginListDialog.Designer.cs">
+      <DependentUpon>PluginListDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Vixen\Dialogs\ProfileManagerDialog.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\Dialogs\ProfileManagerDialog.Designer.cs">
+      <DependentUpon>ProfileManagerDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Vixen\Dialogs\Routine.cs">
       <SubType>Code</SubType>
@@ -230,17 +268,29 @@
     <Compile Include="Vixen\Dialogs\RoutineSelectDialog.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Vixen\Dialogs\RoutineSelectDialog.Designer.cs">
+      <DependentUpon>RoutineSelectDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Vixen\Dialogs\SequenceSettingsDialog.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Vixen\Dialogs\SequenceSettingsDialog.Designer.cs">
+      <DependentUpon>SequenceSettingsDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Vixen\Dialogs\SerialSetupDialog.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\Dialogs\SerialSetupDialog.Designer.cs">
+      <DependentUpon>SerialSetupDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Vixen\Dialogs\SSR.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Vixen\Dialogs\TextQueryDialog.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\Dialogs\TextQueryDialog.Designer.cs">
+      <DependentUpon>TextQueryDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Vixen\DimmingCurveDialog.cs">
       <SubType>Form</SubType>
@@ -446,6 +496,9 @@
     <Compile Include="Vixen\MusicPlayerDialog.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Vixen\MusicPlayerDialog.Designer.cs">
+      <DependentUpon>MusicPlayerDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Vixen\Notification.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -488,6 +541,9 @@
     <Compile Include="Vixen\PreferencesDialog.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Vixen\PreferencesDialog.Designer.cs">
+      <DependentUpon>PreferencesDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Vixen\Profile.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -502,6 +558,9 @@
     </Compile>
     <Compile Include="Vixen\ProgramManagerDialog.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\ProgramManagerDialog.Designer.cs">
+      <DependentUpon>ProgramManagerDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Vixen\ProgressDialog.cs">
       <SubType>Form</SubType>
@@ -560,6 +619,9 @@
     <Compile Include="Vixen\SoundDeviceDialog.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Vixen\SoundDeviceDialog.Designer.cs">
+      <DependentUpon>SoundDeviceDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Vixen\Splash.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -584,6 +646,9 @@
     <Compile Include="Vixen\TimerDialog.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Vixen\TimerDialog.Designer.cs">
+      <DependentUpon>TimerDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Vixen\TimerExecutor.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -592,6 +657,9 @@
     </Compile>
     <Compile Include="Vixen\TriggerResponseRegistrationsDialog.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vixen\TriggerResponseRegistrationsDialog.Designer.cs">
+      <DependentUpon>TriggerResponseRegistrationsDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Vixen\UIBase.cs">
       <SubType>Form</SubType>
@@ -620,6 +688,10 @@
     <Compile Include="Vixen\Xml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Vixen\AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -631,6 +703,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Vixen\CurveLibraryDialog.resx">
       <DependentUpon>CurveLibraryDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vixen\Dialogs\ChannelLayoutDialog.resx">
+      <DependentUpon>ChannelLayoutDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vixen\Dialogs\ProfileManagerDialog.resx">
+      <DependentUpon>ProfileManagerDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Vixen\InputPluginDialog.resx">
       <DependentUpon>InputPluginDialog.cs</DependentUpon>

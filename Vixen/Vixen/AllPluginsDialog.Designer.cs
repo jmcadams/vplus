@@ -16,7 +16,7 @@ namespace Vixen
         private ColumnHeader Description;
         private ColumnHeader FileName;
         private ListView lvPlugins;
-        private ColumnHeader Location;
+        private ColumnHeader chLocation;
         private ColumnHeader PlugInName;
         private ColumnHeader Version;
 
@@ -27,7 +27,7 @@ namespace Vixen
             this.Description = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.FileName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Version = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Location = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chLocation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Author = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.buttonDone = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -42,7 +42,7 @@ namespace Vixen
             this.Description,
             this.FileName,
             this.Version,
-            this.Location,
+            this.chLocation,
             this.Author});
             this.lvPlugins.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvPlugins.Location = new System.Drawing.Point(12, 12);
@@ -70,7 +70,7 @@ namespace Vixen
             // 
             // Location
             // 
-            this.Location.Text = "Location";
+            this.chLocation.Text = "Location";
             // 
             // Author
             // 

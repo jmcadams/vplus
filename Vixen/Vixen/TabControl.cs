@@ -95,7 +95,7 @@
                     this.m_HideTabs = value;
                     if (value)
                     {
-                        this.Multiline = true;
+                        this.ourMultiline = true;
                     }
                     base.UpdateStyles();
                 }
@@ -103,7 +103,7 @@
         }
 
         [RefreshProperties(RefreshProperties.All)]
-        public bool Multiline
+        public bool ourMultiline
         {
             get
             {

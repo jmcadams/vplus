@@ -556,7 +556,7 @@
 							foreach (System.Type type2 in type.GetInterfaces()) {
 								if (type2.Name == "IUIPlugIn") {
 									try {
-                                        Debug.WriteLine("Type: " + type.Name + " Type2: " + type2.Name + " Path: " + type.FullName());
+										Debug.WriteLine("Type: " + type.Name + " Type2: " + type2.Name);
 										IUIPlugIn inputPlugin = (IUIPlugIn)Activator.CreateInstance(type);
 										if (!this.RegisterFileType(inputPlugin.FileExtension, inputPlugin)) {
 											MessageBox.Show(string.Format("Could not register UI plugin {0}.\nFile type is already handled.", inputPlugin.Name), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
