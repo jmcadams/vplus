@@ -77,43 +77,43 @@
     <Compile Include="Global.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenControls\Toolbox.cs">
+    <Compile Include="CommonControls\Toolbox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="VixenControls\ToolboxCategory.cs">
+    <Compile Include="CommonControls\ToolboxCategory.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenControls\ToolboxCategoryCollection.cs">
+    <Compile Include="CommonControls\ToolboxCategoryCollection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenControls\ToolboxCategoryTypeConverter.cs">
+    <Compile Include="CommonControls\ToolboxCategoryTypeConverter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenControls\ToolboxItem.cs">
+    <Compile Include="CommonControls\ToolboxItem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenControls\ToolboxItemCollection.cs">
+    <Compile Include="CommonControls\ToolboxItemCollection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenControls\ToolboxItemTypeConverter.cs">
+    <Compile Include="CommonControls\ToolboxItemTypeConverter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenControls\VectorImage.cs">
+    <Compile Include="CommonControls\VectorImage.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenControls\VectorImageCollection.cs">
+    <Compile Include="CommonControls\VectorImageCollection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenControls\VectorImageElement.cs">
+    <Compile Include="CommonControls\VectorImageElement.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenControls\VectorImageStrip.cs">
+    <Compile Include="CommonControls\VectorImageStrip.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="VixenControls\VectorListItem.cs">
+    <Compile Include="CommonControls\VectorListItem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenControls\Xml.cs">
+    <Compile Include="CommonControls\Xml.cs">
       <SubType>Code</SubType>
     </Compile>
     <EmbeddedResource Include="VixenControls.Toolbox.resources" />

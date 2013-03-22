@@ -751,9 +751,9 @@
       <Name>FtpClientVB</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\VixenControls\VixenControls.csproj">
+    <ProjectReference Include="..\VixenControls\CommonControls.csproj">
       <Project>{6B127E8D-35CC-409E-9E66-520FBA86E283}</Project>
-      <Name>VixenControls</Name>
+      <Name>CommonControls</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
