@@ -148,6 +148,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LedTriksScript", "..\ScriptModules\LedTriksScript\LedTriksScript.csproj", "{C464EF7B-32CC-4312-8013-293FA9C94B9B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standard", "..\ScriptModules\Standard\Standard.csproj", "{B1C14B46-BBD2-4C73-875D-1870EAC5CC69}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FAC218DC-5B18-416B-9646-2D4128E4D50D} = {FAC218DC-5B18-416B-9646-2D4128E4D50D}
+		{FA99E3F3-4783-485F-A37E-0E24F823E5AE} = {FA99E3F3-4783-485F-A37E-0E24F823E5AE}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
