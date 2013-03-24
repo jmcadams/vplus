@@ -12,11 +12,8 @@ namespace Vixen
 		{
 			get
 			{
-				XmlNode node = base.m_rootNode.SelectSingleNode(string.Format("Extension[@type = \"{0}\"]", extensionKey));
-				if (node == null)
-				{
-					node = Xml.SetAttribute(base.m_rootNode, "Extension", "type", extensionKey);
-				}
+				XmlNode node = base.m_rootNode.SelectSingleNode(string.Format("Extension[@type = \"{0}\"]", extensionKey)) ??
+				               Xml.SetAttribute(base.m_rootNode, "Extension", "type", extensionKey);
 				return node;
 			}
 		}

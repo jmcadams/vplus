@@ -201,7 +201,7 @@ namespace Vixen
 		public void LoadFromXml(XmlNode contextNode)
 		{
 			XmlNode node = contextNode.SelectSingleNode("Timers");
-			bool flag = false;
+			const bool flag = false;
 			m_disabled = node.Attributes["enabled"].Value == flag.ToString();
 			var list = new List<Timer>();
 			foreach (XmlNode node2 in node.SelectNodes("Timer"))
@@ -302,7 +302,7 @@ namespace Vixen
 
 		public void SaveToXml(XmlNode contextNode)
 		{
-			XmlDocument document = (contextNode.OwnerDocument == null) ? ((XmlDocument) contextNode) : contextNode.OwnerDocument;
+			XmlDocument document = contextNode.OwnerDocument ?? ((XmlDocument) contextNode);
 			XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(contextNode, "Timers");
 			Xml.SetAttribute(emptyNodeAlways, "enabled", m_disabled ? false.ToString() : true.ToString());
 			foreach (Timer timer in m_timers)

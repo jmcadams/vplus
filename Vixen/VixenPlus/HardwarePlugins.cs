@@ -48,7 +48,9 @@ namespace Vixen
 								{
 									return plugin;
 								}
+/*
 								plugin = null;
+*/
 							}
 						}
 					}

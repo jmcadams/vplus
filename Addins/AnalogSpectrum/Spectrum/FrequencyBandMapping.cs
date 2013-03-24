@@ -1,73 +1,66 @@
-﻿namespace Spectrum
+﻿using System.Collections.Generic;
+using System.Globalization;
+using System.Xml;
+using Vixen;
+
+namespace Spectrum
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Xml;
-    using Vixen;
+	internal class FrequencyBandMapping
+	{
+		private readonly List<int> _mChannelList;
+		private readonly float _mResponseLevelMax;
+		private readonly float _mResponseLevelMin;
 
-    internal class FrequencyBandMapping
-    {
-        private List<int> m_channelList;
-        private float m_responseLevelMax;
-        private float m_responseLevelMin;
+		public FrequencyBandMapping(XmlNode node)
+		{
+			if (node.Attributes != null)
+			{
+				_mResponseLevelMin = float.Parse(node.Attributes["responseLevelMin"].Value);
+				_mResponseLevelMax = float.Parse(node.Attributes["responseLevelMax"].Value);
+			}
+			_mChannelList = new List<int>();
+			if (node.InnerText.Length > 0)
+			{
+				foreach (string str in node.InnerText.Split(new[] {','}))
+				{
+					_mChannelList.Add(int.Parse(str));
+				}
+			}
+		}
 
-        public FrequencyBandMapping(XmlNode node)
-        {
-            this.m_responseLevelMin = float.Parse(node.Attributes["responseLevelMin"].Value);
-            this.m_responseLevelMax = float.Parse(node.Attributes["responseLevelMax"].Value);
-            this.m_channelList = new List<int>();
-            if (node.InnerText.Length > 0)
-            {
-                foreach (string str in node.InnerText.Split(new char[] { ',' }))
-                {
-                    this.m_channelList.Add(int.Parse(str));
-                }
-            }
-        }
+		public FrequencyBandMapping(float responseLevelMin, float responseLevelMax)
+		{
+			_mResponseLevelMin = responseLevelMin;
+			_mResponseLevelMax = responseLevelMax;
+			_mChannelList = new List<int>();
+		}
 
-        public FrequencyBandMapping(float responseLevelMin, float responseLevelMax)
-        {
-            this.m_responseLevelMin = responseLevelMin;
-            this.m_responseLevelMax = responseLevelMax;
-            this.m_channelList = new List<int>();
-        }
+		public List<int> ChannelList
+		{
+			get { return _mChannelList; }
+		}
 
-        public XmlNode SaveToXml(XmlNode contextNode)
-        {
-            List<string> list = new List<string>();
-            foreach (int num in this.m_channelList)
-            {
-                list.Add(num.ToString());
-            }
-            XmlNode node = Xml.SetNewValue(contextNode, "Band", string.Join(",", list.ToArray()));
-            Xml.SetAttribute(node, "responseLevelMin", this.m_responseLevelMin.ToString());
-            Xml.SetAttribute(node, "responseLevelMax", this.m_responseLevelMax.ToString());
-            return node;
-        }
+		public float ResponseLevelMax
+		{
+			get { return _mResponseLevelMax; }
+		}
 
-        public List<int> ChannelList
-        {
-            get
-            {
-                return this.m_channelList;
-            }
-        }
+		public float ResponseLevelMin
+		{
+			get { return _mResponseLevelMin; }
+		}
 
-        public float ResponseLevelMax
-        {
-            get
-            {
-                return this.m_responseLevelMax;
-            }
-        }
-
-        public float ResponseLevelMin
-        {
-            get
-            {
-                return this.m_responseLevelMin;
-            }
-        }
-    }
+		public XmlNode SaveToXml(XmlNode contextNode)
+		{
+			var list = new List<string>();
+			foreach (int num in _mChannelList)
+			{
+				list.Add(num.ToString(CultureInfo.InvariantCulture));
+			}
+			XmlNode node = Xml.SetNewValue(contextNode, "Band", string.Join(",", list.ToArray()));
+			Xml.SetAttribute(node, "responseLevelMin", _mResponseLevelMin.ToString(CultureInfo.InvariantCulture));
+			Xml.SetAttribute(node, "responseLevelMax", _mResponseLevelMax.ToString(CultureInfo.InvariantCulture));
+			return node;
+		}
+	}
 }
-

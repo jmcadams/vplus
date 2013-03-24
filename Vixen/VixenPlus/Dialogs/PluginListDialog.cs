@@ -351,27 +351,13 @@ namespace Vixen.Dialogs
 					{
 						item = new ListViewItem(new[] {string.Empty, port.Index.ToString(port.StringFormat), string.Empty, "Multiple"},
 						                        group);
-						if (port.Shared)
-						{
-							item.SubItems[3].ForeColor = Color.LightSteelBlue;
-						}
-						else
-						{
-							item.SubItems[3].ForeColor = Color.Pink;
-						}
+						item.SubItems[3].ForeColor = port.Shared ? Color.LightSteelBlue : Color.Pink;
 					}
 					else
 					{
 						item = new ListViewItem(new[] {string.Empty, port.Index.ToString(port.StringFormat), string.Empty, "Multiple"},
 						                        group);
-						if (port.Shared)
-						{
-							item.SubItems[3].ForeColor = Color.SteelBlue;
-						}
-						else
-						{
-							item.SubItems[3].ForeColor = Color.Red;
-						}
+						item.SubItems[3].ForeColor = port.Shared ? Color.SteelBlue : Color.Red;
 					}
 					item.Tag = port;
 					listViewOutputPorts.Items.Add(item);

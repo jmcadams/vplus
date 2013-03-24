@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.IO.Ports;
 using System.Text;
 using System.Windows.Forms;
@@ -11,7 +12,7 @@ namespace Vixen.Dialogs
 		{
 			components = null;
 			InitializeComponent();
-			comboBoxPortName.Items.AddRange(SerialPort.GetPortNames());
+			comboBoxPortName.Items.AddRange(new object[] {SerialPort.GetPortNames()});
 			Init(serialPort);
 		}
 
@@ -20,7 +21,7 @@ namespace Vixen.Dialogs
 		{
 			components = null;
 			InitializeComponent();
-			comboBoxPortName.Items.AddRange(SerialPort.GetPortNames());
+			comboBoxPortName.Items.AddRange(new object[] { SerialPort.GetPortNames() });
 			comboBoxPortName.Enabled = allowPortEdit;
 			comboBoxBaudRate.Enabled = allowBaudEdit;
 			comboBoxParity.Enabled = allowParityEdit;
@@ -41,7 +42,7 @@ namespace Vixen.Dialogs
 
 		private void buttonOK_Click(object sender, EventArgs e)
 		{
-			base.DialogResult = DialogResult.None;
+			DialogResult = DialogResult.None;
 			var builder = new StringBuilder();
 			if (comboBoxPortName.SelectedIndex == -1)
 			{
@@ -55,7 +56,7 @@ namespace Vixen.Dialogs
 			{
 				builder.AppendLine("* Parity has not been selected.");
 			}
-			int result = 0;
+			int result;
 			if (!int.TryParse(textBoxData.Text, out result))
 			{
 				builder.AppendLine("* Invalid numeric value for data bits.");
@@ -71,7 +72,7 @@ namespace Vixen.Dialogs
 			}
 			else
 			{
-				base.DialogResult = DialogResult.OK;
+				DialogResult = DialogResult.OK;
 			}
 		}
 
@@ -92,9 +93,9 @@ namespace Vixen.Dialogs
 				serialPort = new SerialPort("COM1", 0x9600, Parity.None, 8, StopBits.One);
 			}
 			comboBoxPortName.SelectedIndex = comboBoxPortName.Items.IndexOf(serialPort.PortName);
-			comboBoxBaudRate.SelectedItem = serialPort.BaudRate.ToString();
+			comboBoxBaudRate.SelectedItem = serialPort.BaudRate.ToString(CultureInfo.InvariantCulture);
 			comboBoxParity.SelectedItem = serialPort.Parity;
-			textBoxData.Text = serialPort.DataBits.ToString();
+			textBoxData.Text = serialPort.DataBits.ToString(CultureInfo.InvariantCulture);
 			comboBoxStop.SelectedItem = serialPort.StopBits;
 		}
 	}

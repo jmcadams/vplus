@@ -8,57 +8,60 @@ namespace Vixen.Dialogs
 {
 	public partial class ChannelOrderDialog : Form
 	{
-		private const int m_lineGutter = 10;
-		private const int m_lineHeight = 40;
-		private const int m_sideGutter = 10;
-		private List<Channel> m_channelMapping;
-		private List<Channel> m_channelNaturalOrder;
-		private bool m_controlDown;
-		private bool m_initializing;
-		private int m_insertIndex;
-		private int m_insertionIndex;
-		private bool m_mouseDown;
-		private int m_selectedIndex;
-		private bool m_showNaturalNumber;
+		private List<Channel> _channelMapping;
+		private List<Channel> _channelNaturalOrder;
+		private bool _controlDown;
+		private bool _initializing;
+		private int _insertIndex;
+		private int _insertionIndex;
+		private bool _mouseDown;
+		private int _selectedIndex;
+		private bool _showNaturalNumber;
 
-		public ChannelOrderDialog(List<Channel> channelList, List<int> channelOrder)
+		public ChannelOrderDialog(List<Channel> channelList, IEnumerable<int> channelOrder)
 		{
-			m_mouseDown = false;
-			m_selectedIndex = -1;
-			m_insertIndex = -1;
-			m_initializing = true;
-			m_insertionIndex = -1;
-			m_controlDown = false;
+			_mouseDown = false;
+			_selectedIndex = -1;
+			_insertIndex = -1;
+			_initializing = true;
+			_insertionIndex = -1;
+			_controlDown = false;
 			components = null;
 			InitializeComponent();
 			Construct(channelList, channelOrder);
 		}
 
-		public ChannelOrderDialog(List<Channel> channelList, List<int> channelOrder, string caption)
+		public ChannelOrderDialog(List<Channel> channelList, IEnumerable<int> channelOrder, string caption)
 		{
-			m_mouseDown = false;
-			m_selectedIndex = -1;
-			m_insertIndex = -1;
-			m_initializing = true;
-			m_insertionIndex = -1;
-			m_controlDown = false;
+			_mouseDown = false;
+			_selectedIndex = -1;
+			_insertIndex = -1;
+			_initializing = true;
+			_insertionIndex = -1;
+			_controlDown = false;
 			components = null;
 			InitializeComponent();
 			Construct(channelList, channelOrder);
 			Text = caption;
 		}
 
+		public override sealed string Text
+		{
+			get { return base.Text; }
+			set { base.Text = value; }
+		}
+
 		public List<Channel> ChannelMapping
 		{
-			get { return m_channelMapping; }
+			get { return _channelMapping; }
 		}
 
 		private void CalcScrollParams()
 		{
-			if (!m_initializing)
+			if (!_initializing)
 			{
 				var num = (int) Math.Round((((pictureBoxChannels.Height - 10))/40f), MidpointRounding.AwayFromZero);
-				vScrollBar.Maximum = m_channelMapping.Count - 1;
+				vScrollBar.Maximum = _channelMapping.Count - 1;
 				vScrollBar.LargeChange = num;
 				if ((vScrollBar.LargeChange + vScrollBar.Value) > vScrollBar.Maximum)
 				{
@@ -79,32 +82,32 @@ namespace Vixen.Dialogs
 
 		private void ChannelOrderDialog_KeyDown(object sender, KeyEventArgs e)
 		{
-			m_controlDown = e.Control;
+			_controlDown = e.Control;
 		}
 
 		private void ChannelOrderDialog_KeyUp(object sender, KeyEventArgs e)
 		{
-			m_controlDown = e.Control;
+			_controlDown = e.Control;
 		}
 
-		private void Construct(List<Channel> channelList, List<int> channelOrder)
+		private void Construct(List<Channel> channelList, IEnumerable<int> channelOrder)
 		{
-			m_initializing = false;
-			m_channelNaturalOrder = new List<Channel>();
-			m_channelNaturalOrder.AddRange(channelList);
-			m_channelMapping = new List<Channel>();
+			_initializing = false;
+			_channelNaturalOrder = new List<Channel>();
+			_channelNaturalOrder.AddRange(channelList);
+			_channelMapping = new List<Channel>();
 			if (channelOrder == null)
 			{
-				m_channelMapping.AddRange(channelList);
+				_channelMapping.AddRange(channelList);
 			}
 			else
 			{
 				foreach (int num in channelOrder)
 				{
-					m_channelMapping.Add(channelList[num]);
+					_channelMapping.Add(channelList[num]);
 				}
 			}
-			m_showNaturalNumber =
+			_showNaturalNumber =
 				((ISystem) Interfaces.Available["ISystem"]).UserPreferences.GetBoolean("ShowNaturalChannelNumber");
 			CalcScrollParams();
 		}
@@ -112,35 +115,35 @@ namespace Vixen.Dialogs
 
 		private void pictureBoxChannels_MouseDoubleClick(object sender, MouseEventArgs e)
 		{
-			m_mouseDown = false;
-			if (!m_controlDown)
+			_mouseDown = false;
+			if (!_controlDown)
 			{
-				m_insertionIndex = vScrollBar.Value + (e.Y/40);
+				_insertionIndex = vScrollBar.Value + (e.Y/40);
 				pictureBoxChannels.Refresh();
 			}
 		}
 
 		private void pictureBoxChannels_MouseDown(object sender, MouseEventArgs e)
 		{
-			if (m_controlDown)
+			if (_controlDown)
 			{
-				if (m_insertionIndex != -1)
+				if (_insertionIndex != -1)
 				{
 					int index = vScrollBar.Value + (e.Y/40);
-					if (m_insertionIndex != index)
+					if (_insertionIndex != index)
 					{
-						if (m_insertionIndex > index)
+						if (_insertionIndex > index)
 						{
-							m_insertionIndex--;
+							_insertionIndex--;
 						}
-						Channel item = m_channelMapping[index];
-						m_channelMapping.RemoveAt(index);
-						m_channelMapping.Insert(m_insertionIndex, item);
-						if (m_insertionIndex < m_channelMapping.Count)
+						Channel item = _channelMapping[index];
+						_channelMapping.RemoveAt(index);
+						_channelMapping.Insert(_insertionIndex, item);
+						if (_insertionIndex < _channelMapping.Count)
 						{
-							m_insertionIndex++;
+							_insertionIndex++;
 						}
-						if (m_insertionIndex < index)
+						if (_insertionIndex < index)
 						{
 							if (vScrollBar.Value <= (vScrollBar.Maximum - vScrollBar.LargeChange))
 							{
@@ -160,14 +163,14 @@ namespace Vixen.Dialogs
 			}
 			else
 			{
-				m_mouseDown = true;
-				m_selectedIndex = vScrollBar.Value + (e.Y/40);
+				_mouseDown = true;
+				_selectedIndex = vScrollBar.Value + (e.Y/40);
 			}
 		}
 
 		private void pictureBoxChannels_MouseMove(object sender, MouseEventArgs e)
 		{
-			if (m_mouseDown && ((e.Y >= 0) && (e.Y <= pictureBoxChannels.Height)))
+			if (_mouseDown && ((e.Y >= 0) && (e.Y <= pictureBoxChannels.Height)))
 			{
 				if (e.Y < 10)
 				{
@@ -180,17 +183,17 @@ namespace Vixen.Dialogs
 				else
 				{
 					int num = vScrollBar.Value + (e.Y/40);
-					if (num == m_insertIndex)
+					if (num == _insertIndex)
 					{
 						return;
 					}
-					if (m_selectedIndex != num)
+					if (_selectedIndex != num)
 					{
-						m_insertIndex = num;
+						_insertIndex = num;
 					}
 					else
 					{
-						m_insertIndex = -1;
+						_insertIndex = -1;
 					}
 				}
 				pictureBoxChannels.Refresh();
@@ -199,31 +202,31 @@ namespace Vixen.Dialogs
 
 		private void pictureBoxChannels_MouseUp(object sender, MouseEventArgs e)
 		{
-			if (m_insertIndex != -1)
+			if (_insertIndex != -1)
 			{
-				if (m_insertIndex != m_selectedIndex)
+				if (_insertIndex != _selectedIndex)
 				{
-					Channel item = m_channelMapping[m_selectedIndex];
-					m_channelMapping.RemoveAt(m_selectedIndex);
-					if (m_selectedIndex > m_insertIndex)
+					Channel item = _channelMapping[_selectedIndex];
+					_channelMapping.RemoveAt(_selectedIndex);
+					if (_selectedIndex > _insertIndex)
 					{
-						m_channelMapping.Insert(m_insertIndex, item);
+						_channelMapping.Insert(_insertIndex, item);
 					}
 					else
 					{
-						m_channelMapping.Insert(m_insertIndex - 1, item);
+						_channelMapping.Insert(_insertIndex - 1, item);
 					}
 				}
-				m_mouseDown = false;
-				m_selectedIndex = -1;
-				m_insertIndex = -1;
+				_mouseDown = false;
+				_selectedIndex = -1;
+				_insertIndex = -1;
 				pictureBoxChannels.Refresh();
 			}
 		}
 
 		private void pictureBoxChannels_Paint(object sender, PaintEventArgs e)
 		{
-			if (m_channelMapping.Count != 0)
+			if (_channelMapping.Count != 0)
 			{
 				int num2;
 				var pen = new Pen(Color.Black, 2f);
@@ -237,7 +240,7 @@ namespace Vixen.Dialogs
 				rect.Y = 10;
 				for (int i = 0; i < vScrollBar.LargeChange; i++)
 				{
-					Channel item = m_channelMapping[i + vScrollBar.Value];
+					Channel item = _channelMapping[i + vScrollBar.Value];
 					if (item.Color.ToArgb() != -1)
 					{
 						pen.Color = item.Color;
@@ -251,27 +254,22 @@ namespace Vixen.Dialogs
 					brush2.Color = pen.Color;
 					e.Graphics.FillRectangle(brush, rect);
 					e.Graphics.DrawRectangle(pen, rect);
-					if (m_showNaturalNumber)
-					{
-						e.Graphics.DrawString(string.Format("{0}: {1}", m_channelNaturalOrder.IndexOf(item) + 1, item.Name), font,
-						                      Brushes.Black, 15f, (rect.Top + 5));
-					}
-					else
-					{
-						e.Graphics.DrawString(item.Name, font, Brushes.Black, 15f, (rect.Top + 5));
-					}
+					e.Graphics.DrawString(
+						_showNaturalNumber ? string.Format("{0}: {1}", _channelNaturalOrder.IndexOf(item) + 1, item.Name) : item.Name,
+						font,
+						Brushes.Black, 15f, (rect.Top + 5));
 					rect.Y += 40;
 				}
-				if (m_insertIndex != -1)
+				if (_insertIndex != -1)
 				{
-					num2 = (m_insertIndex - vScrollBar.Value)*40;
-					int num3 = 5;
+					num2 = (_insertIndex - vScrollBar.Value)*40;
+					const int num3 = 5;
 					var points = new[] {new Point(5, (num2 - 5) + num3), new Point(10, num2 + num3), new Point(5, (num2 + 5) + num3)};
 					e.Graphics.DrawPolygon(Pens.Black, points);
 				}
-				if (m_insertionIndex != -1)
+				if (_insertionIndex != -1)
 				{
-					num2 = ((m_insertionIndex - vScrollBar.Value)*40) + 2;
+					num2 = ((_insertionIndex - vScrollBar.Value)*40) + 2;
 					e.Graphics.FillRectangle(Brushes.Gray, 0, num2, pictureBoxChannels.Width, 6);
 				}
 				font.Dispose();
@@ -301,7 +299,7 @@ namespace Vixen.Dialogs
 				{
 					break;
 				}
-				m_insertIndex++;
+				_insertIndex++;
 				vScrollBar.Value++;
 			}
 		}
@@ -315,7 +313,7 @@ namespace Vixen.Dialogs
 				{
 					break;
 				}
-				m_insertIndex--;
+				_insertIndex--;
 				vScrollBar.Value--;
 				pictureBoxChannels.Refresh();
 			}

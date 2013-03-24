@@ -438,12 +438,7 @@ namespace Vixen
 			Dispose();
 		}
 
-		private void FinalizeEngineContext(EngineContext context)
-		{
-			FinalizeEngineContext(context, true);
-		}
-
-		private void FinalizeEngineContext(EngineContext context, bool shutdownRouterContext)
+		private void FinalizeEngineContext(EngineContext context, bool shutdownRouterContext = true)
 		{
 			if (context != null)
 			{
@@ -1171,12 +1166,7 @@ namespace Vixen
 			}
 		}
 
-		private void StopExecution()
-		{
-			StopExecution(true);
-		}
-
-		private void StopExecution(bool shutdownPlugins)
+		private void StopExecution(bool shutdownPlugins = true)
 		{
 			lock (m_runLock)
 			{
@@ -1200,7 +1190,6 @@ namespace Vixen
 		{
 			if (m_eventTimer.Enabled && !m_stopping)
 			{
-				int num = 0;
 				if ((context.m_soundChannel != null) && context.m_soundChannel.IsPlaying)
 				{
 					context.m_tickCount = (int) context.m_soundChannel.Position;
@@ -1209,7 +1198,7 @@ namespace Vixen
 				{
 					context.m_tickCount = context.m_startOffset + ((int) context.m_timekeeper.ElapsedMilliseconds);
 				}
-				num = context.m_tickCount/context.m_currentSequence.EventPeriod;
+				int num = context.m_tickCount/context.m_currentSequence.EventPeriod;
 				if (((context.m_fadeStartTickCount != 0) && (context.m_tickCount >= context.m_fadeStartTickCount)) &&
 				    !m_contexts[m_secondaryContext].m_timekeeper.IsRunning)
 				{

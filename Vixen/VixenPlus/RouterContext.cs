@@ -19,14 +19,7 @@ namespace Vixen
 			PluginData = pluginData;
 			ExecutableObject = executableObject;
 			OutputPluginList = new List<MappedOutputPlugIn>();
-			if (tickSource == null)
-			{
-				TickSource = this;
-			}
-			else
-			{
-				TickSource = tickSource;
-			}
+			TickSource = tickSource ?? this;
 			foreach (XmlNode node in PluginData.GetAllPluginData(SetupData.PluginType.Output, true))
 			{
 				var item = new MappedOutputPlugIn((IOutputPlugIn) OutputPlugins.FindPlugin(node.Attributes["name"].Value, true),

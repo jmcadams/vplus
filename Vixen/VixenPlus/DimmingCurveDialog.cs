@@ -97,7 +97,7 @@ namespace Vixen
 			m_curvePointBrush = new SolidBrush(m_curvePointColor);
 			if (comboBoxChannels.Items.Count > 0)
 			{
-				comboBoxChannels.SelectedItem = (selectChannel != null) ? selectChannel : comboBoxChannels.Items[0];
+				comboBoxChannels.SelectedItem = selectChannel ?? comboBoxChannels.Items[0];
 			}
 			SwitchDisplay(Preference2.GetInstance().GetBoolean("ActualLevels"));
 			comboBoxImport.SelectedIndex = 0;
@@ -568,7 +568,7 @@ namespace Vixen
 
 		private void SwitchDisplay(bool useActualLevels)
 		{
-			useActualLevels = true;
+			useActualLevels = true; //TODO: Why is this overwritten here?
 			m_usingActualLevels = useActualLevels;
 			if (m_usingActualLevels)
 			{

@@ -5,7 +5,7 @@ namespace Vixen.Dialogs
 {
 	public partial class ChannelOutputMaskDialog : Form
 	{
-		public ChannelOutputMaskDialog(List<Channel> channels)
+		public ChannelOutputMaskDialog(IEnumerable<Channel> channels)
 		{
 			InitializeComponent();
 			foreach (Channel channel in channels)

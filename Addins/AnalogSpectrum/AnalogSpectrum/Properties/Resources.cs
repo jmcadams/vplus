@@ -9,37 +9,22 @@
     [DebuggerNonUserCode, GeneratedCode("System.Resources.Tools.StronglyTypedResourceBuilder", "2.0.0.0"), CompilerGenerated]
     internal class Resources
     {
-        private static CultureInfo resourceCulture;
-        private static System.Resources.ResourceManager resourceMan;
+	    private static System.Resources.ResourceManager _resourceMan;
 
-        internal Resources()
-        {
-        }
+	    [EditorBrowsable(EditorBrowsableState.Advanced)]
+	    internal static CultureInfo Culture { get; set; }
 
-        [EditorBrowsable(EditorBrowsableState.Advanced)]
-        internal static CultureInfo Culture
-        {
-            get
-            {
-                return resourceCulture;
-            }
-            set
-            {
-                resourceCulture = value;
-            }
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Advanced)]
+	    [EditorBrowsable(EditorBrowsableState.Advanced)]
         internal static System.Resources.ResourceManager ResourceManager
         {
             get
             {
-                if (ReferenceEquals(resourceMan, null))
+                if (ReferenceEquals(_resourceMan, null))
                 {
-                    System.Resources.ResourceManager manager = new System.Resources.ResourceManager("AnalogSpectrum.Properties.Resources", typeof(Resources).Assembly);
-                    resourceMan = manager;
+                    var manager = new System.Resources.ResourceManager("AnalogSpectrum.Properties.Resources", typeof(Resources).Assembly);
+                    _resourceMan = manager;
                 }
-                return resourceMan;
+                return _resourceMan;
             }
         }
     }

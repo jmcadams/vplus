@@ -133,11 +133,7 @@ namespace Vixen
 
 		public static Preference2 GetInstance()
 		{
-			if (m_instance == null)
-			{
-				m_instance = new Preference2(Path.Combine(Paths.DataPath, "preferences"));
-			}
-			return m_instance;
+			return m_instance ?? (m_instance = new Preference2(Path.Combine(Paths.DataPath, "preferences")));
 		}
 
 		public int GetInteger(string name)

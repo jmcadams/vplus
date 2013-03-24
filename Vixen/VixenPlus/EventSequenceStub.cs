@@ -116,11 +116,7 @@ namespace Vixen
 
 		public EventSequence RetrieveSequence()
 		{
-			if (m_eventSequence == null)
-			{
-				m_eventSequence = new EventSequence(m_filename);
-			}
-			return m_eventSequence;
+			return m_eventSequence ?? (m_eventSequence = new EventSequence(m_filename));
 		}
 
 		public override string ToString()

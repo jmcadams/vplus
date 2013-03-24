@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace Spectrum
 {
     using System;
@@ -6,9 +8,9 @@ namespace Spectrum
     using System.Xml;
     using Vixen;
 
-    public class Spectrum : IAddIn, ILoadable, IPlugIn
+    public class Spectrum : IAddIn
     {
-        private XmlNode m_dataNode;
+        private XmlNode _mDataNode;
 
         public bool Execute(EventSequence sequence)
         {
@@ -21,28 +23,26 @@ namespace Spectrum
                 throw new Exception("Frequency spectrum add-in requires the sequence to have audio assigned.");
             }
             float num = 1f;
-            string optionalNodeValue = Xml.GetOptionalNodeValue(this.m_dataNode, "Scale");
+            string optionalNodeValue = Xml.GetOptionalNodeValue(_mDataNode, "Scale");
             if (optionalNodeValue.Length > 0)
             {
                 num = float.Parse(optionalNodeValue);
             }
-            bool result = true;
-            bool flag4 = true;
-            bool.TryParse(Xml.GetNodeAlways(this.m_dataNode, "LockSliders", flag4.ToString()).InnerText, out result);
-            List<FrequencyBandMapping> list = new List<FrequencyBandMapping>();
-            foreach (XmlNode node in this.m_dataNode.SelectNodes("Bands/*"))
+            bool result;
+            bool.TryParse(Xml.GetNodeAlways(_mDataNode, "LockSliders", true.ToString()).InnerText, out result);
+            var list = new List<FrequencyBandMapping>();
+	        var xmlNodeList = _mDataNode.SelectNodes("Bands/*");
+	        if (xmlNodeList != null)
+		        foreach (XmlNode node in xmlNodeList)
+		        {
+			        list.Add(new FrequencyBandMapping(node));
+		        }
+	        var dialog = new SpectrumDialog(sequence) {LockSliders = result, Mappings = list.ToArray(), ScaleFactor = num};
+	        if (dialog.ShowDialog() == DialogResult.OK)
             {
-                list.Add(new FrequencyBandMapping(node));
-            }
-            SpectrumDialog dialog = new SpectrumDialog(sequence);
-            dialog.LockSliders = result;
-            dialog.Mappings = list.ToArray();
-            dialog.ScaleFactor = num;
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                Xml.SetValue(this.m_dataNode, "Scale", dialog.ScaleFactor.ToString());
-                Xml.SetValue(this.m_dataNode, "LockSliders", dialog.LockSliders.ToString());
-                XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(this.m_dataNode, "Bands");
+                Xml.SetValue(_mDataNode, "Scale", dialog.ScaleFactor.ToString(CultureInfo.InvariantCulture));
+                Xml.SetValue(_mDataNode, "LockSliders", dialog.LockSliders.ToString());
+                XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(_mDataNode, "Bands");
                 foreach (FrequencyBandMapping mapping in dialog.Mappings)
                 {
                     mapping.SaveToXml(emptyNodeAlways);
@@ -54,12 +54,12 @@ namespace Spectrum
 
         public void Loading(XmlNode dataNode)
         {
-            this.m_dataNode = dataNode;
+            _mDataNode = dataNode;
         }
 
         public override string ToString()
         {
-            return this.Name;
+            return Name;
         }
 
         public void Unloading()

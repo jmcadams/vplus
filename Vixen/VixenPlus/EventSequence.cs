@@ -490,7 +490,7 @@ namespace Vixen
 
 		public Channel FindChannel(ulong id)
 		{
-			return Channels.Find(delegate(Channel c) { return c.ID == id; });
+			return Channels.Find(delegate(Channel c) { return c.Id == id; });
 		}
 
 		private bool HasData()
@@ -510,15 +510,7 @@ namespace Vixen
 
 		public int InsertChannel(int sortedIndex)
 		{
-			int count;
-			if (LastSort >= 0)
-			{
-				count = m_channels.Count;
-			}
-			else
-			{
-				count = sortedIndex;
-			}
+			int count = LastSort >= 0 ? m_channels.Count : sortedIndex;
 			if (count > m_channels.Count)
 			{
 				count = m_channels.Count;
@@ -712,7 +704,7 @@ namespace Vixen
 
 		private void SaveToXml(XmlNode contextNode)
 		{
-			XmlDocument doc = (contextNode.OwnerDocument == null) ? ((XmlDocument) contextNode) : contextNode.OwnerDocument;
+			XmlDocument doc = contextNode.OwnerDocument ?? ((XmlDocument) contextNode);
 			XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(contextNode, "Program");
 			Xml.SetValue(emptyNodeAlways, "Time", m_time.ToString());
 			Xml.SetValue(emptyNodeAlways, "EventPeriodInMilliseconds", m_eventPeriod.ToString());
@@ -772,12 +764,7 @@ namespace Vixen
 			return Name;
 		}
 
-		private void UpdateEventValueArray()
-		{
-			UpdateEventValueArray(false);
-		}
-
-		private void UpdateEventValueArray(bool dataExtrapolation)
+		private void UpdateEventValueArray(bool dataExtrapolation = false)
 		{
 			int length = 0;
 			List<Channel> list = (m_profile == null) ? m_channels : m_profile.Channels;

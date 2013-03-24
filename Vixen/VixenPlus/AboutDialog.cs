@@ -22,6 +22,12 @@ namespace Vixen
 			llblURL.Text = Vendor.ProductURL;
 		}
 
+		public override sealed string Text
+		{
+			get { return base.Text; }
+			set { base.Text = value; }
+		}
+
 		private void llblURL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
 			llblURL.LinkVisited = true;

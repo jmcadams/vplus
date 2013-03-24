@@ -9,7 +9,7 @@ namespace Vixen
 	public class AddEditRemove : Panel
 	{
 		private readonly IContainer components;
-		private VixenSimpleButton[] m_buttons;
+		private VixenSimpleButton[] _buttons;
 
 		public AddEditRemove()
 		{
@@ -29,43 +29,43 @@ namespace Vixen
 		[DefaultValue(true)]
 		public bool AddEnabled
 		{
-			get { return m_buttons[0].Enabled; }
-			set { m_buttons[0].Enabled = value; }
+			get { return _buttons[0].Enabled; }
+			set { _buttons[0].Enabled = value; }
 		}
 
 		[DefaultValue(true)]
 		public bool AddVisible
 		{
-			get { return m_buttons[0].Visible; }
-			set { m_buttons[0].Visible = value; }
+			get { return _buttons[0].Visible; }
+			set { _buttons[0].Visible = value; }
 		}
 
 		[DefaultValue(true)]
 		public bool EditEnabled
 		{
-			get { return m_buttons[1].Enabled; }
-			set { m_buttons[1].Enabled = value; }
+			get { return _buttons[1].Enabled; }
+			set { _buttons[1].Enabled = value; }
 		}
 
 		[DefaultValue(true)]
 		public bool EditVisible
 		{
-			get { return m_buttons[1].Visible; }
-			set { m_buttons[1].Visible = value; }
+			get { return _buttons[1].Visible; }
+			set { _buttons[1].Visible = value; }
 		}
 
 		[DefaultValue(true)]
 		public bool RemoveEnabled
 		{
-			get { return m_buttons[2].Enabled; }
-			set { m_buttons[2].Enabled = value; }
+			get { return _buttons[2].Enabled; }
+			set { _buttons[2].Enabled = value; }
 		}
 
 		[DefaultValue(true)]
 		public bool RemoveVisible
 		{
-			get { return m_buttons[2].Visible; }
-			set { m_buttons[2].Visible = value; }
+			get { return _buttons[2].Visible; }
+			set { _buttons[2].Visible = value; }
 		}
 
 		public event EventHandler AddClick;
@@ -76,15 +76,15 @@ namespace Vixen
 
 		private void AddEditRemove_ButtonClick(object sender, EventArgs e)
 		{
-			if ((sender == m_buttons[0]) && (AddClick != null))
+			if ((sender == _buttons[0]) && (AddClick != null))
 			{
 				AddClick(sender, e);
 			}
-			else if ((sender == m_buttons[1]) && (EditClick != null))
+			else if ((sender == _buttons[1]) && (EditClick != null))
 			{
 				EditClick(sender, e);
 			}
-			else if ((sender == m_buttons[2]) && (RemoveClick != null))
+			else if ((sender == _buttons[2]) && (RemoveClick != null))
 			{
 				RemoveClick(sender, e);
 			}
@@ -98,43 +98,43 @@ namespace Vixen
 		private void CalcPositions()
 		{
 			int num = 0;
-			if (m_buttons[0].Visible)
+			if (_buttons[0].Visible)
 			{
-				m_buttons[0].Left = num;
+				_buttons[0].Left = num;
 				num += 0x1a;
 			}
-			if (m_buttons[1].Visible)
+			if (_buttons[1].Visible)
 			{
-				m_buttons[1].Left = num;
+				_buttons[1].Left = num;
 				num += 0x1a;
 			}
-			if (m_buttons[2].Visible)
+			if (_buttons[2].Visible)
 			{
-				m_buttons[2].Left = num;
+				_buttons[2].Left = num;
 				num += 0x1a;
 			}
-			base.Width = num;
+			Width = num;
 		}
 
 		private void Construct()
 		{
-			base.Size = new Size(0x48, 20);
-			m_buttons = new[]
+			Size = new Size(0x48, 20);
+			_buttons = new[]
 				{
 					new VixenSimpleButton(VixenSimpleButtonType.Add), new VixenSimpleButton(VixenSimpleButtonType.Edit),
 					new VixenSimpleButton(VixenSimpleButtonType.Remove)
 				};
-			m_buttons[0].Parent = this;
-			m_buttons[1].Parent = this;
-			m_buttons[2].Parent = this;
+			_buttons[0].Parent = this;
+			_buttons[1].Parent = this;
+			_buttons[2].Parent = this;
 			EventHandler handler = AddEditRemove_ButtonVisibleChanged;
-			m_buttons[0].VisibleChanged += handler;
-			m_buttons[1].VisibleChanged += handler;
-			m_buttons[2].VisibleChanged += handler;
+			_buttons[0].VisibleChanged += handler;
+			_buttons[1].VisibleChanged += handler;
+			_buttons[2].VisibleChanged += handler;
 			EventHandler handler2 = AddEditRemove_ButtonClick;
-			m_buttons[0].Click += handler2;
-			m_buttons[1].Click += handler2;
-			m_buttons[2].Click += handler2;
+			_buttons[0].Click += handler2;
+			_buttons[1].Click += handler2;
+			_buttons[2].Click += handler2;
 			CalcPositions();
 		}
 

@@ -16,38 +16,14 @@ namespace Vixen
 				finalNode = finalNode.ParentNode;
 			}
 			XmlNode node = stack.Pop();
-			XmlNode node2 = targetDoc.SelectSingleNode("//" + node.Name);
-			if (node2 == null)
-			{
-				node2 = targetDoc.AppendChild(targetDoc.ImportNode(node, false));
-			}
+			XmlNode node2 = targetDoc.SelectSingleNode("//" + node.Name) ??
+			                targetDoc.AppendChild(targetDoc.ImportNode(node, false));
 			while (stack.Count > 0)
 			{
 				XmlNode node3;
 				node = stack.Pop();
-				if (node.Attributes["name"] != null)
-				{
-					node3 = node2.SelectSingleNode(node.Name + string.Format("[@name = \"{0}\"]", node.Attributes["name"].Value));
-				}
-				else
-				{
-					node3 = node2.SelectSingleNode(node.Name);
-				}
-				if (node3 == null)
-				{
-					if (stack.Count == 0)
-					{
-						node2 = node2.AppendChild(targetDoc.ImportNode(node, deep));
-					}
-					else
-					{
-						node2 = node2.AppendChild(targetDoc.ImportNode(node, false));
-					}
-				}
-				else
-				{
-					node2 = node3;
-				}
+				node3 = node.Attributes["name"] != null ? node2.SelectSingleNode(node.Name + string.Format("[@name = \"{0}\"]", node.Attributes["name"].Value)) : node2.SelectSingleNode(node.Name);
+				node2 = node3 ?? node2.AppendChild(stack.Count == 0 ? targetDoc.ImportNode(node, deep) : targetDoc.ImportNode(node, false));
 			}
 			return node2;
 		}
@@ -102,7 +78,7 @@ namespace Vixen
 			if (newChild == null)
 			{
 				newChild =
-					((contextNode.OwnerDocument == null) ? ((XmlDocument) contextNode) : contextNode.OwnerDocument).CreateElement(
+					(contextNode.OwnerDocument ?? ((XmlDocument) contextNode)).CreateElement(
 						nodeName);
 				contextNode.AppendChild(newChild);
 			}
@@ -115,7 +91,7 @@ namespace Vixen
 			if (newChild == null)
 			{
 				newChild =
-					((contextNode.OwnerDocument == null) ? ((XmlDocument) contextNode) : contextNode.OwnerDocument).CreateElement(
+					(contextNode.OwnerDocument ?? ((XmlDocument) contextNode)).CreateElement(
 						nodeName);
 				contextNode.AppendChild(newChild);
 				newChild.InnerText = defaultValue;
@@ -156,7 +132,7 @@ namespace Vixen
 			XmlAttribute attribute = node.Attributes[attributeName];
 			if (attribute == null)
 			{
-				attribute = ((node.OwnerDocument == null) ? ((XmlDocument) node) : node.OwnerDocument).CreateAttribute(attributeName);
+				attribute = (node.OwnerDocument ?? ((XmlDocument) node)).CreateAttribute(attributeName);
 				node.Attributes.Append(attribute);
 			}
 			attribute.Value = attributeValue;
@@ -166,7 +142,7 @@ namespace Vixen
 		public static XmlNode SetAttribute(XmlNode contextNode, string nodeName, string attributeName, string attributeValue)
 		{
 			XmlNode newChild = contextNode.SelectSingleNode(nodeName);
-			XmlDocument document = (contextNode.OwnerDocument == null) ? ((XmlDocument) contextNode) : contextNode.OwnerDocument;
+			XmlDocument document = contextNode.OwnerDocument ?? ((XmlDocument) contextNode);
 			if (newChild == null)
 			{
 				newChild = document.CreateElement(nodeName);
@@ -185,7 +161,7 @@ namespace Vixen
 		public static XmlNode SetNewValue(XmlNode contextNode, string nodeName, string nodeValue)
 		{
 			XmlNode newChild =
-				((contextNode.OwnerDocument == null) ? ((XmlDocument) contextNode) : contextNode.OwnerDocument).CreateElement(
+				(contextNode.OwnerDocument ?? ((XmlDocument) contextNode)).CreateElement(
 					nodeName);
 			contextNode.AppendChild(newChild);
 			newChild.InnerText = nodeValue;
@@ -198,7 +174,7 @@ namespace Vixen
 			if (newChild == null)
 			{
 				newChild =
-					((contextNode.OwnerDocument == null) ? ((XmlDocument) contextNode) : contextNode.OwnerDocument).CreateElement(
+					(contextNode.OwnerDocument ?? ((XmlDocument) contextNode)).CreateElement(
 						nodeName);
 				contextNode.AppendChild(newChild);
 			}

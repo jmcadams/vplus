@@ -43,7 +43,7 @@ namespace Vixen
 		                                   ITickSource tickSource)
 		{
 			var item = new RouterContext(engineBuffer, pluginData, executableObject, tickSource);
-			int newSize = 0;
+			int newSize;
 			newSize = Math.Max((m_data == null) ? 0 : m_data.Length, item.EngineBuffer.Length);
 			if (m_data == null)
 			{
@@ -159,11 +159,7 @@ namespace Vixen
 
 		public static PlugInRouter GetInstance()
 		{
-			if (m_instance == null)
-			{
-				m_instance = new PlugInRouter();
-			}
-			return m_instance;
+			return m_instance ?? (m_instance = new PlugInRouter());
 		}
 
 		public bool GetSequenceInputs(IExecutable executableObject, byte[] eventBuffer, bool forLiveUpdate, bool forRecord)
@@ -186,7 +182,8 @@ namespace Vixen
 								ulChannelId = ulong.Parse(str);
 								if (match == null)
 								{
-									match = delegate(Channel c) { return c.ID == ulChannelId; };
+									var id = ulChannelId;
+									match = c => c.Id == id;
 								}
 								int outputChannel = executableObject.Channels.Find(match).OutputChannel;
 								eventBuffer[outputChannel] = valueInternal;

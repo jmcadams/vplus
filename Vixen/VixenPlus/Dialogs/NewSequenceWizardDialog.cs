@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -8,7 +9,7 @@ namespace Vixen.Dialogs
 {
 	public partial class NewSequenceWizardDialog : Form
 	{
-		private readonly string[,] m_explanations = new[,]
+		private readonly string[,] _explanations = new[,]
 			{
 				{string.Empty, string.Empty, string.Empty, string.Empty},
 				{
@@ -53,11 +54,11 @@ namespace Vixen.Dialogs
 				}
 			};
 
-		private readonly Stack<int> m_history;
-		private readonly Preference2 m_preferences;
-		private readonly EventSequence m_sequence;
-		private bool m_back;
-		private bool m_skip;
+		private readonly Stack<int> _history;
+		private readonly Preference2 _preferences;
+		private readonly EventSequence _eventSequence;
+		private bool _back;
+		private bool _skip;
 
 		//ComponentResourceManager manager = new ComponentResourceManager(typeof(NewSequenceWizardDialog));
 		//this.label2.Text = manager.GetString("label2.Text");
@@ -68,27 +69,27 @@ namespace Vixen.Dialogs
 			InitializeComponent();
 			openFileDialog.InitialDirectory = Paths.SequencePath;
 			tabControl.SelectedIndex = 0;
-			m_preferences = preferences;
-			m_sequence = new EventSequence(preferences);
+			_preferences = preferences;
+			_eventSequence = new EventSequence(preferences);
 			PopulateProfileList();
-			string str = string.Empty;
+			string str;
 			if ((str = preferences.GetString("DefaultProfile")).Length > 0)
 			{
 				comboBoxProfiles.SelectedIndex = comboBoxProfiles.Items.IndexOf(str);
 			}
-			m_history = new Stack<int>();
+			_history = new Stack<int>();
 			UpdateExplanations(0);
 		}
 
 		public EventSequence Sequence
 		{
-			get { return m_sequence; }
+			get { return _eventSequence; }
 		}
 
 		private void buttonAssignAudio_Click(object sender, EventArgs e)
 		{
-			int integer = m_preferences.GetInteger("SoundDevice");
-			var dialog = new AudioDialog(m_sequence, m_preferences.GetBoolean("EventSequenceAutoSize"), integer);
+			int integer = _preferences.GetInteger("SoundDevice");
+			var dialog = new AudioDialog(_eventSequence, _preferences.GetBoolean("EventSequenceAutoSize"), integer);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
 				SetSequenceTime();
@@ -101,32 +102,25 @@ namespace Vixen.Dialogs
 			if (openFileDialog.ShowDialog() == DialogResult.OK)
 			{
 				var sequence = new EventSequence(openFileDialog.FileName);
-				textBoxChannelCount.Text = sequence.ChannelCount.ToString();
+				textBoxChannelCount.Text = sequence.ChannelCount.ToString(CultureInfo.InvariantCulture);
 				var builder = new StringBuilder();
 				foreach (Channel channel in sequence.Channels)
 				{
 					builder.AppendLine(channel.Name);
 				}
 				textBoxChannelNames.Text = builder.ToString();
-				m_sequence.Channels.Clear();
-				m_sequence.Channels.AddRange(sequence.Channels);
+				_eventSequence.Channels.Clear();
+				_eventSequence.Channels.AddRange(sequence.Channels);
 			}
 		}
 
 		private void buttonNext_Click(object sender, EventArgs e)
 		{
-			m_skip = false;
-			m_back = false;
+			_skip = false;
+			_back = false;
 			if (tabControl.SelectedTab == tabPageProfile)
 			{
-				if (comboBoxProfiles.SelectedIndex == 0)
-				{
-					tabControl.SelectedTab = tabPageChannelCount;
-				}
-				else
-				{
-					tabControl.SelectedTab = tabPageAudio;
-				}
+				tabControl.SelectedTab = comboBoxProfiles.SelectedIndex == 0 ? tabPageChannelCount : tabPageAudio;
 			}
 			else
 			{
@@ -143,9 +137,9 @@ namespace Vixen.Dialogs
 
 		private void buttonPrev_Click(object sender, EventArgs e)
 		{
-			m_back = true;
-			tabControl.SelectedIndex = m_history.Pop();
-			buttonPrev.Enabled = m_history.Count > 0;
+			_back = true;
+			tabControl.SelectedIndex = _history.Pop();
+			buttonPrev.Enabled = _history.Count > 0;
 		}
 
 		private void buttonProfileManager_Click(object sender, EventArgs e)
@@ -160,15 +154,15 @@ namespace Vixen.Dialogs
 
 		private void buttonSetupPlugins_Click(object sender, EventArgs e)
 		{
-			var dialog = new PluginListDialog(m_sequence);
+			var dialog = new PluginListDialog(_eventSequence);
 			dialog.ShowDialog();
 			dialog.Dispose();
 		}
 
 		private void buttonSkip_Click(object sender, EventArgs e)
 		{
-			m_skip = true;
-			m_back = false;
+			_skip = true;
+			_back = false;
 			tabControl.SelectedIndex++;
 		}
 
@@ -177,7 +171,7 @@ namespace Vixen.Dialogs
 		{
 			if (labelEffect.Enabled)
 			{
-				labelExplanation.Text = m_explanations[tabControl.SelectedIndex, 2];
+				labelExplanation.Text = _explanations[tabControl.SelectedIndex, 2];
 			}
 		}
 
@@ -185,7 +179,7 @@ namespace Vixen.Dialogs
 		{
 			if (labelNotes.Enabled)
 			{
-				labelExplanation.Text = m_explanations[tabControl.SelectedIndex, 3];
+				labelExplanation.Text = _explanations[tabControl.SelectedIndex, 3];
 			}
 		}
 
@@ -193,7 +187,7 @@ namespace Vixen.Dialogs
 		{
 			if (labelWhat.Enabled)
 			{
-				labelExplanation.Text = m_explanations[tabControl.SelectedIndex, 0];
+				labelExplanation.Text = _explanations[tabControl.SelectedIndex, 0];
 			}
 		}
 
@@ -201,7 +195,7 @@ namespace Vixen.Dialogs
 		{
 			if (labelWhy.Enabled)
 			{
-				labelExplanation.Text = m_explanations[tabControl.SelectedIndex, 1];
+				labelExplanation.Text = _explanations[tabControl.SelectedIndex, 1];
 			}
 		}
 
@@ -211,7 +205,6 @@ namespace Vixen.Dialogs
 			int num3;
 			int num4;
 			string s = "0";
-			string str2 = string.Empty;
 			string str3 = "0";
 			int index = text.IndexOf(':');
 			if (index != -1)
@@ -225,7 +218,7 @@ namespace Vixen.Dialogs
 				str3 = text.Substring(index + 1).Trim();
 				text = text.Substring(0, index);
 			}
-			str2 = text;
+			string str2 = text;
 			try
 			{
 				num2 = int.Parse(s);
@@ -280,18 +273,18 @@ namespace Vixen.Dialogs
 
 		private void SetSequenceTime()
 		{
-			textBoxTime.Text = string.Format("{0:d2}:{1:d2}.{2:d3}", m_sequence.Time/0xea60, (m_sequence.Time%0xea60)/0x3e8,
-			                                 m_sequence.Time%0x3e8);
+			textBoxTime.Text = string.Format("{0:d2}:{1:d2}.{2:d3}", _eventSequence.Time/0xea60, (_eventSequence.Time%0xea60)/0x3e8,
+			                                 _eventSequence.Time%0x3e8);
 		}
 
 		private void tabControl_Deselecting(object sender, TabControlCancelEventArgs e)
 		{
-			if (!m_back)
+			if (!_back)
 			{
-				m_history.Push(e.TabPageIndex);
+				_history.Push(e.TabPageIndex);
 				buttonPrev.Enabled = true;
 			}
-			if (m_skip)
+			if (_skip)
 			{
 				return;
 			}
@@ -300,7 +293,7 @@ namespace Vixen.Dialogs
 			{
 				case 1:
 					{
-						int num = 0;
+						int num;
 						try
 						{
 							num = Convert.ToInt32(textBoxEventPeriod.Text);
@@ -315,23 +308,16 @@ namespace Vixen.Dialogs
 							text = textBoxChannelCount.Text + " is not a valid number for the event period length";
 							goto Label_0339;
 						}
-						m_sequence.EventPeriod = num;
+						_eventSequence.EventPeriod = num;
 						goto Label_0339;
 					}
 				case 2:
-					if (comboBoxProfiles.SelectedIndex == 0)
-					{
-						m_sequence.Profile = null;
-					}
-					else
-					{
-						m_sequence.Profile = new Profile(Path.Combine(Paths.ProfilePath, comboBoxProfiles.SelectedItem + ".pro"));
-					}
+					_eventSequence.Profile = comboBoxProfiles.SelectedIndex == 0 ? null : new Profile(Path.Combine(Paths.ProfilePath, comboBoxProfiles.SelectedItem + ".pro"));
 					goto Label_0339;
 
 				case 3:
 					{
-						int num2 = 0;
+						int num2;
 						try
 						{
 							num2 = Convert.ToInt32(textBoxChannelCount.Text);
@@ -357,7 +343,7 @@ namespace Vixen.Dialogs
 							Cursor = Cursors.WaitCursor;
 							try
 							{
-								m_sequence.ChannelCount = num2;
+								_eventSequence.ChannelCount = num2;
 							}
 							finally
 							{
@@ -389,7 +375,7 @@ namespace Vixen.Dialogs
 						{
 							try
 							{
-								m_sequence.Time = num4;
+								_eventSequence.Time = num4;
 							}
 							catch (Exception exception)
 							{
@@ -404,9 +390,9 @@ namespace Vixen.Dialogs
 			Cursor = Cursors.WaitCursor;
 			try
 			{
-				for (int i = 0; i < m_sequence.ChannelCount; i++)
+				for (int i = 0; i < _eventSequence.ChannelCount; i++)
 				{
-					m_sequence.Channels[i].Name = textBoxChannelNames.Lines[i];
+					_eventSequence.Channels[i].Name = textBoxChannelNames.Lines[i];
 				}
 			}
 			finally
@@ -426,13 +412,13 @@ namespace Vixen.Dialogs
 			switch (e.TabPageIndex)
 			{
 				case 1:
-					textBoxEventPeriod.Text = m_sequence.EventPeriod.ToString();
+					textBoxEventPeriod.Text = _eventSequence.EventPeriod.ToString(CultureInfo.InvariantCulture);
 					break;
 
 				case 2:
-					if (m_sequence.Profile != null)
+					if (_eventSequence.Profile != null)
 					{
-						comboBoxProfiles.SelectedIndex = comboBoxProfiles.Items.IndexOf(m_sequence.Profile.Name);
+						comboBoxProfiles.SelectedIndex = comboBoxProfiles.Items.IndexOf(_eventSequence.Profile.Name);
 						break;
 					}
 					comboBoxProfiles.SelectedIndex = 0;
@@ -478,7 +464,7 @@ namespace Vixen.Dialogs
 			}
 			UpdateExplanations(e.TabPageIndex);
 			buttonSkip.Enabled = buttonNext.Enabled = e.TabPageIndex < (tabControl.TabCount - 1);
-			base.AcceptButton = (e.TabPageIndex == 4) ? null : (buttonNext.Enabled ? (buttonNext) : (buttonOK));
+			AcceptButton = (e.TabPageIndex == 4) ? null : (buttonNext.Enabled ? (buttonNext) : (buttonOK));
 		}
 
 		private void textBoxChannelNames_TextChanged(object sender, EventArgs e)
@@ -489,11 +475,11 @@ namespace Vixen.Dialogs
 
 		private void UpdateExplanations(int pageIndex)
 		{
-			labelWhat.Enabled = m_explanations[pageIndex, 0] != string.Empty;
-			labelWhy.Enabled = m_explanations[pageIndex, 1] != string.Empty;
-			labelEffect.Enabled = m_explanations[pageIndex, 2] != string.Empty;
-			labelNotes.Enabled = m_explanations[pageIndex, 3] != string.Empty;
-			labelExplanation.Text = m_explanations[pageIndex, 0];
+			labelWhat.Enabled = _explanations[pageIndex, 0] != string.Empty;
+			labelWhy.Enabled = _explanations[pageIndex, 1] != string.Empty;
+			labelEffect.Enabled = _explanations[pageIndex, 2] != string.Empty;
+			labelNotes.Enabled = _explanations[pageIndex, 3] != string.Empty;
+			labelExplanation.Text = _explanations[pageIndex, 0];
 		}
 	}
 }

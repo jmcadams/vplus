@@ -12,6 +12,12 @@ namespace Vixen.Dialogs
 			textBoxResponse.Text = response;
 		}
 
+		public override sealed string Text
+		{
+			get { return base.Text; }
+			set { base.Text = value; }
+		}
+
 		public string Caption
 		{
 			get { return Text; }

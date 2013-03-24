@@ -65,7 +65,7 @@ namespace Vixen
 		private void buttonLogFilePath_Click(object sender, EventArgs e)
 		{
 			string path = string.Empty;
-			string fileName = "audio.log";
+			string fileName = "audio.log"; //TODO This is overwritten below without being used.
 			try
 			{
 				path = Path.GetDirectoryName(textBoxLogFilePath.Text);
@@ -80,14 +80,7 @@ namespace Vixen
 			}
 			if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
 			{
-				if (fileName != string.Empty)
-				{
-					textBoxLogFilePath.Text = Path.Combine(folderBrowserDialog.SelectedPath, fileName);
-				}
-				else
-				{
-					textBoxLogFilePath.Text = Path.Combine(folderBrowserDialog.SelectedPath, "audio.log");
-				}
+				textBoxLogFilePath.Text = Path.Combine(folderBrowserDialog.SelectedPath, fileName != string.Empty ? fileName : "audio.log");
 			}
 		}
 
@@ -126,14 +119,10 @@ namespace Vixen
 							m_preferences.SetString("ClientName", textBoxClientName.Text);
 							m_preferences.SetBoolean("ResetAtStartup", checkBoxResetAtStartup.Checked);
 							m_preferences.SetString("PreferredSequenceType", m_uiPlugins[comboBoxSequenceType.SelectedIndex].FileExtension);
-							if (!dateTimePickerAutoShutdownTime.Checked)
-							{
-								m_preferences.SetString("ShutdownTime", string.Empty);
-							}
-							else
-							{
-								m_preferences.SetString("ShutdownTime", dateTimePickerAutoShutdownTime.Value.ToString("h:mm tt"));
-							}
+							m_preferences.SetString("ShutdownTime",
+							                        !dateTimePickerAutoShutdownTime.Checked
+								                        ? string.Empty
+								                        : dateTimePickerAutoShutdownTime.Value.ToString("h:mm tt"));
 							string path = Path.Combine(Paths.DataPath, "no.update");
 							if (checkBoxDisableAutoUpdate.Checked)
 							{
@@ -154,14 +143,10 @@ namespace Vixen
 						m_preferences.SetInteger("MinimumLevel", (int) numericUpDownMinimumLevel.Value);
 						m_preferences.SetInteger("MaximumLevel", (int) numericUpDownMaximumLevel.Value);
 						m_preferences.SetBoolean("WizardForNewSequences", checkBoxWizardForNewSequences.Checked);
-						if (comboBoxDefaultProfile.SelectedIndex != 0)
-						{
-							m_preferences.SetString("DefaultProfile", comboBoxDefaultProfile.SelectedItem.ToString());
-						}
-						else
-						{
-							m_preferences.SetString("DefaultProfile", string.Empty);
-						}
+						m_preferences.SetString("DefaultProfile",
+						                        comboBoxDefaultProfile.SelectedIndex != 0
+							                        ? comboBoxDefaultProfile.SelectedItem.ToString()
+							                        : string.Empty);
 						m_preferences.SetInteger("DefaultSequenceAudioDevice", comboBoxDefaultAudioDevice.SelectedIndex - 1);
 						return;
 
@@ -308,7 +293,7 @@ namespace Vixen
 							numericUpDownMinimumLevel.Value = m_preferences.GetInteger("MinimumLevel");
 							numericUpDownMaximumLevel.Value = m_preferences.GetInteger("MaximumLevel");
 							checkBoxWizardForNewSequences.Checked = m_preferences.GetBoolean("WizardForNewSequences");
-							string str3 = string.Empty;
+							string str3;
 							if (((str3 = m_preferences.GetString("DefaultProfile")).Length != 0) &&
 							    File.Exists(Path.Combine(Paths.ProfilePath, str3 + ".pro")))
 							{
@@ -319,14 +304,7 @@ namespace Vixen
 								comboBoxDefaultProfile.SelectedIndex = 0;
 							}
 							int num2 = m_preferences.GetInteger("DefaultSequenceAudioDevice") + 1;
-							if (num2 < comboBoxDefaultAudioDevice.Items.Count)
-							{
-								comboBoxDefaultAudioDevice.SelectedIndex = num2;
-							}
-							else
-							{
-								comboBoxDefaultAudioDevice.SelectedIndex = 0;
-							}
+							comboBoxDefaultAudioDevice.SelectedIndex = num2 < comboBoxDefaultAudioDevice.Items.Count ? num2 : 0;
 							return;
 						}
 					case 2:

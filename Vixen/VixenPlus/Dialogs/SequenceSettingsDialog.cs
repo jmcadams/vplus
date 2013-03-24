@@ -1,19 +1,20 @@
 using System;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace Vixen.Dialogs
 {
 	public partial class SequenceSettingsDialog : Form
 	{
-		private readonly EventSequence m_sequence;
+		private readonly EventSequence _eventSequence;
 
 		public SequenceSettingsDialog(EventSequence sequence)
 		{
 			InitializeComponent();
-			m_sequence = sequence;
+			_eventSequence = sequence;
 			numericUpDownMinimum.Value = sequence.MinimumLevel;
 			numericUpDownMaximum.Value = sequence.MaximumLevel;
-			textBoxEventPeriodLength.Text = sequence.EventPeriod.ToString();
+			textBoxEventPeriodLength.Text = sequence.EventPeriod.ToString(CultureInfo.InvariantCulture);
 		}
 
 		private void buttonOK_Click(object sender, EventArgs e)
@@ -22,25 +23,18 @@ namespace Vixen.Dialogs
 			{
 				MessageBox.Show("Minimum must be less than the maximum.", Vendor.ProductName, MessageBoxButtons.OK,
 				                MessageBoxIcon.Hand);
-				base.DialogResult = DialogResult.None;
+				DialogResult = DialogResult.None;
 			}
 			else
 			{
-				m_sequence.MinimumLevel = (byte) numericUpDownMinimum.Value;
-				m_sequence.MaximumLevel = (byte) numericUpDownMaximum.Value;
+				_eventSequence.MinimumLevel = (byte) numericUpDownMinimum.Value;
+				_eventSequence.MaximumLevel = (byte) numericUpDownMaximum.Value;
 				Cursor = Cursors.WaitCursor;
-				try
-				{
-					int num = Convert.ToInt32(textBoxEventPeriodLength.Text);
-					m_sequence.EventPeriod = num;
+				int num;
+				if(int.TryParse(textBoxEventPeriodLength.Text, out num))				{
+					_eventSequence.EventPeriod = num;
 				}
-				catch
-				{
-				}
-				finally
-				{
-					Cursor = Cursors.Default;
-				}
+				Cursor = Cursors.Default;
 			}
 		}
 	}

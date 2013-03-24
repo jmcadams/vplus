@@ -135,7 +135,7 @@ namespace Vixen
 			XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(m_setupNode, "Inputs");
 			foreach (Input input in Inputs)
 			{
-				node2 = input.WriteData(emptyNodeAlways);
+				input.WriteData(emptyNodeAlways);
 			}
 			XmlNode node = Xml.GetEmptyNodeAlways(m_setupNode, "Iterator");
 			Xml.SetAttribute(node, "type", m_mappingIterator.ToString());

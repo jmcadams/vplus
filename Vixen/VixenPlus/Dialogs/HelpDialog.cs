@@ -4,29 +4,29 @@ using System.Windows.Forms;
 
 namespace Vixen.Dialogs
 {
-	public partial class HelpDialog : Form
+	public sealed partial class HelpDialog : Form
 	{
-		private readonly Font m_bigFont;
-		private readonly string[] m_helpText;
-		private readonly int m_lineHeight;
+		private readonly Font _bigFont;
+		private readonly string[] _helpText;
+		private readonly int _lineHeight;
 
 		public HelpDialog(string helpText)
 		{
 			InitializeComponent();
-			base.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-			base.SetStyle(ControlStyles.UserPaint, true);
-			base.SetStyle(ControlStyles.DoubleBuffer, true);
-			Graphics graphics = base.CreateGraphics();
-			m_helpText = helpText.Split(new[] {'\n'});
-			m_lineHeight = (int) graphics.MeasureString("Mg", Font).Height;
+			SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+			SetStyle(ControlStyles.UserPaint, true);
+			SetStyle(ControlStyles.DoubleBuffer, true);
+			Graphics graphics = CreateGraphics();
+			_helpText = helpText.Split(new[] {'\n'});
+			_lineHeight = (int) graphics.MeasureString("Mg", Font).Height;
 			int num = 0;
-			foreach (string str in m_helpText)
+			foreach (string str in _helpText)
 			{
 				num = Math.Max(num, (int) graphics.MeasureString(str, Font).Width);
 			}
-			base.Size = new Size((50 + num) + 50, (90 + (m_helpText.Length*m_lineHeight)) + 50);
+			Size = new Size((50 + num) + 50, (90 + (_helpText.Length*_lineHeight)) + 50);
 			graphics.Dispose();
-			m_bigFont = new Font("Arial", 16f, FontStyle.Bold);
+			_bigFont = new Font("Arial", 16f, FontStyle.Bold);
 		}
 
 
@@ -34,19 +34,19 @@ namespace Vixen.Dialogs
 		{
 			if (e.KeyChar == '\x001b')
 			{
-				base.Close();
+				Close();
 			}
 		}
 
 
 		private void linkLabelClose_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			base.Close();
+			Close();
 		}
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			Rectangle clientRectangle = base.ClientRectangle;
+			Rectangle clientRectangle = ClientRectangle;
 			clientRectangle.Width--;
 			clientRectangle.Height--;
 			e.Graphics.DrawRectangle(Pens.Navy, clientRectangle);
@@ -56,14 +56,13 @@ namespace Vixen.Dialogs
 			e.Graphics.DrawRectangle(Pens.MediumBlue, clientRectangle);
 			clientRectangle.Inflate(-1, -1);
 			e.Graphics.DrawRectangle(Pens.RoyalBlue, clientRectangle);
-			e.Graphics.DrawRectangle(Pens.Navy, 50, 0x19, base.ClientRectangle.Width - 100, 0x23);
-			e.Graphics.DrawString("Try this", m_bigFont, Brushes.DarkBlue, 60f, 30f);
-			int num = 0;
-			num = 90;
-			for (int i = 0; i < m_helpText.Length; i++)
+			e.Graphics.DrawRectangle(Pens.Navy, 50, 0x19, ClientRectangle.Width - 100, 0x23);
+			e.Graphics.DrawString("Try this", _bigFont, Brushes.DarkBlue, 60f, 30f);
+			var num = 90;
+			for (var i = 0; i < _helpText.Length; i++)
 			{
-				e.Graphics.DrawString(m_helpText[i], Font, Brushes.Black, 50f, num);
-				num += m_lineHeight;
+				e.Graphics.DrawString(_helpText[i], Font, Brushes.Black, 50f, num);
+				num += _lineHeight;
 			}
 		}
 	}

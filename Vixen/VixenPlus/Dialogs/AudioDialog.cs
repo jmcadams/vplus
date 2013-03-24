@@ -11,40 +11,39 @@ namespace Vixen.Dialogs
 {
 	public partial class AudioDialog : Form
 	{
-		private const int COUNTDOWN_SECONDS = 5;
-		private readonly fmod m_fmod;
-		private readonly int[] m_keyMap = new[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-		private readonly bool[] m_keyStates;
-		private readonly Audio m_originalAudio;
-		private readonly EventSequence m_sequence;
-		private readonly Stopwatch m_stopwatch;
-		private readonly System.Timers.Timer m_timer;
-		private string m_audioFilename = string.Empty;
-		private DateTime m_countdownEnd;
-		private int m_lastIndex = -1;
-		private int m_maxTime;
-		private byte[,] m_newEventValues;
-		private bool m_paused;
-		private bool m_playing;
-		private float m_smallChange;
-		private SoundChannel m_soundChannel;
-		private int m_timeOffset;
+		private readonly fmod _fmod;
+		private readonly int[] _keyMap = new[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		private readonly bool[] _keyStates;
+		private readonly Audio _originalAudio;
+		private readonly EventSequence _eventSequence;
+		private readonly Stopwatch _stopwatch;
+		private readonly System.Timers.Timer _timer;
+		private string _audioFilename = string.Empty;
+		private DateTime _countdownEnd;
+		private int _lastIndex = -1;
+		private int _maxTime;
+		private byte[,] _newEventValues;
+		private bool _paused;
+		private bool _playing;
+		private float _smallChange;
+		private SoundChannel _soundChannel;
+		private int _timeOffset;
 
 		public AudioDialog(EventSequence sequence, bool autoSize, int deviceIndex)
 		{
 			InitializeComponent();
-			m_fmod = (deviceIndex > 0) ? fmod.GetInstance(deviceIndex) : fmod.GetInstance(-1);
-			m_timer = new System.Timers.Timer(10.0);
-			m_timer.Elapsed += m_timer_Elapsed;
-			m_sequence = sequence;
-			m_keyStates = new bool[m_sequence.ChannelCount];
-			m_stopwatch = new Stopwatch();
-			m_newEventValues = new byte[m_sequence.EventValues.GetLength(0),m_sequence.EventValues.GetLength(1)];
-			listBoxChannels.Items.AddRange(m_sequence.Channels.ToArray());
-			m_originalAudio = sequence.Audio;
+			_fmod = (deviceIndex > 0) ? fmod.GetInstance(deviceIndex) : fmod.GetInstance(-1);
+			_timer = new System.Timers.Timer(10.0);
+			_timer.Elapsed += TimerElapsed;
+			_eventSequence = sequence;
+			_keyStates = new bool[_eventSequence.ChannelCount];
+			_stopwatch = new Stopwatch();
+			_newEventValues = new byte[_eventSequence.EventValues.GetLength(0),_eventSequence.EventValues.GetLength(1)];
+			listBoxChannels.Items.AddRange(_eventSequence.Channels.ToArray());
+			_originalAudio = sequence.Audio;
 			if (sequence.Audio != null)
 			{
-				if (LoadAudio(m_sequence.Audio.FileName) == null)
+				if (LoadAudio(_eventSequence.Audio.FileName) == null)
 				{
 					sequence.Audio = null;
 					buttonRemoveAudio.Enabled = false;
@@ -65,7 +64,7 @@ namespace Vixen.Dialogs
 			{
 				UpdateRecordableLength();
 			}
-			Channel[] items = m_sequence.Channels.ToArray();
+			var items = (object[]) _eventSequence.Channels.ToArray();
 			channel1ToolStripMenuItem.Items.AddRange(items);
 			channel2ToolStripMenuItem.Items.AddRange(items);
 			channel3ToolStripMenuItem.Items.AddRange(items);
@@ -76,26 +75,26 @@ namespace Vixen.Dialogs
 			channel8ToolStripMenuItem.Items.AddRange(items);
 			channel9ToolStripMenuItem.Items.AddRange(items);
 			channel0ToolStripMenuItem.Items.AddRange(items);
-			channel1ToolStripMenuItem.SelectedIndex = Math.Min(0, m_sequence.ChannelCount - 1);
-			channel2ToolStripMenuItem.SelectedIndex = Math.Min(1, m_sequence.ChannelCount - 1);
-			channel3ToolStripMenuItem.SelectedIndex = Math.Min(2, m_sequence.ChannelCount - 1);
-			channel4ToolStripMenuItem.SelectedIndex = Math.Min(3, m_sequence.ChannelCount - 1);
-			channel5ToolStripMenuItem.SelectedIndex = Math.Min(4, m_sequence.ChannelCount - 1);
-			channel6ToolStripMenuItem.SelectedIndex = Math.Min(5, m_sequence.ChannelCount - 1);
-			channel7ToolStripMenuItem.SelectedIndex = Math.Min(6, m_sequence.ChannelCount - 1);
-			channel8ToolStripMenuItem.SelectedIndex = Math.Min(7, m_sequence.ChannelCount - 1);
-			channel9ToolStripMenuItem.SelectedIndex = Math.Min(8, m_sequence.ChannelCount - 1);
-			channel0ToolStripMenuItem.SelectedIndex = Math.Min(9, m_sequence.ChannelCount - 1);
+			channel1ToolStripMenuItem.SelectedIndex = Math.Min(0, _eventSequence.ChannelCount - 1);
+			channel2ToolStripMenuItem.SelectedIndex = Math.Min(1, _eventSequence.ChannelCount - 1);
+			channel3ToolStripMenuItem.SelectedIndex = Math.Min(2, _eventSequence.ChannelCount - 1);
+			channel4ToolStripMenuItem.SelectedIndex = Math.Min(3, _eventSequence.ChannelCount - 1);
+			channel5ToolStripMenuItem.SelectedIndex = Math.Min(4, _eventSequence.ChannelCount - 1);
+			channel6ToolStripMenuItem.SelectedIndex = Math.Min(5, _eventSequence.ChannelCount - 1);
+			channel7ToolStripMenuItem.SelectedIndex = Math.Min(6, _eventSequence.ChannelCount - 1);
+			channel8ToolStripMenuItem.SelectedIndex = Math.Min(7, _eventSequence.ChannelCount - 1);
+			channel9ToolStripMenuItem.SelectedIndex = Math.Min(8, _eventSequence.ChannelCount - 1);
+			channel0ToolStripMenuItem.SelectedIndex = Math.Min(9, _eventSequence.ChannelCount - 1);
 			comboBoxAudioDevice.Items.Add("Use application's default device");
 			comboBoxAudioDevice.Items.AddRange(fmod.GetSoundDeviceList());
-			comboBoxAudioDevice.SelectedIndex = m_sequence.AudioDeviceIndex + 1;
+			comboBoxAudioDevice.SelectedIndex = _eventSequence.AudioDeviceIndex + 1;
 		}
 
 		private void AudioDialog_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			Stop();
-			m_fmod.ReleaseSound(m_soundChannel);
-			m_fmod.Shutdown();
+			_fmod.ReleaseSound(_soundChannel);
+			_fmod.Shutdown();
 		}
 
 		private void AudioDialog_KeyDown(object sender, KeyEventArgs e)
@@ -110,14 +109,14 @@ namespace Vixen.Dialogs
 
 		private void buttonCancel_Click(object sender, EventArgs e)
 		{
-			m_sequence.Audio = m_originalAudio;
+			_eventSequence.Audio = _originalAudio;
 		}
 
 		private void buttonClear_Click(object sender, EventArgs e)
 		{
-			for (int i = 0; i < m_newEventValues.GetLength(1); i++)
+			for (int i = 0; i < _newEventValues.GetLength(1); i++)
 			{
-				m_newEventValues[listBoxChannels.SelectedIndex, i] = 0;
+				_newEventValues[listBoxChannels.SelectedIndex, i] = 0;
 			}
 			MessageBox.Show(
 				string.Format("Channel \"{0}\" cleared of new events.", ((Channel) listBoxChannels.SelectedItem).Name),
@@ -132,63 +131,64 @@ namespace Vixen.Dialogs
 			openFileDialog1.FileName = string.Empty;
 			if (openFileDialog1.ShowDialog() == DialogResult.OK)
 			{
-				string path = Path.Combine(Paths.AudioPath, Path.GetFileName(openFileDialog1.FileName));
+				var path = Path.Combine(Paths.AudioPath, Path.GetFileName(openFileDialog1.FileName));
 				if (!File.Exists(path))
 				{
 					Cursor = Cursors.WaitCursor;
 					File.Copy(openFileDialog1.FileName, path);
 					Cursor = Cursors.Default;
 				}
-				m_sequence.Audio = LoadAudio(openFileDialog1.FileName);
+				_eventSequence.Audio = LoadAudio(openFileDialog1.FileName);
 				UpdateRecordableLength();
 			}
 		}
 
 		private void buttonOK_Click(object sender, EventArgs e)
 		{
-			if ((m_sequence.Audio != null) && (checkBoxAutoSize.Checked || (m_sequence.Audio.Duration > m_sequence.Time)))
+			if ((_eventSequence.Audio != null) && (checkBoxAutoSize.Checked || (_eventSequence.Audio.Duration > _eventSequence.Time)))
 			{
-				m_sequence.Time = m_sequence.Audio.Duration;
+				_eventSequence.Time = _eventSequence.Audio.Duration;
 			}
-			m_sequence.AudioDeviceIndex = comboBoxAudioDevice.SelectedIndex - 1;
-			int num2 = Math.Min(m_newEventValues.GetLength(0), m_sequence.EventValues.GetLength(0));
-			int num3 = Math.Min(m_newEventValues.GetLength(1), m_sequence.EventValues.GetLength(1));
-			for (int i = 0; i < num2; i++)
-			{
-				for (int j = 0; j < num3; j++)
-				{
-					byte num1 = m_sequence.EventValues[i, j];
-					num1 = (byte) (num1 | m_newEventValues[i, j]);
-				}
-			}
+			_eventSequence.AudioDeviceIndex = comboBoxAudioDevice.SelectedIndex - 1;
+			//TODO What the hell is this doing?
+			//int num2 = Math.Min(_newEventValues.GetLength(0), _eventSequence.EventValues.GetLength(0));
+			//int num3 = Math.Min(_newEventValues.GetLength(1), _eventSequence.EventValues.GetLength(1));
+			//for (int i = 0; i < num2; i++)
+			//{
+			//    for (int j = 0; j < num3; j++)
+			//    {
+			//        byte num1 = _eventSequence.EventValues[i, j];
+			//        num1 = (byte) (num1 | _newEventValues[i, j]);
+			//    }
+			//}
 		}
 
 		private void buttonPlayPause_Click(object sender, EventArgs e)
 		{
-			if (m_playing)
+			if (_playing)
 			{
-				buttonPlayPause.Image = m_paused ? pictureBoxPause.Image : pictureBoxPlayBlue.Image;
-				if (m_soundChannel != null)
+				buttonPlayPause.Image = _paused ? pictureBoxPause.Image : pictureBoxPlayBlue.Image;
+				if (_soundChannel != null)
 				{
-					m_soundChannel.Paused = !m_paused;
+					_soundChannel.Paused = !_paused;
 				}
-				m_timer.Enabled = m_paused;
-				m_paused = !m_paused;
-				if (!(m_paused || !progressBarCountdown.Visible))
+				_timer.Enabled = _paused;
+				_paused = !_paused;
+				if (!(_paused || !progressBarCountdown.Visible))
 				{
-					m_countdownEnd = DateTime.Now + TimeSpan.FromSeconds((((progressBarCountdown.Value)/100f)*5f));
+					_countdownEnd = DateTime.Now + TimeSpan.FromSeconds((((progressBarCountdown.Value)/100f)*5f));
 				}
 			}
 			else
 			{
-				m_countdownEnd = DateTime.Now.Add(TimeSpan.FromSeconds(5.0));
+				_countdownEnd = DateTime.Now.Add(TimeSpan.FromSeconds(5.0));
 				progressBarCountdown.Value = 100;
 				progressBarCountdown.Visible = true;
-				m_playing = true;
+				_playing = true;
 				labelTime.Text = "Countdown...";
 				labelTotalTime.Text = string.Empty;
 				trackBarPosition.Enabled = false;
-				m_timer.Start();
+				_timer.Start();
 				buttonPlayPause.Image = pictureBoxPause.Image;
 			}
 		}
@@ -207,10 +207,10 @@ namespace Vixen.Dialogs
 		private void channelMapItem_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			var box = sender as ToolStripComboBox;
-			if (box.SelectedIndex != -1)
+			if (box != null && box.SelectedIndex != -1)
 			{
 				int index = Convert.ToInt32(box.Tag) - 1;
-				m_keyMap[index] = box.SelectedIndex;
+				_keyMap[index] = box.SelectedIndex;
 			}
 		}
 
@@ -221,11 +221,11 @@ namespace Vixen.Dialogs
 
 		private void ClearAudio()
 		{
-			m_sequence.Audio = null;
+			_eventSequence.Audio = null;
 			labelAudioFileName.Text = "This event sequence does not have audio assigned";
 			labelAudioLength.Text = string.Empty;
 			labelAudioName.Text = string.Empty;
-			m_soundChannel = null;
+			_soundChannel = null;
 		}
 
 		private void CopyArray(byte[,] source, byte[,] dest)
@@ -244,11 +244,11 @@ namespace Vixen.Dialogs
 
 		private uint GetPosition()
 		{
-			if ((m_soundChannel != null) && m_soundChannel.IsPlaying)
+			if ((_soundChannel != null) && _soundChannel.IsPlaying)
 			{
-				return m_soundChannel.Position;
+				return _soundChannel.Position;
 			}
-			return (uint) (m_stopwatch.ElapsedMilliseconds + m_timeOffset);
+			return (uint) (_stopwatch.ElapsedMilliseconds + _timeOffset);
 		}
 
 		//ComponentResourceManager manager = new ComponentResourceManager(typeof(AudioDialog));
@@ -277,7 +277,7 @@ namespace Vixen.Dialogs
 			}
 			try
 			{
-				m_soundChannel = m_fmod.LoadSound(Path.Combine(Paths.AudioPath, fileName), m_soundChannel);
+				_soundChannel = _fmod.LoadSound(Path.Combine(Paths.AudioPath, fileName), _soundChannel);
 			}
 			catch (Exception exception)
 			{
@@ -285,16 +285,18 @@ namespace Vixen.Dialogs
 				                MessageBoxIcon.Exclamation);
 				return null;
 			}
-			if (m_soundChannel == null)
+			if (_soundChannel == null)
 			{
 				return null;
 			}
-			m_audioFilename = fileName;
-			labelAudioFileName.Text = Path.GetFileName(m_audioFilename);
-			var audio = new Audio();
-			audio.FileName = labelAudioFileName.Text;
-			audio.Name = m_soundChannel.SoundName;
-			audio.Duration = (int) m_soundChannel.SoundLength;
+			_audioFilename = fileName;
+			labelAudioFileName.Text = Path.GetFileName(_audioFilename);
+			var audio = new Audio
+				{
+					FileName = labelAudioFileName.Text,
+					Name = _soundChannel.SoundName,
+					Duration = (int) _soundChannel.SoundLength
+				};
 			labelAudioLength.Text = string.Format("{0:d2}:{1:d2}.{2:d3}", audio.Duration/0xea60, (audio.Duration%0xea60)/0x3e8,
 			                                      audio.Duration%0x3e8);
 			labelAudioName.Text = string.Format("\"{0}\"", audio.Name);
@@ -302,74 +304,66 @@ namespace Vixen.Dialogs
 			return audio;
 		}
 
-		private void m_timer_Elapsed(object sender, ElapsedEventArgs e)
+		private void TimerElapsed(object sender, ElapsedEventArgs e)
 		{
-			MethodInvoker method = null;
 			if (progressBarCountdown.Visible)
 			{
 				if (progressBarCountdown.Value <= 0)
 				{
 					UpdateTotalTime();
-					var num = (int) (((int) base.Invoke(new TrackBarValueDelegate(TrackBarValue)))*m_smallChange);
-					m_timeOffset = num;
-					if ((m_soundChannel != null) && (num < m_soundChannel.SoundLength))
+					var num = (int) (((int) Invoke(new TrackBarValueDelegate(TrackBarValue)))*_smallChange);
+					_timeOffset = num;
+					if ((_soundChannel != null) && (num < _soundChannel.SoundLength))
 					{
-						m_fmod.Play(m_soundChannel, true);
-						m_soundChannel.Position = (uint) num;
-						m_soundChannel.Paused = false;
+						_fmod.Play(_soundChannel, true);
+						_soundChannel.Position = (uint) num;
+						_soundChannel.Paused = false;
 					}
-					m_stopwatch.Reset();
-					m_stopwatch.Start();
-					base.Invoke(new ProgressBarVisibleDelegate(ProgressBarVisible), new object[] {false});
+					_stopwatch.Reset();
+					_stopwatch.Start();
+					Invoke(new ProgressBarVisibleDelegate(ProgressBarVisible), new object[] {false});
 				}
 				else
 				{
-					if (method == null)
-					{
-						method = delegate
-							{
-								TimeSpan span = (m_countdownEnd - DateTime.Now);
-								progressBarCountdown.Value = (int) ((span.TotalMilliseconds*100.0)/5000.0);
-							};
-					}
-					base.BeginInvoke(method);
+					MethodInvoker method = delegate
+						{
+							TimeSpan span = (_countdownEnd - DateTime.Now);
+							progressBarCountdown.Value = (int) ((span.TotalMilliseconds*100.0)/5000.0);
+						};
+					BeginInvoke(method);
 				}
 			}
 			else
 			{
-				MethodInvoker invoker = null;
 				uint position = GetPosition();
-				if (position >= m_maxTime)
+				if (position >= _maxTime)
 				{
 					Stop();
 				}
 				else
 				{
-					var num2 = (int) ((position)/(m_sequence.EventPeriod));
-					if (num2 != m_lastIndex)
+					var num2 = (int) ((position)/(_eventSequence.EventPeriod));
+					if (num2 != _lastIndex)
 					{
-						m_lastIndex = num2;
-						for (int i = 0; i < m_sequence.ChannelCount; i++)
+						_lastIndex = num2;
+						for (int i = 0; i < _eventSequence.ChannelCount; i++)
 						{
-							if (m_keyStates[i])
+							if (_keyStates[i])
 							{
-								m_newEventValues[i, num2] = m_sequence.MaximumLevel;
+								_newEventValues[i, num2] = _eventSequence.MaximumLevel;
 								if (radioButtonSingleEvent.Checked)
 								{
-									m_keyStates[i] = false;
+									_keyStates[i] = false;
 								}
 							}
 						}
 					}
-					if (invoker == null)
-					{
-						invoker = delegate
-							{
-								labelTime.Text = string.Format("{0:d2}:{1:d2}.{2:d3}", position/0xea60, (position%0xea60)/0x3e8, position%0x3e8);
-								trackBarPosition.Value = (int) ((position)/m_smallChange);
-							};
-					}
-					base.BeginInvoke(invoker);
+					MethodInvoker invoker = delegate
+						{
+							labelTime.Text = string.Format("{0:d2}:{1:d2}.{2:d3}", position/0xea60, (position%0xea60)/0x3e8, position%0x3e8);
+							trackBarPosition.Value = (int) ((position)/_smallChange);
+						};
+					BeginInvoke(invoker);
 				}
 			}
 		}
@@ -381,22 +375,22 @@ namespace Vixen.Dialogs
 
 		private void Stop()
 		{
-			if (base.InvokeRequired)
+			if (InvokeRequired)
 			{
-				base.BeginInvoke(new MethodInvoker(Stop));
+				BeginInvoke(new MethodInvoker(Stop));
 			}
 			else
 			{
-				m_timer.Stop();
-				Thread.Sleep((int) m_timer.Interval);
-				if (m_soundChannel != null)
+				_timer.Stop();
+				Thread.Sleep((int) _timer.Interval);
+				if (_soundChannel != null)
 				{
-					m_fmod.Stop(m_soundChannel);
+					_fmod.Stop(_soundChannel);
 				}
-				m_stopwatch.Stop();
+				_stopwatch.Stop();
 				buttonPlayPause.Image = pictureBoxPlay.Image;
-				labelTime.Text = "00:00.000";
-				m_playing = m_paused = false;
+				labelTime.Text = @"00:00.000";
+				_playing = _paused = false;
 				trackBarPosition.Enabled = true;
 				trackBarPosition.Value = 0;
 				progressBarCountdown.Visible = false;
@@ -405,7 +399,7 @@ namespace Vixen.Dialogs
 
 		private void trackBarPosition_Scroll(object sender, EventArgs e)
 		{
-			var num = (int) (trackBarPosition.Value*m_smallChange);
+			var num = (int) (trackBarPosition.Value*_smallChange);
 			labelTime.Text = string.Format("{0:d2}:{1:d2}.{2:d3}", num/0xea60, (num%0xea60)/0x3e8, num%0x3e8);
 		}
 
@@ -421,14 +415,7 @@ namespace Vixen.Dialogs
 			{
 				selectedItem = (Channel) listBoxChannels.SelectedItem;
 			}
-			if (selectedItem != null)
-			{
-				buttonClear.Enabled = selectedItem.Enabled;
-			}
-			else
-			{
-				buttonClear.Enabled = false;
-			}
+			buttonClear.Enabled = selectedItem != null && selectedItem.Enabled;
 		}
 
 		private void UpdateKeyState(KeyEventArgs e, bool state)
@@ -439,16 +426,16 @@ namespace Vixen.Dialogs
 				{
 					if (e.KeyCode == Keys.D0)
 					{
-						m_keyStates[m_keyMap[9]] = state;
+						_keyStates[_keyMap[9]] = state;
 					}
 					else
 					{
-						m_keyStates[m_keyMap[((int) e.KeyCode) - 0x31]] = state;
+						_keyStates[_keyMap[((int) e.KeyCode) - 0x31]] = state;
 					}
 				}
 				else if ((e.KeyCode == Keys.ControlKey) && (listBoxChannels.SelectedItem != null))
 				{
-					m_keyStates[listBoxChannels.SelectedIndex] = state;
+					_keyStates[listBoxChannels.SelectedIndex] = state;
 				}
 			}
 		}
@@ -456,17 +443,17 @@ namespace Vixen.Dialogs
 		private void UpdateRecordableLength()
 		{
 			int num = UpdateTotalTime();
-			m_maxTime = num;
+			_maxTime = num;
 			trackBarPosition.Maximum = num;
 			UpdateTrackbar();
-			var dest = new byte[m_newEventValues.GetLength(0),(int) Math.Ceiling(((num)/((float) m_sequence.EventPeriod)))];
-			CopyArray(m_newEventValues, dest);
-			m_newEventValues = dest;
+			var dest = new byte[_newEventValues.GetLength(0),(int) Math.Ceiling(((num)/((float) _eventSequence.EventPeriod)))];
+			CopyArray(_newEventValues, dest);
+			_newEventValues = dest;
 		}
 
 		private int UpdateTotalTime()
 		{
-			if (base.InvokeRequired)
+			if (InvokeRequired)
 			{
 				int milliseconds = 0;
 				base.Invoke((MethodInvoker) delegate
@@ -476,11 +463,11 @@ namespace Vixen.Dialogs
 					});
 				return milliseconds;
 			}
-			int num = (m_sequence.Audio != null)
+			int num = (_eventSequence.Audio != null)
 				          ? (checkBoxAutoSize.Checked
-					             ? m_sequence.Audio.Duration
-					             : Math.Max(m_sequence.Time, m_sequence.Audio.Duration))
-				          : m_sequence.Time;
+					             ? _eventSequence.Audio.Duration
+					             : Math.Max(_eventSequence.Time, _eventSequence.Audio.Duration))
+				          : _eventSequence.Time;
 			labelTotalTime.Text = string.Format("/ {0:d2}:{1:d2}.{2:d3}", num/0xea60, (num%0xea60)/0x3e8, num%0x3e8);
 			return num;
 		}
@@ -489,22 +476,22 @@ namespace Vixen.Dialogs
 		{
 			if (trackBarPosition.Maximum < 0x7d0)
 			{
-				m_smallChange = 100f;
+				_smallChange = 100f;
 			}
 			else if (trackBarPosition.Maximum < 0x4e20)
 			{
-				m_smallChange = 1000f;
+				_smallChange = 1000f;
 			}
 			else if (trackBarPosition.Maximum < 0xea60)
 			{
-				m_smallChange = 2000f;
+				_smallChange = 2000f;
 			}
 			else
 			{
-				m_smallChange = 5000f;
+				_smallChange = 5000f;
 			}
 			trackBarPosition.Maximum =
-				(int) Math.Round(((trackBarPosition.Maximum)/m_smallChange), MidpointRounding.AwayFromZero);
+				(int) Math.Round(((trackBarPosition.Maximum)/_smallChange), MidpointRounding.AwayFromZero);
 		}
 
 		private delegate void ProgressBarVisibleDelegate(bool value);

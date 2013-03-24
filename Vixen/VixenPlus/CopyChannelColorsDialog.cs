@@ -7,9 +7,9 @@ namespace Vixen
 {
 	internal partial class CopyChannelColorsDialog : Form
 	{
-		private readonly SolidBrush m_itemBrush;
-		private EventSequence m_destinationSequence;
-		private EventSequence m_sourceSequence;
+		private readonly SolidBrush _solidBrush;
+		private EventSequence _destinationSequence;
+		private EventSequence _sourceSequence;
 
 		public CopyChannelColorsDialog()
 		{
@@ -19,9 +19,9 @@ namespace Vixen
 			{
 				files[i] = Path.GetFileNameWithoutExtension(files[i]);
 			}
-			comboBoxSourceSequence.Items.AddRange(files);
-			comboBoxDestinationSequence.Items.AddRange(files);
-			m_itemBrush = new SolidBrush(Color.White);
+			comboBoxSourceSequence.Items.AddRange(new object[] { files });
+			comboBoxDestinationSequence.Items.AddRange(new object[] { files });
+			_solidBrush = new SolidBrush(Color.White);
 		}
 
 		private void buttonCopy_Click(object sender, EventArgs e)
@@ -41,13 +41,13 @@ namespace Vixen
 					"This will make a change to the destination sequence that you cannot undo.\nClick 'Yes' to confirm that you approve of this.",
 					Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 			{
-				int num = Math.Min(m_sourceSequence.ChannelCount, m_destinationSequence.ChannelCount);
+				int num = Math.Min(_sourceSequence.ChannelCount, _destinationSequence.ChannelCount);
 				for (int i = 0; i < num; i++)
 				{
-					m_destinationSequence.Channels[i].Color = m_sourceSequence.Channels[i].Color;
+					_destinationSequence.Channels[i].Color = _sourceSequence.Channels[i].Color;
 				}
-				m_destinationSequence.Save();
-				MessageBox.Show(m_destinationSequence.Name + " has been updated.", Vendor.ProductName, MessageBoxButtons.OK,
+				_destinationSequence.Save();
+				MessageBox.Show(_destinationSequence.Name + " has been updated.", Vendor.ProductName, MessageBoxButtons.OK,
 				                MessageBoxIcon.Asterisk);
 			}
 		}
@@ -56,20 +56,20 @@ namespace Vixen
 		{
 			if (comboBoxDestinationSequence.SelectedIndex != -1)
 			{
-				m_destinationSequence =
+				_destinationSequence =
 					new EventSequence(Path.Combine(Paths.SequencePath, (string) comboBoxDestinationSequence.SelectedItem) + ".vix");
 				comboBoxDestinationColors.Items.Clear();
-				comboBoxDestinationColors.Items.AddRange(m_destinationSequence.Channels.ToArray());
+				comboBoxDestinationColors.Items.AddRange(new object[] { _destinationSequence.Channels.ToArray() });
 				comboBoxDestinationColors.SelectedIndex = 0;
 			}
 			else
 			{
 				comboBoxDestinationColors.Items.Clear();
-				if (m_destinationSequence != null)
+				if (_destinationSequence != null)
 				{
-					m_destinationSequence.Dispose();
+					_destinationSequence.Dispose();
 				}
-				m_destinationSequence = null;
+				_destinationSequence = null;
 			}
 		}
 
@@ -82,13 +82,13 @@ namespace Vixen
 				var num = (uint) channel.Color.ToArgb();
 				if ((num == uint.MaxValue) || (num == 0xffffff00))
 				{
-					m_itemBrush.Color = Color.Black;
+					_solidBrush.Color = Color.Black;
 				}
 				else
 				{
-					m_itemBrush.Color = Color.White;
+					_solidBrush.Color = Color.White;
 				}
-				e.Graphics.DrawString(channel.Name, e.Font, m_itemBrush, e.Bounds.Location);
+				e.Graphics.DrawString(channel.Name, e.Font, _solidBrush, e.Bounds.Location);
 			}
 		}
 
@@ -96,32 +96,32 @@ namespace Vixen
 		{
 			if (comboBoxSourceSequence.SelectedIndex != -1)
 			{
-				m_sourceSequence =
+				_sourceSequence =
 					new EventSequence(Path.Combine(Paths.SequencePath, (string) comboBoxSourceSequence.SelectedItem) + ".vix");
 				comboBoxSourceColors.Items.Clear();
-				comboBoxSourceColors.Items.AddRange(m_sourceSequence.Channels.ToArray());
+				comboBoxSourceColors.Items.AddRange(new object[] { _sourceSequence.Channels.ToArray() });
 				comboBoxSourceColors.SelectedIndex = 0;
 			}
 			else
 			{
 				comboBoxSourceColors.Items.Clear();
-				if (m_sourceSequence != null)
+				if (_sourceSequence != null)
 				{
-					m_sourceSequence.Dispose();
+					_sourceSequence.Dispose();
 				}
-				m_sourceSequence = null;
+				_sourceSequence = null;
 			}
 		}
 
 		private void CopyChannelColorsDialog_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			if (m_sourceSequence != null)
+			if (_sourceSequence != null)
 			{
-				m_sourceSequence.Dispose();
+				_sourceSequence.Dispose();
 			}
-			if (m_destinationSequence != null)
+			if (_destinationSequence != null)
 			{
-				m_destinationSequence.Dispose();
+				_destinationSequence.Dispose();
 			}
 		}
 	}

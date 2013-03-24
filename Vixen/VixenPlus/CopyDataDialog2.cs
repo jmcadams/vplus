@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml;
@@ -8,22 +9,22 @@ namespace Vixen
 {
 	internal partial class CopyDataDialog2 : Form
 	{
-		private readonly string[] m_programPaths = new[] {"Program/PlugInData"};
+		private readonly string[] _programPaths = new[] {"Program/PlugInData"};
 
-		private readonly string[] m_sequencePaths = new[]
+		private readonly string[] _sequencePaths = new[]
 			{"Program/Channels", "Program/EventValues", "Program/PlugInData", "Program/LoadableData"};
 
-		private readonly XmlDocument m_sourceDoc;
-		private XmlDocument m_destDoc;
-		private NodeSource m_source;
+		private readonly XmlDocument _sourceDoc;
+		private XmlDocument _destDoc;
+		private NodeSource _source;
 
 
 		public CopyDataDialog2()
 		{
 			InitializeComponent();
 			treeViewFrom.PathSeparator = "/";
-			m_sourceDoc = new XmlDocument();
-			m_destDoc = new XmlDocument();
+			_sourceDoc = new XmlDocument();
+			_destDoc = new XmlDocument();
 		}
 
 		private void AddNode(XmlNode node, TreeNode parentNode)
@@ -51,7 +52,7 @@ namespace Vixen
 				node2 = parentNode.Nodes.Add(string.Empty);
 				node2.Tag = string.Format("{0}/{1}", parentNode.Tag, node.Name);
 			}
-			if (node.Attributes["name"] != null)
+			if (node.Attributes != null && node.Attributes["name"] != null)
 			{
 				node2.Text = node.Attributes["name"].Value;
 				node2.Name = string.Format("[@name=\"{0}\"]", node2.Text);
@@ -82,17 +83,17 @@ namespace Vixen
 
 		private void buttonCopy_Click(object sender, EventArgs e)
 		{
-			if (m_sourceDoc.BaseURI == string.Empty)
+			if (_sourceDoc.BaseURI == string.Empty)
 			{
 				MessageBox.Show("You need to select something to copy from.", Vendor.ProductName, MessageBoxButtons.OK,
 				                MessageBoxIcon.Hand);
 			}
-			else if (m_destDoc.BaseURI == string.Empty)
+			else if (_destDoc.BaseURI == string.Empty)
 			{
 				MessageBox.Show("You need to select something to copy to.", Vendor.ProductName, MessageBoxButtons.OK,
 				                MessageBoxIcon.Hand);
 			}
-			else if (m_sourceDoc.BaseURI == m_destDoc.BaseURI)
+			else if (_sourceDoc.BaseURI == _destDoc.BaseURI)
 			{
 				MessageBox.Show("Source and destination cannot be the same.", Vendor.ProductName, MessageBoxButtons.OK,
 				                MessageBoxIcon.Hand);
@@ -102,32 +103,19 @@ namespace Vixen
 					"If the selected items already exist in the destination, they will be overwritten.\nClick 'Yes' to confirm that you approve of this.",
 					Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.No)
 			{
-				int count = 0;
-				int num2 = 0;
-				int num3 = 0;
-				XmlNode node = m_destDoc.SelectSingleNode("//Program/Time");
-				if (node != null)
-				{
-					count = m_destDoc.SelectNodes("//Program/Channels/*").Count;
-					try
-					{
-						num2 = Convert.ToInt32(node.InnerText);
-					}
-					catch
-					{
-						num2 = 0;
-					}
-					try
-					{
-						num3 = Convert.ToInt32(m_destDoc.SelectSingleNode("//Program/EventPeriodInMilliseconds").InnerText);
-					}
-					catch
-					{
-						num3 = 0;
-					}
-				}
+				//XmlNode node = _destDoc.SelectSingleNode("//Program/Time");
+				//if (node != null)
+				//{
+				//    try
+				//    {
+				//        Convert.ToInt32(_destDoc.SelectSingleNode("//Program/EventPeriodInMilliseconds").InnerText);
+				//    }
+				//    catch
+				//    {
+				//    }
+				//}
 				var list = new List<string>();
-				foreach (TreeNode node5 in GetAllNodes())
+				foreach (var node5 in GetAllNodes())
 				{
 					string str;
 					list.Add(node5.Text);
@@ -139,7 +127,7 @@ namespace Vixen
 					{
 						str = node5.Tag.ToString();
 					}
-					XmlNode node2 = m_sourceDoc.SelectSingleNode("//" + str);
+					XmlNode node2 = _sourceDoc.SelectSingleNode("//" + str);
 					if (node2 == null)
 					{
 						MessageBox.Show(
@@ -147,84 +135,106 @@ namespace Vixen
 							str, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 						return;
 					}
-					XmlNode oldChild = m_destDoc.SelectSingleNode(str);
-					if (oldChild != null)
+					XmlNode oldChild = _destDoc.SelectSingleNode(str);
+					if (oldChild != null && oldChild.ParentNode != null)
 					{
 						oldChild.ParentNode.RemoveChild(oldChild);
 					}
-					if ((node2.ParentNode != null) && (node2.ParentNode is XmlElement))
+					if (node2.ParentNode != null && node2.ParentNode is XmlElement)
 					{
-						Xml.CloneNode(m_destDoc, node2.ParentNode, false).AppendChild(m_destDoc.ImportNode(node2, true));
+						Xml.CloneNode(_destDoc, node2.ParentNode, false).AppendChild(_destDoc.ImportNode(node2, true));
 					}
 				}
 				if ((list.Contains("EventPeriodInMilliseconds") || list.Contains("Time")) || list.Contains("EventValues"))
 				{
-					XmlNode node6 = m_destDoc.SelectSingleNode("//Program/Time");
+					XmlNode node6 = _destDoc.SelectSingleNode("//Program/Time");
 					if (node6 != null)
 					{
-						int num6;
-						int num4 = m_sourceDoc.SelectNodes("//Program/Channels/Channel").Count;
-						int num5 = m_destDoc.SelectNodes("//Program/Channels/*").Count;
-						try
+						var xmlNodeList = _sourceDoc.SelectNodes("//Program/Channels/Channel");
+						if (xmlNodeList != null)
 						{
-							num6 = Convert.ToInt32(node6.InnerText);
-						}
-						catch
-						{
-							num6 = 0;
-						}
-						if (num6 != 0)
-						{
-							byte[] buffer = Convert.FromBase64String(m_destDoc.SelectSingleNode("//Program/EventValues").InnerText);
-							int num7 = int.Parse(m_sourceDoc.SelectSingleNode("//Program/EventPeriodInMilliseconds").InnerText);
-							int num8 = int.Parse(m_destDoc.SelectSingleNode("//Program/EventPeriodInMilliseconds").InnerText);
-							var num9 = (int) Math.Ceiling(((num5*num6)/((float) num8)));
-							if (((num9 != 0) && (num9 < buffer.Length)) &&
-							    (MessageBox.Show(
-								    "This change requires that events are to be truncated in order to maintain data integrity.\nThis will cause data loss in the destination sequence.\n\nProceed?\n\nIf you select 'No', your change will still be in effect, but no data will be truncated.\nKnow that this will leave the destination sequence in an unusable state.",
-								    Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.No))
+							int num4 = xmlNodeList.Count;
+							var selectNodes = _destDoc.SelectNodes("//Program/Channels/*");
+							if (selectNodes != null)
 							{
-								return;
-							}
-							if ((num9 != 0) && (num9 != buffer.Length))
-							{
-								var inArray = new byte[num9];
-								int num10 = inArray.Length/num5;
-								int num11 = buffer.Length/num4;
-								int num12 = Math.Min(num4, num5);
-								float num14 = Math.Max(num7, num8);
-								float num15 = num14/(num7);
-								float num16 = num14/(num8);
-								var num17 = (int) Math.Min(((num11)/num15), ((num10)/num16));
-								for (int i = 0; i < num12; i++)
+								int num5 = selectNodes.Count;
+								int num6;
+								try
 								{
-									for (float j = 0f; j < num17; j++)
+									num6 = Convert.ToInt32(node6.InnerText); //TODO: TryParse instead
+								}
+								catch
+								{
+									num6 = 0;
+								}
+								if (num6 != 0)
+								{
+									var selectSingleNode = _destDoc.SelectSingleNode("//Program/EventValues");
+									if (selectSingleNode != null)
 									{
-										float num18 = (i*num11) + (j*num15);
-										float num19 = (i*num10) + (j*num16);
-										byte num22 = 0;
-										for (float k = 0f; k < num15; k++)
+										byte[] buffer = Convert.FromBase64String(selectSingleNode.InnerText);
+										var singleNode = _sourceDoc.SelectSingleNode("//Program/EventPeriodInMilliseconds");
+										if (singleNode != null)
 										{
-											num22 = Math.Max(num22, buffer[(int) (num18 + k)]);
-										}
-										for (float m = 0f; m < num16; m++)
-										{
-											inArray[(int) (num19 + m)] = num22;
+											int num7 = int.Parse(singleNode.InnerText);
+											var xmlNode = _destDoc.SelectSingleNode("//Program/EventPeriodInMilliseconds");
+											if (xmlNode != null)
+											{
+												int num8 = int.Parse(xmlNode.InnerText);
+												var num9 = (int) Math.Ceiling(((num5*num6)/((float) num8)));
+												if (((num9 != 0) && (num9 < buffer.Length)) &&
+												    (MessageBox.Show(
+													    "This change requires that events are to be truncated in order to maintain data integrity.\nThis will cause data loss in the destination sequence.\n\nProceed?\n\nIf you select 'No', your change will still be in effect, but no data will be truncated.\nKnow that this will leave the destination sequence in an unusable state.",
+													    Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.No))
+												{
+													return;
+												}
+												if ((num9 != 0) && (num9 != buffer.Length))
+												{
+													var inArray = new byte[num9];
+													int num10 = inArray.Length/num5;
+													int num11 = buffer.Length/num4;
+													int num12 = Math.Min(num4, num5);
+													float num14 = Math.Max(num7, num8);
+													float num15 = num14/(num7);
+													float num16 = num14/(num8);
+													var num17 = (int) Math.Min(((num11)/num15), ((num10)/num16));
+													for (int i = 0; i < num12; i++)
+													{
+														for (float j = 0f; j < num17; j++)
+														{
+															float num18 = (i*num11) + (j*num15);
+															float num19 = (i*num10) + (j*num16);
+															byte num22 = 0;
+															for (float k = 0f; k < num15; k++)
+															{
+																num22 = Math.Max(num22, buffer[(int) (num18 + k)]);
+															}
+															for (float m = 0f; m < num16; m++)
+															{
+																inArray[(int) (num19 + m)] = num22;
+															}
+														}
+													}
+													selectSingleNode.InnerText = Convert.ToBase64String(inArray);
+												}
+											}
 										}
 									}
 								}
-								m_destDoc.SelectSingleNode("//Program/EventValues").InnerText = Convert.ToBase64String(inArray);
 							}
 						}
 					}
 				}
 				int num24 = 0;
-				foreach (XmlNode node7 in m_destDoc.SelectNodes("//Program/PlugInData/PlugIn"))
-				{
-					node7.Attributes["id"].Value = num24.ToString();
-					num24++;
-				}
-				m_destDoc.Save(m_destDoc.BaseURI.Substring(8).Replace('/', '\\'));
+				var nodeList = _destDoc.SelectNodes("//Program/PlugInData/PlugIn");
+				if (nodeList != null)
+					foreach (XmlNode node7 in nodeList)
+					{
+						if (node7.Attributes != null) node7.Attributes["id"].Value = num24.ToString(CultureInfo.InvariantCulture);
+						num24++;
+					}
+				_destDoc.Save(_destDoc.BaseURI.Substring(8).Replace('/', '\\'));
 				MessageBox.Show(labelTo.Text + " has been updated.", Vendor.ProductName, MessageBoxButtons.OK,
 				                MessageBoxIcon.Asterisk);
 			}
@@ -240,10 +250,10 @@ namespace Vixen
 			{
 				try
 				{
-					m_sourceDoc.Load(openFileDialog.FileName);
-					XmlNode node = m_sourceDoc.SelectSingleNode("//Program");
+					_sourceDoc.Load(openFileDialog.FileName);
+					XmlNode node = _sourceDoc.SelectSingleNode("//Program");
 					labelFrom.Text = "file: " + Path.GetFileName(openFileDialog.FileName);
-					m_source = NodeSource.File;
+					_source = NodeSource.File;
 					if (checkBoxShowAllNodes.Checked)
 					{
 						checkBoxShowAllNodes_CheckedChanged(null, null);
@@ -269,10 +279,10 @@ namespace Vixen
 			{
 				try
 				{
-					m_sourceDoc.Load(openFileDialog.FileName);
-					XmlNode node = m_sourceDoc.SelectSingleNode("//Program");
+					_sourceDoc.Load(openFileDialog.FileName);
+					_sourceDoc.SelectSingleNode("//Program");
 					labelFrom.Text = Path.GetFileNameWithoutExtension(openFileDialog.FileName);
-					m_source = NodeSource.Program;
+					_source = NodeSource.Program;
 					if (!checkBoxShowAllNodes.Checked)
 					{
 						checkBoxShowAllNodes_CheckedChanged(null, null);
@@ -298,10 +308,10 @@ namespace Vixen
 			{
 				try
 				{
-					m_sourceDoc.Load(openFileDialog.FileName);
-					XmlNode node = m_sourceDoc.SelectSingleNode("//Program");
+					_sourceDoc.Load(openFileDialog.FileName);
+					_sourceDoc.SelectSingleNode("//Program");
 					labelFrom.Text = Path.GetFileNameWithoutExtension(openFileDialog.FileName);
-					m_source = NodeSource.Sequence;
+					_source = NodeSource.Sequence;
 					if (!checkBoxShowAllNodes.Checked)
 					{
 						checkBoxShowAllNodes_CheckedChanged(null, null);
@@ -327,13 +337,13 @@ namespace Vixen
 			{
 				if (File.Exists(saveFileDialog.FileName))
 				{
-					m_destDoc.Load(saveFileDialog.FileName);
+					_destDoc.Load(saveFileDialog.FileName);
 				}
 				else
 				{
-					m_destDoc = Xml.CreateXmlDocument("Program");
-					m_destDoc.Save(saveFileDialog.FileName);
-					m_destDoc.Load(saveFileDialog.FileName);
+					_destDoc = Xml.CreateXmlDocument("Program");
+					_destDoc.Save(saveFileDialog.FileName);
+					_destDoc.Load(saveFileDialog.FileName);
 				}
 				labelTo.Text = "file: " + Path.GetFileName(saveFileDialog.FileName);
 			}
@@ -349,8 +359,8 @@ namespace Vixen
 			{
 				try
 				{
-					m_destDoc.Load(openFileDialog.FileName);
-					XmlNode node = m_destDoc.SelectSingleNode("//Program");
+					_destDoc.Load(openFileDialog.FileName);
+					_destDoc.SelectSingleNode("//Program");
 					labelTo.Text = Path.GetFileNameWithoutExtension(openFileDialog.FileName);
 				}
 				catch
@@ -371,8 +381,8 @@ namespace Vixen
 			{
 				try
 				{
-					m_destDoc.Load(openFileDialog.FileName);
-					XmlNode node = m_destDoc.SelectSingleNode("//Program");
+					_destDoc.Load(openFileDialog.FileName);
+					_destDoc.SelectSingleNode("//Program");
 					labelTo.Text = Path.GetFileNameWithoutExtension(openFileDialog.FileName);
 				}
 				catch
@@ -400,7 +410,7 @@ namespace Vixen
 		}
 
 
-		private TreeNode[] GetAllNodes()
+		private IEnumerable<TreeNode> GetAllNodes()
 		{
 			var nodes = new List<TreeNode>();
 			foreach (TreeNode node in treeViewFrom.Nodes)
@@ -415,7 +425,7 @@ namespace Vixen
 		{
 			treeViewFrom.Nodes.Clear();
 			treeViewFrom.BeginUpdate();
-			AddNode(m_sourceDoc.SelectSingleNode("//Program"), null);
+			AddNode(_sourceDoc.SelectSingleNode("//Program"), null);
 			treeViewFrom.EndUpdate();
 		}
 
@@ -424,13 +434,13 @@ namespace Vixen
 			Array programPaths;
 			treeViewFrom.Nodes.Clear();
 			treeViewFrom.BeginUpdate();
-			if (m_source == NodeSource.Program)
+			if (_source == NodeSource.Program)
 			{
-				programPaths = m_programPaths;
+				programPaths = _programPaths;
 			}
-			else if (m_source == NodeSource.Sequence)
+			else if (_source == NodeSource.Sequence)
 			{
-				programPaths = m_sequencePaths;
+				programPaths = _sequencePaths;
 			}
 			else
 			{
@@ -438,16 +448,18 @@ namespace Vixen
 			}
 			foreach (string str2 in programPaths)
 			{
-				if (m_sourceDoc.SelectSingleNode("//" + str2) != null)
+				if (_sourceDoc.SelectSingleNode("//" + str2) != null)
 				{
 					string text = str2.Substring(str2.LastIndexOf('/') + 1);
 					TreeNode parentNode = treeViewFrom.Nodes.Add(text);
 					parentNode.Tag = str2;
 					parentNode.Name = text;
-					foreach (XmlNode node2 in m_sourceDoc.SelectNodes("//" + str2 + "/*"))
-					{
-						AddNodeFormatted(node2, parentNode);
-					}
+					var xmlNodeList = _sourceDoc.SelectNodes("//" + str2 + "/*");
+					if (xmlNodeList != null)
+						foreach (XmlNode node2 in xmlNodeList)
+						{
+							AddNodeFormatted(node2, parentNode);
+						}
 				}
 			}
 			treeViewFrom.EndUpdate();

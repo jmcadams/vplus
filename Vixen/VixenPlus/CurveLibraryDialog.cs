@@ -252,14 +252,7 @@ namespace Vixen
 			foreach (string str2 in items)
 			{
 				string str;
-				if (comboBox != comboBoxColor)
-				{
-					str = str2;
-				}
-				else
-				{
-					str = StringFromColor(str2);
-				}
+				str = comboBox != comboBoxColor ? str2 : StringFromColor(str2);
 				if (!comboBox.Items.Contains(str))
 				{
 					comboBox.Items.Add(str);

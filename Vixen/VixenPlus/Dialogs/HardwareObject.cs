@@ -3,14 +3,13 @@ using VixenControls;
 
 namespace Vixen.Dialogs
 {
+	//TODO I am not sure this is doing anything real
 	internal class HardwareObject : ToolboxItem
 	{
-		private VectorImage.Image m_vectorImage;
-
 		public HardwareObject(string fileName)
 		{
-			base.Name = Path.GetFileNameWithoutExtension(fileName);
-			m_vectorImage = VectorImage.Image.FromFile(fileName);
+			Name = Path.GetFileNameWithoutExtension(fileName);
+			VectorImage.Image.FromFile(fileName);
 		}
 	}
 }

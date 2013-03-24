@@ -4,7 +4,7 @@ namespace Vixen.Dialogs{
 	using System.Drawing;
 	using System.Collections;
 
-	public partial class HelpDialog{
+	public sealed partial class HelpDialog{
 		private System.ComponentModel.IContainer components = null;
 
 		#region Windows Form Designer generated code
@@ -47,9 +47,9 @@ namespace Vixen.Dialogs{
 			{
 				this.components.Dispose();
 			}
-			if (this.m_bigFont != null)
+			if (this._bigFont != null)
 			{
-				this.m_bigFont.Dispose();
+				this._bigFont.Dispose();
 			}
 			base.Dispose(disposing);
 		}

@@ -22,14 +22,7 @@ namespace Vixen
 				dateTimePickerTimerTraceTo.Value = DateTime.Parse(Host.GetDebugValue("TraceEnd"));
 			}
 			checkBoxTraceTimers.Checked = Host.GetDebugValue("TraceTimers") == bool.TrueString;
-			if (Host.GetDebugValue("EventAverages") != null)
-			{
-				checkBoxGetEventAverages.Checked = true;
-			}
-			else
-			{
-				checkBoxGetEventAverages.Checked = false;
-			}
+			checkBoxGetEventAverages.Checked = Host.GetDebugValue("EventAverages") != null;
 			buttonShowOutputPluginDurations.Enabled = Host.GetDebugValue("event_average_0") != null;
 		}
 

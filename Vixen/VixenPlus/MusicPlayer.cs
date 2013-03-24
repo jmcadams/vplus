@@ -163,14 +163,7 @@ namespace Vixen
 			{
 				bool flag;
 				dialog.NarrativeSong = new Audio(node2);
-				if (bool.TryParse(node.Attributes["enabled"].Value, out flag))
-				{
-					dialog.NarrativeSongEnabled = flag;
-				}
-				else
-				{
-					dialog.NarrativeSongEnabled = false;
-				}
+				dialog.NarrativeSongEnabled = bool.TryParse(node.Attributes["enabled"].Value, out flag) && flag;
 			}
 			else
 			{
@@ -208,7 +201,7 @@ namespace Vixen
 				m_songCounter = 0;
 				m_narrativeSong = null;
 				XmlNode node = m_doc.SelectSingleNode("//MusicPlayer/Narrative");
-				bool result = false;
+				bool result;
 				bool.TryParse(node.Attributes["enabled"].Value, out result);
 				if (result)
 				{

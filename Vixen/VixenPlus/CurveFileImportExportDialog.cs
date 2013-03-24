@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
@@ -14,15 +15,15 @@ namespace Vixen
 			Export
 		}
 
-		private readonly ImportExport m_importExport;
-		private string m_fileName = "";
-		private CurveLibraryRecord m_selectedCurve;
+		private readonly ImportExport _importExport;
+		private string _fileName = "";
+		private CurveLibraryRecord _selectedCurve;
 
 
 		public CurveFileImportExportDialog(ImportExport importExport)
 		{
 			InitializeComponent();
-			m_importExport = importExport;
+			_importExport = importExport;
 			openFileDialog.InitialDirectory = Paths.ImportExportPath;
 			openFileDialog.DefaultExt = Path.GetExtension("library.xml");
 			openFileDialog.Filter = string.Format("{0} file|*{0}", Path.GetExtension("library.xml"));
@@ -30,18 +31,18 @@ namespace Vixen
 
 		private string FilePath
 		{
-			get { return m_fileName; }
-			set { m_fileName = value; }
+			get { return _fileName; }
+			set { _fileName = value; }
 		}
 
 		public CurveLibraryRecord SelectedCurve
 		{
-			get { return m_selectedCurve; }
+			get { return _selectedCurve; }
 		}
 
 		private void buttonFile_Click(object sender, EventArgs e)
 		{
-			if (m_importExport == ImportExport.Import)
+			if (_importExport == ImportExport.Import)
 			{
 				openFileDialog.CheckFileExists = true;
 				openFileDialog.Title = "Select a file to import from";
@@ -56,7 +57,7 @@ namespace Vixen
 				labelFile.Text = FilePath = openFileDialog.FileName;
 				try
 				{
-					if (m_importExport == ImportExport.Import)
+					if (_importExport == ImportExport.Import)
 					{
 						LoadRecords(FilePath, listViewCurvesImport);
 						groupBoxImport.Enabled = FilePath != "";
@@ -76,9 +77,9 @@ namespace Vixen
 
 		private void buttonOK_Click(object sender, EventArgs e)
 		{
-			if (m_importExport == ImportExport.Import)
+			if (_importExport == ImportExport.Import)
 			{
-				m_selectedCurve = comboBoxSelectedCurve.SelectedItem as CurveLibraryRecord;
+				_selectedCurve = comboBoxSelectedCurve.SelectedItem as CurveLibraryRecord;
 			}
 			else
 			{
@@ -105,35 +106,34 @@ namespace Vixen
 			}
 		}
 
-		private void checkBoxSelectCurveToUse_Click(object sender, EventArgs e)
-		{
-		}
-
 		private void comboBoxSelectedCurve_DrawItem(object sender, DrawItemEventArgs e)
 		{
 			if ((e.Index >= 0) && (e.Index < comboBoxSelectedCurve.Items.Count))
 			{
 				var box = sender as ComboBox;
-				var record = (CurveLibraryRecord) box.Items[e.Index];
-				int width = e.Bounds.Height - 2;
-				using (var brush = new SolidBrush(Color.FromArgb(record.Color)))
+				if (box != null)
 				{
-					e.Graphics.FillRectangle(brush, e.Bounds.X + 1, e.Bounds.Y + 1, width, width);
-					e.Graphics.DrawRectangle(Pens.Black, (e.Bounds.X + 1), (e.Bounds.Y + 1), (width - 1), (width - 1));
+					var record = (CurveLibraryRecord) box.Items[e.Index];
+					int width = e.Bounds.Height - 2;
+					using (var brush = new SolidBrush(Color.FromArgb(record.Color)))
+					{
+						e.Graphics.FillRectangle(brush, e.Bounds.X + 1, e.Bounds.Y + 1, width, width);
+						e.Graphics.DrawRectangle(Pens.Black, (e.Bounds.X + 1), (e.Bounds.Y + 1), (width - 1), (width - 1));
+					}
+					e.Graphics.DrawString(string.Format("{0}, {1}, {2}", record.Manufacturer, record.LightCount, record.Controller),
+					                      comboBoxSelectedCurve.Font, Brushes.Black, ((e.Bounds.X + width) + 5), e.Bounds.Y);
 				}
-				e.Graphics.DrawString(string.Format("{0}, {1}, {2}", record.Manufacturer, record.LightCount, record.Controller),
-				                      comboBoxSelectedCurve.Font, Brushes.Black, ((e.Bounds.X + width) + 5), e.Bounds.Y);
 			}
 		}
 
 		private void CurveFileImportExportDialog_Load(object sender, EventArgs e)
 		{
-			groupBoxImport.Visible = m_importExport == ImportExport.Import;
-			groupBoxExport.Visible = m_importExport == ImportExport.Export;
+			groupBoxImport.Visible = _importExport == ImportExport.Import;
+			groupBoxExport.Visible = _importExport == ImportExport.Export;
 		}
 
 
-		private void ExportRecordsToFile(CurveLibraryRecord[] records, string filePath)
+		private void ExportRecordsToFile(IEnumerable<CurveLibraryRecord> records, string filePath)
 		{
 			if (File.Exists(filePath))
 			{
@@ -157,7 +157,7 @@ namespace Vixen
 				try
 				{
 					ExportRecordsToFile(new[] {listViewCurvesExport.SelectedItems[0].Tag as CurveLibraryRecord}, FilePath);
-					base.DialogResult = DialogResult.OK;
+					DialogResult = DialogResult.OK;
 				}
 				catch (Exception exception)
 				{
@@ -178,11 +178,13 @@ namespace Vixen
 			{
 				Rectangle bounds = e.Bounds;
 				bounds.Inflate(-16, -2);
-				using (var brush = new SolidBrush(Color.FromArgb((e.Item.Tag as CurveLibraryRecord).Color)))
-				{
-					e.Graphics.FillRectangle(brush, bounds);
-					e.Graphics.DrawRectangle(Pens.Black, bounds);
-				}
+				var curveLibraryRecord = e.Item.Tag as CurveLibraryRecord;
+				if (curveLibraryRecord != null)
+					using (var brush = new SolidBrush(Color.FromArgb(curveLibraryRecord.Color)))
+					{
+						e.Graphics.FillRectangle(brush, bounds);
+						e.Graphics.DrawRectangle(Pens.Black, bounds);
+					}
 			}
 			else
 			{
@@ -197,7 +199,7 @@ namespace Vixen
 			comboBoxSelectedCurve.Items.Clear();
 			foreach (ListViewItem item in listViewCurvesImport.SelectedItems)
 			{
-				comboBoxSelectedCurve.Items.Add(item.Tag as CurveLibraryRecord);
+				if (item != null) comboBoxSelectedCurve.Items.Add(new object[] { item.Tag as CurveLibraryRecord });
 			}
 			if ((selectedItem != null) && comboBoxSelectedCurve.Items.Contains(selectedItem))
 			{
@@ -211,8 +213,8 @@ namespace Vixen
 			if (listViewCurvesImport.SelectedItems.Count == 1)
 			{
 				var tag = (CurveLibraryRecord) listViewCurvesImport.SelectedItems[0].Tag;
-				m_selectedCurve = tag;
-				base.DialogResult = DialogResult.OK;
+				_selectedCurve = tag;
+				DialogResult = DialogResult.OK;
 			}
 		}
 
@@ -229,14 +231,7 @@ namespace Vixen
 			try
 			{
 				Exception exception;
-				if (fileName == null)
-				{
-					library = new CurveLibrary();
-				}
-				else
-				{
-					library = new CurveLibrary(fileName);
-				}
+				library = fileName == null ? new CurveLibrary() : new CurveLibrary(fileName);
 				try
 				{
 					library.Load(false);
@@ -252,7 +247,7 @@ namespace Vixen
 					foreach (CurveLibraryRecord record in library.Read())
 					{
 						listView.Items.Add(
-							new ListViewItem(new[] {record.Manufacturer, record.LightCount, record.Color.ToString(), record.Controller})).Tag
+							new ListViewItem(new[] {record.Manufacturer, record.LightCount, record.Color.ToString(CultureInfo.InvariantCulture), record.Controller})).Tag
 							= record;
 						num++;
 					}

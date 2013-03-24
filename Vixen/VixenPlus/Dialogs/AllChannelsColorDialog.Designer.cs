@@ -123,7 +123,7 @@ private ListBox listBoxColorsInUse;
 			{
 				this.components.Dispose();
 			}
-			this.m_brush.Dispose();
+			this._solidBrush.Dispose();
 			base.Dispose(disposing);
 		}
 	}

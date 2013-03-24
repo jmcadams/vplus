@@ -1,16 +1,17 @@
 using System;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace Vixen.Dialogs
 {
 	public partial class ParallelSetupDialog : Form
 	{
-		private readonly int m_otherAddressIndex;
+		private readonly int _otherAddressIndex;
 
 		public ParallelSetupDialog(int portAddress)
 		{
 			InitializeComponent();
-			m_otherAddressIndex = 3;
+			_otherAddressIndex = 3;
 			switch (portAddress)
 			{
 				case 0x278:
@@ -57,24 +58,20 @@ namespace Vixen.Dialogs
 
 		private void buttonOK_Click(object sender, EventArgs e)
 		{
-			if (comboBoxPort.SelectedIndex == m_otherAddressIndex)
+			ushort ignore;
+
+			if (comboBoxPort.SelectedIndex != _otherAddressIndex || UInt16.TryParse(textBoxPort.Text, NumberStyles.HexNumber, null, out ignore))
 			{
-				try
-				{
-					Convert.ToUInt16(textBoxPort.Text, 0x10);
-				}
-				catch
-				{
-					MessageBox.Show("The port number is not a valid hexadecimal number.", Vendor.ProductName, MessageBoxButtons.OK,
-					                MessageBoxIcon.Hand);
-					base.DialogResult = DialogResult.None;
-				}
+				return;
 			}
+			
+			MessageBox.Show("The port number is not a valid hexadecimal number.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+			DialogResult = DialogResult.None;
 		}
 
 		private void comboBoxPort_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			textBoxPort.Enabled = comboBoxPort.SelectedIndex == m_otherAddressIndex;
+			textBoxPort.Enabled = comboBoxPort.SelectedIndex == _otherAddressIndex;
 		}
 	}
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace FMOD
 {
@@ -37,37 +36,37 @@ namespace FMOD
 
         public REVERB_PROPERTIES(int instance, uint environment, float envSize, float envDiffusion, int room, int roomHF, int roomLF, float decayTime, float decayHFRatio, float decayLFRatio, int reflections, float reflectionsDelay, float reflectionsPanx, float reflectionsPany, float reflectionsPanz, int reverb, float reverbDelay, float reverbPanx, float reverbPany, float reverbPanz, float echoTime, float echoDepth, float modulationTime, float modulationDepth, float airAbsorptionHF, float hfReference, float lfReference, float roomRolloffFactor, float diffusion, float density, uint flags)
         {
-            this.Instance = instance;
-            this.Environment = environment;
-            this.EnvSize = envSize;
-            this.EnvDiffusion = envDiffusion;
-            this.Room = room;
-            this.RoomHF = roomHF;
-            this.RoomLF = roomLF;
-            this.DecayTime = decayTime;
-            this.DecayHFRatio = decayHFRatio;
-            this.DecayLFRatio = decayLFRatio;
-            this.Reflections = reflections;
-            this.ReflectionsDelay = reflectionsDelay;
-            this.ReflectionsPan[0] = reflectionsPanx;
-            this.ReflectionsPan[1] = reflectionsPany;
-            this.ReflectionsPan[2] = reflectionsPanz;
-            this.Reverb = reverb;
-            this.ReverbDelay = reverbDelay;
-            this.ReverbPan[0] = reverbPanx;
-            this.ReverbPan[1] = reverbPany;
-            this.ReverbPan[2] = reverbPanz;
-            this.EchoTime = echoTime;
-            this.EchoDepth = echoDepth;
-            this.ModulationTime = modulationTime;
-            this.ModulationDepth = modulationDepth;
-            this.AirAbsorptionHF = airAbsorptionHF;
-            this.HFReference = hfReference;
-            this.LFReference = lfReference;
-            this.RoomRolloffFactor = roomRolloffFactor;
-            this.Diffusion = diffusion;
-            this.Density = density;
-            this.Flags = flags;
+            Instance = instance;
+            Environment = environment;
+            EnvSize = envSize;
+            EnvDiffusion = envDiffusion;
+            Room = room;
+            RoomHF = roomHF;
+            RoomLF = roomLF;
+            DecayTime = decayTime;
+            DecayHFRatio = decayHFRatio;
+            DecayLFRatio = decayLFRatio;
+            Reflections = reflections;
+            ReflectionsDelay = reflectionsDelay;
+            ReflectionsPan[0] = reflectionsPanx;
+            ReflectionsPan[1] = reflectionsPany;
+            ReflectionsPan[2] = reflectionsPanz;
+            Reverb = reverb;
+            ReverbDelay = reverbDelay;
+            ReverbPan[0] = reverbPanx;
+            ReverbPan[1] = reverbPany;
+            ReverbPan[2] = reverbPanz;
+            EchoTime = echoTime;
+            EchoDepth = echoDepth;
+            ModulationTime = modulationTime;
+            ModulationDepth = modulationDepth;
+            AirAbsorptionHF = airAbsorptionHF;
+            HFReference = hfReference;
+            LFReference = lfReference;
+            RoomRolloffFactor = roomRolloffFactor;
+            Diffusion = diffusion;
+            Density = density;
+            Flags = flags;
         }
     }
 }

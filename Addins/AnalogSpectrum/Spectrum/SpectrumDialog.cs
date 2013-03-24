@@ -1,216 +1,204 @@
-using FMOD;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using FMOD;
 using Vixen;
 using Vixen.Dialogs;
 	
 namespace Spectrum
 {
 	//ComponentResourceManager manager = new ComponentResourceManager(typeof(SpectrumDialog));
-	//this.pictureBoxPlay.Image = (Image)manager.GetObject("pictureBoxPlay.Image");
-	//this.pictureBoxPause.Image = (Image)manager.GetObject("pictureBoxPause.Image");
-	//this.pictureBoxStop.Image = (Image)manager.GetObject("pictureBoxStop.Image");
-	//this.pictureBoxScaleUp.Image = (Image)manager.GetObject("pictureBoxScaleUp.Image");
-	//this.pictureBoxScaleDown.Image = (Image)manager.GetObject("pictureBoxScaleDown.Image");
-	//this.buttonAutoMap = new Button();
+	//pictureBoxPlay.Image = (Image)manager.GetObject("pictureBoxPlay.Image");
+	//pictureBoxPause.Image = (Image)manager.GetObject("pictureBoxPause.Image");
+	//pictureBoxStop.Image = (Image)manager.GetObject("pictureBoxStop.Image");
+	//pictureBoxScaleUp.Image = (Image)manager.GetObject("pictureBoxScaleUp.Image");
+	//pictureBoxScaleDown.Image = (Image)manager.GetObject("pictureBoxScaleDown.Image");
+	//buttonAutoMap = new Button();
 
 	internal partial class SpectrumDialog : Form
 	{
-		private const int BAND_HEIGHT = 100;
-		private const int BAND_LEVEL_GUTTER = 3;
-		private const int BAND_LEVEL_MAX_HEIGHT = 0x4b;
-		private const int BANDS_OFFSET = 50;
-		private FMOD.Channel channel = null;
-		private const int CHANNEL_OFFSET = 0xe1;
-		private const int CONNECTION_ENDPOINT_SIZE = 7;
-		private const int CONNECTION_ENDPOINT_VERTICAL_OFFSET = 10;
-		private Dictionary<FrequencyBand, List<int>> m_bandChannelConnections;
-		private Font m_bandFont = new Font("Arial", 8f);
-		private List<FrequencyBand> m_bands;
-		private Rectangle m_bandsBounds;
-		private Dictionary<int, FrequencyBand> m_channelBandConnections;
-		private Rectangle m_channelBounds;
-		private int m_channelBoxWidth;
-		private int m_channelsShown;
-		private string m_channelText = string.Empty;
-		private bool m_doingMaxSliderDrag = false;
-		private bool m_doingMinSliderDrag = false;
-		private object m_dragStartObject = null;
-		private FrequencyBand m_lastBand = null;
-		private int m_lastChannel = -1;
-		private Point m_lastMouseLocation;
-		private int m_leftArrowChannel = -1;
-		private bool m_leftArrowEnabled;
-		private Point[] m_leftArrowPoints;
-		private int m_maxChannelsShown;
-		private Point m_mouseDownAt = Point.Empty;
-		private Point m_mouseLastAt = Point.Empty;
-		private bool m_paused = false;
-		private bool m_playing = false;
-		private int m_rightArrowChannel;
-		private bool m_rightArrowEnabled;
-		private Point[] m_rightArrowPoints;
-		private float m_scaleFactor = 5f;
-		private EventSequence m_sequence;
-		private int m_startChannel;
-		private Font m_textFont = new Font("Arial", 14f);
-		private bool m_userSetResponseLevels = false;
-		private const int SINGLE_BAND_WIDTH = 0x1c;
-		private const int SLIDER_HEIGHT = 4;
-		private Sound sound = null;
-		private float[] spectrum = new float[0x200];
-		private const int SPECTRUMSIZE = 0x200;
-		private FMOD.System system = null;
-		private System.Windows.Forms.Timer timer;
+		private FMOD.Channel _channel;
+		private readonly Dictionary<FrequencyBand, List<int>> _bandChannelConnections;
+		private readonly Font _bandFont = new Font("Arial", 8f);
+		private readonly List<FrequencyBand> _bands;
+		private Rectangle _bandsBounds;
+		private readonly Dictionary<int, FrequencyBand> _channelBandConnections;
+		private Rectangle _channelBounds;
+		private readonly int _channelBoxWidth;
+		private readonly int _channelsShown;
+		private string _channelText = string.Empty;
+		private bool _doingMaxSliderDrag;
+		private bool _doingMinSliderDrag;
+		private object _dragStartObject;
+		private FrequencyBand _lastBand;
+		private int _lastChannel = -1;
+		private int _leftArrowChannel = -1;
+		private bool _leftArrowEnabled;
+		private readonly Point[] _leftArrowPoints;
+		private readonly int _maxChannelsShown;
+		private Point _mouseDownAt = Point.Empty;
+		private Point _mouseLastAt = Point.Empty;
+		private bool _paused;
+		private bool _playing;
+		private int _rightArrowChannel;
+		private bool _rightArrowEnabled;
+		private readonly Point[] _rightArrowPoints;
+		private float _scaleFactor = 5f;
+		private readonly EventSequence _eventSequence;
+		private int _startChannel;
+		private readonly Font _textFont = new Font("Arial", 14f);
+		private bool _mUserSetResponseLevels;
+		private Sound _sound;
+		private readonly float[] _spectrum = new float[512];
+		private FMOD.System _system;
+		private Timer _timer;
 
 		public SpectrumDialog(EventSequence sequence)
 		{
-			this.InitializeComponent();
-			base.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-			base.SetStyle(ControlStyles.DoubleBuffer, true);
-			base.SetStyle(ControlStyles.UserPaint, true);
-			this.m_sequence = sequence;
-			this.m_bands = new List<FrequencyBand>();
-			this.m_channelBoxWidth = 12;
-			this.m_rightArrowChannel = sequence.ChannelCount;
-			this.m_lastMouseLocation = new Point(0, 0);
-			this.m_bandChannelConnections = new Dictionary<FrequencyBand, List<int>>();
-			this.m_channelBandConnections = new Dictionary<int, FrequencyBand>();
-			this.UpdateScaleLabel();
-			int[] numArray = new int[] { 
-				20, 0x19, 0x1f, 40, 50, 0x3f, 80, 100, 0x7d, 160, 200, 250, 0x13b, 400, 500, 630, 
-				800, 0x3e8, 0x4e2, 0x640, 0x7d0, 0x9c4, 0xc4e, 0xfa0, 0x1388, 0x189c, 0x1f40, 0x2710, 0x30d4, 0x3e80, 0x4e20
+			InitializeComponent();
+			SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+			SetStyle(ControlStyles.DoubleBuffer, true);
+			SetStyle(ControlStyles.UserPaint, true);
+			_eventSequence = sequence;
+			_bands = new List<FrequencyBand>();
+			_channelBoxWidth = 12;
+			_rightArrowChannel = sequence.ChannelCount;
+			_bandChannelConnections = new Dictionary<FrequencyBand, List<int>>();
+			_channelBandConnections = new Dictionary<int, FrequencyBand>();
+			UpdateScaleLabel();
+			var numArray = new[] { 
+				20, 25, 31, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 
+				800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000, 10000, 12500, 16000, 20000
 			 };
 			foreach (int num in numArray)
 			{
-				this.m_bands.Add(new FrequencyBand(num));
+				_bands.Add(new FrequencyBand(num));
 			}
-			this.ERRCHECK(Factory.System_Create(ref this.system));
-			this.ERRCHECK(this.system.init(0x20, INITFLAG.NORMAL, IntPtr.Zero));
-			int width = this.m_bands.Count * 0x1c;
-			this.m_bandsBounds = new Rectangle((((base.ClientRectangle.Width - 40) - width) >> 1) + 40, 50, width, 100);
-			this.m_maxChannelsShown = (base.ClientRectangle.Width / this.m_channelBoxWidth) - 2;
-			this.m_leftArrowEnabled = false;
-			if (this.m_sequence.ChannelCount > this.m_maxChannelsShown)
+			ErrCheck(Factory.System_Create(ref _system));
+			ErrCheck(_system.init(0x20, INITFLAG.NORMAL, IntPtr.Zero));
+			int width = _bands.Count * 0x1c;
+			_bandsBounds = new Rectangle(((ClientRectangle.Width - 40 - width) >> 1) + 40, 50, width, 100);
+			_maxChannelsShown = ClientRectangle.Width / _channelBoxWidth - 2;
+			_leftArrowEnabled = false;
+			if (_eventSequence.ChannelCount > _maxChannelsShown)
 			{
-				this.m_channelsShown = this.m_maxChannelsShown;
-				this.m_rightArrowEnabled = true;
+				_channelsShown = _maxChannelsShown;
+				_rightArrowEnabled = true;
 			}
 			else
 			{
-				this.m_channelsShown = this.m_sequence.ChannelCount;
-				this.m_rightArrowEnabled = false;
+				_channelsShown = _eventSequence.ChannelCount;
+				_rightArrowEnabled = false;
 			}
-			this.m_startChannel = 0;
-			this.m_leftArrowChannel = this.m_startChannel - 1;
-			this.m_rightArrowChannel = this.m_startChannel + this.m_channelsShown;
-			int num4 = (this.m_channelsShown + 2) * this.m_channelBoxWidth;
-			this.m_channelBounds = new Rectangle((base.ClientRectangle.Width - num4) >> 1, 0xe1, num4, this.m_channelBoxWidth);
-			this.m_channelBounds.X = Math.Max(this.m_channelBounds.X, 2);
-			Point[] pointArray = new Point[] { new Point(this.m_channelBounds.Left + 3, this.m_channelBounds.Top + 6), new Point(this.m_channelBounds.Left + 9, this.m_channelBounds.Top + 3), new Point(this.m_channelBounds.Left + 9, this.m_channelBounds.Top + 9) };
-			this.m_leftArrowPoints = pointArray;
-			pointArray = new Point[] { new Point(this.m_channelBounds.Right - 3, this.m_channelBounds.Top + 6), new Point(this.m_channelBounds.Right - 9, this.m_channelBounds.Top + 3), new Point(this.m_channelBounds.Right - 9, this.m_channelBounds.Top + 9) };
-			this.m_rightArrowPoints = pointArray;
-			for (int i = 0; i < this.m_bands.Count; i++)
+			_startChannel = 0;
+			_leftArrowChannel = _startChannel - 1;
+			_rightArrowChannel = _startChannel + _channelsShown;
+			int num4 = (_channelsShown + 2) * _channelBoxWidth;
+			_channelBounds = new Rectangle(ClientRectangle.Width - num4 >> 1, 0xe1, num4, _channelBoxWidth);
+			_channelBounds.X = Math.Max(_channelBounds.X, 2);
+			var pointArray = new[] { new Point(_channelBounds.Left + 3, _channelBounds.Top + 6), new Point(_channelBounds.Left + 9, _channelBounds.Top + 3), new Point(_channelBounds.Left + 9, _channelBounds.Top + 9) };
+			_leftArrowPoints = pointArray;
+			pointArray = new[] { new Point(_channelBounds.Right - 3, _channelBounds.Top + 6), new Point(_channelBounds.Right - 9, _channelBounds.Top + 3), new Point(_channelBounds.Right - 9, _channelBounds.Top + 9) };
+			_rightArrowPoints = pointArray;
+			for (int i = 0; i < _bands.Count; i++)
 			{
-				FrequencyBand band = this.m_bands[i];
-				band.Region = new Rectangle((3 + this.m_bandsBounds.Left) + (i * 0x1c), 0x4b, 0x16, 0x4b);
+				FrequencyBand band = _bands[i];
+				band.Region = new Rectangle((3 + _bandsBounds.Left) + (i * 0x1c), 0x4b, 0x16, 0x4b);
 				band.MinSliderRegion = new Rectangle(band.Region.X, (band.Region.Bottom - (band.Region.Height / 2)) - 4, band.Region.Width, 4);
 				band.MaxSliderRegion = new Rectangle(band.Region.X, band.Region.Top, band.Region.Width, 4);
-				if (!this.m_userSetResponseLevels)
+				if (!_mUserSetResponseLevels)
 				{
 					band.ResponseLevelMax = 1f;
 					band.ResponseLevelMin = 0.5f;
 				}
 			}
-			RESULT result = this.system.createStream(Path.Combine(Paths.AudioPath, this.m_sequence.Audio.FileName), MODE.SOFTWARE | MODE._2D, ref this.sound);
-			this.ERRCHECK(result);
+			RESULT result = _system.createStream(Path.Combine(Paths.AudioPath, _eventSequence.Audio.FileName), MODE.SOFTWARE | MODE._2D, ref _sound);
+			ErrCheck(result);
 		}
 
 		private void buttonAutoMap_Click(object sender, EventArgs e)
 		{
-			AutoMapDialog dialog = new AutoMapDialog(this.m_sequence.Channels, this.m_bands);
+			var dialog = new AutoMapDialog(_eventSequence.Channels, _bands);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
 				int startChannelIndex = dialog.StartChannelIndex;
 				int startBandIndex = dialog.StartBandIndex;
-				int num3 = Math.Min((int) (this.m_bands.Count - startBandIndex), (int) (this.m_sequence.Channels.Count - startChannelIndex));
-				this.m_bandChannelConnections.Clear();
-				this.m_channelBandConnections.Clear();
+				int num3 = Math.Min(_bands.Count - startBandIndex, _eventSequence.Channels.Count - startChannelIndex);
+				_bandChannelConnections.Clear();
+				_channelBandConnections.Clear();
 				for (int i = 0; i < num3; i++)
 				{
-					FrequencyBand band = this.m_bands[startBandIndex];
-					List<int> list = new List<int>();
-					this.m_bandChannelConnections[band] = list;
+					FrequencyBand band = _bands[startBandIndex];
+					var list = new List<int>();
+					_bandChannelConnections[band] = list;
 					list.Add(startChannelIndex);
-					this.m_channelBandConnections[startChannelIndex] = band;
+					_channelBandConnections[startChannelIndex] = band;
 					startBandIndex++;
 					startChannelIndex++;
 				}
-				this.Refresh();
+				Refresh();
 			}
 		}
 
 		private void buttonOK_Click(object sender, EventArgs e)
 		{
-			if (this.m_channelBandConnections.Count == 0)
+			if (_channelBandConnections.Count == 0)
 			{
-				MessageBox.Show("There are no mappings created.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show(@"There are no mappings created.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 			else
 			{
 				uint length = 0;
 				uint position = 0;
-				this.Stop();
-				this.sound.release();
-				this.system.close();
-				this.system.release();
-				this.ERRCHECK(Factory.System_Create(ref this.system));
-				this.system.setOutput(OUTPUTTYPE.NOSOUND_NRT);
-				this.ERRCHECK(this.system.init(0x20, INITFLAG.STREAM_FROM_UPDATE, IntPtr.Zero));
-				this.system.createStream(Path.Combine(Paths.AudioPath, this.m_sequence.Audio.FileName), MODE.SOFTWARE | MODE._2D, ref this.sound);
-				this.sound.getLength(ref length, TIMEUNIT.MS);
-				TranscribeDialog dialog = new TranscribeDialog((int) length);
+				Stop();
+				_sound.release();
+				_system.close();
+				_system.release();
+				ErrCheck(Factory.System_Create(ref _system));
+				_system.setOutput(OUTPUTTYPE.NOSOUND_NRT);
+				ErrCheck(_system.init(0x20, INITFLAG.STREAM_FROM_UPDATE, IntPtr.Zero));
+				_system.createStream(Path.Combine(Paths.AudioPath, _eventSequence.Audio.FileName), MODE.SOFTWARE | MODE._2D, ref _sound);
+				_sound.getLength(ref length, TIMEUNIT.MS);
+				var dialog = new TranscribeDialog((int) length);
 				dialog.Show();
-				this.ERRCHECK(this.system.playSound(CHANNELINDEX.FREE, this.sound, false, ref this.channel));
-				int num6 = this.m_sequence.MaximumLevel - this.m_sequence.MinimumLevel;
+				ErrCheck(_system.playSound(CHANNELINDEX.FREE, _sound, false, ref _channel));
+				int num6 = _eventSequence.MaximumLevel - _eventSequence.MinimumLevel;
 				while (position < length)
 				{
-					this.channel.getPosition(ref position, TIMEUNIT.MS);
+					_channel.getPosition(ref position, TIMEUNIT.MS);
 					dialog.Progress = (int) position;
-					this.GetSpectrumData();
-					int num3 = (int) (((long) position) / ((long) this.m_sequence.EventPeriod));
-					if (num3 >= this.m_sequence.TotalEventPeriods)
+					GetSpectrumData();
+					var num3 = (int) (position / _eventSequence.EventPeriod);
+					if (num3 >= _eventSequence.TotalEventPeriods)
 					{
 						break;
 					}
-					foreach (FrequencyBand band in this.m_bands)
+					foreach (FrequencyBand band in _bands)
 					{
 						float responseLevelMin = band.ResponseLevelMin;
 						float responseLevelMax = band.ResponseLevelMax;
 						float num7 = responseLevelMax - responseLevelMin;
-						if ((this.m_bandChannelConnections.ContainsKey(band) && (band.CurrentScaledLevel >= responseLevelMin)) && (band.CurrentScaledLevel <= responseLevelMax))
+						if ((_bandChannelConnections.ContainsKey(band) && (band.CurrentScaledLevel >= responseLevelMin)) && (band.CurrentScaledLevel <= responseLevelMax))
 						{
-							foreach (int num8 in this.m_bandChannelConnections[band])
+							foreach (int num8 in _bandChannelConnections[band])
 							{
-								this.m_sequence.EventValues[num8, num3] = (byte) ((((band.CurrentScaledLevel - responseLevelMin) / num7) * num6) + this.m_sequence.MinimumLevel);
+								_eventSequence.EventValues[num8, num3] = (byte) ((((band.CurrentScaledLevel - responseLevelMin) / num7) * num6) + _eventSequence.MinimumLevel);
 							}
 						}
 					}
-					this.system.update();
+					_system.update();
 				}
-				this.channel.stop();
+				_channel.stop();
 				dialog.Hide();
 				dialog.Dispose();
-				this.sound.release();
-				this.sound = null;
-				this.system.close();
-				this.system.release();
-				this.system = null;
+				_sound.release();
+				_sound = null;
+				_system.close();
+				_system.release();
+				_system = null;
 			}
 		}
 
@@ -220,29 +208,28 @@ namespace Spectrum
 		{
 			int numoutputchannels = 0;
 			int samplerate = 0;
-			SOUND_FORMAT nONE = SOUND_FORMAT.NONE;
-			DSP_RESAMPLER lINEAR = DSP_RESAMPLER.LINEAR;
-			int channeloffset = 0;
-			int height = 0x19;
-			int num6 = 50;
-			Rectangle b = new Rectangle(3, this.m_bandsBounds.Bottom - height, 0x16, height);
-			Rectangle rectangle3 = new Rectangle(3, this.m_bandsBounds.Bottom - num6, 0x16, height);
-			Rectangle rectangle4 = new Rectangle(3, this.m_bandsBounds.Bottom - 0x4b, 0x16, height);
-			this.system.getSoftwareFormat(ref samplerate, ref nONE, ref numoutputchannels, ref samplerate, ref lINEAR, ref samplerate);
-			float num7 = 0f;
+			var none = SOUND_FORMAT.NONE;
+			var linear = DSP_RESAMPLER.LINEAR;
+			int channeloffset;
+			const int height = 25;
+			const int num6 = 50;
+			var b = new Rectangle(3, _bandsBounds.Bottom - height, 22, height);
+			var rectangle3 = new Rectangle(3, _bandsBounds.Bottom - num6, 22, height);
+			var rectangle4 = new Rectangle(3, _bandsBounds.Bottom - 75, 22, height);
+			_system.getSoftwareFormat(ref samplerate, ref none, ref numoutputchannels, ref samplerate, ref linear, ref samplerate);
 			for (channeloffset = 0; channeloffset < numoutputchannels; channeloffset++)
 			{
-				this.system.getSpectrum(this.spectrum, 0x200, channeloffset, DSP_FFT_WINDOW.TRIANGLE);
-				foreach (FrequencyBand band in this.m_bands)
+				_system.getSpectrum(_spectrum, 0x200, channeloffset, DSP_FFT_WINDOW.TRIANGLE);
+				foreach (FrequencyBand band in _bands)
 				{
 					int num8;
-					num7 = 0f;
+					float num7 = 0f;
 					for (int i = band.FmodLowFrequency; i < band.FmodHighFrequency; i++)
 					{
-						num7 = Math.Max(num7, this.spectrum[i]);
+						num7 = Math.Max(num7, _spectrum[i]);
 					}
 					Rectangle region = band.Region;
-					region.Height = Math.Min((int) ((75f * num7) * this.m_scaleFactor), 0x4b);
+					region.Height = Math.Min((int) ((75f * num7) * _scaleFactor), 0x4b);
 					region.Y = band.Region.Bottom - region.Height;
 					rectangle4.X = num8 = region.X;
 					b.X = rectangle3.X = num8;
@@ -253,20 +240,20 @@ namespace Spectrum
 			}
 		}
 
-		private void ERRCHECK(RESULT result)
+		private void ErrCheck(RESULT result)
 		{
 			if (result != RESULT.OK)
 			{
-				this.timer.Stop();
+				_timer.Stop();
 				MessageBox.Show(string.Concat(new object[] { "FMOD error! ", result, " - ", Error.String(result) }));
 			}
 		}
 
 		private object FindObjectAt(Point point)
 		{
-			if (this.m_bandsBounds.Contains(point))
+			if (_bandsBounds.Contains(point))
 			{
-				foreach (FrequencyBand band in this.m_bands)
+				foreach (FrequencyBand band in _bands)
 				{
 					if (band.Region.Contains(point))
 					{
@@ -274,34 +261,33 @@ namespace Spectrum
 					}
 				}
 			}
-			else if (this.m_channelBounds.Contains(point))
+			else if (_channelBounds.Contains(point))
 			{
-				int num = ((point.X - this.m_channelBounds.X) / this.m_channelBoxWidth) - 1;
-				return (this.m_startChannel + num);
+				int num = ((point.X - _channelBounds.X) / _channelBoxWidth) - 1;
+				return (_startChannel + num);
 			}
 			return null;
 		}
 
 		private void GetSpectrumData()
 		{
-			int numoutputchannels = 0;
-			int samplerate = 0;
-			SOUND_FORMAT nONE = SOUND_FORMAT.NONE;
-			DSP_RESAMPLER lINEAR = DSP_RESAMPLER.LINEAR;
-			int channeloffset = 0;
-			this.system.getSoftwareFormat(ref samplerate, ref nONE, ref numoutputchannels, ref samplerate, ref lINEAR, ref samplerate);
-			float num4 = 0f;
+			var numoutputchannels = 0;
+			var samplerate = 0;
+			var none = SOUND_FORMAT.NONE;
+			var linear = DSP_RESAMPLER.LINEAR;
+			int channeloffset;
+			_system.getSoftwareFormat(ref samplerate, ref none, ref numoutputchannels, ref samplerate, ref linear, ref samplerate);
 			for (channeloffset = 0; channeloffset < numoutputchannels; channeloffset++)
 			{
-				this.system.getSpectrum(this.spectrum, 0x200, channeloffset, DSP_FFT_WINDOW.TRIANGLE);
-				foreach (FrequencyBand band in this.m_bands)
+				_system.getSpectrum(_spectrum, 0x200, channeloffset, DSP_FFT_WINDOW.TRIANGLE);
+				foreach (FrequencyBand band in _bands)
 				{
-					num4 = 0f;
-					for (int i = band.FmodLowFrequency; i < band.FmodHighFrequency; i++)
+					var num4 = 0f;
+					for (var i = band.FmodLowFrequency; i < band.FmodHighFrequency; i++)
 					{
-						num4 = Math.Max(num4, this.spectrum[i]);
+						num4 = Math.Max(num4, _spectrum[i]);
 					}
-					band.CurrentScaledLevel = num4 * this.m_scaleFactor;
+					band.CurrentScaledLevel = num4 * _scaleFactor;
 				}
 			}
 		}
@@ -310,221 +296,227 @@ namespace Spectrum
 
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			this.m_doingMinSliderDrag = false;
-			this.m_doingMaxSliderDrag = false;
-			if (this.Cursor == Cursors.SizeNS)
+			_doingMinSliderDrag = false;
+			_doingMaxSliderDrag = false;
+			if (Cursor == Cursors.SizeNS)
 			{
-				if (this.m_lastBand.MinSliderRegion.Contains(e.Location))
+				if (_lastBand.MinSliderRegion.Contains(e.Location))
 				{
-					this.m_lastBand.MouseOffset = e.Y - this.m_lastBand.MinSliderRegion.Y;
-					this.m_doingMinSliderDrag = true;
+					_lastBand.MouseOffset = e.Y - _lastBand.MinSliderRegion.Y;
+					_doingMinSliderDrag = true;
 				}
 				else
 				{
-					this.m_lastBand.MouseOffset = e.Y - this.m_lastBand.MaxSliderRegion.Y;
-					this.m_doingMaxSliderDrag = true;
+					_lastBand.MouseOffset = e.Y - _lastBand.MaxSliderRegion.Y;
+					_doingMaxSliderDrag = true;
 				}
 			}
-			if (!this.m_playing && (e.Button == MouseButtons.Left))
+			if (!_playing && (e.Button == MouseButtons.Left))
 			{
-				this.m_dragStartObject = null;
-				if (this.m_channelText != string.Empty)
+				_dragStartObject = null;
+				if (_channelText != string.Empty)
 				{
-					this.m_dragStartObject = this.m_lastChannel;
+					_dragStartObject = _lastChannel;
 				}
-				else if ((this.m_lastBand != null) && this.m_bandsBounds.Contains(e.Location))
+				else if ((_lastBand != null) && _bandsBounds.Contains(e.Location))
 				{
-					this.m_dragStartObject = this.m_lastBand;
+					_dragStartObject = _lastBand;
 				}
-				else if ((this.m_lastChannel == this.m_leftArrowChannel) && this.m_leftArrowEnabled)
+				else if ((_lastChannel == _leftArrowChannel) && _leftArrowEnabled)
 				{
-					this.m_startChannel = Math.Max(0, this.m_startChannel - this.m_channelsShown);
-					this.m_leftArrowChannel = this.m_startChannel - 1;
-					this.m_rightArrowChannel = this.m_startChannel + this.m_channelsShown;
-					this.m_leftArrowEnabled = this.m_startChannel > 0;
-					this.m_rightArrowEnabled = this.m_sequence.ChannelCount > (this.m_maxChannelsShown + this.m_startChannel);
-					this.Refresh();
+					_startChannel = Math.Max(0, _startChannel - _channelsShown);
+					_leftArrowChannel = _startChannel - 1;
+					_rightArrowChannel = _startChannel + _channelsShown;
+					_leftArrowEnabled = _startChannel > 0;
+					_rightArrowEnabled = _eventSequence.ChannelCount > (_maxChannelsShown + _startChannel);
+					Refresh();
 				}
-				else if ((this.m_lastChannel == this.m_rightArrowChannel) && this.m_rightArrowEnabled)
+				else if ((_lastChannel == _rightArrowChannel) && _rightArrowEnabled)
 				{
-					this.m_startChannel = Math.Min((int) (this.m_sequence.ChannelCount - this.m_channelsShown), (int) (this.m_startChannel + this.m_channelsShown));
-					this.m_leftArrowChannel = this.m_startChannel - 1;
-					this.m_rightArrowChannel = this.m_startChannel + this.m_channelsShown;
-					this.m_leftArrowEnabled = this.m_startChannel > 0;
-					this.m_rightArrowEnabled = this.m_sequence.ChannelCount > (this.m_maxChannelsShown + this.m_startChannel);
-					this.Refresh();
+					_startChannel = Math.Min(_eventSequence.ChannelCount - _channelsShown, _startChannel + _channelsShown);
+					_leftArrowChannel = _startChannel - 1;
+					_rightArrowChannel = _startChannel + _channelsShown;
+					_leftArrowEnabled = _startChannel > 0;
+					_rightArrowEnabled = _eventSequence.ChannelCount > (_maxChannelsShown + _startChannel);
+					Refresh();
 				}
-				if (this.m_dragStartObject != null)
+				if (_dragStartObject != null)
 				{
-					this.m_mouseLastAt = this.m_mouseDownAt = e.Location;
+					_mouseLastAt = _mouseDownAt = e.Location;
 				}
 				else
 				{
-					this.m_mouseLastAt = this.m_mouseDownAt = Point.Empty;
+					_mouseLastAt = _mouseDownAt = Point.Empty;
 				}
 			}
 		}
 
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
-			if (this.m_doingMinSliderDrag)
+			if (_doingMinSliderDrag)
 			{
-				this.m_lastBand.MinSliderTop = e.Y - this.m_lastBand.MouseOffset;
-				if (!this.m_playing)
+				_lastBand.MinSliderTop = e.Y - _lastBand.MouseOffset;
+				if (!_playing)
 				{
-					base.Invalidate(this.m_bandsBounds);
+					Invalidate(_bandsBounds);
 				}
 			}
-			else if (this.m_doingMaxSliderDrag)
+			else if (_doingMaxSliderDrag)
 			{
-				this.m_lastBand.MaxSliderTop = e.Y - this.m_lastBand.MouseOffset;
-				if (!this.m_playing)
+				_lastBand.MaxSliderTop = e.Y - _lastBand.MouseOffset;
+				if (!_playing)
 				{
-					base.Invalidate(this.m_bandsBounds);
+					Invalidate(_bandsBounds);
 				}
 			}
 			else
 			{
-				if (this.m_mouseDownAt != Point.Empty)
+				if (_mouseDownAt != Point.Empty)
 				{
-					this.m_mouseLastAt = e.Location;
+					_mouseLastAt = e.Location;
 				}
-				if (!this.m_bandsBounds.Contains(e.Location))
+				if (!_bandsBounds.Contains(e.Location))
 				{
-					this.m_lastBand = null;
+					_lastBand = null;
 				}
-				if (!this.m_channelBounds.Contains(e.Location))
+				if (!_channelBounds.Contains(e.Location))
 				{
-					this.SetLastChannel(-1);
+					SetLastChannel(-1);
 				}
-				this.Cursor = Cursors.Default;
+				Cursor = Cursors.Default;
 				if ((e.Button & MouseButtons.Left) == MouseButtons.None)
 				{
-					if (this.m_bandsBounds.Contains(e.Location))
+					if (_bandsBounds.Contains(e.Location))
 					{
-						foreach (FrequencyBand band in this.m_bands)
+						foreach (FrequencyBand band in _bands)
 						{
 							if (band.Region.Contains(e.Location))
 							{
-								this.m_lastBand = band;
+								_lastBand = band;
 								if (band.MinSliderRegion.Contains(e.Location) || band.MaxSliderRegion.Contains(e.Location))
 								{
-									this.Cursor = Cursors.SizeNS;
+									Cursor = Cursors.SizeNS;
 								}
 								break;
 							}
 						}
 					}
-					else if (!(!this.m_channelBounds.Contains(e.Location) || this.m_playing))
+					else if (!(!_channelBounds.Contains(e.Location) || _playing))
 					{
-						int num = ((e.X - this.m_channelBounds.X) / this.m_channelBoxWidth) - 1;
-						this.SetLastChannel(this.m_startChannel + num);
+						int num = ((e.X - _channelBounds.X) / _channelBoxWidth) - 1;
+						SetLastChannel(_startChannel + num);
 					}
 				}
-				if (!this.m_playing)
+				if (!_playing)
 				{
-					this.Refresh();
+					Refresh();
 				}
 			}
 		}
 
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
-			if (this.m_doingMinSliderDrag)
+			if (_doingMinSliderDrag)
 			{
-				this.m_doingMinSliderDrag = false;
-				this.m_mouseDownAt = Point.Empty;
+				_doingMinSliderDrag = false;
+				_mouseDownAt = Point.Empty;
 			}
-			else if (this.m_doingMaxSliderDrag)
+			else if (_doingMaxSliderDrag)
 			{
-				this.m_doingMaxSliderDrag = false;
-				this.m_mouseDownAt = Point.Empty;
+				_doingMaxSliderDrag = false;
+				_mouseDownAt = Point.Empty;
 			}
-			else if ((!this.m_playing && (e.Button == MouseButtons.Left)) && (this.m_mouseDownAt != Point.Empty))
+			else if ((!_playing && (e.Button == MouseButtons.Left)) && (_mouseDownAt != Point.Empty))
 			{
-				this.m_mouseDownAt = Point.Empty;
-				object obj2 = this.FindObjectAt(e.Location);
-				if (this.m_dragStartObject != obj2)
+				_mouseDownAt = Point.Empty;
+				object obj2 = FindObjectAt(e.Location);
+				if (_dragStartObject != obj2)
 				{
 					List<int> list;
 					FrequencyBand dragStartObject;
 					int current;
 					if (obj2 != null)
 					{
-						if (this.m_dragStartObject.GetType() == obj2.GetType())
+						if (_dragStartObject.GetType() == obj2.GetType())
 						{
-							if (this.m_dragStartObject is FrequencyBand)
+							var frequencyBand = _dragStartObject as FrequencyBand;
+							if (frequencyBand != null)
 							{
-								if (this.m_bandChannelConnections.TryGetValue((FrequencyBand) this.m_dragStartObject, out list) && (list.Count > 0))
+								if (_bandChannelConnections.TryGetValue(frequencyBand, out list) && (list.Count > 0))
 								{
-									this.m_bandChannelConnections.Remove((FrequencyBand) this.m_dragStartObject);
-									this.m_bandChannelConnections[(FrequencyBand) obj2] = list;
+									_bandChannelConnections.Remove(frequencyBand);
+									_bandChannelConnections[(FrequencyBand) obj2] = list;
 									using (List<int>.Enumerator enumerator = list.GetEnumerator())
 									{
 										while (enumerator.MoveNext())
 										{
 											current = enumerator.Current;
-											this.m_channelBandConnections[current] = (FrequencyBand) obj2;
+											_channelBandConnections[current] = (FrequencyBand) obj2;
 										}
 									}
 								}
 							}
-							else if (this.m_channelBandConnections.TryGetValue((int) this.m_dragStartObject, out dragStartObject))
+							else if (_channelBandConnections.TryGetValue((int) _dragStartObject, out dragStartObject))
 							{
-								list = this.m_bandChannelConnections[dragStartObject];
-								list.Remove((int) this.m_dragStartObject);
+								list = _bandChannelConnections[dragStartObject];
+								list.Remove((int) _dragStartObject);
 								list.Add((int) obj2);
-								this.m_channelBandConnections.Remove((int) this.m_dragStartObject);
-								this.m_channelBandConnections[(int) obj2] = dragStartObject;
+								_channelBandConnections.Remove((int) _dragStartObject);
+								_channelBandConnections[(int) obj2] = dragStartObject;
 							}
 						}
 						else
 						{
-							if (this.m_dragStartObject is FrequencyBand)
+							var frequencyBand = _dragStartObject as FrequencyBand;
+							if (frequencyBand != null)
 							{
-								dragStartObject = (FrequencyBand) this.m_dragStartObject;
+								dragStartObject = frequencyBand;
 								current = (int) obj2;
 							}
 							else
 							{
 								dragStartObject = (FrequencyBand) obj2;
-								current = (int) this.m_dragStartObject;
+								current = (int) _dragStartObject;
 							}
-							if (this.m_channelBandConnections.ContainsKey(current))
+							if (_channelBandConnections.ContainsKey(current))
 							{
 								return;
 							}
-							if (!this.m_bandChannelConnections.TryGetValue(dragStartObject, out list))
+							if (!_bandChannelConnections.TryGetValue(dragStartObject, out list))
 							{
 								list = new List<int>();
-								this.m_bandChannelConnections[dragStartObject] = list;
+								_bandChannelConnections[dragStartObject] = list;
 							}
 							list.Add(current);
-							this.m_channelBandConnections[current] = dragStartObject;
-						}
-					}
-					else if (this.m_dragStartObject is FrequencyBand)
-					{
-						if (this.m_bandChannelConnections.TryGetValue((FrequencyBand) this.m_dragStartObject, out list))
-						{
-							foreach (int num in list)
-							{
-								this.m_channelBandConnections.Remove(num);
-							}
-							list.Clear();
+							_channelBandConnections[current] = dragStartObject;
 						}
 					}
 					else
 					{
-						current = (int) this.m_dragStartObject;
-						if (this.m_channelBandConnections.TryGetValue(current, out dragStartObject))
+						var frequencyBand = _dragStartObject as FrequencyBand;
+						if (frequencyBand != null)
 						{
-							dragStartObject = this.m_channelBandConnections[current];
-							this.m_channelBandConnections.Remove(current);
-							this.m_bandChannelConnections[dragStartObject].Remove(current);
+							if (_bandChannelConnections.TryGetValue(frequencyBand, out list))
+							{
+								foreach (int num in list)
+								{
+									_channelBandConnections.Remove(num);
+								}
+								list.Clear();
+							}
+						}
+						else
+						{
+							current = (int) _dragStartObject;
+							if (_channelBandConnections.TryGetValue(current, out dragStartObject))
+							{
+								dragStartObject = _channelBandConnections[current];
+								_channelBandConnections.Remove(current);
+								_bandChannelConnections[dragStartObject].Remove(current);
+							}
 						}
 					}
-					this.Refresh();
+					Refresh();
 				}
 			}
 		}
@@ -533,160 +525,160 @@ namespace Spectrum
 		{
 			int left;
 			Graphics graphics = e.Graphics;
-			graphics.DrawRectangle(Pens.Black, this.m_bandsBounds);
-			for (left = this.m_bandsBounds.Left + 0x1c; left < this.m_bandsBounds.Right; left += 0x1c)
+			graphics.DrawRectangle(Pens.Black, _bandsBounds);
+			for (left = _bandsBounds.Left + 0x1c; left < _bandsBounds.Right; left += 0x1c)
 			{
-				graphics.DrawLine(Pens.Black, left, this.m_bandsBounds.Top, left, this.m_bandsBounds.Bottom);
+				graphics.DrawLine(Pens.Black, left, _bandsBounds.Top, left, _bandsBounds.Bottom);
 			}
-			int num4 = this.m_bandsBounds.Top + 2;
-			left = this.m_bandsBounds.Left;
-			for (int i = 0; left < this.m_bandsBounds.Right; i++)
+			int num4 = _bandsBounds.Top + 2;
+			left = _bandsBounds.Left;
+			for (int i = 0; left < _bandsBounds.Right; i++)
 			{
-				graphics.FillRectangle(Brushes.Black, this.m_bands[i].Region);
-				graphics.DrawString(this.m_bands[i].CenterFrequency, this.m_bandFont, Brushes.DarkSlateBlue, (float) left, (float) num4);
+				graphics.FillRectangle(Brushes.Black, _bands[i].Region);
+				graphics.DrawString(_bands[i].CenterFrequency, _bandFont, Brushes.DarkSlateBlue, left, num4);
 				left += 0x1c;
 			}
-			if (this.m_playing)
+			if (_playing)
 			{
-				this.DrawSpectrum(e.Graphics);
-				this.system.update();
+				DrawSpectrum(e.Graphics);
+				_system.update();
 			}
-			foreach (FrequencyBand band in this.m_bands)
+			foreach (FrequencyBand band in _bands)
 			{
 				graphics.FillRectangle(Brushes.Red, band.MaxSliderRegion);
 				graphics.FillRectangle(Brushes.Blue, band.MinSliderRegion);
 			}
-			if (!this.m_playing)
+			if (!_playing)
 			{
-				e.Graphics.DrawRectangle(Pens.Black, this.m_channelBounds);
-				int num2 = this.m_channelBounds.X + this.m_channelBoxWidth;
-				List<Vixen.Channel> channels = this.m_sequence.Channels;
-				for (left = 0; left < this.m_channelsShown; left++)
+				e.Graphics.DrawRectangle(Pens.Black, _channelBounds);
+				int num2 = _channelBounds.X + _channelBoxWidth;
+				List<Vixen.Channel> channels = _eventSequence.Channels;
+				for (left = 0; left < _channelsShown; left++)
 				{
-					e.Graphics.FillRectangle(channels[left + this.m_startChannel].Brush, (int) (num2 + 1), (int) (this.m_channelBounds.Top + 1), (int) (this.m_channelBoxWidth - 1), (int) (this.m_channelBoxWidth - 1));
-					e.Graphics.DrawLine(Pens.Black, num2, this.m_channelBounds.Top, num2, this.m_channelBounds.Bottom);
-					num2 += this.m_channelBoxWidth;
+					e.Graphics.FillRectangle(channels[left + _startChannel].Brush, num2 + 1, _channelBounds.Top + 1, _channelBoxWidth - 1, _channelBoxWidth - 1);
+					e.Graphics.DrawLine(Pens.Black, num2, _channelBounds.Top, num2, _channelBounds.Bottom);
+					num2 += _channelBoxWidth;
 				}
-				e.Graphics.DrawLine(Pens.Black, num2, this.m_channelBounds.Top, num2, this.m_channelBounds.Bottom);
-				e.Graphics.DrawString(this.m_channelText, this.m_textFont, Brushes.Black, (float) this.m_channelBounds.X, (float) (this.m_channelBounds.Bottom + 15));
-				e.Graphics.FillPolygon(this.m_leftArrowEnabled ? Brushes.Black : Brushes.LightGray, this.m_leftArrowPoints);
-				e.Graphics.FillPolygon(this.m_rightArrowEnabled ? Brushes.Black : Brushes.LightGray, this.m_rightArrowPoints);
-				int num5 = 10;
-				int num6 = (this.m_channelBoxWidth - 7) / 2;
-				int num7 = 14;
-				int num8 = 3;
-				foreach (FrequencyBand band in this.m_bandChannelConnections.Keys)
+				e.Graphics.DrawLine(Pens.Black, num2, _channelBounds.Top, num2, _channelBounds.Bottom);
+				e.Graphics.DrawString(_channelText, _textFont, Brushes.Black, _channelBounds.X, _channelBounds.Bottom + 15);
+				e.Graphics.FillPolygon(_leftArrowEnabled ? Brushes.Black : Brushes.LightGray, _leftArrowPoints);
+				e.Graphics.FillPolygon(_rightArrowEnabled ? Brushes.Black : Brushes.LightGray, _rightArrowPoints);
+				const int num5 = 10;
+				var num6 = (_channelBoxWidth - 7) / 2;
+				const int num7 = 14;
+				const int num8 = 3;
+				foreach (FrequencyBand band in _bandChannelConnections.Keys)
 				{
-					foreach (int num9 in this.m_bandChannelConnections[band])
+					foreach (int num9 in _bandChannelConnections[band])
 					{
-						e.Graphics.DrawLine(Pens.Black, (int) (band.Region.Left + num7), (int) ((band.Region.Bottom - 10) + num8), (int) ((this.m_channelBounds.Left + (((num9 + 1) - this.m_startChannel) * this.m_channelBoxWidth)) + (this.m_channelBoxWidth / 2)), (int) ((this.m_channelBounds.Top + num6) + num8));
+						e.Graphics.DrawLine(Pens.Black, band.Region.Left + num7, (band.Region.Bottom - 10) + num8, (_channelBounds.Left + (((num9 + 1) - _startChannel) * _channelBoxWidth)) + (_channelBoxWidth / 2), (_channelBounds.Top + num6) + num8);
 						e.Graphics.FillEllipse(Brushes.White, band.Region.Left + num5, band.Region.Bottom - 10, 7, 7);
-						e.Graphics.FillEllipse(Brushes.Black, (this.m_channelBounds.Left + (((num9 + 1) - this.m_startChannel) * this.m_channelBoxWidth)) + num6, this.m_channelBounds.Top + num6, 7, 7);
+						e.Graphics.FillEllipse(Brushes.Black, (_channelBounds.Left + (((num9 + 1) - _startChannel) * _channelBoxWidth)) + num6, _channelBounds.Top + num6, 7, 7);
 					}
 				}
-				if (this.m_mouseDownAt != Point.Empty)
+				if (_mouseDownAt != Point.Empty)
 				{
-					e.Graphics.DrawLine(Pens.Black, this.m_mouseDownAt, this.m_mouseLastAt);
+					e.Graphics.DrawLine(Pens.Black, _mouseDownAt, _mouseLastAt);
 				}
 			}
 		}
 
 		private void PauseResume()
 		{
-			if (this.m_playing)
+			if (_playing)
 			{
 				bool paused = false;
-				this.channel.getPaused(ref paused);
-				this.m_paused = !paused;
-				this.channel.setPaused(this.m_paused);
+				_channel.getPaused(ref paused);
+				_paused = !paused;
+				_channel.setPaused(_paused);
 			}
 		}
 
 		private void pictureBoxPause_Click(object sender, EventArgs e)
 		{
-			this.PauseResume();
+			PauseResume();
 		}
 
 		private void pictureBoxPlay_Click(object sender, EventArgs e)
 		{
-			if (this.m_paused)
+			if (_paused)
 			{
-				this.PauseResume();
+				PauseResume();
 			}
-			else if (!this.m_playing)
+			else if (!_playing)
 			{
-				this.m_playing = true;
-				RESULT result = this.system.playSound(CHANNELINDEX.FREE, this.sound, false, ref this.channel);
-				this.ERRCHECK(result);
-				this.timer.Start();
+				_playing = true;
+				RESULT result = _system.playSound(CHANNELINDEX.FREE, _sound, false, ref _channel);
+				ErrCheck(result);
+				_timer.Start();
 			}
-			this.Refresh();
+			Refresh();
 		}
 
 		private void pictureBoxScaleDown_MouseDown(object sender, MouseEventArgs e)
 		{
-			if (this.m_scaleFactor > 1f)
+			if (_scaleFactor > 1f)
 			{
-				if (this.checkBoxLockSliders.Checked)
+				if (checkBoxLockSliders.Checked)
 				{
-					this.ScaleSlidersTo(this.m_scaleFactor - 0.5f);
+					ScaleSlidersTo(_scaleFactor - 0.5f);
 				}
-				this.m_scaleFactor -= 0.5f;
-				this.UpdateScaleLabel();
+				_scaleFactor -= 0.5f;
+				UpdateScaleLabel();
 			}
 		}
 
 		private void pictureBoxScaleUp_MouseDown(object sender, MouseEventArgs e)
 		{
-			if (this.checkBoxLockSliders.Checked)
+			if (checkBoxLockSliders.Checked)
 			{
-				this.ScaleSlidersTo(this.m_scaleFactor + 0.5f);
+				ScaleSlidersTo(_scaleFactor + 0.5f);
 			}
-			this.m_scaleFactor += 0.5f;
-			this.UpdateScaleLabel();
+			_scaleFactor += 0.5f;
+			UpdateScaleLabel();
 		}
 
 		private void pictureBoxStop_Click(object sender, EventArgs e)
 		{
-			this.Stop();
+			Stop();
 		}
 
 		private void ScaleSlidersTo(float newScaleFactor)
 		{
-			foreach (FrequencyBand band in this.m_bands)
+			foreach (FrequencyBand band in _bands)
 			{
 				int num = (band.Region.Bottom - band.MinSliderTop) - 4;
-				band.MinSliderTop = (band.Region.Bottom - ((int) ((((float) num) / this.m_scaleFactor) * newScaleFactor))) - 4;
+				band.MinSliderTop = (band.Region.Bottom - ((int) (num / _scaleFactor * newScaleFactor))) - 4;
 				num = band.Region.Bottom - band.MaxSliderTop;
-				band.MaxSliderTop = band.Region.Bottom - ((int) ((((float) num) / this.m_scaleFactor) * newScaleFactor));
+				band.MaxSliderTop = band.Region.Bottom - ((int) (num / _scaleFactor * newScaleFactor));
 			}
-			base.Invalidate(this.m_bandsBounds);
+			Invalidate(_bandsBounds);
 		}
 
 		private void SetLastChannel(int index)
 		{
 			if (index == -1)
 			{
-				this.m_channelText = string.Empty;
-				this.m_lastChannel = -1;
+				_channelText = string.Empty;
+				_lastChannel = -1;
 			}
-			else if ((index == this.m_leftArrowChannel) || (index == this.m_rightArrowChannel))
+			else if ((index == _leftArrowChannel) || (index == _rightArrowChannel))
 			{
-				this.m_lastChannel = index;
-				this.m_channelText = string.Empty;
+				_lastChannel = index;
+				_channelText = string.Empty;
 			}
-			else if (this.m_lastChannel != index)
+			else if (_lastChannel != index)
 			{
-				this.m_lastChannel = index;
-				this.m_channelText = this.m_sequence.Channels[index].Name;
+				_lastChannel = index;
+				_channelText = _eventSequence.Channels[index].Name;
 			}
 		}
 
 		private void SpectrumDialog_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			if (this.m_playing)
+			if (_playing)
 			{
-				this.Stop();
+				Stop();
 			}
 		}
 
@@ -702,49 +694,49 @@ namespace Spectrum
 
 		private void Stop()
 		{
-			this.m_playing = false;
-			this.m_paused = false;
-			this.timer.Stop();
-			if (this.channel != null)
+			_playing = false;
+			_paused = false;
+			_timer.Stop();
+			if (_channel != null)
 			{
-				this.channel.stop();
-				this.channel = null;
+				_channel.stop();
+				_channel = null;
 			}
-			this.Refresh();
+			Refresh();
 		}
 
 		private void timer_Tick(object sender, EventArgs e)
 		{
-			base.Invalidate(this.m_bandsBounds);
-			if (this.system != null)
+			Invalidate(_bandsBounds);
+			if (_system != null)
 			{
-				this.system.update();
+				_system.update();
 			}
-			if (this.channel != null)
+			if (_channel != null)
 			{
 				bool isplaying = false;
-				this.channel.isPlaying(ref isplaying);
+				_channel.isPlaying(ref isplaying);
 				if (!isplaying)
 				{
-					this.Stop();
+					Stop();
 				}
 			}
 		}
 
 		private void UpdateScaleLabel()
 		{
-			this.labelScaleFactor.Text = string.Format("Scale\nx {0:F1}", this.m_scaleFactor);
+			labelScaleFactor.Text = string.Format("Scale\nx {0:F1}", _scaleFactor);
 		}
 
 		public bool LockSliders
 		{
 			get
 			{
-				return this.checkBoxLockSliders.Checked;
+				return checkBoxLockSliders.Checked;
 			}
 			set
 			{
-				this.checkBoxLockSliders.Checked = value;
+				checkBoxLockSliders.Checked = value;
 			}
 		}
 
@@ -752,38 +744,38 @@ namespace Spectrum
 		{
 			get
 			{
-				List<FrequencyBandMapping> list = new List<FrequencyBandMapping>();
-				foreach (FrequencyBand band in this.m_bands)
+				var list = new List<FrequencyBandMapping>();
+				foreach (FrequencyBand band in _bands)
 				{
-					FrequencyBandMapping item = new FrequencyBandMapping(band.ResponseLevelMin, band.ResponseLevelMax);
+					var item = new FrequencyBandMapping(band.ResponseLevelMin, band.ResponseLevelMax);
 					list.Add(item);
-					if (this.m_bandChannelConnections.ContainsKey(band))
+					if (_bandChannelConnections.ContainsKey(band))
 					{
-						item.ChannelList.AddRange(this.m_bandChannelConnections[band]);
+						item.ChannelList.AddRange(_bandChannelConnections[band]);
 					}
 				}
 				return list.ToArray();
 			}
 			set
 			{
-				this.m_userSetResponseLevels = value.Length > 0;
-				int num = Math.Min(this.m_bands.Count, value.Length);
+				_mUserSetResponseLevels = value.Length > 0;
+				int num = Math.Min(_bands.Count, value.Length);
 				for (int i = 0; i < num; i++)
 				{
 					List<int> list;
-					FrequencyBand key = this.m_bands[i];
+					FrequencyBand key = _bands[i];
 					FrequencyBandMapping mapping = value[i];
 					key.ResponseLevelMin = mapping.ResponseLevelMin;
 					key.ResponseLevelMax = mapping.ResponseLevelMax;
-					if (!this.m_bandChannelConnections.TryGetValue(key, out list))
+					if (!_bandChannelConnections.TryGetValue(key, out list))
 					{
 						list = new List<int>();
-						this.m_bandChannelConnections[key] = list;
+						_bandChannelConnections[key] = list;
 					}
 					list.AddRange(mapping.ChannelList);
 					foreach (int num3 in mapping.ChannelList)
 					{
-						this.m_channelBandConnections[num3] = key;
+						_channelBandConnections[num3] = key;
 					}
 				}
 			}
@@ -793,12 +785,12 @@ namespace Spectrum
 		{
 			get
 			{
-				return this.m_scaleFactor;
+				return _scaleFactor;
 			}
 			set
 			{
-				this.m_scaleFactor = value;
-				this.UpdateScaleLabel();
+				_scaleFactor = value;
+				UpdateScaleLabel();
 			}
 		}
 	}

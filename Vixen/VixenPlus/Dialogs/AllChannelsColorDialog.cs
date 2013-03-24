@@ -2,16 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace Vixen.Dialogs
 {
 	public partial class AllChannelsColorDialog : Form
 	{
-		private readonly SolidBrush m_brush;
-		private readonly Dictionary<int, Color> m_colorsInUse;
-		private readonly Preference2 m_preferences;
-		private Color m_dragColor;
+		private readonly SolidBrush _solidBrush;
+		private readonly Dictionary<int, Color> _colorsInUse;
+		private readonly Preference2 _preferences;
+		private Color _dragColor;
 
 		public AllChannelsColorDialog(List<Channel> channels)
 		{
@@ -20,18 +21,18 @@ namespace Vixen.Dialogs
 			{
 				listBoxChannels.Items.Add(channel.Clone());
 			}
-			m_colorsInUse = new Dictionary<int, Color>();
-			m_brush = new SolidBrush(Color.White);
+			_colorsInUse = new Dictionary<int, Color>();
+			_solidBrush = new SolidBrush(Color.White);
 			foreach (Channel channel in channels)
 			{
-				if (!m_colorsInUse.ContainsKey(channel.Color.ToArgb()))
+				if (!_colorsInUse.ContainsKey(channel.Color.ToArgb()))
 				{
 					listBoxColorsInUse.Items.Add(channel.Color);
-					m_colorsInUse.Add(channel.Color.ToArgb(), channel.Color);
+					_colorsInUse.Add(channel.Color.ToArgb(), channel.Color);
 				}
 			}
-			m_preferences = ((ISystem) Interfaces.Available["ISystem"]).UserPreferences;
-			string[] strArray = m_preferences.GetString("CustomColors").Split(new[] {','});
+			_preferences = ((ISystem) Interfaces.Available["ISystem"]).UserPreferences;
+			string[] strArray = _preferences.GetString("CustomColors").Split(new[] {','});
 			var numArray = new int[strArray.Length];
 			for (int i = 0; i < strArray.Length; i++)
 			{
@@ -67,7 +68,7 @@ namespace Vixen.Dialogs
 		{
 			if (colorDialog.ShowDialog() == DialogResult.OK)
 			{
-				if (m_colorsInUse.ContainsKey(colorDialog.Color.ToArgb()))
+				if (_colorsInUse.ContainsKey(colorDialog.Color.ToArgb()))
 				{
 					MessageBox.Show("Color already exists in the list.", Vendor.ProductName, MessageBoxButtons.OK,
 					                MessageBoxIcon.Asterisk);
@@ -75,14 +76,14 @@ namespace Vixen.Dialogs
 				else
 				{
 					listBoxColorsInUse.Items.Add(colorDialog.Color);
-					m_colorsInUse.Add(colorDialog.Color.ToArgb(), colorDialog.Color);
+					_colorsInUse.Add(colorDialog.Color.ToArgb(), colorDialog.Color);
 				}
 				var strArray = new string[colorDialog.CustomColors.Length];
 				for (int i = 0; i < strArray.Length; i++)
 				{
-					strArray[i] = colorDialog.CustomColors[i].ToString();
+					strArray[i] = colorDialog.CustomColors[i].ToString(CultureInfo.InvariantCulture);
 				}
-				m_preferences.SetString("CustomColors", string.Join(",", strArray));
+				_preferences.SetString("CustomColors", string.Join(",", strArray));
 			}
 		}
 
@@ -120,28 +121,14 @@ namespace Vixen.Dialogs
 				var channel = (Channel) listBoxChannels.Items[e.Index];
 				e.Graphics.FillRectangle(Brushes.White, e.Bounds);
 				var rect = new Rectangle(e.Bounds.X + 2, e.Bounds.Y + 2, e.Bounds.Height - 4, e.Bounds.Height - 4);
-				if ((e.State & DrawItemState.Selected) != DrawItemState.None)
-				{
-					e.Graphics.DrawRectangle(Pens.Black, rect);
-				}
-				else
-				{
-					e.Graphics.DrawRectangle(Pens.White, rect);
-				}
+				e.Graphics.DrawRectangle((e.State & DrawItemState.Selected) != DrawItemState.None ? Pens.Black : Pens.White, rect);
 				rect.X += 2;
 				rect.Y += 2;
 				rect.Width -= 3;
 				rect.Height -= 3;
 				e.Graphics.FillRectangle(channel.Brush, rect);
-				if (((channel.Color.R + channel.Color.G) + channel.Color.B) < 100)
-				{
-					m_brush.Color = Color.White;
-				}
-				else
-				{
-					m_brush.Color = Color.Black;
-				}
-				e.Graphics.DrawString(channel.Name, Font, m_brush, ((e.Bounds.X + e.Bounds.Height) + 2), (e.Bounds.Y + 3));
+				_solidBrush.Color = ((channel.Color.R + channel.Color.G) + channel.Color.B) < 100 ? Color.White : Color.Black;
+				e.Graphics.DrawString(channel.Name, Font, _solidBrush, ((e.Bounds.X + e.Bounds.Height) + 2), (e.Bounds.Y + 3));
 			}
 		}
 
@@ -149,8 +136,8 @@ namespace Vixen.Dialogs
 		{
 			if (e.Index != -1)
 			{
-				m_brush.Color = (Color) listBoxColorsInUse.Items[e.Index];
-				e.Graphics.FillRectangle(m_brush, e.Bounds);
+				_solidBrush.Color = (Color) listBoxColorsInUse.Items[e.Index];
+				e.Graphics.FillRectangle(_solidBrush, e.Bounds);
 			}
 		}
 
@@ -159,19 +146,19 @@ namespace Vixen.Dialogs
 			int num = listBoxColorsInUse.IndexFromPoint(e.Location);
 			if (num != -1)
 			{
-				m_dragColor = (Color) listBoxColorsInUse.Items[num];
+				_dragColor = (Color) listBoxColorsInUse.Items[num];
 			}
 			else
 			{
-				m_dragColor = Color.Empty;
+				_dragColor = Color.Empty;
 			}
 		}
 
 		private void listBoxColorsInUse_MouseMove(object sender, MouseEventArgs e)
 		{
-			if (((MouseButtons & MouseButtons.Left) != MouseButtons.None) && (m_dragColor != Color.Empty))
+			if (((MouseButtons & MouseButtons.Left) != MouseButtons.None) && (_dragColor != Color.Empty))
 			{
-				listBoxColorsInUse.DoDragDrop(m_dragColor, DragDropEffects.Copy);
+				listBoxColorsInUse.DoDragDrop(_dragColor, DragDropEffects.Copy);
 			}
 		}
 	}

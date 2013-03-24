@@ -869,14 +869,7 @@ namespace FMOD
             IntPtr ptr;
             RESULT oK = RESULT.OK;
             Channel channel2 = null;
-            if (channel != null)
-            {
-                ptr = channel.getRaw();
-            }
-            else
-            {
-                ptr = new IntPtr();
-            }
+            ptr = channel != null ? channel.getRaw() : new IntPtr();
             try
             {
                 oK = FMOD_System_PlayDSP(this.systemraw, channelid, dsp.getRaw(), paused, ref ptr);
@@ -906,14 +899,7 @@ namespace FMOD
             IntPtr ptr;
             RESULT oK = RESULT.OK;
             Channel channel2 = null;
-            if (channel != null)
-            {
-                ptr = channel.getRaw();
-            }
-            else
-            {
-                ptr = new IntPtr();
-            }
+            ptr = channel != null ? channel.getRaw() : new IntPtr();
             try
             {
                 oK = FMOD_System_PlaySound(this.systemraw, channelid, sound.getRaw(), paused, ref ptr);

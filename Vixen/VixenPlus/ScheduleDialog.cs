@@ -33,7 +33,7 @@ namespace Vixen
 		private readonly Font m_timeSmallFont = new Font("Tahoma", 8f);
 		private readonly List<Timer> m_timers;
 		private readonly Timers m_timersObject;
-		private int m_agendaItemHeight = 50;
+		private const int m_agendaItemHeight = 50;
 		private int m_agendaViewScrollBarValue;
 		private List<Timer> m_applicableTimers;
 
@@ -44,20 +44,20 @@ namespace Vixen
 
 		private int m_dayViewScrollBarValue;
 		private Rectangle m_drawingArea;
-		private int m_halfHourHeight = 20;
+		private const int m_halfHourHeight = 20;
 		private int m_headerHeight = 30;
 		private bool m_inLeftButtonBounds;
 		private bool m_inRightButtonBounds;
-		private int m_monthBarHeight = 10;
-		private int m_monthViewBottomMargin = 40;
+		private const int m_monthBarHeight = 10;
+		private const int m_monthViewBottomMargin = 40;
 		private int m_monthViewColSize;
-		private int m_monthViewLeftMargin = 40;
-		private int m_monthViewRightMargin = 40;
+		private const int m_monthViewLeftMargin = 40;
+		private const int m_monthViewRightMargin = 40;
 		private int m_monthViewRowSize;
-		private int m_monthViewTopMargin = 40;
+		private const int m_monthViewTopMargin = 40;
 		private Point m_mouseDownAt;
 		private bool m_resizing;
-		private int m_timeGutter = 50;
+		private const int m_timeGutter = 50;
 		private int m_weekViewScrollBarValue;
 
 		public ScheduleDialog(Timers timers)
@@ -311,8 +311,8 @@ namespace Vixen
 
 		private void DrawHeaderButtons(Graphics g, bool hoverLeft, bool hoverRight)
 		{
-			int width = 0x12;
-			int num2 = 8;
+			const int width = 0x12;
+			const int num2 = 8;
 			int x = m_drawingArea.Width - (((width + num2) + width) + num2);
 			int y = m_drawingArea.Top + ((m_headerHeight - width)/2);
 			var pointArray3 = new[] {new Point(x + 12, y + 5), new Point(x + 12, y + 13), new Point(x + 6, y + 9)};
@@ -329,22 +329,8 @@ namespace Vixen
 			                                     Color.FromArgb(0x77, 0xa5, 0xd6), Color.FromArgb(0x18, 0x4d, 0x94), 90f);
 			m_buttonLeftBounds = new Rectangle(x, y, width, width);
 			m_buttonRightBounds = new Rectangle((x + width) + num2, y, width, width);
-			if (hoverLeft)
-			{
-				g.FillRectangle(brush2, (x + 1), (y + 1), (width - 1), (width - 1));
-			}
-			else
-			{
-				g.FillRectangle(brush, (x + 1), (y + 1), (width - 1), (width - 1));
-			}
-			if (hoverRight)
-			{
-				g.FillRectangle(brush2, (((x + 1) + width) + num2), (y + 1), (width - 1), (width - 1));
-			}
-			else
-			{
-				g.FillRectangle(brush, (((x + 1) + width) + num2), (y + 1), (width - 1), (width - 1));
-			}
+			g.FillRectangle(hoverLeft ? brush2 : brush, (x + 1), (y + 1), (width - 1), (width - 1));
+			g.FillRectangle(hoverRight ? brush2 : brush, (((x + 1) + width) + num2), (y + 1), (width - 1), (width - 1));
 			DrawRoundRect(g, Pens.White, x, y, width, width, 3f);
 			DrawRoundRect(g, Pens.White, ((x + width) + num2), y, width, width, 3f);
 			g.FillPolygon(Brushes.White, points);
@@ -592,21 +578,14 @@ namespace Vixen
 
 		private void EditOrAddTimerAt(Point point, int viewRelativeY, DateTime viewStartDate, TimeSpan viewLengthSpan)
 		{
-			Timer timer = null;
+			Timer timer;
 			timer = FindApplicableTimerAt(point);
 			int hour = (vScrollBar.Value + (viewRelativeY/m_halfHourHeight))/2;
 			int minute = ((vScrollBar.Value + (viewRelativeY/m_halfHourHeight))%2)*30;
 			if (hour < 0x18)
 			{
 				TimerDialog dialog;
-				if (timer == null)
-				{
-					dialog = new TimerDialog(new DateTime(m_currentDate.Year, m_currentDate.Month, m_currentDate.Day, hour, minute, 0));
-				}
-				else
-				{
-					dialog = new TimerDialog(timer);
-				}
+				dialog = timer == null ? new TimerDialog(new DateTime(m_currentDate.Year, m_currentDate.Month, m_currentDate.Day, hour, minute, 0)) : new TimerDialog(timer);
 				if (dialog.ShowDialog() == DialogResult.OK)
 				{
 					if (timer == null)
@@ -1269,14 +1248,7 @@ namespace Vixen
 						{
 							vScrollBar.Maximum = m_applicableTimers.Count;
 							vScrollBar.LargeChange = num;
-							if (m_agendaViewScrollBarValue <= vScrollBar.Maximum)
-							{
-								vScrollBar.Value = m_agendaViewScrollBarValue;
-							}
-							else
-							{
-								vScrollBar.Value = vScrollBar.Maximum;
-							}
+							vScrollBar.Value = m_agendaViewScrollBarValue <= vScrollBar.Maximum ? m_agendaViewScrollBarValue : vScrollBar.Maximum;
 							vScrollBar.Enabled = true;
 							vScrollBar.Visible = true;
 							break;
@@ -1300,7 +1272,7 @@ namespace Vixen
 				timer.DisplayBounds.Clear();
 			}
 			DateTime startDateTime = m_currentDate.AddDays(-(double) m_currentDate.DayOfWeek);
-			var applicableTimers = new List<Timer>();
+			List<Timer> applicableTimers;
 			float num = ((m_drawingArea.Width - m_timeGutter))/7f;
 			int num2 = 0;
 			while (num2 < 7)

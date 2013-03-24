@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Globalization;
 using System.Xml;
 
 namespace Vixen
 {
 	public class Audio
 	{
-		private int m_duration;
-		private string m_filename;
-		private string m_name;
+		private int _duration;
+		private string _filename;
+		private string _name;
 
 		public Audio()
 		{
@@ -15,42 +16,45 @@ namespace Vixen
 
 		public Audio(XmlNode node)
 		{
-			m_name = node.Attributes["name"].Value;
-			m_filename = node.InnerText;
-			m_duration = Convert.ToInt32(node.Attributes["duration"].Value);
+			if (node.Attributes != null)
+			{
+				_name = node.Attributes["name"].Value;
+				_filename = node.InnerText;
+				_duration = Convert.ToInt32(node.Attributes["duration"].Value);
+			}
 		}
 
 		public Audio(string name, string filename, int duration)
 		{
-			m_name = name;
-			m_filename = filename;
-			m_duration = duration;
+			_name = name;
+			_filename = filename;
+			_duration = duration;
 		}
 
 		public int Duration
 		{
-			get { return m_duration; }
-			set { m_duration = value; }
+			get { return _duration; }
+			set { _duration = value; }
 		}
 
 		public string FileName
 		{
-			get { return m_filename; }
-			set { m_filename = value; }
+			get { return _filename; }
+			set { _filename = value; }
 		}
 
 		public string Name
 		{
-			get { return m_name; }
-			set { m_name = value; }
+			get { return _name; }
+			set { _name = value; }
 		}
 
 		public XmlNode SaveToXml(XmlDocument doc)
 		{
 			XmlNode node = doc.CreateElement("Audio");
-			node.InnerText = m_filename;
-			Xml.SetAttribute(node, "name", m_name);
-			Xml.SetAttribute(node, "duration", m_duration.ToString());
+			node.InnerText = _filename;
+			Xml.SetAttribute(node, "name", _name);
+			Xml.SetAttribute(node, "duration", _duration.ToString(CultureInfo.InvariantCulture));
 			return node;
 		}
 

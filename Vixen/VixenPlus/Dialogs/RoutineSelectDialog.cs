@@ -7,7 +7,7 @@ namespace Vixen.Dialogs
 {
 	public partial class RoutineSelectDialog : Form
 	{
-		private bool m_resizing;
+		private bool _resizing;
 
 		public RoutineSelectDialog()
 		{
@@ -32,7 +32,7 @@ namespace Vixen.Dialogs
 
 		private void listBoxRoutines_DrawItem(object sender, DrawItemEventArgs e)
 		{
-			if (!m_resizing &&
+			if (!_resizing &&
 			    ((((e.State & (DrawItemState.Focus | DrawItemState.Selected)) == (DrawItemState.Focus | DrawItemState.Selected)) &&
 			      (e.Index == listBoxRoutines.SelectedIndex)) ||
 			     ((e.State & (DrawItemState.NoFocusRect | DrawItemState.Selected)) == DrawItemState.NoFocusRect)))
@@ -44,18 +44,10 @@ namespace Vixen.Dialogs
 				e.Graphics.DrawString(routine.Name, listBoxRoutines.Font, Brushes.DarkSlateBlue, layoutRectangle);
 				var rect = new Rectangle(e.Bounds.Width - 0xaf, e.Bounds.Y + 10, 150, 80);
 				e.Graphics.FillRectangle(Brushes.White, rect);
-				if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
-				{
-					e.Graphics.DrawRectangle(Pens.Black, (rect.X - 1), (rect.Y - 1), (rect.Width + 1), (rect.Height + 1));
-				}
-				else
-				{
-					e.Graphics.DrawRectangle(Pens.White, (rect.X - 1), (rect.Y - 1), (rect.Width + 1), (rect.Height + 1));
-				}
+				e.Graphics.DrawRectangle((e.State & DrawItemState.Selected) == DrawItemState.Selected ? Pens.Black : Pens.White,
+				                         (rect.X - 1), (rect.Y - 1), (rect.Width + 1), (rect.Height + 1));
 				float width = 150f/(routine.PreviewBounds.Width);
 				float height = 80f/(routine.PreviewBounds.Height);
-				int left = e.Bounds.Left;
-				int top = e.Bounds.Top;
 				int num7 = routine.PreviewBounds.Height;
 				int num8 = routine.PreviewBounds.Width;
 				var brush = new SolidBrush(Color.LightBlue);
@@ -75,7 +67,7 @@ namespace Vixen.Dialogs
 		{
 			if (listBoxRoutines.SelectedIndex != -1)
 			{
-				base.DialogResult = DialogResult.OK;
+				DialogResult = DialogResult.OK;
 			}
 		}
 
@@ -86,12 +78,12 @@ namespace Vixen.Dialogs
 
 		private void RoutineSelectDialog_ResizeBegin(object sender, EventArgs e)
 		{
-			m_resizing = true;
+			_resizing = true;
 		}
 
 		private void RoutineSelectDialog_ResizeEnd(object sender, EventArgs e)
 		{
-			m_resizing = false;
+			_resizing = false;
 			listBoxRoutines.Refresh();
 		}
 	}

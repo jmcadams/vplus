@@ -30,7 +30,7 @@ namespace Vixen
 			listBoxInputs.DataSource = m_plugin.Inputs;
 			foreach (Channel channel in m_sequence.Channels)
 			{
-				m_idChannel[channel.ID.ToString()] = channel;
+				m_idChannel[channel.Id.ToString()] = channel;
 			}
 			listBoxChannels.Items.AddRange(m_sequence.Channels.ToArray());
 			m_editingMappingSets = (MappingSets) m_plugin.MappingSets.Clone();
@@ -227,7 +227,7 @@ namespace Vixen
 					outputChannelIdList.Clear();
 					foreach (Channel channel in list)
 					{
-						outputChannelIdList.Add(channel.ID.ToString());
+						outputChannelIdList.Add(channel.Id.ToString());
 					}
 				}
 				listBoxMappedChannels.BeginUpdate();

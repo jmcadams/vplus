@@ -1,6 +1,9 @@
-﻿namespace FMOD
+﻿using System;
+
+namespace FMOD
 {
-    public enum MODE
+	[Flags]
+	public enum MODE
     {
         _2D = 8,
         _3D = 0x10,

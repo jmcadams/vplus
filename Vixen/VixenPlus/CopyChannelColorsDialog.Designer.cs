@@ -108,9 +108,9 @@ private GroupBox groupBox2;
 			{
 				this.components.Dispose();
 			}
-			if (this.m_itemBrush != null)
+			if (this._solidBrush != null)
 			{
-				this.m_itemBrush.Dispose();
+				this._solidBrush.Dispose();
 			}
 			base.Dispose(disposing);
 		}

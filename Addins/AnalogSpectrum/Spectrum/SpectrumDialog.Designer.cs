@@ -30,7 +30,7 @@ namespace Spectrum {
 			this.pictureBoxStop = new PictureBox();
 			this.pictureBoxScaleUp = new PictureBox();
 			this.pictureBoxScaleDown = new PictureBox();
-			this.timer = new System.Windows.Forms.Timer(this.components);
+			this._timer = new System.Windows.Forms.Timer(this.components);
 			this.labelScaleFactor = new Label();
 			this.checkBoxLockSliders = new CheckBox();
 			((ISupportInitialize)this.pictureBoxPlay).BeginInit();
@@ -99,8 +99,8 @@ namespace Spectrum {
 			this.pictureBoxScaleDown.TabIndex = 7;
 			this.pictureBoxScaleDown.TabStop = false;
 			this.pictureBoxScaleDown.MouseDown += new MouseEventHandler(this.pictureBoxScaleDown_MouseDown);
-			this.timer.Interval = 50;
-			this.timer.Tick += new EventHandler(this.timer_Tick);
+			this._timer.Interval = 50;
+			this._timer.Tick += new EventHandler(this.timer_Tick);
 			this.labelScaleFactor.AutoSize = true;
 			this.labelScaleFactor.Location = new Point(10, 0x80);
 			this.labelScaleFactor.Name = "labelScaleFactor";
@@ -152,21 +152,21 @@ namespace Spectrum {
 
 		protected override void Dispose(bool disposing) {
 			FMOD.RESULT result;
-			if (this.sound != null) {
-				result = this.sound.release();
-				this.ERRCHECK(result);
+			if (_sound != null) {
+				result = _sound.release();
+				this.ErrCheck(result);
 			}
-			if (this.system != null) {
-				result = this.system.close();
-				this.ERRCHECK(result);
-				result = this.system.release();
-				this.ERRCHECK(result);
+			if (_system != null) {
+				result = _system.close();
+				this.ErrCheck(result);
+				result = _system.release();
+				this.ErrCheck(result);
 			}
 			if (disposing && (this.components != null)) {
 				this.components.Dispose();
 			}
-			this.m_textFont.Dispose();
-			this.m_bandFont.Dispose();
+			_textFont.Dispose();
+			_bandFont.Dispose();
 			base.Dispose(disposing);
 		}
 	}

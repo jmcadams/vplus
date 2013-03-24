@@ -102,7 +102,7 @@ namespace Vixen
 		private void buttonResume_Click(object sender, EventArgs e)
 		{
 			var selectedItem = (TimerContext) listBoxTimers.SelectedItem;
-			int sequencePosition = 0;
+			int sequencePosition;
 			if (selectedItem.ExecutionInterface.EngineStatus(selectedItem.ExecutionContextHandle, out sequencePosition) == 2)
 			{
 				selectedItem.ExecutionInterface.ExecutePlay(selectedItem.ExecutionContextHandle, sequencePosition, 0);
@@ -116,7 +116,7 @@ namespace Vixen
 			{
 				list.Add(context);
 			}
-			int sequencePosition = 0;
+			int sequencePosition;
 			foreach (TimerContext context in list)
 			{
 				if (context.ExecutionInterface.EngineStatus(context.ExecutionContextHandle, out sequencePosition) == 2)

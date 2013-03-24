@@ -496,9 +496,9 @@ private TreeView treeViewProfile;
 			{
 				this.components.Dispose();
 			}
-			this.m_pictureFont.Dispose();
-			this.m_picturePen.Dispose();
-			this.m_pictureBrush.Dispose();
+			this._pictureFont.Dispose();
+			this._picturePen.Dispose();
+			this._pictureBrush.Dispose();
 			if (this.m_hoveredButton != null)
 			{
 				this.m_hoveredButton.Dispose();

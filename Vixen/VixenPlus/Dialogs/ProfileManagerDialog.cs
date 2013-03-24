@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
@@ -9,39 +10,41 @@ namespace Vixen.Dialogs
 {
 	public partial class ProfileManagerDialog : Form
 	{
-		private readonly List<int> m_channelOrderMapping;
-		private readonly Color m_pictureBoxHoverColor = Color.FromArgb(80, 80, 0xff);
-		private readonly SolidBrush m_pictureBrush = new SolidBrush(Color.Black);
-		private readonly Color m_pictureDisabledColor = Color.FromArgb(0xc0, 0xc0, 0xc0);
-		private readonly Color m_pictureEnabledColor = Color.FromArgb(0x80, 0x80, 0xff);
-		private readonly Font m_pictureFont = new Font("Arial", 13f, FontStyle.Bold);
-		private readonly Pen m_picturePen = new Pen(Color.Black, 2f);
-		private Profile m_contextProfile;
+		private readonly List<int> _channelOrderMapping;
+		private readonly Color _pictureBoxHoverColor = Color.FromArgb(80, 80, 255);
+		private readonly SolidBrush _pictureBrush = new SolidBrush(Color.Black);
+		private readonly Color _pictureDisabledColor = Color.FromArgb(192, 192, 192);
+		private readonly Color _pictureEnabledColor = Color.FromArgb(128, 128, 255);
+		private readonly Font _pictureFont = new Font("Arial", 13f, FontStyle.Bold);
+		private readonly Pen _picturePen = new Pen(Color.Black, 2f);
+		private Profile _contextProfile;
 
 		public ProfileManagerDialog(object objectInContext)
 		{
 			InitializeComponent();
-			foreach (string str in Directory.GetFiles(Paths.ProfilePath, "*.pro"))
+			foreach (var str in Directory.GetFiles(Paths.ProfilePath, "*.pro"))
 			{
 				try
 				{
 					listBoxProfiles.Items.Add(new Profile(str));
 				}
-				catch
+				catch (Exception)
 				{
+					// Empty catch since we don't want to bomb on attempting to add a profile.
 				}
 			}
 			var bitmap = new Bitmap(pictureBoxReturnFromProfileEdit.Image);
 			bitmap.MakeTransparent();
 			pictureBoxReturnFromProfileEdit.Image = bitmap;
-			m_channelOrderMapping = new List<int>();
-			if (objectInContext is Profile)
+			_channelOrderMapping = new List<int>();
+			var profile = objectInContext as Profile;
+			if (profile != null)
 			{
-				if (listBoxProfiles.Items.IndexOf(objectInContext) == -1)
+				if (listBoxProfiles.Items.IndexOf(profile) == -1)
 				{
-					listBoxProfiles.Items.Add(objectInContext);
+					listBoxProfiles.Items.Add(profile);
 				}
-				EditProfile((Profile) objectInContext);
+				EditProfile(profile);
 			}
 			else
 			{
@@ -52,10 +55,10 @@ namespace Vixen.Dialogs
 		private void AddProfileChannel()
 		{
 			int num = treeViewProfile.Nodes.Count + 1;
-			var channelObject = new Channel("Channel " + num.ToString(), 0);
-			m_contextProfile.AddChannelObject(channelObject);
+			var channelObject = new Channel("Channel " + num.ToString(CultureInfo.InvariantCulture), 0);
+			_contextProfile.AddChannelObject(channelObject);
 			treeViewProfile.Nodes.Add(channelObject.Name).Tag = channelObject;
-			m_channelOrderMapping.Add(m_channelOrderMapping.Count);
+			_channelOrderMapping.Add(_channelOrderMapping.Count);
 		}
 
 		private void buttonAddMultipleProfileChannels_Click(object sender, EventArgs e)
@@ -88,7 +91,7 @@ namespace Vixen.Dialogs
 		{
 			if (ChangeProfileName())
 			{
-				labelProfileName.Text = m_contextProfile.Name;
+				labelProfileName.Text = _contextProfile.Name;
 			}
 		}
 
@@ -96,9 +99,9 @@ namespace Vixen.Dialogs
 		{
 			foreach (Profile profile in listBoxProfiles.Items)
 			{
-				if (!(!(profile.FileName == string.Empty) || ChangeProfileName()))
+				if (!(profile.FileName != string.Empty || ChangeProfileName()))
 				{
-					base.DialogResult = DialogResult.None;
+					DialogResult = DialogResult.None;
 					break;
 				}
 				profile.SaveToFile();
@@ -107,7 +110,7 @@ namespace Vixen.Dialogs
 
 		private void buttonPlugins_Click(object sender, EventArgs e)
 		{
-			var dialog = new PluginListDialog(m_contextProfile);
+			var dialog = new PluginListDialog(_contextProfile);
 			dialog.ShowDialog();
 			dialog.Dispose();
 		}
@@ -119,10 +122,10 @@ namespace Vixen.Dialogs
 
 		private bool ChangeProfileName()
 		{
-			var dialog = new TextQueryDialog("Profile Name", "Name for this profile", m_contextProfile.Name);
+			var dialog = new TextQueryDialog("Profile Name", "Name for this profile", _contextProfile.Name);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
-				m_contextProfile.Name = dialog.Response;
+				_contextProfile.Name = dialog.Response;
 				dialog.Dispose();
 				return true;
 			}
@@ -134,7 +137,7 @@ namespace Vixen.Dialogs
 		{
 			if (comboBoxChannelOrder.SelectedIndex != -1)
 			{
-				List<Channel> channels = m_contextProfile.Channels;
+				List<Channel> channels = _contextProfile.Channels;
 				if (comboBoxChannelOrder.SelectedIndex == 0)
 				{
 					if (channels.Count == 0)
@@ -144,14 +147,14 @@ namespace Vixen.Dialogs
 					}
 					pictureBoxProfileDeleteChannelOrder.Enabled = false;
 					comboBoxChannelOrder.SelectedIndex = -1;
-					List<Channel> channelList = m_contextProfile.Channels;
-					var dialog = new ChannelOrderDialog(channelList, m_channelOrderMapping);
+					List<Channel> channelList = _contextProfile.Channels;
+					var dialog = new ChannelOrderDialog(channelList, _channelOrderMapping);
 					if (dialog.ShowDialog() == DialogResult.OK)
 					{
-						m_channelOrderMapping.Clear();
+						_channelOrderMapping.Clear();
 						foreach (Channel channel in dialog.ChannelMapping)
 						{
-							m_channelOrderMapping.Add(channelList.IndexOf(channel));
+							_channelOrderMapping.Add(channelList.IndexOf(channel));
 						}
 					}
 					dialog.Dispose();
@@ -160,18 +163,18 @@ namespace Vixen.Dialogs
 				{
 					pictureBoxProfileDeleteChannelOrder.Enabled = false;
 					comboBoxChannelOrder.SelectedIndex = -1;
-					m_channelOrderMapping.Clear();
+					_channelOrderMapping.Clear();
 					for (int i = 0; i < channels.Count; i++)
 					{
-						m_channelOrderMapping.Add(i);
+						_channelOrderMapping.Add(i);
 					}
-					m_contextProfile.LastSort = -1;
+					_contextProfile.LastSort = -1;
 				}
 				else
 				{
-					m_channelOrderMapping.Clear();
-					m_channelOrderMapping.AddRange(((SortOrder) comboBoxChannelOrder.SelectedItem).ChannelIndexes);
-					m_contextProfile.LastSort = comboBoxChannelOrder.SelectedIndex;
+					_channelOrderMapping.Clear();
+					_channelOrderMapping.AddRange(((SortOrder) comboBoxChannelOrder.SelectedItem).ChannelIndexes);
+					_contextProfile.LastSort = comboBoxChannelOrder.SelectedIndex;
 					pictureBoxProfileDeleteChannelOrder.Enabled = true;
 				}
 				ReloadProfileChannelObjects();
@@ -181,11 +184,11 @@ namespace Vixen.Dialogs
 
 		private void EditProfile(Profile profile)
 		{
-			m_contextProfile = profile;
+			_contextProfile = profile;
 			labelProfileName.Text = profile.Name;
 			UpdateSortList();
 			ReloadProfileChannelObjects();
-			comboBoxChannelOrder.SelectedIndex = m_contextProfile.LastSort;
+			comboBoxChannelOrder.SelectedIndex = _contextProfile.LastSort;
 			tabEditProfile.Tag = tabControl.SelectedTab;
 			tabControl.SelectedTab = tabEditProfile;
 		}
@@ -223,15 +226,15 @@ namespace Vixen.Dialogs
 		private void PictureBase(PictureBox pb, Graphics g)
 		{
 			Color color = (m_hoveredButton == pb)
-				              ? m_pictureBoxHoverColor
-				              : (pb.Enabled ? m_pictureEnabledColor : m_pictureDisabledColor);
+				              ? _pictureBoxHoverColor
+				              : (pb.Enabled ? _pictureEnabledColor : _pictureDisabledColor);
 			g.SmoothingMode = SmoothingMode.AntiAlias;
 			Rectangle clientRectangle = pb.ClientRectangle;
 			clientRectangle.Inflate(-2, -2);
-			m_picturePen.Color = color;
-			m_pictureBrush.Color = color;
+			_picturePen.Color = color;
+			_pictureBrush.Color = color;
 			g.FillEllipse(Brushes.White, clientRectangle);
-			g.DrawEllipse(m_picturePen, clientRectangle);
+			g.DrawEllipse(_picturePen, clientRectangle);
 		}
 
 		private void pictureBoxAddProfile_Click(object sender, EventArgs e)
@@ -239,8 +242,7 @@ namespace Vixen.Dialogs
 			var dialog = new TextQueryDialog("New Profile", "Name for the new profile", string.Empty);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
-				var item = new Profile();
-				item.Name = dialog.Response;
+				var item = new Profile {Name = dialog.Response};
 				listBoxProfiles.Items.Add(item);
 				EditProfile(item);
 			}
@@ -262,7 +264,7 @@ namespace Vixen.Dialogs
 		private void pictureBoxAddProfile_Paint(object sender, PaintEventArgs e)
 		{
 			PictureBase((PictureBox) sender, e.Graphics);
-			e.Graphics.DrawString("+", m_pictureFont, m_pictureBrush, 3f, 1f);
+			e.Graphics.DrawString("+", _pictureFont, _pictureBrush, 3f, 1f);
 		}
 
 		private void pictureBoxEditProfile_Click(object sender, EventArgs e)
@@ -273,13 +275,13 @@ namespace Vixen.Dialogs
 		private void pictureBoxEditProfile_Paint(object sender, PaintEventArgs e)
 		{
 			PictureBase((PictureBox) sender, e.Graphics);
-			e.Graphics.DrawLine(m_picturePen, 6, 11, 11, 6);
-			e.Graphics.DrawLine(m_picturePen, 9, 14, 14, 9);
+			e.Graphics.DrawLine(_picturePen, 6, 11, 11, 6);
+			e.Graphics.DrawLine(_picturePen, 9, 14, 14, 9);
 		}
 
 		private void pictureBoxProfileChannelColors_Click(object sender, EventArgs e)
 		{
-			List<Channel> channels = m_contextProfile.Channels;
+			List<Channel> channels = _contextProfile.Channels;
 			var dialog = new AllChannelsColorDialog(channels);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
@@ -294,7 +296,7 @@ namespace Vixen.Dialogs
 
 		private void pictureBoxProfileChannelOutputMask_Click(object sender, EventArgs e)
 		{
-			List<Channel> channels = m_contextProfile.Channels;
+			List<Channel> channels = _contextProfile.Channels;
 			var dialog = new ChannelOutputMaskDialog(channels);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
@@ -312,10 +314,10 @@ namespace Vixen.Dialogs
 
 		private void pictureBoxProfileChannelOutputs_Click(object sender, EventArgs e)
 		{
-			var dialog = new ChannelOrderDialog(m_contextProfile.OutputChannels, null, "Channel output mapping");
+			var dialog = new ChannelOrderDialog(_contextProfile.OutputChannels, null, "Channel output mapping");
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
-				m_contextProfile.OutputChannels = dialog.ChannelMapping;
+				_contextProfile.OutputChannels = dialog.ChannelMapping;
 			}
 			dialog.Dispose();
 		}
@@ -326,7 +328,7 @@ namespace Vixen.Dialogs
 				MessageBox.Show(string.Format("Delete channel order '{0}'?", comboBoxChannelOrder.Text), Vendor.ProductName,
 				                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 			{
-				m_contextProfile.Sorts.Remove((SortOrder) comboBoxChannelOrder.SelectedItem);
+				_contextProfile.Sorts.Remove((SortOrder) comboBoxChannelOrder.SelectedItem);
 				comboBoxChannelOrder.Items.RemoveAt(comboBoxChannelOrder.SelectedIndex);
 				pictureBoxProfileDeleteChannelOrder.Enabled = false;
 			}
@@ -346,7 +348,7 @@ namespace Vixen.Dialogs
 					return;
 				}
 				no = DialogResult.Yes;
-				foreach (SortOrder order2 in m_contextProfile.Sorts)
+				foreach (SortOrder order2 in _contextProfile.Sorts)
 				{
 					if (order2.Name == dialog.Response)
 					{
@@ -367,14 +369,14 @@ namespace Vixen.Dialogs
 			if (item != null)
 			{
 				item.ChannelIndexes.Clear();
-				item.ChannelIndexes.AddRange(m_channelOrderMapping);
+				item.ChannelIndexes.AddRange(_channelOrderMapping);
 				comboBoxChannelOrder.SelectedItem = item;
 			}
 			else
 			{
-				m_contextProfile.Sorts.Add(item = new SortOrder(dialog.Response, m_channelOrderMapping));
+				_contextProfile.Sorts.Add(item = new SortOrder(dialog.Response, _channelOrderMapping));
 				item.ChannelIndexes.Clear();
-				item.ChannelIndexes.AddRange(m_channelOrderMapping);
+				item.ChannelIndexes.AddRange(_channelOrderMapping);
 				comboBoxChannelOrder.Items.Insert(comboBoxChannelOrder.Items.Count - 1, item);
 				comboBoxChannelOrder.SelectedIndex = comboBoxChannelOrder.Items.Count - 2;
 			}
@@ -388,7 +390,7 @@ namespace Vixen.Dialogs
 		private void pictureBoxRemoveProfile_Paint(object sender, PaintEventArgs e)
 		{
 			PictureBase((PictureBox) sender, e.Graphics);
-			e.Graphics.DrawString("-", m_pictureFont, m_pictureBrush, 4f, 0f);
+			e.Graphics.DrawString("-", _pictureFont, _pictureBrush, 4f, 0f);
 		}
 
 		private void pictureBoxReturnFromChannelGroupEdit_Click(object sender, EventArgs e)
@@ -424,8 +426,8 @@ namespace Vixen.Dialogs
 			buttonRemoveProfileChannels.Enabled = false;
 			treeViewProfile.BeginUpdate();
 			treeViewProfile.Nodes.Clear();
-			List<Channel> channels = m_contextProfile.Channels;
-			foreach (int num2 in m_channelOrderMapping)
+			List<Channel> channels = _contextProfile.Channels;
+			foreach (int num2 in _channelOrderMapping)
 			{
 				Channel channel = channels[num2];
 				treeViewProfile.Nodes.Add(channel.Name).Tag = channel;
@@ -459,8 +461,8 @@ namespace Vixen.Dialogs
 				MessageBox.Show("Remove the selected item from this profile?", Vendor.ProductName, MessageBoxButtons.YesNo,
 				                MessageBoxIcon.Question) == DialogResult.Yes)
 			{
-				m_channelOrderMapping.RemoveAt(m_contextProfile.Channels.IndexOf((Channel) treeViewProfile.SelectedNode.Tag));
-				m_contextProfile.RemoveChannelObject((Channel) treeViewProfile.SelectedNode.Tag);
+				_channelOrderMapping.RemoveAt(_contextProfile.Channels.IndexOf((Channel) treeViewProfile.SelectedNode.Tag));
+				_contextProfile.RemoveChannelObject((Channel) treeViewProfile.SelectedNode.Tag);
 				treeViewProfile.Nodes.Remove(treeViewProfile.SelectedNode);
 			}
 		}
@@ -519,17 +521,17 @@ namespace Vixen.Dialogs
 			var str2 = (string) comboBoxChannelOrder.Items[comboBoxChannelOrder.Items.Count - 1];
 			comboBoxChannelOrder.Items.Clear();
 			comboBoxChannelOrder.Items.Add(item);
-			foreach (SortOrder order in m_contextProfile.Sorts)
+			foreach (SortOrder order in _contextProfile.Sorts)
 			{
 				comboBoxChannelOrder.Items.Add(order);
 			}
 			comboBoxChannelOrder.Items.Add(str2);
 			comboBoxChannelOrder.EndUpdate();
-			int count = m_contextProfile.Channels.Count;
-			m_channelOrderMapping.Clear();
+			int count = _contextProfile.Channels.Count;
+			_channelOrderMapping.Clear();
 			for (int i = 0; i < count; i++)
 			{
-				m_channelOrderMapping.Add(i);
+				_channelOrderMapping.Add(i);
 			}
 		}
 	}

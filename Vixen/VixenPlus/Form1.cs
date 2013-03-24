@@ -27,7 +27,7 @@ namespace Vixen
 		private readonly string m_timersPath;
 		private string[] m_audioDevices;
 		private List<string> m_history;
-		private int m_historyMax = 7;
+		private const int m_historyMax = 7;
 		private string m_knownFileTypesFilter;
 		private string m_lastWindowsClipboardValue = "";
 		private DateTime m_shutdownAt;
@@ -148,10 +148,9 @@ namespace Vixen
 			if (executable != null)
 			{
 				string str = executable.Key.ToString();
-				XmlNode node = null;
 				XmlNode node2 = null;
-				node = ((XmlNode) Host.Communication["SetupNode_" + str]).SelectSingleNode("DialogPositions");
-				object obj2 = null;
+				XmlNode node = ((XmlNode) Host.Communication["SetupNode_" + str]).SelectSingleNode("DialogPositions");
+				object obj2;
 				if (Host.Communication.TryGetValue("KeyInterceptor_" + str, out obj2))
 				{
 					base2.ExecutionParent = (VixenMDI) obj2;
@@ -213,14 +212,7 @@ namespace Vixen
 
 		public string[] AudioDevices
 		{
-			get
-			{
-				if (m_audioDevices == null)
-				{
-					m_audioDevices = fmod.GetSoundDeviceList();
-				}
-				return m_audioDevices;
-			}
+			get { return m_audioDevices ?? (m_audioDevices = fmod.GetSoundDeviceList()); }
 		}
 
 		public byte[,] Clipboard
@@ -392,7 +384,7 @@ namespace Vixen
 			var none = DialogResult.None;
 			if (pluginInstance.IsDirty)
 			{
-				string str = (pluginInstance.Sequence.Name == null) ? "this unnamed sequence" : pluginInstance.Sequence.Name;
+				string str = pluginInstance.Sequence.Name ?? "this unnamed sequence";
 				none = MessageBox.Show(string.Format("[{0}]\nSave changes to {1}?", pluginInstance.FileTypeDescription, str),
 				                       Vendor.ProductName, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 				if (none == DialogResult.Yes)
@@ -1382,7 +1374,7 @@ namespace Vixen
 
 		private void visualChannelLayoutToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			IExecutable executableObject = null;
+			IExecutable executableObject;
 			if (((base.ActiveMdiChild != null) && (base.ActiveMdiChild is VixenMDI)) &&
 			    (((VixenMDI) base.ActiveMdiChild).Sequence != null))
 			{
@@ -1400,7 +1392,7 @@ namespace Vixen
 			}
 			else
 			{
-				var dialog = new ChannelLayoutDialog(executableObject);
+				var dialog = new ChannelLayoutDialog();
 				dialog.ShowDialog();
 				dialog.Dispose();
 			}

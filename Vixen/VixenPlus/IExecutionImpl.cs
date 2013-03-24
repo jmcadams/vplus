@@ -26,7 +26,7 @@ namespace Vixen
 
 		public int EngineStatus(int contextHandle)
 		{
-			ExecutionContext context = null;
+			ExecutionContext context;
 			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return 0;
@@ -50,7 +50,7 @@ namespace Vixen
 		public int EngineStatus(int contextHandle, out int position)
 		{
 			position = 0;
-			ExecutionContext context = null;
+			ExecutionContext context;
 			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return 0;
@@ -76,7 +76,7 @@ namespace Vixen
 
 		public bool ExecuteChannelOff(int contextHandle, int channelIndex)
 		{
-			ExecutionContext context = null;
+			ExecutionContext context;
 			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return false;
@@ -122,7 +122,7 @@ namespace Vixen
 
 		public bool ExecuteChannelOn(int contextHandle, int channelIndex, int percentLevel)
 		{
-			ExecutionContext context = null;
+			ExecutionContext context;
 			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return false;
@@ -163,7 +163,7 @@ namespace Vixen
 
 		public bool ExecuteChannelToggle(int contextHandle, int channelIndex)
 		{
-			ExecutionContext context = null;
+			ExecutionContext context;
 			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return false;
@@ -206,7 +206,7 @@ namespace Vixen
 
 		public bool ExecutePause(int contextHandle)
 		{
-			ExecutionContext context = null;
+			ExecutionContext context;
 			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return false;
@@ -248,7 +248,7 @@ namespace Vixen
 
 		public bool ExecutePlay(int contextHandle, int startMillisecond, int endMillisecond, bool logAudio)
 		{
-			ExecutionContext context = null;
+			ExecutionContext context;
 			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return false;
@@ -290,7 +290,7 @@ namespace Vixen
 
 		public bool ExecuteStop(int contextHandle)
 		{
-			ExecutionContext context = null;
+			ExecutionContext context;
 			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return false;
@@ -352,7 +352,7 @@ namespace Vixen
 
 		public float GetAudioSpeed(int contextHandle)
 		{
-			ExecutionContext context = null;
+			ExecutionContext context;
 			if (m_registeredContexts.TryGetValue(contextHandle, out context) && (context.SynchronousEngineInstance != null))
 			{
 				return context.SynchronousEngineInstance.AudioSpeed;
@@ -362,7 +362,7 @@ namespace Vixen
 
 		public int GetCurrentPosition(int contextHandle)
 		{
-			ExecutionContext context = null;
+			ExecutionContext context;
 			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return 0;
@@ -376,7 +376,7 @@ namespace Vixen
 
 		public IExecutable GetObjectInContext(int contextHandle)
 		{
-			ExecutionContext context = null;
+			ExecutionContext context;
 			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return null;
@@ -386,7 +386,7 @@ namespace Vixen
 
 		public int GetObjectPosition(int contextHandle)
 		{
-			ExecutionContext context = null;
+			ExecutionContext context;
 			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return 0;
@@ -400,7 +400,7 @@ namespace Vixen
 
 		public string LoadedProgram(int contextHandle)
 		{
-			ExecutionContext context = null;
+			ExecutionContext context;
 			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return string.Empty;
@@ -414,7 +414,7 @@ namespace Vixen
 
 		public string LoadedSequence(int contextHandle)
 		{
-			ExecutionContext context = null;
+			ExecutionContext context;
 			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return string.Empty;
@@ -428,7 +428,7 @@ namespace Vixen
 
 		public int ProgramLength(int contextHandle)
 		{
-			ExecutionContext context = null;
+			ExecutionContext context;
 			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return 0;
@@ -539,7 +539,7 @@ namespace Vixen
 
 		public int SequenceLength(int contextHandle)
 		{
-			ExecutionContext context = null;
+			ExecutionContext context;
 			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return 0;
@@ -577,7 +577,7 @@ namespace Vixen
 
 		public void SetAsynchronousProgramChangeHandler(int contextHandle, ProgramChangeHandler programChangeHandler)
 		{
-			ExecutionContext context = null;
+			ExecutionContext context;
 			if (m_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				context.AsynchronousProgramChangeHandler += programChangeHandler;
@@ -586,7 +586,7 @@ namespace Vixen
 
 		public void SetAudioSpeed(int contextHandle, float rate)
 		{
-			ExecutionContext context = null;
+			ExecutionContext context;
 			if (m_registeredContexts.TryGetValue(contextHandle, out context) && (context.SynchronousEngineInstance != null))
 			{
 				context.SynchronousEngineInstance.AudioSpeed = rate;
@@ -595,7 +595,7 @@ namespace Vixen
 
 		public void SetChannelStates(int contextHandle, byte[] channelValues)
 		{
-			ExecutionContext context = null;
+			ExecutionContext context;
 			if (m_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				if (context.SynchronousEngineInstance != null)
@@ -611,7 +611,7 @@ namespace Vixen
 
 		public void SetLoopState(int contextHandle, bool state)
 		{
-			ExecutionContext context = null;
+			ExecutionContext context;
 			if (m_registeredContexts.TryGetValue(contextHandle, out context) && (context.SynchronousEngineInstance != null))
 			{
 				context.SynchronousEngineInstance.Loop = state;
@@ -685,7 +685,7 @@ namespace Vixen
 
 		public void SetSynchronousProgramChangeHandler(int contextHandle, ProgramChangeHandler programChangeHandler)
 		{
-			ExecutionContext context = null;
+			ExecutionContext context;
 			if (m_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				context.SynchronousProgramChangeHandler += programChangeHandler;

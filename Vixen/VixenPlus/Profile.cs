@@ -128,14 +128,7 @@ namespace Vixen
 			get { return Path.GetFileNameWithoutExtension(m_fileName); }
 			set
 			{
-				if (m_fileName.Length == 0)
-				{
-					m_fileName = Path.Combine(Paths.ProfilePath, value + ".pro");
-				}
-				else
-				{
-					m_fileName = Path.Combine(Path.GetDirectoryName(m_fileName), value + ".pro");
-				}
+				m_fileName = Path.Combine(m_fileName.Length == 0 ? Paths.ProfilePath : Path.GetDirectoryName(m_fileName), value + ".pro");
 			}
 		}
 

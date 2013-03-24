@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Vixen
 {
-	internal partial class CopySequenceDialog
+	internal sealed partial class CopySequenceDialog
     {
         private IContainer components = null;
 

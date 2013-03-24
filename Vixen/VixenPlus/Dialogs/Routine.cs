@@ -6,23 +6,22 @@ namespace Vixen.Dialogs
 {
 	internal class Routine : IDisposable
 	{
-		private readonly string m_filePath;
-		private readonly string m_name;
-		private readonly Rectangle m_previewBounds;
-		private Bitmap m_preview;
+		private readonly string _filePath;
+		private readonly string _name;
+		private readonly Rectangle _previewBounds;
+		private Bitmap _preview;
 
 		public Routine(string filePath)
 		{
-			int width = 0;
-			int height = 0;
-			m_filePath = filePath;
+			_filePath = filePath;
 			if (File.Exists(filePath))
 			{
 				string str;
-				m_name = Path.GetFileNameWithoutExtension(filePath);
+				_name = Path.GetFileNameWithoutExtension(filePath);
 				var stream = new FileStream(filePath, FileMode.Open);
 				var reader = new StreamReader(stream);
-				width = reader.ReadLine().Split(new[] {' '}).Length - 1;
+				int width = reader.ReadLine().Split(new[] {' '}).Length - 1;
+				int height = 0;
 				height++;
 				while (reader.ReadLine() != null)
 				{
@@ -30,7 +29,7 @@ namespace Vixen.Dialogs
 				}
 				stream.Seek(0L, SeekOrigin.Begin);
 				int y = 0;
-				m_preview = new Bitmap(width, height);
+				_preview = new Bitmap(width, height);
 				while ((str = reader.ReadLine()) != null)
 				{
 					int num4 = 0;
@@ -38,7 +37,7 @@ namespace Vixen.Dialogs
 					{
 						if (str2.Length > 0)
 						{
-							m_preview.SetPixel(num4++, y, Color.FromArgb(Convert.ToByte(str2), Color.LightBlue));
+							_preview.SetPixel(num4++, y, Color.FromArgb(Convert.ToByte(str2), Color.LightBlue));
 						}
 					}
 					y++;
@@ -47,37 +46,37 @@ namespace Vixen.Dialogs
 				reader.Dispose();
 				stream.Dispose();
 				var world = GraphicsUnit.World;
-				RectangleF bounds = m_preview.GetBounds(ref world);
-				m_previewBounds = new Rectangle((int) bounds.X, (int) bounds.Y, (int) bounds.Width, (int) bounds.Height);
+				RectangleF bounds = _preview.GetBounds(ref world);
+				_previewBounds = new Rectangle((int) bounds.X, (int) bounds.Y, (int) bounds.Width, (int) bounds.Height);
 			}
 		}
 
 		public string FilePath
 		{
-			get { return m_filePath; }
+			get { return _filePath; }
 		}
 
 		public string Name
 		{
-			get { return m_name; }
+			get { return _name; }
 		}
 
 		public Bitmap Preview
 		{
-			get { return m_preview; }
+			get { return _preview; }
 		}
 
 		public Rectangle PreviewBounds
 		{
-			get { return m_previewBounds; }
+			get { return _previewBounds; }
 		}
 
 		public void Dispose()
 		{
-			if (m_preview != null)
+			if (_preview != null)
 			{
-				m_preview.Dispose();
-				m_preview = null;
+				_preview.Dispose();
+				_preview = null;
 			}
 			GC.SuppressFinalize(this);
 		}

@@ -51,14 +51,7 @@ namespace Vixen
 			get { return m_dataPath; }
 			set
 			{
-				if (!string.IsNullOrEmpty(value))
-				{
-					m_dataPath = value;
-				}
-				else
-				{
-					m_dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Vendor.ProductName);
-				}
+				m_dataPath = !string.IsNullOrEmpty(value) ? value : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Vendor.ProductName);
 				if (!Directory.Exists(m_dataPath))
 				{
 					Directory.CreateDirectory(m_dataPath);

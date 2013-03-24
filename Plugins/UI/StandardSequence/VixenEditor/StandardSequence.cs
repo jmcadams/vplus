@@ -5811,7 +5811,7 @@ namespace VixenEditor
 						else if ((this.SelectedChannel != null) && (MessageBox.Show(string.Format("Delete channel {0}?", this.SelectedChannel.Name), "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes))
 						{
 							channelSortedIndex = this.GetChannelSortedIndex(this.SelectedChannel);
-							this.m_sequence.DeleteChannel(this.SelectedChannel.ID);
+							this.m_sequence.DeleteChannel(this.SelectedChannel.Id);
 							this.DeleteChannelFromSort(channelSortedIndex);
 							this.ChannelCountChanged();
 						}

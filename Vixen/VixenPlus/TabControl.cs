@@ -35,14 +35,7 @@ namespace Vixen
 				{
 					return new Rectangle(0, 0, base.Width, base.Height);
 				}
-				if (base.Alignment <= TabAlignment.Bottom)
-				{
-					height = base.ItemSize.Height;
-				}
-				else
-				{
-					height = base.ItemSize.Width;
-				}
+				height = base.Alignment <= TabAlignment.Bottom ? base.ItemSize.Height : base.ItemSize.Width;
 				if (base.Appearance == TabAppearance.Normal)
 				{
 					num = 5 + (height*base.RowCount);
@@ -88,16 +81,8 @@ namespace Vixen
 		public bool ourMultiline
 		{
 			get { return (HideTabs || base.Multiline); }
-			set
-			{
-				if (HideTabs)
-				{
-					base.Multiline = true;
-				}
-				else
-				{
-					base.Multiline = value;
-				}
+			set {
+				base.Multiline = HideTabs || value;
 			}
 		}
 
