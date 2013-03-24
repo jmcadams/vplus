@@ -1,4 +1,4 @@
-﻿namespace Prop2SeqGen
+namespace Prop2SeqGen
 {
     using System;
     using System.Collections.Generic;
@@ -52,13 +52,13 @@
             string path = Path.Combine(Paths.AddinPath, "prop-2_sequencer_main.txt");
             if (!File.Exists(path))
             {
-                MessageBox.Show("Template file is missing.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Template file is missing.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
             string str2 = Path.Combine(Paths.AddinPath, "prop-2_sequencer_fill.txt");
             if (!File.Exists(str2))
             {
-                MessageBox.Show("Option file is missing.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Option file is missing.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
             List<AudioSelection> audioOptions = this.LoadAudioSelections(str2);
@@ -134,7 +134,7 @@
                     local1.Value = (ushort) (local1.Value | 0x8000);
                     if (num3 < list2.Count)
                     {
-                        MessageBox.Show("The sequence data is more than can be stored.\nAll values will be written, this message is for your information only.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        MessageBox.Show("The sequence data is more than can be stored.\nAll values will be written, this message is for your information only.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                     }
                     for (int i = 0; i < list2.Count; i++)
                     {
@@ -166,7 +166,7 @@
                 }
                 else
                 {
-                    MessageBox.Show(string.Format("{0} has been written to\n{1}", Path.GetFileName(addin.FileName), Path.GetDirectoryName(addin.FileName)), "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    MessageBox.Show(string.Format("{0} has been written to\n{1}", Path.GetFileName(addin.FileName), Path.GetDirectoryName(addin.FileName)), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 }
             }
             return false;
@@ -238,7 +238,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

@@ -1,4 +1,4 @@
-﻿namespace Prop_SX_8s8d
+namespace Prop_SX_8s8d
 {
     using System;
     using System.IO.Ports;
@@ -97,7 +97,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

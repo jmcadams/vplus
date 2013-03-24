@@ -1,4 +1,4 @@
-﻿namespace EZ_8_Transfer
+namespace EZ_8_Transfer
 {
     using EZ_8;
     using System;
@@ -75,7 +75,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

@@ -1,4 +1,4 @@
-﻿namespace FGDimmer
+namespace FGDimmer
 {
     using System;
     using System.IO.Ports;
@@ -233,7 +233,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

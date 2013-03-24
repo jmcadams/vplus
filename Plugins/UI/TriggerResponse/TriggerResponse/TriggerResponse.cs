@@ -1,4 +1,4 @@
-﻿namespace TriggerResponse
+namespace TriggerResponse
 {
     using System;
     using System.Collections.Generic;
@@ -84,7 +84,7 @@
             List<ITriggerPlugin> triggers = this.GetTriggers();
             if (triggers.Count == 0)
             {
-                MessageBox.Show("There are no trigger plugins available for use.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                MessageBox.Show("There are no trigger plugins available for use.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
             }
             else
             {
@@ -301,7 +301,7 @@
             List<ITriggerPlugin> triggers = this.GetTriggers();
             if (triggers.Count == 0)
             {
-                MessageBox.Show("There are no trigger plugins available for use.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                MessageBox.Show("There are no trigger plugins available for use.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
             }
             else
             {
@@ -364,7 +364,7 @@
 
         private void RemoveTriggerResponses()
         {
-            if (MessageBox.Show("Remove selected trigger responses?", "Vixen", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("Remove selected trigger responses?", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 List<object> list = new List<object>();
                 foreach (object obj2 in this.listBoxTriggers.SelectedItems)
@@ -458,7 +458,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

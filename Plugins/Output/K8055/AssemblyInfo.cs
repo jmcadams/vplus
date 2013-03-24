@@ -5,7 +5,7 @@
 [assembly: System.Runtime.InteropServices.Guid("10c9b0a5-5ac1-4232-8a78-78f0ca2751cd")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 [assembly: System.Reflection.AssemblyTrademark("")]
-[assembly: System.Reflection.AssemblyCopyright("Copyleft 2013 Vixen Developers")]
+[assembly: System.Reflection.AssemblyCopyright("Copyleft 2013")]
 [assembly: System.Reflection.AssemblyProduct("K8055")]
 [assembly: System.Reflection.AssemblyCompany("")]
 [assembly: System.Reflection.AssemblyConfiguration("")]

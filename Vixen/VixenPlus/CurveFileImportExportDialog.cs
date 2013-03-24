@@ -53,7 +53,7 @@ namespace Vixen
                 }
                 catch (Exception exception)
                 {
-                    MessageBox.Show(exception.Message, "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show(exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
@@ -75,11 +75,11 @@ namespace Vixen
                         list.Add(item.Tag as CurveLibraryRecord);
                     }
                     this.ExportRecordsToFile(list.ToArray(), this.FilePath);
-                    MessageBox.Show("Export completed successfully.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    MessageBox.Show("Export completed successfully.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 }
                 catch (Exception exception)
                 {
-                    MessageBox.Show("Error occurred while exporting:\n" + exception.Message, "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("Error occurred while exporting:\n" + exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
                 finally
                 {
@@ -145,7 +145,7 @@ namespace Vixen
                 }
                 catch (Exception exception)
                 {
-                    MessageBox.Show("Error occurred while exporting:\n" + exception.Message, "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("Error occurred while exporting:\n" + exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }

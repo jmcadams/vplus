@@ -1,4 +1,4 @@
-﻿namespace EZ_8_Output
+namespace EZ_8_Output
 {
     using EZ_8;
     using System;
@@ -58,7 +58,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

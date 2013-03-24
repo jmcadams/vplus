@@ -1,4 +1,4 @@
-﻿namespace FC4_RC4
+namespace FC4_RC4
 {
     using System;
     using System.Collections.Generic;
@@ -105,7 +105,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

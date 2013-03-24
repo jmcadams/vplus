@@ -1,4 +1,4 @@
-﻿namespace JoystickInput
+namespace JoystickInput
 {
     using JoystickManager;
     using System;
@@ -67,7 +67,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

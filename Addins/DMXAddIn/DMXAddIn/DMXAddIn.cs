@@ -1,4 +1,4 @@
-﻿namespace DMXAddIn
+namespace DMXAddIn
 {
     using IDMX;
     using System;
@@ -86,7 +86,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

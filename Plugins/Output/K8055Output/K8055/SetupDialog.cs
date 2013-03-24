@@ -59,7 +59,7 @@ namespace K8055 {
 				this.Cursor = Cursors.Default;
 			}
 			if ((num & 15L) == 0L) {
-				MessageBox.Show("No devices were found.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show("No devices were found.", Vixen.Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 		}
 

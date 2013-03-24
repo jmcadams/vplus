@@ -1,4 +1,4 @@
-﻿namespace CurrentExecution
+namespace CurrentExecution
 {
     using LedTriksUtil;
     using System;
@@ -205,7 +205,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

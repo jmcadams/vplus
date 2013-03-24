@@ -1,4 +1,4 @@
-﻿namespace Simple595
+namespace Simple595
 {
     using System;
     using System.Runtime.InteropServices;
@@ -72,7 +72,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

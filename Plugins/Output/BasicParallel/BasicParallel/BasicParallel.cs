@@ -1,4 +1,4 @@
-﻿namespace BasicParallel
+namespace BasicParallel
 {
     using System;
     using System.Runtime.InteropServices;
@@ -66,7 +66,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

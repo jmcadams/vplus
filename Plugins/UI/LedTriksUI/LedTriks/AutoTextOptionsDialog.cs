@@ -46,7 +46,7 @@ namespace LedTriks
 		{
 			if (!this.ValidatePositionValue())
 			{
-				MessageBox.Show("Please fix the error shown before continuing.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+				MessageBox.Show("Please fix the error shown before continuing.", Vixen.Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 				base.DialogResult = System.Windows.Forms.DialogResult.None;
 			}
 			else
@@ -65,7 +65,7 @@ namespace LedTriks
 				else if (this.radioButtonPositionPercent.Checked)
 				{
 					this.m_generator.TextVertPosition = VertPosition.Percent;
-					if (((((this.m_textPositionValue * this.m_generator.BoardPixelHeight) / 100) + this.m_generator.TextHeight) > this.m_generator.BoardPixelHeight) && (MessageBox.Show("Text position's percent value will put the text partially off of the board.\nIs this okay?", "Vixen", MessageBoxButtons.YesNo, MessageBoxIcon.Hand) == DialogResult.No))
+					if (((((this.m_textPositionValue * this.m_generator.BoardPixelHeight) / 100) + this.m_generator.TextHeight) > this.m_generator.BoardPixelHeight) && (MessageBox.Show("Text position's percent value will put the text partially off of the board.\nIs this okay?", Vixen.Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Hand) == DialogResult.No))
 					{
 						base.DialogResult = System.Windows.Forms.DialogResult.None;
 					}

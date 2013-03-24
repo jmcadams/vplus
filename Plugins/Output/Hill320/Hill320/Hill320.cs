@@ -1,4 +1,4 @@
-﻿namespace Hill320
+namespace Hill320
 {
     using System;
     using System.Runtime.InteropServices;
@@ -76,7 +76,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

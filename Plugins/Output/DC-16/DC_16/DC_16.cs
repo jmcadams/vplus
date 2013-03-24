@@ -1,4 +1,4 @@
-﻿namespace DC_16
+namespace DC_16
 {
     using System;
     using System.IO.Ports;
@@ -122,7 +122,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

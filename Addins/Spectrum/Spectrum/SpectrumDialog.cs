@@ -104,7 +104,7 @@ namespace Spectrum {
 
 		private void buttonOK_Click(object sender, EventArgs e) {
 			if (this.m_channelBandConnections.Count == 0) {
-				MessageBox.Show("There are no mappings created.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show("There are no mappings created.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 			else {
 				uint length = 0;

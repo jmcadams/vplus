@@ -5,7 +5,7 @@
 [assembly: System.Runtime.InteropServices.Guid("e54f154d-a8e8-4420-a61a-33d1df78dc43")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 [assembly: System.Reflection.AssemblyTrademark("")]
-[assembly: System.Reflection.AssemblyCopyright("Copyleft 2013 Vixen Developers")]
+[assembly: System.Reflection.AssemblyCopyright("Copyleft 2013")]
 [assembly: System.Reflection.AssemblyProduct("JoystickManager")]
 [assembly: System.Reflection.AssemblyCompany("")]
 [assembly: System.Reflection.AssemblyConfiguration("")]

@@ -27,7 +27,7 @@ namespace Prop_2_8s8d {
 
 		private void btnOK_Click(object sender, EventArgs e) {
 			if (this.nudAnaMin.Value >= this.nudAnaMax.Value) {
-				MessageBox.Show("Minimum must be below the maximum.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+				MessageBox.Show("Minimum must be below the maximum.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 				base.DialogResult = System.Windows.Forms.DialogResult.None;
 			}
 			else {

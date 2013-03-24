@@ -6,7 +6,7 @@
 [assembly: System.Runtime.InteropServices.Guid("26ff95bc-d635-4bcb-bfa9-14b6826f30ba")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 [assembly: System.Reflection.AssemblyTrademark("")]
-[assembly: System.Reflection.AssemblyCopyright("Copyleft 2013 Vixen Developers")]
+[assembly: System.Reflection.AssemblyCopyright("Copyleft 2013")]
 [assembly: System.Reflection.AssemblyDescription("Vixen+ Lighting Control")]
 [assembly: System.Reflection.AssemblyCompany("")]
 [assembly: System.Reflection.AssemblyConfiguration("")]

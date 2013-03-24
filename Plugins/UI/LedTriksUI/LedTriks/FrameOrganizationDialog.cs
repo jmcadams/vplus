@@ -106,7 +106,7 @@ namespace LedTriks {
 			if (this.m_selectedFrameCount > 0) {
 				List<Frame> firstEmptyClipboard = this.FirstEmptyClipboard;
 				if (firstEmptyClipboard == null) {
-					MessageBox.Show("To load a routine, there needs to be an empty clipboard.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+					MessageBox.Show("To load a routine, there needs to be an empty clipboard.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 				}
 				else {
 					for (int i = 0; i < this.m_selectedFrameCount; i++) {
@@ -148,7 +148,7 @@ namespace LedTriks {
 			if (this.m_folderBounds.Contains(base.PointToClient(Control.MousePosition))) {
 				List<Frame> firstEmptyClipboard = this.FirstEmptyClipboard;
 				if (firstEmptyClipboard == null) {
-					MessageBox.Show("To load a routine, there needs to be an empty clipboard.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+					MessageBox.Show("To load a routine, there needs to be an empty clipboard.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 				}
 				else {
 					this.openFileDialog.InitialDirectory = Paths.RoutinePath;

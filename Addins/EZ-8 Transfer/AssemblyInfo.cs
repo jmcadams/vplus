@@ -6,7 +6,7 @@
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 [assembly: System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)]
 [assembly: System.Reflection.AssemblyTrademark("")]
-[assembly: System.Reflection.AssemblyCopyright("Copyleft 2013 Vixen Developers")]
+[assembly: System.Reflection.AssemblyCopyright("Copyleft 2013")]
 [assembly: System.Reflection.AssemblyProduct("EZ-8 Transfer")]
 [assembly: System.Reflection.AssemblyCompany("")]
 [assembly: System.Reflection.AssemblyConfiguration("")]

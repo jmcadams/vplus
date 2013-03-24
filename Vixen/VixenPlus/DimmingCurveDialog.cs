@@ -1,4 +1,4 @@
-﻿namespace Vixen
+namespace Vixen
 {
     using System;
     using System.ComponentModel;
@@ -176,7 +176,7 @@
 
         private void buttonResetToLinear_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("This will reset all values of the selected channel.\n\nContinue?", "Vixen", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("This will reset all values of the selected channel.\n\nContinue?", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 this.ResetCurrentToLinear();
             }

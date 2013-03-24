@@ -12,96 +12,90 @@ namespace Vixen
 
 		#region Windows Form Designer generated code
 		private System.Windows.Forms.Button btnOkay;
-private System.Windows.Forms.Label label1;
-private System.Windows.Forms.Label label2;
-private System.Windows.Forms.Label label3;
-private System.Windows.Forms.Label label4;
-private System.Windows.Forms.Label labelVersion;
+		private System.Windows.Forms.Label lblName;
+		private System.Windows.Forms.Label lblDescription;
+		private System.Windows.Forms.Label labelVersion;
 
 		private void InitializeComponent()
 		{
 			this.btnOkay = new System.Windows.Forms.Button();
-			this.label1 = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
-			this.label3 = new System.Windows.Forms.Label();
-			this.label4 = new System.Windows.Forms.Label();
+			this.lblName = new System.Windows.Forms.Label();
+			this.lblDescription = new System.Windows.Forms.Label();
 			this.labelVersion = new System.Windows.Forms.Label();
+			this.llblURL = new System.Windows.Forms.LinkLabel();
 			this.SuspendLayout();
 			// 
 			// btnOkay
 			// 
 			this.btnOkay.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.btnOkay.Location = new System.Drawing.Point(84, 175);
+			this.btnOkay.Location = new System.Drawing.Point(260, 135);
 			this.btnOkay.Name = "btnOkay";
 			this.btnOkay.Size = new System.Drawing.Size(75, 23);
 			this.btnOkay.TabIndex = 0;
 			this.btnOkay.Text = "Done";
 			this.btnOkay.UseVisualStyleBackColor = true;
 			// 
-			// label1
+			// lblName
 			// 
-			this.label1.AutoSize = true;
-			this.label1.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label1.Location = new System.Drawing.Point(32, 31);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(55, 23);
-			this.label1.TabIndex = 1;
-			this.label1.Text = "VixenPlus";
+			this.lblName.Font = new System.Drawing.Font("Arial", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblName.ForeColor = System.Drawing.Color.Red;
+			this.lblName.Location = new System.Drawing.Point(12, 9);
+			this.lblName.Name = "lblName";
+			this.lblName.Size = new System.Drawing.Size(323, 45);
+			this.lblName.TabIndex = 1;
+			this.lblName.Text = "ProductName";
+			this.lblName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// label2
+			// lblDescription
 			// 
-			this.label2.AutoSize = true;
-			this.label2.Font = new System.Drawing.Font("Tahoma", 10F);
-			this.label2.Location = new System.Drawing.Point(33, 54);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(132, 17);
-			this.label2.TabIndex = 2;
-			this.label2.Text = "Lighting Control";
-			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.Font = new System.Drawing.Font("Tahoma", 8F);
-			this.label3.Location = new System.Drawing.Point(33, 103);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(126, 13);
-			this.label3.TabIndex = 3;
-			this.label3.Text = "Copyleft 2013 Vixen Developers";
-			// 
-			// label4
-			// 
-			this.label4.AutoSize = true;
-			this.label4.Font = new System.Drawing.Font("Tahoma", 8F);
-			this.label4.Location = new System.Drawing.Point(33, 73);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(109, 13);
-			this.label4.TabIndex = 4;
-			this.label4.Text = "www.vixenplus.com";
+			this.lblDescription.Font = new System.Drawing.Font("Arial Narrow", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblDescription.Location = new System.Drawing.Point(12, 54);
+			this.lblDescription.Name = "lblDescription";
+			this.lblDescription.Size = new System.Drawing.Size(323, 25);
+			this.lblDescription.TabIndex = 2;
+			this.lblDescription.Text = "PreoductDescripton";
+			this.lblDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// labelVersion
 			// 
-			this.labelVersion.AutoSize = true;
-			this.labelVersion.Font = new System.Drawing.Font("Tahoma", 8F);
-			this.labelVersion.Location = new System.Drawing.Point(90, 144);
+			this.labelVersion.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelVersion.ForeColor = System.Drawing.Color.Green;
+			this.labelVersion.Location = new System.Drawing.Point(12, 79);
 			this.labelVersion.Name = "labelVersion";
-			this.labelVersion.Size = new System.Drawing.Size(52, 13);
+			this.labelVersion.Size = new System.Drawing.Size(323, 25);
 			this.labelVersion.TabIndex = 6;
-			this.labelVersion.Text = "v. 0.90.0";
+			this.labelVersion.Text = "ProductVersion";
+			this.labelVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// llblURL
+			// 
+			this.llblURL.AutoSize = true;
+			this.llblURL.Font = new System.Drawing.Font("Arial Narrow", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.llblURL.Location = new System.Drawing.Point(12, 132);
+			this.llblURL.Name = "llblURL";
+			this.llblURL.Size = new System.Drawing.Size(102, 23);
+			this.llblURL.TabIndex = 7;
+			this.llblURL.TabStop = true;
+			this.llblURL.Text = "ProductURL";
+			this.llblURL.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llblURL_LinkClicked);
 			// 
 			// AboutDialog
 			// 
 			this.AcceptButton = this.btnOkay;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.BackColor = System.Drawing.Color.Gainsboro;
 			this.CancelButton = this.btnOkay;
-			this.ClientSize = new System.Drawing.Size(242, 214);
+			this.ClientSize = new System.Drawing.Size(347, 168);
+			this.ControlBox = false;
+			this.Controls.Add(this.llblURL);
 			this.Controls.Add(this.labelVersion);
-			this.Controls.Add(this.label4);
-			this.Controls.Add(this.label3);
-			this.Controls.Add(this.label2);
-			this.Controls.Add(this.label1);
+			this.Controls.Add(this.lblDescription);
+			this.Controls.Add(this.lblName);
 			this.Controls.Add(this.btnOkay);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+			this.MaximizeBox = false;
+			this.MinimizeBox = false;
 			this.Name = "AboutDialog";
 			this.Opacity = 0.75D;
 			this.ShowInTaskbar = false;
@@ -121,5 +115,7 @@ private System.Windows.Forms.Label labelVersion;
 			}
 			base.Dispose(disposing);
 		}
+
+		private LinkLabel llblURL;
 	}
 }

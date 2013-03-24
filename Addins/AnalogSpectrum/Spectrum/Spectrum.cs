@@ -1,4 +1,4 @@
-﻿namespace Spectrum
+namespace Spectrum
 {
     using System;
     using System.Collections.Generic;
@@ -70,7 +70,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

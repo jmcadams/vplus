@@ -1,4 +1,4 @@
-﻿namespace VixenEditor
+namespace VixenEditor
 {
 	using FMOD;
 	using System;
@@ -813,7 +813,7 @@
 			if (base.IsDirty)
 			{
 				string str = (this.m_sequence.Name == null) ? "this unnamed sequence" : this.m_sequence.Name;
-				none = MessageBox.Show(string.Format("Save changes to {0}?", str), "Vixen", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+				none = MessageBox.Show(string.Format("Save changes to {0}?", str), Vendor.ProductName, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 				if (none == DialogResult.Yes)
 				{
 					this.m_systemInterface.InvokeSave(this);
@@ -878,7 +878,7 @@
 
 		private void clearAllToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (MessageBox.Show("Clear all events in the sequence?", "Vixen", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+			if (MessageBox.Show("Clear all events in the sequence?", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 			{
 				Rectangle normalizedRange = this.m_normalizedRange;
 				this.m_normalizedRange = new Rectangle(0, 0, this.m_sequence.TotalEventPeriods, this.m_sequence.ChannelCount);
@@ -949,7 +949,7 @@
 			objectInContext.InheritPlugInDataFrom(this.m_sequence);
 			objectInContext.InheritSortsFrom(this.m_sequence);
 			ProfileManagerDialog dialog = new ProfileManagerDialog(objectInContext);
-			if ((dialog.ShowDialog() == DialogResult.OK) && (MessageBox.Show("Do you want to attach this sequence to the new profile?", "Vixen", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes))
+			if ((dialog.ShowDialog() == DialogResult.OK) && (MessageBox.Show("Do you want to attach this sequence to the new profile?", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes))
 			{
 				this.SetProfile(objectInContext);
 			}
@@ -970,7 +970,7 @@
 					if (this.m_drawingLevel < this.m_sequence.MinimumLevel)
 					{
 						this.SetDrawingLevel(this.m_sequence.MinimumLevel);
-						MessageBox.Show("Drawing level was below the sequence minimum, so it has been adjusted.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+						MessageBox.Show("Drawing level was below the sequence minimum, so it has been adjusted.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 					}
 				}
 				if (maximumLevel != this.m_sequence.MaximumLevel)
@@ -979,7 +979,7 @@
 					if (this.m_drawingLevel > this.m_sequence.MaximumLevel)
 					{
 						this.SetDrawingLevel(this.m_sequence.MaximumLevel);
-						MessageBox.Show("Drawing level was above the sequence maximum, so it has been adjusted.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+						MessageBox.Show("Drawing level was above the sequence maximum, so it has been adjusted.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 					}
 				}
 				if (eventPeriod != this.m_sequence.EventPeriod)
@@ -1009,7 +1009,7 @@
 
 		private void detachSequenceFromItsProfileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (MessageBox.Show("Do you wish to detach this sequence from its profile?\n\nThis will not cause anything to be deleted.\nVixen will attempt to reload channel and plugin data from the sequence.", "Vixen", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+			if (MessageBox.Show("Do you wish to detach this sequence from its profile?\n\nThis will not cause anything to be deleted.\nVixen will attempt to reload channel and plugin data from the sequence.", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 			{
 				this.SetProfile((Profile) null);
 			}
@@ -1240,7 +1240,7 @@
 
 		private void flattenProfileIntoSequenceToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (MessageBox.Show("This will detach the sequence from the profile and bring the profile data into the sequence.\nIs this what you want to do?", "Vixen", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.No)
+			if (MessageBox.Show("This will detach the sequence from the profile and bring the profile data into the sequence.\nIs this what you want to do?", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.No)
 			{
 				Profile profile = this.m_sequence.Profile;
 				this.m_sequence.Profile = null;
@@ -1491,7 +1491,7 @@
 		{
 			if (this.m_sequence.Profile != null)
 			{
-				MessageBox.Show("Can't import channel names when attached to a profile.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+				MessageBox.Show("Can't import channel names when attached to a profile.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 			}
 			else
 			{
@@ -4880,7 +4880,7 @@
 		{
 			if (this.m_sequence.Profile != null)
 			{
-				MessageBox.Show("This sequence is attached to a profile.\nChanges made to the profile's channel outputs will be reflected here.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+				MessageBox.Show("This sequence is attached to a profile.\nChanges made to the profile's channel outputs will be reflected here.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 			}
 			else
 			{
@@ -4944,7 +4944,7 @@
 		{
 			DialogResult result;
 			string path = string.Empty;
-			TextQueryDialog dialog = new TextQueryDialog("Vixen", "Name of the routine", string.Empty);
+			TextQueryDialog dialog = new TextQueryDialog(Vendor.ProductName, "Name of the routine", string.Empty);
 			do
 			{
 				if ((result = dialog.ShowDialog()) == DialogResult.OK)
@@ -4952,7 +4952,7 @@
 					path = Path.Combine(Paths.RoutinePath, Path.GetFileNameWithoutExtension(dialog.Response) + ".vir");
 					if (File.Exists(path))
 					{
-						result = MessageBox.Show("File already exists.  Overwrite?", "Vixen", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+						result = MessageBox.Show("File already exists.  Overwrite?", Vendor.ProductName, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 					}
 				}
 			}
@@ -4971,7 +4971,7 @@
 					writer.WriteLine();
 				}
 				writer.Close();
-				MessageBox.Show(string.Format("Routine \"{0}\" has been saved", Path.GetFileNameWithoutExtension(path)), "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+				MessageBox.Show(string.Format("Routine \"{0}\" has been saved", Path.GetFileNameWithoutExtension(path)), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 			}
 		}
 
@@ -4985,7 +4985,7 @@
 		{
 			VixenEditor.ToolStripManager.SaveSettings(this, this.m_preferences.XmlDoc.DocumentElement);
 			this.m_preferences.Flush();
-			MessageBox.Show("Done.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+			MessageBox.Show("Done.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 		}
 
 		private void scaleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -5110,7 +5110,7 @@
 		{
 			if (this.m_sequence.Profile != null)
 			{
-				MessageBox.Show("This sequence is attached to a profile.\nChanges to the profile affect all sequences attached to it.\n\nIf this is what you want to do, please use the profile manager.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+				MessageBox.Show("This sequence is attached to a profile.\nChanges to the profile affect all sequences attached to it.\n\nIf this is what you want to do, please use the profile manager.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 			}
 			else
 			{
@@ -5191,7 +5191,7 @@
 				}
 				if (flag)
 				{
-					if (MessageBox.Show("With the new channel count, some channels would refer to outputs that no longer exist.\nTo keep the sequence valid, channel outputs would have to be reset.\n\nDo you want to keep the new channel count?", "Vixen", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) != DialogResult.Yes)
+					if (MessageBox.Show("With the new channel count, some channels would refer to outputs that no longer exist.\nTo keep the sequence valid, channel outputs would have to be reset.\n\nDo you want to keep the new channel count?", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) != DialogResult.Yes)
 					{
 						this.textBoxChannelCount.Text = this.m_sequence.ChannelCount.ToString();
 						return;
@@ -5208,7 +5208,7 @@
 				this.pictureBoxChannels.Refresh();
 				this.pictureBoxGrid.Refresh();
 				base.IsDirty = true;
-				MessageBox.Show("Channel count has been updated.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+				MessageBox.Show("Channel count has been updated.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 			}
 		}
 
@@ -5293,7 +5293,7 @@
 			}
 			catch
 			{
-				MessageBox.Show("Cannot set the sequence length.\nThere is audio associated which would exceed that length.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+				MessageBox.Show("Cannot set the sequence length.\nThere is audio associated which would exceed that length.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 				this.textBoxProgramLength.Text = this.TimeString(this.m_sequence.Time);
 				return false;
 			}
@@ -5880,7 +5880,7 @@
 				{
 					if (result < this.m_sequence.ChannelCount)
 					{
-						if (MessageBox.Show("This will reduce the number of channels and potentially lose data.\n\nAccept new channel count?", "Vixen", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+						if (MessageBox.Show("This will reduce the number of channels and potentially lose data.\n\nAccept new channel count?", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 						{
 							this.SetChannelCount(result);
 						}
@@ -5897,7 +5897,7 @@
 				else
 				{
 					this.textBoxChannelCount.Text = this.m_sequence.ChannelCount.ToString();
-					MessageBox.Show("Please provide a valid number.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					MessageBox.Show("Please provide a valid number.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				}
 			}
 		}
@@ -5955,12 +5955,12 @@
 				if (num4 == 0)
 				{
 					this.textBoxProgramLength.Text = this.TimeString(this.m_sequence.Time);
-					MessageBox.Show("Not a valid format for time.\nUse one of the following:\n\nSeconds\nMinutes:Seconds\nSeconds.Milliseconds\nMinutes:Seconds.Milliseconds", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					MessageBox.Show("Not a valid format for time.\nUse one of the following:\n\nSeconds\nMinutes:Seconds\nSeconds.Milliseconds\nMinutes:Seconds.Milliseconds", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				}
 				else if (this.SetProgramTime(num4))
 				{
 					base.IsDirty = true;
-					MessageBox.Show("Sequence length has been updated.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+					MessageBox.Show("Sequence length has been updated.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 				}
 			}
 		}
@@ -6028,7 +6028,7 @@
 
 		private void toolStripButtonDeleteOrder_Click(object sender, EventArgs e)
 		{
-			if (MessageBox.Show(string.Format("Delete channel order '{0}'?", this.toolStripComboBoxChannelOrder.Text), "Vixen", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+			if (MessageBox.Show(string.Format("Delete channel order '{0}'?", this.toolStripComboBoxChannelOrder.Text), Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 			{
 				this.m_sequence.Sorts.Remove((Vixen.SortOrder) this.toolStripComboBoxChannelOrder.SelectedItem);
 				this.toolStripComboBoxChannelOrder.Items.RemoveAt(this.toolStripComboBoxChannelOrder.SelectedIndex);
@@ -6041,7 +6041,7 @@
 		{
 			if ((this.m_normalizedRange.Width == 0) || (this.m_normalizedRange.Height == 0))
 			{
-				MessageBox.Show("There are no cells to search", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+				MessageBox.Show("There are no cells to search", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 			}
 			else
 			{
@@ -6130,7 +6130,7 @@
 					{
 						str = this.m_sequence.EventValues[this.m_channelOrderMapping[this.m_normalizedRange.Top], this.m_normalizedRange.Left].ToString();
 					}
-					dialog = new TextQueryDialog("Vixen", "What intensity level (0-255)?", str);
+					dialog = new TextQueryDialog(Vendor.ProductName, "What intensity level (0-255)?", str);
 					if (dialog.ShowDialog() != DialogResult.OK)
 					{
 						dialog.Dispose();
@@ -6138,12 +6138,12 @@
 					}
 					if (!int.TryParse(dialog.Response, out result))
 					{
-						MessageBox.Show("Not a valid number.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+						MessageBox.Show("Not a valid number.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 						flag = false;
 					}
 					if ((result < 0) || (result > 0xff))
 					{
-						MessageBox.Show("Not a valid value.\nPlease select a value between 0 and 255.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+						MessageBox.Show("Not a valid value.\nPlease select a value between 0 and 255.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 						flag = false;
 					}
 					dialog.Dispose();
@@ -6155,7 +6155,7 @@
 					{
 						str = ((int) Math.Round((double) ((this.m_sequence.EventValues[this.m_channelOrderMapping[this.m_normalizedRange.Top], this.m_normalizedRange.Left] * 100f) / 255f), MidpointRounding.AwayFromZero)).ToString();
 					}
-					dialog = new TextQueryDialog("Vixen", "What % intensity (0-100)?", str);
+					dialog = new TextQueryDialog(Vendor.ProductName, "What % intensity (0-100)?", str);
 					if (dialog.ShowDialog() != DialogResult.OK)
 					{
 						dialog.Dispose();
@@ -6166,13 +6166,13 @@
 						result = (int) Math.Round((double) ((Convert.ToSingle(dialog.Response) * 255f) / 100f), MidpointRounding.AwayFromZero);
 						if ((result < 0) || (result > 0xff))
 						{
-							MessageBox.Show("Not a valid value.\nPlease select a value between 0 and 100.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+							MessageBox.Show("Not a valid value.\nPlease select a value between 0 and 100.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 							flag = false;
 						}
 					}
 					catch
 					{
-						MessageBox.Show("Not a valid number.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+						MessageBox.Show("Not a valid number.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 						flag = false;
 					}
 					finally
@@ -6533,7 +6533,7 @@
 				{
 					if (order2.Name == dialog.Response)
 					{
-						if ((no = MessageBox.Show("This name is already in use.\nDo you want to overwrite it?", "Vixen", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)) == DialogResult.Cancel)
+						if ((no = MessageBox.Show("This name is already in use.\nDo you want to overwrite it?", Vendor.ProductName, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)) == DialogResult.Cancel)
 						{
 							dialog.Dispose();
 							return;
@@ -6641,7 +6641,7 @@
 			}
 			catch (Exception exception)
 			{
-				MessageBox.Show(exception.Message, "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show(exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 		}
 
@@ -6653,7 +6653,7 @@
 			}
 			catch (Exception exception)
 			{
-				MessageBox.Show(exception.Message, "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show(exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 		}
 
@@ -6751,7 +6751,7 @@
 				if ((this.m_sequence.Profile != null) && (this.toolStripComboBoxChannelOrder.SelectedIndex == 0))
 				{
 					this.toolStripComboBoxChannelOrder.SelectedIndex = -1;
-					MessageBox.Show("This sequence is attached to a profile.\nChanges to the profile affect all sequences attached to it.\n\nIf this is what you want to do, please use the profile manager.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+					MessageBox.Show("This sequence is attached to a profile.\nChanges to the profile affect all sequences attached to it.\n\nIf this is what you want to do, please use the profile manager.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 				}
 				else
 				{
@@ -6759,7 +6759,7 @@
 					{
 						if (this.m_sequence.ChannelCount == 0)
 						{
-							MessageBox.Show("There are no channels to reorder.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+							MessageBox.Show("There are no channels to reorder.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 							return;
 						}
 						this.toolStripButtonDeleteOrder.Enabled = false;
@@ -7196,7 +7196,7 @@
 		{
 			get
 			{
-				return "Vixen Developers";
+				return "Vixen and VixenPlus Developers";
 			}
 		}
 

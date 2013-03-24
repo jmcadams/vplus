@@ -1,4 +1,4 @@
-﻿namespace K8055
+namespace K8055
 {
     using System;
     using System.Windows.Forms;
@@ -91,7 +91,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

@@ -1,4 +1,4 @@
-﻿namespace WattMeter
+namespace WattMeter
 {
     using System;
     using System.Xml;
@@ -31,7 +31,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

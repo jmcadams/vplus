@@ -1,4 +1,4 @@
-﻿namespace CometConversion
+namespace CometConversion
 {
     using System;
     using System.Drawing;
@@ -136,7 +136,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

@@ -185,7 +185,7 @@ namespace Vixen
                     }
                     catch (Exception exception)
                     {
-                        MessageBox.Show(exception.Message, "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MessageBox.Show(exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     }
                     finally
                     {

@@ -35,7 +35,7 @@ namespace DC_16 {
 		}
 
 		private void btnOK_Click(object sender, EventArgs e) {
-			if (((((this.cboGrp1Addr.SelectedIndex == -1) && (this.cboGrp2Addr.SelectedIndex == -1)) && (this.cboGrp3Addr.SelectedIndex == -1)) && (this.cboGrp4Addr.SelectedIndex == -1)) && (MessageBox.Show("No controllers have been selected to receive any of channel groupings.\nAre you sure that this is what you want to do?", "Vixen", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)) {
+			if (((((this.cboGrp1Addr.SelectedIndex == -1) && (this.cboGrp2Addr.SelectedIndex == -1)) && (this.cboGrp3Addr.SelectedIndex == -1)) && (this.cboGrp4Addr.SelectedIndex == -1)) && (MessageBox.Show("No controllers have been selected to receive any of channel groupings.\nAre you sure that this is what you want to do?", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)) {
 				base.DialogResult = System.Windows.Forms.DialogResult.None;
 			}
 			else {

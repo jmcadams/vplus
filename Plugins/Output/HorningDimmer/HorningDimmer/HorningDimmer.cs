@@ -1,4 +1,4 @@
-﻿namespace HorningDimmer
+namespace HorningDimmer
 {
     using System;
     using System.Runtime.InteropServices;
@@ -201,7 +201,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

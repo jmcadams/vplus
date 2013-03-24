@@ -435,10 +435,10 @@ namespace Vixen {
 						}
 					}
 					if (sourceFileName == null) {
-						MessageBox.Show(string.Format("Error while saving programs:\n\n{0}\n\nAffected file was successfully restored.", exception.Message), "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+						MessageBox.Show(string.Format("Error while saving programs:\n\n{0}\n\nAffected file was successfully restored.", exception.Message), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 					}
 					else {
-						MessageBox.Show(string.Format("Error while saving programs:\n\n{0}\n\nAffected file could not be restored.  It was backed up to {1}.", exception.Message, sourceFileName), "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+						MessageBox.Show(string.Format("Error while saving programs:\n\n{0}\n\nAffected file could not be restored.  It was backed up to {1}.", exception.Message, sourceFileName), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 					}
 				}
 			}

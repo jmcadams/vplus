@@ -108,7 +108,7 @@ namespace MIDIReader
 
         private void buttonAutoMap_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("This will remove all current connections and map notes to channels in order.\n\nDo you want to continue?", "Vixen", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("This will remove all current connections and map notes to channels in order.\n\nDo you want to continue?", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 this.m_keyChannelConnections.Clear();
                 this.m_channelKeyConnections.Clear();

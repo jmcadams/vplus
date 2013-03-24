@@ -215,7 +215,7 @@ namespace WattMeter {
 					this.textBoxChannelAmps.Text = (Convert.ToSingle(this.textBoxChannelWatts.Text) / ((float)Convert.ToInt32(this.textBoxVolts.Text))).ToString("f2");
 				}
 				catch {
-					MessageBox.Show("Make sure that the amps are a valid decimal value and watts is a valid integer value.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					MessageBox.Show("Make sure that the amps are a valid decimal value and watts is a valid integer value.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				}
 			}
 			else {
@@ -399,7 +399,7 @@ namespace WattMeter {
 						this.textBoxChannelAmps.Text = (Convert.ToSingle(text) / ((float)Convert.ToInt32(this.textBoxVolts.Text))).ToString("f2");
 					}
 					catch {
-						MessageBox.Show("Make sure that the watts and volts are a valid integer value.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+						MessageBox.Show("Make sure that the watts and volts are a valid integer value.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 						base.ActiveControl = this.textBoxChannelWatts;
 						return;
 					}
@@ -409,7 +409,7 @@ namespace WattMeter {
 						text = ((int)Math.Round((double)(Convert.ToSingle(this.textBoxChannelAmps.Text) * Convert.ToInt32(this.textBoxVolts.Text)), 0)).ToString();
 					}
 					catch {
-						MessageBox.Show("Make sure that the amps are a valid decimal value and volts is a valid integer value.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+						MessageBox.Show("Make sure that the amps are a valid decimal value and volts is a valid integer value.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 						base.ActiveControl = this.textBoxChannelAmps;
 						return;
 					}

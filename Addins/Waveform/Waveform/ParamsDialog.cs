@@ -40,9 +40,9 @@ namespace Waveform {
 		private void buttonStart_Click(object sender, EventArgs e) {
 			if (this.buttonStart.Text == "Start") {
 				if (this.listBoxChannels.SelectedItems.Count == 0) {
-					MessageBox.Show("There are no channels selected", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					MessageBox.Show("There are no channels selected", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				}
-				else if ((!this.radioButtonChannelRange.Checked || (this.listBoxChannels.SelectedItems.Count != 1)) || (MessageBox.Show("You selected to use multiple channels but only selected one channel.\nIs this really what you want?", "Vixen", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.No)) {
+				else if ((!this.radioButtonChannelRange.Checked || (this.listBoxChannels.SelectedItems.Count != 1)) || (MessageBox.Show("You selected to use multiple channels but only selected one channel.\nIs this really what you want?", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.No)) {
 					RESULT result;
 					this.buttonStart.Enabled = false;
 					SOUND_TYPE rAW = SOUND_TYPE.RAW;
@@ -89,7 +89,7 @@ namespace Waveform {
 					this.m_scale = Convert.ToSingle(this.textBoxScale.Text);
 				}
 				catch {
-					MessageBox.Show(this.textBoxScale.Text + " is not a valid number.\nReverting to a default scale of 1.0", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+					MessageBox.Show(this.textBoxScale.Text + " is not a valid number.\nReverting to a default scale of 1.0", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 					this.m_scale = 1f;
 				}
 			}
@@ -144,7 +144,7 @@ namespace Waveform {
 			}
 			this.label1.Text = "Completed";
 			this.m_completed = true;
-			MessageBox.Show("Done.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+			MessageBox.Show("Done.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 			base.DialogResult = System.Windows.Forms.DialogResult.OK;
 			base.Close();
 		}

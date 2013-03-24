@@ -31,15 +31,15 @@ namespace FanslerDimmer {
 				int num = Convert.ToInt32(this.textBoxFrom.Text);
 				int num2 = Convert.ToInt32(this.textBoxTo.Text);
 				if ((num < this.m_start) || (num > this.m_end)) {
-					MessageBox.Show("Range starting value is invalid", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+					MessageBox.Show("Range starting value is invalid", Vixen.Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 					e.Cancel = true;
 				}
 				else if ((num2 < this.m_start) || (num2 > this.m_end)) {
-					MessageBox.Show("Range ending value is invalid", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+					MessageBox.Show("Range ending value is invalid", Vixen.Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 					e.Cancel = true;
 				}
 				else if (num > num2) {
-					MessageBox.Show("Range starting value cannot be greater than the ending value", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+					MessageBox.Show("Range starting value cannot be greater than the ending value", Vixen.Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 					e.Cancel = true;
 				}
 				else {

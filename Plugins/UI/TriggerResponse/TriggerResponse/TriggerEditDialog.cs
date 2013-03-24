@@ -32,7 +32,7 @@ namespace TriggerResponse {
 
 		private void buttonOK_Click(object sender, EventArgs e) {
 			if ((((this.comboBoxTriggers.SelectedIndex == -1) || (this.comboBoxLines.SelectedIndex == -1)) || (this.textBoxDescription.Text.Length == 0)) || (this.textBoxSequence.Text.Length == 0)) {
-				MessageBox.Show("All items are required.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+				MessageBox.Show("All items are required.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 				base.DialogResult = System.Windows.Forms.DialogResult.None;
 			}
 			else {

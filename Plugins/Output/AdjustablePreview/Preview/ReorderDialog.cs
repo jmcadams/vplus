@@ -24,22 +24,22 @@ namespace Preview {
 
 		private void buttonClear_Click(object sender, EventArgs e) {
 			if (this.comboBoxTo.SelectedIndex == -1) {
-				MessageBox.Show("Please select a channel to clear.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+				MessageBox.Show("Please select a channel to clear.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 			}
 			else {
 				this.m_channelDictionary.Remove(this.comboBoxTo.SelectedIndex);
-				MessageBox.Show(string.Format("Channel '{0}' has been cleared.", (Channel)this.comboBoxTo.SelectedItem), "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+				MessageBox.Show(string.Format("Channel '{0}' has been cleared.", (Channel)this.comboBoxTo.SelectedItem), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 			}
 		}
 
 		private void buttonCopy_Click(object sender, EventArgs e) {
 			if ((this.comboBoxFrom.SelectedIndex == -1) || (this.comboBoxTo.SelectedIndex == -1)) {
-				MessageBox.Show("Please select channels to copy from and to.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+				MessageBox.Show("Please select channels to copy from and to.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 			}
 			else {
 				List<uint> list = null;
 				if (!this.m_channelDictionary.TryGetValue(this.comboBoxFrom.SelectedIndex, out list)) {
-					MessageBox.Show(string.Format("{0} has no cells drawn.", (Channel)this.comboBoxFrom.SelectedItem), "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+					MessageBox.Show(string.Format("{0} has no cells drawn.", (Channel)this.comboBoxFrom.SelectedItem), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 				}
 				else {
 					List<uint> list2 = null;
@@ -51,7 +51,7 @@ namespace Preview {
 						list2.Clear();
 					}
 					list2.AddRange(list);
-					MessageBox.Show(string.Format("Channel '{0}' has been copied to channel '{1}'.", (Channel)this.comboBoxFrom.SelectedItem, (Channel)this.comboBoxTo.SelectedItem), "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+					MessageBox.Show(string.Format("Channel '{0}' has been copied to channel '{1}'.", (Channel)this.comboBoxFrom.SelectedItem, (Channel)this.comboBoxTo.SelectedItem), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 				}
 			}
 		}

@@ -1,4 +1,4 @@
-﻿namespace DMX_512
+namespace DMX_512
 {
     using IDMX;
     using System;
@@ -58,7 +58,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

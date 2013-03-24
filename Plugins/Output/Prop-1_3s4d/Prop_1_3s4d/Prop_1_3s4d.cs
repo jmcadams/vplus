@@ -1,4 +1,4 @@
-﻿namespace Prop_1_3s4d
+namespace Prop_1_3s4d
 {
     using System;
     using System.IO.Ports;
@@ -98,7 +98,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

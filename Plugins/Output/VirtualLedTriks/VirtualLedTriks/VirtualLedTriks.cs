@@ -1,4 +1,4 @@
-﻿namespace VirtualLedTriks
+namespace VirtualLedTriks
 {
     using LedTriksUtil;
     using System;
@@ -253,7 +253,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

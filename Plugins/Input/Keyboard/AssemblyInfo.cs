@@ -7,7 +7,7 @@
 [assembly: System.Reflection.AssemblyFileVersion("1.0.0.0")]
 [assembly: System.Runtime.InteropServices.Guid("a90f3f7d-d0a3-492d-ab87-c2050c78adb3")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
-[assembly: System.Reflection.AssemblyCopyright("Copyleft 2013 Vixen Developers")]
+[assembly: System.Reflection.AssemblyCopyright("Copyleft 2013")]
 [assembly: System.Reflection.AssemblyProduct("Keyboard")]
 [assembly: System.Reflection.AssemblyCompany("")]
 [assembly: System.Reflection.AssemblyConfiguration("")]

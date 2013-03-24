@@ -1,4 +1,4 @@
-﻿namespace FanslerDimmer
+namespace FanslerDimmer
 {
     using System;
     using System.Collections.Generic;
@@ -204,7 +204,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

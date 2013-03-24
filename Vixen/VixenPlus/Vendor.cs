@@ -1,16 +1,21 @@
-﻿namespace Vixen
+namespace Vixen
 {
-    using System;
+	using System;
 
-    internal static class Vendor
-    {
-        public static string DataExtension = "vda";
-        public static string Name = "Vixen Developers";
-        public static string ProductName = "VixenPlus";
-        public static string ProgramExtension = "vpr";
-        public static string SequenceExtension = "vix";
+	public static class Vendor
+	{
+		public static string ProductDescription = "Lighting Control Software";
+		public static string ProductName = "VixenPlus";
+		public static string ProductURL = "http://www.vixenplus.com/";
+
+		public static string DataExtension = "vda";
+		public static string ProgramExtension = "vpr";
+		public static string SequenceExtension = "vix";
+
 		public static string SupportURL = "http://diychristmas.org/phpbb/viewforum.php?f=34";
-        public static string UpdateRoot = "/version";
-    }
+	
+		public static string UpdateURL = "http://www.vixenplus.com/updates/";
+		public static string UpdateFile = "/ver.xml";
+	}
 }
 

@@ -1,4 +1,4 @@
-﻿namespace RGBLEDAddIn
+namespace RGBLEDAddIn
 {
     using System;
     using System.Windows.Forms;
@@ -52,7 +52,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

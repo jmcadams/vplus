@@ -1,4 +1,4 @@
-﻿namespace Vixen
+namespace Vixen
 {
     using System;
     using System.ComponentModel;
@@ -38,7 +38,7 @@
         {
             if (((this.textBoxManufacturer.Text.Trim().Length == 0) || (this.textBoxLightCount.Text.Trim().Length == 0)) || (this.textBoxController.Text.Trim().Length == 0))
             {
-                MessageBox.Show("All fields are required.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                MessageBox.Show("All fields are required.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
             }
             else if (this.m_clr == null)
             {

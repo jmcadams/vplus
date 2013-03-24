@@ -1,4 +1,4 @@
-﻿namespace LedTriks
+namespace LedTriks
 {
     using LedTriksUtil;
     using System;
@@ -114,7 +114,7 @@
         {
             if (this.m_generator.TextFont == null)
             {
-                MessageBox.Show("Please select a font first.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                MessageBox.Show("Please select a font first.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
             }
             else
             {
@@ -191,7 +191,7 @@
 
         private void buttonRemove_Click(object sender, EventArgs e)
         {
-            if ((this.m_frames.Count != 0) && (!this.confirmOnFrameRemoveToolStripMenuItem.Checked || (MessageBox.Show("Remove this frame?", "Vixen", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.No)))
+            if ((this.m_frames.Count != 0) && (!this.confirmOnFrameRemoveToolStripMenuItem.Checked || (MessageBox.Show("Remove this frame?", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.No)))
             {
                 this.m_frames.RemoveAt(this.m_currentFrameIndex);
                 if (this.m_frames.Count > 0)
@@ -210,7 +210,7 @@
 
         private void buttonRemoveAll_Click(object sender, EventArgs e)
         {
-            if ((this.m_frames.Count != 0) && (!this.confirmOnFrameRemoveToolStripMenuItem.Checked || (MessageBox.Show("Remove ALL frames?", "Vixen", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.No)))
+            if ((this.m_frames.Count != 0) && (!this.confirmOnFrameRemoveToolStripMenuItem.Checked || (MessageBox.Show("Remove ALL frames?", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.No)))
             {
                 this.m_frames.Clear();
                 this.trackBarFrame.Maximum = this.trackBarFrame.Minimum;
@@ -1008,7 +1008,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

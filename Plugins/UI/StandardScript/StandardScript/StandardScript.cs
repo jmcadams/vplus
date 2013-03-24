@@ -1,4 +1,4 @@
-﻿namespace StandardScript
+namespace StandardScript
 {
     using ScriptEngine;
     using System;
@@ -281,9 +281,9 @@
 
         private bool ImportChannels(IEnumerable<Channel> sourceChannelCollection)
         {
-            if (this.DuplicateChannelNames(sourceChannelCollection) && (MessageBox.Show("There are channels with duplicate names.\nDo you want this correctly automatically?", "Vixen", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes))
+            if (this.DuplicateChannelNames(sourceChannelCollection) && (MessageBox.Show("There are channels with duplicate names.\nDo you want this correctly automatically?", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes))
             {
-                MessageBox.Show("Channel names will not be imported.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                MessageBox.Show("Channel names will not be imported.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 return false;
             }
             List<string> list = new List<string>();
@@ -315,7 +315,7 @@
                 {
                     this.UpdateChannelList();
                 }
-                MessageBox.Show(this.m_sequence.Channels.Count.ToString() + " channels have been imported.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                MessageBox.Show(this.m_sequence.Channels.Count.ToString() + " channels have been imported.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
         }
 
@@ -623,7 +623,7 @@
             }
             else
             {
-                MessageBox.Show("Can't edit channel names when the sequence is attached to a profile.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                MessageBox.Show("Can't edit channel names when the sequence is attached to a profile.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
             }
         }
 
@@ -785,7 +785,7 @@
         {
             if ((e.CloseReason == CloseReason.UserClosing) && (base.IsDirty || this.DocsDirty()))
             {
-                switch (MessageBox.Show("Save changes?", "Vixen", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
+                switch (MessageBox.Show("Save changes?", Vendor.ProductName, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
                 {
                     case DialogResult.OK:
                         ((ISystem) Interfaces.Available["ISystem"]).InvokeSave(this);
@@ -846,7 +846,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

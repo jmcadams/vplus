@@ -1,19 +1,17 @@
 ﻿namespace Vixen {
-	using AppUpdate;
-	using FMOD;
 	using System;
 	using System.Collections.Generic;
-	using System.ComponentModel;
 	using System.Diagnostics;
 	using System.Drawing;
 	using System.IO;
 	using System.Reflection;
 	using System.Resources;
-	using System.Runtime.CompilerServices;
 	using System.Text;
 	using System.Threading;
 	using System.Windows.Forms;
 	using System.Xml;
+	using AppUpdate;
+	using FMOD;
 	using Vixen.Dialogs;
 
 	internal partial class Form1 : Form, ISystem {
@@ -38,7 +36,7 @@
 		public Form1(string[] args) {
 			List<string> list = new List<string>();
 			list.AddRange(args);
-			this.LoadVendorData();
+			//this.LoadVendorData();
 			this.SetDataPath();
 			this.Ensure(Paths.DataPath);
 			this.Ensure(Paths.SequencePath);
@@ -95,7 +93,7 @@
 			finally {
 				this.Cursor = Cursors.Default;
 			}
-			this.scheduleTimer.Interval = this.m_preferences.GetInteger("TimerCheckFrequency") * 0x3e8;
+			this.scheduleTimer.Interval = this.m_preferences.GetInteger("TimerCheckFrequency") * 1000;
 			this.m_timers = new Timers();
 			if (File.Exists(this.m_timersPath)) {
 				this.m_timers.LoadFromXml(Xml.LoadDocument(this.m_timersPath));
@@ -196,9 +194,9 @@
 		}
 
 		private void CheckForUpdates() {
-			string updateServerURI = "http://www.vixenlights.com";
+			string updateServerURI = Vendor.UpdateFile;
 			Version version = Assembly.GetExecutingAssembly().GetName().Version;
-			string updateRootPath = string.Format("{0}/{1}.{2}", Vendor.UpdateRoot, version.Major, version.Minor);
+			string updateRootPath = string.Format("{0}/{1}.{2}", Vendor.UpdateFile, version.Major, version.Minor);
 			string path = Path.Combine(Paths.DataPath, "target.update");
 			if (File.Exists(path)) {
 				string str4;
@@ -590,20 +588,20 @@
 			}
 		}
 
-		private void LoadVendorData() {
-			string path = Path.Combine(Paths.BinaryPath, "Vendor.dll");
-			if (File.Exists(path)) {
-				ResourceManager manager = new ResourceManager("Vixen.Properties.Resources", Assembly.LoadFile(path));
-				Vendor.ProductName = manager.GetString("VendorProductName");
-				Vendor.Name = manager.GetString("VendorName");
-				Vendor.SequenceExtension = manager.GetString("SequenceFileExtension");
-				Vendor.ProgramExtension = manager.GetString("ProgramFileExtension");
-				Vendor.DataExtension = manager.GetString("DataFileExtension");
-				Vendor.UpdateRoot = manager.GetString("UpdateRoot");
-				Vendor.SupportURL = manager.GetString("SupportURL");
-				manager.ReleaseAllResources();
-			}
-		}
+		//private void LoadVendorData() {
+		//    string path = Path.Combine(Paths.BinaryPath, "Vendor.dll");
+		//    if (File.Exists(path)) {
+		//        ResourceManager manager = new ResourceManager("Vixen.Properties.Resources", Assembly.LoadFile(path));
+		//        Vendor.ProductName = manager.GetString("VendorProductName");
+		//        Vendor.Name = manager.GetString("VendorName");
+		//        Vendor.SequenceExtension = manager.GetString("SequenceFileExtension");
+		//        Vendor.ProgramExtension = manager.GetString("ProgramFileExtension");
+		//        Vendor.DataExtension = manager.GetString("DataFileExtension");
+		//        Vendor.UpdateRoot = manager.GetString("UpdateRoot");
+		//        Vendor.SupportURL = manager.GetString("SupportURL");
+		//        manager.ReleaseAllResources();
+		//    }
+		//}
 
 		private void m_preferences_PreferenceChange(string preferenceName) {
 			switch (preferenceName) {

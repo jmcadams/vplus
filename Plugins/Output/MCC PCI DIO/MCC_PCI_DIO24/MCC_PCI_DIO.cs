@@ -1,4 +1,4 @@
-﻿namespace MCC_PCI_DIO24
+namespace MCC_PCI_DIO24
 {
     using MccDaq;
     using System;
@@ -90,7 +90,7 @@
 
         public void Setup()
         {
-            MessageBox.Show(this.m_pinCount.ToString() + " pins have been setup for output.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            MessageBox.Show(this.m_pinCount.ToString() + " pins have been setup for output.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
         public void Shutdown()
@@ -110,7 +110,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

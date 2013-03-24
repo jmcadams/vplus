@@ -1,4 +1,4 @@
-﻿namespace EventDataLogger
+namespace EventDataLogger
 {
     using System;
     using System.IO;
@@ -60,7 +60,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 

@@ -1,4 +1,4 @@
-﻿namespace RC_4 {
+namespace RC_4 {
 	using System;
 	using System.ComponentModel;
 	using System.Drawing;
@@ -30,7 +30,7 @@
 
 		private void btnOK_Click(object sender, EventArgs e) {
 			if ((this.cboBaud.SelectedIndex == -1) || (this.cboAddress.SelectedIndex == -1)) {
-				MessageBox.Show("Please select both a baud rate and an address.", "Vixen", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+				MessageBox.Show("Please select both a baud rate and an address.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 				base.DialogResult = DialogResult.None;
 			}
 			else {

@@ -1,4 +1,4 @@
-﻿namespace Parallel12
+namespace Parallel12
 {
     using System;
     using System.Runtime.InteropServices;
@@ -84,7 +84,7 @@
         {
             get
             {
-                return "Vixen Developers";
+                return "Vixen and VixenPlus Developers";
             }
         }
 
