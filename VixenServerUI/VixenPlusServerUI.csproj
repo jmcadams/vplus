@@ -77,28 +77,24 @@
     <Compile Include="Global.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenServerUI\Form1.cs">
+    <Compile Include="VixenPlusServerUI\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VixenServerUI\Form1.Designer.cs">
+    <Compile Include="VixenPlusServerUI\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="VixenServerUI\PasswordDialog.cs">
+    <Compile Include="VixenPlusServerUI\PasswordDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VixenServerUI\PasswordDialog.Designer.cs">
+    <Compile Include="VixenPlusServerUI\PasswordDialog.Designer.cs">
       <DependentUpon>PasswordDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="VixenServerUI\Program.cs">
+    <Compile Include="VixenPlusServerUI\Program.cs" />
+    <Compile Include="VixenPlusServerUI\Xml.cs" />
+    <Compile Include="VixenPlusServerUI\Properties\Resources.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenServerUI\Properties\Resources.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="VixenServerUI\Properties\Settings.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="VixenServerUI\Xml.cs">
+    <Compile Include="VixenPlusServerUI\Properties\Settings.cs">
       <SubType>Code</SubType>
     </Compile>
     <EmbeddedResource Include="VixenServerUI.Form1.resources" />

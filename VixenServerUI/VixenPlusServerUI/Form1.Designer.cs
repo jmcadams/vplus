@@ -1,10 +1,9 @@
 using System;
-using System.Windows.Forms;
-using System.Drawing;
 using System.ComponentModel;
-using System.Collections;
+using System.Drawing;
+using System.Windows.Forms;
 
-namespace VixenServerUI
+namespace VixenPlusServerUI
 {
 	public partial class Form1 {
 
@@ -31,15 +30,15 @@ namespace VixenServerUI
 			this.labelServerStatus = new Label();
 			this.buttonStop = new Button();
 			this.buttonStart = new Button();
-			this.notifyIcon = new NotifyIcon(this.components);
+			this._notifyIcon = new NotifyIcon(this.components);
 			this.contextMenuStrip = new ContextMenuStrip(this.components);
-			this.startToolStripMenuItem = new ToolStripMenuItem();
-			this.stopToolStripMenuItem = new ToolStripMenuItem();
-			this.menuStrip = new MenuStrip();
-			this.passwordToolStripMenuItem = new ToolStripMenuItem();
+			this._startToolStripMenuItem = new ToolStripMenuItem();
+			this._stopToolStripMenuItem = new ToolStripMenuItem();
+			this._menuStrip = new MenuStrip();
+			this._passwordToolStripMenuItem = new ToolStripMenuItem();
 			this.groupBox1.SuspendLayout();
 			this.contextMenuStrip.SuspendLayout();
-			this.menuStrip.SuspendLayout();
+			this._menuStrip.SuspendLayout();
 			base.SuspendLayout();
 			this.groupBox1.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top;
 			this.groupBox1.Controls.Add(this.buttonClearLog);
@@ -98,35 +97,35 @@ namespace VixenServerUI
 			this.buttonStart.Text = "Start server";
 			this.buttonStart.UseVisualStyleBackColor = true;
 			this.buttonStart.Click += new EventHandler(this.buttonStart_Click);
-			this.notifyIcon.ContextMenuStrip = this.contextMenuStrip;
-			this.notifyIcon.Text = "Vixen Server (stopped)";
-			this.notifyIcon.Visible = true;
-			this.notifyIcon.DoubleClick += new EventHandler(this.notifyIcon_DoubleClick);
-			this.contextMenuStrip.Items.AddRange(new ToolStripItem[] { this.startToolStripMenuItem, this.stopToolStripMenuItem });
+			this._notifyIcon.ContextMenuStrip = this.contextMenuStrip;
+			this._notifyIcon.Text = "Vixen Server (stopped)";
+			this._notifyIcon.Visible = true;
+			this._notifyIcon.DoubleClick += new EventHandler(this.notifyIcon_DoubleClick);
+			this.contextMenuStrip.Items.AddRange(new ToolStripItem[] { this._startToolStripMenuItem, this._stopToolStripMenuItem });
 			this.contextMenuStrip.Name = "contextMenuStrip";
 			this.contextMenuStrip.Size = new Size(110, 0x30);
-			this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-			this.startToolStripMenuItem.Size = new Size(0x6d, 0x16);
-			this.startToolStripMenuItem.Text = "Start";
-			this.startToolStripMenuItem.Click += new EventHandler(this.startToolStripMenuItem_Click);
-			this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-			this.stopToolStripMenuItem.Size = new Size(0x6d, 0x16);
-			this.stopToolStripMenuItem.Text = "Stop";
-			this.stopToolStripMenuItem.Click += new EventHandler(this.stopToolStripMenuItem_Click);
-			this.menuStrip.Items.AddRange(new ToolStripItem[] { this.passwordToolStripMenuItem });
-			this.menuStrip.Location = new Point(0, 0);
-			this.menuStrip.Name = "menuStrip";
-			this.menuStrip.Size = new Size(0x188, 0x18);
-			this.menuStrip.TabIndex = 3;
-			this.menuStrip.Text = "menuStrip1";
-			this.passwordToolStripMenuItem.Name = "passwordToolStripMenuItem";
-			this.passwordToolStripMenuItem.Size = new Size(0x41, 20);
-			this.passwordToolStripMenuItem.Text = "Password";
-			this.passwordToolStripMenuItem.Click += new EventHandler(this.passwordToolStripMenuItem_Click);
+			this._startToolStripMenuItem.Name = "startToolStripMenuItem";
+			this._startToolStripMenuItem.Size = new Size(0x6d, 0x16);
+			this._startToolStripMenuItem.Text = "Start";
+			this._startToolStripMenuItem.Click += new EventHandler(this.startToolStripMenuItem_Click);
+			this._stopToolStripMenuItem.Name = "stopToolStripMenuItem";
+			this._stopToolStripMenuItem.Size = new Size(0x6d, 0x16);
+			this._stopToolStripMenuItem.Text = "Stop";
+			this._stopToolStripMenuItem.Click += new EventHandler(this.stopToolStripMenuItem_Click);
+			this._menuStrip.Items.AddRange(new ToolStripItem[] { this._passwordToolStripMenuItem });
+			this._menuStrip.Location = new Point(0, 0);
+			this._menuStrip.Name = "_menuStrip";
+			this._menuStrip.Size = new Size(0x188, 0x18);
+			this._menuStrip.TabIndex = 3;
+			this._menuStrip.Text = "menuStrip1";
+			this._passwordToolStripMenuItem.Name = "passwordToolStripMenuItem";
+			this._passwordToolStripMenuItem.Size = new Size(0x41, 20);
+			this._passwordToolStripMenuItem.Text = "Password";
+			this._passwordToolStripMenuItem.Click += new EventHandler(this.passwordToolStripMenuItem_Click);
 			base.AutoScaleDimensions = new SizeF(6f, 13f);
 			base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			base.ClientSize = new Size(0x188, 0x173);
-			base.Controls.Add(this.menuStrip);
+			base.Controls.Add(this._menuStrip);
 			base.Controls.Add(this.groupBox1);
 			base.MaximizeBox = false;
 			base.Name = "Form1";
@@ -138,8 +137,8 @@ namespace VixenServerUI
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.contextMenuStrip.ResumeLayout(false);
-			this.menuStrip.ResumeLayout(false);
-			this.menuStrip.PerformLayout();
+			this._menuStrip.ResumeLayout(false);
+			this._menuStrip.PerformLayout();
 			base.ResumeLayout(false);
 			base.PerformLayout();
 		}

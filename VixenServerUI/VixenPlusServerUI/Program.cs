@@ -1,9 +1,9 @@
-﻿namespace VixenServerUI
-{
-    using System;
-    using System.Windows.Forms;
+using System;
+using System.Windows.Forms;
 
-    internal static class Program
+namespace VixenPlusServerUI
+{
+	internal static class Program
     {
         [STAThread]
         private static void Main(string[] args)

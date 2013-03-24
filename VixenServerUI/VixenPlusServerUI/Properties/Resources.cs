@@ -1,4 +1,4 @@
-﻿namespace VixenServerUI.Properties
+﻿namespace VixenPlusServerUI.Properties
 {
     using System;
     using System.CodeDom.Compiler;
