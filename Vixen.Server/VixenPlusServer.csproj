@@ -77,19 +77,19 @@
     <Compile Include="Global.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\ExecutionClientStub.cs">
+    <Compile Include="VixenPlus\ExecutionClientStub.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\ListenerParams.cs">
+    <Compile Include="VixenPlus\ListenerParams.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\Server.cs">
+    <Compile Include="VixenPlus\Server.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\VixenSequenceProgram.cs">
+    <Compile Include="VixenPlus\VixenSequenceProgram.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\Xml.cs">
+    <Compile Include="VixenPlus\Xml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

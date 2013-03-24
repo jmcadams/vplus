@@ -1,7 +1,6 @@
 ﻿namespace VixenPlus
 {
-    using System;
-    using System.Collections.Generic;
+	using System.Collections.Generic;
 
     internal class VixenSequenceProgram
     {
@@ -11,7 +10,7 @@
 
         public VixenSequenceProgram(byte[] sequenceProgram)
         {
-            this.Program = sequenceProgram;
+            Program = sequenceProgram;
         }
     }
 }

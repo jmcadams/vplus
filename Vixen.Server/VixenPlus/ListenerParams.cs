@@ -1,25 +1,24 @@
 ﻿namespace VixenPlus
 {
-    using System;
-    using System.Net.Sockets;
+	using System.Net.Sockets;
     using System.Threading;
 
     internal class ListenerParams
     {
-        private WaitCallback m_callback;
-        private TcpListener m_listener;
+        private readonly WaitCallback _callback;
+        private readonly TcpListener _listener;
 
         public ListenerParams(TcpListener listener, WaitCallback callback)
         {
-            this.m_listener = listener;
-            this.m_callback = callback;
+            _listener = listener;
+            _callback = callback;
         }
 
         public WaitCallback Callback
         {
             get
             {
-                return this.m_callback;
+                return _callback;
             }
         }
 
@@ -27,7 +26,7 @@
         {
             get
             {
-                return this.m_listener;
+                return _listener;
             }
         }
     }
