@@ -9,8 +9,6 @@ namespace VixenPlus
 {
 	internal class InputPlugins : HardwarePlugins
 	{
-		private const string INPUT_PLUGIN_INTERFACE_NAME = "IInputPlugin";
-
 		public static IHardwarePlugin FindPlugin(string pluginName)
 		{
 			return FindPlugin(pluginName, Paths.InputPluginPath, "IInputPlugin");
@@ -39,29 +37,36 @@ namespace VixenPlus
 				var builder = new StringBuilder();
 				var dialog = new ProgressDialog();
 				dialog.Show();
-				int num = 0;
 				foreach (XmlNode node in allPluginData)
 				{
-					string pluginName = node.Attributes["name"].Value;
-					dialog.Message = "Verifying " + pluginName;
-					if (FindPlugin(pluginName) == null)
+					if (node.Attributes != null)
 					{
-						XmlDocument targetDoc = Xml.CreateXmlDocument(node.OwnerDocument.DocumentElement.Name);
-						Xml.CloneNode(targetDoc, node, true);
-						Host.GetUniqueKey();
-						string str = string.Format("{0}.{1}.{2}.{3}.vda",
-						                           new object[]
-							                           {
-								                           _object.Name, node.Attributes["name"].Value, DateTime.Today.ToString("MMddyyyy"),
-								                           DateTime.Now.ToString("HHmmssfff")
-							                           });
-						targetDoc.Save(Path.Combine(Paths.ImportExportPath, str));
-						builder.Append(str + "\n");
-						node.ParentNode.RemoveChild(node);
-					}
-					else
-					{
-						num++;
+						string pluginName = node.Attributes["name"].Value;
+						dialog.Message = "Verifying " + pluginName;
+						if (FindPlugin(pluginName) == null)
+						{
+							if (node.OwnerDocument != null)
+							{
+								if (node.OwnerDocument.DocumentElement != null)
+								{
+									XmlDocument targetDoc = Xml.CreateXmlDocument(node.OwnerDocument.DocumentElement.Name);
+									Xml.CloneNode(targetDoc, node, true);
+									Host.GetUniqueKey();
+									string str = string.Format("{0}.{1}.{2}.{3}.vda",
+									                           new object[]
+										                           {
+											                           _object.Name, node.Attributes["name"].Value, DateTime.Today.ToString("MMddyyyy"),
+											                           DateTime.Now.ToString("HHmmssfff")
+										                           });
+									targetDoc.Save(Path.Combine(Paths.ImportExportPath, str));
+									builder.Append(str + "\n");
+								}
+							}
+							if (node.ParentNode != null)
+							{
+								node.ParentNode.RemoveChild(node);
+							}
+						}
 					}
 				}
 				dialog.Hide();

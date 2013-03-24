@@ -6,20 +6,20 @@ namespace VixenPlus
 {
 	internal partial class SoundDeviceDialog : Form
 	{
-		private readonly Preference2 m_preferences;
-		private bool m_internal;
-		private int m_lastSelection = -1;
+		private readonly Preference2 _preferences;
+		private bool _internal;
+		private int _lastSelection = -1;
 
 		public SoundDeviceDialog(Preference2 preferences)
 		{
 			InitializeComponent();
-			m_preferences = preferences;
+			_preferences = preferences;
 		}
 
 		private void buttonSet_Click(object sender, EventArgs e)
 		{
-			m_preferences.SetInteger("SoundDevice", comboBoxDevice.SelectedIndex, 0);
-			m_preferences.Flush();
+			_preferences.SetInteger("SoundDevice", comboBoxDevice.SelectedIndex, 0);
+			_preferences.Flush();
 			buttonSet.Enabled = false;
 			MessageBox.Show("Please restart the application for this change to take effect", Vendor.ProductName,
 			                MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
@@ -27,23 +27,23 @@ namespace VixenPlus
 
 		private void comboBoxDevice_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (!m_internal)
+			if (!_internal)
 			{
-				buttonSet.Enabled = m_lastSelection != comboBoxDevice.SelectedIndex;
-				m_lastSelection = comboBoxDevice.SelectedIndex;
+				buttonSet.Enabled = _lastSelection != comboBoxDevice.SelectedIndex;
+				_lastSelection = comboBoxDevice.SelectedIndex;
 			}
 		}
 
 
 		private void SoundDeviceDialog_Load(object sender, EventArgs e)
 		{
-			comboBoxDevice.Items.AddRange(fmod.GetSoundDeviceList());
-			int integer = m_preferences.GetInteger("SoundDevice");
+			comboBoxDevice.Items.AddRange(new object[] { fmod.GetSoundDeviceList() });
+			int integer = _preferences.GetInteger("SoundDevice");
 			if (integer < comboBoxDevice.Items.Count)
 			{
-				m_internal = true;
+				_internal = true;
 				comboBoxDevice.SelectedIndex = integer;
-				m_internal = false;
+				_internal = false;
 			}
 		}
 	}

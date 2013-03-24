@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace VixenPlus
@@ -10,50 +11,50 @@ namespace VixenPlus
 		//ComponentResourceManager manager = new ComponentResourceManager(typeof(InputPluginDialog));
 		//this.imageList.ImageStream = (ImageListStreamer)manager.GetObject("imageList.ImageStream"); 
 
-		private readonly MappingSets m_editingMappingSets;
-		private readonly Dictionary<string, Channel> m_idChannel;
-		private readonly bool m_init;
-		private readonly InputPlugin m_plugin;
-		private readonly EventSequence m_sequence;
-		private bool m_internal;
+		private readonly MappingSets _editingMappingSets;
+		private readonly Dictionary<string, Channel> _idChannel;
+		private readonly bool _isInit;
+		private readonly InputPlugin _inputPlugin;
+		private readonly EventSequence _eventSequence;
+		private bool _isInternal;
 
 		public InputPluginDialog(InputPlugin plugin, EventSequence sequence)
 		{
 			InitializeComponent();
-			m_idChannel = new Dictionary<string, Channel>();
-			m_plugin = plugin;
-			m_sequence = sequence;
+			_idChannel = new Dictionary<string, Channel>();
+			_inputPlugin = plugin;
+			_eventSequence = sequence;
 			plugin.SetupDataToPlugin();
-			m_init = true;
+			_isInit = true;
 			listBoxInputs.DisplayMember = "Name";
 			listBoxInputs.ValueMember = "OutputChannelId";
-			listBoxInputs.DataSource = m_plugin.Inputs;
-			foreach (Channel channel in m_sequence.Channels)
+			listBoxInputs.DataSource = _inputPlugin.Inputs;
+			foreach (Channel channel in _eventSequence.Channels)
 			{
-				m_idChannel[channel.Id.ToString()] = channel;
+				_idChannel[channel.Id.ToString(CultureInfo.InvariantCulture)] = channel;
 			}
-			listBoxChannels.Items.AddRange(m_sequence.Channels.ToArray());
-			m_editingMappingSets = (MappingSets) m_plugin.MappingSets.Clone();
-			m_init = false;
+			listBoxChannels.Items.AddRange(new object[] { _eventSequence.Channels.ToArray() });
+			_editingMappingSets = (MappingSets) _inputPlugin.MappingSets.Clone();
+			_isInit = false;
 			if (listBoxInputs.SelectedItem != null)
 			{
 				ReflectInput((Input) listBoxInputs.SelectedItem);
 			}
-			checkBoxLiveUpdate.Checked = m_plugin.LiveUpdate;
-			checkBoxRecord.Checked = m_plugin.Record;
-			foreach (MappingSet set in m_editingMappingSets)
+			checkBoxLiveUpdate.Checked = _inputPlugin.LiveUpdate;
+			checkBoxRecord.Checked = _inputPlugin.Record;
+			foreach (MappingSet set in _editingMappingSets)
 			{
 				AddMappingSetListViewItem(set);
 			}
-			Input[] iterators = m_plugin.GetIterators();
-			comboBoxSingleIteratorInput.Items.AddRange(iterators);
-			listBoxIteratorInputs.Items.AddRange(iterators);
-			if (m_plugin.MappingIteratorType == InputPlugin.MappingIterator.SingleInput)
+			var iterators = _inputPlugin.GetIterators();
+			comboBoxSingleIteratorInput.Items.AddRange(new object[] { iterators });
+			listBoxIteratorInputs.Items.AddRange(new object[] { iterators });
+			if (_inputPlugin.MappingIteratorType == InputPlugin.MappingIterator.SingleInput)
 			{
 				radioButtonSingleIterator.Checked = true;
-				comboBoxSingleIteratorInput.SelectedItem = m_plugin.SingleIterator;
+				comboBoxSingleIteratorInput.SelectedItem = _inputPlugin.SingleIterator;
 			}
-			else if (m_plugin.MappingIteratorType == InputPlugin.MappingIterator.MultiInput)
+			else if (_inputPlugin.MappingIteratorType == InputPlugin.MappingIterator.MultiInput)
 			{
 				radioButtonMultipleIterators.Checked = true;
 				tabControlIterators.SelectedTab = tabPageMultipleIterators;
@@ -79,7 +80,7 @@ namespace VixenPlus
 
 		private void buttonAddMappingSet_Click(object sender, EventArgs e)
 		{
-			AddMappingSetListViewItem(m_editingMappingSets.AddMapping());
+			AddMappingSetListViewItem(_editingMappingSets.AddMapping());
 		}
 
 		private void buttonClearInputChannels_Click(object sender, EventArgs e)
@@ -87,7 +88,7 @@ namespace VixenPlus
 			if (listBoxInputs.SelectedItem != null)
 			{
 				var selectedItem = (Input) listBoxInputs.SelectedItem;
-				m_editingMappingSets.GetOutputChannelIdList(selectedItem).Clear();
+				_editingMappingSets.GetOutputChannelIdList(selectedItem).Clear();
 				ReflectInput(selectedItem);
 			}
 		}
@@ -95,7 +96,7 @@ namespace VixenPlus
 		private void buttonMoveDown_Click(object sender, EventArgs e)
 		{
 			int oldIndex = listViewMappingSets.SelectedIndices[0];
-			m_editingMappingSets.MoveMappingTo(oldIndex, oldIndex + 1);
+			_editingMappingSets.MoveMappingTo(oldIndex, oldIndex + 1);
 			ListViewItem item = listViewMappingSets.Items[oldIndex];
 			listViewMappingSets.Items.RemoveAt(oldIndex);
 			listViewMappingSets.Items.Insert(oldIndex + 1, item);
@@ -106,7 +107,7 @@ namespace VixenPlus
 		private void buttonMoveUp_Click(object sender, EventArgs e)
 		{
 			int oldIndex = listViewMappingSets.SelectedIndices[0];
-			m_editingMappingSets.MoveMappingTo(oldIndex, oldIndex - 1);
+			_editingMappingSets.MoveMappingTo(oldIndex, oldIndex - 1);
 			ListViewItem item = listViewMappingSets.Items[oldIndex];
 			listViewMappingSets.Items.RemoveAt(oldIndex);
 			listViewMappingSets.Items.Insert(oldIndex - 1, item);
@@ -118,7 +119,7 @@ namespace VixenPlus
 		{
 			if (radioButtonSingleIterator.Checked && (comboBoxSingleIteratorInput.SelectedItem == null))
 			{
-				if (m_plugin.GetIterators().Length > 0)
+				if (_inputPlugin.GetIterators().Length > 0)
 				{
 					MessageBox.Show(
 						"You have selected to use a single input to iterate the mapping sets, but have not chosen an input.",
@@ -131,40 +132,40 @@ namespace VixenPlus
 						"You have selected to use a single input to iterate the mapping sets, but do not have any inputs sets to be iterators and therefore have not chosen an input to iterate with.",
 						Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 				}
-				base.DialogResult = DialogResult.None;
+				DialogResult = DialogResult.None;
 			}
 			else
 			{
-				m_plugin.MappingSets = m_editingMappingSets;
-				m_plugin.LiveUpdate = checkBoxLiveUpdate.Checked;
-				m_plugin.Record = checkBoxRecord.Checked;
+				_inputPlugin.MappingSets = _editingMappingSets;
+				_inputPlugin.LiveUpdate = checkBoxLiveUpdate.Checked;
+				_inputPlugin.Record = checkBoxRecord.Checked;
 				if (radioButtonSingleIterator.Checked)
 				{
-					m_plugin.MappingIteratorType = InputPlugin.MappingIterator.SingleInput;
+					_inputPlugin.MappingIteratorType = InputPlugin.MappingIterator.SingleInput;
 				}
 				else if (radioButtonMultipleIterators.Checked)
 				{
-					m_plugin.MappingIteratorType = InputPlugin.MappingIterator.MultiInput;
+					_inputPlugin.MappingIteratorType = InputPlugin.MappingIterator.MultiInput;
 				}
 				else
 				{
-					m_plugin.MappingIteratorType = InputPlugin.MappingIterator.None;
+					_inputPlugin.MappingIteratorType = InputPlugin.MappingIterator.None;
 				}
-				if (m_plugin.MappingIteratorType == InputPlugin.MappingIterator.SingleInput)
+				if (_inputPlugin.MappingIteratorType == InputPlugin.MappingIterator.SingleInput)
 				{
-					m_plugin.SingleIterator = (Input) comboBoxSingleIteratorInput.SelectedItem;
+					_inputPlugin.SingleIterator = (Input) comboBoxSingleIteratorInput.SelectedItem;
 				}
 				else
 				{
-					m_plugin.SingleIterator = null;
+					_inputPlugin.SingleIterator = null;
 				}
-				m_plugin.PluginToSetupData();
+				_inputPlugin.PluginToSetupData();
 			}
 		}
 
 		private void buttonRemoveMappingSet_Click(object sender, EventArgs e)
 		{
-			m_editingMappingSets.RemoveMappingAt(listViewMappingSets.SelectedIndices[0]);
+			_editingMappingSets.RemoveMappingAt(listViewMappingSets.SelectedIndices[0]);
 			listViewMappingSets.Items.RemoveAt(listViewMappingSets.SelectedIndices[0]);
 			buttonRemoveMappingSet.Enabled = buttonMoveUp.Enabled = buttonMoveDown.Enabled = false;
 			UpdateIteratorType();
@@ -190,7 +191,7 @@ namespace VixenPlus
 
 		private void comboBoxMappingSet_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			m_editingMappingSets.CurrentMappingSet = (MappingSet) comboBoxMappingSet.SelectedItem;
+			_editingMappingSets.CurrentMappingSet = (MappingSet) comboBoxMappingSet.SelectedItem;
 			listBoxInputs.SelectedIndex = -1;
 			listBoxMappedChannels.Items.Clear();
 			listBoxChannels.ClearSelected();
@@ -200,7 +201,7 @@ namespace VixenPlus
 
 		private void listBoxChannels_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (!m_internal)
+			if (!_isInternal)
 			{
 				var list = new List<Channel>();
 				foreach (Channel channel in listBoxMappedChannels.Items)
@@ -223,23 +224,23 @@ namespace VixenPlus
 				}
 				if (listBoxInputs.SelectedItem != null)
 				{
-					List<string> outputChannelIdList = m_editingMappingSets.GetOutputChannelIdList((Input) listBoxInputs.SelectedItem);
+					List<string> outputChannelIdList = _editingMappingSets.GetOutputChannelIdList((Input) listBoxInputs.SelectedItem);
 					outputChannelIdList.Clear();
 					foreach (Channel channel in list)
 					{
-						outputChannelIdList.Add(channel.Id.ToString());
+						outputChannelIdList.Add(channel.Id.ToString(CultureInfo.InvariantCulture));
 					}
 				}
 				listBoxMappedChannels.BeginUpdate();
 				listBoxMappedChannels.Items.Clear();
-				listBoxMappedChannels.Items.AddRange(list.ToArray());
+				listBoxMappedChannels.Items.AddRange(new object[] { list.ToArray() });
 				listBoxMappedChannels.EndUpdate();
 			}
 		}
 
 		private void listBoxInputs_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (!m_init && (listBoxInputs.SelectedItem != null))
+			if (!_isInit && (listBoxInputs.SelectedItem != null))
 			{
 				ReflectInput((Input) listBoxInputs.SelectedItem);
 			}
@@ -274,7 +275,7 @@ namespace VixenPlus
 		{
 			if ((e.Label != null) && (e.Label.Trim().Length > 0))
 			{
-				m_editingMappingSets[listViewMappingSets.SelectedIndices[0]].Name = e.Label;
+				_editingMappingSets[listViewMappingSets.SelectedIndices[0]].Name = e.Label;
 			}
 		}
 
@@ -306,25 +307,25 @@ namespace VixenPlus
 		{
 			if (groupBoxIOMapping.Enabled)
 			{
-				m_internal = true;
+				_isInternal = true;
 				listBoxChannels.ClearSelected();
-				m_internal = false;
+				_isInternal = false;
 				listBoxMappedChannels.Items.Clear();
 				if (listBoxInputs.SelectedValue != null)
 				{
 					listBoxChannels.BeginUpdate();
 					listBoxMappedChannels.BeginUpdate();
-					m_internal = true;
-					foreach (string str in m_editingMappingSets.GetOutputChannelIdList(input))
+					_isInternal = true;
+					foreach (string str in _editingMappingSets.GetOutputChannelIdList(input))
 					{
 						Channel channel;
-						if (m_idChannel.TryGetValue(str, out channel))
+						if (_idChannel.TryGetValue(str, out channel))
 						{
 							listBoxMappedChannels.Items.Add(channel);
 							listBoxChannels.SetSelected(listBoxChannels.Items.IndexOf(channel), true);
 						}
 					}
-					m_internal = false;
+					_isInternal = false;
 					listBoxMappedChannels.EndUpdate();
 					listBoxChannels.EndUpdate();
 					checkBoxEnabled.Checked = input.Enabled;
@@ -343,7 +344,7 @@ namespace VixenPlus
 				}
 				comboBoxMappingSet.BeginUpdate();
 				comboBoxMappingSet.Items.Clear();
-				comboBoxMappingSet.Items.AddRange(m_editingMappingSets.AllSets);
+				comboBoxMappingSet.Items.AddRange(new object[] { _editingMappingSets.AllSets });
 				comboBoxMappingSet.EndUpdate();
 				if ((selectedItem != null) && comboBoxMappingSet.Items.Contains(selectedItem))
 				{
@@ -366,13 +367,13 @@ namespace VixenPlus
 			{
 				int selectedIndex = comboBoxSingleIteratorInput.SelectedIndex;
 				comboBoxSingleIteratorInput.Items.Clear();
-				comboBoxSingleIteratorInput.Items.AddRange(m_plugin.GetIterators());
+				comboBoxSingleIteratorInput.Items.AddRange(new object[] { _inputPlugin.GetIterators() });
 				listBoxIteratorInputs.Items.Clear();
-				listBoxIteratorInputs.Items.AddRange(m_plugin.GetIterators());
+				listBoxIteratorInputs.Items.AddRange(new object[] { _inputPlugin.GetIterators() });
 				comboBoxSingleIteratorInput.SelectedIndex = selectedIndex;
 				listBoxMappingSets.Items.Clear();
 				listBoxMappingSets.Items.Add("(none)");
-				listBoxMappingSets.Items.AddRange(m_editingMappingSets.AllSets);
+				listBoxMappingSets.Items.AddRange(new object[] { _editingMappingSets.AllSets });
 			}
 		}
 

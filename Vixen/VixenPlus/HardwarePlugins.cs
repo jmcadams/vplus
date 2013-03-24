@@ -7,7 +7,7 @@ namespace VixenPlus
 {
 	internal class HardwarePlugins
 	{
-		private static readonly Dictionary<string, IHardwarePlugin> m_pluginCache = new Dictionary<string, IHardwarePlugin>();
+		private static readonly Dictionary<string, IHardwarePlugin> PluginCache = new Dictionary<string, IHardwarePlugin>();
 
 		public static IHardwarePlugin FindPlugin(string pluginName, string directory, string interfaceName)
 		{
@@ -17,7 +17,7 @@ namespace VixenPlus
 		public static IHardwarePlugin FindPlugin(string pluginName, bool uniqueInstance, string directory,
 		                                         string interfaceName)
 		{
-			foreach (IHardwarePlugin plugin2 in m_pluginCache.Values)
+			foreach (IHardwarePlugin plugin2 in PluginCache.Values)
 			{
 				if (plugin2.Name == pluginName)
 				{
@@ -40,9 +40,9 @@ namespace VixenPlus
 							if (type2.Name == interfaceName)
 							{
 								var plugin = (IHardwarePlugin) Activator.CreateInstance(type);
-								if (!m_pluginCache.ContainsKey(str))
+								if (!PluginCache.ContainsKey(str))
 								{
-									m_pluginCache[str] = plugin;
+									PluginCache[str] = plugin;
 								}
 								if (plugin.Name == pluginName)
 								{
@@ -68,7 +68,7 @@ namespace VixenPlus
 			foreach (string str in Directory.GetFiles(directory, "*.dll"))
 			{
 				IHardwarePlugin plugin;
-				if (!m_pluginCache.TryGetValue(str, out plugin))
+				if (!PluginCache.TryGetValue(str, out plugin))
 				{
 					try
 					{
@@ -80,7 +80,7 @@ namespace VixenPlus
 								if (type2.Name == interfaceName)
 								{
 									plugin = (IHardwarePlugin) Activator.CreateInstance(type);
-									m_pluginCache[str] = plugin;
+									PluginCache[str] = plugin;
 								}
 							}
 						}
@@ -105,7 +105,7 @@ namespace VixenPlus
 			foreach (string str in Directory.GetFiles(directory, "*.dll", SearchOption.TopDirectoryOnly))
 			{
 				IHardwarePlugin plugin;
-				if (!m_pluginCache.TryGetValue(str, out plugin))
+				if (!PluginCache.TryGetValue(str, out plugin))
 				{
 					try
 					{
@@ -118,7 +118,7 @@ namespace VixenPlus
 								{
 									dialog.Message = "Loading " + Path.GetFileName(str);
 									plugin = (IHardwarePlugin) Activator.CreateInstance(type);
-									m_pluginCache[str] = plugin;
+									PluginCache[str] = plugin;
 								}
 							}
 						}

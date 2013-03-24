@@ -11,7 +11,7 @@ namespace VixenPlus
 		public List<MappedOutputPlugIn> OutputPluginList;
 		public SetupData PluginData;
 		public ITickSource TickSource;
-		public bool m_initialized = false;
+		public bool IsInitialized = false;
 
 		public RouterContext(byte[] engineBuffer, SetupData pluginData, IExecutable executableObject, ITickSource tickSource)
 		{
@@ -22,19 +22,22 @@ namespace VixenPlus
 			TickSource = tickSource ?? this;
 			foreach (XmlNode node in PluginData.GetAllPluginData(SetupData.PluginType.Output, true))
 			{
-				var item = new MappedOutputPlugIn((IOutputPlugIn) OutputPlugins.FindPlugin(node.Attributes["name"].Value, true),
-				                                  Convert.ToInt32(node.Attributes["from"].Value),
-				                                  Convert.ToInt32(node.Attributes["to"].Value), true, node);
-				OutputPluginList.Add(item);
+				if (node.Attributes != null)
+				{
+					var item = new MappedOutputPlugIn((IOutputPlugIn) OutputPlugins.FindPlugin(node.Attributes["name"].Value, true),
+					                                  Convert.ToInt32(node.Attributes["from"].Value),
+					                                  Convert.ToInt32(node.Attributes["to"].Value), true, node);
+					OutputPluginList.Add(item);
+				}
 			}
 		}
 
 		public bool Initialized
 		{
-			get { return m_initialized; }
+			get { return IsInitialized; }
 			set
 			{
-				m_initialized = value;
+				IsInitialized = value;
 				foreach (MappedOutputPlugIn @in in OutputPluginList)
 				{
 					@in.ContextInitialized = value;

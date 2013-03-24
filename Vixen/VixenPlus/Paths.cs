@@ -6,9 +6,9 @@ namespace VixenPlus
 {
 	public static class Paths
 	{
-		private static string m_binaryPath = string.Empty;
+		private static string _binaryPath = string.Empty;
 
-		private static string m_dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal),
+		private static string _dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal),
 		                                                Vendor.ProductName);
 
 		public static string AddinPath
@@ -30,14 +30,14 @@ namespace VixenPlus
 		{
 			get
 			{
-				if (m_binaryPath == string.Empty)
+				if (_binaryPath == string.Empty)
 				{
 					using (Process process = Process.GetCurrentProcess())
 					{
-						m_binaryPath = Path.GetDirectoryName(process.MainModule.FileName);
+						_binaryPath = Path.GetDirectoryName(process.MainModule.FileName);
 					}
 				}
-				return m_binaryPath;
+				return _binaryPath;
 			}
 		}
 
@@ -48,13 +48,13 @@ namespace VixenPlus
 
 		public static string DataPath
 		{
-			get { return m_dataPath; }
+			get { return _dataPath; }
 			set
 			{
-				m_dataPath = !string.IsNullOrEmpty(value) ? value : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Vendor.ProductName);
-				if (!Directory.Exists(m_dataPath))
+				_dataPath = !string.IsNullOrEmpty(value) ? value : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Vendor.ProductName);
+				if (!Directory.Exists(_dataPath))
 				{
-					Directory.CreateDirectory(m_dataPath);
+					Directory.CreateDirectory(_dataPath);
 				}
 			}
 		}

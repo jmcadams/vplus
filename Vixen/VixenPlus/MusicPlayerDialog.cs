@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -8,22 +9,22 @@ namespace VixenPlus
 {
 	internal partial class MusicPlayerDialog : Form
 	{
-		private readonly fmod m_fmod;
-		private Audio m_narrativeSong;
+		private readonly fmod _fmod;
+		private Audio _narrativeSong;
 
 		public MusicPlayerDialog(fmod fmod)
 		{
 			InitializeComponent();
-			m_fmod = fmod;
+			_fmod = fmod;
 		}
 
 		public Audio NarrativeSong
 		{
-			get { return m_narrativeSong; }
+			get { return _narrativeSong; }
 			set
 			{
-				m_narrativeSong = value;
-				textBoxNarrative.Text = m_narrativeSong.Name;
+				_narrativeSong = value;
+				textBoxNarrative.Text = _narrativeSong.Name;
 			}
 		}
 
@@ -46,7 +47,7 @@ namespace VixenPlus
 					return 0;
 				}
 			}
-			set { textBoxNarrativeIntervalCount.Text = value.ToString(); }
+			set { textBoxNarrativeIntervalCount.Text = value.ToString(CultureInfo.InvariantCulture); }
 		}
 
 		public bool Shuffle
@@ -60,13 +61,13 @@ namespace VixenPlus
 			get
 			{
 				var destination = new Audio[listBoxPlaylist.Items.Count];
-				listBoxPlaylist.Items.CopyTo(destination, 0);
+				listBoxPlaylist.Items.CopyTo(new object[] { destination }, 0);
 				return destination;
 			}
 			set
 			{
 				listBoxPlaylist.BeginUpdate();
-				listBoxPlaylist.Items.AddRange(value);
+				listBoxPlaylist.Items.AddRange(new object[] { value });
 				listBoxPlaylist.EndUpdate();
 			}
 		}
@@ -145,14 +146,14 @@ namespace VixenPlus
 				{
 					if (Convert.ToInt32(textBoxNarrativeIntervalCount.Text) >= 2)
 					{
-						if ((m_narrativeSong == null) || !File.Exists(Path.Combine(Paths.AudioPath, m_narrativeSong.FileName)))
+						if ((_narrativeSong == null) || !File.Exists(Path.Combine(Paths.AudioPath, _narrativeSong.FileName)))
 						{
 							if (
 								MessageBox.Show(
 									"You enabled the narrative but didn't specify a narrative file.  Do you want to continue?\n\nIf you choose Yes, the narrative will be disabled.",
 									Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
 							{
-								base.DialogResult = DialogResult.None;
+								DialogResult = DialogResult.None;
 							}
 							else
 							{
@@ -165,12 +166,12 @@ namespace VixenPlus
 							"An interval count less than 2 is not usable.  Do you want to continue?\n\nIf you choose Yes, the narrative will be disabled.",
 							Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
 					{
-						base.DialogResult = DialogResult.None;
+						DialogResult = DialogResult.None;
 					}
 					else
 					{
 						checkBoxEnableNarrative.Checked = false;
-						textBoxNarrativeIntervalCount.Text = "0";
+						textBoxNarrativeIntervalCount.Text = @"0";
 					}
 				}
 				catch
@@ -180,12 +181,12 @@ namespace VixenPlus
 							"The interval count is not a valid number.  Do you want to continue?\n\nIf you choose Yes, the narrative will be disabled.",
 							Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
 					{
-						base.DialogResult = DialogResult.None;
+						DialogResult = DialogResult.None;
 					}
 					else
 					{
 						checkBoxEnableNarrative.Checked = false;
-						textBoxNarrativeIntervalCount.Text = "0";
+						textBoxNarrativeIntervalCount.Text = @"0";
 					}
 				}
 			}
@@ -202,8 +203,8 @@ namespace VixenPlus
 			openFileDialog.Multiselect = false;
 			if (openFileDialog.ShowDialog() == DialogResult.OK)
 			{
-				m_narrativeSong = LoadSong(openFileDialog.FileName);
-				textBoxNarrative.Text = m_narrativeSong.Name;
+				_narrativeSong = LoadSong(openFileDialog.FileName);
+				textBoxNarrative.Text = _narrativeSong.Name;
 			}
 		}
 
@@ -242,30 +243,30 @@ namespace VixenPlus
 
 		private Audio LoadSong(string fileName)
 		{
-			string str;
-			uint num;
+			string str = string.Empty;
+			uint num = 0;
 			string sourceFileName = fileName;
 			fileName = Path.GetFileName(fileName);
-			string path = Path.Combine(Paths.AudioPath, fileName);
-			if (!File.Exists(path))
+			if (fileName != null)
 			{
-				File.Copy(sourceFileName, path);
+				string path = Path.Combine(Paths.AudioPath, fileName);
+				if (!File.Exists(path))
+				{
+					File.Copy(sourceFileName, path);
+				}
+				object[] objArray = _fmod.LoadSoundStats(path);
+				if (objArray != null)
+				{
+					str = (string) objArray[0];
+					num = (uint) objArray[1];
+				}
+				else
+				{
+					MessageBox.Show("Unable to load the song.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					return null;
+				}
 			}
-			object[] objArray = m_fmod.LoadSoundStats(path);
-			if (objArray != null)
-			{
-				str = (string) objArray[0];
-				num = (uint) objArray[1];
-			}
-			else
-			{
-				MessageBox.Show("Unable to load the song.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-				return null;
-			}
-			var audio = new Audio();
-			audio.FileName = fileName;
-			audio.Name = str;
-			audio.Duration = (int) num;
+			var audio = new Audio {FileName = fileName, Name = str, Duration = (int) num};
 			return audio;
 		}
 

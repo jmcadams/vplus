@@ -2,7 +2,7 @@
 
 namespace VixenPlus
 {
-	internal interface IScheduledObject : IExecutable, IMaskable, IDisposable
+	internal interface IScheduledObject : IExecutable
 	{
 		int Length { get; }
 	}

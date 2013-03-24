@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -13,25 +14,25 @@ using VixenPlus.Dialogs;
 
 namespace VixenPlus
 {
-	internal partial class Form1 : Form, ISystem
+	internal sealed partial class Form1 : Form, ISystem
 	{
-		private readonly EventHandler m_historyItemClick;
-		private readonly Host m_host;
-		private readonly ITriggerImpl m_iTriggerImpl;
-		private readonly LoadableData m_loadableData;
-		private readonly Dictionary<string, List<LoadedObject>> m_loadables;
-		private readonly EventHandler m_newMenuItemClick;
-		private readonly Preference2 m_preferences;
-		private readonly Dictionary<string, IUIPlugIn> m_registeredFileTypes;
-		private readonly TimerExecutor m_timerExecutor;
-		private readonly string m_timersPath;
-		private string[] m_audioDevices;
-		private List<string> m_history;
-		private const int m_historyMax = 7;
-		private string m_knownFileTypesFilter;
-		private string m_lastWindowsClipboardValue = "";
-		private DateTime m_shutdownAt;
-		private Timers m_timers;
+		private readonly EventHandler _historyItemClick;
+		private readonly Host _host;
+		private readonly TriggerImpl _iTriggerImpl;
+		private readonly LoadableData _loadableData;
+		private readonly Dictionary<string, List<LoadedObject>> _loadables;
+		private readonly EventHandler _newMenuItemClick;
+		private readonly Preference2 _preferences;
+		private readonly Dictionary<string, IUIPlugIn> _registeredFileTypes;
+		private readonly TimerExecutor _timerExecutor;
+		private readonly string _timersPath;
+		private string[] _audioDevices;
+		private List<string> _history;
+		private const int HistoryMax = 7;
+		private string _knownFileTypesFilter;
+		private string _lastWindowsClipboardValue = "";
+		private DateTime _shutdownAt;
+		private Timers _timers;
 
 		public Form1(string[] args)
 		{
@@ -53,27 +54,31 @@ namespace VixenPlus
 			splash.Refresh();
 			InitializeComponent();
 			SetVendorData();
-			m_registeredFileTypes = new Dictionary<string, IUIPlugIn>();
-			m_timersPath = Path.Combine(Paths.DataPath, "timers");
+			_registeredFileTypes = new Dictionary<string, IUIPlugIn>();
+			_timersPath = Path.Combine(Paths.DataPath, "timers");
 			helpProvider.HelpNamespace = Path.Combine(Paths.BinaryPath, Vendor.ProductName + ".chm");
 			string path = Path.Combine(Paths.BinaryPath, "prepare.exe");
 			if (File.Exists(path))
 			{
-				Process.Start(path).WaitForExit();
+				var process = Process.Start(path);
+				if (process != null)
+				{
+					process.WaitForExit();
+				}
 				File.Delete(path);
 			}
-			m_preferences = Preference2.GetInstance();
-			m_preferences.PreferenceChange += m_preferences_PreferenceChange;
-			m_host = new Host(this);
-			m_loadables = new Dictionary<string, List<LoadedObject>>();
+			_preferences = Preference2.GetInstance();
+			_preferences.PreferenceChange += PreferencesPreferenceChange;
+			_host = new Host(this);
+			_loadables = new Dictionary<string, List<LoadedObject>>();
 			Interfaces.Available["ISystem"] = this;
-			Interfaces.Available["IExecution"] = new IExecutionImpl(m_host);
-			Interfaces.Available["ITrigger"] = m_iTriggerImpl = new ITriggerImpl(m_host);
-			m_newMenuItemClick = NewMenuItemClick;
-			m_historyItemClick = HistoryItemClick;
+			Interfaces.Available["IExecution"] = new ExecutionImpl(_host);
+			Interfaces.Available["ITrigger"] = _iTriggerImpl = new TriggerImpl();
+			_newMenuItemClick = NewMenuItemClick;
+			_historyItemClick = HistoryItemClick;
 			LoadHistory();
-			m_loadableData = new LoadableData();
-			m_loadableData.LoadFromXml(m_preferences.XmlDoc.DocumentElement);
+			_loadableData = new LoadableData();
+			_loadableData.LoadFromXml(_preferences.XmlDoc.DocumentElement);
 			splash.Task = "Starting add-ins";
 			if (!list.Contains("no_addins"))
 			{
@@ -101,20 +106,20 @@ namespace VixenPlus
 			{
 				Cursor = Cursors.Default;
 			}
-			scheduleTimer.Interval = m_preferences.GetInteger("TimerCheckFrequency")*1000;
-			m_timers = new Timers();
-			if (File.Exists(m_timersPath))
+			scheduleTimer.Interval = _preferences.GetInteger("TimerCheckFrequency")*1000;
+			_timers = new Timers();
+			if (File.Exists(_timersPath))
 			{
-				m_timers.LoadFromXml(Xml.LoadDocument(m_timersPath));
+				_timers.LoadFromXml(Xml.LoadDocument(_timersPath));
 			}
-			m_timerExecutor = new TimerExecutor(m_host);
-			scheduleTimer.Enabled = !m_timers.TimersDisabled;
-			if (m_preferences.GetBoolean("EnableBackgroundSequence"))
+			_timerExecutor = new TimerExecutor();
+			scheduleTimer.Enabled = !_timers.TimersDisabled;
+			if (_preferences.GetBoolean("EnableBackgroundSequence"))
 			{
-				m_host.BackgroundSequenceName = m_preferences.GetString("BackgroundSequence");
+				_host.BackgroundSequenceName = _preferences.GetString("BackgroundSequence");
 			}
-			m_host.StartBackgroundObjects();
-			SetShutdownTime(m_preferences.GetString("ShutdownTime"));
+			_host.StartBackgroundObjects();
+			SetShutdownTime(_preferences.GetString("ShutdownTime"));
 			splash.Hide();
 			splash.Dispose();
 			if (!(list.Contains("no_update") || File.Exists(Path.Combine(Paths.DataPath, "no.update"))))
@@ -125,14 +130,14 @@ namespace VixenPlus
 
 		public int GetExecutingTimerExecutionContextHandle(int executingTimerIndex)
 		{
-			return m_timerExecutor.GetExecutingTimerExecutionContextHandle(executingTimerIndex);
+			return _timerExecutor.GetExecutingTimerExecutionContextHandle(executingTimerIndex);
 		}
 
 		public Form InstantiateForm(ConstructorInfo constructorInfo, params object[] parameters)
 		{
-			if (base.InvokeRequired)
+			if (InvokeRequired)
 			{
-				return (Form) base.Invoke(new InstantiateFormDelegate(InstantiateForm), new object[] {constructorInfo, parameters});
+				return (Form) Invoke(new InstantiateFormDelegate(InstantiateForm), new object[] {constructorInfo, parameters});
 			}
 			var child = (Form) constructorInfo.Invoke(parameters);
 			if (child == null)
@@ -147,13 +152,13 @@ namespace VixenPlus
 			var executable = (IExecutable) Host.Communication["CurrentObject"];
 			if (executable != null)
 			{
-				string str = executable.Key.ToString();
+				string str = executable.Key.ToString(CultureInfo.InvariantCulture);
 				XmlNode node2 = null;
 				XmlNode node = ((XmlNode) Host.Communication["SetupNode_" + str]).SelectSingleNode("DialogPositions");
 				object obj2;
 				if (Host.Communication.TryGetValue("KeyInterceptor_" + str, out obj2))
 				{
-					base2.ExecutionParent = (VixenMDI) obj2;
+					base2.ExecutionParent = (IVixenMDI) obj2;
 				}
 				if (Host.Communication.TryGetValue("SetupNode_" + str, out obj2))
 				{
@@ -170,13 +175,16 @@ namespace VixenPlus
 				{
 					node2 = node.SelectSingleNode(child.Name);
 				}
-				if ((node2 != null) && m_preferences.GetBoolean("SavePlugInDialogPositions"))
+				if ((node2 != null) && _preferences.GetBoolean("SavePlugInDialogPositions"))
 				{
-					XmlAttribute attribute = node2.Attributes["x"];
-					XmlAttribute attribute2 = node2.Attributes["y"];
-					if ((attribute != null) && (attribute2 != null))
+					if (node2.Attributes != null)
 					{
-						child.Location = new Point(Convert.ToInt32(attribute.Value), Convert.ToInt32(attribute2.Value));
+						XmlAttribute attribute = node2.Attributes["x"];
+						XmlAttribute attribute2 = node2.Attributes["y"];
+						if ((attribute != null) && (attribute2 != null))
+						{
+							child.Location = new Point(Convert.ToInt32(attribute.Value), Convert.ToInt32(attribute2.Value));
+						}
 					}
 				}
 			}
@@ -191,9 +199,9 @@ namespace VixenPlus
 		public List<ILoadable> LoadableList(string interfaceName)
 		{
 			var list = new List<ILoadable>();
-			if (m_loadables.ContainsKey(interfaceName))
+			if (_loadables.ContainsKey(interfaceName))
 			{
-				foreach (LoadedObject obj2 in m_loadables[interfaceName])
+				foreach (LoadedObject obj2 in _loadables[interfaceName])
 				{
 					if (obj2.Instance != null)
 					{
@@ -212,7 +220,7 @@ namespace VixenPlus
 
 		public string[] AudioDevices
 		{
-			get { return m_audioDevices ?? (m_audioDevices = fmod.GetSoundDeviceList()); }
+			get { return _audioDevices ?? (_audioDevices = fmod.GetSoundDeviceList()); }
 		}
 
 		public byte[,] Clipboard
@@ -224,7 +232,7 @@ namespace VixenPlus
 				{
 					try
 					{
-						if (m_lastWindowsClipboardValue == System.Windows.Forms.Clipboard.GetText())
+						if (_lastWindowsClipboardValue == System.Windows.Forms.Clipboard.GetText())
 						{
 							return Host.Clipboard;
 						}
@@ -253,7 +261,7 @@ namespace VixenPlus
 					return Host.Clipboard;
 				}
 				Host.Clipboard = array;
-				m_lastWindowsClipboardValue = System.Windows.Forms.Clipboard.GetText();
+				_lastWindowsClipboardValue = System.Windows.Forms.Clipboard.GetText();
 				return array;
 			}
 			set
@@ -278,17 +286,17 @@ namespace VixenPlus
 
 		public int ExecutingTimerCount
 		{
-			get { return m_timerExecutor.ExecutingTimerCount; }
+			get { return _timerExecutor.ExecutingTimerCount; }
 		}
 
 		public string KnownFileTypesFilter
 		{
-			get { return m_knownFileTypesFilter; }
+			get { return _knownFileTypesFilter; }
 		}
 
 		public Preference2 UserPreferences
 		{
-			get { return m_preferences; }
+			get { return _preferences; }
 		}
 
 		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -298,9 +306,9 @@ namespace VixenPlus
 			dialog.Dispose();
 		}
 
-		private void AddInClickHandler(object Sender, EventArgs e)
+		private void AddInClickHandler(object sender, EventArgs e)
 		{
-			var item = (ToolStripMenuItem) Sender;
+			var item = (ToolStripMenuItem) sender;
 			var tag = (LoadedObject) item.Tag;
 			if (tag.Instance == null)
 			{
@@ -311,15 +319,16 @@ namespace VixenPlus
 				item.Checked = true;
 			}
 			EventSequence sequence = null;
-			if ((base.ActiveMdiChild != null) && (base.ActiveMdiChild is VixenMDI))
+			if (base.ActiveMdiChild != null && (base.ActiveMdiChild is IVixenMDI))
 			{
-				sequence = ((VixenMDI) base.ActiveMdiChild).Sequence;
+				sequence = ((IVixenMDI) base.ActiveMdiChild).Sequence;
 			}
 			try
 			{
-				if (((IAddIn) tag.Instance).Execute(sequence) && (sequence != null))
+				var addIn = (IAddIn) tag.Instance;
+				if (addIn != null && (addIn.Execute(sequence) && (sequence != null)))
 				{
-					((VixenMDI) base.ActiveMdiChild).Notify(Notification.SequenceChange, null);
+					((IVixenMDI) base.ActiveMdiChild).Notify(Notification.SequenceChange, null);
 				}
 			}
 			catch (Exception exception)
@@ -329,7 +338,7 @@ namespace VixenPlus
 			}
 			finally
 			{
-				if (tag.Instance.DataLocationPreference == LoadableDataLocation.Sequence)
+				if (tag.Instance != null && tag.Instance.DataLocationPreference == LoadableDataLocation.Sequence)
 				{
 					tag.Instance.Unloading();
 					tag.Instance = null;
@@ -340,11 +349,11 @@ namespace VixenPlus
 		private void AddToFileHistory(string fileName)
 		{
 			string item = Path.GetFileName(fileName);
-			m_history.Remove(item);
-			m_history.Insert(0, item);
-			if (m_history.Count > m_historyMax)
+			_history.Remove(item);
+			_history.Insert(0, item);
+			if (_history.Count > HistoryMax)
 			{
-				m_history.RemoveAt(m_history.Count - 1);
+				_history.RemoveAt(_history.Count - 1);
 			}
 			FlushHistory();
 			LoadHistory();
@@ -352,7 +361,7 @@ namespace VixenPlus
 
 		private void cascadeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			base.LayoutMdi(MdiLayout.Cascade);
+			LayoutMdi(MdiLayout.Cascade);
 		}
 
 		private void ChangeSequenceName(IUIPlugIn pluginInstance, string newName)
@@ -368,7 +377,7 @@ namespace VixenPlus
 
 		private void channelDimmingCurvesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var activeMdiChild = base.ActiveMdiChild as IUIPlugIn;
+			var activeMdiChild = ActiveMdiChild as IUIPlugIn;
 			if (activeMdiChild != null)
 			{
 				var dialog = new DimmingCurveDialog(activeMdiChild.Sequence, null);
@@ -411,7 +420,7 @@ namespace VixenPlus
 					string str5 = strArray[0];
 					if (str5 != null)
 					{
-						if (!(str5 == "server"))
+						if (str5 != "server")
 						{
 							if (str5 == "root")
 							{
@@ -468,7 +477,7 @@ namespace VixenPlus
 
 		private void diagnosticsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			new DiagnosticsDialog(m_timers).ShowDialog();
+			new DiagnosticsDialog(_timers).ShowDialog();
 		}
 
 
@@ -482,9 +491,9 @@ namespace VixenPlus
 
 		private int FindMdiChildIndex(Form childForm)
 		{
-			for (int i = 0; i < base.MdiChildren.Length; i++)
+			for (int i = 0; i < MdiChildren.Length; i++)
 			{
-				if (childForm == base.MdiChildren[i])
+				if (childForm == MdiChildren[i])
 				{
 					return i;
 				}
@@ -492,35 +501,19 @@ namespace VixenPlus
 			return -1;
 		}
 
-		private Form FindUIBase()
-		{
-			if (base.ActiveMdiChild is UIBase)
-			{
-				return base.ActiveMdiChild;
-			}
-			for (int i = FindMdiChildIndex(base.ActiveMdiChild) - 1; i > 0; i--)
-			{
-				if (base.MdiChildren[i] is UIBase)
-				{
-					return base.MdiChildren[i];
-				}
-			}
-			return null;
-		}
-
 		private void FlushHistory()
 		{
-			XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(m_preferences.XmlDoc.DocumentElement, "History");
-			foreach (string str in m_history)
+			XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(_preferences.XmlDoc.DocumentElement, "History");
+			foreach (string str in _history)
 			{
 				Xml.SetNewValue(emptyNodeAlways, "Item", str);
 			}
-			m_preferences.Flush();
+			_preferences.Flush();
 		}
 
 		private void Form1_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			foreach (Form form in base.MdiChildren)
+			foreach (var form in MdiChildren)
 			{
 				if ((form is IUIPlugIn) && (CheckDirty((IUIPlugIn) form) == DialogResult.Cancel))
 				{
@@ -528,14 +521,15 @@ namespace VixenPlus
 					return;
 				}
 			}
-			m_host.StopBackgroundObjects();
-			m_host.BackgroundSequenceName = null;
+			_host.StopBackgroundObjects();
+			_host.BackgroundSequenceName = null;
 			foreach (ToolStripItem item in addInsToolStripMenuItem.DropDownItems)
 			{
-				if (item.Tag is LoadedObject)
+				var loadedObject = item.Tag as LoadedObject;
+				if (loadedObject != null)
 				{
-					var tag = (LoadedObject) item.Tag;
-					XmlNode loadableData = m_loadableData.GetLoadableData(tag.InterfaceImplemented, item.Text);
+					var tag = loadedObject;
+					XmlNode loadableData = _loadableData.GetLoadableData(tag.InterfaceImplemented, item.Text);
 					if ((tag.Instance != null) && (tag.Instance.DataLocationPreference == LoadableDataLocation.Application))
 					{
 						Xml.SetAttribute(loadableData, "enabled", bool.TrueString);
@@ -549,10 +543,11 @@ namespace VixenPlus
 			}
 			foreach (ToolStripItem item in triggersToolStripMenuItem.DropDownItems)
 			{
-				if (item.Tag is LoadedObject)
+				var loadedObject = item.Tag as LoadedObject;
+				if (loadedObject != null)
 				{
-					var obj3 = (LoadedObject) item.Tag;
-					XmlNode node = m_loadableData.GetLoadableData(obj3.InterfaceImplemented, item.Text);
+					var obj3 = loadedObject;
+					XmlNode node = _loadableData.GetLoadableData(obj3.InterfaceImplemented, item.Text);
 					if (obj3.Instance != null)
 					{
 						Xml.SetAttribute(node, "enabled", bool.TrueString);
@@ -564,30 +559,34 @@ namespace VixenPlus
 					}
 				}
 			}
-			m_preferences.Flush();
+			_preferences.Flush();
 		}
 
 		private void Form1_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (base.ActiveMdiChild != null)
+			if (ActiveMdiChild != null)
 			{
-				if ((base.ActiveMdiChild is OutputPlugInUIBase) &&
-				    (((OutputPlugInUIBase) base.ActiveMdiChild).ExecutionParent != null))
+				if ((ActiveMdiChild is OutputPlugInUIBase) &&
+				    (((OutputPlugInUIBase) ActiveMdiChild).ExecutionParent != null))
 				{
-					((OutputPlugInUIBase) base.ActiveMdiChild).ExecutionParent.Notify(Notification.KeyDown, e);
+					((OutputPlugInUIBase) ActiveMdiChild).ExecutionParent.Notify(Notification.KeyDown, e);
 				}
-				else if (base.ActiveMdiChild is VixenMDI)
+				else
 				{
-					((VixenMDI) base.ActiveMdiChild).Notify(Notification.KeyDown, e);
+					var activeMdiChild = ActiveMdiChild as IVixenMDI;
+					if (activeMdiChild != null)
+					{
+						activeMdiChild.Notify(Notification.KeyDown, e);
+					}
 				}
 			}
 		}
 
 		private void Form1_MdiChildActivate(object sender, EventArgs e)
 		{
-			if (base.ActiveMdiChild is IUIPlugIn)
+			if (ActiveMdiChild is IUIPlugIn)
 			{
-				saveToolStripMenuItem.Enabled = (base.ActiveMdiChild as IUIPlugIn).IsDirty;
+				saveToolStripMenuItem.Enabled = (ActiveMdiChild as IUIPlugIn).IsDirty;
 				saveAsToolStripMenuItem.Enabled = true;
 			}
 			else
@@ -632,7 +631,7 @@ namespace VixenPlus
 			}
 			else
 			{
-				m_history.Remove(text);
+				_history.Remove(text);
 				FlushHistory();
 				LoadHistory();
 				MessageBox.Show("File does not exist.\nItem has been removed from the history.", Vendor.ProductName,
@@ -650,17 +649,20 @@ namespace VixenPlus
 			loadedObject.Instance = (ILoadable) Activator.CreateInstance(loadedObject.ObjectType);
 			try
 			{
-				if ((((loadedObject.Instance.DataLocationPreference == LoadableDataLocation.Sequence) &&
-				      (base.ActiveMdiChild != null)) && (base.ActiveMdiChild is VixenMDI)) &&
-				    (((VixenMDI) base.ActiveMdiChild).Sequence != null))
+				if ((((loadedObject.Instance.DataLocationPreference != LoadableDataLocation.Sequence) || ActiveMdiChild == null) ||
+				     (!(ActiveMdiChild is IVixenMDI))) || (((IVixenMDI) ActiveMdiChild).Sequence == null))
 				{
-					loadedObject.Instance.Loading(
-						((VixenMDI) base.ActiveMdiChild).Sequence.LoadableData.GetLoadableData(loadedObject.InterfaceImplemented,
-						                                                                       loadedObject.Instance.Name));
+					var activeMdiChild = (IVixenMDI) ActiveMdiChild;
+					if (activeMdiChild != null)
+					{
+						loadedObject.Instance.Loading(
+							activeMdiChild.Sequence.LoadableData.GetLoadableData(loadedObject.InterfaceImplemented,
+							                                                                  loadedObject.Instance.Name));
+					}
 				}
 				else
 				{
-					loadedObject.Instance.Loading(m_loadableData.GetLoadableData(loadedObject.InterfaceImplemented,
+					loadedObject.Instance.Loading(_loadableData.GetLoadableData(loadedObject.InterfaceImplemented,
 					                                                             loadedObject.Instance.Name));
 				}
 			}
@@ -703,9 +705,10 @@ namespace VixenPlus
 			var item = (ToolStripMenuItem) sender;
 			foreach (ToolStripItem item2 in item.DropDownItems)
 			{
-				if (item2.Tag is LoadedObject)
+				var loadedObject = item2.Tag as LoadedObject;
+				if (loadedObject != null)
 				{
-					var tag = (LoadedObject) item2.Tag;
+					var tag = loadedObject;
 					((ToolStripMenuItem) item2).Checked = tag.Instance != null;
 				}
 			}
@@ -714,12 +717,15 @@ namespace VixenPlus
 		private void LoadHistory()
 		{
 			recentToolStripMenuItem.DropDownItems.Clear();
-			m_history = new List<string>();
-			XmlNodeList list = m_preferences.XmlDoc.SelectNodes("//User/History/*");
-			foreach (XmlNode node in list)
+			_history = new List<string>();
+			XmlNodeList list = _preferences.XmlDoc.SelectNodes("//User/History/*");
+			if (list != null)
 			{
-				m_history.Add(node.InnerText);
-				recentToolStripMenuItem.DropDownItems.Add(node.InnerText, null, m_historyItemClick);
+				foreach (XmlNode node in list)
+				{
+					_history.Add(node.InnerText);
+					recentToolStripMenuItem.DropDownItems.Add(node.InnerText, null, _historyItemClick);
+				}
 			}
 			recentToolStripMenuItem.Enabled = recentToolStripMenuItem.DropDownItems.Count > 0;
 		}
@@ -765,7 +771,7 @@ namespace VixenPlus
 						MessageBox.Show(string.Format("{0}:\n{1}", Path.GetFileName(str), exception.Message));
 					}
 				}
-				m_loadables[interfaceName] = list;
+				_loadables[interfaceName] = list;
 			}
 			return list;
 		}
@@ -817,18 +823,18 @@ namespace VixenPlus
 						MessageBox.Show(string.Format("{0}:\n{1}", Path.GetFileName(str), exception.Message));
 					}
 				}
-				foreach (IUIPlugIn in2 in m_registeredFileTypes.Values)
+				foreach (IUIPlugIn in2 in _registeredFileTypes.Values)
 				{
 					ToolStripItem item = newLightingProgramToolStripMenuItem.DropDownItems.Add(in2.FileTypeDescription);
 					item.Tag = in2;
-					item.Click += m_newMenuItemClick;
+					item.Click += _newMenuItemClick;
 				}
 				var builder = new StringBuilder();
-				foreach (IUIPlugIn in2 in m_registeredFileTypes.Values)
+				foreach (IUIPlugIn in2 in _registeredFileTypes.Values)
 				{
 					builder.AppendFormat("|{0}|*{1}", in2.FileTypeDescription, in2.FileExtension);
 				}
-				m_knownFileTypesFilter = builder.ToString().Remove(0, 1);
+				_knownFileTypesFilter = builder.ToString().Remove(0, 1);
 			}
 		}
 
@@ -847,37 +853,37 @@ namespace VixenPlus
 		//    }
 		//}
 
-		private void m_preferences_PreferenceChange(string preferenceName)
+		private void PreferencesPreferenceChange(string preferenceName)
 		{
 			switch (preferenceName)
 			{
 				case "TimerCheckFrequency":
-					scheduleTimer.Interval = m_preferences.GetInteger("TimerCheckFrequency")*0x3e8;
+					scheduleTimer.Interval = _preferences.GetInteger("TimerCheckFrequency")*0x3e8;
 					break;
 
 				case "EnableBackgroundSequence":
-					if (!m_preferences.GetBoolean("EnableBackgroundSequence"))
+					if (!_preferences.GetBoolean("EnableBackgroundSequence"))
 					{
-						m_host.StopBackgroundSequence();
+						_host.StopBackgroundSequence();
 						break;
 					}
-					m_host.BackgroundSequenceName = m_preferences.GetString("BackgroundSequence");
-					m_host.StartBackgroundSequence();
+					_host.BackgroundSequenceName = _preferences.GetString("BackgroundSequence");
+					_host.StartBackgroundSequence();
 					break;
 
 				case "EnableBackgroundMusic":
-					if (!m_preferences.GetBoolean("EnableBackgroundMusic"))
+					if (!_preferences.GetBoolean("EnableBackgroundMusic"))
 					{
-						m_host.StopBackgroundMusic();
+						_host.StopBackgroundMusic();
 						break;
 					}
-					m_host.StartBackgroundMusic();
+					_host.StartBackgroundMusic();
 					break;
 
 				case "EventPeriod":
-					if (m_preferences.GetInteger("EventPeriod") < 0x19)
+					if (_preferences.GetInteger("EventPeriod") < 0x19)
 					{
-						m_preferences.SetInteger("EventPeriod", 0x19);
+						_preferences.SetInteger("EventPeriod", 0x19);
 						MessageBox.Show(
 							"The event period length cannot be less than 25 milliseconds.\nThe length has been reset to 25 milliseconds.",
 							Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
@@ -885,32 +891,32 @@ namespace VixenPlus
 					break;
 
 				case "BackgroundMusicDelay":
-					if (m_preferences.GetInteger("BackgroundMusicDelay") < 1)
+					if (_preferences.GetInteger("BackgroundMusicDelay") < 1)
 					{
 						MessageBox.Show("Delay cannot be less than 1 second.\nResetting to 1 second", Vendor.ProductName,
 						                MessageBoxButtons.OK, MessageBoxIcon.Hand);
-						m_preferences.SetInteger("BackgroundMusicDelay", 1);
+						_preferences.SetInteger("BackgroundMusicDelay", 1);
 					}
 					break;
 
 				case "BackgroundSequenceDelay":
-					if (m_preferences.GetInteger("BackgroundSequenceDelay") < 1)
+					if (_preferences.GetInteger("BackgroundSequenceDelay") < 1)
 					{
 						MessageBox.Show("Delay cannot be less than 1 second.\nResetting to 1 second", Vendor.ProductName,
 						                MessageBoxButtons.OK, MessageBoxIcon.Hand);
-						m_preferences.SetInteger("BackgroundSequenceDelay", 1);
+						_preferences.SetInteger("BackgroundSequenceDelay", 1);
 					}
 					break;
 
 				case "ShutdownTime":
-					SetShutdownTime(m_preferences.GetString("ShutdownTime"));
+					SetShutdownTime(_preferences.GetString("ShutdownTime"));
 					break;
 			}
 		}
 
 		private void manageProgramsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var dialog = new ProgramManagerDialog(m_host);
+			var dialog = new ProgramManagerDialog();
 			dialog.ShowDialog();
 			dialog.Dispose();
 		}
@@ -927,7 +933,7 @@ namespace VixenPlus
 
 		private void musicPlayerToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			m_host.MusicPlayer.ShowDialog();
+			_host.MusicPlayer.ShowDialog();
 		}
 
 		private void NewMenuItemClick(object sender, EventArgs e)
@@ -940,7 +946,7 @@ namespace VixenPlus
 			var tag = (IUIPlugIn) item.Tag;
 			tag = (IUIPlugIn) Activator.CreateInstance(tag.GetType());
 			tag.Sequence = null;
-			if (m_preferences.GetBoolean("WizardForNewSequences"))
+			if (_preferences.GetBoolean("WizardForNewSequences"))
 			{
 				EventSequence resultSequence = null;
 				switch (tag.RunWizard(ref resultSequence))
@@ -955,7 +961,7 @@ namespace VixenPlus
 						tag.Sequence = tag.New(resultSequence);
 						if (!SaveAs((UIBase) tag))
 						{
-							base.DialogResult = DialogResult.None;
+							DialogResult = DialogResult.None;
 						}
 						goto Label_00DF;
 
@@ -970,7 +976,11 @@ namespace VixenPlus
 			Label_00DF:
 			if (tag.Sequence != null)
 			{
-				(tag as UIBase).DirtyChanged += plugin_DirtyChanged;
+				var uiBase = tag as UIBase;
+				if (uiBase != null)
+				{
+					uiBase.DirtyChanged += plugin_DirtyChanged;
+				}
 				tag.MdiParent = this;
 				tag.Show();
 			}
@@ -978,20 +988,19 @@ namespace VixenPlus
 
 		private void NotifyAll(Notification notification)
 		{
-			foreach (Form form in base.MdiChildren)
+			foreach (Form form in MdiChildren)
 			{
-				if (form is VixenMDI)
-				{
-					((VixenMDI) form).Notify(notification, null);
+				var vixenMdi = form as IVixenMDI;
+				if (vixenMdi != null)
+				{		
+					vixenMdi.Notify(notification, null);
 				}
 			}
 		}
 
 		private void onlineSupportForumToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var process = new Process();
-			process.StartInfo.FileName = Vendor.SupportURL;
-			process.StartInfo.UseShellExecute = true;
+			var process = new Process {StartInfo = {FileName = Vendor.SupportURL, UseShellExecute = true}};
 			process.Start();
 		}
 
@@ -999,8 +1008,8 @@ namespace VixenPlus
 		{
 			int num = 0;
 			int num2 = 1;
-			string str = m_preferences.GetString("PreferredSequenceType");
-			foreach (IUIPlugIn @in in m_registeredFileTypes.Values)
+			string str = _preferences.GetString("PreferredSequenceType");
+			foreach (IUIPlugIn @in in _registeredFileTypes.Values)
 			{
 				if (str == @in.FileExtension)
 				{
@@ -1009,7 +1018,7 @@ namespace VixenPlus
 				}
 				num2++;
 			}
-			openFileDialog1.Filter = m_knownFileTypesFilter;
+			openFileDialog1.Filter = _knownFileTypesFilter;
 			openFileDialog1.InitialDirectory = Paths.SequencePath;
 			openFileDialog1.FileName = string.Empty;
 			openFileDialog1.FilterIndex = num;
@@ -1030,13 +1039,18 @@ namespace VixenPlus
 		public void OpenSequence(string fileName)
 		{
 			IUIPlugIn @in;
-			var document = new XmlDocument();
-			if (m_registeredFileTypes.TryGetValue(Path.GetExtension(fileName).ToLower(), out @in))
+			new XmlDocument();
+			var extension = Path.GetExtension(fileName);
+			if (extension != null && _registeredFileTypes.TryGetValue(extension.ToLower(), out @in))
 			{
 				AddToFileHistory(fileName);
 				@in = (IUIPlugIn) Activator.CreateInstance(@in.GetType());
 				@in.Sequence = @in.Open(fileName);
-				(@in as UIBase).DirtyChanged += plugin_DirtyChanged;
+				var uiBase = @in as UIBase;
+				if (uiBase != null)
+				{
+					uiBase.DirtyChanged += plugin_DirtyChanged;
+				}
 				@in.MdiParent = this;
 				@in.Show();
 			}
@@ -1049,17 +1063,21 @@ namespace VixenPlus
 
 		private void plugin_DirtyChanged(object sender, EventArgs e)
 		{
-			saveToolStripMenuItem.Enabled = (sender as IUIPlugIn).IsDirty;
+			var uiPlugIn = sender as IUIPlugIn;
+			if (uiPlugIn != null)
+			{
+				saveToolStripMenuItem.Enabled = uiPlugIn.IsDirty;
+			}
 		}
 
 		private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var array = new IUIPlugIn[m_registeredFileTypes.Values.Count];
-			m_registeredFileTypes.Values.CopyTo(array, 0);
-			var dialog = new PreferencesDialog(m_preferences, array);
+			var array = new IUIPlugIn[_registeredFileTypes.Values.Count];
+			_registeredFileTypes.Values.CopyTo(array, 0);
+			var dialog = new PreferencesDialog(array);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
-				m_preferences.Reload();
+				_preferences.Reload();
 				NotifyAll(Notification.PreferenceChange);
 			}
 			dialog.Dispose();
@@ -1072,17 +1090,11 @@ namespace VixenPlus
 
 		private void programToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
 		{
-			if (base.ActiveMdiChild is IUIPlugIn)
+			var @in = ActiveMdiChild as IUIPlugIn;
+			if (@in != null)
 			{
-				var activeMdiChild = (IUIPlugIn) base.ActiveMdiChild;
-				if ((activeMdiChild.Sequence.Name != null) && (activeMdiChild.Sequence.Name.Length > 0))
-				{
-					saveToolStripMenuItem.Text = string.Format("Save ({0})", activeMdiChild.Sequence.Name);
-				}
-				else
-				{
-					saveToolStripMenuItem.Text = "Save";
-				}
+				var activeMdiChild = @in;
+				saveToolStripMenuItem.Text = !string.IsNullOrEmpty(activeMdiChild.Sequence.Name) ? string.Format("Save ({0})", activeMdiChild.Sequence.Name) : "Save";
 				channelDimmingCurvesToolStripMenuItem.Enabled = true;
 			}
 			else
@@ -1096,17 +1108,17 @@ namespace VixenPlus
 		{
 			IUIPlugIn @in;
 			fileExtension = fileExtension.ToLower();
-			if (m_registeredFileTypes.TryGetValue(fileExtension, out @in))
+			if (_registeredFileTypes.TryGetValue(fileExtension, out @in))
 			{
 				return false;
 			}
-			m_registeredFileTypes[fileExtension] = inputPlugin;
+			_registeredFileTypes[fileExtension] = inputPlugin;
 			return true;
 		}
 
 		private void restartCurrentTimerToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (m_timers.TimersDisabled)
+			if (_timers.TimersDisabled)
 			{
 				MessageBox.Show("Schedule is currently disabled.", Vendor.ProductName, MessageBoxButtons.OK,
 				                MessageBoxIcon.Exclamation);
@@ -1114,7 +1126,7 @@ namespace VixenPlus
 			else
 			{
 				SetTimerTraceFlag();
-				List<Timer> list = m_timers.CurrentlyEffectiveTimers();
+				List<Timer> list = _timers.CurrentlyEffectiveTimers();
 				if (list.Count == 0)
 				{
 					MessageBox.Show("There is nothing scheduled to execute at this time.", Vendor.ProductName, MessageBoxButtons.OK,
@@ -1124,9 +1136,9 @@ namespace VixenPlus
 				{
 					foreach (Timer timer in list)
 					{
-						m_timerExecutor.SpawnExecutorFor(timer);
+						_timerExecutor.SpawnExecutorFor(timer);
 					}
-					if (m_timerExecutor.ExecutingTimerCount == 0)
+					if (_timerExecutor.ExecutingTimerCount == 0)
 					{
 						MessageBox.Show(
 							"Timers were not executed.\n\nThe scheduled items may be longer than their remaining time or there may have been an error.",
@@ -1143,7 +1155,7 @@ namespace VixenPlus
 				return false;
 			}
 			IUIPlugIn @in = pluginInstance;
-			if ((@in.IsDirty && ((@in.Sequence.Name == null) || (@in.Sequence.Name == string.Empty))) &&
+			if ((@in.IsDirty && string.IsNullOrEmpty(@in.Sequence.Name)) &&
 			    !GetNewName(pluginInstance))
 			{
 				return false;
@@ -1151,7 +1163,7 @@ namespace VixenPlus
 			UpdateHistoryImages(@in.Sequence.FileName);
 			@in.SaveTo(@in.Sequence.FileName);
 			AddToFileHistory(@in.Sequence.FileName);
-			if (m_preferences.GetBoolean("ShowSaveConfirmation"))
+			if (_preferences.GetBoolean("ShowSaveConfirmation"))
 			{
 				MessageBox.Show("Sequence saved", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 			}
@@ -1170,16 +1182,16 @@ namespace VixenPlus
 
 		private void saveToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			Save((UIBase) base.ActiveMdiChild);
+			Save((UIBase) ActiveMdiChild);
 		}
 
 		private void setBackgroundSequenceToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var dialog = new BackgroundSequenceDialog(m_preferences.GetString("BackgroundSequence"), Paths.SequencePath);
+			var dialog = new BackgroundSequenceDialog(_preferences.GetString("BackgroundSequence"), Paths.SequencePath);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
-				m_preferences.SetString("BackgroundSequence", dialog.BackgroundSequenceFileName);
-				m_host.BackgroundSequenceName = dialog.BackgroundSequenceFileName;
+				_preferences.SetString("BackgroundSequence", dialog.BackgroundSequenceFileName);
+				_host.BackgroundSequenceName = dialog.BackgroundSequenceFileName;
 			}
 			dialog.Dispose();
 		}
@@ -1200,14 +1212,14 @@ namespace VixenPlus
 			}
 			else if (File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "shutdown.exe")))
 			{
-				m_shutdownAt = DateTime.Parse(time);
+				_shutdownAt = DateTime.Parse(time);
 				shutdownTimer.Start();
 			}
 		}
 
 		private void setSoundDeviceToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var dialog = new SoundDeviceDialog(m_preferences);
+			var dialog = new SoundDeviceDialog(_preferences);
 			dialog.ShowDialog();
 			dialog.Dispose();
 		}
@@ -1233,7 +1245,7 @@ namespace VixenPlus
 
 		private void shutdownTimer_Tick(object sender, EventArgs e)
 		{
-			if ((DateTime.Now.Hour == m_shutdownAt.Hour) && (DateTime.Now.Minute == m_shutdownAt.Minute))
+			if ((DateTime.Now.Hour == _shutdownAt.Hour) && (DateTime.Now.Minute == _shutdownAt.Minute))
 			{
 				shutdownTimer.Stop();
 				Process.Start("shutdown", string.Format("/s /d P:4:1 /c \"Automatic shutdown by {0}\"", Vendor.ProductName));
@@ -1256,7 +1268,7 @@ namespace VixenPlus
 				item.CheckClick += loadableMenuItem_CheckClick;
 				addInsToolStripMenuItem.DropDownItems.Add(item);
 				if (
-					m_loadableData.RootNode.SelectSingleNode(string.Format("IAddInData/IAddIn[@name=\"{0}\" and @enabled=\"{1}\"]",
+					_loadableData.RootNode.SelectSingleNode(string.Format("IAddInData/IAddIn[@name=\"{0}\" and @enabled=\"{1}\"]",
 					                                                       @in.Name, bool.TrueString)) != null)
 				{
 					InstantiateObject(obj2);
@@ -1279,7 +1291,7 @@ namespace VixenPlus
 				item.CheckClick += loadableMenuItem_CheckClick;
 				triggersToolStripMenuItem.DropDownItems.Add(item);
 				if (
-					m_loadableData.RootNode.SelectSingleNode(
+					_loadableData.RootNode.SelectSingleNode(
 						string.Format("ITriggerPluginData/ITriggerPlugin[@name=\"{0}\" and @enabled=\"{1}\"]", plugin.Name,
 						              bool.TrueString)) != null)
 				{
@@ -1291,36 +1303,36 @@ namespace VixenPlus
 
 		private void tileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			base.LayoutMdi(MdiLayout.TileHorizontal);
+			LayoutMdi(MdiLayout.TileHorizontal);
 		}
 
 		private void timer1_Tick(object sender, EventArgs e)
 		{
 			SetTimerTraceFlag();
-			foreach (Timer timer in m_timers.StartingTimers())
+			foreach (Timer timer in _timers.StartingTimers())
 			{
-				m_timerExecutor.SpawnExecutorFor(timer);
+				_timerExecutor.SpawnExecutorFor(timer);
 			}
 		}
 
 		private void timersToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var dialog = new ScheduleDialog(m_timers);
+			var dialog = new ScheduleDialog(_timers);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
-				m_timers = dialog.Timers;
-				m_timers.TimersDisabled = dialog.ScheduleDisabled;
+				_timers = dialog.Timers;
+				_timers.TimersDisabled = dialog.ScheduleDisabled;
 				XmlDocument contextNode = Xml.CreateXmlDocument();
-				m_timers.SaveToXml(contextNode);
-				contextNode.Save(m_timersPath);
-				scheduleTimer.Enabled = !m_timers.TimersDisabled;
+				_timers.SaveToXml(contextNode);
+				contextNode.Save(_timersPath);
+				scheduleTimer.Enabled = !_timers.TimersDisabled;
 			}
 			dialog.Dispose();
 		}
 
-		private void TriggerClickHandler(object Sender, EventArgs e)
+		private void TriggerClickHandler(object sender, EventArgs e)
 		{
-			var item = (ToolStripMenuItem) Sender;
+			var item = (ToolStripMenuItem) sender;
 			var tag = (LoadedObject) item.Tag;
 			if (tag.Instance == null)
 			{
@@ -1349,7 +1361,7 @@ namespace VixenPlus
 		{
 			if (File.Exists(baseFilePath))
 			{
-				int integer = m_preferences.GetInteger("HistoryImages");
+				int integer = _preferences.GetInteger("HistoryImages");
 				if (integer != 0)
 				{
 					string[] files = Directory.GetFiles(Paths.SequencePath, Path.GetFileName(baseFilePath) + ".bak*");
@@ -1369,20 +1381,19 @@ namespace VixenPlus
 
 		private void viewRegisteredResponsesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			m_iTriggerImpl.ShowRegistrations();
+			_iTriggerImpl.ShowRegistrations();
 		}
 
 		private void visualChannelLayoutToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			IExecutable executableObject;
-			if (((base.ActiveMdiChild != null) && (base.ActiveMdiChild is VixenMDI)) &&
-			    (((VixenMDI) base.ActiveMdiChild).Sequence != null))
+			if (ActiveMdiChild != null && ActiveMdiChild is IVixenMDI && ((IVixenMDI) ActiveMdiChild).Sequence != null)
 			{
-				executableObject = ((VixenMDI) base.ActiveMdiChild).Sequence;
+				executableObject = ((IVixenMDI) base.ActiveMdiChild).Sequence;
 			}
 			else
 			{
-				string str = m_preferences.GetString("DefaultProfile");
+				string str = _preferences.GetString("DefaultProfile");
 				executableObject = (str.Length == 0) ? null : (new Profile(Path.Combine(Paths.ProfilePath, str + ".pro")));
 			}
 			if (executableObject == null)

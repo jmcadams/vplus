@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -17,87 +18,85 @@ namespace VixenPlus
 
 		public delegate void SequenceChangeDelegate();
 
-		private const string INSTANCE_ID_ROOT = "engine_";
-		private static readonly List<Engine8> m_instanceList = new List<Engine8>();
-		private static int m_nextInstanceId;
-		private readonly object m_runLock;
-		private float m_audioSpeed;
-		private XmlDocument m_commDoc;
-		private EngineContext[] m_contexts;
-		private System.Timers.Timer m_eventTimer;
-		private fmod m_fmod;
-		private HardwareUpdateDelegate m_hardwareUpdate;
-		private Host m_host;
-		private int m_instanceId;
-		private bool m_isPaused;
-		private bool m_loggingEnabled;
-		private bool m_loop;
-		private EngineMode m_mode;
-		private int m_primaryContext;
-		private SequenceProgram m_program;
-		private PlugInRouter m_router;
-		private bool m_running;
-		private int m_secondaryContext;
-		private IEngine m_secondaryEngine;
-		private bool m_stopping;
-		private EngineTimer m_surfacedTimer;
-		private bool m_useSequencePluginData;
+		private static readonly List<Engine8> InstanceList = new List<Engine8>();
+		private static int _nextInstanceId;
+		private readonly object _runLock;
+		private float _audioSpeed;
+		private XmlDocument _xmlDocument;
+		private EngineContext[] _engineContexts;
+		private System.Timers.Timer _eventTimer;
+		private fmod _fmod;
+		private HardwareUpdateDelegate _hardwareUpdateDelegate;
+		private Host _host;
+		private bool _isPaused;
+		private bool _isLoggingEnabled;
+		private bool _isLooping;
+		private EngineMode _engineMode;
+		private int _primaryContext;
+		private SequenceProgram _sequenceProgram;
+		private PlugInRouter _plugInRouter;
+		private bool _isRunning;
+		private int _secondaryContext;
+		private IEngine _secondaryEngine;
+		private bool _isStopping;
+		private EngineTimer _surfacedTimer;
+		private bool _useSequencePluginData;
 
 		internal Engine8(Host host, int audioDeviceIndex)
 		{
-			m_isPaused = false;
-			m_loop = false;
-			m_secondaryEngine = null;
-			m_running = false;
-			m_runLock = new object();
-			m_useSequencePluginData = false;
-			m_primaryContext = 0;
-			m_secondaryContext = 1;
-			m_audioSpeed = 1f;
-			m_loggingEnabled = false;
-			m_stopping = false;
+			_isPaused = false;
+			_isLooping = false;
+			_secondaryEngine = null;
+			_isRunning = false;
+			_runLock = new object();
+			_useSequencePluginData = false;
+			_primaryContext = 0;
+			_secondaryContext = 1;
+			_audioSpeed = 1f;
+			_isLoggingEnabled = false;
+			_isStopping = false;
 			ConstructUsing(EngineMode.Synchronous, host, audioDeviceIndex);
 		}
 
 		internal Engine8(EngineMode mode, Host host, int audioDeviceIndex)
 		{
-			m_isPaused = false;
-			m_loop = false;
-			m_secondaryEngine = null;
-			m_running = false;
-			m_runLock = new object();
-			m_useSequencePluginData = false;
-			m_primaryContext = 0;
-			m_secondaryContext = 1;
-			m_audioSpeed = 1f;
-			m_loggingEnabled = false;
-			m_stopping = false;
+			_isPaused = false;
+			_isLooping = false;
+			_secondaryEngine = null;
+			_isRunning = false;
+			_runLock = new object();
+			_useSequencePluginData = false;
+			_primaryContext = 0;
+			_secondaryContext = 1;
+			_audioSpeed = 1f;
+			_isLoggingEnabled = false;
+			_isStopping = false;
 			ConstructUsing(mode, host, audioDeviceIndex);
 		}
 
 		public float AudioSpeed
 		{
-			get { return m_audioSpeed; }
-			set { m_audioSpeed = value; }
+			get { return _audioSpeed; }
+			set { _audioSpeed = value; }
 		}
 
 		public XmlDocument CommDoc
 		{
-			set { m_commDoc = value; }
+			set { _xmlDocument = value; }
 		}
 
 		public IExecutable CurrentObject
 		{
-			get { return m_program; }
+			get { return _sequenceProgram; }
 		}
 
 		public string ExecutingProgram
 		{
 			get
 			{
-				if ((m_mode != EngineMode.Asynchronous) && (IsRunning || IsPaused))
+				if ((_engineMode != EngineMode.Asynchronous) && (IsRunning || IsPaused))
 				{
-					return m_program.Name;
+					return _sequenceProgram.Name;
 				}
 				return string.Empty;
 			}
@@ -107,13 +106,13 @@ namespace VixenPlus
 		{
 			get
 			{
-				if (m_mode == EngineMode.Asynchronous)
+				if (_engineMode == EngineMode.Asynchronous)
 				{
 					return string.Empty;
 				}
 				if (IsRunning || IsPaused)
 				{
-					return m_contexts[m_primaryContext].m_currentSequence.Name;
+					return _engineContexts[_primaryContext].CurrentSequence.Name;
 				}
 				return "None";
 			}
@@ -121,18 +120,18 @@ namespace VixenPlus
 
 		public bool IsPaused
 		{
-			get { return m_isPaused; }
+			get { return _isPaused; }
 		}
 
 		public bool IsRunning
 		{
 			get
 			{
-				if (m_secondaryEngine != null)
+				if (_secondaryEngine != null)
 				{
-					return m_secondaryEngine.IsRunning;
+					return _secondaryEngine.IsRunning;
 				}
-				return m_running;
+				return _isRunning;
 			}
 		}
 
@@ -140,15 +139,15 @@ namespace VixenPlus
 		{
 			get
 			{
-				if (m_mode == EngineMode.Asynchronous)
+				if (_engineMode == EngineMode.Asynchronous)
 				{
 					return string.Empty;
 				}
-				if (m_program == null)
+				if (_sequenceProgram == null)
 				{
 					return string.Empty;
 				}
-				return m_program.Name;
+				return _sequenceProgram.Name;
 			}
 		}
 
@@ -156,15 +155,15 @@ namespace VixenPlus
 		{
 			get
 			{
-				if (m_mode == EngineMode.Asynchronous)
+				if (_engineMode == EngineMode.Asynchronous)
 				{
 					return 0;
 				}
-				if (m_program == null)
+				if (_sequenceProgram == null)
 				{
 					return 0;
 				}
-				return m_program.Length;
+				return _sequenceProgram.Length;
 			}
 		}
 
@@ -172,15 +171,15 @@ namespace VixenPlus
 		{
 			get
 			{
-				if (m_mode == EngineMode.Asynchronous)
+				if (_engineMode == EngineMode.Asynchronous)
 				{
 					return string.Empty;
 				}
-				if (m_contexts[m_primaryContext].m_currentSequence == null)
+				if (_engineContexts[_primaryContext].CurrentSequence == null)
 				{
 					return string.Empty;
 				}
-				return m_contexts[m_primaryContext].m_currentSequence.Name;
+				return _engineContexts[_primaryContext].CurrentSequence.Name;
 			}
 		}
 
@@ -188,38 +187,38 @@ namespace VixenPlus
 		{
 			get
 			{
-				if (m_mode == EngineMode.Asynchronous)
+				if (_engineMode == EngineMode.Asynchronous)
 				{
 					return 0;
 				}
-				if (m_contexts[m_primaryContext].m_currentSequence == null)
+				if (_engineContexts[_primaryContext].CurrentSequence == null)
 				{
 					return 0;
 				}
-				return m_contexts[m_primaryContext].m_currentSequence.Length;
+				return _engineContexts[_primaryContext].CurrentSequence.Length;
 			}
 		}
 
-		public bool Loop
+		public bool IsLooping
 		{
-			get { return m_loop; }
-			set { m_loop = value; }
+			get { return _isLooping; }
+			set { _isLooping = value; }
 		}
 
 		public EngineMode Mode
 		{
-			get { return m_mode; }
+			get { return _engineMode; }
 		}
 
 		public int ObjectPosition
 		{
 			get
 			{
-				EngineContext context = m_contexts[m_primaryContext];
-				int tickCount = context.m_tickCount;
-				for (int i = 0; i < context.m_sequenceIndex; i++)
+				EngineContext context = _engineContexts[_primaryContext];
+				int tickCount = context.TickCount;
+				for (int i = 0; i < context.SequenceIndex; i++)
 				{
-					tickCount += m_program.EventSequences[i].Length;
+					tickCount += _sequenceProgram.EventSequences[i].Length;
 				}
 				return tickCount;
 			}
@@ -227,36 +226,36 @@ namespace VixenPlus
 
 		public int Position
 		{
-			get { return m_contexts[m_primaryContext].m_tickCount; }
+			get { return _engineContexts[_primaryContext].TickCount; }
 		}
 
 		public void Dispose()
 		{
 			ReleaseSecondaryEngine();
-			if (m_mode == EngineMode.Synchronous)
+			if (_engineMode == EngineMode.Synchronous)
 			{
-				if (m_eventTimer != null)
+				if (_eventTimer != null)
 				{
-					m_eventTimer.Stop();
-					m_eventTimer.Elapsed -= m_eventTimer_Elapsed;
-					m_eventTimer.Dispose();
-					m_eventTimer = null;
+					_eventTimer.Stop();
+					_eventTimer.Elapsed -= EventTimerElapsed;
+					_eventTimer.Dispose();
+					_eventTimer = null;
 				}
-				m_fmod.Stop(m_contexts[m_primaryContext].m_soundChannel);
-				if (m_contexts[m_secondaryContext] != null)
+				_fmod.Stop(_engineContexts[_primaryContext].SoundChannel);
+				if (_engineContexts[_secondaryContext] != null)
 				{
-					m_fmod.Stop(m_contexts[m_secondaryContext].m_soundChannel);
+					_fmod.Stop(_engineContexts[_secondaryContext].SoundChannel);
 				}
-				m_fmod.Shutdown();
+				_fmod.Shutdown();
 			}
-			if (m_router != null)
+			if (_plugInRouter != null)
 			{
 				try
 				{
-					m_router.Shutdown(m_contexts[m_primaryContext].m_routerContext);
-					if (m_contexts[m_secondaryContext] != null)
+					_plugInRouter.Shutdown(_engineContexts[_primaryContext].RouterContext);
+					if (_engineContexts[_secondaryContext] != null)
 					{
-						m_router.Shutdown(m_contexts[m_secondaryContext].m_routerContext);
+						_plugInRouter.Shutdown(_engineContexts[_secondaryContext].RouterContext);
 					}
 				}
 				catch (Exception exception)
@@ -265,34 +264,34 @@ namespace VixenPlus
 					                MessageBoxButtons.OK, MessageBoxIcon.Hand);
 				}
 			}
-			if (m_surfacedTimer != null)
+			if (_surfacedTimer != null)
 			{
-				m_surfacedTimer.Dispose();
-				m_surfacedTimer = null;
+				_surfacedTimer.Dispose();
+				_surfacedTimer = null;
 			}
 			ProgramEnd = null;
 			SequenceChange = null;
-			m_hardwareUpdate = null;
-			if (m_program != null)
+			_hardwareUpdateDelegate = null;
+			if (_sequenceProgram != null)
 			{
-				m_program.Dispose();
+				_sequenceProgram.Dispose();
 			}
-			m_instanceList.Remove(this);
+			InstanceList.Remove(this);
 			GC.SuppressFinalize(this);
 		}
 
 		public string QueryInstance(int index)
 		{
 			var builder = new StringBuilder();
-			if ((index >= 0) && (index < m_instanceList.Count))
+			if ((index >= 0) && (index < InstanceList.Count))
 			{
-				Engine8 engine = m_instanceList[index];
-				if (engine.m_program != null)
+				Engine8 engine = InstanceList[index];
+				if (engine._sequenceProgram != null)
 				{
-					builder.AppendLine("Program: " + engine.m_program.Name);
-					builder.AppendLine("Sequence count: " + engine.m_program.EventSequences.Count);
+					builder.AppendLine("Program: " + engine._sequenceProgram.Name);
+					builder.AppendLine("Sequence count: " + engine._sequenceProgram.EventSequences.Count);
 					builder.AppendLine("Sequences:");
-					foreach (EventSequenceStub stub in engine.m_program.EventSequences)
+					foreach (EventSequenceStub stub in engine._sequenceProgram.EventSequences)
 					{
 						builder.AppendLine("   " + stub.FileName);
 					}
@@ -301,22 +300,22 @@ namespace VixenPlus
 				{
 					builder.AppendLine("Program: (null)");
 				}
-				builder.AppendLine("Primary context: " + engine.m_primaryContext);
-				builder.Append(QueryContext(engine.m_contexts[engine.m_primaryContext]));
-				builder.AppendLine("Secondary context: " + engine.m_secondaryContext);
-				builder.Append(QueryContext(engine.m_contexts[engine.m_secondaryContext]));
-				builder.AppendLine("Loop: " + engine.m_loop);
-				builder.AppendLine("Paused: " + engine.m_isPaused);
-				builder.AppendLine("Running: " + engine.m_running);
-				builder.AppendLine("Use sequence plugin data: " + engine.m_useSequencePluginData);
-				builder.AppendLine("Mode: " + engine.m_mode);
+				builder.AppendLine("Primary context: " + engine._primaryContext);
+				builder.Append(QueryContext(engine._engineContexts[engine._primaryContext]));
+				builder.AppendLine("Secondary context: " + engine._secondaryContext);
+				builder.Append(QueryContext(engine._engineContexts[engine._secondaryContext]));
+				builder.AppendLine("Loop: " + engine._isLooping);
+				builder.AppendLine("Paused: " + engine._isPaused);
+				builder.AppendLine("Running: " + engine._isRunning);
+				builder.AppendLine("Use sequence plugin data: " + engine._useSequencePluginData);
+				builder.AppendLine("Mode: " + engine._engineMode);
 			}
 			return builder.ToString();
 		}
 
 		public int Count
 		{
-			get { return m_instanceList.Count; }
+			get { return InstanceList.Count; }
 		}
 
 		public event ProgramEndDelegate ProgramEnd;
@@ -326,9 +325,9 @@ namespace VixenPlus
 		private int CalcContainingSequence(int milliseconds)
 		{
 			int num = 0;
-			for (int i = 0; i < m_program.EventSequences.Count; i++)
+			for (int i = 0; i < _sequenceProgram.EventSequences.Count; i++)
 			{
-				num += m_program.EventSequences[i].Length;
+				num += _sequenceProgram.EventSequences[i].Length;
 				if (milliseconds <= num)
 				{
 					return i;
@@ -337,69 +336,59 @@ namespace VixenPlus
 			return -1;
 		}
 
-		private int CalcSequenceStart(int index)
-		{
-			int num = 0;
-			while (index-- > 0)
-			{
-				num += m_program.EventSequences[index].Length;
-			}
-			return num;
-		}
-
 		private void ConstructUsing(EngineMode mode, Host host, int audioDeviceIndex)
 		{
-			m_instanceId = m_nextInstanceId++;
-			m_mode = mode;
-			m_host = host;
-			m_router = Host.Router;
+			_nextInstanceId++;
+			_engineMode = mode;
+			_host = host;
+			_plugInRouter = Host.Router;
 			if (mode == EngineMode.Synchronous)
 			{
-				m_eventTimer = new System.Timers.Timer(1.0);
-				m_eventTimer.Elapsed += m_eventTimer_Elapsed;
-				m_fmod = fmod.GetInstance(audioDeviceIndex);
-				m_surfacedTimer = (m_mode == EngineMode.Synchronous) ? new EngineTimer(CurrentTime) : null;
+				_eventTimer = new System.Timers.Timer(1.0);
+				_eventTimer.Elapsed += EventTimerElapsed;
+				_fmod = fmod.GetInstance(audioDeviceIndex);
+				_surfacedTimer = (_engineMode == EngineMode.Synchronous) ? new EngineTimer(CurrentTime) : null;
 			}
 			else
 			{
-				m_eventTimer = null;
-				m_fmod = null;
-				m_surfacedTimer = null;
+				_eventTimer = null;
+				_fmod = null;
+				_surfacedTimer = null;
 			}
-			m_hardwareUpdate = HardwareUpdate;
-			m_contexts = new[] {new EngineContext(), new EngineContext()};
-			m_instanceList.Add(this);
+			_hardwareUpdateDelegate = HardwareUpdate;
+			_engineContexts = new[] {new EngineContext(), new EngineContext()};
+			InstanceList.Add(this);
 		}
 
 		private void CreateScriptEngine(EventSequence sequence)
 		{
-			if ((sequence.EngineType == EngineType.Procedural) && (m_secondaryEngine == null))
+			if ((sequence.EngineType == EngineType.Procedural) && (_secondaryEngine == null))
 			{
 				LoadSecondaryEngine(Path.Combine(Paths.BinaryPath,
 				                                 Path.GetFileName(
 					                                 ((ISystem) Interfaces.Available["ISystem"]).UserPreferences.GetString(
 						                                 "SecondaryEngine"))));
-				m_secondaryEngine.HardwareUpdate = m_hardwareUpdate;
-				m_secondaryEngine.CommDoc = m_commDoc;
+				_secondaryEngine.HardwareUpdate = _hardwareUpdateDelegate;
+				_secondaryEngine.CommDoc = _xmlDocument;
 			}
 		}
 
 		private int CurrentTime()
 		{
-			if ((m_contexts[m_primaryContext].m_soundChannel != null) && m_contexts[m_primaryContext].m_soundChannel.IsPlaying)
+			if ((_engineContexts[_primaryContext].SoundChannel != null) && _engineContexts[_primaryContext].SoundChannel.IsPlaying)
 			{
-				return (int) m_contexts[m_primaryContext].m_soundChannel.Position;
+				return (int) _engineContexts[_primaryContext].SoundChannel.Position;
 			}
-			return (m_contexts[m_primaryContext].m_startOffset +
-			        ((int) m_contexts[m_primaryContext].m_timekeeper.ElapsedMilliseconds));
+			return (_engineContexts[_primaryContext].StartOffset +
+			        ((int) _engineContexts[_primaryContext].Timekeeper.ElapsedMilliseconds));
 		}
 
 		private int DetermineSecondarySequenceIndex()
 		{
-			int sequenceIndex = m_contexts[m_primaryContext].m_sequenceIndex;
-			if ((sequenceIndex + 1) == m_program.EventSequences.Count)
+			int sequenceIndex = _engineContexts[_primaryContext].SequenceIndex;
+			if ((sequenceIndex + 1) == _sequenceProgram.EventSequences.Count)
 			{
-				if (m_loop)
+				if (_isLooping)
 				{
 					return 0;
 				}
@@ -410,27 +399,27 @@ namespace VixenPlus
 
 		private void ExecutionStopThread()
 		{
-			if (m_secondaryEngine != null)
+			if (_secondaryEngine != null)
 			{
-				lock (m_secondaryEngine)
+				lock (_secondaryEngine)
 				{
-					if (m_secondaryEngine.IsRunning)
+					if (_secondaryEngine.IsRunning)
 					{
-						lock (m_runLock)
+						lock (_runLock)
 						{
-							m_running = false;
+							_isRunning = false;
 						}
-						m_secondaryEngine.Stop();
+						_secondaryEngine.Stop();
 					}
 				}
 			}
-			else if (m_running && (m_router != null))
+			else if (_isRunning && (_plugInRouter != null))
 			{
 				StopExecution();
-				m_contexts[m_primaryContext].m_currentSequence = null;
+				_engineContexts[_primaryContext].CurrentSequence = null;
 				OnProgramEnd(true);
 			}
-			m_stopping = false;
+			_isStopping = false;
 		}
 
 		~Engine8()
@@ -442,27 +431,27 @@ namespace VixenPlus
 		{
 			if (context != null)
 			{
-				if (shutdownRouterContext && (context.m_routerContext != null))
+				if (shutdownRouterContext && (context.RouterContext != null))
 				{
-					m_router.Shutdown(context.m_routerContext);
-					context.m_routerContext = null;
+					_plugInRouter.Shutdown(context.RouterContext);
+					context.RouterContext = null;
 				}
-				if (context.m_soundChannel != null)
+				if (context.SoundChannel != null)
 				{
-					m_fmod.ReleaseSound(context.m_soundChannel);
-					context.m_soundChannel = null;
+					_fmod.ReleaseSound(context.SoundChannel);
+					context.SoundChannel = null;
 				}
-				if (context.m_timekeeper.IsRunning)
+				if (context.Timekeeper.IsRunning)
 				{
-					context.m_timekeeper.Stop();
-					context.m_timekeeper.Reset();
+					context.Timekeeper.Stop();
+					context.Timekeeper.Reset();
 				}
 			}
 		}
 
 		private bool FindEventSequence(object uniqueReference)
 		{
-			foreach (EventSequenceStub stub in m_program.EventSequences)
+			foreach (EventSequenceStub stub in _sequenceProgram.EventSequences)
 			{
 				if (stub.Sequence == uniqueReference)
 				{
@@ -474,7 +463,7 @@ namespace VixenPlus
 
 		private bool FindOutputPlugIn(object uniqueReference)
 		{
-			foreach (MappedOutputPlugIn @in in m_contexts[m_primaryContext].m_routerContext.OutputPluginList)
+			foreach (MappedOutputPlugIn @in in _engineContexts[_primaryContext].RouterContext.OutputPluginList)
 			{
 				if (@in.PlugIn == uniqueReference)
 				{
@@ -486,13 +475,13 @@ namespace VixenPlus
 
 		private void FireEvent(EngineContext context, int index)
 		{
-			if ((context.m_timekeeper.IsRunning && m_eventTimer.Enabled) && !m_stopping)
+			if ((context.Timekeeper.IsRunning && _eventTimer.Enabled) && !_isStopping)
 			{
-				for (int i = 0; i < context.m_currentSequence.Channels.Count; i++)
+				for (int i = 0; i < context.CurrentSequence.Channels.Count; i++)
 				{
-					context.m_routerContext.EngineBuffer[i] = context.m_data[i, index];
+					context.RouterContext.EngineBuffer[i] = context.Data[i, index];
 				}
-				HardwareUpdate(context.m_routerContext.EngineBuffer, index);
+				HardwareUpdate(context.RouterContext.EngineBuffer, index);
 			}
 		}
 
@@ -503,34 +492,34 @@ namespace VixenPlus
 
 		public void HardwareUpdate(byte[] values, int eventIndex)
 		{
-			if (m_running && !m_stopping)
+			if (_isRunning && !_isStopping)
 			{
-				lock (m_runLock)
+				lock (_runLock)
 				{
-					if (m_running && !m_stopping)
+					if (_isRunning && !_isStopping)
 					{
 						int num;
-						EngineContext context = m_contexts[m_primaryContext];
-						byte[] engineBuffer = context.m_routerContext.EngineBuffer;
+						EngineContext context = _engineContexts[_primaryContext];
+						byte[] engineBuffer = context.RouterContext.EngineBuffer;
 						values.CopyTo(engineBuffer, 0);
-						m_router.BeginUpdate();
-						m_router.GetSequenceInputs(context.m_routerContext.ExecutableObject, engineBuffer, true, false);
-						bool flag = context.m_lastPeriod == null;
+						_plugInRouter.BeginUpdate();
+						_plugInRouter.GetSequenceInputs(context.RouterContext.ExecutableObject, engineBuffer, true, false);
+						bool flag = context.LastPeriod == null;
 						for (num = 0; (num < engineBuffer.Length) && !flag; num++)
 						{
-							flag |= engineBuffer[num] != context.m_lastPeriod[num];
+							flag |= engineBuffer[num] != context.LastPeriod[num];
 						}
 						if (!flag)
 						{
-							m_router.CancelUpdate();
+							_plugInRouter.CancelUpdate();
 						}
 						else
 						{
-							if ((context.m_lastPeriod != null) && (engineBuffer.Length == context.m_lastPeriod.Length))
+							if ((context.LastPeriod != null) && (engineBuffer.Length == context.LastPeriod.Length))
 							{
-								engineBuffer.CopyTo(context.m_lastPeriod, 0);
+								engineBuffer.CopyTo(context.LastPeriod, 0);
 							}
-							IExecutable executableObject = context.m_routerContext.ExecutableObject;
+							IExecutable executableObject = context.RouterContext.ExecutableObject;
 							int count = executableObject.Channels.Count;
 							for (num = 0; num < count; num++)
 							{
@@ -540,13 +529,13 @@ namespace VixenPlus
 									engineBuffer[num] = channel.DimmingCurve[engineBuffer[num]];
 								}
 							}
-							for (num = 0; num < context.m_channelMask.Length; num++)
+							for (num = 0; num < context.ChannelMask.Length; num++)
 							{
-								engineBuffer[num] = (byte) (engineBuffer[num] & context.m_channelMask[num]);
+								engineBuffer[num] = (byte) (engineBuffer[num] & context.ChannelMask[num]);
 							}
 							try
 							{
-								m_router.EndUpdate();
+								_plugInRouter.EndUpdate();
 							}
 							catch (Exception exception)
 							{
@@ -556,12 +545,12 @@ namespace VixenPlus
 								                MessageBoxIcon.Exclamation);
 							}
 						}
-						if ((!m_stopping && m_running) && (eventIndex != -1))
+						if ((!_isStopping && _isRunning) && (eventIndex != -1))
 						{
 							engineBuffer = new byte[engineBuffer.Length];
-							int num3 = context.m_currentSequence.Channels.Count;
-							byte[,] eventValues = context.m_currentSequence.EventValues;
-							if (m_router.GetSequenceInputs(context.m_routerContext.ExecutableObject, engineBuffer, false, true))
+							int num3 = context.CurrentSequence.Channels.Count;
+							byte[,] eventValues = context.CurrentSequence.EventValues;
+							if (_plugInRouter.GetSequenceInputs(context.RouterContext.ExecutableObject, engineBuffer, false, true))
 							{
 								for (int i = 0; i < num3; i++)
 								{
@@ -578,82 +567,82 @@ namespace VixenPlus
 		{
 			if (context != null)
 			{
-				context.m_timekeeper.Stop();
+				context.Timekeeper.Stop();
 				if (Host.InvokeRequired)
 				{
 					Host.Invoke(new InitEngineContextDelegate(InitEngineContext), new object[] {context, sequenceIndex});
 				}
-				else if ((sequenceIndex == -1) || (m_program.EventSequences.Count <= sequenceIndex))
+				else if ((sequenceIndex == -1) || (_sequenceProgram.EventSequences.Count <= sequenceIndex))
 				{
 					FinalizeEngineContext(context);
 				}
 				else
 				{
-					EventSequence executableObject = m_program.EventSequences[sequenceIndex].Sequence;
-					if (context.m_routerContext == null)
+					EventSequence executableObject = _sequenceProgram.EventSequences[sequenceIndex].Sequence;
+					if (context.RouterContext == null)
 					{
-						context.m_routerContext = m_router.CreateContext(new byte[executableObject.ChannelCount],
-						                                                 m_useSequencePluginData
+						context.RouterContext = _plugInRouter.CreateContext(new byte[executableObject.ChannelCount],
+						                                                 _useSequencePluginData
 							                                                 ? executableObject.PlugInData
-							                                                 : m_program.SetupData, executableObject, m_surfacedTimer);
+							                                                 : _sequenceProgram.SetupData, executableObject, _surfacedTimer);
 					}
-					if (m_program.Mask.Length > sequenceIndex)
+					if (_sequenceProgram.Mask.Length > sequenceIndex)
 					{
-						context.m_channelMask = m_program.Mask[sequenceIndex];
+						context.ChannelMask = _sequenceProgram.Mask[sequenceIndex];
 					}
-					else if (context == m_contexts[m_primaryContext])
+					else if (context == _engineContexts[_primaryContext])
 					{
-						context.m_channelMask = m_contexts[m_secondaryContext].m_channelMask;
+						context.ChannelMask = _engineContexts[_secondaryContext].ChannelMask;
 					}
 					else
 					{
-						context.m_channelMask = m_contexts[m_primaryContext].m_channelMask;
+						context.ChannelMask = _engineContexts[_primaryContext].ChannelMask;
 					}
-					context.m_sequenceIndex = sequenceIndex;
-					context.m_tickCount = 0;
-					context.m_lastIndex = -1;
-					context.m_sequenceTickLength = executableObject.Time;
-					context.m_fadeStartTickCount = ((m_program.CrossFadeLength == 0) || (m_program.EventSequences.Count == 1))
+					context.SequenceIndex = sequenceIndex;
+					context.TickCount = 0;
+					context.LastIndex = -1;
+					context.SequenceTickLength = executableObject.Time;
+					context.FadeStartTickCount = ((_sequenceProgram.CrossFadeLength == 0) || (_sequenceProgram.EventSequences.Count == 1))
 						                               ? 0
-						                               : ((m_loop || (m_program.EventSequences.Count > (sequenceIndex + 1)))
-							                                  ? (executableObject.Time - (m_program.CrossFadeLength*0x3e8))
+						                               : ((_isLooping || (_sequenceProgram.EventSequences.Count > (sequenceIndex + 1)))
+							                                  ? (executableObject.Time - (_sequenceProgram.CrossFadeLength*0x3e8))
 							                                  : 0);
-					context.m_startOffset = 0;
+					context.StartOffset = 0;
 					if (executableObject.Audio != null)
 					{
-						context.m_soundChannel = m_fmod.LoadSound(Path.Combine(Paths.AudioPath, executableObject.Audio.FileName),
-						                                          context.m_soundChannel);
+						context.SoundChannel = _fmod.LoadSound(Path.Combine(Paths.AudioPath, executableObject.Audio.FileName),
+						                                          context.SoundChannel);
 					}
 					else
 					{
-						context.m_soundChannel = m_fmod.LoadSound(null);
+						context.SoundChannel = _fmod.LoadSound(null);
 					}
-					if ((m_program.CrossFadeLength != 0) && (context.m_soundChannel != null))
+					if ((_sequenceProgram.CrossFadeLength != 0) && (context.SoundChannel != null))
 					{
-						if (m_loop || (sequenceIndex > 0))
+						if (_isLooping || (sequenceIndex > 0))
 						{
-							context.m_soundChannel.SetEntryFade(m_program.CrossFadeLength);
+							context.SoundChannel.SetEntryFade(_sequenceProgram.CrossFadeLength);
 						}
-						if (m_loop || (m_program.EventSequences.Count > (sequenceIndex + 1)))
+						if (_isLooping || (_sequenceProgram.EventSequences.Count > (sequenceIndex + 1)))
 						{
-							context.m_soundChannel.SetExitFade(m_program.CrossFadeLength);
+							context.SoundChannel.SetExitFade(_sequenceProgram.CrossFadeLength);
 						}
 					}
-					context.m_currentSequence = executableObject;
-					context.m_maxEvent = context.m_currentSequence.TotalEventPeriods;
-					context.m_lastPeriod = new byte[context.m_currentSequence.Channels.Count];
-					for (int i = 0; i < context.m_lastPeriod.Length; i++)
+					context.CurrentSequence = executableObject;
+					context.MaxEvent = context.CurrentSequence.TotalEventPeriods;
+					context.LastPeriod = new byte[context.CurrentSequence.Channels.Count];
+					for (int i = 0; i < context.LastPeriod.Length; i++)
 					{
-						context.m_lastPeriod[i] = (byte) i;
+						context.LastPeriod[i] = (byte) i;
 					}
-					context.m_data = ReconfigureSourceData(executableObject);
+					context.Data = ReconfigureSourceData(executableObject);
 				}
 			}
 		}
 
 		public void Initialize(EventSequence sequence)
 		{
-			if (m_mode == EngineMode.Asynchronous)
+			if (_engineMode == EngineMode.Asynchronous)
 			{
 				InitializeForAsynchronous(sequence);
 			}
@@ -665,27 +654,34 @@ namespace VixenPlus
 
 		public void Initialize(IExecutable obj)
 		{
-			if (obj is SequenceProgram)
+			var sequenceProgram = obj as SequenceProgram;
+			if (sequenceProgram != null)
 			{
-				Initialize((SequenceProgram) obj);
-			}
-			else if (obj is EventSequence)
-			{
-				Initialize((EventSequence) obj);
+				Initialize(sequenceProgram);
 			}
 			else
 			{
-				if (!(obj is Profile))
+				var eventSequence = obj as EventSequence;
+				if (eventSequence != null
+					)
 				{
-					throw new Exception("Trying to initialize the engine with an unknown object type.\nType: " + obj.GetType());
+					Initialize(eventSequence);
 				}
-				Initialize((Profile) obj);
+				else
+				{
+					var profile = obj as Profile;
+					if (profile == null)
+					{
+						throw new Exception("Trying to initialize the engine with an unknown object type.\nType: " + obj.GetType());
+					}
+					Initialize((Profile) obj);
+				}
 			}
 		}
 
 		public void Initialize(Profile profile)
 		{
-			if (m_mode == EngineMode.Synchronous)
+			if (_engineMode == EngineMode.Synchronous)
 			{
 				throw new Exception("Only an asynchronous engine instance can be initialized with a profile.");
 			}
@@ -695,7 +691,7 @@ namespace VixenPlus
 
 		public void Initialize(SequenceProgram program)
 		{
-			if (m_mode == EngineMode.Asynchronous)
+			if (_engineMode == EngineMode.Asynchronous)
 			{
 				InitializeForAsynchronous(program);
 			}
@@ -705,19 +701,19 @@ namespace VixenPlus
 				{
 					throw new Exception("Cannot execute a program that has no sequences.");
 				}
-				m_program = program;
-				m_useSequencePluginData = m_program.UseSequencePluginData;
-				EventSequence sequence = m_program.EventSequences[0].Sequence;
-				if (m_program.EventSequences.Count > 1)
+				_sequenceProgram = program;
+				_useSequencePluginData = _sequenceProgram.UseSequencePluginData;
+				//EventSequence sequence = _sequenceProgram.EventSequences[0].Sequence;
+				if (_sequenceProgram.EventSequences.Count > 1)
 				{
-					if (m_contexts[m_secondaryContext] == null)
+					if (_engineContexts[_secondaryContext] == null)
 					{
-						m_contexts[m_secondaryContext] = new EngineContext();
+						_engineContexts[_secondaryContext] = new EngineContext();
 					}
 				}
 				else
 				{
-					m_contexts[m_secondaryContext] = null;
+					_engineContexts[_secondaryContext] = null;
 				}
 			}
 		}
@@ -729,32 +725,32 @@ namespace VixenPlus
 			{
 				throw new Exception("Trying to setup for asynchronous operation with no channels?");
 			}
-			if ((m_contexts[m_primaryContext].m_routerContext != null) &&
-			    m_contexts[m_primaryContext].m_routerContext.Initialized)
+			if ((_engineContexts[_primaryContext].RouterContext != null) &&
+			    _engineContexts[_primaryContext].RouterContext.Initialized)
 			{
-				m_router.Shutdown(m_contexts[m_primaryContext].m_routerContext);
+				_plugInRouter.Shutdown(_engineContexts[_primaryContext].RouterContext);
 			}
-			m_contexts[m_primaryContext].m_routerContext = m_router.CreateContext(new byte[channels.Count],
+			_engineContexts[_primaryContext].RouterContext = _plugInRouter.CreateContext(new byte[channels.Count],
 			                                                                      executableObject.PlugInData, executableObject,
 			                                                                      null);
-			m_contexts[m_primaryContext].m_channelMask = executableObject.Mask[0];
-			m_contexts[m_secondaryContext] = null;
-			Host.Communication["CurrentObject"] = m_program;
-			m_router.Startup(m_contexts[m_primaryContext].m_routerContext);
-			m_running = true;
+			_engineContexts[_primaryContext].ChannelMask = executableObject.Mask[0];
+			_engineContexts[_secondaryContext] = null;
+			Host.Communication["CurrentObject"] = _sequenceProgram;
+			_plugInRouter.Startup(_engineContexts[_primaryContext].RouterContext);
+			_isRunning = true;
 			Host.Communication["CurrentObject"] = null;
 		}
 
-		private bool LoadSecondaryEngine(string enginePath)
+		private void LoadSecondaryEngine(string enginePath)
 		{
-			if (m_mode == EngineMode.Asynchronous)
+			if (_engineMode == EngineMode.Asynchronous)
 			{
-				return false;
+				return;
 			}
 			if (enginePath == null)
 			{
 				ReleaseSecondaryEngine();
-				return true;
+				return;
 			}
 			IEngine engine = null;
 			try
@@ -779,34 +775,32 @@ namespace VixenPlus
 			catch
 			{
 				MessageBox.Show(Path.GetFileName(enginePath) + " is missing or does not contain a valid engine");
-				return false;
+				return;
 			}
 			Label_00EB:
-			m_secondaryEngine = engine;
+			_secondaryEngine = engine;
 			if (engine != null)
 			{
-				m_secondaryEngine.EngineError += SecondaryEngineError;
-				m_secondaryEngine.EngineStopped += SecondaryEngineStopped;
-				return true;
+				_secondaryEngine.EngineError += SecondaryEngineError;
+				_secondaryEngine.EngineStopped += SecondaryEngineStopped;
 			}
-			return false;
 		}
 
 		private void LogAudio(EventSequence sequence)
 		{
-			if (m_loggingEnabled && (sequence.Audio != null))
+			if (_isLoggingEnabled && (sequence.Audio != null))
 			{
 				Host.LogAudio("Sequence", sequence.Name, sequence.Audio.FileName, sequence.Audio.Duration);
 			}
 		}
 
-		private void m_eventTimer_Elapsed(object sender, ElapsedEventArgs e)
+		private void EventTimerElapsed(object sender, ElapsedEventArgs e)
 		{
-			TimerTick(m_contexts[m_primaryContext]);
-			if (((m_contexts[m_secondaryContext] != null) && (m_contexts[m_secondaryContext].m_routerContext != null)) &&
-			    m_contexts[m_secondaryContext].m_routerContext.Initialized)
+			TimerTick(_engineContexts[_primaryContext]);
+			if (((_engineContexts[_secondaryContext] != null) && (_engineContexts[_secondaryContext].RouterContext != null)) &&
+			    _engineContexts[_secondaryContext].RouterContext.Initialized)
 			{
-				TimerTick(m_contexts[m_secondaryContext]);
+				TimerTick(_engineContexts[_secondaryContext]);
 			}
 		}
 
@@ -814,11 +808,9 @@ namespace VixenPlus
 		{
 			if (ProgramEnd != null)
 			{
-				m_host.DelegateNullMethod(ProgramEnd.Invoke);
+				_host.DelegateNullMethod(ProgramEnd.Invoke);
 			}
-			string key = CurrentObject.Key.ToString();
-			bool flag = Host.Communication.ContainsKey(key);
-			int count = Host.Communication.Count;
+			string key = CurrentObject.Key.ToString(CultureInfo.InvariantCulture);
 			Host.Communication.Remove("KeyInterceptor_" + key);
 			Host.Communication.Remove("ExecutionContext_" + key);
 			if (restartBackgroundObjects)
@@ -837,35 +829,35 @@ namespace VixenPlus
 
 		public void Pause()
 		{
-			if (((m_mode != EngineMode.Asynchronous) && IsRunning) && !m_isPaused)
+			if (((_engineMode != EngineMode.Asynchronous) && IsRunning) && !_isPaused)
 			{
-				lock (m_runLock)
+				lock (_runLock)
 				{
-					if (m_secondaryEngine != null)
+					if (_secondaryEngine != null)
 					{
-						m_secondaryEngine.Pause();
-						m_isPaused = true;
-						m_contexts[m_primaryContext].m_timekeeper.Stop();
-						m_running = false;
+						_secondaryEngine.Pause();
+						_isPaused = true;
+						_engineContexts[_primaryContext].Timekeeper.Stop();
+						_isRunning = false;
 					}
 					else
 					{
-						m_eventTimer.Stop();
-						if (m_contexts[m_primaryContext].m_soundChannel != null)
+						_eventTimer.Stop();
+						if (_engineContexts[_primaryContext].SoundChannel != null)
 						{
-							m_contexts[m_primaryContext].m_soundChannel.Paused = true;
+							_engineContexts[_primaryContext].SoundChannel.Paused = true;
 						}
-						m_contexts[m_primaryContext].m_timekeeper.Stop();
-						if (m_contexts[m_secondaryContext] != null)
+						_engineContexts[_primaryContext].Timekeeper.Stop();
+						if (_engineContexts[_secondaryContext] != null)
 						{
-							m_contexts[m_secondaryContext].m_timekeeper.Stop();
-							if (m_contexts[m_secondaryContext].m_soundChannel != null)
+							_engineContexts[_secondaryContext].Timekeeper.Stop();
+							if (_engineContexts[_secondaryContext].SoundChannel != null)
 							{
-								m_contexts[m_secondaryContext].m_soundChannel.Paused = true;
+								_engineContexts[_secondaryContext].SoundChannel.Paused = true;
 							}
 						}
-						m_isPaused = true;
-						m_running = false;
+						_isPaused = true;
+						_isRunning = false;
 					}
 				}
 			}
@@ -873,63 +865,63 @@ namespace VixenPlus
 
 		public bool Play(int startMillisecond, int endMillisecond, bool logAudio)
 		{
-			if (m_mode == EngineMode.Asynchronous)
+			if (_engineMode == EngineMode.Asynchronous)
 			{
 				return false;
 			}
 			try
 			{
-				m_loggingEnabled = logAudio;
-				if (m_eventTimer.Enabled)
+				_isLoggingEnabled = logAudio;
+				if (_eventTimer.Enabled)
 				{
 					return false;
 				}
 				StopBackgroundObjects();
-				CreateScriptEngine(m_program.EventSequences[0].Sequence);
-				if (m_secondaryEngine != null)
+				CreateScriptEngine(_sequenceProgram.EventSequences[0].Sequence);
+				if (_secondaryEngine != null)
 				{
-					if (m_isPaused)
+					if (_isPaused)
 					{
-						m_isPaused = false;
+						_isPaused = false;
 					}
 					else
 					{
 						ResetScriptEngineContext();
 						OnSequenceChange();
-						Host.Communication["CurrentObject"] = m_program;
-						m_router.Startup(m_contexts[m_primaryContext].m_routerContext);
+						Host.Communication["CurrentObject"] = _sequenceProgram;
+						_plugInRouter.Startup(_engineContexts[_primaryContext].RouterContext);
 						Host.Communication["CurrentObject"] = null;
 					}
 					StartTimekeepers();
-					return m_secondaryEngine.Play();
+					return _secondaryEngine.Play();
 				}
-				if (!m_isPaused)
+				if (!_isPaused)
 				{
-					InitEngineContext(ref m_contexts[m_primaryContext], CalcContainingSequence(startMillisecond));
-					LogAudio(m_contexts[m_primaryContext].m_currentSequence);
-					m_contexts[m_primaryContext].m_startOffset = startMillisecond;
-					InitEngineContext(ref m_contexts[m_secondaryContext], DetermineSecondarySequenceIndex());
-					m_contexts[m_primaryContext].m_maxEvent = (endMillisecond == 0)
-						                                          ? m_contexts[m_primaryContext].m_currentSequence.TotalEventPeriods
+					InitEngineContext(ref _engineContexts[_primaryContext], CalcContainingSequence(startMillisecond));
+					LogAudio(_engineContexts[_primaryContext].CurrentSequence);
+					_engineContexts[_primaryContext].StartOffset = startMillisecond;
+					InitEngineContext(ref _engineContexts[_secondaryContext], DetermineSecondarySequenceIndex());
+					_engineContexts[_primaryContext].MaxEvent = (endMillisecond == 0)
+						                                          ? _engineContexts[_primaryContext].CurrentSequence.TotalEventPeriods
 						                                          : (endMillisecond/
-						                                             m_contexts[m_primaryContext].m_currentSequence.EventPeriod);
+						                                             _engineContexts[_primaryContext].CurrentSequence.EventPeriod);
 				}
-				int millisecondPosition = (m_contexts[m_primaryContext].m_currentSequence.Audio != null) ? startMillisecond : -1;
-				PrepareAudio(m_contexts[m_primaryContext], millisecondPosition);
-				if (m_isPaused)
+				int millisecondPosition = (_engineContexts[_primaryContext].CurrentSequence.Audio != null) ? startMillisecond : -1;
+				PrepareAudio(_engineContexts[_primaryContext], millisecondPosition);
+				if (_isPaused)
 				{
-					m_isPaused = false;
+					_isPaused = false;
 				}
 				else
 				{
 					OnSequenceChange();
-					Host.Communication["CurrentObject"] = m_program;
-					m_router.Startup(m_contexts[m_primaryContext].m_routerContext);
+					Host.Communication["CurrentObject"] = _sequenceProgram;
+					_plugInRouter.Startup(_engineContexts[_primaryContext].RouterContext);
 					Host.Communication["CurrentObject"] = null;
 				}
-				StartAudio(m_contexts[m_primaryContext]);
+				StartAudio(_engineContexts[_primaryContext]);
 				StartTimekeepers();
-				m_eventTimer.Start();
+				_eventTimer.Start();
 				return true;
 			}
 			catch
@@ -940,11 +932,11 @@ namespace VixenPlus
 
 		private void PrepareAudio(EngineContext context, int millisecondPosition)
 		{
-			if (((m_mode != EngineMode.Asynchronous) && (context.m_soundChannel != null)) && (millisecondPosition != -1))
+			if (((_engineMode != EngineMode.Asynchronous) && (context.SoundChannel != null)) && (millisecondPosition != -1))
 			{
-				m_fmod.Play(context.m_soundChannel, true);
-				context.m_soundChannel.Position = (uint) millisecondPosition;
-				context.m_soundChannel.Frequency = m_audioSpeed;
+				_fmod.Play(context.SoundChannel, true);
+				context.SoundChannel.Position = (uint) millisecondPosition;
+				context.SoundChannel.Frequency = _audioSpeed;
 			}
 		}
 
@@ -956,16 +948,16 @@ namespace VixenPlus
 			}
 			var builder = new StringBuilder();
 			builder.AppendLine("   Sequence: " +
-			                   ((context.m_currentSequence != null) ? context.m_currentSequence.Name : "(null)"));
-			builder.AppendLine("   Sequence index: " + context.m_sequenceIndex);
-			builder.AppendLine("   Sequence tick length: " + context.m_sequenceTickLength);
-			builder.AppendLine("   Tick count: " + context.m_tickCount);
-			if (context.m_routerContext != null)
+			                   ((context.CurrentSequence != null) ? context.CurrentSequence.Name : "(null)"));
+			builder.AppendLine("   Sequence index: " + context.SequenceIndex);
+			builder.AppendLine("   Sequence tick length: " + context.SequenceTickLength);
+			builder.AppendLine("   Tick count: " + context.TickCount);
+			if (context.RouterContext != null)
 			{
 				builder.AppendLine("   Router context:");
-				builder.AppendLine("      Mapped plugin count: " + context.m_routerContext.OutputPluginList.Count);
-				builder.AppendLine("      Mapped plugins: " + context.m_routerContext.OutputPluginList.Count);
-				foreach (MappedOutputPlugIn @in in context.m_routerContext.OutputPluginList)
+				builder.AppendLine("      Mapped plugin count: " + context.RouterContext.OutputPluginList.Count);
+				builder.AppendLine("      Mapped plugins: " + context.RouterContext.OutputPluginList.Count);
+				foreach (MappedOutputPlugIn @in in context.RouterContext.OutputPluginList)
 				{
 					builder.Append(QueryMappedPlugIn(@in));
 				}
@@ -1008,36 +1000,36 @@ namespace VixenPlus
 
 		private void ReleaseSecondaryEngine()
 		{
-			if (m_secondaryEngine != null)
+			if (_secondaryEngine != null)
 			{
-				lock (m_secondaryEngine)
+				lock (_secondaryEngine)
 				{
-					m_secondaryEngine.Stop();
-					m_secondaryEngine.HardwareUpdate = null;
-					m_secondaryEngine.EngineError -= SecondaryEngineError;
-					m_secondaryEngine.EngineStopped -= SecondaryEngineStopped;
-					m_secondaryEngine.Dispose();
-					m_secondaryEngine = null;
-					m_secondaryContext = 0;
+					_secondaryEngine.Stop();
+					_secondaryEngine.HardwareUpdate = null;
+					_secondaryEngine.EngineError -= SecondaryEngineError;
+					_secondaryEngine.EngineStopped -= SecondaryEngineStopped;
+					_secondaryEngine.Dispose();
+					_secondaryEngine = null;
+					_secondaryContext = 0;
 				}
 			}
 		}
 
 		private void ResetScriptEngineContext()
 		{
-			InitEngineContext(ref m_contexts[m_primaryContext], 0);
-			LogAudio(m_contexts[m_primaryContext].m_currentSequence);
-			if (m_contexts[m_primaryContext].m_soundChannel != null)
+			InitEngineContext(ref _engineContexts[_primaryContext], 0);
+			LogAudio(_engineContexts[_primaryContext].CurrentSequence);
+			if (_engineContexts[_primaryContext].SoundChannel != null)
 			{
-				m_contexts[m_primaryContext].m_soundChannel.SetEntryFade(0);
+				_engineContexts[_primaryContext].SoundChannel.SetEntryFade(0);
 			}
-			m_secondaryEngine.Initialize(m_contexts[m_primaryContext].m_currentSequence);
+			_secondaryEngine.Initialize(_engineContexts[_primaryContext].CurrentSequence);
 		}
 
 		private void RestartBackgroundObjects()
 		{
 			Engine8 engine = null;
-			foreach (Engine8 engine2 in m_instanceList)
+			foreach (Engine8 engine2 in InstanceList)
 			{
 				if (engine2.IsRunning)
 				{
@@ -1047,77 +1039,73 @@ namespace VixenPlus
 			}
 			if (engine == null)
 			{
-				m_host.StartBackgroundObjects();
+				_host.StartBackgroundObjects();
 			}
 		}
 
 		private void SecondaryEngineError(string message, string stackTrace)
 		{
 			Stop();
-			if (m_host.IsBackgroundExecutionEngineInstance(this))
+			if (_host.IsBackgroundExecutionEngineInstance(this))
 			{
-				m_host.StopBackgroundSequence();
+				_host.StopBackgroundSequence();
 			}
 			MessageBox.Show(message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 		}
 
 		private void SecondaryEngineStopped(object sender, EventArgs e)
 		{
-			if (m_running && m_loop)
+			if (_isRunning && _isLooping)
 			{
-				FinalizeEngineContext(m_contexts[m_primaryContext], false);
-				FinalizeEngineContext(m_contexts[m_secondaryContext], false);
+				FinalizeEngineContext(_engineContexts[_primaryContext], false);
+				FinalizeEngineContext(_engineContexts[_secondaryContext], false);
 				ResetScriptEngineContext();
 				StartTimekeepers();
 				OnSequenceChange();
-				m_secondaryEngine.Play();
+				_secondaryEngine.Play();
 			}
 			else
 			{
-				bool flag = m_host.IsBackgroundExecutionEngineInstance(this);
+				bool flag = _host.IsBackgroundExecutionEngineInstance(this);
 				if (flag)
 				{
-					m_host.StopBackgroundSequenceUI();
+					_host.StopBackgroundSequenceUI();
 				}
-				FinalizeEngineContext(m_contexts[m_primaryContext]);
-				FinalizeEngineContext(m_contexts[m_secondaryContext]);
+				FinalizeEngineContext(_engineContexts[_primaryContext]);
+				FinalizeEngineContext(_engineContexts[_secondaryContext]);
 				OnProgramEnd(!flag);
 			}
 		}
 
 		public void SetAudioDevice(int value)
 		{
-			m_fmod.DeviceIndex = value;
+			_fmod.DeviceIndex = value;
 		}
 
 		private void StartAudio(EngineContext context)
 		{
-			if (((m_mode != EngineMode.Asynchronous) && (context.m_soundChannel != null)) && context.m_soundChannel.Paused)
+			if (((_engineMode != EngineMode.Asynchronous) && (context.SoundChannel != null)) && context.SoundChannel.Paused)
 			{
-				context.m_soundChannel.Paused = false;
+				context.SoundChannel.Paused = false;
 			}
 		}
 
 		private void StartContextAudio(EngineContext context)
 		{
-			MethodInvoker method = null;
-			if (context.m_currentSequence.Audio != null)
+			if (context.CurrentSequence.Audio != null)
 			{
 				if (Host.InvokeRequired)
 				{
-					if (method == null)
-					{
-						method = delegate
-							{
-								PrepareAudio(context, context.m_startOffset);
-								StartAudio(context);
-							};
-					}
+					MethodInvoker method = delegate
+						{
+							PrepareAudio(context, context.StartOffset);
+							StartAudio(context);
+						};
 					Host.Invoke(method, new object[0]);
 				}
 				else
 				{
-					PrepareAudio(context, context.m_startOffset);
+					PrepareAudio(context, context.StartOffset);
 					StartAudio(context);
 				}
 			}
@@ -1125,108 +1113,108 @@ namespace VixenPlus
 
 		private void StartTimekeepers()
 		{
-			lock (m_runLock)
+			lock (_runLock)
 			{
-				m_running = true;
-				m_contexts[m_primaryContext].m_timekeeper.Start();
-				if ((m_contexts[m_primaryContext].m_fadeStartTickCount != 0) &&
-				    (m_contexts[m_primaryContext].m_tickCount >= m_contexts[m_primaryContext].m_fadeStartTickCount))
+				_isRunning = true;
+				_engineContexts[_primaryContext].Timekeeper.Start();
+				if ((_engineContexts[_primaryContext].FadeStartTickCount != 0) &&
+				    (_engineContexts[_primaryContext].TickCount >= _engineContexts[_primaryContext].FadeStartTickCount))
 				{
-					m_contexts[m_secondaryContext].m_timekeeper.Start();
+					_engineContexts[_secondaryContext].Timekeeper.Start();
 				}
 			}
 		}
 
 		public void Stop()
 		{
-			if (!m_stopping)
+			if (!_isStopping)
 			{
-				m_stopping = true;
-				if (m_mode != EngineMode.Asynchronous)
+				_isStopping = true;
+				if (_engineMode != EngineMode.Asynchronous)
 				{
 					new Thread(ExecutionStopThread).Start();
 				}
 				else
 				{
-					FinalizeEngineContext(m_contexts[m_primaryContext], true);
-					lock (m_runLock)
+					FinalizeEngineContext(_engineContexts[_primaryContext]);
+					lock (_runLock)
 					{
-						m_running = false;
+						_isRunning = false;
 					}
-					m_stopping = false;
+					_isStopping = false;
 				}
 			}
 		}
 
 		private void StopBackgroundObjects()
 		{
-			if (!m_host.IsBackgroundExecutionEngineInstance(this))
+			if (!_host.IsBackgroundExecutionEngineInstance(this))
 			{
-				m_host.StopBackgroundObjects();
+				_host.StopBackgroundObjects();
 			}
 		}
 
 		private void StopExecution(bool shutdownPlugins = true)
 		{
-			lock (m_runLock)
+			lock (_runLock)
 			{
-				m_running = false;
+				_isRunning = false;
 			}
-			if (m_eventTimer != null)
+			if (_eventTimer != null)
 			{
-				m_eventTimer.Stop();
+				_eventTimer.Stop();
 			}
-			m_fmod.Stop(m_contexts[m_primaryContext].m_soundChannel);
-			if (m_contexts[m_secondaryContext] != null)
+			_fmod.Stop(_engineContexts[_primaryContext].SoundChannel);
+			if (_engineContexts[_secondaryContext] != null)
 			{
-				m_fmod.Stop(m_contexts[m_secondaryContext].m_soundChannel);
+				_fmod.Stop(_engineContexts[_secondaryContext].SoundChannel);
 			}
-			m_isPaused = false;
-			FinalizeEngineContext(m_contexts[m_primaryContext], shutdownPlugins);
-			FinalizeEngineContext(m_contexts[m_secondaryContext], shutdownPlugins);
+			_isPaused = false;
+			FinalizeEngineContext(_engineContexts[_primaryContext], shutdownPlugins);
+			FinalizeEngineContext(_engineContexts[_secondaryContext], shutdownPlugins);
 		}
 
 		private void TimerTick(EngineContext context)
 		{
-			if (m_eventTimer.Enabled && !m_stopping)
+			if (_eventTimer.Enabled && !_isStopping)
 			{
-				if ((context.m_soundChannel != null) && context.m_soundChannel.IsPlaying)
+				if ((context.SoundChannel != null) && context.SoundChannel.IsPlaying)
 				{
-					context.m_tickCount = (int) context.m_soundChannel.Position;
+					context.TickCount = (int) context.SoundChannel.Position;
 				}
 				else
 				{
-					context.m_tickCount = context.m_startOffset + ((int) context.m_timekeeper.ElapsedMilliseconds);
+					context.TickCount = context.StartOffset + ((int) context.Timekeeper.ElapsedMilliseconds);
 				}
-				int num = context.m_tickCount/context.m_currentSequence.EventPeriod;
-				if (((context.m_fadeStartTickCount != 0) && (context.m_tickCount >= context.m_fadeStartTickCount)) &&
-				    !m_contexts[m_secondaryContext].m_timekeeper.IsRunning)
+				int num = context.TickCount/context.CurrentSequence.EventPeriod;
+				if (((context.FadeStartTickCount != 0) && (context.TickCount >= context.FadeStartTickCount)) &&
+				    !_engineContexts[_secondaryContext].Timekeeper.IsRunning)
 				{
-					m_eventTimer.Enabled = false;
-					Host.Communication["CurrentObject"] = m_program;
-					m_router.Startup(m_contexts[m_secondaryContext].m_routerContext);
+					_eventTimer.Enabled = false;
+					Host.Communication["CurrentObject"] = _sequenceProgram;
+					_plugInRouter.Startup(_engineContexts[_secondaryContext].RouterContext);
 					Host.Communication["CurrentObject"] = null;
-					LogAudio(m_contexts[m_secondaryContext].m_currentSequence);
-					StartContextAudio(m_contexts[m_secondaryContext]);
-					if (m_contexts[m_secondaryContext].m_soundChannel != null)
+					LogAudio(_engineContexts[_secondaryContext].CurrentSequence);
+					StartContextAudio(_engineContexts[_secondaryContext]);
+					if (_engineContexts[_secondaryContext].SoundChannel != null)
 					{
-						m_contexts[m_secondaryContext].m_soundChannel.Volume = 0f;
+						_engineContexts[_secondaryContext].SoundChannel.Volume = 0f;
 					}
-					m_contexts[m_secondaryContext].m_timekeeper.Start();
-					m_eventTimer.Enabled = true;
+					_engineContexts[_secondaryContext].Timekeeper.Start();
+					_eventTimer.Enabled = true;
 				}
-				if ((context.m_tickCount >= context.m_sequenceTickLength) || (num >= context.m_maxEvent))
+				if ((context.TickCount >= context.SequenceTickLength) || (num >= context.MaxEvent))
 				{
-					m_fmod.Stop(context.m_soundChannel);
-					context.m_timekeeper.Stop();
-					context.m_timekeeper.Reset();
-					if ((m_contexts[m_secondaryContext] == null) || (m_contexts[m_secondaryContext].m_routerContext == null))
+					_fmod.Stop(context.SoundChannel);
+					context.Timekeeper.Stop();
+					context.Timekeeper.Reset();
+					if ((_engineContexts[_secondaryContext] == null) || (_engineContexts[_secondaryContext].RouterContext == null))
 					{
-						if (m_loop)
+						if (_isLooping)
 						{
-							LogAudio(m_contexts[m_primaryContext].m_currentSequence);
-							StartContextAudio(m_contexts[m_primaryContext]);
-							context.m_timekeeper.Start();
+							LogAudio(_engineContexts[_primaryContext].CurrentSequence);
+							StartContextAudio(_engineContexts[_primaryContext]);
+							context.Timekeeper.Start();
 							OnSequenceChange();
 						}
 						else
@@ -1236,33 +1224,33 @@ namespace VixenPlus
 					}
 					else
 					{
-						if (m_contexts[m_secondaryContext].m_soundChannel != null)
+						if (_engineContexts[_secondaryContext].SoundChannel != null)
 						{
-							m_contexts[m_secondaryContext].m_soundChannel.Volume = 1f;
+							_engineContexts[_secondaryContext].SoundChannel.Volume = 1f;
 						}
-						if (m_contexts[m_secondaryContext] != null)
+						if (_engineContexts[_secondaryContext] != null)
 						{
-							FinalizeEngineContext(m_contexts[m_primaryContext]);
-							m_primaryContext ^= 1;
-							m_secondaryContext ^= 1;
-							InitEngineContext(ref m_contexts[m_secondaryContext], DetermineSecondarySequenceIndex());
+							FinalizeEngineContext(_engineContexts[_primaryContext]);
+							_primaryContext ^= 1;
+							_secondaryContext ^= 1;
+							InitEngineContext(ref _engineContexts[_secondaryContext], DetermineSecondarySequenceIndex());
 						}
-						if (!m_contexts[m_primaryContext].m_timekeeper.IsRunning)
+						if (!_engineContexts[_primaryContext].Timekeeper.IsRunning)
 						{
-							Host.Communication["CurrentObject"] = m_program;
-							m_router.Startup(m_contexts[m_primaryContext].m_routerContext);
+							Host.Communication["CurrentObject"] = _sequenceProgram;
+							_plugInRouter.Startup(_engineContexts[_primaryContext].RouterContext);
 							Host.Communication["CurrentObject"] = null;
-							LogAudio(m_contexts[m_primaryContext].m_currentSequence);
-							StartContextAudio(m_contexts[m_primaryContext]);
-							m_contexts[m_primaryContext].m_timekeeper.Start();
+							LogAudio(_engineContexts[_primaryContext].CurrentSequence);
+							StartContextAudio(_engineContexts[_primaryContext]);
+							_engineContexts[_primaryContext].Timekeeper.Start();
 						}
 						OnSequenceChange();
 					}
 				}
-				else if (num != context.m_lastIndex)
+				else if (num != context.LastIndex)
 				{
-					context.m_lastIndex = num;
-					FireEvent(context, context.m_lastIndex);
+					context.LastIndex = num;
+					FireEvent(context, context.LastIndex);
 				}
 			}
 		}
@@ -1275,7 +1263,7 @@ namespace VixenPlus
 			}
 			if (uniqueReference is SequenceProgram)
 			{
-				return (uniqueReference == m_program);
+				return (uniqueReference == _sequenceProgram);
 			}
 			return ((uniqueReference is IOutputPlugIn) && FindOutputPlugIn(uniqueReference));
 		}
@@ -1287,7 +1275,5 @@ namespace VixenPlus
 		}
 
 		private delegate void InitEngineContextDelegate(ref EngineContext context, int sequenceIndex);
-
-		private delegate void ShutdownDelegate(RouterContext routerInstanceInfo);
 	}
 }

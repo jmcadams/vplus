@@ -4,24 +4,24 @@ namespace VixenPlus
 {
 	internal class EngineDescriptor
 	{
-		private readonly string m_name;
-		private readonly Type m_type;
+		private readonly string _name;
+		private readonly Type _type;
 
 		public EngineDescriptor(IEngine2 engineInstance)
 		{
-			m_name = engineInstance.Name;
-			m_type = engineInstance.GetType();
+			_name = engineInstance.Name;
+			_type = engineInstance.GetType();
 			engineInstance.Dispose();
 		}
 
 		public string Name
 		{
-			get { return m_name; }
+			get { return _name; }
 		}
 
 		public Type Type
 		{
-			get { return m_type; }
+			get { return _type; }
 		}
 	}
 }

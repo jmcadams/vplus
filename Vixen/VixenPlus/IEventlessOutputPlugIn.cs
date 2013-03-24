@@ -2,7 +2,7 @@
 
 namespace VixenPlus
 {
-	public interface IEventlessOutputPlugIn : IOutputPlugIn, IHardwarePlugin, IPlugIn, ISetup
+	public interface IEventlessOutputPlugIn : IOutputPlugIn
 	{
 		void Initialize(IExecutable executableObject, SetupData setupData, XmlNode setupNode, ITickSource timer);
 	}

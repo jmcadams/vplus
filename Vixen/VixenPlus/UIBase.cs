@@ -4,9 +4,9 @@ using System.Windows.Forms;
 namespace VixenPlus
 {
 //	[TypeDescriptionProvider(typeof(GeneralConcreteClassProvider)), ConcreteClass(typeof(UIBaseConcreteForm))]
-	public partial class UIBase : Form, IUIPlugIn, VixenMDI, IPlugIn
+	public partial class UIBase : Form, IUIPlugIn, IVixenMDI, IPlugIn
 	{
-		private bool m_isDirty;
+		private bool _isDirty;
 
 		public UIBase()
 		{
@@ -60,7 +60,7 @@ namespace VixenPlus
 
 		void IUIPlugIn.Show()
 		{
-			base.Show();
+			Show();
 		}
 
 		public virtual /*abstract*/ string Author { get; set; }
@@ -73,10 +73,10 @@ namespace VixenPlus
 
 		public bool IsDirty
 		{
-			get { return m_isDirty; }
+			get { return _isDirty; }
 			set
 			{
-				m_isDirty = value;
+				_isDirty = value;
 				OnDirtyChanged(EventArgs.Empty);
 			}
 		}

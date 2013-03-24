@@ -1,21 +1,22 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace VixenPlus
 {
 	internal partial class TriggerResponseRegistrationsDialog : Form
 	{
-		private readonly IExecution m_executionInterface;
-		private readonly Dictionary<string, List<RegisteredResponse>> m_registrations;
-		private readonly ITrigger m_triggerInterface;
+		private readonly IExecution _executionInterface;
+		private readonly Dictionary<string, List<RegisteredResponse>> _registrations;
+		private readonly ITrigger _triggerInterface;
 
 		public TriggerResponseRegistrationsDialog(Dictionary<string, List<RegisteredResponse>> responseRegistrations)
 		{
 			InitializeComponent();
-			m_registrations = responseRegistrations;
-			m_executionInterface = (IExecution) Interfaces.Available["IExecution"];
-			m_triggerInterface = (ITrigger) Interfaces.Available["ITrigger"];
+			_registrations = responseRegistrations;
+			_executionInterface = (IExecution) Interfaces.Available["IExecution"];
+			_triggerInterface = (ITrigger) Interfaces.Available["ITrigger"];
 		}
 
 		private void buttonRefresh_Click(object sender, EventArgs e)
@@ -30,7 +31,7 @@ namespace VixenPlus
 			foreach (ListViewItem item in listViewResponses.SelectedItems)
 			{
 				var tag = (RegisteredResponse) item.Tag;
-				m_triggerInterface.UnregisterResponse(tag.InterfaceTypeName, tag.Line, tag.EcHandle);
+				_triggerInterface.UnregisterResponse(tag.InterfaceTypeName, tag.Line, tag.EcHandle);
 				list.Add(item);
 			}
 			foreach (ListViewItem item in list)
@@ -46,18 +47,17 @@ namespace VixenPlus
 			listViewResponses.BeginUpdate();
 			listViewResponses.Items.Clear();
 			buttonRemove.Enabled = false;
-			foreach (var list in m_registrations.Values)
+			foreach (var list in _registrations.Values)
 			{
 				foreach (RegisteredResponse response in list)
 				{
-					IExecutable objectInContext = m_executionInterface.GetObjectInContext(response.EcHandle);
+					IExecutable objectInContext = _executionInterface.GetObjectInContext(response.EcHandle);
 					var item =
 						new ListViewItem(new[]
 							{
-								response.InterfaceTypeName, response.Line.ToString(),
+								response.InterfaceTypeName, response.Line.ToString(CultureInfo.InvariantCulture),
 								(objectInContext == null) ? "(none)" : objectInContext.Name
-							});
-					item.Tag = response;
+							}) {Tag = response};
 					listViewResponses.Items.Add(item);
 				}
 			}

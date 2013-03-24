@@ -4,22 +4,22 @@ namespace VixenPlus
 {
 	internal class EngineTimer : ITickSource, IDisposable
 	{
-		private TickCallDelegate m_tickCall;
+		private TickCallDelegate _tickCall;
 
 		internal EngineTimer(TickCallDelegate tickCall)
 		{
-			m_tickCall = tickCall.Invoke;
+			_tickCall = tickCall.Invoke;
 		}
 
 		public void Dispose()
 		{
-			m_tickCall = null;
+			_tickCall = null;
 			GC.SuppressFinalize(this);
 		}
 
 		public int Milliseconds
 		{
-			get { return m_tickCall(); }
+			get { return _tickCall(); }
 		}
 
 		~EngineTimer()

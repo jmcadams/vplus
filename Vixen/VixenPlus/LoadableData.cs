@@ -10,15 +10,18 @@ namespace VixenPlus
 
 		public XmlNode GetLoadableData(string loadableType, string loadableName)
 		{
-			XmlNode nodeAlways = Xml.GetNodeAlways(base.m_rootNode, loadableType + "Data");
+			XmlNode nodeAlways = Xml.GetNodeAlways(Node, loadableType + "Data");
 			XmlNode newChild =
 				nodeAlways.SelectSingleNode(string.Format("{0}[attribute::name=\"{1}\"]", loadableType, loadableName));
 			if (newChild == null)
 			{
-				newChild = base.m_doc.CreateElement(loadableType);
-				XmlAttribute node = base.m_doc.CreateAttribute("name");
+				newChild = Document.CreateElement(loadableType);
+				XmlAttribute node = Document.CreateAttribute("name");
 				node.Value = loadableName;
-				newChild.Attributes.Append(node);
+				if (newChild.Attributes != null)
+				{
+					newChild.Attributes.Append(node);
+				}
 				nodeAlways.AppendChild(newChild);
 			}
 			return newChild;

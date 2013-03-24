@@ -2,7 +2,7 @@
 
 namespace VixenPlus
 {
-	internal interface IUIPlugIn : VixenMDI, IPlugIn
+	internal interface IUIPlugIn : IVixenMDI, IPlugIn
 	{
 		string FileExtension { get; }
 

@@ -2,23 +2,21 @@
 {
 	internal class TimerExecutor
 	{
-		private readonly ExecutingTimerControlDialog m_controlDialog;
-		private readonly Host m_host;
+		private readonly ExecutingTimerControlDialog _controlDialog;
 
-		public TimerExecutor(Host host)
+		public TimerExecutor()
 		{
-			m_host = host;
-			m_controlDialog = new ExecutingTimerControlDialog();
+			_controlDialog = new ExecutingTimerControlDialog();
 		}
 
 		public int ExecutingTimerCount
 		{
-			get { return m_controlDialog.TimerCount; }
+			get { return _controlDialog.TimerCount; }
 		}
 
 		public int GetExecutingTimerExecutionContextHandle(int executingTimerIndex)
 		{
-			TimerContext contextOf = m_controlDialog.GetContextOf(executingTimerIndex);
+			TimerContext contextOf = _controlDialog.GetContextOf(executingTimerIndex);
 			if (contextOf == null)
 			{
 				return 0;
@@ -28,8 +26,8 @@
 
 		public void SpawnExecutorFor(Timer timer)
 		{
-			var context = new TimerContext(timer, m_host);
-			m_controlDialog.AddTimer(context);
+			var context = new TimerContext(timer);
+			_controlDialog.AddTimer(context);
 		}
 	}
 }

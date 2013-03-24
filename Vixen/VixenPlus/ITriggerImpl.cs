@@ -3,35 +3,33 @@ using System.IO;
 
 namespace VixenPlus
 {
-	internal class ITriggerImpl : ITrigger
+	internal class TriggerImpl : ITrigger
 	{
-		private readonly ActivateTriggerDelegate m_activateTrigger;
-		private readonly IExecution m_executionInterface;
-		private readonly Dictionary<string, List<RegisteredResponse>> m_registeredTriggerResponses;
-		private Host m_host;
+		private readonly ActivateTriggerDelegate _activateTriggerDelegate;
+		private readonly IExecution _executionInterface;
+		private readonly Dictionary<string, List<RegisteredResponse>> _registeredTriggerResponses;
 
-		public ITriggerImpl(Host host)
+		public TriggerImpl()
 		{
-			m_host = host;
-			m_registeredTriggerResponses = new Dictionary<string, List<RegisteredResponse>>();
-			m_executionInterface = (IExecution) Interfaces.Available["IExecution"];
-			m_activateTrigger = ActivateTrigger;
+			_registeredTriggerResponses = new Dictionary<string, List<RegisteredResponse>>();
+			_executionInterface = (IExecution) Interfaces.Available["IExecution"];
+			_activateTriggerDelegate = ActivateTrigger;
 		}
 
 		public void ActivateTrigger(string interfaceTypeName, int index)
 		{
 			if (Host.InvokeRequired)
 			{
-				Host.BeginInvoke(m_activateTrigger, new object[] {interfaceTypeName, index});
+				Host.BeginInvoke(_activateTriggerDelegate, new object[] {interfaceTypeName, index});
 			}
 			else
 			{
 				List<RegisteredResponse> list;
-				if (m_registeredTriggerResponses.TryGetValue(string.Format("{0}{1}", interfaceTypeName, index), out list))
+				if (_registeredTriggerResponses.TryGetValue(string.Format("{0}{1}", interfaceTypeName, index), out list))
 				{
 					foreach (RegisteredResponse response in list)
 					{
-						m_executionInterface.ExecutePlay(response.EcHandle);
+						_executionInterface.ExecutePlay(response.EcHandle);
 					}
 				}
 			}
@@ -50,20 +48,20 @@ namespace VixenPlus
 				return 0;
 			}
 			string key = string.Format("{0}{1}", interfaceTypeName, index);
-			if (!m_registeredTriggerResponses.TryGetValue(key, out list))
+			if (!_registeredTriggerResponses.TryGetValue(key, out list))
 			{
 				list = new List<RegisteredResponse>();
-				m_registeredTriggerResponses[key] = list;
+				_registeredTriggerResponses[key] = list;
 			}
-			int ecHandle = m_executionInterface.RequestContext(true, false, null);
+			int ecHandle = _executionInterface.RequestContext(true, false, null);
 			list.Add(new RegisteredResponse(interfaceTypeName, index, ecHandle));
-			m_executionInterface.SetSynchronousContext(ecHandle, sequence);
+			_executionInterface.SetSynchronousContext(ecHandle, sequence);
 			return ecHandle;
 		}
 
 		public void ShowRegistrations()
 		{
-			var dialog = new TriggerResponseRegistrationsDialog(m_registeredTriggerResponses);
+			var dialog = new TriggerResponseRegistrationsDialog(_registeredTriggerResponses);
 			dialog.ShowDialog();
 			dialog.Dispose();
 		}
@@ -72,7 +70,7 @@ namespace VixenPlus
 		{
 			List<RegisteredResponse> list;
 			string key = string.Format("{0}{1}", interfaceTypeName, index);
-			if (m_registeredTriggerResponses.TryGetValue(key, out list))
+			if (_registeredTriggerResponses.TryGetValue(key, out list))
 			{
 				for (int i = 0; i < list.Count; i++)
 				{
@@ -83,7 +81,7 @@ namespace VixenPlus
 					}
 				}
 			}
-			m_executionInterface.ReleaseContext(executionContextHandle);
+			_executionInterface.ReleaseContext(executionContextHandle);
 		}
 
 		private delegate void ActivateTriggerDelegate(string interfaceTypename, int index);

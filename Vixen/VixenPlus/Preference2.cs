@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Xml;
 
@@ -8,11 +9,9 @@ namespace VixenPlus
 	{
 		public delegate void OnPreferenceChange(string preferenceName);
 
-		private const string PREFERENCES_FILE_NAME = "preferences";
-
-		private static Preference2 m_instance;
-		private readonly XmlDocument m_doc;
-		private string m_preferenceFileName;
+		private static Preference2 _preference2;
+		private readonly XmlDocument _xmlDocument;
+		private string _preferenceFileName;
 
 		private Preference2(string preferenceFilePath)
 		{
@@ -20,17 +19,17 @@ namespace VixenPlus
 			{
 				Directory.CreateDirectory(Paths.DataPath);
 			}
-			m_doc = new XmlDocument();
-			m_preferenceFileName = preferenceFilePath;
-			if (File.Exists(m_preferenceFileName))
+			_xmlDocument = new XmlDocument();
+			_preferenceFileName = preferenceFilePath;
+			if (File.Exists(_preferenceFileName))
 			{
-				m_doc.Load(m_preferenceFileName);
+				_xmlDocument.Load(_preferenceFileName);
 			}
 			else
 			{
-				XmlDeclaration newChild = m_doc.CreateXmlDeclaration("1.0", string.Empty, string.Empty);
-				m_doc.AppendChild(newChild);
-				m_doc.AppendChild(m_doc.CreateElement("User"));
+				XmlDeclaration newChild = _xmlDocument.CreateXmlDeclaration("1.0", string.Empty, string.Empty);
+				_xmlDocument.AppendChild(newChild);
+				_xmlDocument.AppendChild(_xmlDocument.CreateElement("User"));
 			}
 			bool flag = false;
 			flag |= VerifyPreference("EventPeriod", 100);
@@ -90,20 +89,20 @@ namespace VixenPlus
 
 		public string FileName
 		{
-			get { return m_preferenceFileName; }
-			set { m_preferenceFileName = value; }
+			get { return _preferenceFileName; }
+			set { _preferenceFileName = value; }
 		}
 
 		public XmlDocument XmlDoc
 		{
-			get { return m_doc; }
+			get { return _xmlDocument; }
 		}
 
 		public event OnPreferenceChange PreferenceChange;
 
 		public void Flush()
 		{
-			m_doc.Save(m_preferenceFileName);
+			_xmlDocument.Save(_preferenceFileName);
 		}
 
 		public bool GetBoolean(string name)
@@ -116,9 +115,10 @@ namespace VixenPlus
 			return Convert.ToBoolean(str);
 		}
 
+		// TODO This can be refactored
 		public string GetChildString(string parentName, string name)
 		{
-			XmlNode node = m_doc.DocumentElement.SelectSingleNode(parentName);
+			XmlNode node = _xmlDocument.DocumentElement.SelectSingleNode(parentName);
 			if (node != null)
 			{
 				XmlAttribute attribute = node.Attributes[name];
@@ -133,7 +133,7 @@ namespace VixenPlus
 
 		public static Preference2 GetInstance()
 		{
-			return m_instance ?? (m_instance = new Preference2(Path.Combine(Paths.DataPath, "preferences")));
+			return _preference2 ?? (_preference2 = new Preference2(Path.Combine(Paths.DataPath, "preferences")));
 		}
 
 		public int GetInteger(string name)
@@ -146,9 +146,10 @@ namespace VixenPlus
 			return Convert.ToInt32(str);
 		}
 
+		// TODO This can be refactored to eliminte the potential nullreference
 		public string GetString(string name)
 		{
-			XmlNode node = m_doc.DocumentElement.SelectSingleNode(name);
+			XmlNode node = _xmlDocument.DocumentElement.SelectSingleNode(name);
 			if (node == null)
 			{
 				return string.Empty;
@@ -158,7 +159,7 @@ namespace VixenPlus
 
 		public void Reload()
 		{
-			m_doc.Load(m_preferenceFileName);
+			_xmlDocument.Load(_preferenceFileName);
 		}
 
 		public void SetBoolean(string name, bool value)
@@ -178,18 +179,18 @@ namespace VixenPlus
 
 		public void SetChildInteger(string parentName, string name, int value)
 		{
-			SetChildString(parentName, name, value.ToString());
+			SetChildString(parentName, name, value.ToString(CultureInfo.InvariantCulture));
 		}
 
 		public void SetChildString(string parentName, string name, string value)
 		{
-			var element = (XmlElement) m_doc.DocumentElement.SelectSingleNode(parentName);
+			var element = (XmlElement) _xmlDocument.DocumentElement.SelectSingleNode(parentName);
 			if (element != null)
 			{
 				XmlAttribute attribute = element.Attributes[name];
 				if (attribute == null)
 				{
-					element.Attributes.Append(attribute = m_doc.CreateAttribute(name));
+					element.Attributes.Append(attribute = _xmlDocument.CreateAttribute(name));
 				}
 				attribute.Value = value;
 			}
@@ -197,12 +198,12 @@ namespace VixenPlus
 
 		public void SetInteger(string name, int value)
 		{
-			SetString(name, value.ToString());
+			SetString(name, value.ToString(CultureInfo.InvariantCulture));
 		}
 
 		public void SetInteger(string name, int value, int defaultValue)
 		{
-			SetString(name, value.ToString(), defaultValue.ToString());
+			SetString(name, value.ToString(CultureInfo.InvariantCulture), defaultValue.ToString(CultureInfo.InvariantCulture));
 		}
 
 		public void SetString(string name, string value)
@@ -213,7 +214,7 @@ namespace VixenPlus
 		public void SetString(string name, string value, string defaultValue)
 		{
 			bool flag = GetString(name) != value;
-			SetValue(m_doc.DocumentElement, name, value, defaultValue);
+			SetValue(_xmlDocument.DocumentElement, name, value, defaultValue);
 			if (flag && (PreferenceChange != null))
 			{
 				PreferenceChange(name);
@@ -225,10 +226,10 @@ namespace VixenPlus
 			var newChild = (XmlElement) parentNode.SelectSingleNode(name);
 			if (newChild == null)
 			{
-				newChild = m_doc.CreateElement(name);
+				newChild = _xmlDocument.CreateElement(name);
 				if (defaultValue != null)
 				{
-					XmlAttribute node = m_doc.CreateAttribute("default");
+					XmlAttribute node = _xmlDocument.CreateAttribute("default");
 					newChild.Attributes.Append(node);
 				}
 				parentNode.AppendChild(newChild);
@@ -242,7 +243,7 @@ namespace VixenPlus
 
 		private bool VerifyPreference(string name, object defaultValue)
 		{
-			XmlNode node = m_doc.DocumentElement.SelectSingleNode(name);
+			XmlNode node = _xmlDocument.DocumentElement.SelectSingleNode(name);
 			bool flag = false;
 			if (node == null)
 			{

@@ -5,8 +5,6 @@ namespace VixenPlus
 {
 	public class CurveLibraryRecord
 	{
-		private const char CURVE_DATA_DELIM = '|';
-		private const char FIELD_DELIM = ',';
 		public int Color;
 		public string Controller;
 		public byte[] CurveData;
@@ -80,7 +78,7 @@ namespace VixenPlus
 		private byte[] BreakCurveDataString(string text)
 		{
 			var dataBytes = new List<byte>();
-			Array.ForEach(text.Split(new[] {'|'}), delegate(string s) { dataBytes.Add(byte.Parse(s)); });
+			Array.ForEach(text.Split(new[] {'|'}), s => dataBytes.Add(byte.Parse(s)));
 			return dataBytes.ToArray();
 		}
 

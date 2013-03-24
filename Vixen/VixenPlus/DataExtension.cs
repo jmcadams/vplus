@@ -1,35 +1,36 @@
 ﻿using System;
+using System.Globalization;
 using System.Xml;
 
 namespace VixenPlus
 {
 	public class DataExtension
 	{
-		private readonly string m_extensionName;
-		protected XmlDocument m_doc;
-		protected XmlNode m_rootNode;
+		private readonly string _extensionName;
+		protected XmlDocument Document;
+		protected XmlNode Node;
 
 		public DataExtension(string extensionName)
 		{
-			m_extensionName = extensionName;
-			m_doc = Xml.CreateXmlDocument(extensionName);
-			m_rootNode = m_doc.DocumentElement;
+			_extensionName = extensionName;
+			Document = Xml.CreateXmlDocument(extensionName);
+			Node = Document.DocumentElement;
 		}
 
 		public bool IsEmpty
 		{
-			get { return !m_rootNode.HasChildNodes; }
+			get { return !Node.HasChildNodes; }
 		}
 
 		public XmlNode RootNode
 		{
-			get { return m_rootNode; }
+			get { return Node; }
 		}
 
 		public DataExtension Clone()
 		{
-			var extension = new DataExtension(m_extensionName);
-			Xml.CloneNode(extension.m_doc, m_doc.DocumentElement, true);
+			var extension = new DataExtension(_extensionName);
+			Xml.CloneNode(extension.Document, Document.DocumentElement, true);
 			return extension;
 		}
 
@@ -100,8 +101,8 @@ namespace VixenPlus
 
 		public void LoadFromXml(XmlNode contextNode)
 		{
-			m_rootNode = Xml.GetNodeAlways(contextNode, m_extensionName);
-			m_doc = m_rootNode.OwnerDocument;
+			Node = Xml.GetNodeAlways(contextNode, _extensionName);
+			Document = Node.OwnerDocument;
 		}
 
 		public void SetBoolean(XmlNode setupDataNode, string childNode, bool value)
@@ -109,7 +110,7 @@ namespace VixenPlus
 			XmlNode newChild = setupDataNode.SelectSingleNode(childNode);
 			if (newChild == null)
 			{
-				newChild = m_doc.CreateElement(childNode);
+				newChild = Document.CreateElement(childNode);
 				setupDataNode.AppendChild(newChild);
 			}
 			newChild.InnerText = value.ToString();
@@ -120,7 +121,7 @@ namespace VixenPlus
 			XmlNode newChild = setupDataNode.SelectSingleNode(childNode);
 			if (newChild == null)
 			{
-				newChild = m_doc.CreateElement(childNode);
+				newChild = Document.CreateElement(childNode);
 				setupDataNode.AppendChild(newChild);
 			}
 			newChild.InnerText = Convert.ToBase64String(value);
@@ -131,10 +132,10 @@ namespace VixenPlus
 			XmlNode newChild = setupDataNode.SelectSingleNode(childNode);
 			if (newChild == null)
 			{
-				newChild = m_doc.CreateElement(childNode);
+				newChild = Document.CreateElement(childNode);
 				setupDataNode.AppendChild(newChild);
 			}
-			newChild.InnerText = value.ToString();
+			newChild.InnerText = value.ToString(CultureInfo.InvariantCulture);
 		}
 
 		public void SetString(XmlNode setupDataNode, string childNode, string value)
@@ -142,7 +143,7 @@ namespace VixenPlus
 			XmlNode newChild = setupDataNode.SelectSingleNode(childNode);
 			if (newChild == null)
 			{
-				newChild = m_doc.CreateElement(childNode);
+				newChild = Document.CreateElement(childNode);
 				setupDataNode.AppendChild(newChild);
 			}
 			newChild.InnerText = value;

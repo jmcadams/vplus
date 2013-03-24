@@ -17,15 +17,15 @@ namespace VixenPlus
 		{
 		}
 
-		public bool this[string pluginID]
+		public bool this[string pluginId]
 		{
-			get { return bool.Parse(GetPlugInData(pluginID).Attributes["enabled"].Value); }
-			set { GetPlugInData(pluginID).Attributes["enabled"].Value = value.ToString(); }
+			get { return bool.Parse(GetPlugInData(pluginId).Attributes["enabled"].Value); }
+			set { GetPlugInData(pluginId).Attributes["enabled"].Value = value.ToString(); }
 		}
 
 		public XmlNode CreatePlugInData(IHardwarePlugin plugIn)
 		{
-			XmlNode node = Xml.SetNewValue(base.m_rootNode, "PlugIn", string.Empty);
+			XmlNode node = Xml.SetNewValue(base.Node, "PlugIn", string.Empty);
 			Xml.SetAttribute(node, "name", plugIn.Name);
 			Xml.SetAttribute(node, "key", plugIn.Name.GetHashCode().ToString());
 			Xml.SetAttribute(node, "id", (GetAllPluginData().Count - 1).ToString());
@@ -40,26 +40,26 @@ namespace VixenPlus
 				Xml.SetAttribute(node, "type", PluginType.Output.ToString());
 				return node;
 			}
-			if (plugIn is IBidirectionalPlugin)
-			{
-				Xml.SetAttribute(node, "type", PluginType.Bidirectional.ToString());
-			}
+			//if (plugIn is IBidirectionalPlugin)
+			//{
+			//    Xml.SetAttribute(node, "type", PluginType.Bidirectional.ToString());
+			//}
 			return node;
 		}
 
 		public XmlNodeList GetAllPluginData()
 		{
-			return base.m_rootNode.SelectNodes("PlugIn");
+			return Node.SelectNodes("PlugIn");
 		}
 
 		public XmlNodeList GetAllPluginData(PluginType type)
 		{
-			return base.m_rootNode.SelectNodes(string.Format("PlugIn[@type='{0}']", type));
+			return Node.SelectNodes(string.Format("PlugIn[@type='{0}']", type));
 		}
 
 		public XmlNodeList GetAllPluginData(PluginType type, bool enabledOnly)
 		{
-			return base.m_rootNode.SelectNodes(string.Format("PlugIn[@enabled='{0}' and @type='{1}']", enabledOnly, type));
+			return Node.SelectNodes(string.Format("PlugIn[@enabled='{0}' and @type='{1}']", enabledOnly, type));
 		}
 
 		public int GetHighestChannel(bool enabledOnly)
@@ -85,14 +85,14 @@ namespace VixenPlus
 			return list.ToArray();
 		}
 
-		public XmlNode GetPlugInData(string pluginID)
+		public XmlNode GetPlugInData(string pluginId)
 		{
-			return base.m_rootNode.SelectSingleNode(string.Format("PlugIn[@id='{0}']", pluginID));
+			return Node.SelectSingleNode(string.Format("PlugIn[@id='{0}']", pluginId));
 		}
 
-		public void RemovePlugInData(string pluginID)
+		public void RemovePlugInData(string pluginId)
 		{
-			base.m_rootNode.RemoveChild(GetPlugInData(pluginID));
+			Node.RemoveChild(GetPlugInData(pluginId));
 			int num = 0;
 			foreach (XmlNode node in GetAllPluginData())
 			{
@@ -103,11 +103,11 @@ namespace VixenPlus
 
 		public void ReplaceRoot(XmlNode newBranch)
 		{
-			XmlNode parentNode = base.m_rootNode.ParentNode;
-			parentNode.RemoveChild(base.m_rootNode);
-			XmlNode newChild = base.m_doc.ImportNode(newBranch, true);
+			XmlNode parentNode = Node.ParentNode;
+			parentNode.RemoveChild(Node);
+			XmlNode newChild = Document.ImportNode(newBranch, true);
 			parentNode.AppendChild(newChild);
-			base.m_rootNode = newChild;
+			Node = newChild;
 		}
 	}
 }

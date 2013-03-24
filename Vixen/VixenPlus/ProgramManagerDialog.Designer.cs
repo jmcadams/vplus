@@ -5,7 +5,7 @@ namespace VixenPlus{
 	using System.ComponentModel;
 	using System.Collections;
 
-	internal partial class ProgramManagerDialog{
+	internal sealed partial class ProgramManagerDialog{
 		private IContainer components;
 
 		#region Windows Form Designer generated code
@@ -281,17 +281,17 @@ private System.Windows.Forms.Timer timer;
             {
                 this.components.Dispose();
             }
-            if (this.m_programBrush != null)
+            if (this._programBrush != null)
             {
-                this.m_programBrush.Dispose();
+                this._programBrush.Dispose();
             }
-            if (this.m_programBoldFont != null)
+            if (this._programBoldFont != null)
             {
-                this.m_programBoldFont.Dispose();
+                this._programBoldFont.Dispose();
             }
-            if (this.m_programSmallFont != null)
+            if (this._programSmallFont != null)
             {
-                this.m_programSmallFont.Dispose();
+                this._programSmallFont.Dispose();
             }
             base.Dispose(disposing);
         }

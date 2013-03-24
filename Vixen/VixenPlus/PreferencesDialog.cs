@@ -3,20 +3,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 using FMOD;
-using VixenPlus.Dialogs;
 
 namespace VixenPlus
 {
 	internal partial class PreferencesDialog : Form
 	{
-		private readonly Preference2 m_preferences;
-		private readonly IUIPlugIn[] m_uiPlugins;
+		private readonly Preference2 _preferences;
+		private readonly IUIPlugIn[] _uiPlugins;
 
-		public PreferencesDialog(Preference2 preferences, IUIPlugIn[] uiPlugins)
+		public PreferencesDialog(IUIPlugIn[] uiPlugins)
 		{
 			InitializeComponent();
-			m_preferences = Preference2.GetInstance();
-			m_uiPlugins = uiPlugins;
+			_preferences = Preference2.GetInstance();
+			_uiPlugins = uiPlugins;
 			foreach (IUIPlugIn @in in uiPlugins)
 			{
 				comboBoxSequenceType.Items.Add(@in.FileTypeDescription);
@@ -38,16 +37,6 @@ namespace VixenPlus
 				dateTimePickerAutoShutdownTime.Enabled = false;
 			}
 			PopulateAudioDeviceList();
-		}
-
-		private void buttonCreateProfile_Click(object sender, EventArgs e)
-		{
-			var dialog = new ProfileManagerDialog(null);
-			if (dialog.ShowDialog() == DialogResult.OK)
-			{
-				PopulateProfileLists();
-			}
-			dialog.Dispose();
 		}
 
 		private void buttonEngine_Click(object sender, EventArgs e)
@@ -74,24 +63,20 @@ namespace VixenPlus
 			{
 			}
 			fileName = Path.GetFileName(textBoxLogFilePath.Text);
-			if (Directory.Exists(path))
+			if (path != null && Directory.Exists(path))
 			{
 				folderBrowserDialog.SelectedPath = path;
 			}
 			if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
 			{
-				textBoxLogFilePath.Text = Path.Combine(folderBrowserDialog.SelectedPath, fileName != string.Empty ? fileName : "audio.log");
+				textBoxLogFilePath.Text = Path.Combine(folderBrowserDialog.SelectedPath, string.IsNullOrEmpty(fileName) ? "audio.log" : fileName);
 			}
 		}
 
 		private void buttonOK_Click(object sender, EventArgs e)
 		{
 			PopulateFrom(tabControl.SelectedIndex);
-			m_preferences.Flush();
-		}
-
-		private void buttonPluginSetup_Click(object sender, EventArgs e)
-		{
+			_preferences.Flush();
 		}
 
 
@@ -102,24 +87,24 @@ namespace VixenPlus
 		private void PopulateAudioDeviceList()
 		{
 			comboBoxDefaultAudioDevice.Items.Add("Use application's default device");
-			comboBoxDefaultAudioDevice.Items.AddRange(fmod.GetSoundDeviceList());
+			comboBoxDefaultAudioDevice.Items.AddRange(new object[] { fmod.GetSoundDeviceList() });
 		}
 
 		private void PopulateFrom(int tabIndex)
 		{
-			if (m_preferences != null)
+			if (_preferences != null)
 			{
 				switch (tabIndex)
 				{
 					case 0:
 						{
-							m_preferences.SetString("TimerCheckFrequency", textBoxTimerCheckFrequency.Text);
-							m_preferences.SetString("MouseWheelVerticalDelta", textBoxMouseWheelVertical.Text);
-							m_preferences.SetString("MouseWheelHorizontalDelta", textBoxMouseWheelHorizontal.Text);
-							m_preferences.SetString("ClientName", textBoxClientName.Text);
-							m_preferences.SetBoolean("ResetAtStartup", checkBoxResetAtStartup.Checked);
-							m_preferences.SetString("PreferredSequenceType", m_uiPlugins[comboBoxSequenceType.SelectedIndex].FileExtension);
-							m_preferences.SetString("ShutdownTime",
+							_preferences.SetString("TimerCheckFrequency", textBoxTimerCheckFrequency.Text);
+							_preferences.SetString("MouseWheelVerticalDelta", textBoxMouseWheelVertical.Text);
+							_preferences.SetString("MouseWheelHorizontalDelta", textBoxMouseWheelHorizontal.Text);
+							_preferences.SetString("ClientName", textBoxClientName.Text);
+							_preferences.SetBoolean("ResetAtStartup", checkBoxResetAtStartup.Checked);
+							_preferences.SetString("PreferredSequenceType", _uiPlugins[comboBoxSequenceType.SelectedIndex].FileExtension);
+							_preferences.SetString("ShutdownTime",
 							                        !dateTimePickerAutoShutdownTime.Checked
 								                        ? string.Empty
 								                        : dateTimePickerAutoShutdownTime.Value.ToString("h:mm tt"));
@@ -135,60 +120,60 @@ namespace VixenPlus
 							{
 								File.Delete(path);
 							}
-							m_preferences.SetInteger("HistoryImages", (int) numericUpDownHistoryImages.Value);
+							_preferences.SetInteger("HistoryImages", (int) numericUpDownHistoryImages.Value);
 							return;
 						}
 					case 1:
-						m_preferences.SetString("EventPeriod", textBoxEventPeriod.Text);
-						m_preferences.SetInteger("MinimumLevel", (int) numericUpDownMinimumLevel.Value);
-						m_preferences.SetInteger("MaximumLevel", (int) numericUpDownMaximumLevel.Value);
-						m_preferences.SetBoolean("WizardForNewSequences", checkBoxWizardForNewSequences.Checked);
-						m_preferences.SetString("DefaultProfile",
+						_preferences.SetString("EventPeriod", textBoxEventPeriod.Text);
+						_preferences.SetInteger("MinimumLevel", (int) numericUpDownMinimumLevel.Value);
+						_preferences.SetInteger("MaximumLevel", (int) numericUpDownMaximumLevel.Value);
+						_preferences.SetBoolean("WizardForNewSequences", checkBoxWizardForNewSequences.Checked);
+						_preferences.SetString("DefaultProfile",
 						                        comboBoxDefaultProfile.SelectedIndex != 0
 							                        ? comboBoxDefaultProfile.SelectedItem.ToString()
 							                        : string.Empty);
-						m_preferences.SetInteger("DefaultSequenceAudioDevice", comboBoxDefaultAudioDevice.SelectedIndex - 1);
+						_preferences.SetInteger("DefaultSequenceAudioDevice", comboBoxDefaultAudioDevice.SelectedIndex - 1);
 						return;
 
 					case 2:
 						{
-							m_preferences.SetString("MaxColumnWidth", textBoxMaxColumnWidth.Text);
-							m_preferences.SetString("MaxRowHeight", textBoxMaxRowHeight.Text);
+							_preferences.SetString("MaxColumnWidth", textBoxMaxColumnWidth.Text);
+							_preferences.SetString("MaxRowHeight", textBoxMaxRowHeight.Text);
 							int index = textBoxIntensityLargeDelta.Text.Trim().IndexOf('%');
 							if (index != -1)
 							{
 								textBoxIntensityLargeDelta.Text = textBoxIntensityLargeDelta.Text.Substring(0, index).Trim();
 							}
-							m_preferences.SetString("IntensityLargeDelta", textBoxIntensityLargeDelta.Text);
-							m_preferences.SetBoolean("EventSequenceAutoSize", checkBoxEventSequenceAutoSize.Checked);
-							m_preferences.SetBoolean("SaveZoomLevels", checkBoxSaveZoomLevels.Checked);
-							m_preferences.SetBoolean("ShowSaveConfirmation", checkBoxShowSaveConfirmation.Checked);
-							m_preferences.SetBoolean("ShowNaturalChannelNumber", checkBoxShowNaturalChannelNumber.Checked);
-							m_preferences.SetBoolean("FlipScrollBehavior", checkBoxFlipMouseScroll.Checked);
-							m_preferences.SetString("RemoteLibraryHTTPURL", textBoxCurveLibraryHttpUrl.Text);
-							m_preferences.SetString("RemoteLibraryFTPURL", textBoxCurveLibraryFtpUrl.Text);
-							m_preferences.SetString("RemoteLibraryFileName", textBoxCurveLibraryFileName.Text);
-							m_preferences.SetString("DefaultSequenceDirectory", textBoxDefaultSequenceSaveDirectory.Text);
+							_preferences.SetString("IntensityLargeDelta", textBoxIntensityLargeDelta.Text);
+							_preferences.SetBoolean("EventSequenceAutoSize", checkBoxEventSequenceAutoSize.Checked);
+							_preferences.SetBoolean("SaveZoomLevels", checkBoxSaveZoomLevels.Checked);
+							_preferences.SetBoolean("ShowSaveConfirmation", checkBoxShowSaveConfirmation.Checked);
+							_preferences.SetBoolean("ShowNaturalChannelNumber", checkBoxShowNaturalChannelNumber.Checked);
+							_preferences.SetBoolean("FlipScrollBehavior", checkBoxFlipMouseScroll.Checked);
+							_preferences.SetString("RemoteLibraryHTTPURL", textBoxCurveLibraryHttpUrl.Text);
+							_preferences.SetString("RemoteLibraryFTPURL", textBoxCurveLibraryFtpUrl.Text);
+							_preferences.SetString("RemoteLibraryFileName", textBoxCurveLibraryFileName.Text);
+							_preferences.SetString("DefaultSequenceDirectory", textBoxDefaultSequenceSaveDirectory.Text);
 							return;
 						}
 					case 3:
-						m_preferences.SetBoolean("ShowPositionMarker", checkBoxShowPositionMarker.Checked);
-						m_preferences.SetBoolean("AutoScrolling", checkBoxAutoScrolling.Checked);
-						m_preferences.SetBoolean("SavePlugInDialogPositions", checkBoxSavePlugInDialogPositions.Checked);
-						m_preferences.SetBoolean("ClearAtEndOfSequence", checkBoxClearAtEndOfSequence.Checked);
-						m_preferences.SetBoolean("LogAudioManual", checkBoxLogManual.Checked);
-						m_preferences.SetBoolean("LogAudioScheduled", checkBoxLogScheduled.Checked);
-						m_preferences.SetBoolean("LogAudioMusicPlayer", checkBoxLogMusicPlayer.Checked);
-						m_preferences.SetString("AudioLogFilePath", textBoxLogFilePath.Text);
+						_preferences.SetBoolean("ShowPositionMarker", checkBoxShowPositionMarker.Checked);
+						_preferences.SetBoolean("AutoScrolling", checkBoxAutoScrolling.Checked);
+						_preferences.SetBoolean("SavePlugInDialogPositions", checkBoxSavePlugInDialogPositions.Checked);
+						_preferences.SetBoolean("ClearAtEndOfSequence", checkBoxClearAtEndOfSequence.Checked);
+						_preferences.SetBoolean("LogAudioManual", checkBoxLogManual.Checked);
+						_preferences.SetBoolean("LogAudioScheduled", checkBoxLogScheduled.Checked);
+						_preferences.SetBoolean("LogAudioMusicPlayer", checkBoxLogMusicPlayer.Checked);
+						_preferences.SetString("AudioLogFilePath", textBoxLogFilePath.Text);
 						return;
 
 					case 4:
-						m_preferences.SetBoolean("EnableBackgroundSequence", checkBoxEnableBackgroundSequence.Checked);
-						m_preferences.SetString("BackgroundSequenceDelay", textBoxBackgroundSequenceDelay.Text);
-						m_preferences.SetBoolean("EnableBackgroundMusic", checkBoxEnableBackgroundMusic.Checked);
-						m_preferences.SetString("BackgroundMusicDelay", textBoxBackgroundMusicDelay.Text);
-						m_preferences.SetBoolean("EnableMusicFade", checkBoxEnableMusicFade.Checked);
-						m_preferences.SetString("MusicFadeDuration", textBoxMusicFadeDuration.Text);
+						_preferences.SetBoolean("EnableBackgroundSequence", checkBoxEnableBackgroundSequence.Checked);
+						_preferences.SetString("BackgroundSequenceDelay", textBoxBackgroundSequenceDelay.Text);
+						_preferences.SetBoolean("EnableBackgroundMusic", checkBoxEnableBackgroundMusic.Checked);
+						_preferences.SetString("BackgroundMusicDelay", textBoxBackgroundMusicDelay.Text);
+						_preferences.SetBoolean("EnableMusicFade", checkBoxEnableMusicFade.Checked);
+						_preferences.SetString("MusicFadeDuration", textBoxMusicFadeDuration.Text);
 						return;
 
 					case 5:
@@ -196,33 +181,33 @@ namespace VixenPlus
 						{
 							if (radioButtonSyncDefaultProfileData.Checked || (comboBoxSyncProfile.SelectedItem == null))
 							{
-								m_preferences.SetString("SynchronousData", "Default");
+								_preferences.SetString("SynchronousData", "Default");
 							}
 							else
 							{
-								m_preferences.SetString("SynchronousData", comboBoxSyncProfile.SelectedItem.ToString());
+								_preferences.SetString("SynchronousData", comboBoxSyncProfile.SelectedItem.ToString());
 							}
 						}
 						else
 						{
-							m_preferences.SetString("SynchronousData", "Embedded");
+							_preferences.SetString("SynchronousData", "Embedded");
 						}
 						if (radioButtonAsyncSyncObject.Checked)
 						{
-							m_preferences.SetString("AsynchronousData", "Sync");
+							_preferences.SetString("AsynchronousData", "Sync");
 						}
 						else if (radioButtonAsyncDefaultProfileData.Checked || (comboBoxAsyncProfile.SelectedItem == null))
 						{
-							m_preferences.SetString("AsynchronousData", "Default");
+							_preferences.SetString("AsynchronousData", "Default");
 						}
 						else
 						{
-							m_preferences.SetString("AsynchronousData", comboBoxAsyncProfile.SelectedItem.ToString());
+							_preferences.SetString("AsynchronousData", comboBoxAsyncProfile.SelectedItem.ToString());
 						}
 						return;
 
 					case 6:
-						m_preferences.SetString("SecondaryEngine", Path.GetFileName(textBoxEngine.Text));
+						_preferences.SetString("SecondaryEngine", Path.GetFileName(textBoxEngine.Text));
 						return;
 				}
 			}
@@ -241,7 +226,7 @@ namespace VixenPlus
 				int selectedIndex = box.SelectedIndex;
 				box.BeginUpdate();
 				box.Items.Clear();
-				box.Items.AddRange(list.ToArray());
+				box.Items.AddRange(new object[] { list.ToArray() });
 				if (selectedIndex < box.Items.Count)
 				{
 					box.SelectedIndex = selectedIndex;
@@ -253,21 +238,21 @@ namespace VixenPlus
 
 		private void PopulateTo(int tabIndex)
 		{
-			if (m_preferences != null)
+			if (_preferences != null)
 			{
 				switch (tabIndex)
 				{
 					case 0:
 						{
-							textBoxTimerCheckFrequency.Text = m_preferences.GetString("TimerCheckFrequency");
-							textBoxMouseWheelVertical.Text = m_preferences.GetString("MouseWheelVerticalDelta");
-							textBoxMouseWheelHorizontal.Text = m_preferences.GetString("MouseWheelHorizontalDelta");
-							textBoxClientName.Text = m_preferences.GetString("ClientName");
-							checkBoxResetAtStartup.Checked = m_preferences.GetBoolean("ResetAtStartup");
-							string str = m_preferences.GetString("PreferredSequenceType");
-							for (int i = 0; i < m_uiPlugins.Length; i++)
+							textBoxTimerCheckFrequency.Text = _preferences.GetString("TimerCheckFrequency");
+							textBoxMouseWheelVertical.Text = _preferences.GetString("MouseWheelVerticalDelta");
+							textBoxMouseWheelHorizontal.Text = _preferences.GetString("MouseWheelHorizontalDelta");
+							textBoxClientName.Text = _preferences.GetString("ClientName");
+							checkBoxResetAtStartup.Checked = _preferences.GetBoolean("ResetAtStartup");
+							string str = _preferences.GetString("PreferredSequenceType");
+							for (int i = 0; i < _uiPlugins.Length; i++)
 							{
-								if (m_uiPlugins[i].FileExtension == str)
+								if (_uiPlugins[i].FileExtension == str)
 								{
 									comboBoxSequenceType.SelectedIndex = i;
 									break;
@@ -277,24 +262,24 @@ namespace VixenPlus
 							{
 								comboBoxSequenceType.SelectedIndex = 0;
 							}
-							string s = m_preferences.GetString("ShutdownTime");
+							string s = _preferences.GetString("ShutdownTime");
 							if (s != string.Empty)
 							{
 								dateTimePickerAutoShutdownTime.Checked = true;
 								dateTimePickerAutoShutdownTime.Value = DateTime.Parse(s);
 							}
 							checkBoxDisableAutoUpdate.Checked = File.Exists(Path.Combine(Paths.DataPath, "no.update"));
-							numericUpDownHistoryImages.Value = m_preferences.GetInteger("HistoryImages");
+							numericUpDownHistoryImages.Value = _preferences.GetInteger("HistoryImages");
 							return;
 						}
 					case 1:
 						{
-							textBoxEventPeriod.Text = m_preferences.GetString("EventPeriod");
-							numericUpDownMinimumLevel.Value = m_preferences.GetInteger("MinimumLevel");
-							numericUpDownMaximumLevel.Value = m_preferences.GetInteger("MaximumLevel");
-							checkBoxWizardForNewSequences.Checked = m_preferences.GetBoolean("WizardForNewSequences");
+							textBoxEventPeriod.Text = _preferences.GetString("EventPeriod");
+							numericUpDownMinimumLevel.Value = _preferences.GetInteger("MinimumLevel");
+							numericUpDownMaximumLevel.Value = _preferences.GetInteger("MaximumLevel");
+							checkBoxWizardForNewSequences.Checked = _preferences.GetBoolean("WizardForNewSequences");
 							string str3;
-							if (((str3 = m_preferences.GetString("DefaultProfile")).Length != 0) &&
+							if (((str3 = _preferences.GetString("DefaultProfile")).Length != 0) &&
 							    File.Exists(Path.Combine(Paths.ProfilePath, str3 + ".pro")))
 							{
 								comboBoxDefaultProfile.SelectedIndex = comboBoxDefaultProfile.Items.IndexOf(str3);
@@ -303,49 +288,49 @@ namespace VixenPlus
 							{
 								comboBoxDefaultProfile.SelectedIndex = 0;
 							}
-							int num2 = m_preferences.GetInteger("DefaultSequenceAudioDevice") + 1;
+							int num2 = _preferences.GetInteger("DefaultSequenceAudioDevice") + 1;
 							comboBoxDefaultAudioDevice.SelectedIndex = num2 < comboBoxDefaultAudioDevice.Items.Count ? num2 : 0;
 							return;
 						}
 					case 2:
-						textBoxMaxColumnWidth.Text = m_preferences.GetString("MaxColumnWidth");
-						textBoxMaxRowHeight.Text = m_preferences.GetString("MaxRowHeight");
-						textBoxIntensityLargeDelta.Text = m_preferences.GetString("IntensityLargeDelta");
-						checkBoxEventSequenceAutoSize.Checked = m_preferences.GetBoolean("EventSequenceAutoSize");
-						checkBoxSaveZoomLevels.Checked = m_preferences.GetBoolean("SaveZoomLevels");
-						checkBoxShowSaveConfirmation.Checked = m_preferences.GetBoolean("ShowSaveConfirmation");
-						checkBoxShowNaturalChannelNumber.Checked = m_preferences.GetBoolean("ShowNaturalChannelNumber");
-						checkBoxFlipMouseScroll.Checked = m_preferences.GetBoolean("FlipScrollBehavior");
-						textBoxCurveLibraryHttpUrl.Text = m_preferences.GetString("RemoteLibraryHTTPURL");
-						textBoxCurveLibraryFtpUrl.Text = m_preferences.GetString("RemoteLibraryFTPURL");
-						textBoxCurveLibraryFileName.Text = m_preferences.GetString("RemoteLibraryFileName");
-						textBoxDefaultSequenceSaveDirectory.Text = m_preferences.GetString("DefaultSequenceDirectory");
+						textBoxMaxColumnWidth.Text = _preferences.GetString("MaxColumnWidth");
+						textBoxMaxRowHeight.Text = _preferences.GetString("MaxRowHeight");
+						textBoxIntensityLargeDelta.Text = _preferences.GetString("IntensityLargeDelta");
+						checkBoxEventSequenceAutoSize.Checked = _preferences.GetBoolean("EventSequenceAutoSize");
+						checkBoxSaveZoomLevels.Checked = _preferences.GetBoolean("SaveZoomLevels");
+						checkBoxShowSaveConfirmation.Checked = _preferences.GetBoolean("ShowSaveConfirmation");
+						checkBoxShowNaturalChannelNumber.Checked = _preferences.GetBoolean("ShowNaturalChannelNumber");
+						checkBoxFlipMouseScroll.Checked = _preferences.GetBoolean("FlipScrollBehavior");
+						textBoxCurveLibraryHttpUrl.Text = _preferences.GetString("RemoteLibraryHTTPURL");
+						textBoxCurveLibraryFtpUrl.Text = _preferences.GetString("RemoteLibraryFTPURL");
+						textBoxCurveLibraryFileName.Text = _preferences.GetString("RemoteLibraryFileName");
+						textBoxDefaultSequenceSaveDirectory.Text = _preferences.GetString("DefaultSequenceDirectory");
 						return;
 
 					case 3:
-						checkBoxShowPositionMarker.Checked = m_preferences.GetBoolean("ShowPositionMarker");
-						checkBoxAutoScrolling.Checked = m_preferences.GetBoolean("AutoScrolling");
-						checkBoxSavePlugInDialogPositions.Checked = m_preferences.GetBoolean("SavePlugInDialogPositions");
-						checkBoxClearAtEndOfSequence.Checked = m_preferences.GetBoolean("ClearAtEndOfSequence");
-						checkBoxLogManual.Checked = m_preferences.GetBoolean("LogAudioManual");
-						checkBoxLogScheduled.Checked = m_preferences.GetBoolean("LogAudioScheduled");
-						checkBoxLogMusicPlayer.Checked = m_preferences.GetBoolean("LogAudioMusicPlayer");
-						textBoxLogFilePath.Text = m_preferences.GetString("AudioLogFilePath");
+						checkBoxShowPositionMarker.Checked = _preferences.GetBoolean("ShowPositionMarker");
+						checkBoxAutoScrolling.Checked = _preferences.GetBoolean("AutoScrolling");
+						checkBoxSavePlugInDialogPositions.Checked = _preferences.GetBoolean("SavePlugInDialogPositions");
+						checkBoxClearAtEndOfSequence.Checked = _preferences.GetBoolean("ClearAtEndOfSequence");
+						checkBoxLogManual.Checked = _preferences.GetBoolean("LogAudioManual");
+						checkBoxLogScheduled.Checked = _preferences.GetBoolean("LogAudioScheduled");
+						checkBoxLogMusicPlayer.Checked = _preferences.GetBoolean("LogAudioMusicPlayer");
+						textBoxLogFilePath.Text = _preferences.GetString("AudioLogFilePath");
 						return;
 
 					case 4:
-						checkBoxEnableBackgroundSequence.Checked = m_preferences.GetBoolean("EnableBackgroundSequence");
-						textBoxBackgroundSequenceDelay.Text = m_preferences.GetString("BackgroundSequenceDelay");
-						checkBoxEnableBackgroundMusic.Checked = m_preferences.GetBoolean("EnableBackgroundMusic");
-						textBoxBackgroundMusicDelay.Text = m_preferences.GetString("BackgroundMusicDelay");
-						checkBoxEnableMusicFade.Checked = m_preferences.GetBoolean("EnableMusicFade");
-						textBoxMusicFadeDuration.Text = m_preferences.GetString("MusicFadeDuration");
+						checkBoxEnableBackgroundSequence.Checked = _preferences.GetBoolean("EnableBackgroundSequence");
+						textBoxBackgroundSequenceDelay.Text = _preferences.GetString("BackgroundSequenceDelay");
+						checkBoxEnableBackgroundMusic.Checked = _preferences.GetBoolean("EnableBackgroundMusic");
+						textBoxBackgroundMusicDelay.Text = _preferences.GetString("BackgroundMusicDelay");
+						checkBoxEnableMusicFade.Checked = _preferences.GetBoolean("EnableMusicFade");
+						textBoxMusicFadeDuration.Text = _preferences.GetString("MusicFadeDuration");
 						return;
 
 					case 5:
 						{
-							string str4 = m_preferences.GetString("SynchronousData");
-							if (!(str4 == "Embedded"))
+							string str4 = _preferences.GetString("SynchronousData");
+							if (str4 != "Embedded")
 							{
 								if (str4 == "Default")
 								{
@@ -361,7 +346,7 @@ namespace VixenPlus
 							{
 								radioButtonSyncEmbeddedData.Checked = true;
 							}
-							str4 = m_preferences.GetString("AsynchronousData");
+							str4 = _preferences.GetString("AsynchronousData");
 							if (str4 == "Sync")
 							{
 								radioButtonAsyncSyncObject.Checked = true;
@@ -378,7 +363,7 @@ namespace VixenPlus
 							return;
 						}
 					case 6:
-						textBoxEngine.Text = Path.GetFileName(m_preferences.GetString("SecondaryEngine"));
+						textBoxEngine.Text = Path.GetFileName(_preferences.GetString("SecondaryEngine"));
 						return;
 				}
 			}

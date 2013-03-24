@@ -15,59 +15,53 @@ namespace VixenPlus
 		public bool SuppressAsynchronousContext;
 		public bool SuppressSynchronousContext;
 		public XmlDocument SynchronousEngineComm;
-		private Async m_asynchronous;
-		private Engine8 m_asynchronousEngineInstance;
-		private IEngine2 m_synchronous;
-		private Engine8 m_synchronousEngineInstance;
+		private Engine8 _asynchronousEngineInstance;
+		private Engine8 _synchronousEngineInstance;
 
 		public ExecutionContext()
 		{
-			m_synchronous = null;
-			m_asynchronous = null;
 			OutputPlugInForms = new List<Form>();
 			KeyInterceptor = null;
 		}
 
 		public ExecutionContext(bool useSynchronous, bool useAsynchronous)
 		{
-			m_synchronous = null;
-			m_asynchronous = null;
 			OutputPlugInForms = new List<Form>();
 			KeyInterceptor = null;
 			if (useSynchronous)
 			{
-				m_synchronous = Engines.GetInstance();
+				Engines.GetInstance();
 			}
 			if (useAsynchronous)
 			{
-				m_asynchronous = new Async();
+				new Async();
 			}
 		}
 
 		public Engine8 AsynchronousEngineInstance
 		{
-			get { return m_asynchronousEngineInstance; }
+			get { return _asynchronousEngineInstance; }
 			set
 			{
-				m_asynchronousEngineInstance = value;
+				_asynchronousEngineInstance = value;
 				if (value != null)
 				{
-					m_asynchronousEngineInstance.ProgramEnd += AsynchronousEngineProgramEndHandler;
-					m_asynchronousEngineInstance.SequenceChange += AsynchronousEngineProgramChangeHandler;
+					_asynchronousEngineInstance.ProgramEnd += AsynchronousEngineProgramEndHandler;
+					_asynchronousEngineInstance.SequenceChange += AsynchronousEngineProgramChangeHandler;
 				}
 			}
 		}
 
 		public Engine8 SynchronousEngineInstance
 		{
-			get { return m_synchronousEngineInstance; }
+			get { return _synchronousEngineInstance; }
 			set
 			{
-				m_synchronousEngineInstance = value;
+				_synchronousEngineInstance = value;
 				if (value != null)
 				{
-					m_synchronousEngineInstance.ProgramEnd += SynchronousEngineProgramEndHandler;
-					m_synchronousEngineInstance.SequenceChange += SynchronousEngineProgramChangeHandler;
+					_synchronousEngineInstance.ProgramEnd += SynchronousEngineProgramEndHandler;
+					_synchronousEngineInstance.SequenceChange += SynchronousEngineProgramChangeHandler;
 				}
 			}
 		}

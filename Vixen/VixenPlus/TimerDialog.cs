@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -7,20 +8,20 @@ namespace VixenPlus
 {
 	internal partial class TimerDialog : Form
 	{
-		private readonly string m_fileTypeFilter;
-		private ObjectType m_objectType;
-		private string m_selectedObjectFileName;
-		private TimeSpan m_selectedObjectLength;
-		private Timer m_timer;
+		private readonly string _fileTypeFilter;
+		private ObjectType _objectType;
+		private string _selectedObjectFileName;
+		private TimeSpan _selectedObjectLength;
+		private Timer _timer;
 
 		public TimerDialog(DateTime startDateTime)
 		{
-			m_timer = null;
-			m_selectedObjectFileName = string.Empty;
-			m_selectedObjectLength = TimeSpan.MinValue;
+			_timer = null;
+			_selectedObjectFileName = string.Empty;
+			_selectedObjectLength = TimeSpan.MinValue;
 			components = null;
 			InitializeComponent();
-			m_fileTypeFilter = ((ISystem) Interfaces.Available["ISystem"]).KnownFileTypesFilter;
+			_fileTypeFilter = ((ISystem) Interfaces.Available["ISystem"]).KnownFileTypesFilter;
 			comboBoxStartTime.SelectedIndex = (startDateTime.Hour*2) + (startDateTime.Minute/30);
 			dateTimePickerRecurrenceStartDate.Value =
 				dateTimePickerRecurrenceEndDate.Value = dateTimePickerExecutionStartDate.Value = startDateTime;
@@ -30,18 +31,18 @@ namespace VixenPlus
 
 		public TimerDialog(Timer timer)
 		{
-			m_timer = null;
-			m_selectedObjectFileName = string.Empty;
-			m_selectedObjectLength = TimeSpan.MinValue;
+			_timer = null;
+			_selectedObjectFileName = string.Empty;
+			_selectedObjectLength = TimeSpan.MinValue;
 			components = null;
 			InitializeComponent();
-			m_fileTypeFilter = ((ISystem) Interfaces.Available["ISystem"]).KnownFileTypesFilter;
+			_fileTypeFilter = ((ISystem) Interfaces.Available["ISystem"]).KnownFileTypesFilter;
 			dateTimePickerExecutionStartDate.Value = timer.StartDate;
 			labelObject.Text = string.Format("{0} ({1:d2}:{2:d2})", timer.ProgramName, timer.ObjectLength.Minutes,
 			                                 timer.ObjectLength.Seconds);
-			m_selectedObjectFileName = timer.ProgramFileName;
-			m_selectedObjectLength = timer.ObjectLength;
-			m_objectType = timer.ObjectType;
+			_selectedObjectFileName = timer.ProgramFileName;
+			_selectedObjectLength = timer.ObjectLength;
+			_objectType = timer.ObjectType;
 			if ((timer.StartTime.TotalMinutes%30.0) == 0.0)
 			{
 				comboBoxStartTime.SelectedIndex = (int) (timer.StartTime.TotalMinutes/30.0);
@@ -58,7 +59,7 @@ namespace VixenPlus
 				if (timer.RepeatInterval != 0)
 				{
 					checkBoxEvery.Checked = true;
-					textBoxRepeatInterval.Text = timer.RepeatInterval.ToString();
+					textBoxRepeatInterval.Text = timer.RepeatInterval.ToString(CultureInfo.InvariantCulture);
 				}
 			}
 			if (timer.Recurrence == RecurrenceType.None)
@@ -89,7 +90,7 @@ namespace VixenPlus
 							var str = (string) timer.RecurrenceData;
 							if (timer.RecurrenceData is string)
 							{
-								if (!(str == "first"))
+								if (str != "first")
 								{
 									radioButtonLastDay.Checked = true;
 								}
@@ -110,47 +111,47 @@ namespace VixenPlus
 				}
 			}
 			Label_037C:
-			m_timer = timer;
+			_timer = timer;
 		}
 
 		public Timer Timer
 		{
-			get { return m_timer; }
+			get { return _timer; }
 		}
 
 		private void buttonOK_Click(object sender, EventArgs e)
 		{
 			DateTime time;
-			if (m_timer == null)
+			if (_timer == null)
 			{
-				m_timer = new Timer();
+				_timer = new Timer();
 			}
 			var builder = new StringBuilder();
-			if (m_selectedObjectFileName == string.Empty)
+			if (_selectedObjectFileName == string.Empty)
 			{
 				builder.AppendLine("* Nothing has been selected to execute");
 			}
 			else
 			{
-				m_timer.ObjectType = m_objectType;
-				m_timer.ProgramFileName = m_selectedObjectFileName;
+				_timer.ObjectType = _objectType;
+				_timer.ProgramFileName = _selectedObjectFileName;
 			}
-			m_timer.StartDate = dateTimePickerExecutionStartDate.Value;
+			_timer.StartDate = dateTimePickerExecutionStartDate.Value;
 			if (!DateTime.TryParse(comboBoxStartTime.Text, out time))
 			{
 				builder.AppendLine("* Start time is not a valid time");
 			}
 			else
 			{
-				m_timer.StartTime = time.TimeOfDay;
+				_timer.StartTime = time.TimeOfDay;
 			}
-			if (m_selectedObjectLength != TimeSpan.MinValue)
+			if (_selectedObjectLength != TimeSpan.MinValue)
 			{
-				m_timer.ObjectLength = new TimeSpan(0, 0, 0, 0, (int) m_selectedObjectLength.TotalMilliseconds);
+				_timer.ObjectLength = new TimeSpan(0, 0, 0, 0, (int) _selectedObjectLength.TotalMilliseconds);
 			}
 			if (checkBoxRepeat.Checked)
 			{
-				m_timer.RepeatInterval = 0;
+				_timer.RepeatInterval = 0;
 				TimeSpan span = (time.AddHours(((comboBoxEndTime.SelectedIndex + 1)*0.5f)) - time);
 				if (span.TotalMinutes <= 0.0)
 				{
@@ -158,11 +159,11 @@ namespace VixenPlus
 				}
 				else
 				{
-					m_timer.TimerLength = span;
+					_timer.TimerLength = span;
 				}
-				if (m_timer.TimerLength < m_timer.ObjectLength)
+				if (_timer.TimerLength < _timer.ObjectLength)
 				{
-					m_timer.TimerLength = m_timer.ObjectLength;
+					_timer.TimerLength = _timer.ObjectLength;
 					MessageBox.Show("Timer length has been adjusted so that it's at least as long as the scheduled item.",
 					                Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 				}
@@ -170,16 +171,16 @@ namespace VixenPlus
 				{
 					try
 					{
-						m_timer.RepeatInterval = Convert.ToInt32(textBoxRepeatInterval.Text);
+						_timer.RepeatInterval = Convert.ToInt32(textBoxRepeatInterval.Text);
 					}
 					catch
 					{
 						builder.AppendLine("* The repeat interval must be 0 (for end-to-end repeating) or greater");
 					}
-					if (((m_timer.ObjectLength.TotalMinutes*2.0) + m_timer.RepeatInterval) > m_timer.TimerLength.TotalMinutes)
+					if (((_timer.ObjectLength.TotalMinutes*2.0) + _timer.RepeatInterval) > _timer.TimerLength.TotalMinutes)
 					{
-						m_timer.TimerLength = m_timer.ObjectLength;
-						m_timer.RepeatInterval = 0;
+						_timer.TimerLength = _timer.ObjectLength;
+						_timer.RepeatInterval = 0;
 						MessageBox.Show(
 							"Since the scheduled item would not repeat with the given interval\nand timer duration, it has been changed to a single-occurence timer",
 							Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
@@ -188,19 +189,19 @@ namespace VixenPlus
 			}
 			else
 			{
-				m_timer.TimerLength = m_timer.ObjectLength;
+				_timer.TimerLength = _timer.ObjectLength;
 			}
-			m_timer.Recurrence = (RecurrenceType) Math.Max(comboBoxRecurrenceType.SelectedIndex, 0);
+			_timer.Recurrence = (RecurrenceType) Math.Max(comboBoxRecurrenceType.SelectedIndex, 0);
 			if (comboBoxRecurrenceType.SelectedIndex <= 0)
 			{
-				m_timer.RecurrenceStart = DateTime.MinValue;
-				m_timer.RecurrenceEnd = DateTime.MinValue;
+				_timer.RecurrenceStart = DateTime.MinValue;
+				_timer.RecurrenceEnd = DateTime.MinValue;
 			}
 			else
 			{
-				m_timer.RecurrenceStart = dateTimePickerRecurrenceStartDate.Value.Date;
-				m_timer.RecurrenceEnd = dateTimePickerRecurrenceEndDate.Value.Date.Add(new TimeSpan(0x17, 0x3b, 0));
-				switch (m_timer.Recurrence)
+				_timer.RecurrenceStart = dateTimePickerRecurrenceStartDate.Value.Date;
+				_timer.RecurrenceEnd = dateTimePickerRecurrenceEndDate.Value.Date.Add(new TimeSpan(0x17, 0x3b, 0));
+				switch (_timer.Recurrence)
 				{
 					case RecurrenceType.Weekly:
 						{
@@ -233,7 +234,7 @@ namespace VixenPlus
 							{
 								num |= 0x40;
 							}
-							m_timer.RecurrenceData = num;
+							_timer.RecurrenceData = num;
 							goto Label_054B;
 						}
 					case RecurrenceType.Monthly:
@@ -241,7 +242,7 @@ namespace VixenPlus
 						{
 							if (radioButtonLastDay.Checked)
 							{
-								m_timer.RecurrenceData = "last";
+								_timer.RecurrenceData = "last";
 							}
 							else
 							{
@@ -260,18 +261,18 @@ namespace VixenPlus
 								}
 								else
 								{
-									m_timer.RecurrenceData = num2;
+									_timer.RecurrenceData = num2;
 								}
 							}
 						}
 						else
 						{
-							m_timer.RecurrenceData = "first";
+							_timer.RecurrenceData = "first";
 						}
 						goto Label_054B;
 
 					case RecurrenceType.Yearly:
-						m_timer.RecurrenceData = dateTimePickerYearlyDate.Value;
+						_timer.RecurrenceData = dateTimePickerYearlyDate.Value;
 						goto Label_054B;
 				}
 			}
@@ -294,16 +295,16 @@ namespace VixenPlus
 				using (IScheduledObject obj2 = LoadProgram(openFileDialog.FileName))
 				{
 					labelObject.Text = obj2.Name + string.Format(" ({0:d2}:{1:d2})", obj2.Length/0xea60, (obj2.Length%0xea60)/0x3e8);
-					m_selectedObjectFileName = obj2.FileName;
-					m_selectedObjectLength = new TimeSpan(0, 0, 0, 0, obj2.Length);
-					m_objectType = ObjectType.Program;
+					_selectedObjectFileName = obj2.FileName;
+					_selectedObjectLength = new TimeSpan(0, 0, 0, 0, obj2.Length);
+					_objectType = ObjectType.Program;
 				}
 			}
 		}
 
 		private void buttonSelectSequence_Click(object sender, EventArgs e)
 		{
-			openFileDialog.Filter = m_fileTypeFilter;
+			openFileDialog.Filter = _fileTypeFilter;
 			openFileDialog.InitialDirectory = Paths.SequencePath;
 			openFileDialog.FileName = string.Empty;
 			if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -312,9 +313,9 @@ namespace VixenPlus
 				{
 					labelObject.Text = string.Format("{0} ({1:d2}:{2:d2})", Path.GetFileName(openFileDialog.FileName),
 					                                 obj2.Length/0xea60, (obj2.Length%0xea60)/0x3e8);
-					m_selectedObjectFileName = obj2.FileName;
-					m_selectedObjectLength = new TimeSpan(0, 0, 0, 0, obj2.Length);
-					m_objectType = ObjectType.Sequence;
+					_selectedObjectFileName = obj2.FileName;
+					_selectedObjectLength = new TimeSpan(0, 0, 0, 0, obj2.Length);
+					_objectType = ObjectType.Sequence;
 				}
 			}
 		}

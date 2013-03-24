@@ -1,50 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Xml;
 
 namespace VixenPlus
 {
 	public class MappingSet : ICloneable
 	{
-		private const string ATTRIBUTE_ID = "id";
-		private const string ATTRIBUTE_NAME = "name";
-		private const string ELEMENT_INPUT = "Input";
-		private const string ELEMENT_INPUTS = "Inputs";
-		private readonly Dictionary<ulong, List<string>> m_inputMappings;
-		private readonly Dictionary<ulong, List<int>> m_inputOutputMappings;
-		private ulong m_id;
+		private readonly Dictionary<ulong, List<string>> _inputMappings;
+		private readonly Dictionary<ulong, List<int>> _inputOutputMappings;
+		private ulong _id;
 
 		public MappingSet(string name)
 		{
 			Name = name;
-			m_inputMappings = new Dictionary<ulong, List<string>>();
-			m_inputOutputMappings = new Dictionary<ulong, List<int>>();
-			m_id = Host.GetUniqueKey();
+			_inputMappings = new Dictionary<ulong, List<string>>();
+			_inputOutputMappings = new Dictionary<ulong, List<int>>();
+			_id = Host.GetUniqueKey();
 		}
 
 		public MappingSet(XmlNode dataNode)
 		{
-			m_inputMappings = new Dictionary<ulong, List<string>>();
-			m_inputOutputMappings = new Dictionary<ulong, List<int>>();
+			_inputMappings = new Dictionary<ulong, List<string>>();
+			_inputOutputMappings = new Dictionary<ulong, List<int>>();
 			ReadData(dataNode);
 		}
 
 		public ulong Id
 		{
-			get { return m_id; }
+			get { return _id; }
 		}
 
 		public string Name { get; set; }
 
 		public object Clone()
 		{
-			var set = new MappingSet(Name);
-			set.m_id = m_id;
-			foreach (ulong num in m_inputMappings.Keys)
+			var set = new MappingSet(Name) {_id = _id};
+			foreach (ulong num in _inputMappings.Keys)
 			{
 				List<string> list;
-				set.m_inputMappings[num] = list = new List<string>();
-				list.AddRange(m_inputMappings[num]);
+				set._inputMappings[num] = list = new List<string>();
+				list.AddRange(_inputMappings[num]);
 			}
 			return set;
 		}
@@ -52,9 +48,9 @@ namespace VixenPlus
 		public List<string> GetOutputChannelIdList(ulong inputId)
 		{
 			List<string> list;
-			if (!m_inputMappings.TryGetValue(inputId, out list))
+			if (!_inputMappings.TryGetValue(inputId, out list))
 			{
-				m_inputMappings[inputId] = list = new List<string>();
+				_inputMappings[inputId] = list = new List<string>();
 			}
 			return list;
 		}
@@ -66,24 +62,37 @@ namespace VixenPlus
 
 		internal List<int> GetOutputChannelIndexList(Input input)
 		{
-			return m_inputOutputMappings[input.Id];
+			return _inputOutputMappings[input.Id];
 		}
 
 		public bool HasMappingFor(Input input)
 		{
-			return m_inputMappings.ContainsKey(input.Id);
+			return _inputMappings.ContainsKey(input.Id);
 		}
 
 		public void ReadData(XmlNode dataNode)
 		{
-			Name = dataNode.Attributes["name"].Value;
-			m_id = ulong.Parse(dataNode.Attributes["id"].Value);
-			XmlNode node = dataNode["Inputs"];
-			foreach (XmlNode node2 in node.SelectNodes("Input"))
+			if (dataNode.Attributes != null)
 			{
-				if (node2.InnerText.Trim().Length > 0)
+				Name = dataNode.Attributes["name"].Value;
+				_id = ulong.Parse(dataNode.Attributes["id"].Value);
+			}
+			XmlNode node = dataNode["Inputs"];
+			if (node != null)
+			{
+				var inputNodes = node.SelectNodes("Input");
+				if (inputNodes != null)
 				{
-					m_inputMappings[ulong.Parse(node2.Attributes["id"].Value)] = new List<string>(node2.InnerText.Split(new[] {','}));
+					foreach (XmlNode node2 in inputNodes)
+					{
+						if (node2.InnerText.Trim().Length > 0)
+						{
+							if (node2.Attributes != null)
+							{
+								_inputMappings[ulong.Parse(node2.Attributes["id"].Value)] = new List<string>(node2.InnerText.Split(new[] {','}));
+							}
+						}
+					}
 				}
 			}
 		}
@@ -96,14 +105,14 @@ namespace VixenPlus
 		public void WriteData(XmlNode dataNode)
 		{
 			Xml.SetAttribute(dataNode, "name", Name);
-			Xml.SetAttribute(dataNode, "id", Id.ToString());
+			Xml.SetAttribute(dataNode, "id", Id.ToString(CultureInfo.InvariantCulture));
 			XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(dataNode, "Inputs");
-			foreach (ulong num in m_inputMappings.Keys)
+			foreach (ulong num in _inputMappings.Keys)
 			{
-				if (m_inputMappings[num].Count > 0)
+				if (_inputMappings[num].Count > 0)
 				{
-					Xml.SetAttribute(Xml.SetNewValue(emptyNodeAlways, "Input", string.Join(",", m_inputMappings[num].ToArray())), "id",
-					                 num.ToString());
+					Xml.SetAttribute(Xml.SetNewValue(emptyNodeAlways, "Input", string.Join(",", _inputMappings[num].ToArray())), "id",
+					                 num.ToString(CultureInfo.InvariantCulture));
 				}
 			}
 		}

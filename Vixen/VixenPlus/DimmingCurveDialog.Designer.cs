@@ -214,13 +214,13 @@ private PictureBox pbMini;
 			{
 				this.components.Dispose();
 			}
-			this.m_miniBackBrush.Dispose();
-			this.m_curveBackBrush.Dispose();
-			this.m_miniBoxPen.Dispose();
-			this.m_miniLinePen.Dispose();
-			this.m_curveGridPen.Dispose();
-			this.m_curveLinePen.Dispose();
-			this.m_curvePointBrush.Dispose();
+			this._miniBackBrush.Dispose();
+			this._curveBackBrush.Dispose();
+			this._miniBoxPen.Dispose();
+			this._miniLinePen.Dispose();
+			this._curveGridPen.Dispose();
+			this._curveLinePen.Dispose();
+			this._curvePointBrush.Dispose();
 			base.Dispose(disposing);
 		}
 	}

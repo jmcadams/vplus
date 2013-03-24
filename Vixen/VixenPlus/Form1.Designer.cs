@@ -5,7 +5,7 @@ namespace VixenPlus{
 	using System.ComponentModel;
 	using System.Collections;
 
-	internal  partial class Form1{
+	internal sealed partial class Form1{
 		private IContainer components;
 
 		#region Windows Form Designer generated code

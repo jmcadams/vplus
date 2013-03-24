@@ -189,15 +189,15 @@ private VScrollBar vScrollBar;
             {
                 this.components.Dispose();
             }
-            this.m_backgroundBrush.Dispose();
-            this.m_hourPen.Dispose();
-            this.m_halfHourPen.Dispose();
-            this.m_timeLargeFont.Dispose();
-            this.m_timeSmallFont.Dispose();
-            this.m_dayViewHeaderFont.Dispose();
-            this.m_agendaViewItemFont.Dispose();
-            this.m_agendaViewTimeFont.Dispose();
-            this.m_timeLinePen.Dispose();
+            this._backgroundBrush.Dispose();
+            this._hourPen.Dispose();
+            this._halfHourPen.Dispose();
+            this._timeLargeFont.Dispose();
+            this._timeSmallFont.Dispose();
+            this._dayViewHeaderFont.Dispose();
+            this._agendaViewItemFont.Dispose();
+            this._agendaViewTimeFont.Dispose();
+            this._timeLinePen.Dispose();
             base.Dispose(disposing);
         }
 	}

@@ -1,25 +1,26 @@
 ﻿using System;
+using System.Globalization;
 using System.Xml;
 
 namespace VixenPlus
 {
 	public abstract class Input : ICloneable
 	{
-		private readonly InputPlugin m_owner;
-		private bool m_enabled;
-		private ulong m_id;
-		private bool m_isMappingIterator;
-		private string m_name;
-		private bool m_wasChanged;
+		private readonly InputPlugin _owner;
+		private bool _isEnabled;
+		private ulong _id;
+		private bool _isMappingIterator;
+		private string _name;
+		private bool _wasChanged;
 
-		public Input(InputPlugin owner, string name, bool isIterator)
+		protected Input(InputPlugin owner, string name, bool isIterator)
 		{
-			m_owner = owner;
-			m_name = name;
-			m_enabled = true;
-			m_isMappingIterator = isIterator;
-			m_owner.MappingSets.GetMappingSet("Mapping set 1", this);
-			m_id = Host.GetUniqueKey();
+			_owner = owner;
+			_name = name;
+			_isEnabled = true;
+			_isMappingIterator = isIterator;
+			_owner.MappingSets.GetMappingSet("Mapping set 1", this);
+			_id = Host.GetUniqueKey();
 		}
 
 		public MappingSet AssignedMappingSet { get; set; }
@@ -28,48 +29,48 @@ namespace VixenPlus
 
 		public bool Enabled
 		{
-			get { return m_enabled; }
-			set { m_enabled = value; }
+			get { return _isEnabled; }
+			set { _isEnabled = value; }
 		}
 
 		public ulong Id
 		{
-			get { return m_id; }
+			get { return _id; }
 		}
 
 		public bool IsMappingIterator
 		{
-			get { return m_isMappingIterator; }
-			set { m_isMappingIterator = value; }
+			get { return _isMappingIterator; }
+			set { _isMappingIterator = value; }
 		}
 
 		public string Name
 		{
-			get { return m_name; }
+			get { return _name; }
 		}
 
 		internal InputPlugin Owner
 		{
-			get { return m_owner; }
+			get { return _owner; }
 		}
 
 		public object Clone()
 		{
-			var input = (Input) base.MemberwiseClone();
-			input.m_id = m_id;
+			var input = (Input) MemberwiseClone();
+			input._id = _id;
 			return input;
 		}
 
 		internal bool GetChangedInternal()
 		{
-			if (m_isMappingIterator)
+			if (_isMappingIterator)
 			{
 				bool changed = Changed;
-				if (!(m_wasChanged || !changed))
+				if (!(_wasChanged || !changed))
 				{
-					m_owner.IteratorTriggered(this);
+					_owner.IteratorTriggered(this);
 				}
-				m_wasChanged = changed;
+				_wasChanged = changed;
 				return false;
 			}
 			return Changed;
@@ -79,7 +80,7 @@ namespace VixenPlus
 
 		internal byte GetValueInternal()
 		{
-			if (m_isMappingIterator)
+			if (_isMappingIterator)
 			{
 				return 0;
 			}
@@ -88,10 +89,13 @@ namespace VixenPlus
 
 		public void ReadData(XmlNode node)
 		{
-			m_name = node.Attributes["name"].Value;
-			m_enabled = bool.Parse(node.Attributes["enabled"].Value);
-			m_id = ulong.Parse(node.Attributes["id"].Value);
-			m_isMappingIterator = bool.Parse(node.Attributes["isIterator"].Value);
+			if (node.Attributes != null)
+			{
+				_name = node.Attributes["name"].Value;
+				_isEnabled = bool.Parse(node.Attributes["enabled"].Value);
+				_id = ulong.Parse(node.Attributes["id"].Value);
+				_isMappingIterator = bool.Parse(node.Attributes["isIterator"].Value);
+			}
 		}
 
 		public override string ToString()
@@ -104,8 +108,8 @@ namespace VixenPlus
 			XmlNode node = Xml.SetNewValue(parentNode, "Input", "");
 			Xml.SetAttribute(node, "name", Name);
 			Xml.SetAttribute(node, "enabled", Enabled.ToString());
-			Xml.SetAttribute(node, "id", Id.ToString());
-			Xml.SetAttribute(node, "isIterator", m_isMappingIterator.ToString());
+			Xml.SetAttribute(node, "id", Id.ToString(CultureInfo.InvariantCulture));
+			Xml.SetAttribute(node, "isIterator", _isMappingIterator.ToString());
 			return node;
 		}
 	}

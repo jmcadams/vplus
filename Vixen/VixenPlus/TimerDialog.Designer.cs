@@ -212,7 +212,7 @@ private TextBox textBoxSpecificDay;
             this.tabControl.Controls.Add(this.tabPageYearly);
             this.tabControl.HideTabs = true;
             this.tabControl.Location = new Point(140, 0x22);
-            this.tabControl.ourMultiline = true;
+            this.tabControl.OurMultiline = true;
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new Size(0xf6, 0x6f);

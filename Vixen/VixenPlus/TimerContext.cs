@@ -8,53 +8,51 @@ namespace VixenPlus
 
 		public delegate void OnExecutionEnd(TimerContext context);
 
-		private static IExecution m_executionInterface;
+		private static IExecution _executionInterface;
 
-		private readonly DateTime m_endDateTime;
-		private readonly int m_executionContextHandle;
-		private readonly Timer m_timer;
-		private Host m_host;
+		private readonly DateTime _endDateTime;
+		private readonly int _executionContextHandle;
+		private readonly Timer _timer;
 
-		public TimerContext(Timer timer, Host host)
+		public TimerContext(Timer timer)
 		{
-			m_timer = timer;
-			m_host = host;
-			m_endDateTime =
-				new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, m_timer.StartDateTime.Hour,
-				             m_timer.StartDateTime.Minute, 0).Add(m_timer.TimerLength);
-			if (m_executionInterface == null)
+			_timer = timer;
+			_endDateTime =
+				new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, _timer.StartDateTime.Hour,
+				             _timer.StartDateTime.Minute, 0).Add(_timer.TimerLength);
+			if (_executionInterface == null)
 			{
-				m_executionInterface = (IExecution) Interfaces.Available["IExecution"];
+				_executionInterface = (IExecution) Interfaces.Available["IExecution"];
 			}
-			m_executionContextHandle = m_executionInterface.RequestContext(true, false, null);
-			m_executionInterface.SetSynchronousProgramChangeHandler(m_executionContextHandle, ProgramChanged);
+			_executionContextHandle = _executionInterface.RequestContext(true, false, null);
+			_executionInterface.SetSynchronousProgramChangeHandler(_executionContextHandle, ProgramChanged);
 		}
 
 		public DateTime EndDateTime
 		{
-			get { return m_endDateTime; }
+			get { return _endDateTime; }
 		}
 
 		public int ExecutionContextHandle
 		{
-			get { return m_executionContextHandle; }
+			get { return _executionContextHandle; }
 		}
 
 		public IExecution ExecutionInterface
 		{
-			get { return m_executionInterface; }
+			get { return _executionInterface; }
 		}
 
 		public bool Stopping { get; set; }
 
 		public Timer Timer
 		{
-			get { return m_timer; }
+			get { return _timer; }
 		}
 
 		public void Dispose()
 		{
-			m_executionInterface.ReleaseContext(m_executionContextHandle);
+			_executionInterface.ReleaseContext(_executionContextHandle);
 			GC.SuppressFinalize(this);
 		}
 
@@ -89,8 +87,8 @@ namespace VixenPlus
 
 		public override string ToString()
 		{
-			string str = m_executionInterface.LoadedProgram(m_executionContextHandle);
-			string str2 = m_executionInterface.LoadedSequence(m_executionContextHandle);
+			string str = _executionInterface.LoadedProgram(_executionContextHandle);
+			string str2 = _executionInterface.LoadedSequence(_executionContextHandle);
 			if (str.Length == 0)
 			{
 				return str2;

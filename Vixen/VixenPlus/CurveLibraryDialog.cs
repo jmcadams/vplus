@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
 using VixenPlus;
 
@@ -7,11 +9,9 @@ namespace VixenPlus
 {
 	internal partial class CurveLibraryDialog : Form
 	{
-		private const string COLOR_PREPEND = "C";
-		private readonly CurveLibrary m_localLibrary;
-		private byte[] m_curve;
-		private bool m_internal;
-		private ListViewItemSorter m_sorter;
+		private readonly CurveLibrary _curveLibrary;
+		private byte[] _curve;
+		private bool _isInternal;
 
 		public CurveLibraryDialog()
 		{
@@ -20,22 +20,22 @@ namespace VixenPlus
 			listViewRecords.Columns[1].Name = "LightCount";
 			listViewRecords.Columns[2].Name = "Color";
 			listViewRecords.Columns[3].Name = "Controller";
-			m_localLibrary = new CurveLibrary();
-			m_internal = true;
+			_curveLibrary = new CurveLibrary();
+			_isInternal = true;
 			comboBoxManufacturer.SelectedIndex = 0;
 			comboBoxCount.SelectedIndex = 0;
 			comboBoxColor.SelectedIndex = 0;
 			comboBoxController.SelectedIndex = 0;
-			m_internal = false;
+			_isInternal = false;
 			comboBoxSource.SelectedIndex = 0;
-			listViewRecords.ListViewItemSorter = m_sorter = new ListViewItemSorter();
+			listViewRecords.ListViewItemSorter = new ListViewItemSorter();
 			ListViewSortIcons.SetSortIcon(listViewRecords, 0, /* this.listViewRecords.Columns[0].Tag = */
 			                              System.Windows.Forms.SortOrder.Ascending);
 		}
 
 		public byte[] SelectedCurve
 		{
-			get { return m_curve; }
+			get { return _curve; }
 		}
 
 		private void buttonChangeRemoteLocation_Click(object sender, EventArgs e)
@@ -82,16 +82,14 @@ namespace VixenPlus
 			{
 				Rectangle bounds = e.Bounds;
 				bounds.Inflate(-16, -2);
-				using (var brush = new SolidBrush(Color.FromArgb(int.Parse((box.Items[e.Index] as string).Substring(1)))))
-				{
-					e.Graphics.FillRectangle(brush, bounds);
-					e.Graphics.DrawRectangle(Pens.Black, bounds);
-				}
+				var boxItems = box.Items[e.Index] as string;
+				if (boxItems != null)
+					using (var brush = new SolidBrush(Color.FromArgb(int.Parse(boxItems.Substring(1)))))
+					{
+						e.Graphics.FillRectangle(brush, bounds);
+						e.Graphics.DrawRectangle(Pens.Black, bounds);
+					}
 			}
-		}
-
-		private void comboBoxColor_SelectedIndexChanged(object sender, EventArgs e)
-		{
 		}
 
 		private void comboBoxFilter_SelectedIndexChanged(object sender, EventArgs e)
@@ -106,7 +104,7 @@ namespace VixenPlus
 
 		private void CurveLibraryDialog_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			m_localLibrary.Dispose();
+			_curveLibrary.Dispose();
 		}
 
 
@@ -118,7 +116,7 @@ namespace VixenPlus
 			{
 				ListViewSortIcons.SetSortIcon(listViewRecords, e.Column, System.Windows.Forms.SortOrder.Ascending);
 				listViewRecords.Columns[e.Column].Tag = System.Windows.Forms.SortOrder.Ascending;
-				m_localLibrary.SortOrder = new CurveLibrary.Sort(listViewRecords.Columns[e.Column].Name,
+				_curveLibrary.SortOrder = new CurveLibrary.Sort(listViewRecords.Columns[e.Column].Name,
 				                                                 CurveLibrary.Sort.Direction.Asc);
 				LoadRecords();
 			}
@@ -126,7 +124,7 @@ namespace VixenPlus
 			{
 				ListViewSortIcons.SetSortIcon(listViewRecords, e.Column, System.Windows.Forms.SortOrder.Descending);
 				listViewRecords.Columns[e.Column].Tag = System.Windows.Forms.SortOrder.Descending;
-				m_localLibrary.SortOrder = new CurveLibrary.Sort(listViewRecords.Columns[e.Column].Name,
+				_curveLibrary.SortOrder = new CurveLibrary.Sort(listViewRecords.Columns[e.Column].Name,
 				                                                 CurveLibrary.Sort.Direction.Desc);
 				LoadRecords();
 			}
@@ -143,11 +141,13 @@ namespace VixenPlus
 			{
 				Rectangle bounds = e.Bounds;
 				bounds.Inflate(-16, -2);
-				using (var brush = new SolidBrush(Color.FromArgb((e.Item.Tag as CurveLibraryRecord).Color)))
-				{
-					e.Graphics.FillRectangle(brush, bounds);
-					e.Graphics.DrawRectangle(Pens.Black, bounds);
-				}
+				var curveLibraryRecord = e.Item.Tag as CurveLibraryRecord;
+				if (curveLibraryRecord != null)
+					using (var brush = new SolidBrush(Color.FromArgb(curveLibraryRecord.Color)))
+					{
+						e.Graphics.FillRectangle(brush, bounds);
+						e.Graphics.DrawRectangle(Pens.Black, bounds);
+					}
 			}
 			else
 			{
@@ -161,7 +161,7 @@ namespace VixenPlus
 			{
 				SetSelectedCurve((CurveLibraryRecord) listViewRecords.Items[listViewRecords.SelectedIndices[0]].Tag);
 			}
-			base.DialogResult = DialogResult.OK;
+			DialogResult = DialogResult.OK;
 		}
 
 		private void listViewRecords_SelectedIndexChanged(object sender, EventArgs e)
@@ -171,33 +171,33 @@ namespace VixenPlus
 
 		private void LoadRecords()
 		{
-			if (!m_internal)
+			if (!_isInternal)
 			{
 				Cursor = Cursors.WaitCursor;
 				try
 				{
-					m_localLibrary.ManufacturerFilter = (comboBoxManufacturer.SelectedIndex == 0)
+					_curveLibrary.ManufacturerFilter = (comboBoxManufacturer.SelectedIndex == 0)
 						                                    ? null
 						                                    : new[]
 							                                    {
 								                                    new CurveLibrary.Filter(CurveLibrary.Filter.Operator.Equals,
 								                                                            comboBoxManufacturer.SelectedItem.ToString())
 							                                    };
-					m_localLibrary.LightCountFilter = (comboBoxCount.SelectedIndex == 0)
+					_curveLibrary.LightCountFilter = (comboBoxCount.SelectedIndex == 0)
 						                                  ? null
 						                                  : new[]
 							                                  {
 								                                  new CurveLibrary.Filter(CurveLibrary.Filter.Operator.Equals,
 								                                                          comboBoxCount.SelectedItem.ToString())
 							                                  };
-					m_localLibrary.ColorFilter = (comboBoxColor.SelectedIndex == 0)
+					_curveLibrary.ColorFilter = (comboBoxColor.SelectedIndex == 0)
 						                             ? null
 						                             : new[]
 							                             {
 								                             new CurveLibrary.Filter(CurveLibrary.Filter.Operator.Equals,
 								                                                     ColorFromString(comboBoxColor.SelectedItem.ToString()))
 							                             };
-					m_localLibrary.ControllerFilter = (comboBoxController.SelectedIndex == 0)
+					_curveLibrary.ControllerFilter = (comboBoxController.SelectedIndex == 0)
 						                                  ? null
 						                                  : new[]
 							                                  {
@@ -209,10 +209,10 @@ namespace VixenPlus
 					btnOkay.Enabled = false;
 					try
 					{
-						foreach (CurveLibraryRecord record in m_localLibrary.Read())
+						foreach (CurveLibraryRecord record in _curveLibrary.Read())
 						{
 							listViewRecords.Items.Add(
-								new ListViewItem(new[] {record.Manufacturer, record.LightCount, record.Color.ToString(), record.Controller}))
+								new ListViewItem(new[] {record.Manufacturer, record.LightCount, record.Color.ToString(CultureInfo.InvariantCulture), record.Controller}))
 							               .Tag = record;
 						}
 					}
@@ -224,12 +224,12 @@ namespace VixenPlus
 					{
 						listViewRecords.EndUpdate();
 					}
-					if (!m_localLibrary.IsFiltered)
+					if (!_curveLibrary.IsFiltered)
 					{
-						PopulateFilter(comboBoxManufacturer, m_localLibrary.GetAllManufacturers());
-						PopulateFilter(comboBoxCount, m_localLibrary.GetAllLightCounts());
-						PopulateFilter(comboBoxColor, m_localLibrary.GetAllLightColors());
-						PopulateFilter(comboBoxController, m_localLibrary.GetAllControllers());
+						PopulateFilter(comboBoxManufacturer, _curveLibrary.GetAllManufacturers());
+						PopulateFilter(comboBoxCount, _curveLibrary.GetAllLightCounts());
+						PopulateFilter(comboBoxColor, _curveLibrary.GetAllLightColors());
+						PopulateFilter(comboBoxController, _curveLibrary.GetAllControllers());
 					}
 				}
 				finally
@@ -239,38 +239,31 @@ namespace VixenPlus
 			}
 		}
 
-		private void m_library_Message(string message)
-		{
-			labelDownloadMessage.Text = message;
-			labelDownloadMessage.Refresh();
-		}
-
-		private void PopulateFilter(ComboBox comboBox, string[] items)
+		private void PopulateFilter(ComboBox comboBox, IEnumerable<string> items)
 		{
 			int selectedIndex = comboBox.SelectedIndex;
 			comboBox.Items.Clear();
 			comboBox.Items.Add("(All)");
 			foreach (string str2 in items)
 			{
-				string str;
-				str = comboBox != comboBoxColor ? str2 : StringFromColor(str2);
+				string str = comboBox != comboBoxColor ? str2 : StringFromColor(str2);
 				if (!comboBox.Items.Contains(str))
 				{
 					comboBox.Items.Add(str);
 				}
 			}
-			m_internal = true;
+			_isInternal = true;
 			comboBox.SelectedIndex = selectedIndex;
-			m_internal = false;
+			_isInternal = false;
 		}
 
 		private void SetSelectedCurve(CurveLibraryRecord clr)
 		{
 			if (comboBoxSource.SelectedIndex == 1)
 			{
-				m_localLibrary.Import(clr);
+				_curveLibrary.Import(clr);
 			}
-			m_curve = clr.CurveData;
+			_curve = clr.CurveData;
 		}
 
 		private string StringFromColor(string colorString)

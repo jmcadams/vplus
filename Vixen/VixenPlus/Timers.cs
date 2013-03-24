@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using System.Xml;
 
@@ -7,30 +8,30 @@ namespace VixenPlus
 {
 	internal class Timers : IQueryable
 	{
-		private bool m_disabled;
-		private Timer[] m_timers = new Timer[0];
+		private bool _isDisabled;
+		private Timer[] _timers = new Timer[0];
 
 		public Timer[] TimerArray
 		{
-			get { return m_timers; }
-			set { m_timers = value; }
+			get { return _timers; }
+			set { _timers = value; }
 		}
 
 		public bool TimersDisabled
 		{
-			get { return m_disabled; }
-			set { m_disabled = value; }
+			get { return _isDisabled; }
+			set { _isDisabled = value; }
 		}
 
 		public string QueryInstance(int index)
 		{
 			var builder = new StringBuilder();
-			builder.AppendLine("Disabled: " + m_disabled);
-			builder.AppendLine("Timer count: " + m_timers.Length);
-			if (m_timers.Length > 0)
+			builder.AppendLine("Disabled: " + _isDisabled);
+			builder.AppendLine("Timer count: " + _timers.Length);
+			if (_timers.Length > 0)
 			{
 				builder.AppendLine("Timers:");
-				foreach (Timer timer in m_timers)
+				foreach (Timer timer in _timers)
 				{
 					builder.AppendLine("   Start date: " + timer.StartDate);
 					builder.AppendLine("   Start time: " + timer.StartTime);
@@ -92,9 +93,8 @@ namespace VixenPlus
 			var list = new List<Timer>();
 			DateTime now = DateTime.Now;
 			DateTime today = DateTime.Today;
-			foreach (Timer timer in m_timers)
+			foreach (Timer timer in _timers)
 			{
-				int num;
 				if (flag)
 				{
 					Host.LogTo(Paths.TimerTraceFilePath, "Timer for: " + timer.ProgramName);
@@ -153,7 +153,7 @@ namespace VixenPlus
 							{
 								goto Label_0436;
 							}
-							if (!(((string) timer.RecurrenceData) == "first"))
+							if (((string) timer.RecurrenceData) != "first")
 							{
 								goto Label_03E2;
 							}
@@ -182,7 +182,7 @@ namespace VixenPlus
 				}
 				goto Label_04CB;
 				Label_0436:
-				num = (int) timer.RecurrenceData;
+				var num = (int) timer.RecurrenceData;
 				num = Math.Min(num, DateTime.DaysInMonth(today.Year, today.Month));
 				if (today.Day == num)
 				{
@@ -202,17 +202,27 @@ namespace VixenPlus
 		{
 			XmlNode node = contextNode.SelectSingleNode("Timers");
 			const bool flag = false;
-			m_disabled = node.Attributes["enabled"].Value == flag.ToString();
-			var list = new List<Timer>();
-			foreach (XmlNode node2 in node.SelectNodes("Timer"))
+			if (node != null && node.Attributes != null)
 			{
-				var item = new Timer(node2);
-				if (item.RecurrenceEnd >= DateTime.Today)
+				_isDisabled = node.Attributes["enabled"].Value == flag.ToString();
+			}
+			var list = new List<Timer>();
+			if (node != null)
+			{
+				var timerNode = node.SelectNodes("Timer");
+				if (timerNode != null)
 				{
-					list.Add(item);
+					foreach (XmlNode node2 in timerNode)
+					{
+						var item = new Timer(node2);
+						if (item.RecurrenceEnd >= DateTime.Today)
+						{
+							list.Add(item);
+						}
+					}
 				}
 			}
-			m_timers = list.ToArray();
+			_timers = list.ToArray();
 		}
 
 		private bool RepeatingInstanceIntersects(Timer timer, DateTime intersectionDateTime)
@@ -222,7 +232,7 @@ namespace VixenPlus
 			if (flag)
 			{
 				Host.LogTo(Paths.TimerTraceFilePath, "DateTime intersection");
-				Host.LogTo(Paths.TimerTraceFilePath, "Interval: " + timer.RepeatInterval.ToString());
+				Host.LogTo(Paths.TimerTraceFilePath, "Interval: " + timer.RepeatInterval.ToString(CultureInfo.InvariantCulture));
 			}
 			if (timer.RepeatInterval == 0)
 			{
@@ -263,8 +273,8 @@ namespace VixenPlus
 			bool flag = Host.GetDebugValue("TimerTrace") != null;
 			if (flag)
 			{
-				Host.LogTo(Paths.TimerTraceFilePath, "DateTime intersection with tolerance of " + deviationTolerance.ToString());
-				Host.LogTo(Paths.TimerTraceFilePath, "Interval: " + timer.RepeatInterval.ToString());
+				Host.LogTo(Paths.TimerTraceFilePath, "DateTime intersection with tolerance of " + deviationTolerance.ToString(CultureInfo.InvariantCulture));
+				Host.LogTo(Paths.TimerTraceFilePath, "Interval: " + timer.RepeatInterval.ToString(CultureInfo.InvariantCulture));
 			}
 			if (timer.RepeatInterval == 0)
 			{
@@ -294,18 +304,18 @@ namespace VixenPlus
 			}
 			if (flag)
 			{
-				Host.LogTo(Paths.TimerTraceFilePath, "  Deviation: " + num2.ToString());
-				Host.LogTo(Paths.TimerTraceFilePath, "  Minutes: " + num.ToString());
+				Host.LogTo(Paths.TimerTraceFilePath, "  Deviation: " + num2.ToString(CultureInfo.InvariantCulture));
+				Host.LogTo(Paths.TimerTraceFilePath, "  Minutes: " + num.ToString(CultureInfo.InvariantCulture));
 			}
 			return ((num2 >= 0.0) && (num <= deviationTolerance));
 		}
 
 		public void SaveToXml(XmlNode contextNode)
 		{
-			XmlDocument document = contextNode.OwnerDocument ?? ((XmlDocument) contextNode);
+			//XmlDocument document = contextNode.OwnerDocument ?? ((XmlDocument) contextNode);
 			XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(contextNode, "Timers");
-			Xml.SetAttribute(emptyNodeAlways, "enabled", m_disabled ? false.ToString() : true.ToString());
-			foreach (Timer timer in m_timers)
+			Xml.SetAttribute(emptyNodeAlways, "enabled", _isDisabled ? false.ToString() : true.ToString());
+			foreach (Timer timer in _timers)
 			{
 				timer.SaveToXml(emptyNodeAlways);
 			}

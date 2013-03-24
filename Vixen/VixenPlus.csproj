@@ -639,7 +639,7 @@
     <Compile Include="VixenPlus\Vendor.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenPlus\VixenMDI.cs">
+    <Compile Include="VixenPlus\IVixenMDI.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="VixenPlus\VixenSimpleButton.cs">

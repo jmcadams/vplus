@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
@@ -7,12 +8,12 @@ namespace VixenPlus
 {
 	internal partial class DiagnosticsDialog : Form
 	{
-		private readonly Timers m_timers;
+		private readonly Timers _timers;
 
 		public DiagnosticsDialog(Timers timers)
 		{
 			InitializeComponent();
-			m_timers = timers;
+			_timers = timers;
 			if (Host.GetDebugValue("TraceStart") != null)
 			{
 				dateTimePickerTimerTraceFrom.Value = DateTime.Parse(Host.GetDebugValue("TraceStart"));
@@ -37,19 +38,19 @@ namespace VixenPlus
 			var writer = new StreamWriter(path);
 			try
 			{
-				var list = new List<Timer>(m_timers.TimerArray);
-				writer.WriteLine("Timers dumped at " + DateTime.Now.ToString());
+				var list = new List<Timer>(_timers.TimerArray);
+				writer.WriteLine("Timers dumped at " + DateTime.Now.ToString(CultureInfo.InvariantCulture));
 				writer.WriteLine();
 				writer.WriteLine("(Starting timers)");
 				writer.WriteLine();
-				foreach (Timer timer in m_timers.StartingTimers())
+				foreach (Timer timer in _timers.StartingTimers())
 				{
 					Host.DumpTimer(writer, timer);
 					list.Remove(timer);
 				}
 				writer.WriteLine("(Currently effective timers)");
 				writer.WriteLine();
-				foreach (Timer timer in m_timers.CurrentlyEffectiveTimers())
+				foreach (Timer timer in _timers.CurrentlyEffectiveTimers())
 				{
 					Host.DumpTimer(writer, timer);
 					list.Remove(timer);
@@ -105,8 +106,8 @@ namespace VixenPlus
 			if (checkBoxTraceTimers.Checked)
 			{
 				DateTime time = DateTime.Today + dateTimePickerTimerTraceFrom.Value.TimeOfDay;
-				Host.SetDebugValue("TraceStart", time.ToString());
-				Host.SetDebugValue("TraceEnd", (DateTime.Today + dateTimePickerTimerTraceTo.Value.TimeOfDay).ToString());
+				Host.SetDebugValue("TraceStart", time.ToString(CultureInfo.InvariantCulture));
+				Host.SetDebugValue("TraceEnd", (DateTime.Today + dateTimePickerTimerTraceTo.Value.TimeOfDay).ToString(CultureInfo.InvariantCulture));
 			}
 			else
 			{

@@ -9,6 +9,7 @@ namespace VixenPlus
 		public XmlNode Node;
 		public int To;
 
+		//TODO This needs refactoring.
 		public PlugInMapping(XmlNode node)
 		{
 			try

@@ -2,7 +2,7 @@
 
 namespace VixenPlus
 {
-	internal interface IInputPlugin : IHardwarePlugin, IPlugIn, ISetup
+	internal interface IInputPlugin : IHardwarePlugin
 	{
 		Input[] Inputs { get; }
 

@@ -5,40 +5,40 @@ namespace VixenPlus
 {
 	internal class EventSequenceStub : IDisposable
 	{
-		private EventSequence m_eventSequence;
-		private string m_filename;
-		private int m_length;
-		private string m_lengthString;
+		private EventSequence _eventSequence;
+		private string _filename;
+		private int _length;
+		private string _lengthString;
 
 		public EventSequenceStub(EventSequence sequence)
 		{
-			m_filename = string.Empty;
-			m_length = 0;
-			m_lengthString = string.Empty;
+			_filename = string.Empty;
+			_length = 0;
+			_lengthString = string.Empty;
 			AudioName = string.Empty;
 			AudioFileName = string.Empty;
-			m_eventSequence = null;
-			m_filename = sequence.FileName;
+			_eventSequence = null;
+			_filename = sequence.FileName;
 			Length = sequence.Time;
 			if (sequence.Audio != null)
 			{
 				AudioName = sequence.Audio.Name;
 				AudioFileName = sequence.Audio.FileName;
 			}
-			m_eventSequence = sequence;
-			Mask = m_eventSequence.Mask;
+			_eventSequence = sequence;
+			Mask = _eventSequence.Mask;
 		}
 
 		public EventSequenceStub(string fileName, bool referenceSequence)
 		{
-			m_filename = string.Empty;
-			m_length = 0;
-			m_lengthString = string.Empty;
+			_filename = string.Empty;
+			_length = 0;
+			_lengthString = string.Empty;
 			AudioName = string.Empty;
 			AudioFileName = string.Empty;
-			m_eventSequence = null;
+			_eventSequence = null;
 			var sequence = new EventSequence(fileName);
-			m_filename = sequence.FileName;
+			_filename = sequence.FileName;
 			Length = sequence.Time;
 			if (sequence.Audio != null)
 			{
@@ -48,12 +48,11 @@ namespace VixenPlus
 			Mask = sequence.Mask;
 			if (referenceSequence)
 			{
-				m_eventSequence = sequence;
+				_eventSequence = sequence;
 			}
 			else
 			{
 				sequence.Dispose();
-				sequence = null;
 			}
 		}
 
@@ -63,35 +62,35 @@ namespace VixenPlus
 
 		public string FileName
 		{
-			get { return m_filename; }
+			get { return _filename; }
 		}
 
 		public int Length
 		{
-			get { return m_length; }
+			get { return _length; }
 			set
 			{
-				m_length = value;
-				m_lengthString = string.Format("{0}:{1:d2}", m_length/0xea60, (m_length%0xea60)/0x3e8);
+				_length = value;
+				_lengthString = string.Format("{0}:{1:d2}", _length/0xea60, (_length%0xea60)/0x3e8);
 			}
 		}
 
 		public string LengthString
 		{
-			get { return m_lengthString; }
+			get { return _lengthString; }
 		}
 
 		public byte[][] Mask { get; set; }
 
 		public string Name
 		{
-			get { return Path.GetFileNameWithoutExtension(m_filename); }
-			set { m_filename = Path.ChangeExtension(value, ".vpr"); }
+			get { return Path.GetFileNameWithoutExtension(_filename); }
+			set { _filename = Path.ChangeExtension(value, ".vpr"); }
 		}
 
 		public EventSequence Sequence
 		{
-			get { return m_eventSequence; }
+			get { return _eventSequence; }
 		}
 
 		public void Dispose()
@@ -101,10 +100,10 @@ namespace VixenPlus
 
 		public void Dispose(bool disposing)
 		{
-			if (m_eventSequence != null)
+			if (_eventSequence != null)
 			{
-				m_eventSequence.Dispose();
-				m_eventSequence = null;
+				_eventSequence.Dispose();
+				_eventSequence = null;
 			}
 			GC.SuppressFinalize(this);
 		}
@@ -116,12 +115,12 @@ namespace VixenPlus
 
 		public EventSequence RetrieveSequence()
 		{
-			return m_eventSequence ?? (m_eventSequence = new EventSequence(m_filename));
+			return _eventSequence ?? (_eventSequence = new EventSequence(_filename));
 		}
 
 		public override string ToString()
 		{
-			return string.Format("{0} ({1})", Name, m_lengthString);
+			return string.Format("{0} ({1})", Name, _lengthString);
 		}
 	}
 }

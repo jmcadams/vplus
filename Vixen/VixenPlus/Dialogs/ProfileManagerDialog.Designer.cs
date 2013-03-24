@@ -244,7 +244,7 @@ private TreeView treeViewProfile;
 	this.tabControl.Location = new System.Drawing.Point(0, 0);
 	this.tabControl.Multiline = true;
 	this.tabControl.Name = "tabControl";
-	this.tabControl.ourMultiline = true;
+	this.tabControl.OurMultiline = true;
 	this.tabControl.SelectedIndex = 0;
 	this.tabControl.Size = new System.Drawing.Size(598, 424);
 	this.tabControl.TabIndex = 2;

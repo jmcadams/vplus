@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -9,25 +10,25 @@ using System.Xml;
 
 namespace VixenPlus
 {
-	internal class IExecutionImpl : IExecution, IQueryable
+	internal class ExecutionImpl : IExecution, IQueryable
 	{
-		private readonly string m_errorLog;
-		private readonly Host m_host;
-		private readonly Preference2 m_preferences;
-		private readonly Dictionary<int, ExecutionContext> m_registeredContexts;
+		private readonly string _errorLog;
+		private readonly Host _host;
+		private readonly Preference2 _preferences;
+		private readonly Dictionary<int, ExecutionContext> _registeredContexts;
 
-		public IExecutionImpl(Host host)
+		public ExecutionImpl(Host host)
 		{
-			m_host = host;
-			m_registeredContexts = new Dictionary<int, ExecutionContext>();
-			m_preferences = ((ISystem) Interfaces.Available["ISystem"]).UserPreferences;
-			m_errorLog = Path.Combine(Paths.DataPath, "iexecution.err");
+			_host = host;
+			_registeredContexts = new Dictionary<int, ExecutionContext>();
+			_preferences = ((ISystem) Interfaces.Available["ISystem"]).UserPreferences;
+			_errorLog = Path.Combine(Paths.DataPath, "iexecution.err");
 		}
 
 		public int EngineStatus(int contextHandle)
 		{
 			ExecutionContext context;
-			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
+			if (!_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return 0;
 			}
@@ -51,7 +52,7 @@ namespace VixenPlus
 		{
 			position = 0;
 			ExecutionContext context;
-			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
+			if (!_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return 0;
 			}
@@ -77,7 +78,7 @@ namespace VixenPlus
 		public bool ExecuteChannelOff(int contextHandle, int channelIndex)
 		{
 			ExecutionContext context;
-			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
+			if (!_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return false;
 			}
@@ -123,7 +124,7 @@ namespace VixenPlus
 		public bool ExecuteChannelOn(int contextHandle, int channelIndex, int percentLevel)
 		{
 			ExecutionContext context;
-			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
+			if (!_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return false;
 			}
@@ -164,7 +165,7 @@ namespace VixenPlus
 		public bool ExecuteChannelToggle(int contextHandle, int channelIndex)
 		{
 			ExecutionContext context;
-			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
+			if (!_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return false;
 			}
@@ -207,7 +208,7 @@ namespace VixenPlus
 		public bool ExecutePause(int contextHandle)
 		{
 			ExecutionContext context;
-			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
+			if (!_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return false;
 			}
@@ -233,7 +234,7 @@ namespace VixenPlus
 
 		public bool ExecutePlay(int contextHandle)
 		{
-			return ExecutePlay(contextHandle, m_preferences.GetBoolean("LogAudioManual"));
+			return ExecutePlay(contextHandle, _preferences.GetBoolean("LogAudioManual"));
 		}
 
 		public bool ExecutePlay(int contextHandle, bool logAudio)
@@ -243,13 +244,13 @@ namespace VixenPlus
 
 		public bool ExecutePlay(int contextHandle, int millisecondStart, int millisecondCount)
 		{
-			return ExecutePlay(contextHandle, millisecondStart, millisecondCount, m_preferences.GetBoolean("LogAudioManual"));
+			return ExecutePlay(contextHandle, millisecondStart, millisecondCount, _preferences.GetBoolean("LogAudioManual"));
 		}
 
 		public bool ExecutePlay(int contextHandle, int startMillisecond, int endMillisecond, bool logAudio)
 		{
 			ExecutionContext context;
-			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
+			if (!_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return false;
 			}
@@ -277,7 +278,7 @@ namespace VixenPlus
 					return false;
 				}
 			}
-			string str = context.SynchronousEngineInstance.CurrentObject.Key.ToString();
+			string str = context.SynchronousEngineInstance.CurrentObject.Key.ToString(CultureInfo.InvariantCulture);
 			Host.Communication["KeyInterceptor_" + str] = context.KeyInterceptor;
 			Host.Communication["ExecutionContext_" + str] = context;
 			bool flag = context.SynchronousEngineInstance.Play(startMillisecond, endMillisecond, logAudio);
@@ -291,7 +292,7 @@ namespace VixenPlus
 		public bool ExecuteStop(int contextHandle)
 		{
 			ExecutionContext context;
-			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
+			if (!_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return false;
 			}
@@ -306,15 +307,15 @@ namespace VixenPlus
 			try
 			{
 				context.SynchronousEngineInstance.Stop();
-				if (m_preferences.GetBoolean("SavePlugInDialogPositions"))
+				if (_preferences.GetBoolean("SavePlugInDialogPositions"))
 				{
 					foreach (OutputPlugInUIBase base2 in context.OutputPlugInForms)
 					{
 						if (base2.WindowState == FormWindowState.Normal)
 						{
 							XmlNode nodeAlways = Xml.GetNodeAlways(Xml.GetNodeAlways(base2.DataNode, "DialogPositions"), base2.Name);
-							Xml.SetAttribute(nodeAlways, "x", base2.Location.X.ToString());
-							Xml.SetAttribute(nodeAlways, "y", base2.Location.Y.ToString());
+							Xml.SetAttribute(nodeAlways, "x", base2.Location.X.ToString(CultureInfo.InvariantCulture));
+							Xml.SetAttribute(nodeAlways, "y", base2.Location.Y.ToString(CultureInfo.InvariantCulture));
 						}
 					}
 				}
@@ -353,7 +354,7 @@ namespace VixenPlus
 		public float GetAudioSpeed(int contextHandle)
 		{
 			ExecutionContext context;
-			if (m_registeredContexts.TryGetValue(contextHandle, out context) && (context.SynchronousEngineInstance != null))
+			if (_registeredContexts.TryGetValue(contextHandle, out context) && (context.SynchronousEngineInstance != null))
 			{
 				return context.SynchronousEngineInstance.AudioSpeed;
 			}
@@ -363,7 +364,7 @@ namespace VixenPlus
 		public int GetCurrentPosition(int contextHandle)
 		{
 			ExecutionContext context;
-			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
+			if (!_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return 0;
 			}
@@ -377,7 +378,7 @@ namespace VixenPlus
 		public IExecutable GetObjectInContext(int contextHandle)
 		{
 			ExecutionContext context;
-			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
+			if (!_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return null;
 			}
@@ -387,7 +388,7 @@ namespace VixenPlus
 		public int GetObjectPosition(int contextHandle)
 		{
 			ExecutionContext context;
-			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
+			if (!_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return 0;
 			}
@@ -401,7 +402,7 @@ namespace VixenPlus
 		public string LoadedProgram(int contextHandle)
 		{
 			ExecutionContext context;
-			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
+			if (!_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return string.Empty;
 			}
@@ -415,7 +416,7 @@ namespace VixenPlus
 		public string LoadedSequence(int contextHandle)
 		{
 			ExecutionContext context;
-			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
+			if (!_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return string.Empty;
 			}
@@ -429,7 +430,7 @@ namespace VixenPlus
 		public int ProgramLength(int contextHandle)
 		{
 			ExecutionContext context;
-			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
+			if (!_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return 0;
 			}
@@ -442,12 +443,12 @@ namespace VixenPlus
 
 		public void ReleaseContext(int contextHandle)
 		{
-			if (m_registeredContexts.ContainsKey(contextHandle))
+			if (_registeredContexts.ContainsKey(contextHandle))
 			{
 				try
 				{
-					m_registeredContexts[contextHandle].Dispose();
-					m_registeredContexts.Remove(contextHandle);
+					_registeredContexts[contextHandle].Dispose();
+					_registeredContexts.Remove(contextHandle);
 				}
 				catch (Exception exception)
 				{
@@ -460,15 +461,17 @@ namespace VixenPlus
 		{
 			try
 			{
-				int num = ((int) DateTime.Now.ToBinary()) + m_registeredContexts.Count;
-				var context = new ExecutionContext();
-				context.SuppressAsynchronousContext = suppressAsynchronousContext;
-				context.SuppressSynchronousContext = suppressSynchronousContext;
-				int integer = m_preferences.GetInteger("SoundDevice");
-				context.SynchronousEngineInstance = context.SuppressSynchronousContext ? null : new Engine8(m_host, integer);
+				int num = ((int) DateTime.Now.ToBinary()) + _registeredContexts.Count;
+				var context = new ExecutionContext
+					{
+						SuppressAsynchronousContext = suppressAsynchronousContext,
+						SuppressSynchronousContext = suppressSynchronousContext
+					};
+				int integer = _preferences.GetInteger("SoundDevice");
+				context.SynchronousEngineInstance = context.SuppressSynchronousContext ? null : new Engine8(_host, integer);
 				context.AsynchronousEngineInstance = context.SuppressAsynchronousContext
 					                                     ? null
-					                                     : new Engine8(Engine8.EngineMode.Asynchronous, m_host, integer);
+					                                     : new Engine8(Engine8.EngineMode.Asynchronous, _host, integer);
 				context.LocalRequestor = RequestorIsLocal(new StackTrace().GetFrame(1));
 				context.Object = null;
 				context.KeyInterceptor = keyInterceptor;
@@ -476,8 +479,8 @@ namespace VixenPlus
 				{
 					byte[][] mask;
 					SetupData plugInData;
-					string str = m_preferences.GetString("AsynchronousData");
-					string str2 = ((str != "Default") && (str != "Sync")) ? str : m_preferences.GetString("DefaultProfile");
+					string str = _preferences.GetString("AsynchronousData");
+					string str2 = ((str != "Default") && (str != "Sync")) ? str : _preferences.GetString("DefaultProfile");
 					Profile profile = null;
 					if (str2.Length > 0)
 					{
@@ -510,11 +513,14 @@ namespace VixenPlus
 					if (context.Object != null)
 					{
 						context.Object.Mask = mask;
-						context.Object.PlugInData.ReplaceRoot(plugInData.RootNode);
+						if (plugInData != null)
+						{
+							context.Object.PlugInData.ReplaceRoot(plugInData.RootNode);
+						}
 						AsyncInit(context);
 					}
 				}
-				m_registeredContexts[num] = context;
+				_registeredContexts[num] = context;
 				return num;
 			}
 			catch (Exception exception)
@@ -530,7 +536,7 @@ namespace VixenPlus
 			int num = RequestContext(suppressAsynchronousContext, suppressSynchronousContext, keyInterceptor);
 			if (num != 0)
 			{
-				ExecutionContext context = m_registeredContexts[num];
+				ExecutionContext context = _registeredContexts[num];
 				context.SynchronousEngineComm =
 					syncEngineCommDoc = context.SynchronousEngineInstance.CommDoc = Xml.CreateXmlDocument("Engine");
 			}
@@ -540,7 +546,7 @@ namespace VixenPlus
 		public int SequenceLength(int contextHandle)
 		{
 			ExecutionContext context;
-			if (!m_registeredContexts.TryGetValue(contextHandle, out context))
+			if (!_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				return 0;
 			}
@@ -555,7 +561,7 @@ namespace VixenPlus
 		{
 			if (contextHandle != 0)
 			{
-				ExecutionContext context = m_registeredContexts[contextHandle];
+				ExecutionContext context = _registeredContexts[contextHandle];
 				if (!context.SuppressAsynchronousContext)
 				{
 					if (context.Object != null)
@@ -578,7 +584,7 @@ namespace VixenPlus
 		public void SetAsynchronousProgramChangeHandler(int contextHandle, ProgramChangeHandler programChangeHandler)
 		{
 			ExecutionContext context;
-			if (m_registeredContexts.TryGetValue(contextHandle, out context))
+			if (_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				context.AsynchronousProgramChangeHandler += programChangeHandler;
 			}
@@ -587,7 +593,7 @@ namespace VixenPlus
 		public void SetAudioSpeed(int contextHandle, float rate)
 		{
 			ExecutionContext context;
-			if (m_registeredContexts.TryGetValue(contextHandle, out context) && (context.SynchronousEngineInstance != null))
+			if (_registeredContexts.TryGetValue(contextHandle, out context) && (context.SynchronousEngineInstance != null))
 			{
 				context.SynchronousEngineInstance.AudioSpeed = rate;
 			}
@@ -596,7 +602,7 @@ namespace VixenPlus
 		public void SetChannelStates(int contextHandle, byte[] channelValues)
 		{
 			ExecutionContext context;
-			if (m_registeredContexts.TryGetValue(contextHandle, out context))
+			if (_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				if (context.SynchronousEngineInstance != null)
 				{
@@ -612,9 +618,9 @@ namespace VixenPlus
 		public void SetLoopState(int contextHandle, bool state)
 		{
 			ExecutionContext context;
-			if (m_registeredContexts.TryGetValue(contextHandle, out context) && (context.SynchronousEngineInstance != null))
+			if (_registeredContexts.TryGetValue(contextHandle, out context) && (context.SynchronousEngineInstance != null))
 			{
-				context.SynchronousEngineInstance.Loop = state;
+				context.SynchronousEngineInstance.IsLooping = state;
 			}
 		}
 
@@ -622,7 +628,7 @@ namespace VixenPlus
 		{
 			if (contextHandle != 0)
 			{
-				ExecutionContext context = m_registeredContexts[contextHandle];
+				ExecutionContext context = _registeredContexts[contextHandle];
 				if (!context.SuppressSynchronousContext)
 				{
 					try
@@ -632,10 +638,10 @@ namespace VixenPlus
 						if (!context.LocalRequestor && !executableObject.TreatAsLocal)
 						{
 							Profile profile;
-							string str = m_preferences.GetString("SynchronousData");
+							string str = _preferences.GetString("SynchronousData");
 							if (str == "Default")
 							{
-								string str2 = m_preferences.GetString("DefaultProfile");
+								string str2 = _preferences.GetString("DefaultProfile");
 								if (str2 == string.Empty)
 								{
 									LogError("SetSynchronousContext",
@@ -661,8 +667,11 @@ namespace VixenPlus
 						}
 						context.Object = executableObject;
 						context.Object.Mask = mask;
-						context.Object.PlugInData.ReplaceRoot(plugInData.RootNode);
-						if (!(context.SuppressAsynchronousContext || !(m_preferences.GetString("AsynchronousData") == "Sync")))
+						if (plugInData != null)
+						{
+							context.Object.PlugInData.ReplaceRoot(plugInData.RootNode);
+						}
+						if (!(context.SuppressAsynchronousContext || _preferences.GetString("AsynchronousData") != "Sync"))
 						{
 							AsyncInit(context);
 						}
@@ -686,7 +695,7 @@ namespace VixenPlus
 		public void SetSynchronousProgramChangeHandler(int contextHandle, ProgramChangeHandler programChangeHandler)
 		{
 			ExecutionContext context;
-			if (m_registeredContexts.TryGetValue(contextHandle, out context))
+			if (_registeredContexts.TryGetValue(contextHandle, out context))
 			{
 				context.SynchronousProgramChangeHandler += programChangeHandler;
 			}
@@ -695,11 +704,11 @@ namespace VixenPlus
 		public string QueryInstance(int index)
 		{
 			var builder = new StringBuilder();
-			if ((index >= 0) && (index < m_registeredContexts.Count))
+			if ((index >= 0) && (index < _registeredContexts.Count))
 			{
-				var array = new int[m_registeredContexts.Count];
-				m_registeredContexts.Keys.CopyTo(array, 0);
-				ExecutionContext context = m_registeredContexts[array[index]];
+				var array = new int[_registeredContexts.Count];
+				_registeredContexts.Keys.CopyTo(array, 0);
+				ExecutionContext context = _registeredContexts[array[index]];
 				builder.AppendLine("Handle: " + array[index]);
 				builder.AppendLine("Asynchronous suppressed: " + context.SuppressAsynchronousContext);
 				builder.AppendLine("Synchronous suppressed: " + context.SuppressSynchronousContext);
@@ -718,7 +727,7 @@ namespace VixenPlus
 
 		public int Count
 		{
-			get { return m_registeredContexts.Count; }
+			get { return _registeredContexts.Count; }
 		}
 
 		private bool AsynchronousAccessSanityCheck(int channelIndex, ExecutionContext context)
@@ -746,9 +755,9 @@ namespace VixenPlus
 
 		private int FindEngine(object uniqueReference)
 		{
-			foreach (int num in m_registeredContexts.Keys)
+			foreach (int num in _registeredContexts.Keys)
 			{
-				ExecutionContext context = m_registeredContexts[num];
+				ExecutionContext context = _registeredContexts[num];
 				if (context.AsynchronousEngineInstance == uniqueReference)
 				{
 					return num;
@@ -763,9 +772,9 @@ namespace VixenPlus
 
 		private int FindExecutableObject(object uniqueReference)
 		{
-			foreach (int num in m_registeredContexts.Keys)
+			foreach (int num in _registeredContexts.Keys)
 			{
-				if (m_registeredContexts[num].Object == uniqueReference)
+				if (_registeredContexts[num].Object == uniqueReference)
 				{
 					return num;
 				}
@@ -775,9 +784,9 @@ namespace VixenPlus
 
 		private int FindOutputPlugIn(object uniqueReference)
 		{
-			foreach (int num in m_registeredContexts.Keys)
+			foreach (int num in _registeredContexts.Keys)
 			{
-				ExecutionContext context = m_registeredContexts[num];
+				ExecutionContext context = _registeredContexts[num];
 				if ((context.AsynchronousEngineInstance != null) && context.AsynchronousEngineInstance.UsesObject(uniqueReference))
 				{
 					return num;
@@ -792,9 +801,9 @@ namespace VixenPlus
 
 		private int FindOutputPlugInUI(object uniqueReference)
 		{
-			foreach (int num in m_registeredContexts.Keys)
+			foreach (int num in _registeredContexts.Keys)
 			{
-				foreach (Form form in m_registeredContexts[num].OutputPlugInForms)
+				foreach (Form form in _registeredContexts[num].OutputPlugInForms)
 				{
 					if (form == uniqueReference)
 					{
@@ -807,7 +816,7 @@ namespace VixenPlus
 
 		private void LogError(string errorSource, Exception e)
 		{
-			using (var writer = new StreamWriter(m_errorLog, true))
+			using (var writer = new StreamWriter(_errorLog, true))
 			{
 				try
 				{
@@ -823,7 +832,7 @@ namespace VixenPlus
 
 		private void LogError(string errorSource, string message)
 		{
-			using (var writer = new StreamWriter(m_errorLog, true))
+			using (var writer = new StreamWriter(_errorLog, true))
 			{
 				try
 				{
@@ -857,13 +866,11 @@ namespace VixenPlus
 				}
 				foreach (Type type2 in type.GetInterfaces())
 				{
-					flag3 |= type2.Name == "VixenMDI";
+					flag3 |= type2.Name == "IVixenMDI";
 					flag2 |= type2.Name == "IAddIn";
 				}
 			}
 			return ((flag && flag3) && !flag2);
 		}
-
-		private delegate void SetContextDelegate(object sequenceOrProgram);
 	}
 }

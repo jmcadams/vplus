@@ -7,14 +7,14 @@ namespace VixenPlus
 {
 	internal static class Engines
 	{
-		private static EngineDescriptor[] m_loadedEngines = new EngineDescriptor[0];
-		private static int m_selectedIndex = -1;
+		private static EngineDescriptor[] _loadedEngines = new EngineDescriptor[0];
+		private static int _selectedIndex = -1;
 
 		public static IEngine2 GetInstance()
 		{
-			if (m_selectedIndex != -1)
+			if (_selectedIndex != -1)
 			{
-				return (IEngine2) Activator.CreateInstance(m_loadedEngines[m_selectedIndex].Type);
+				return (IEngine2) Activator.CreateInstance(_loadedEngines[_selectedIndex].Type);
 			}
 			return null;
 		}
@@ -43,14 +43,14 @@ namespace VixenPlus
 				{
 				}
 			}
-			m_loadedEngines = list.ToArray();
+			_loadedEngines = list.ToArray();
 		}
 
 		public static void Select(int index)
 		{
-			if (((index >= 0) && (index < m_loadedEngines.Length)) && (m_selectedIndex != index))
+			if (((index >= 0) && (index < _loadedEngines.Length)) && (_selectedIndex != index))
 			{
-				m_selectedIndex = index;
+				_selectedIndex = index;
 			}
 		}
 	}

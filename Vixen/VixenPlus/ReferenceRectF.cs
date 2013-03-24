@@ -4,65 +4,65 @@ namespace VixenPlus
 {
 	internal class ReferenceRectF
 	{
-		private RectangleF m_rectF;
+		private RectangleF _rectangleF;
 
 		public ReferenceRectF()
 		{
-			m_rectF = new RectangleF();
+			_rectangleF = new RectangleF();
 		}
 
 		public ReferenceRectF(float x, float y, float width, float height)
 		{
-			m_rectF = new RectangleF(x, y, width, height);
+			_rectangleF = new RectangleF(x, y, width, height);
 		}
 
 		public float Bottom
 		{
-			get { return m_rectF.Bottom; }
+			get { return _rectangleF.Bottom; }
 		}
 
 		public float Height
 		{
-			get { return m_rectF.Height; }
-			set { m_rectF.Height = value; }
+			get { return _rectangleF.Height; }
+			set { _rectangleF.Height = value; }
 		}
 
 		public float Left
 		{
-			get { return m_rectF.Left; }
+			get { return _rectangleF.Left; }
 		}
 
 		public float Right
 		{
-			get { return m_rectF.Right; }
+			get { return _rectangleF.Right; }
 		}
 
 		public float Top
 		{
-			get { return m_rectF.Top; }
+			get { return _rectangleF.Top; }
 		}
 
 		public float Width
 		{
-			get { return m_rectF.Width; }
-			set { m_rectF.Width = value; }
+			get { return _rectangleF.Width; }
+			set { _rectangleF.Width = value; }
 		}
 
 		public float X
 		{
-			get { return m_rectF.X; }
-			set { m_rectF.X = value; }
+			get { return _rectangleF.X; }
+			set { _rectangleF.X = value; }
 		}
 
 		public float Y
 		{
-			get { return m_rectF.Y; }
-			set { m_rectF.Y = value; }
+			get { return _rectangleF.Y; }
+			set { _rectangleF.Y = value; }
 		}
 
 		public bool Contains(Point p)
 		{
-			return m_rectF.Contains(p);
+			return _rectangleF.Contains(p);
 		}
 
 		public static bool Intersects(ReferenceRectF a, ReferenceRectF b)
@@ -72,7 +72,7 @@ namespace VixenPlus
 
 		public RectangleF ToRectangleF()
 		{
-			return m_rectF;
+			return _rectangleF;
 		}
 	}
 }

@@ -23,7 +23,7 @@ namespace VixenPlus
 			}
 		}
 
-		public SortOrder(string name, List<int> indexes)
+		public SortOrder(string name, IEnumerable<int> indexes)
 		{
 			Name = name;
 			ChannelIndexes = new List<int>();

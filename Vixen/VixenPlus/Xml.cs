@@ -10,7 +10,7 @@ namespace VixenPlus
 		public static XmlNode CloneNode(XmlDocument targetDoc, XmlNode finalNode, bool deep)
 		{
 			var stack = new Stack<XmlNode>();
-			while ((finalNode != null) && (finalNode is XmlElement))
+			while (finalNode != null && (finalNode is XmlElement))
 			{
 				stack.Push(finalNode);
 				finalNode = finalNode.ParentNode;
@@ -20,9 +20,8 @@ namespace VixenPlus
 			                targetDoc.AppendChild(targetDoc.ImportNode(node, false));
 			while (stack.Count > 0)
 			{
-				XmlNode node3;
 				node = stack.Pop();
-				node3 = node.Attributes["name"] != null ? node2.SelectSingleNode(node.Name + string.Format("[@name = \"{0}\"]", node.Attributes["name"].Value)) : node2.SelectSingleNode(node.Name);
+				XmlNode node3 = node.Attributes != null && node.Attributes["name"] != null ? node2.SelectSingleNode(node.Name + string.Format("[@name = \"{0}\"]", node.Attributes["name"].Value)) : node2.SelectSingleNode(node.Name);
 				node2 = node3 ?? node2.AppendChild(stack.Count == 0 ? targetDoc.ImportNode(node, deep) : targetDoc.ImportNode(node, false));
 			}
 			return node2;
@@ -47,7 +46,7 @@ namespace VixenPlus
 
 		public static string GetAttribute(XmlNode node, string attributeName)
 		{
-			if (node.Attributes[attributeName] == null)
+			if (node.Attributes != null && node.Attributes[attributeName] == null)
 			{
 				SetAttribute(node, attributeName, "");
 				return "";
@@ -57,7 +56,7 @@ namespace VixenPlus
 
 		public static string GetAttribute(XmlNode node, string attributeName, string attributeDefaultValue)
 		{
-			if (node.Attributes[attributeName] == null)
+			if (node.Attributes != null && node.Attributes[attributeName] == null)
 			{
 				SetAttribute(node, attributeName, attributeDefaultValue);
 				return attributeDefaultValue;
@@ -129,13 +128,16 @@ namespace VixenPlus
 
 		public static XmlNode SetAttribute(XmlNode node, string attributeName, string attributeValue)
 		{
-			XmlAttribute attribute = node.Attributes[attributeName];
-			if (attribute == null)
+			if (node.Attributes != null)
 			{
-				attribute = (node.OwnerDocument ?? ((XmlDocument) node)).CreateAttribute(attributeName);
-				node.Attributes.Append(attribute);
+				XmlAttribute attribute = node.Attributes[attributeName];
+				if (attribute == null)
+				{
+					attribute = (node.OwnerDocument ?? ((XmlDocument) node)).CreateAttribute(attributeName);
+					node.Attributes.Append(attribute);
+				}
+				attribute.Value = attributeValue;
 			}
-			attribute.Value = attributeValue;
 			return node;
 		}
 
@@ -148,13 +150,16 @@ namespace VixenPlus
 				newChild = document.CreateElement(nodeName);
 				contextNode.AppendChild(newChild);
 			}
-			XmlAttribute node = newChild.Attributes[attributeName];
-			if (node == null)
+			if (newChild.Attributes != null)
 			{
-				node = document.CreateAttribute(attributeName);
-				newChild.Attributes.Append(node);
+				XmlAttribute node = newChild.Attributes[attributeName];
+				if (node == null)
+				{
+					node = document.CreateAttribute(attributeName);
+					newChild.Attributes.Append(node);
+				}
+				node.Value = attributeValue;
 			}
-			node.Value = attributeValue;
 			return newChild;
 		}
 

@@ -22,7 +22,7 @@ namespace VixenPlus
 		private void buttonAbort_Click(object sender, EventArgs e)
 		{
 			Process.Start("shutdown", "/a");
-			base.Close();
+			Close();
 		}
 	}
 }

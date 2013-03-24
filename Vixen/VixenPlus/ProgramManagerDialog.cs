@@ -1,34 +1,35 @@
 using System;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 using VixenPlus.Dialogs;
 
 namespace VixenPlus
 {
-	internal partial class ProgramManagerDialog : Form
+	internal sealed partial class ProgramManagerDialog : Form
 	{
-		private readonly StringFormat m_clipFormat = new StringFormat(StringFormatFlags.NoWrap);
-		private readonly int m_executionContextHandle;
-		private readonly IExecution m_executionInterface;
-		private readonly Font m_programBoldFont;
-		private readonly SolidBrush m_programBrush;
-		private readonly Font m_programSmallFont;
-		private bool m_dirty;
-		private object m_dragSource;
-		private bool m_internal;
+		private readonly StringFormat _clipFormat = new StringFormat(StringFormatFlags.NoWrap);
+		private readonly int _executionContextHandle;
+		private readonly IExecution _executionInterface;
+		private readonly Font _programBoldFont;
+		private readonly SolidBrush _programBrush;
+		private readonly Font _programSmallFont;
+		private bool _isDirty;
+		private object _dragSource;
+		private bool _isInternal;
 
-		public ProgramManagerDialog(Host host)
+		public ProgramManagerDialog()
 		{
 			var dialog = new ProgressDialog();
 			InitializeComponent();
 			pictureBoxRunProgram.Image = pictureBoxRun.Image;
-			m_executionInterface = (IExecution) Interfaces.Available["IExecution"];
-			m_executionContextHandle = m_executionInterface.RequestContext(true, false, null);
-			m_executionInterface.SetSynchronousProgramChangeHandler(m_executionContextHandle, ProgramChanged);
-			m_programBrush = new SolidBrush(Color.FromArgb(0xc2, 0xd3, 0xfc));
-			m_programBoldFont = new Font(listBoxPrograms.Font.FontFamily, 12f, FontStyle.Bold);
-			m_programSmallFont = new Font(listBoxPrograms.Font.FontFamily, 8f);
+			_executionInterface = (IExecution) Interfaces.Available["IExecution"];
+			_executionContextHandle = _executionInterface.RequestContext(true, false, null);
+			_executionInterface.SetSynchronousProgramChangeHandler(_executionContextHandle, ProgramChanged);
+			_programBrush = new SolidBrush(Color.FromArgb(0xc2, 0xd3, 0xfc));
+			_programBoldFont = new Font(listBoxPrograms.Font.FontFamily, 12f, FontStyle.Bold);
+			_programSmallFont = new Font(listBoxPrograms.Font.FontFamily, 8f);
 			dialog.Show();
 			Cursor = Cursors.WaitCursor;
 			try
@@ -63,10 +64,9 @@ namespace VixenPlus
 			var dialog = new TextQueryDialog("New Program", "Name for the new program", string.Empty);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
-				var item = new SequenceProgram();
-				item.Name = dialog.Response;
+				var item = new SequenceProgram {Name = dialog.Response};
 				listBoxPrograms.Items.Add(item);
-				m_dirty = true;
+				_isDirty = true;
 			}
 			dialog.Dispose();
 		}
@@ -80,7 +80,7 @@ namespace VixenPlus
 				{
 					listBoxPrograms.Items.RemoveAt(listBoxPrograms.SelectedIndex);
 				}
-				m_dirty = true;
+				_isDirty = true;
 			}
 		}
 
@@ -101,7 +101,7 @@ namespace VixenPlus
 				}
 				else
 				{
-					m_dirty = true;
+					_isDirty = true;
 					var dialog = new PluginListDialog(selectedItem);
 					dialog.ShowDialog();
 					dialog.Dispose();
@@ -123,11 +123,11 @@ namespace VixenPlus
 
 		private void GetCrossFadeValue()
 		{
-			if (!m_internal &&
-			    (((int) numericUpDownCrossFade.Value) != (listBoxPrograms.SelectedItem as SequenceProgram).CrossFadeLength))
+			var sequenceProgram = listBoxPrograms.SelectedItem as SequenceProgram;
+			if (sequenceProgram != null && (!_isInternal && (int) numericUpDownCrossFade.Value != sequenceProgram.CrossFadeLength))
 			{
 				(listBoxPrograms.SelectedItem as SequenceProgram).CrossFadeLength = (int) numericUpDownCrossFade.Value;
-				m_dirty = true;
+				_isDirty = true;
 			}
 		}
 
@@ -157,13 +157,13 @@ namespace VixenPlus
 			{
 				listBoxPrograms.SelectedIndex = num;
 			}
-			m_dirty = true;
+			_isDirty = true;
 		}
 
 		private void listBoxPrograms_DragOver(object sender, DragEventArgs e)
 		{
 			int num = listBoxPrograms.IndexFromPoint(listBoxPrograms.PointToClient(new Point(e.X, e.Y)));
-			e.Effect = ((e.Data.GetDataPresent("Vixen.EventSequenceStub") && (sender != m_dragSource)) && (num != -1))
+			e.Effect = ((e.Data.GetDataPresent("Vixen.EventSequenceStub") && (sender != _dragSource)) && (num != -1))
 				           ? DragDropEffects.Move
 				           : DragDropEffects.None;
 		}
@@ -172,33 +172,37 @@ namespace VixenPlus
 		{
 			if (e.Index != -1)
 			{
-				Brush brush = ((e.State & DrawItemState.Selected) > DrawItemState.None) ? m_programBrush : Brushes.White;
+				Brush brush = ((e.State & DrawItemState.Selected) > DrawItemState.None) ? _programBrush : Brushes.White;
 				e.Graphics.FillRectangle(brush, (e.Bounds.Left + 2), (e.Bounds.Top + 2), (e.Bounds.Width - 4), (e.Bounds.Height - 4));
 				var program = (SequenceProgram) listBoxPrograms.Items[e.Index];
 				if ((e.State & DrawItemState.Selected) > DrawItemState.None)
 				{
-					e.Graphics.DrawString(program.Name, m_programBoldFont, Brushes.Blue, (e.Bounds.Left + 5), (e.Bounds.Top + 7));
+					e.Graphics.DrawString(program.Name, _programBoldFont, Brushes.Blue, (e.Bounds.Left + 5), (e.Bounds.Top + 7));
 					e.Graphics.DrawString(string.Format("Length: {0}:{1:d2}", program.Length/0xea60, (program.Length%0xea60)/0x3e8),
-					                      m_programSmallFont, Brushes.Black, (e.Bounds.Left + 10), (e.Bounds.Top + 0x21));
+					                      _programSmallFont, Brushes.Black, (e.Bounds.Left + 10), (e.Bounds.Top + 0x21));
 					int count = program.EventSequences.Count;
 					if (count == 0)
 					{
-						e.Graphics.DrawString("Empty", m_programSmallFont, Brushes.Black, (e.Bounds.Left + 10), (e.Bounds.Top + 50));
+						e.Graphics.DrawString("Empty", _programSmallFont, Brushes.Black, (e.Bounds.Left + 10), (e.Bounds.Top + 50));
 					}
 					else if (count == 1)
 					{
-						e.Graphics.DrawString("1 sequence", m_programSmallFont, Brushes.Black, (e.Bounds.Left + 10), (e.Bounds.Top + 50));
+						e.Graphics.DrawString("1 sequence", _programSmallFont, Brushes.Black, (e.Bounds.Left + 10), (e.Bounds.Top + 50));
 					}
 					else
 					{
-						e.Graphics.DrawString(count.ToString() + " sequences", m_programSmallFont, Brushes.Black, (e.Bounds.Left + 10),
+						e.Graphics.DrawString(count.ToString(CultureInfo.InvariantCulture) + " sequences", _programSmallFont, Brushes.Black, (e.Bounds.Left + 10),
 						                      (e.Bounds.Top + 50));
 					}
 				}
 				else
 				{
-					e.Graphics.DrawString((sender as ListBox).Items[e.Index].ToString(), m_programBoldFont, Brushes.Black,
-					                      (e.Bounds.Left + 5), (e.Bounds.Top + 7));
+					var listBox = sender as ListBox;
+					if (listBox != null)
+					{
+						e.Graphics.DrawString(listBox.Items[e.Index].ToString(), _programBoldFont, Brushes.Black,
+						                      (e.Bounds.Left + 5), (e.Bounds.Top + 7));
+					}
 				}
 			}
 		}
@@ -211,7 +215,7 @@ namespace VixenPlus
 				{
 					listBoxPrograms.Items.RemoveAt(listBoxPrograms.SelectedIndex);
 				}
-				m_dirty = true;
+				_isDirty = true;
 			}
 		}
 
@@ -220,32 +224,35 @@ namespace VixenPlus
 			int num = listBoxPrograms.IndexFromPoint(e.X, e.Y);
 			listBoxProgramSequences.BeginUpdate();
 			listBoxProgramSequences.Items.Clear();
-			m_internal = true;
+			_isInternal = true;
 			if (num != -1)
 			{
 				var program = (SequenceProgram) listBoxPrograms.Items[num];
-				listBoxProgramSequences.Items.AddRange(program.EventSequences.ToArray());
-				if (program.UseSequencePluginData)
+				if (program != null)
 				{
-					radioButtonSequencePlugin.Checked = true;
+					listBoxProgramSequences.Items.AddRange(new object[] { program.EventSequences.ToArray() });
+					if (program.UseSequencePluginData)
+					{
+						radioButtonSequencePlugin.Checked = true;
+					}
+					else if (program.Profile == null)
+					{
+						radioButtonProgramPlugin.Checked = true;
+					}
+					else
+					{
+						radioButtonProfile.Checked = true;
+					}
+					labelProgramName.Text = program.Name;
+					numericUpDownCrossFade.Value = program.CrossFadeLength;
 				}
-				else if (program.Profile == null)
-				{
-					radioButtonProgramPlugin.Checked = true;
-				}
-				else
-				{
-					radioButtonProfile.Checked = true;
-				}
-				labelProgramName.Text = program.Name;
-				numericUpDownCrossFade.Value = program.CrossFadeLength;
 			}
 			else
 			{
 				labelProgramName.Text = "No program selected";
 				numericUpDownCrossFade.Value = 0M;
 			}
-			m_internal = false;
+			_isInternal = false;
 			listBoxProgramSequences.EndUpdate();
 			groupBoxProgramPlugin.Enabled = addEditRemove.RemoveEnabled = listBoxPrograms.SelectedIndex != -1;
 		}
@@ -254,15 +261,15 @@ namespace VixenPlus
 		{
 			if ((e.Button == MouseButtons.Left) && (listBoxPrograms.SelectedItem != null))
 			{
-				m_dragSource = sender;
-				base.DoDragDrop(listBoxPrograms.SelectedItem, DragDropEffects.Move);
+				_dragSource = sender;
+				DoDragDrop(listBoxPrograms.SelectedItem, DragDropEffects.Move);
 			}
 		}
 
 		private void listBoxProgramSongs_DragDrop(object sender, DragEventArgs e)
 		{
 			EventSequenceStub data;
-			if (m_dragSource == listBoxProgramSequences)
+			if (_dragSource == listBoxProgramSequences)
 			{
 				data = (EventSequenceStub) e.Data.GetData("Vixen.EventSequenceStub");
 				int index = listBoxProgramSequences.Items.IndexOf(data);
@@ -281,7 +288,7 @@ namespace VixenPlus
 				listBoxProgramSequences.Items.Insert(num2, data);
 				selectedItem.EventSequences.Insert(num2, data);
 			}
-			else if (m_dragSource == listBoxSequences)
+			else if (_dragSource == listBoxSequences)
 			{
 				data = (EventSequenceStub) e.Data.GetData("Vixen.EventSequenceStub");
 				((SequenceProgram) listBoxPrograms.SelectedItem).EventSequences.Add(data);
@@ -294,7 +301,7 @@ namespace VixenPlus
 		private void listBoxProgramSongs_DragEnter(object sender, DragEventArgs e)
 		{
 			e.Effect = ((e.Data.GetDataPresent("Vixen.EventSequenceStub") &&
-			             ((m_dragSource == listBoxSequences) || (m_dragSource == listBoxProgramSequences))) &&
+			             ((_dragSource == listBoxSequences) || (_dragSource == listBoxProgramSequences))) &&
 			            (listBoxPrograms.SelectedItem != null))
 				           ? DragDropEffects.Move
 				           : DragDropEffects.None;
@@ -304,7 +311,7 @@ namespace VixenPlus
 		{
 			if (e.Index != -1)
 			{
-				Brush brush = ((e.State & DrawItemState.Selected) > DrawItemState.None) ? m_programBrush : Brushes.White;
+				Brush brush = ((e.State & DrawItemState.Selected) > DrawItemState.None) ? _programBrush : Brushes.White;
 				var rect = new RectangleF((e.Bounds.Left + 2), (e.Bounds.Top + 2), (e.Bounds.Width - 4), (e.Bounds.Height - 4));
 				e.Graphics.FillRectangle(brush, rect);
 				var stub = (EventSequenceStub) listBoxProgramSequences.Items[e.Index];
@@ -314,8 +321,8 @@ namespace VixenPlus
 					rect.Width -= 3f;
 					rect.Y += 5f;
 					rect.Height -= 5f;
-					e.Graphics.DrawString(stub.Name, m_programBoldFont, Brushes.Blue, rect, m_clipFormat);
-					e.Graphics.DrawString("Length: " + stub.LengthString, m_programSmallFont, Brushes.Black, (e.Bounds.Left + 10),
+					e.Graphics.DrawString(stub.Name, _programBoldFont, Brushes.Blue, rect, _clipFormat);
+					e.Graphics.DrawString("Length: " + stub.LengthString, _programSmallFont, Brushes.Black, (e.Bounds.Left + 10),
 					                      (e.Bounds.Top + 0x21));
 					if (stub.AudioName != string.Empty)
 					{
@@ -323,7 +330,7 @@ namespace VixenPlus
 						rect.Width -= 5f;
 						rect.Y += 43f;
 						rect.Height -= 45f;
-						e.Graphics.DrawString("Audio: " + stub.AudioName, m_programSmallFont, Brushes.Black, rect, m_clipFormat);
+						e.Graphics.DrawString("Audio: " + stub.AudioName, _programSmallFont, Brushes.Black, rect, _clipFormat);
 					}
 				}
 				else
@@ -332,7 +339,7 @@ namespace VixenPlus
 					rect.Width -= 3f;
 					rect.Y += 5f;
 					rect.Height -= 5f;
-					e.Graphics.DrawString(stub.Name, m_programBoldFont, Brushes.Black, rect, m_clipFormat);
+					e.Graphics.DrawString(stub.Name, _programBoldFont, Brushes.Black, rect, _clipFormat);
 				}
 			}
 		}
@@ -353,8 +360,8 @@ namespace VixenPlus
 		{
 			if ((e.Button == MouseButtons.Left) && (listBoxProgramSequences.SelectedItem != null))
 			{
-				m_dragSource = sender;
-				base.DoDragDrop(listBoxProgramSequences.SelectedItem, DragDropEffects.Move);
+				_dragSource = sender;
+				DoDragDrop(listBoxProgramSequences.SelectedItem, DragDropEffects.Move);
 			}
 		}
 
@@ -365,7 +372,7 @@ namespace VixenPlus
 
 		private void listBoxSongs_DragEnter(object sender, DragEventArgs e)
 		{
-			e.Effect = (e.Data.GetDataPresent("Vixen.EventSequenceStub") && (m_dragSource == listBoxProgramSequences))
+			e.Effect = (e.Data.GetDataPresent("Vixen.EventSequenceStub") && (_dragSource == listBoxProgramSequences))
 				           ? DragDropEffects.Move
 				           : DragDropEffects.None;
 		}
@@ -374,8 +381,8 @@ namespace VixenPlus
 		{
 			if ((e.Button == MouseButtons.Left) && (listBoxSequences.SelectedItem != null))
 			{
-				m_dragSource = sender;
-				base.DoDragDrop(listBoxSequences.SelectedItem, DragDropEffects.Move);
+				_dragSource = sender;
+				DoDragDrop(listBoxSequences.SelectedItem, DragDropEffects.Move);
 			}
 		}
 
@@ -392,7 +399,7 @@ namespace VixenPlus
 		private void pictureBoxRunProgram_Click(object sender, EventArgs e)
 		{
 			var selectedItem = listBoxPrograms.SelectedItem as SequenceProgram;
-			if (selectedItem.UseSequencePluginData)
+			if (selectedItem != null && selectedItem.UseSequencePluginData)
 			{
 				foreach (EventSequenceStub stub in selectedItem.EventSequences)
 				{
@@ -405,22 +412,22 @@ namespace VixenPlus
 					}
 				}
 			}
-			else if (!VerifyOutputPlugins(selectedItem.PlugInData))
+			else if (selectedItem != null && !VerifyOutputPlugins(selectedItem.PlugInData))
 			{
 				MessageBox.Show("Program does not have any output plugins setup and/or enabled.", Vendor.ProductName,
 				                MessageBoxButtons.OK, MessageBoxIcon.Hand);
 				return;
 			}
 			GetCrossFadeValue();
-			if (m_executionInterface.EngineStatus(m_executionContextHandle) != 0)
+			if (_executionInterface.EngineStatus(_executionContextHandle) != 0)
 			{
-				m_executionInterface.ExecuteStop(m_executionContextHandle);
+				_executionInterface.ExecuteStop(_executionContextHandle);
 				pictureBoxRunProgram.Image = pictureBoxRun.Image;
 			}
 			else
 			{
-				m_executionInterface.SetSynchronousContext(m_executionContextHandle, listBoxPrograms.SelectedItem as SequenceProgram);
-				if (m_executionInterface.ExecutePlay(m_executionContextHandle))
+				_executionInterface.SetSynchronousContext(_executionContextHandle, listBoxPrograms.SelectedItem as SequenceProgram);
+				if (_executionInterface.ExecutePlay(_executionContextHandle))
 				{
 					pictureBoxRunProgram.Image = pictureBoxStop.Image;
 				}
@@ -439,25 +446,25 @@ namespace VixenPlus
 
 		private void ProgramManagerDialog_DragDrop(object sender, DragEventArgs e)
 		{
-			if (m_dragSource == listBoxPrograms)
+			if (_dragSource == listBoxPrograms)
 			{
 				listBoxPrograms.Items.RemoveAt(listBoxPrograms.SelectedIndex);
 			}
-			else if (m_dragSource == listBoxProgramSequences)
+			else if (_dragSource == listBoxProgramSequences)
 			{
 				RemoveSongFromProgram((EventSequenceStub) listBoxProgramSequences.SelectedItem);
 			}
-			m_dirty = true;
+			_isDirty = true;
 		}
 
 		private void ProgramManagerDialog_DragEnter(object sender, DragEventArgs e)
 		{
-			e.Effect = (m_dragSource != listBoxSequences) ? DragDropEffects.Move : DragDropEffects.None;
+			e.Effect = (_dragSource != listBoxSequences) ? DragDropEffects.Move : DragDropEffects.None;
 		}
 
 		private void ProgramManagerDialog_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			if (m_dirty)
+			if (_isDirty)
 			{
 				switch (MessageBox.Show("Save changes?", Vendor.ProductName, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
 					)
@@ -473,7 +480,7 @@ namespace VixenPlus
 			}
 			if (!e.Cancel)
 			{
-				m_executionInterface.ReleaseContext(m_executionContextHandle);
+				_executionInterface.ReleaseContext(_executionContextHandle);
 				foreach (SequenceProgram program in listBoxPrograms.Items)
 				{
 					program.Dispose();
@@ -483,7 +490,7 @@ namespace VixenPlus
 
 		private void radioButtonProgramPlugin_CheckedChanged(object sender, EventArgs e)
 		{
-			m_dirty = true;
+			_isDirty = true;
 			if (radioButtonProgramPlugin.Checked)
 			{
 				buttonRadioAction.Text = "Plugin Setup";
@@ -508,7 +515,7 @@ namespace VixenPlus
 			listBoxPrograms.BeginUpdate();
 			listBoxPrograms.Refresh();
 			listBoxPrograms.EndUpdate();
-			m_dirty = true;
+			_isDirty = true;
 		}
 
 		private void RemoveSongFromProgram(EventSequenceStub eventSequenceStub)

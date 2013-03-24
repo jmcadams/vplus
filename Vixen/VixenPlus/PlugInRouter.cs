@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
+using System.Globalization;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -9,33 +9,33 @@ namespace VixenPlus
 {
 	internal class PlugInRouter
 	{
-		private static PlugInRouter m_instance;
-		private readonly List<RouterContext> m_instances = new List<RouterContext>();
-		private readonly List<MappedOutputPlugIn> m_outputPlugins = new List<MappedOutputPlugIn>();
+		private static PlugInRouter _instance;
+		private readonly List<RouterContext> _instances = new List<RouterContext>();
+		private readonly List<MappedOutputPlugIn> _outputPlugins = new List<MappedOutputPlugIn>();
 
-		private readonly Dictionary<IExecutable, List<InputPlugin>> m_sequenceInputPlugins =
+		private readonly Dictionary<IExecutable, List<InputPlugin>> _sequenceInputPlugins =
 			new Dictionary<IExecutable, List<InputPlugin>>();
 
-		private readonly MethodInvoker m_updateInvoker;
-		private byte[] m_data;
-		private int m_refCount;
-		private bool m_updateLock;
+		private readonly MethodInvoker _methodInvoker;
+		private byte[] _data;
+		private int _refCount;
+		private bool _updateLock;
 
 		private PlugInRouter()
 		{
-			m_updateInvoker = EndUpdate;
+			_methodInvoker = EndUpdate;
 		}
 
 		public void BeginUpdate()
 		{
-			m_refCount++;
+			_refCount++;
 		}
 
 		public void CancelUpdate()
 		{
-			if (m_refCount != 0)
+			if (_refCount != 0)
 			{
-				m_refCount--;
+				_refCount--;
 			}
 		}
 
@@ -43,63 +43,62 @@ namespace VixenPlus
 		                                   ITickSource tickSource)
 		{
 			var item = new RouterContext(engineBuffer, pluginData, executableObject, tickSource);
-			int newSize;
-			newSize = Math.Max((m_data == null) ? 0 : m_data.Length, item.EngineBuffer.Length);
-			if (m_data == null)
+			int newSize = Math.Max((_data == null) ? 0 : _data.Length, item.EngineBuffer.Length);
+			if (_data == null)
 			{
-				m_data = new byte[newSize];
+				_data = new byte[newSize];
 			}
-			else if (m_data.Length < newSize)
+			else if (_data.Length < newSize)
 			{
-				Array.Resize(ref m_data, newSize);
+				Array.Resize(ref _data, newSize);
 			}
 			foreach (MappedOutputPlugIn @in in item.OutputPluginList)
 			{
-				m_outputPlugins.Add(@in);
+				_outputPlugins.Add(@in);
 			}
-			m_instances.Add(item);
+			_instances.Add(item);
 			return item;
 		}
 
 		public void EndUpdate()
 		{
-			if (m_data != null)
+			if (_data != null)
 			{
-				m_updateLock = true;
+				_updateLock = true;
 				if (Host.InvokeRequired)
 				{
-					Host.Invoke(m_updateInvoker, new object[0]);
+					Host.Invoke(_methodInvoker, new object[0]);
 				}
 				else
 				{
 					try
 					{
-						if (m_refCount == 0)
+						if (_refCount == 0)
 						{
-							m_updateLock = false;
+							_updateLock = false;
 						}
-						else if (--m_refCount == 0)
+						else if (--_refCount == 0)
 						{
 							int index = 0;
-							while (index < m_data.Length)
+							while (index < _data.Length)
 							{
-								m_data[index] = 0;
+								_data[index] = 0;
 								index++;
 							}
 							try
 							{
-								foreach (RouterContext context in m_instances)
+								foreach (RouterContext context in _instances)
 								{
 									byte[] engineBuffer = context.EngineBuffer;
 									for (index = 0; index < engineBuffer.Length; index++)
 									{
-										m_data[index] = Math.Max(m_data[index], engineBuffer[index]);
+										_data[index] = Math.Max(_data[index], engineBuffer[index]);
 									}
 								}
 							}
 							catch (Exception exception)
 							{
-								m_updateLock = false;
+								_updateLock = false;
 								throw new Exception(string.Format("(Router - Update)\n{0}", exception.Message), exception);
 							}
 							bool flag = Host.GetDebugValue("EventAverages") != null;
@@ -107,27 +106,28 @@ namespace VixenPlus
 							if (flag)
 							{
 								stopwatch = new Stopwatch();
-								Host.SetDebugValue("TotalEvents", (int.Parse(Host.GetDebugValue("TotalEvents")) + 1).ToString());
+								Host.SetDebugValue("TotalEvents", (int.Parse(Host.GetDebugValue("TotalEvents")) + 1).ToString(CultureInfo.InvariantCulture));
 							}
 							try
 							{
-								lock (m_outputPlugins)
+								lock (_outputPlugins)
 								{
-									foreach (MappedOutputPlugIn @in in m_outputPlugins)
+									foreach (MappedOutputPlugIn @in in _outputPlugins)
 									{
 										if (!((@in.From != 0) && @in.ContextInitialized))
 										{
 											continue;
 										}
-										Array.Copy(m_data, @in.From - 1, @in.Buffer, 0, (@in.To - @in.From) + 1);
-										if (@in.PlugIn is IEventDrivenOutputPlugIn)
+										Array.Copy(_data, @in.From - 1, @in.Buffer, 0, (@in.To - @in.From) + 1);
+										var eventDrivenOutputPlugIn = @in.PlugIn as IEventDrivenOutputPlugIn;
+										if (eventDrivenOutputPlugIn != null)
 										{
 											if (flag)
 											{
 												stopwatch.Reset();
 												stopwatch.Start();
 											}
-											((IEventDrivenOutputPlugIn) @in.PlugIn).Event(@in.Buffer);
+											eventDrivenOutputPlugIn.Event(@in.Buffer);
 											if (flag)
 											{
 												stopwatch.Stop();
@@ -141,17 +141,17 @@ namespace VixenPlus
 							}
 							catch (Exception exception2)
 							{
-								m_updateLock = false;
+								_updateLock = false;
 								throw new Exception(
 									string.Format("(Router - plugins)\nAn output plugin caused the following exception: \n{0}", exception2.Message),
 									exception2);
 							}
-							m_updateLock = false;
+							_updateLock = false;
 						}
 					}
 					finally
 					{
-						m_updateLock = false;
+						_updateLock = false;
 					}
 				}
 			}
@@ -159,18 +159,17 @@ namespace VixenPlus
 
 		public static PlugInRouter GetInstance()
 		{
-			return m_instance ?? (m_instance = new PlugInRouter());
+			return _instance ?? (_instance = new PlugInRouter());
 		}
 
 		public bool GetSequenceInputs(IExecutable executableObject, byte[] eventBuffer, bool forLiveUpdate, bool forRecord)
 		{
 			bool flag = false;
-			foreach (InputPlugin plugin in m_sequenceInputPlugins[executableObject])
+			foreach (InputPlugin plugin in _sequenceInputPlugins[executableObject])
 			{
 				if (((forLiveUpdate == plugin.LiveUpdate) && forLiveUpdate) || ((forRecord == plugin.Record) && forRecord))
 				{
 					Predicate<Channel> match = null;
-					ulong ulChannelId;
 					foreach (Input input in plugin.Inputs)
 					{
 						if (input.Enabled && input.GetChangedInternal())
@@ -179,7 +178,7 @@ namespace VixenPlus
 							byte valueInternal = input.GetValueInternal();
 							foreach (string str in plugin.MappingSets.CurrentMappingSet.GetOutputChannelIdList(input))
 							{
-								ulChannelId = ulong.Parse(str);
+								ulong ulChannelId = ulong.Parse(str);
 								if (match == null)
 								{
 									var id = ulChannelId;
@@ -204,9 +203,9 @@ namespace VixenPlus
 					try
 					{
 						routerContext.Initialized = false;
-						if (!m_instances.Contains(routerContext))
+						if (!_instances.Contains(routerContext))
 						{
-							m_updateLock = false;
+							_updateLock = false;
 						}
 						else
 						{
@@ -223,7 +222,7 @@ namespace VixenPlus
 							{
 								num = int.Parse(Host.GetDebugValue("TotalEvents"));
 							}
-							lock (m_outputPlugins)
+							lock (_outputPlugins)
 							{
 								foreach (MappedOutputPlugIn @in in routerContext.OutputPluginList)
 								{
@@ -235,39 +234,39 @@ namespace VixenPlus
 										                                 new object[]
 											                                 {@in.PlugIn.Name, @in.From, @in.To, (((long) @in.UserData))/((float) num)}));
 									}
-									m_outputPlugins.Remove(@in);
+									_outputPlugins.Remove(@in);
 								}
 							}
-							if (m_sequenceInputPlugins.ContainsKey(routerContext.ExecutableObject))
+							if (_sequenceInputPlugins.ContainsKey(routerContext.ExecutableObject))
 							{
-								lock (m_sequenceInputPlugins)
+								lock (_sequenceInputPlugins)
 								{
-									foreach (InputPlugin plugin in m_sequenceInputPlugins[routerContext.ExecutableObject])
+									foreach (InputPlugin plugin in _sequenceInputPlugins[routerContext.ExecutableObject])
 									{
 										plugin.ShutdownInternal();
 									}
-									m_sequenceInputPlugins.Remove(routerContext.ExecutableObject);
+									_sequenceInputPlugins.Remove(routerContext.ExecutableObject);
 								}
 							}
-							lock (m_instances)
+							lock (_instances)
 							{
-								m_instances.Remove(routerContext);
+								_instances.Remove(routerContext);
 							}
-							if (m_instances.Count == 0)
+							if (_instances.Count == 0)
 							{
-								m_data = null;
+								_data = null;
 							}
 						}
 					}
 					finally
 					{
-						m_updateLock = false;
+						_updateLock = false;
 					}
 				}
 			}
 			catch (Exception exception)
 			{
-				m_updateLock = false;
+				_updateLock = false;
 				MessageBox.Show(
 					string.Format(
 						"(Router)\nAn output plugin caused the following exception: \n{0}\n\nExecution has been stopped.\n\n{1}",
@@ -289,9 +288,10 @@ namespace VixenPlus
 				routerContext.Initialized = false;
 				foreach (MappedOutputPlugIn @in in routerContext.OutputPluginList)
 				{
-					if (@in.PlugIn is IEventDrivenOutputPlugIn)
+					var eventDrivenOutputPlugIn = @in.PlugIn as IEventDrivenOutputPlugIn;
+					if (eventDrivenOutputPlugIn != null)
 					{
-						((IEventDrivenOutputPlugIn) @in.PlugIn).Initialize(routerContext.ExecutableObject, routerContext.PluginData,
+						eventDrivenOutputPlugIn.Initialize(routerContext.ExecutableObject, routerContext.PluginData,
 						                                                   @in.SetupDataNode);
 					}
 					else
@@ -300,23 +300,26 @@ namespace VixenPlus
 						                                                 @in.SetupDataNode, routerContext.TickSource);
 					}
 				}
-				m_sequenceInputPlugins[routerContext.ExecutableObject] = list = new List<InputPlugin>();
+				_sequenceInputPlugins[routerContext.ExecutableObject] = list = new List<InputPlugin>();
 				foreach (XmlNode node2 in routerContext.PluginData.GetAllPluginData(SetupData.PluginType.Input, true))
 				{
-					var item = (InputPlugin) InputPlugins.FindPlugin(node2.Attributes["name"].Value, true);
-					item.InitializeInternal(routerContext.PluginData, node2);
-					item.SetupDataToPlugin();
-					list.Add(item);
+					if (node2.Attributes != null)
+					{
+						var item = (InputPlugin) InputPlugins.FindPlugin(node2.Attributes["name"].Value, true);
+						item.InitializeInternal(routerContext.PluginData, node2);
+						item.SetupDataToPlugin();
+						list.Add(item);
+					}
 				}
 				var executable = (IExecutable) Host.Communication["CurrentObject"];
 				string str2 = string.Empty;
 				if (executable != null)
 				{
-					str2 = executable.Key.ToString();
+					str2 = executable.Key.ToString(CultureInfo.InvariantCulture);
 				}
 				try
 				{
-					foreach (InputPlugin plugin2 in m_sequenceInputPlugins[routerContext.ExecutableObject])
+					foreach (InputPlugin plugin2 in _sequenceInputPlugins[routerContext.ExecutableObject])
 					{
 						name = plugin2.Name;
 						plugin2.StartupInternal();
@@ -324,7 +327,7 @@ namespace VixenPlus
 					foreach (MappedOutputPlugIn @in in routerContext.OutputPluginList)
 					{
 						name = @in.PlugIn.Name;
-						XmlNode plugInData = routerContext.PluginData.GetPlugInData(num.ToString());
+						XmlNode plugInData = routerContext.PluginData.GetPlugInData(num.ToString(CultureInfo.InvariantCulture));
 						if (executable != null)
 						{
 							Host.Communication["SetupNode_" + str2] = plugInData;
@@ -350,16 +353,6 @@ namespace VixenPlus
 				MessageBox.Show(string.Format("{0}:\n\n{1}", name, exception2.Message), Vendor.ProductName, MessageBoxButtons.OK,
 				                MessageBoxIcon.Hand);
 			}
-		}
-
-		private void WaitForLock()
-		{
-			while (m_updateLock)
-			{
-				Application.DoEvents();
-				Thread.Sleep(10);
-			}
-			m_updateLock = true;
 		}
 	}
 }

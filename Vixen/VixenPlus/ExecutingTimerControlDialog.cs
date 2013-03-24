@@ -1,20 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace VixenPlus
 {
 	internal partial class ExecutingTimerControlDialog : Form
 	{
-		private readonly TimerContext.OnExecutionChange m_onExecutionChangeHandler;
-		private readonly TimerContext.OnExecutionEnd m_onExecutionEndHandler;
+		private readonly TimerContext.OnExecutionChange _onExecutionChangeHandler;
+		private readonly TimerContext.OnExecutionEnd _onExecutionEndHandler;
 
 
 		public ExecutingTimerControlDialog()
 		{
 			InitializeComponent();
-			m_onExecutionChangeHandler = context_ExecutionChange;
-			m_onExecutionEndHandler = context_ExecutionEnd;
+			_onExecutionChangeHandler = context_ExecutionChange;
+			_onExecutionEndHandler = context_ExecutionEnd;
 		}
 
 		public int TimerCount
@@ -74,12 +75,12 @@ namespace VixenPlus
 					MessageBox.Show(exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 					return;
 				}
-				context.ExecutionChange += m_onExecutionChangeHandler;
-				context.ExecutionEnd += m_onExecutionEndHandler;
+				context.ExecutionChange += _onExecutionChangeHandler;
+				context.ExecutionEnd += _onExecutionEndHandler;
 				listBoxTimers.Items.Add(context);
 				if (listBoxTimers.Items.Count == 1)
 				{
-					base.Show();
+					Show();
 				}
 				ExecuteTimer(context);
 			}
@@ -116,9 +117,9 @@ namespace VixenPlus
 			{
 				list.Add(context);
 			}
-			int sequencePosition;
 			foreach (TimerContext context in list)
 			{
+				int sequencePosition;
 				if (context.ExecutionInterface.EngineStatus(context.ExecutionContextHandle, out sequencePosition) == 2)
 				{
 					context.ExecutionInterface.ExecutePlay(context.ExecutionContextHandle, sequencePosition, 0);
@@ -158,7 +159,7 @@ namespace VixenPlus
 			if (Host.GetDebugValue("TimerTrace") != null)
 			{
 				Host.LogTo(Paths.TimerTraceFilePath, "Can loop?");
-				Host.LogTo(Paths.TimerTraceFilePath, "  Repeat interval: " + context.Timer.RepeatInterval.ToString());
+				Host.LogTo(Paths.TimerTraceFilePath, "  Repeat interval: " + context.Timer.RepeatInterval.ToString(CultureInfo.InvariantCulture));
 				Host.LogTo(Paths.TimerTraceFilePath,
 				           string.Format("  Timer length / Object length: {0}/{1} ({2})", context.Timer.TimerLength,
 				                         context.Timer.ObjectLength, context.Timer.TimerLength >= context.Timer.ObjectLength));
@@ -182,9 +183,9 @@ namespace VixenPlus
 
 		private void context_ExecutionChange(TimerContext context)
 		{
-			if (base.InvokeRequired)
+			if (InvokeRequired)
 			{
-				base.BeginInvoke(m_onExecutionChangeHandler, new object[] {context});
+				BeginInvoke(_onExecutionChangeHandler, new object[] {context});
 			}
 			else
 			{
@@ -199,14 +200,10 @@ namespace VixenPlus
 
 		private void context_ExecutionEnd(TimerContext context)
 		{
-			MethodInvoker method = null;
-			if (base.InvokeRequired)
+			if (InvokeRequired)
 			{
-				if (method == null)
-				{
-					method = delegate { RemoveTimer(context); };
-				}
-				base.Invoke(method);
+				MethodInvoker method = () => RemoveTimer(context);
+				Invoke(method);
 			}
 			else
 			{
@@ -249,14 +246,14 @@ namespace VixenPlus
 			}
 			else
 			{
-				base.Hide();
+				Hide();
 			}
 			e.Cancel = true;
 		}
 
 		private void ExecutingTimerControlDialog_VisibleChanged(object sender, EventArgs e)
 		{
-			timerWatchdog.Enabled = base.Visible;
+			timerWatchdog.Enabled = Visible;
 		}
 
 		public TimerContext GetContextOf(int executingTimerIndex)
@@ -278,12 +275,12 @@ namespace VixenPlus
 		{
 			context.Timer.IsExecuting = false;
 			context.Stopping = false;
-			context.ExecutionChange -= m_onExecutionChangeHandler;
-			context.ExecutionEnd -= m_onExecutionEndHandler;
+			context.ExecutionChange -= _onExecutionChangeHandler;
+			context.ExecutionEnd -= _onExecutionEndHandler;
 			listBoxTimers.Items.Remove(context);
 			if (listBoxTimers.Items.Count == 0)
 			{
-				base.Hide();
+				Hide();
 			}
 			context.Dispose();
 		}

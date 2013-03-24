@@ -8,18 +8,18 @@ namespace VixenPlus
 	public class TabControl : System.Windows.Forms.TabControl
 	{
 		private IContainer components;
-		private bool m_HideTabs;
+		private bool _hideTabs;
 
 		public TabControl()
 		{
-			m_HideTabs = false;
+			_hideTabs = false;
 			components = null;
 			InitializeComponent();
 		}
 
 		public TabControl(IContainer container)
 		{
-			m_HideTabs = false;
+			_hideTabs = false;
 			components = null;
 			container.Add(this);
 			InitializeComponent();
@@ -30,59 +30,58 @@ namespace VixenPlus
 			get
 			{
 				int num;
-				int height;
 				if (HideTabs)
 				{
-					return new Rectangle(0, 0, base.Width, base.Height);
+					return new Rectangle(0, 0, Width, Height);
 				}
-				height = base.Alignment <= TabAlignment.Bottom ? base.ItemSize.Height : base.ItemSize.Width;
-				if (base.Appearance == TabAppearance.Normal)
+				int height = Alignment <= TabAlignment.Bottom ? ItemSize.Height : ItemSize.Width;
+				if (Appearance == TabAppearance.Normal)
 				{
-					num = 5 + (height*base.RowCount);
+					num = 5 + (height*RowCount);
 				}
 				else
 				{
-					num = (3 + height)*base.RowCount;
+					num = (3 + height)*RowCount;
 				}
-				switch (base.Alignment)
+				switch (Alignment)
 				{
 					case TabAlignment.Bottom:
-						return new Rectangle(4, 4, base.Width - 8, (base.Height - num) - 4);
+						return new Rectangle(4, 4, Width - 8, (Height - num) - 4);
 
 					case TabAlignment.Left:
-						return new Rectangle(num, 4, (base.Width - num) - 4, base.Height - 8);
+						return new Rectangle(num, 4, (Width - num) - 4, Height - 8);
 
 					case TabAlignment.Right:
-						return new Rectangle(4, 4, (base.Width - num) - 4, base.Height - 8);
+						return new Rectangle(4, 4, (Width - num) - 4, Height - 8);
 				}
-				return new Rectangle(4, num, base.Width - 8, (base.Height - num) - 4);
+				return new Rectangle(4, num, Width - 8, (Height - num) - 4);
 			}
 		}
 
 		[DefaultValue(false), RefreshProperties(RefreshProperties.All)]
 		public bool HideTabs
 		{
-			get { return m_HideTabs; }
+			get { return _hideTabs; }
 			set
 			{
-				if (m_HideTabs != value)
+				if (_hideTabs != value)
 				{
-					m_HideTabs = value;
+					_hideTabs = value;
 					if (value)
 					{
-						ourMultiline = true;
+						OurMultiline = true;
 					}
-					base.UpdateStyles();
+					UpdateStyles();
 				}
 			}
 		}
 
 		[RefreshProperties(RefreshProperties.All)]
-		public bool ourMultiline
+		public bool OurMultiline
 		{
-			get { return (HideTabs || base.Multiline); }
+			get { return (HideTabs || Multiline); }
 			set {
-				base.Multiline = HideTabs || value;
+				Multiline = HideTabs || value;
 			}
 		}
 

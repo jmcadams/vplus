@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Xml;
 
 namespace VixenPlus
 {
-	public class SortOrders : IEnumerable<SortOrder>, IEnumerable
+	public class SortOrders : IEnumerable<SortOrder>
 	{
-		private readonly List<SortOrder> m_sortOrders = new List<SortOrder>();
-		private int m_lastSort = -1;
+		private readonly List<SortOrder> _sortOrders = new List<SortOrder>();
+		private int _lastSort = -1;
 
 		public SortOrder CurrentOrder
 		{
@@ -18,13 +19,13 @@ namespace VixenPlus
 				{
 					return null;
 				}
-				return m_sortOrders[LastSort];
+				return _sortOrders[LastSort];
 			}
 			set
 			{
-				for (int i = 0; i < m_sortOrders.Count; i++)
+				for (int i = 0; i < _sortOrders.Count; i++)
 				{
-					if (m_sortOrders[i].Name == value.Name)
+					if (_sortOrders[i].Name == value.Name)
 					{
 						LastSort = i;
 					}
@@ -34,23 +35,23 @@ namespace VixenPlus
 
 		public int LastSort
 		{
-			get { return m_lastSort; }
-			set { m_lastSort = value; }
+			get { return _lastSort; }
+			set { _lastSort = value; }
 		}
 
 		public IEnumerator<SortOrder> GetEnumerator()
 		{
-			return m_sortOrders.GetEnumerator();
+			return _sortOrders.GetEnumerator();
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
-			return m_sortOrders.GetEnumerator();
+			return _sortOrders.GetEnumerator();
 		}
 
 		public void Add(SortOrder sortOrder)
 		{
-			m_sortOrders.Add(sortOrder);
+			_sortOrders.Add(sortOrder);
 		}
 
 		internal SortOrders Clone()
@@ -62,14 +63,14 @@ namespace VixenPlus
 
 		private void CloneTo(SortOrders target)
 		{
-			target.m_lastSort = m_lastSort;
-			target.m_sortOrders.Clear();
-			target.m_sortOrders.AddRange(m_sortOrders);
+			target._lastSort = _lastSort;
+			target._sortOrders.Clear();
+			target._sortOrders.AddRange(_sortOrders);
 		}
 
 		public void DeleteChannel(int naturalIndex)
 		{
-			foreach (SortOrder order in m_sortOrders)
+			foreach (SortOrder order in _sortOrders)
 			{
 				order.ChannelIndexes.Remove(naturalIndex);
 				for (int i = 0; i < order.ChannelIndexes.Count; i++)
@@ -86,9 +87,9 @@ namespace VixenPlus
 
 		public void InsertChannel(int naturalIndex, int currentSortIndex)
 		{
-			for (int i = 0; i < m_sortOrders.Count; i++)
+			for (int i = 0; i < _sortOrders.Count; i++)
 			{
-				SortOrder order = m_sortOrders[i];
+				SortOrder order = _sortOrders[i];
 				int index = (i == LastSort) ? currentSortIndex : naturalIndex;
 				for (int j = 0; j < order.ChannelIndexes.Count; j++)
 				{
@@ -110,36 +111,33 @@ namespace VixenPlus
 
 		public void LoadFromXml(XmlNode contextNode)
 		{
-			m_sortOrders.Clear();
+			_sortOrders.Clear();
 			XmlNode node = contextNode.SelectSingleNode("SortOrders");
 			if (node != null)
 			{
 				foreach (XmlNode node2 in node.SelectNodes("SortOrder"))
 				{
-					m_sortOrders.Add(new SortOrder(node2));
+					_sortOrders.Add(new SortOrder(node2));
 				}
-				if (node != null)
+				XmlAttribute attribute = node.Attributes["lastSort"];
+				if (attribute != null)
 				{
-					XmlAttribute attribute = node.Attributes["lastSort"];
-					if (attribute != null)
-					{
-						m_lastSort = Convert.ToInt32(attribute.Value);
-					}
+					_lastSort = Convert.ToInt32(attribute.Value);
 				}
 			}
 		}
 
 		public void Remove(SortOrder sortOrder)
 		{
-			m_sortOrders.Remove(sortOrder);
+			_sortOrders.Remove(sortOrder);
 		}
 
 		public void SaveToXml(XmlNode contextNode)
 		{
 			XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(contextNode, "SortOrders");
-			Xml.SetAttribute(emptyNodeAlways, "lastSort", m_lastSort.ToString());
+			Xml.SetAttribute(emptyNodeAlways, "lastSort", _lastSort.ToString(CultureInfo.InvariantCulture));
 			XmlDocument ownerDocument = contextNode.OwnerDocument;
-			foreach (SortOrder order in m_sortOrders)
+			foreach (SortOrder order in _sortOrders)
 			{
 				emptyNodeAlways.AppendChild(order.SaveToXml(ownerDocument));
 			}
@@ -147,7 +145,7 @@ namespace VixenPlus
 
 		public void UpdateChannelCounts(int count)
 		{
-			foreach (SortOrder order in m_sortOrders)
+			foreach (SortOrder order in _sortOrders)
 			{
 				int current;
 				if (order.ChannelIndexes.Count > count)

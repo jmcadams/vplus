@@ -5,79 +5,76 @@ using System.Xml;
 
 namespace VixenPlus
 {
-	internal class MappingSets : ICloneable, IEnumerable<MappingSet>, IEnumerable
+	internal class MappingSets : ICloneable, IEnumerable<MappingSet>
 	{
-		public const string DEFAULT_SET_NAME = "Mapping set 1";
-		private const string ELEMENT_MAPPING_SET = "MappingSet";
-		private const int INVALID_ID = 0;
-		private readonly List<MappingSet> m_mappingSets = new List<MappingSet>();
-		private int m_currentMappingSetIndex;
+		public const string DefaultSetName = "Mapping set 1";
+		private readonly List<MappingSet> _mappingSets = new List<MappingSet>();
+		private int _currentMappingSetIndex;
 
 		public MappingSets()
 		{
-			m_mappingSets.Add(new MappingSet("Mapping set 1"));
-			m_currentMappingSetIndex = 0;
+			_mappingSets.Add(new MappingSet("Mapping set 1"));
+			_currentMappingSetIndex = 0;
 		}
 
 		internal MappingSet[] AllSets
 		{
-			get { return m_mappingSets.ToArray(); }
+			get { return _mappingSets.ToArray(); }
 		}
 
 		public int Count
 		{
-			get { return m_mappingSets.Count; }
+			get { return _mappingSets.Count; }
 		}
 
 		public MappingSet CurrentMappingSet
 		{
-			get { return m_mappingSets[m_currentMappingSetIndex]; }
+			get { return _mappingSets[_currentMappingSetIndex]; }
 			set
 			{
 				if (value != null)
 				{
-					m_currentMappingSetIndex = FindMappingSetIndex(value);
+					_currentMappingSetIndex = FindMappingSetIndex(value);
 				}
 			}
 		}
 
 		public MappingSet this[int index]
 		{
-			get { return m_mappingSets[index]; }
+			get { return _mappingSets[index]; }
 		}
 
 		public object Clone()
 		{
-			var sets = new MappingSets();
-			sets.m_currentMappingSetIndex = m_currentMappingSetIndex;
-			sets.m_mappingSets.Clear();
-			sets.m_mappingSets.AddRange(m_mappingSets);
-			sets.m_mappingSets.ForEach(delegate(MappingSet m) { m = (MappingSet) m.Clone(); });
+			var sets = new MappingSets {_currentMappingSetIndex = _currentMappingSetIndex};
+			sets._mappingSets.Clear();
+			sets._mappingSets.AddRange(_mappingSets);
+			sets._mappingSets.ForEach(delegate(MappingSet m) { m = (MappingSet) m.Clone(); });
 			return sets;
 		}
 
 		public IEnumerator<MappingSet> GetEnumerator()
 		{
-			return m_mappingSets.GetEnumerator();
+			return _mappingSets.GetEnumerator();
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
-			return m_mappingSets.GetEnumerator();
+			return _mappingSets.GetEnumerator();
 		}
 
 		public MappingSet AddMapping()
 		{
-			var item = new MappingSet("Mapping set " + (m_mappingSets.Count + 1));
-			m_mappingSets.Add(item);
+			var item = new MappingSet("Mapping set " + (_mappingSets.Count + 1));
+			_mappingSets.Add(item);
 			return item;
 		}
 
 		private void CheckIndex()
 		{
-			if (m_currentMappingSetIndex >= m_mappingSets.Count)
+			if (_currentMappingSetIndex >= _mappingSets.Count)
 			{
-				m_currentMappingSetIndex = m_mappingSets.Count - 1;
+				_currentMappingSetIndex = _mappingSets.Count - 1;
 			}
 		}
 
@@ -87,7 +84,7 @@ namespace VixenPlus
 			{
 				return null;
 			}
-			return m_mappingSets.Find(delegate(MappingSet m) { return m.Id == id; });
+			return _mappingSets.Find(m => m.Id == id);
 		}
 
 		public int FindMappingSetIndex(MappingSet mappingSet)
@@ -96,12 +93,12 @@ namespace VixenPlus
 			{
 				return -1;
 			}
-			return m_mappingSets.FindIndex(delegate(MappingSet m) { return m == mappingSet; });
+			return _mappingSets.FindIndex(m => m == mappingSet);
 		}
 
 		public MappingSet GetMappingSet(string mappingSetName, Input input)
 		{
-			foreach (MappingSet set in m_mappingSets)
+			foreach (MappingSet set in _mappingSets)
 			{
 				if (string.Equals(set.Name, mappingSetName, StringComparison.OrdinalIgnoreCase))
 				{
@@ -115,7 +112,7 @@ namespace VixenPlus
 		public int GetMappingSetCountFor(Input input)
 		{
 			int num = 0;
-			foreach (MappingSet set in m_mappingSets)
+			foreach (MappingSet set in _mappingSets)
 			{
 				if (set.HasMappingFor(input))
 				{
@@ -127,33 +124,37 @@ namespace VixenPlus
 
 		internal List<string> GetOutputChannelIdList(Input input)
 		{
-			return m_mappingSets[m_currentMappingSetIndex].GetOutputChannelIdList(input);
+			return _mappingSets[_currentMappingSetIndex].GetOutputChannelIdList(input);
 		}
 
 		public void InsertMappingAt(int index)
 		{
-			m_mappingSets.Insert(index, new MappingSet("Mapping set " + (index + 1)));
+			_mappingSets.Insert(index, new MappingSet("Mapping set " + (index + 1)));
 		}
 
 		public void MoveMappingTo(int oldIndex, int newIndex)
 		{
-			MappingSet item = m_mappingSets[oldIndex];
-			m_mappingSets.RemoveAt(oldIndex);
-			m_mappingSets.Insert(newIndex, item);
+			MappingSet item = _mappingSets[oldIndex];
+			_mappingSets.RemoveAt(oldIndex);
+			_mappingSets.Insert(newIndex, item);
 		}
 
 		public void ReadData(XmlNode node)
 		{
-			m_mappingSets.Clear();
-			foreach (XmlNode node2 in node.SelectNodes("MappingSet"))
+			_mappingSets.Clear();
+			var mappingSetNode = node.SelectNodes("MappingSet");
+			if (mappingSetNode != null)
 			{
-				m_mappingSets.Add(new MappingSet(node2));
+				foreach (XmlNode node2 in mappingSetNode)
+				{
+					_mappingSets.Add(new MappingSet(node2));
+				}
 			}
 		}
 
 		public void RemoveMappingAt(int index)
 		{
-			m_mappingSets.RemoveAt(index);
+			_mappingSets.RemoveAt(index);
 			CheckIndex();
 		}
 
@@ -168,15 +169,15 @@ namespace VixenPlus
 
 		public void StepMapping()
 		{
-			if (++m_currentMappingSetIndex == m_mappingSets.Count)
+			if (++_currentMappingSetIndex == _mappingSets.Count)
 			{
-				m_currentMappingSetIndex = 0;
+				_currentMappingSetIndex = 0;
 			}
 		}
 
 		public void WriteData(XmlNode node)
 		{
-			foreach (MappingSet set in m_mappingSets)
+			foreach (MappingSet set in _mappingSets)
 			{
 				XmlNode dataNode = Xml.SetNewValue(node, "MappingSet", "");
 				set.WriteData(dataNode);
