@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -8,21 +9,21 @@ namespace Vixen
 {
 	public class CurveLibrary : IDisposable
 	{
-		public const string COL_COLOR = "Color";
-		public const string COL_CONTROLLER = "Controller";
-		public const string COL_CURVE_DATA = "CurveData";
-		public const string COL_LIGHT_COUNT = "LightCount";
-		public const string COL_MANUFACTURER = "Manufacturer";
-		public const string CURVE_LIBRARY_FILE = "library.xml";
-		private readonly string m_localFilePath;
-		private string StringDelimiter;
-		private Filter[] m_colorFilters;
-		private Filter[] m_controllerFilters;
-		private DataTable m_dataTable;
-		private Filter[] m_lightCountFilters;
-		private Filter[] m_manufacturerFilters;
-		private bool m_modified;
-		private Sort m_sort;
+		public const string Color = "Color";
+		public const string Controller = "Controller";
+		public const string CurveData = "CurveData";
+		public const string LightCount = "LightCount";
+		public const string Manufacturer = "Manufacturer";
+		public const string LibraryFile = "library.xml";
+		private readonly string _localFilePath;
+		private string _delimiter;
+		private Filter[] _colorFilters;
+		private Filter[] _controllerFilters;
+		private DataTable _dataTable;
+		private Filter[] _lightCountFilters;
+		private Filter[] _manufacturerFilters;
+		private bool _modified;
+		private Sort _sort;
 
 		public CurveLibrary() : this(Path.Combine(Paths.CurveLibraryPath, "library.xml"))
 		{
@@ -30,23 +31,23 @@ namespace Vixen
 
 		public CurveLibrary(string filePath)
 		{
-			m_dataTable = null;
-			m_manufacturerFilters = null;
-			m_lightCountFilters = null;
-			m_colorFilters = null;
-			m_controllerFilters = null;
-			m_sort = null;
-			m_modified = false;
-			StringDelimiter = "\"";
-			m_localFilePath = filePath;
+			_dataTable = null;
+			_manufacturerFilters = null;
+			_lightCountFilters = null;
+			_colorFilters = null;
+			_controllerFilters = null;
+			_sort = null;
+			_modified = false;
+			_delimiter = "\"";
+			_localFilePath = filePath;
 		}
 
 		public Filter[] ColorFilter
 		{
-			get { return m_colorFilters; }
+			get { return _colorFilters; }
 			set
 			{
-				m_colorFilters = value;
+				_colorFilters = value;
 				if (value != null)
 				{
 					foreach (Filter filter in value)
@@ -60,10 +61,10 @@ namespace Vixen
 
 		public Filter[] ControllerFilter
 		{
-			get { return m_controllerFilters; }
+			get { return _controllerFilters; }
 			set
 			{
-				m_controllerFilters = value;
+				_controllerFilters = value;
 				if (value != null)
 				{
 					foreach (Filter filter in value)
@@ -77,26 +78,26 @@ namespace Vixen
 
 		public string FilePath
 		{
-			get { return m_localFilePath; }
+			get { return _localFilePath; }
 		}
 
 		public bool IsFiltered
 		{
 			get
 			{
-				return (((((m_manufacturerFilters != null) && (m_manufacturerFilters.Length > 0)) ||
-				          ((m_lightCountFilters != null) && (m_lightCountFilters.Length > 0))) ||
-				         ((m_colorFilters != null) && (m_colorFilters.Length > 0))) ||
-				        ((m_controllerFilters != null) && (m_controllerFilters.Length > 0)));
+				return (((((_manufacturerFilters != null) && (_manufacturerFilters.Length > 0)) ||
+				          ((_lightCountFilters != null) && (_lightCountFilters.Length > 0))) ||
+				         ((_colorFilters != null) && (_colorFilters.Length > 0))) ||
+				        ((_controllerFilters != null) && (_controllerFilters.Length > 0)));
 			}
 		}
 
 		public Filter[] LightCountFilter
 		{
-			get { return m_lightCountFilters; }
+			get { return _lightCountFilters; }
 			set
 			{
-				m_lightCountFilters = value;
+				_lightCountFilters = value;
 				if (value != null)
 				{
 					foreach (Filter filter in value)
@@ -110,10 +111,10 @@ namespace Vixen
 
 		public Filter[] ManufacturerFilter
 		{
-			get { return m_manufacturerFilters; }
+			get { return _manufacturerFilters; }
 			set
 			{
-				m_manufacturerFilters = value;
+				_manufacturerFilters = value;
 				if (value != null)
 				{
 					foreach (Filter filter in value)
@@ -127,35 +128,19 @@ namespace Vixen
 
 		public Sort SortOrder
 		{
-			get { return m_sort; }
-			set { m_sort = value; }
+			get { return _sort; }
+			set { _sort = value; }
 		}
 
 		public void Dispose()
 		{
 		}
 
-		private bool ArrayMatch(byte[] array1, byte[] array2)
-		{
-			if (array1.Length != array2.Length)
-			{
-				return false;
-			}
-			for (int i = 0; i < array1.Length; i++)
-			{
-				if (array1[i] != array2[i])
-				{
-					return false;
-				}
-			}
-			return true;
-		}
-
 		private string BuildSortClause()
 		{
-			if (m_sort != null)
+			if (_sort != null)
 			{
-				return string.Format("{0} {1}", m_sort.ColumnName, m_sort.SortDirection);
+				return string.Format("{0} {1}", _sort.ColumnName, _sort.SortDirection);
 			}
 			return "";
 		}
@@ -163,10 +148,10 @@ namespace Vixen
 		private string BuildWhereClause()
 		{
 			var builder = new StringBuilder();
-			builder.Append(BuildWhereFragment(m_manufacturerFilters));
-			builder.Append(BuildWhereFragment(m_lightCountFilters));
-			builder.Append(BuildWhereFragment(m_colorFilters));
-			builder.Append(BuildWhereFragment(m_controllerFilters));
+			builder.Append(BuildWhereFragment(_manufacturerFilters));
+			builder.Append(BuildWhereFragment(_lightCountFilters));
+			builder.Append(BuildWhereFragment(_colorFilters));
+			builder.Append(BuildWhereFragment(_controllerFilters));
 			if (builder.Length > 0)
 			{
 				string str = builder.ToString();
@@ -184,24 +169,16 @@ namespace Vixen
 
 		private string BuildWhereFragment(Filter[] filters)
 		{
-			Action<Filter> action = null;
 			var sb = new StringBuilder();
 			if ((filters != null) && (filters.Length > 0))
 			{
-				StringDelimiter = "'";
-				if (action == null)
-				{
-					action =
-						delegate(Filter f)
-							{
-								sb.AppendFormat(" {0} {1} {2} {3}",
-								                new object[]
-									                {
-										                f.JoinOperator, f.ColumnName, OperatorString(f.ComparisonOperator),
-										                FormatValue(f.Value, f.ColumnType)
-									                });
-							};
-				}
+				_delimiter = "'";
+				Action<Filter> action = f => sb.AppendFormat(" {0} {1} {2} {3}",
+				                                             new object[]
+					                                             {
+						                                             f.JoinOperator, f.ColumnName, OperatorString(f.ComparisonOperator),
+						                                             FormatValue(f.Value, f.ColumnType)
+					                                             });
 				Array.ForEach(filters, action);
 			}
 			return sb.ToString();
@@ -210,9 +187,9 @@ namespace Vixen
 		public CurveLibraryRecord Find(string manufacturer, string lightCount, int color, string controller)
 		{
 			Load(false);
-			if (m_dataTable != null)
+			if (_dataTable != null)
 			{
-				DataRow[] rowArray = m_dataTable.Select(GetSelectString(manufacturer, lightCount, color, controller));
+				DataRow[] rowArray = _dataTable.Select(GetSelectString(manufacturer, lightCount, color, controller));
 				if (rowArray.Length == 0)
 				{
 					return null;
@@ -227,9 +204,9 @@ namespace Vixen
 		private string FormatValue(string value, Type valueType)
 		{
 			string name = valueType.Name;
-			if (((name == null) || (name == "String")) || (name != "Int32"))
+			if (name == "String" || name != "Int32")
 			{
-				return string.Format("{0}{1}{2}", StringDelimiter, value, StringDelimiter);
+				return string.Format("{0}{1}{2}", _delimiter, value, _delimiter);
 			}
 			return value;
 		}
@@ -258,9 +235,9 @@ namespace Vixen
 		{
 			var list = new List<string>();
 			Load(false);
-			if (m_dataTable != null)
+			if (_dataTable != null)
 			{
-				DataRow[] rowArray = m_dataTable.Select(BuildWhereClause(), BuildSortClause());
+				DataRow[] rowArray = _dataTable.Select(BuildWhereClause(), BuildSortClause());
 				foreach (DataRow row in rowArray)
 				{
 					list.Add(row[columnName].ToString());
@@ -272,9 +249,9 @@ namespace Vixen
 		public int GetRecordCount()
 		{
 			Load(false);
-			if (m_dataTable != null)
+			if (_dataTable != null)
 			{
-				return m_dataTable.Rows.Count;
+				return _dataTable.Rows.Count;
 			}
 			return -1;
 		}
@@ -297,28 +274,28 @@ namespace Vixen
 		public void Import(CurveLibraryRecord clr, bool updateIfPresent)
 		{
 			Load(false);
-			if (m_dataTable != null)
+			if (_dataTable != null)
 			{
-				DataRow[] rowArray = m_dataTable.Select(GetSelectString(clr.Manufacturer, clr.LightCount, clr.Color, clr.Controller));
+				DataRow[] rowArray = _dataTable.Select(GetSelectString(clr.Manufacturer, clr.LightCount, clr.Color, clr.Controller));
 				if ((rowArray.Length == 0) || updateIfPresent)
 				{
 					var curveDataStrings = new List<string>();
-					Array.ForEach(clr.CurveData, delegate(byte b) { curveDataStrings.Add(b.ToString()); });
+					Array.ForEach(clr.CurveData, b => curveDataStrings.Add(b.ToString(CultureInfo.InvariantCulture)));
 					if (rowArray.Length == 0)
 					{
-						DataRow row = m_dataTable.NewRow();
+						DataRow row = _dataTable.NewRow();
 						row["Manufacturer"] = clr.Manufacturer;
 						row["LightCount"] = clr.LightCount;
 						row["Color"] = clr.Color;
 						row["Controller"] = clr.Controller;
 						row["CurveData"] = string.Join("|", curveDataStrings.ToArray());
-						m_dataTable.Rows.Add(row);
+						_dataTable.Rows.Add(row);
 					}
 					else
 					{
 						rowArray[0]["CurveData"] = string.Join("|", curveDataStrings.ToArray());
 					}
-					m_modified = true;
+					_modified = true;
 				}
 			}
 		}
@@ -330,25 +307,19 @@ namespace Vixen
 
 		public void Load(bool forcedLoad)
 		{
-			if (forcedLoad || (m_dataTable == null))
+			if (forcedLoad || (_dataTable == null))
 			{
-				if (!File.Exists(m_localFilePath))
+				if (!File.Exists(_localFilePath))
 				{
 					Save(true);
 				}
-				try
+				if (_dataTable != null)
 				{
-					if (m_dataTable != null)
-					{
-						m_dataTable.Dispose();
-						m_dataTable = null;
-					}
-					m_dataTable = new DataTable();
-					m_dataTable.ReadXml(m_localFilePath);
+					_dataTable.Dispose();
+					_dataTable = null;
 				}
-				finally
-				{
-				}
+				_dataTable = new DataTable();
+				_dataTable.ReadXml(_localFilePath);
 			}
 		}
 
@@ -401,23 +372,23 @@ namespace Vixen
 
 		public void Save(bool force)
 		{
-			if (force || m_modified)
+			if (force || _modified)
 			{
-				if (m_dataTable != null)
+				if (_dataTable != null)
 				{
-					m_dataTable.WriteXml(m_localFilePath, XmlWriteMode.WriteSchema);
+					_dataTable.WriteXml(_localFilePath, XmlWriteMode.WriteSchema);
 				}
 				else
 				{
-					m_dataTable = new DataTable("CurveLibrary");
-					m_dataTable.Columns.Add("Manufacturer").AllowDBNull = false;
-					m_dataTable.Columns.Add("LightCount").AllowDBNull = false;
-					m_dataTable.Columns.Add("Color").AllowDBNull = false;
-					m_dataTable.Columns.Add("Controller").AllowDBNull = false;
-					m_dataTable.Columns.Add("CurveData").AllowDBNull = false;
-					m_dataTable.WriteXml(m_localFilePath, XmlWriteMode.WriteSchema);
+					_dataTable = new DataTable("CurveLibrary");
+					_dataTable.Columns.Add("Manufacturer").AllowDBNull = false;
+					_dataTable.Columns.Add("LightCount").AllowDBNull = false;
+					_dataTable.Columns.Add("Color").AllowDBNull = false;
+					_dataTable.Columns.Add("Controller").AllowDBNull = false;
+					_dataTable.Columns.Add("CurveData").AllowDBNull = false;
+					_dataTable.WriteXml(_localFilePath, XmlWriteMode.WriteSchema);
 				}
-				m_modified = false;
+				_modified = false;
 			}
 		}
 
@@ -596,9 +567,9 @@ namespace Vixen
 		//                case 0:
 		//                    this.<>1__state = -1;
 		//                    this.<>4__this.Load(false);
-		//                    if (this.<>4__this.m_dataTable != null)
+		//                    if (this.<>4__this._dataTable != null)
 		//                    {
-		//                        this.<rows>5__6 = this.<>4__this.m_dataTable.Select(this.<>4__this.BuildWhereClause(), this.<>4__this.BuildSortClause());
+		//                        this.<rows>5__6 = this.<>4__this._dataTable.Select(this.<>4__this.BuildWhereClause(), this.<>4__this.BuildSortClause());
 		//                        this.<>1__state = 1;
 		//                        this.<>7__wrap8 = this.<rows>5__6;
 		//                        this.<>7__wrap9 = 0;
