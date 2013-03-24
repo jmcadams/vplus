@@ -96,12 +96,6 @@
     <Compile Include="VixenPlus\AddEditRemove.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="VixenPlus\AllPluginsDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VixenPlus\AllPluginsDialog.Designer.cs">
-      <DependentUpon>AllPluginsDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="VixenPlus\Async.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -116,12 +110,6 @@
     </Compile>
     <Compile Include="VixenPlus\Channel.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="VixenPlus\ChannelRangeFixDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VixenPlus\ChannelRangeFixDialog.Designer.cs">
-      <DependentUpon>ChannelRangeFixDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="VixenPlus\CheckableToolStripMenuItem.cs">
       <SubType>Component</SubType>
@@ -146,12 +134,6 @@
     </Compile>
     <Compile Include="VixenPlus\CopySequenceDialog.Designer.cs">
       <DependentUpon>CopySequenceDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="VixenPlus\CurveConflictResolutionDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VixenPlus\CurveConflictResolutionDialog.Designer.cs">
-      <DependentUpon>CurveConflictResolutionDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="VixenPlus\CurveFileImportExportDialog.cs">
       <SubType>Form</SubType>
@@ -354,12 +336,6 @@
     <Compile Include="VixenPlus\Group.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenPlus\GroupDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VixenPlus\GroupDialog.Designer.cs">
-      <DependentUpon>GroupDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="VixenPlus\HardwareMap.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -525,12 +501,6 @@
     <Compile Include="VixenPlus\Paths.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenPlus\PluginEnabledFixDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VixenPlus\PluginEnabledFixDialog.Designer.cs">
-      <DependentUpon>PluginEnabledFixDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="VixenPlus\PlugInMapping.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -633,12 +603,6 @@
     <Compile Include="VixenPlus\TabControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="VixenPlus\TextListDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VixenPlus\TextListDialog.Designer.cs">
-      <DependentUpon>TextListDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="VixenPlus\Timer.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -684,9 +648,6 @@
     <Compile Include="VixenPlus\VixenSimpleButtonType.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenPlus\Web.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="VixenPlus\Xml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -697,9 +658,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VixenPlus\AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VixenPlus\AllPluginsDialog.resx">
-      <DependentUpon>AllPluginsDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenPlus\BackgroundSequenceDialog.resx">
       <DependentUpon>BackgroundSequenceDialog.cs</DependentUpon>
@@ -746,11 +704,6 @@
     <ProjectReference Include="..\fmod\fmod.csproj">
       <Project>{7B3F05AD-9943-4359-97FF-0AE22C225EB4}</Project>
       <Name>fmod</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\FtpClientVB\FtpClientVB.csproj">
-      <Project>{B329CC47-2452-46D6-BA9F-1E56141537FE}</Project>
-      <Name>FtpClientVB</Name>
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\VixenControls\CommonControls.csproj">
