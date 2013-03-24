@@ -2,8 +2,9 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using VixenPlus;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal partial class DimmingCurveDialog : Form
 	{

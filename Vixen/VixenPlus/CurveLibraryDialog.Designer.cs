@@ -1,10 +1,7 @@
-using System;
 using System.Windows.Forms;
-using System.Drawing;
 using System.ComponentModel;
-using System.Collections;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal partial class CurveLibraryDialog
     {

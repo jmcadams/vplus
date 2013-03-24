@@ -1,8 +1,9 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using VixenPlus;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal partial class CurveLibraryDialog : Form
 	{
