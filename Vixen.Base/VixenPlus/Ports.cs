@@ -1,12 +1,11 @@
 ﻿namespace VixenPlus
 {
 	public enum Ports
-    {
-        ExecutionClient = 0xa1bb,
-        LocalClient = 0xa1bd,
-        Server = 0xa1b9,
-        ServerAutoConnect = 0xa1bc,
-        Web = 0xa1ba
-    }
+	{
+		ExecutionClient = 41403,
+		LocalClient = 41405,
+		Server = 41401,
+		ServerAutoConnect = 41404,
+		Web = 41402
+	}
 }
-

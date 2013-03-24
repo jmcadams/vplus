@@ -1,14 +1,11 @@
-﻿namespace VixenPlus
+﻿using System.Net.Sockets;
+
+namespace VixenPlus
 {
-    using System;
-    using System.Net.Sockets;
-
-    public interface IObjectPacket
-    {
-        void CopyFrom(Socket socket);
-        void CopyTo(byte[] array, int startIndex);
-
-        int PacketBytesRequired { get; }
-    }
+	public interface IObjectPacket
+	{
+		int PacketBytesRequired { get; }
+		void CopyFrom(Socket socket);
+		void CopyTo(byte[] array, int startIndex);
+	}
 }
-
