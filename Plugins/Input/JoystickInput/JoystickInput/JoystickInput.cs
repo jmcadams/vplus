@@ -5,13 +5,13 @@ namespace JoystickInput
     using System.Collections.Generic;
     using System.Windows.Forms;
     using System.Xml;
-    using Vixen;
+    using VixenPlus;
 
     public class JoystickInput : InputPlugin
     {
         private Input[] m_inputs = null;
 
-        public override void Initialize(Vixen.SetupData setupData, XmlNode setupNode)
+        public override void Initialize(VixenPlus.SetupData setupData, XmlNode setupNode)
         {
             SetupData.LoadFrom(setupNode);
             List<Input> list = new List<Input>();
@@ -79,11 +79,11 @@ namespace JoystickInput
             }
         }
 
-        public override Vixen.HardwareMap[] HardwareMap
+        public override VixenPlus.HardwareMap[] HardwareMap
         {
             get
             {
-                return new Vixen.HardwareMap[0];
+                return new VixenPlus.HardwareMap[0];
             }
         }
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Vixen
+namespace VixenPlus
 {
 	[AttributeUsage(AttributeTargets.Class)]
 	internal class ConcreteClassAttribute : Attribute

@@ -8,8 +8,8 @@ namespace StandardScript
     using System.IO;
     using System.Windows.Forms;
     using System.Xml;
-    using Vixen;
-    using Vixen.Dialogs;
+    using VixenPlus;
+    using VixenPlus.Dialogs;
 
     public class StandardScript : UIBase
     {
@@ -684,9 +684,9 @@ namespace StandardScript
             return this.m_sequence;
         }
 
-        private void ProgramChange(Vixen.ProgramChange changeType)
+        private void ProgramChange(VixenPlus.ProgramChange changeType)
         {
-            if (changeType == Vixen.ProgramChange.End)
+            if (changeType == VixenPlus.ProgramChange.End)
             {
                 this.SetUIState(false);
             }

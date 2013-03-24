@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Vixen.Dialogs
+namespace VixenPlus.Dialogs
 {
 	internal partial class ChannelLayoutDialog : Form
 	{

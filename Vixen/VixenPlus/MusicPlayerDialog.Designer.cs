@@ -1,4 +1,4 @@
-namespace Vixen{
+namespace VixenPlus{
 	using System;
 	using System.Windows.Forms;
 	using System.Drawing;

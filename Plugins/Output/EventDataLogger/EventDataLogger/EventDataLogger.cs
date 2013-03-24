@@ -5,7 +5,7 @@ namespace EventDataLogger
     using System.Text;
     using System.Windows.Forms;
     using System.Xml;
-    using Vixen;
+    using VixenPlus;
 
     public class EventDataLogger : IEventDrivenOutputPlugIn, IOutputPlugIn, IHardwarePlugin, IPlugIn, ISetup
     {
@@ -72,11 +72,11 @@ namespace EventDataLogger
             }
         }
 
-        public Vixen.HardwareMap[] HardwareMap
+        public VixenPlus.HardwareMap[] HardwareMap
         {
             get
             {
-                return new Vixen.HardwareMap[0];
+                return new VixenPlus.HardwareMap[0];
             }
         }
 

@@ -6,8 +6,8 @@ namespace MIDIReader
     using System.Drawing;
     using System.IO;
     using System.Windows.Forms;
-    using Vixen;
-    using Vixen.Dialogs;
+    using VixenPlus;
+    using VixenPlus.Dialogs;
 
     internal partial class MIDIReaderDialog : Form
     {

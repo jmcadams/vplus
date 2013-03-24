@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Vixen
+namespace VixenPlus
 {
 	[ToolboxBitmap(typeof (Panel))]
 	public class AddEditRemove : Panel

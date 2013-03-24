@@ -3,7 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-namespace Vixen.Dialogs
+namespace VixenPlus.Dialogs
 {
 	public partial class RoutineSelectDialog : Form
 	{

@@ -2,7 +2,7 @@ using System;
 using System.Globalization;
 using System.Windows.Forms;
 
-namespace Vixen.Dialogs
+namespace VixenPlus.Dialogs
 {
 	public partial class ParallelSetupDialog : Form
 	{

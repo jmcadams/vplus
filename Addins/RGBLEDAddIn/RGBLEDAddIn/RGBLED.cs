@@ -3,7 +3,7 @@ namespace RGBLEDAddIn
     using System;
     using System.Windows.Forms;
     using System.Xml;
-    using Vixen;
+    using VixenPlus;
 
     public class RGBLED : IAddIn, ILoadable, IPlugIn
     {

@@ -4,7 +4,7 @@ namespace StandardScript {
 	using System.ComponentModel;
 	using System.Drawing;
 	using System.Windows.Forms;
-	using Vixen;
+	using VixenPlus;
 
 	public partial class ChannelNameEditDialog : Form {
 		public ChannelNameEditDialog(EventSequence sequence, int itemIndex) {

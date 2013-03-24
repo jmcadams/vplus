@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal partial class Splash : Form
 	{

@@ -5,7 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal partial class CurveFileImportExportDialog : Form
 	{

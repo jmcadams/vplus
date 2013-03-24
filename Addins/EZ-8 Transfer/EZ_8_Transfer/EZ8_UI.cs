@@ -5,8 +5,8 @@ using System.Drawing;
 using System.IO.Ports;
 using System.Threading;
 using System.Windows.Forms;
-using Vixen;
-using Vixen.Dialogs;
+using VixenPlus;
+using VixenPlus.Dialogs;
 
 namespace EZ_8_Transfer
 {

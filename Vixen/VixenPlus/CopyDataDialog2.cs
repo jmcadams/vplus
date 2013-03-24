@@ -5,7 +5,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal partial class CopyDataDialog2 : Form
 	{

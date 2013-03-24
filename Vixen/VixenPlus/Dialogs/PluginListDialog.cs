@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace Vixen.Dialogs
+namespace VixenPlus.Dialogs
 {
 	public partial class PluginListDialog : Form
 	{

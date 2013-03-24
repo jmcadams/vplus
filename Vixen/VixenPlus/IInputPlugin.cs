@@ -1,6 +1,6 @@
 ﻿using System.Xml;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal interface IInputPlugin : IHardwarePlugin, IPlugIn, ISetup
 	{

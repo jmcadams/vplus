@@ -2,7 +2,7 @@
 {
 	using JoystickManager;
 	using System;
-	using Vixen;
+	using VixenPlus;
 
 	internal class JoystickInputResource : Input
 	{

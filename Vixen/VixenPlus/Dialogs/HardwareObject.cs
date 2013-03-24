@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using VixenControls;
 
-namespace Vixen.Dialogs
+namespace VixenPlus.Dialogs
 {
 	//TODO I am not sure this is doing anything real
 	internal class HardwareObject : ToolboxItem

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Xml;
 
-namespace Vixen
+namespace VixenPlus
 {
 	public class Preference2
 	{

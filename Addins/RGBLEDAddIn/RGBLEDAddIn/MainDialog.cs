@@ -3,7 +3,7 @@ namespace RGBLEDAddIn {
 	using System.ComponentModel;
 	using System.Drawing;
 	using System.Windows.Forms;
-	using Vixen;
+	using VixenPlus;
 
 	public partial class MainDialog : Form {
 		public MainDialog(EventSequence sequence) {

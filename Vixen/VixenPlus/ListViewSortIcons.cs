@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal static class ListViewSortIcons
 	{

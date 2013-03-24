@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal class Async : IObjectQuery
 	{

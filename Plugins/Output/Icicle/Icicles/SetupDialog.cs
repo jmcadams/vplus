@@ -4,7 +4,7 @@ namespace Icicles {
 	using System.Drawing;
 	using System.IO.Ports;
 	using System.Windows.Forms;
-	using Vixen.Dialogs;
+	using VixenPlus.Dialogs;
 
 	public partial class SetupDialog : Form {
 

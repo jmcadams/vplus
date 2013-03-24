@@ -5,8 +5,8 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using FMOD;
-using Vixen;
-using Vixen.Dialogs;
+using VixenPlus;
+using VixenPlus.Dialogs;
 	
 namespace Spectrum
 {
@@ -552,7 +552,7 @@ namespace Spectrum
 			{
 				e.Graphics.DrawRectangle(Pens.Black, _channelBounds);
 				int num2 = _channelBounds.X + _channelBoxWidth;
-				List<Vixen.Channel> channels = _eventSequence.Channels;
+				List<VixenPlus.Channel> channels = _eventSequence.Channels;
 				for (left = 0; left < _channelsShown; left++)
 				{
 					e.Graphics.FillRectangle(channels[left + _startChannel].Brush, num2 + 1, _channelBounds.Top + 1, _channelBoxWidth - 1, _channelBoxWidth - 1);

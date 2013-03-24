@@ -8,7 +8,7 @@
 	using System.Threading;
 	using System.Windows.Forms;
 	using System.Xml;
-	using Vixen;
+	using VixenPlus;
 
 	internal class Inputs
 	{

@@ -89,7 +89,7 @@ namespace RemoteClient {
 				this.labelServerData.Text = "Paused";
 			}
 			else {
-				MessageBox.Show("Client was unable to execute the command", Vixen.Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show("Client was unable to execute the command", VixenPlus.Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 		}
 
@@ -101,7 +101,7 @@ namespace RemoteClient {
 				this.labelServerData.Text = "Executing";
 			}
 			else {
-				MessageBox.Show("Client was unable to execute the command", Vixen.Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show("Client was unable to execute the command", VixenPlus.Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 		}
 
@@ -120,7 +120,7 @@ namespace RemoteClient {
 				this.labelServerData.Text = "Stopped";
 			}
 			else {
-				MessageBox.Show("Client was unable to execute the command", Vixen.Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show("Client was unable to execute the command", VixenPlus.Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 		}
 
@@ -158,12 +158,12 @@ namespace RemoteClient {
 			if (index != -1) {
 				if (this.listBoxChannels.GetSelected(index)) {
 					if (!this.m_controlClient.ClientChannelOn(((VixenExecutionClientStub)this.listBoxClients.SelectedItem).ID, index)) {
-						MessageBox.Show("Client was unable to execute the command", Vixen.Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+						MessageBox.Show("Client was unable to execute the command", VixenPlus.Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 						this.listBoxChannels.SetSelected(index, false);
 					}
 				}
 				else if (!this.m_controlClient.ClientChannelOff(((VixenExecutionClientStub)this.listBoxClients.SelectedItem).ID, index)) {
-					MessageBox.Show("Client was unable to execute the command", Vixen.Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					MessageBox.Show("Client was unable to execute the command", VixenPlus.Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 					this.listBoxChannels.SetSelected(index, true);
 				}
 			}

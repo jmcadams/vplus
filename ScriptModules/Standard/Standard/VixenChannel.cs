@@ -4,7 +4,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Reflection;
-    using Vixen;
+    using VixenPlus;
 
     public class VixenChannel : IChannelEnumerable, IEnumerable<VixenChannel>, IEnumerable
     {

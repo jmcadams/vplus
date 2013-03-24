@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 
-namespace Vixen
+namespace VixenPlus
 {
 	public class SortOrders : IEnumerable<SortOrder>, IEnumerable
 	{

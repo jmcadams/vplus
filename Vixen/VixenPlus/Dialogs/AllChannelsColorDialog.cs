@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 
-namespace Vixen.Dialogs
+namespace VixenPlus.Dialogs
 {
 	public partial class AllChannelsColorDialog : Form
 	{

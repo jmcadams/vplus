@@ -4,7 +4,7 @@ namespace VixenEditor {
 	using System.ComponentModel;
 	using System.Drawing;
 	using System.Windows.Forms;
-	using Vixen;
+	using VixenPlus;
 
 	internal partial class TestChannelsDialog : Form {
 		private byte[] m_channelLevels;

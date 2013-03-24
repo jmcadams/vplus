@@ -7,7 +7,7 @@ namespace Prop1SeqGen
     using System.Text;
     using System.Windows.Forms;
     using System.Xml;
-    using Vixen;
+    using VixenPlus;
 
     public class SeqGen : IAddIn, ILoadable, IPlugIn
     {

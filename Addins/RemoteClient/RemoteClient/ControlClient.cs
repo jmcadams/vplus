@@ -6,7 +6,7 @@
 	using System.Net.Sockets;
 	using System.Runtime.CompilerServices;
 	using System.Text;
-	using Vixen;
+	using VixenPlus;
 	using System.Diagnostics;
 
 	internal class ControlClient

@@ -1,4 +1,4 @@
-namespace Vixen{
+namespace VixenPlus{
 	using System;
 	using System.Windows.Forms;
 	using System.Drawing;
@@ -108,7 +108,7 @@ private RadioButton radioButtonSyncProfileData;
 private TabPage remoteExecutionTab;
 private TabPage sequenceEditingTab;
 private TabPage sequenceExecutionTab;
-private Vixen.TabControl tabControl;
+private TabControl tabControl;
 private TextBox textBoxBackgroundMusicDelay;
 private TextBox textBoxBackgroundSequenceDelay;
 private TextBox textBoxClientName;
@@ -230,7 +230,7 @@ private TreeView treeView;
             this.buttonOK = new Button();
             this.buttonCancel = new Button();
             this.openFileDialog = new OpenFileDialog();
-            this.tabControl = new Vixen.TabControl(this.components);
+            this.tabControl = new TabControl(this.components);
             this.generalTab = new TabPage();
             this.groupBox3 = new GroupBox();
             this.numericUpDownHistoryImages = new NumericUpDown();

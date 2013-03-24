@@ -5,7 +5,7 @@ namespace TriggerResponse {
 	using System.Drawing;
 	using System.IO;
 	using System.Windows.Forms;
-	using Vixen;
+	using VixenPlus;
 
 	internal partial class TriggerEditDialog : Form {
 		private MappedTriggerResponse m_item;

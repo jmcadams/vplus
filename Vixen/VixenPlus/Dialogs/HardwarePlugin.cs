@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml;
 
-namespace Vixen.Dialogs
+namespace VixenPlus.Dialogs
 {
 	internal class HardwarePlugin
 	{

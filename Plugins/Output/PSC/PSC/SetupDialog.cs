@@ -5,8 +5,8 @@ namespace PSC {
 	using System.IO.Ports;
 	using System.Windows.Forms;
 	using System.Xml;
-	using Vixen;
-	using Vixen.Dialogs;
+	using VixenPlus;
+	using VixenPlus.Dialogs;
 
 	public partial class SetupDialog : Form {
 

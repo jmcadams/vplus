@@ -3,7 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal partial class CopyChannelColorsDialog : Form
 	{

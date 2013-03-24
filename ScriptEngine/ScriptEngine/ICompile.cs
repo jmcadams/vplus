@@ -2,7 +2,7 @@
 {
     using System;
     using System.Reflection;
-    using Vixen;
+    using VixenPlus;
 
     public interface ICompile
     {

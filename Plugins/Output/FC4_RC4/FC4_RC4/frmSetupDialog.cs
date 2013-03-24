@@ -5,7 +5,7 @@ namespace FC4_RC4 {
 	using System.Drawing;
 	using System.Windows.Forms;
 	using System.Xml;
-	using Vixen;
+	using VixenPlus;
 
 	internal partial class frmSetupDialog : Form {
 		private ComboBox[] m_addrCombos;

@@ -2,7 +2,7 @@
 using System.Text;
 using System.Xml;
 
-namespace Vixen
+namespace VixenPlus
 {
 	public class SortOrder
 	{

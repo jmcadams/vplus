@@ -25,12 +25,12 @@ namespace Prop1SeqGen
 		{
 			if (this.textBoxName.Text.Length == 0)
 			{
-				MessageBox.Show("Please specify a file name.", Vixen.Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+				MessageBox.Show("Please specify a file name.", VixenPlus.Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 				base.DialogResult = DialogResult.None;
 			}
 			else if (this.comboBoxAudioDevice.SelectedIndex == -1)
 			{
-				MessageBox.Show("Please select an audio device.", Vixen.Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+				MessageBox.Show("Please select an audio device.", VixenPlus.Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 				base.DialogResult = DialogResult.None;
 			}
 			else

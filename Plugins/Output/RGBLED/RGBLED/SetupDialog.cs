@@ -5,7 +5,7 @@ namespace RGBLED {
 	using System.IO.Ports;
 	using System.Windows.Forms;
 	using System.Xml;
-	using Vixen.Dialogs;
+	using VixenPlus.Dialogs;
 
 	public partial class SetupDialog : Form {
 

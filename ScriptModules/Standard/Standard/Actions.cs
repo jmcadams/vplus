@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using Vixen;
+    using VixenPlus;
 
     public static class Actions
     {

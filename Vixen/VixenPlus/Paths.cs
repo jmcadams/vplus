@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace Vixen
+namespace VixenPlus
 {
 	public static class Paths
 	{

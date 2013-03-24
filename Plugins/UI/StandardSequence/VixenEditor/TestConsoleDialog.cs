@@ -5,7 +5,7 @@ namespace VixenEditor
 	using System.ComponentModel;
 	using System.Drawing;
 	using System.Windows.Forms;
-	using Vixen;
+	using VixenPlus;
 
 	//TODO: Convert this file
 	internal class TestConsoleDialog : Form

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 using FMOD;
-using Vixen.Dialogs;
+using VixenPlus.Dialogs;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal partial class PreferencesDialog : Form
 	{

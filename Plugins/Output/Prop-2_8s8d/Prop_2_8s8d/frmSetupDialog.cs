@@ -4,7 +4,7 @@ namespace Prop_2_8s8d {
 	using System.Drawing;
 	using System.Windows.Forms;
 	using System.Xml;
-	using Vixen;
+	using VixenPlus;
 
 	internal partial class frmSetupDialog : Form {
 		

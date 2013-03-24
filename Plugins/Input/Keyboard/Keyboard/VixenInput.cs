@@ -2,7 +2,7 @@
 {
 	using System;
 	using System.Windows.Forms;
-	using Vixen;
+	using VixenPlus;
 
 	internal class VixenInput : Input
 	{

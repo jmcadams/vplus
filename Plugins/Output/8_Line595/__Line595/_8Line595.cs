@@ -4,7 +4,7 @@ namespace __Line595
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
     using System.Xml;
-    using Vixen;
+    using VixenPlus;
 
     public class _8Line595 : IEventDrivenOutputPlugIn, IOutputPlugIn, IHardwarePlugin, IPlugIn, ISetup
     {
@@ -115,11 +115,11 @@ namespace __Line595
             }
         }
 
-        public Vixen.HardwareMap[] HardwareMap
+        public VixenPlus.HardwareMap[] HardwareMap
         {
             get
             {
-                return new Vixen.HardwareMap[] { new Vixen.HardwareMap("Parallel", this.m_portBase, "X") };
+                return new VixenPlus.HardwareMap[] { new VixenPlus.HardwareMap("Parallel", this.m_portBase, "X") };
             }
         }
 

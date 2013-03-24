@@ -2,7 +2,7 @@
 using System.Configuration;
 using System.Runtime.CompilerServices;
 
-namespace Vixen.Properties
+namespace VixenPlus.Properties
 {
 	[GeneratedCode("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "8.0.0.0"),
 	 CompilerGenerated]

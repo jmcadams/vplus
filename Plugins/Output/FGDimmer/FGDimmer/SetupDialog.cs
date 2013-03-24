@@ -4,7 +4,7 @@ namespace FGDimmer {
 	using System.Drawing;
 	using System.IO.Ports;
 	using System.Windows.Forms;
-	using Vixen.Dialogs;
+	using VixenPlus.Dialogs;
 
 	internal partial class SetupDialog : Form {
 		private Module[] m_modules;

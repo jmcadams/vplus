@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using System.Xml;
 using FMOD;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal class Engine8 : IDisposable, IQueryable
 	{

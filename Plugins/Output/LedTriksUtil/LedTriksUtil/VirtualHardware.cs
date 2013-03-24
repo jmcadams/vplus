@@ -4,7 +4,7 @@
     using System.Drawing;
     using System.Reflection;
     using System.Threading;
-    using Vixen;
+    using VixenPlus;
 
     public class VirtualHardware : IFrameOutput
     {

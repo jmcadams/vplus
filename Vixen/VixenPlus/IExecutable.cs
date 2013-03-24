@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Vixen
+namespace VixenPlus
 {
 	public interface IExecutable : IMaskable, IDisposable
 	{

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal class UIBaseConcreteForm : UIBase
 	{

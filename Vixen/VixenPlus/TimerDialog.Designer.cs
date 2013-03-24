@@ -1,4 +1,4 @@
-namespace Vixen{
+namespace VixenPlus{
 	using System;
 	using System.Windows.Forms;
 	using System.Drawing;
@@ -49,7 +49,7 @@ private Panel panelRecurrenceRange;
 private RadioButton radioButtonFirstDay;
 private RadioButton radioButtonLastDay;
 private RadioButton radioButtonSpecificDay;
-private Vixen.TabControl tabControl;
+private TabControl tabControl;
 private TabPage tabPageDaily;
 private TabPage tabPageMonthly;
 private TabPage tabPageNone;
@@ -73,7 +73,7 @@ private TextBox textBoxSpecificDay;
             this.dateTimePickerRecurrenceEndDate = new DateTimePicker();
             this.label3 = new Label();
             this.label4 = new Label();
-            this.tabControl = new Vixen.TabControl(this.components);
+            this.tabControl = new TabControl(this.components);
             this.tabPageNone = new TabPage();
             this.tabPageDaily = new TabPage();
             this.tabPageWeekly = new TabPage();

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal class PlugInMapping
 	{

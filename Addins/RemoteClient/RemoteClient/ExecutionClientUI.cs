@@ -3,7 +3,7 @@
 	using System.ComponentModel;
 	using System.Drawing;
 	using System.Windows.Forms;
-	using Vixen;
+	using VixenPlus;
 
 	public partial class ExecutionClientUI : Form {
 		private ClientContext m_clientContext;

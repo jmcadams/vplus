@@ -7,7 +7,7 @@ namespace Waveform {
 	using System.Runtime.InteropServices;
 	using System.Threading;
 	using System.Windows.Forms;
-	using Vixen;
+	using VixenPlus;
 
 	public partial class ParamsDialog : Form {
 		private int m_bits = 0;

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal interface IUIPlugIn : VixenMDI, IPlugIn
 	{

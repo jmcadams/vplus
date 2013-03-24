@@ -7,7 +7,7 @@
 	using System.Text;
 	using System.Windows.Forms;
 	using System.Xml;
-	using Vixen;
+	using VixenPlus;
 
 	internal partial class ClientUI : Form {
 		private ControlClient m_controlClient;

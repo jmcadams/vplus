@@ -7,7 +7,7 @@
     using System.IO;
     using System.Threading;
     using System.Xml;
-    using Vixen;
+    using VixenPlus;
 
     public static class Actions
     {

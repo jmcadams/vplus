@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal class EngineTimer : ITickSource, IDisposable
 	{

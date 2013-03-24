@@ -4,7 +4,7 @@ namespace Spectrum
     using System.Collections.Generic;
     using System.Windows.Forms;
     using System.Xml;
-    using Vixen;
+    using VixenPlus;
 
     public class Spectrum : IAddIn, ILoadable, IPlugIn
     {

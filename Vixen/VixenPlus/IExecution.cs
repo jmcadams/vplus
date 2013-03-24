@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
 using System.Xml;
 
-namespace Vixen
+namespace VixenPlus
 {
 	public interface IExecution
 	{

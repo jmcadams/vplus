@@ -6,7 +6,7 @@ namespace WattMeter {
 	using System.Text;
 	using System.Windows.Forms;
 	using System.Xml;
-	using Vixen;
+	using VixenPlus;
 
 	internal partial class WattMeterDialog : Form {
 		private const int GRAPH_AMP_GUTTER = 40;

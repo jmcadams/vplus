@@ -8,7 +8,7 @@ namespace Preview
     using System.IO;
     using System.Windows.Forms;
     using System.Xml;
-    using Vixen;
+    using VixenPlus;
 
     public class PreviewDialog : OutputPlugInUIBase
     {
@@ -31,7 +31,7 @@ namespace Preview
             {
                 this.m_startChannel = startChannel;
                 this.m_channelDictionary = new Dictionary<int, List<uint>>();
-                bool flag = bool.Parse(Vixen.Xml.GetNodeAlways(setupNode, "RedirectOutputs", "False").InnerText);
+                bool flag = bool.Parse(VixenPlus.Xml.GetNodeAlways(setupNode, "RedirectOutputs", "False").InnerText);
                 this.m_channelColors = new Color[channels.Count - startChannel];
                 for (int i = startChannel; i < channels.Count; i++)
                 {

@@ -27,7 +27,7 @@ namespace LedTriksUtil
             if (this.m_sizeExceeded)
             {
                 base.DialogResult = DialogResult.None;
-                MessageBox.Show("The layout exceeds the number of boards.", Vixen.Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                MessageBox.Show("The layout exceeds the number of boards.", VixenPlus.Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
             }
         }
 

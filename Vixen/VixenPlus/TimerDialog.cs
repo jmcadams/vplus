@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal partial class TimerDialog : Form
 	{

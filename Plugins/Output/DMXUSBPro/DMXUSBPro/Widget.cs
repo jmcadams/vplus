@@ -6,7 +6,7 @@
 
     internal class Widget : IDisposable
     {
-        private string logFile = Path.Combine(Vixen.Paths.DataPath, "dmxusbpro.log");
+        private string logFile = Path.Combine(VixenPlus.Paths.DataPath, "dmxusbpro.log");
         private Message m_dmxPacketMessage;
         private SerialPort m_serialPort = null;
         private byte[] m_statePacket;

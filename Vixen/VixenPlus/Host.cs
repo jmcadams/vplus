@@ -5,7 +5,7 @@ using System.Text;
 using System.Timers;
 using System.Windows.Forms;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal class Host : IQueryable
 	{

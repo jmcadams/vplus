@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Xml;
 
-namespace Vixen
+namespace VixenPlus
 {
 	public class Audio
 	{

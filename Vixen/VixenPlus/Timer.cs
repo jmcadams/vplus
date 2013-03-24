@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Xml;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal class Timer : IComparable<Timer>
 	{

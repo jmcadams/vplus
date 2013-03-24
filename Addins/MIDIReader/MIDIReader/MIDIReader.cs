@@ -5,7 +5,7 @@ namespace MIDIReader
     using System.IO;
     using System.Windows.Forms;
     using System.Xml;
-    using Vixen;
+    using VixenPlus;
 
     public class MIDIReader : IAddIn, ILoadable, IPlugIn
     {

@@ -2,7 +2,7 @@ namespace Waveform
 {
     using System;
     using System.Xml;
-    using Vixen;
+    using VixenPlus;
 
     public class Waveform : IAddIn, ILoadable, IPlugIn
     {

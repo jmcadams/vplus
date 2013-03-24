@@ -2,7 +2,7 @@ using System;
 using System.Windows.Forms;
 using FMOD;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal partial class SoundDeviceDialog : Form
 	{

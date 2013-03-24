@@ -6,7 +6,7 @@ namespace Launcher
     using System.IO;
     using System.Windows.Forms;
     using System.Xml;
-    using Vixen;
+    using VixenPlus;
 
     public class Launcher : IEventDrivenOutputPlugIn, IOutputPlugIn, IHardwarePlugin, IPlugIn, ISetup
     {
@@ -99,11 +99,11 @@ namespace Launcher
             }
         }
 
-        public Vixen.HardwareMap[] HardwareMap
+        public VixenPlus.HardwareMap[] HardwareMap
         {
             get
             {
-                return new Vixen.HardwareMap[0];
+                return new VixenPlus.HardwareMap[0];
             }
         }
 

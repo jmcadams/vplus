@@ -3,7 +3,7 @@
     using ScriptEngine;
     using System;
     using System.Text;
-    using Vixen;
+    using VixenPlus;
 
     public class Standard : IScriptModule
     {

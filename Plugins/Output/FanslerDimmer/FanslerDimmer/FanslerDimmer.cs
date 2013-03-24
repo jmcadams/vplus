@@ -5,7 +5,7 @@ namespace FanslerDimmer
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
     using System.Xml;
-    using Vixen;
+    using VixenPlus;
 
     public class FanslerDimmer : IEventDrivenOutputPlugIn, IOutputPlugIn, IPlugIn
     {
@@ -216,7 +216,7 @@ namespace FanslerDimmer
             }
         }
 
-        public Vixen.HardwareMap[] HardwareMap
+        public VixenPlus.HardwareMap[] HardwareMap
         {
             get
             {
@@ -225,13 +225,13 @@ namespace FanslerDimmer
                 {
                     num += mapping.Mapped ? 1 : 0;
                 }
-                Vixen.HardwareMap[] mapArray = new Vixen.HardwareMap[num];
+                VixenPlus.HardwareMap[] mapArray = new VixenPlus.HardwareMap[num];
                 num = 0;
                 foreach (PortMapping mapping in this.m_portMappings)
                 {
                     if (mapping.Mapped)
                     {
-                        mapArray[num++] = new Vixen.HardwareMap("0", this.IndexOfPort(mapping.DataPort));
+                        mapArray[num++] = new VixenPlus.HardwareMap("0", this.IndexOfPort(mapping.DataPort));
                     }
                 }
                 return mapArray;

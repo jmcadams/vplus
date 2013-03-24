@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.IO;
 
-namespace Vixen.Dialogs
+namespace VixenPlus.Dialogs
 {
 	internal class Routine : IDisposable
 	{

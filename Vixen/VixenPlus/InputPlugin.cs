@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Xml;
 
-namespace Vixen
+namespace VixenPlus
 {
 	public abstract class InputPlugin : IInputPlugin, IHardwarePlugin, IPlugIn, ISetup
 	{

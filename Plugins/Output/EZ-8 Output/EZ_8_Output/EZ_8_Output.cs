@@ -5,8 +5,8 @@ namespace EZ_8_Output
     using System.IO.Ports;
     using System.Windows.Forms;
     using System.Xml;
-    using Vixen;
-    using Vixen.Dialogs;
+    using VixenPlus;
+    using VixenPlus.Dialogs;
 
     public class EZ_8_Output : IEventDrivenOutputPlugIn, IOutputPlugIn, IHardwarePlugin, IPlugIn, ISetup
     {
@@ -70,15 +70,15 @@ namespace EZ_8_Output
             }
         }
 
-        public Vixen.HardwareMap[] HardwareMap
+        public VixenPlus.HardwareMap[] HardwareMap
         {
             get
             {
                 if (this.m_hardware.PortName != null)
                 {
-                    return new Vixen.HardwareMap[] { new Vixen.HardwareMap("Serial", int.Parse(this.m_hardware.PortName.Substring(3))) };
+                    return new VixenPlus.HardwareMap[] { new VixenPlus.HardwareMap("Serial", int.Parse(this.m_hardware.PortName.Substring(3))) };
                 }
-                return new Vixen.HardwareMap[0];
+                return new VixenPlus.HardwareMap[0];
             }
         }
 

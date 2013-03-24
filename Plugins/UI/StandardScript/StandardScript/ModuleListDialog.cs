@@ -6,7 +6,7 @@ namespace StandardScript {
 	using System.IO;
 	using System.Windows.Forms;
 	using System.Xml;
-	using Vixen;
+	using VixenPlus;
 
 	public partial class ModuleListDialog : Form {
 		private XmlNode m_projectNode;

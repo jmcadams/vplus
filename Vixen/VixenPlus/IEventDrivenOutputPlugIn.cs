@@ -1,6 +1,6 @@
 ﻿using System.Xml;
 
-namespace Vixen
+namespace VixenPlus
 {
 	public interface IEventDrivenOutputPlugIn : IOutputPlugIn, IHardwarePlugin, IPlugIn, ISetup
 	{

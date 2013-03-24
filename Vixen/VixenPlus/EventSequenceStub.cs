@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal class EventSequenceStub : IDisposable
 	{

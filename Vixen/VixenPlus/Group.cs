@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal class Group
 	{

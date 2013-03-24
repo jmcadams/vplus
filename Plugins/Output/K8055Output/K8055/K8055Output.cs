@@ -3,7 +3,7 @@ namespace K8055
     using System;
     using System.Windows.Forms;
     using System.Xml;
-    using Vixen;
+    using VixenPlus;
 
     public class K8055Output : IEventDrivenOutputPlugIn, IOutputPlugIn, IHardwarePlugin, IPlugIn, ISetup
     {
@@ -103,11 +103,11 @@ namespace K8055
             }
         }
 
-        public Vixen.HardwareMap[] HardwareMap
+        public VixenPlus.HardwareMap[] HardwareMap
         {
             get
             {
-                return new Vixen.HardwareMap[0];
+                return new VixenPlus.HardwareMap[0];
             }
         }
 

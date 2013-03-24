@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Xml;
 
-namespace Vixen
+namespace VixenPlus
 {
 	public class Profile : IExecutable, IMaskable, IDisposable
 	{

@@ -8,7 +8,7 @@ namespace CurrentExecution
     using System.Timers;
     using System.Windows.Forms;
     using System.Xml;
-    using Vixen;
+    using VixenPlus;
 
     public class CurrentExecution : IEventlessOutputPlugIn, IOutputPlugIn, IHardwarePlugin, IPlugIn, ISetup
     {
@@ -217,15 +217,15 @@ namespace CurrentExecution
             }
         }
 
-        public Vixen.HardwareMap[] HardwareMap
+        public VixenPlus.HardwareMap[] HardwareMap
         {
             get
             {
                 if (!this.m_virtual)
                 {
-                    return new Vixen.HardwareMap[] { new Vixen.HardwareMap("Parallel", this.m_portAddress, "X") };
+                    return new VixenPlus.HardwareMap[] { new VixenPlus.HardwareMap("Parallel", this.m_portAddress, "X") };
                 }
-                return new Vixen.HardwareMap[0];
+                return new VixenPlus.HardwareMap[0];
             }
         }
 

@@ -2,7 +2,7 @@
 {
     using System;
     using System.IO;
-    using Vixen;
+    using VixenPlus;
 
     internal static class ErrorLog
     {

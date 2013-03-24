@@ -4,7 +4,7 @@ namespace FC_4 {
 	using System.Drawing;
 	using System.Windows.Forms;
 	using System.Xml;
-	using Vixen;
+	using VixenPlus;
 
 	public partial class frmEfxSetup : Form {
 

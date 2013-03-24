@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal partial class DiagnosticsDialog : Form
 	{

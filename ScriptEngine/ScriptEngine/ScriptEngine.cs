@@ -5,7 +5,7 @@
     using System.Runtime.CompilerServices;
     using System.Threading;
     using System.Xml;
-    using Vixen;
+    using VixenPlus;
 
     public class ScriptEngine : IEngine, IDisposable
     {

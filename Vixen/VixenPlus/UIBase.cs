@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Vixen
+namespace VixenPlus
 {
 //	[TypeDescriptionProvider(typeof(GeneralConcreteClassProvider)), ConcreteClass(typeof(UIBaseConcreteForm))]
 	public partial class UIBase : Form, IUIPlugIn, VixenMDI, IPlugIn

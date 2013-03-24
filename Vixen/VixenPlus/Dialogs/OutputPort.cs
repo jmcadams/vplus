@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Vixen.Dialogs
+namespace VixenPlus.Dialogs
 {
 	internal class OutputPort
 	{

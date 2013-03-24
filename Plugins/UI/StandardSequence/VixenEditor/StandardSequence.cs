@@ -13,8 +13,8 @@ namespace VixenEditor
 	using System.Threading;
 	using System.Windows.Forms;
 	using System.Xml;
-	using Vixen;
-	using Vixen.Dialogs;
+	using VixenPlus;
+	using VixenPlus.Dialogs;
 
 	public class StandardSequence : UIBase
 	{
@@ -77,7 +77,7 @@ namespace VixenEditor
 		private SolidBrush m_channelCaretBrush;
 		private Font m_channelNameFont;
 		private List<int> m_channelOrderMapping;
-		private Vixen.Channel m_currentlyEditingChannel;
+		private VixenPlus.Channel m_currentlyEditingChannel;
 		private XmlNode m_dataNode;
 		private FrequencyEffectGenerator m_dimmingShimmerGenerator;
 		private byte m_drawingLevel;
@@ -110,9 +110,9 @@ namespace VixenEditor
 		private Preference2 m_preferences;
 		private int m_previousPosition;
 		private int m_printingChannelIndex;
-		private List<Vixen.Channel> m_printingChannelList;
+		private List<VixenPlus.Channel> m_printingChannelList;
 		private Stack m_redoStack;
-		private Vixen.Channel m_selectedChannel;
+		private VixenPlus.Channel m_selectedChannel;
 		private int m_selectedEventIndex;
 		private int m_selectedLineIndex;
 		private Rectangle m_selectedRange;
@@ -540,7 +540,7 @@ namespace VixenEditor
 			base.IsDirty = true;
 		}
 
-		private void AssignChannelArray(List<Vixen.Channel> channels)
+		private void AssignChannelArray(List<VixenPlus.Channel> channels)
 		{
 			this.m_sequence.Channels = channels;
 			this.textBoxChannelCount.Text = this.m_sequence.ChannelCount.ToString();
@@ -1168,7 +1168,7 @@ namespace VixenEditor
 			ChannelOutputMaskDialog dialog = new ChannelOutputMaskDialog(this.m_sequence.Channels);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
-				foreach (Vixen.Channel channel in this.m_sequence.Channels)
+				foreach (VixenPlus.Channel channel in this.m_sequence.Channels)
 				{
 					channel.Enabled = true;
 				}
@@ -1215,7 +1215,7 @@ namespace VixenEditor
 			StreamWriter writer = new StreamWriter(path);
 			try
 			{
-				foreach (Vixen.Channel channel in this.m_sequence.Channels)
+				foreach (VixenPlus.Channel channel in this.m_sequence.Channels)
 				{
 					writer.WriteLine(channel.Name);
 				}
@@ -1244,7 +1244,7 @@ namespace VixenEditor
 			{
 				Profile profile = this.m_sequence.Profile;
 				this.m_sequence.Profile = null;
-				List<Vixen.Channel> list = new List<Vixen.Channel>();
+				List<VixenPlus.Channel> list = new List<VixenPlus.Channel>();
 				list.AddRange(profile.Channels);
 				this.m_sequence.Channels = list;
 				this.m_sequence.Sorts.LoadFrom(profile.Sorts);
@@ -1305,12 +1305,12 @@ namespace VixenEditor
 			return 0;
 		}
 
-		private Vixen.Channel GetChannelAt(Point point)
+		private VixenPlus.Channel GetChannelAt(Point point)
 		{
 			return this.GetChannelAtSortedIndex(this.GetLineIndexAt(point));
 		}
 
-		private Vixen.Channel GetChannelAtSortedIndex(int index)
+		private VixenPlus.Channel GetChannelAtSortedIndex(int index)
 		{
 			if (index < this.m_channelOrderMapping.Count)
 			{
@@ -1319,7 +1319,7 @@ namespace VixenEditor
 			return null;
 		}
 
-		private Rectangle GetChannelNameRect(Vixen.Channel channel)
+		private Rectangle GetChannelNameRect(VixenPlus.Channel channel)
 		{
 			if (channel != null)
 			{
@@ -1328,12 +1328,12 @@ namespace VixenEditor
 			return Rectangle.Empty;
 		}
 
-		private int GetChannelNaturalIndex(Vixen.Channel channel)
+		private int GetChannelNaturalIndex(VixenPlus.Channel channel)
 		{
 			return this.m_sequence.Channels.IndexOf(channel);
 		}
 
-		private int GetChannelSortedIndex(Vixen.Channel channel)
+		private int GetChannelSortedIndex(VixenPlus.Channel channel)
 		{
 			return this.m_channelOrderMapping.IndexOf(this.m_sequence.Channels.IndexOf(channel));
 		}
@@ -3324,7 +3324,7 @@ namespace VixenEditor
 			string str2 = (string) this.toolStripComboBoxChannelOrder.Items[this.toolStripComboBoxChannelOrder.Items.Count - 1];
 			this.toolStripComboBoxChannelOrder.Items.Clear();
 			this.toolStripComboBoxChannelOrder.Items.Add(item);
-			foreach (Vixen.SortOrder order in this.m_sequence.Sorts)
+			foreach (VixenPlus.SortOrder order in this.m_sequence.Sorts)
 			{
 				this.toolStripComboBoxChannelOrder.Items.Add(order);
 			}
@@ -3524,7 +3524,7 @@ namespace VixenEditor
 
 				case Notification.ProfileChange:
 				{
-					Vixen.SortOrder currentOrder = this.m_sequence.Sorts.CurrentOrder;
+					VixenPlus.SortOrder currentOrder = this.m_sequence.Sorts.CurrentOrder;
 					this.m_sequence.ReloadProfile();
 					this.m_sequence.Sorts.CurrentOrder = currentOrder;
 					this.LoadSequenceSorts();
@@ -3731,10 +3731,10 @@ namespace VixenEditor
 
 		private void pictureBoxChannels_DragDrop(object sender, DragEventArgs e)
 		{
-			if (e.Data.GetDataPresent(typeof(Vixen.Channel)))
+			if (e.Data.GetDataPresent(typeof(VixenPlus.Channel)))
 			{
-				Vixen.Channel data = (Vixen.Channel) e.Data.GetData(typeof(Vixen.Channel));
-				Vixen.Channel channelAt = this.GetChannelAt(this.pictureBoxChannels.PointToClient(new Point(e.X, e.Y)));
+				VixenPlus.Channel data = (VixenPlus.Channel) e.Data.GetData(typeof(VixenPlus.Channel));
+				VixenPlus.Channel channelAt = this.GetChannelAt(this.pictureBoxChannels.PointToClient(new Point(e.X, e.Y)));
 				if (data != channelAt)
 				{
 					if (e.Effect == DragDropEffects.Copy)
@@ -3766,7 +3766,7 @@ namespace VixenEditor
 
 		private void pictureBoxChannels_DragOver(object sender, DragEventArgs e)
 		{
-			if (e.Data.GetDataPresent(typeof(Vixen.Channel)))
+			if (e.Data.GetDataPresent(typeof(VixenPlus.Channel)))
 			{
 				Point point = this.pictureBoxChannels.PointToClient(new Point(e.X, e.Y));
 				int lineIndexAt = this.GetLineIndexAt(point);
@@ -3854,7 +3854,7 @@ namespace VixenEditor
 
 		private void pictureBoxChannels_Paint(object sender, PaintEventArgs e)
 		{
-			Vixen.Channel channel;
+			VixenPlus.Channel channel;
 			int num2;
 			int num3;
 			int num5;
@@ -4888,8 +4888,8 @@ namespace VixenEditor
 				dialog.Text = "Channel Output Mapping";
 				if (dialog.ShowDialog() == DialogResult.OK)
 				{
-					List<Vixen.Channel> channelMapping = dialog.ChannelMapping;
-					foreach (Vixen.Channel channel in this.m_sequence.Channels)
+					List<VixenPlus.Channel> channelMapping = dialog.ChannelMapping;
+					foreach (VixenPlus.Channel channel in this.m_sequence.Channels)
 					{
 						channel.OutputChannel = channelMapping.IndexOf(channel);
 					}
@@ -5326,7 +5326,7 @@ namespace VixenEditor
 
 		private void ShowChannelProperties()
 		{
-			List<Vixen.Channel> channels = new List<Vixen.Channel>();
+			List<VixenPlus.Channel> channels = new List<VixenPlus.Channel>();
 			channels.AddRange(this.m_sequence.Channels);
 			for (int i = 0; i < channels.Count; i++)
 			{
@@ -5353,9 +5353,9 @@ namespace VixenEditor
 
 		private void sortByChannelOutputToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.m_printingChannelList = new List<Vixen.Channel>();
-			Vixen.Channel[] collection = new Vixen.Channel[this.m_sequence.ChannelCount];
-			foreach (Vixen.Channel channel in this.m_sequence.Channels)
+			this.m_printingChannelList = new List<VixenPlus.Channel>();
+			VixenPlus.Channel[] collection = new VixenPlus.Channel[this.m_sequence.ChannelCount];
+			foreach (VixenPlus.Channel channel in this.m_sequence.Channels)
 			{
 				collection[channel.OutputChannel] = channel;
 			}
@@ -6030,7 +6030,7 @@ namespace VixenEditor
 		{
 			if (MessageBox.Show(string.Format("Delete channel order '{0}'?", this.toolStripComboBoxChannelOrder.Text), Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 			{
-				this.m_sequence.Sorts.Remove((Vixen.SortOrder) this.toolStripComboBoxChannelOrder.SelectedItem);
+				this.m_sequence.Sorts.Remove((VixenPlus.SortOrder) this.toolStripComboBoxChannelOrder.SelectedItem);
 				this.toolStripComboBoxChannelOrder.Items.RemoveAt(this.toolStripComboBoxChannelOrder.SelectedIndex);
 				this.toolStripButtonDeleteOrder.Enabled = false;
 				base.IsDirty = true;
@@ -6518,7 +6518,7 @@ namespace VixenEditor
 
 		private void toolStripButtonSaveOrder_Click(object sender, EventArgs e)
 		{
-			Vixen.SortOrder item = null;
+			VixenPlus.SortOrder item = null;
 			TextQueryDialog dialog = new TextQueryDialog("New order", "What name would you like to give to this ordering of the channels?", string.Empty);
 			DialogResult no = DialogResult.No;
 			while (no == DialogResult.No)
@@ -6529,7 +6529,7 @@ namespace VixenEditor
 					return;
 				}
 				no = DialogResult.Yes;
-				foreach (Vixen.SortOrder order2 in this.m_sequence.Sorts)
+				foreach (VixenPlus.SortOrder order2 in this.m_sequence.Sorts)
 				{
 					if (order2.Name == dialog.Response)
 					{
@@ -6551,7 +6551,7 @@ namespace VixenEditor
 			}
 			else
 			{
-				this.m_sequence.Sorts.Add(item = new Vixen.SortOrder(dialog.Response, this.m_channelOrderMapping));
+				this.m_sequence.Sorts.Add(item = new VixenPlus.SortOrder(dialog.Response, this.m_channelOrderMapping));
 				this.toolStripComboBoxChannelOrder.Items.Insert(this.toolStripComboBoxChannelOrder.Items.Count - 1, item);
 				this.toolStripComboBoxChannelOrder.SelectedIndex = this.toolStripComboBoxChannelOrder.Items.Count - 2;
 			}
@@ -6768,7 +6768,7 @@ namespace VixenEditor
 						if (dialog.ShowDialog() == DialogResult.OK)
 						{
 							this.m_channelOrderMapping.Clear();
-							foreach (Vixen.Channel channel in dialog.ChannelMapping)
+							foreach (VixenPlus.Channel channel in dialog.ChannelMapping)
 							{
 								this.m_channelOrderMapping.Add(this.m_sequence.Channels.IndexOf(channel));
 							}
@@ -6794,7 +6794,7 @@ namespace VixenEditor
 					else
 					{
 						this.m_channelOrderMapping.Clear();
-						this.m_channelOrderMapping.AddRange(((Vixen.SortOrder) this.toolStripComboBoxChannelOrder.SelectedItem).ChannelIndexes);
+						this.m_channelOrderMapping.AddRange(((VixenPlus.SortOrder) this.toolStripComboBoxChannelOrder.SelectedItem).ChannelIndexes);
 						this.m_sequence.LastSort = this.toolStripComboBoxChannelOrder.SelectedIndex - 1;
 						this.toolStripButtonDeleteOrder.Enabled = true;
 						if (this.m_sequence.Profile == null)
@@ -6998,7 +6998,7 @@ namespace VixenEditor
 						int num;
 						int num3;
 						int num7;
-						Vixen.Channel channel;
+						VixenPlus.Channel channel;
 						string str;
 						int num5 = ((clipRect.X / this.m_periodPixelWidth) * this.m_periodPixelWidth) + 1;
 						int y = ((clipRect.Y / this.m_gridRowHeight) * this.m_gridRowHeight) + 1;
@@ -7224,7 +7224,7 @@ namespace VixenEditor
 			}
 		}
 
-		private Vixen.Channel SelectedChannel
+		private VixenPlus.Channel SelectedChannel
 		{
 			get
 			{
@@ -7234,7 +7234,7 @@ namespace VixenEditor
 			{
 				if (this.m_selectedChannel != value)
 				{
-					Vixen.Channel selectedChannel = this.m_selectedChannel;
+					VixenPlus.Channel selectedChannel = this.m_selectedChannel;
 					this.m_selectedChannel = value;
 					if (selectedChannel != null)
 					{

@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal class IExecutionImpl : IExecution, IQueryable
 	{

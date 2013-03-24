@@ -5,8 +5,8 @@ namespace CurrentExecution {
 	using System.Drawing;
 	using System.Windows.Forms;
 	using System.Xml;
-	using Vixen;
-	using Vixen.Dialogs;
+	using VixenPlus;
+	using VixenPlus.Dialogs;
 
 	public partial class SetupDialog : Form {
 		private Size m_boardLayout;

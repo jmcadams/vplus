@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using FMOD;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal class EngineContext
 	{

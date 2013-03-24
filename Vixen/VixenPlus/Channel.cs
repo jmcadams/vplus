@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Xml;
 
-namespace Vixen
+namespace VixenPlus
 {
 	public class Channel : IDisposable, IComparable<Channel>
 	{

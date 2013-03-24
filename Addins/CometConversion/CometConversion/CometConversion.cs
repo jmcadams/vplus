@@ -6,7 +6,7 @@ namespace CometConversion
     using System.Text;
     using System.Windows.Forms;
     using System.Xml;
-    using Vixen;
+    using VixenPlus;
 
     public class CometConversion : IAddIn, ILoadable, IPlugIn
     {

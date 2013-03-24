@@ -43,7 +43,7 @@ namespace RGBLEDAddIn {
 		private Label labelCapacity;
 		private Label labelGIntensity;
 		private Label labelRIntensity;
-		private Vixen.EventSequence m_sequence;
+		private VixenPlus.EventSequence m_sequence;
 		private NumericUpDown numericUpDownBlue;
 		private NumericUpDown numericUpDownGreen;
 		private NumericUpDown numericUpDownRed;

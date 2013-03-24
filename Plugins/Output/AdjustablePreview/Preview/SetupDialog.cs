@@ -8,7 +8,7 @@ namespace Preview {
 	using System.Text;
 	using System.Windows.Forms;
 	using System.Xml;
-	using Vixen;
+	using VixenPlus;
 
 	public partial class SetupDialog : Form {
 		private string m_backgroundImageFileName;

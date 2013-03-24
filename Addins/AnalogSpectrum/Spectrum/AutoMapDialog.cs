@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Spectrum {
 	internal partial class AutoMapDialog : Form {
-		public AutoMapDialog(List<Vixen.Channel> channels, List<FrequencyBand> bands) {
+		public AutoMapDialog(List<VixenPlus.Channel> channels, List<FrequencyBand> bands) {
 			InitializeComponent();
 			comboBoxStartChannel.Items.AddRange(new object[] {channels.ToArray()});
 			comboBoxStartBand.Items.AddRange(new object[] {bands.ToArray()});

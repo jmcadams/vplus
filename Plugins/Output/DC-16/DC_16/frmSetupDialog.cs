@@ -4,7 +4,7 @@ namespace DC_16 {
 	using System.Drawing;
 	using System.Windows.Forms;
 	using System.Xml;
-	using Vixen;
+	using VixenPlus;
 
 	internal partial class frmSetupDialog : Form {
 

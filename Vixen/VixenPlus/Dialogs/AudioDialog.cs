@@ -7,7 +7,7 @@ using System.Timers;
 using System.Windows.Forms;
 using FMOD;
 
-namespace Vixen.Dialogs
+namespace VixenPlus.Dialogs
 {
 	public partial class AudioDialog : Form
 	{

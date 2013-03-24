@@ -1,4 +1,4 @@
-namespace Vixen.Dialogs{
+namespace VixenPlus.Dialogs{
 	using System;
 	using System.Windows.Forms;
 	using System.Drawing;

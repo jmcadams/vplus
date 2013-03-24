@@ -6,7 +6,7 @@
 	using System.Net.Sockets;
 	using System.Text;
 	using System.Threading;
-	using Vixen;
+	using VixenPlus;
 	using System.Diagnostics;
 
 	internal class ExecutionClient

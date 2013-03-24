@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal interface IEngine2 : IObjectQuery, IDisposable
 	{

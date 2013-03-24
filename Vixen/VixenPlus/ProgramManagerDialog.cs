@@ -2,9 +2,9 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using Vixen.Dialogs;
+using VixenPlus.Dialogs;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal partial class ProgramManagerDialog : Form
 	{

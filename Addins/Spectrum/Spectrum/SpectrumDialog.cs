@@ -6,8 +6,8 @@ namespace Spectrum {
 	using System.Drawing;
 	using System.IO;
 	using System.Windows.Forms;
-	using Vixen;
-	using Vixen.Dialogs;
+	using VixenPlus;
+	using VixenPlus.Dialogs;
 
 	internal partial class SpectrumDialog : Form {
 		private const int BAND_HEIGHT = 100;
@@ -411,7 +411,7 @@ namespace Spectrum {
 			if (!this.m_playing) {
 				e.Graphics.DrawRectangle(Pens.Black, this.m_channelBounds);
 				int num2 = this.m_channelBounds.X + this.m_channelBoxWidth;
-				List<Vixen.Channel> channels = this.m_sequence.Channels;
+				List<VixenPlus.Channel> channels = this.m_sequence.Channels;
 				for (left = 0; left < this.m_channelsShown; left++) {
 					e.Graphics.FillRectangle(channels[left + this.m_startChannel].Brush, (int)(num2 + 1), (int)(this.m_channelBounds.Top + 1), (int)(this.m_channelBoxWidth - 1), (int)(this.m_channelBoxWidth - 1));
 					e.Graphics.DrawLine(Pens.Black, num2, this.m_channelBounds.Top, num2, this.m_channelBounds.Bottom);

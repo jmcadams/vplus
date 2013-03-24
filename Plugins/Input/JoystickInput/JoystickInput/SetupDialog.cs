@@ -4,7 +4,7 @@ namespace JoystickInput
 	using System.ComponentModel;
 	using System.Drawing;
 	using System.Windows.Forms;
-	using Vixen;
+	using VixenPlus;
 
 	public partial class SetupDialog : Form
 	{

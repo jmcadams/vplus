@@ -1,4 +1,4 @@
-﻿namespace Vixen
+﻿namespace VixenPlus
 {
 	public interface ITrigger
 	{

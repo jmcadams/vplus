@@ -4,8 +4,8 @@ namespace Simple595
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
     using System.Xml;
-    using Vixen;
-    using Vixen.Dialogs;
+    using VixenPlus;
+    using VixenPlus.Dialogs;
 
     public class Simple595 : IEventDrivenOutputPlugIn, IOutputPlugIn, IHardwarePlugin, IPlugIn, ISetup
     {
@@ -84,11 +84,11 @@ namespace Simple595
             }
         }
 
-        public Vixen.HardwareMap[] HardwareMap
+        public VixenPlus.HardwareMap[] HardwareMap
         {
             get
             {
-                return new Vixen.HardwareMap[] { new Vixen.HardwareMap("Parallel", this.m_portAddress, "X") };
+                return new VixenPlus.HardwareMap[] { new VixenPlus.HardwareMap("Parallel", this.m_portAddress, "X") };
             }
         }
 

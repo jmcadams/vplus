@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal class ReferenceRectF
 	{

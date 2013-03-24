@@ -4,7 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace Vixen
+namespace VixenPlus
 {
 	public class EventSequence : IScheduledObject, IExecutable, IMaskable, IDisposable
 	{

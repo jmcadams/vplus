@@ -4,7 +4,7 @@ namespace Renard {
 	using System.Drawing;
 	using System.IO.Ports;
 	using System.Windows.Forms;
-	using Vixen.Dialogs;
+	using VixenPlus.Dialogs;
 
 	public partial class SetupDialog : Form {
 		private SerialPort m_selectedPort;

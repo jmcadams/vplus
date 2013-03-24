@@ -2,7 +2,7 @@ namespace WattMeter
 {
     using System;
     using System.Xml;
-    using Vixen;
+    using VixenPlus;
 
     public class WattMeter : IAddIn, ILoadable, IPlugIn
     {

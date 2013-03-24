@@ -9,7 +9,7 @@
     using System.Text;
     using System.Text.RegularExpressions;
     using System.Xml;
-    using Vixen;
+    using VixenPlus;
 
     internal class ScriptCompiler : ICompile
     {

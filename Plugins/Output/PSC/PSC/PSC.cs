@@ -7,7 +7,7 @@ namespace PSC
     using System.Threading;
     using System.Windows.Forms;
     using System.Xml;
-    using Vixen;
+    using VixenPlus;
 
     public class PSC : IEventDrivenOutputPlugIn, IOutputPlugIn, IHardwarePlugin, IPlugIn, ISetup
     {
@@ -309,11 +309,11 @@ namespace PSC
             }
         }
 
-        public Vixen.HardwareMap[] HardwareMap
+        public VixenPlus.HardwareMap[] HardwareMap
         {
             get
             {
-                return new Vixen.HardwareMap[] { new Vixen.HardwareMap("Serial", int.Parse(this.m_serialPort.PortName.Substring(3))) };
+                return new VixenPlus.HardwareMap[] { new VixenPlus.HardwareMap("Serial", int.Parse(this.m_serialPort.PortName.Substring(3))) };
             }
         }
 

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal class GeneralConcreteClassProvider : TypeDescriptionProvider
 	{

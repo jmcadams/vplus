@@ -5,7 +5,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal class PlugInRouter
 	{

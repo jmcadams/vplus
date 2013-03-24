@@ -1,4 +1,4 @@
-﻿namespace Vixen.Dialogs
+﻿namespace VixenPlus.Dialogs
 {
 	internal class SSR : HardwareObject
 	{

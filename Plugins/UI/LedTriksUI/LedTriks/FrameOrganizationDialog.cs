@@ -7,8 +7,8 @@ namespace LedTriks {
 	using System.Drawing.Drawing2D;
 	using System.Windows.Forms;
 	using System.Xml;
-	using Vixen;
-	using Vixen.Dialogs;
+	using VixenPlus;
+	using VixenPlus.Dialogs;
 
 	internal partial class FrameOrganizationDialog : Form {
 		private List<Frame> m_clipboard1;

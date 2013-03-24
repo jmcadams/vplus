@@ -1,7 +1,7 @@
 ﻿namespace ScriptEngine
 {
     using System;
-    using Vixen;
+    using VixenPlus;
 
     public interface IUser : IDisposable
     {

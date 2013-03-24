@@ -6,7 +6,7 @@ namespace EZ_8_Transfer
     using System.IO.Ports;
     using System.Windows.Forms;
     using System.Xml;
-    using Vixen;
+    using VixenPlus;
 
     public class EZ8 : IAddIn, ILoadable, IPlugIn
     {

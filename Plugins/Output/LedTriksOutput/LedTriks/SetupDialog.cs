@@ -3,7 +3,7 @@ namespace LedTriks {
 	using System.ComponentModel;
 	using System.Drawing;
 	using System.Windows.Forms;
-	using Vixen.Dialogs;
+	using VixenPlus.Dialogs;
 
 	public partial class SetupDialog : Form {
 

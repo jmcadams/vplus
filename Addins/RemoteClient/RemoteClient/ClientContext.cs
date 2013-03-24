@@ -1,7 +1,7 @@
 ﻿namespace RemoteClient
 {
     using System;
-    using Vixen;
+    using VixenPlus;
 
     internal class ClientContext
     {

@@ -5,7 +5,7 @@ namespace Icicles
     using System.Text;
     using System.Windows.Forms;
     using System.Xml;
-    using Vixen;
+    using VixenPlus;
 
     public class Icicles : IEventDrivenOutputPlugIn, IOutputPlugIn, IHardwarePlugin, IPlugIn, ISetup
     {
@@ -106,11 +106,11 @@ namespace Icicles
             }
         }
 
-        public Vixen.HardwareMap[] HardwareMap
+        public VixenPlus.HardwareMap[] HardwareMap
         {
             get
             {
-                return new Vixen.HardwareMap[] { new Vixen.HardwareMap("Serial", int.Parse(this.m_selectedPort.PortName.Substring(3))) };
+                return new VixenPlus.HardwareMap[] { new VixenPlus.HardwareMap("Serial", int.Parse(this.m_selectedPort.PortName.Substring(3))) };
             }
         }
 

@@ -5,7 +5,7 @@
     using System.ComponentModel;
     using System.Drawing;
     using System.Windows.Forms;
-    using Vixen;
+    using VixenPlus;
 
     internal partial class VirtualHardwareDisplayDialog : OutputPlugInUIBase
     {

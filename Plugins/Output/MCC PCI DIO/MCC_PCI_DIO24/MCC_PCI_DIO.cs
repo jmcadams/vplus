@@ -5,13 +5,13 @@ namespace MCC_PCI_DIO24
     using System.Collections.Generic;
     using System.Windows.Forms;
     using System.Xml;
-    using Vixen;
+    using VixenPlus;
 
     public class MCC_PCI_DIO : IEventDrivenOutputPlugIn, IOutputPlugIn, IHardwarePlugin, IPlugIn, ISetup
     {
         private DigitalPortType[] m_boardPortType;
         private MccBoard[] m_boards;
-        private Vixen.HardwareMap[] m_hardwareMap;
+        private VixenPlus.HardwareMap[] m_hardwareMap;
         private int[] m_pinBoardIndex;
         private int[] m_pinBoardOffset;
         private int m_pinCount;
@@ -47,7 +47,7 @@ namespace MCC_PCI_DIO24
             }
             Array.Resize<MccBoard>(ref this.m_boards, index);
             Array.Resize<DigitalPortType>(ref this.m_boardPortType, index);
-            this.m_hardwareMap = new Vixen.HardwareMap[index];
+            this.m_hardwareMap = new VixenPlus.HardwareMap[index];
             int num3 = 0;
             int num6 = 0;
             Dictionary<string, int> dictionary = new Dictionary<string, int>();
@@ -62,7 +62,7 @@ namespace MCC_PCI_DIO24
                 {
                     dictionary[board.BoardName] = 0;
                 }
-                this.m_hardwareMap[index] = new Vixen.HardwareMap(board.BoardName, dictionary[board.BoardName]);
+                this.m_hardwareMap[index] = new VixenPlus.HardwareMap(board.BoardName, dictionary[board.BoardName]);
                 (dictionary2 = dictionary)[str = board.BoardName] = dictionary2[str] + 1;
                 int pinCount = this.m_pinCount;
                 board.BoardConfig.GetDiNumDevs(out num3);
@@ -122,7 +122,7 @@ namespace MCC_PCI_DIO24
             }
         }
 
-        public Vixen.HardwareMap[] HardwareMap
+        public VixenPlus.HardwareMap[] HardwareMap
         {
             get
             {

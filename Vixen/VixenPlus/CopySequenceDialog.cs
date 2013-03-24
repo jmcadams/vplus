@@ -3,7 +3,7 @@ using System.Collections;
 using System.IO;
 using System.Windows.Forms;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal sealed partial class CopySequenceDialog : Form
 	{

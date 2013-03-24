@@ -9,9 +9,9 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 using FMOD;
-using Vixen.Dialogs;
+using VixenPlus.Dialogs;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal partial class Form1 : Form, ISystem
 	{

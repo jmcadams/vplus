@@ -2,7 +2,7 @@
 {
     using System;
     using System.Xml;
-    using Vixen;
+    using VixenPlus;
 
     internal static class SetupData
     {

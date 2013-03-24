@@ -1,4 +1,4 @@
-namespace Vixen.Dialogs{
+namespace VixenPlus.Dialogs{
 	using System;
 	using System.Windows.Forms;
 	using System.Drawing;
@@ -36,7 +36,7 @@ private PictureBox pictureBoxProfileDeleteChannelOrder;
 private PictureBox pictureBoxProfileSaveChannelOrder;
 private PictureBox pictureBoxRemoveProfile;
 private PictureBox pictureBoxReturnFromProfileEdit;
-private Vixen.TabControl tabControl;
+private VixenPlus.TabControl tabControl;
 private TabPage tabEditProfile;
 private TabPage tabProfiles;
 private TextBox textBoxProfileChannelCount;
@@ -61,7 +61,7 @@ private TreeView treeViewProfile;
 	this.pictureBoxProfileChannelOutputs = new System.Windows.Forms.PictureBox();
 	this.pictureBoxReturnFromProfileEdit = new System.Windows.Forms.PictureBox();
 	this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-	this.tabControl = new Vixen.TabControl(this.components);
+	this.tabControl = new VixenPlus.TabControl(this.components);
 	this.tabProfiles = new System.Windows.Forms.TabPage();
 	this.listBoxProfiles = new System.Windows.Forms.ListBox();
 	this.label1 = new System.Windows.Forms.Label();

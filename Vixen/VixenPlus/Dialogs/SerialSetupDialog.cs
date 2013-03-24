@@ -4,7 +4,7 @@ using System.IO.Ports;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Vixen.Dialogs
+namespace VixenPlus.Dialogs
 {
 	public partial class SerialSetupDialog : Form
 	{

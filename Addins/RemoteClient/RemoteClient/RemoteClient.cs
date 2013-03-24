@@ -3,7 +3,7 @@ namespace RemoteClient
     using System;
     using System.Windows.Forms;
     using System.Xml;
-    using Vixen;
+    using VixenPlus;
 
     public class RemoteClient : IAddIn, ILoadable, IPlugIn
     {

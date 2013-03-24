@@ -6,7 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
-namespace Vixen.Dialogs
+namespace VixenPlus.Dialogs
 {
 	public partial class ProfileManagerDialog : Form
 	{

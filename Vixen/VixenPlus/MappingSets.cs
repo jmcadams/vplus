@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal class MappingSets : ICloneable, IEnumerable<MappingSet>, IEnumerable
 	{

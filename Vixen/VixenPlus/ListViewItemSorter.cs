@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Windows.Forms;
 
-namespace Vixen
+namespace VixenPlus
 {
 	internal class ListViewItemSorter : IComparer
 	{

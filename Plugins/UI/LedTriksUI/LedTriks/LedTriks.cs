@@ -10,8 +10,8 @@ namespace LedTriks
     using System.Threading;
     using System.Windows.Forms;
     using System.Xml;
-    using Vixen;
-    using Vixen.Dialogs;
+    using VixenPlus;
+    using VixenPlus.Dialogs;
 
     public partial class LedTriks : UIBase
     {
