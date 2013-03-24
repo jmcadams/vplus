@@ -1,8 +1,6 @@
 ﻿namespace VixenPlus
 {
-    using System;
-
-    public enum Ports
+	public enum Ports
     {
         ExecutionClient = 0xa1bb,
         LocalClient = 0xa1bd,

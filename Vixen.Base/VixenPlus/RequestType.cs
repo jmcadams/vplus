@@ -1,8 +1,6 @@
 ﻿namespace VixenPlus
 {
-    using System;
-
-    public enum RequestType
+	public enum RequestType
     {
         Ack = 0x13,
         Authenticate = 0x15,

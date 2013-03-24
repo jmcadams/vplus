@@ -9,10 +9,8 @@
     {
         public static TcpClient ConnectTo(IPAddress[] hostAddresses, int port)
         {
-            TcpClient client = new TcpClient();
-            client.SendTimeout = 0x1388;
-            client.ReceiveTimeout = 0x1388;
-            try
+            var client = new TcpClient {SendTimeout = 5000, ReceiveTimeout = 5000};
+	        try
             {
                 client.Connect(hostAddresses, port);
             }
@@ -25,16 +23,14 @@
 
         public static TcpClient ConnectTo(IPAddress hostAddress, int port)
         {
-            TcpClient client = new TcpClient();
-            client.SendTimeout = 0x1388;
-            client.ReceiveTimeout = 0x1388;
-            try
+            var client = new TcpClient {SendTimeout = 5000, ReceiveTimeout = 5000};
+	        try
             {
                 client.Connect(hostAddress, port);
             }
             catch
             {
-                throw new Exception(string.Format("Timeout trying to connect to the host ({0})", hostAddress.ToString()));
+                throw new Exception(string.Format("Timeout trying to connect to the host ({0})", hostAddress));
             }
             return client;
         }
@@ -52,7 +48,7 @@
                 return new byte[0];
             }
             int offset = 0;
-            byte[] buffer = new byte[byteCount];
+            var buffer = new byte[byteCount];
             do
             {
                 num = socket.Receive(buffer, offset, byteCount - offset, SocketFlags.None);
@@ -90,7 +86,7 @@
 
         public static void SendSocketString(Socket socket, string str)
         {
-            byte[] array = new byte[str.Length + 1];
+            var array = new byte[str.Length + 1];
             array[0] = (byte) str.Length;
             Encoding.ASCII.GetBytes(str).CopyTo(array, 1);
             socket.Send(array);

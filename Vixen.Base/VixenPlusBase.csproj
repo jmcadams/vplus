@@ -68,16 +68,16 @@
     <Compile Include="Global.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\ObjectPacket.cs">
+    <Compile Include="VixenPlus\IObjectPacket.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\Ports.cs">
+    <Compile Include="VixenPlus\Ports.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\RequestType.cs">
+    <Compile Include="VixenPlus\RequestType.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\Sockets.cs">
+    <Compile Include="VixenPlus\Sockets.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
