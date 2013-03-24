@@ -23,7 +23,7 @@ namespace BasicParallel
             foreach (byte num2 in channelValues)
             {
                 data = (short) (data >> 1);
-                data = (short) (data | ((num2 > 0) ? 0x80 : 0));
+                data = (short) (data | ((num2 > 0) ? (short)0x80 : (short)0));
             }
             Out(this.m_portAddress, data);
         }

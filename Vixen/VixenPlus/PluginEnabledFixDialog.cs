@@ -6,6 +6,7 @@ namespace Vixen
     using System.Windows.Forms;
     using System.Xml;
 
+	[Obsolete]
     internal partial class PluginEnabledFixDialog : Form
     {
         public PluginEnabledFixDialog(XmlDocument doc)

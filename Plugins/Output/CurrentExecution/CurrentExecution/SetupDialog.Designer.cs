@@ -1,12 +1,11 @@
 namespace CurrentExecution {
 	using System;
-	using System.Windows.Forms;
-	using System.Drawing;
 	using System.ComponentModel;
-	using System.Collections;
+	using System.Drawing;
+	using System.Windows.Forms;
 
 	public partial class SetupDialog {
-		private IContainer components;
+		private System.ComponentModel.IContainer components = null;
 
 		#region Windows Form Designer generated code
 		private Button buttonBoardLayout;

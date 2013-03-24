@@ -2,11 +2,10 @@ namespace Vixen.Dialogs{
 	using System;
 	using System.Windows.Forms;
 	using System.Drawing;
-	using System.ComponentModel;
 	using System.Collections;
 
 	public partial class ParallelSetupDialog{
-		private IContainer components;
+		private System.ComponentModel.IContainer components = null;
 
 		#region Windows Form Designer generated code
 		private Button buttonCancel;

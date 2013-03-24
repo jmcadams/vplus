@@ -9,6 +9,7 @@
     using System.Runtime.InteropServices;
     using System.Text;
 
+	[Obsolete]
     [OptionText]
     public class FTPclient
     {
@@ -110,7 +111,6 @@
                         stream2.Close();
                         targetFI.Delete();
                         throw;
-                        ProjectData.ClearProjectError();
                     }
                     finally
                     {
@@ -158,7 +158,6 @@
                 bool flag = false;
                 ProjectData.ClearProjectError();
                 return flag;
-                ProjectData.ClearProjectError();
             }
             return true;
         }
@@ -179,7 +178,6 @@
                 bool flag = false;
                 ProjectData.ClearProjectError();
                 return flag;
-                ProjectData.ClearProjectError();
             }
             return true;
         }
@@ -200,7 +198,6 @@
                 bool flag = false;
                 ProjectData.ClearProjectError();
                 return flag;
-                ProjectData.ClearProjectError();
             }
             return true;
         }
@@ -224,14 +221,12 @@
                     return flag;
                 }
                 throw;
-                ProjectData.ClearProjectError();
             }
             catch (Exception exception3)
             {
                 ProjectData.SetProjectError(exception3);
                 Exception exception2 = exception3;
                 throw;
-                ProjectData.ClearProjectError();
             }
             return flag;
         }
@@ -255,13 +250,11 @@
                     return flag;
                 }
                 throw;
-                ProjectData.ClearProjectError();
             }
             catch (Exception exception2)
             {
                 ProjectData.SetProjectError(exception2);
                 throw;
-                ProjectData.ClearProjectError();
             }
             return flag;
         }
@@ -297,7 +290,6 @@
                 bool flag = false;
                 ProjectData.ClearProjectError();
                 return flag;
-                ProjectData.ClearProjectError();
             }
             return true;
         }

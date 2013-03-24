@@ -18,7 +18,7 @@
         public int FrameLength = 0x19;
         public bool IgnoreFontDescent = false;
         private int m_fontHeight;
-        private int m_staticCount = 0;
+		//private int m_staticCount = 0;
         private int m_stringPixelLength;
         private Win32.TEXTMETRIC m_tm;
         public Font TextFont = new Font("Arial", 10f);

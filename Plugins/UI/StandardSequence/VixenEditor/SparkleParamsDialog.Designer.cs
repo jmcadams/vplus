@@ -2,11 +2,10 @@ namespace VixenEditor {
 	using System;
 	using System.Windows.Forms;
 	using System.Drawing;
-	using System.ComponentModel;
 	using System.Collections;
 
 	internal partial class SparkleParamsDialog {
-		private IContainer components;
+		private System.ComponentModel.IContainer components = null;
 
 		#region Windows Form Designer generated code
 		private Button buttonCancel;
@@ -40,7 +39,7 @@ namespace VixenEditor {
 			this.numericUpDownMax.BeginInit();
 			this.numericUpDownMin.BeginInit();
 			this.trackBarDecay.BeginInit();
-			((ISupportInitialize)this.pictureBoxExample).BeginInit();
+			((System.ComponentModel.ISupportInitialize)this.pictureBoxExample).BeginInit();
 			this.trackBarFrequency.BeginInit();
 			base.SuspendLayout();
 			this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
@@ -153,7 +152,7 @@ namespace VixenEditor {
 			this.numericUpDownMax.EndInit();
 			this.numericUpDownMin.EndInit();
 			this.trackBarDecay.EndInit();
-			((ISupportInitialize)this.pictureBoxExample).EndInit();
+			((System.ComponentModel.ISupportInitialize)this.pictureBoxExample).EndInit();
 			this.trackBarFrequency.EndInit();
 			base.ResumeLayout(false);
 		}

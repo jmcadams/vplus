@@ -5,6 +5,7 @@
     using System.Drawing;
     using System.Windows.Forms;
 
+	[Obsolete]
     internal partial class CurveConflictResolutionDialog : Form
     {
         private CurveLibraryRecord[] m_selectedRecords = null;

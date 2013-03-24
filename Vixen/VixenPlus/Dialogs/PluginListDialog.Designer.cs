@@ -2,11 +2,11 @@ namespace Vixen.Dialogs{
 	using System;
 	using System.Windows.Forms;
 	using System.Drawing;
-	using System.ComponentModel;
 	using System.Collections;
+	using System.ComponentModel;
 
 	public partial class PluginListDialog{
-		private IContainer components;
+		private System.ComponentModel.IContainer components = null;
 
 		#region Windows Form Designer generated code
 		private Button buttonCancel;

@@ -10,7 +10,7 @@ namespace Simple595
     public class InvertedSimple595 : IEventDrivenOutputPlugIn, IOutputPlugIn, IHardwarePlugin, IPlugIn, ISetup
     {
         private ushort m_portAddress = 0;
-        private int m_portNumber = 0;
+		//private int m_portNumber = 0;
         private SetupData m_setupData;
         private XmlNode m_setupNode;
 

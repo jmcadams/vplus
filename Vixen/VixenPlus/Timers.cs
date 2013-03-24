@@ -270,10 +270,9 @@
 
         public void SaveToXml(XmlNode contextNode)
         {
-            bool flag;
             XmlDocument document = (contextNode.OwnerDocument == null) ? ((XmlDocument) contextNode) : contextNode.OwnerDocument;
             XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(contextNode, "Timers");
-            Xml.SetAttribute(emptyNodeAlways, "enabled", this.m_disabled ? (flag = false).ToString() : (flag = true).ToString());
+            Xml.SetAttribute(emptyNodeAlways, "enabled", this.m_disabled ? false.ToString() : true.ToString());
             foreach (Timer timer in this.m_timers)
             {
                 timer.SaveToXml(emptyNodeAlways);

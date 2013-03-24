@@ -12,7 +12,7 @@ namespace Preview
 
     public class PreviewDialog : OutputPlugInUIBase
     {
-        private byte color = 0;
+		//private byte color = 0;
         private IContainer components = null;
         private uint[,] m_backBuffer;
         private int m_cellSize;

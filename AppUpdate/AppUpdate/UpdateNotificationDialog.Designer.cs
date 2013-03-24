@@ -2,11 +2,10 @@ namespace AppUpdate {
 	using System;
 	using System.Windows.Forms;
 	using System.Drawing;
-	using System.ComponentModel;
 	using System.Collections;
 
 	internal partial class UpdateNotificationDialog {
-		private IContainer components;
+		private System.ComponentModel.IContainer components = null;
 
 		#region Windows Form Designer generated code
 		private Button buttonNo;
@@ -19,7 +18,7 @@ namespace AppUpdate {
 			this.pictureBox1 = new PictureBox();
 			this.buttonYes = new Button();
 			this.buttonNo = new Button();
-			((ISupportInitialize)this.pictureBox1).BeginInit();
+			((System.ComponentModel.ISupportInitialize)this.pictureBox1).BeginInit();
 			base.SuspendLayout();
 			this.labelMessage.AutoSize = true;
 			this.labelMessage.Location = new Point(0x41, 15);
@@ -65,7 +64,7 @@ namespace AppUpdate {
 			base.StartPosition = FormStartPosition.CenterScreen;
 			this.Text = "UpdateNotificationDialog";
 			base.TopMost = true;
-			((ISupportInitialize)this.pictureBox1).EndInit();
+			((System.ComponentModel.ISupportInitialize)this.pictureBox1).EndInit();
 			base.ResumeLayout(false);
 			base.PerformLayout();
 		}

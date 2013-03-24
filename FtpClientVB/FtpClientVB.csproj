@@ -18,6 +18,7 @@
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <OldToolsVersion>0.0</OldToolsVersion>
     <UpgradeBackupLocation />
+    <IsWebBootstrapper>true</IsWebBootstrapper>
     <PublishUrl>http://localhost/FtpClientVB/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -30,7 +31,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>true</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -69,21 +69,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Global.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="My\MyApplication.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="My\MyComputer.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="My\MyProject.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="My\MySettings.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="My\Resources\Resources.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Utilities\FTP\FTPclient.cs">

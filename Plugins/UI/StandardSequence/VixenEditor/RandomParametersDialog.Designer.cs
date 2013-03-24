@@ -2,11 +2,10 @@ namespace VixenEditor {
 	using System;
 	using System.Windows.Forms;
 	using System.Drawing;
-	using System.ComponentModel;
 	using System.Collections;
 
 	internal partial class RandomParametersDialog {
-		private IContainer components;
+		private System.ComponentModel.IContainer components = null;
 
 		#region Windows Form Designer generated code
 		private Button buttonCancel;

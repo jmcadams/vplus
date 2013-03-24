@@ -2,11 +2,10 @@ namespace Vixen.Dialogs{
 	using System;
 	using System.Windows.Forms;
 	using System.Drawing;
-	using System.ComponentModel;
 	using System.Collections;
 
 	public partial class AllChannelsColorDialog{
-		private IContainer components;
+		private System.ComponentModel.IContainer components = null;
 
 		#region Windows Form Designer generated code
 		private Button buttonCancel;
@@ -111,7 +110,7 @@ private ListBox listBoxColorsInUse;
 			base.Name = "AllChannelsColorDialog";
 			base.StartPosition = FormStartPosition.CenterScreen;
 			this.Text = "Channel Colors";
-			base.HelpButtonClicked += new CancelEventHandler(this.AllChannelsColorDialog_HelpButtonClicked);
+			base.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.AllChannelsColorDialog_HelpButtonClicked);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
 			base.ResumeLayout(false);

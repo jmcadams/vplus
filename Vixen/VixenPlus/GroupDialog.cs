@@ -6,21 +6,10 @@ namespace Vixen
     using System.Drawing;
     using System.Windows.Forms;
 
+	[Obsolete]
     internal partial class GroupDialog : Form
     {
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        private bool m_canClose = true;
+		private bool m_canClose = true;
         private Channel m_primaryChannel = null;
         
 

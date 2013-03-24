@@ -6,6 +6,7 @@
     using System.Windows.Forms;
     using System.Xml;
 
+	[Obsolete]
     internal partial class ChannelRangeFixDialog : Form
     {
         private XmlDocument m_doc;

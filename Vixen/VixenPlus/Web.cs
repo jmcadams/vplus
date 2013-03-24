@@ -9,6 +9,7 @@
     using System.Threading;
     using Utilities.FTP;
 
+	[Obsolete]
     internal class Web : IDisposable
     {
         private WebClient m_client = null;

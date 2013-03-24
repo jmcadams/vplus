@@ -9,7 +9,7 @@ namespace DC_16
 
     public class DC_16 : IEventDrivenOutputPlugIn, IOutputPlugIn, IHardwarePlugin, IPlugIn, ISetup
     {
-        private byte m_addr;
+		//private byte m_addr;
         private int[] m_channelGroupControllers = new int[] { -1, -1, -1, -1 };
         private byte[] m_firmwareErrorHighPacket = new byte[] { 0x21, 0x44, 0x43, 0x31, 0x36, 0, 80, 14, 0 };
         private byte[] m_firmwareErrorLowPacket = new byte[] { 0x21, 0x44, 0x43, 0x31, 0x36, 0, 80, 6, 0 };
@@ -104,9 +104,9 @@ namespace DC_16
 
         public void Startup()
         {
-            this.m_packet[5] = this.m_addr;
-            this.m_firmwareErrorLowPacket[5] = this.m_addr;
-            this.m_firmwareErrorHighPacket[5] = this.m_addr;
+            this.m_packet[5] = 0;
+            this.m_firmwareErrorLowPacket[5] = 0;
+            this.m_firmwareErrorHighPacket[5] = 0;
             if (!this.m_serialPort.IsOpen)
             {
                 this.m_serialPort.Open();

@@ -8,16 +8,7 @@ namespace Vixen
 
     internal partial class ExecutingTimerControlDialog : Form
     {
-        
-        
-        
-        
-        
-        
-
-        
-        
-        private TimerContext.OnExecutionChange m_onExecutionChangeHandler;
+		private TimerContext.OnExecutionChange m_onExecutionChangeHandler;
         private TimerContext.OnExecutionEnd m_onExecutionEndHandler;
         
 

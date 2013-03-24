@@ -1,10 +1,9 @@
 namespace AppUpdate {
-	using System.ComponentModel;
 	using System.Drawing;
 	using System.Windows.Forms;
 
 	internal partial class ProgressDialog {
-		private IContainer components;
+		private System.ComponentModel.IContainer components = null;
 
 		#region Windows Form Designer generated code
 		private Label lblMessage;

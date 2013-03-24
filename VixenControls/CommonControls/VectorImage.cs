@@ -16,7 +16,7 @@
                 base.Type = VectorImage.PrimitiveType.Ellipse;
             }
 
-            public static VectorImageElement LoadFromXml(XmlNode contextNode)
+            public static VectorImageElement LoadEllipseFromXml(XmlNode contextNode)
             {
                 string[] strArray = contextNode.SelectSingleNode("Location").InnerText.Split(new char[] { ',' });
                 return new VectorImage.Ellipse(Color.Black, int.Parse(strArray[0]), int.Parse(strArray[1]), int.Parse(contextNode.SelectSingleNode("Width").InnerText), int.Parse(contextNode.SelectSingleNode("Height").InnerText));
@@ -30,7 +30,7 @@
                 base.Type = VectorImage.PrimitiveType.FilledEllipse;
             }
 
-            public static VectorImageElement LoadFromXml(XmlNode contextNode)
+            public static VectorImageElement LoadFilledEllipseFromXml(XmlNode contextNode)
             {
                 string[] strArray = contextNode.SelectSingleNode("Location").InnerText.Split(new char[] { ',' });
                 return new VectorImage.FilledEllipse(Color.Black, int.Parse(strArray[0]), int.Parse(strArray[1]), int.Parse(contextNode.SelectSingleNode("Width").InnerText), int.Parse(contextNode.SelectSingleNode("Height").InnerText));
@@ -44,7 +44,7 @@
                 base.Type = VectorImage.PrimitiveType.FilledRectangle;
             }
 
-            public static VectorImageElement LoadFromXml(XmlNode contextNode)
+            public static VectorImageElement LoadRectangleFromXml(XmlNode contextNode)
             {
                 string[] strArray = contextNode.SelectSingleNode("Location").InnerText.Split(new char[] { ',' });
                 return new VectorImage.FilledRectangle(Color.Black, int.Parse(strArray[0]), int.Parse(strArray[1]), int.Parse(contextNode.SelectSingleNode("Width").InnerText), int.Parse(contextNode.SelectSingleNode("Height").InnerText));
@@ -89,15 +89,15 @@
                             break;
 
                         case VectorImage.PrimitiveType.FilledRectangle:
-                            item = VectorImage.FilledRectangle.LoadFromXml(node2);
+                            item = VectorImage.FilledRectangle.LoadRectangleFromXml(node2);
                             break;
 
                         case VectorImage.PrimitiveType.Ellipse:
-                            item = VectorImage.Ellipse.LoadFromXml(node2);
+                            item = VectorImage.Ellipse.LoadEllipseFromXml(node2);
                             break;
 
                         case VectorImage.PrimitiveType.FilledEllipse:
-                            item = VectorImage.FilledEllipse.LoadFromXml(node2);
+                            item = VectorImage.FilledEllipse.LoadFilledEllipseFromXml(node2);
                             break;
                     }
                     item.Color = Color.FromArgb(int.Parse(node2.Attributes["color"].Value));
