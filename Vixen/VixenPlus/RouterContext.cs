@@ -8,10 +8,10 @@ namespace VixenPlus
 	{
 		public byte[] EngineBuffer;
 		public IExecutable ExecutableObject;
+		public bool IsInitialized = false;
 		public List<MappedOutputPlugIn> OutputPluginList;
 		public SetupData PluginData;
 		public ITickSource TickSource;
-		public bool IsInitialized = false;
 
 		public RouterContext(byte[] engineBuffer, SetupData pluginData, IExecutable executableObject, ITickSource tickSource)
 		{

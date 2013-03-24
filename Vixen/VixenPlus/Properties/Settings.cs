@@ -8,11 +8,11 @@ namespace VixenPlus.Properties
 	 CompilerGenerated]
 	internal sealed class Settings : ApplicationSettingsBase
 	{
-		private static readonly Settings defaultInstance = ((Settings) Synchronized(new Settings()));
+		private static readonly Settings DefaultInstance = ((Settings) Synchronized(new Settings()));
 
 		public static Settings Default
 		{
-			get { return defaultInstance; }
+			get { return DefaultInstance; }
 		}
 	}
 }

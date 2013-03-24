@@ -47,8 +47,9 @@ namespace VixenPlus
 			}
 			else if (_curveLibraryRecord == null)
 			{
-				_curveLibraryRecord = new CurveLibraryRecord(textBoxManufacturer.Text, textBoxLightCount.Text, buttonColor.BackColor.ToArgb(),
-				                               textBoxController.Text);
+				_curveLibraryRecord = new CurveLibraryRecord(textBoxManufacturer.Text, textBoxLightCount.Text,
+				                                             buttonColor.BackColor.ToArgb(),
+				                                             textBoxController.Text);
 			}
 			else
 			{

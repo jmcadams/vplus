@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace VixenPlus
+﻿namespace VixenPlus
 {
 	internal interface IScheduledObject : IExecutable
 	{

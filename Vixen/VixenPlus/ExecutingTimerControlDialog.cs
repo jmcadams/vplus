@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Globalization;
+using System.Windows.Forms;
 
 namespace VixenPlus
 {
@@ -159,7 +159,8 @@ namespace VixenPlus
 			if (Host.GetDebugValue("TimerTrace") != null)
 			{
 				Host.LogTo(Paths.TimerTraceFilePath, "Can loop?");
-				Host.LogTo(Paths.TimerTraceFilePath, "  Repeat interval: " + context.Timer.RepeatInterval.ToString(CultureInfo.InvariantCulture));
+				Host.LogTo(Paths.TimerTraceFilePath,
+				           "  Repeat interval: " + context.Timer.RepeatInterval.ToString(CultureInfo.InvariantCulture));
 				Host.LogTo(Paths.TimerTraceFilePath,
 				           string.Format("  Timer length / Object length: {0}/{1} ({2})", context.Timer.TimerLength,
 				                         context.Timer.ObjectLength, context.Timer.TimerLength >= context.Timer.ObjectLength));

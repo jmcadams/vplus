@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Xml;
 
 namespace VixenPlus
@@ -25,10 +26,10 @@ namespace VixenPlus
 
 		public XmlNode CreatePlugInData(IHardwarePlugin plugIn)
 		{
-			XmlNode node = Xml.SetNewValue(base.Node, "PlugIn", string.Empty);
+			XmlNode node = Xml.SetNewValue(Node, "PlugIn", string.Empty);
 			Xml.SetAttribute(node, "name", plugIn.Name);
-			Xml.SetAttribute(node, "key", plugIn.Name.GetHashCode().ToString());
-			Xml.SetAttribute(node, "id", (GetAllPluginData().Count - 1).ToString());
+			Xml.SetAttribute(node, "key", plugIn.Name.GetHashCode().ToString(CultureInfo.InvariantCulture));
+			Xml.SetAttribute(node, "id", (GetAllPluginData().Count - 1).ToString(CultureInfo.InvariantCulture));
 			Xml.SetAttribute(node, "enabled", bool.TrueString);
 			if (plugIn is IInputPlugin)
 			{
@@ -96,7 +97,7 @@ namespace VixenPlus
 			int num = 0;
 			foreach (XmlNode node in GetAllPluginData())
 			{
-				node.Attributes["id"].Value = num.ToString();
+				node.Attributes["id"].Value = num.ToString(CultureInfo.InvariantCulture);
 				num++;
 			}
 		}

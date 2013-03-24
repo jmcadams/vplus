@@ -80,7 +80,7 @@ namespace VixenPlus
 			XmlNode node = dataNode["Inputs"];
 			if (node != null)
 			{
-				var inputNodes = node.SelectNodes("Input");
+				XmlNodeList inputNodes = node.SelectNodes("Input");
 				if (inputNodes != null)
 				{
 					foreach (XmlNode node2 in inputNodes)

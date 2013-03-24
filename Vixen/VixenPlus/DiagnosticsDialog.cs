@@ -107,7 +107,9 @@ namespace VixenPlus
 			{
 				DateTime time = DateTime.Today + dateTimePickerTimerTraceFrom.Value.TimeOfDay;
 				Host.SetDebugValue("TraceStart", time.ToString(CultureInfo.InvariantCulture));
-				Host.SetDebugValue("TraceEnd", (DateTime.Today + dateTimePickerTimerTraceTo.Value.TimeOfDay).ToString(CultureInfo.InvariantCulture));
+				Host.SetDebugValue("TraceEnd",
+				                   (DateTime.Today + dateTimePickerTimerTraceTo.Value.TimeOfDay).ToString(
+					                   CultureInfo.InvariantCulture));
 			}
 			else
 			{

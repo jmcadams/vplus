@@ -4,7 +4,7 @@ using System.Windows.Forms;
 namespace VixenPlus
 {
 //	[TypeDescriptionProvider(typeof(GeneralConcreteClassProvider)), ConcreteClass(typeof(UIBaseConcreteForm))]
-	public partial class UIBase : Form, IUIPlugIn, IVixenMDI, IPlugIn
+	public partial class UIBase : Form, IUIPlugIn
 	{
 		private bool _isDirty;
 

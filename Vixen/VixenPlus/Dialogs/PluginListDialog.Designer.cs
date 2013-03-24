@@ -5,7 +5,7 @@ namespace VixenPlus.Dialogs{
 	using System.Collections;
 	using System.ComponentModel;
 
-	public partial class PluginListDialog{
+	public sealed partial class PluginListDialog{
 		private System.ComponentModel.IContainer components = null;
 
 		#region Windows Form Designer generated code

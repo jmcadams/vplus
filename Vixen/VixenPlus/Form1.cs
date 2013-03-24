@@ -16,6 +16,7 @@ namespace VixenPlus
 {
 	internal sealed partial class Form1 : Form, ISystem
 	{
+		private const int HistoryMax = 7;
 		private readonly EventHandler _historyItemClick;
 		private readonly Host _host;
 		private readonly TriggerImpl _iTriggerImpl;
@@ -28,7 +29,6 @@ namespace VixenPlus
 		private readonly string _timersPath;
 		private string[] _audioDevices;
 		private List<string> _history;
-		private const int HistoryMax = 7;
 		private string _knownFileTypesFilter;
 		private string _lastWindowsClipboardValue = "";
 		private DateTime _shutdownAt;
@@ -60,7 +60,7 @@ namespace VixenPlus
 			string path = Path.Combine(Paths.BinaryPath, "prepare.exe");
 			if (File.Exists(path))
 			{
-				var process = Process.Start(path);
+				Process process = Process.Start(path);
 				if (process != null)
 				{
 					process.WaitForExit();
@@ -319,16 +319,16 @@ namespace VixenPlus
 				item.Checked = true;
 			}
 			EventSequence sequence = null;
-			if (base.ActiveMdiChild != null && (base.ActiveMdiChild is IVixenMDI))
+			if (ActiveMdiChild != null && (base.ActiveMdiChild is IVixenMDI))
 			{
-				sequence = ((IVixenMDI) base.ActiveMdiChild).Sequence;
+				sequence = ((IVixenMDI) ActiveMdiChild).Sequence;
 			}
 			try
 			{
 				var addIn = (IAddIn) tag.Instance;
 				if (addIn != null && (addIn.Execute(sequence) && (sequence != null)))
 				{
-					((IVixenMDI) base.ActiveMdiChild).Notify(Notification.SequenceChange, null);
+					((IVixenMDI) ActiveMdiChild).Notify(Notification.SequenceChange, null);
 				}
 			}
 			catch (Exception exception)
@@ -489,18 +489,6 @@ namespace VixenPlus
 			}
 		}
 
-		private int FindMdiChildIndex(Form childForm)
-		{
-			for (int i = 0; i < MdiChildren.Length; i++)
-			{
-				if (childForm == MdiChildren[i])
-				{
-					return i;
-				}
-			}
-			return -1;
-		}
-
 		private void FlushHistory()
 		{
 			XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(_preferences.XmlDoc.DocumentElement, "History");
@@ -513,7 +501,7 @@ namespace VixenPlus
 
 		private void Form1_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			foreach (var form in MdiChildren)
+			foreach (Form form in MdiChildren)
 			{
 				if ((form is IUIPlugIn) && (CheckDirty((IUIPlugIn) form) == DialogResult.Cancel))
 				{
@@ -528,7 +516,7 @@ namespace VixenPlus
 				var loadedObject = item.Tag as LoadedObject;
 				if (loadedObject != null)
 				{
-					var tag = loadedObject;
+					LoadedObject tag = loadedObject;
 					XmlNode loadableData = _loadableData.GetLoadableData(tag.InterfaceImplemented, item.Text);
 					if ((tag.Instance != null) && (tag.Instance.DataLocationPreference == LoadableDataLocation.Application))
 					{
@@ -546,7 +534,7 @@ namespace VixenPlus
 				var loadedObject = item.Tag as LoadedObject;
 				if (loadedObject != null)
 				{
-					var obj3 = loadedObject;
+					LoadedObject obj3 = loadedObject;
 					XmlNode node = _loadableData.GetLoadableData(obj3.InterfaceImplemented, item.Text);
 					if (obj3.Instance != null)
 					{
@@ -657,13 +645,13 @@ namespace VixenPlus
 					{
 						loadedObject.Instance.Loading(
 							activeMdiChild.Sequence.LoadableData.GetLoadableData(loadedObject.InterfaceImplemented,
-							                                                                  loadedObject.Instance.Name));
+							                                                     loadedObject.Instance.Name));
 					}
 				}
 				else
 				{
 					loadedObject.Instance.Loading(_loadableData.GetLoadableData(loadedObject.InterfaceImplemented,
-					                                                             loadedObject.Instance.Name));
+					                                                            loadedObject.Instance.Name));
 				}
 			}
 			catch (Exception exception)
@@ -708,7 +696,7 @@ namespace VixenPlus
 				var loadedObject = item2.Tag as LoadedObject;
 				if (loadedObject != null)
 				{
-					var tag = loadedObject;
+					LoadedObject tag = loadedObject;
 					((ToolStripMenuItem) item2).Checked = tag.Instance != null;
 				}
 			}
@@ -992,7 +980,7 @@ namespace VixenPlus
 			{
 				var vixenMdi = form as IVixenMDI;
 				if (vixenMdi != null)
-				{		
+				{
 					vixenMdi.Notify(notification, null);
 				}
 			}
@@ -1040,7 +1028,7 @@ namespace VixenPlus
 		{
 			IUIPlugIn @in;
 			new XmlDocument();
-			var extension = Path.GetExtension(fileName);
+			string extension = Path.GetExtension(fileName);
 			if (extension != null && _registeredFileTypes.TryGetValue(extension.ToLower(), out @in))
 			{
 				AddToFileHistory(fileName);
@@ -1093,8 +1081,10 @@ namespace VixenPlus
 			var @in = ActiveMdiChild as IUIPlugIn;
 			if (@in != null)
 			{
-				var activeMdiChild = @in;
-				saveToolStripMenuItem.Text = !string.IsNullOrEmpty(activeMdiChild.Sequence.Name) ? string.Format("Save ({0})", activeMdiChild.Sequence.Name) : "Save";
+				IUIPlugIn activeMdiChild = @in;
+				saveToolStripMenuItem.Text = !string.IsNullOrEmpty(activeMdiChild.Sequence.Name)
+					                             ? string.Format("Save ({0})", activeMdiChild.Sequence.Name)
+					                             : "Save";
 				channelDimmingCurvesToolStripMenuItem.Enabled = true;
 			}
 			else
@@ -1177,7 +1167,7 @@ namespace VixenPlus
 
 		private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			SaveAs((UIBase) base.ActiveMdiChild);
+			SaveAs((UIBase) ActiveMdiChild);
 		}
 
 		private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1269,7 +1259,7 @@ namespace VixenPlus
 				addInsToolStripMenuItem.DropDownItems.Add(item);
 				if (
 					_loadableData.RootNode.SelectSingleNode(string.Format("IAddInData/IAddIn[@name=\"{0}\" and @enabled=\"{1}\"]",
-					                                                       @in.Name, bool.TrueString)) != null)
+					                                                      @in.Name, bool.TrueString)) != null)
 				{
 					InstantiateObject(obj2);
 					item.Checked = true;
@@ -1389,7 +1379,7 @@ namespace VixenPlus
 			IExecutable executableObject;
 			if (ActiveMdiChild != null && ActiveMdiChild is IVixenMDI && ((IVixenMDI) ActiveMdiChild).Sequence != null)
 			{
-				executableObject = ((IVixenMDI) base.ActiveMdiChild).Sequence;
+				executableObject = ((IVixenMDI) ActiveMdiChild).Sequence;
 			}
 			else
 			{

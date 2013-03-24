@@ -171,7 +171,8 @@ namespace VixenPlus
 			writer.WriteLine("Object length: " + timer.ObjectLength);
 			writer.WriteLine("Recurrence: {0} ({1})", timer.Recurrence, timer.RecurrenceData);
 			writer.WriteLine("Recurrence start: " + timer.RecurrenceStart.ToString(CultureInfo.InvariantCulture));
-			writer.WriteLine("Recurrence start date/time: " + timer.RecurrenceStartDateTime.ToString(CultureInfo.InvariantCulture));
+			writer.WriteLine("Recurrence start date/time: " +
+			                 timer.RecurrenceStartDateTime.ToString(CultureInfo.InvariantCulture));
 			writer.WriteLine("Recurrence span: " + timer.RecurrenceSpan);
 			writer.WriteLine("Recurrence end: " + timer.RecurrenceEnd.ToString(CultureInfo.InvariantCulture));
 			writer.WriteLine("Recurrence end date/time: " + timer.RecurrenceEndDateTime.ToString(CultureInfo.InvariantCulture));
@@ -190,7 +191,7 @@ namespace VixenPlus
 		{
 			if ((((_executionInterface != null) && (_backgroundExecutionContextHandle != 0)) && (_backgroundSequence != null)) &&
 			    !_executionInterface.ExecutePlay(_backgroundExecutionContextHandle, 0, 0,
-			                                      Preference2.GetBoolean("LogAudioScheduled")))
+			                                     Preference2.GetBoolean("LogAudioScheduled")))
 			{
 				MessageBox.Show("There was a problem starting the background sequence.", Vendor.ProductName, MessageBoxButtons.OK,
 				                MessageBoxIcon.Exclamation);

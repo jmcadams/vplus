@@ -9,9 +9,7 @@ namespace VixenPlus
 	{
 		public static TcpClient ConnectTo(IPAddress[] hostAddresses, int port)
 		{
-			var client = new TcpClient();
-			client.SendTimeout = 0x1388;
-			client.ReceiveTimeout = 0x1388;
+			var client = new TcpClient {SendTimeout = 5000, ReceiveTimeout = 5000};
 			try
 			{
 				client.Connect(hostAddresses, port);
@@ -25,9 +23,7 @@ namespace VixenPlus
 
 		public static TcpClient ConnectTo(IPAddress hostAddress, int port)
 		{
-			var client = new TcpClient();
-			client.SendTimeout = 0x1388;
-			client.ReceiveTimeout = 0x1388;
+			var client = new TcpClient {SendTimeout = 5000, ReceiveTimeout = 5000};
 			try
 			{
 				client.Connect(hostAddress, port);

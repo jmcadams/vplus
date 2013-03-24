@@ -39,12 +39,12 @@ namespace VixenPlus
 			_isExecuting = false;
 			LastExecution = DateTime.MinValue;
 			NotValidUntil = DateTime.MinValue;
-			var startDateTimeNode = timerNode["StartDateTime"];
+			XmlElement startDateTimeNode = timerNode["StartDateTime"];
 			if (startDateTimeNode != null)
 			{
 				_startDateTime = DateTime.Parse(startDateTimeNode.InnerText);
 			}
-			var timerLenNode = timerNode["TimerLength"];
+			XmlElement timerLenNode = timerNode["TimerLength"];
 			if (timerLenNode != null)
 			{
 				_timerLength = TimeSpan.Parse(timerLenNode.InnerText);
@@ -61,7 +61,7 @@ namespace VixenPlus
 			}
 			if (_objectLength != _timerLength)
 			{
-				var repeatNode = timerNode["RepeatInterval"];
+				XmlElement repeatNode = timerNode["RepeatInterval"];
 				if (repeatNode != null)
 				{
 					_repeatInterval = Convert.ToInt32(repeatNode.InnerText);
@@ -74,12 +74,12 @@ namespace VixenPlus
 				{
 					_recurrence = (RecurrenceType) Enum.Parse(typeof (RecurrenceType), node2.Attributes["type"].Value);
 				}
-				var xmlElement = node2["StartDate"];
+				XmlElement xmlElement = node2["StartDate"];
 				if (xmlElement != null)
 				{
 					_recurrenceStart = DateTime.Parse(xmlElement.InnerText);
 				}
-				var element = node2["EndDate"];
+				XmlElement element = node2["EndDate"];
 				if (element != null)
 				{
 					_recurrenceEnd = DateTime.Parse(element.InnerText);
@@ -87,7 +87,7 @@ namespace VixenPlus
 				switch (_recurrence)
 				{
 					case RecurrenceType.Weekly:
-						var weeklyDataNode = node2["Data"];
+						XmlElement weeklyDataNode = node2["Data"];
 						if (weeklyDataNode != null)
 						{
 							_recurrenceData = Convert.ToInt32(weeklyDataNode.InnerText);
@@ -95,7 +95,7 @@ namespace VixenPlus
 						break;
 
 					case RecurrenceType.Monthly:
-						var monthlyDataNode = node2["Data"];
+						XmlElement monthlyDataNode = node2["Data"];
 						if (monthlyDataNode != null)
 						{
 							_recurrenceData = monthlyDataNode.InnerText;
@@ -103,7 +103,7 @@ namespace VixenPlus
 						break;
 
 					case RecurrenceType.Yearly:
-						var yearlyDataNode = node2["Data"];
+						XmlElement yearlyDataNode = node2["Data"];
 						if (yearlyDataNode != null)
 						{
 							_recurrenceData = DateTime.Parse(yearlyDataNode.InnerText);
@@ -278,7 +278,7 @@ namespace VixenPlus
 			set
 			{
 				_startDateTime = new DateTime(_startDateTime.Year, _startDateTime.Month, _startDateTime.Day, value.Hours,
-				                               value.Minutes, 0);
+				                              value.Minutes, 0);
 			}
 		}
 
@@ -338,7 +338,7 @@ namespace VixenPlus
 				switch (_recurrence)
 				{
 					case RecurrenceType.Weekly:
-						Xml.SetValue(node3, "Data", ((int)_recurrenceData).ToString(CultureInfo.InvariantCulture));
+						Xml.SetValue(node3, "Data", ((int) _recurrenceData).ToString(CultureInfo.InvariantCulture));
 						break;
 
 					case RecurrenceType.Monthly:
@@ -346,7 +346,7 @@ namespace VixenPlus
 						break;
 
 					case RecurrenceType.Yearly:
-						Xml.SetValue(node3, "Data", ((DateTime)_recurrenceData).ToString(CultureInfo.InvariantCulture));
+						Xml.SetValue(node3, "Data", ((DateTime) _recurrenceData).ToString(CultureInfo.InvariantCulture));
 						break;
 				}
 			}

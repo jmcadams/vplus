@@ -58,8 +58,8 @@ namespace VixenPlus.Dialogs
 			e.Graphics.DrawRectangle(Pens.RoyalBlue, clientRectangle);
 			e.Graphics.DrawRectangle(Pens.Navy, 50, 0x19, ClientRectangle.Width - 100, 0x23);
 			e.Graphics.DrawString("Try this", _bigFont, Brushes.DarkBlue, 60f, 30f);
-			var num = 90;
-			for (var i = 0; i < _helpText.Length; i++)
+			int num = 90;
+			for (int i = 0; i < _helpText.Length; i++)
 			{
 				e.Graphics.DrawString(_helpText[i], Font, Brushes.Black, 50f, num);
 				num += _lineHeight;

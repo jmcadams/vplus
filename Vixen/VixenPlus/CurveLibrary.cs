@@ -16,10 +16,10 @@ namespace VixenPlus
 		public const string Manufacturer = "Manufacturer";
 		public const string LibraryFile = "library.xml";
 		private readonly string _localFilePath;
-		private string _delimiter;
 		private Filter[] _colorFilters;
 		private Filter[] _controllerFilters;
 		private DataTable _dataTable;
+		private string _delimiter;
 		private Filter[] _lightCountFilters;
 		private Filter[] _manufacturerFilters;
 		private bool _modified;

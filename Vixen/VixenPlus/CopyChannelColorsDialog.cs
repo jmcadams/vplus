@@ -19,8 +19,8 @@ namespace VixenPlus
 			{
 				files[i] = Path.GetFileNameWithoutExtension(files[i]);
 			}
-			comboBoxSourceSequence.Items.AddRange(new object[] { files });
-			comboBoxDestinationSequence.Items.AddRange(new object[] { files });
+			comboBoxSourceSequence.Items.AddRange(new object[] {files});
+			comboBoxDestinationSequence.Items.AddRange(new object[] {files});
 			_solidBrush = new SolidBrush(Color.White);
 		}
 
@@ -59,7 +59,7 @@ namespace VixenPlus
 				_destinationSequence =
 					new EventSequence(Path.Combine(Paths.SequencePath, (string) comboBoxDestinationSequence.SelectedItem) + ".vix");
 				comboBoxDestinationColors.Items.Clear();
-				comboBoxDestinationColors.Items.AddRange(new object[] { _destinationSequence.Channels.ToArray() });
+				comboBoxDestinationColors.Items.AddRange(new object[] {_destinationSequence.Channels.ToArray()});
 				comboBoxDestinationColors.SelectedIndex = 0;
 			}
 			else
@@ -99,7 +99,7 @@ namespace VixenPlus
 				_sourceSequence =
 					new EventSequence(Path.Combine(Paths.SequencePath, (string) comboBoxSourceSequence.SelectedItem) + ".vix");
 				comboBoxSourceColors.Items.Clear();
-				comboBoxSourceColors.Items.AddRange(new object[] { _sourceSequence.Channels.ToArray() });
+				comboBoxSourceColors.Items.AddRange(new object[] {_sourceSequence.Channels.ToArray()});
 				comboBoxSourceColors.SelectedIndex = 0;
 			}
 			else

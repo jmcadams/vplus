@@ -142,7 +142,7 @@ namespace VixenPlus
 		public void ReadData(XmlNode node)
 		{
 			_mappingSets.Clear();
-			var mappingSetNode = node.SelectNodes("MappingSet");
+			XmlNodeList mappingSetNode = node.SelectNodes("MappingSet");
 			if (mappingSetNode != null)
 			{
 				foreach (XmlNode node2 in mappingSetNode)

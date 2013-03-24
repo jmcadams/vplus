@@ -209,7 +209,7 @@ namespace VixenPlus
 			var list = new List<Timer>();
 			if (node != null)
 			{
-				var timerNode = node.SelectNodes("Timer");
+				XmlNodeList timerNode = node.SelectNodes("Timer");
 				if (timerNode != null)
 				{
 					foreach (XmlNode node2 in timerNode)
@@ -273,7 +273,8 @@ namespace VixenPlus
 			bool flag = Host.GetDebugValue("TimerTrace") != null;
 			if (flag)
 			{
-				Host.LogTo(Paths.TimerTraceFilePath, "DateTime intersection with tolerance of " + deviationTolerance.ToString(CultureInfo.InvariantCulture));
+				Host.LogTo(Paths.TimerTraceFilePath,
+				           "DateTime intersection with tolerance of " + deviationTolerance.ToString(CultureInfo.InvariantCulture));
 				Host.LogTo(Paths.TimerTraceFilePath, "Interval: " + timer.RepeatInterval.ToString(CultureInfo.InvariantCulture));
 			}
 			if (timer.RepeatInterval == 0)

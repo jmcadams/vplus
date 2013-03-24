@@ -61,13 +61,13 @@ namespace VixenPlus
 			get
 			{
 				var destination = new Audio[listBoxPlaylist.Items.Count];
-				listBoxPlaylist.Items.CopyTo(new object[] { destination }, 0);
+				listBoxPlaylist.Items.CopyTo(new object[] {destination}, 0);
 				return destination;
 			}
 			set
 			{
 				listBoxPlaylist.BeginUpdate();
-				listBoxPlaylist.Items.AddRange(new object[] { value });
+				listBoxPlaylist.Items.AddRange(new object[] {value});
 				listBoxPlaylist.EndUpdate();
 			}
 		}

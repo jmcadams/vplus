@@ -8,12 +8,12 @@ namespace VixenPlus
 	internal class VixenSimpleButton : PictureBox, IDisposable
 	{
 		private readonly SolidBrush _brush = new SolidBrush(Color.Black);
+		private readonly VixenSimpleButtonType _buttonType;
 		private readonly Color _disabledColor = Color.FromArgb(0xc0, 0xc0, 0xc0);
 		private readonly Color _enabledColor = Color.FromArgb(0x80, 0x80, 0xff);
 		private readonly Font _font = new Font("Arial", 13f, FontStyle.Bold);
 		private readonly Color _hoverColor = Color.FromArgb(80, 80, 0xff);
 		private readonly Pen _pen = new Pen(Color.Black, 2f);
-		private readonly VixenSimpleButtonType _buttonType;
 		private bool _isHovered;
 
 		public VixenSimpleButton(VixenSimpleButtonType type)

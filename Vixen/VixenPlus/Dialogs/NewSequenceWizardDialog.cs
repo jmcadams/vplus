@@ -9,6 +9,8 @@ namespace VixenPlus.Dialogs
 {
 	public partial class NewSequenceWizardDialog : Form
 	{
+		private readonly EventSequence _eventSequence;
+
 		private readonly string[,] _explanations = new[,]
 			{
 				{string.Empty, string.Empty, string.Empty, string.Empty},
@@ -56,7 +58,6 @@ namespace VixenPlus.Dialogs
 
 		private readonly Stack<int> _history;
 		private readonly Preference2 _preferences;
-		private readonly EventSequence _eventSequence;
 		private bool _back;
 		private bool _skip;
 
@@ -273,7 +274,8 @@ namespace VixenPlus.Dialogs
 
 		private void SetSequenceTime()
 		{
-			textBoxTime.Text = string.Format("{0:d2}:{1:d2}.{2:d3}", _eventSequence.Time/0xea60, (_eventSequence.Time%0xea60)/0x3e8,
+			textBoxTime.Text = string.Format("{0:d2}:{1:d2}.{2:d3}", _eventSequence.Time/0xea60,
+			                                 (_eventSequence.Time%0xea60)/0x3e8,
 			                                 _eventSequence.Time%0x3e8);
 		}
 
@@ -312,7 +314,9 @@ namespace VixenPlus.Dialogs
 						goto Label_0339;
 					}
 				case 2:
-					_eventSequence.Profile = comboBoxProfiles.SelectedIndex == 0 ? null : new Profile(Path.Combine(Paths.ProfilePath, comboBoxProfiles.SelectedItem + ".pro"));
+					_eventSequence.Profile = comboBoxProfiles.SelectedIndex == 0
+						                         ? null
+						                         : new Profile(Path.Combine(Paths.ProfilePath, comboBoxProfiles.SelectedItem + ".pro"));
 					goto Label_0339;
 
 				case 3:

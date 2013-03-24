@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Windows.Forms;
 
 namespace VixenPlus
@@ -19,7 +20,7 @@ namespace VixenPlus
 		{
 			string text = ((ListViewItem) x).SubItems[_sortColumn].Text;
 			string strB = ((ListViewItem) y).SubItems[_sortColumn].Text;
-			return System.String.Compare(text, strB, System.StringComparison.OrdinalIgnoreCase);
+			return String.Compare(text, strB, StringComparison.OrdinalIgnoreCase);
 		}
 	}
 }

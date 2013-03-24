@@ -322,7 +322,7 @@ namespace VixenPlus
 			_eventSequences.Clear();
 			if (node != null)
 			{
-				var sequenceNode = node.SelectNodes("Sequence");
+				XmlNodeList sequenceNode = node.SelectNodes("Sequence");
 				if (sequenceNode != null)
 				{
 					foreach (XmlNode node2 in sequenceNode)

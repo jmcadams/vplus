@@ -12,10 +12,10 @@ namespace VixenPlus
 		//this.imageList.ImageStream = (ImageListStreamer)manager.GetObject("imageList.ImageStream"); 
 
 		private readonly MappingSets _editingMappingSets;
-		private readonly Dictionary<string, Channel> _idChannel;
-		private readonly bool _isInit;
-		private readonly InputPlugin _inputPlugin;
 		private readonly EventSequence _eventSequence;
+		private readonly Dictionary<string, Channel> _idChannel;
+		private readonly InputPlugin _inputPlugin;
+		private readonly bool _isInit;
 		private bool _isInternal;
 
 		public InputPluginDialog(InputPlugin plugin, EventSequence sequence)
@@ -33,7 +33,7 @@ namespace VixenPlus
 			{
 				_idChannel[channel.Id.ToString(CultureInfo.InvariantCulture)] = channel;
 			}
-			listBoxChannels.Items.AddRange(new object[] { _eventSequence.Channels.ToArray() });
+			listBoxChannels.Items.AddRange(new object[] {_eventSequence.Channels.ToArray()});
 			_editingMappingSets = (MappingSets) _inputPlugin.MappingSets.Clone();
 			_isInit = false;
 			if (listBoxInputs.SelectedItem != null)
@@ -46,9 +46,9 @@ namespace VixenPlus
 			{
 				AddMappingSetListViewItem(set);
 			}
-			var iterators = _inputPlugin.GetIterators();
-			comboBoxSingleIteratorInput.Items.AddRange(new object[] { iterators });
-			listBoxIteratorInputs.Items.AddRange(new object[] { iterators });
+			Input[] iterators = _inputPlugin.GetIterators();
+			comboBoxSingleIteratorInput.Items.AddRange(new object[] {iterators});
+			listBoxIteratorInputs.Items.AddRange(new object[] {iterators});
 			if (_inputPlugin.MappingIteratorType == InputPlugin.MappingIterator.SingleInput)
 			{
 				radioButtonSingleIterator.Checked = true;
@@ -233,7 +233,7 @@ namespace VixenPlus
 				}
 				listBoxMappedChannels.BeginUpdate();
 				listBoxMappedChannels.Items.Clear();
-				listBoxMappedChannels.Items.AddRange(new object[] { list.ToArray() });
+				listBoxMappedChannels.Items.AddRange(new object[] {list.ToArray()});
 				listBoxMappedChannels.EndUpdate();
 			}
 		}
@@ -344,7 +344,7 @@ namespace VixenPlus
 				}
 				comboBoxMappingSet.BeginUpdate();
 				comboBoxMappingSet.Items.Clear();
-				comboBoxMappingSet.Items.AddRange(new object[] { _editingMappingSets.AllSets });
+				comboBoxMappingSet.Items.AddRange(new object[] {_editingMappingSets.AllSets});
 				comboBoxMappingSet.EndUpdate();
 				if ((selectedItem != null) && comboBoxMappingSet.Items.Contains(selectedItem))
 				{
@@ -367,13 +367,13 @@ namespace VixenPlus
 			{
 				int selectedIndex = comboBoxSingleIteratorInput.SelectedIndex;
 				comboBoxSingleIteratorInput.Items.Clear();
-				comboBoxSingleIteratorInput.Items.AddRange(new object[] { _inputPlugin.GetIterators() });
+				comboBoxSingleIteratorInput.Items.AddRange(new object[] {_inputPlugin.GetIterators()});
 				listBoxIteratorInputs.Items.Clear();
-				listBoxIteratorInputs.Items.AddRange(new object[] { _inputPlugin.GetIterators() });
+				listBoxIteratorInputs.Items.AddRange(new object[] {_inputPlugin.GetIterators()});
 				comboBoxSingleIteratorInput.SelectedIndex = selectedIndex;
 				listBoxMappingSets.Items.Clear();
 				listBoxMappingSets.Items.Add("(none)");
-				listBoxMappingSets.Items.AddRange(new object[] { _editingMappingSets.AllSets });
+				listBoxMappingSets.Items.AddRange(new object[] {_editingMappingSets.AllSets});
 			}
 		}
 

@@ -11,11 +11,11 @@ namespace VixenPlus.Dialogs
 {
 	public partial class AudioDialog : Form
 	{
+		private readonly EventSequence _eventSequence;
 		private readonly fmod _fmod;
 		private readonly int[] _keyMap = new[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 		private readonly bool[] _keyStates;
 		private readonly Audio _originalAudio;
-		private readonly EventSequence _eventSequence;
 		private readonly Stopwatch _stopwatch;
 		private readonly System.Timers.Timer _timer;
 		private string _audioFilename = string.Empty;
@@ -39,7 +39,7 @@ namespace VixenPlus.Dialogs
 			_keyStates = new bool[_eventSequence.ChannelCount];
 			_stopwatch = new Stopwatch();
 			_newEventValues = new byte[_eventSequence.EventValues.GetLength(0),_eventSequence.EventValues.GetLength(1)];
-			listBoxChannels.Items.AddRange(_eventSequence.Channels.ToArray());
+			listBoxChannels.Items.AddRange(new object[] {_eventSequence.Channels.ToArray()});
 			_originalAudio = sequence.Audio;
 			if (sequence.Audio != null)
 			{
@@ -64,7 +64,7 @@ namespace VixenPlus.Dialogs
 			{
 				UpdateRecordableLength();
 			}
-			var items = (object[]) _eventSequence.Channels.ToArray();
+			var items = (new object[] {_eventSequence.Channels.ToArray()});
 			channel1ToolStripMenuItem.Items.AddRange(items);
 			channel2ToolStripMenuItem.Items.AddRange(items);
 			channel3ToolStripMenuItem.Items.AddRange(items);
@@ -86,7 +86,7 @@ namespace VixenPlus.Dialogs
 			channel9ToolStripMenuItem.SelectedIndex = Math.Min(8, _eventSequence.ChannelCount - 1);
 			channel0ToolStripMenuItem.SelectedIndex = Math.Min(9, _eventSequence.ChannelCount - 1);
 			comboBoxAudioDevice.Items.Add("Use application's default device");
-			comboBoxAudioDevice.Items.AddRange(fmod.GetSoundDeviceList());
+			comboBoxAudioDevice.Items.AddRange(new object[] {fmod.GetSoundDeviceList()});
 			comboBoxAudioDevice.SelectedIndex = _eventSequence.AudioDeviceIndex + 1;
 		}
 
@@ -131,7 +131,7 @@ namespace VixenPlus.Dialogs
 			openFileDialog1.FileName = string.Empty;
 			if (openFileDialog1.ShowDialog() == DialogResult.OK)
 			{
-				var path = Path.Combine(Paths.AudioPath, Path.GetFileName(openFileDialog1.FileName));
+				string path = Path.Combine(Paths.AudioPath, Path.GetFileName(openFileDialog1.FileName));
 				if (!File.Exists(path))
 				{
 					Cursor = Cursors.WaitCursor;
@@ -145,7 +145,8 @@ namespace VixenPlus.Dialogs
 
 		private void buttonOK_Click(object sender, EventArgs e)
 		{
-			if ((_eventSequence.Audio != null) && (checkBoxAutoSize.Checked || (_eventSequence.Audio.Duration > _eventSequence.Time)))
+			if ((_eventSequence.Audio != null) &&
+			    (checkBoxAutoSize.Checked || (_eventSequence.Audio.Duration > _eventSequence.Time)))
 			{
 				_eventSequence.Time = _eventSequence.Audio.Duration;
 			}
@@ -456,7 +457,7 @@ namespace VixenPlus.Dialogs
 			if (InvokeRequired)
 			{
 				int milliseconds = 0;
-				base.Invoke((MethodInvoker) delegate
+				Invoke((MethodInvoker) delegate
 					{
 						// TODO: Can change this to "base.Invoke(() => {" when we go to 3.x
 						milliseconds = UpdateTotalTime();

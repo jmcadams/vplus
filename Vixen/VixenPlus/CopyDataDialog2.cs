@@ -115,7 +115,7 @@ namespace VixenPlus
 				//    }
 				//}
 				var list = new List<string>();
-				foreach (var node5 in GetAllNodes())
+				foreach (TreeNode node5 in GetAllNodes())
 				{
 					string str;
 					list.Add(node5.Text);
@@ -150,11 +150,11 @@ namespace VixenPlus
 					XmlNode node6 = _destDoc.SelectSingleNode("//Program/Time");
 					if (node6 != null)
 					{
-						var xmlNodeList = _sourceDoc.SelectNodes("//Program/Channels/Channel");
+						XmlNodeList xmlNodeList = _sourceDoc.SelectNodes("//Program/Channels/Channel");
 						if (xmlNodeList != null)
 						{
 							int num4 = xmlNodeList.Count;
-							var selectNodes = _destDoc.SelectNodes("//Program/Channels/*");
+							XmlNodeList selectNodes = _destDoc.SelectNodes("//Program/Channels/*");
 							if (selectNodes != null)
 							{
 								int num5 = selectNodes.Count;
@@ -169,15 +169,15 @@ namespace VixenPlus
 								}
 								if (num6 != 0)
 								{
-									var selectSingleNode = _destDoc.SelectSingleNode("//Program/EventValues");
+									XmlNode selectSingleNode = _destDoc.SelectSingleNode("//Program/EventValues");
 									if (selectSingleNode != null)
 									{
 										byte[] buffer = Convert.FromBase64String(selectSingleNode.InnerText);
-										var singleNode = _sourceDoc.SelectSingleNode("//Program/EventPeriodInMilliseconds");
+										XmlNode singleNode = _sourceDoc.SelectSingleNode("//Program/EventPeriodInMilliseconds");
 										if (singleNode != null)
 										{
 											int num7 = int.Parse(singleNode.InnerText);
-											var xmlNode = _destDoc.SelectSingleNode("//Program/EventPeriodInMilliseconds");
+											XmlNode xmlNode = _destDoc.SelectSingleNode("//Program/EventPeriodInMilliseconds");
 											if (xmlNode != null)
 											{
 												int num8 = int.Parse(xmlNode.InnerText);
@@ -227,13 +227,18 @@ namespace VixenPlus
 					}
 				}
 				int num24 = 0;
-				var nodeList = _destDoc.SelectNodes("//Program/PlugInData/PlugIn");
+				XmlNodeList nodeList = _destDoc.SelectNodes("//Program/PlugInData/PlugIn");
 				if (nodeList != null)
+				{
 					foreach (XmlNode node7 in nodeList)
 					{
-						if (node7.Attributes != null) node7.Attributes["id"].Value = num24.ToString(CultureInfo.InvariantCulture);
+						if (node7.Attributes != null)
+						{
+							node7.Attributes["id"].Value = num24.ToString(CultureInfo.InvariantCulture);
+						}
 						num24++;
 					}
+				}
 				_destDoc.Save(_destDoc.BaseURI.Substring(8).Replace('/', '\\'));
 				MessageBox.Show(labelTo.Text + " has been updated.", Vendor.ProductName, MessageBoxButtons.OK,
 				                MessageBoxIcon.Asterisk);
@@ -251,7 +256,7 @@ namespace VixenPlus
 				try
 				{
 					_sourceDoc.Load(openFileDialog.FileName);
-					XmlNode node = _sourceDoc.SelectSingleNode("//Program");
+					//XmlNode node = _sourceDoc.SelectSingleNode("//Program");
 					labelFrom.Text = "file: " + Path.GetFileName(openFileDialog.FileName);
 					_source = NodeSource.File;
 					if (checkBoxShowAllNodes.Checked)
@@ -454,12 +459,14 @@ namespace VixenPlus
 					TreeNode parentNode = treeViewFrom.Nodes.Add(text);
 					parentNode.Tag = str2;
 					parentNode.Name = text;
-					var xmlNodeList = _sourceDoc.SelectNodes("//" + str2 + "/*");
+					XmlNodeList xmlNodeList = _sourceDoc.SelectNodes("//" + str2 + "/*");
 					if (xmlNodeList != null)
+					{
 						foreach (XmlNode node2 in xmlNodeList)
 						{
 							AddNodeFormatted(node2, parentNode);
 						}
+					}
 				}
 			}
 			treeViewFrom.EndUpdate();

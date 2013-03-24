@@ -180,11 +180,13 @@ namespace VixenPlus
 				bounds.Inflate(-16, -2);
 				var curveLibraryRecord = e.Item.Tag as CurveLibraryRecord;
 				if (curveLibraryRecord != null)
+				{
 					using (var brush = new SolidBrush(Color.FromArgb(curveLibraryRecord.Color)))
 					{
 						e.Graphics.FillRectangle(brush, bounds);
 						e.Graphics.DrawRectangle(Pens.Black, bounds);
 					}
+				}
 			}
 			else
 			{
@@ -199,7 +201,10 @@ namespace VixenPlus
 			comboBoxSelectedCurve.Items.Clear();
 			foreach (ListViewItem item in listViewCurvesImport.SelectedItems)
 			{
-				if (item != null) comboBoxSelectedCurve.Items.Add(new object[] { item.Tag as CurveLibraryRecord });
+				if (item != null)
+				{
+					comboBoxSelectedCurve.Items.Add(new object[] {item.Tag as CurveLibraryRecord});
+				}
 			}
 			if ((selectedItem != null) && comboBoxSelectedCurve.Items.Contains(selectedItem))
 			{
@@ -247,7 +252,9 @@ namespace VixenPlus
 					foreach (CurveLibraryRecord record in library.Read())
 					{
 						listView.Items.Add(
-							new ListViewItem(new[] {record.Manufacturer, record.LightCount, record.Color.ToString(CultureInfo.InvariantCulture), record.Controller})).Tag
+							new ListViewItem(new[]
+								{record.Manufacturer, record.LightCount, record.Color.ToString(CultureInfo.InvariantCulture), record.Controller}))
+						        .Tag
 							= record;
 						num++;
 					}

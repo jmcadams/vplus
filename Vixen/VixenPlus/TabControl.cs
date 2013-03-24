@@ -7,8 +7,8 @@ namespace VixenPlus
 	[ToolboxBitmap(typeof (System.Windows.Forms.TabControl))]
 	public class TabControl : System.Windows.Forms.TabControl
 	{
-		private IContainer components;
 		private bool _hideTabs;
+		private IContainer components;
 
 		public TabControl()
 		{
@@ -80,9 +80,7 @@ namespace VixenPlus
 		public bool OurMultiline
 		{
 			get { return (HideTabs || Multiline); }
-			set {
-				Multiline = HideTabs || value;
-			}
+			set { Multiline = HideTabs || value; }
 		}
 
 		protected override void Dispose(bool disposing)

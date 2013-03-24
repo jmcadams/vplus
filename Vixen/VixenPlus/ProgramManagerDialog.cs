@@ -15,8 +15,8 @@ namespace VixenPlus
 		private readonly Font _programBoldFont;
 		private readonly SolidBrush _programBrush;
 		private readonly Font _programSmallFont;
-		private bool _isDirty;
 		private object _dragSource;
+		private bool _isDirty;
 		private bool _isInternal;
 
 		public ProgramManagerDialog()
@@ -124,7 +124,8 @@ namespace VixenPlus
 		private void GetCrossFadeValue()
 		{
 			var sequenceProgram = listBoxPrograms.SelectedItem as SequenceProgram;
-			if (sequenceProgram != null && (!_isInternal && (int) numericUpDownCrossFade.Value != sequenceProgram.CrossFadeLength))
+			if (sequenceProgram != null &&
+			    (!_isInternal && (int) numericUpDownCrossFade.Value != sequenceProgram.CrossFadeLength))
 			{
 				(listBoxPrograms.SelectedItem as SequenceProgram).CrossFadeLength = (int) numericUpDownCrossFade.Value;
 				_isDirty = true;
@@ -191,7 +192,8 @@ namespace VixenPlus
 					}
 					else
 					{
-						e.Graphics.DrawString(count.ToString(CultureInfo.InvariantCulture) + " sequences", _programSmallFont, Brushes.Black, (e.Bounds.Left + 10),
+						e.Graphics.DrawString(count.ToString(CultureInfo.InvariantCulture) + " sequences", _programSmallFont,
+						                      Brushes.Black, (e.Bounds.Left + 10),
 						                      (e.Bounds.Top + 50));
 					}
 				}
@@ -230,7 +232,7 @@ namespace VixenPlus
 				var program = (SequenceProgram) listBoxPrograms.Items[num];
 				if (program != null)
 				{
-					listBoxProgramSequences.Items.AddRange(new object[] { program.EventSequences.ToArray() });
+					listBoxProgramSequences.Items.AddRange(new object[] {program.EventSequences.ToArray()});
 					if (program.UseSequencePluginData)
 					{
 						radioButtonSequencePlugin.Checked = true;

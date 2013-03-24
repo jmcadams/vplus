@@ -49,8 +49,7 @@ namespace VixenPlus
 		{
 			public int mask;
 			private readonly int cx;
-			[MarshalAs(UnmanagedType.LPTStr)]
-			private readonly string pszText;
+			[MarshalAs(UnmanagedType.LPTStr)] private readonly string pszText;
 			private readonly IntPtr hbm;
 			private readonly int cchTextMax;
 			public int fmt;

@@ -11,15 +11,15 @@ namespace VixenPlus
 	{
 		private static PlugInRouter _instance;
 		private readonly List<RouterContext> _instances = new List<RouterContext>();
+		private readonly MethodInvoker _methodInvoker;
 		private readonly List<MappedOutputPlugIn> _outputPlugins = new List<MappedOutputPlugIn>();
 
 		private readonly Dictionary<IExecutable, List<InputPlugin>> _sequenceInputPlugins =
 			new Dictionary<IExecutable, List<InputPlugin>>();
 
-		private readonly MethodInvoker _methodInvoker;
 		private byte[] _data;
 		private int _refCount;
-		private bool _updateLock;
+		//private bool _updateLock;
 
 		private PlugInRouter()
 		{
@@ -64,95 +64,96 @@ namespace VixenPlus
 		{
 			if (_data != null)
 			{
-				_updateLock = true;
+				//_updateLock = true;
 				if (Host.InvokeRequired)
 				{
 					Host.Invoke(_methodInvoker, new object[0]);
 				}
 				else
 				{
-					try
+					//try
+					//{
+					if (_refCount == 0)
 					{
-						if (_refCount == 0)
+						//_updateLock = false;
+					}
+					else if (--_refCount == 0)
+					{
+						int index = 0;
+						while (index < _data.Length)
 						{
-							_updateLock = false;
+							_data[index] = 0;
+							index++;
 						}
-						else if (--_refCount == 0)
+						try
 						{
-							int index = 0;
-							while (index < _data.Length)
+							foreach (RouterContext context in _instances)
 							{
-								_data[index] = 0;
-								index++;
-							}
-							try
-							{
-								foreach (RouterContext context in _instances)
+								byte[] engineBuffer = context.EngineBuffer;
+								for (index = 0; index < engineBuffer.Length; index++)
 								{
-									byte[] engineBuffer = context.EngineBuffer;
-									for (index = 0; index < engineBuffer.Length; index++)
+									_data[index] = Math.Max(_data[index], engineBuffer[index]);
+								}
+							}
+						}
+						catch (Exception exception)
+						{
+							//_updateLock = false;
+							throw new Exception(string.Format("(Router - Update)\n{0}", exception.Message), exception);
+						}
+						bool flag = Host.GetDebugValue("EventAverages") != null;
+						Stopwatch stopwatch = null;
+						if (flag)
+						{
+							stopwatch = new Stopwatch();
+							Host.SetDebugValue("TotalEvents",
+							                   (int.Parse(Host.GetDebugValue("TotalEvents")) + 1).ToString(CultureInfo.InvariantCulture));
+						}
+						try
+						{
+							lock (_outputPlugins)
+							{
+								foreach (MappedOutputPlugIn @in in _outputPlugins)
+								{
+									if (!((@in.From != 0) && @in.ContextInitialized))
 									{
-										_data[index] = Math.Max(_data[index], engineBuffer[index]);
+										continue;
+									}
+									Array.Copy(_data, @in.From - 1, @in.Buffer, 0, (@in.To - @in.From) + 1);
+									var eventDrivenOutputPlugIn = @in.PlugIn as IEventDrivenOutputPlugIn;
+									if (eventDrivenOutputPlugIn != null)
+									{
+										if (flag)
+										{
+											stopwatch.Reset();
+											stopwatch.Start();
+										}
+										eventDrivenOutputPlugIn.Event(@in.Buffer);
+										if (flag)
+										{
+											stopwatch.Stop();
+											var userData = (long) @in.UserData;
+											userData += stopwatch.ElapsedMilliseconds;
+											@in.UserData = userData;
+										}
 									}
 								}
 							}
-							catch (Exception exception)
-							{
-								_updateLock = false;
-								throw new Exception(string.Format("(Router - Update)\n{0}", exception.Message), exception);
-							}
-							bool flag = Host.GetDebugValue("EventAverages") != null;
-							Stopwatch stopwatch = null;
-							if (flag)
-							{
-								stopwatch = new Stopwatch();
-								Host.SetDebugValue("TotalEvents", (int.Parse(Host.GetDebugValue("TotalEvents")) + 1).ToString(CultureInfo.InvariantCulture));
-							}
-							try
-							{
-								lock (_outputPlugins)
-								{
-									foreach (MappedOutputPlugIn @in in _outputPlugins)
-									{
-										if (!((@in.From != 0) && @in.ContextInitialized))
-										{
-											continue;
-										}
-										Array.Copy(_data, @in.From - 1, @in.Buffer, 0, (@in.To - @in.From) + 1);
-										var eventDrivenOutputPlugIn = @in.PlugIn as IEventDrivenOutputPlugIn;
-										if (eventDrivenOutputPlugIn != null)
-										{
-											if (flag)
-											{
-												stopwatch.Reset();
-												stopwatch.Start();
-											}
-											eventDrivenOutputPlugIn.Event(@in.Buffer);
-											if (flag)
-											{
-												stopwatch.Stop();
-												var userData = (long) @in.UserData;
-												userData += stopwatch.ElapsedMilliseconds;
-												@in.UserData = userData;
-											}
-										}
-									}
-								}
-							}
-							catch (Exception exception2)
-							{
-								_updateLock = false;
-								throw new Exception(
-									string.Format("(Router - plugins)\nAn output plugin caused the following exception: \n{0}", exception2.Message),
-									exception2);
-							}
-							_updateLock = false;
 						}
+						catch (Exception exception2)
+						{
+							//_updateLock = false;
+							throw new Exception(
+								string.Format("(Router - plugins)\nAn output plugin caused the following exception: \n{0}", exception2.Message),
+								exception2);
+						}
+						//_updateLock = false;
 					}
-					finally
-					{
-						_updateLock = false;
-					}
+					//}
+					//finally
+					//{
+					//    //_updateLock = false;
+					//}
 				}
 			}
 		}
@@ -181,7 +182,7 @@ namespace VixenPlus
 								ulong ulChannelId = ulong.Parse(str);
 								if (match == null)
 								{
-									var id = ulChannelId;
+									ulong id = ulChannelId;
 									match = c => c.Id == id;
 								}
 								int outputChannel = executableObject.Channels.Find(match).OutputChannel;
@@ -200,73 +201,73 @@ namespace VixenPlus
 			{
 				if ((routerContext != null) && routerContext.Initialized)
 				{
-					try
+					//try
+					//{
+					routerContext.Initialized = false;
+					if (!_instances.Contains(routerContext))
 					{
-						routerContext.Initialized = false;
-						if (!_instances.Contains(routerContext))
+						//_updateLock = false;
+					}
+					else
+					{
+						if (((ISystem) Interfaces.Available["ISystem"]).UserPreferences.GetBoolean("ClearAtEndOfSequence"))
 						{
-							_updateLock = false;
+							BeginUpdate();
+							Array.Clear(routerContext.EngineBuffer, 0, routerContext.EngineBuffer.Length);
+							EndUpdate();
 						}
-						else
+						bool flag2 = Host.GetDebugValue("EventAverages") != null;
+						int num = 0;
+						int num2 = 0;
+						if (flag2)
 						{
-							if (((ISystem) Interfaces.Available["ISystem"]).UserPreferences.GetBoolean("ClearAtEndOfSequence"))
+							num = int.Parse(Host.GetDebugValue("TotalEvents"));
+						}
+						lock (_outputPlugins)
+						{
+							foreach (MappedOutputPlugIn @in in routerContext.OutputPluginList)
 							{
-								BeginUpdate();
-								Array.Clear(routerContext.EngineBuffer, 0, routerContext.EngineBuffer.Length);
-								EndUpdate();
-							}
-							bool flag2 = Host.GetDebugValue("EventAverages") != null;
-							int num = 0;
-							int num2 = 0;
-							if (flag2)
-							{
-								num = int.Parse(Host.GetDebugValue("TotalEvents"));
-							}
-							lock (_outputPlugins)
-							{
-								foreach (MappedOutputPlugIn @in in routerContext.OutputPluginList)
+								@in.PlugIn.Shutdown();
+								if (flag2)
 								{
-									@in.PlugIn.Shutdown();
-									if (flag2)
-									{
-										Host.SetDebugValue(string.Format("event_average_{0}", num2++),
-										                   string.Format("{0}|{1}|{2}|{3}",
-										                                 new object[]
-											                                 {@in.PlugIn.Name, @in.From, @in.To, (((long) @in.UserData))/((float) num)}));
-									}
-									_outputPlugins.Remove(@in);
+									Host.SetDebugValue(string.Format("event_average_{0}", num2++),
+									                   string.Format("{0}|{1}|{2}|{3}",
+									                                 new object[]
+										                                 {@in.PlugIn.Name, @in.From, @in.To, (((long) @in.UserData))/((float) num)}));
 								}
-							}
-							if (_sequenceInputPlugins.ContainsKey(routerContext.ExecutableObject))
-							{
-								lock (_sequenceInputPlugins)
-								{
-									foreach (InputPlugin plugin in _sequenceInputPlugins[routerContext.ExecutableObject])
-									{
-										plugin.ShutdownInternal();
-									}
-									_sequenceInputPlugins.Remove(routerContext.ExecutableObject);
-								}
-							}
-							lock (_instances)
-							{
-								_instances.Remove(routerContext);
-							}
-							if (_instances.Count == 0)
-							{
-								_data = null;
+								_outputPlugins.Remove(@in);
 							}
 						}
+						if (_sequenceInputPlugins.ContainsKey(routerContext.ExecutableObject))
+						{
+							lock (_sequenceInputPlugins)
+							{
+								foreach (InputPlugin plugin in _sequenceInputPlugins[routerContext.ExecutableObject])
+								{
+									plugin.ShutdownInternal();
+								}
+								_sequenceInputPlugins.Remove(routerContext.ExecutableObject);
+							}
+						}
+						lock (_instances)
+						{
+							_instances.Remove(routerContext);
+						}
+						if (_instances.Count == 0)
+						{
+							_data = null;
+						}
 					}
-					finally
-					{
-						_updateLock = false;
-					}
+					//}
+					//finally
+					//{
+					//    //_updateLock = false;
+					//}
 				}
 			}
 			catch (Exception exception)
 			{
-				_updateLock = false;
+				//_updateLock = false;
 				MessageBox.Show(
 					string.Format(
 						"(Router)\nAn output plugin caused the following exception: \n{0}\n\nExecution has been stopped.\n\n{1}",
@@ -292,7 +293,7 @@ namespace VixenPlus
 					if (eventDrivenOutputPlugIn != null)
 					{
 						eventDrivenOutputPlugIn.Initialize(routerContext.ExecutableObject, routerContext.PluginData,
-						                                                   @in.SetupDataNode);
+						                                   @in.SetupDataNode);
 					}
 					else
 					{

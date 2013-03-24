@@ -17,6 +17,7 @@ namespace VixenPlus
 		private readonly Color _curvePointColor;
 		private readonly float _curveRowPointsPerMiniPixel;
 		private readonly int _dotPitch;
+		private readonly EventSequence _eventSequence;
 		private readonly int _gridSpacing;
 		private readonly float _halfPointSize;
 		private readonly SolidBrush _miniBackBrush;
@@ -26,7 +27,6 @@ namespace VixenPlus
 		private readonly Pen _miniLinePen;
 		private readonly Channel _originalChannel;
 		private readonly int _pointSize;
-		private readonly EventSequence _eventSequence;
 		private float _availableValues;
 		private int[,] _curvePoints;
 		private Rectangle _miniBoxBounds;
@@ -81,12 +81,15 @@ namespace VixenPlus
 			{
 				_miniBoxBounds = new Rectangle(
 					0,
-					0, 
-					(int) (pictureBoxCurve.Width/_gridSpacing/_availableValues*pbMini.Width), 
+					0,
+					(int) (pictureBoxCurve.Width/_gridSpacing/_availableValues*pbMini.Width),
 					(int) (pictureBoxCurve.Height/_gridSpacing/_availableValues*pbMini.Height));
 			}
 			_miniBackBrush = new SolidBrush(pbMini.BackColor);
-			if (pictureBoxCurve != null) _curveBackBrush = new SolidBrush(pictureBoxCurve.BackColor);
+			if (pictureBoxCurve != null)
+			{
+				_curveBackBrush = new SolidBrush(pictureBoxCurve.BackColor);
+			}
 			_miniBoxPen = new Pen(_miniBoxColor);
 			_miniLinePen = new Pen(_miniLineColor);
 			_curveGridPen = new Pen(_curveGridColor);
@@ -134,7 +137,9 @@ namespace VixenPlus
 				if (dialog.ShowDialog() == DialogResult.OK)
 				{
 					if (comboBoxChannels != null)
+					{
 						((Channel) comboBoxChannels.SelectedItem).DimmingCurve = _points = dialog.SelectedCurve;
+					}
 					RedrawBoth();
 				}
 				dialog.Dispose();
@@ -459,11 +464,11 @@ namespace VixenPlus
 				{
 					Rectangle miniBoxBounds = _miniBoxBounds;
 					_miniBoxBounds.X = Math.Max(0,
-					                             Math.Min(((pbMini.Width - _miniBoxBounds.Width) - 1),
-					                                      (e.X - (_miniBoxBounds.Width/2))));
+					                            Math.Min(((pbMini.Width - _miniBoxBounds.Width) - 1),
+					                                     (e.X - (_miniBoxBounds.Width/2))));
 					_miniBoxBounds.Y = Math.Max(0,
-					                             Math.Min(((pbMini.Height - _miniBoxBounds.Height) - 1),
-					                                      (e.Y - (_miniBoxBounds.Height/2))));
+					                            Math.Min(((pbMini.Height - _miniBoxBounds.Height) - 1),
+					                                     (e.Y - (_miniBoxBounds.Height/2))));
 					RedrawMiniBox(miniBoxBounds);
 					RedrawCurve();
 				}

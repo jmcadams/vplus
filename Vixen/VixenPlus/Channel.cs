@@ -9,12 +9,12 @@ namespace VixenPlus
 	public class Channel : IDisposable, IComparable<Channel>
 	{
 		private readonly ulong _id;
-		private SolidBrush _solidBrush;
 		private Color _color;
 		private byte[] _dimmingCurve;
 		private bool _enabled;
 		private string _name;
 		private int _outputChannel;
+		private SolidBrush _solidBrush;
 
 		public Channel(XmlNode channelNode)
 		{

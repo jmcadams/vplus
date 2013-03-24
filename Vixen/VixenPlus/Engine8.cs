@@ -19,28 +19,28 @@ namespace VixenPlus
 		public delegate void SequenceChangeDelegate();
 
 		private static readonly List<Engine8> InstanceList = new List<Engine8>();
-		private static int _nextInstanceId;
+		//private static int _nextInstanceId;
 		private readonly object _runLock;
 		private float _audioSpeed;
-		private XmlDocument _xmlDocument;
 		private EngineContext[] _engineContexts;
+		private EngineMode _engineMode;
 		private System.Timers.Timer _eventTimer;
 		private fmod _fmod;
 		private HardwareUpdateDelegate _hardwareUpdateDelegate;
 		private Host _host;
-		private bool _isPaused;
 		private bool _isLoggingEnabled;
 		private bool _isLooping;
-		private EngineMode _engineMode;
-		private int _primaryContext;
-		private SequenceProgram _sequenceProgram;
-		private PlugInRouter _plugInRouter;
+		private bool _isPaused;
 		private bool _isRunning;
+		private bool _isStopping;
+		private PlugInRouter _plugInRouter;
+		private int _primaryContext;
 		private int _secondaryContext;
 		private IEngine _secondaryEngine;
-		private bool _isStopping;
+		private SequenceProgram _sequenceProgram;
 		private EngineTimer _surfacedTimer;
 		private bool _useSequencePluginData;
+		private XmlDocument _xmlDocument;
 
 		internal Engine8(Host host, int audioDeviceIndex)
 		{
@@ -338,7 +338,7 @@ namespace VixenPlus
 
 		private void ConstructUsing(EngineMode mode, Host host, int audioDeviceIndex)
 		{
-			_nextInstanceId++;
+			//_nextInstanceId++;
 			_engineMode = mode;
 			_host = host;
 			_plugInRouter = Host.Router;
@@ -375,7 +375,8 @@ namespace VixenPlus
 
 		private int CurrentTime()
 		{
-			if ((_engineContexts[_primaryContext].SoundChannel != null) && _engineContexts[_primaryContext].SoundChannel.IsPlaying)
+			if ((_engineContexts[_primaryContext].SoundChannel != null) &&
+			    _engineContexts[_primaryContext].SoundChannel.IsPlaying)
 			{
 				return (int) _engineContexts[_primaryContext].SoundChannel.Position;
 			}
@@ -539,7 +540,7 @@ namespace VixenPlus
 							}
 							catch (Exception exception)
 							{
-								string stackTrace = exception.StackTrace;
+								//string stackTrace = exception.StackTrace;
 								StopExecution();
 								MessageBox.Show(exception.Message + "\n\nExecution has been stopped.", "Plugin error", MessageBoxButtons.OK,
 								                MessageBoxIcon.Exclamation);
@@ -582,9 +583,10 @@ namespace VixenPlus
 					if (context.RouterContext == null)
 					{
 						context.RouterContext = _plugInRouter.CreateContext(new byte[executableObject.ChannelCount],
-						                                                 _useSequencePluginData
-							                                                 ? executableObject.PlugInData
-							                                                 : _sequenceProgram.SetupData, executableObject, _surfacedTimer);
+						                                                    _useSequencePluginData
+							                                                    ? executableObject.PlugInData
+							                                                    : _sequenceProgram.SetupData, executableObject,
+						                                                    _surfacedTimer);
 					}
 					if (_sequenceProgram.Mask.Length > sequenceIndex)
 					{
@@ -602,16 +604,17 @@ namespace VixenPlus
 					context.TickCount = 0;
 					context.LastIndex = -1;
 					context.SequenceTickLength = executableObject.Time;
-					context.FadeStartTickCount = ((_sequenceProgram.CrossFadeLength == 0) || (_sequenceProgram.EventSequences.Count == 1))
-						                               ? 0
-						                               : ((_isLooping || (_sequenceProgram.EventSequences.Count > (sequenceIndex + 1)))
-							                                  ? (executableObject.Time - (_sequenceProgram.CrossFadeLength*0x3e8))
-							                                  : 0);
+					context.FadeStartTickCount = ((_sequenceProgram.CrossFadeLength == 0) ||
+					                              (_sequenceProgram.EventSequences.Count == 1))
+						                             ? 0
+						                             : ((_isLooping || (_sequenceProgram.EventSequences.Count > (sequenceIndex + 1)))
+							                                ? (executableObject.Time - (_sequenceProgram.CrossFadeLength*0x3e8))
+							                                : 0);
 					context.StartOffset = 0;
 					if (executableObject.Audio != null)
 					{
 						context.SoundChannel = _fmod.LoadSound(Path.Combine(Paths.AudioPath, executableObject.Audio.FileName),
-						                                          context.SoundChannel);
+						                                       context.SoundChannel);
 					}
 					else
 					{
@@ -731,8 +734,9 @@ namespace VixenPlus
 				_plugInRouter.Shutdown(_engineContexts[_primaryContext].RouterContext);
 			}
 			_engineContexts[_primaryContext].RouterContext = _plugInRouter.CreateContext(new byte[channels.Count],
-			                                                                      executableObject.PlugInData, executableObject,
-			                                                                      null);
+			                                                                             executableObject.PlugInData,
+			                                                                             executableObject,
+			                                                                             null);
 			_engineContexts[_primaryContext].ChannelMask = executableObject.Mask[0];
 			_engineContexts[_secondaryContext] = null;
 			Host.Communication["CurrentObject"] = _sequenceProgram;
@@ -902,9 +906,9 @@ namespace VixenPlus
 					_engineContexts[_primaryContext].StartOffset = startMillisecond;
 					InitEngineContext(ref _engineContexts[_secondaryContext], DetermineSecondarySequenceIndex());
 					_engineContexts[_primaryContext].MaxEvent = (endMillisecond == 0)
-						                                          ? _engineContexts[_primaryContext].CurrentSequence.TotalEventPeriods
-						                                          : (endMillisecond/
-						                                             _engineContexts[_primaryContext].CurrentSequence.EventPeriod);
+						                                            ? _engineContexts[_primaryContext].CurrentSequence.TotalEventPeriods
+						                                            : (endMillisecond/
+						                                               _engineContexts[_primaryContext].CurrentSequence.EventPeriod);
 				}
 				int millisecondPosition = (_engineContexts[_primaryContext].CurrentSequence.Audio != null) ? startMillisecond : -1;
 				PrepareAudio(_engineContexts[_primaryContext], millisecondPosition);

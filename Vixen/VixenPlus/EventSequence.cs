@@ -18,12 +18,12 @@ namespace VixenPlus
 		private EngineType _engineType;
 		private int _eventPeriod;
 		private byte[,] _eventValues;
-		private SequenceExtensions _sequenceExtensions;
 		private LoadableData _loadableData;
 		private byte _maximumLevel;
 		private byte _minimumLevel;
 		private SetupData _plugInData;
 		private Profile _profile;
+		private SequenceExtensions _sequenceExtensions;
 		private SortOrders _sortOrders;
 		private string _sourceFileName;
 		private int _time;
@@ -545,7 +545,7 @@ namespace VixenPlus
 		private void LoadEmbeddedData(XmlNode contextNode)
 		{
 			_channels.Clear();
-			var xmlNodeList = contextNode.SelectNodes("Channels/Channel");
+			XmlNodeList xmlNodeList = contextNode.SelectNodes("Channels/Channel");
 			if (xmlNodeList != null)
 			{
 				foreach (XmlNode node in xmlNodeList)
@@ -573,27 +573,27 @@ namespace VixenPlus
 			_loadableData = new LoadableData();
 			_sequenceExtensions = new SequenceExtensions();
 			_sortOrders = new SortOrders();
-			var timeNode = requiredNode.SelectSingleNode("Time");
+			XmlNode timeNode = requiredNode.SelectSingleNode("Time");
 			if (timeNode != null)
 			{
 				Time = Convert.ToInt32(timeNode.InnerText);
 			}
-			var eventPeriodNode = requiredNode.SelectSingleNode("EventPeriodInMilliseconds");
+			XmlNode eventPeriodNode = requiredNode.SelectSingleNode("EventPeriodInMilliseconds");
 			if (eventPeriodNode != null)
 			{
 				_eventPeriod = Convert.ToInt32(eventPeriodNode.InnerText);
 			}
-			var minLevelNode = requiredNode.SelectSingleNode("MinimumLevel");
+			XmlNode minLevelNode = requiredNode.SelectSingleNode("MinimumLevel");
 			if (minLevelNode != null)
 			{
 				_minimumLevel = (byte) Convert.ToInt32(minLevelNode.InnerText);
 			}
-			var mnaxLevelNode = requiredNode.SelectSingleNode("MaximumLevel");
+			XmlNode mnaxLevelNode = requiredNode.SelectSingleNode("MaximumLevel");
 			if (mnaxLevelNode != null)
 			{
 				_maximumLevel = (byte) Convert.ToInt32(mnaxLevelNode.InnerText);
 			}
-			var audioDeviceNode = requiredNode.SelectSingleNode("AudioDevice");
+			XmlNode audioDeviceNode = requiredNode.SelectSingleNode("AudioDevice");
 			if (audioDeviceNode != null)
 			{
 				_audioDeviceIndex = int.Parse(audioDeviceNode.InnerText);
@@ -609,7 +609,7 @@ namespace VixenPlus
 				AttachToProfile(node2.InnerText);
 			}
 			UpdateEventValueArray();
-			var audioFileNode = requiredNode.SelectSingleNode("Audio");
+			XmlNode audioFileNode = requiredNode.SelectSingleNode("Audio");
 			if (audioFileNode != null)
 			{
 				if (audioFileNode.Attributes != null)

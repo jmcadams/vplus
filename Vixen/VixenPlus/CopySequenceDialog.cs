@@ -69,7 +69,7 @@ namespace VixenPlus
 				listViewMapping.EndUpdate();
 				comboBoxDestChannels.Items.Clear();
 				comboBoxDestChannels.Items.Add("none");
-				comboBoxDestChannels.Items.AddRange(new object[] { _destSequence.Channels.ToArray() });
+				comboBoxDestChannels.Items.AddRange(new object[] {_destSequence.Channels.ToArray()});
 				var comparer = new CaseInsensitiveComparer();
 				foreach (ListViewItem item in listViewMapping.Items)
 				{

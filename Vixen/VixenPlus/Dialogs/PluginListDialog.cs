@@ -1,32 +1,33 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
 using System.Xml;
 
 namespace VixenPlus.Dialogs
 {
-	public partial class PluginListDialog : Form
+	public sealed partial class PluginListDialog : Form
 	{
-		private readonly List<Channel> m_channels;
-		private readonly IExecutable m_executableObject;
-		private readonly Dictionary<string, Dictionary<int, OutputPort>> m_outputPorts;
-		private readonly List<IHardwarePlugin> m_sequencePlugins;
-		private readonly SetupData m_setupData;
-		private Rectangle m_collapsedRelativeBounds;
-		private Rectangle m_expandedRelativeBounds;
-		private bool m_internalUpdate;
-		private int m_itemAffectedIndex;
-		private int m_lastIndex = -1;
+		private readonly List<Channel> _channels;
+		private readonly IExecutable _executableObject;
+		private readonly Dictionary<string, Dictionary<int, OutputPort>> _outputPorts;
+		private readonly List<IHardwarePlugin> _sequencePlugins;
+		private readonly SetupData _setupData;
+		private Rectangle _collapsedRelativeBounds;
+		private Rectangle _expandedRelativeBounds;
+		private bool _internalUpdate;
+		private int _itemAffectedIndex;
+		private int _lastIndex = -1;
 
 		public PluginListDialog(IExecutable executableObject)
 		{
-			m_setupData = executableObject.PlugInData;
-			m_executableObject = executableObject;
-			m_channels = executableObject.Channels;
+			_setupData = executableObject.PlugInData;
+			_executableObject = executableObject;
+			_channels = executableObject.Channels;
 			InitializeComponent();
-			m_sequencePlugins = new List<IHardwarePlugin>();
-			m_outputPorts = new Dictionary<string, Dictionary<int, OutputPort>>();
+			_sequencePlugins = new List<IHardwarePlugin>();
+			_outputPorts = new Dictionary<string, Dictionary<int, OutputPort>>();
 			Cursor = Cursors.WaitCursor;
 			try
 			{
@@ -39,8 +40,7 @@ namespace VixenPlus.Dialogs
 				{
 					foreach (IHardwarePlugin plugin in list)
 					{
-						item = new ListViewItem(plugin.Name, group);
-						item.Tag = plugin;
+						item = new ListViewItem(plugin.Name, group) {Tag = plugin};
 						listViewPlugins.Items.Add(item);
 					}
 				}
@@ -49,20 +49,19 @@ namespace VixenPlus.Dialogs
 				{
 					foreach (IHardwarePlugin plugin in list)
 					{
-						item = new ListViewItem(plugin.Name, group2);
-						item.Tag = plugin;
+						item = new ListViewItem(plugin.Name, group2) {Tag = plugin};
 						listViewPlugins.Items.Add(item);
 					}
 				}
 				listViewPlugins.Enabled = listViewPlugins.Items.Count > 0;
-				OutputPlugins.VerifyPlugIns(m_executableObject);
-				InputPlugins.VerifyPlugIns(m_executableObject);
-				m_collapsedRelativeBounds = new Rectangle(listViewOutputPorts.Columns[2].Width - (pictureBoxPlus.Width*2),
-				                                          (14 - pictureBoxPlus.Height)/2, pictureBoxPlus.Width,
-				                                          pictureBoxPlus.Height);
-				m_expandedRelativeBounds = new Rectangle(listViewOutputPorts.Columns[2].Width - (pictureBoxMinus.Width*2),
-				                                         (14 - pictureBoxMinus.Height)/2, pictureBoxMinus.Width,
-				                                         pictureBoxMinus.Height);
+				OutputPlugins.VerifyPlugIns(_executableObject);
+				InputPlugins.VerifyPlugIns(_executableObject);
+				_collapsedRelativeBounds = new Rectangle(listViewOutputPorts.Columns[2].Width - (pictureBoxPlus.Width*2),
+				                                         (14 - pictureBoxPlus.Height)/2, pictureBoxPlus.Width,
+				                                         pictureBoxPlus.Height);
+				_expandedRelativeBounds = new Rectangle(listViewOutputPorts.Columns[2].Width - (pictureBoxMinus.Width*2),
+				                                        (14 - pictureBoxMinus.Height)/2, pictureBoxMinus.Width,
+				                                        pictureBoxMinus.Height);
 			}
 			finally
 			{
@@ -75,7 +74,7 @@ namespace VixenPlus.Dialogs
 			get
 			{
 				var list = new List<object[]>();
-				foreach (XmlNode node in m_setupData.GetAllPluginData())
+				foreach (XmlNode node in _setupData.GetAllPluginData())
 				{
 					list.Add(new object[]
 						{
@@ -85,15 +84,17 @@ namespace VixenPlus.Dialogs
 							Convert.ToInt32(node.Attributes["id"].Value)
 						});
 				}
-				return list.ToArray();
+				return new object[] {list.ToArray()};
 			}
 		}
 
 		private void buttonInput_Click(object sender, EventArgs e)
 		{
-			var plugin = (InputPlugin) m_sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex];
-			InitializePlugin(plugin, m_setupData.GetPlugInData(checkedListBoxSequencePlugins.SelectedIndex.ToString()));
-			var dialog = new InputPluginDialog(plugin, (EventSequence) m_executableObject);
+			var plugin = (InputPlugin) _sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex];
+			InitializePlugin(plugin,
+			                 _setupData.GetPlugInData(
+				                 checkedListBoxSequencePlugins.SelectedIndex.ToString(CultureInfo.InvariantCulture)));
+			var dialog = new InputPluginDialog(plugin, (EventSequence) _executableObject);
 			dialog.ShowDialog();
 			dialog.Dispose();
 		}
@@ -125,7 +126,7 @@ namespace VixenPlus.Dialogs
 		{
 			if (e.Index != -1)
 			{
-				m_setupData.GetPlugInData(e.Index.ToString()).Attributes["enabled"].Value =
+				_setupData.GetPlugInData(e.Index.ToString(CultureInfo.InvariantCulture)).Attributes["enabled"].Value =
 					(e.NewValue == CheckState.Checked).ToString();
 				UpdateDictionary();
 			}
@@ -139,26 +140,27 @@ namespace VixenPlus.Dialogs
 
 		private void InitializePlugin(IHardwarePlugin plugin, XmlNode setupNode)
 		{
-			if (plugin is IEventDrivenOutputPlugIn)
+			var eventDrivenOutputPlugIn = plugin as IEventDrivenOutputPlugIn;
+			if (eventDrivenOutputPlugIn != null)
 			{
-				((IEventDrivenOutputPlugIn) plugin).Initialize(m_executableObject, m_setupData, setupNode);
+				eventDrivenOutputPlugIn.Initialize(_executableObject, _setupData, setupNode);
 			}
-			else if (plugin is IEventlessOutputPlugIn)
+			else
 			{
-				((IEventlessOutputPlugIn) plugin).Initialize(m_executableObject, m_setupData, setupNode, null);
+				var eventlessOutputPlugIn = plugin as IEventlessOutputPlugIn;
+				if (eventlessOutputPlugIn != null)
+				{
+					eventlessOutputPlugIn.Initialize(_executableObject, _setupData, setupNode, null);
+				}
+				else
+				{
+					var inputPlugin = plugin as IInputPlugin;
+					if (inputPlugin != null)
+					{
+						((InputPlugin) plugin).InitializeInternal(_setupData, setupNode);
+					}
+				}
 			}
-			else if (plugin is IInputPlugin)
-			{
-				((InputPlugin) plugin).InitializeInternal(m_setupData, setupNode);
-			}
-		}
-
-		private void listBoxAllPlugins_DoubleClick(object sender, EventArgs e)
-		{
-		}
-
-		private void listBoxAllPlugins_SelectedIndexChanged(object sender, EventArgs e)
-		{
 		}
 
 		private void listBoxSequencePlugins_KeyDown(object sender, KeyEventArgs e)
@@ -171,22 +173,22 @@ namespace VixenPlus.Dialogs
 
 		private void listBoxSequencePlugins_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if ((m_lastIndex != -1) && (checkedListBoxSequencePlugins.SelectedIndex != -1))
+			if ((_lastIndex != -1) && (checkedListBoxSequencePlugins.SelectedIndex != -1))
 			{
-				UpdatePlugInNodeChannelRanges(m_lastIndex.ToString());
+				UpdatePlugInNodeChannelRanges(_lastIndex.ToString(CultureInfo.InvariantCulture));
 			}
 			int selectedIndex = checkedListBoxSequencePlugins.SelectedIndex;
 			buttonPluginSetup.Enabled = selectedIndex != -1;
 			buttonRemove.Enabled = selectedIndex != -1;
 			if (selectedIndex != -1)
 			{
-				XmlNode plugInData = m_setupData.GetPlugInData(selectedIndex.ToString());
+				XmlNode plugInData = _setupData.GetPlugInData(selectedIndex.ToString(CultureInfo.InvariantCulture));
 				textBoxChannelFrom.Text = plugInData.Attributes["from"].Value;
 				textBoxChannelTo.Text = plugInData.Attributes["to"].Value;
 			}
-			buttonInput.Enabled = ((checkedListBoxSequencePlugins.SelectedIndex != -1) && (m_executableObject is EventSequence)) &&
-			                      (m_sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex] is IInputPlugin);
-			m_lastIndex = selectedIndex;
+			buttonInput.Enabled = ((checkedListBoxSequencePlugins.SelectedIndex != -1) && (_executableObject is EventSequence)) &&
+			                      (_sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex] is IInputPlugin);
+			_lastIndex = selectedIndex;
 		}
 
 		private void listViewOutputPorts_DrawItem(object sender, DrawListViewItemEventArgs e)
@@ -203,7 +205,7 @@ namespace VixenPlus.Dialogs
 				{
 					Image image = tag.IsExpanded ? pictureBoxMinus.Image : pictureBoxPlus.Image;
 					var point = new Point(e.Bounds.Location.X, e.Bounds.Location.Y);
-					point.Offset(tag.IsExpanded ? m_expandedRelativeBounds.Location : m_collapsedRelativeBounds.Location);
+					point.Offset(tag.IsExpanded ? _expandedRelativeBounds.Location : _collapsedRelativeBounds.Location);
 					e.Graphics.DrawImage(image, point);
 				}
 			}
@@ -223,16 +225,16 @@ namespace VixenPlus.Dialogs
 				{
 					var pt = new Point(e.Location.X, e.Location.Y);
 					pt.Offset(-info.SubItem.Bounds.Location.X, -info.SubItem.Bounds.Location.Y);
-					m_itemAffectedIndex = info.Item.Index;
+					_itemAffectedIndex = info.Item.Index;
 					if (tag.IsExpanded)
 					{
-						if (m_expandedRelativeBounds.Contains(pt))
+						if (_expandedRelativeBounds.Contains(pt))
 						{
 							tag.IsExpanded = false;
 							UpdateConfigDisplay();
 						}
 					}
-					else if (m_collapsedRelativeBounds.Contains(pt))
+					else if (_collapsedRelativeBounds.Contains(pt))
 					{
 						tag.IsExpanded = true;
 						UpdateConfigDisplay();
@@ -264,8 +266,8 @@ namespace VixenPlus.Dialogs
 			Cursor = Cursors.WaitCursor;
 			try
 			{
-				m_internalUpdate = true;
-				foreach (XmlNode node in m_setupData.GetAllPluginData())
+				_internalUpdate = true;
+				foreach (XmlNode node in _setupData.GetAllPluginData())
 				{
 					IHardwarePlugin plugin;
 					if ((node.Attributes["type"] != null) && (node.Attributes["type"].Value == SetupData.PluginType.Input.ToString()))
@@ -280,10 +282,10 @@ namespace VixenPlus.Dialogs
 					{
 						InitializePlugin(plugin, node);
 						checkedListBoxSequencePlugins.Items.Add(plugin.Name, bool.Parse(node.Attributes["enabled"].Value));
-						m_sequencePlugins.Add(plugin);
+						_sequencePlugins.Add(plugin);
 					}
 				}
-				m_internalUpdate = false;
+				_internalUpdate = false;
 				UpdateDictionary();
 			}
 			finally
@@ -296,10 +298,10 @@ namespace VixenPlus.Dialogs
 		{
 			if (checkedListBoxSequencePlugins.SelectedItem != null)
 			{
-				UpdatePlugInNodeChannelRanges(checkedListBoxSequencePlugins.SelectedIndex.ToString());
+				UpdatePlugInNodeChannelRanges(checkedListBoxSequencePlugins.SelectedIndex.ToString(CultureInfo.InvariantCulture));
 				try
 				{
-					m_sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex].Setup();
+					_sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex].Setup();
 					UpdateDictionary();
 				}
 				catch (Exception exception)
@@ -313,11 +315,11 @@ namespace VixenPlus.Dialogs
 
 		private void RemoveSelectedPlugIn()
 		{
-			if ((m_sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex] != null) &&
+			if ((_sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex] != null) &&
 			    (checkedListBoxSequencePlugins.SelectedIndex != -1))
 			{
-				m_setupData.RemovePlugInData(checkedListBoxSequencePlugins.SelectedIndex.ToString());
-				m_sequencePlugins.RemoveAt(checkedListBoxSequencePlugins.SelectedIndex);
+				_setupData.RemovePlugInData(checkedListBoxSequencePlugins.SelectedIndex.ToString(CultureInfo.InvariantCulture));
+				_sequencePlugins.RemoveAt(checkedListBoxSequencePlugins.SelectedIndex);
 				checkedListBoxSequencePlugins.Items.RemoveAt(checkedListBoxSequencePlugins.SelectedIndex);
 				buttonRemove.Enabled = checkedListBoxSequencePlugins.SelectedIndex != -1;
 				UpdateDictionary();
@@ -329,10 +331,10 @@ namespace VixenPlus.Dialogs
 			listViewOutputPorts.BeginUpdate();
 			listViewOutputPorts.Items.Clear();
 			var list = new List<int>();
-			foreach (string str in m_outputPorts.Keys)
+			foreach (string str in _outputPorts.Keys)
 			{
 				ListViewGroup group = listViewOutputPorts.Groups.Add(str, str);
-				Dictionary<int, OutputPort> dictionary = m_outputPorts[str];
+				Dictionary<int, OutputPort> dictionary = _outputPorts[str];
 				list.Clear();
 				list.AddRange(dictionary.Keys);
 				list.Sort();
@@ -363,7 +365,7 @@ namespace VixenPlus.Dialogs
 					listViewOutputPorts.Items.Add(item);
 					if (port.IsExpanded)
 					{
-						foreach (IPlugIn @in in port.ReferencingPlugins)
+						foreach (IHardwarePlugin @in in port.ReferencingPlugins)
 						{
 							listViewOutputPorts.Items.Add(new ListViewItem(new[] {string.Empty, string.Empty, string.Empty, @in.Name}, group));
 						}
@@ -374,19 +376,19 @@ namespace VixenPlus.Dialogs
 			if (listViewOutputPorts.Items.Count > 0)
 			{
 				listViewOutputPorts.EnsureVisible(listViewOutputPorts.Items.Count - 1);
-				listViewOutputPorts.EnsureVisible(m_itemAffectedIndex);
+				listViewOutputPorts.EnsureVisible(_itemAffectedIndex);
 			}
 		}
 
 		private void UpdateDictionary()
 		{
-			if (!m_internalUpdate)
+			if (!_internalUpdate)
 			{
-				m_outputPorts.Clear();
+				_outputPorts.Clear();
 				int num = 0;
-				foreach (IHardwarePlugin plugin in m_sequencePlugins)
+				foreach (IHardwarePlugin plugin in _sequencePlugins)
 				{
-					if (bool.Parse(m_setupData.GetPlugInData(num.ToString()).Attributes["enabled"].Value))
+					if (bool.Parse(_setupData.GetPlugInData(num.ToString(CultureInfo.InvariantCulture)).Attributes["enabled"].Value))
 					{
 						foreach (HardwareMap map in plugin.HardwareMap)
 						{
@@ -394,9 +396,9 @@ namespace VixenPlus.Dialogs
 							OutputPort port;
 							string key = map.PortTypeName.ToLower().Trim();
 							key = char.ToUpper(key[0]) + key.Substring(1);
-							if (!m_outputPorts.TryGetValue(key, out dictionary))
+							if (!_outputPorts.TryGetValue(key, out dictionary))
 							{
-								m_outputPorts[key] = dictionary = new Dictionary<int, OutputPort>();
+								_outputPorts[key] = dictionary = new Dictionary<int, OutputPort>();
 							}
 							if (!dictionary.TryGetValue(map.PortTypeIndex, out port))
 							{
@@ -411,7 +413,7 @@ namespace VixenPlus.Dialogs
 					}
 					num++;
 				}
-				m_itemAffectedIndex = 0;
+				_itemAffectedIndex = 0;
 				UpdateConfigDisplay();
 			}
 		}
@@ -419,7 +421,7 @@ namespace VixenPlus.Dialogs
 		private void UpdatePlugInNodeChannelRanges(string pluginID)
 		{
 			int count;
-			XmlNode plugInData = m_setupData.GetPlugInData(pluginID);
+			XmlNode plugInData = _setupData.GetPlugInData(pluginID);
 			try
 			{
 				count = Convert.ToInt32(textBoxChannelFrom.Text);
@@ -428,16 +430,16 @@ namespace VixenPlus.Dialogs
 			{
 				count = 1;
 			}
-			plugInData.Attributes["from"].Value = count.ToString();
+			plugInData.Attributes["from"].Value = count.ToString(CultureInfo.InvariantCulture);
 			try
 			{
 				count = Convert.ToInt32(textBoxChannelTo.Text);
 			}
 			catch
 			{
-				count = m_channels.Count;
+				count = _channels.Count;
 			}
-			plugInData.Attributes["to"].Value = count.ToString();
+			plugInData.Attributes["to"].Value = count.ToString(CultureInfo.InvariantCulture);
 		}
 
 		private void UsePlugin()
@@ -446,9 +448,9 @@ namespace VixenPlus.Dialogs
 			{
 				IHardwarePlugin plugIn = OutputPlugins.FindPlugin(((IHardwarePlugin) listViewPlugins.SelectedItems[0].Tag).Name,
 				                                                  true);
-				XmlNode node = m_setupData.CreatePlugInData(plugIn);
+				XmlNode node = _setupData.CreatePlugInData(plugIn);
 				Xml.SetAttribute(node, "from", "1");
-				Xml.SetAttribute(node, "to", m_channels.Count.ToString());
+				Xml.SetAttribute(node, "to", _channels.Count.ToString(CultureInfo.InvariantCulture));
 				Cursor = Cursors.WaitCursor;
 				try
 				{
@@ -466,7 +468,7 @@ namespace VixenPlus.Dialogs
 					Cursor = Cursors.Default;
 				}
 				checkedListBoxSequencePlugins.Items.Add(plugIn.Name, true);
-				m_sequencePlugins.Add(plugIn);
+				_sequencePlugins.Add(plugIn);
 			}
 		}
 	}

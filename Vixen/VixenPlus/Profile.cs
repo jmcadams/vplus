@@ -129,7 +129,8 @@ namespace VixenPlus
 			get { return Path.GetFileNameWithoutExtension(_fileName); }
 			set
 			{
-				_fileName = Path.Combine(string.IsNullOrEmpty(_fileName) ? Paths.ProfilePath : Path.GetDirectoryName(_fileName), value + ".pro");
+				_fileName = Path.Combine(string.IsNullOrEmpty(_fileName) ? Paths.ProfilePath : Path.GetDirectoryName(_fileName),
+				                         value + ".pro");
 			}
 		}
 
@@ -245,7 +246,7 @@ namespace VixenPlus
 			_channelOutputs.Clear();
 			if (documentElement != null)
 			{
-				var channelObjectsNode = documentElement.SelectNodes("ChannelObjects/*");
+				XmlNodeList channelObjectsNode = documentElement.SelectNodes("ChannelObjects/*");
 				if (channelObjectsNode != null)
 				{
 					foreach (XmlNode node2 in channelObjectsNode)
@@ -254,7 +255,7 @@ namespace VixenPlus
 					}
 				}
 
-				var outputNodes = documentElement.SelectSingleNode("Outputs");
+				XmlNode outputNodes = documentElement.SelectSingleNode("Outputs");
 				if (outputNodes != null)
 				{
 					foreach (string str in outputNodes.InnerText.Split(new[] {','}))
@@ -268,10 +269,10 @@ namespace VixenPlus
 			}
 			_plugInData.LoadFromXml(documentElement);
 			_sortOrders.LoadFromXml(documentElement);
-			var channels = Channels;
+			List<Channel> channels = Channels;
 			if (documentElement != null)
 			{
-				var disabledChannelsNode = documentElement.SelectSingleNode("DisabledChannels");
+				XmlNode disabledChannelsNode = documentElement.SelectSingleNode("DisabledChannels");
 				if (disabledChannelsNode != null)
 				{
 					foreach (string str2 in disabledChannelsNode.InnerText.Split(new[] {','}))
@@ -306,7 +307,7 @@ namespace VixenPlus
 
 		public void SaveToFile()
 		{
-			var ownerDocument = SaveToXml(null).OwnerDocument;
+			XmlDocument ownerDocument = SaveToXml(null).OwnerDocument;
 			if (ownerDocument != null)
 			{
 				ownerDocument.Save(_fileName);

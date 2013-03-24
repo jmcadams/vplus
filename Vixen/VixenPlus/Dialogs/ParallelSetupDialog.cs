@@ -60,12 +60,14 @@ namespace VixenPlus.Dialogs
 		{
 			ushort ignore;
 
-			if (comboBoxPort.SelectedIndex != _otherAddressIndex || UInt16.TryParse(textBoxPort.Text, NumberStyles.HexNumber, null, out ignore))
+			if (comboBoxPort.SelectedIndex != _otherAddressIndex ||
+			    UInt16.TryParse(textBoxPort.Text, NumberStyles.HexNumber, null, out ignore))
 			{
 				return;
 			}
-			
-			MessageBox.Show("The port number is not a valid hexadecimal number.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+
+			MessageBox.Show("The port number is not a valid hexadecimal number.", Vendor.ProductName, MessageBoxButtons.OK,
+			                MessageBoxIcon.Hand);
 			DialogResult = DialogResult.None;
 		}
 

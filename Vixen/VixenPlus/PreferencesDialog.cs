@@ -69,7 +69,8 @@ namespace VixenPlus
 			}
 			if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
 			{
-				textBoxLogFilePath.Text = Path.Combine(folderBrowserDialog.SelectedPath, string.IsNullOrEmpty(fileName) ? "audio.log" : fileName);
+				textBoxLogFilePath.Text = Path.Combine(folderBrowserDialog.SelectedPath,
+				                                       string.IsNullOrEmpty(fileName) ? "audio.log" : fileName);
 			}
 		}
 
@@ -87,7 +88,7 @@ namespace VixenPlus
 		private void PopulateAudioDeviceList()
 		{
 			comboBoxDefaultAudioDevice.Items.Add("Use application's default device");
-			comboBoxDefaultAudioDevice.Items.AddRange(new object[] { fmod.GetSoundDeviceList() });
+			comboBoxDefaultAudioDevice.Items.AddRange(new object[] {fmod.GetSoundDeviceList()});
 		}
 
 		private void PopulateFrom(int tabIndex)
@@ -105,9 +106,9 @@ namespace VixenPlus
 							_preferences.SetBoolean("ResetAtStartup", checkBoxResetAtStartup.Checked);
 							_preferences.SetString("PreferredSequenceType", _uiPlugins[comboBoxSequenceType.SelectedIndex].FileExtension);
 							_preferences.SetString("ShutdownTime",
-							                        !dateTimePickerAutoShutdownTime.Checked
-								                        ? string.Empty
-								                        : dateTimePickerAutoShutdownTime.Value.ToString("h:mm tt"));
+							                       !dateTimePickerAutoShutdownTime.Checked
+								                       ? string.Empty
+								                       : dateTimePickerAutoShutdownTime.Value.ToString("h:mm tt"));
 							string path = Path.Combine(Paths.DataPath, "no.update");
 							if (checkBoxDisableAutoUpdate.Checked)
 							{
@@ -129,9 +130,9 @@ namespace VixenPlus
 						_preferences.SetInteger("MaximumLevel", (int) numericUpDownMaximumLevel.Value);
 						_preferences.SetBoolean("WizardForNewSequences", checkBoxWizardForNewSequences.Checked);
 						_preferences.SetString("DefaultProfile",
-						                        comboBoxDefaultProfile.SelectedIndex != 0
-							                        ? comboBoxDefaultProfile.SelectedItem.ToString()
-							                        : string.Empty);
+						                       comboBoxDefaultProfile.SelectedIndex != 0
+							                       ? comboBoxDefaultProfile.SelectedItem.ToString()
+							                       : string.Empty);
 						_preferences.SetInteger("DefaultSequenceAudioDevice", comboBoxDefaultAudioDevice.SelectedIndex - 1);
 						return;
 
@@ -226,7 +227,7 @@ namespace VixenPlus
 				int selectedIndex = box.SelectedIndex;
 				box.BeginUpdate();
 				box.Items.Clear();
-				box.Items.AddRange(new object[] { list.ToArray() });
+				box.Items.AddRange(new object[] {list.ToArray()});
 				if (selectedIndex < box.Items.Count)
 				{
 					box.SelectedIndex = selectedIndex;

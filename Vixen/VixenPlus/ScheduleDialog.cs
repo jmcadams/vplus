@@ -17,6 +17,14 @@ namespace VixenPlus
 		//this.toolStripButtonWeekView.Image = (Image) manager.GetObject("toolStripButtonWeekView.Image");
 		//this.toolStripButtonMonthView.Image = (Image) manager.GetObject("toolStripButtonMonthView.Image");
 		//this.toolStripButtonAgendaView.Image = (Image) manager.GetObject("toolStripButtonAgendaView.Image");
+		private const int AgendaItemHeight = 50;
+		private const int HalfHourHeight = 20;
+		private const int MonthBarHeight = 10;
+		private const int MonthViewBottomMargin = 40;
+		private const int MonthViewLeftMargin = 40;
+		private const int MonthViewRightMargin = 40;
+		private const int MonthViewTopMargin = 40;
+		private const int TimeGutter = 50;
 		private readonly Font _agendaViewItemFont = new Font("Arial", 10f, FontStyle.Bold);
 		private readonly Font _agendaViewTimeFont = new Font("Arial", 8f);
 		private readonly SolidBrush _backgroundBrush = new SolidBrush(Color.FromArgb(0xff, 0xff, 0xd5));
@@ -34,7 +42,6 @@ namespace VixenPlus
 		private readonly Font _timeSmallFont = new Font("Tahoma", 8f);
 		private readonly List<Timer> _timers;
 		private readonly Timers _timersObject;
-		private const int AgendaItemHeight = 50;
 		private int _agendaViewScrollBarValue;
 		private List<Timer> _applicableTimers;
 
@@ -45,20 +52,13 @@ namespace VixenPlus
 
 		private int _dayViewScrollBarValue;
 		private Rectangle _drawingArea;
-		private const int HalfHourHeight = 20;
 		private int _headerHeight = 30;
 		private bool _inLeftButtonBounds;
 		private bool _inRightButtonBounds;
-		private const int MonthBarHeight = 10;
-		private const int MonthViewBottomMargin = 40;
-		private int _monthViewColSize;
-		private const int MonthViewLeftMargin = 40;
-		private const int MonthViewRightMargin = 40;
-		private int _monthViewRowSize;
-		private const int MonthViewTopMargin = 40;
-		private Point _mouseDownAt;
 		private bool _isResizing;
-		private const int TimeGutter = 50;
+		private int _monthViewColSize;
+		private int _monthViewRowSize;
+		private Point _mouseDownAt;
 		private int _weekViewScrollBarValue;
 
 		public ScheduleDialog(Timers timers)
@@ -111,7 +111,7 @@ namespace VixenPlus
 			for (int i = vScrollBar.Value; i < _applicableTimers.Count; i++)
 			{
 				_applicableTimers[i].DisplayBounds.Add(new ReferenceRectF(_drawingArea.Left, num, _drawingArea.Width,
-				                                                           AgendaItemHeight));
+				                                                          AgendaItemHeight));
 				num += AgendaItemHeight;
 			}
 		}
@@ -580,7 +580,10 @@ namespace VixenPlus
 			int minute = ((vScrollBar.Value + (viewRelativeY/HalfHourHeight))%2)*30;
 			if (hour < 0x18)
 			{
-				TimerDialog dialog = timer == null ? new TimerDialog(new DateTime(_currentDate.Year, _currentDate.Month, _currentDate.Day, hour, minute, 0)) : new TimerDialog(timer);
+				TimerDialog dialog = timer == null
+					                     ? new TimerDialog(new DateTime(_currentDate.Year, _currentDate.Month, _currentDate.Day, hour,
+					                                                    minute, 0))
+					                     : new TimerDialog(timer);
 				if (dialog.ShowDialog() == DialogResult.OK)
 				{
 					if (timer == null)
@@ -637,7 +640,7 @@ namespace VixenPlus
 			int num2 = num + (int) time.DayOfWeek;
 			int num3 = ((num2%7) > 0) ? ((num2/7) + 1) : (num2/7);
 			_monthViewRowSize = (((_drawingArea.Height - _headerHeight) - MonthViewTopMargin) - MonthViewBottomMargin)/
-			                     num3;
+			                    num3;
 			_monthViewColSize = ((_drawingArea.Width - MonthViewLeftMargin) - MonthViewRightMargin)/7;
 			var dayOfWeek = (int) time.DayOfWeek;
 			int num5 = ((_drawingArea.Top + _headerHeight) + MonthViewTopMargin) + 5;
@@ -1168,7 +1171,7 @@ namespace VixenPlus
 
 				case DateView.Week:
 					Invalidate(new Rectangle(0, y + HalfHourHeight, _drawingArea.Width,
-					                              (ClientRectangle.Height - y) - HalfHourHeight));
+					                         (ClientRectangle.Height - y) - HalfHourHeight));
 					break;
 
 				case DateView.Month:
@@ -1241,7 +1244,9 @@ namespace VixenPlus
 						{
 							vScrollBar.Maximum = _applicableTimers.Count;
 							vScrollBar.LargeChange = num;
-							vScrollBar.Value = _agendaViewScrollBarValue <= vScrollBar.Maximum ? _agendaViewScrollBarValue : vScrollBar.Maximum;
+							vScrollBar.Value = _agendaViewScrollBarValue <= vScrollBar.Maximum
+								                   ? _agendaViewScrollBarValue
+								                   : vScrollBar.Maximum;
 							vScrollBar.Enabled = true;
 							vScrollBar.Visible = true;
 							break;

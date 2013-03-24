@@ -279,7 +279,7 @@ namespace VixenPlus
 			Label_054B:
 			if (builder.Length > 0)
 			{
-				base.DialogResult = DialogResult.None;
+				DialogResult = DialogResult.None;
 				MessageBox.Show("The following items need to be corrected before\na timer can be created:\n\n" + builder,
 				                Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}

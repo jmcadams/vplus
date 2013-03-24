@@ -13,12 +13,12 @@ namespace VixenPlus
 	{
 		public delegate void OnSongChange(string songName);
 
-		private readonly XmlDocument _xmlDocument;
 		private readonly fmod _fmod;
 		private readonly List<Audio> _playlist;
 		private readonly Preference2 _preferences = Preference2.GetInstance();
 		private readonly System.Timers.Timer _songTimer;
 		private readonly List<Audio> _songs;
+		private readonly XmlDocument _xmlDocument;
 		private int _narrativeInterval;
 		private Audio _narrativeSong;
 		private int _songCounter;
@@ -75,11 +75,11 @@ namespace VixenPlus
 		public void GeneratePlaylist()
 		{
 			_playlist.Clear();
-			var songNode = _xmlDocument.SelectSingleNode("//MusicPlayer/Songs");
+			XmlNode songNode = _xmlDocument.SelectSingleNode("//MusicPlayer/Songs");
 			if (songNode != null && songNode.Attributes != null && bool.Parse(songNode.Attributes["shuffle"].Value))
 			{
 				var list = new List<XmlNode>();
-				var allSongsNode = _xmlDocument.SelectNodes("//MusicPlayer/Songs/*");
+				XmlNodeList allSongsNode = _xmlDocument.SelectNodes("//MusicPlayer/Songs/*");
 				if (allSongsNode != null)
 				{
 					foreach (XmlNode node in allSongsNode)
@@ -97,7 +97,7 @@ namespace VixenPlus
 			}
 			else
 			{
-				var allSongsNode = _xmlDocument.SelectNodes("//MusicPlayer/Songs/*");
+				XmlNodeList allSongsNode = _xmlDocument.SelectNodes("//MusicPlayer/Songs/*");
 				if (allSongsNode != null)
 				{
 					foreach (XmlNode node2 in allSongsNode)
@@ -111,7 +111,7 @@ namespace VixenPlus
 		private void LoadAudioData()
 		{
 			_songs.Clear();
-			var allSongsNode = _xmlDocument.SelectNodes("//MusicPlayer/Songs/*");
+			XmlNodeList allSongsNode = _xmlDocument.SelectNodes("//MusicPlayer/Songs/*");
 			if (allSongsNode != null)
 			{
 				foreach (XmlNode node in allSongsNode)
@@ -167,7 +167,7 @@ namespace VixenPlus
 
 		public DialogResult ShowDialog()
 		{
-			var songNode = _xmlDocument.SelectSingleNode("//MusicPlayer/Songs");
+			XmlNode songNode = _xmlDocument.SelectSingleNode("//MusicPlayer/Songs");
 			var dialog = new MusicPlayerDialog(_fmod)
 				{
 					Shuffle = songNode != null && songNode.Attributes != null && bool.Parse(songNode.Attributes["shuffle"].Value),

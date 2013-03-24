@@ -2,9 +2,9 @@
 {
 	public class OutputPlugin
 	{
-		private readonly bool _isEnabled;
 		private readonly int _from;
 		private readonly int _id;
+		private readonly bool _isEnabled;
 		private readonly string _name;
 		private readonly int _to;
 

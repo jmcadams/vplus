@@ -31,7 +31,8 @@ namespace VixenPlus.Dialogs
 				_eventSequence.MaximumLevel = (byte) numericUpDownMaximum.Value;
 				Cursor = Cursors.WaitCursor;
 				int num;
-				if(int.TryParse(textBoxEventPeriodLength.Text, out num))				{
+				if (int.TryParse(textBoxEventPeriodLength.Text, out num))
+				{
 					_eventSequence.EventPeriod = num;
 				}
 				Cursor = Cursors.Default;

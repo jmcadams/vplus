@@ -7,8 +7,8 @@ namespace VixenPlus
 	public abstract class Input : ICloneable
 	{
 		private readonly InputPlugin _owner;
-		private bool _isEnabled;
 		private ulong _id;
+		private bool _isEnabled;
 		private bool _isMappingIterator;
 		private string _name;
 		private bool _wasChanged;

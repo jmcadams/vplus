@@ -9,7 +9,7 @@ namespace VixenPlus
 		private static string _binaryPath = string.Empty;
 
 		private static string _dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal),
-		                                                Vendor.ProductName);
+		                                               Vendor.ProductName);
 
 		public static string AddinPath
 		{
@@ -51,7 +51,9 @@ namespace VixenPlus
 			get { return _dataPath; }
 			set
 			{
-				_dataPath = !string.IsNullOrEmpty(value) ? value : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Vendor.ProductName);
+				_dataPath = !string.IsNullOrEmpty(value)
+					            ? value
+					            : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Vendor.ProductName);
 				if (!Directory.Exists(_dataPath))
 				{
 					Directory.CreateDirectory(_dataPath);

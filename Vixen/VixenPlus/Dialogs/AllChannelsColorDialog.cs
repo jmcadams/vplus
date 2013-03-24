@@ -9,9 +9,9 @@ namespace VixenPlus.Dialogs
 {
 	public partial class AllChannelsColorDialog : Form
 	{
-		private readonly SolidBrush _solidBrush;
 		private readonly Dictionary<int, Color> _colorsInUse;
 		private readonly Preference2 _preferences;
+		private readonly SolidBrush _solidBrush;
 		private Color _dragColor;
 
 		public AllChannelsColorDialog(List<Channel> channels)

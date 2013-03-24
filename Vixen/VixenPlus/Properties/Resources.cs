@@ -12,19 +12,19 @@ namespace VixenPlus.Properties
 	 DebuggerNonUserCode]
 	internal class Resources
 	{
-		private static CultureInfo resourceCulture;
-		private static ResourceManager resourceMan;
+		private static CultureInfo _resourceCulture;
+		private static ResourceManager _resourceManager;
 
 		internal static Bitmap ChannelOrder
 		{
-			get { return (Bitmap) ResourceManager.GetObject("ChannelOrder", resourceCulture); }
+			get { return (Bitmap) ResourceManager.GetObject("ChannelOrder", _resourceCulture); }
 		}
 
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
 		internal static CultureInfo Culture
 		{
-			get { return resourceCulture; }
-			set { resourceCulture = value; }
+			get { return _resourceCulture; }
+			set { _resourceCulture = value; }
 		}
 
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
@@ -32,23 +32,23 @@ namespace VixenPlus.Properties
 		{
 			get
 			{
-				if (ReferenceEquals(resourceMan, null))
+				if (ReferenceEquals(_resourceManager, null))
 				{
 					var manager = new ResourceManager("Vixen.Properties.Resources", typeof (Resources).Assembly);
-					resourceMan = manager;
+					_resourceManager = manager;
 				}
-				return resourceMan;
+				return _resourceManager;
 			}
 		}
 
 		internal static Bitmap ReturnToPrevious
 		{
-			get { return (Bitmap) ResourceManager.GetObject("ReturnToPrevious", resourceCulture); }
+			get { return (Bitmap) ResourceManager.GetObject("ReturnToPrevious", _resourceCulture); }
 		}
 
 		internal static Bitmap Save
 		{
-			get { return (Bitmap) ResourceManager.GetObject("Save", resourceCulture); }
+			get { return (Bitmap) ResourceManager.GetObject("Save", _resourceCulture); }
 		}
 	}
 }

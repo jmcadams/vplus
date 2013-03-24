@@ -21,7 +21,7 @@ namespace VixenPlus.Dialogs
 		{
 			components = null;
 			InitializeComponent();
-			comboBoxPortName.Items.AddRange(new object[] { SerialPort.GetPortNames() });
+			comboBoxPortName.Items.AddRange(new object[] {SerialPort.GetPortNames()});
 			comboBoxPortName.Enabled = allowPortEdit;
 			comboBoxBaudRate.Enabled = allowBaudEdit;
 			comboBoxParity.Enabled = allowParityEdit;

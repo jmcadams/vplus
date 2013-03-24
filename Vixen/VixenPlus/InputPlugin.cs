@@ -14,6 +14,8 @@ namespace VixenPlus
 			MultiInput
 		}
 
+		private bool _isRecord;
+
 		//private const string AttributeId = "id";
 		//private const string AttributeLiveUpdate = "liveUpdate";
 		//private const string AttributeMappingId = "mappingId";
@@ -28,7 +30,6 @@ namespace VixenPlus
 		private bool _liveUpdate;
 		private MappingIterator _mappingIterator = MappingIterator.None;
 		private MappingSets _mappingSets = new MappingSets();
-		private bool _isRecord;
 		private XmlNode _setupNode;
 		private Input _singleIterator;
 
@@ -153,7 +154,9 @@ namespace VixenPlus
 						XmlNode node2 = Xml.SetNewValue(node, "Input", "");
 						Xml.SetAttribute(node2, "id", input.Id.ToString(CultureInfo.InvariantCulture));
 						Xml.SetAttribute(node2, "mappingId",
-										 (input.AssignedMappingSet != null) ? input.AssignedMappingSet.Id.ToString(CultureInfo.InvariantCulture) : 0.ToString(CultureInfo.InvariantCulture));
+						                 (input.AssignedMappingSet != null)
+							                 ? input.AssignedMappingSet.Id.ToString(CultureInfo.InvariantCulture)
+							                 : 0.ToString(CultureInfo.InvariantCulture));
 					}
 				}
 			}
@@ -208,7 +211,7 @@ namespace VixenPlus
 				}
 				else if (MappingIteratorType == MappingIterator.MultiInput)
 				{
-					var inputNodes = node4.SelectNodes("Input");
+					XmlNodeList inputNodes = node4.SelectNodes("Input");
 					if (inputNodes != null)
 					{
 						foreach (XmlNode node5 in inputNodes)

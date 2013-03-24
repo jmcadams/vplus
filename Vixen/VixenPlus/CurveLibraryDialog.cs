@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
-using VixenPlus;
 
 namespace VixenPlus
 {
@@ -84,11 +83,13 @@ namespace VixenPlus
 				bounds.Inflate(-16, -2);
 				var boxItems = box.Items[e.Index] as string;
 				if (boxItems != null)
+				{
 					using (var brush = new SolidBrush(Color.FromArgb(int.Parse(boxItems.Substring(1)))))
 					{
 						e.Graphics.FillRectangle(brush, bounds);
 						e.Graphics.DrawRectangle(Pens.Black, bounds);
 					}
+				}
 			}
 		}
 
@@ -117,7 +118,7 @@ namespace VixenPlus
 				ListViewSortIcons.SetSortIcon(listViewRecords, e.Column, System.Windows.Forms.SortOrder.Ascending);
 				listViewRecords.Columns[e.Column].Tag = System.Windows.Forms.SortOrder.Ascending;
 				_curveLibrary.SortOrder = new CurveLibrary.Sort(listViewRecords.Columns[e.Column].Name,
-				                                                 CurveLibrary.Sort.Direction.Asc);
+				                                                CurveLibrary.Sort.Direction.Asc);
 				LoadRecords();
 			}
 			else
@@ -125,7 +126,7 @@ namespace VixenPlus
 				ListViewSortIcons.SetSortIcon(listViewRecords, e.Column, System.Windows.Forms.SortOrder.Descending);
 				listViewRecords.Columns[e.Column].Tag = System.Windows.Forms.SortOrder.Descending;
 				_curveLibrary.SortOrder = new CurveLibrary.Sort(listViewRecords.Columns[e.Column].Name,
-				                                                 CurveLibrary.Sort.Direction.Desc);
+				                                                CurveLibrary.Sort.Direction.Desc);
 				LoadRecords();
 			}
 		}
@@ -143,11 +144,13 @@ namespace VixenPlus
 				bounds.Inflate(-16, -2);
 				var curveLibraryRecord = e.Item.Tag as CurveLibraryRecord;
 				if (curveLibraryRecord != null)
+				{
 					using (var brush = new SolidBrush(Color.FromArgb(curveLibraryRecord.Color)))
 					{
 						e.Graphics.FillRectangle(brush, bounds);
 						e.Graphics.DrawRectangle(Pens.Black, bounds);
 					}
+				}
 			}
 			else
 			{
@@ -177,33 +180,33 @@ namespace VixenPlus
 				try
 				{
 					_curveLibrary.ManufacturerFilter = (comboBoxManufacturer.SelectedIndex == 0)
-						                                    ? null
-						                                    : new[]
-							                                    {
-								                                    new CurveLibrary.Filter(CurveLibrary.Filter.Operator.Equals,
-								                                                            comboBoxManufacturer.SelectedItem.ToString())
-							                                    };
+						                                   ? null
+						                                   : new[]
+							                                   {
+								                                   new CurveLibrary.Filter(CurveLibrary.Filter.Operator.Equals,
+								                                                           comboBoxManufacturer.SelectedItem.ToString())
+							                                   };
 					_curveLibrary.LightCountFilter = (comboBoxCount.SelectedIndex == 0)
-						                                  ? null
-						                                  : new[]
-							                                  {
-								                                  new CurveLibrary.Filter(CurveLibrary.Filter.Operator.Equals,
-								                                                          comboBoxCount.SelectedItem.ToString())
-							                                  };
+						                                 ? null
+						                                 : new[]
+							                                 {
+								                                 new CurveLibrary.Filter(CurveLibrary.Filter.Operator.Equals,
+								                                                         comboBoxCount.SelectedItem.ToString())
+							                                 };
 					_curveLibrary.ColorFilter = (comboBoxColor.SelectedIndex == 0)
-						                             ? null
-						                             : new[]
-							                             {
-								                             new CurveLibrary.Filter(CurveLibrary.Filter.Operator.Equals,
-								                                                     ColorFromString(comboBoxColor.SelectedItem.ToString()))
-							                             };
+						                            ? null
+						                            : new[]
+							                            {
+								                            new CurveLibrary.Filter(CurveLibrary.Filter.Operator.Equals,
+								                                                    ColorFromString(comboBoxColor.SelectedItem.ToString()))
+							                            };
 					_curveLibrary.ControllerFilter = (comboBoxController.SelectedIndex == 0)
-						                                  ? null
-						                                  : new[]
-							                                  {
-								                                  new CurveLibrary.Filter(CurveLibrary.Filter.Operator.Equals,
-								                                                          comboBoxController.SelectedItem.ToString())
-							                                  };
+						                                 ? null
+						                                 : new[]
+							                                 {
+								                                 new CurveLibrary.Filter(CurveLibrary.Filter.Operator.Equals,
+								                                                         comboBoxController.SelectedItem.ToString())
+							                                 };
 					listViewRecords.BeginUpdate();
 					listViewRecords.Items.Clear();
 					btnOkay.Enabled = false;
@@ -212,7 +215,10 @@ namespace VixenPlus
 						foreach (CurveLibraryRecord record in _curveLibrary.Read())
 						{
 							listViewRecords.Items.Add(
-								new ListViewItem(new[] {record.Manufacturer, record.LightCount, record.Color.ToString(CultureInfo.InvariantCulture), record.Controller}))
+								new ListViewItem(new[]
+									{
+										record.Manufacturer, record.LightCount, record.Color.ToString(CultureInfo.InvariantCulture), record.Controller
+									}))
 							               .Tag = record;
 						}
 					}
