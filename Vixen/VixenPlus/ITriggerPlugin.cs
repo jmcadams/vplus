@@ -1,14 +1,10 @@
 ﻿namespace Vixen
 {
-    using System;
+	public interface ITriggerPlugin : ILoadable, IPlugIn
+	{
+		string InterfaceTypeName { get; }
 
-    public interface ITriggerPlugin : ILoadable, IPlugIn
-    {
-        void Setup();
-
-        string InterfaceTypeName { get; }
-
-        int TriggerCount { get; }
-    }
+		int TriggerCount { get; }
+		void Setup();
+	}
 }
-

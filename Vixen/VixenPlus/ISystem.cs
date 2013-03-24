@@ -1,27 +1,24 @@
-﻿namespace Vixen
+﻿using System.Collections.Generic;
+using System.Reflection;
+using System.Windows.Forms;
+
+namespace Vixen
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Reflection;
-    using System.Windows.Forms;
+	public interface ISystem
+	{
+		string[] AudioDevices { get; }
 
-    public interface ISystem
-    {
-        int GetExecutingTimerExecutionContextHandle(int executingTimerIndex);
-        Form InstantiateForm(ConstructorInfo constructorInfo, params object[] parameters);
-        bool InvokeSave(UIBase pluginInstance);
-        List<ILoadable> LoadableList(string interfaceName);
-        void VerifySequenceHardwarePlugins(EventSequence sequence);
+		byte[,] Clipboard { get; set; }
 
-        string[] AudioDevices { get; }
+		int ExecutingTimerCount { get; }
 
-        byte[,] Clipboard { get; set; }
+		string KnownFileTypesFilter { get; }
 
-        int ExecutingTimerCount { get; }
-
-        string KnownFileTypesFilter { get; }
-
-        Preference2 UserPreferences { get; }
-    }
+		Preference2 UserPreferences { get; }
+		int GetExecutingTimerExecutionContextHandle(int executingTimerIndex);
+		Form InstantiateForm(ConstructorInfo constructorInfo, params object[] parameters);
+		bool InvokeSave(UIBase pluginInstance);
+		List<ILoadable> LoadableList(string interfaceName);
+		void VerifySequenceHardwarePlugins(EventSequence sequence);
+	}
 }
-

@@ -1,64 +1,48 @@
-﻿namespace Vixen
+﻿using System.Collections.Generic;
+
+namespace Vixen
 {
-    using System;
-    using System.Collections.Generic;
+	internal class Group
+	{
+		private readonly List<Channel> m_mirrorChannels;
 
-    internal class Group
-    {
-        private List<Channel> m_mirrorChannels;
-        private Channel m_primaryChannel;
+		public Group(Channel primaryChannel)
+		{
+			PrimaryChannel = null;
+			m_mirrorChannels = null;
+			PrimaryChannel = primaryChannel;
+			m_mirrorChannels = new List<Channel>();
+		}
 
-        public Group(Channel primaryChannel)
-        {
-            this.m_primaryChannel = null;
-            this.m_mirrorChannels = null;
-            this.m_primaryChannel = primaryChannel;
-            this.m_mirrorChannels = new List<Channel>();
-        }
+		public Group(string primaryChannelName, List<string> mirrorChannelNames, List<Channel> channels)
+		{
+			PrimaryChannel = null;
+			m_mirrorChannels = null;
+			PrimaryChannel = FindChannel(primaryChannelName, channels);
+			m_mirrorChannels = new List<Channel>();
+			foreach (string str in mirrorChannelNames)
+			{
+				m_mirrorChannels.Add(FindChannel(str, channels));
+			}
+		}
 
-        public Group(string primaryChannelName, List<string> mirrorChannelNames, List<Channel> channels)
-        {
-            this.m_primaryChannel = null;
-            this.m_mirrorChannels = null;
-            this.m_primaryChannel = this.FindChannel(primaryChannelName, channels);
-            this.m_mirrorChannels = new List<Channel>();
-            foreach (string str in mirrorChannelNames)
-            {
-                this.m_mirrorChannels.Add(this.FindChannel(str, channels));
-            }
-        }
+		public List<Channel> MirrorChannels
+		{
+			get { return m_mirrorChannels; }
+		}
 
-        private Channel FindChannel(string channelName, List<Channel> channels)
-        {
-            foreach (Channel channel in channels)
-            {
-                if (channelName == channel.Name)
-                {
-                    return channel;
-                }
-            }
-            return null;
-        }
+		public Channel PrimaryChannel { get; set; }
 
-        public List<Channel> MirrorChannels
-        {
-            get
-            {
-                return this.m_mirrorChannels;
-            }
-        }
-
-        public Channel PrimaryChannel
-        {
-            get
-            {
-                return this.m_primaryChannel;
-            }
-            set
-            {
-                this.m_primaryChannel = value;
-            }
-        }
-    }
+		private Channel FindChannel(string channelName, List<Channel> channels)
+		{
+			foreach (Channel channel in channels)
+			{
+				if (channelName == channel.Name)
+				{
+					return channel;
+				}
+			}
+			return null;
+		}
+	}
 }
-

@@ -1,88 +1,101 @@
-namespace Vixen.Dialogs {
-	using System;
-	using System.ComponentModel;
-	using System.Drawing;
-	using System.IO.Ports;
-	using System.Text;
-	using System.Windows.Forms;
-	using Vixen;
+using System;
+using System.IO.Ports;
+using System.Text;
+using System.Windows.Forms;
 
-	public partial class SerialSetupDialog : Form {
-		public SerialSetupDialog(SerialPort serialPort) {
-			this.components = null;
-			this.InitializeComponent();
-			this.comboBoxPortName.Items.AddRange(SerialPort.GetPortNames());
-			this.Init(serialPort);
+namespace Vixen.Dialogs
+{
+	public partial class SerialSetupDialog : Form
+	{
+		public SerialSetupDialog(SerialPort serialPort)
+		{
+			components = null;
+			InitializeComponent();
+			comboBoxPortName.Items.AddRange(SerialPort.GetPortNames());
+			Init(serialPort);
 		}
 
-		public SerialSetupDialog(SerialPort serialPort, bool allowPortEdit, bool allowBaudEdit, bool allowParityEdit, bool allowDataEdit, bool allowStopEdit) {
-			this.components = null;
-			this.InitializeComponent();
-			this.comboBoxPortName.Items.AddRange(SerialPort.GetPortNames());
-			this.comboBoxPortName.Enabled = allowPortEdit;
-			this.comboBoxBaudRate.Enabled = allowBaudEdit;
-			this.comboBoxParity.Enabled = allowParityEdit;
-			this.textBoxData.Enabled = allowDataEdit;
-			this.comboBoxStop.Enabled = allowStopEdit;
-			this.Init(serialPort);
+		public SerialSetupDialog(SerialPort serialPort, bool allowPortEdit, bool allowBaudEdit, bool allowParityEdit,
+		                         bool allowDataEdit, bool allowStopEdit)
+		{
+			components = null;
+			InitializeComponent();
+			comboBoxPortName.Items.AddRange(SerialPort.GetPortNames());
+			comboBoxPortName.Enabled = allowPortEdit;
+			comboBoxBaudRate.Enabled = allowBaudEdit;
+			comboBoxParity.Enabled = allowParityEdit;
+			textBoxData.Enabled = allowDataEdit;
+			comboBoxStop.Enabled = allowStopEdit;
+			Init(serialPort);
 		}
 
-		private void buttonOK_Click(object sender, EventArgs e) {
-			base.DialogResult = System.Windows.Forms.DialogResult.None;
-			StringBuilder builder = new StringBuilder();
-			if (this.comboBoxPortName.SelectedIndex == -1) {
+		public SerialPort SelectedPort
+		{
+			get
+			{
+				return new SerialPort(comboBoxPortName.SelectedItem.ToString(), int.Parse(comboBoxBaudRate.SelectedItem.ToString()),
+				                      (Parity) comboBoxParity.SelectedItem, int.Parse(textBoxData.Text),
+				                      (StopBits) comboBoxStop.SelectedItem);
+			}
+		}
+
+		private void buttonOK_Click(object sender, EventArgs e)
+		{
+			base.DialogResult = DialogResult.None;
+			var builder = new StringBuilder();
+			if (comboBoxPortName.SelectedIndex == -1)
+			{
 				builder.AppendLine("* Port name has not been selected.");
 			}
-			if (this.comboBoxBaudRate.SelectedIndex == -1) {
+			if (comboBoxBaudRate.SelectedIndex == -1)
+			{
 				builder.AppendLine("* Baud rate has not been selected.");
 			}
-			if (this.comboBoxParity.SelectedIndex == -1) {
+			if (comboBoxParity.SelectedIndex == -1)
+			{
 				builder.AppendLine("* Parity has not been selected.");
 			}
 			int result = 0;
-			if (!int.TryParse(this.textBoxData.Text, out result)) {
+			if (!int.TryParse(textBoxData.Text, out result))
+			{
 				builder.AppendLine("* Invalid numeric value for data bits.");
 			}
-			if (this.comboBoxStop.SelectedIndex == -1) {
+			if (comboBoxStop.SelectedIndex == -1)
+			{
 				builder.AppendLine("* Stop bits have not been selected.");
 			}
-			if (builder.Length > 0) {
-				MessageBox.Show("The following items need to be resolved:\n\n" + builder.ToString(), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+			if (builder.Length > 0)
+			{
+				MessageBox.Show("The following items need to be resolved:\n\n" + builder, Vendor.ProductName, MessageBoxButtons.OK,
+				                MessageBoxIcon.Hand);
 			}
-			else {
-				base.DialogResult = System.Windows.Forms.DialogResult.OK;
+			else
+			{
+				base.DialogResult = DialogResult.OK;
 			}
 		}
 
 
-
-		private void Init(SerialPort serialPort) {
-			this.comboBoxParity.Items.Add(Parity.Even);
-			this.comboBoxParity.Items.Add(Parity.Mark);
-			this.comboBoxParity.Items.Add(Parity.None);
-			this.comboBoxParity.Items.Add(Parity.Odd);
-			this.comboBoxParity.Items.Add(Parity.Space);
-			this.comboBoxStop.Items.Add(StopBits.None);
-			this.comboBoxStop.Items.Add(StopBits.One);
-			this.comboBoxStop.Items.Add(StopBits.OnePointFive);
-			this.comboBoxStop.Items.Add(StopBits.Two);
-			if (serialPort == null) {
+		private void Init(SerialPort serialPort)
+		{
+			comboBoxParity.Items.Add(Parity.Even);
+			comboBoxParity.Items.Add(Parity.Mark);
+			comboBoxParity.Items.Add(Parity.None);
+			comboBoxParity.Items.Add(Parity.Odd);
+			comboBoxParity.Items.Add(Parity.Space);
+			comboBoxStop.Items.Add(StopBits.None);
+			comboBoxStop.Items.Add(StopBits.One);
+			comboBoxStop.Items.Add(StopBits.OnePointFive);
+			comboBoxStop.Items.Add(StopBits.Two);
+			if (serialPort == null)
+			{
 				serialPort = new SerialPort("COM1", 0x9600, Parity.None, 8, StopBits.One);
 			}
-			this.comboBoxPortName.SelectedIndex = this.comboBoxPortName.Items.IndexOf(serialPort.PortName);
-			this.comboBoxBaudRate.SelectedItem = serialPort.BaudRate.ToString();
-			this.comboBoxParity.SelectedItem = serialPort.Parity;
-			this.textBoxData.Text = serialPort.DataBits.ToString();
-			this.comboBoxStop.SelectedItem = serialPort.StopBits;
-		}
-
-
-
-		public SerialPort SelectedPort {
-			get {
-				return new SerialPort(this.comboBoxPortName.SelectedItem.ToString(), int.Parse(this.comboBoxBaudRate.SelectedItem.ToString()), (Parity)this.comboBoxParity.SelectedItem, int.Parse(this.textBoxData.Text), (StopBits)this.comboBoxStop.SelectedItem);
-			}
+			comboBoxPortName.SelectedIndex = comboBoxPortName.Items.IndexOf(serialPort.PortName);
+			comboBoxBaudRate.SelectedItem = serialPort.BaudRate.ToString();
+			comboBoxParity.SelectedItem = serialPort.Parity;
+			textBoxData.Text = serialPort.DataBits.ToString();
+			comboBoxStop.SelectedItem = serialPort.StopBits;
 		}
 	}
 }
-

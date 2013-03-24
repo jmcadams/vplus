@@ -1,12 +1,10 @@
 ﻿namespace AnalogSpectrum.Properties
 {
-    using System;
-    using System.CodeDom.Compiler;
+	using System.CodeDom.Compiler;
     using System.ComponentModel;
     using System.Diagnostics;
     using System.Globalization;
-    using System.Resources;
-    using System.Runtime.CompilerServices;
+	using System.Runtime.CompilerServices;
 
     [DebuggerNonUserCode, GeneratedCode("System.Resources.Tools.StronglyTypedResourceBuilder", "2.0.0.0"), CompilerGenerated]
     internal class Resources
@@ -36,7 +34,7 @@
         {
             get
             {
-                if (object.ReferenceEquals(resourceMan, null))
+                if (ReferenceEquals(resourceMan, null))
                 {
                     System.Resources.ResourceManager manager = new System.Resources.ResourceManager("AnalogSpectrum.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = manager;

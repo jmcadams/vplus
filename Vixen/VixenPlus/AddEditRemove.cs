@@ -1,188 +1,154 @@
-﻿namespace Vixen
+﻿using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace Vixen
 {
-    using System;
-    using System.ComponentModel;
-    using System.Drawing;
-    using System.Runtime.CompilerServices;
-    using System.Windows.Forms;
+	[ToolboxBitmap(typeof (Panel))]
+	public class AddEditRemove : Panel
+	{
+		private readonly IContainer components;
+		private VixenSimpleButton[] m_buttons;
 
-    [ToolboxBitmap(typeof(Panel))]
-    public class AddEditRemove : Panel
-    {
-        private IContainer components;
-        private VixenSimpleButton[] m_buttons;
+		public AddEditRemove()
+		{
+			components = null;
+			InitializeComponent();
+			Construct();
+		}
 
-        public event EventHandler AddClick;
+		public AddEditRemove(IContainer container)
+		{
+			components = null;
+			container.Add(this);
+			InitializeComponent();
+			Construct();
+		}
 
-        public event EventHandler EditClick;
+		[DefaultValue(true)]
+		public bool AddEnabled
+		{
+			get { return m_buttons[0].Enabled; }
+			set { m_buttons[0].Enabled = value; }
+		}
 
-        public event EventHandler RemoveClick;
+		[DefaultValue(true)]
+		public bool AddVisible
+		{
+			get { return m_buttons[0].Visible; }
+			set { m_buttons[0].Visible = value; }
+		}
 
-        public AddEditRemove()
-        {
-            this.components = null;
-            this.InitializeComponent();
-            this.Construct();
-        }
+		[DefaultValue(true)]
+		public bool EditEnabled
+		{
+			get { return m_buttons[1].Enabled; }
+			set { m_buttons[1].Enabled = value; }
+		}
 
-        public AddEditRemove(IContainer container)
-        {
-            this.components = null;
-            container.Add(this);
-            this.InitializeComponent();
-            this.Construct();
-        }
+		[DefaultValue(true)]
+		public bool EditVisible
+		{
+			get { return m_buttons[1].Visible; }
+			set { m_buttons[1].Visible = value; }
+		}
 
-        private void AddEditRemove_ButtonClick(object sender, EventArgs e)
-        {
-            if ((sender == this.m_buttons[0]) && (this.AddClick != null))
-            {
-                this.AddClick(sender, e);
-            }
-            else if ((sender == this.m_buttons[1]) && (this.EditClick != null))
-            {
-                this.EditClick(sender, e);
-            }
-            else if ((sender == this.m_buttons[2]) && (this.RemoveClick != null))
-            {
-                this.RemoveClick(sender, e);
-            }
-        }
+		[DefaultValue(true)]
+		public bool RemoveEnabled
+		{
+			get { return m_buttons[2].Enabled; }
+			set { m_buttons[2].Enabled = value; }
+		}
 
-        private void AddEditRemove_ButtonVisibleChanged(object sender, EventArgs e)
-        {
-            this.CalcPositions();
-        }
+		[DefaultValue(true)]
+		public bool RemoveVisible
+		{
+			get { return m_buttons[2].Visible; }
+			set { m_buttons[2].Visible = value; }
+		}
 
-        private void CalcPositions()
-        {
-            int num = 0;
-            if (this.m_buttons[0].Visible)
-            {
-                this.m_buttons[0].Left = num;
-                num += 0x1a;
-            }
-            if (this.m_buttons[1].Visible)
-            {
-                this.m_buttons[1].Left = num;
-                num += 0x1a;
-            }
-            if (this.m_buttons[2].Visible)
-            {
-                this.m_buttons[2].Left = num;
-                num += 0x1a;
-            }
-            base.Width = num;
-        }
+		public event EventHandler AddClick;
 
-        private void Construct()
-        {
-            base.Size = new Size(0x48, 20);
-            this.m_buttons = new VixenSimpleButton[] { new VixenSimpleButton(VixenSimpleButtonType.Add), new VixenSimpleButton(VixenSimpleButtonType.Edit), new VixenSimpleButton(VixenSimpleButtonType.Remove) };
-            this.m_buttons[0].Parent = this;
-            this.m_buttons[1].Parent = this;
-            this.m_buttons[2].Parent = this;
-            EventHandler handler = new EventHandler(this.AddEditRemove_ButtonVisibleChanged);
-            this.m_buttons[0].VisibleChanged += handler;
-            this.m_buttons[1].VisibleChanged += handler;
-            this.m_buttons[2].VisibleChanged += handler;
-            EventHandler handler2 = new EventHandler(this.AddEditRemove_ButtonClick);
-            this.m_buttons[0].Click += handler2;
-            this.m_buttons[1].Click += handler2;
-            this.m_buttons[2].Click += handler2;
-            this.CalcPositions();
-        }
+		public event EventHandler EditClick;
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (this.components != null))
-            {
-                this.components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+		public event EventHandler RemoveClick;
 
-        private void InitializeComponent()
-        {
-        }
+		private void AddEditRemove_ButtonClick(object sender, EventArgs e)
+		{
+			if ((sender == m_buttons[0]) && (AddClick != null))
+			{
+				AddClick(sender, e);
+			}
+			else if ((sender == m_buttons[1]) && (EditClick != null))
+			{
+				EditClick(sender, e);
+			}
+			else if ((sender == m_buttons[2]) && (RemoveClick != null))
+			{
+				RemoveClick(sender, e);
+			}
+		}
 
-        [DefaultValue(true)]
-        public bool AddEnabled
-        {
-            get
-            {
-                return this.m_buttons[0].Enabled;
-            }
-            set
-            {
-                this.m_buttons[0].Enabled = value;
-            }
-        }
+		private void AddEditRemove_ButtonVisibleChanged(object sender, EventArgs e)
+		{
+			CalcPositions();
+		}
 
-        [DefaultValue(true)]
-        public bool AddVisible
-        {
-            get
-            {
-                return this.m_buttons[0].Visible;
-            }
-            set
-            {
-                this.m_buttons[0].Visible = value;
-            }
-        }
+		private void CalcPositions()
+		{
+			int num = 0;
+			if (m_buttons[0].Visible)
+			{
+				m_buttons[0].Left = num;
+				num += 0x1a;
+			}
+			if (m_buttons[1].Visible)
+			{
+				m_buttons[1].Left = num;
+				num += 0x1a;
+			}
+			if (m_buttons[2].Visible)
+			{
+				m_buttons[2].Left = num;
+				num += 0x1a;
+			}
+			base.Width = num;
+		}
 
-        [DefaultValue(true)]
-        public bool EditEnabled
-        {
-            get
-            {
-                return this.m_buttons[1].Enabled;
-            }
-            set
-            {
-                this.m_buttons[1].Enabled = value;
-            }
-        }
+		private void Construct()
+		{
+			base.Size = new Size(0x48, 20);
+			m_buttons = new[]
+				{
+					new VixenSimpleButton(VixenSimpleButtonType.Add), new VixenSimpleButton(VixenSimpleButtonType.Edit),
+					new VixenSimpleButton(VixenSimpleButtonType.Remove)
+				};
+			m_buttons[0].Parent = this;
+			m_buttons[1].Parent = this;
+			m_buttons[2].Parent = this;
+			EventHandler handler = AddEditRemove_ButtonVisibleChanged;
+			m_buttons[0].VisibleChanged += handler;
+			m_buttons[1].VisibleChanged += handler;
+			m_buttons[2].VisibleChanged += handler;
+			EventHandler handler2 = AddEditRemove_ButtonClick;
+			m_buttons[0].Click += handler2;
+			m_buttons[1].Click += handler2;
+			m_buttons[2].Click += handler2;
+			CalcPositions();
+		}
 
-        [DefaultValue(true)]
-        public bool EditVisible
-        {
-            get
-            {
-                return this.m_buttons[1].Visible;
-            }
-            set
-            {
-                this.m_buttons[1].Visible = value;
-            }
-        }
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && (components != null))
+			{
+				components.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 
-        [DefaultValue(true)]
-        public bool RemoveEnabled
-        {
-            get
-            {
-                return this.m_buttons[2].Enabled;
-            }
-            set
-            {
-                this.m_buttons[2].Enabled = value;
-            }
-        }
-
-        [DefaultValue(true)]
-        public bool RemoveVisible
-        {
-            get
-            {
-                return this.m_buttons[2].Visible;
-            }
-            set
-            {
-                this.m_buttons[2].Visible = value;
-            }
-        }
-    }
+		private void InitializeComponent()
+		{
+		}
+	}
 }
-

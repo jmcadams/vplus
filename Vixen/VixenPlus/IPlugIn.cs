@@ -1,16 +1,12 @@
 ﻿namespace Vixen
 {
-    using System;
+	public interface IPlugIn
+	{
+		string Author { get; }
 
-    public interface IPlugIn
-    {
-        string ToString();
+		string Description { get; }
 
-        string Author { get; }
-
-        string Description { get; }
-
-        string Name { get; }
-    }
+		string Name { get; }
+		string ToString();
+	}
 }
-

@@ -1,392 +1,391 @@
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+
 namespace Vixen
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Drawing;
-    using System.Windows.Forms;
+	internal partial class InputPluginDialog : Form
+	{
+		//TODO: Figure out what the code below does. It was translated to the designer, but doesn't seem to work there.
+		//ComponentResourceManager manager = new ComponentResourceManager(typeof(InputPluginDialog));
+		//this.imageList.ImageStream = (ImageListStreamer)manager.GetObject("imageList.ImageStream"); 
 
-    internal partial class InputPluginDialog : Form
-    {
-        //TODO: Figure out what the code below does. It was translated to the designer, but doesn't seem to work there.
-        //ComponentResourceManager manager = new ComponentResourceManager(typeof(InputPluginDialog));
-        //this.imageList.ImageStream = (ImageListStreamer)manager.GetObject("imageList.ImageStream"); 
+		private readonly MappingSets m_editingMappingSets;
+		private readonly Dictionary<string, Channel> m_idChannel;
+		private readonly bool m_init;
+		private readonly InputPlugin m_plugin;
+		private readonly EventSequence m_sequence;
+		private bool m_internal;
 
-        private MappingSets m_editingMappingSets;
-        private Dictionary<string, Channel> m_idChannel;
-        private bool m_init = false;
-        private bool m_internal = false;
-        private InputPlugin m_plugin;
-        private EventSequence m_sequence;
- 
-        public InputPluginDialog(InputPlugin plugin, EventSequence sequence)
-        {
-            this.InitializeComponent();
-            this.m_idChannel = new Dictionary<string, Channel>();
-            this.m_plugin = plugin;
-            this.m_sequence = sequence;
-            plugin.SetupDataToPlugin();
-            this.m_init = true;
-            this.listBoxInputs.DisplayMember = "Name";
-            this.listBoxInputs.ValueMember = "OutputChannelId";
-            this.listBoxInputs.DataSource = this.m_plugin.Inputs;
-            foreach (Channel channel in this.m_sequence.Channels)
-            {
-                this.m_idChannel[channel.ID.ToString()] = channel;
-            }
-            this.listBoxChannels.Items.AddRange(this.m_sequence.Channels.ToArray());
-            this.m_editingMappingSets = (MappingSets) this.m_plugin.MappingSets.Clone();
-            this.m_init = false;
-            if (this.listBoxInputs.SelectedItem != null)
-            {
-                this.ReflectInput((Input) this.listBoxInputs.SelectedItem);
-            }
-            this.checkBoxLiveUpdate.Checked = this.m_plugin.LiveUpdate;
-            this.checkBoxRecord.Checked = this.m_plugin.Record;
-            foreach (MappingSet set in this.m_editingMappingSets)
-            {
-                this.AddMappingSetListViewItem(set);
-            }
-            Input[] iterators = this.m_plugin.GetIterators();
-            this.comboBoxSingleIteratorInput.Items.AddRange(iterators);
-            this.listBoxIteratorInputs.Items.AddRange(iterators);
-            if (this.m_plugin.MappingIteratorType == InputPlugin.MappingIterator.SingleInput)
-            {
-                this.radioButtonSingleIterator.Checked = true;
-                this.comboBoxSingleIteratorInput.SelectedItem = this.m_plugin.SingleIterator;
-            }
-            else if (this.m_plugin.MappingIteratorType == InputPlugin.MappingIterator.MultiInput)
-            {
-                this.radioButtonMultipleIterators.Checked = true;
-                this.tabControlIterators.SelectedTab = this.tabPageMultipleIterators;
-            }
-            else
-            {
-                this.radioButtonNoIterator.Checked = true;
-            }
-        }
+		public InputPluginDialog(InputPlugin plugin, EventSequence sequence)
+		{
+			InitializeComponent();
+			m_idChannel = new Dictionary<string, Channel>();
+			m_plugin = plugin;
+			m_sequence = sequence;
+			plugin.SetupDataToPlugin();
+			m_init = true;
+			listBoxInputs.DisplayMember = "Name";
+			listBoxInputs.ValueMember = "OutputChannelId";
+			listBoxInputs.DataSource = m_plugin.Inputs;
+			foreach (Channel channel in m_sequence.Channels)
+			{
+				m_idChannel[channel.ID.ToString()] = channel;
+			}
+			listBoxChannels.Items.AddRange(m_sequence.Channels.ToArray());
+			m_editingMappingSets = (MappingSets) m_plugin.MappingSets.Clone();
+			m_init = false;
+			if (listBoxInputs.SelectedItem != null)
+			{
+				ReflectInput((Input) listBoxInputs.SelectedItem);
+			}
+			checkBoxLiveUpdate.Checked = m_plugin.LiveUpdate;
+			checkBoxRecord.Checked = m_plugin.Record;
+			foreach (MappingSet set in m_editingMappingSets)
+			{
+				AddMappingSetListViewItem(set);
+			}
+			Input[] iterators = m_plugin.GetIterators();
+			comboBoxSingleIteratorInput.Items.AddRange(iterators);
+			listBoxIteratorInputs.Items.AddRange(iterators);
+			if (m_plugin.MappingIteratorType == InputPlugin.MappingIterator.SingleInput)
+			{
+				radioButtonSingleIterator.Checked = true;
+				comboBoxSingleIteratorInput.SelectedItem = m_plugin.SingleIterator;
+			}
+			else if (m_plugin.MappingIteratorType == InputPlugin.MappingIterator.MultiInput)
+			{
+				radioButtonMultipleIterators.Checked = true;
+				tabControlIterators.SelectedTab = tabPageMultipleIterators;
+			}
+			else
+			{
+				radioButtonNoIterator.Checked = true;
+			}
+		}
 
-        private void AddMappingSetListViewItem(MappingSet mappingSet)
-        {
-            this.listViewMappingSets.Items.Add(mappingSet.Name);
-        }
+		private void AddMappingSetListViewItem(MappingSet mappingSet)
+		{
+			listViewMappingSets.Items.Add(mappingSet.Name);
+		}
 
-        private void AssignMappingSetToInput(MappingSet mappingSet, Input input)
-        {
-            if (input != null)
-            {
-                input.AssignedMappingSet = mappingSet;
-            }
-        }
+		private void AssignMappingSetToInput(MappingSet mappingSet, Input input)
+		{
+			if (input != null)
+			{
+				input.AssignedMappingSet = mappingSet;
+			}
+		}
 
-        private void buttonAddMappingSet_Click(object sender, EventArgs e)
-        {
-            this.AddMappingSetListViewItem(this.m_editingMappingSets.AddMapping());
-        }
+		private void buttonAddMappingSet_Click(object sender, EventArgs e)
+		{
+			AddMappingSetListViewItem(m_editingMappingSets.AddMapping());
+		}
 
-        private void buttonClearInputChannels_Click(object sender, EventArgs e)
-        {
-            if (this.listBoxInputs.SelectedItem != null)
-            {
-                Input selectedItem = (Input) this.listBoxInputs.SelectedItem;
-                this.m_editingMappingSets.GetOutputChannelIdList(selectedItem).Clear();
-                this.ReflectInput(selectedItem);
-            }
-        }
+		private void buttonClearInputChannels_Click(object sender, EventArgs e)
+		{
+			if (listBoxInputs.SelectedItem != null)
+			{
+				var selectedItem = (Input) listBoxInputs.SelectedItem;
+				m_editingMappingSets.GetOutputChannelIdList(selectedItem).Clear();
+				ReflectInput(selectedItem);
+			}
+		}
 
-        private void buttonMoveDown_Click(object sender, EventArgs e)
-        {
-            int oldIndex = this.listViewMappingSets.SelectedIndices[0];
-            this.m_editingMappingSets.MoveMappingTo(oldIndex, oldIndex + 1);
-            ListViewItem item = this.listViewMappingSets.Items[oldIndex];
-            this.listViewMappingSets.Items.RemoveAt(oldIndex);
-            this.listViewMappingSets.Items.Insert(oldIndex + 1, item);
-            this.listViewMappingSets.Items[oldIndex].Selected = false;
-            this.listViewMappingSets.Items[oldIndex + 1].Selected = true;
-        }
+		private void buttonMoveDown_Click(object sender, EventArgs e)
+		{
+			int oldIndex = listViewMappingSets.SelectedIndices[0];
+			m_editingMappingSets.MoveMappingTo(oldIndex, oldIndex + 1);
+			ListViewItem item = listViewMappingSets.Items[oldIndex];
+			listViewMappingSets.Items.RemoveAt(oldIndex);
+			listViewMappingSets.Items.Insert(oldIndex + 1, item);
+			listViewMappingSets.Items[oldIndex].Selected = false;
+			listViewMappingSets.Items[oldIndex + 1].Selected = true;
+		}
 
-        private void buttonMoveUp_Click(object sender, EventArgs e)
-        {
-            int oldIndex = this.listViewMappingSets.SelectedIndices[0];
-            this.m_editingMappingSets.MoveMappingTo(oldIndex, oldIndex - 1);
-            ListViewItem item = this.listViewMappingSets.Items[oldIndex];
-            this.listViewMappingSets.Items.RemoveAt(oldIndex);
-            this.listViewMappingSets.Items.Insert(oldIndex - 1, item);
-            this.listViewMappingSets.Items[oldIndex].Selected = false;
-            this.listViewMappingSets.Items[oldIndex - 1].Selected = true;
-        }
+		private void buttonMoveUp_Click(object sender, EventArgs e)
+		{
+			int oldIndex = listViewMappingSets.SelectedIndices[0];
+			m_editingMappingSets.MoveMappingTo(oldIndex, oldIndex - 1);
+			ListViewItem item = listViewMappingSets.Items[oldIndex];
+			listViewMappingSets.Items.RemoveAt(oldIndex);
+			listViewMappingSets.Items.Insert(oldIndex - 1, item);
+			listViewMappingSets.Items[oldIndex].Selected = false;
+			listViewMappingSets.Items[oldIndex - 1].Selected = true;
+		}
 
-        private void buttonOK_Click(object sender, EventArgs e)
-        {
-            if (this.radioButtonSingleIterator.Checked && (this.comboBoxSingleIteratorInput.SelectedItem == null))
-            {
-                if (this.m_plugin.GetIterators().Length > 0)
-                {
-                    MessageBox.Show("You have selected to use a single input to iterate the mapping sets, but have not chosen an input.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                    this.tabControlPlugin.SelectedTab = this.tabPageMappingIteration;
-                }
-                else
-                {
-                    MessageBox.Show("You have selected to use a single input to iterate the mapping sets, but do not have any inputs sets to be iterators and therefore have not chosen an input to iterate with.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                }
-                base.DialogResult = System.Windows.Forms.DialogResult.None;
-            }
-            else
-            {
-                this.m_plugin.MappingSets = this.m_editingMappingSets;
-                this.m_plugin.LiveUpdate = this.checkBoxLiveUpdate.Checked;
-                this.m_plugin.Record = this.checkBoxRecord.Checked;
-                if (this.radioButtonSingleIterator.Checked)
-                {
-                    this.m_plugin.MappingIteratorType = InputPlugin.MappingIterator.SingleInput;
-                }
-                else if (this.radioButtonMultipleIterators.Checked)
-                {
-                    this.m_plugin.MappingIteratorType = InputPlugin.MappingIterator.MultiInput;
-                }
-                else
-                {
-                    this.m_plugin.MappingIteratorType = InputPlugin.MappingIterator.None;
-                }
-                if (this.m_plugin.MappingIteratorType == InputPlugin.MappingIterator.SingleInput)
-                {
-                    this.m_plugin.SingleIterator = (Input) this.comboBoxSingleIteratorInput.SelectedItem;
-                }
-                else
-                {
-                    this.m_plugin.SingleIterator = null;
-                }
-                this.m_plugin.PluginToSetupData();
-            }
-        }
+		private void buttonOK_Click(object sender, EventArgs e)
+		{
+			if (radioButtonSingleIterator.Checked && (comboBoxSingleIteratorInput.SelectedItem == null))
+			{
+				if (m_plugin.GetIterators().Length > 0)
+				{
+					MessageBox.Show(
+						"You have selected to use a single input to iterate the mapping sets, but have not chosen an input.",
+						Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+					tabControlPlugin.SelectedTab = tabPageMappingIteration;
+				}
+				else
+				{
+					MessageBox.Show(
+						"You have selected to use a single input to iterate the mapping sets, but do not have any inputs sets to be iterators and therefore have not chosen an input to iterate with.",
+						Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+				}
+				base.DialogResult = DialogResult.None;
+			}
+			else
+			{
+				m_plugin.MappingSets = m_editingMappingSets;
+				m_plugin.LiveUpdate = checkBoxLiveUpdate.Checked;
+				m_plugin.Record = checkBoxRecord.Checked;
+				if (radioButtonSingleIterator.Checked)
+				{
+					m_plugin.MappingIteratorType = InputPlugin.MappingIterator.SingleInput;
+				}
+				else if (radioButtonMultipleIterators.Checked)
+				{
+					m_plugin.MappingIteratorType = InputPlugin.MappingIterator.MultiInput;
+				}
+				else
+				{
+					m_plugin.MappingIteratorType = InputPlugin.MappingIterator.None;
+				}
+				if (m_plugin.MappingIteratorType == InputPlugin.MappingIterator.SingleInput)
+				{
+					m_plugin.SingleIterator = (Input) comboBoxSingleIteratorInput.SelectedItem;
+				}
+				else
+				{
+					m_plugin.SingleIterator = null;
+				}
+				m_plugin.PluginToSetupData();
+			}
+		}
 
-        private void buttonRemoveMappingSet_Click(object sender, EventArgs e)
-        {
-            this.m_editingMappingSets.RemoveMappingAt(this.listViewMappingSets.SelectedIndices[0]);
-            this.listViewMappingSets.Items.RemoveAt(this.listViewMappingSets.SelectedIndices[0]);
-            this.buttonRemoveMappingSet.Enabled = this.buttonMoveUp.Enabled = this.buttonMoveDown.Enabled = false;
-            this.UpdateIteratorType();
-        }
+		private void buttonRemoveMappingSet_Click(object sender, EventArgs e)
+		{
+			m_editingMappingSets.RemoveMappingAt(listViewMappingSets.SelectedIndices[0]);
+			listViewMappingSets.Items.RemoveAt(listViewMappingSets.SelectedIndices[0]);
+			buttonRemoveMappingSet.Enabled = buttonMoveUp.Enabled = buttonMoveDown.Enabled = false;
+			UpdateIteratorType();
+		}
 
-        private void buttonRenameMappingSet_Click(object sender, EventArgs e)
-        {
-        }
+		private void buttonRenameMappingSet_Click(object sender, EventArgs e)
+		{
+		}
 
-        private void checkBoxEnabled_CheckedChanged(object sender, EventArgs e)
-        {
-            this.checkBoxEnabled.Text = this.checkBoxEnabled.Checked ? "Input is enabled and is mapped to:" : "Input is disabled";
-            this.listBoxChannels.Enabled = this.checkBoxEnabled.Checked;
-        }
+		private void checkBoxEnabled_CheckedChanged(object sender, EventArgs e)
+		{
+			checkBoxEnabled.Text = checkBoxEnabled.Checked ? "Input is enabled and is mapped to:" : "Input is disabled";
+			listBoxChannels.Enabled = checkBoxEnabled.Checked;
+		}
 
-        private void checkBoxEnabled_Click(object sender, EventArgs e)
-        {
-            if (this.listBoxInputs.SelectedItem != null)
-            {
-                ((Input) this.listBoxInputs.SelectedItem).Enabled = this.checkBoxEnabled.Checked;
-            }
-        }
+		private void checkBoxEnabled_Click(object sender, EventArgs e)
+		{
+			if (listBoxInputs.SelectedItem != null)
+			{
+				((Input) listBoxInputs.SelectedItem).Enabled = checkBoxEnabled.Checked;
+			}
+		}
 
-        private void comboBoxMappingSet_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            this.m_editingMappingSets.CurrentMappingSet = (MappingSet) this.comboBoxMappingSet.SelectedItem;
-            this.listBoxInputs.SelectedIndex = -1;
-            this.listBoxMappedChannels.Items.Clear();
-            this.listBoxChannels.ClearSelected();
-            this.groupBoxIOMapping.Enabled = this.comboBoxMappingSet.SelectedIndex != -1;
-        }
+		private void comboBoxMappingSet_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			m_editingMappingSets.CurrentMappingSet = (MappingSet) comboBoxMappingSet.SelectedItem;
+			listBoxInputs.SelectedIndex = -1;
+			listBoxMappedChannels.Items.Clear();
+			listBoxChannels.ClearSelected();
+			groupBoxIOMapping.Enabled = comboBoxMappingSet.SelectedIndex != -1;
+		}
 
-        
 
-        
+		private void listBoxChannels_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (!m_internal)
+			{
+				var list = new List<Channel>();
+				foreach (Channel channel in listBoxMappedChannels.Items)
+				{
+					list.Add(channel);
+				}
+				foreach (Channel channel in listBoxMappedChannels.Items)
+				{
+					if (!listBoxChannels.SelectedItems.Contains(channel))
+					{
+						list.Remove(channel);
+					}
+				}
+				foreach (Channel channel in listBoxChannels.SelectedItems)
+				{
+					if (!list.Contains(channel))
+					{
+						list.Add(channel);
+					}
+				}
+				if (listBoxInputs.SelectedItem != null)
+				{
+					List<string> outputChannelIdList = m_editingMappingSets.GetOutputChannelIdList((Input) listBoxInputs.SelectedItem);
+					outputChannelIdList.Clear();
+					foreach (Channel channel in list)
+					{
+						outputChannelIdList.Add(channel.ID.ToString());
+					}
+				}
+				listBoxMappedChannels.BeginUpdate();
+				listBoxMappedChannels.Items.Clear();
+				listBoxMappedChannels.Items.AddRange(list.ToArray());
+				listBoxMappedChannels.EndUpdate();
+			}
+		}
 
-        private void listBoxChannels_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (!this.m_internal)
-            {
-                List<Channel> list = new List<Channel>();
-                foreach (Channel channel in this.listBoxMappedChannels.Items)
-                {
-                    list.Add(channel);
-                }
-                foreach (Channel channel in this.listBoxMappedChannels.Items)
-                {
-                    if (!this.listBoxChannels.SelectedItems.Contains(channel))
-                    {
-                        list.Remove(channel);
-                    }
-                }
-                foreach (Channel channel in this.listBoxChannels.SelectedItems)
-                {
-                    if (!list.Contains(channel))
-                    {
-                        list.Add(channel);
-                    }
-                }
-                if (this.listBoxInputs.SelectedItem != null)
-                {
-                    List<string> outputChannelIdList = this.m_editingMappingSets.GetOutputChannelIdList((Input) this.listBoxInputs.SelectedItem);
-                    outputChannelIdList.Clear();
-                    foreach (Channel channel in list)
-                    {
-                        outputChannelIdList.Add(channel.ID.ToString());
-                    }
-                }
-                this.listBoxMappedChannels.BeginUpdate();
-                this.listBoxMappedChannels.Items.Clear();
-                this.listBoxMappedChannels.Items.AddRange(list.ToArray());
-                this.listBoxMappedChannels.EndUpdate();
-            }
-        }
+		private void listBoxInputs_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (!m_init && (listBoxInputs.SelectedItem != null))
+			{
+				ReflectInput((Input) listBoxInputs.SelectedItem);
+			}
+		}
 
-        private void listBoxInputs_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (!this.m_init && (this.listBoxInputs.SelectedItem != null))
-            {
-                this.ReflectInput((Input) this.listBoxInputs.SelectedItem);
-            }
-        }
+		private void listBoxIteratorInputs_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			var selectedItem = (Input) listBoxIteratorInputs.SelectedItem;
+			if (selectedItem.AssignedMappingSet == null)
+			{
+				listBoxMappingSets.SelectedIndex = 0;
+			}
+			else
+			{
+				listBoxMappingSets.SelectedItem = selectedItem.AssignedMappingSet;
+			}
+		}
 
-        private void listBoxIteratorInputs_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Input selectedItem = (Input) this.listBoxIteratorInputs.SelectedItem;
-            if (selectedItem.AssignedMappingSet == null)
-            {
-                this.listBoxMappingSets.SelectedIndex = 0;
-            }
-            else
-            {
-                this.listBoxMappingSets.SelectedItem = selectedItem.AssignedMappingSet;
-            }
-        }
+		private void listBoxMappingSets_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (!(listBoxMappingSets.SelectedItem is MappingSet))
+			{
+				AssignMappingSetToInput(null, (Input) listBoxIteratorInputs.SelectedItem);
+			}
+			else
+			{
+				AssignMappingSetToInput((MappingSet) listBoxMappingSets.SelectedItem, (Input) listBoxIteratorInputs.SelectedItem);
+			}
+		}
 
-        private void listBoxMappingSets_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (!(this.listBoxMappingSets.SelectedItem is MappingSet))
-            {
-                this.AssignMappingSetToInput(null, (Input) this.listBoxIteratorInputs.SelectedItem);
-            }
-            else
-            {
-                this.AssignMappingSetToInput((MappingSet) this.listBoxMappingSets.SelectedItem, (Input) this.listBoxIteratorInputs.SelectedItem);
-            }
-        }
+		private void listViewMappingSets_AfterLabelEdit(object sender, LabelEditEventArgs e)
+		{
+			if ((e.Label != null) && (e.Label.Trim().Length > 0))
+			{
+				m_editingMappingSets[listViewMappingSets.SelectedIndices[0]].Name = e.Label;
+			}
+		}
 
-        private void listViewMappingSets_AfterLabelEdit(object sender, LabelEditEventArgs e)
-        {
-            if ((e.Label != null) && (e.Label.Trim().Length > 0))
-            {
-                this.m_editingMappingSets[this.listViewMappingSets.SelectedIndices[0]].Name = e.Label;
-            }
-        }
+		private void listViewMappingSets_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			buttonRemoveMappingSet.Enabled = listViewMappingSets.SelectedItems.Count > 0;
+			buttonMoveUp.Enabled = (listViewMappingSets.SelectedItems.Count > 0) && (listViewMappingSets.SelectedIndices[0] != 0);
+			buttonMoveDown.Enabled = (listViewMappingSets.SelectedItems.Count > 0) &&
+			                         (listViewMappingSets.SelectedIndices[0] < (listViewMappingSets.Items.Count - 1));
+		}
 
-        private void listViewMappingSets_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            this.buttonRemoveMappingSet.Enabled = this.listViewMappingSets.SelectedItems.Count > 0;
-            this.buttonMoveUp.Enabled = (this.listViewMappingSets.SelectedItems.Count > 0) && (this.listViewMappingSets.SelectedIndices[0] != 0);
-            this.buttonMoveDown.Enabled = (this.listViewMappingSets.SelectedItems.Count > 0) && (this.listViewMappingSets.SelectedIndices[0] < (this.listViewMappingSets.Items.Count - 1));
-        }
+		private void radioButtonMultipleIterators_CheckedChanged(object sender, EventArgs e)
+		{
+			if (radioButtonMultipleIterators.Checked)
+			{
+				tabControlIterators.SelectedTab = tabPageMultipleIterators;
+			}
+		}
 
-        private void radioButtonMultipleIterators_CheckedChanged(object sender, EventArgs e)
-        {
-            if (this.radioButtonMultipleIterators.Checked)
-            {
-                this.tabControlIterators.SelectedTab = this.tabPageMultipleIterators;
-            }
-        }
+		private void radioButtonSingleIterator_CheckedChanged(object sender, EventArgs e)
+		{
+			if (radioButtonSingleIterator.Checked)
+			{
+				tabControlIterators.SelectedTab = tabPageSingleIterator;
+			}
+		}
 
-        private void radioButtonSingleIterator_CheckedChanged(object sender, EventArgs e)
-        {
-            if (this.radioButtonSingleIterator.Checked)
-            {
-                this.tabControlIterators.SelectedTab = this.tabPageSingleIterator;
-            }
-        }
+		private void ReflectInput(Input input)
+		{
+			if (groupBoxIOMapping.Enabled)
+			{
+				m_internal = true;
+				listBoxChannels.ClearSelected();
+				m_internal = false;
+				listBoxMappedChannels.Items.Clear();
+				if (listBoxInputs.SelectedValue != null)
+				{
+					listBoxChannels.BeginUpdate();
+					listBoxMappedChannels.BeginUpdate();
+					m_internal = true;
+					foreach (string str in m_editingMappingSets.GetOutputChannelIdList(input))
+					{
+						Channel channel;
+						if (m_idChannel.TryGetValue(str, out channel))
+						{
+							listBoxMappedChannels.Items.Add(channel);
+							listBoxChannels.SetSelected(listBoxChannels.Items.IndexOf(channel), true);
+						}
+					}
+					m_internal = false;
+					listBoxMappedChannels.EndUpdate();
+					listBoxChannels.EndUpdate();
+					checkBoxEnabled.Checked = input.Enabled;
+				}
+			}
+		}
 
-        private void ReflectInput(Input input)
-        {
-            if (this.groupBoxIOMapping.Enabled)
-            {
-                this.m_internal = true;
-                this.listBoxChannels.ClearSelected();
-                this.m_internal = false;
-                this.listBoxMappedChannels.Items.Clear();
-                if (this.listBoxInputs.SelectedValue != null)
-                {
-                    this.listBoxChannels.BeginUpdate();
-                    this.listBoxMappedChannels.BeginUpdate();
-                    this.m_internal = true;
-                    foreach (string str in this.m_editingMappingSets.GetOutputChannelIdList(input))
-                    {
-                        Channel channel;
-                        if (this.m_idChannel.TryGetValue(str, out channel))
-                        {
-                            this.listBoxMappedChannels.Items.Add(channel);
-                            this.listBoxChannels.SetSelected(this.listBoxChannels.Items.IndexOf(channel), true);
-                        }
-                    }
-                    this.m_internal = false;
-                    this.listBoxMappedChannels.EndUpdate();
-                    this.listBoxChannels.EndUpdate();
-                    this.checkBoxEnabled.Checked = input.Enabled;
-                }
-            }
-        }
+		private void tabControlMappingSets_Selecting(object sender, TabControlCancelEventArgs e)
+		{
+			if (e.TabPage == tabPageInputOutputMapping)
+			{
+				MappingSet selectedItem = null;
+				if (comboBoxMappingSet.SelectedItem != null)
+				{
+					selectedItem = (MappingSet) comboBoxMappingSet.SelectedItem;
+				}
+				comboBoxMappingSet.BeginUpdate();
+				comboBoxMappingSet.Items.Clear();
+				comboBoxMappingSet.Items.AddRange(m_editingMappingSets.AllSets);
+				comboBoxMappingSet.EndUpdate();
+				if ((selectedItem != null) && comboBoxMappingSet.Items.Contains(selectedItem))
+				{
+					comboBoxMappingSet.SelectedItem = selectedItem;
+				}
+				else if (comboBoxMappingSet.Items.Count > 0)
+				{
+					comboBoxMappingSet.SelectedIndex = 0;
+				}
+				else
+				{
+					groupBoxIOMapping.Enabled = false;
+				}
+			}
+		}
 
-        private void tabControlMappingSets_Selecting(object sender, TabControlCancelEventArgs e)
-        {
-            if (e.TabPage == this.tabPageInputOutputMapping)
-            {
-                MappingSet selectedItem = null;
-                if (this.comboBoxMappingSet.SelectedItem != null)
-                {
-                    selectedItem = (MappingSet) this.comboBoxMappingSet.SelectedItem;
-                }
-                this.comboBoxMappingSet.BeginUpdate();
-                this.comboBoxMappingSet.Items.Clear();
-                this.comboBoxMappingSet.Items.AddRange(this.m_editingMappingSets.AllSets);
-                this.comboBoxMappingSet.EndUpdate();
-                if ((selectedItem != null) && this.comboBoxMappingSet.Items.Contains(selectedItem))
-                {
-                    this.comboBoxMappingSet.SelectedItem = selectedItem;
-                }
-                else if (this.comboBoxMappingSet.Items.Count > 0)
-                {
-                    this.comboBoxMappingSet.SelectedIndex = 0;
-                }
-                else
-                {
-                    this.groupBoxIOMapping.Enabled = false;
-                }
-            }
-        }
+		private void tabControlPlugin_Selecting(object sender, TabControlCancelEventArgs e)
+		{
+			if (e.TabPage == tabPageMappingIteration)
+			{
+				int selectedIndex = comboBoxSingleIteratorInput.SelectedIndex;
+				comboBoxSingleIteratorInput.Items.Clear();
+				comboBoxSingleIteratorInput.Items.AddRange(m_plugin.GetIterators());
+				listBoxIteratorInputs.Items.Clear();
+				listBoxIteratorInputs.Items.AddRange(m_plugin.GetIterators());
+				comboBoxSingleIteratorInput.SelectedIndex = selectedIndex;
+				listBoxMappingSets.Items.Clear();
+				listBoxMappingSets.Items.Add("(none)");
+				listBoxMappingSets.Items.AddRange(m_editingMappingSets.AllSets);
+			}
+		}
 
-        private void tabControlPlugin_Selecting(object sender, TabControlCancelEventArgs e)
-        {
-            if (e.TabPage == this.tabPageMappingIteration)
-            {
-                int selectedIndex = this.comboBoxSingleIteratorInput.SelectedIndex;
-                this.comboBoxSingleIteratorInput.Items.Clear();
-                this.comboBoxSingleIteratorInput.Items.AddRange(this.m_plugin.GetIterators());
-                this.listBoxIteratorInputs.Items.Clear();
-                this.listBoxIteratorInputs.Items.AddRange(this.m_plugin.GetIterators());
-                this.comboBoxSingleIteratorInput.SelectedIndex = selectedIndex;
-                this.listBoxMappingSets.Items.Clear();
-                this.listBoxMappingSets.Items.Add("(none)");
-                this.listBoxMappingSets.Items.AddRange(this.m_editingMappingSets.AllSets);
-            }
-        }
-
-        private void UpdateIteratorType()
-        {
-            if (this.listViewMappingSets.Items.Count <= 1)
-            {
-                this.radioButtonNoIterator.Checked = true;
-            }
-            else if (this.radioButtonNoIterator.Checked)
-            {
-                this.radioButtonSingleIterator.Checked = true;
-            }
-        }
-    }
+		private void UpdateIteratorType()
+		{
+			if (listViewMappingSets.Items.Count <= 1)
+			{
+				radioButtonNoIterator.Checked = true;
+			}
+			else if (radioButtonNoIterator.Checked)
+			{
+				radioButtonSingleIterator.Checked = true;
+			}
+		}
+	}
 }
-

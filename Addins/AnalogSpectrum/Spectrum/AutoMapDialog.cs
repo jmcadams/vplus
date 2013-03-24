@@ -8,8 +8,8 @@ namespace Spectrum {
 	internal partial class AutoMapDialog : Form {
 		public AutoMapDialog(List<Vixen.Channel> channels, List<FrequencyBand> bands) {
 			this.InitializeComponent();
-			this.comboBoxStartChannel.Items.AddRange(channels.ToArray());
-			this.comboBoxStartBand.Items.AddRange(bands.ToArray());
+			this.comboBoxStartChannel.Items.AddRange(new object[] {channels.ToArray()});
+			this.comboBoxStartBand.Items.AddRange(new object[] {bands.ToArray()});
 			this.comboBoxStartChannel.SelectedIndex = 0;
 			this.comboBoxStartBand.SelectedIndex = 0;
 		}

@@ -1,65 +1,56 @@
-﻿namespace Spectrum
+﻿using System.Globalization;
+
+namespace Spectrum
 {
     using System;
     using System.Drawing;
 
     internal class FrequencyBand
     {
-        private static float BAND_WIDTH = (0x5622 / SPECTRUMSIZE);
-        private static double FREQUENCY_BANDWIDTH_MULTIPLIER = Math.Pow(2.0, 0.16666666666666666);
-        private string m_centerFrequency;
-        private float m_currentScaledLevel;
-        private int m_fmodHighFrequencyIndex;
-        private int m_fmodLowFrequencyIndex;
-        private int m_highFrequency;
-        private int m_lowFrequency;
-        private Rectangle m_maxSliderRegion;
-        private Rectangle m_minSliderRegion;
-        private int m_mouseOffset = 0;
-        private Rectangle m_region;
-        private float m_responseLevelMax = 1f;
-        private float m_responseLevelMin = 0f;
-        private static int SPECTRUMSIZE = 0x200;
+	    private const int Spectrumsize = 512;
+	    private const float BandWidth = (22050/Spectrumsize);
+	    private static readonly double FrequencyBandwidthMultiplier = Math.Pow(2.0, 0.16666666666666666);
+        private readonly string _mCenterFrequency;
+	    private readonly int _mFmodHighFrequencyIndex;
+        private readonly int _mFmodLowFrequencyIndex;
+        private readonly int _mHighFrequency;
+        private readonly int _mLowFrequency;
+        private Rectangle _mMaxSliderRegion;
+        private Rectangle _mMinSliderRegion;
+	    private Rectangle _mRegion;
+        private float _mResponseLevelMax = 1f;
+        private float _mResponseLevelMin;
+
 
         public FrequencyBand(int centerFrequency)
         {
-            this.m_centerFrequency = (centerFrequency < 0x3e8) ? centerFrequency.ToString() : string.Format("{0:F1}k", ((float) centerFrequency) / 1000f);
-            this.m_lowFrequency = (int) (((double) centerFrequency) / FREQUENCY_BANDWIDTH_MULTIPLIER);
-            this.m_highFrequency = (int) (centerFrequency * FREQUENCY_BANDWIDTH_MULTIPLIER);
-            this.m_fmodLowFrequencyIndex = (int) Math.Floor((double) (((float) this.m_lowFrequency) / BAND_WIDTH));
-            this.m_fmodHighFrequencyIndex = Math.Min((int) Math.Ceiling((double) (((float) this.m_highFrequency) / BAND_WIDTH)), SPECTRUMSIZE);
+            _mCenterFrequency = (centerFrequency < 1000) ? centerFrequency.ToString(CultureInfo.InvariantCulture) : string.Format("{0:F1}k", centerFrequency / 1000f);
+            _mLowFrequency = (int) (centerFrequency / FrequencyBandwidthMultiplier);
+            _mHighFrequency = (int) (centerFrequency * FrequencyBandwidthMultiplier);
+            _mFmodLowFrequencyIndex = (int) Math.Floor(_mLowFrequency / BandWidth);
+            _mFmodHighFrequencyIndex = Math.Min((int) Math.Ceiling(_mHighFrequency / BandWidth), Spectrumsize);
         }
 
         public override string ToString()
         {
-            return this.m_centerFrequency;
+            return _mCenterFrequency;
         }
 
         public string CenterFrequency
         {
             get
             {
-                return this.m_centerFrequency;
+                return _mCenterFrequency;
             }
         }
 
-        public float CurrentScaledLevel
-        {
-            get
-            {
-                return this.m_currentScaledLevel;
-            }
-            set
-            {
-                this.m_currentScaledLevel = value;
-            }
-        }
+	    public float CurrentScaledLevel { get; set; }
 
-        public int FmodHighFrequency
+	    public int FmodHighFrequency
         {
             get
             {
-                return this.m_fmodHighFrequencyIndex;
+                return _mFmodHighFrequencyIndex;
             }
         }
 
@@ -67,7 +58,7 @@
         {
             get
             {
-                return this.m_fmodLowFrequencyIndex;
+                return _mFmodLowFrequencyIndex;
             }
         }
 
@@ -75,12 +66,12 @@
         {
             get
             {
-                return this.m_maxSliderRegion;
+                return _mMaxSliderRegion;
             }
             set
             {
-                this.m_maxSliderRegion = value;
-                this.ResponseLevelMax = this.m_responseLevelMax;
+                _mMaxSliderRegion = value;
+                ResponseLevelMax = _mResponseLevelMax;
             }
         }
 
@@ -88,13 +79,13 @@
         {
             get
             {
-                return this.m_maxSliderRegion.Y;
+                return _mMaxSliderRegion.Y;
             }
             set
             {
-                if ((value >= this.m_region.Top) && (value <= (this.m_region.Bottom - this.m_maxSliderRegion.Height)))
+                if ((value >= _mRegion.Top) && (value <= _mRegion.Bottom - _mMaxSliderRegion.Height))
                 {
-                    this.ResponseLevelMax = ((float) (this.m_region.Bottom - value)) / ((float) this.m_region.Height);
+                    ResponseLevelMax = (_mRegion.Bottom - value) / ((float) _mRegion.Height);
                 }
             }
         }
@@ -103,12 +94,12 @@
         {
             get
             {
-                return this.m_minSliderRegion;
+                return _mMinSliderRegion;
             }
             set
             {
-                this.m_minSliderRegion = value;
-                this.ResponseLevelMin = this.m_responseLevelMin;
+                _mMinSliderRegion = value;
+                ResponseLevelMin = _mResponseLevelMin;
             }
         }
 
@@ -116,40 +107,30 @@
         {
             get
             {
-                return this.m_minSliderRegion.Y;
+                return _mMinSliderRegion.Y;
             }
             set
             {
-                if ((value >= this.m_region.Top) && (value <= (this.m_region.Bottom - this.m_minSliderRegion.Height)))
+                if ((value >= _mRegion.Top) && (value <= (_mRegion.Bottom - _mMinSliderRegion.Height)))
                 {
-                    this.ResponseLevelMin = ((float) (this.m_region.Bottom - (value + this.m_minSliderRegion.Height))) / ((float) this.m_region.Height);
+                    ResponseLevelMin = (_mRegion.Bottom - (value + _mMinSliderRegion.Height)) / ((float) _mRegion.Height);
                 }
             }
         }
 
-        public int MouseOffset
-        {
-            get
-            {
-                return this.m_mouseOffset;
-            }
-            set
-            {
-                this.m_mouseOffset = value;
-            }
-        }
+	    public int MouseOffset { get; set; }
 
-        public Rectangle Region
+	    public Rectangle Region
         {
             get
             {
-                return this.m_region;
+                return _mRegion;
             }
             set
             {
-                this.m_region = value;
-                this.ResponseLevelMin = this.m_responseLevelMin;
-                this.ResponseLevelMax = this.m_responseLevelMax;
+                _mRegion = value;
+                ResponseLevelMin = _mResponseLevelMin;
+                ResponseLevelMax = _mResponseLevelMax;
             }
         }
 
@@ -157,18 +138,18 @@
         {
             get
             {
-                return this.m_responseLevelMax;
+                return _mResponseLevelMax;
             }
             set
             {
-                int num = (this.m_region.Bottom - ((int) (this.m_region.Height * value))) + this.m_maxSliderRegion.Height;
-                if (num >= this.m_minSliderRegion.Top)
+                int num = (_mRegion.Bottom - ((int) (_mRegion.Height * value))) + _mMaxSliderRegion.Height;
+                if (num >= _mMinSliderRegion.Top)
                 {
-                    float num2 = 1f / ((float) this.m_region.Height);
-                    value = ((this.m_region.Bottom - this.m_minSliderRegion.Top) + this.m_maxSliderRegion.Height) * num2;
+                    float num2 = 1f / _mRegion.Height;
+                    value = ((_mRegion.Bottom - _mMinSliderRegion.Top) + _mMaxSliderRegion.Height) * num2;
                 }
-                this.m_responseLevelMax = value;
-                this.m_maxSliderRegion.Y = this.m_region.Bottom - ((int) (this.m_region.Height * value));
+                _mResponseLevelMax = value;
+                _mMaxSliderRegion.Y = _mRegion.Bottom - ((int) (_mRegion.Height * value));
             }
         }
 
@@ -176,18 +157,18 @@
         {
             get
             {
-                return this.m_responseLevelMin;
+                return _mResponseLevelMin;
             }
             set
             {
-                int num = (this.m_region.Bottom - ((int) (this.m_region.Height * value))) - this.m_minSliderRegion.Height;
-                if (num <= this.m_maxSliderRegion.Bottom)
+                int num = (_mRegion.Bottom - ((int) (_mRegion.Height * value))) - _mMinSliderRegion.Height;
+                if (num <= _mMaxSliderRegion.Bottom)
                 {
-                    float num2 = 1f / ((float) this.m_region.Height);
-                    value = ((this.m_region.Bottom - this.m_maxSliderRegion.Bottom) - this.m_minSliderRegion.Height) * num2;
+                    float num2 = 1f / _mRegion.Height;
+                    value = ((_mRegion.Bottom - _mMaxSliderRegion.Bottom) - _mMinSliderRegion.Height) * num2;
                 }
-                this.m_responseLevelMin = value;
-                this.m_minSliderRegion.Y = (this.m_region.Bottom - ((int) (this.m_region.Height * value))) - this.m_minSliderRegion.Height;
+                _mResponseLevelMin = value;
+                _mMinSliderRegion.Y = (_mRegion.Bottom - ((int) (_mRegion.Height * value))) - _mMinSliderRegion.Height;
             }
         }
     }

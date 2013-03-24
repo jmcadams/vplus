@@ -1,14 +1,11 @@
-﻿namespace Vixen
+﻿using System.Xml;
+
+namespace Vixen
 {
-    using System;
-    using System.Xml;
-
-    public interface ILoadable : IPlugIn
-    {
-        void Loading(XmlNode dataNode);
-        void Unloading();
-
-        LoadableDataLocation DataLocationPreference { get; }
-    }
+	public interface ILoadable : IPlugIn
+	{
+		LoadableDataLocation DataLocationPreference { get; }
+		void Loading(XmlNode dataNode);
+		void Unloading();
+	}
 }
-

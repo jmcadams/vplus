@@ -1,7 +1,7 @@
 ﻿namespace Vixen
 {
-    internal interface IBidirectionalPlugin : IInputPlugin, IEventDrivenOutputPlugIn, IOutputPlugIn, IHardwarePlugin, IPlugIn, ISetup
-    {
-    }
+	internal interface IBidirectionalPlugin : IInputPlugin, IEventDrivenOutputPlugIn, IOutputPlugIn, IHardwarePlugin,
+	                                          IPlugIn, ISetup
+	{
+	}
 }
-

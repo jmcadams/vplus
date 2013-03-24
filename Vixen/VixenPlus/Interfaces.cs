@@ -1,11 +1,9 @@
-﻿namespace Vixen
+﻿using System.Collections.Generic;
+
+namespace Vixen
 {
-    using System;
-    using System.Collections.Generic;
-
-    public static class Interfaces
-    {
-        public static Dictionary<string, object> Available = new Dictionary<string, object>();
-    }
+	public static class Interfaces
+	{
+		public static Dictionary<string, object> Available = new Dictionary<string, object>();
+	}
 }
-

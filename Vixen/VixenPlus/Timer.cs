@@ -1,441 +1,341 @@
-﻿namespace Vixen
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Xml;
+
+namespace Vixen
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Text;
-    using System.Xml;
+	internal class Timer : IComparable<Timer>
+	{
+		private List<ReferenceRectF> m_displayBounds;
+		private bool m_isExecuting;
+		private string m_objectDisplayName;
+		private string m_objectFileName;
+		private TimeSpan m_objectLength;
+		private ObjectType m_objectType;
+		private RecurrenceType m_recurrence;
+		private object m_recurrenceData;
+		private DateTime m_recurrenceEnd;
+		private DateTime m_recurrenceStart;
+		private int m_repeatInterval;
+		private DateTime m_startDateTime;
+		private TimeSpan m_timerLength;
 
-    internal class Timer : IComparable<Timer>
-    {
-        private List<ReferenceRectF> m_displayBounds;
-        private bool m_isExecuting;
-        private DateTime m_lastExecution;
-        private DateTime m_notValidUntil;
-        private string m_objectDisplayName;
-        private string m_objectFileName;
-        private TimeSpan m_objectLength;
-        private Vixen.ObjectType m_objectType;
-        private RecurrenceType m_recurrence;
-        private object m_recurrenceData;
-        private DateTime m_recurrenceEnd;
-        private DateTime m_recurrenceStart;
-        private int m_repeatInterval;
-        private DateTime m_startDateTime;
-        private TimeSpan m_timerLength;
+		public Timer()
+		{
+			m_objectType = ObjectType.Sequence;
+			m_displayBounds = new List<ReferenceRectF>();
+			m_isExecuting = false;
+			LastExecution = DateTime.MinValue;
+			NotValidUntil = DateTime.MinValue;
+		}
 
-        public Timer()
-        {
-            this.m_objectType = Vixen.ObjectType.Sequence;
-            this.m_displayBounds = new List<ReferenceRectF>();
-            this.m_isExecuting = false;
-            this.m_lastExecution = DateTime.MinValue;
-            this.m_notValidUntil = DateTime.MinValue;
-        }
+		public Timer(XmlNode timerNode)
+		{
+			m_objectType = ObjectType.Sequence;
+			m_displayBounds = new List<ReferenceRectF>();
+			m_isExecuting = false;
+			LastExecution = DateTime.MinValue;
+			NotValidUntil = DateTime.MinValue;
+			m_startDateTime = DateTime.Parse(timerNode["StartDateTime"].InnerText);
+			m_timerLength = TimeSpan.Parse(timerNode["TimerLength"].InnerText);
+			XmlNode node = timerNode["Item"];
+			m_objectLength = TimeSpan.Parse(node.Attributes["length"].Value);
+			m_objectType = (ObjectType) Enum.Parse(typeof (ObjectType), node.Attributes["type"].Value);
+			ProgramFileName = node.InnerText;
+			if (m_objectLength != m_timerLength)
+			{
+				m_repeatInterval = Convert.ToInt32(timerNode["RepeatInterval"].InnerText);
+			}
+			XmlNode node2 = timerNode["Recurrence"];
+			if (node2 != null)
+			{
+				m_recurrence = (RecurrenceType) Enum.Parse(typeof (RecurrenceType), node2.Attributes["type"].Value);
+				m_recurrenceStart = DateTime.Parse(node2["StartDate"].InnerText);
+				m_recurrenceEnd = DateTime.Parse(node2["EndDate"].InnerText);
+				switch (m_recurrence)
+				{
+					case RecurrenceType.Weekly:
+						m_recurrenceData = Convert.ToInt32(node2["Data"].InnerText);
+						break;
 
-        public Timer(XmlNode timerNode)
-        {
-            this.m_objectType = Vixen.ObjectType.Sequence;
-            this.m_displayBounds = new List<ReferenceRectF>();
-            this.m_isExecuting = false;
-            this.m_lastExecution = DateTime.MinValue;
-            this.m_notValidUntil = DateTime.MinValue;
-            this.m_startDateTime = DateTime.Parse(timerNode["StartDateTime"].InnerText);
-            this.m_timerLength = TimeSpan.Parse(timerNode["TimerLength"].InnerText);
-            XmlNode node = timerNode["Item"];
-            this.m_objectLength = TimeSpan.Parse(node.Attributes["length"].Value);
-            this.m_objectType = (Vixen.ObjectType) Enum.Parse(typeof(Vixen.ObjectType), node.Attributes["type"].Value);
-            this.ProgramFileName = node.InnerText;
-            if (this.m_objectLength != this.m_timerLength)
-            {
-                this.m_repeatInterval = Convert.ToInt32(timerNode["RepeatInterval"].InnerText);
-            }
-            XmlNode node2 = timerNode["Recurrence"];
-            if (node2 != null)
-            {
-                this.m_recurrence = (RecurrenceType) Enum.Parse(typeof(RecurrenceType), node2.Attributes["type"].Value);
-                this.m_recurrenceStart = DateTime.Parse(node2["StartDate"].InnerText);
-                this.m_recurrenceEnd = DateTime.Parse(node2["EndDate"].InnerText);
-                switch (this.m_recurrence)
-                {
-                    case RecurrenceType.Weekly:
-                        this.m_recurrenceData = Convert.ToInt32(node2["Data"].InnerText);
-                        break;
+					case RecurrenceType.Monthly:
+						m_recurrenceData = node2["Data"].InnerText;
+						break;
 
-                    case RecurrenceType.Monthly:
-                        this.m_recurrenceData = node2["Data"].InnerText;
-                        break;
+					case RecurrenceType.Yearly:
+						m_recurrenceData = DateTime.Parse(node2["Data"].InnerText);
+						break;
+				}
+			}
+		}
 
-                    case RecurrenceType.Yearly:
-                        this.m_recurrenceData = DateTime.Parse(node2["Data"].InnerText);
-                        break;
-                }
-            }
-        }
+		public List<ReferenceRectF> DisplayBounds
+		{
+			get { return m_displayBounds; }
+			set { m_displayBounds = value; }
+		}
 
-        public Timer Clone()
-        {
-            Timer timer = new Timer();
-            timer.Copy(this);
-            return timer;
-        }
+		public DateTime EndDate
+		{
+			get
+			{
+				DateTime time2 = m_startDateTime + m_timerLength;
+				return time2.Date;
+			}
+		}
 
-        public int CompareTo(Timer other)
-        {
-            return this.StartTime.CompareTo(other.StartTime);
-        }
+		public DateTime EndDateTime
+		{
+			get { return (m_startDateTime + m_timerLength); }
+		}
 
-        public void Copy(Timer timer)
-        {
-            this.m_displayBounds = timer.m_displayBounds;
-            this.m_objectLength = timer.m_objectLength;
-            this.ObjectType = timer.ObjectType;
-            this.ProgramFileName = timer.ProgramFileName;
-            this.m_objectDisplayName = timer.m_objectDisplayName;
-            this.m_recurrence = timer.m_recurrence;
-            this.m_recurrenceEnd = timer.m_recurrenceEnd;
-            this.m_recurrenceStart = timer.m_recurrenceStart;
-            this.m_repeatInterval = timer.m_repeatInterval;
-            this.m_startDateTime = timer.m_startDateTime;
-            this.m_timerLength = timer.m_timerLength;
-            this.m_recurrenceData = timer.m_recurrenceData;
-            this.m_isExecuting = timer.m_isExecuting;
-        }
+		public TimeSpan EndTime
+		{
+			get { return (StartTime + m_timerLength); }
+		}
 
-        public void SaveToXml(XmlNode contextNode)
-        {
-            XmlNode node = Xml.SetNewValue(contextNode, "Timer", string.Empty);
-            Xml.SetValue(node, "StartDateTime", this.m_startDateTime.ToString());
-            Xml.SetValue(node, "TimerLength", this.m_timerLength.ToString());
-            XmlNode node2 = Xml.SetValue(node, "Item", Path.GetFileName(this.m_objectFileName));
-            Xml.SetAttribute(node2, "length", this.m_objectLength.ToString());
-            Xml.SetAttribute(node2, "type", this.m_objectType.ToString());
-            if (this.m_objectLength != this.m_timerLength)
-            {
-                Xml.SetValue(node, "RepeatInterval", this.m_repeatInterval.ToString());
-            }
-            if (this.m_recurrence != RecurrenceType.None)
-            {
-                XmlNode node3 = Xml.SetValue(node, "Recurrence", string.Empty);
-                Xml.SetAttribute(node3, "type", this.m_recurrence.ToString());
-                Xml.SetValue(node3, "StartDate", this.m_recurrenceStart.ToShortDateString());
-                Xml.SetValue(node3, "EndDate", this.m_recurrenceEnd.ToShortDateString());
-                switch (this.m_recurrence)
-                {
-                    case RecurrenceType.Weekly:
-                        Xml.SetValue(node3, "Data", ((int) this.m_recurrenceData).ToString());
-                        break;
+		public bool IsExecuting
+		{
+			get { return m_isExecuting; }
+			set { m_isExecuting = value; }
+		}
 
-                    case RecurrenceType.Monthly:
-                        Xml.SetValue(node3, "Data", (string) this.m_recurrenceData);
-                        break;
+		public DateTime LastExecution { get; set; }
 
-                    case RecurrenceType.Yearly:
-                        Xml.SetValue(node3, "Data", ((DateTime) this.m_recurrenceData).ToString());
-                        break;
-                }
-            }
-        }
+		public DateTime NotValidUntil { get; set; }
 
-        private void SetObjectPath()
-        {
-            if ((this.m_objectFileName != null) && (this.m_objectFileName != string.Empty))
-            {
-                string str = (this.m_objectType == Vixen.ObjectType.Program) ? Paths.ProgramPath : Paths.SequencePath;
-                this.m_objectFileName = Path.Combine(str, Path.GetFileName(this.m_objectFileName));
-            }
-        }
+		public TimeSpan ObjectLength
+		{
+			get { return m_objectLength; }
+			set { m_objectLength = value; }
+		}
 
-        public override string ToString()
-        {
-            StringBuilder builder = new StringBuilder();
-            builder.Append(this.m_objectDisplayName);
-            if (this.m_timerLength != this.m_objectLength)
-            {
-                builder.Append("|Repeats");
-                if (this.m_repeatInterval != 0)
-                {
-                    builder.AppendFormat(" every {0} minutes", this.m_repeatInterval);
-                }
-            }
-            if (this.m_recurrence != RecurrenceType.None)
-            {
-                builder.AppendFormat("|Recurs on a {0} basis", this.m_recurrence.ToString().ToLower());
-            }
-            return builder.ToString();
-        }
+		public ObjectType ObjectType
+		{
+			get { return m_objectType; }
+			set
+			{
+				m_objectType = value;
+				SetObjectPath();
+			}
+		}
 
-        public List<ReferenceRectF> DisplayBounds
-        {
-            get
-            {
-                return this.m_displayBounds;
-            }
-            set
-            {
-                this.m_displayBounds = value;
-            }
-        }
+		public string ProgramFileName
+		{
+			get { return m_objectFileName; }
+			set
+			{
+				m_objectFileName = value;
+				m_objectDisplayName = Path.GetFileName(value);
+				SetObjectPath();
+			}
+		}
 
-        public DateTime EndDate
-        {
-            get
-            {
-                DateTime time2 = this.m_startDateTime + this.m_timerLength;
-                return time2.Date;
-            }
-        }
+		public string ProgramName
+		{
+			get { return m_objectDisplayName; }
+		}
 
-        public DateTime EndDateTime
-        {
-            get
-            {
-                return (this.m_startDateTime + this.m_timerLength);
-            }
-        }
+		public RecurrenceType Recurrence
+		{
+			get { return m_recurrence; }
+			set { m_recurrence = value; }
+		}
 
-        public TimeSpan EndTime
-        {
-            get
-            {
-                return (this.StartTime + this.m_timerLength);
-            }
-        }
+		public object RecurrenceData
+		{
+			get { return m_recurrenceData; }
+			set { m_recurrenceData = value; }
+		}
 
-        public bool IsExecuting
-        {
-            get
-            {
-                return this.m_isExecuting;
-            }
-            set
-            {
-                this.m_isExecuting = value;
-            }
-        }
+		public DateTime RecurrenceEnd
+		{
+			get
+			{
+				if (m_recurrence == RecurrenceType.None)
+				{
+					return EndDateTime;
+				}
+				return m_recurrenceEnd;
+			}
+			set { m_recurrenceEnd = value; }
+		}
 
-        public DateTime LastExecution
-        {
-            get
-            {
-                return this.m_lastExecution;
-            }
-            set
-            {
-                this.m_lastExecution = value;
-            }
-        }
+		public DateTime RecurrenceEndDateTime
+		{
+			get
+			{
+				if (m_recurrence == RecurrenceType.None)
+				{
+					return EndDateTime;
+				}
+				return (m_recurrenceEnd + EndTime);
+			}
+		}
 
-        public DateTime NotValidUntil
-        {
-            get
-            {
-                return this.m_notValidUntil;
-            }
-            set
-            {
-                this.m_notValidUntil = value;
-            }
-        }
+		public TimeSpan RecurrenceSpan
+		{
+			get
+			{
+				if (m_recurrence == RecurrenceType.None)
+				{
+					return m_timerLength;
+				}
+				return (m_recurrenceEnd - m_recurrenceStart);
+			}
+		}
 
-        public TimeSpan ObjectLength
-        {
-            get
-            {
-                return this.m_objectLength;
-            }
-            set
-            {
-                this.m_objectLength = value;
-            }
-        }
+		public DateTime RecurrenceStart
+		{
+			get
+			{
+				if (m_recurrence == RecurrenceType.None)
+				{
+					return m_startDateTime;
+				}
+				return m_recurrenceStart;
+			}
+			set { m_recurrenceStart = value; }
+		}
 
-        public Vixen.ObjectType ObjectType
-        {
-            get
-            {
-                return this.m_objectType;
-            }
-            set
-            {
-                this.m_objectType = value;
-                this.SetObjectPath();
-            }
-        }
+		public DateTime RecurrenceStartDateTime
+		{
+			get
+			{
+				if (m_recurrence == RecurrenceType.None)
+				{
+					return StartDateTime;
+				}
+				return (m_recurrenceStart + StartTime);
+			}
+		}
 
-        public string ProgramFileName
-        {
-            get
-            {
-                return this.m_objectFileName;
-            }
-            set
-            {
-                this.m_objectFileName = value;
-                this.m_objectDisplayName = Path.GetFileName(value);
-                this.SetObjectPath();
-            }
-        }
+		public int RepeatInterval
+		{
+			get { return m_repeatInterval; }
+			set { m_repeatInterval = value; }
+		}
 
-        public string ProgramName
-        {
-            get
-            {
-                return this.m_objectDisplayName;
-            }
-        }
+		public DateTime StartDate
+		{
+			get { return m_startDateTime.Date; }
+			set { m_startDateTime = new DateTime(value.Year, value.Month, value.Day, m_startDateTime.Hour, m_startDateTime.Minute, 0); }
+		}
 
-        public RecurrenceType Recurrence
-        {
-            get
-            {
-                return this.m_recurrence;
-            }
-            set
-            {
-                this.m_recurrence = value;
-            }
-        }
+		public DateTime StartDateTime
+		{
+			get { return m_startDateTime; }
+			set { m_startDateTime = value; }
+		}
 
-        public object RecurrenceData
-        {
-            get
-            {
-                return this.m_recurrenceData;
-            }
-            set
-            {
-                this.m_recurrenceData = value;
-            }
-        }
+		public TimeSpan StartTime
+		{
+			get { return m_startDateTime.TimeOfDay; }
+			set
+			{
+				m_startDateTime = new DateTime(m_startDateTime.Year, m_startDateTime.Month, m_startDateTime.Day, value.Hours,
+				                               value.Minutes, 0);
+			}
+		}
 
-        public DateTime RecurrenceEnd
-        {
-            get
-            {
-                if (this.m_recurrence == RecurrenceType.None)
-                {
-                    return this.EndDateTime;
-                }
-                return this.m_recurrenceEnd;
-            }
-            set
-            {
-                this.m_recurrenceEnd = value;
-            }
-        }
+		public TimeSpan TimerLength
+		{
+			get { return m_timerLength; }
+			set { m_timerLength = value; }
+		}
 
-        public DateTime RecurrenceEndDateTime
-        {
-            get
-            {
-                if (this.m_recurrence == RecurrenceType.None)
-                {
-                    return this.EndDateTime;
-                }
-                return (this.m_recurrenceEnd + this.EndTime);
-            }
-        }
+		public int CompareTo(Timer other)
+		{
+			return StartTime.CompareTo(other.StartTime);
+		}
 
-        public TimeSpan RecurrenceSpan
-        {
-            get
-            {
-                if (this.m_recurrence == RecurrenceType.None)
-                {
-                    return this.m_timerLength;
-                }
-                return (TimeSpan) (this.m_recurrenceEnd - this.m_recurrenceStart);
-            }
-        }
+		public Timer Clone()
+		{
+			var timer = new Timer();
+			timer.Copy(this);
+			return timer;
+		}
 
-        public DateTime RecurrenceStart
-        {
-            get
-            {
-                if (this.m_recurrence == RecurrenceType.None)
-                {
-                    return this.m_startDateTime;
-                }
-                return this.m_recurrenceStart;
-            }
-            set
-            {
-                this.m_recurrenceStart = value;
-            }
-        }
+		public void Copy(Timer timer)
+		{
+			m_displayBounds = timer.m_displayBounds;
+			m_objectLength = timer.m_objectLength;
+			ObjectType = timer.ObjectType;
+			ProgramFileName = timer.ProgramFileName;
+			m_objectDisplayName = timer.m_objectDisplayName;
+			m_recurrence = timer.m_recurrence;
+			m_recurrenceEnd = timer.m_recurrenceEnd;
+			m_recurrenceStart = timer.m_recurrenceStart;
+			m_repeatInterval = timer.m_repeatInterval;
+			m_startDateTime = timer.m_startDateTime;
+			m_timerLength = timer.m_timerLength;
+			m_recurrenceData = timer.m_recurrenceData;
+			m_isExecuting = timer.m_isExecuting;
+		}
 
-        public DateTime RecurrenceStartDateTime
-        {
-            get
-            {
-                if (this.m_recurrence == RecurrenceType.None)
-                {
-                    return this.StartDateTime;
-                }
-                return (this.m_recurrenceStart + this.StartTime);
-            }
-        }
+		public void SaveToXml(XmlNode contextNode)
+		{
+			XmlNode node = Xml.SetNewValue(contextNode, "Timer", string.Empty);
+			Xml.SetValue(node, "StartDateTime", m_startDateTime.ToString());
+			Xml.SetValue(node, "TimerLength", m_timerLength.ToString());
+			XmlNode node2 = Xml.SetValue(node, "Item", Path.GetFileName(m_objectFileName));
+			Xml.SetAttribute(node2, "length", m_objectLength.ToString());
+			Xml.SetAttribute(node2, "type", m_objectType.ToString());
+			if (m_objectLength != m_timerLength)
+			{
+				Xml.SetValue(node, "RepeatInterval", m_repeatInterval.ToString());
+			}
+			if (m_recurrence != RecurrenceType.None)
+			{
+				XmlNode node3 = Xml.SetValue(node, "Recurrence", string.Empty);
+				Xml.SetAttribute(node3, "type", m_recurrence.ToString());
+				Xml.SetValue(node3, "StartDate", m_recurrenceStart.ToShortDateString());
+				Xml.SetValue(node3, "EndDate", m_recurrenceEnd.ToShortDateString());
+				switch (m_recurrence)
+				{
+					case RecurrenceType.Weekly:
+						Xml.SetValue(node3, "Data", ((int) m_recurrenceData).ToString());
+						break;
 
-        public int RepeatInterval
-        {
-            get
-            {
-                return this.m_repeatInterval;
-            }
-            set
-            {
-                this.m_repeatInterval = value;
-            }
-        }
+					case RecurrenceType.Monthly:
+						Xml.SetValue(node3, "Data", (string) m_recurrenceData);
+						break;
 
-        public DateTime StartDate
-        {
-            get
-            {
-                return this.m_startDateTime.Date;
-            }
-            set
-            {
-                this.m_startDateTime = new DateTime(value.Year, value.Month, value.Day, this.m_startDateTime.Hour, this.m_startDateTime.Minute, 0);
-            }
-        }
+					case RecurrenceType.Yearly:
+						Xml.SetValue(node3, "Data", ((DateTime) m_recurrenceData).ToString());
+						break;
+				}
+			}
+		}
 
-        public DateTime StartDateTime
-        {
-            get
-            {
-                return this.m_startDateTime;
-            }
-            set
-            {
-                this.m_startDateTime = value;
-            }
-        }
+		private void SetObjectPath()
+		{
+			if ((m_objectFileName != null) && (m_objectFileName != string.Empty))
+			{
+				string str = (m_objectType == ObjectType.Program) ? Paths.ProgramPath : Paths.SequencePath;
+				m_objectFileName = Path.Combine(str, Path.GetFileName(m_objectFileName));
+			}
+		}
 
-        public TimeSpan StartTime
-        {
-            get
-            {
-                return this.m_startDateTime.TimeOfDay;
-            }
-            set
-            {
-                this.m_startDateTime = new DateTime(this.m_startDateTime.Year, this.m_startDateTime.Month, this.m_startDateTime.Day, value.Hours, value.Minutes, 0);
-            }
-        }
-
-        public TimeSpan TimerLength
-        {
-            get
-            {
-                return this.m_timerLength;
-            }
-            set
-            {
-                this.m_timerLength = value;
-            }
-        }
-    }
+		public override string ToString()
+		{
+			var builder = new StringBuilder();
+			builder.Append(m_objectDisplayName);
+			if (m_timerLength != m_objectLength)
+			{
+				builder.Append("|Repeats");
+				if (m_repeatInterval != 0)
+				{
+					builder.AppendFormat(" every {0} minutes", m_repeatInterval);
+				}
+			}
+			if (m_recurrence != RecurrenceType.None)
+			{
+				builder.AppendFormat("|Recurs on a {0} basis", m_recurrence.ToString().ToLower());
+			}
+			return builder.ToString();
+		}
+	}
 }
-

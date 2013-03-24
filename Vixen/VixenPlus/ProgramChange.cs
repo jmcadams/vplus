@@ -1,11 +1,8 @@
 ﻿namespace Vixen
 {
-    using System;
-
-    public enum ProgramChange
-    {
-        SequenceChange,
-        End
-    }
+	public enum ProgramChange
+	{
+		SequenceChange,
+		End
+	}
 }
-

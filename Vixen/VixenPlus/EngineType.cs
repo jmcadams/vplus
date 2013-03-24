@@ -1,11 +1,8 @@
 ﻿namespace Vixen
 {
-    using System;
-
-    public enum EngineType
-    {
-        Standard,
-        Procedural
-    }
+	public enum EngineType
+	{
+		Standard,
+		Procedural
+	}
 }
-

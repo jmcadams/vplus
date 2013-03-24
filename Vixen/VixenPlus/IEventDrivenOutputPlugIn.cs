@@ -1,12 +1,10 @@
-﻿namespace Vixen
+﻿using System.Xml;
+
+namespace Vixen
 {
-    using System;
-    using System.Xml;
-
-    public interface IEventDrivenOutputPlugIn : IOutputPlugIn, IHardwarePlugin, IPlugIn, ISetup
-    {
-        void Event(byte[] channelValues);
-        void Initialize(IExecutable executableObject, SetupData setupData, XmlNode setupNode);
-    }
+	public interface IEventDrivenOutputPlugIn : IOutputPlugIn, IHardwarePlugin, IPlugIn, ISetup
+	{
+		void Event(byte[] channelValues);
+		void Initialize(IExecutable executableObject, SetupData setupData, XmlNode setupNode);
+	}
 }
-

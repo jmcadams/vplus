@@ -1,25 +1,22 @@
-﻿namespace Vixen
+﻿using System;
+using System.Xml;
+
+namespace Vixen
 {
-    using System;
-    using System.Runtime.CompilerServices;
-    using System.Xml;
+	public interface IEngine : IDisposable
+	{
+		XmlDocument CommDoc { set; }
 
-    public interface IEngine : IDisposable
-    {
-        event OnEngineError EngineError;
+		HardwareUpdateDelegate HardwareUpdate { set; }
 
-        event EventHandler EngineStopped;
+		bool IsRunning { get; }
+		event OnEngineError EngineError;
 
-        void Initialize(EventSequence sequence);
-        void Pause();
-        bool Play();
-        void Stop();
+		event EventHandler EngineStopped;
 
-        XmlDocument CommDoc { set; }
-
-        HardwareUpdateDelegate HardwareUpdate { set; }
-
-        bool IsRunning { get; }
-    }
+		void Initialize(EventSequence sequence);
+		void Pause();
+		bool Play();
+		void Stop();
+	}
 }
-

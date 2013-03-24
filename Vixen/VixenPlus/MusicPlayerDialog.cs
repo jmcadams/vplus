@@ -1,233 +1,278 @@
-namespace Vixen {
-	using FMOD;
-	using System;
-	using System.ComponentModel;
-	using System.Drawing;
-	using System.IO;
-	using System.Text;
-	using System.Windows.Forms;
+using System;
+using System.IO;
+using System.Text;
+using System.Windows.Forms;
+using FMOD;
 
-	internal partial class MusicPlayerDialog : Form {
-		private fmod m_fmod;
-		private Audio m_narrativeSong = null;
+namespace Vixen
+{
+	internal partial class MusicPlayerDialog : Form
+	{
+		private readonly fmod m_fmod;
+		private Audio m_narrativeSong;
 
-		public MusicPlayerDialog(fmod fmod) {
-			this.InitializeComponent();
-			this.m_fmod = fmod;
+		public MusicPlayerDialog(fmod fmod)
+		{
+			InitializeComponent();
+			m_fmod = fmod;
 		}
 
-		private void AddSong(string fileName) {
-			Audio item = this.LoadSong(fileName);
-			if (item != null) {
-				this.listBoxPlaylist.Items.Add(item);
+		public Audio NarrativeSong
+		{
+			get { return m_narrativeSong; }
+			set
+			{
+				m_narrativeSong = value;
+				textBoxNarrative.Text = m_narrativeSong.Name;
 			}
 		}
 
-		private void buttonAdd_Click(object sender, EventArgs e) {
-			StringBuilder builder = new StringBuilder();
+		public bool NarrativeSongEnabled
+		{
+			get { return checkBoxEnableNarrative.Checked; }
+			set { checkBoxEnableNarrative.Checked = value; }
+		}
+
+		public int NarrativeSongInterval
+		{
+			get
+			{
+				try
+				{
+					return Convert.ToInt32(textBoxNarrativeIntervalCount.Text);
+				}
+				catch
+				{
+					return 0;
+				}
+			}
+			set { textBoxNarrativeIntervalCount.Text = value.ToString(); }
+		}
+
+		public bool Shuffle
+		{
+			get { return checkBoxShuffle.Checked; }
+			set { checkBoxShuffle.Checked = value; }
+		}
+
+		public Audio[] Songs
+		{
+			get
+			{
+				var destination = new Audio[listBoxPlaylist.Items.Count];
+				listBoxPlaylist.Items.CopyTo(destination, 0);
+				return destination;
+			}
+			set
+			{
+				listBoxPlaylist.BeginUpdate();
+				listBoxPlaylist.Items.AddRange(value);
+				listBoxPlaylist.EndUpdate();
+			}
+		}
+
+		private void AddSong(string fileName)
+		{
+			Audio item = LoadSong(fileName);
+			if (item != null)
+			{
+				listBoxPlaylist.Items.Add(item);
+			}
+		}
+
+		private void buttonAdd_Click(object sender, EventArgs e)
+		{
+			var builder = new StringBuilder();
 			ProgressDialog dialog = null;
-			this.openFileDialog.InitialDirectory = Paths.AudioPath;
-			this.openFileDialog.Multiselect = true;
-			if (this.openFileDialog.ShowDialog() == DialogResult.OK) {
-				if (this.openFileDialog.FileNames.Length > 2) {
+			openFileDialog.InitialDirectory = Paths.AudioPath;
+			openFileDialog.Multiselect = true;
+			if (openFileDialog.ShowDialog() == DialogResult.OK)
+			{
+				if (openFileDialog.FileNames.Length > 2)
+				{
 					dialog = new ProgressDialog();
 					dialog.Show();
 				}
-				this.Cursor = Cursors.WaitCursor;
-				foreach (string str in this.openFileDialog.FileNames) {
-					try {
-						if (dialog != null) {
+				Cursor = Cursors.WaitCursor;
+				foreach (string str in openFileDialog.FileNames)
+				{
+					try
+					{
+						if (dialog != null)
+						{
 							dialog.Message = "Adding " + Path.GetFileName(str);
 						}
-						this.AddSong(str);
+						AddSong(str);
 					}
-					catch {
+					catch
+					{
 						builder.AppendLine(str);
 					}
 				}
-				if (dialog != null) {
+				if (dialog != null)
+				{
 					dialog.Hide();
 					dialog.Dispose();
 				}
-				this.Cursor = Cursors.Default;
+				Cursor = Cursors.Default;
 			}
-			if (builder.Length > 0) {
-				MessageBox.Show("There were errors when trying to add the following songs:\n\n" + builder.ToString(), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-			}
-		}
-
-		private void buttonDown_Click(object sender, EventArgs e) {
-			if (this.listBoxPlaylist.SelectedIndex < (this.listBoxPlaylist.Items.Count - 1)) {
-				this.listBoxPlaylist.BeginUpdate();
-				object selectedItem = this.listBoxPlaylist.SelectedItem;
-				int selectedIndex = this.listBoxPlaylist.SelectedIndex;
-				this.listBoxPlaylist.Items.RemoveAt(this.listBoxPlaylist.SelectedIndex);
-				this.listBoxPlaylist.Items.Insert(++selectedIndex, selectedItem);
-				this.listBoxPlaylist.EndUpdate();
-				this.listBoxPlaylist.SelectedIndex = selectedIndex;
+			if (builder.Length > 0)
+			{
+				MessageBox.Show("There were errors when trying to add the following songs:\n\n" + builder, Vendor.ProductName,
+				                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 		}
 
-		private void buttonOK_Click(object sender, EventArgs e) {
-			if (this.checkBoxEnableNarrative.Checked) {
-				try {
-					if (Convert.ToInt32(this.textBoxNarrativeIntervalCount.Text) >= 2) {
-						if ((this.m_narrativeSong == null) || !File.Exists(Path.Combine(Paths.AudioPath, this.m_narrativeSong.FileName))) {
-							if (MessageBox.Show("You enabled the narrative but didn't specify a narrative file.  Do you want to continue?\n\nIf you choose Yes, the narrative will be disabled.", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) {
-								base.DialogResult = System.Windows.Forms.DialogResult.None;
+		private void buttonDown_Click(object sender, EventArgs e)
+		{
+			if (listBoxPlaylist.SelectedIndex < (listBoxPlaylist.Items.Count - 1))
+			{
+				listBoxPlaylist.BeginUpdate();
+				object selectedItem = listBoxPlaylist.SelectedItem;
+				int selectedIndex = listBoxPlaylist.SelectedIndex;
+				listBoxPlaylist.Items.RemoveAt(listBoxPlaylist.SelectedIndex);
+				listBoxPlaylist.Items.Insert(++selectedIndex, selectedItem);
+				listBoxPlaylist.EndUpdate();
+				listBoxPlaylist.SelectedIndex = selectedIndex;
+			}
+		}
+
+		private void buttonOK_Click(object sender, EventArgs e)
+		{
+			if (checkBoxEnableNarrative.Checked)
+			{
+				try
+				{
+					if (Convert.ToInt32(textBoxNarrativeIntervalCount.Text) >= 2)
+					{
+						if ((m_narrativeSong == null) || !File.Exists(Path.Combine(Paths.AudioPath, m_narrativeSong.FileName)))
+						{
+							if (
+								MessageBox.Show(
+									"You enabled the narrative but didn't specify a narrative file.  Do you want to continue?\n\nIf you choose Yes, the narrative will be disabled.",
+									Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+							{
+								base.DialogResult = DialogResult.None;
 							}
-							else {
-								this.checkBoxEnableNarrative.Checked = false;
+							else
+							{
+								checkBoxEnableNarrative.Checked = false;
 							}
 						}
 					}
-					else if (MessageBox.Show("An interval count less than 2 is not usable.  Do you want to continue?\n\nIf you choose Yes, the narrative will be disabled.", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) {
-						base.DialogResult = System.Windows.Forms.DialogResult.None;
+					else if (
+						MessageBox.Show(
+							"An interval count less than 2 is not usable.  Do you want to continue?\n\nIf you choose Yes, the narrative will be disabled.",
+							Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+					{
+						base.DialogResult = DialogResult.None;
 					}
-					else {
-						this.checkBoxEnableNarrative.Checked = false;
-						this.textBoxNarrativeIntervalCount.Text = "0";
-					}
-				}
-				catch {
-					if (MessageBox.Show("The interval count is not a valid number.  Do you want to continue?\n\nIf you choose Yes, the narrative will be disabled.", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) {
-						base.DialogResult = System.Windows.Forms.DialogResult.None;
-					}
-					else {
-						this.checkBoxEnableNarrative.Checked = false;
-						this.textBoxNarrativeIntervalCount.Text = "0";
+					else
+					{
+						checkBoxEnableNarrative.Checked = false;
+						textBoxNarrativeIntervalCount.Text = "0";
 					}
 				}
+				catch
+				{
+					if (
+						MessageBox.Show(
+							"The interval count is not a valid number.  Do you want to continue?\n\nIf you choose Yes, the narrative will be disabled.",
+							Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+					{
+						base.DialogResult = DialogResult.None;
+					}
+					else
+					{
+						checkBoxEnableNarrative.Checked = false;
+						textBoxNarrativeIntervalCount.Text = "0";
+					}
+				}
 			}
 		}
 
-		private void buttonRemove_Click(object sender, EventArgs e) {
-			this.RemoveCurrentSelection();
+		private void buttonRemove_Click(object sender, EventArgs e)
+		{
+			RemoveCurrentSelection();
 		}
 
-		private void buttonSelectNarrative_Click(object sender, EventArgs e) {
-			this.openFileDialog.InitialDirectory = Paths.AudioPath;
-			this.openFileDialog.Multiselect = false;
-			if (this.openFileDialog.ShowDialog() == DialogResult.OK) {
-				this.m_narrativeSong = this.LoadSong(this.openFileDialog.FileName);
-				this.textBoxNarrative.Text = this.m_narrativeSong.Name;
+		private void buttonSelectNarrative_Click(object sender, EventArgs e)
+		{
+			openFileDialog.InitialDirectory = Paths.AudioPath;
+			openFileDialog.Multiselect = false;
+			if (openFileDialog.ShowDialog() == DialogResult.OK)
+			{
+				m_narrativeSong = LoadSong(openFileDialog.FileName);
+				textBoxNarrative.Text = m_narrativeSong.Name;
 			}
 		}
 
-		private void buttonUp_Click(object sender, EventArgs e) {
-			if (this.listBoxPlaylist.SelectedIndex > 0) {
-				this.listBoxPlaylist.BeginUpdate();
-				object selectedItem = this.listBoxPlaylist.SelectedItem;
-				int selectedIndex = this.listBoxPlaylist.SelectedIndex;
-				this.listBoxPlaylist.Items.RemoveAt(this.listBoxPlaylist.SelectedIndex);
-				this.listBoxPlaylist.Items.Insert(--selectedIndex, selectedItem);
-				this.listBoxPlaylist.EndUpdate();
-				this.listBoxPlaylist.SelectedIndex = selectedIndex;
+		private void buttonUp_Click(object sender, EventArgs e)
+		{
+			if (listBoxPlaylist.SelectedIndex > 0)
+			{
+				listBoxPlaylist.BeginUpdate();
+				object selectedItem = listBoxPlaylist.SelectedItem;
+				int selectedIndex = listBoxPlaylist.SelectedIndex;
+				listBoxPlaylist.Items.RemoveAt(listBoxPlaylist.SelectedIndex);
+				listBoxPlaylist.Items.Insert(--selectedIndex, selectedItem);
+				listBoxPlaylist.EndUpdate();
+				listBoxPlaylist.SelectedIndex = selectedIndex;
 			}
 		}
 
-		private void checkBoxEnableNarrative_CheckedChanged(object sender, EventArgs e) {
-			this.groupBoxNarrative.Enabled = this.checkBoxEnableNarrative.Checked;
+		private void checkBoxEnableNarrative_CheckedChanged(object sender, EventArgs e)
+		{
+			groupBoxNarrative.Enabled = checkBoxEnableNarrative.Checked;
 		}
 
 
-
-
-
-		private void listBoxPlaylist_KeyDown(object sender, KeyEventArgs e) {
-			if ((e.KeyCode == Keys.Delete) && (this.listBoxPlaylist.SelectedIndex != -1)) {
-				this.RemoveCurrentSelection();
+		private void listBoxPlaylist_KeyDown(object sender, KeyEventArgs e)
+		{
+			if ((e.KeyCode == Keys.Delete) && (listBoxPlaylist.SelectedIndex != -1))
+			{
+				RemoveCurrentSelection();
 			}
 		}
 
-		private void listBoxPlaylist_SelectedIndexChanged(object sender, EventArgs e) {
-			this.buttonRemove.Enabled = this.buttonUp.Enabled = this.buttonDown.Enabled = this.listBoxPlaylist.SelectedIndex != -1;
+		private void listBoxPlaylist_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			buttonRemove.Enabled = buttonUp.Enabled = buttonDown.Enabled = listBoxPlaylist.SelectedIndex != -1;
 		}
 
-		private Audio LoadSong(string fileName) {
+		private Audio LoadSong(string fileName)
+		{
 			string str;
 			uint num;
 			string sourceFileName = fileName;
 			fileName = Path.GetFileName(fileName);
 			string path = Path.Combine(Paths.AudioPath, fileName);
-			if (!File.Exists(path)) {
+			if (!File.Exists(path))
+			{
 				File.Copy(sourceFileName, path);
 			}
-			object[] objArray = this.m_fmod.LoadSoundStats(path);
-			if (objArray != null) {
-				str = (string)objArray[0];
-				num = (uint)objArray[1];
+			object[] objArray = m_fmod.LoadSoundStats(path);
+			if (objArray != null)
+			{
+				str = (string) objArray[0];
+				num = (uint) objArray[1];
 			}
-			else {
+			else
+			{
 				MessageBox.Show("Unable to load the song.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				return null;
 			}
-			Audio audio = new Audio();
+			var audio = new Audio();
 			audio.FileName = fileName;
 			audio.Name = str;
-			audio.Duration = (int)num;
+			audio.Duration = (int) num;
 			return audio;
 		}
 
-		private void RemoveCurrentSelection() {
-			this.listBoxPlaylist.Items.RemoveAt(this.listBoxPlaylist.SelectedIndex);
-			this.buttonRemove.Enabled = this.buttonUp.Enabled = this.buttonDown.Enabled = false;
-		}
-
-		public Audio NarrativeSong {
-			get {
-				return this.m_narrativeSong;
-			}
-			set {
-				this.m_narrativeSong = value;
-				this.textBoxNarrative.Text = this.m_narrativeSong.Name;
-			}
-		}
-
-		public bool NarrativeSongEnabled {
-			get {
-				return this.checkBoxEnableNarrative.Checked;
-			}
-			set {
-				this.checkBoxEnableNarrative.Checked = value;
-			}
-		}
-
-		public int NarrativeSongInterval {
-			get {
-				try {
-					return Convert.ToInt32(this.textBoxNarrativeIntervalCount.Text);
-				}
-				catch {
-					return 0;
-				}
-			}
-			set {
-				this.textBoxNarrativeIntervalCount.Text = value.ToString();
-			}
-		}
-
-		public bool Shuffle {
-			get {
-				return this.checkBoxShuffle.Checked;
-			}
-			set {
-				this.checkBoxShuffle.Checked = value;
-			}
-		}
-
-		public Audio[] Songs {
-			get {
-				Audio[] destination = new Audio[this.listBoxPlaylist.Items.Count];
-				this.listBoxPlaylist.Items.CopyTo(destination, 0);
-				return destination;
-			}
-			set {
-				this.listBoxPlaylist.BeginUpdate();
-				this.listBoxPlaylist.Items.AddRange(value);
-				this.listBoxPlaylist.EndUpdate();
-			}
+		private void RemoveCurrentSelection()
+		{
+			listBoxPlaylist.Items.RemoveAt(listBoxPlaylist.SelectedIndex);
+			buttonRemove.Enabled = buttonUp.Enabled = buttonDown.Enabled = false;
 		}
 	}
 }
-

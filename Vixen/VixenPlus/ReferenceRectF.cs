@@ -1,116 +1,78 @@
-﻿namespace Vixen
+﻿using System.Drawing;
+
+namespace Vixen
 {
-    using System;
-    using System.Drawing;
+	internal class ReferenceRectF
+	{
+		private RectangleF m_rectF;
 
-    internal class ReferenceRectF
-    {
-        private RectangleF m_rectF;
+		public ReferenceRectF()
+		{
+			m_rectF = new RectangleF();
+		}
 
-        public ReferenceRectF()
-        {
-            this.m_rectF = new RectangleF();
-        }
+		public ReferenceRectF(float x, float y, float width, float height)
+		{
+			m_rectF = new RectangleF(x, y, width, height);
+		}
 
-        public ReferenceRectF(float x, float y, float width, float height)
-        {
-            this.m_rectF = new RectangleF(x, y, width, height);
-        }
+		public float Bottom
+		{
+			get { return m_rectF.Bottom; }
+		}
 
-        public bool Contains(Point p)
-        {
-            return this.m_rectF.Contains((PointF) p);
-        }
+		public float Height
+		{
+			get { return m_rectF.Height; }
+			set { m_rectF.Height = value; }
+		}
 
-        public static bool Intersects(ReferenceRectF a, ReferenceRectF b)
-        {
-            return ((((a.Right > b.Left) && (a.Bottom > b.Top)) && (a.Left < b.Right)) && (a.Top < b.Bottom));
-        }
+		public float Left
+		{
+			get { return m_rectF.Left; }
+		}
 
-        public RectangleF ToRectangleF()
-        {
-            return this.m_rectF;
-        }
+		public float Right
+		{
+			get { return m_rectF.Right; }
+		}
 
-        public float Bottom
-        {
-            get
-            {
-                return this.m_rectF.Bottom;
-            }
-        }
+		public float Top
+		{
+			get { return m_rectF.Top; }
+		}
 
-        public float Height
-        {
-            get
-            {
-                return this.m_rectF.Height;
-            }
-            set
-            {
-                this.m_rectF.Height = value;
-            }
-        }
+		public float Width
+		{
+			get { return m_rectF.Width; }
+			set { m_rectF.Width = value; }
+		}
 
-        public float Left
-        {
-            get
-            {
-                return this.m_rectF.Left;
-            }
-        }
+		public float X
+		{
+			get { return m_rectF.X; }
+			set { m_rectF.X = value; }
+		}
 
-        public float Right
-        {
-            get
-            {
-                return this.m_rectF.Right;
-            }
-        }
+		public float Y
+		{
+			get { return m_rectF.Y; }
+			set { m_rectF.Y = value; }
+		}
 
-        public float Top
-        {
-            get
-            {
-                return this.m_rectF.Top;
-            }
-        }
+		public bool Contains(Point p)
+		{
+			return m_rectF.Contains(p);
+		}
 
-        public float Width
-        {
-            get
-            {
-                return this.m_rectF.Width;
-            }
-            set
-            {
-                this.m_rectF.Width = value;
-            }
-        }
+		public static bool Intersects(ReferenceRectF a, ReferenceRectF b)
+		{
+			return ((((a.Right > b.Left) && (a.Bottom > b.Top)) && (a.Left < b.Right)) && (a.Top < b.Bottom));
+		}
 
-        public float X
-        {
-            get
-            {
-                return this.m_rectF.X;
-            }
-            set
-            {
-                this.m_rectF.X = value;
-            }
-        }
-
-        public float Y
-        {
-            get
-            {
-                return this.m_rectF.Y;
-            }
-            set
-            {
-                this.m_rectF.Y = value;
-            }
-        }
-    }
+		public RectangleF ToRectangleF()
+		{
+			return m_rectF;
+		}
+	}
 }
-

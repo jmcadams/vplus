@@ -1,37 +1,47 @@
-﻿namespace Vixen
-{
-	using System;
-	using System.ComponentModel;
-	using System.Drawing;
-	using System.Runtime.CompilerServices;
-	using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
+namespace Vixen
+{
 //	[TypeDescriptionProvider(typeof(GeneralConcreteClassProvider)), ConcreteClass(typeof(UIBaseConcreteForm))]
 	public partial class UIBase : Form, IUIPlugIn, VixenMDI, IPlugIn
 	{
-		private bool m_isDirty = false;
-
-		public event EventHandler DirtyChanged;
+		private bool m_isDirty;
 
 		public UIBase()
 		{
-			this.InitializeComponent();
-		}
-		
-		public virtual /*abstract*/ EventSequence New() { throw new NotImplementedException(); }
-		public virtual /*abstract*/ EventSequence New(EventSequence seedSequence) { throw new NotImplementedException(); }
-		public virtual /*abstract*/ void Notify(Notification notification, object data) { throw new NotImplementedException(); }
-		public virtual void OnDirtyChanged(EventArgs e)
-		{
-			if (this.DirtyChanged != null)
-			{
-				this.DirtyChanged(this, e);
-			}
+			InitializeComponent();
 		}
 
-		public virtual /*abstract*/ EventSequence Open(string filePath) { throw new NotImplementedException(); }
-		public virtual /*abstract*/ DialogResult RunWizard(ref EventSequence resultSequence) { throw new NotImplementedException(); }
-		public virtual /*abstract*/ void SaveTo(string filePath) { throw new NotImplementedException(); }
+		public virtual /*abstract*/ EventSequence New()
+		{
+			throw new NotImplementedException();
+		}
+
+		public virtual /*abstract*/ EventSequence New(EventSequence seedSequence)
+		{
+			throw new NotImplementedException();
+		}
+
+		public virtual /*abstract*/ void Notify(Notification notification, object data)
+		{
+			throw new NotImplementedException();
+		}
+
+		public virtual /*abstract*/ EventSequence Open(string filePath)
+		{
+			throw new NotImplementedException();
+		}
+
+		public virtual /*abstract*/ DialogResult RunWizard(ref EventSequence resultSequence)
+		{
+			throw new NotImplementedException();
+		}
+
+		public virtual /*abstract*/ void SaveTo(string filePath)
+		{
+			throw new NotImplementedException();
+		}
 
 		//string IPlugIn.get_Name()
 		//{
@@ -63,18 +73,23 @@
 
 		public bool IsDirty
 		{
-			get
-			{
-				return this.m_isDirty;
-			}
+			get { return m_isDirty; }
 			set
 			{
-				this.m_isDirty = value;
-				this.OnDirtyChanged(EventArgs.Empty);
+				m_isDirty = value;
+				OnDirtyChanged(EventArgs.Empty);
 			}
 		}
 
 		public virtual /*abstract*/ EventSequence Sequence { get; set; }
+		public event EventHandler DirtyChanged;
+
+		public virtual void OnDirtyChanged(EventArgs e)
+		{
+			if (DirtyChanged != null)
+			{
+				DirtyChanged(this, e);
+			}
+		}
 	}
 }
-

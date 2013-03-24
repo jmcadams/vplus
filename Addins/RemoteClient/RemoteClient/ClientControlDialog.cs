@@ -21,8 +21,10 @@ namespace RemoteClient {
 		private bool Authenticate(string password) {
 			bool flag = false;
 			this.Cursor = Cursors.WaitCursor;
-			try {
-				if (flag = this.m_controlClient.Authenticate(password)) {
+			try
+			{
+				flag = this.m_controlClient.Authenticate(password);
+				if (flag) {
 					this.groupBoxClients.Enabled = true;
 					return flag;
 				}

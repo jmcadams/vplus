@@ -1,11 +1,8 @@
 ﻿namespace Vixen
 {
-    using System;
-
-    public enum LoadableDataLocation
-    {
-        Sequence,
-        Application
-    }
+	public enum LoadableDataLocation
+	{
+		Sequence,
+		Application
+	}
 }
-

@@ -1,94 +1,133 @@
-namespace Vixen.Dialogs {
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel;
-	using System.Drawing;
-	using System.Windows.Forms;
-	using System.Xml;
-	using Vixen;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Xml;
 
-	public partial class PluginListDialog : Form {
-		private List<Channel> m_channels;
+namespace Vixen.Dialogs
+{
+	public partial class PluginListDialog : Form
+	{
+		private readonly List<Channel> m_channels;
+		private readonly IExecutable m_executableObject;
+		private readonly Dictionary<string, Dictionary<int, OutputPort>> m_outputPorts;
+		private readonly List<IHardwarePlugin> m_sequencePlugins;
+		private readonly SetupData m_setupData;
 		private Rectangle m_collapsedRelativeBounds;
-		private IExecutable m_executableObject = null;
 		private Rectangle m_expandedRelativeBounds;
-		private bool m_internalUpdate = false;
+		private bool m_internalUpdate;
 		private int m_itemAffectedIndex;
 		private int m_lastIndex = -1;
-		private Dictionary<string, Dictionary<int, OutputPort>> m_outputPorts;
-		private List<IHardwarePlugin> m_sequencePlugins;
-		private SetupData m_setupData = null;
 
-		public PluginListDialog(IExecutable executableObject) {
-			this.m_setupData = executableObject.PlugInData;
-			this.m_executableObject = executableObject;
-			this.m_channels = executableObject.Channels;
-			this.InitializeComponent();
-			this.m_sequencePlugins = new List<IHardwarePlugin>();
-			this.m_outputPorts = new Dictionary<string, Dictionary<int, OutputPort>>();
-			this.Cursor = Cursors.WaitCursor;
-			try {
+		public PluginListDialog(IExecutable executableObject)
+		{
+			m_setupData = executableObject.PlugInData;
+			m_executableObject = executableObject;
+			m_channels = executableObject.Channels;
+			InitializeComponent();
+			m_sequencePlugins = new List<IHardwarePlugin>();
+			m_outputPorts = new Dictionary<string, Dictionary<int, OutputPort>>();
+			Cursor = Cursors.WaitCursor;
+			try
+			{
 				ListViewItem item;
-				this.listViewPlugins.Columns[0].Width = this.listViewPlugins.Width - 0x19;
-				ListViewGroup group = this.listViewPlugins.Groups["listViewGroupOutput"];
-				ListViewGroup group2 = this.listViewPlugins.Groups["listViewGroupInput"];
+				listViewPlugins.Columns[0].Width = listViewPlugins.Width - 0x19;
+				ListViewGroup group = listViewPlugins.Groups["listViewGroupOutput"];
+				ListViewGroup group2 = listViewPlugins.Groups["listViewGroupInput"];
 				List<IHardwarePlugin> list = OutputPlugins.LoadPlugins();
-				if (list != null) {
-					foreach (IHardwarePlugin plugin in list) {
+				if (list != null)
+				{
+					foreach (IHardwarePlugin plugin in list)
+					{
 						item = new ListViewItem(plugin.Name, group);
 						item.Tag = plugin;
-						this.listViewPlugins.Items.Add(item);
+						listViewPlugins.Items.Add(item);
 					}
 				}
 				list = InputPlugins.LoadPlugins();
-				if (list != null) {
-					foreach (IHardwarePlugin plugin in list) {
+				if (list != null)
+				{
+					foreach (IHardwarePlugin plugin in list)
+					{
 						item = new ListViewItem(plugin.Name, group2);
 						item.Tag = plugin;
-						this.listViewPlugins.Items.Add(item);
+						listViewPlugins.Items.Add(item);
 					}
 				}
-				this.listViewPlugins.Enabled = this.listViewPlugins.Items.Count > 0;
-				OutputPlugins.VerifyPlugIns(this.m_executableObject);
-				InputPlugins.VerifyPlugIns(this.m_executableObject);
-				this.m_collapsedRelativeBounds = new Rectangle(this.listViewOutputPorts.Columns[2].Width - (this.pictureBoxPlus.Width * 2), (14 - this.pictureBoxPlus.Height) / 2, this.pictureBoxPlus.Width, this.pictureBoxPlus.Height);
-				this.m_expandedRelativeBounds = new Rectangle(this.listViewOutputPorts.Columns[2].Width - (this.pictureBoxMinus.Width * 2), (14 - this.pictureBoxMinus.Height) / 2, this.pictureBoxMinus.Width, this.pictureBoxMinus.Height);
+				listViewPlugins.Enabled = listViewPlugins.Items.Count > 0;
+				OutputPlugins.VerifyPlugIns(m_executableObject);
+				InputPlugins.VerifyPlugIns(m_executableObject);
+				m_collapsedRelativeBounds = new Rectangle(listViewOutputPorts.Columns[2].Width - (pictureBoxPlus.Width*2),
+				                                          (14 - pictureBoxPlus.Height)/2, pictureBoxPlus.Width,
+				                                          pictureBoxPlus.Height);
+				m_expandedRelativeBounds = new Rectangle(listViewOutputPorts.Columns[2].Width - (pictureBoxMinus.Width*2),
+				                                         (14 - pictureBoxMinus.Height)/2, pictureBoxMinus.Width,
+				                                         pictureBoxMinus.Height);
 			}
-			finally {
-				this.Cursor = Cursors.Default;
+			finally
+			{
+				Cursor = Cursors.Default;
 			}
 		}
 
-		private void buttonInput_Click(object sender, EventArgs e) {
-			InputPlugin plugin = (InputPlugin)this.m_sequencePlugins[this.checkedListBoxSequencePlugins.SelectedIndex];
-			this.InitializePlugin(plugin, this.m_setupData.GetPlugInData(this.checkedListBoxSequencePlugins.SelectedIndex.ToString()));
-			InputPluginDialog dialog = new InputPluginDialog(plugin, (EventSequence)this.m_executableObject);
+		public object[] MappedPluginList
+		{
+			get
+			{
+				var list = new List<object[]>();
+				foreach (XmlNode node in m_setupData.GetAllPluginData())
+				{
+					list.Add(new object[]
+						{
+							string.Format("{0} ({1}-{2})", node.Attributes["name"].Value, node.Attributes["from"].Value,
+							              node.Attributes["to"].Value),
+							bool.Parse(node.Attributes["enabled"].Value),
+							Convert.ToInt32(node.Attributes["id"].Value)
+						});
+				}
+				return list.ToArray();
+			}
+		}
+
+		private void buttonInput_Click(object sender, EventArgs e)
+		{
+			var plugin = (InputPlugin) m_sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex];
+			InitializePlugin(plugin, m_setupData.GetPlugInData(checkedListBoxSequencePlugins.SelectedIndex.ToString()));
+			var dialog = new InputPluginDialog(plugin, (EventSequence) m_executableObject);
 			dialog.ShowDialog();
 			dialog.Dispose();
 		}
 
-		private void buttonPluginSetup_Click(object sender, EventArgs e) {
-			this.PluginSetup();
+		private void buttonPluginSetup_Click(object sender, EventArgs e)
+		{
+			PluginSetup();
 		}
 
-		private void buttonRemove_Click(object sender, EventArgs e) {
-			this.RemoveSelectedPlugIn();
+		private void buttonRemove_Click(object sender, EventArgs e)
+		{
+			RemoveSelectedPlugIn();
 		}
 
-		private void buttonUse_Click(object sender, EventArgs e) {
-			this.UsePlugin();
+		private void buttonUse_Click(object sender, EventArgs e)
+		{
+			UsePlugin();
 		}
 
-		private void checkedListBoxSequencePlugins_DoubleClick(object sender, EventArgs e) {
-			if (this.checkedListBoxSequencePlugins.SelectedIndex != -1) {
-				this.PluginSetup();
+		private void checkedListBoxSequencePlugins_DoubleClick(object sender, EventArgs e)
+		{
+			if (checkedListBoxSequencePlugins.SelectedIndex != -1)
+			{
+				PluginSetup();
 			}
 		}
 
-		private void checkedListBoxSequencePlugins_ItemCheck(object sender, ItemCheckEventArgs e) {
-			if (e.Index != -1) {
-				this.m_setupData.GetPlugInData(e.Index.ToString()).Attributes["enabled"].Value = (e.NewValue == CheckState.Checked).ToString();
-				this.UpdateDictionary();
+		private void checkedListBoxSequencePlugins_ItemCheck(object sender, ItemCheckEventArgs e)
+		{
+			if (e.Index != -1)
+			{
+				m_setupData.GetPlugInData(e.Index.ToString()).Attributes["enabled"].Value =
+					(e.NewValue == CheckState.Checked).ToString();
+				UpdateDictionary();
 			}
 		}
 
@@ -98,219 +137,287 @@ namespace Vixen.Dialogs {
 		//this.pictureBoxMinus.Image = (Image)manager.GetObject("pictureBoxMinus.Image");
 
 
-
-		private void InitializePlugin(IHardwarePlugin plugin, XmlNode setupNode) {
-			if (plugin is IEventDrivenOutputPlugIn) {
-				((IEventDrivenOutputPlugIn)plugin).Initialize(this.m_executableObject, this.m_setupData, setupNode);
+		private void InitializePlugin(IHardwarePlugin plugin, XmlNode setupNode)
+		{
+			if (plugin is IEventDrivenOutputPlugIn)
+			{
+				((IEventDrivenOutputPlugIn) plugin).Initialize(m_executableObject, m_setupData, setupNode);
 			}
-			else if (plugin is IEventlessOutputPlugIn) {
-				((IEventlessOutputPlugIn)plugin).Initialize(this.m_executableObject, this.m_setupData, setupNode, null);
+			else if (plugin is IEventlessOutputPlugIn)
+			{
+				((IEventlessOutputPlugIn) plugin).Initialize(m_executableObject, m_setupData, setupNode, null);
 			}
-			else if (plugin is IInputPlugin) {
-				((InputPlugin)plugin).InitializeInternal(this.m_setupData, setupNode);
-			}
-		}
-
-		private void listBoxAllPlugins_DoubleClick(object sender, EventArgs e) {
-		}
-
-		private void listBoxAllPlugins_SelectedIndexChanged(object sender, EventArgs e) {
-		}
-
-		private void listBoxSequencePlugins_KeyDown(object sender, KeyEventArgs e) {
-			if (e.KeyCode == Keys.Delete) {
-				this.RemoveSelectedPlugIn();
+			else if (plugin is IInputPlugin)
+			{
+				((InputPlugin) plugin).InitializeInternal(m_setupData, setupNode);
 			}
 		}
 
-		private void listBoxSequencePlugins_SelectedIndexChanged(object sender, EventArgs e) {
-			if ((this.m_lastIndex != -1) && (this.checkedListBoxSequencePlugins.SelectedIndex != -1)) {
-				this.UpdatePlugInNodeChannelRanges(this.m_lastIndex.ToString());
-			}
-			int selectedIndex = this.checkedListBoxSequencePlugins.SelectedIndex;
-			this.buttonPluginSetup.Enabled = selectedIndex != -1;
-			this.buttonRemove.Enabled = selectedIndex != -1;
-			if (selectedIndex != -1) {
-				XmlNode plugInData = this.m_setupData.GetPlugInData(selectedIndex.ToString());
-				this.textBoxChannelFrom.Text = plugInData.Attributes["from"].Value;
-				this.textBoxChannelTo.Text = plugInData.Attributes["to"].Value;
-			}
-			this.buttonInput.Enabled = ((this.checkedListBoxSequencePlugins.SelectedIndex != -1) && (this.m_executableObject is EventSequence)) && (this.m_sequencePlugins[this.checkedListBoxSequencePlugins.SelectedIndex] is IInputPlugin);
-			this.m_lastIndex = selectedIndex;
+		private void listBoxAllPlugins_DoubleClick(object sender, EventArgs e)
+		{
 		}
 
-		private void listViewOutputPorts_DrawItem(object sender, DrawListViewItemEventArgs e) {
+		private void listBoxAllPlugins_SelectedIndexChanged(object sender, EventArgs e)
+		{
+		}
+
+		private void listBoxSequencePlugins_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Delete)
+			{
+				RemoveSelectedPlugIn();
+			}
+		}
+
+		private void listBoxSequencePlugins_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if ((m_lastIndex != -1) && (checkedListBoxSequencePlugins.SelectedIndex != -1))
+			{
+				UpdatePlugInNodeChannelRanges(m_lastIndex.ToString());
+			}
+			int selectedIndex = checkedListBoxSequencePlugins.SelectedIndex;
+			buttonPluginSetup.Enabled = selectedIndex != -1;
+			buttonRemove.Enabled = selectedIndex != -1;
+			if (selectedIndex != -1)
+			{
+				XmlNode plugInData = m_setupData.GetPlugInData(selectedIndex.ToString());
+				textBoxChannelFrom.Text = plugInData.Attributes["from"].Value;
+				textBoxChannelTo.Text = plugInData.Attributes["to"].Value;
+			}
+			buttonInput.Enabled = ((checkedListBoxSequencePlugins.SelectedIndex != -1) && (m_executableObject is EventSequence)) &&
+			                      (m_sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex] is IInputPlugin);
+			m_lastIndex = selectedIndex;
+		}
+
+		private void listViewOutputPorts_DrawItem(object sender, DrawListViewItemEventArgs e)
+		{
 			e.DrawDefault = false;
 		}
 
-		private void listViewOutputPorts_DrawSubItem(object sender, DrawListViewSubItemEventArgs e) {
-			if ((e.ColumnIndex == 2) && (e.Item.Tag != null)) {
-				OutputPort tag = (OutputPort)e.Item.Tag;
-				if (tag.ReferencingPlugins.Count > 1) {
-					Image image = tag.IsExpanded ? this.pictureBoxMinus.Image : this.pictureBoxPlus.Image;
-					Point point = new Point(e.Bounds.Location.X, e.Bounds.Location.Y);
-					point.Offset(tag.IsExpanded ? this.m_expandedRelativeBounds.Location : this.m_collapsedRelativeBounds.Location);
+		private void listViewOutputPorts_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
+		{
+			if ((e.ColumnIndex == 2) && (e.Item.Tag != null))
+			{
+				var tag = (OutputPort) e.Item.Tag;
+				if (tag.ReferencingPlugins.Count > 1)
+				{
+					Image image = tag.IsExpanded ? pictureBoxMinus.Image : pictureBoxPlus.Image;
+					var point = new Point(e.Bounds.Location.X, e.Bounds.Location.Y);
+					point.Offset(tag.IsExpanded ? m_expandedRelativeBounds.Location : m_collapsedRelativeBounds.Location);
 					e.Graphics.DrawImage(image, point);
 				}
 			}
-			else if (e.ColumnIndex != 0) {
+			else if (e.ColumnIndex != 0)
+			{
 				e.DrawDefault = true;
 			}
 		}
 
-		private void listViewOutputPorts_MouseDown(object sender, MouseEventArgs e) {
-			ListViewHitTestInfo info = this.listViewOutputPorts.HitTest(e.Location);
-			if ((info.Item != null) && (info.Item.Tag != null)) {
-				OutputPort tag = (OutputPort)info.Item.Tag;
-				if ((tag.ReferencingPlugins.Count > 1) && (info.Item.SubItems.IndexOf(info.SubItem) == 2)) {
-					Point pt = new Point(e.Location.X, e.Location.Y);
+		private void listViewOutputPorts_MouseDown(object sender, MouseEventArgs e)
+		{
+			ListViewHitTestInfo info = listViewOutputPorts.HitTest(e.Location);
+			if ((info.Item != null) && (info.Item.Tag != null))
+			{
+				var tag = (OutputPort) info.Item.Tag;
+				if ((tag.ReferencingPlugins.Count > 1) && (info.Item.SubItems.IndexOf(info.SubItem) == 2))
+				{
+					var pt = new Point(e.Location.X, e.Location.Y);
 					pt.Offset(-info.SubItem.Bounds.Location.X, -info.SubItem.Bounds.Location.Y);
-					this.m_itemAffectedIndex = info.Item.Index;
-					if (tag.IsExpanded) {
-						if (this.m_expandedRelativeBounds.Contains(pt)) {
+					m_itemAffectedIndex = info.Item.Index;
+					if (tag.IsExpanded)
+					{
+						if (m_expandedRelativeBounds.Contains(pt))
+						{
 							tag.IsExpanded = false;
-							this.UpdateConfigDisplay();
+							UpdateConfigDisplay();
 						}
 					}
-					else if (this.m_collapsedRelativeBounds.Contains(pt)) {
+					else if (m_collapsedRelativeBounds.Contains(pt))
+					{
 						tag.IsExpanded = true;
-						this.UpdateConfigDisplay();
+						UpdateConfigDisplay();
 					}
 				}
 			}
 		}
 
-		private void listViewPlugins_DoubleClick(object sender, EventArgs e) {
-			if (this.listViewPlugins.SelectedItems.Count > 0) {
-				this.UsePlugin();
+		private void listViewPlugins_DoubleClick(object sender, EventArgs e)
+		{
+			if (listViewPlugins.SelectedItems.Count > 0)
+			{
+				UsePlugin();
 			}
 		}
 
-		private void listViewPlugins_SelectedIndexChanged(object sender, EventArgs e) {
-			this.buttonUse.Enabled = this.listViewPlugins.SelectedItems.Count > 0;
+		private void listViewPlugins_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			buttonUse.Enabled = listViewPlugins.SelectedItems.Count > 0;
 		}
 
-		private void PluginListDialog_FormClosing(object sender, FormClosingEventArgs e) {
-			this.listBoxSequencePlugins_SelectedIndexChanged(null, null);
+		private void PluginListDialog_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			listBoxSequencePlugins_SelectedIndexChanged(null, null);
 		}
 
-		private void PluginListDialog_Load(object sender, EventArgs e) {
-			this.Cursor = Cursors.WaitCursor;
-			try {
-				this.m_internalUpdate = true;
-				foreach (XmlNode node in this.m_setupData.GetAllPluginData()) {
+		private void PluginListDialog_Load(object sender, EventArgs e)
+		{
+			Cursor = Cursors.WaitCursor;
+			try
+			{
+				m_internalUpdate = true;
+				foreach (XmlNode node in m_setupData.GetAllPluginData())
+				{
 					IHardwarePlugin plugin;
-					if ((node.Attributes["type"] != null) && (node.Attributes["type"].Value == SetupData.PluginType.Input.ToString())) {
+					if ((node.Attributes["type"] != null) && (node.Attributes["type"].Value == SetupData.PluginType.Input.ToString()))
+					{
 						plugin = InputPlugins.FindPlugin(node.Attributes["name"].Value, true);
 					}
-					else {
+					else
+					{
 						plugin = OutputPlugins.FindPlugin(node.Attributes["name"].Value, true);
 					}
-					if (plugin != null) {
-						this.InitializePlugin(plugin, node);
-						this.checkedListBoxSequencePlugins.Items.Add(plugin.Name, bool.Parse(node.Attributes["enabled"].Value));
-						this.m_sequencePlugins.Add(plugin);
+					if (plugin != null)
+					{
+						InitializePlugin(plugin, node);
+						checkedListBoxSequencePlugins.Items.Add(plugin.Name, bool.Parse(node.Attributes["enabled"].Value));
+						m_sequencePlugins.Add(plugin);
 					}
 				}
-				this.m_internalUpdate = false;
-				this.UpdateDictionary();
+				m_internalUpdate = false;
+				UpdateDictionary();
 			}
-			finally {
-				this.Cursor = Cursors.Default;
+			finally
+			{
+				Cursor = Cursors.Default;
 			}
 		}
 
-		private void PluginSetup() {
-			if (this.checkedListBoxSequencePlugins.SelectedItem != null) {
-				this.UpdatePlugInNodeChannelRanges(this.checkedListBoxSequencePlugins.SelectedIndex.ToString());
-				try {
-					this.m_sequencePlugins[this.checkedListBoxSequencePlugins.SelectedIndex].Setup();
-					this.UpdateDictionary();
+		private void PluginSetup()
+		{
+			if (checkedListBoxSequencePlugins.SelectedItem != null)
+			{
+				UpdatePlugInNodeChannelRanges(checkedListBoxSequencePlugins.SelectedIndex.ToString());
+				try
+				{
+					m_sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex].Setup();
+					UpdateDictionary();
 				}
-				catch (Exception exception) {
-					MessageBox.Show("An exception occurred when trying to initialize the plugin for setup.\n\nError:\n" + exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				catch (Exception exception)
+				{
+					MessageBox.Show(
+						"An exception occurred when trying to initialize the plugin for setup.\n\nError:\n" + exception.Message,
+						Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				}
 			}
 		}
 
-		private void RemoveSelectedPlugIn() {
-			if ((this.m_sequencePlugins[this.checkedListBoxSequencePlugins.SelectedIndex] != null) && (this.checkedListBoxSequencePlugins.SelectedIndex != -1)) {
-				this.m_setupData.RemovePlugInData(this.checkedListBoxSequencePlugins.SelectedIndex.ToString());
-				this.m_sequencePlugins.RemoveAt(this.checkedListBoxSequencePlugins.SelectedIndex);
-				this.checkedListBoxSequencePlugins.Items.RemoveAt(this.checkedListBoxSequencePlugins.SelectedIndex);
-				this.buttonRemove.Enabled = this.checkedListBoxSequencePlugins.SelectedIndex != -1;
-				this.UpdateDictionary();
+		private void RemoveSelectedPlugIn()
+		{
+			if ((m_sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex] != null) &&
+			    (checkedListBoxSequencePlugins.SelectedIndex != -1))
+			{
+				m_setupData.RemovePlugInData(checkedListBoxSequencePlugins.SelectedIndex.ToString());
+				m_sequencePlugins.RemoveAt(checkedListBoxSequencePlugins.SelectedIndex);
+				checkedListBoxSequencePlugins.Items.RemoveAt(checkedListBoxSequencePlugins.SelectedIndex);
+				buttonRemove.Enabled = checkedListBoxSequencePlugins.SelectedIndex != -1;
+				UpdateDictionary();
 			}
 		}
 
-		private void UpdateConfigDisplay() {
-			this.listViewOutputPorts.BeginUpdate();
-			this.listViewOutputPorts.Items.Clear();
-			List<int> list = new List<int>();
-			foreach (string str in this.m_outputPorts.Keys) {
-				ListViewGroup group = this.listViewOutputPorts.Groups.Add(str, str);
-				Dictionary<int, OutputPort> dictionary = this.m_outputPorts[str];
+		private void UpdateConfigDisplay()
+		{
+			listViewOutputPorts.BeginUpdate();
+			listViewOutputPorts.Items.Clear();
+			var list = new List<int>();
+			foreach (string str in m_outputPorts.Keys)
+			{
+				ListViewGroup group = listViewOutputPorts.Groups.Add(str, str);
+				Dictionary<int, OutputPort> dictionary = m_outputPorts[str];
 				list.Clear();
 				list.AddRange(dictionary.Keys);
 				list.Sort();
-				foreach (int num in list) {
+				foreach (int num in list)
+				{
 					ListViewItem item;
 					OutputPort port = dictionary[num];
-					if (port.ReferencingPlugins.Count == 1) {
-						item = new ListViewItem(new string[] { string.Empty, port.Index.ToString(port.StringFormat), string.Empty, port.ReferencingPlugins[0].Name }, group);
+					if (port.ReferencingPlugins.Count == 1)
+					{
+						item =
+							new ListViewItem(
+								new[] {string.Empty, port.Index.ToString(port.StringFormat), string.Empty, port.ReferencingPlugins[0].Name},
+								group);
 					}
-					else if (port.IsExpanded) {
-						item = new ListViewItem(new string[] { string.Empty, port.Index.ToString(port.StringFormat), string.Empty, "Multiple" }, group);
-						if (port.Shared) {
+					else if (port.IsExpanded)
+					{
+						item = new ListViewItem(new[] {string.Empty, port.Index.ToString(port.StringFormat), string.Empty, "Multiple"},
+						                        group);
+						if (port.Shared)
+						{
 							item.SubItems[3].ForeColor = Color.LightSteelBlue;
 						}
-						else {
+						else
+						{
 							item.SubItems[3].ForeColor = Color.Pink;
 						}
 					}
-					else {
-						item = new ListViewItem(new string[] { string.Empty, port.Index.ToString(port.StringFormat), string.Empty, "Multiple" }, group);
-						if (port.Shared) {
+					else
+					{
+						item = new ListViewItem(new[] {string.Empty, port.Index.ToString(port.StringFormat), string.Empty, "Multiple"},
+						                        group);
+						if (port.Shared)
+						{
 							item.SubItems[3].ForeColor = Color.SteelBlue;
 						}
-						else {
+						else
+						{
 							item.SubItems[3].ForeColor = Color.Red;
 						}
 					}
 					item.Tag = port;
-					this.listViewOutputPorts.Items.Add(item);
-					if (port.IsExpanded) {
-						foreach (IPlugIn @in in port.ReferencingPlugins) {
-							this.listViewOutputPorts.Items.Add(new ListViewItem(new string[] { string.Empty, string.Empty, string.Empty, @in.Name }, group));
+					listViewOutputPorts.Items.Add(item);
+					if (port.IsExpanded)
+					{
+						foreach (IPlugIn @in in port.ReferencingPlugins)
+						{
+							listViewOutputPorts.Items.Add(new ListViewItem(new[] {string.Empty, string.Empty, string.Empty, @in.Name}, group));
 						}
 					}
 				}
 			}
-			this.listViewOutputPorts.EndUpdate();
-			if (this.listViewOutputPorts.Items.Count > 0) {
-				this.listViewOutputPorts.EnsureVisible(this.listViewOutputPorts.Items.Count - 1);
-				this.listViewOutputPorts.EnsureVisible(this.m_itemAffectedIndex);
+			listViewOutputPorts.EndUpdate();
+			if (listViewOutputPorts.Items.Count > 0)
+			{
+				listViewOutputPorts.EnsureVisible(listViewOutputPorts.Items.Count - 1);
+				listViewOutputPorts.EnsureVisible(m_itemAffectedIndex);
 			}
 		}
 
-		private void UpdateDictionary() {
-			if (!this.m_internalUpdate) {
-				this.m_outputPorts.Clear();
+		private void UpdateDictionary()
+		{
+			if (!m_internalUpdate)
+			{
+				m_outputPorts.Clear();
 				int num = 0;
-				foreach (IHardwarePlugin plugin in this.m_sequencePlugins) {
-					if (bool.Parse(this.m_setupData.GetPlugInData(num.ToString()).Attributes["enabled"].Value)) {
-						foreach (HardwareMap map in plugin.HardwareMap) {
+				foreach (IHardwarePlugin plugin in m_sequencePlugins)
+				{
+					if (bool.Parse(m_setupData.GetPlugInData(num.ToString()).Attributes["enabled"].Value))
+					{
+						foreach (HardwareMap map in plugin.HardwareMap)
+						{
 							Dictionary<int, OutputPort> dictionary;
 							OutputPort port;
 							string key = map.PortTypeName.ToLower().Trim();
 							key = char.ToUpper(key[0]) + key.Substring(1);
-							if (!this.m_outputPorts.TryGetValue(key, out dictionary)) {
-								this.m_outputPorts[key] = dictionary = new Dictionary<int, OutputPort>();
+							if (!m_outputPorts.TryGetValue(key, out dictionary))
+							{
+								m_outputPorts[key] = dictionary = new Dictionary<int, OutputPort>();
 							}
-							if (!dictionary.TryGetValue(map.PortTypeIndex, out port)) {
+							if (!dictionary.TryGetValue(map.PortTypeIndex, out port))
+							{
 								dictionary[map.PortTypeIndex] = port = new OutputPort(key, map.PortTypeIndex, map.Shared, map.StringFormat);
 							}
-							else {
+							else
+							{
 								port.Shared |= map.Shared;
 							}
 							port.ReferencingPlugins.Add(plugin);
@@ -318,60 +425,63 @@ namespace Vixen.Dialogs {
 					}
 					num++;
 				}
-				this.m_itemAffectedIndex = 0;
-				this.UpdateConfigDisplay();
+				m_itemAffectedIndex = 0;
+				UpdateConfigDisplay();
 			}
 		}
 
-		private void UpdatePlugInNodeChannelRanges(string pluginID) {
+		private void UpdatePlugInNodeChannelRanges(string pluginID)
+		{
 			int count;
-			XmlNode plugInData = this.m_setupData.GetPlugInData(pluginID);
-			try {
-				count = Convert.ToInt32(this.textBoxChannelFrom.Text);
+			XmlNode plugInData = m_setupData.GetPlugInData(pluginID);
+			try
+			{
+				count = Convert.ToInt32(textBoxChannelFrom.Text);
 			}
-			catch {
+			catch
+			{
 				count = 1;
 			}
 			plugInData.Attributes["from"].Value = count.ToString();
-			try {
-				count = Convert.ToInt32(this.textBoxChannelTo.Text);
+			try
+			{
+				count = Convert.ToInt32(textBoxChannelTo.Text);
 			}
-			catch {
-				count = this.m_channels.Count;
+			catch
+			{
+				count = m_channels.Count;
 			}
 			plugInData.Attributes["to"].Value = count.ToString();
 		}
 
-		private void UsePlugin() {
-			if (this.listViewPlugins.SelectedItems.Count != 0) {
-				IHardwarePlugin plugIn = OutputPlugins.FindPlugin(((IHardwarePlugin)this.listViewPlugins.SelectedItems[0].Tag).Name, true);
-				XmlNode node = this.m_setupData.CreatePlugInData(plugIn);
+		private void UsePlugin()
+		{
+			if (listViewPlugins.SelectedItems.Count != 0)
+			{
+				IHardwarePlugin plugIn = OutputPlugins.FindPlugin(((IHardwarePlugin) listViewPlugins.SelectedItems[0].Tag).Name,
+				                                                  true);
+				XmlNode node = m_setupData.CreatePlugInData(plugIn);
 				Xml.SetAttribute(node, "from", "1");
-				Xml.SetAttribute(node, "to", this.m_channels.Count.ToString());
-				this.Cursor = Cursors.WaitCursor;
-				try {
-					this.InitializePlugin(plugIn, node);
+				Xml.SetAttribute(node, "to", m_channels.Count.ToString());
+				Cursor = Cursors.WaitCursor;
+				try
+				{
+					InitializePlugin(plugIn, node);
 				}
-				catch (Exception exception) {
-					MessageBox.Show(string.Format("Error during plugin initialization:\n\n{0}\n\nThe plugin's setup data may be invalid or inaccurate.", exception.Message), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				catch (Exception exception)
+				{
+					MessageBox.Show(
+						string.Format(
+							"Error during plugin initialization:\n\n{0}\n\nThe plugin's setup data may be invalid or inaccurate.",
+							exception.Message), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				}
-				finally {
-					this.Cursor = Cursors.Default;
+				finally
+				{
+					Cursor = Cursors.Default;
 				}
-				this.checkedListBoxSequencePlugins.Items.Add(plugIn.Name, true);
-				this.m_sequencePlugins.Add(plugIn);
-			}
-		}
-
-		public object[] MappedPluginList {
-			get {
-				List<object[]> list = new List<object[]>();
-				foreach (XmlNode node in this.m_setupData.GetAllPluginData()) {
-					list.Add(new object[] { string.Format("{0} ({1}-{2})", node.Attributes["name"].Value, node.Attributes["from"].Value, node.Attributes["to"].Value), bool.Parse(node.Attributes["enabled"].Value), Convert.ToInt32(node.Attributes["id"].Value) });
-				}
-				return list.ToArray();
+				checkedListBoxSequencePlugins.Items.Add(plugIn.Name, true);
+				m_sequencePlugins.Add(plugIn);
 			}
 		}
 	}
 }
-

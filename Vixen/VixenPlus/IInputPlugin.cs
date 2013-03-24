@@ -1,17 +1,14 @@
-﻿namespace Vixen
+﻿using System.Xml;
+
+namespace Vixen
 {
-    using System;
-    using System.Xml;
+	internal interface IInputPlugin : IHardwarePlugin, IPlugIn, ISetup
+	{
+		Input[] Inputs { get; }
 
-    internal interface IInputPlugin : IHardwarePlugin, IPlugIn, ISetup
-    {
-        void Initialize(SetupData setupData, XmlNode setupNode);
+		bool LiveUpdate { get; }
 
-        Input[] Inputs { get; }
-
-        bool LiveUpdate { get; }
-
-        bool Record { get; }
-    }
+		bool Record { get; }
+		void Initialize(SetupData setupData, XmlNode setupNode);
+	}
 }
-

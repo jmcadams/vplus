@@ -1,10 +1,9 @@
-﻿namespace Vixen
-{
-    using System;
-    using System.ComponentModel;
+﻿using System.ComponentModel;
 
-    internal class GeneralConcreteClassProvider : TypeDescriptionProvider
-    {
+namespace Vixen
+{
+	internal class GeneralConcreteClassProvider : TypeDescriptionProvider
+	{
 		//private Type _abstractType;
 		//private Type _concreteType;
 
@@ -54,6 +53,5 @@
 		//    }
 		//    return base.GetReflectionType(objectType, instance);
 		//}
-    }
+	}
 }
-

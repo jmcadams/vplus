@@ -1,152 +1,144 @@
-﻿namespace Vixen
+﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using System.Xml;
+
+namespace Vixen
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Runtime.CompilerServices;
-    using System.Windows.Forms;
-    using System.Xml;
+	internal class ExecutionContext : IDisposable
+	{
+		public byte[] AsynchronousEngineBuffer;
+		public Form KeyInterceptor;
+		public bool LocalRequestor;
+		public IExecutable Object;
+		public List<Form> OutputPlugInForms;
+		public bool SuppressAsynchronousContext;
+		public bool SuppressSynchronousContext;
+		public XmlDocument SynchronousEngineComm;
+		private Async m_asynchronous;
+		private Engine8 m_asynchronousEngineInstance;
+		private IEngine2 m_synchronous;
+		private Engine8 m_synchronousEngineInstance;
 
-    internal class ExecutionContext : IDisposable
-    {
-        public byte[] AsynchronousEngineBuffer;
-        public Form KeyInterceptor;
-        public bool LocalRequestor;
-        private Async m_asynchronous;
-        private Engine8 m_asynchronousEngineInstance;
-        private IEngine2 m_synchronous;
-        private Engine8 m_synchronousEngineInstance;
-        public IExecutable Object;
-        public List<Form> OutputPlugInForms;
-        public bool SuppressAsynchronousContext;
-        public bool SuppressSynchronousContext;
-        public XmlDocument SynchronousEngineComm;
+		public ExecutionContext()
+		{
+			m_synchronous = null;
+			m_asynchronous = null;
+			OutputPlugInForms = new List<Form>();
+			KeyInterceptor = null;
+		}
 
-        public event ProgramChangeHandler AsynchronousProgramChangeHandler;
+		public ExecutionContext(bool useSynchronous, bool useAsynchronous)
+		{
+			m_synchronous = null;
+			m_asynchronous = null;
+			OutputPlugInForms = new List<Form>();
+			KeyInterceptor = null;
+			if (useSynchronous)
+			{
+				m_synchronous = Engines.GetInstance();
+			}
+			if (useAsynchronous)
+			{
+				m_asynchronous = new Async();
+			}
+		}
 
-        public event ProgramChangeHandler SynchronousProgramChangeHandler;
+		public Engine8 AsynchronousEngineInstance
+		{
+			get { return m_asynchronousEngineInstance; }
+			set
+			{
+				m_asynchronousEngineInstance = value;
+				if (value != null)
+				{
+					m_asynchronousEngineInstance.ProgramEnd += AsynchronousEngineProgramEndHandler;
+					m_asynchronousEngineInstance.SequenceChange += AsynchronousEngineProgramChangeHandler;
+				}
+			}
+		}
 
-        public ExecutionContext()
-        {
-            this.m_synchronous = null;
-            this.m_asynchronous = null;
-            this.OutputPlugInForms = new List<Form>();
-            this.KeyInterceptor = null;
-        }
+		public Engine8 SynchronousEngineInstance
+		{
+			get { return m_synchronousEngineInstance; }
+			set
+			{
+				m_synchronousEngineInstance = value;
+				if (value != null)
+				{
+					m_synchronousEngineInstance.ProgramEnd += SynchronousEngineProgramEndHandler;
+					m_synchronousEngineInstance.SequenceChange += SynchronousEngineProgramChangeHandler;
+				}
+			}
+		}
 
-        public ExecutionContext(bool useSynchronous, bool useAsynchronous)
-        {
-            this.m_synchronous = null;
-            this.m_asynchronous = null;
-            this.OutputPlugInForms = new List<Form>();
-            this.KeyInterceptor = null;
-            if (useSynchronous)
-            {
-                this.m_synchronous = Engines.GetInstance();
-            }
-            if (useAsynchronous)
-            {
-                this.m_asynchronous = new Async();
-            }
-        }
+		public void Dispose()
+		{
+			ReleaseAsynchronousEngine();
+			ReleaseSynchronousEngine();
+			Object = null;
+			GC.SuppressFinalize(this);
+		}
 
-        private void AsynchronousEngineProgramChangeHandler()
-        {
-            if (this.AsynchronousProgramChangeHandler != null)
-            {
-                this.AsynchronousProgramChangeHandler(ProgramChange.SequenceChange);
-            }
-        }
+		public event ProgramChangeHandler AsynchronousProgramChangeHandler;
 
-        private void AsynchronousEngineProgramEndHandler()
-        {
-            if (this.AsynchronousProgramChangeHandler != null)
-            {
-                this.AsynchronousProgramChangeHandler(ProgramChange.End);
-            }
-        }
+		public event ProgramChangeHandler SynchronousProgramChangeHandler;
 
-        public void Dispose()
-        {
-            this.ReleaseAsynchronousEngine();
-            this.ReleaseSynchronousEngine();
-            this.Object = null;
-            GC.SuppressFinalize(this);
-        }
+		private void AsynchronousEngineProgramChangeHandler()
+		{
+			if (AsynchronousProgramChangeHandler != null)
+			{
+				AsynchronousProgramChangeHandler(ProgramChange.SequenceChange);
+			}
+		}
 
-        ~ExecutionContext()
-        {
-            this.Dispose();
-        }
+		private void AsynchronousEngineProgramEndHandler()
+		{
+			if (AsynchronousProgramChangeHandler != null)
+			{
+				AsynchronousProgramChangeHandler(ProgramChange.End);
+			}
+		}
 
-        private void ReleaseAsynchronousEngine()
-        {
-            if (this.AsynchronousEngineInstance != null)
-            {
-                this.AsynchronousEngineInstance.Stop();
-                this.AsynchronousEngineInstance.Dispose();
-                this.AsynchronousEngineInstance = null;
-            }
-        }
+		~ExecutionContext()
+		{
+			Dispose();
+		}
 
-        private void ReleaseSynchronousEngine()
-        {
-            if (this.SynchronousEngineInstance != null)
-            {
-                this.SynchronousEngineInstance.Stop();
-                this.SynchronousEngineInstance.Dispose();
-                this.SynchronousEngineInstance = null;
-            }
-        }
+		private void ReleaseAsynchronousEngine()
+		{
+			if (AsynchronousEngineInstance != null)
+			{
+				AsynchronousEngineInstance.Stop();
+				AsynchronousEngineInstance.Dispose();
+				AsynchronousEngineInstance = null;
+			}
+		}
 
-        private void SynchronousEngineProgramChangeHandler()
-        {
-            if (this.SynchronousProgramChangeHandler != null)
-            {
-                this.SynchronousProgramChangeHandler(ProgramChange.SequenceChange);
-            }
-        }
+		private void ReleaseSynchronousEngine()
+		{
+			if (SynchronousEngineInstance != null)
+			{
+				SynchronousEngineInstance.Stop();
+				SynchronousEngineInstance.Dispose();
+				SynchronousEngineInstance = null;
+			}
+		}
 
-        private void SynchronousEngineProgramEndHandler()
-        {
-            if (this.SynchronousProgramChangeHandler != null)
-            {
-                this.SynchronousProgramChangeHandler(ProgramChange.End);
-            }
-        }
+		private void SynchronousEngineProgramChangeHandler()
+		{
+			if (SynchronousProgramChangeHandler != null)
+			{
+				SynchronousProgramChangeHandler(ProgramChange.SequenceChange);
+			}
+		}
 
-        public Engine8 AsynchronousEngineInstance
-        {
-            get
-            {
-                return this.m_asynchronousEngineInstance;
-            }
-            set
-            {
-                this.m_asynchronousEngineInstance = value;
-                if (value != null)
-                {
-                    this.m_asynchronousEngineInstance.ProgramEnd += new Engine8.ProgramEndDelegate(this.AsynchronousEngineProgramEndHandler);
-                    this.m_asynchronousEngineInstance.SequenceChange += new Engine8.SequenceChangeDelegate(this.AsynchronousEngineProgramChangeHandler);
-                }
-            }
-        }
-
-        public Engine8 SynchronousEngineInstance
-        {
-            get
-            {
-                return this.m_synchronousEngineInstance;
-            }
-            set
-            {
-                this.m_synchronousEngineInstance = value;
-                if (value != null)
-                {
-                    this.m_synchronousEngineInstance.ProgramEnd += new Engine8.ProgramEndDelegate(this.SynchronousEngineProgramEndHandler);
-                    this.m_synchronousEngineInstance.SequenceChange += new Engine8.SequenceChangeDelegate(this.SynchronousEngineProgramChangeHandler);
-                }
-            }
-        }
-    }
+		private void SynchronousEngineProgramEndHandler()
+		{
+			if (SynchronousProgramChangeHandler != null)
+			{
+				SynchronousProgramChangeHandler(ProgramChange.End);
+			}
+		}
+	}
 }
-

@@ -1,10 +1,9 @@
-﻿namespace Vixen
+﻿using System;
+
+namespace Vixen
 {
-    using System;
-
-    internal interface IScheduledObject : IExecutable, IMaskable, IDisposable
-    {
-        int Length { get; }
-    }
+	internal interface IScheduledObject : IExecutable, IMaskable, IDisposable
+	{
+		int Length { get; }
+	}
 }
-

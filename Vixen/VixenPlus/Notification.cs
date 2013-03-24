@@ -1,13 +1,10 @@
 ﻿namespace Vixen
 {
-    using System;
-
-    public enum Notification
-    {
-        PreferenceChange,
-        KeyDown,
-        SequenceChange,
-        ProfileChange
-    }
+	public enum Notification
+	{
+		PreferenceChange,
+		KeyDown,
+		SequenceChange,
+		ProfileChange
+	}
 }
-

@@ -1,44 +1,43 @@
-﻿namespace Vixen
+﻿using System;
+
+namespace Vixen
 {
-    using System;
+	internal class Async : IObjectQuery
+	{
+		public bool UsesInputPlugin(InputPlugin plugin)
+		{
+			throw new Exception("The method or operation is not implemented.");
+		}
 
-    internal class Async : IObjectQuery
-    {
-        public void HardwareUpdate(byte[] values)
-        {
-        }
+		public bool UsesOutputPlugin(IOutputPlugIn plugin)
+		{
+			throw new Exception("The method or operation is not implemented.");
+		}
 
-        public void Initialize(EventSequence sequence)
-        {
-        }
+		public bool UsesProgram(SequenceProgram program)
+		{
+			throw new Exception("The method or operation is not implemented.");
+		}
 
-        public void Initialize(Profile profile)
-        {
-        }
+		public bool UsesSequence(EventSequence sequence)
+		{
+			throw new Exception("The method or operation is not implemented.");
+		}
 
-        public void Initialize(SequenceProgram program)
-        {
-        }
+		public void HardwareUpdate(byte[] values)
+		{
+		}
 
-        public bool UsesInputPlugin(InputPlugin plugin)
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
+		public void Initialize(EventSequence sequence)
+		{
+		}
 
-        public bool UsesOutputPlugin(IOutputPlugIn plugin)
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
+		public void Initialize(Profile profile)
+		{
+		}
 
-        public bool UsesProgram(SequenceProgram program)
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
-        public bool UsesSequence(EventSequence sequence)
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-    }
+		public void Initialize(SequenceProgram program)
+		{
+		}
+	}
 }
-

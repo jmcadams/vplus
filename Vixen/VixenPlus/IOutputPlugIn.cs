@@ -1,7 +1,6 @@
 ﻿namespace Vixen
 {
-    public interface IOutputPlugIn : IHardwarePlugin, IPlugIn, ISetup
-    {
-    }
+	public interface IOutputPlugIn : IHardwarePlugin, IPlugIn, ISetup
+	{
+	}
 }
-

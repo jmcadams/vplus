@@ -1,63 +1,47 @@
-namespace Vixen.Dialogs {
-	using System;
-	using System.ComponentModel;
-	using System.Drawing;
-	using System.Windows.Forms;
-	using Vixen;
+using System;
+using System.Windows.Forms;
 
-	public partial class ParallelSetupDialog : Form {
-		private int m_otherAddressIndex;
+namespace Vixen.Dialogs
+{
+	public partial class ParallelSetupDialog : Form
+	{
+		private readonly int m_otherAddressIndex;
 
-		public ParallelSetupDialog(int portAddress) {
-			this.InitializeComponent();
-			this.m_otherAddressIndex = 3;
-			switch (portAddress) {
+		public ParallelSetupDialog(int portAddress)
+		{
+			InitializeComponent();
+			m_otherAddressIndex = 3;
+			switch (portAddress)
+			{
 				case 0x278:
-					this.comboBoxPort.SelectedIndex = 1;
+					comboBoxPort.SelectedIndex = 1;
 					break;
 
 				case 0x378:
-					this.comboBoxPort.SelectedIndex = 0;
+					comboBoxPort.SelectedIndex = 0;
 					break;
 
 				case 0x3bc:
-					this.comboBoxPort.SelectedIndex = 2;
+					comboBoxPort.SelectedIndex = 2;
 					break;
 
 				case 0:
-					this.comboBoxPort.SelectedIndex = 0;
+					comboBoxPort.SelectedIndex = 0;
 					break;
 
 				default:
-					this.textBoxPort.Text = portAddress.ToString("X4");
-					this.comboBoxPort.SelectedIndex = 3;
+					textBoxPort.Text = portAddress.ToString("X4");
+					comboBoxPort.SelectedIndex = 3;
 					break;
 			}
 		}
 
-		private void buttonOK_Click(object sender, EventArgs e) {
-			if (this.comboBoxPort.SelectedIndex == this.m_otherAddressIndex) {
-				try {
-					Convert.ToUInt16(this.textBoxPort.Text, 0x10);
-				}
-				catch {
-					MessageBox.Show("The port number is not a valid hexadecimal number.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-					base.DialogResult = System.Windows.Forms.DialogResult.None;
-				}
-			}
-		}
-
-		private void comboBoxPort_SelectedIndexChanged(object sender, EventArgs e) {
-			this.textBoxPort.Enabled = this.comboBoxPort.SelectedIndex == this.m_otherAddressIndex;
-		}
-
-
-
-
-
-		public ushort PortAddress {
-			get {
-				switch (this.comboBoxPort.SelectedIndex) {
+		public ushort PortAddress
+		{
+			get
+			{
+				switch (comboBoxPort.SelectedIndex)
+				{
 					case 0:
 						return 0x378;
 
@@ -67,9 +51,30 @@ namespace Vixen.Dialogs {
 					case 2:
 						return 0x3bc;
 				}
-				return Convert.ToUInt16(this.textBoxPort.Text, 0x10);
+				return Convert.ToUInt16(textBoxPort.Text, 0x10);
 			}
+		}
+
+		private void buttonOK_Click(object sender, EventArgs e)
+		{
+			if (comboBoxPort.SelectedIndex == m_otherAddressIndex)
+			{
+				try
+				{
+					Convert.ToUInt16(textBoxPort.Text, 0x10);
+				}
+				catch
+				{
+					MessageBox.Show("The port number is not a valid hexadecimal number.", Vendor.ProductName, MessageBoxButtons.OK,
+					                MessageBoxIcon.Hand);
+					base.DialogResult = DialogResult.None;
+				}
+			}
+		}
+
+		private void comboBoxPort_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			textBoxPort.Enabled = comboBoxPort.SelectedIndex == m_otherAddressIndex;
 		}
 	}
 }
-

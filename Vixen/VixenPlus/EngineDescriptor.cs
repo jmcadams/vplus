@@ -1,34 +1,27 @@
-﻿namespace Vixen
+﻿using System;
+
+namespace Vixen
 {
-    using System;
+	internal class EngineDescriptor
+	{
+		private readonly string m_name;
+		private readonly Type m_type;
 
-    internal class EngineDescriptor
-    {
-        private string m_name;
-        private System.Type m_type;
+		public EngineDescriptor(IEngine2 engineInstance)
+		{
+			m_name = engineInstance.Name;
+			m_type = engineInstance.GetType();
+			engineInstance.Dispose();
+		}
 
-        public EngineDescriptor(IEngine2 engineInstance)
-        {
-            this.m_name = engineInstance.Name;
-            this.m_type = engineInstance.GetType();
-            engineInstance.Dispose();
-        }
+		public string Name
+		{
+			get { return m_name; }
+		}
 
-        public string Name
-        {
-            get
-            {
-                return this.m_name;
-            }
-        }
-
-        public System.Type Type
-        {
-            get
-            {
-                return this.m_type;
-            }
-        }
-    }
+		public Type Type
+		{
+			get { return m_type; }
+		}
+	}
 }
-

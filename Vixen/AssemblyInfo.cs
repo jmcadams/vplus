@@ -1,16 +1,23 @@
 // Assembly Vixen, Version 1.0.0.0
 
-[assembly: System.Reflection.AssemblyVersion("1.0.0.0")]
-[assembly: System.Runtime.CompilerServices.CompilationRelaxations(8)]
-[assembly: System.Reflection.AssemblyFileVersion("1.0.0.0")]
-[assembly: System.Diagnostics.Debuggable(System.Diagnostics.DebuggableAttribute.DebuggingModes.DisableOptimizations | System.Diagnostics.DebuggableAttribute.DebuggingModes.EnableEditAndContinue | System.Diagnostics.DebuggableAttribute.DebuggingModes.IgnoreSymbolStoreSequencePoints | System.Diagnostics.DebuggableAttribute.DebuggingModes.Default)]
-[assembly: System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)]
-[assembly: System.Runtime.InteropServices.ComVisible(false)]
-[assembly: System.Reflection.AssemblyTrademark("")]
-[assembly: System.Reflection.AssemblyCopyright("Copyleft 2013")]
-[assembly: System.Reflection.AssemblyProduct("VixenPlus")]
-[assembly: System.Reflection.AssemblyCompany("")]
-[assembly: System.Reflection.AssemblyConfiguration("")]
-[assembly: System.Reflection.AssemblyDescription("Vixen+ Lighting Control")]
-[assembly: System.Reflection.AssemblyTitle("VixenPlus")]
+using System.Diagnostics;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: CompilationRelaxations(8)]
+[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly:
+	Debuggable(
+		DebuggableAttribute.DebuggingModes.DisableOptimizations | DebuggableAttribute.DebuggingModes.EnableEditAndContinue |
+		DebuggableAttribute.DebuggingModes.IgnoreSymbolStoreSequencePoints | DebuggableAttribute.DebuggingModes.Default)]
+[assembly: RuntimeCompatibility(WrapNonExceptionThrows = true)]
+[assembly: ComVisible(false)]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCopyright("Copyleft 2013")]
+[assembly: AssemblyProduct("VixenPlus")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyDescription("Vixen+ Lighting Control")]
+[assembly: AssemblyTitle("VixenPlus")]

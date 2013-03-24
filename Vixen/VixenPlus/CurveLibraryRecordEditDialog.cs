@@ -1,74 +1,67 @@
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+
 namespace Vixen
 {
-    using System;
-    using System.ComponentModel;
-    using System.Drawing;
-    using System.Windows.Forms;
+	internal partial class CurveLibraryRecordEditDialog : Form
+	{
+		private readonly CurveLibrary m_library;
+		private CurveLibraryRecord m_clr;
 
-    internal partial class CurveLibraryRecordEditDialog : Form
-    {
-        private CurveLibraryRecord m_clr = null;
-        private CurveLibrary m_library;
+		public CurveLibraryRecordEditDialog(CurveLibraryRecord clr)
+		{
+			InitializeComponent();
+			m_clr = clr;
+			m_library = new CurveLibrary();
+			textBoxManufacturer.AutoCompleteCustomSource.AddRange(m_library.GetAllManufacturers());
+			textBoxController.AutoCompleteCustomSource.AddRange(m_library.GetAllControllers());
+			if (m_clr != null)
+			{
+				textBoxManufacturer.Text = m_clr.Manufacturer;
+				textBoxLightCount.Text = m_clr.LightCount;
+				buttonColor.BackColor = Color.FromArgb(m_clr.Color);
+				textBoxController.Text = m_clr.Controller;
+			}
+		}
 
-        public CurveLibraryRecordEditDialog(CurveLibraryRecord clr)
-        {
-            this.InitializeComponent();
-            this.m_clr = clr;
-            this.m_library = new CurveLibrary();
-            this.textBoxManufacturer.AutoCompleteCustomSource.AddRange(this.m_library.GetAllManufacturers());
-            this.textBoxController.AutoCompleteCustomSource.AddRange(this.m_library.GetAllControllers());
-            if (this.m_clr != null)
-            {
-                this.textBoxManufacturer.Text = this.m_clr.Manufacturer;
-                this.textBoxLightCount.Text = this.m_clr.LightCount;
-                this.buttonColor.BackColor = Color.FromArgb(this.m_clr.Color);
-                this.textBoxController.Text = this.m_clr.Controller;
-            }
-        }
+		public CurveLibraryRecord LibraryRecord
+		{
+			get { return m_clr; }
+		}
 
-        private void buttonColor_Click(object sender, EventArgs e)
-        {
-            if (this.colorDialog.ShowDialog() == DialogResult.OK)
-            {
-                this.buttonColor.BackColor = this.colorDialog.Color;
-            }
-        }
+		private void buttonColor_Click(object sender, EventArgs e)
+		{
+			if (colorDialog.ShowDialog() == DialogResult.OK)
+			{
+				buttonColor.BackColor = colorDialog.Color;
+			}
+		}
 
-        private void buttonOK_Click(object sender, EventArgs e)
-        {
-            if (((this.textBoxManufacturer.Text.Trim().Length == 0) || (this.textBoxLightCount.Text.Trim().Length == 0)) || (this.textBoxController.Text.Trim().Length == 0))
-            {
-                MessageBox.Show("All fields are required.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-            }
-            else if (this.m_clr == null)
-            {
-                this.m_clr = new CurveLibraryRecord(this.textBoxManufacturer.Text, this.textBoxLightCount.Text, this.buttonColor.BackColor.ToArgb(), this.textBoxController.Text);
-            }
-            else
-            {
-                this.m_clr.Manufacturer = this.textBoxManufacturer.Text;
-                this.m_clr.LightCount = this.textBoxLightCount.Text;
-                this.m_clr.Color = this.buttonColor.BackColor.ToArgb();
-                this.m_clr.Controller = this.textBoxController.Text;
-            }
-        }
+		private void buttonOK_Click(object sender, EventArgs e)
+		{
+			if (((textBoxManufacturer.Text.Trim().Length == 0) || (textBoxLightCount.Text.Trim().Length == 0)) ||
+			    (textBoxController.Text.Trim().Length == 0))
+			{
+				MessageBox.Show("All fields are required.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+			}
+			else if (m_clr == null)
+			{
+				m_clr = new CurveLibraryRecord(textBoxManufacturer.Text, textBoxLightCount.Text, buttonColor.BackColor.ToArgb(),
+				                               textBoxController.Text);
+			}
+			else
+			{
+				m_clr.Manufacturer = textBoxManufacturer.Text;
+				m_clr.LightCount = textBoxLightCount.Text;
+				m_clr.Color = buttonColor.BackColor.ToArgb();
+				m_clr.Controller = textBoxController.Text;
+			}
+		}
 
-        private void CurveLibraryRecordEditDialog_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            this.m_library.Dispose();
-        }
-
-        
-
-        
-
-        public CurveLibraryRecord LibraryRecord
-        {
-            get
-            {
-                return this.m_clr;
-            }
-        }
-    }
+		private void CurveLibraryRecordEditDialog_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			m_library.Dispose();
+		}
+	}
 }
-

@@ -46,17 +46,25 @@ namespace FGDimmer {
 			}
 		}
 
-		private void buttonOK_Click(object sender, EventArgs e) {
-			if (this.m_modules[0].Enabled = this.checkBoxModule1.Checked) {
+		private void buttonOK_Click(object sender, EventArgs e)
+		{
+			this.m_modules[0].Enabled = this.checkBoxModule1.Checked;
+			if (this.m_modules[0].Enabled) {
 				this.m_modules[0].StartChannel = (int)this.comboBoxModule1.SelectedItem;
 			}
-			if (this.m_modules[1].Enabled = this.checkBoxModule2.Checked) {
+
+			this.m_modules[1].Enabled = this.checkBoxModule2.Checked;
+			if (this.m_modules[1].Enabled) {
 				this.m_modules[1].StartChannel = (int)this.comboBoxModule2.SelectedItem;
 			}
-			if (this.m_modules[2].Enabled = this.checkBoxModule3.Checked) {
+
+			this.m_modules[2].Enabled = this.checkBoxModule3.Checked;
+			if (this.m_modules[2].Enabled) {
 				this.m_modules[2].StartChannel = (int)this.comboBoxModule3.SelectedItem;
 			}
-			if (this.m_modules[3].Enabled = this.checkBoxModule4.Checked) {
+
+			this.m_modules[3].Enabled = this.checkBoxModule4.Checked;
+			if (this.m_modules[3].Enabled) {
 				this.m_modules[3].StartChannel = (int)this.comboBoxModule4.SelectedItem;
 			}
 		}

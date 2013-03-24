@@ -1,17 +1,13 @@
 ﻿namespace Vixen
 {
-    using System;
+	internal interface IMedia : ITickSource
+	{
+		string[] OutputTypes { get; }
 
-    internal interface IMedia : ITickSource
-    {
-        string[] GetOutputDevices(int outputTypeIndex);
-        int Load(string mediaFileName);
+		int Position { get; set; }
 
-        string[] OutputTypes { get; }
-
-        int Position { get; set; }
-
-        bool SupportsVariableSpeeds { get; }
-    }
+		bool SupportsVariableSpeeds { get; }
+		string[] GetOutputDevices(int outputTypeIndex);
+		int Load(string mediaFileName);
+	}
 }
-

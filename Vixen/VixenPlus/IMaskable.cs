@@ -1,10 +1,7 @@
 ﻿namespace Vixen
 {
-    using System;
-
-    public interface IMaskable
-    {
-        byte[][] Mask { get; set; }
-    }
+	public interface IMaskable
+	{
+		byte[][] Mask { get; set; }
+	}
 }
-

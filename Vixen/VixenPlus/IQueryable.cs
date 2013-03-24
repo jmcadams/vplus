@@ -1,12 +1,8 @@
 ﻿namespace Vixen
 {
-    using System;
-
-    internal interface IQueryable
-    {
-        string QueryInstance(int index);
-
-        int Count { get; }
-    }
+	internal interface IQueryable
+	{
+		int Count { get; }
+		string QueryInstance(int index);
+	}
 }
-

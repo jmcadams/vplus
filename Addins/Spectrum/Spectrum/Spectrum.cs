@@ -43,7 +43,8 @@ namespace Spectrum
             dialog.LastStartChannel = num2;
             dialog.LastStartBand = num3;
             dialog.Mappings = list.ToArray();
-            if (flag2 = dialog.ShowDialog() == DialogResult.OK)
+	        flag2 = dialog.ShowDialog() == DialogResult.OK;
+            if (flag2)
             {
                 XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(this.m_dataNode, "Bands");
                 foreach (FrequencyBandMapping mapping in dialog.Mappings)

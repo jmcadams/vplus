@@ -1,105 +1,128 @@
-namespace Vixen.Dialogs {
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel;
-	using System.Drawing;
-	using System.Drawing.Drawing2D;
-	using System.IO;
-	using System.Windows.Forms;
-	using Vixen;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.IO;
+using System.Windows.Forms;
 
-	public partial class ProfileManagerDialog : Form {
-		private List<int> m_channelOrderMapping;
-		private Profile m_contextProfile = null;
-		private Color m_pictureBoxHoverColor = Color.FromArgb(80, 80, 0xff);
-		private SolidBrush m_pictureBrush = new SolidBrush(Color.Black);
-		private Color m_pictureDisabledColor = Color.FromArgb(0xc0, 0xc0, 0xc0);
-		private Color m_pictureEnabledColor = Color.FromArgb(0x80, 0x80, 0xff);
-		private Font m_pictureFont = new Font("Arial", 13f, FontStyle.Bold);
-		private Pen m_picturePen = new Pen(Color.Black, 2f);
+namespace Vixen.Dialogs
+{
+	public partial class ProfileManagerDialog : Form
+	{
+		private readonly List<int> m_channelOrderMapping;
+		private readonly Color m_pictureBoxHoverColor = Color.FromArgb(80, 80, 0xff);
+		private readonly SolidBrush m_pictureBrush = new SolidBrush(Color.Black);
+		private readonly Color m_pictureDisabledColor = Color.FromArgb(0xc0, 0xc0, 0xc0);
+		private readonly Color m_pictureEnabledColor = Color.FromArgb(0x80, 0x80, 0xff);
+		private readonly Font m_pictureFont = new Font("Arial", 13f, FontStyle.Bold);
+		private readonly Pen m_picturePen = new Pen(Color.Black, 2f);
+		private Profile m_contextProfile;
 
-		public ProfileManagerDialog(object objectInContext) {
-			this.InitializeComponent();
-			foreach (string str in Directory.GetFiles(Paths.ProfilePath, "*.pro")) {
-				try {
-					this.listBoxProfiles.Items.Add(new Profile(str));
+		public ProfileManagerDialog(object objectInContext)
+		{
+			InitializeComponent();
+			foreach (string str in Directory.GetFiles(Paths.ProfilePath, "*.pro"))
+			{
+				try
+				{
+					listBoxProfiles.Items.Add(new Profile(str));
 				}
-				catch {
+				catch
+				{
 				}
 			}
-			Bitmap bitmap = new Bitmap(this.pictureBoxReturnFromProfileEdit.Image);
+			var bitmap = new Bitmap(pictureBoxReturnFromProfileEdit.Image);
 			bitmap.MakeTransparent();
-			this.pictureBoxReturnFromProfileEdit.Image = bitmap;
-			this.m_channelOrderMapping = new List<int>();
-			if (objectInContext is Profile) {
-				if (this.listBoxProfiles.Items.IndexOf(objectInContext) == -1) {
-					this.listBoxProfiles.Items.Add((Profile)objectInContext);
+			pictureBoxReturnFromProfileEdit.Image = bitmap;
+			m_channelOrderMapping = new List<int>();
+			if (objectInContext is Profile)
+			{
+				if (listBoxProfiles.Items.IndexOf(objectInContext) == -1)
+				{
+					listBoxProfiles.Items.Add(objectInContext);
 				}
-				this.EditProfile((Profile)objectInContext);
+				EditProfile((Profile) objectInContext);
 			}
-			else {
-				this.tabControl.SelectedTab = this.tabProfiles;
+			else
+			{
+				tabControl.SelectedTab = tabProfiles;
 			}
 		}
 
-		private void AddProfileChannel() {
-			int num = this.treeViewProfile.Nodes.Count + 1;
-			Channel channelObject = new Channel("Channel " + num.ToString(), 0);
-			this.m_contextProfile.AddChannelObject(channelObject);
-			this.treeViewProfile.Nodes.Add(channelObject.Name).Tag = channelObject;
-			this.m_channelOrderMapping.Add(this.m_channelOrderMapping.Count);
+		private void AddProfileChannel()
+		{
+			int num = treeViewProfile.Nodes.Count + 1;
+			var channelObject = new Channel("Channel " + num.ToString(), 0);
+			m_contextProfile.AddChannelObject(channelObject);
+			treeViewProfile.Nodes.Add(channelObject.Name).Tag = channelObject;
+			m_channelOrderMapping.Add(m_channelOrderMapping.Count);
 		}
 
-		private void buttonAddMultipleProfileChannels_Click(object sender, EventArgs e) {
+		private void buttonAddMultipleProfileChannels_Click(object sender, EventArgs e)
+		{
 			int num;
-			try {
-				num = Convert.ToInt32(this.textBoxProfileChannelCount.Text);
+			try
+			{
+				num = Convert.ToInt32(textBoxProfileChannelCount.Text);
 			}
-			catch {
-				MessageBox.Show("Need to have a valid number for the number of channels to add.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+			catch
+			{
+				MessageBox.Show("Need to have a valid number for the number of channels to add.", Vendor.ProductName,
+				                MessageBoxButtons.OK, MessageBoxIcon.Hand);
 				return;
 			}
-			this.treeViewProfile.BeginUpdate();
-			while (num-- > 0) {
-				this.AddProfileChannel();
+			treeViewProfile.BeginUpdate();
+			while (num-- > 0)
+			{
+				AddProfileChannel();
 			}
-			this.treeViewProfile.EndUpdate();
+			treeViewProfile.EndUpdate();
 		}
 
-		private void buttonAddProfileChannel_Click(object sender, EventArgs e) {
-			this.AddProfileChannel();
+		private void buttonAddProfileChannel_Click(object sender, EventArgs e)
+		{
+			AddProfileChannel();
 		}
 
-		private void buttonChangeProfileName_Click(object sender, EventArgs e) {
-			if (this.ChangeProfileName()) {
-				this.labelProfileName.Text = this.m_contextProfile.Name;
+		private void buttonChangeProfileName_Click(object sender, EventArgs e)
+		{
+			if (ChangeProfileName())
+			{
+				labelProfileName.Text = m_contextProfile.Name;
 			}
 		}
 
-		private void buttonDone_Click(object sender, EventArgs e) {
-			foreach (Profile profile in this.listBoxProfiles.Items) {
-				if (!(!(profile.FileName == string.Empty) || this.ChangeProfileName())) {
-					base.DialogResult = System.Windows.Forms.DialogResult.None;
+		private void buttonDone_Click(object sender, EventArgs e)
+		{
+			foreach (Profile profile in listBoxProfiles.Items)
+			{
+				if (!(!(profile.FileName == string.Empty) || ChangeProfileName()))
+				{
+					base.DialogResult = DialogResult.None;
 					break;
 				}
 				profile.SaveToFile();
 			}
 		}
 
-		private void buttonPlugins_Click(object sender, EventArgs e) {
-			PluginListDialog dialog = new PluginListDialog(this.m_contextProfile);
+		private void buttonPlugins_Click(object sender, EventArgs e)
+		{
+			var dialog = new PluginListDialog(m_contextProfile);
 			dialog.ShowDialog();
 			dialog.Dispose();
 		}
 
-		private void buttonRemoveProfileChannels_Click(object sender, EventArgs e) {
-			this.RemoveSelectedProfileChannelObjects();
+		private void buttonRemoveProfileChannels_Click(object sender, EventArgs e)
+		{
+			RemoveSelectedProfileChannelObjects();
 		}
 
-		private bool ChangeProfileName() {
-			TextQueryDialog dialog = new TextQueryDialog("Profile Name", "Name for this profile", this.m_contextProfile.Name);
-			if (dialog.ShowDialog() == DialogResult.OK) {
-				this.m_contextProfile.Name = dialog.Response;
+		private bool ChangeProfileName()
+		{
+			var dialog = new TextQueryDialog("Profile Name", "Name for this profile", m_contextProfile.Name);
+			if (dialog.ShowDialog() == DialogResult.OK)
+			{
+				m_contextProfile.Name = dialog.Response;
 				dialog.Dispose();
 				return true;
 			}
@@ -107,55 +130,64 @@ namespace Vixen.Dialogs {
 			return false;
 		}
 
-		private void comboBoxChannelOrder_SelectedIndexChanged(object sender, EventArgs e) {
-			if (this.comboBoxChannelOrder.SelectedIndex != -1) {
-				List<Channel> channels = this.m_contextProfile.Channels;
-				if (this.comboBoxChannelOrder.SelectedIndex == 0) {
-					if (channels.Count == 0) {
+		private void comboBoxChannelOrder_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (comboBoxChannelOrder.SelectedIndex != -1)
+			{
+				List<Channel> channels = m_contextProfile.Channels;
+				if (comboBoxChannelOrder.SelectedIndex == 0)
+				{
+					if (channels.Count == 0)
+					{
 						MessageBox.Show("There are no channels to reorder.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 						return;
 					}
-					this.pictureBoxProfileDeleteChannelOrder.Enabled = false;
-					this.comboBoxChannelOrder.SelectedIndex = -1;
-					List<Channel> channelList = this.m_contextProfile.Channels;
-					ChannelOrderDialog dialog = new ChannelOrderDialog(channelList, this.m_channelOrderMapping);
-					if (dialog.ShowDialog() == DialogResult.OK) {
-						this.m_channelOrderMapping.Clear();
-						foreach (Channel channel in dialog.ChannelMapping) {
-							this.m_channelOrderMapping.Add(channelList.IndexOf(channel));
+					pictureBoxProfileDeleteChannelOrder.Enabled = false;
+					comboBoxChannelOrder.SelectedIndex = -1;
+					List<Channel> channelList = m_contextProfile.Channels;
+					var dialog = new ChannelOrderDialog(channelList, m_channelOrderMapping);
+					if (dialog.ShowDialog() == DialogResult.OK)
+					{
+						m_channelOrderMapping.Clear();
+						foreach (Channel channel in dialog.ChannelMapping)
+						{
+							m_channelOrderMapping.Add(channelList.IndexOf(channel));
 						}
 					}
 					dialog.Dispose();
 				}
-				else if (this.comboBoxChannelOrder.SelectedIndex == (this.comboBoxChannelOrder.Items.Count - 1)) {
-					this.pictureBoxProfileDeleteChannelOrder.Enabled = false;
-					this.comboBoxChannelOrder.SelectedIndex = -1;
-					this.m_channelOrderMapping.Clear();
-					for (int i = 0; i < channels.Count; i++) {
-						this.m_channelOrderMapping.Add(i);
+				else if (comboBoxChannelOrder.SelectedIndex == (comboBoxChannelOrder.Items.Count - 1))
+				{
+					pictureBoxProfileDeleteChannelOrder.Enabled = false;
+					comboBoxChannelOrder.SelectedIndex = -1;
+					m_channelOrderMapping.Clear();
+					for (int i = 0; i < channels.Count; i++)
+					{
+						m_channelOrderMapping.Add(i);
 					}
-					this.m_contextProfile.LastSort = -1;
+					m_contextProfile.LastSort = -1;
 				}
-				else {
-					this.m_channelOrderMapping.Clear();
-					this.m_channelOrderMapping.AddRange(((Vixen.SortOrder)this.comboBoxChannelOrder.SelectedItem).ChannelIndexes);
-					this.m_contextProfile.LastSort = this.comboBoxChannelOrder.SelectedIndex;
-					this.pictureBoxProfileDeleteChannelOrder.Enabled = true;
+				else
+				{
+					m_channelOrderMapping.Clear();
+					m_channelOrderMapping.AddRange(((SortOrder) comboBoxChannelOrder.SelectedItem).ChannelIndexes);
+					m_contextProfile.LastSort = comboBoxChannelOrder.SelectedIndex;
+					pictureBoxProfileDeleteChannelOrder.Enabled = true;
 				}
-				this.ReloadProfileChannelObjects();
+				ReloadProfileChannelObjects();
 			}
 		}
 
 
-
-		private void EditProfile(Profile profile) {
-			this.m_contextProfile = profile;
-			this.labelProfileName.Text = profile.Name;
-			this.UpdateSortList();
-			this.ReloadProfileChannelObjects();
-			this.comboBoxChannelOrder.SelectedIndex = this.m_contextProfile.LastSort;
-			this.tabEditProfile.Tag = this.tabControl.SelectedTab;
-			this.tabControl.SelectedTab = this.tabEditProfile;
+		private void EditProfile(Profile profile)
+		{
+			m_contextProfile = profile;
+			labelProfileName.Text = profile.Name;
+			UpdateSortList();
+			ReloadProfileChannelObjects();
+			comboBoxChannelOrder.SelectedIndex = m_contextProfile.LastSort;
+			tabEditProfile.Tag = tabControl.SelectedTab;
+			tabControl.SelectedTab = tabEditProfile;
 		}
 
 		//ComponentResourceManager manager = new ComponentResourceManager(typeof(ProfileManagerDialog));
@@ -167,125 +199,162 @@ namespace Vixen.Dialogs {
 		//this.pictureBoxReturnFromProfileEdit.Image = (Image)manager.GetObject("pictureBoxReturnFromProfileEdit.Image");
 
 
-
-		private void listBoxProfiles_DoubleClick(object sender, EventArgs e) {
-			if (this.listBoxProfiles.SelectedIndex != -1) {
-				this.EditProfile((Profile)this.listBoxProfiles.SelectedItem);
+		private void listBoxProfiles_DoubleClick(object sender, EventArgs e)
+		{
+			if (listBoxProfiles.SelectedIndex != -1)
+			{
+				EditProfile((Profile) listBoxProfiles.SelectedItem);
 			}
 		}
 
-		private void listBoxProfiles_KeyDown(object sender, KeyEventArgs e) {
-			if ((this.listBoxProfiles.SelectedIndex != -1) && (e.KeyCode == Keys.Delete)) {
-				this.RemoveProfile((Profile)this.listBoxProfiles.SelectedItem);
+		private void listBoxProfiles_KeyDown(object sender, KeyEventArgs e)
+		{
+			if ((listBoxProfiles.SelectedIndex != -1) && (e.KeyCode == Keys.Delete))
+			{
+				RemoveProfile((Profile) listBoxProfiles.SelectedItem);
 			}
 		}
 
-		private void listBoxProfiles_SelectedIndexChanged(object sender, EventArgs e) {
-			this.pictureBoxEditProfile.Enabled = this.pictureBoxRemoveProfile.Enabled = this.listBoxProfiles.SelectedIndex != -1;
+		private void listBoxProfiles_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			pictureBoxEditProfile.Enabled = pictureBoxRemoveProfile.Enabled = listBoxProfiles.SelectedIndex != -1;
 		}
 
-		private void PictureBase(PictureBox pb, Graphics g) {
-			Color color = (this.m_hoveredButton == pb) ? this.m_pictureBoxHoverColor : (pb.Enabled ? this.m_pictureEnabledColor : this.m_pictureDisabledColor);
+		private void PictureBase(PictureBox pb, Graphics g)
+		{
+			Color color = (m_hoveredButton == pb)
+				              ? m_pictureBoxHoverColor
+				              : (pb.Enabled ? m_pictureEnabledColor : m_pictureDisabledColor);
 			g.SmoothingMode = SmoothingMode.AntiAlias;
 			Rectangle clientRectangle = pb.ClientRectangle;
 			clientRectangle.Inflate(-2, -2);
-			this.m_picturePen.Color = color;
-			this.m_pictureBrush.Color = color;
+			m_picturePen.Color = color;
+			m_pictureBrush.Color = color;
 			g.FillEllipse(Brushes.White, clientRectangle);
-			g.DrawEllipse(this.m_picturePen, clientRectangle);
+			g.DrawEllipse(m_picturePen, clientRectangle);
 		}
 
-		private void pictureBoxAddProfile_Click(object sender, EventArgs e) {
-			TextQueryDialog dialog = new TextQueryDialog("New Profile", "Name for the new profile", string.Empty);
-			if (dialog.ShowDialog() == DialogResult.OK) {
-				Profile item = new Profile();
+		private void pictureBoxAddProfile_Click(object sender, EventArgs e)
+		{
+			var dialog = new TextQueryDialog("New Profile", "Name for the new profile", string.Empty);
+			if (dialog.ShowDialog() == DialogResult.OK)
+			{
+				var item = new Profile();
 				item.Name = dialog.Response;
-				this.listBoxProfiles.Items.Add(item);
-				this.EditProfile(item);
+				listBoxProfiles.Items.Add(item);
+				EditProfile(item);
 			}
 			dialog.Dispose();
 		}
 
-		private void pictureBoxAddProfile_MouseEnter(object sender, EventArgs e) {
-			this.m_hoveredButton = (PictureBox)sender;
-			((PictureBox)sender).Refresh();
+		private void pictureBoxAddProfile_MouseEnter(object sender, EventArgs e)
+		{
+			m_hoveredButton = (PictureBox) sender;
+			((PictureBox) sender).Refresh();
 		}
 
-		private void pictureBoxAddProfile_MouseLeave(object sender, EventArgs e) {
-			this.m_hoveredButton = null;
-			((PictureBox)sender).Refresh();
+		private void pictureBoxAddProfile_MouseLeave(object sender, EventArgs e)
+		{
+			m_hoveredButton = null;
+			((PictureBox) sender).Refresh();
 		}
 
-		private void pictureBoxAddProfile_Paint(object sender, PaintEventArgs e) {
-			this.PictureBase((PictureBox)sender, e.Graphics);
-			e.Graphics.DrawString("+", this.m_pictureFont, this.m_pictureBrush, (float)3f, (float)1f);
+		private void pictureBoxAddProfile_Paint(object sender, PaintEventArgs e)
+		{
+			PictureBase((PictureBox) sender, e.Graphics);
+			e.Graphics.DrawString("+", m_pictureFont, m_pictureBrush, 3f, 1f);
 		}
 
-		private void pictureBoxEditProfile_Click(object sender, EventArgs e) {
-			this.EditProfile((Profile)this.listBoxProfiles.SelectedItem);
+		private void pictureBoxEditProfile_Click(object sender, EventArgs e)
+		{
+			EditProfile((Profile) listBoxProfiles.SelectedItem);
 		}
 
-		private void pictureBoxEditProfile_Paint(object sender, PaintEventArgs e) {
-			this.PictureBase((PictureBox)sender, e.Graphics);
-			e.Graphics.DrawLine(this.m_picturePen, 6, 11, 11, 6);
-			e.Graphics.DrawLine(this.m_picturePen, 9, 14, 14, 9);
+		private void pictureBoxEditProfile_Paint(object sender, PaintEventArgs e)
+		{
+			PictureBase((PictureBox) sender, e.Graphics);
+			e.Graphics.DrawLine(m_picturePen, 6, 11, 11, 6);
+			e.Graphics.DrawLine(m_picturePen, 9, 14, 14, 9);
 		}
 
-		private void pictureBoxProfileChannelColors_Click(object sender, EventArgs e) {
-			List<Channel> channels = this.m_contextProfile.Channels;
-			AllChannelsColorDialog dialog = new AllChannelsColorDialog(channels);
-			if (dialog.ShowDialog() == DialogResult.OK) {
+		private void pictureBoxProfileChannelColors_Click(object sender, EventArgs e)
+		{
+			List<Channel> channels = m_contextProfile.Channels;
+			var dialog = new AllChannelsColorDialog(channels);
+			if (dialog.ShowDialog() == DialogResult.OK)
+			{
 				List<Color> channelColors = dialog.ChannelColors;
-				for (int i = 0; i < channels.Count; i++) {
+				for (int i = 0; i < channels.Count; i++)
+				{
 					channels[i].Color = channelColors[i];
 				}
 			}
 			dialog.Dispose();
 		}
 
-		private void pictureBoxProfileChannelOutputMask_Click(object sender, EventArgs e) {
-			List<Channel> channels = this.m_contextProfile.Channels;
-			ChannelOutputMaskDialog dialog = new ChannelOutputMaskDialog(channels);
-			if (dialog.ShowDialog() == DialogResult.OK) {
-				foreach (Channel channel in channels) {
+		private void pictureBoxProfileChannelOutputMask_Click(object sender, EventArgs e)
+		{
+			List<Channel> channels = m_contextProfile.Channels;
+			var dialog = new ChannelOutputMaskDialog(channels);
+			if (dialog.ShowDialog() == DialogResult.OK)
+			{
+				foreach (Channel channel in channels)
+				{
 					channel.Enabled = true;
 				}
-				foreach (int num in dialog.DisabledChannels) {
+				foreach (int num in dialog.DisabledChannels)
+				{
 					channels[num].Enabled = false;
 				}
 			}
 			dialog.Dispose();
 		}
 
-		private void pictureBoxProfileChannelOutputs_Click(object sender, EventArgs e) {
-			ChannelOrderDialog dialog = new ChannelOrderDialog(this.m_contextProfile.OutputChannels, null, "Channel output mapping");
-			if (dialog.ShowDialog() == DialogResult.OK) {
-				this.m_contextProfile.OutputChannels = dialog.ChannelMapping;
+		private void pictureBoxProfileChannelOutputs_Click(object sender, EventArgs e)
+		{
+			var dialog = new ChannelOrderDialog(m_contextProfile.OutputChannels, null, "Channel output mapping");
+			if (dialog.ShowDialog() == DialogResult.OK)
+			{
+				m_contextProfile.OutputChannels = dialog.ChannelMapping;
 			}
 			dialog.Dispose();
 		}
 
-		private void pictureBoxProfileDeleteChannelOrder_Click(object sender, EventArgs e) {
-			if (MessageBox.Show(string.Format("Delete channel order '{0}'?", this.comboBoxChannelOrder.Text), Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
-				this.m_contextProfile.Sorts.Remove((Vixen.SortOrder)this.comboBoxChannelOrder.SelectedItem);
-				this.comboBoxChannelOrder.Items.RemoveAt(this.comboBoxChannelOrder.SelectedIndex);
-				this.pictureBoxProfileDeleteChannelOrder.Enabled = false;
+		private void pictureBoxProfileDeleteChannelOrder_Click(object sender, EventArgs e)
+		{
+			if (
+				MessageBox.Show(string.Format("Delete channel order '{0}'?", comboBoxChannelOrder.Text), Vendor.ProductName,
+				                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+			{
+				m_contextProfile.Sorts.Remove((SortOrder) comboBoxChannelOrder.SelectedItem);
+				comboBoxChannelOrder.Items.RemoveAt(comboBoxChannelOrder.SelectedIndex);
+				pictureBoxProfileDeleteChannelOrder.Enabled = false;
 			}
 		}
 
-		private void pictureBoxProfileSaveChannelOrder_Click(object sender, EventArgs e) {
-			Vixen.SortOrder item = null;
-			TextQueryDialog dialog = new TextQueryDialog("New order", "What name would you like to give to this ordering of the channels?", string.Empty);
-			DialogResult no = DialogResult.No;
-			while (no == DialogResult.No) {
-				if (dialog.ShowDialog() == DialogResult.Cancel) {
+		private void pictureBoxProfileSaveChannelOrder_Click(object sender, EventArgs e)
+		{
+			SortOrder item = null;
+			var dialog = new TextQueryDialog("New order", "What name would you like to give to this ordering of the channels?",
+			                                 string.Empty);
+			var no = DialogResult.No;
+			while (no == DialogResult.No)
+			{
+				if (dialog.ShowDialog() == DialogResult.Cancel)
+				{
 					dialog.Dispose();
 					return;
 				}
 				no = DialogResult.Yes;
-				foreach (Vixen.SortOrder order2 in this.m_contextProfile.Sorts) {
-					if (order2.Name == dialog.Response) {
-						if ((no = MessageBox.Show("This name is already in use.\nDo you want to overwrite it?", Vendor.ProductName, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)) == DialogResult.Cancel) {
+				foreach (SortOrder order2 in m_contextProfile.Sorts)
+				{
+					if (order2.Name == dialog.Response)
+					{
+						if (
+							(no =
+							 MessageBox.Show("This name is already in use.\nDo you want to overwrite it?", Vendor.ProductName,
+							                 MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)) == DialogResult.Cancel)
+						{
 							dialog.Dispose();
 							return;
 						}
@@ -295,138 +364,173 @@ namespace Vixen.Dialogs {
 				}
 			}
 			dialog.Dispose();
-			if (item != null) {
+			if (item != null)
+			{
 				item.ChannelIndexes.Clear();
-				item.ChannelIndexes.AddRange(this.m_channelOrderMapping);
-				this.comboBoxChannelOrder.SelectedItem = item;
+				item.ChannelIndexes.AddRange(m_channelOrderMapping);
+				comboBoxChannelOrder.SelectedItem = item;
 			}
-			else {
-				this.m_contextProfile.Sorts.Add(item = new Vixen.SortOrder(dialog.Response, this.m_channelOrderMapping));
+			else
+			{
+				m_contextProfile.Sorts.Add(item = new SortOrder(dialog.Response, m_channelOrderMapping));
 				item.ChannelIndexes.Clear();
-				item.ChannelIndexes.AddRange(this.m_channelOrderMapping);
-				this.comboBoxChannelOrder.Items.Insert(this.comboBoxChannelOrder.Items.Count - 1, item);
-				this.comboBoxChannelOrder.SelectedIndex = this.comboBoxChannelOrder.Items.Count - 2;
+				item.ChannelIndexes.AddRange(m_channelOrderMapping);
+				comboBoxChannelOrder.Items.Insert(comboBoxChannelOrder.Items.Count - 1, item);
+				comboBoxChannelOrder.SelectedIndex = comboBoxChannelOrder.Items.Count - 2;
 			}
 		}
 
-		private void pictureBoxRemoveProfile_Click(object sender, EventArgs e) {
-			this.RemoveProfile((Profile)this.listBoxProfiles.SelectedItem);
+		private void pictureBoxRemoveProfile_Click(object sender, EventArgs e)
+		{
+			RemoveProfile((Profile) listBoxProfiles.SelectedItem);
 		}
 
-		private void pictureBoxRemoveProfile_Paint(object sender, PaintEventArgs e) {
-			this.PictureBase((PictureBox)sender, e.Graphics);
-			e.Graphics.DrawString("-", this.m_pictureFont, this.m_pictureBrush, (float)4f, (float)0f);
+		private void pictureBoxRemoveProfile_Paint(object sender, PaintEventArgs e)
+		{
+			PictureBase((PictureBox) sender, e.Graphics);
+			e.Graphics.DrawString("-", m_pictureFont, m_pictureBrush, 4f, 0f);
 		}
 
-		private void pictureBoxReturnFromChannelGroupEdit_Click(object sender, EventArgs e) {
-			if (this.tabControl.SelectedTab.Tag == this.tabProfiles) {
-				this.UpdateProfiles();
+		private void pictureBoxReturnFromChannelGroupEdit_Click(object sender, EventArgs e)
+		{
+			if (tabControl.SelectedTab.Tag == tabProfiles)
+			{
+				UpdateProfiles();
 			}
-			else if (this.tabControl.SelectedTab.Tag == this.tabEditProfile) {
-				this.ReloadProfileChannelObjects();
+			else if (tabControl.SelectedTab.Tag == tabEditProfile)
+			{
+				ReloadProfileChannelObjects();
 			}
-			this.tabControl.SelectedTab = (TabPage)this.tabControl.SelectedTab.Tag;
+			tabControl.SelectedTab = (TabPage) tabControl.SelectedTab.Tag;
 		}
 
-		private void ReloadProfileChannelObjects() {
+		private void ReloadProfileChannelObjects()
+		{
 			int index = -1;
-			if (this.treeViewProfile.SelectedNode != null) {
-				if (this.treeViewProfile.SelectedNode.Level == 0) {
-					if (this.treeViewProfile.SelectedNode.IsExpanded) {
-						index = this.treeViewProfile.SelectedNode.Index;
+			if (treeViewProfile.SelectedNode != null)
+			{
+				if (treeViewProfile.SelectedNode.Level == 0)
+				{
+					if (treeViewProfile.SelectedNode.IsExpanded)
+					{
+						index = treeViewProfile.SelectedNode.Index;
 					}
 				}
-				else if ((this.treeViewProfile.SelectedNode.Level == 1) && this.treeViewProfile.SelectedNode.Parent.IsExpanded) {
-					index = this.treeViewProfile.SelectedNode.Parent.Index;
+				else if ((treeViewProfile.SelectedNode.Level == 1) && treeViewProfile.SelectedNode.Parent.IsExpanded)
+				{
+					index = treeViewProfile.SelectedNode.Parent.Index;
 				}
 			}
-			this.buttonRemoveProfileChannels.Enabled = false;
-			this.treeViewProfile.BeginUpdate();
-			this.treeViewProfile.Nodes.Clear();
-			List<Channel> channels = this.m_contextProfile.Channels;
-			foreach (int num2 in this.m_channelOrderMapping) {
+			buttonRemoveProfileChannels.Enabled = false;
+			treeViewProfile.BeginUpdate();
+			treeViewProfile.Nodes.Clear();
+			List<Channel> channels = m_contextProfile.Channels;
+			foreach (int num2 in m_channelOrderMapping)
+			{
 				Channel channel = channels[num2];
-				this.treeViewProfile.Nodes.Add(channel.Name).Tag = channel;
+				treeViewProfile.Nodes.Add(channel.Name).Tag = channel;
 			}
-			if (index != -1) {
-				this.treeViewProfile.Nodes[index].Expand();
+			if (index != -1)
+			{
+				treeViewProfile.Nodes[index].Expand();
 			}
-			this.treeViewProfile.EndUpdate();
+			treeViewProfile.EndUpdate();
 		}
 
-		private void RemoveProfile(Profile profile) {
-			if (MessageBox.Show(string.Format("Remove profile {0}?\n\nThis will affect any sequences that use this profile.", profile.Name), Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
+		private void RemoveProfile(Profile profile)
+		{
+			if (
+				MessageBox.Show(
+					string.Format("Remove profile {0}?\n\nThis will affect any sequences that use this profile.", profile.Name),
+					Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+			{
 				File.Delete(profile.FileName);
-				this.listBoxProfiles.Items.Remove(profile);
+				listBoxProfiles.Items.Remove(profile);
 			}
 		}
 
-		private void RemoveSelectedProfileChannelObjects() {
-			if (this.treeViewProfile.SelectedNode.Level != 0) {
-				this.buttonRemoveProfileChannels.Enabled = false;
+		private void RemoveSelectedProfileChannelObjects()
+		{
+			if (treeViewProfile.SelectedNode.Level != 0)
+			{
+				buttonRemoveProfileChannels.Enabled = false;
 			}
-			else if (MessageBox.Show("Remove the selected item from this profile?", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
-				this.m_channelOrderMapping.RemoveAt(this.m_contextProfile.Channels.IndexOf((Channel)this.treeViewProfile.SelectedNode.Tag));
-				this.m_contextProfile.RemoveChannelObject((Channel)this.treeViewProfile.SelectedNode.Tag);
-				this.treeViewProfile.Nodes.Remove(this.treeViewProfile.SelectedNode);
+			else if (
+				MessageBox.Show("Remove the selected item from this profile?", Vendor.ProductName, MessageBoxButtons.YesNo,
+				                MessageBoxIcon.Question) == DialogResult.Yes)
+			{
+				m_channelOrderMapping.RemoveAt(m_contextProfile.Channels.IndexOf((Channel) treeViewProfile.SelectedNode.Tag));
+				m_contextProfile.RemoveChannelObject((Channel) treeViewProfile.SelectedNode.Tag);
+				treeViewProfile.Nodes.Remove(treeViewProfile.SelectedNode);
 			}
 		}
 
-		private void treeViewProfile_AfterSelect(object sender, TreeViewEventArgs e) {
-			this.buttonRemoveProfileChannels.Enabled = (this.treeViewProfile.SelectedNode != null) && (e.Node.Level == 0);
+		private void treeViewProfile_AfterSelect(object sender, TreeViewEventArgs e)
+		{
+			buttonRemoveProfileChannels.Enabled = (treeViewProfile.SelectedNode != null) && (e.Node.Level == 0);
 		}
 
-		private void treeViewProfile_DoubleClick(object sender, EventArgs e) {
-			if (this.treeViewProfile.SelectedNode != null) {
-				Channel tag = (Channel)this.treeViewProfile.SelectedNode.Tag;
-				List<Channel> channels = new List<Channel>();
-				foreach (TreeNode node in this.treeViewProfile.Nodes) {
-					channels.Add((Channel)node.Tag);
+		private void treeViewProfile_DoubleClick(object sender, EventArgs e)
+		{
+			if (treeViewProfile.SelectedNode != null)
+			{
+				var tag = (Channel) treeViewProfile.SelectedNode.Tag;
+				var channels = new List<Channel>();
+				foreach (TreeNode node in treeViewProfile.Nodes)
+				{
+					channels.Add((Channel) node.Tag);
 				}
-				ChannelPropertyDialog dialog = new ChannelPropertyDialog(channels, tag, false);
+				var dialog = new ChannelPropertyDialog(channels, tag, false);
 				dialog.ShowDialog();
-				this.ReloadProfileChannelObjects();
+				ReloadProfileChannelObjects();
 				dialog.Dispose();
 			}
 		}
 
-		private void treeViewProfile_KeyDown(object sender, KeyEventArgs e) {
-			if ((this.treeViewProfile.SelectedNode != null) && (e.KeyCode == Keys.Delete)) {
-				this.RemoveSelectedProfileChannelObjects();
+		private void treeViewProfile_KeyDown(object sender, KeyEventArgs e)
+		{
+			if ((treeViewProfile.SelectedNode != null) && (e.KeyCode == Keys.Delete))
+			{
+				RemoveSelectedProfileChannelObjects();
 			}
 		}
 
-		private void UpdateProfiles() {
-			List<Profile> list = new List<Profile>();
-			foreach (Profile profile in this.listBoxProfiles.Items) {
+		private void UpdateProfiles()
+		{
+			var list = new List<Profile>();
+			foreach (Profile profile in listBoxProfiles.Items)
+			{
 				list.Add(profile);
 			}
-			this.listBoxProfiles.SelectedIndex = -1;
-			this.listBoxProfiles.BeginUpdate();
-			this.listBoxProfiles.Items.Clear();
-			foreach (Profile profile in list) {
-				this.listBoxProfiles.Items.Add(profile);
+			listBoxProfiles.SelectedIndex = -1;
+			listBoxProfiles.BeginUpdate();
+			listBoxProfiles.Items.Clear();
+			foreach (Profile profile in list)
+			{
+				listBoxProfiles.Items.Add(profile);
 			}
-			this.listBoxProfiles.EndUpdate();
+			listBoxProfiles.EndUpdate();
 		}
 
-		private void UpdateSortList() {
-			this.comboBoxChannelOrder.BeginUpdate();
-			string item = (string)this.comboBoxChannelOrder.Items[0];
-			string str2 = (string)this.comboBoxChannelOrder.Items[this.comboBoxChannelOrder.Items.Count - 1];
-			this.comboBoxChannelOrder.Items.Clear();
-			this.comboBoxChannelOrder.Items.Add(item);
-			foreach (Vixen.SortOrder order in this.m_contextProfile.Sorts) {
-				this.comboBoxChannelOrder.Items.Add(order);
+		private void UpdateSortList()
+		{
+			comboBoxChannelOrder.BeginUpdate();
+			var item = (string) comboBoxChannelOrder.Items[0];
+			var str2 = (string) comboBoxChannelOrder.Items[comboBoxChannelOrder.Items.Count - 1];
+			comboBoxChannelOrder.Items.Clear();
+			comboBoxChannelOrder.Items.Add(item);
+			foreach (SortOrder order in m_contextProfile.Sorts)
+			{
+				comboBoxChannelOrder.Items.Add(order);
 			}
-			this.comboBoxChannelOrder.Items.Add(str2);
-			this.comboBoxChannelOrder.EndUpdate();
-			int count = this.m_contextProfile.Channels.Count;
-			this.m_channelOrderMapping.Clear();
-			for (int i = 0; i < count; i++) {
-				this.m_channelOrderMapping.Add(i);
+			comboBoxChannelOrder.Items.Add(str2);
+			comboBoxChannelOrder.EndUpdate();
+			int count = m_contextProfile.Channels.Count;
+			m_channelOrderMapping.Clear();
+			for (int i = 0; i < count; i++)
+			{
+				m_channelOrderMapping.Add(i);
 			}
 		}
 	}
 }
-

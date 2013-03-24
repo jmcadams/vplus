@@ -1,271 +1,236 @@
-﻿namespace Vixen
+﻿using System;
+using System.Collections.Generic;
+using System.Xml;
+
+namespace Vixen
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Xml;
+	public abstract class InputPlugin : IInputPlugin, IHardwarePlugin, IPlugIn, ISetup
+	{
+		public enum MappingIterator
+		{
+			None,
+			SingleInput,
+			MultiInput
+		}
 
-    public abstract class InputPlugin : IInputPlugin, IHardwarePlugin, IPlugIn, ISetup
-    {
-        private const string ATTRIBUTE_ID = "id";
-        private const string ATTRIBUTE_LIVE_UPDATE = "liveUpdate";
-        private const string ATTRIBUTE_MAPPING_ID = "mappingId";
-        private const string ATTRIBUTE_NAME = "name";
-        private const string ATTRIBUTE_RECORD = "record";
-        private const string ATTRIBUTE_TYPE = "type";
-        private const string ELEMENT_INPUT = "Input";
-        private const string ELEMENT_INPUTS = "Inputs";
-        private const string ELEMENT_ITERATOR = "Iterator";
-        private const string ELEMENT_MAPPING_SETS = "MappingSets";
-        private const int INVALID_ID = 0;
-        private bool m_liveUpdate = false;
-        private MappingIterator m_mappingIterator = MappingIterator.None;
-        private Vixen.MappingSets m_mappingSets = new Vixen.MappingSets();
-        private bool m_record = false;
-        private XmlNode m_setupNode;
-        private Input m_singleIterator = null;
+		private const string ATTRIBUTE_ID = "id";
+		private const string ATTRIBUTE_LIVE_UPDATE = "liveUpdate";
+		private const string ATTRIBUTE_MAPPING_ID = "mappingId";
+		private const string ATTRIBUTE_NAME = "name";
+		private const string ATTRIBUTE_RECORD = "record";
+		private const string ATTRIBUTE_TYPE = "type";
+		private const string ELEMENT_INPUT = "Input";
+		private const string ELEMENT_INPUTS = "Inputs";
+		private const string ELEMENT_ITERATOR = "Iterator";
+		private const string ELEMENT_MAPPING_SETS = "MappingSets";
+		private const int INVALID_ID = 0;
+		private bool m_liveUpdate;
+		private MappingIterator m_mappingIterator = MappingIterator.None;
+		private MappingSets m_mappingSets = new MappingSets();
+		private bool m_record;
+		private XmlNode m_setupNode;
+		private Input m_singleIterator;
 
-        protected InputPlugin()
-        {
-        }
+		public MappingIterator MappingIteratorType
+		{
+			get { return m_mappingIterator; }
+			set { m_mappingIterator = value; }
+		}
 
-        private Input FindInput(ulong id)
-        {
-            if (id == 0L)
-            {
-                return null;
-            }
-            return Array.Find<Input>(this.Inputs, delegate (Input i) {
-                return i.Id == id;
-            });
-        }
+		internal MappingSets MappingSets
+		{
+			get { return m_mappingSets; }
+			set { m_mappingSets = value; }
+		}
 
-        public Input[] GetIterators()
-        {
-            List<Input> list = new List<Input>();
-            foreach (Input input in this.Inputs)
-            {
-                if (input.IsMappingIterator)
-                {
-                    list.Add(input);
-                }
-            }
-            return list.ToArray();
-        }
+		public Input SingleIterator
+		{
+			get { return m_singleIterator; }
+			set { m_singleIterator = value; }
+		}
 
-        public abstract void Initialize(SetupData setupData, XmlNode setupNode);
-        internal void InitializeInternal(SetupData setupData, XmlNode setupNode)
-        {
-            this.m_setupNode = setupNode;
-            this.Initialize(setupData, setupNode);
-        }
+		public abstract void Initialize(SetupData setupData, XmlNode setupNode);
 
-        internal void IteratorTriggered(Input input)
-        {
-            if (this.m_mappingIterator == MappingIterator.SingleInput)
-            {
-                if (input == this.m_singleIterator)
-                {
-                    this.m_mappingSets.StepMapping();
-                }
-            }
-            else
-            {
-                this.m_mappingSets.CurrentMappingSet = input.AssignedMappingSet;
-            }
-        }
+		public virtual void Setup()
+		{
+		}
 
-        internal void PluginToSetupData()
-        {
-            XmlNode node2;
-            this.m_mappingSets.WriteData(Xml.GetEmptyNodeAlways(this.m_setupNode, "MappingSets"));
-            XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(this.m_setupNode, "Inputs");
-            foreach (Input input in this.Inputs)
-            {
-                node2 = input.WriteData(emptyNodeAlways);
-            }
-            XmlNode node = Xml.GetEmptyNodeAlways(this.m_setupNode, "Iterator");
-            Xml.SetAttribute(node, "type", this.m_mappingIterator.ToString());
-            Input[] iterators = this.GetIterators();
-            if (iterators.Length > 0)
-            {
-                if (this.MappingIteratorType == MappingIterator.SingleInput)
-                {
-                    Xml.SetAttribute(node, "Input", "id", this.m_singleIterator.Id.ToString());
-                }
-                else
-                {
-                    foreach (Input input in iterators)
-                    {
-                        node2 = Xml.SetNewValue(node, "Input", "");
-                        Xml.SetAttribute(node2, "id", input.Id.ToString());
-                        Xml.SetAttribute(node2, "mappingId", (input.AssignedMappingSet != null) ? input.AssignedMappingSet.Id.ToString() : 0.ToString());
-                    }
-                }
-            }
-            Xml.SetAttribute(this.m_setupNode, "liveUpdate", this.m_liveUpdate.ToString());
-            Xml.SetAttribute(this.m_setupNode, "record", this.m_record.ToString());
-        }
+		public virtual void Shutdown()
+		{
+		}
 
-        public virtual void Setup()
-        {
-        }
+		public virtual void Startup()
+		{
+		}
 
-        internal void SetupDataToPlugin()
-        {
-            XmlNode node = this.m_setupNode["MappingSets"];
-            if (node != null)
-            {
-                this.m_mappingSets.ReadData(node);
-            }
-            XmlNode node2 = this.m_setupNode["Inputs"];
-            if (node2 != null)
-            {
-                foreach (Input input in this.Inputs)
-                {
-                    XmlNode node3 = node2.SelectSingleNode(string.Format("{0}[@{1}=\"{2}\"]", "Input", "name", input.Name));
-                    if (node3 != null)
-                    {
-                        input.ReadData(node3);
-                    }
-                }
-            }
-            XmlNode node4 = this.m_setupNode["Iterator"];
-            if (node4 != null)
-            {
-                this.MappingIteratorType = (MappingIterator) Enum.Parse(typeof(MappingIterator), node4.Attributes["type"].Value);
-            }
-            else
-            {
-                this.MappingIteratorType = MappingIterator.None;
-            }
-            this.m_singleIterator = null;
-            if (node4 != null)
-            {
-                if (this.MappingIteratorType == MappingIterator.SingleInput)
-                {
-                    XmlNode node5 = node4["Input"];
-                    if (node5 != null)
-                    {
-                        this.m_singleIterator = this.FindInput(ulong.Parse(node5.Attributes["id"].Value));
-                    }
-                }
-                else if (this.MappingIteratorType == MappingIterator.MultiInput)
-                {
-                    foreach (XmlNode node5 in node4.SelectNodes("Input"))
-                    {
-                        Input input2 = this.FindInput(ulong.Parse(node5.Attributes["id"].Value));
-                        MappingSet set = this.m_mappingSets.FindMappingSet(ulong.Parse(node5.Attributes["mappingId"].Value));
-                        if (input2 != null)
-                        {
-                            input2.AssignedMappingSet = set;
-                        }
-                    }
-                }
-            }
-            if (this.m_setupNode.Attributes["liveUpdate"] != null)
-            {
-                this.m_liveUpdate = bool.Parse(this.m_setupNode.Attributes["liveUpdate"].Value);
-            }
-            if (this.m_setupNode.Attributes["record"] != null)
-            {
-                this.m_record = bool.Parse(this.m_setupNode.Attributes["record"].Value);
-            }
-        }
+		public abstract string Author { get; }
 
-        public virtual void Shutdown()
-        {
-        }
+		public abstract string Description { get; }
 
-        internal void ShutdownInternal()
-        {
-            this.Shutdown();
-        }
+		public abstract HardwareMap[] HardwareMap { get; }
 
-        public virtual void Startup()
-        {
-        }
+		public abstract Input[] Inputs { get; }
 
-        internal void StartupInternal()
-        {
-            this.Startup();
-        }
+		public bool LiveUpdate
+		{
+			get { return m_liveUpdate; }
+			set { m_liveUpdate = value; }
+		}
 
-        public abstract string Author { get; }
+		public abstract string Name { get; }
 
-        public abstract string Description { get; }
+		public bool Record
+		{
+			get { return m_record; }
+			set { m_record = value; }
+		}
 
-        public abstract Vixen.HardwareMap[] HardwareMap { get; }
+		private Input FindInput(ulong id)
+		{
+			if (id == 0L)
+			{
+				return null;
+			}
+			return Array.Find(Inputs, delegate(Input i) { return i.Id == id; });
+		}
 
-        public abstract Input[] Inputs { get; }
+		public Input[] GetIterators()
+		{
+			var list = new List<Input>();
+			foreach (Input input in Inputs)
+			{
+				if (input.IsMappingIterator)
+				{
+					list.Add(input);
+				}
+			}
+			return list.ToArray();
+		}
 
-        public bool LiveUpdate
-        {
-            get
-            {
-                return this.m_liveUpdate;
-            }
-            set
-            {
-                this.m_liveUpdate = value;
-            }
-        }
+		internal void InitializeInternal(SetupData setupData, XmlNode setupNode)
+		{
+			m_setupNode = setupNode;
+			Initialize(setupData, setupNode);
+		}
 
-        public MappingIterator MappingIteratorType
-        {
-            get
-            {
-                return this.m_mappingIterator;
-            }
-            set
-            {
-                this.m_mappingIterator = value;
-            }
-        }
+		internal void IteratorTriggered(Input input)
+		{
+			if (m_mappingIterator == MappingIterator.SingleInput)
+			{
+				if (input == m_singleIterator)
+				{
+					m_mappingSets.StepMapping();
+				}
+			}
+			else
+			{
+				m_mappingSets.CurrentMappingSet = input.AssignedMappingSet;
+			}
+		}
 
-        internal Vixen.MappingSets MappingSets
-        {
-            get
-            {
-                return this.m_mappingSets;
-            }
-            set
-            {
-                this.m_mappingSets = value;
-            }
-        }
+		internal void PluginToSetupData()
+		{
+			XmlNode node2;
+			m_mappingSets.WriteData(Xml.GetEmptyNodeAlways(m_setupNode, "MappingSets"));
+			XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(m_setupNode, "Inputs");
+			foreach (Input input in Inputs)
+			{
+				node2 = input.WriteData(emptyNodeAlways);
+			}
+			XmlNode node = Xml.GetEmptyNodeAlways(m_setupNode, "Iterator");
+			Xml.SetAttribute(node, "type", m_mappingIterator.ToString());
+			Input[] iterators = GetIterators();
+			if (iterators.Length > 0)
+			{
+				if (MappingIteratorType == MappingIterator.SingleInput)
+				{
+					Xml.SetAttribute(node, "Input", "id", m_singleIterator.Id.ToString());
+				}
+				else
+				{
+					foreach (Input input in iterators)
+					{
+						node2 = Xml.SetNewValue(node, "Input", "");
+						Xml.SetAttribute(node2, "id", input.Id.ToString());
+						Xml.SetAttribute(node2, "mappingId",
+						                 (input.AssignedMappingSet != null) ? input.AssignedMappingSet.Id.ToString() : 0.ToString());
+					}
+				}
+			}
+			Xml.SetAttribute(m_setupNode, "liveUpdate", m_liveUpdate.ToString());
+			Xml.SetAttribute(m_setupNode, "record", m_record.ToString());
+		}
 
-        public abstract string Name { get; }
+		internal void SetupDataToPlugin()
+		{
+			XmlNode node = m_setupNode["MappingSets"];
+			if (node != null)
+			{
+				m_mappingSets.ReadData(node);
+			}
+			XmlNode node2 = m_setupNode["Inputs"];
+			if (node2 != null)
+			{
+				foreach (Input input in Inputs)
+				{
+					XmlNode node3 = node2.SelectSingleNode(string.Format("{0}[@{1}=\"{2}\"]", "Input", "name", input.Name));
+					if (node3 != null)
+					{
+						input.ReadData(node3);
+					}
+				}
+			}
+			XmlNode node4 = m_setupNode["Iterator"];
+			if (node4 != null)
+			{
+				MappingIteratorType = (MappingIterator) Enum.Parse(typeof (MappingIterator), node4.Attributes["type"].Value);
+			}
+			else
+			{
+				MappingIteratorType = MappingIterator.None;
+			}
+			m_singleIterator = null;
+			if (node4 != null)
+			{
+				if (MappingIteratorType == MappingIterator.SingleInput)
+				{
+					XmlNode node5 = node4["Input"];
+					if (node5 != null)
+					{
+						m_singleIterator = FindInput(ulong.Parse(node5.Attributes["id"].Value));
+					}
+				}
+				else if (MappingIteratorType == MappingIterator.MultiInput)
+				{
+					foreach (XmlNode node5 in node4.SelectNodes("Input"))
+					{
+						Input input2 = FindInput(ulong.Parse(node5.Attributes["id"].Value));
+						MappingSet set = m_mappingSets.FindMappingSet(ulong.Parse(node5.Attributes["mappingId"].Value));
+						if (input2 != null)
+						{
+							input2.AssignedMappingSet = set;
+						}
+					}
+				}
+			}
+			if (m_setupNode.Attributes["liveUpdate"] != null)
+			{
+				m_liveUpdate = bool.Parse(m_setupNode.Attributes["liveUpdate"].Value);
+			}
+			if (m_setupNode.Attributes["record"] != null)
+			{
+				m_record = bool.Parse(m_setupNode.Attributes["record"].Value);
+			}
+		}
 
-        public bool Record
-        {
-            get
-            {
-                return this.m_record;
-            }
-            set
-            {
-                this.m_record = value;
-            }
-        }
+		internal void ShutdownInternal()
+		{
+			Shutdown();
+		}
 
-        public Input SingleIterator
-        {
-            get
-            {
-                return this.m_singleIterator;
-            }
-            set
-            {
-                this.m_singleIterator = value;
-            }
-        }
-
-        public enum MappingIterator
-        {
-            None,
-            SingleInput,
-            MultiInput
-        }
-    }
+		internal void StartupInternal()
+		{
+			Startup();
+		}
+	}
 }
-
