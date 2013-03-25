@@ -17,9 +17,9 @@ namespace VixenPlus.Dialogs{
 			this.linkLabelClose.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
 			this.linkLabelClose.AutoSize = true;
 			this.linkLabelClose.LinkBehavior = LinkBehavior.NeverUnderline;
-			this.linkLabelClose.Location = new Point(0x1c0, 230);
+			this.linkLabelClose.Location = new Point(448, 230);
 			this.linkLabelClose.Name = "linkLabelClose";
-			this.linkLabelClose.Size = new Size(0x21, 13);
+			this.linkLabelClose.Size = new Size(33, 13);
 			this.linkLabelClose.TabIndex = 0;
 			this.linkLabelClose.TabStop = true;
 			this.linkLabelClose.Text = "Close";
@@ -27,7 +27,7 @@ namespace VixenPlus.Dialogs{
 			base.AutoScaleDimensions = new SizeF(6f, 13f);
 			base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = Color.White;
-			base.ClientSize = new Size(0x1ed, 0xfc);
+			base.ClientSize = new Size(493, 252);
 			base.ControlBox = false;
 			base.Controls.Add(this.linkLabelClose);
 			base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

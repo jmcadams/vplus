@@ -27,7 +27,7 @@ namespace FanslerDimmer {
 			this.label1.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
 			this.label1.Location = new Point(15, 14);
 			this.label1.Name = "label1";
-			this.label1.Size = new Size(0x15a, 0x1c);
+			this.label1.Size = new Size(0x15a, 28);
 			this.label1.TabIndex = 0;
 			this.label1.Text = "Select the channels that are dimmable according to the hardware configuration.";
 			this.checkedListBoxChannels.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top;
@@ -41,14 +41,14 @@ namespace FanslerDimmer {
 			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.buttonCancel.Location = new Point(0x11d, 0x111);
 			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.Size = new Size(0x4b, 0x17);
+			this.buttonCancel.Size = new Size(0x4b, 23);
 			this.buttonCancel.TabIndex = 6;
 			this.buttonCancel.Text = "Cancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;
 			this.buttonAll.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
 			this.buttonAll.Location = new Point(0x10, 240);
 			this.buttonAll.Name = "buttonAll";
-			this.buttonAll.Size = new Size(0x4b, 0x17);
+			this.buttonAll.Size = new Size(0x4b, 23);
 			this.buttonAll.TabIndex = 2;
 			this.buttonAll.Text = "All";
 			this.buttonAll.UseVisualStyleBackColor = true;
@@ -56,7 +56,7 @@ namespace FanslerDimmer {
 			this.buttonNone.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
 			this.buttonNone.Location = new Point(0x61, 240);
 			this.buttonNone.Name = "buttonNone";
-			this.buttonNone.Size = new Size(0x4b, 0x17);
+			this.buttonNone.Size = new Size(0x4b, 23);
 			this.buttonNone.TabIndex = 3;
 			this.buttonNone.Text = "None";
 			this.buttonNone.UseVisualStyleBackColor = true;
@@ -64,7 +64,7 @@ namespace FanslerDimmer {
 			this.buttonRange.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
 			this.buttonRange.Location = new Point(0xb2, 240);
 			this.buttonRange.Name = "buttonRange";
-			this.buttonRange.Size = new Size(0x4b, 0x17);
+			this.buttonRange.Size = new Size(0x4b, 23);
 			this.buttonRange.TabIndex = 4;
 			this.buttonRange.Text = "Range";
 			this.buttonRange.UseVisualStyleBackColor = true;
@@ -73,7 +73,7 @@ namespace FanslerDimmer {
 			this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.buttonOK.Location = new Point(0xcc, 0x111);
 			this.buttonOK.Name = "buttonOK";
-			this.buttonOK.Size = new Size(0x4b, 0x17);
+			this.buttonOK.Size = new Size(0x4b, 23);
 			this.buttonOK.TabIndex = 5;
 			this.buttonOK.Text = "OK";
 			this.buttonOK.UseVisualStyleBackColor = true;

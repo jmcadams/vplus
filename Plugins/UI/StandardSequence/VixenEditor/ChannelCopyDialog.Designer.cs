@@ -25,7 +25,7 @@ namespace VixenEditor {
 			this.buttonDone = new Button();
 			base.SuspendLayout();
 			this.label1.AutoSize = true;
-			this.label1.Location = new Point(0x16, 0x15);
+			this.label1.Location = new Point(22, 0x15);
 			this.label1.Name = "label1";
 			this.label1.Size = new Size(0x52, 13);
 			this.label1.TabIndex = 0;
@@ -37,7 +37,7 @@ namespace VixenEditor {
 			this.comboBoxSourceChannel.Size = new Size(0x79, 0x15);
 			this.comboBoxSourceChannel.TabIndex = 1;
 			this.label2.AutoSize = true;
-			this.label2.Location = new Point(0x16, 0x30);
+			this.label2.Location = new Point(22, 0x30);
 			this.label2.Name = "label2";
 			this.label2.Size = new Size(0x65, 13);
 			this.label2.TabIndex = 2;
@@ -51,7 +51,7 @@ namespace VixenEditor {
 			this.buttonCopy.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.buttonCopy.Location = new Point(0xcd, 0x48);
 			this.buttonCopy.Name = "buttonCopy";
-			this.buttonCopy.Size = new Size(0x4b, 0x17);
+			this.buttonCopy.Size = new Size(0x4b, 23);
 			this.buttonCopy.TabIndex = 4;
 			this.buttonCopy.Text = "Copy";
 			this.buttonCopy.UseVisualStyleBackColor = true;
@@ -60,7 +60,7 @@ namespace VixenEditor {
 			this.buttonDone.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.buttonDone.Location = new Point(0xcd, 0x83);
 			this.buttonDone.Name = "buttonDone";
-			this.buttonDone.Size = new Size(0x4b, 0x17);
+			this.buttonDone.Size = new Size(0x4b, 23);
 			this.buttonDone.TabIndex = 5;
 			this.buttonDone.Text = "Done";
 			this.buttonDone.UseVisualStyleBackColor = true;

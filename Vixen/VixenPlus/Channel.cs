@@ -31,9 +31,9 @@ namespace VixenPlus
 				_enabled = bool.Parse(channelNode.Attributes["enabled"].Value);
 				if (channelNode["Curve"] != null)
 				{
-					_dimmingCurve = new byte[0x100];
+					_dimmingCurve = new byte[256];
 					string[] strArray = channelNode["Curve"].InnerText.Split(new[] {','});
-					int num = Math.Min(strArray.Length, 0x100);
+					int num = Math.Min(strArray.Length, 256);
 					for (int i = 0; i < num; i++)
 					{
 						byte num2;

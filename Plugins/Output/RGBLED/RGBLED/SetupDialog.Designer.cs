@@ -36,7 +36,7 @@ namespace RGBLED {
 			base.SuspendLayout();
 			this.buttonSerial.Location = new Point(12, 12);
 			this.buttonSerial.Name = "buttonSerial";
-			this.buttonSerial.Size = new Size(0x4b, 0x17);
+			this.buttonSerial.Size = new Size(0x4b, 23);
 			this.buttonSerial.TabIndex = 0;
 			this.buttonSerial.Text = "Serial Setup";
 			this.buttonSerial.UseVisualStyleBackColor = true;
@@ -58,7 +58,7 @@ namespace RGBLED {
 			this.buttonChangeID.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
 			this.buttonChangeID.Location = new Point(250, 0xe7);
 			this.buttonChangeID.Name = "buttonChangeID";
-			this.buttonChangeID.Size = new Size(0x4b, 0x17);
+			this.buttonChangeID.Size = new Size(0x4b, 23);
 			this.buttonChangeID.TabIndex = 6;
 			this.buttonChangeID.Text = "Change ID";
 			this.buttonChangeID.UseVisualStyleBackColor = true;
@@ -96,7 +96,7 @@ namespace RGBLED {
 			this.panelContainer.ControlRemoved += new ControlEventHandler(this.RenumberControls);
 			this.buttonAdd.Location = new Point(6, 0x13);
 			this.buttonAdd.Name = "buttonAdd";
-			this.buttonAdd.Size = new Size(0x4b, 0x17);
+			this.buttonAdd.Size = new Size(0x4b, 23);
 			this.buttonAdd.TabIndex = 0;
 			this.buttonAdd.Text = "Add";
 			this.buttonAdd.UseVisualStyleBackColor = true;
@@ -105,7 +105,7 @@ namespace RGBLED {
 			this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.buttonOK.Location = new Point(0xb6, 0x14b);
 			this.buttonOK.Name = "buttonOK";
-			this.buttonOK.Size = new Size(0x4b, 0x17);
+			this.buttonOK.Size = new Size(0x4b, 23);
 			this.buttonOK.TabIndex = 3;
 			this.buttonOK.Text = "OK";
 			this.buttonOK.UseVisualStyleBackColor = true;
@@ -113,7 +113,7 @@ namespace RGBLED {
 			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.buttonCancel.Location = new Point(0x10c, 0x14b);
 			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.Size = new Size(0x4b, 0x17);
+			this.buttonCancel.Size = new Size(0x4b, 23);
 			this.buttonCancel.TabIndex = 4;
 			this.buttonCancel.Text = "Cancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;

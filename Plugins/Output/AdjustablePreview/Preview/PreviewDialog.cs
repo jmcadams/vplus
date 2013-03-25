@@ -208,8 +208,8 @@ namespace Preview
                             }
                             else
                             {
-                                num8 = Math.Max(num16, (byte) (num2 >> 0x18));
-                                float num12 = ((float) (num2 >> 0x18)) / ((float) num8);
+                                num8 = Math.Max(num16, (byte) (num2 >> 24));
+                                float num12 = ((float) (num2 >> 24)) / ((float) num8);
                                 float num13 = ((float) num16) / ((float) num8);
                                 byte num9 = (byte) ((num2 >> 0x10) & 0xff);
                                 byte num10 = (byte) ((num2 >> 8) & 0xff);
@@ -218,7 +218,7 @@ namespace Preview
                                 g = (byte) (((int) ((num10 * num12) + (color.G * num13))) >> 1);
                                 b = (byte) (((int) ((num11 * num12) + (color.B * num13))) >> 1);
                             }
-                            num2 = (uint) ((((num8 << 0x18) | (r << 0x10)) | (g << 8)) | b);
+                            num2 = (uint) ((((num8 << 24) | (r << 0x10)) | (g << 8)) | b);
                             this.m_backBuffer[num7, num6] = num2;
                         }
                     }

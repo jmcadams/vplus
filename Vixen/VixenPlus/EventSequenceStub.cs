@@ -71,7 +71,7 @@ namespace VixenPlus
 			set
 			{
 				_length = value;
-				_lengthString = string.Format("{0}:{1:d2}", _length/0xea60, (_length%0xea60)/0x3e8);
+				_lengthString = string.Format("{0}:{1:d2}", _length/60000, (_length%60000)/1000);
 			}
 		}
 

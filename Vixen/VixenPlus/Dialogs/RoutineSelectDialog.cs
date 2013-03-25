@@ -42,7 +42,7 @@ namespace VixenPlus.Dialogs
 				var layoutRectangle = new RectangleF((e.Bounds.X + 5), (e.Bounds.Y + 5), ((listBoxRoutines.Width - 200) - 10),
 				                                     (e.Bounds.Height - 10));
 				e.Graphics.DrawString(routine.Name, listBoxRoutines.Font, Brushes.DarkSlateBlue, layoutRectangle);
-				var rect = new Rectangle(e.Bounds.Width - 0xaf, e.Bounds.Y + 10, 150, 80);
+				var rect = new Rectangle(e.Bounds.Width - 175, e.Bounds.Y + 10, 150, 80);
 				e.Graphics.FillRectangle(Brushes.White, rect);
 				e.Graphics.DrawRectangle((e.State & DrawItemState.Selected) == DrawItemState.Selected ? Pens.Black : Pens.White,
 				                         (rect.X - 1), (rect.Y - 1), (rect.Width + 1), (rect.Height + 1));

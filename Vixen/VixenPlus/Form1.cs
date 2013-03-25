@@ -846,7 +846,7 @@ namespace VixenPlus
 			switch (preferenceName)
 			{
 				case "TimerCheckFrequency":
-					scheduleTimer.Interval = _preferences.GetInteger("TimerCheckFrequency")*0x3e8;
+					scheduleTimer.Interval = _preferences.GetInteger("TimerCheckFrequency")*1000;
 					break;
 
 				case "EnableBackgroundSequence":
@@ -869,9 +869,9 @@ namespace VixenPlus
 					break;
 
 				case "EventPeriod":
-					if (_preferences.GetInteger("EventPeriod") < 0x19)
+					if (_preferences.GetInteger("EventPeriod") < 25)
 					{
-						_preferences.SetInteger("EventPeriod", 0x19);
+						_preferences.SetInteger("EventPeriod", 25);
 						MessageBox.Show(
 							"The event period length cannot be less than 25 milliseconds.\nThe length has been reset to 25 milliseconds.",
 							Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
@@ -1239,7 +1239,7 @@ namespace VixenPlus
 			{
 				shutdownTimer.Stop();
 				Process.Start("shutdown", string.Format("/s /d P:4:1 /c \"Automatic shutdown by {0}\"", Vendor.ProductName));
-				Thread.Sleep(0x3e8);
+				Thread.Sleep(1000);
 				new ShutdownDialog().Show();
 			}
 		}

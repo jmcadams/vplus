@@ -42,7 +42,7 @@ namespace Spectrum {
 			this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.buttonOK.Location = new Point(0x7c, 0x85);
 			this.buttonOK.Name = "buttonOK";
-			this.buttonOK.Size = new Size(0x4b, 0x17);
+			this.buttonOK.Size = new Size(0x4b, 23);
 			this.buttonOK.TabIndex = 1;
 			this.buttonOK.Text = "OK";
 			this.buttonOK.UseVisualStyleBackColor = true;
@@ -50,7 +50,7 @@ namespace Spectrum {
 			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.buttonCancel.Location = new Point(0xcd, 0x85);
 			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.Size = new Size(0x4b, 0x17);
+			this.buttonCancel.Size = new Size(0x4b, 23);
 			this.buttonCancel.TabIndex = 2;
 			this.buttonCancel.Text = "Cancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;

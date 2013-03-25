@@ -20,7 +20,7 @@ namespace TriggerResponse {
 			base.SuspendLayout();
 			this.comboBoxTriggerResponses.DropDownStyle = ComboBoxStyle.DropDownList;
 			this.comboBoxTriggerResponses.FormattingEnabled = true;
-			this.comboBoxTriggerResponses.Location = new Point(0x16, 0x2a);
+			this.comboBoxTriggerResponses.Location = new Point(22, 0x2a);
 			this.comboBoxTriggerResponses.Name = "comboBoxTriggerResponses";
 			this.comboBoxTriggerResponses.Size = new Size(0xf4, 0x15);
 			this.comboBoxTriggerResponses.TabIndex = 0;
@@ -28,13 +28,13 @@ namespace TriggerResponse {
 			this.buttonTest.Enabled = false;
 			this.buttonTest.Location = new Point(0x6d, 0x45);
 			this.buttonTest.Name = "buttonTest";
-			this.buttonTest.Size = new Size(0x4b, 0x17);
+			this.buttonTest.Size = new Size(0x4b, 23);
 			this.buttonTest.TabIndex = 1;
 			this.buttonTest.Text = "Test";
 			this.buttonTest.UseVisualStyleBackColor = true;
 			this.buttonTest.Click += new EventHandler(this.buttonTest_Click);
 			this.label1.AutoSize = true;
-			this.label1.Location = new Point(0x13, 0x16);
+			this.label1.Location = new Point(0x13, 22);
 			this.label1.Name = "label1";
 			this.label1.Size = new Size(0x76, 13);
 			this.label1.TabIndex = 2;

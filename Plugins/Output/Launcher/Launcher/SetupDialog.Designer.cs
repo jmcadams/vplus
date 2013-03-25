@@ -80,14 +80,14 @@ namespace Launcher {
 			this.buttonRemove.Enabled = false;
 			this.buttonRemove.Location = new Point(0x22d, 0x33);
 			this.buttonRemove.Name = "buttonRemove";
-			this.buttonRemove.Size = new Size(0x4b, 0x17);
+			this.buttonRemove.Size = new Size(0x4b, 23);
 			this.buttonRemove.TabIndex = 5;
 			this.buttonRemove.Text = "Remove";
 			this.buttonRemove.UseVisualStyleBackColor = true;
 			this.buttonRemove.Click += new EventHandler(this.buttonRemove_Click);
-			this.buttonAdd.Location = new Point(0x22d, 0x16);
+			this.buttonAdd.Location = new Point(0x22d, 22);
 			this.buttonAdd.Name = "buttonAdd";
-			this.buttonAdd.Size = new Size(0x4b, 0x17);
+			this.buttonAdd.Size = new Size(0x4b, 23);
 			this.buttonAdd.TabIndex = 4;
 			this.buttonAdd.Text = "Add New";
 			this.buttonAdd.UseVisualStyleBackColor = true;
@@ -95,7 +95,7 @@ namespace Launcher {
 			this.buttonFileDialog.Font = new Font("Arial", 7f, FontStyle.Regular, GraphicsUnit.Point, 0);
 			this.buttonFileDialog.Location = new Point(15, 0x81);
 			this.buttonFileDialog.Name = "buttonFileDialog";
-			this.buttonFileDialog.Size = new Size(0x18, 0x12);
+			this.buttonFileDialog.Size = new Size(24, 0x12);
 			this.buttonFileDialog.TabIndex = 3;
 			this.buttonFileDialog.Text = "...";
 			this.buttonFileDialog.UseVisualStyleBackColor = true;
@@ -104,7 +104,7 @@ namespace Launcher {
 			this.listViewPrograms.Columns.AddRange(new ColumnHeader[] { this.columnHeader1, this.columnHeader2, this.columnHeader3 });
 			this.listViewPrograms.HeaderStyle = ColumnHeaderStyle.Nonclickable;
 			this.listViewPrograms.LabelWrap = false;
-			this.listViewPrograms.Location = new Point(13, 0x16);
+			this.listViewPrograms.Location = new Point(13, 22);
 			this.listViewPrograms.MultiSelect = false;
 			this.listViewPrograms.Name = "listViewPrograms";
 			this.listViewPrograms.OwnerDraw = true;
@@ -127,7 +127,7 @@ namespace Launcher {
 			this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.buttonOK.Location = new Point(0x1f7, 0xcb);
 			this.buttonOK.Name = "buttonOK";
-			this.buttonOK.Size = new Size(0x4b, 0x17);
+			this.buttonOK.Size = new Size(0x4b, 23);
 			this.buttonOK.TabIndex = 1;
 			this.buttonOK.Text = "OK";
 			this.buttonOK.UseVisualStyleBackColor = true;
@@ -135,7 +135,7 @@ namespace Launcher {
 			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.buttonCancel.Location = new Point(0x248, 0xcb);
 			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.Size = new Size(0x4b, 0x17);
+			this.buttonCancel.Size = new Size(0x4b, 23);
 			this.buttonCancel.TabIndex = 2;
 			this.buttonCancel.Text = "Cancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;

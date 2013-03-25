@@ -32,7 +32,7 @@ namespace Preview {
 			this.groupBox1.SuspendLayout();
 			base.SuspendLayout();
 			this.label1.AutoSize = true;
-			this.label1.Location = new Point(20, 0x1a);
+			this.label1.Location = new Point(20, 26);
 			this.label1.Name = "label1";
 			this.label1.Size = new Size(0xf1, 13);
 			this.label1.TabIndex = 0;
@@ -50,7 +50,7 @@ namespace Preview {
 			this.comboBoxFrom.Size = new Size(0xb9, 0x15);
 			this.comboBoxFrom.TabIndex = 2;
 			this.label3.AutoSize = true;
-			this.label3.Location = new Point(0x19, 0x67);
+			this.label3.Location = new Point(25, 0x67);
 			this.label3.Name = "label3";
 			this.label3.Size = new Size(20, 13);
 			this.label3.TabIndex = 3;
@@ -63,14 +63,14 @@ namespace Preview {
 			this.comboBoxTo.TabIndex = 4;
 			this.buttonClear.Location = new Point(0x4c, 160);
 			this.buttonClear.Name = "buttonClear";
-			this.buttonClear.Size = new Size(0x75, 0x17);
+			this.buttonClear.Size = new Size(0x75, 23);
 			this.buttonClear.TabIndex = 5;
 			this.buttonClear.Text = "Clear this channel";
 			this.buttonClear.UseVisualStyleBackColor = true;
 			this.buttonClear.Click += new EventHandler(this.buttonClear_Click);
 			this.buttonCopy.Location = new Point(0x4c, 0x83);
 			this.buttonCopy.Name = "buttonCopy";
-			this.buttonCopy.Size = new Size(0x75, 0x17);
+			this.buttonCopy.Size = new Size(0x75, 23);
 			this.buttonCopy.TabIndex = 6;
 			this.buttonCopy.Text = "Copy to this channel";
 			this.buttonCopy.UseVisualStyleBackColor = true;
@@ -93,7 +93,7 @@ namespace Preview {
 			this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.buttonOK.Location = new Point(0x8d, 0xe2);
 			this.buttonOK.Name = "buttonOK";
-			this.buttonOK.Size = new Size(0x4b, 0x17);
+			this.buttonOK.Size = new Size(0x4b, 23);
 			this.buttonOK.TabIndex = 8;
 			this.buttonOK.Text = "OK";
 			this.buttonOK.UseVisualStyleBackColor = true;
@@ -101,7 +101,7 @@ namespace Preview {
 			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.buttonCancel.Location = new Point(0xde, 0xe2);
 			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.Size = new Size(0x4b, 0x17);
+			this.buttonCancel.Size = new Size(0x4b, 23);
 			this.buttonCancel.TabIndex = 9;
 			this.buttonCancel.Text = "Cancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;

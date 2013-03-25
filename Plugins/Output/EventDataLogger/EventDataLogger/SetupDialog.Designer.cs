@@ -33,15 +33,15 @@ namespace EventDataLogger {
 			this.buttonClearLog.Enabled = false;
 			this.buttonClearLog.Location = new Point(0x81, 0x24);
 			this.buttonClearLog.Name = "buttonClearLog";
-			this.buttonClearLog.Size = new Size(0x4b, 0x17);
+			this.buttonClearLog.Size = new Size(0x4b, 23);
 			this.buttonClearLog.TabIndex = 1;
 			this.buttonClearLog.Text = "Clear Log";
 			this.buttonClearLog.UseVisualStyleBackColor = true;
 			this.buttonClearLog.Click += new EventHandler(this.buttonClearLog_Click);
 			this.buttonViewLog.Enabled = false;
-			this.buttonViewLog.Location = new Point(0x17, 0x24);
+			this.buttonViewLog.Location = new Point(23, 0x24);
 			this.buttonViewLog.Name = "buttonViewLog";
-			this.buttonViewLog.Size = new Size(0x4b, 0x17);
+			this.buttonViewLog.Size = new Size(0x4b, 23);
 			this.buttonViewLog.TabIndex = 0;
 			this.buttonViewLog.Text = "View Log";
 			this.buttonViewLog.UseVisualStyleBackColor = true;
@@ -50,7 +50,7 @@ namespace EventDataLogger {
 			this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.buttonOK.Location = new Point(0x53, 100);
 			this.buttonOK.Name = "buttonOK";
-			this.buttonOK.Size = new Size(0x4b, 0x17);
+			this.buttonOK.Size = new Size(0x4b, 23);
 			this.buttonOK.TabIndex = 1;
 			this.buttonOK.Text = "OK";
 			this.buttonOK.UseVisualStyleBackColor = true;
@@ -58,7 +58,7 @@ namespace EventDataLogger {
 			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.buttonCancel.Location = new Point(0xa4, 100);
 			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.Size = new Size(0x4b, 0x17);
+			this.buttonCancel.Size = new Size(0x4b, 23);
 			this.buttonCancel.TabIndex = 2;
 			this.buttonCancel.Text = "Cancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;

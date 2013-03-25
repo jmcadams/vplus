@@ -15,7 +15,7 @@ namespace AppUpdate {
 			this.panel1.SuspendLayout();
 			base.SuspendLayout();
 			this.lblMessage.AutoSize = true;
-			this.lblMessage.Location = new Point(11, 0x1d);
+			this.lblMessage.Location = new Point(11, 29);
 			this.lblMessage.Name = "labelMessage";
 			this.lblMessage.Size = new Size(0x36, 13);
 			this.lblMessage.TabIndex = 0;

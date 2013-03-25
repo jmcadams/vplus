@@ -101,24 +101,24 @@ namespace VixenPlus
 			if (_buttons[0].Visible)
 			{
 				_buttons[0].Left = num;
-				num += 0x1a;
+				num += 26;
 			}
 			if (_buttons[1].Visible)
 			{
 				_buttons[1].Left = num;
-				num += 0x1a;
+				num += 26;
 			}
 			if (_buttons[2].Visible)
 			{
 				_buttons[2].Left = num;
-				num += 0x1a;
+				num += 26;
 			}
 			Width = num;
 		}
 
 		private void Construct()
 		{
-			Size = new Size(0x48, 20);
+			Size = new Size(72, 20);
 			_buttons = new[]
 				{
 					new VixenSimpleButton(VixenSimpleButtonType.Add), new VixenSimpleButton(VixenSimpleButtonType.Edit),

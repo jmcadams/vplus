@@ -200,7 +200,7 @@ namespace VixenEditor
 			this.buttonDone.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.buttonDone.Location = new Point(0x2e1, 0x14e);
 			this.buttonDone.Name = "buttonDone";
-			this.buttonDone.Size = new Size(0x4b, 0x17);
+			this.buttonDone.Size = new Size(0x4b, 23);
 			this.buttonDone.TabIndex = 4;
 			this.buttonDone.Text = "Done";
 			this.buttonDone.UseVisualStyleBackColor = true;

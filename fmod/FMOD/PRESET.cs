@@ -46,12 +46,12 @@
 
         public REVERB_PROPERTIES DIZZY()
         {
-            return new REVERB_PROPERTIES(0, 0x18, 1.8f, 0.6f, -1000, -400, 0, 17.23f, 0.56f, 1f, -1713, 0.02f, 0f, 0f, 0f, -613, 0.03f, 0f, 0f, 0f, 0.25f, 1f, 0.81f, 0.31f, -5f, 5000f, 250f, 0f, 100f, 100f, 0x1f);
+            return new REVERB_PROPERTIES(0, 24, 1.8f, 0.6f, -1000, -400, 0, 17.23f, 0.56f, 1f, -1713, 0.02f, 0f, 0f, 0f, -613, 0.03f, 0f, 0f, 0f, 0.25f, 1f, 0.81f, 0.31f, -5f, 5000f, 250f, 0f, 100f, 100f, 0x1f);
         }
 
         public REVERB_PROPERTIES DRUGGED()
         {
-            return new REVERB_PROPERTIES(0, 0x17, 1.9f, 0.5f, -1000, 0, 0, 8.39f, 1.39f, 1f, -115, 0.002f, 0f, 0f, 0f, 0x3d9, 0.03f, 0f, 0f, 0f, 0.25f, 0f, 0.25f, 1f, -5f, 5000f, 250f, 0f, 100f, 100f, 0x1f);
+            return new REVERB_PROPERTIES(0, 23, 1.9f, 0.5f, -1000, 0, 0, 8.39f, 1.39f, 1f, -115, 0.002f, 0f, 0f, 0f, 0x3d9, 0.03f, 0f, 0f, 0f, 0.25f, 0f, 0.25f, 1f, -5f, 5000f, 250f, 0f, 100f, 100f, 0x1f);
         }
 
         public REVERB_PROPERTIES FOREST()
@@ -151,7 +151,7 @@
 
         public REVERB_PROPERTIES PSYCHOTIC()
         {
-            return new REVERB_PROPERTIES(0, 0x19, 1f, 0.5f, -1000, -151, 0, 7.56f, 0.91f, 1f, -626, 0.02f, 0f, 0f, 0f, 0x306, 0.03f, 0f, 0f, 0f, 0.25f, 0f, 4f, 1f, -5f, 5000f, 250f, 0f, 100f, 100f, 0x1f);
+            return new REVERB_PROPERTIES(0, 25, 1f, 0.5f, -1000, -151, 0, 7.56f, 0.91f, 1f, -626, 0.02f, 0f, 0f, 0f, 0x306, 0.03f, 0f, 0f, 0f, 0.25f, 0f, 4f, 1f, -5f, 5000f, 250f, 0f, 100f, 100f, 0x1f);
         }
 
         public REVERB_PROPERTIES QUARRY()
@@ -171,7 +171,7 @@
 
         public REVERB_PROPERTIES STONECORRIDOR()
         {
-            return new REVERB_PROPERTIES(0, 13, 13.5f, 1f, -1000, -237, 0, 2.7f, 0.79f, 1f, -1214, 0.013f, 0f, 0f, 0f, 0x18b, 0.02f, 0f, 0f, 0f, 0.25f, 0f, 0.25f, 0f, -5f, 5000f, 250f, 0f, 100f, 100f, 0x3f);
+            return new REVERB_PROPERTIES(0, 13, 13.5f, 1f, -1000, -237, 0, 2.7f, 0.79f, 1f, -1214, 0.013f, 0f, 0f, 0f, 24b, 0.02f, 0f, 0f, 0f, 0.25f, 0f, 0.25f, 0f, -5f, 5000f, 250f, 0f, 100f, 100f, 0x3f);
         }
 
         public REVERB_PROPERTIES STONEROOM()
@@ -181,7 +181,7 @@
 
         public REVERB_PROPERTIES UNDERWATER()
         {
-            return new REVERB_PROPERTIES(0, 0x16, 1.8f, 1f, -1000, -4000, 0, 1.49f, 0.1f, 1f, -449, 0.007f, 0f, 0f, 0f, 0x6a4, 0.011f, 0f, 0f, 0f, 0.25f, 0f, 1.18f, 0.348f, -5f, 5000f, 250f, 0f, 100f, 100f, 0x3f);
+            return new REVERB_PROPERTIES(0, 22, 1.8f, 1f, -1000, -4000, 0, 1.49f, 0.1f, 1f, -449, 0.007f, 0f, 0f, 0f, 0x6a4, 0.011f, 0f, 0f, 0f, 0.25f, 0f, 1.18f, 0.348f, -5f, 5000f, 250f, 0f, 100f, 100f, 0x3f);
         }
     }
 }

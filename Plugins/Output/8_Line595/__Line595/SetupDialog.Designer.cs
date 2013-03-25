@@ -125,14 +125,14 @@ namespace __Line595 {
 			this.checkBox1.TabIndex = 3;
 			this.checkBox1.Text = "Data line 0";
 			this.checkBox1.UseVisualStyleBackColor = true;
-			this.textBoxChannels.Location = new Point(0xa1, 0x1a);
+			this.textBoxChannels.Location = new Point(0xa1, 26);
 			this.textBoxChannels.MaxLength = 4;
 			this.textBoxChannels.Name = "textBoxChannels";
 			this.textBoxChannels.Size = new Size(0x24, 20);
 			this.textBoxChannels.TabIndex = 2;
 			this.textBoxChannels.Text = "0";
 			this.label1.AutoSize = true;
-			this.label1.Location = new Point(0x15, 0x1d);
+			this.label1.Location = new Point(0x15, 29);
 			this.label1.Name = "label1";
 			this.label1.Size = new Size(0x76, 13);
 			this.label1.TabIndex = 0;
@@ -141,7 +141,7 @@ namespace __Line595 {
 			this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.buttonOK.Location = new Point(0x59, 0x16d);
 			this.buttonOK.Name = "buttonOK";
-			this.buttonOK.Size = new Size(0x4b, 0x17);
+			this.buttonOK.Size = new Size(0x4b, 23);
 			this.buttonOK.TabIndex = 2;
 			this.buttonOK.Text = "OK";
 			this.buttonOK.UseVisualStyleBackColor = true;
@@ -149,7 +149,7 @@ namespace __Line595 {
 			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.buttonCancel.Location = new Point(170, 0x16d);
 			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.Size = new Size(0x4b, 0x17);
+			this.buttonCancel.Size = new Size(0x4b, 23);
 			this.buttonCancel.TabIndex = 3;
 			this.buttonCancel.Text = "Cancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;
@@ -163,7 +163,7 @@ namespace __Line595 {
 			this.groupBox2.Text = "Port";
 			this.buttonPortSetup.Location = new Point(0x3b, 0x13);
 			this.buttonPortSetup.Name = "buttonPortSetup";
-			this.buttonPortSetup.Size = new Size(0x73, 0x17);
+			this.buttonPortSetup.Size = new Size(0x73, 23);
 			this.buttonPortSetup.TabIndex = 0;
 			this.buttonPortSetup.Text = "Parallel Port Setup";
 			this.buttonPortSetup.UseVisualStyleBackColor = true;

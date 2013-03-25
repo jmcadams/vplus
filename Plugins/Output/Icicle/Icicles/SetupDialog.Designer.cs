@@ -36,7 +36,7 @@ namespace Icicles {
 			base.SuspendLayout();
 			this.buttonSerialSetup.Location = new Point(12, 12);
 			this.buttonSerialSetup.Name = "buttonSerialSetup";
-			this.buttonSerialSetup.Size = new Size(0x4b, 0x17);
+			this.buttonSerialSetup.Size = new Size(0x4b, 23);
 			this.buttonSerialSetup.TabIndex = 0;
 			this.buttonSerialSetup.Text = "Serial Setup";
 			this.buttonSerialSetup.UseVisualStyleBackColor = true;
@@ -52,13 +52,13 @@ namespace Icicles {
 			this.groupBox1.TabIndex = 2;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Board ID assignment";
-			this.textBoxBoardID.Location = new Point(0xe2, 0x16);
+			this.textBoxBoardID.Location = new Point(0xe2, 22);
 			this.textBoxBoardID.Name = "textBoxBoardID";
 			this.textBoxBoardID.Size = new Size(0x26, 20);
 			this.textBoxBoardID.TabIndex = 1;
 			this.buttonAssign.Location = new Point(0xe2, 0x41);
 			this.buttonAssign.Name = "buttonAssign";
-			this.buttonAssign.Size = new Size(0x4b, 0x17);
+			this.buttonAssign.Size = new Size(0x4b, 23);
 			this.buttonAssign.TabIndex = 3;
 			this.buttonAssign.Text = "Assign";
 			this.buttonAssign.UseVisualStyleBackColor = true;
@@ -69,7 +69,7 @@ namespace Icicles {
 			this.label3.TabIndex = 2;
 			this.label3.Text = "When the board is ready to accept the ID assignment, click the Assign button.";
 			this.label2.AutoSize = true;
-			this.label2.Location = new Point(6, 0x19);
+			this.label2.Location = new Point(6, 25);
 			this.label2.Name = "label2";
 			this.label2.Size = new Size(0x51, 13);
 			this.label2.TabIndex = 0;
@@ -78,7 +78,7 @@ namespace Icicles {
 			this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.buttonOK.Location = new Point(0xc1, 0xea);
 			this.buttonOK.Name = "buttonOK";
-			this.buttonOK.Size = new Size(0x4b, 0x17);
+			this.buttonOK.Size = new Size(0x4b, 23);
 			this.buttonOK.TabIndex = 3;
 			this.buttonOK.Text = "OK";
 			this.buttonOK.UseVisualStyleBackColor = true;
@@ -86,7 +86,7 @@ namespace Icicles {
 			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.buttonCancel.Location = new Point(0x112, 0xea);
 			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.Size = new Size(0x4b, 0x17);
+			this.buttonCancel.Size = new Size(0x4b, 23);
 			this.buttonCancel.TabIndex = 4;
 			this.buttonCancel.Text = "Cancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;

@@ -11,9 +11,9 @@ namespace VixenPlus
 		public EventAverageDialog()
 		{
 			InitializeComponent();
-			lvData.Columns[0].Width = 0x92;
-			lvData.Columns[1].Width = 0x57;
-			lvData.Columns[2].Width = 0xb8;
+			lvData.Columns[0].Width = 146;
+			lvData.Columns[1].Width = 87;
+			lvData.Columns[2].Width = 184;
 			string debugValue = string.Empty;
 			for (int i = 0; debugValue != null; i++)
 			{

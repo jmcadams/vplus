@@ -91,7 +91,7 @@ namespace DC_16 {
 			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.btnCancel.Location = new Point(170, 0x131);
 			this.btnCancel.Name = "btnCancel";
-			this.btnCancel.Size = new Size(0x4b, 0x17);
+			this.btnCancel.Size = new Size(0x4b, 23);
 			this.btnCancel.TabIndex = 3;
 			this.btnCancel.Text = "Cancel";
 			this.btnCancel.UseVisualStyleBackColor = true;
@@ -99,7 +99,7 @@ namespace DC_16 {
 			this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.btnOK.Location = new Point(0x59, 0x131);
 			this.btnOK.Name = "btnOK";
-			this.btnOK.Size = new Size(0x4b, 0x17);
+			this.btnOK.Size = new Size(0x4b, 23);
 			this.btnOK.TabIndex = 4;
 			this.btnOK.Text = "OK";
 			this.btnOK.UseVisualStyleBackColor = true;
@@ -189,7 +189,7 @@ namespace DC_16 {
 			this.cboGrp1Addr.Size = new Size(70, 0x15);
 			this.cboGrp1Addr.TabIndex = 0x22;
 			this.lblChGrp1.AutoSize = true;
-			this.lblChGrp1.Location = new Point(10, 0x16);
+			this.lblChGrp1.Location = new Point(10, 22);
 			this.lblChGrp1.Name = "lblChGrp1";
 			this.lblChGrp1.Size = new Size(0x51, 13);
 			this.lblChGrp1.TabIndex = 0x20;

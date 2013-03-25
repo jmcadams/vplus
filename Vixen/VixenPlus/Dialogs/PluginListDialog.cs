@@ -32,7 +32,7 @@ namespace VixenPlus.Dialogs
 			try
 			{
 				ListViewItem item;
-				listViewPlugins.Columns[0].Width = listViewPlugins.Width - 0x19;
+				listViewPlugins.Columns[0].Width = listViewPlugins.Width - 25;
 				ListViewGroup group = listViewPlugins.Groups["listViewGroupOutput"];
 				ListViewGroup group2 = listViewPlugins.Groups["listViewGroupInput"];
 				List<IHardwarePlugin> list = OutputPlugins.LoadPlugins();

@@ -166,7 +166,7 @@ namespace Prop_SX_8s8d {
 			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.btnCancel.Location = new Point(160, 0xb1);
 			this.btnCancel.Name = "btnCancel";
-			this.btnCancel.Size = new Size(0x4b, 0x17);
+			this.btnCancel.Size = new Size(0x4b, 23);
 			this.btnCancel.TabIndex = 3;
 			this.btnCancel.Text = "Cancel";
 			this.btnCancel.UseVisualStyleBackColor = true;
@@ -174,7 +174,7 @@ namespace Prop_SX_8s8d {
 			this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.btnOK.Location = new Point(0x4f, 0xb0);
 			this.btnOK.Name = "btnOK";
-			this.btnOK.Size = new Size(0x4b, 0x17);
+			this.btnOK.Size = new Size(0x4b, 23);
 			this.btnOK.TabIndex = 4;
 			this.btnOK.Text = "OK";
 			this.btnOK.UseVisualStyleBackColor = true;

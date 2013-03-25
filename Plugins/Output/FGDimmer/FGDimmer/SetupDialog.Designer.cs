@@ -103,7 +103,7 @@ namespace FGDimmer {
 			this.checkBoxModule2.UseVisualStyleBackColor = true;
 			this.comboBoxModule1.DropDownStyle = ComboBoxStyle.DropDownList;
 			this.comboBoxModule1.FormattingEnabled = true;
-			this.comboBoxModule1.Location = new Point(0xd8, 0x1d);
+			this.comboBoxModule1.Location = new Point(0xd8, 29);
 			this.comboBoxModule1.Name = "comboBoxModule1";
 			this.comboBoxModule1.Size = new Size(0x38, 0x15);
 			this.comboBoxModule1.TabIndex = 1;
@@ -118,7 +118,7 @@ namespace FGDimmer {
 			this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.buttonOK.Location = new Point(0x8d, 0x167);
 			this.buttonOK.Name = "buttonOK";
-			this.buttonOK.Size = new Size(0x4b, 0x17);
+			this.buttonOK.Size = new Size(0x4b, 23);
 			this.buttonOK.TabIndex = 2;
 			this.buttonOK.Text = "OK";
 			this.buttonOK.UseVisualStyleBackColor = true;
@@ -127,7 +127,7 @@ namespace FGDimmer {
 			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.buttonCancel.Location = new Point(0xde, 0x167);
 			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.Size = new Size(0x4b, 0x17);
+			this.buttonCancel.Size = new Size(0x4b, 23);
 			this.buttonCancel.TabIndex = 3;
 			this.buttonCancel.Text = "Cancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;
@@ -147,7 +147,7 @@ namespace FGDimmer {
 			this.checkBoxHoldPort.UseVisualStyleBackColor = true;
 			this.buttonSerialSetup.Location = new Point(0x69, 0x11);
 			this.buttonSerialSetup.Name = "buttonSerialSetup";
-			this.buttonSerialSetup.Size = new Size(0x4b, 0x17);
+			this.buttonSerialSetup.Size = new Size(0x4b, 23);
 			this.buttonSerialSetup.TabIndex = 0;
 			this.buttonSerialSetup.Text = "Serial Setup";
 			this.buttonSerialSetup.UseVisualStyleBackColor = true;
@@ -161,7 +161,7 @@ namespace FGDimmer {
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Operation";
 			this.radioButtonPWM.AutoSize = true;
-			this.radioButtonPWM.Location = new Point(0x21, 0x1b);
+			this.radioButtonPWM.Location = new Point(0x21, 27);
 			this.radioButtonPWM.Name = "radioButtonPWM";
 			this.radioButtonPWM.Size = new Size(0x63, 0x11);
 			this.radioButtonPWM.TabIndex = 0;

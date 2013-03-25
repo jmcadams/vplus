@@ -166,7 +166,7 @@ namespace Prop_1_3s4d {
 			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.btnCancel.Location = new Point(0xa1, 0xb1);
 			this.btnCancel.Name = "btnCancel";
-			this.btnCancel.Size = new Size(0x4b, 0x17);
+			this.btnCancel.Size = new Size(0x4b, 23);
 			this.btnCancel.TabIndex = 3;
 			this.btnCancel.Text = "Cancel";
 			this.btnCancel.UseVisualStyleBackColor = true;
@@ -174,7 +174,7 @@ namespace Prop_1_3s4d {
 			this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.btnOK.Location = new Point(80, 0xb1);
 			this.btnOK.Name = "btnOK";
-			this.btnOK.Size = new Size(0x4b, 0x17);
+			this.btnOK.Size = new Size(0x4b, 23);
 			this.btnOK.TabIndex = 4;
 			this.btnOK.Text = "OK";
 			this.btnOK.UseVisualStyleBackColor = true;

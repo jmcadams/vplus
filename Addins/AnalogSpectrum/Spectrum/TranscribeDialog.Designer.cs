@@ -16,9 +16,9 @@ namespace Spectrum
 		{
 			this.progressBar = new ProgressBar();
 			base.SuspendLayout();
-			this.progressBar.Location = new Point(12, 0x16);
+			this.progressBar.Location = new Point(12, 22);
 			this.progressBar.Name = "progressBar";
-			this.progressBar.Size = new Size(0x13a, 0x17);
+			this.progressBar.Size = new Size(0x13a, 23);
 			this.progressBar.TabIndex = 0;
 			base.AutoScaleDimensions = new SizeF(6f, 13f);
 			base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

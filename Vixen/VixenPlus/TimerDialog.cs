@@ -82,7 +82,7 @@ namespace VixenPlus
 							checkBoxWednesday.Checked = (recurrenceData & 8) != 0;
 							checkBoxThursday.Checked = (recurrenceData & 0x10) != 0;
 							checkBoxFriday.Checked = (recurrenceData & 0x20) != 0;
-							checkBoxSaturday.Checked = (recurrenceData & 0x40) != 0;
+							checkBoxSaturday.Checked = (recurrenceData & 64) != 0;
 							goto Label_037C;
 						}
 					case RecurrenceType.Monthly:
@@ -200,7 +200,7 @@ namespace VixenPlus
 			else
 			{
 				_timer.RecurrenceStart = dateTimePickerRecurrenceStartDate.Value.Date;
-				_timer.RecurrenceEnd = dateTimePickerRecurrenceEndDate.Value.Date.Add(new TimeSpan(0x17, 0x3b, 0));
+				_timer.RecurrenceEnd = dateTimePickerRecurrenceEndDate.Value.Date.Add(new TimeSpan(23, 0x3b, 0));
 				switch (_timer.Recurrence)
 				{
 					case RecurrenceType.Weekly:
@@ -232,7 +232,7 @@ namespace VixenPlus
 							}
 							if (checkBoxSaturday.Checked)
 							{
-								num |= 0x40;
+								num |= 64;
 							}
 							_timer.RecurrenceData = num;
 							goto Label_054B;

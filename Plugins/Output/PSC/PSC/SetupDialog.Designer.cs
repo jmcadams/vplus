@@ -37,7 +37,7 @@ namespace PSC {
 			this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.buttonOK.Location = new Point(0xa1, 0xc3);
 			this.buttonOK.Name = "buttonOK";
-			this.buttonOK.Size = new Size(0x4b, 0x17);
+			this.buttonOK.Size = new Size(0x4b, 23);
 			this.buttonOK.TabIndex = 2;
 			this.buttonOK.Text = "OK";
 			this.buttonOK.UseVisualStyleBackColor = true;
@@ -46,13 +46,13 @@ namespace PSC {
 			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.buttonCancel.Location = new Point(0xf2, 0xc3);
 			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.Size = new Size(0x4b, 0x17);
+			this.buttonCancel.Size = new Size(0x4b, 23);
 			this.buttonCancel.TabIndex = 3;
 			this.buttonCancel.Text = "Cancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;
-			this.buttonSerialSetup.Location = new Point(0x73, 0x1d);
+			this.buttonSerialSetup.Location = new Point(0x73, 29);
 			this.buttonSerialSetup.Name = "buttonSerialSetup";
-			this.buttonSerialSetup.Size = new Size(0x4b, 0x17);
+			this.buttonSerialSetup.Size = new Size(0x4b, 23);
 			this.buttonSerialSetup.TabIndex = 0;
 			this.buttonSerialSetup.Text = "Serial Setup";
 			this.buttonSerialSetup.UseVisualStyleBackColor = true;

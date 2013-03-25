@@ -84,14 +84,14 @@ namespace K8055 {
 			this.groupBox1.Text = "Velleman K8805";
 			this.buttonDriverVersion.Location = new Point(0xba, 0x91);
 			this.buttonDriverVersion.Name = "buttonDriverVersion";
-			this.buttonDriverVersion.Size = new Size(0x74, 0x17);
+			this.buttonDriverVersion.Size = new Size(0x74, 23);
 			this.buttonDriverVersion.TabIndex = 0x11;
 			this.buttonDriverVersion.Text = "K8805 driver version";
 			this.buttonDriverVersion.UseVisualStyleBackColor = true;
 			this.buttonDriverVersion.Click += new EventHandler(this.buttonDriverVersion_Click);
 			this.buttonSearchDevices.Location = new Point(0x40, 0x91);
 			this.buttonSearchDevices.Name = "buttonSearchDevices";
-			this.buttonSearchDevices.Size = new Size(0x74, 0x17);
+			this.buttonSearchDevices.Size = new Size(0x74, 23);
 			this.buttonSearchDevices.TabIndex = 0x10;
 			this.buttonSearchDevices.Text = "Search devices";
 			this.buttonSearchDevices.UseVisualStyleBackColor = true;
@@ -119,7 +119,7 @@ namespace K8055 {
 			this.checkBoxDev1.UseVisualStyleBackColor = true;
 			this.checkBoxDev0.AutoSize = true;
 			this.checkBoxDev0.Enabled = false;
-			this.checkBoxDev0.Location = new Point(0x15, 0x19);
+			this.checkBoxDev0.Location = new Point(0x15, 25);
 			this.checkBoxDev0.Name = "checkBoxDev0";
 			this.checkBoxDev0.Size = new Size(15, 14);
 			this.checkBoxDev0.TabIndex = 12;
@@ -138,7 +138,7 @@ namespace K8055 {
 			this.numericUpDownDev3.Size = new Size(50, 20);
 			this.numericUpDownDev3.TabIndex = 10;
 			int[] bitsUpDownValue = new int[4];
-			bitsUpDownValue[0] = 0x19;
+			bitsUpDownValue[0] = 25;
 			this.numericUpDownDev3.Value = new decimal(bitsUpDownValue);
 			this.numericUpDownDev3.ValueChanged += new EventHandler(this.numericUpDownDev3_ValueChanged);
 			this.label7.AutoSize = true;
@@ -194,12 +194,12 @@ namespace K8055 {
 			this.label3.TabIndex = 3;
 			this.label3.Text = "Device address 1 will handle channels";
 			this.labelDev0ChannelRange.AutoSize = true;
-			this.labelDev0ChannelRange.Location = new Point(0x137, 0x19);
+			this.labelDev0ChannelRange.Location = new Point(0x137, 25);
 			this.labelDev0ChannelRange.Name = "labelDev0ChannelRange";
-			this.labelDev0ChannelRange.Size = new Size(0x19, 13);
+			this.labelDev0ChannelRange.Size = new Size(25, 13);
 			this.labelDev0ChannelRange.TabIndex = 2;
 			this.labelDev0ChannelRange.Text = "to 8";
-			this.numericUpDownDev0.Location = new Point(0xff, 0x17);
+			this.numericUpDownDev0.Location = new Point(0xff, 23);
 			int[] bitsUpDownDev0Min = new int[4];
 			bitsUpDownDev0Min[0] = 1;
 			this.numericUpDownDev0.Minimum = new decimal(bitsUpDownDev0Min);
@@ -211,7 +211,7 @@ namespace K8055 {
 			this.numericUpDownDev0.Value = new decimal(bits);
 			this.numericUpDownDev0.ValueChanged += new EventHandler(this.numericUpDownDev0_ValueChanged);
 			this.label1.AutoSize = true;
-			this.label1.Location = new Point(0x3d, 0x19);
+			this.label1.Location = new Point(0x3d, 25);
 			this.label1.Name = "label1";
 			this.label1.Size = new Size(0xbc, 13);
 			this.label1.TabIndex = 0;
@@ -220,7 +220,7 @@ namespace K8055 {
 			this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.buttonOK.Location = new Point(220, 0xc6);
 			this.buttonOK.Name = "buttonOK";
-			this.buttonOK.Size = new Size(0x4b, 0x17);
+			this.buttonOK.Size = new Size(0x4b, 23);
 			this.buttonOK.TabIndex = 1;
 			this.buttonOK.Text = "OK";
 			this.buttonOK.UseVisualStyleBackColor = true;
@@ -228,7 +228,7 @@ namespace K8055 {
 			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.buttonCancel.Location = new Point(0x12d, 0xc6);
 			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.Size = new Size(0x4b, 0x17);
+			this.buttonCancel.Size = new Size(0x4b, 23);
 			this.buttonCancel.TabIndex = 2;
 			this.buttonCancel.Text = "Cancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;

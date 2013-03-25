@@ -42,7 +42,7 @@ namespace Spectrum {
 			this.btnAutoMap.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
 			this.btnAutoMap.Location = new Point(12, 0x143);
 			this.btnAutoMap.Name = "buttonAutoMap";
-			this.btnAutoMap.Size = new Size(0x4b, 0x17);
+			this.btnAutoMap.Size = new Size(0x4b, 23);
 			this.btnAutoMap.TabIndex = 1;
 			this.btnAutoMap.Text = "Auto Map";
 			this.btnAutoMap.UseVisualStyleBackColor = true;
@@ -51,7 +51,7 @@ namespace Spectrum {
 			this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.buttonOK.Location = new Point(0x31c, 0x143);
 			this.buttonOK.Name = "buttonOK";
-			this.buttonOK.Size = new Size(0x4b, 0x17);
+			this.buttonOK.Size = new Size(0x4b, 23);
 			this.buttonOK.TabIndex = 1;
 			this.buttonOK.Text = "OK";
 			this.buttonOK.UseVisualStyleBackColor = true;
@@ -60,11 +60,11 @@ namespace Spectrum {
 			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.buttonCancel.Location = new Point(0x36d, 0x143);
 			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.Size = new Size(0x4b, 0x17);
+			this.buttonCancel.Size = new Size(0x4b, 23);
 			this.buttonCancel.TabIndex = 2;
 			this.buttonCancel.Text = "Cancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;
-			this.pictureBoxPlay.Location = new Point(0x1c4, 0x124);
+			this.pictureBoxPlay.Location = new Point(284, 0x124);
 			this.pictureBoxPlay.Name = "pictureBoxPlay";
 			this.pictureBoxPlay.Size = new Size(0x10, 0x10);
 			this.pictureBoxPlay.SizeMode = PictureBoxSizeMode.AutoSize;

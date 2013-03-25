@@ -87,7 +87,7 @@
 		{
 			TcpClient serverConnection = this.GetServerConnection();
 			byte[] array = new byte[9];
-			array[0] = 0x18;
+			array[0] = 24;
 			BitConverter.GetBytes(clientID).CopyTo(array, 1);
 			BitConverter.GetBytes(this.m_clientID).CopyTo(array, 5);
 			serverConnection.Client.Send(array);
@@ -104,7 +104,7 @@
 			}
 			TcpClient serverConnection = this.GetServerConnection();
 			byte[] array = new byte[5];
-			array[0] = 0x17;
+			array[0] = 23;
 			BitConverter.GetBytes(clientID).CopyTo(array, 1);
 			serverConnection.Client.Send(array);
 			ClientStatus status = null;

@@ -52,7 +52,7 @@ namespace VixenPlus.Dialogs
 					case 2:
 						return 0x3bc;
 				}
-				return Convert.ToUInt16(textBoxPort.Text, 0x10);
+				return Convert.ToUInt16(textBoxPort.Text, 16);
 			}
 		}
 

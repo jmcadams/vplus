@@ -608,7 +608,7 @@ namespace VixenPlus
 					                              (_sequenceProgram.EventSequences.Count == 1))
 						                             ? 0
 						                             : ((_isLooping || (_sequenceProgram.EventSequences.Count > (sequenceIndex + 1)))
-							                                ? (executableObject.Time - (_sequenceProgram.CrossFadeLength*0x3e8))
+							                                ? (executableObject.Time - (_sequenceProgram.CrossFadeLength*1000))
 							                                : 0);
 					context.StartOffset = 0;
 					if (executableObject.Audio != null)

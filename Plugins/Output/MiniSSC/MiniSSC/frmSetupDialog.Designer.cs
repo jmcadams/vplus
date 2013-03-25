@@ -85,7 +85,7 @@ namespace MiniSSC {
 			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.btnCancel.Location = new Point(160, 0x9a);
 			this.btnCancel.Name = "btnCancel";
-			this.btnCancel.Size = new Size(0x4b, 0x17);
+			this.btnCancel.Size = new Size(0x4b, 23);
 			this.btnCancel.TabIndex = 3;
 			this.btnCancel.Text = "Cancel";
 			this.btnCancel.UseVisualStyleBackColor = true;
@@ -93,7 +93,7 @@ namespace MiniSSC {
 			this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.btnOK.Location = new Point(0x4f, 0x99);
 			this.btnOK.Name = "btnOK";
-			this.btnOK.Size = new Size(0x4b, 0x17);
+			this.btnOK.Size = new Size(0x4b, 23);
 			this.btnOK.TabIndex = 4;
 			this.btnOK.Text = "OK";
 			this.btnOK.UseVisualStyleBackColor = true;
@@ -115,7 +115,7 @@ namespace MiniSSC {
 			this.lblAnaMax.TabIndex = 6;
 			this.lblAnaMax.Text = "Analog Max (100%) Output";
 			this.lblAnaMin.AutoSize = true;
-			this.lblAnaMin.Location = new Point(6, 0x19);
+			this.lblAnaMin.Location = new Point(6, 25);
 			this.lblAnaMin.Name = "lblAnaMin";
 			this.lblAnaMin.Size = new Size(0x76, 13);
 			this.lblAnaMin.TabIndex = 5;
@@ -133,7 +133,7 @@ namespace MiniSSC {
 			int[] AnalogMaxValue = new int[4];
 			AnalogMaxValue[0] = 200;
 			this.nudAnaMax.Value = new decimal(AnalogMaxValue);
-			this.nudAnaMin.Location = new Point(0x94, 0x17);
+			this.nudAnaMin.Location = new Point(0x94, 23);
 			int[] AnalogMinMin = new int[4];
 			AnalogMinMin[0] = 50;
 			this.nudAnaMin.Minimum = new decimal(AnalogMinMin);

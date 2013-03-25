@@ -59,7 +59,7 @@ namespace VixenEditor {
 			this.numericUpDownIntensityMin.BeginInit();
 			base.SuspendLayout();
 			this.label1.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
-			this.label1.Location = new Point(0x10, 0x17);
+			this.label1.Location = new Point(0x10, 23);
 			this.label1.Name = "label1";
 			this.label1.Size = new Size(0xec, 0x37);
 			this.label1.TabIndex = 1;
@@ -82,7 +82,7 @@ namespace VixenEditor {
 			this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.buttonOK.Location = new Point(0x7c, 0x1b1);
 			this.buttonOK.Name = "buttonOK";
-			this.buttonOK.Size = new Size(0x4b, 0x17);
+			this.buttonOK.Size = new Size(0x4b, 23);
 			this.buttonOK.TabIndex = 4;
 			this.buttonOK.Text = "OK";
 			this.buttonOK.UseVisualStyleBackColor = true;
@@ -90,7 +90,7 @@ namespace VixenEditor {
 			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.buttonCancel.Location = new Point(0xcd, 0x1b1);
 			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.Size = new Size(0x4b, 0x17);
+			this.buttonCancel.Size = new Size(0x4b, 23);
 			this.buttonCancel.TabIndex = 5;
 			this.buttonCancel.Text = "Cancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;
@@ -108,7 +108,7 @@ namespace VixenEditor {
 			this.checkBoxUseSaturation.ForeColor = Color.FromArgb(0, 70, 0xd5);
 			this.checkBoxUseSaturation.Location = new Point(8, -4);
 			this.checkBoxUseSaturation.Name = "checkBoxUseSaturation";
-			this.checkBoxUseSaturation.Size = new Size(110, 0x18);
+			this.checkBoxUseSaturation.Size = new Size(110, 24);
 			this.checkBoxUseSaturation.TabIndex = 0;
 			this.checkBoxUseSaturation.Text = "Ensure Saturation";
 			this.checkBoxUseSaturation.UseVisualStyleBackColor = true;
@@ -139,7 +139,7 @@ namespace VixenEditor {
 			this.numericUpDownPeriodLength.Value = new decimal(bitsValue);
 			this.numericUpDownPeriodLength.Enter += new EventHandler(this.UpDownEnter);
 			this.label4.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
-			this.label4.Location = new Point(0x10, 0x1b);
+			this.label4.Location = new Point(0x10, 27);
 			this.label4.Name = "label4";
 			this.label4.Size = new Size(0xec, 0x21);
 			this.label4.TabIndex = 0;
@@ -162,7 +162,7 @@ namespace VixenEditor {
 			this.label9.AutoSize = true;
 			this.label9.Location = new Point(0x7d, 0x4b);
 			this.label9.Name = "label9";
-			this.label9.Size = new Size(0x19, 13);
+			this.label9.Size = new Size(25, 13);
 			this.label9.TabIndex = 5;
 			this.label9.Text = "and";
 			this.label8.AutoSize = true;
@@ -194,7 +194,7 @@ namespace VixenEditor {
 			this.label6.TabIndex = 2;
 			this.label6.Text = "Between";
 			this.label5.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
-			this.label5.Location = new Point(0x10, 0x1d);
+			this.label5.Location = new Point(0x10, 29);
 			this.label5.Name = "label5";
 			this.label5.Size = new Size(0xec, 0x21);
 			this.label5.TabIndex = 1;

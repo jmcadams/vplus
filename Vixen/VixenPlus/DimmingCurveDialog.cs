@@ -206,7 +206,7 @@ namespace VixenPlus
 			{
 				if (selectedItem.DimmingCurve == null)
 				{
-					selectedItem.DimmingCurve = new byte[0x100];
+					selectedItem.DimmingCurve = new byte[256];
 					ResetToLinear(selectedItem.DimmingCurve);
 				}
 				ShowChannel(selectedItem);
@@ -573,7 +573,7 @@ namespace VixenPlus
 			if (_usingActualLevels)
 			{
 				_availableValues = 256f;
-				pbMini.Size = new Size(0x100, 0x100);
+				pbMini.Size = new Size(256, 256);
 			}
 			else
 			{

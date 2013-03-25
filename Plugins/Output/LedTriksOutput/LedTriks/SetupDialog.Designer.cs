@@ -21,9 +21,9 @@ namespace LedTriks {
 			this.buttonCancel = new Button();
 			this.groupBox1.SuspendLayout();
 			base.SuspendLayout();
-			this.buttonParallelSetup.Location = new Point(0x4f, 0x1c);
+			this.buttonParallelSetup.Location = new Point(0x4f, 28);
 			this.buttonParallelSetup.Name = "buttonParallelSetup";
-			this.buttonParallelSetup.Size = new Size(0x6f, 0x17);
+			this.buttonParallelSetup.Size = new Size(0x6f, 23);
 			this.buttonParallelSetup.TabIndex = 0;
 			this.buttonParallelSetup.Text = "Parallel Port Setup";
 			this.buttonParallelSetup.UseVisualStyleBackColor = true;
@@ -48,7 +48,7 @@ namespace LedTriks {
 			this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.buttonOK.Location = new Point(0x7c, 140);
 			this.buttonOK.Name = "buttonOK";
-			this.buttonOK.Size = new Size(0x4b, 0x17);
+			this.buttonOK.Size = new Size(0x4b, 23);
 			this.buttonOK.TabIndex = 3;
 			this.buttonOK.Text = "OK";
 			this.buttonOK.UseVisualStyleBackColor = true;
@@ -56,7 +56,7 @@ namespace LedTriks {
 			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.buttonCancel.Location = new Point(0xcd, 140);
 			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.Size = new Size(0x4b, 0x17);
+			this.buttonCancel.Size = new Size(0x4b, 23);
 			this.buttonCancel.TabIndex = 4;
 			this.buttonCancel.Text = "Cancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;

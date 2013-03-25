@@ -325,7 +325,7 @@ namespace VixenPlus
 			var brush = new LinearGradientBrush(new Rectangle(x + 1, y + 1, width - 1, _headerHeight),
 			                                    Color.FromArgb(0x59, 0x87, 0xd6), Color.FromArgb(4, 0x39, 0x94), 90f);
 			var brush2 = new LinearGradientBrush(new Rectangle(x + 1, y + 1, width - 1, width - 1),
-			                                     Color.FromArgb(0x77, 0xa5, 0xd6), Color.FromArgb(0x18, 0x4d, 0x94), 90f);
+			                                     Color.FromArgb(0x77, 0xa5, 0xd6), Color.FromArgb(24, 0x4d, 0x94), 90f);
 			_buttonLeftBounds = new Rectangle(x, y, width, width);
 			_buttonRightBounds = new Rectangle((x + width) + num2, y, width, width);
 			g.FillRectangle(hoverLeft ? brush2 : brush, (x + 1), (y + 1), (width - 1), (width - 1));
@@ -489,7 +489,7 @@ namespace VixenPlus
 			const int num3 = TimeGutter >> 1;
 			int num4 = -1;
 			for (num = ((_drawingArea.Top + 3) + _headerHeight) + (((vScrollBar.Value%2) == 0) ? 0 : HalfHourHeight);
-			     (num < _drawingArea.Height) && (num2 < 0x18);
+			     (num < _drawingArea.Height) && (num2 < 24);
 			     num += HalfHourHeight*2)
 			{
 				string str;
@@ -578,7 +578,7 @@ namespace VixenPlus
 			Timer timer = FindApplicableTimerAt(point);
 			int hour = (vScrollBar.Value + (viewRelativeY/HalfHourHeight))/2;
 			int minute = ((vScrollBar.Value + (viewRelativeY/HalfHourHeight))%2)*30;
-			if (hour < 0x18)
+			if (hour < 24)
 			{
 				TimerDialog dialog = timer == null
 					                     ? new TimerDialog(new DateTime(_currentDate.Year, _currentDate.Month, _currentDate.Day, hour,

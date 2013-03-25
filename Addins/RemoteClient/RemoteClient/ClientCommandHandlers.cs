@@ -228,7 +228,7 @@
         private static byte[] RetrieveRemoteObject(byte type, string name, Socket socket)
         {
             byte[] array = new byte[3 + name.Length];
-            array[0] = 0x16;
+            array[0] = 22;
             array[1] = type;
             array[2] = (byte) name.Length;
             Encoding.ASCII.GetBytes(name).CopyTo(array, 3);

@@ -41,7 +41,7 @@ namespace K8055
             this.m_deviceStarts[0] = setupData.GetInteger(setupNode, "Device0", 0);
             this.m_deviceStarts[1] = setupData.GetInteger(setupNode, "Device1", 8);
             this.m_deviceStarts[2] = setupData.GetInteger(setupNode, "Device2", 0x10);
-            this.m_deviceStarts[3] = setupData.GetInteger(setupNode, "Device3", 0x18);
+            this.m_deviceStarts[3] = setupData.GetInteger(setupNode, "Device3", 24);
             this.m_offset = int.Parse(this.m_setupNode.Attributes["from"].Value) - 1;
         }
 

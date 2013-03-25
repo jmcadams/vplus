@@ -90,7 +90,7 @@ namespace VixenPlus.Dialogs
 			comboBoxStop.Items.Add(StopBits.Two);
 			if (serialPort == null)
 			{
-				serialPort = new SerialPort("COM1", 0x9600, Parity.None, 8, StopBits.One);
+				serialPort = new SerialPort("COM1", 38400, Parity.None, 8, StopBits.One);
 			}
 			comboBoxPortName.SelectedIndex = comboBoxPortName.Items.IndexOf(serialPort.PortName);
 			comboBoxBaudRate.SelectedItem = serialPort.BaudRate.ToString(CultureInfo.InvariantCulture);

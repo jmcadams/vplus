@@ -71,7 +71,7 @@ namespace FC_4 {
 			this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.btnOK.Location = new Point(0x4f, 0xe3);
 			this.btnOK.Name = "btnOK";
-			this.btnOK.Size = new Size(0x4b, 0x17);
+			this.btnOK.Size = new Size(0x4b, 23);
 			this.btnOK.TabIndex = 2;
 			this.btnOK.Text = "OK";
 			this.btnOK.UseVisualStyleBackColor = true;
@@ -80,7 +80,7 @@ namespace FC_4 {
 			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.btnCancel.Location = new Point(160, 0xe3);
 			this.btnCancel.Name = "btnCancel";
-			this.btnCancel.Size = new Size(0x4b, 0x17);
+			this.btnCancel.Size = new Size(0x4b, 23);
 			this.btnCancel.TabIndex = 3;
 			this.btnCancel.Text = "Cancel";
 			this.btnCancel.UseVisualStyleBackColor = true;
@@ -114,7 +114,7 @@ namespace FC_4 {
 			this.lblAddr.AutoSize = true;
 			this.lblAddr.Location = new Point(6, 0x4a);
 			this.lblAddr.Name = "lblAddr";
-			this.lblAddr.Size = new Size(0x1d, 13);
+			this.lblAddr.Size = new Size(29, 13);
 			this.lblAddr.TabIndex = 4;
 			this.lblAddr.Text = "Addr";
 			this.cboBaud.DropDownStyle = ComboBoxStyle.DropDownList;

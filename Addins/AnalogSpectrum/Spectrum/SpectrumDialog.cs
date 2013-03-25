@@ -79,7 +79,7 @@ namespace Spectrum
 			}
 			ErrCheck(Factory.System_Create(ref _system));
 			ErrCheck(_system.init(0x20, INITFLAG.NORMAL, IntPtr.Zero));
-			int width = _bands.Count * 0x1c;
+			int width = _bands.Count * 28;
 			_bandsBounds = new Rectangle(((ClientRectangle.Width - 40 - width) >> 1) + 40, 50, width, 100);
 			_maxChannelsShown = ClientRectangle.Width / _channelBoxWidth - 2;
 			_leftArrowEnabled = false;
@@ -106,7 +106,7 @@ namespace Spectrum
 			for (int i = 0; i < _bands.Count; i++)
 			{
 				FrequencyBand band = _bands[i];
-				band.Region = new Rectangle((3 + _bandsBounds.Left) + (i * 0x1c), 0x4b, 0x16, 0x4b);
+				band.Region = new Rectangle((3 + _bandsBounds.Left) + (i * 28), 0x4b, 22, 0x4b);
 				band.MinSliderRegion = new Rectangle(band.Region.X, (band.Region.Bottom - (band.Region.Height / 2)) - 4, band.Region.Width, 4);
 				band.MaxSliderRegion = new Rectangle(band.Region.X, band.Region.Top, band.Region.Width, 4);
 				if (!_mUserSetResponseLevels)
@@ -526,7 +526,7 @@ namespace Spectrum
 			int left;
 			Graphics graphics = e.Graphics;
 			graphics.DrawRectangle(Pens.Black, _bandsBounds);
-			for (left = _bandsBounds.Left + 0x1c; left < _bandsBounds.Right; left += 0x1c)
+			for (left = _bandsBounds.Left + 28; left < _bandsBounds.Right; left += 28)
 			{
 				graphics.DrawLine(Pens.Black, left, _bandsBounds.Top, left, _bandsBounds.Bottom);
 			}
@@ -536,7 +536,7 @@ namespace Spectrum
 			{
 				graphics.FillRectangle(Brushes.Black, _bands[i].Region);
 				graphics.DrawString(_bands[i].CenterFrequency, _bandFont, Brushes.DarkSlateBlue, left, num4);
-				left += 0x1c;
+				left += 28;
 			}
 			if (_playing)
 			{

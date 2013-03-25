@@ -36,7 +36,7 @@ namespace VixenPlus
 			_eventValues = null;
 			_eventPeriod = 100;
 			_minimumLevel = 0;
-			_maximumLevel = 0xff;
+			_maximumLevel = 255;
 			_audio = null;
 			_totalEventPeriods = 0;
 			_windowWidth = 0;
@@ -60,7 +60,7 @@ namespace VixenPlus
 			_eventValues = null;
 			_eventPeriod = 100;
 			_minimumLevel = 0;
-			_maximumLevel = 0xff;
+			_maximumLevel = 255;
 			_audio = null;
 			_totalEventPeriods = 0;
 			_windowWidth = 0;
@@ -94,10 +94,10 @@ namespace VixenPlus
 			{
 				_eventPeriod = 100;
 				_minimumLevel = 0;
-				_maximumLevel = 0xff;
+				_maximumLevel = 255;
 				_audioDeviceIndex = -1;
 			}
-			Time = 0xea60;
+			Time = 60000;
 		}
 
 		public Audio Audio
@@ -315,7 +315,7 @@ namespace VixenPlus
 					var buffer = new byte[_channels.Count];
 					for (int i = 0; i < _channels.Count; i++)
 					{
-						buffer[i] = _channels[i].Enabled ? ((byte) 0xff) : ((byte) 0);
+						buffer[i] = _channels[i].Enabled ? ((byte) 255) : ((byte) 0);
 					}
 					return new[] {buffer};
 				}
@@ -327,7 +327,7 @@ namespace VixenPlus
 				{
 					for (int i = 0; i < _channels.Count; i++)
 					{
-						_channels[i].Enabled = value[0][i] == 0xff;
+						_channels[i].Enabled = value[0][i] == 255;
 					}
 				}
 			}

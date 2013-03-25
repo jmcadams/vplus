@@ -15,7 +15,7 @@
     {
         public int BoardPixelHeight = 0x10;
         public int BoardPixelWidth = 0x30;
-        public int FrameLength = 0x19;
+        public int FrameLength = 25;
         public bool IgnoreFontDescent = false;
         private int m_fontHeight;
 		//private int m_staticCount = 0;

@@ -87,7 +87,7 @@
             this.groupBox.TabStop = false;
             this.groupBox.Text = "groupBox1";
             this.label1.AutoSize = true;
-            this.label1.Location = new Point(6, 0x1b);
+            this.label1.Location = new Point(6, 27);
             this.label1.Name = "label1";
             this.label1.Size = new Size(0x48, 13);
             this.label1.TabIndex = 0;
@@ -96,13 +96,13 @@
             this.comboBoxConfiguration.DropDownStyle = ComboBoxStyle.DropDownList;
             this.comboBoxConfiguration.FormattingEnabled = true;
             this.comboBoxConfiguration.Items.AddRange(new object[] { "Software PWM", "Hardware PWM" });
-            this.comboBoxConfiguration.Location = new Point(0x54, 0x18);
+            this.comboBoxConfiguration.Location = new Point(0x54, 24);
             this.comboBoxConfiguration.Name = "comboBoxConfiguration";
             this.comboBoxConfiguration.Size = new Size(0x97, 0x15);
             this.comboBoxConfiguration.TabIndex = 1;
             this.buttonRemove.Location = new Point(9, 0x3a);
             this.buttonRemove.Name = "buttonRemove";
-            this.buttonRemove.Size = new Size(0x4b, 0x17);
+            this.buttonRemove.Size = new Size(0x4b, 23);
             this.buttonRemove.TabIndex = 2;
             this.buttonRemove.Text = "Remove";
             this.buttonRemove.UseVisualStyleBackColor = true;
@@ -110,9 +110,9 @@
             this.buttonUp.Anchor = AnchorStyles.Right | AnchorStyles.Top;
             this.buttonUp.FlatStyle = FlatStyle.System;
             this.buttonUp.Font = new Font("Wingdings", 8.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            this.buttonUp.Location = new Point(0xf1, 0x17);
+            this.buttonUp.Location = new Point(0xf1, 23);
             this.buttonUp.Name = "buttonUp";
-            this.buttonUp.Size = new Size(0x19, 0x17);
+            this.buttonUp.Size = new Size(25, 23);
             this.buttonUp.TabIndex = 3;
             this.buttonUp.Text = "\x00e9";
             this.buttonUp.UseVisualStyleBackColor = true;
@@ -120,9 +120,9 @@
             this.buttonDown.Anchor = AnchorStyles.Right | AnchorStyles.Top;
             this.buttonDown.FlatStyle = FlatStyle.System;
             this.buttonDown.Font = new Font("Wingdings", 8.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            this.buttonDown.Location = new Point(0x110, 0x17);
+            this.buttonDown.Location = new Point(0x110, 23);
             this.buttonDown.Name = "buttonDown";
-            this.buttonDown.Size = new Size(0x19, 0x17);
+            this.buttonDown.Size = new Size(25, 23);
             this.buttonDown.TabIndex = 4;
             this.buttonDown.Text = "\x00ea";
             this.buttonDown.UseVisualStyleBackColor = true;

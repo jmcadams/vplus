@@ -36,12 +36,12 @@ namespace VixenPlus
 			{
 				Cursor = Cursors.Default;
 			}
-			int num = (listViewMapping.Width - 0x16) >> 1;
+			int num = (listViewMapping.Width - 22) >> 1;
 			listViewMapping.Columns[0].Width = num;
 			listViewMapping.Columns[1].Width = num;
 			comboBoxDestChannels.Width = num;
 			comboBoxDestChannels.Left = num + listViewMapping.Left;
-			_itemsShowing = listViewMapping.Height/0x11;
+			_itemsShowing = listViewMapping.Height/17;
 		}
 
 		private void buttonApply_Click(object sender, EventArgs e)

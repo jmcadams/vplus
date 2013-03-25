@@ -11,7 +11,7 @@ namespace VixenPlus
 		public int FadeStartTickCount;
 		public int LastIndex = -1;
 		public byte[] LastPeriod = null;
-		public int MaxEvent = 0x7fffffff;
+		public int MaxEvent = 2147483647;
 		public RouterContext RouterContext;
 		public int SequenceIndex = 0;
 		public int SequenceTickLength;

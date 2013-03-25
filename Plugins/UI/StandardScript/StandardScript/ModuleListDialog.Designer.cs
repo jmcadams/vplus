@@ -23,7 +23,7 @@ namespace StandardScript {
 			this.label1.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
 			this.label1.Location = new Point(13, 14);
 			this.label1.Name = "label1";
-			this.label1.Size = new Size(0x10b, 0x1d);
+			this.label1.Size = new Size(0x10b, 29);
 			this.label1.TabIndex = 0;
 			this.label1.Text = "Select the script modules you will be using.";
 			this.checkedListBoxModules.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
@@ -36,7 +36,7 @@ namespace StandardScript {
 			this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.buttonOK.Location = new Point(0x7c, 0xe7);
 			this.buttonOK.Name = "buttonOK";
-			this.buttonOK.Size = new Size(0x4b, 0x17);
+			this.buttonOK.Size = new Size(0x4b, 23);
 			this.buttonOK.TabIndex = 2;
 			this.buttonOK.Text = "OK";
 			this.buttonOK.UseVisualStyleBackColor = true;
@@ -44,7 +44,7 @@ namespace StandardScript {
 			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.buttonCancel.Location = new Point(0xcd, 0xe7);
 			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.Size = new Size(0x4b, 0x17);
+			this.buttonCancel.Size = new Size(0x4b, 23);
 			this.buttonCancel.TabIndex = 3;
 			this.buttonCancel.Text = "Cancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;

@@ -68,7 +68,7 @@ namespace LedTriksUtil {
 			this.labelBoardLayout.Text = "label1";
 			this.buttonBoardLayout.Location = new Point(15, 30);
 			this.buttonBoardLayout.Name = "buttonBoardLayout";
-			this.buttonBoardLayout.Size = new Size(0x4b, 0x17);
+			this.buttonBoardLayout.Size = new Size(0x4b, 23);
 			this.buttonBoardLayout.TabIndex = 0;
 			this.buttonBoardLayout.Text = "Board layout";
 			this.buttonBoardLayout.UseVisualStyleBackColor = true;
@@ -77,7 +77,7 @@ namespace LedTriksUtil {
 			this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.buttonOK.Location = new Point(0x6c, 0x10b);
 			this.buttonOK.Name = "buttonOK";
-			this.buttonOK.Size = new Size(0x4b, 0x17);
+			this.buttonOK.Size = new Size(0x4b, 23);
 			this.buttonOK.TabIndex = 2;
 			this.buttonOK.Text = "OK";
 			this.buttonOK.UseVisualStyleBackColor = true;
@@ -85,7 +85,7 @@ namespace LedTriksUtil {
 			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.buttonCancel.Location = new Point(0xbd, 0x10b);
 			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.Size = new Size(0x4b, 0x17);
+			this.buttonCancel.Size = new Size(0x4b, 23);
 			this.buttonCancel.TabIndex = 3;
 			this.buttonCancel.Text = "Cancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;
@@ -115,7 +115,7 @@ namespace LedTriksUtil {
 			this.buttonLEDColor.BackColor = Color.Red;
 			this.buttonLEDColor.Location = new Point(0x7f, 0x39);
 			this.buttonLEDColor.Name = "buttonLEDColor";
-			this.buttonLEDColor.Size = new Size(0x4b, 0x17);
+			this.buttonLEDColor.Size = new Size(0x4b, 23);
 			this.buttonLEDColor.TabIndex = 3;
 			this.buttonLEDColor.UseVisualStyleBackColor = false;
 			this.buttonLEDColor.Click += new EventHandler(this.buttonLEDColor_Click);
@@ -125,7 +125,7 @@ namespace LedTriksUtil {
 			this.label2.Size = new Size(0x36, 13);
 			this.label2.TabIndex = 2;
 			this.label2.Text = "LED color";
-			this.numericUpDownLEDSize.Location = new Point(0x7f, 0x1a);
+			this.numericUpDownLEDSize.Location = new Point(0x7f, 26);
 			int[] LEDSizeMin = new int[4];
 			LEDSizeMin[0] = 1;
 			this.numericUpDownLEDSize.Minimum = new decimal(LEDSizeMin);
@@ -136,7 +136,7 @@ namespace LedTriksUtil {
 			LEDSizeValue[0] = 1;
 			this.numericUpDownLEDSize.Value = new decimal(LEDSizeValue);
 			this.label1.AutoSize = true;
-			this.label1.Location = new Point(12, 0x1c);
+			this.label1.Location = new Point(12, 28);
 			this.label1.Name = "label1";
 			this.label1.Size = new Size(0x4c, 13);
 			this.label1.TabIndex = 0;

@@ -30,7 +30,7 @@ namespace JoystickInput {
 			this.buttonClose.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.buttonClose.Location = new Point(0xe1, 0x10c);
 			this.buttonClose.Name = "buttonClose";
-			this.buttonClose.Size = new Size(0x4b, 0x17);
+			this.buttonClose.Size = new Size(0x4b, 23);
 			this.buttonClose.TabIndex = 1;
 			this.buttonClose.Text = "Close";
 			this.buttonClose.UseVisualStyleBackColor = true;

@@ -298,8 +298,8 @@ namespace VixenPlus.Dialogs
 					Name = _soundChannel.SoundName,
 					Duration = (int) _soundChannel.SoundLength
 				};
-			labelAudioLength.Text = string.Format("{0:d2}:{1:d2}.{2:d3}", audio.Duration/0xea60, (audio.Duration%0xea60)/0x3e8,
-			                                      audio.Duration%0x3e8);
+			labelAudioLength.Text = string.Format("{0:d2}:{1:d2}.{2:d3}", audio.Duration/60000, (audio.Duration%60000)/1000,
+			                                      audio.Duration%1000);
 			labelAudioName.Text = string.Format("\"{0}\"", audio.Name);
 			UpdateAudioButtons();
 			return audio;
@@ -361,7 +361,7 @@ namespace VixenPlus.Dialogs
 					}
 					MethodInvoker invoker = delegate
 						{
-							labelTime.Text = string.Format("{0:d2}:{1:d2}.{2:d3}", position/0xea60, (position%0xea60)/0x3e8, position%0x3e8);
+							labelTime.Text = string.Format("{0:d2}:{1:d2}.{2:d3}", position/60000, (position%60000)/1000, position%1000);
 							trackBarPosition.Value = (int) ((position)/_smallChange);
 						};
 					BeginInvoke(invoker);
@@ -401,7 +401,7 @@ namespace VixenPlus.Dialogs
 		private void trackBarPosition_Scroll(object sender, EventArgs e)
 		{
 			var num = (int) (trackBarPosition.Value*_smallChange);
-			labelTime.Text = string.Format("{0:d2}:{1:d2}.{2:d3}", num/0xea60, (num%0xea60)/0x3e8, num%0x3e8);
+			labelTime.Text = string.Format("{0:d2}:{1:d2}.{2:d3}", num/60000, (num%60000)/1000, num%1000);
 		}
 
 		private int TrackBarValue()
@@ -431,7 +431,7 @@ namespace VixenPlus.Dialogs
 					}
 					else
 					{
-						_keyStates[_keyMap[((int) e.KeyCode) - 0x31]] = state;
+						_keyStates[_keyMap[((int) e.KeyCode) - 49]] = state;
 					}
 				}
 				else if ((e.KeyCode == Keys.ControlKey) && (listBoxChannels.SelectedItem != null))
@@ -469,21 +469,21 @@ namespace VixenPlus.Dialogs
 					             ? _eventSequence.Audio.Duration
 					             : Math.Max(_eventSequence.Time, _eventSequence.Audio.Duration))
 				          : _eventSequence.Time;
-			labelTotalTime.Text = string.Format("/ {0:d2}:{1:d2}.{2:d3}", num/0xea60, (num%0xea60)/0x3e8, num%0x3e8);
+			labelTotalTime.Text = string.Format("/ {0:d2}:{1:d2}.{2:d3}", num/60000, (num%60000)/1000, num%1000);
 			return num;
 		}
 
 		private void UpdateTrackbar()
 		{
-			if (trackBarPosition.Maximum < 0x7d0)
+			if (trackBarPosition.Maximum < 2000)
 			{
 				_smallChange = 100f;
 			}
-			else if (trackBarPosition.Maximum < 0x4e20)
+			else if (trackBarPosition.Maximum < 20000)
 			{
 				_smallChange = 1000f;
 			}
-			else if (trackBarPosition.Maximum < 0xea60)
+			else if (trackBarPosition.Maximum < 60000)
 			{
 				_smallChange = 2000f;
 			}

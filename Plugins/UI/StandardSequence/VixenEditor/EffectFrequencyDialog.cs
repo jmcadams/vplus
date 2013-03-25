@@ -28,7 +28,7 @@ namespace VixenEditor {
 			effectGenerator(this.m_effectValues, new int[] { 1 });
 			this.m_tickCount = 0;
 			Point[][] pointArray = new Point[4][];
-			Point[] pointArray2 = new Point[] { new Point(0x16, 0x2e), new Point(0x25, 0x5b), new Point(7, 0x5b) };
+			Point[] pointArray2 = new Point[] { new Point(22, 0x2e), new Point(0x25, 0x5b), new Point(7, 0x5b) };
 			pointArray[0] = pointArray2;
 			pointArray2 = new Point[] { new Point(0x43, 0x2e), new Point(0x52, 0x5b), new Point(0x34, 0x5b) };
 			pointArray[1] = pointArray2;

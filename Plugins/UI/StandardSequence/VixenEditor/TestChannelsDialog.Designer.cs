@@ -31,7 +31,7 @@ namespace VixenEditor {
 			this.buttonDone.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.buttonDone.Location = new Point(0xff, 0x14b);
 			this.buttonDone.Name = "buttonDone";
-			this.buttonDone.Size = new Size(0x4b, 0x17);
+			this.buttonDone.Size = new Size(0x4b, 23);
 			this.buttonDone.TabIndex = 3;
 			this.buttonDone.Text = "Done";
 			this.buttonDone.UseVisualStyleBackColor = true;
@@ -49,7 +49,7 @@ namespace VixenEditor {
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Channels";
 			this.listBoxChannels.FormattingEnabled = true;
-			this.listBoxChannels.Location = new Point(6, 0x19);
+			this.listBoxChannels.Location = new Point(6, 25);
 			this.listBoxChannels.Name = "listBoxChannels";
 			this.listBoxChannels.SelectionMode = SelectionMode.MultiExtended;
 			this.listBoxChannels.Size = new Size(0xfe, 0xee);
@@ -71,14 +71,14 @@ namespace VixenEditor {
 			this.trackBar.ValueChanged += new EventHandler(this.trackBar_ValueChanged);
 			this.buttonUnselectAll.Location = new Point(0x57, 0x10d);
 			this.buttonUnselectAll.Name = "buttonUnselectAll";
-			this.buttonUnselectAll.Size = new Size(0x4b, 0x17);
+			this.buttonUnselectAll.Size = new Size(0x4b, 23);
 			this.buttonUnselectAll.TabIndex = 5;
 			this.buttonUnselectAll.Text = "Unselect all";
 			this.buttonUnselectAll.UseVisualStyleBackColor = true;
 			this.buttonUnselectAll.Click += new EventHandler(this.buttonAllOff_Click);
 			this.buttonSelectAll.Location = new Point(6, 0x10d);
 			this.buttonSelectAll.Name = "buttonSelectAll";
-			this.buttonSelectAll.Size = new Size(0x4b, 0x17);
+			this.buttonSelectAll.Size = new Size(0x4b, 23);
 			this.buttonSelectAll.TabIndex = 4;
 			this.buttonSelectAll.Text = "Select all";
 			this.buttonSelectAll.UseVisualStyleBackColor = true;

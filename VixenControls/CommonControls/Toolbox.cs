@@ -169,7 +169,7 @@
                         }
                         if (item.Image != null)
                         {
-                            graphics.DrawImage(item.Image, item.Bounds.Left + 3, y + 3, 0x18, 0x18);
+                            graphics.DrawImage(item.Image, item.Bounds.Left + 3, y + 3, 24, 24);
                         }
                         graphics.DrawString(item.Name, this.m_categoryItemFont, Brushes.Black, 40f, (float) (y + 7));
                         y += 30;

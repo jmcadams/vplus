@@ -244,7 +244,7 @@ namespace VixenPlus.Dialogs
 			{
 				num4 = 0;
 			}
-			num4 = (num4 + (num3*0x3e8)) + (num2*0xea60);
+			num4 = (num4 + (num3*1000)) + (num2*60000);
 			if (num4 == 0)
 			{
 				MessageBox.Show(
@@ -274,9 +274,9 @@ namespace VixenPlus.Dialogs
 
 		private void SetSequenceTime()
 		{
-			textBoxTime.Text = string.Format("{0:d2}:{1:d2}.{2:d3}", _eventSequence.Time/0xea60,
-			                                 (_eventSequence.Time%0xea60)/0x3e8,
-			                                 _eventSequence.Time%0x3e8);
+			textBoxTime.Text = string.Format("{0:d2}:{1:d2}.{2:d3}", _eventSequence.Time/60000,
+			                                 (_eventSequence.Time%60000)/1000,
+			                                 _eventSequence.Time%1000);
 		}
 
 		private void tabControl_Deselecting(object sender, TabControlCancelEventArgs e)
@@ -299,7 +299,7 @@ namespace VixenPlus.Dialogs
 						try
 						{
 							num = Convert.ToInt32(textBoxEventPeriod.Text);
-							if (num < 0x19)
+							if (num < 25)
 							{
 								text = "While possible, event periods less than 25 ms aren't realistic or practical.";
 								goto Label_0339;
@@ -336,7 +336,7 @@ namespace VixenPlus.Dialogs
 							text = textBoxChannelCount.Text + " is not a valid number for the channel count";
 							goto Label_0339;
 						}
-						if ((num2 > 0x400) &&
+						if ((num2 > 1024) &&
 						    (MessageBox.Show(string.Format("Are you sure you really want {0} channels?", num2), Vendor.ProductName,
 						                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes))
 						{

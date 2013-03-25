@@ -32,7 +32,7 @@ namespace VixenPlus
 					Controller = strArray[2];
 					CurveData = BreakCurveDataString(strArray[3]);
 				}
-				else if ((CurveData = BreakCurveDataString(strArray[3])).Length == 0x100)
+				else if ((CurveData = BreakCurveDataString(strArray[3])).Length == 256)
 				{
 					Controller = "";
 				}

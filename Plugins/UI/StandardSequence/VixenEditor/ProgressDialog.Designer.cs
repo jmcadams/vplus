@@ -15,7 +15,7 @@ namespace VixenEditor {
 			this.panel1.SuspendLayout();
 			base.SuspendLayout();
 			this.labelMessage.AutoSize = true;
-			this.labelMessage.Location = new Point(11, 0x1d);
+			this.labelMessage.Location = new Point(11, 29);
 			this.labelMessage.Name = "labelMessage";
 			this.labelMessage.Size = new Size(0x36, 13);
 			this.labelMessage.TabIndex = 0;

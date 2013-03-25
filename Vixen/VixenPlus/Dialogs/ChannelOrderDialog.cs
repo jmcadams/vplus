@@ -244,7 +244,7 @@ namespace VixenPlus.Dialogs
 					if (item.Color.ToArgb() != -1)
 					{
 						pen.Color = item.Color;
-						brush.Color = Color.FromArgb(0x40, item.Color);
+						brush.Color = Color.FromArgb(64, item.Color);
 					}
 					else
 					{

@@ -36,7 +36,7 @@ namespace VixenEditor {
 			this.numericUpDownLevel.TabIndex = 1;
 			this.buttonReset.Location = new Point(0x49, 0x8e);
 			this.buttonReset.Name = "buttonReset";
-			this.buttonReset.Size = new Size(0x89, 0x17);
+			this.buttonReset.Size = new Size(0x89, 23);
 			this.buttonReset.TabIndex = 2;
 			this.buttonReset.Text = "Reset to sequence's max";
 			this.buttonReset.UseVisualStyleBackColor = true;
@@ -53,14 +53,14 @@ namespace VixenEditor {
 			this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.buttonOK.Location = new Point(140, 0xc4);
 			this.buttonOK.Name = "buttonOK";
-			this.buttonOK.Size = new Size(0x4b, 0x17);
+			this.buttonOK.Size = new Size(0x4b, 23);
 			this.buttonOK.TabIndex = 4;
 			this.buttonOK.Text = "OK";
 			this.buttonOK.UseVisualStyleBackColor = true;
 			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.buttonCancel.Location = new Point(0xdd, 0xc4);
 			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.Size = new Size(0x4b, 0x17);
+			this.buttonCancel.Size = new Size(0x4b, 23);
 			this.buttonCancel.TabIndex = 5;
 			this.buttonCancel.Text = "Cancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;

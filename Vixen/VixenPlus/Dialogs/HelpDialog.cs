@@ -56,7 +56,7 @@ namespace VixenPlus.Dialogs
 			e.Graphics.DrawRectangle(Pens.MediumBlue, clientRectangle);
 			clientRectangle.Inflate(-1, -1);
 			e.Graphics.DrawRectangle(Pens.RoyalBlue, clientRectangle);
-			e.Graphics.DrawRectangle(Pens.Navy, 50, 0x19, ClientRectangle.Width - 100, 0x23);
+			e.Graphics.DrawRectangle(Pens.Navy, 50, 25, ClientRectangle.Width - 100, 35);
 			e.Graphics.DrawString("Try this", _bigFont, Brushes.DarkBlue, 60f, 30f);
 			int num = 90;
 			for (int i = 0; i < _helpText.Length; i++)
