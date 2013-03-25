@@ -10,11 +10,12 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 using FMOD;
+using Properties;
 using VixenPlus.Dialogs;
 
 namespace VixenPlus
 {
-	internal sealed partial class Form1 : Form, ISystem
+	internal sealed partial class VixenPlusForm : Form, ISystem
 	{
 		private const int HistoryMax = 7;
 		private readonly EventHandler _historyItemClick;
@@ -29,16 +30,14 @@ namespace VixenPlus
 		private readonly string _timersPath;
 		private string[] _audioDevices;
 		private List<string> _history;
-		private string _knownFileTypesFilter;
 		private string _lastWindowsClipboardValue = "";
 		private DateTime _shutdownAt;
 		private Timers _timers;
 
-		public Form1(string[] args)
+		public VixenPlusForm(string[] args)
 		{
 			var list = new List<string>();
 			list.AddRange(args);
-			//this.LoadVendorData();
 			SetDataPath();
 			Ensure(Paths.DataPath);
 			Ensure(Paths.SequencePath);
@@ -56,8 +55,8 @@ namespace VixenPlus
 			SetVendorData();
 			_registeredFileTypes = new Dictionary<string, IUIPlugIn>();
 			_timersPath = Path.Combine(Paths.DataPath, "timers");
-			helpProvider.HelpNamespace = Path.Combine(Paths.BinaryPath, Vendor.ProductName + ".chm");
-			string path = Path.Combine(Paths.BinaryPath, "prepare.exe");
+			//helpProvider.HelpNamespace = Path.Combine(Paths.BinaryPath, Vendor.ProductName + ".chm");
+			var path = Path.Combine(Paths.BinaryPath, "prepare.exe");
 			if (File.Exists(path))
 			{
 				Process process = Process.Start(path);
@@ -152,9 +151,9 @@ namespace VixenPlus
 			var executable = (IExecutable) Host.Communication["CurrentObject"];
 			if (executable != null)
 			{
-				string str = executable.Key.ToString(CultureInfo.InvariantCulture);
+				var str = executable.Key.ToString(CultureInfo.InvariantCulture);
 				XmlNode node2 = null;
-				XmlNode node = ((XmlNode) Host.Communication["SetupNode_" + str]).SelectSingleNode("DialogPositions");
+				var node = ((XmlNode) Host.Communication["SetupNode_" + str]).SelectSingleNode("DialogPositions");
 				object obj2;
 				if (Host.Communication.TryGetValue("KeyInterceptor_" + str, out obj2))
 				{
@@ -179,8 +178,8 @@ namespace VixenPlus
 				{
 					if (node2.Attributes != null)
 					{
-						XmlAttribute attribute = node2.Attributes["x"];
-						XmlAttribute attribute2 = node2.Attributes["y"];
+						var attribute = node2.Attributes["x"];
+						var attribute2 = node2.Attributes["y"];
 						if ((attribute != null) && (attribute2 != null))
 						{
 							child.Location = new Point(Convert.ToInt32(attribute.Value), Convert.ToInt32(attribute2.Value));
@@ -201,7 +200,7 @@ namespace VixenPlus
 			var list = new List<ILoadable>();
 			if (_loadables.ContainsKey(interfaceName))
 			{
-				foreach (LoadedObject obj2 in _loadables[interfaceName])
+				foreach (var obj2 in _loadables[interfaceName])
 				{
 					if (obj2.Instance != null)
 					{
@@ -236,16 +235,16 @@ namespace VixenPlus
 						{
 							return Host.Clipboard;
 						}
-						string[] strArray = System.Windows.Forms.Clipboard.GetText()
+						var strArray = System.Windows.Forms.Clipboard.GetText()
 						                          .Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
-						int maxCols = 0;
+						var maxCols = 0;
 						Array.ForEach(strArray, delegate(string s) { maxCols = Math.Max(s.Split(new[] {','}).Length, maxCols); });
 						array = new byte[strArray.Length,maxCols];
 						Array.Clear(array, 0, array.Length);
-						for (int i = 0; i < strArray.Length; i++)
+						for (var i = 0; i < strArray.Length; i++)
 						{
-							string[] strArray2 = strArray[i].Split(new[] {','});
-							for (int j = 0; j < strArray2.Length; j++)
+							var strArray2 = strArray[i].Split(new[] {','});
+							for (var j = 0; j < strArray2.Length; j++)
 							{
 								array[i, j] = byte.Parse(strArray2[j]);
 							}
@@ -270,9 +269,9 @@ namespace VixenPlus
 				{
 					Host.Clipboard = value;
 					var builder = new StringBuilder();
-					for (int i = 0; i < value.GetLength(0); i++)
+					for (var i = 0; i < value.GetLength(0); i++)
 					{
-						for (int j = 0; j < value.GetLength(1); j++)
+						for (var j = 0; j < value.GetLength(1); j++)
 						{
 							builder.AppendFormat("{0},", value[i, j]);
 						}
@@ -289,10 +288,7 @@ namespace VixenPlus
 			get { return _timerExecutor.ExecutingTimerCount; }
 		}
 
-		public string KnownFileTypesFilter
-		{
-			get { return _knownFileTypesFilter; }
-		}
+		public string KnownFileTypesFilter { get; private set; }
 
 		public Preference2 UserPreferences
 		{
@@ -319,9 +315,10 @@ namespace VixenPlus
 				item.Checked = true;
 			}
 			EventSequence sequence = null;
-			if (ActiveMdiChild != null && (base.ActiveMdiChild is IVixenMDI))
+			var mdi = ActiveMdiChild as IVixenMDI;
+			if (/*ActiveMdiChild != null &&*/ mdi != null)
 			{
-				sequence = ((IVixenMDI) ActiveMdiChild).Sequence;
+				sequence = mdi.Sequence;
 			}
 			try
 			{
@@ -333,7 +330,7 @@ namespace VixenPlus
 			}
 			catch (Exception exception)
 			{
-				MessageBox.Show("Add-in error:\n\n" + exception.Message, Vendor.ProductName, MessageBoxButtons.OK,
+				MessageBox.Show(Resources.VixenPlusForm_AddInError + exception.Message, Vendor.ProductName, MessageBoxButtons.OK,
 				                MessageBoxIcon.Exclamation);
 			}
 			finally
@@ -348,7 +345,7 @@ namespace VixenPlus
 
 		private void AddToFileHistory(string fileName)
 		{
-			string item = Path.GetFileName(fileName);
+			var item = Path.GetFileName(fileName);
 			_history.Remove(item);
 			_history.Insert(0, item);
 			if (_history.Count > HistoryMax)
@@ -393,31 +390,32 @@ namespace VixenPlus
 			var none = DialogResult.None;
 			if (pluginInstance.IsDirty)
 			{
-				string str = pluginInstance.Sequence.Name ?? "this unnamed sequence";
+				var str = pluginInstance.Sequence.Name ?? "this unnamed sequence";
 				none = MessageBox.Show(string.Format("[{0}]\nSave changes to {1}?", pluginInstance.FileTypeDescription, str),
 				                       Vendor.ProductName, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 				if (none == DialogResult.Yes)
 				{
-					Save((UIBase) pluginInstance);
+					Save(pluginInstance);
 				}
 			}
 			return none;
 		}
 
-		private void CheckForUpdates()
+		//TODO Remove these damn gotos
+		private static void CheckForUpdates()
 		{
-			string updateServerURI = Vendor.UpdateFile;
-			Version version = Assembly.GetExecutingAssembly().GetName().Version;
-			string updateRootPath = string.Format("{0}/{1}.{2}", Vendor.UpdateFile, version.Major, version.Minor);
-			string path = Path.Combine(Paths.DataPath, "target.update");
+			var updateServerURI = Vendor.UpdateFile;
+			var version = Assembly.GetExecutingAssembly().GetName().Version;
+			var updateRootPath = string.Format("{0}/{1}.{2}", Vendor.UpdateFile, version.Major, version.Minor);
+			var path = Path.Combine(Paths.DataPath, "target.update");
 			if (File.Exists(path))
 			{
 				string str4;
 				var reader = new StreamReader(path);
 				while ((str4 = reader.ReadLine()) != null)
 				{
-					string[] strArray = str4.Split(new[] {'='});
-					string str5 = strArray[0];
+					var strArray = str4.Split(new[] {'='});
+					var str5 = strArray[0];
 					if (str5 != null)
 					{
 						if (str5 != "server")
@@ -449,10 +447,10 @@ namespace VixenPlus
 			CheckForUpdates();
 		}
 
-		private void contentsToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			Help.ShowHelp(this, helpProvider.HelpNamespace);
-		}
+		//private void contentsToolStripMenuItem_Click(object sender, EventArgs e)
+		//{
+		//    Help.ShowHelp(this, helpProvider.HelpNamespace);
+		//}
 
 		private void copyASequenceToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -481,7 +479,7 @@ namespace VixenPlus
 		}
 
 
-		private void Ensure(string path)
+		private static void Ensure(string path)
 		{
 			if (!Directory.Exists(path))
 			{
@@ -491,8 +489,8 @@ namespace VixenPlus
 
 		private void FlushHistory()
 		{
-			XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(_preferences.XmlDoc.DocumentElement, "History");
-			foreach (string str in _history)
+			var emptyNodeAlways = Xml.GetEmptyNodeAlways(_preferences.XmlDoc.DocumentElement, "History");
+			foreach (var str in _history)
 			{
 				Xml.SetNewValue(emptyNodeAlways, "Item", str);
 			}
@@ -501,7 +499,7 @@ namespace VixenPlus
 
 		private void Form1_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			foreach (Form form in MdiChildren)
+			foreach (var form in MdiChildren)
 			{
 				if ((form is IUIPlugIn) && (CheckDirty((IUIPlugIn) form) == DialogResult.Cancel))
 				{
@@ -516,8 +514,8 @@ namespace VixenPlus
 				var loadedObject = item.Tag as LoadedObject;
 				if (loadedObject != null)
 				{
-					LoadedObject tag = loadedObject;
-					XmlNode loadableData = _loadableData.GetLoadableData(tag.InterfaceImplemented, item.Text);
+					var tag = loadedObject;
+					var loadableData = _loadableData.GetLoadableData(tag.InterfaceImplemented, item.Text);
 					if ((tag.Instance != null) && (tag.Instance.DataLocationPreference == LoadableDataLocation.Application))
 					{
 						Xml.SetAttribute(loadableData, "enabled", bool.TrueString);
@@ -534,8 +532,8 @@ namespace VixenPlus
 				var loadedObject = item.Tag as LoadedObject;
 				if (loadedObject != null)
 				{
-					LoadedObject obj3 = loadedObject;
-					XmlNode node = _loadableData.GetLoadableData(obj3.InterfaceImplemented, item.Text);
+					var obj3 = loadedObject;
+					var node = _loadableData.GetLoadableData(obj3.InterfaceImplemented, item.Text);
 					if (obj3.Instance != null)
 					{
 						Xml.SetAttribute(node, "enabled", bool.TrueString);
@@ -584,9 +582,9 @@ namespace VixenPlus
 			}
 		}
 
-		private bool FormContainsChild(Form parent, Form child)
+		private static bool FormContainsChild(Form parent, Form child)
 		{
-			foreach (Form form in parent.MdiChildren)
+			foreach (var form in parent.MdiChildren)
 			{
 				if (form == child)
 				{
@@ -611,8 +609,8 @@ namespace VixenPlus
 
 		private void HistoryItemClick(object sender, EventArgs e)
 		{
-			string text = ((ToolStripItem) sender).Text;
-			string path = Path.Combine(Paths.SequencePath, text);
+			var text = ((ToolStripItem) sender).Text;
+			var path = Path.Combine(Paths.SequencePath, text);
 			if (File.Exists(path))
 			{
 				OpenSequence(path);
@@ -622,15 +620,13 @@ namespace VixenPlus
 				_history.Remove(text);
 				FlushHistory();
 				LoadHistory();
-				MessageBox.Show("File does not exist.\nItem has been removed from the history.", Vendor.ProductName,
-				                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show(Resources.VixenPlusForm_HistoryRemovalMsg, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 		}
 
-		//ComponentResourceManager manager = new ComponentResourceManager(typeof(Form1));
+		//ComponentResourceManager manager = new ComponentResourceManager(typeof(VixenPlusForm));
 		//this.toolStripStatusLabelMusic.Image = (Image)manager.GetObject("toolStripStatusLabelMusic.Image");
 		//base.Icon = (Icon)manager.GetObject("$this.Icon");
-
 
 		private bool InstantiateObject(LoadedObject loadedObject)
 		{
@@ -696,7 +692,7 @@ namespace VixenPlus
 				var loadedObject = item2.Tag as LoadedObject;
 				if (loadedObject != null)
 				{
-					LoadedObject tag = loadedObject;
+					var tag = loadedObject;
 					((ToolStripMenuItem) item2).Checked = tag.Instance != null;
 				}
 			}
@@ -706,7 +702,7 @@ namespace VixenPlus
 		{
 			recentToolStripMenuItem.DropDownItems.Clear();
 			_history = new List<string>();
-			XmlNodeList list = _preferences.XmlDoc.SelectNodes("//User/History/*");
+			var list = _preferences.XmlDoc.SelectNodes("//User/History/*");
 			if (list != null)
 			{
 				foreach (XmlNode node in list)
@@ -723,21 +719,21 @@ namespace VixenPlus
 			var list = new List<LoadedObject>();
 			if (Directory.Exists(directory))
 			{
-				foreach (string str in Directory.GetFiles(directory, "*.dll"))
+				foreach (var str in Directory.GetFiles(directory, "*.dll"))
 				{
 					Exception exception;
 					try
 					{
-						Assembly assembly = Assembly.LoadFile(str);
-						foreach (Type type in assembly.GetExportedTypes())
+						var assembly = Assembly.LoadFile(str);
+						foreach (var exportedTypes in assembly.GetExportedTypes())
 						{
-							foreach (Type type2 in type.GetInterfaces())
+							foreach (var interfaceTypes in exportedTypes.GetInterfaces())
 							{
-								if (type2.Name == interfaceName)
+								if (interfaceTypes.Name == interfaceName)
 								{
 									try
 									{
-										list.Add(new LoadedObject(type, interfaceName));
+										list.Add(new LoadedObject(exportedTypes, interfaceName));
 									}
 									catch (Exception exception1)
 									{
@@ -768,22 +764,21 @@ namespace VixenPlus
 		{
 			if (Directory.Exists(Paths.UIPluginPath))
 			{
-				foreach (string str in Directory.GetFiles(Paths.UIPluginPath, "*.dll"))
+				foreach (var str in Directory.GetFiles(Paths.UIPluginPath, "*.dll"))
 				{
 					Exception exception;
 					try
 					{
-						Assembly assembly = Assembly.LoadFile(str);
-						foreach (Type type in assembly.GetExportedTypes())
+						var assembly = Assembly.LoadFile(str);
+						foreach (var exportedTypes in assembly.GetExportedTypes())
 						{
-							foreach (Type type2 in type.GetInterfaces())
+							foreach (Type interfaceTypes in exportedTypes.GetInterfaces())
 							{
-								if (type2.Name == "IUIPlugIn")
+								if (interfaceTypes.Name == "IUIPlugIn")
 								{
 									try
 									{
-										Debug.WriteLine("Type: " + type.Name + " Type2: " + type2.Name);
-										var inputPlugin = (IUIPlugIn) Activator.CreateInstance(type);
+										var inputPlugin = (IUIPlugIn) Activator.CreateInstance(exportedTypes);
 										if (!RegisterFileType(inputPlugin.FileExtension, inputPlugin))
 										{
 											MessageBox.Show(
@@ -811,35 +806,20 @@ namespace VixenPlus
 						MessageBox.Show(string.Format("{0}:\n{1}", Path.GetFileName(str), exception.Message));
 					}
 				}
-				foreach (IUIPlugIn in2 in _registeredFileTypes.Values)
+				foreach (var in2 in _registeredFileTypes.Values)
 				{
-					ToolStripItem item = newLightingProgramToolStripMenuItem.DropDownItems.Add(in2.FileTypeDescription);
+					var item = newLightingProgramToolStripMenuItem.DropDownItems.Add(in2.FileTypeDescription);
 					item.Tag = in2;
 					item.Click += _newMenuItemClick;
 				}
 				var builder = new StringBuilder();
-				foreach (IUIPlugIn in2 in _registeredFileTypes.Values)
+				foreach (var in2 in _registeredFileTypes.Values)
 				{
 					builder.AppendFormat("|{0}|*{1}", in2.FileTypeDescription, in2.FileExtension);
 				}
-				_knownFileTypesFilter = builder.ToString().Remove(0, 1);
+				KnownFileTypesFilter = builder.ToString().Remove(0, 1);
 			}
 		}
-
-		//private void LoadVendorData() {
-		//    string path = Path.Combine(Paths.BinaryPath, "Vendor.dll");
-		//    if (File.Exists(path)) {
-		//        ResourceManager manager = new ResourceManager("Vixen.Properties.Resources", Assembly.LoadFile(path));
-		//        Vendor.ProductName = manager.GetString("VendorProductName");
-		//        Vendor.Name = manager.GetString("VendorName");
-		//        Vendor.SequenceExtension = manager.GetString("SequenceFileExtension");
-		//        Vendor.ProgramExtension = manager.GetString("ProgramFileExtension");
-		//        Vendor.DataExtension = manager.GetString("DataFileExtension");
-		//        Vendor.UpdateRoot = manager.GetString("UpdateRoot");
-		//        Vendor.SupportURL = manager.GetString("SupportURL");
-		//        manager.ReleaseAllResources();
-		//    }
-		//}
 
 		private void PreferencesPreferenceChange(string preferenceName)
 		{
@@ -873,7 +853,7 @@ namespace VixenPlus
 					{
 						_preferences.SetInteger("EventPeriod", 25);
 						MessageBox.Show(
-							"The event period length cannot be less than 25 milliseconds.\nThe length has been reset to 25 milliseconds.",
+							Resources.VixenPlusForm_EventPeriodMin,
 							Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 					}
 					break;
@@ -881,7 +861,7 @@ namespace VixenPlus
 				case "BackgroundMusicDelay":
 					if (_preferences.GetInteger("BackgroundMusicDelay") < 1)
 					{
-						MessageBox.Show("Delay cannot be less than 1 second.\nResetting to 1 second", Vendor.ProductName,
+						MessageBox.Show(Resources.VixenPlusForm_DelayPeriodMin, Vendor.ProductName,
 						                MessageBoxButtons.OK, MessageBoxIcon.Hand);
 						_preferences.SetInteger("BackgroundMusicDelay", 1);
 					}
@@ -890,7 +870,7 @@ namespace VixenPlus
 				case "BackgroundSequenceDelay":
 					if (_preferences.GetInteger("BackgroundSequenceDelay") < 1)
 					{
-						MessageBox.Show("Delay cannot be less than 1 second.\nResetting to 1 second", Vendor.ProductName,
+						MessageBox.Show(Resources.VixenPlusForm_DelayPeriodMin, Vendor.ProductName,
 						                MessageBoxButtons.OK, MessageBoxIcon.Hand);
 						_preferences.SetInteger("BackgroundSequenceDelay", 1);
 					}
@@ -940,14 +920,14 @@ namespace VixenPlus
 				switch (tag.RunWizard(ref resultSequence))
 				{
 					case DialogResult.None:
-						MessageBox.Show("No wizard available.\n\nA blank sequence will be created for you.", Vendor.ProductName,
+						MessageBox.Show(Resources.VixenPlusForm_NoWizardMsg, Vendor.ProductName,
 						                MessageBoxButtons.OK, MessageBoxIcon.Hand);
 						tag.Sequence = tag.New();
 						goto Label_00DF;
 
 					case DialogResult.OK:
 						tag.Sequence = tag.New(resultSequence);
-						if (!SaveAs((UIBase) tag))
+						if (!SaveAs(tag))
 						{
 							DialogResult = DialogResult.None;
 						}
@@ -976,7 +956,7 @@ namespace VixenPlus
 
 		private void NotifyAll(Notification notification)
 		{
-			foreach (Form form in MdiChildren)
+			foreach (var form in MdiChildren)
 			{
 				var vixenMdi = form as IVixenMDI;
 				if (vixenMdi != null)
@@ -994,10 +974,10 @@ namespace VixenPlus
 
 		private void openALightingProgramToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			int num = 0;
-			int num2 = 1;
-			string str = _preferences.GetString("PreferredSequenceType");
-			foreach (IUIPlugIn @in in _registeredFileTypes.Values)
+			var num = 0;
+			var num2 = 1;
+			var str = _preferences.GetString("PreferredSequenceType");
+			foreach (var @in in _registeredFileTypes.Values)
 			{
 				if (str == @in.FileExtension)
 				{
@@ -1006,7 +986,7 @@ namespace VixenPlus
 				}
 				num2++;
 			}
-			openFileDialog1.Filter = _knownFileTypesFilter;
+			openFileDialog1.Filter = KnownFileTypesFilter;
 			openFileDialog1.InitialDirectory = Paths.SequencePath;
 			openFileDialog1.FileName = string.Empty;
 			openFileDialog1.FilterIndex = num;
@@ -1026,26 +1006,25 @@ namespace VixenPlus
 
 		public void OpenSequence(string fileName)
 		{
-			IUIPlugIn @in;
-			new XmlDocument();
-			string extension = Path.GetExtension(fileName);
-			if (extension != null && _registeredFileTypes.TryGetValue(extension.ToLower(), out @in))
+			IUIPlugIn plugInInterface;
+			//new XmlDocument();
+			var extension = Path.GetExtension(fileName);
+			if (extension != null && _registeredFileTypes.TryGetValue(extension.ToLower(), out plugInInterface))
 			{
 				AddToFileHistory(fileName);
-				@in = (IUIPlugIn) Activator.CreateInstance(@in.GetType());
-				@in.Sequence = @in.Open(fileName);
-				var uiBase = @in as UIBase;
+				plugInInterface = (IUIPlugIn) Activator.CreateInstance(plugInInterface.GetType());
+				plugInInterface.Sequence = plugInInterface.Open(fileName);
+				var uiBase = plugInInterface as UIBase;
 				if (uiBase != null)
 				{
 					uiBase.DirtyChanged += plugin_DirtyChanged;
 				}
-				@in.MdiParent = this;
-				@in.Show();
+				plugInInterface.MdiParent = this;
+				plugInInterface.Show();
 			}
 			else
 			{
-				MessageBox.Show("There is no known editor for that file type.", Vendor.ProductName, MessageBoxButtons.OK,
-				                MessageBoxIcon.Hand);
+				MessageBox.Show(Resources.VixenPlusForm_NoKnowEditor, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 			}
 		}
 
@@ -1081,24 +1060,24 @@ namespace VixenPlus
 			var @in = ActiveMdiChild as IUIPlugIn;
 			if (@in != null)
 			{
-				IUIPlugIn activeMdiChild = @in;
+				var activeMdiChild = @in;
 				saveToolStripMenuItem.Text = !string.IsNullOrEmpty(activeMdiChild.Sequence.Name)
-					                             ? string.Format("Save ({0})", activeMdiChild.Sequence.Name)
-					                             : "Save";
+												 ? string.Format("{0} ({1})", Resources.VixenPlusForm_Save, activeMdiChild.Sequence.Name)
+					                             : Resources.VixenPlusForm_Save;
 				channelDimmingCurvesToolStripMenuItem.Enabled = true;
 			}
 			else
 			{
-				saveToolStripMenuItem.Text = "Save";
+				saveToolStripMenuItem.Text = Resources.VixenPlusForm_Save;
 				channelDimmingCurvesToolStripMenuItem.Enabled = false;
 			}
 		}
 
 		private bool RegisterFileType(string fileExtension, IUIPlugIn inputPlugin)
 		{
-			IUIPlugIn @in;
+			IUIPlugIn plugInInterface;
 			fileExtension = fileExtension.ToLower();
-			if (_registeredFileTypes.TryGetValue(fileExtension, out @in))
+			if (_registeredFileTypes.TryGetValue(fileExtension, out plugInInterface))
 			{
 				return false;
 			}
@@ -1110,57 +1089,55 @@ namespace VixenPlus
 		{
 			if (_timers.TimersDisabled)
 			{
-				MessageBox.Show("Schedule is currently disabled.", Vendor.ProductName, MessageBoxButtons.OK,
+				MessageBox.Show(Resources.VixenPlusForm_ScheduleDisabledMsg, Vendor.ProductName, MessageBoxButtons.OK,
 				                MessageBoxIcon.Exclamation);
 			}
 			else
 			{
 				SetTimerTraceFlag();
-				List<Timer> list = _timers.CurrentlyEffectiveTimers();
+				var list = _timers.CurrentlyEffectiveTimers();
 				if (list.Count == 0)
 				{
-					MessageBox.Show("There is nothing scheduled to execute at this time.", Vendor.ProductName, MessageBoxButtons.OK,
+					MessageBox.Show(Resources.VixenPlusForm_NothingToDoMsg, Vendor.ProductName, MessageBoxButtons.OK,
 					                MessageBoxIcon.Asterisk);
 				}
 				else
 				{
-					foreach (Timer timer in list)
+					foreach (var timer in list)
 					{
 						_timerExecutor.SpawnExecutorFor(timer);
 					}
 					if (_timerExecutor.ExecutingTimerCount == 0)
 					{
-						MessageBox.Show(
-							"Timers were not executed.\n\nThe scheduled items may be longer than their remaining time or there may have been an error.",
-							Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+						MessageBox.Show(Resources.VixenPlusForm_TimersNotStarted_TooLong_OrError, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 					}
 				}
 			}
 		}
 
-		private bool Save(UIBase pluginInstance)
+		private bool Save(IUIPlugIn pluginInstance)
 		{
 			if (pluginInstance == null)
 			{
 				return false;
 			}
-			IUIPlugIn @in = pluginInstance;
-			if ((@in.IsDirty && string.IsNullOrEmpty(@in.Sequence.Name)) &&
+			var plugInInterface = pluginInstance;
+			if ((plugInInterface.IsDirty && string.IsNullOrEmpty(plugInInterface.Sequence.Name)) &&
 			    !GetNewName(pluginInstance))
 			{
 				return false;
 			}
-			UpdateHistoryImages(@in.Sequence.FileName);
-			@in.SaveTo(@in.Sequence.FileName);
-			AddToFileHistory(@in.Sequence.FileName);
+			UpdateHistoryImages(plugInInterface.Sequence.FileName);
+			plugInInterface.SaveTo(plugInInterface.Sequence.FileName);
+			AddToFileHistory(plugInInterface.Sequence.FileName);
 			if (_preferences.GetBoolean("ShowSaveConfirmation"))
 			{
-				MessageBox.Show("Sequence saved", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+				MessageBox.Show(Resources.VixenPlusForm_SequenceSaved, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 			}
 			return true;
 		}
 
-		private bool SaveAs(UIBase pluginInstance)
+		private bool SaveAs(IUIPlugIn pluginInstance)
 		{
 			return (GetNewName(pluginInstance) && Save(pluginInstance));
 		}
@@ -1186,7 +1163,8 @@ namespace VixenPlus
 			dialog.Dispose();
 		}
 
-		private void SetDataPath()
+		//todo move to preferences
+		private static void SetDataPath()
 		{
 			if (File.Exists("redirect.data"))
 			{
@@ -1246,9 +1224,9 @@ namespace VixenPlus
 
 		private void StartAddins()
 		{
-			List<LoadedObject> list = LoadObjects(Paths.AddinPath, "IAddIn");
+			var list = LoadObjects(Paths.AddinPath, "IAddIn");
 			addInsToolStripMenuItem.Visible = list.Count > 0;
-			foreach (LoadedObject obj2 in list)
+			foreach (var obj2 in list)
 			{
 				var @in = (IAddIn) Activator.CreateInstance(obj2.ObjectType);
 				var item = new CheckableToolStripMenuItem();
@@ -1269,9 +1247,9 @@ namespace VixenPlus
 
 		private void StartTriggers()
 		{
-			List<LoadedObject> list = LoadObjects(Paths.TriggerPluginPath, "ITriggerPlugin");
+			var list = LoadObjects(Paths.TriggerPluginPath, "ITriggerPlugin");
 			triggersToolStripMenuItem.Visible = list.Count > 0;
-			foreach (LoadedObject obj2 in list)
+			foreach (var obj2 in list)
 			{
 				var plugin = (ITriggerPlugin) Activator.CreateInstance(obj2.ObjectType);
 				var item = new CheckableToolStripMenuItem();
@@ -1299,7 +1277,7 @@ namespace VixenPlus
 		private void timer1_Tick(object sender, EventArgs e)
 		{
 			SetTimerTraceFlag();
-			foreach (Timer timer in _timers.StartingTimers())
+			foreach (var timer in _timers.StartingTimers())
 			{
 				_timerExecutor.SpawnExecutorFor(timer);
 			}
@@ -1312,7 +1290,7 @@ namespace VixenPlus
 			{
 				_timers = dialog.Timers;
 				_timers.TimersDisabled = dialog.ScheduleDisabled;
-				XmlDocument contextNode = Xml.CreateXmlDocument();
+				var contextNode = Xml.CreateXmlDocument();
 				_timers.SaveToXml(contextNode);
 				contextNode.Save(_timersPath);
 				scheduleTimer.Enabled = !_timers.TimersDisabled;
@@ -1334,15 +1312,23 @@ namespace VixenPlus
 			}
 			try
 			{
-				((ITriggerPlugin) tag.Instance).Setup();
+				var triggerPlugin = (ITriggerPlugin) tag.Instance;
+				if (triggerPlugin != null)
+				{
+					triggerPlugin.Setup();
+				}
+				else
+				{
+					throw new EntryPointNotFoundException(Resources.VixenPlusForm_TriggerNotFoundOrStarted);
+				}
 			}
 			catch (Exception exception)
 			{
-				MessageBox.Show("Trigger error:\n\n" + exception.Message, Vendor.ProductName, MessageBoxButtons.OK,
-				                MessageBoxIcon.Exclamation);
+				MessageBox.Show(Resources.VixenPlusForm_TriggeError + exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 		}
 
+		//TODO is this really needed
 		private void turnOnQueryServerToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 		}
@@ -1351,15 +1337,15 @@ namespace VixenPlus
 		{
 			if (File.Exists(baseFilePath))
 			{
-				int integer = _preferences.GetInteger("HistoryImages");
+				var integer = _preferences.GetInteger("HistoryImages");
 				if (integer != 0)
 				{
-					string[] files = Directory.GetFiles(Paths.SequencePath, Path.GetFileName(baseFilePath) + ".bak*");
-					int num2 = files.Length + 1;
+					var files = Directory.GetFiles(Paths.SequencePath, Path.GetFileName(baseFilePath) + ".bak*");
+					var num2 = files.Length + 1;
 					if (files.Length >= integer)
 					{
 						num2--;
-						for (int i = 2; i <= integer; i++)
+						for (var i = 2; i <= integer; i++)
 						{
 							File.Copy(string.Format("{0}.bak{1}", baseFilePath, i), string.Format("{0}.bak{1}", baseFilePath, i - 1), true);
 						}
@@ -1377,19 +1363,19 @@ namespace VixenPlus
 		private void visualChannelLayoutToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			IExecutable executableObject;
-			if (ActiveMdiChild != null && ActiveMdiChild is IVixenMDI && ((IVixenMDI) ActiveMdiChild).Sequence != null)
+			var mdi = ActiveMdiChild as IVixenMDI;
+			if (/*ActiveMdiChild != null &&*/ mdi != null && mdi.Sequence != null)
 			{
-				executableObject = ((IVixenMDI) ActiveMdiChild).Sequence;
+				executableObject = mdi.Sequence;
 			}
 			else
 			{
-				string str = _preferences.GetString("DefaultProfile");
-				executableObject = (str.Length == 0) ? null : (new Profile(Path.Combine(Paths.ProfilePath, str + ".pro")));
+				var str = _preferences.GetString("DefaultProfile");
+				executableObject = (str.Length == 0) ? null : (new Profile(Path.Combine(Paths.ProfilePath, str + "." +  Vendor.ProfilExtension)));
 			}
 			if (executableObject == null)
 			{
-				MessageBox.Show("There is no sequence open, nor is there a default profile set.\nYou have no channels to layout.",
-				                Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+				MessageBox.Show(Resources.VixenPlusForm_NoOpenSequence, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 			}
 			else
 			{

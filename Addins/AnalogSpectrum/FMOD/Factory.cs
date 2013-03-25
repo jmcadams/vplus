@@ -5,7 +5,12 @@ namespace FMOD
 {
 	public class Factory
 	{
+
+#if x64
+		[DllImport("fmodex64.dll")]
+#else
 		[DllImport("fmodex.dll")]
+#endif
 		private static extern RESULT FMOD_System_Create(ref IntPtr system);
 		public static RESULT System_Create(ref System system)
 		{

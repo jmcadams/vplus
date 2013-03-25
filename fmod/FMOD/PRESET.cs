@@ -171,7 +171,7 @@
 
         public REVERB_PROPERTIES STONECORRIDOR()
         {
-            return new REVERB_PROPERTIES(0, 13, 13.5f, 1f, -1000, -237, 0, 2.7f, 0.79f, 1f, -1214, 0.013f, 0f, 0f, 0f, 24b, 0.02f, 0f, 0f, 0f, 0.25f, 0f, 0.25f, 0f, -5f, 5000f, 250f, 0f, 100f, 100f, 0x3f);
+            return new REVERB_PROPERTIES(0, 13, 13.5f, 1f, -1000, -237, 0, 2.7f, 0.79f, 1f, -1214, 0.013f, 0f, 0f, 0f, 0x18b, 0.02f, 0f, 0f, 0f, 0.25f, 0f, 0.25f, 0f, -5f, 5000f, 250f, 0f, 100f, 100f, 0x3f);
         }
 
         public REVERB_PROPERTIES STONEROOM()

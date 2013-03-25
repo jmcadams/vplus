@@ -7,6 +7,7 @@ namespace VixenPlus
 		public static string ProductURL = "http://www.vixenplus.com/";
 
 		public static string DataExtension = "vda";
+		public static string ProfilExtension = "pro";
 		public static string ProgramExtension = "vpr";
 		public static string SequenceExtension = "vix";
 

@@ -324,11 +324,11 @@
     <Compile Include="VixenPlus\ExecutionContext.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenPlus\Form1.cs">
+    <Compile Include="VixenPlus\VixenPlusForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VixenPlus\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="VixenPlus\VixenPlusForm.Designer.cs">
+      <DependentUpon>VixenPlusForm.cs</DependentUpon>
     </Compile>
     <Compile Include="VixenPlus\GeneralConcreteClassProvider.cs">
       <SubType>Code</SubType>
@@ -677,6 +677,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VixenPlus\Splash.resx">
       <DependentUpon>Splash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\VixenPlusForm.resx">
+      <DependentUpon>VixenPlusForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
