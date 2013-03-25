@@ -15,7 +15,7 @@ namespace VixenPlus.Dialogs
 		{
 			InitializeComponent();
 			_internalChange = true;
-			comboBoxChannels.Items.AddRange(new object[] {channels.ToArray()});
+			comboBoxChannels.Items.AddRange(channels.ToArray());
 			_internalChange = false;
 			label3.Visible = labelOutputChannel.Visible = showOutputChannel;
 			GotoChannel(currentChannel);

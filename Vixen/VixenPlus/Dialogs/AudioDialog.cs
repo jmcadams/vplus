@@ -39,7 +39,7 @@ namespace VixenPlus.Dialogs
 			_keyStates = new bool[_eventSequence.ChannelCount];
 			_stopwatch = new Stopwatch();
 			_newEventValues = new byte[_eventSequence.EventValues.GetLength(0),_eventSequence.EventValues.GetLength(1)];
-			listBoxChannels.Items.AddRange(new object[] {_eventSequence.Channels.ToArray()});
+			listBoxChannels.Items.AddRange(_eventSequence.Channels.ToArray());
 			_originalAudio = sequence.Audio;
 			if (sequence.Audio != null)
 			{
@@ -64,7 +64,7 @@ namespace VixenPlus.Dialogs
 			{
 				UpdateRecordableLength();
 			}
-			var items = (new object[] {_eventSequence.Channels.ToArray()});
+			var items = (_eventSequence.Channels.ToArray());
 			channel1ToolStripMenuItem.Items.AddRange(items);
 			channel2ToolStripMenuItem.Items.AddRange(items);
 			channel3ToolStripMenuItem.Items.AddRange(items);
@@ -86,7 +86,7 @@ namespace VixenPlus.Dialogs
 			channel9ToolStripMenuItem.SelectedIndex = Math.Min(8, _eventSequence.ChannelCount - 1);
 			channel0ToolStripMenuItem.SelectedIndex = Math.Min(9, _eventSequence.ChannelCount - 1);
 			comboBoxAudioDevice.Items.Add("Use application's default device");
-			comboBoxAudioDevice.Items.AddRange(new object[] {fmod.GetSoundDeviceList()});
+			comboBoxAudioDevice.Items.AddRange(fmod.GetSoundDeviceList());
 			comboBoxAudioDevice.SelectedIndex = _eventSequence.AudioDeviceIndex + 1;
 		}
 

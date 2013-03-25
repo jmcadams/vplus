@@ -5,8 +5,8 @@ namespace Spectrum {
 	internal partial class AutoMapDialog : Form {
 		public AutoMapDialog(List<VixenPlus.Channel> channels, List<FrequencyBand> bands) {
 			InitializeComponent();
-			comboBoxStartChannel.Items.AddRange(new object[] {channels.ToArray()});
-			comboBoxStartBand.Items.AddRange(new object[] {bands.ToArray()});
+			comboBoxStartChannel.Items.AddRange(channels.ToArray());
+			comboBoxStartBand.Items.AddRange(bands.ToArray());
 			comboBoxStartChannel.SelectedIndex = 0;
 			comboBoxStartBand.SelectedIndex = 0;
 		}

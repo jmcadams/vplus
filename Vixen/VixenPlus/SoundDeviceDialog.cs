@@ -37,7 +37,7 @@ namespace VixenPlus
 
 		private void SoundDeviceDialog_Load(object sender, EventArgs e)
 		{
-			comboBoxDevice.Items.AddRange(new object[] {fmod.GetSoundDeviceList()});
+			comboBoxDevice.Items.AddRange(fmod.GetSoundDeviceList());
 			int integer = _preferences.GetInteger("SoundDevice");
 			if (integer < comboBoxDevice.Items.Count)
 			{

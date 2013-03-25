@@ -88,7 +88,7 @@ namespace VixenPlus
 		private void PopulateAudioDeviceList()
 		{
 			comboBoxDefaultAudioDevice.Items.Add("Use application's default device");
-			comboBoxDefaultAudioDevice.Items.AddRange(new object[] {fmod.GetSoundDeviceList()});
+			comboBoxDefaultAudioDevice.Items.AddRange(fmod.GetSoundDeviceList());
 		}
 
 		private void PopulateFrom(int tabIndex)
@@ -227,7 +227,7 @@ namespace VixenPlus
 				int selectedIndex = box.SelectedIndex;
 				box.BeginUpdate();
 				box.Items.Clear();
-				box.Items.AddRange(new object[] {list.ToArray()});
+				box.Items.AddRange(list.ToArray());
 				if (selectedIndex < box.Items.Count)
 				{
 					box.SelectedIndex = selectedIndex;

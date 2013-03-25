@@ -203,7 +203,7 @@ namespace VixenPlus
 			{
 				if (item != null)
 				{
-					comboBoxSelectedCurve.Items.Add(new object[] {item.Tag as CurveLibraryRecord});
+					comboBoxSelectedCurve.Items.Add(new object[] {item.Tag as CurveLibraryRecord}); //This may have been one of the new object[] that was not needed
 				}
 			}
 			if ((selectedItem != null) && comboBoxSelectedCurve.Items.Contains(selectedItem))

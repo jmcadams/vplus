@@ -78,7 +78,7 @@ namespace Spectrum
 				_bands.Add(new FrequencyBand(num));
 			}
 			ErrCheck(Factory.System_Create(ref _system));
-			ErrCheck(_system.init(0x20, INITFLAG.NORMAL, IntPtr.Zero));
+			ErrCheck(_system.init(0x20, INITFLAGS.NORMAL, IntPtr.Zero));
 			int width = _bands.Count * 28;
 			_bandsBounds = new Rectangle(((ClientRectangle.Width - 40 - width) >> 1) + 40, 50, width, 100);
 			_maxChannelsShown = ClientRectangle.Width / _channelBoxWidth - 2;
@@ -159,7 +159,7 @@ namespace Spectrum
 				_system.release();
 				ErrCheck(Factory.System_Create(ref _system));
 				_system.setOutput(OUTPUTTYPE.NOSOUND_NRT);
-				ErrCheck(_system.init(0x20, INITFLAG.STREAM_FROM_UPDATE, IntPtr.Zero));
+				ErrCheck(_system.init(0x20, INITFLAGS.STREAM_FROM_UPDATE, IntPtr.Zero));
 				_system.createStream(Path.Combine(Paths.AudioPath, _eventSequence.Audio.FileName), MODE.SOFTWARE | MODE._2D, ref _sound);
 				_sound.getLength(ref length, TIMEUNIT.MS);
 				var dialog = new TranscribeDialog((int) length);

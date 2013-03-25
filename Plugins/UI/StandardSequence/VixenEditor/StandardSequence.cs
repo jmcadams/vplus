@@ -1,20 +1,22 @@
+using FMOD;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Printing;
+using System.IO;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Threading;
+using System.Windows.Forms;
+using System.Xml;
+using VixenPlus;
+using VixenPlus.Dialogs;
+
 namespace VixenEditor
 {
-	using FMOD;
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.ComponentModel;
-	using System.Drawing;
-	using System.Drawing.Printing;
-	using System.IO;
-	using System.Runtime.CompilerServices;
-	using System.Runtime.InteropServices;
-	using System.Threading;
-	using System.Windows.Forms;
-	using System.Xml;
-	using VixenPlus;
-	using VixenPlus.Dialogs;
+
 
 	public class StandardSequence : UIBase
 	{

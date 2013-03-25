@@ -18,6 +18,7 @@
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <OldToolsVersion>0.0</OldToolsVersion>
     <UpgradeBackupLocation />
+    <IsWebBootstrapper>true</IsWebBootstrapper>
     <PublishUrl>http://localhost/fmod/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -30,20 +31,20 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>true</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>..\Build\</OutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;WIN64</DefineConstants>
     <DebugSymbols>true</DebugSymbols>
     <NoStdLib>false</NoStdLib>
     <Optimize>false</Optimize>
     <WarningLevel>4</WarningLevel>
     <DebugType>full</DebugType>
     <ErrorReport>prompt</ErrorReport>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -65,273 +66,15 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="FMOD\ADVANCEDSETTINGS.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\CAPS.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\CB_3D_ROLLOFFCALLBACK.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\CDTOC.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\Channel.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\ChannelGroup.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\CHANNELINDEX.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\CHANNEL_CALLBACK.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\CHANNEL_CALLBACKTYPE.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\CREATESOUNDEXINFO.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DEBUGLEVEL.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DELAYTYPE.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DELAYTYPE_UTILITY.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSPConnection.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_CHORUS.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_COMPRESSOR.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_CREATECALLBACK.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_DESCRIPTION.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_DIALOGCALLBACK.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_DISTORTION.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_ECHO.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_FFT_WINDOW.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_FLANGE.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_GETPARAMCALLBACK.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_HIGHPASS.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_ITECHO.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_ITLOWPASS.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_LOWPASS.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_NORMALIZE.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_OSCILLATOR.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_PARAMEQ.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_PARAMETERDESC.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_PITCHSHIFT.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_READCALLBACK.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_RELEASECALLBACK.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_RESAMPLER.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_RESETCALLBACK.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_REVERB.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_SETPARAMCALLBACK.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_SETPOSITIONCALLBACK.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_SFXREVERB.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_STATE.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\DSP_TYPE.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\Error.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\Factory.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\FadeDirection.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\FILE_CLOSECALLBACK.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\FILE_OPENCALLBACK.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\FILE_READCALLBACK.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\FILE_SEEKCALLBACK.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\fmod.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\Geometry.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\GUID.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\INITFLAG.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\Memory.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\MEMORY_TYPE.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\MODE.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\OPENSTATE.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\OUTPUTTYPE.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\Platform.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\PLUGINTYPE.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\PRESET.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\RESULT.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\REVERB_CHANNELFLAGS.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\REVERB_CHANNELPROPERTIES.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\REVERB_FLAGS.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\REVERB_PROPERTIES.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\Sound.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\SoundChannel.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\SoundGroup.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\SOUNDGROUP_BEHAVIOR.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\SOUND_FORMAT.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\SOUND_NONBLOCKCALLBACK.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\SOUND_PCMREADCALLBACK.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\SOUND_PCMSETPOSCALLBACK.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\SOUND_TYPE.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\SPEAKER.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\SPEAKERMAPTYPE.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\SPEAKERMODE.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\SYSTEM_CALLBACKTYPE.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\TAG.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\TAGDATATYPE.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\TAGTYPE.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\TIMEUNIT.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\VECTOR.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\VERSION.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FMOD\_System.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="FMOD\fmodType.cs" />
+    <Compile Include="FMOD\fmod.cs" />
+    <Compile Include="FMOD\fmod_dsp.cs" />
+    <Compile Include="FMOD\fmod_errors.cs" />
+    <Compile Include="FMOD\fmod_memoryinfo.cs" />
     <Compile Include="Global.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FMOD\SoundChannel.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -350,6 +93,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent />

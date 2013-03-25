@@ -232,7 +232,7 @@ namespace VixenPlus
 				var program = (SequenceProgram) listBoxPrograms.Items[num];
 				if (program != null)
 				{
-					listBoxProgramSequences.Items.AddRange(new object[] {program.EventSequences.ToArray()});
+					listBoxProgramSequences.Items.AddRange(program.EventSequences.ToArray());
 					if (program.UseSequencePluginData)
 					{
 						radioButtonSequencePlugin.Checked = true;
