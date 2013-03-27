@@ -15,40 +15,51 @@ namespace VixenPlus
 		private string _name;
 		private int _outputChannel;
 		private SolidBrush _solidBrush;
+        private bool _isV21Style;
 
-		public Channel(XmlNode channelNode)
-		{
-			_solidBrush = null;
-			_outputChannel = 0;
-			_enabled = true;
-			_dimmingCurve = null;
-			if (channelNode.Attributes != null)
-			{
-				_name = channelNode.Attributes["name"].Value;
-				Color = Color.FromArgb(Convert.ToInt32(channelNode.Attributes["color"].Value));
-				_outputChannel = Convert.ToInt32(channelNode.Attributes["output"].Value);
-				_id = ulong.Parse(channelNode.Attributes["id"].Value);
-				_enabled = bool.Parse(channelNode.Attributes["enabled"].Value);
-				if (channelNode["Curve"] != null)
-				{
-					_dimmingCurve = new byte[256];
-					string[] strArray = channelNode["Curve"].InnerText.Split(new[] {','});
-					int num = Math.Min(strArray.Length, 256);
-					for (int i = 0; i < num; i++)
-					{
-						byte num2;
-						if (byte.TryParse(strArray[i], out num2))
-						{
-							_dimmingCurve[i] = num2;
-						}
-						else
-						{
-							_dimmingCurve[i] = (byte) i;
-						}
-					}
-				}
-			}
-		}
+        public Channel(XmlNode channelNode)
+        {
+            _solidBrush = null;
+            _outputChannel = 0;
+            _enabled = true;
+            _dimmingCurve = null;
+            if (channelNode.Attributes != null)
+            {
+                _isV21Style = (channelNode.Attributes["name"] == null);
+                
+                if (_isV21Style)
+                {
+                    _name = channelNode.InnerText;
+                }
+                else
+                {
+                    _name = channelNode.Attributes["name"].Value;
+                }
+
+                Color = Color.FromArgb(Convert.ToInt32(channelNode.Attributes["color"].Value));
+                _outputChannel = Convert.ToInt32(channelNode.Attributes["output"].Value);
+                _id = ulong.Parse(channelNode.Attributes["id"].Value);
+                _enabled = bool.Parse(channelNode.Attributes["enabled"].Value);
+                if (channelNode["Curve"] != null)
+                {
+                    _dimmingCurve = new byte[256];
+                    string[] strArray = channelNode["Curve"].InnerText.Split(new[] { ',' });
+                    int num = Math.Min(strArray.Length, 256);
+                    for (int i = 0; i < num; i++)
+                    {
+                        byte num2;
+                        if (byte.TryParse(strArray[i], out num2))
+                        {
+                            _dimmingCurve[i] = num2;
+                        }
+                        else
+                        {
+                            _dimmingCurve[i] = (byte)i;
+                        }
+                    }
+                }
+            }
+        }
 
 		public Channel(string name, int outputChannel)
 		{
@@ -198,7 +209,14 @@ namespace VixenPlus
 		public XmlNode SaveToXml(XmlDocument doc)
 		{
 			XmlNode node = doc.CreateElement("Channel");
-			Xml.SetAttribute(node, "name", _name);
+            if (_isV21Style)
+            {
+                node.InnerText = _name;
+            }
+            else
+            {
+                Xml.SetAttribute(node, "name", _name);
+            }
 			Xml.SetAttribute(node, "color", _color.ToArgb().ToString(CultureInfo.InvariantCulture));
 			Xml.SetAttribute(node, "output", _outputChannel.ToString(CultureInfo.InvariantCulture));
 			Xml.SetAttribute(node, "id", _id.ToString(CultureInfo.InvariantCulture));
