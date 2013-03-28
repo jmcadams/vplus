@@ -25,16 +25,9 @@ namespace VixenPlus
             _dimmingCurve = null;
             if (channelNode.Attributes != null)
             {
-                _isV21Style = (channelNode.Attributes["name"] == null);
-                
-                if (_isV21Style)
-                {
-                    _name = channelNode.InnerText;
-                }
-                else
-                {
-                    _name = channelNode.Attributes["name"].Value;
-                }
+				_name = (_isV21Style = (channelNode.Attributes["name"] == null))
+	                        ? channelNode.InnerText
+	                        : channelNode.Attributes["name"].Value;
 
                 Color = Color.FromArgb(Convert.ToInt32(channelNode.Attributes["color"].Value));
                 _outputChannel = Convert.ToInt32(channelNode.Attributes["output"].Value);
