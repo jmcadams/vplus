@@ -15,7 +15,7 @@ namespace VixenPlus
 		private string _name;
 		private int _outputChannel;
 		private SolidBrush _solidBrush;
-        private bool _isV21Style;
+        private readonly bool _isV21Style;
 
         public Channel(XmlNode channelNode)
         {
@@ -161,6 +161,11 @@ namespace VixenPlus
 		{
 			get { return _id; }
 		}
+
+        public bool CanDoDimming
+        {
+            get { return !_isV21Style;  }
+        }
 
 		public string Name
 		{

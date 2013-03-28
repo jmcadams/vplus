@@ -658,6 +658,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VixenPlus\AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenPlus\BackgroundSequenceDialog.resx">
       <DependentUpon>BackgroundSequenceDialog.cs</DependentUpon>
