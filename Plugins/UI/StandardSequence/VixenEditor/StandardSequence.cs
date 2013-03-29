@@ -1252,8 +1252,8 @@ namespace VixenEditor
 			this.m_channelBackBrush = new SolidBrush(Color.White);
 			this.m_timeBackBrush = new SolidBrush(Color.FromArgb(0xff, 0xff, 0xe0));
 			this.m_gridBackBrush = new SolidBrush(Color.FromArgb(0xc0, 0xc0, 0xc0));
-			this.m_arrowBitmap = new Bitmap(this.pictureBoxOutputArrow.Image);
-			this.m_arrowBitmap.MakeTransparent(this.m_arrowBitmap.GetPixel(0, 0));
+			//this.m_arrowBitmap = new Bitmap(this.pictureBoxOutputArrow.Image);
+			//this.m_arrowBitmap.MakeTransparent(this.m_arrowBitmap.GetPixel(0, 0));
 			this.m_gridGraphics = this.pictureBoxGrid.CreateGraphics();
 			this.m_dimmingShimmerGenerator = new FrequencyEffectGenerator(this.DimmingShimmerGenerator);
 			this.m_sparkleGenerator = new FrequencyEffectGenerator(this.SparkleGenerator);
@@ -1621,7 +1621,7 @@ namespace VixenEditor
 		public override void OnDirtyChanged(EventArgs e)
 		{
 			base.OnDirtyChanged(e);
-			this.toolStripButtonSave.Enabled = base.IsDirty;
+			this.tbsSave.Enabled = base.IsDirty;
 		}
 
 		protected override void OnMouseWheel(MouseEventArgs e)
@@ -2739,14 +2739,14 @@ namespace VixenEditor
 		{
 			this.playAtTheSelectedPointToolStripMenuItem.Checked = true;
 			this.playOnlyTheSelectedRangeToolStripMenuItem.Checked = false;
-			this.toolStripButtonPlayPoint.ToolTipText = "Play this sequence starting at the selection point (F6)";
+			this.tsbPlayFrom.ToolTipText = "Play this sequence starting at the selection point (F6)";
 		}
 
 		private void playOnlyTheSelectedRangeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			this.playOnlyTheSelectedRangeToolStripMenuItem.Checked = true;
 			this.playAtTheSelectedPointToolStripMenuItem.Checked = false;
-			this.toolStripButtonPlayPoint.ToolTipText = "Play the selected range of this sequence (F6)";
+			this.tsbPlayFrom.ToolTipText = "Play the selected range of this sequence (F6)";
 		}
 
 		private void plugInItem_CheckedChanged(object sender, EventArgs e)
@@ -3224,35 +3224,35 @@ namespace VixenEditor
 				this.xToolStripMenuItem2.Checked = false;
 				this.normalToolStripMenuItem1.Checked = false;
 				this.otherToolStripMenuItem.Checked = false;
-				this.toolStripButtonPlaySpeedQuarter.Checked = false;
-				this.toolStripButtonPlaySpeedHalf.Checked = false;
-				this.toolStripButtonPlaySpeedThreeQuarters.Checked = false;
-				this.toolStripButtonPlaySpeedNormal.Checked = false;
-				this.toolStripButtonPlaySpeedVariable.Checked = false;
+				this.SpeedQtrTsb.Checked = false;
+				this.SpeedHalfTsb.Checked = false;
+				this.SpeedThreeQtrTsb.Checked = false;
+				this.SpeedNormalTsb.Checked = false;
+				this.SpeedVariableTsb.Checked = false;
 				if (rate == 0.25f)
 				{
 					this.xToolStripMenuItem.Checked = true;
-					this.toolStripButtonPlaySpeedQuarter.Checked = true;
+					this.SpeedQtrTsb.Checked = true;
 				}
 				else if (rate == 0.5f)
 				{
 					this.xToolStripMenuItem1.Checked = true;
-					this.toolStripButtonPlaySpeedHalf.Checked = true;
+					this.SpeedHalfTsb.Checked = true;
 				}
 				else if (rate == 0.75f)
 				{
 					this.xToolStripMenuItem2.Checked = true;
-					this.toolStripButtonPlaySpeedThreeQuarters.Checked = true;
+					this.SpeedThreeQtrTsb.Checked = true;
 				}
 				else if (rate == 1f)
 				{
 					this.normalToolStripMenuItem1.Checked = true;
-					this.toolStripButtonPlaySpeedNormal.Checked = true;
+					this.SpeedNormalTsb.Checked = true;
 				}
 				else
 				{
 					this.otherToolStripMenuItem.Checked = true;
-					this.toolStripButtonPlaySpeedVariable.Checked = true;
+					this.SpeedVariableTsb.Checked = true;
 				}
 				this.m_executionInterface.SetAudioSpeed(this.m_executionContextHandle, rate);
 			}
@@ -3587,7 +3587,7 @@ namespace VixenEditor
 					return;
 				}
 				case Keys.F6:
-					if (this.toolStripButtonPlayPoint.Enabled)
+					if (this.tsbPlayFrom.Enabled)
 					{
 						this.toolStripButtonPlayPoint_Click(null, null);
 						e.Handled = true;
@@ -3595,7 +3595,7 @@ namespace VixenEditor
 					goto Label_0355;
 
 				case Keys.F7:
-					if (this.toolStripButtonPause.Enabled)
+					if (this.tsbPause.Enabled)
 					{
 						this.toolStripButtonPause_Click(null, null);
 						e.Handled = true;
@@ -3603,7 +3603,7 @@ namespace VixenEditor
 					goto Label_0355;
 
 				case Keys.F8:
-					if (this.toolStripButtonStop.Enabled)
+					if (this.tsbStop.Enabled)
 					{
 						this.toolStripButtonStop_Click(null, null);
 						e.Handled = true;
@@ -3613,7 +3613,7 @@ namespace VixenEditor
 				default:
 					goto Label_0355;
 			}
-			if (this.toolStripButtonPlay.Enabled)
+			if (this.tsbPlay.Enabled)
 			{
 				this.toolStripButtonPlay_Click(null, null);
 				e.Handled = true;
@@ -3950,8 +3950,8 @@ namespace VixenEditor
 
 		private void SyncAudioButton()
 		{
-			this.toolStripButtonAudio.Checked = this.m_sequence.Audio != null;
-			this.toolStripButtonAudio.ToolTipText = (this.m_sequence.Audio != null) ? this.m_sequence.Audio.Name : "Add audio";
+			this.tsbAudio.Checked = this.m_sequence.Audio != null;
+			this.tsbAudio.ToolTipText = (this.m_sequence.Audio != null) ? this.m_sequence.Audio.Name : "Add audio";
 		}
 
 		private void textBoxChannelCount_KeyPress(object sender, KeyPressEventArgs e)
@@ -4305,7 +4305,7 @@ namespace VixenEditor
 
 		private void toolStripButtonLoop_CheckedChanged(object sender, EventArgs e)
 		{
-			this.m_executionInterface.SetLoopState(this.m_executionContextHandle, this.toolStripButtonLoop.Checked);
+			this.m_executionInterface.SetLoopState(this.m_executionContextHandle, this.tsbLoop.Checked);
 		}
 
 		private void toolStripButtonMirrorHorizontal_Click(object sender, EventArgs e)
@@ -4465,7 +4465,7 @@ namespace VixenEditor
 
 		private void toolStripButtonPlaySpeedVariable_Click(object sender, EventArgs e)
 		{
-			this.SetVariablePlaybackSpeed(this.toolStripExecutionControl.PointToScreen(new Point(this.toolStripButtonPlaySpeedVariable.Bounds.Right, this.toolStripButtonPlaySpeedVariable.Bounds.Top)));
+			this.SetVariablePlaybackSpeed(this.toolStripExecutionControl.PointToScreen(new Point(this.SpeedVariableTsb.Bounds.Right, this.SpeedVariableTsb.Bounds.Top)));
 		}
 
 		private void toolStripButtonRampOff_Click(object sender, EventArgs e)
@@ -4744,6 +4744,9 @@ namespace VixenEditor
 		private void toolStripButtonToggleCellText_Click(object sender, EventArgs e)
 		{
 			this.m_showCellText = !this.m_showCellText;
+			toolStripButtonToggleCellText.BackgroundImage = m_showCellText
+				                                                ? global::Properties.Resources.Ball_Green
+				                                                : global::Properties.Resources.Ball_Red;
 			this.pictureBoxGrid.Refresh();
 		}
 
@@ -4761,6 +4764,9 @@ namespace VixenEditor
 		private void toolStripButtonToggleLevels_Click(object sender, EventArgs e)
 		{
 			this.m_actualLevels = !this.m_actualLevels;
+			//toolStripButtonToggleLevels.Image = m_actualLevels
+			//                                        ? global::Properties.Resources.level_Number
+			//                                        : global::Properties.Resources.level_Percent;
 			this.m_preferences.SetBoolean("ActualLevels", this.m_actualLevels);
 			this.UpdateLevelDisplay();
 			this.pictureBoxGrid.Refresh();
@@ -5144,12 +5150,14 @@ namespace VixenEditor
 			this.SetDrawingLevel(this.m_drawingLevel);
 			if (this.m_actualLevels)
 			{
-				this.toolStripButtonToggleLevels.Image = this.pictureBoxLevelPercent.Image;
+				toolStripButtonToggleLevels.Image = global::Properties.Resources.Percent;
+				//this.toolStripButtonToggleLevels.Image = this.pictureBoxLevelPercent.Image;
 				this.toolStripButtonToggleLevels.Text = this.toolStripButtonToggleLevels.ToolTipText = "Show intensity levels as percent (0-100%)";
 			}
 			else
 			{
-				this.toolStripButtonToggleLevels.Image = this.pictureBoxLevelNumber.Image;
+				toolStripButtonToggleLevels.Image = global::Properties.Resources.number;
+				//this.toolStripButtonToggleLevels.Image = this.pictureBoxLevelNumber.Image;
 				this.toolStripButtonToggleLevels.Text = this.toolStripButtonToggleLevels.ToolTipText = "Show actual intensity levels (0-255)";
 			}
 			this.m_intensityAdjustDialog.ActualLevels = this.m_actualLevels;
@@ -5365,6 +5373,10 @@ namespace VixenEditor
 		}
 
 		private delegate void ToolStripUpdateDelegate(int seconds);
+
+		private void toolStripContainer1_TopToolStripPanel_Click(object sender, EventArgs e) {
+
+		}
 	}
 }
 
