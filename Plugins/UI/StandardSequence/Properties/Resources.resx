@@ -274,7 +274,4 @@
   <data name="crosshairs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\crosshairs.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="level_Number2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\level Number2.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
 </root>

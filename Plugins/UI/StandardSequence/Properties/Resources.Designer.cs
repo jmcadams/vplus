@@ -158,13 +158,6 @@ namespace Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap level_Number2 {
-            get {
-                object obj = ResourceManager.GetObject("level_Number2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap level_Percent {
             get {
                 object obj = ResourceManager.GetObject("level_Percent", resourceCulture);
