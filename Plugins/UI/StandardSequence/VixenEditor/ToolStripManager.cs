@@ -5,9 +5,15 @@
     using System.Windows.Forms;
     using System.Xml;
     using VixenPlus;
+    using System.Drawing;
 
     internal static class ToolStripManager
     {
+
+        internal const int ICON_SIZE_SMALL = 24;
+        internal const int ICON_SIZE_MEDIUM = 32;
+        internal const int ICON_SIZE_LARGE = 48;
+
         public static void LoadSettings(Form form, XmlNode parentNode)
         {
             LoadSettings(form, parentNode, form.GetType().ToString());
@@ -67,17 +73,27 @@
                     ToolStrip item = null;
                     foreach (ToolStrip strip2 in toolStrips)
                     {
+                        if (node.Attributes["size"] != null)
+                        {
+                            var strArray = node.Attributes["size"].Value.Split(new char[] { ',' });
+                            strip2.ImageScalingSize = new System.Drawing.Size(int.Parse(strArray[0]), int.Parse(strArray[1]));
+                            resizeChildren(strip2.Items, int.Parse(strArray[0]), int.Parse(strArray[1]));
+                        }
+
                         if (strip2.Name == node.Attributes["name"].Value)
                         {
                             item = strip2;
                             break;
                         }
+
                     }
                     if (item != null)
                     {
                         toolStrips.Remove(item);
+
                         string[] strArray = node.Attributes["location"].Value.Split(new char[] { ',' });
                         toolStripPanel.Join(item, int.Parse(strArray[0]), int.Parse(strArray[1]));
+
                         item.Visible = bool.Parse(node.Attributes["visible"].Value);
                     }
                 }
@@ -145,6 +161,37 @@
                 Xml.SetAttribute(node2, "name", control.Name);
                 Xml.SetAttribute(node2, "location", string.Format("{0},{1}", control.Location.X, control.Location.Y));
                 Xml.SetAttribute(node2, "visible", control.Visible.ToString());
+                if (control.GetType() == typeof(ToolStrip))
+                {
+                    Xml.SetAttribute(node2, "size", string.Format("{0},{1}", ((ToolStrip)control).ImageScalingSize.Height, ((ToolStrip)control).ImageScalingSize.Width));
+                }
+            }
+        }
+
+        public static void resizeToolStrips(Form form, int width, int height)
+        {
+            foreach (Control toolStripContainer in form.Controls)
+            {
+                if (toolStripContainer is ToolStripContainer)
+                {
+                    foreach (ToolStrip toolStrip in ((ToolStripContainer)toolStripContainer).TopToolStripPanel.Controls)
+                    {
+                        toolStrip.ImageScalingSize = new Size(width, height);
+                        resizeChildren(toolStrip.Items, width, height);
+                    }
+                }
+            }
+        }
+
+
+        private static void resizeChildren(ToolStripItemCollection toolStripItems, int width, int height)
+        {
+            foreach (var item in toolStripItems)
+            {
+                if (item is ToolStripButton)
+                {
+                    ((ToolStripButton)item).Size = new Size(width, height);
+                }
             }
         }
     }

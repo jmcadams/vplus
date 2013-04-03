@@ -5377,6 +5377,27 @@ namespace VixenEditor
 		private void toolStripContainer1_TopToolStripPanel_Click(object sender, EventArgs e) {
 
 		}
+
+        private void smallToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            resizeToolStrips(ToolStripManager.ICON_SIZE_SMALL);
+        }
+
+        private void mediumToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            resizeToolStrips(ToolStripManager.ICON_SIZE_MEDIUM);
+        }
+
+        private void largeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            resizeToolStrips(ToolStripManager.ICON_SIZE_LARGE);
+        }
+
+        private void resizeToolStrips(int widthAndHeight)
+        {
+            ToolStripManager.resizeToolStrips(this, widthAndHeight, widthAndHeight);
+        }
+
 	}
 }
 
