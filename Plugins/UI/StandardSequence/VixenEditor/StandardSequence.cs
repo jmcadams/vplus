@@ -2074,6 +2074,7 @@ namespace VixenEditor
 			if (e.Button == MouseButtons.Left)
 			{
 				this.m_mouseDownInGrid = true;
+                lblFollowMouse.Visible = true;
 				this.m_mouseDownAtInGrid.X = (e.X / this.m_periodPixelWidth) + this.hScrollBar1.Value;
 				this.m_mouseDownAtInGrid.Y = (e.Y / this.m_gridRowHeight) + this.vScrollBar1.Value;
 				if (this.m_normalizedRange.Width != 0)
@@ -2136,6 +2137,7 @@ namespace VixenEditor
 					this.m_selectedLineIndex = -1;
 				}
 				this.UpdatePositionLabel(this.m_normalizedRange, false);
+                UpdateFollowMouse(new Point(m_mouseDownAtInGrid.X,m_mouseDownAtInGrid.Y));
 			}
 		}
 
@@ -2402,11 +2404,13 @@ namespace VixenEditor
 		Label_0473:
 			this.InvalidateRect(this.m_lineRect);
 			this.UpdatePositionLabel(this.NormalizeRect(new Rectangle(this.m_lineRect.X, this.m_lineRect.Y, this.m_lineRect.Width + 1, this.m_lineRect.Height)), true);
+            //UpdateFollowMouse(e.Location);
 			goto Label_0733;
 		Label_0715:
 			this.m_lastCellX = cellX;
 			this.m_lastCellY = cellY;
 			this.UpdatePositionLabel(this.m_normalizedRange, false);
+            //UpdateFollowMouse(e.Location);
 		Label_0733:
 			num8 = 0;
 			int num9 = 0;
@@ -2469,11 +2473,13 @@ namespace VixenEditor
 				this.toolStripLabelCellIntensity.Text = str;
 				this.toolStripLabelCurrentCell.Text = string.Format("{0} , {1}", this.TimeString(cellX * this.m_sequence.EventPeriod), this.m_sequence.Channels[this.m_channelOrderMapping[cellY]].Name);
 			}
+            UpdateFollowMouse(new Point(e.X,e.Y/*e.X + hScrollBar1.Size.Height , e.Y + vScrollBar1.Size.Width*/));
 		}
 
 		private void pictureBoxGrid_MouseUp(object sender, MouseEventArgs e)
 		{
 			this.m_mouseDownInGrid = false;
+            lblFollowMouse.Visible = false;
 			if (this.m_lineRect.Left != -1)
 			{
 				bool flag = this.paintFromClipboardToolStripMenuItem.Checked && (this.m_systemInterface.Clipboard != null);
@@ -2509,6 +2515,7 @@ namespace VixenEditor
 				}
 				this.m_lineRect.X = -1;
 				this.UpdatePositionLabel(this.m_normalizedRange, false);
+                //UpdateFollowMouse(e.Location);
 			}
 		}
 
@@ -3929,7 +3936,7 @@ namespace VixenEditor
 				}
 			}
 			list.Sort();
-			int num = 0;
+			var position = 2;
 			foreach (string str in list)
 			{
 				ToolStripMenuItem item = new ToolStripMenuItem(str);
@@ -3937,9 +3944,10 @@ namespace VixenEditor
 				item.Checked = this.m_toolStrips[str].Visible;
 				item.CheckOnClick = true;
 				item.CheckStateChanged += this.m_toolStripCheckStateChangeHandler;
-				this.toolbarsToolStripMenuItem.DropDownItems.Insert(num++, item);
+				this.toolbarsToolStripMenuItem.DropDownItems.Insert(position++, item);
 			}
 			this.m_actualLevels = this.m_preferences.GetBoolean("ActualLevels");
+            UpdateIconSizeMenu();
 			this.UpdateLevelDisplay();
 		}
 
@@ -5163,25 +5171,41 @@ namespace VixenEditor
 			this.m_intensityAdjustDialog.ActualLevels = this.m_actualLevels;
 		}
 
-		private void UpdatePositionLabel(Rectangle rect, bool zeroWidthIsValid)
-		{
-			int milliseconds = rect.Left * this.m_sequence.EventPeriod;
-			string str = this.TimeString(milliseconds);
-			if (rect.Width > 1)
-			{
-				int num2 = (rect.Right - 1) * this.m_sequence.EventPeriod;
-				string str2 = this.TimeString(num2);
-				this.labelPosition.Text = string.Format("{0} - {1}\n({2})", str, str2, this.TimeString(num2 - milliseconds));
-			}
-			else if (((rect.Width == 0) && zeroWidthIsValid) || (rect.Width == 1))
-			{
-				this.labelPosition.Text = str;
-			}
-			else
-			{
-				this.labelPosition.Text = string.Empty;
-			}
-		}
+        private void UpdateIconSizeMenu()
+        {
+            smallToolStripMenuItem.Checked = (ToolStripManager.iconSize == ToolStripManager.ICON_SIZE_SMALL);
+            mediumToolStripMenuItem.Checked = (ToolStripManager.iconSize == ToolStripManager.ICON_SIZE_MEDIUM);
+            largeToolStripMenuItem.Checked = (ToolStripManager.iconSize == ToolStripManager.ICON_SIZE_LARGE);
+        }
+
+        private void UpdatePositionLabel(Rectangle rect, bool zeroWidthIsValid)
+        {
+            int milliseconds = rect.Left * this.m_sequence.EventPeriod;
+            string str = this.TimeString(milliseconds);
+            if (rect.Width > 1)
+            {
+                int num2 = (rect.Right - 1) * this.m_sequence.EventPeriod;
+                string str2 = this.TimeString(num2);
+                this.labelPosition.Text = string.Format("{0} - {1}\n({2})", str, str2, this.TimeString(num2 - milliseconds));
+            }
+            else if (((rect.Width == 0) && zeroWidthIsValid) || (rect.Width == 1))
+            {
+                this.labelPosition.Text = str;
+            }
+            else
+            {
+                this.labelPosition.Text = string.Empty;
+            }
+        }
+
+        private void UpdateFollowMouse(Point mousePoint)
+        {
+            lblFollowMouse.Text = labelPosition.Text;
+            mousePoint.X -= lblFollowMouse.Size.Width;
+            mousePoint.Y += 24;
+            lblFollowMouse.Location = mousePoint;
+
+        }
 
 		private void UpdateProgress()
 		{
@@ -5296,7 +5320,7 @@ namespace VixenEditor
 		{
 			get
 			{
-				return "Vixen standard sequence user interface";
+				return "Vixen+ sequence user interface";
 			}
 		}
 
@@ -5312,7 +5336,7 @@ namespace VixenEditor
 		{
 			get
 			{
-				return "Vixen standard sequence";
+				return "Vixen/Vixen+ sequence";
 			}
 		}
 
@@ -5374,37 +5398,39 @@ namespace VixenEditor
 
 		private delegate void ToolStripUpdateDelegate(int seconds);
 
-		private void toolStripContainer1_TopToolStripPanel_Click(object sender, EventArgs e) {
-
-		}
-
         private void smallToolStripMenuItem_Click(object sender, EventArgs e)
         {
             resizeToolStrips(ToolStripManager.ICON_SIZE_SMALL);
-            smallToolStripMenuItem.Checked = true;
-            mediumToolStripMenuItem.Checked = false;
-            largeToolStripMenuItem.Checked = false;
         }
 
         private void mediumToolStripMenuItem_Click(object sender, EventArgs e)
         {
             resizeToolStrips(ToolStripManager.ICON_SIZE_MEDIUM);
-            smallToolStripMenuItem.Checked = false;
-            mediumToolStripMenuItem.Checked = true;
-            largeToolStripMenuItem.Checked = false;
         }
 
         private void largeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             resizeToolStrips(ToolStripManager.ICON_SIZE_LARGE);
-            smallToolStripMenuItem.Checked = false;
-            mediumToolStripMenuItem.Checked = false;
-            largeToolStripMenuItem.Checked = true;
         }
 
         private void resizeToolStrips(int widthAndHeight)
         {
-            ToolStripManager.resizeToolStrips(this, widthAndHeight, widthAndHeight);
+            ToolStripManager.iconSize = widthAndHeight;
+            ToolStripManager.resizeToolStrips(this);
+            UpdateIconSizeMenu();
+        }
+
+        private void lockToolbarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var style = lockToolbarToolStripMenuItem.Checked ? ToolStripGripStyle.Hidden : ToolStripGripStyle.Visible;
+
+            toolStripDisplaySettings.GripStyle = style;
+            toolStripEditing.GripStyle = style;
+            toolStripEffect.GripStyle = style;
+            toolStripExecutionControl.GripStyle = style;
+            toolStripSequenceSettings.GripStyle = style;
+            toolStripText.GripStyle = style;
+            toolStripVisualizer.GripStyle = style;
         }
 
 	}
