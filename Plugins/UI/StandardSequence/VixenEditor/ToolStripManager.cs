@@ -46,11 +46,18 @@
                 XmlNode node2 = node[key];
                 if (node2 != null)
                 {
-                    var sizeNode = node2.SelectSingleNode("Size");
+                    
+					var sizeNode = node2.SelectSingleNode("Size");
                     if (sizeNode != null)
                     {
                         iconSize = int.Parse(sizeNode.InnerText);
                     }
+
+					var lockedNode = node2.SelectSingleNode("Locked");
+					if (lockedNode != null) {
+						Locked = bool.Parse(lockedNode.InnerText);
+					}
+
                     foreach (Control control in form.Controls)
                     {
                         if (control is ToolStripContainer)
@@ -115,6 +122,7 @@
                         toolStripPanel.Join(item, int.Parse(strArray[0]), int.Parse(strArray[1]));
 
                         item.Visible = bool.Parse(node.Attributes["visible"].Value);
+						item.GripStyle = Locked ? ToolStripGripStyle.Hidden : ToolStripGripStyle.Visible;
                     }
                 }
             }
@@ -129,6 +137,7 @@
         {
             XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(Xml.GetNodeAlways(parentNode, "ToolStripConfiguration"), key);
             Xml.SetNewValue(emptyNodeAlways, "Size", iconSize.ToString());
+			Xml.SetNewValue(emptyNodeAlways, "Locked", Locked.ToString());
             foreach (Control control in form.Controls)
             {
                 if (control is ToolStripContainer)
@@ -182,10 +191,6 @@
                 Xml.SetAttribute(node2, "name", control.Name);
                 Xml.SetAttribute(node2, "location", string.Format("{0},{1}", control.Location.X, control.Location.Y));
                 Xml.SetAttribute(node2, "visible", control.Visible.ToString());
-                //if (control.GetType() == typeof(ToolStrip))
-                //{
-                //    Xml.SetAttribute(node2, "size", string.Format("{0},{1}", ((ToolStrip)control).ImageScalingSize.Height, ((ToolStrip)control).ImageScalingSize.Width));
-                //}
             }
         }
 
@@ -215,6 +220,8 @@
             }
         }
 
-    }
+
+		public static bool Locked { get; set; }
+	}
 }
 

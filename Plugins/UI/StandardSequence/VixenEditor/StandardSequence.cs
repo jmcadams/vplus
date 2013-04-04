@@ -3936,7 +3936,9 @@ namespace VixenEditor
 				}
 			}
 			list.Sort();
-			var position = 2;
+
+			//this populates the toolstrip menu with the attached toolstrips
+			var position = 4; //todo this should be resolved dynamically
 			foreach (string str in list)
 			{
 				ToolStripMenuItem item = new ToolStripMenuItem(str);
@@ -3947,7 +3949,7 @@ namespace VixenEditor
 				this.toolbarsToolStripMenuItem.DropDownItems.Insert(position++, item);
 			}
 			this.m_actualLevels = this.m_preferences.GetBoolean("ActualLevels");
-            UpdateIconSizeMenu();
+            UpdateToolbarMenu();
 			this.UpdateLevelDisplay();
 		}
 
@@ -5171,11 +5173,12 @@ namespace VixenEditor
 			this.m_intensityAdjustDialog.ActualLevels = this.m_actualLevels;
 		}
 
-        private void UpdateIconSizeMenu()
+        private void UpdateToolbarMenu()
         {
             smallToolStripMenuItem.Checked = (ToolStripManager.iconSize == ToolStripManager.ICON_SIZE_SMALL);
             mediumToolStripMenuItem.Checked = (ToolStripManager.iconSize == ToolStripManager.ICON_SIZE_MEDIUM);
             largeToolStripMenuItem.Checked = (ToolStripManager.iconSize == ToolStripManager.ICON_SIZE_LARGE);
+			lockToolbarToolStripMenuItem.Checked = ToolStripManager.Locked;
         }
 
         private void UpdatePositionLabel(Rectangle rect, bool zeroWidthIsValid)
@@ -5417,12 +5420,14 @@ namespace VixenEditor
         {
             ToolStripManager.iconSize = widthAndHeight;
             ToolStripManager.resizeToolStrips(this);
-            UpdateIconSizeMenu();
+            UpdateToolbarMenu();
         }
 
         private void lockToolbarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var style = lockToolbarToolStripMenuItem.Checked ? ToolStripGripStyle.Hidden : ToolStripGripStyle.Visible;
+
+			ToolStripManager.Locked = lockToolbarToolStripMenuItem.Checked;
 
             toolStripDisplaySettings.GripStyle = style;
             toolStripEditing.GripStyle = style;
