@@ -5381,16 +5381,25 @@ namespace VixenEditor
         private void smallToolStripMenuItem_Click(object sender, EventArgs e)
         {
             resizeToolStrips(ToolStripManager.ICON_SIZE_SMALL);
+            smallToolStripMenuItem.Checked = true;
+            mediumToolStripMenuItem.Checked = false;
+            largeToolStripMenuItem.Checked = false;
         }
 
         private void mediumToolStripMenuItem_Click(object sender, EventArgs e)
         {
             resizeToolStrips(ToolStripManager.ICON_SIZE_MEDIUM);
+            smallToolStripMenuItem.Checked = false;
+            mediumToolStripMenuItem.Checked = true;
+            largeToolStripMenuItem.Checked = false;
         }
 
         private void largeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             resizeToolStrips(ToolStripManager.ICON_SIZE_LARGE);
+            smallToolStripMenuItem.Checked = false;
+            mediumToolStripMenuItem.Checked = false;
+            largeToolStripMenuItem.Checked = true;
         }
 
         private void resizeToolStrips(int widthAndHeight)

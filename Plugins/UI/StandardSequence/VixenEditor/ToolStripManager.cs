@@ -170,15 +170,36 @@
 
         public static void resizeToolStrips(Form form, int width, int height)
         {
-            foreach (Control toolStripContainer in form.Controls)
+            foreach (Control control in form.Controls)
             {
-                if (toolStripContainer is ToolStripContainer)
+                System.Diagnostics.Debug.WriteLine("Control: " + control.Name);
+                if (control is ToolStripContainer)
                 {
-                    foreach (ToolStrip toolStrip in ((ToolStripContainer)toolStripContainer).TopToolStripPanel.Controls)
+                    foreach (ToolStrip toolStrip in ((ToolStripContainer)control).TopToolStripPanel.Controls)
                     {
+                        System.Diagnostics.Debug.WriteLine("ToolStrip: " + toolStrip.Name);
                         toolStrip.ImageScalingSize = new Size(width, height);
                         resizeChildren(toolStrip.Items, width, height);
                     }
+                }
+                if (control is MenuStrip)
+                {
+                    foreach (ToolStripItemCollection item in ((MenuStrip)control).Items)
+                    {
+                        if (item.
+                    }
+                    var name = ((MenuStrip)control).Name;
+                    //if (name == "smallToolStripMenuItem")
+                    //{
+                    //    ((MenuStrip)control).Checked = (width == ICON_SIZE_SMALL);
+                    //}
+                    //if (name == "mediumToolStripMenuItem")
+                    //{
+                    //}
+                    //if (name == "largeToolStripMenuItem")
+                    //{
+                    //}
+                    System.Diagnostics.Debug.WriteLine("Name: " + name);
                 }
             }
         }
@@ -194,6 +215,8 @@
                 }
             }
         }
+
+        //private static void (
     }
 }
 
