@@ -200,12 +200,8 @@
     <Compile Include="VixenEditor\ToolStripManager.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vixen\UndoItem.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Vixen\UndoOriginalBehavior.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="VixenPlus\UndoItem.cs" />
+    <Compile Include="VixenPlus\UndoOriginalBehavior.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -421,6 +417,7 @@
   <ItemGroup>
     <None Include="Resources\level Number2.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent />

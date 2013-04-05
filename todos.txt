@@ -1,4 +1,4 @@
-High,incomplete,The Size on the waveform does nothing!
+High,complete,The Size on the waveform does nothing!
 High,incomplete,Refactor
 High,incomplete,Menu order and names need to be fixed
 Normal,incomplete,What are tools? What are Tool Bars?
