@@ -5438,7 +5438,7 @@ namespace VixenEditor
             toolStripExecutionControl.GripStyle = style;
             toolStripSequenceSettings.GripStyle = style;
             toolStripText.GripStyle = style;
-            toolStripVisualizer.GripStyle = style;
+			//toolStripVisualizer.GripStyle = style;
         }
 
 	}

@@ -18,21 +18,29 @@ namespace VixenPlus
 	internal sealed partial class VixenPlusForm : Form, ISystem
 	{
 		private const int HistoryMax = 7;
-		private readonly EventHandler _historyItemClick;
-		private readonly Host _host;
-		//private readonly TriggerImpl _iTriggerImpl;
-		private readonly LoadableData _loadableData;
-		private readonly Dictionary<string, List<LoadedObject>> _loadables;
-		private readonly EventHandler _newMenuItemClick;
-		private readonly Preference2 _preferences;
-		private readonly Dictionary<string, IUIPlugIn> _registeredFileTypes;
-		private readonly TimerExecutor _timerExecutor;
-		private readonly string _timersPath;
-		private string[] _audioDevices;
 		private List<string> _history;
-		private string _lastWindowsClipboardValue = "";
+
 		private DateTime _shutdownAt;
-		private Timers _timers;
+
+		private string _lastWindowsClipboardValue = "";
+
+		private string[] _audioDevices;
+
+		private readonly Dictionary<string, IUIPlugIn> _registeredFileTypes;
+		private readonly Dictionary<string, List<LoadedObject>> _loadables;
+
+		private readonly EventHandler _historyItemClick;
+		private readonly EventHandler _newMenuItemClick;
+
+		private readonly Host _host;
+
+		private readonly LoadableData _loadableData;
+
+		private readonly Preference2 _preferences;
+
+		private readonly TimerExecutor _timerExecutor;
+		private readonly Timers _timers;
+		private readonly string _timersPath;
 
 		public VixenPlusForm(string[] args)
 		{
@@ -338,7 +346,7 @@ namespace VixenPlus
 			return none;
 		}
 
-		//TODO Remove these damn gotos
+		//TODO Remove these damn gotos (Update: just redo this whole scheme)
 		private static void CheckForUpdates()
 		{
 			var updateServerURI = Vendor.UpdateFile;
@@ -440,43 +448,6 @@ namespace VixenPlus
 			}
 			_host.StopBackgroundObjects();
 			_host.BackgroundSequenceName = null;
-			//foreach (ToolStripItem item in addInsToolStripMenuItem.DropDownItems)
-			//{
-			//    var loadedObject = item.Tag as LoadedObject;
-			//    if (loadedObject != null)
-			//    {
-			//        var tag = loadedObject;
-			//        var loadableData = _loadableData.GetLoadableData(tag.InterfaceImplemented, item.Text);
-			//        if ((tag.Instance != null) && (tag.Instance.DataLocationPreference == LoadableDataLocation.Application))
-			//        {
-			//            Xml.SetAttribute(loadableData, "enabled", bool.TrueString);
-			//            tag.Instance.Unloading();
-			//        }
-			//        else
-			//        {
-			//            Xml.SetAttribute(loadableData, "enabled", bool.FalseString);
-			//        }
-			//    }
-			//}
-			//TODO I think this needs to go away, why are these here still?
-			//foreach (ToolStripItem item in triggersToolStripMenuItem.DropDownItems)
-			//{
-			//    var loadedObject = item.Tag as LoadedObject;
-			//    if (loadedObject != null)
-			//    {
-			//        var obj3 = loadedObject;
-			//        var node = _loadableData.GetLoadableData(obj3.InterfaceImplemented, item.Text);
-			//        if (obj3.Instance != null)
-			//        {
-			//            Xml.SetAttribute(node, "enabled", bool.TrueString);
-			//            obj3.Instance.Unloading();
-			//        }
-			//        else
-			//        {
-			//            Xml.SetAttribute(node, "enabled", bool.FalseString);
-			//        }
-			//    }
-			//}
 			_preferences.Flush();
 		}
 

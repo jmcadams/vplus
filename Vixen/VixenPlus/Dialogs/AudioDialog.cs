@@ -151,17 +151,6 @@ namespace VixenPlus.Dialogs
 				_eventSequence.Time = _eventSequence.Audio.Duration;
 			}
 			_eventSequence.AudioDeviceIndex = comboBoxAudioDevice.SelectedIndex - 1;
-			//TODO What the hell is this doing?
-			//int num2 = Math.Min(_newEventValues.GetLength(0), _eventSequence.EventValues.GetLength(0));
-			//int num3 = Math.Min(_newEventValues.GetLength(1), _eventSequence.EventValues.GetLength(1));
-			//for (int i = 0; i < num2; i++)
-			//{
-			//    for (int j = 0; j < num3; j++)
-			//    {
-			//        byte num1 = _eventSequence.EventValues[i, j];
-			//        num1 = (byte) (num1 | _newEventValues[i, j]);
-			//    }
-			//}
 		}
 
 		private void buttonPlayPause_Click(object sender, EventArgs e)
@@ -459,7 +448,6 @@ namespace VixenPlus.Dialogs
 				int milliseconds = 0;
 				Invoke((MethodInvoker) delegate
 					{
-						// TODO: Can change this to "base.Invoke(() => {" when we go to 3.x
 						milliseconds = UpdateTotalTime();
 					});
 				return milliseconds;
