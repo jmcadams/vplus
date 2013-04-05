@@ -10,7 +10,6 @@ namespace VixenPlus{
 
 		#region Windows Form Designer generated code
 		private ToolStripMenuItem aboutToolStripMenuItem1;
-		private ToolStripMenuItem addInsToolStripMenuItem;
 		private ToolStripMenuItem cascadeToolStripMenuItem;
 		private ToolStripMenuItem channelDimmingCurvesToolStripMenuItem;
 		private ToolStripMenuItem checkForUpdatesToolStripMenuItem;
@@ -21,7 +20,6 @@ namespace VixenPlus{
 		private ToolStripMenuItem diagnosticsToolStripMenuItem;
 		private HelpProvider helpProvider;
 		private ToolStripMenuItem helpToolStripMenuItem;
-		private ToolStripMenuItem manageProgramsToolStripMenuItem;
 		private ToolStripMenuItem manageToolStripMenuItem;
 		private MenuStrip menuStrip1;
 		private ToolStripMenuItem musicPlayerToolStripMenuItem;
@@ -31,10 +29,8 @@ namespace VixenPlus{
 		private OpenFileDialog openFileDialog1;
 		private ToolStripMenuItem preferencesToolStripMenuItem;
 		private ToolStripMenuItem profilesToolStripMenuItem;
-		private ToolStripMenuItem programsToolStripMenuItem;
 		private ToolStripMenuItem programToolStripMenuItem;
 		private ToolStripMenuItem recentToolStripMenuItem;
-		private ToolStripMenuItem restartCurrentTimerToolStripMenuItem;
 		private ToolStripMenuItem saveAsToolStripMenuItem;
 		private SaveFileDialog saveFileDialog1;
 		private ToolStripMenuItem saveToolStripMenuItem;
@@ -44,21 +40,16 @@ namespace VixenPlus{
 		private System.Windows.Forms.Timer shutdownTimer;
 		private StatusStrip statusStrip;
 		private ToolStripMenuItem tileToolStripMenuItem;
-		private ToolStripMenuItem timersToolStripMenuItem;
 		private ToolStripSeparator toolStripMenuItem1;
 		private ToolStripSeparator toolStripMenuItem2;
 		private ToolStripSeparator toolStripMenuItem3;
 		private ToolStripSeparator toolStripMenuItem4;
-		private ToolStripSeparator toolStripMenuItem5;
 		private ToolStripSeparator toolStripMenuItem6;
-		private ToolStripSeparator toolStripMenuItem7;
 		private ToolStripSeparator toolStripMenuItem8;
 		private ToolStripProgressBar toolStripProgressBarBackgroundSequenceRunning;
 		private ToolStripStatusLabel toolStripStatusLabelMusic;
-		private ToolStripMenuItem triggersToolStripMenuItem;
 		private ToolStripMenuItem turnOnQueryServerToolStripMenuItem;
 		private ToolStripMenuItem utilityToolStripMenuItem;
-		private ToolStripMenuItem viewRegisteredResponsesToolStripMenuItem;
 		private ToolStripMenuItem visualChannelLayoutToolStripMenuItem;
 		private ToolStripMenuItem windowsToolStripMenuItem;
 
@@ -77,11 +68,6 @@ namespace VixenPlus{
 			this.channelDimmingCurvesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
 			this.recentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.programsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.manageProgramsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
-			this.timersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.restartCurrentTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.profilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.manageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.utilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -96,10 +82,6 @@ namespace VixenPlus{
 			this.turnOnQueryServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
 			this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.addInsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.triggersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.viewRegisteredResponsesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
 			this.windowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.cascadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -125,11 +107,8 @@ namespace VixenPlus{
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.programToolStripMenuItem,
-            this.programsToolStripMenuItem,
             this.profilesToolStripMenuItem,
             this.utilityToolStripMenuItem,
-            this.addInsToolStripMenuItem,
-            this.triggersToolStripMenuItem,
             this.windowsToolStripMenuItem,
             this.helpToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -153,8 +132,8 @@ namespace VixenPlus{
             this.toolStripMenuItem6,
             this.recentToolStripMenuItem});
 			this.programToolStripMenuItem.Name = "programToolStripMenuItem";
-			this.programToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
-			this.programToolStripMenuItem.Text = "Sequence";
+			this.programToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+			this.programToolStripMenuItem.Text = "File";
 			this.programToolStripMenuItem.DropDownOpening += new System.EventHandler(this.programToolStripMenuItem_DropDownOpening);
 			// 
 			// newLightingProgramToolStripMenuItem
@@ -221,45 +200,6 @@ namespace VixenPlus{
 			this.recentToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
 			this.recentToolStripMenuItem.Text = "Recent";
 			// 
-			// programsToolStripMenuItem
-			// 
-			this.programsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.manageProgramsToolStripMenuItem,
-            this.toolStripMenuItem5,
-            this.timersToolStripMenuItem,
-            this.restartCurrentTimerToolStripMenuItem});
-			this.programsToolStripMenuItem.Enabled = false;
-			this.programsToolStripMenuItem.Name = "programsToolStripMenuItem";
-			this.programsToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
-			this.programsToolStripMenuItem.Text = "Programs";
-			this.programsToolStripMenuItem.DropDownOpening += new System.EventHandler(this.programsToolStripMenuItem_DropDownOpening);
-			// 
-			// manageProgramsToolStripMenuItem
-			// 
-			this.manageProgramsToolStripMenuItem.Name = "manageProgramsToolStripMenuItem";
-			this.manageProgramsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-			this.manageProgramsToolStripMenuItem.Text = "Manage";
-			this.manageProgramsToolStripMenuItem.Click += new System.EventHandler(this.manageProgramsToolStripMenuItem_Click);
-			// 
-			// toolStripMenuItem5
-			// 
-			this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-			this.toolStripMenuItem5.Size = new System.Drawing.Size(184, 6);
-			// 
-			// timersToolStripMenuItem
-			// 
-			this.timersToolStripMenuItem.Name = "timersToolStripMenuItem";
-			this.timersToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-			this.timersToolStripMenuItem.Text = "Schedule";
-			this.timersToolStripMenuItem.Click += new System.EventHandler(this.timersToolStripMenuItem_Click);
-			// 
-			// restartCurrentTimerToolStripMenuItem
-			// 
-			this.restartCurrentTimerToolStripMenuItem.Name = "restartCurrentTimerToolStripMenuItem";
-			this.restartCurrentTimerToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-			this.restartCurrentTimerToolStripMenuItem.Text = "Restart current timers";
-			this.restartCurrentTimerToolStripMenuItem.Click += new System.EventHandler(this.restartCurrentTimerToolStripMenuItem_Click);
-			// 
 			// profilesToolStripMenuItem
 			// 
 			this.profilesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -289,7 +229,6 @@ namespace VixenPlus{
             this.turnOnQueryServerToolStripMenuItem,
             this.toolStripMenuItem1,
             this.preferencesToolStripMenuItem});
-			this.utilityToolStripMenuItem.Enabled = false;
 			this.utilityToolStripMenuItem.Name = "utilityToolStripMenuItem";
 			this.utilityToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
 			this.utilityToolStripMenuItem.Text = "Tools";
@@ -355,7 +294,6 @@ namespace VixenPlus{
 			this.turnOnQueryServerToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
 			this.turnOnQueryServerToolStripMenuItem.Text = "Query server";
 			this.turnOnQueryServerToolStripMenuItem.Visible = false;
-			this.turnOnQueryServerToolStripMenuItem.Click += new System.EventHandler(this.turnOnQueryServerToolStripMenuItem_Click);
 			// 
 			// toolStripMenuItem1
 			// 
@@ -370,39 +308,6 @@ namespace VixenPlus{
 			this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
 			this.preferencesToolStripMenuItem.Text = "Preferences";
 			this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
-			// 
-			// addInsToolStripMenuItem
-			// 
-			this.addInsToolStripMenuItem.Enabled = false;
-			this.addInsToolStripMenuItem.Name = "addInsToolStripMenuItem";
-			this.addInsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-			this.addInsToolStripMenuItem.Text = "Add-ins";
-			this.addInsToolStripMenuItem.Visible = false;
-			this.addInsToolStripMenuItem.DropDownOpening += new System.EventHandler(this.loadableToolStripMenuItem_DropDownOpening);
-			// 
-			// triggersToolStripMenuItem
-			// 
-			this.triggersToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.viewRegisteredResponsesToolStripMenuItem,
-            this.toolStripMenuItem7});
-			this.triggersToolStripMenuItem.Enabled = false;
-			this.triggersToolStripMenuItem.Name = "triggersToolStripMenuItem";
-			this.triggersToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
-			this.triggersToolStripMenuItem.Text = "Triggers";
-			this.triggersToolStripMenuItem.Visible = false;
-			this.triggersToolStripMenuItem.DropDownOpening += new System.EventHandler(this.loadableToolStripMenuItem_DropDownOpening);
-			// 
-			// viewRegisteredResponsesToolStripMenuItem
-			// 
-			this.viewRegisteredResponsesToolStripMenuItem.Name = "viewRegisteredResponsesToolStripMenuItem";
-			this.viewRegisteredResponsesToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-			this.viewRegisteredResponsesToolStripMenuItem.Text = "View registered responses";
-			this.viewRegisteredResponsesToolStripMenuItem.Click += new System.EventHandler(this.viewRegisteredResponsesToolStripMenuItem_Click);
-			// 
-			// toolStripMenuItem7
-			// 
-			this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-			this.toolStripMenuItem7.Size = new System.Drawing.Size(206, 6);
 			// 
 			// windowsToolStripMenuItem
 			// 

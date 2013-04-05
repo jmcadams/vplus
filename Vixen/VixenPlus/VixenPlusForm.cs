@@ -20,7 +20,7 @@ namespace VixenPlus
 		private const int HistoryMax = 7;
 		private readonly EventHandler _historyItemClick;
 		private readonly Host _host;
-		private readonly TriggerImpl _iTriggerImpl;
+		//private readonly TriggerImpl _iTriggerImpl;
 		private readonly LoadableData _loadableData;
 		private readonly Dictionary<string, List<LoadedObject>> _loadables;
 		private readonly EventHandler _newMenuItemClick;
@@ -55,29 +55,17 @@ namespace VixenPlus
 			SetVendorData();
 			_registeredFileTypes = new Dictionary<string, IUIPlugIn>();
 			_timersPath = Path.Combine(Paths.DataPath, "timers");
-			//helpProvider.HelpNamespace = Path.Combine(Paths.BinaryPath, Vendor.ProductName + ".chm");
 			_preferences = Preference2.GetInstance();
 			_preferences.PreferenceChange += PreferencesPreferenceChange;
 			_host = new Host(this);
 			_loadables = new Dictionary<string, List<LoadedObject>>();
 			Interfaces.Available["ISystem"] = this;
 			Interfaces.Available["IExecution"] = new ExecutionImpl(_host);
-			Interfaces.Available["ITrigger"] = _iTriggerImpl = new TriggerImpl();
 			_newMenuItemClick = NewMenuItemClick;
 			_historyItemClick = HistoryItemClick;
 			LoadHistory();
 			_loadableData = new LoadableData();
 			_loadableData.LoadFromXml(_preferences.XmlDoc.DocumentElement);
-			splash.Task = "Starting add-ins";
-			if (!list.Contains("no_addins"))
-			{
-				StartAddins();
-			}
-			splash.Task = "Starting triggers";
-			if (!list.Contains("no_triggers"))
-			{
-				StartTriggers();
-			}
 			splash.Task = "Loading UI";
 			LoadUIPlugins();
 			Cursor = Cursors.WaitCursor;
@@ -292,47 +280,6 @@ namespace VixenPlus
 			dialog.Dispose();
 		}
 
-		private void AddInClickHandler(object sender, EventArgs e)
-		{
-			var item = (ToolStripMenuItem) sender;
-			var tag = (LoadedObject) item.Tag;
-			if (tag.Instance == null)
-			{
-				if (!InstantiateObject(tag))
-				{
-					return;
-				}
-				item.Checked = true;
-			}
-			EventSequence sequence = null;
-			var mdi = ActiveMdiChild as IVixenMDI;
-			if (/*ActiveMdiChild != null &&*/ mdi != null)
-			{
-				sequence = mdi.Sequence;
-			}
-			try
-			{
-				var addIn = (IAddIn) tag.Instance;
-				if (addIn != null && (addIn.Execute(sequence) && (sequence != null)))
-				{
-					((IVixenMDI) ActiveMdiChild).Notify(Notification.SequenceChange, null);
-				}
-			}
-			catch (Exception exception)
-			{
-				MessageBox.Show(Resources.VixenPlusForm_AddInError + exception.Message, Vendor.ProductName, MessageBoxButtons.OK,
-				                MessageBoxIcon.Exclamation);
-			}
-			finally
-			{
-				if (tag.Instance != null && tag.Instance.DataLocationPreference == LoadableDataLocation.Sequence)
-				{
-					tag.Instance.Unloading();
-					tag.Instance = null;
-				}
-			}
-		}
-
 		private void AddToFileHistory(string fileName)
 		{
 			var item = Path.GetFileName(fileName);
@@ -437,11 +384,6 @@ namespace VixenPlus
 			CheckForUpdates();
 		}
 
-		//private void contentsToolStripMenuItem_Click(object sender, EventArgs e)
-		//{
-		//    Help.ShowHelp(this, helpProvider.HelpNamespace);
-		//}
-
 		private void copyASequenceToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			var dialog = new CopySequenceDialog();
@@ -467,7 +409,6 @@ namespace VixenPlus
 		{
 			new DiagnosticsDialog(_timers).ShowDialog();
 		}
-
 
 		private static void Ensure(string path)
 		{
@@ -499,42 +440,43 @@ namespace VixenPlus
 			}
 			_host.StopBackgroundObjects();
 			_host.BackgroundSequenceName = null;
-			foreach (ToolStripItem item in addInsToolStripMenuItem.DropDownItems)
-			{
-				var loadedObject = item.Tag as LoadedObject;
-				if (loadedObject != null)
-				{
-					var tag = loadedObject;
-					var loadableData = _loadableData.GetLoadableData(tag.InterfaceImplemented, item.Text);
-					if ((tag.Instance != null) && (tag.Instance.DataLocationPreference == LoadableDataLocation.Application))
-					{
-						Xml.SetAttribute(loadableData, "enabled", bool.TrueString);
-						tag.Instance.Unloading();
-					}
-					else
-					{
-						Xml.SetAttribute(loadableData, "enabled", bool.FalseString);
-					}
-				}
-			}
-			foreach (ToolStripItem item in triggersToolStripMenuItem.DropDownItems)
-			{
-				var loadedObject = item.Tag as LoadedObject;
-				if (loadedObject != null)
-				{
-					var obj3 = loadedObject;
-					var node = _loadableData.GetLoadableData(obj3.InterfaceImplemented, item.Text);
-					if (obj3.Instance != null)
-					{
-						Xml.SetAttribute(node, "enabled", bool.TrueString);
-						obj3.Instance.Unloading();
-					}
-					else
-					{
-						Xml.SetAttribute(node, "enabled", bool.FalseString);
-					}
-				}
-			}
+			//foreach (ToolStripItem item in addInsToolStripMenuItem.DropDownItems)
+			//{
+			//    var loadedObject = item.Tag as LoadedObject;
+			//    if (loadedObject != null)
+			//    {
+			//        var tag = loadedObject;
+			//        var loadableData = _loadableData.GetLoadableData(tag.InterfaceImplemented, item.Text);
+			//        if ((tag.Instance != null) && (tag.Instance.DataLocationPreference == LoadableDataLocation.Application))
+			//        {
+			//            Xml.SetAttribute(loadableData, "enabled", bool.TrueString);
+			//            tag.Instance.Unloading();
+			//        }
+			//        else
+			//        {
+			//            Xml.SetAttribute(loadableData, "enabled", bool.FalseString);
+			//        }
+			//    }
+			//}
+			//TODO I think this needs to go away, why are these here still?
+			//foreach (ToolStripItem item in triggersToolStripMenuItem.DropDownItems)
+			//{
+			//    var loadedObject = item.Tag as LoadedObject;
+			//    if (loadedObject != null)
+			//    {
+			//        var obj3 = loadedObject;
+			//        var node = _loadableData.GetLoadableData(obj3.InterfaceImplemented, item.Text);
+			//        if (obj3.Instance != null)
+			//        {
+			//            Xml.SetAttribute(node, "enabled", bool.TrueString);
+			//            obj3.Instance.Unloading();
+			//        }
+			//        else
+			//        {
+			//            Xml.SetAttribute(node, "enabled", bool.FalseString);
+			//        }
+			//    }
+			//}
 			_preferences.Flush();
 		}
 
@@ -618,62 +560,7 @@ namespace VixenPlus
 		//this.toolStripStatusLabelMusic.Image = (Image)manager.GetObject("toolStripStatusLabelMusic.Image");
 		//base.Icon = (Icon)manager.GetObject("$this.Icon");
 
-		private bool InstantiateObject(LoadedObject loadedObject)
-		{
-			loadedObject.Instance = (ILoadable) Activator.CreateInstance(loadedObject.ObjectType);
-			try
-			{
-				if ((((loadedObject.Instance.DataLocationPreference != LoadableDataLocation.Sequence) || ActiveMdiChild == null) ||
-				     (!(ActiveMdiChild is IVixenMDI))) || (((IVixenMDI) ActiveMdiChild).Sequence == null))
-				{
-					var activeMdiChild = (IVixenMDI) ActiveMdiChild;
-					if (activeMdiChild != null)
-					{
-						loadedObject.Instance.Loading(
-							activeMdiChild.Sequence.LoadableData.GetLoadableData(loadedObject.InterfaceImplemented,
-							                                                     loadedObject.Instance.Name));
-					}
-				}
-				else
-				{
-					loadedObject.Instance.Loading(_loadableData.GetLoadableData(loadedObject.InterfaceImplemented,
-					                                                            loadedObject.Instance.Name));
-				}
-			}
-			catch (Exception exception)
-			{
-				MessageBox.Show(
-					string.Format("Error when initializing loadable {0}:\n\n{1}", loadedObject.Instance.Name, exception.Message),
-					Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-				return false;
-			}
-			return true;
-		}
-
-		private void loadableMenuItem_CheckClick(object sender, EventArgs e)
-		{
-			var item = (ToolStripMenuItem) sender;
-			var tag = (LoadedObject) item.Tag;
-			if (item.Checked)
-			{
-				InstantiateObject(tag);
-			}
-			else
-			{
-				try
-				{
-					tag.Instance.Unloading();
-				}
-				catch (Exception exception)
-				{
-					MessageBox.Show(
-						string.Format("{0} caused the following error while unloading:\n\n{1}", tag.Instance.Name, exception.Message),
-						Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-				}
-				tag.Instance = null;
-			}
-		}
-
+/*
 		private void loadableToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
 		{
 			var item = (ToolStripMenuItem) sender;
@@ -687,6 +574,7 @@ namespace VixenPlus
 				}
 			}
 		}
+*/
 
 		private void LoadHistory()
 		{
@@ -702,52 +590,6 @@ namespace VixenPlus
 				}
 			}
 			recentToolStripMenuItem.Enabled = recentToolStripMenuItem.DropDownItems.Count > 0;
-		}
-
-		private List<LoadedObject> LoadObjects(string directory, string interfaceName)
-		{
-			var list = new List<LoadedObject>();
-			if (Directory.Exists(directory))
-			{
-				foreach (var str in Directory.GetFiles(directory, "*.dll"))
-				{
-					Exception exception;
-					try
-					{
-						var assembly = Assembly.LoadFile(str);
-						foreach (var exportedTypes in assembly.GetExportedTypes())
-						{
-							foreach (var interfaceTypes in exportedTypes.GetInterfaces())
-							{
-								if (interfaceTypes.Name == interfaceName)
-								{
-									try
-									{
-										list.Add(new LoadedObject(exportedTypes, interfaceName));
-									}
-									catch (Exception exception1)
-									{
-										exception = exception1;
-										MessageBox.Show(
-											string.Format("Error when loading object from {0}:\n{1}", Path.GetFileNameWithoutExtension(str),
-											              exception.Message), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-									}
-								}
-							}
-						}
-					}
-					catch (BadImageFormatException)
-					{
-					}
-					catch (Exception exception3)
-					{
-						exception = exception3;
-						MessageBox.Show(string.Format("{0}:\n{1}", Path.GetFileName(str), exception.Message));
-					}
-				}
-				_loadables[interfaceName] = list;
-			}
-			return list;
 		}
 
 		private void LoadUIPlugins()
@@ -872,12 +714,14 @@ namespace VixenPlus
 			}
 		}
 
+/*
 		private void manageProgramsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			var dialog = new ProgramManagerDialog();
 			dialog.ShowDialog();
 			dialog.Dispose();
 		}
+*/
 
 		private void manageToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -1040,10 +884,10 @@ namespace VixenPlus
 			dialog.Dispose();
 		}
 
-		private void programsToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
-		{
-			manageProgramsToolStripMenuItem.Enabled = ((ISystem) Interfaces.Available["ISystem"]).ExecutingTimerCount == 0;
-		}
+		//private void programsToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+		//{
+		//    manageProgramsToolStripMenuItem.Enabled = ((ISystem) Interfaces.Available["ISystem"]).ExecutingTimerCount == 0;
+		//}
 
 		private void programToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
 		{
@@ -1075,6 +919,7 @@ namespace VixenPlus
 			return true;
 		}
 
+/*
 		private void restartCurrentTimerToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (_timers.TimersDisabled)
@@ -1104,6 +949,7 @@ namespace VixenPlus
 				}
 			}
 		}
+*/
 
 		private bool Save(IUIPlugIn pluginInstance)
 		{
@@ -1212,53 +1058,6 @@ namespace VixenPlus
 			}
 		}
 
-		private void StartAddins()
-		{
-			var list = LoadObjects(Paths.AddinPath, "IAddIn");
-			addInsToolStripMenuItem.Visible = list.Count > 0;
-			foreach (var obj2 in list)
-			{
-				var @in = (IAddIn) Activator.CreateInstance(obj2.ObjectType);
-				var item = new CheckableToolStripMenuItem();
-				item.Click += AddInClickHandler;
-				item.Text = @in.Name;
-				item.Tag = obj2;
-				item.CheckClick += loadableMenuItem_CheckClick;
-				addInsToolStripMenuItem.DropDownItems.Add(item);
-				if (
-					_loadableData.RootNode.SelectSingleNode(string.Format("IAddInData/IAddIn[@name=\"{0}\" and @enabled=\"{1}\"]",
-					                                                      @in.Name, bool.TrueString)) != null)
-				{
-					InstantiateObject(obj2);
-					item.Checked = true;
-				}
-			}
-		}
-
-		private void StartTriggers()
-		{
-			var list = LoadObjects(Paths.TriggerPluginPath, "ITriggerPlugin");
-			triggersToolStripMenuItem.Visible = list.Count > 0;
-			foreach (var obj2 in list)
-			{
-				var plugin = (ITriggerPlugin) Activator.CreateInstance(obj2.ObjectType);
-				var item = new CheckableToolStripMenuItem();
-				item.Click += TriggerClickHandler;
-				item.Text = plugin.Name;
-				item.Tag = obj2;
-				item.CheckClick += loadableMenuItem_CheckClick;
-				triggersToolStripMenuItem.DropDownItems.Add(item);
-				if (
-					_loadableData.RootNode.SelectSingleNode(
-						string.Format("ITriggerPluginData/ITriggerPlugin[@name=\"{0}\" and @enabled=\"{1}\"]", plugin.Name,
-						              bool.TrueString)) != null)
-				{
-					InstantiateObject(obj2);
-					item.Checked = true;
-				}
-			}
-		}
-
 		private void tileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			LayoutMdi(MdiLayout.TileHorizontal);
@@ -1273,6 +1072,7 @@ namespace VixenPlus
 			}
 		}
 
+/*
 		private void timersToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			var dialog = new ScheduleDialog(_timers);
@@ -1287,41 +1087,7 @@ namespace VixenPlus
 			}
 			dialog.Dispose();
 		}
-
-		private void TriggerClickHandler(object sender, EventArgs e)
-		{
-			var item = (ToolStripMenuItem) sender;
-			var tag = (LoadedObject) item.Tag;
-			if (tag.Instance == null)
-			{
-				if (!InstantiateObject(tag))
-				{
-					return;
-				}
-				item.Checked = true;
-			}
-			try
-			{
-				var triggerPlugin = (ITriggerPlugin) tag.Instance;
-				if (triggerPlugin != null)
-				{
-					triggerPlugin.Setup();
-				}
-				else
-				{
-					throw new EntryPointNotFoundException(Resources.VixenPlusForm_TriggerNotFoundOrStarted);
-				}
-			}
-			catch (Exception exception)
-			{
-				MessageBox.Show(Resources.VixenPlusForm_TriggeError + exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-			}
-		}
-
-		//TODO is this really needed
-		private void turnOnQueryServerToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-		}
+*/
 
 		private void UpdateHistoryImages(string baseFilePath)
 		{
@@ -1343,11 +1109,6 @@ namespace VixenPlus
 					File.Copy(baseFilePath, string.Format("{0}.bak{1}", baseFilePath, num2), true);
 				}
 			}
-		}
-
-		private void viewRegisteredResponsesToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			_iTriggerImpl.ShowRegistrations();
 		}
 
 		private void visualChannelLayoutToolStripMenuItem_Click(object sender, EventArgs e)
