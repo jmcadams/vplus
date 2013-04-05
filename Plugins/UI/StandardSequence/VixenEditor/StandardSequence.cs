@@ -128,7 +128,7 @@ namespace VixenEditor
 			_waveformOffset = 0x24;
 			_showingOutputs = false;
 			_selectedLineIndex = 0;
-			_arrowBitmap = null;
+			_arrowBitmap = null; //todo I don't think this is ever set to anything
 			_bookmarks = new[] { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
 			_showingGradient = true;
 			_actualLevels = false;
@@ -275,17 +275,19 @@ namespace VixenEditor
 			IsDirty = true;
 		}
 
+/*
 		private void AssignChannelArray(List<VixenPlus.Channel> channels)
 		{
 			_sequence.Channels = channels;
-			textBoxChannelCount.Text = _sequence.ChannelCount.ToString();
+			textBoxChannelCount.Text = _sequence.ChannelCount.ToString(CultureInfo.InvariantCulture);
 			VScrollCheck();
 		}
+*/
 
 		private void attachSequenceToToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			openFileDialog1.Filter = "Profile | *.pro";
-			openFileDialog1.DefaultExt = "pro";
+			openFileDialog1.Filter = @"Profile | *.pro";
+			openFileDialog1.DefaultExt = @"pro";
 			openFileDialog1.InitialDirectory = Paths.ProfilePath;
 			openFileDialog1.FileName = string.Empty;
 			if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -483,11 +485,11 @@ namespace VixenEditor
 
 		private byte[,] CellsToArray()
 		{
-			byte[,] buffer = new byte[_normalizedRange.Height, _normalizedRange.Width];
-			for (int i = 0; i < _normalizedRange.Height; i++)
+			var buffer = new byte[_normalizedRange.Height, _normalizedRange.Width];
+			for (var i = 0; i < _normalizedRange.Height; i++)
 			{
-				int num2 = _channelOrderMapping[_normalizedRange.Top + i];
-				for (int j = 0; j < _normalizedRange.Width; j++)
+                var num2 = _channelOrderMapping[_normalizedRange.Top + i];
+                for (var j = 0; j < _normalizedRange.Width; j++)
 				{
 					buffer[i, j] = _sequence.EventValues[num2, _normalizedRange.Left + j];
 				}
@@ -495,19 +497,20 @@ namespace VixenEditor
 			return buffer;
 		}
 
-		private Rectangle CellsToPixels(Rectangle relativeCells)
-		{
-			Rectangle rectangle = new Rectangle();
-			rectangle.X = (Math.Min(relativeCells.Left, relativeCells.Right) * _periodPixelWidth) + 1;
-			rectangle.Y = (Math.Min(relativeCells.Top, relativeCells.Bottom) * _gridRowHeight) + 1;
-			rectangle.Width = ((Math.Abs(relativeCells.Width) + 1) * _periodPixelWidth) - 1;
-			rectangle.Height = ((Math.Abs(relativeCells.Height) + 1) * _gridRowHeight) - 1;
-			return rectangle;
-		}
 
-		private bool ChannelClickValid()
+	    private Rectangle CellsToPixels(Rectangle relativeCells) {
+	        return new Rectangle {
+	                                 X = (Math.Min(relativeCells.Left, relativeCells.Right) * _periodPixelWidth) + 1,
+	                                 Y = (Math.Min(relativeCells.Top, relativeCells.Bottom) * _gridRowHeight) + 1,
+	                                 Width = ((Math.Abs(relativeCells.Width) + 1) * _periodPixelWidth) - 1,
+	                                 Height = ((Math.Abs(relativeCells.Height) + 1) * _gridRowHeight) - 1
+	                             };
+	    }
+
+
+	    private bool ChannelClickValid()
 		{
-			bool flag = false;
+            var flag = false;
 			if (pictureBoxChannels.PointToClient(MousePosition).Y > pictureBoxTime.Height)
 			{
 				_selectedLineIndex = vScrollBar1.Value + ((pictureBoxChannels.PointToClient(MousePosition).Y - pictureBoxTime.Height) / _gridRowHeight);
@@ -527,7 +530,7 @@ namespace VixenEditor
 		private void ChannelCountChanged()
 		{
 			IsDirty = true;
-			textBoxChannelCount.Text = _sequence.ChannelCount.ToString();
+			textBoxChannelCount.Text = _sequence.ChannelCount.ToString(CultureInfo.InvariantCulture);
 			pictureBoxChannels.Refresh();
 			pictureBoxGrid.Refresh();
 		}
@@ -596,9 +599,9 @@ namespace VixenEditor
 		{
 			if (_selectedEventIndex != -1)
 			{
-				Rectangle blockAffected = new Rectangle(_selectedEventIndex, 0, 1, _sequence.ChannelCount);
+                var blockAffected = new Rectangle(_selectedEventIndex, 0, 1, _sequence.ChannelCount);
 				AddUndoItem(blockAffected, UndoOriginalBehavior.Overwrite);
-				for (int i = 0; i < _sequence.ChannelCount; i++)
+                for (var i = 0; i < _sequence.ChannelCount; i++)
 				{
 					_sequence.EventValues[_channelOrderMapping[i], _selectedEventIndex] = _sequence.MinimumLevel;
 				}
@@ -610,7 +613,7 @@ namespace VixenEditor
 		{
 			if (MessageBox.Show("Clear all events in the sequence?", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 			{
-				Rectangle normalizedRange = _normalizedRange;
+                var normalizedRange = _normalizedRange;
 				_normalizedRange = new Rectangle(0, 0, _sequence.TotalEventPeriods, _sequence.ChannelCount);
 				TurnCellsOff();
 				_normalizedRange = normalizedRange;
@@ -621,7 +624,7 @@ namespace VixenEditor
 		private void ClearChannel(int lineIndex)
 		{
 			AddUndoItem(new Rectangle(0, lineIndex, _sequence.TotalEventPeriods, 1), UndoOriginalBehavior.Overwrite);
-			for (int i = 0; i < _sequence.TotalEventPeriods; i++)
+            for (var i = 0; i < _sequence.TotalEventPeriods; i++)
 			{
 				_sequence.EventValues[_editingChannelSortedIndex, i] = _sequence.MinimumLevel;
 			}
@@ -659,8 +662,8 @@ namespace VixenEditor
 
 		private void copyChannelEventsToClipboardToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			byte[,] buffer = new byte[1, _sequence.TotalEventPeriods];
-			for (int i = 0; i < _sequence.TotalEventPeriods; i++)
+			var buffer = new byte[1, _sequence.TotalEventPeriods];
+            for (var i = 0; i < _sequence.TotalEventPeriods; i++)
 			{
 				buffer[0, i] = _sequence.EventValues[_editingChannelSortedIndex, i];
 			}
@@ -674,11 +677,11 @@ namespace VixenEditor
 
 		private void createFromSequenceToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			Profile objectInContext = new Profile();
+            var objectInContext = new Profile();
 			objectInContext.InheritChannelsFrom(_sequence);
 			objectInContext.InheritPlugInDataFrom(_sequence);
 			objectInContext.InheritSortsFrom(_sequence);
-			ProfileManagerDialog dialog = new ProfileManagerDialog(objectInContext);
+            var dialog = new ProfileManagerDialog(objectInContext);
 			if ((dialog.ShowDialog() == DialogResult.OK) && (MessageBox.Show("Do you want to attach this sequence to the new profile?", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes))
 			{
 				SetProfile(objectInContext);
@@ -688,10 +691,10 @@ namespace VixenEditor
 
 		private void currentProgramsSettingsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			SequenceSettingsDialog dialog = new SequenceSettingsDialog(_sequence);
+            var dialog = new SequenceSettingsDialog(_sequence);
 			int minimumLevel = _sequence.MinimumLevel;
 			int maximumLevel = _sequence.MaximumLevel;
-			int eventPeriod = _sequence.EventPeriod;
+            var eventPeriod = _sequence.EventPeriod;
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
 				if (minimumLevel != _sequence.MinimumLevel)
@@ -726,7 +729,7 @@ namespace VixenEditor
 		private void DeleteChannelFromSort(int naturalIndex)
 		{
 			_channelOrderMapping.Remove(naturalIndex);
-			for (int i = 0; i < _channelOrderMapping.Count; i++)
+            for (var i = 0; i < _channelOrderMapping.Count; i++)
 			{
 				if (_channelOrderMapping[i] > naturalIndex)
 				{
@@ -747,22 +750,22 @@ namespace VixenEditor
 
 		private void DimmingShimmerGenerator(byte[,] values, params int[] effectParameters)
 		{
-			int num = effectParameters[0];
+            var num = effectParameters[0];
 			if (num != 0)
 			{
-				int num2 = (int) Math.Round((double) ((1000f / ((float) _sequence.EventPeriod)) / ((float) num)), MidpointRounding.AwayFromZero);
+                var num2 = (int)Math.Round((double)((1000f / ((float)_sequence.EventPeriod)) / ((float)num)), MidpointRounding.AwayFromZero);
 				if (num2 != 0)
 				{
-					int length = values.GetLength(1);
-					int num8 = values.GetLength(0);
-					Random random = new Random();
-					for (int i = 0; i < length; i += num2)
+                    var length = values.GetLength(1);
+                    var num8 = values.GetLength(0);
+					var random = new Random();
+                    for (var i = 0; i < length; i += num2)
 					{
-						int num4 = Math.Min(length, i + num2) - i;
-						byte num6 = (byte) Math.Max(random.NextDouble() * _sequence.MaximumLevel, (double) _sequence.MinimumLevel);
-						for (int j = 0; j < num4; j++)
+                        var num4 = Math.Min(length, i + num2) - i;
+                        var num6 = (byte)Math.Max(random.NextDouble() * _sequence.MaximumLevel, _sequence.MinimumLevel);
+                        for (var j = 0; j < num4; j++)
 						{
-							for (int k = 0; k < num8; k++)
+                            for (var k = 0; k < num8; k++)
 							{
 								values[k, i + j] = num6;
 							}
@@ -790,31 +793,31 @@ namespace VixenEditor
 			DisableWaveformButton();
 		}
 
-		private void DisjointedInsert(int x, int y, int width, int height, int[] channelIndexes)
+		private void DisjointedInsert(int x, int width, int height, int[] channelIndexes)
 		{
-			for (int i = 0; i < height; i++)
+            for (var i = 0; i < height; i++)
 			{
-				int num = channelIndexes[i];
-				for (int j = ((_sequence.TotalEventPeriods - x) - width) - 1; j >= 0; j--)
+                var num = channelIndexes[i];
+                for (var j = ((_sequence.TotalEventPeriods - x) - width) - 1; j >= 0; j--)
 				{
 					_sequence.EventValues[num, (j + x) + width] = _sequence.EventValues[num, j + x];
 				}
 			}
 		}
 
-		private void DisjointedOverwrite(int x, int y, byte[,] data, int[] channelIndexes)
+		private void DisjointedOverwrite(int x, byte[,] data, int[] channelIndexes)
 		{
-			for (int i = 0; i < data.GetLength(0); i++)
+            for (var i = 0; i < data.GetLength(0); i++)
 			{
-				int num = channelIndexes[i];
-				for (int j = 0; j < data.GetLength(1); j++)
+                var num = channelIndexes[i];
+                for (var j = 0; j < data.GetLength(1); j++)
 				{
 					_sequence.EventValues[num, j + x] = data[i, j];
 				}
 			}
 		}
 
-		private void DisjointedRemove(int x, int y, int width, int height, int[] channelIndexes)
+		private void DisjointedRemove(int x, int width, int height, int[] channelIndexes)
 		{
 			int num;
 			int num2;
@@ -843,8 +846,8 @@ namespace VixenEditor
 
 		private void DrawSelectedRange()
 		{
-			Point point = new Point();
-			Point point2 = new Point();
+            var point = new Point();
+            var point2 = new Point();
 			point.X = (_normalizedRange.Left - hScrollBar1.Value) * _periodPixelWidth;
 			point.Y = (_normalizedRange.Top - vScrollBar1.Value) * _gridRowHeight;
 			point2.X = (_normalizedRange.Right - hScrollBar1.Value) * _periodPixelWidth;
@@ -867,7 +870,7 @@ namespace VixenEditor
 
 		private void EditSequenceChannelMask()
 		{
-			ChannelOutputMaskDialog dialog = new ChannelOutputMaskDialog(_sequence.Channels);
+            var dialog = new ChannelOutputMaskDialog(_sequence.Channels);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
 				foreach (VixenPlus.Channel channel in _sequence.Channels)
@@ -899,7 +902,7 @@ namespace VixenEditor
 		private void EraseRectangleEntity(Rectangle rect)
 		{
 			rect.Offset(-hScrollBar1.Value, -vScrollBar1.Value);
-			Rectangle rc = CellsToPixels(rect);
+            var rc = CellsToPixels(rect);
 			rect.X = -1;
 			pictureBoxGrid.Invalidate(rc);
 		}
@@ -914,7 +917,7 @@ namespace VixenEditor
 		private void exportChannelNamesListToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			string path = Path.Combine(Paths.ImportExportPath, _sequence.Name + "_channels.txt");
-			StreamWriter writer = new StreamWriter(path);
+            var writer = new StreamWriter(path);
 			try
 			{
 				foreach (VixenPlus.Channel channel in _sequence.Channels)
@@ -932,7 +935,7 @@ namespace VixenEditor
 		private void FillChannel(int lineIndex)
 		{
 			AddUndoItem(new Rectangle(0, lineIndex, _sequence.TotalEventPeriods, 1), UndoOriginalBehavior.Overwrite);
-			for (int i = 0; i < _sequence.TotalEventPeriods; i++)
+            for (var i = 0; i < _sequence.TotalEventPeriods; i++)
 			{
 				_sequence.EventValues[_editingChannelSortedIndex, i] = _drawingLevel;
 			}
@@ -946,7 +949,7 @@ namespace VixenEditor
 			{
 				Profile profile = _sequence.Profile;
 				_sequence.Profile = null;
-				List<VixenPlus.Channel> list = new List<VixenPlus.Channel>();
+				var list = new List<VixenPlus.Channel>();
 				list.AddRange(profile.Channels);
 				_sequence.Channels = list;
 				_sequence.Sorts.LoadFrom(profile.Sorts);
@@ -976,11 +979,11 @@ namespace VixenEditor
 			{
 				blockAffected.Height = _sequence.ChannelCount - blockAffected.Top;
 			}
-			byte[,] buffer = new byte[blockAffected.Height, blockAffected.Width];
-			for (int i = 0; i < blockAffected.Height; i++)
+			var buffer = new byte[blockAffected.Height, blockAffected.Width];
+            for (var i = 0; i < blockAffected.Height; i++)
 			{
-				int num3 = _channelOrderMapping[blockAffected.Y + i];
-				for (int j = 0; j < blockAffected.Width; j++)
+                var num3 = _channelOrderMapping[blockAffected.Y + i];
+                for (var j = 0; j < blockAffected.Width; j++)
 				{
 					buffer[i, j] = _sequence.EventValues[num3, blockAffected.X + j];
 				}
@@ -999,7 +1002,7 @@ namespace VixenEditor
 					intensityText = string.Format("{0}", num);
 					return num;
 				}
-				num = (int) Math.Round((double) ((_sequence.EventValues[_channelOrderMapping[cellY], cellX] * 100f) / 255f), MidpointRounding.AwayFromZero);
+				num = (int) Math.Round(_sequence.EventValues[_channelOrderMapping[cellY], cellX] * 100f / 255f, MidpointRounding.AwayFromZero);
 				intensityText = string.Format("{0}%", num);
 				return num;
 			}
@@ -1040,12 +1043,12 @@ namespace VixenEditor
 			return _channelOrderMapping.IndexOf(_sequence.Channels.IndexOf(channel));
 		}
 
-		private Color GetGradientColor(Color startColor, Color endColor, int level)
+		private static Color GetGradientColor(Color startColor, Color endColor, int level)
 		{
-			float num = ((float) level) / 255f;
-			int red = (int) (((endColor.R - startColor.R) * num) + startColor.R);
-			int green = (int) (((endColor.G - startColor.G) * num) + startColor.G);
-			int blue = (int) (((endColor.B - startColor.B) * num) + startColor.B);
+			var num = level / 255f;
+			var red = (int) (((endColor.R - startColor.R) * num) + startColor.R);
+			var green = (int) (((endColor.G - startColor.G) * num) + startColor.G);
+			var blue = (int) (((endColor.B - startColor.B) * num) + startColor.B);
 			return Color.FromArgb(red, green, blue);
 		}
 
@@ -1054,26 +1057,26 @@ namespace VixenEditor
 			return (((point.Y - pictureBoxTime.Height) / _gridRowHeight) + vScrollBar1.Value);
 		}
 
-		private byte[,] GetRoutine()
+		private static byte[,] GetRoutine()
 		{
-			List<string[]> list = new List<string[]>();
-			RoutineSelectDialog dialog = new RoutineSelectDialog();
+			var list = new List<string[]>();
+			var dialog = new RoutineSelectDialog();
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
 				string str;
-				StreamReader reader = new StreamReader(dialog.SelectedRoutine);
+				var reader = new StreamReader(dialog.SelectedRoutine);
 				while ((str = reader.ReadLine()) != null)
 				{
 					list.Add(str.Trim().Split(new char[] { ' ' }));
 				}
 				reader.Close();
 				reader.Dispose();
-				int length = list[0].Length;
-				int count = list.Count;
-				byte[,] buffer = new byte[count, length];
-				for (int i = 0; i < count; i++)
+				var length = list[0].Length;
+				var count = list.Count;
+				var buffer = new byte[count, length];
+                for (var i = 0; i < count; i++)
 				{
-					for (int j = 0; j < length; j++)
+                    for (var j = 0; j < length; j++)
 					{
 						buffer[i, j] = Convert.ToByte((string) list[i][j]);
 					}
@@ -1085,33 +1088,33 @@ namespace VixenEditor
 			return null;
 		}
 
-		private uint GetSampleMinMax(int startSample, int sampleCount, Sound sound, int bits, int channels)
+		private static uint GetSampleMinMax(int startSample, int sampleCount, Sound sound, int bits, int channels)
 		{
 			int num10;
 			int num12;
 			short num = -32768;
 			short num2 = 0x7fff;
-			int num3 = startSample + sampleCount;
-			int num4 = (bits >> 3) * channels;
-			int num5 = startSample * num4;
-			int num6 = num3 * num4;
-			int length = num4 * sampleCount;
-			byte[] destination = new byte[length];
-			IntPtr zero = IntPtr.Zero;
-			IntPtr ptr2 = IntPtr.Zero;
+            var num3 = startSample + sampleCount;
+            var num4 = (bits >> 3) * channels;
+            var num5 = startSample * num4;
+            var num6 = num3 * num4;
+            var length = num4 * sampleCount;
+			var destination = new byte[length];
+			var zero = IntPtr.Zero;
+			var ptr2 = IntPtr.Zero;
 			uint num8 = 0;
 			uint num9 = 0;
 			sound.@lock((uint) num5, (uint) length, ref zero, ref ptr2, ref num8, ref num9);
 			Marshal.Copy(zero, destination, 0, length);
 			num5 = 0;
-			if (bits == 0x10)
+			if (bits == 16)
 			{
 				for (num12 = 0; num12 < sampleCount; num12++)
 				{
 					num10 = 0;
 					while (num10 < channels)
 					{
-						short num11 = BitConverter.ToInt16(destination, num5 + (num10 * 2));
+						var num11 = BitConverter.ToInt16(destination, num5 + (num10 * 2));
 						num = Math.Max(num, num11);
 						num2 = Math.Min(num2, num11);
 						num10++;
@@ -1125,7 +1128,7 @@ namespace VixenEditor
 				{
 					for (num10 = 0; num10 < channels; num10++)
 					{
-						sbyte num13 = (sbyte) destination[num5 + num10];
+						var num13 = (sbyte) destination[num5 + num10];
 						num = Math.Max(num, num13);
 						num2 = Math.Min(num2, num13);
 					}
@@ -1138,7 +1141,7 @@ namespace VixenEditor
 
 		private Control GetTerminalSelectableControl()
 		{
-			Control activeControl = ActiveControl;
+			var activeControl = ActiveControl;
 			while (activeControl is IContainerControl)
 			{
 				activeControl = (activeControl as IContainerControl).ActiveControl;
@@ -1203,8 +1206,8 @@ namespace VixenEditor
 				openFileDialog1.FileName = string.Empty;
 				if (openFileDialog1.ShowDialog() == DialogResult.OK)
 				{
-					StreamReader reader = new StreamReader(openFileDialog1.FileName);
-					List<string> list = new List<string>();
+					var reader = new StreamReader(openFileDialog1.FileName);
+					var list = new List<string>();
 					try
 					{
 						string str;
@@ -1213,7 +1216,7 @@ namespace VixenEditor
 							list.Add(str);
 						}
 						SetChannelCount(list.Count);
-						for (int i = 0; i < list.Count; i++)
+						for (var i = 0; i < list.Count; i++)
 						{
 							_sequence.Channels[i].Name = list[i];
 						}
@@ -1253,7 +1256,7 @@ namespace VixenEditor
 			_affectGridDelegate = AffectGrid;
 			_pluginCheckHandler = plugInItem_CheckedChanged;
 			_channelOrderMapping = new List<int>();
-			for (int i = 0; i < _sequence.ChannelCount; i++)
+			for (var i = 0; i < _sequence.ChannelCount; i++)
 			{
 				_channelOrderMapping.Add(i);
 			}
@@ -1328,8 +1331,8 @@ namespace VixenEditor
 			rect.Y -= vScrollBar1.Value;
 			_selectionRectangle.X = Math.Min(rect.Left, rect.Right) * _periodPixelWidth;
 			_selectionRectangle.Y = Math.Min(rect.Top, rect.Bottom) * _gridRowHeight;
-			_selectionRectangle.Width = Math.Abs((int) ((rect.Width + 1) * _periodPixelWidth));
-			_selectionRectangle.Height = Math.Abs((int) ((rect.Height + 1) * _gridRowHeight));
+			_selectionRectangle.Width = Math.Abs((rect.Width + 1) * _periodPixelWidth);
+			_selectionRectangle.Height = Math.Abs((rect.Height + 1) * _gridRowHeight);
 			if (_selectionRectangle.Width == 0)
 			{
 				_selectionRectangle.Width = _periodPixelWidth;
@@ -1342,6 +1345,7 @@ namespace VixenEditor
 			pictureBoxGrid.Update();
 		}
 
+/*
 		private int LineIndexToChannelIndex(int lineIndex)
 		{
 			if ((lineIndex >= 0) && (lineIndex < _channelOrderMapping.Count))
@@ -1350,10 +1354,11 @@ namespace VixenEditor
 			}
 			return -1;
 		}
+*/
 
 		private void loadARoutineToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			byte[,] routine = GetRoutine();
+			var routine = GetRoutine();
 			if (routine != null)
 			{
 				AddUndoItem(new Rectangle(_normalizedRange.X, _normalizedRange.Y, routine.GetLength(1), routine.GetLength(0)), UndoOriginalBehavior.Overwrite);
@@ -1374,6 +1379,7 @@ namespace VixenEditor
 		    toolStripDropDownButtonPlugins.DropDownItems.Clear();
 			foreach (XmlNode node in _sequence.PlugInData.GetAllPluginData())
 			{
+                //todo refactor
 				var item = new ToolStripMenuItem(string.Format("{0} ({1}-{2})", node.Attributes["name"].Value, node.Attributes["from"].Value, node.Attributes["to"].Value));
 				item.Checked = bool.Parse(node.Attributes["enabled"].Value);
 				item.CheckOnClick = true;
@@ -1393,11 +1399,11 @@ namespace VixenEditor
 		private void LoadSequenceSorts()
 		{
 			toolStripComboBoxChannelOrder.BeginUpdate();
-			string item = (string) toolStripComboBoxChannelOrder.Items[0];
-			string str2 = (string) toolStripComboBoxChannelOrder.Items[toolStripComboBoxChannelOrder.Items.Count - 1];
+			var item = (string) toolStripComboBoxChannelOrder.Items[0];
+			var str2 = (string) toolStripComboBoxChannelOrder.Items[toolStripComboBoxChannelOrder.Items.Count - 1];
 			toolStripComboBoxChannelOrder.Items.Clear();
 			toolStripComboBoxChannelOrder.Items.Add(item);
-			foreach (VixenPlus.SortOrder order in _sequence.Sorts)
+			foreach (var order in _sequence.Sorts)
 			{
 				toolStripComboBoxChannelOrder.Items.Add(order);
 			}
@@ -1418,9 +1424,9 @@ namespace VixenEditor
 				int num4;
 				int num8;
 				AddUndoItem(_normalizedRange, UndoOriginalBehavior.Overwrite);
-				int delta = m_intensityAdjustDialog.Delta;
-				int bottom = _normalizedRange.Bottom;
-				int right = _normalizedRange.Right;
+				var delta = m_intensityAdjustDialog.Delta;
+                var bottom = _normalizedRange.Bottom;
+                var right = _normalizedRange.Right;
 				if (_actualLevels)
 				{
 					for (num8 = _normalizedRange.Top; num8 < bottom; num8++)
@@ -1473,10 +1479,10 @@ namespace VixenEditor
 			}
 			else
 			{
-				int num2 = num / _sequence.EventPeriod;
+                var num2 = num / _sequence.EventPeriod;
 				if (num2 != _position)
 				{
-					toolStripLabelExecutionPoint.Text = string.Format("{0:d2}:{1:d2}", num / 0xea60, (num % 0xea60) / 0x3e8);
+					toolStripLabelExecutionPoint.Text = string.Format("{0:d2}:{1:d2}", num / 60000, (num % 60000) / 1000);
 					_previousPosition = _position;
 					_position = num2;
 					if ((_position < hScrollBar1.Value) || (_position > (hScrollBar1.Value + _visibleEventPeriods)))
@@ -1490,7 +1496,7 @@ namespace VixenEditor
 									_previousPosition = _position = _sequence.TotalEventPeriods - 1;
 								}
 								hScrollBar1.Value = _position;
-								toolStripLabelExecutionPoint.Text = string.Format("{0:d2}:{1:d2}", num / 0xea60, (num % 0xea60) / 0x3e8);
+								toolStripLabelExecutionPoint.Text = string.Format("{0:d2}:{1:d2}", num / 60000, (num % 60000) / 1000);
 							}
 						}
 						else
@@ -1504,7 +1510,7 @@ namespace VixenEditor
 					}
 					else
 					{
-						toolStripLabelExecutionPoint.Text = string.Format("{0:d2}:{1:d2}", num / 0xea60, (num % 0xea60) / 0x3e8);
+						toolStripLabelExecutionPoint.Text = string.Format("{0:d2}:{1:d2}", num / 60000, (num % 60000) / 1000);
 					}
 				}
 			}
@@ -1534,25 +1540,22 @@ namespace VixenEditor
 			return _sequence;
 		}
 
-		private Rectangle NormalizeRect(Rectangle rect)
-		{
-			Rectangle rectangle = new Rectangle();
-			rectangle.X = Math.Min(rect.Left, rect.Right);
-			rectangle.Y = Math.Min(rect.Top, rect.Bottom);
-			rectangle.Width = Math.Abs(rect.Width);
-			rectangle.Height = Math.Abs(rect.Height);
-			if (rect.Width < 0)
-			{
-				rectangle.Width++;
-			}
-			if (rect.Height < 0)
-			{
-				rectangle.Height++;
-			}
-			return rectangle;
-		}
 
-		private void normalSpeedToolStripMenuItem_Click(object sender, EventArgs e)
+	    private static Rectangle NormalizeRect(Rectangle rect) {
+	        return new Rectangle {
+	                                 X = Math.Min(rect.Left, rect.Right),
+	                                 Y = Math.Min(rect.Top, rect.Bottom),
+	                                 Width = Math.Abs(rect.Width) + (rect.Width < 0
+	                                                                     ? 1
+	                                                                     : 0),
+	                                 Height = Math.Abs(rect.Height) + (rect.Height < 0
+	                                                                       ? 1
+	                                                                       : 0)
+	                             };
+	    }
+
+
+	    private void normalSpeedToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			SetAudioSpeed(1f);
 		}
@@ -1601,13 +1604,13 @@ namespace VixenEditor
 
 		public override void OnDirtyChanged(EventArgs e)
 		{
-			OnDirtyChanged(e);
+			base.OnDirtyChanged(e);
 			tbsSave.Enabled = IsDirty;
 		}
 
 		protected override void OnMouseWheel(MouseEventArgs e)
 		{
-			bool flag = (ModifierKeys & Keys.Shift) == Keys.None;
+			var flag = (ModifierKeys & Keys.Shift) == Keys.None;
 			if (_preferences.GetBoolean("FlipScrollBehavior"))
 			{
 				flag = !flag;
@@ -1675,6 +1678,7 @@ namespace VixenEditor
 			paintFromClipboardToolStripMenuItem.Checked = true;
 		}
 
+        //TODO Refactor
 		private void ParseAudioWaveform()
 		{
 			string str;
@@ -1682,7 +1686,7 @@ namespace VixenEditor
 			{
 				if (toolStripButtonWaveform.Checked)
 				{
-					VixenEditor.ProgressDialog dialog = new VixenEditor.ProgressDialog();
+					var dialog = new VixenEditor.ProgressDialog();
 					dialog.Show();
 					dialog.Message = "Parsing sound data, please wait...";
 					Cursor = Cursors.WaitCursor;
@@ -1726,7 +1730,7 @@ namespace VixenEditor
 							index++;
 						}
 						_waveform100PercentAmplitude = _waveformMaxAmplitude = Math.Max(num14, -num15);
-						PCMToPixels(_waveformPcmData, _waveformPixelData);
+						PcmToPixels(_waveformPcmData, _waveformPixelData);
 						sound.release();
 					}
 					finally
@@ -1753,7 +1757,7 @@ namespace VixenEditor
 			if (_systemInterface.Clipboard != null)
 			{
 				AddUndoItem(new Rectangle(0, _selectedLineIndex, _systemInterface.Clipboard.GetLength(1), 1), UndoOriginalBehavior.Overwrite);
-				int num2 = Math.Min(_systemInterface.Clipboard.GetLength(1), _sequence.TotalEventPeriods);
+				var num2 = Math.Min(_systemInterface.Clipboard.GetLength(1), _sequence.TotalEventPeriods);
 				for (int i = 0; i < num2; i++)
 				{
 					_sequence.EventValues[_editingChannelSortedIndex, i] = _systemInterface.Clipboard[0, i];
@@ -1772,127 +1776,119 @@ namespace VixenEditor
 			}
 		}
 
-		private void PCMToPixels(uint[] PCMData, uint[] pixelData)
+		private void PcmToPixels(uint[] pcmDataValues, uint[] pixelData)
 		{
-			int pcmDataLength = PCMData.Length;
-            short minAmp = short.MinValue; // -32768;
-			short maxAmp = short.MaxValue; // 0x7fff
-			int waveformOffset = _waveformOffset;
-			int negativeOffset = -_waveformOffset;
-			double num7 = ((double) _waveformMaxAmplitude) / ((double) Math.Max(waveformOffset, negativeOffset));
-			for (int i = 0; i < pcmDataLength; i++)
+			var pcmDataLength = pcmDataValues.Length;
+			var waveformOffset = _waveformOffset;
+			var negativeOffset = -_waveformOffset;
+			var amplitudeDivisor = _waveformMaxAmplitude / ((double) Math.Max(waveformOffset, negativeOffset));
+			for (var i = 0; i < pcmDataLength; i++)
 			{
-				uint pcmData = PCMData[i];
+				var pcmData = pcmDataValues[i];
 
-				minAmp = (short) (((double) Math.Min((short) (pcmData >> 0x10), _waveformMaxAmplitude)) / num7);
-				minAmp = (short) Math.Max((short)minAmp, (short)0);
+				var minAmp = (short) (Math.Min((short) (pcmData >> 16), _waveformMaxAmplitude) / amplitudeDivisor);
+				minAmp = Math.Max(minAmp, (short)0);
 				minAmp = (short) Math.Min(minAmp, waveformOffset);
 
-				maxAmp = (short) (((double) Math.Max((short) (pcmData & 0xffff), -_waveformMaxAmplitude)) / num7);
-				maxAmp = (short)Math.Min((short)maxAmp, (short)0);
+				var maxAmp = (short) (Math.Max((short) (pcmData & 0xffff), -_waveformMaxAmplitude) / amplitudeDivisor);
+				maxAmp = Math.Min(maxAmp, (short)0);
 				maxAmp = (short) Math.Max(maxAmp, negativeOffset);
 
-				pixelData[i] = (uint) ((minAmp << 0x10) | ((ushort) maxAmp));
+				pixelData[i] = (uint) ((minAmp << 16) | ((ushort) maxAmp));
 			}
 		}
 
-		private void pictureBoxChannels_DragDrop(object sender, DragEventArgs e)
-		{
-			if (e.Data.GetDataPresent(typeof(VixenPlus.Channel)))
-			{
-				VixenPlus.Channel data = (VixenPlus.Channel) e.Data.GetData(typeof(VixenPlus.Channel));
-				VixenPlus.Channel channelAt = GetChannelAt(pictureBoxChannels.PointToClient(new Point(e.X, e.Y)));
-				if (data != channelAt)
-				{
-					if (e.Effect == DragDropEffects.Copy)
-					{
-						_sequence.CopyChannel(data, channelAt);
-						RefreshAll();
-						IsDirty = true;
-					}
-					else if (e.Effect == DragDropEffects.Move)
-					{
-						int channelSortedIndex;
-						int channelNaturalIndex = GetChannelNaturalIndex(data);
-						_channelOrderMapping.Remove(channelNaturalIndex);
-						channelSortedIndex = channelAt != null
-						                         ? GetChannelSortedIndex(channelAt)
-						                         : _channelOrderMapping.Count;
-						_channelOrderMapping.Insert(channelSortedIndex, channelNaturalIndex);
-						RefreshAll();
-						IsDirty = true;
-					}
-				}
-			}
-		}
 
-		private void pictureBoxChannels_DragOver(object sender, DragEventArgs e)
+	    private void pictureBoxChannels_DragDrop(object sender, DragEventArgs e) {
+	        
+            if (!e.Data.GetDataPresent(typeof (VixenPlus.Channel))) {
+	            return;
+	        }
+
+	        var data = (VixenPlus.Channel) e.Data.GetData(typeof (VixenPlus.Channel));
+	        var channelAt = GetChannelAt(pictureBoxChannels.PointToClient(new Point(e.X, e.Y)));
+	        
+            if (data == channelAt) {
+	            return;
+	        }
+	        
+            switch (e.Effect) {
+                case DragDropEffects.Copy:
+                    _sequence.CopyChannel(data, channelAt);
+                    RefreshAll();
+                    IsDirty = true;
+                    break;
+                case DragDropEffects.Move:
+                    var channelNaturalIndex = GetChannelNaturalIndex(data);
+                    _channelOrderMapping.Remove(channelNaturalIndex);
+                    var channelSortedIndex = channelAt != null
+                                                 ? GetChannelSortedIndex(channelAt)
+                                                 : _channelOrderMapping.Count;
+                    _channelOrderMapping.Insert(channelSortedIndex, channelNaturalIndex);
+                    RefreshAll();
+                    IsDirty = true;
+                    break;
+            }
+	    }
+
+
+	    private void pictureBoxChannels_DragOver(object sender, DragEventArgs e)
 		{
-			if (e.Data.GetDataPresent(typeof(VixenPlus.Channel)))
-			{
-				Point point = pictureBoxChannels.PointToClient(new Point(e.X, e.Y));
-				int lineIndexAt = GetLineIndexAt(point);
-				if (vScrollBar1.Enabled)
-				{
-					if ((vScrollBar1.Value > vScrollBar1.Minimum) && ((lineIndexAt - vScrollBar1.Value) < 2))
-					{
-						vScrollBar1.Value--;
-						Thread.Sleep(50);
-						lineIndexAt = GetLineIndexAt(point);
-					}
-					else if ((vScrollBar1.Value < vScrollBar1.Maximum) && ((lineIndexAt - vScrollBar1.Value) > (_visibleRowCount - 2)))
-					{
-						vScrollBar1.Value++;
-						Thread.Sleep(50);
-						lineIndexAt = GetLineIndexAt(point);
-					}
-				}
-				if ((ModifierKeys & Keys.Control) != Keys.None)
-				{
-					if ((lineIndexAt >= 0) && (lineIndexAt < _sequence.ChannelCount))
-					{
-						e.Effect = DragDropEffects.Copy;
-					}
-					else
-					{
-						e.Effect = DragDropEffects.None;
-					}
-				}
-				else
-				{
-					e.Effect = DragDropEffects.Move;
-				}
-			}
-		}
+	        if (!e.Data.GetDataPresent(typeof (VixenPlus.Channel))) {
+	            return;
+	        }
+
+	        var point = pictureBoxChannels.PointToClient(new Point(e.X, e.Y));
+	        var lineIndexAt = GetLineIndexAt(point);
+	        if (vScrollBar1.Enabled)
+	        {
+	            if ((vScrollBar1.Value > vScrollBar1.Minimum) && ((lineIndexAt - vScrollBar1.Value) < 2))
+	            {
+	                vScrollBar1.Value--;
+	                Thread.Sleep(50); //todo evaluate how to put in preferences or a constant
+	                lineIndexAt = GetLineIndexAt(point);
+	            }
+	            else if ((vScrollBar1.Value < vScrollBar1.Maximum) && ((lineIndexAt - vScrollBar1.Value) > (_visibleRowCount - 2)))
+	            {
+	                vScrollBar1.Value++;
+                    Thread.Sleep(50); //todo evaluate how to put in preferences or a constant
+	                lineIndexAt = GetLineIndexAt(point);
+	            }
+	        }
+	        if ((ModifierKeys & Keys.Control) != Keys.None)
+	        {
+	            if ((lineIndexAt >= 0) && (lineIndexAt < _sequence.ChannelCount))
+	            {
+	                e.Effect = DragDropEffects.Copy;
+	            }
+	            else
+	            {
+	                e.Effect = DragDropEffects.None;
+	            }
+	        }
+	        else
+	        {
+	            e.Effect = DragDropEffects.Move;
+	        }
+	    }
 
 		private void pictureBoxChannels_GiveFeedback(object sender, GiveFeedbackEventArgs e)
 		{
 		}
 
-		private void pictureBoxChannels_MouseDoubleClick(object sender, MouseEventArgs e)
-		{
-			if (ChannelClickValid())
-			{
-				int num = 2;
-				if (e.X < 10)
-				{
-					num = 0;
-				}
-				else if (_showingOutputs && (e.X < 50))
-				{
-					num = 1;
-				}
-				switch (num)
-				{
-					case 1:
-						ReorderChannelOutputs();
-						break;
 
-					case 2:
-						ShowChannelProperties();
-						break;
-				}
-			}
+	    private void pictureBoxChannels_MouseDoubleClick(object sender, MouseEventArgs e) {
+	        if ((!ChannelClickValid()) ||
+	            e.X < 10) {
+	            return;
+	        }
+
+	        if (_showingOutputs && (e.X < 50)) {
+	            ReorderChannelOutputs();
+	        }
+	        else {
+	            ShowChannelProperties();
+	        }
 		}
 
 		private void pictureBoxChannels_MouseDown(object sender, MouseEventArgs e)
@@ -1914,118 +1910,85 @@ namespace VixenEditor
 			_mouseDownAtInChannels = Point.Empty;
 		}
 
-		private void pictureBoxChannels_Paint(object sender, PaintEventArgs e)
-		{
-			VixenPlus.Channel channel;
-			int num2;
-			int num3;
-			int num5;
-			e.Graphics.FillRectangle(_channelBackBrush, e.Graphics.VisibleClipBounds);
-			int height = pictureBoxTime.Height;
-			if (toolStripComboBoxRowZoom.SelectedIndex <= 4)
-			{
-				num2 = 0;
-			}
-			else if (toolStripComboBoxRowZoom.SelectedIndex >= 8)
-			{
-				num2 = 3;
-			}
-			else
-			{
-				num2 = 1;
-			}
-			bool boolean = _preferences.GetBoolean("ShowNaturalChannelNumber");
-			int x = boolean ? (((_sequence.ChannelCount.ToString().Length + 1) * 6) + 10) : 10;
-			if (!_showingOutputs)
-			{
-			    for (num5 = vScrollBar1.Value; (num5 >= 0) && (num5 < _sequence.ChannelCount); num5++) {
-			        num3 = _channelOrderMapping[num5];
-			        channel = _sequence.Channels[num3];
-			        e.Graphics.FillRectangle(
-			            channel == SelectedChannel
-			                ? SystemBrushes.Highlight
-			                : channel.Brush,
-			            0,
-			            height,
-			            pictureBoxChannels.Width,
-			            _gridRowHeight);
-			        if (boolean) {
-			            e.Graphics.DrawString(
-			                string.Format("{0}:", num3 + 1), _channelNameFont, Brushes.Black, 10f, (float) (height + num2));
-			        }
-			        e.Graphics.DrawString(
-			            channel.Name,
-			            _channelNameFont,
-			            channel == SelectedChannel
-			                ? SystemBrushes.HighlightText
-			                : Brushes.Black,
-			            x,
-			            height + num2);
-			        height += _gridRowHeight;
-			    }
-			}
-			else
-			{
-				int num8;
-				int width = Math.Min(_gridRowHeight - 4, pictureBoxOutputArrow.Height);
-				int num7 = (_gridRowHeight - width) >> 1;
-				SolidBrush brush = new SolidBrush(Color.White);
-				if (boolean)
-				{
-					for (num5 = vScrollBar1.Value; (num5 >= 0) && (num5 < _sequence.ChannelCount); num5++)
-					{
-						num3 = _channelOrderMapping[num5];
-						channel = _sequence.Channels[num3];
-						brush.Color = Color.FromArgb(0xc0, Color.Gray);
-					    e.Graphics.FillRectangle(
-					        channel == SelectedChannel
-					            ? SystemBrushes.Highlight
-					            : channel.Brush,
-					        0,
-					        height,
-					        pictureBoxChannels.Width,
-					        _gridRowHeight);
-					    e.Graphics.DrawString(string.Format("{0}:", num3 + 1), _channelNameFont, Brushes.Black, 10f, (float) (height + num2));
-						e.Graphics.FillRectangle(brush, x, height + 1, 40, _gridRowHeight - 2);
-						if (toolStripComboBoxRowZoom.SelectedIndex > 4)
+        private void pictureBoxChannels_Paint(object sender, PaintEventArgs e) {
+            e.Graphics.FillRectangle(_channelBackBrush, e.Graphics.VisibleClipBounds);
+
+            VixenPlus.Channel channel;
+            int mappedChannel;
+            int channelOffset;
+
+            var height = pictureBoxTime.Height;
+            var selectedZoom = toolStripComboBoxRowZoom.SelectedIndex;
+            var heightAddition = (selectedZoom <= 4) ? 0 : (selectedZoom >= 8) ? 3 : 1;
+            var showNaturalChannelNumbers = _preferences.GetBoolean("ShowNaturalChannelNumber");
+            var x = showNaturalChannelNumbers ? (_sequence.ChannelCount.ToString(CultureInfo.InvariantCulture).Length + 1) * 6 + 10 : 10;
+
+            #region Not Showing Outputs
+            if (!_showingOutputs) {
+                for (channelOffset = vScrollBar1.Value; (channelOffset >= 0) && (channelOffset < _sequence.ChannelCount); channelOffset++) {
+
+                    mappedChannel = _channelOrderMapping[channelOffset];
+                    channel = _sequence.Channels[mappedChannel];
+                    var isChannelSelected = (channel == SelectedChannel);
+
+                    e.Graphics.FillRectangle(isChannelSelected ? SystemBrushes.Highlight : channel.Brush,
+                            0, height, pictureBoxChannels.Width, _gridRowHeight);
+
+                    if (showNaturalChannelNumbers) {
+                        e.Graphics.DrawString(string.Format("{0}:", mappedChannel + 1), _channelNameFont, Brushes.Black, 10f, height + heightAddition);
+                    }
+
+                    e.Graphics.DrawString(channel.Name, _channelNameFont, isChannelSelected ? SystemBrushes.HighlightText : Brushes.Black,
+                            x, height + heightAddition);
+
+                    height += _gridRowHeight;
+                }
+            } 
+            #endregion
+            #region Showing Outputs
+            else {
+                var width = Math.Min(_gridRowHeight - 4, pictureBoxOutputArrow.Height);
+                var heightOffset = (_gridRowHeight - width) >> 1;
+                var brush = new SolidBrush(Color.White);
+
+                for (channelOffset = vScrollBar1.Value; (channelOffset >= 0) && (channelOffset < _sequence.ChannelCount); channelOffset++) {
+
+                    mappedChannel = _channelOrderMapping[channelOffset];
+                    channel = _sequence.Channels[mappedChannel];
+
+                    brush.Color = Color.FromArgb(0xc0, Color.Gray);
+
+                    e.Graphics.FillRectangle(channel == SelectedChannel && showNaturalChannelNumbers ? SystemBrushes.Highlight : channel.Brush,
+                            0, height, pictureBoxChannels.Width, _gridRowHeight);
+
+                    if (showNaturalChannelNumbers) {
+                        e.Graphics.DrawString(string.Format("{0}:", mappedChannel + 1), _channelNameFont, Brushes.Black, 10f, height + heightAddition);
+                    }
+                    else {
+                        x = 10;
+                    }
+
+                    e.Graphics.FillRectangle(brush, x, height + 1, 40, _gridRowHeight - 2);
+
+                    if (toolStripComboBoxRowZoom.SelectedIndex > 4) //todo What is 4? 30%
 						{
-							e.Graphics.DrawRectangle(Pens.Black, x, height + 1, 40, _gridRowHeight - 2);
-						}
-						e.Graphics.DrawImage(_arrowBitmap, x + 2, height + num7, width, width);
-						num8 = channel.OutputChannel + 1;
-						e.Graphics.DrawString(num8.ToString(), _channelNameFont, Brushes.Black, (float) (x + 0x10), (float) (height + num2));
-						e.Graphics.DrawString(channel.Name, _channelNameFont, Brushes.Black, (float) (x + 0x2c), (float) (height + num2));
-						height += _gridRowHeight;
-					}
-				}
-				else
-				{
-					for (num5 = vScrollBar1.Value; (num5 >= 0) && (num5 < _sequence.ChannelCount); num5++)
-					{
-						num3 = _channelOrderMapping[num5];
-						channel = _sequence.Channels[num3];
-						brush.Color = Color.FromArgb(0xc0, Color.Gray);
-						e.Graphics.FillRectangle(channel.Brush, 0, height, pictureBoxChannels.Width, _gridRowHeight);
-						e.Graphics.FillRectangle(brush, 10, height + 1, 40, _gridRowHeight - 2);
-						if (toolStripComboBoxRowZoom.SelectedIndex > 4)
-						{
-							e.Graphics.DrawRectangle(Pens.Black, 10, height + 1, 40, _gridRowHeight - 2);
-						}
-						e.Graphics.DrawImage(_arrowBitmap, 12, height + num7, width, width);
-						num8 = channel.OutputChannel + 1;
-						e.Graphics.DrawString(num8.ToString(), _channelNameFont, Brushes.Black, 26f, (float) (height + num2));
-						e.Graphics.DrawString(channel.Name, _channelNameFont, Brushes.Black, 54f, (float) (height + num2));
-						height += _gridRowHeight;
-					}
-				}
-				brush.Dispose();
-			}
-			e.Graphics.FillRectangle(Brushes.White, 0, 0, 5, pictureBoxChannels.Height);
-			if (_mouseChannelCaret != -1)
-			{
-				e.Graphics.FillRectangle(_channelCaretBrush, 0, ((_mouseChannelCaret - vScrollBar1.Value) * _gridRowHeight) + pictureBoxTime.Height, 5, _gridRowHeight);
-			}
-		}
+                        e.Graphics.DrawRectangle(Pens.Black, x, height + 1, 40, _gridRowHeight - 2);
+                    }
+
+                    e.Graphics.DrawImage(_arrowBitmap, x + 2, height + heightOffset, width, width);
+                    e.Graphics.DrawString(String.Format("{0}", channel.OutputChannel + 1), _channelNameFont, Brushes.Black, x + 16, height + heightAddition);
+                    e.Graphics.DrawString(channel.Name, _channelNameFont, Brushes.Black, x + 44, height + heightAddition);
+
+                    height += _gridRowHeight;
+                } 
+            #endregion
+                brush.Dispose();
+            }
+            e.Graphics.FillRectangle(Brushes.White, 0, 0, 5, pictureBoxChannels.Height);
+            if (_mouseChannelCaret != -1) {
+                e.Graphics.FillRectangle(_channelCaretBrush, 0, ((_mouseChannelCaret - vScrollBar1.Value) * _gridRowHeight) + pictureBoxTime.Height, 5, _gridRowHeight);
+            }
+        }
 
 		private void pictureBoxChannels_QueryContinueDrag(object sender, QueryContinueDragEventArgs e)
 		{
@@ -2902,18 +2865,18 @@ namespace VixenEditor
 				switch (item.Behavior)
 				{
 					case UndoOriginalBehavior.Overwrite:
-						DisjointedOverwrite(item.Location.X, item.Location.Y, item.Data, item.ReferencedChannels);
+						DisjointedOverwrite(item.Location.X, item.Data, item.ReferencedChannels);
 						pictureBoxGrid.Invalidate(new Rectangle((item.Location.X - hScrollBar1.Value) * _periodPixelWidth, (item.Location.Y - vScrollBar1.Value) * _gridRowHeight, width * _periodPixelWidth, height * _gridRowHeight));
 						break;
 
 					case UndoOriginalBehavior.Removal:
-						DisjointedRemove(item.Location.X, item.Location.Y, width, height, item.ReferencedChannels);
+						DisjointedRemove(item.Location.X, width, height, item.ReferencedChannels);
 						pictureBoxGrid.Refresh();
 						break;
 
 					case UndoOriginalBehavior.Insertion:
-						DisjointedInsert(item.Location.X, item.Location.Y, width, height, item.ReferencedChannels);
-						DisjointedOverwrite(item.Location.X, item.Location.Y, item.Data, item.ReferencedChannels);
+						DisjointedInsert(item.Location.X, width, height, item.ReferencedChannels);
+						DisjointedOverwrite(item.Location.X, item.Data, item.ReferencedChannels);
 						pictureBoxGrid.Refresh();
 						break;
 				}
@@ -3969,8 +3932,8 @@ namespace VixenEditor
 		{
 			if (e.KeyChar == '\r')
 			{
-				int num2;
-				int num3;
+				int heightAddition;
+				int mappedChannel;
 				int num4;
 				e.Handled = true;
 				string s = "0";
@@ -3992,19 +3955,19 @@ namespace VixenEditor
 				str2 = text;
 				try
 				{
-					num2 = int.Parse(s);
+					heightAddition = int.Parse(s);
 				}
 				catch
 				{
-					num2 = 0;
+					heightAddition = 0;
 				}
 				try
 				{
-					num3 = int.Parse(str2);
+					mappedChannel = int.Parse(str2);
 				}
 				catch
 				{
-					num3 = 0;
+					mappedChannel = 0;
 				}
 				try
 				{
@@ -4014,7 +3977,7 @@ namespace VixenEditor
 				{
 					num4 = 0;
 				}
-				num4 = (num4 + (num3 * 0x3e8)) + (num2 * 0xea60);
+				num4 = (num4 + (mappedChannel * 0x3e8)) + (heightAddition * 0xea60);
 				if (num4 == 0)
 				{
 					textBoxProgramLength.Text = TimeString(_sequence.Time);
@@ -4463,7 +4426,7 @@ namespace VixenEditor
 			var dialog = new RandomParametersDialog(_sequence.MinimumLevel, _sequence.MaximumLevel, _actualLevels);
 			int maximumLevel = _sequence.MaximumLevel;
 			int intensityMax = _sequence.MaximumLevel;
-            //var num5 = 0;
+            //var channelOffset = 0;
 			Random random = null;
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
@@ -4475,7 +4438,7 @@ namespace VixenEditor
 				{
 					maximumLevel = dialog.IntensityMin;
 					intensityMax = dialog.IntensityMax;
-                    //num5 = Math.Abs((int) (intensityMax - maximumLevel));
+                    //channelOffset = Math.Abs((int) (intensityMax - maximumLevel));
 					random = new Random();
 				}
 				AddUndoItem(_normalizedRange, UndoOriginalBehavior.Overwrite);
@@ -4897,7 +4860,7 @@ namespace VixenEditor
 			{
 				var selectedItem = (string) toolStripComboBoxWaveformZoom.SelectedItem;
 				_waveformMaxAmplitude = (int) ((100f / (Convert.ToInt32(selectedItem.Substring(0, selectedItem.Length - 1)))) * _waveform100PercentAmplitude);
-				PCMToPixels(_waveformPcmData, _waveformPixelData);
+				PcmToPixels(_waveformPcmData, _waveformPixelData);
 				pictureBoxTime.Refresh();
 			}
 		}
@@ -4994,11 +4957,11 @@ namespace VixenEditor
 			{
 				var item = (UndoItem) _undoStack.Pop();
                 //var length = 0;
-                //var num2 = 0;
+                //var heightAddition = 0;
                 //if (item.Data != null)
                 //{
                 //    length = item.Data.GetLength(0);
-                //    num2 = item.Data.GetLength(1);
+                //    heightAddition = item.Data.GetLength(1);
                 //}
 				toolStripButtonUndo.Enabled = undoToolStripMenuItem.Enabled = _undoStack.Count > 0;
 				if (_undoStack.Count > 0)
@@ -5009,18 +4972,18 @@ namespace VixenEditor
 				switch (item.Behavior)
 				{
 					case UndoOriginalBehavior.Overwrite:
-						DisjointedOverwrite(item.Location.X, item.Location.Y, item.Data, item.ReferencedChannels);
+						DisjointedOverwrite(item.Location.X, item.Data, item.ReferencedChannels);
 						pictureBoxGrid.Refresh();
 						break;
 
 					case UndoOriginalBehavior.Removal:
-						DisjointedInsert(item.Location.X, item.Location.Y, item.Data.GetLength(1), item.Data.GetLength(0), item.ReferencedChannels);
-						DisjointedOverwrite(item.Location.X, item.Location.Y, item.Data, item.ReferencedChannels);
+						DisjointedInsert(item.Location.X, item.Data.GetLength(1), item.Data.GetLength(0), item.ReferencedChannels);
+						DisjointedOverwrite(item.Location.X, item.Data, item.ReferencedChannels);
 						pictureBoxGrid.Refresh();
 						break;
 
 					case UndoOriginalBehavior.Insertion:
-						DisjointedRemove(item.Location.X, item.Location.Y, item.Data.GetLength(1), item.Data.GetLength(0), item.ReferencedChannels);
+						DisjointedRemove(item.Location.X, item.Data.GetLength(1), item.Data.GetLength(0), item.ReferencedChannels);
 						pictureBoxGrid.Refresh();
 						break;
 				}
