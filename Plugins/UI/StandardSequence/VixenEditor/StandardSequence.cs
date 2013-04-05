@@ -93,80 +93,80 @@ namespace VixenEditor
 		public StandardSequence()
 		{
 			object obj2;
-			this.m_executionInterface = null;
-			this.m_systemInterface = null;
-			this.m_gridRowHeight = 20;
-			this.m_visibleRowCount = 0;
-			this.m_visibleEventPeriods = 0;
-			this.m_channelBackBrush = null;
-			this.m_timeBackBrush = null;
-			this.m_gridBackBrush = null;
-			this.m_channelNameFont = new Font("Arial", 8f);
-			this.m_timeFont = new Font("Arial", 8f);
-			this.m_selectedChannel = null;
-			this.m_currentlyEditingChannel = null;
-			this.m_editingChannelSortedIndex = 0;
-			this.m_gridGraphics = null;
-			this.m_selectedRange = new Rectangle();
-			this.m_periodPixelWidth = 30;
-			this.m_selectionRectangle = new Rectangle();
-			this.m_selectionBrush = new SolidBrush(Color.FromArgb(0x3f, Color.Blue));
-			this.m_positionBrush = new SolidBrush(Color.FromArgb(0x3f, Color.Red));
-			this.m_mouseDownInGrid = false;
-			this.m_position = -1;
-			this.m_previousPosition = -1;
-			this.m_mouseChannelCaret = -1;
-			this.m_mouseTimeCaret = -1;
-			this.m_channelCaretBrush = new SolidBrush(Color.Gray);
-			this.m_undoStack = new Stack();
-			this.m_redoStack = new Stack();
-			this.m_lineRect = new Rectangle(-1, -1, -1, -1);
-			this.m_lastCellX = -1;
-			this.m_lastCellY = -1;
-			this.m_initializing = false;
-			this.m_selectedEventIndex = -1;
-			this.m_normalizedRange = new Rectangle();
-			this.m_mouseDownAtInGrid = new Point();
-			this.m_mouseDownAtInChannels = Point.Empty;
-			this.m_waveformPCMData = null;
-			this.m_waveformPixelData = null;
-			this.m_waveformOffset = 0x24;
-			this.m_showingOutputs = false;
-			this.m_selectedLineIndex = 0;
-			this.m_arrowBitmap = null;
-			this.m_bookmarks = new int[] { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
-			this.m_showingGradient = true;
-			this.m_actualLevels = false;
-			this.m_showCellText = false;
-			this.m_lastSelectableControl = null;
+			m_executionInterface = null;
+			m_systemInterface = null;
+			m_gridRowHeight = 20;
+			m_visibleRowCount = 0;
+			m_visibleEventPeriods = 0;
+			m_channelBackBrush = null;
+			m_timeBackBrush = null;
+			m_gridBackBrush = null;
+			m_channelNameFont = new Font("Arial", 8f);
+			m_timeFont = new Font("Arial", 8f);
+			m_selectedChannel = null;
+			m_currentlyEditingChannel = null;
+			m_editingChannelSortedIndex = 0;
+			m_gridGraphics = null;
+			m_selectedRange = new Rectangle();
+			m_periodPixelWidth = 30;
+			m_selectionRectangle = new Rectangle();
+			m_selectionBrush = new SolidBrush(Color.FromArgb(0x3f, Color.Blue));
+			m_positionBrush = new SolidBrush(Color.FromArgb(0x3f, Color.Red));
+			m_mouseDownInGrid = false;
+			m_position = -1;
+			m_previousPosition = -1;
+			m_mouseChannelCaret = -1;
+			m_mouseTimeCaret = -1;
+			m_channelCaretBrush = new SolidBrush(Color.Gray);
+			m_undoStack = new Stack();
+			m_redoStack = new Stack();
+			m_lineRect = new Rectangle(-1, -1, -1, -1);
+			m_lastCellX = -1;
+			m_lastCellY = -1;
+			m_initializing = false;
+			m_selectedEventIndex = -1;
+			m_normalizedRange = new Rectangle();
+			m_mouseDownAtInGrid = new Point();
+			m_mouseDownAtInChannels = Point.Empty;
+			m_waveformPCMData = null;
+			m_waveformPixelData = null;
+			m_waveformOffset = 0x24;
+			m_showingOutputs = false;
+			m_selectedLineIndex = 0;
+			m_arrowBitmap = null;
+			m_bookmarks = new int[] { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
+			m_showingGradient = true;
+			m_actualLevels = false;
+			m_showCellText = false;
+			m_lastSelectableControl = null;
 			if (Interfaces.Available.TryGetValue("IExecution", out obj2))
 			{
-				this.m_executionInterface = (IExecution) obj2;
+				m_executionInterface = (IExecution) obj2;
 			}
 			if (Interfaces.Available.TryGetValue("ISystem", out obj2))
 			{
-				this.m_systemInterface = (ISystem) obj2;
+				m_systemInterface = (ISystem) obj2;
 			}
-			this.m_toolStrips = new Dictionary<string, ToolStrip>();
-			this.m_toolStripCheckStateChangeHandler = new EventHandler(this.toolStripItem_CheckStateChanged);
+			m_toolStrips = new Dictionary<string, ToolStrip>();
+			m_toolStripCheckStateChangeHandler = new EventHandler(toolStripItem_CheckStateChanged);
 		}
 
 		private void additionToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.ArithmeticPaste(ArithmeticOperation.Addition);
+			ArithmeticPaste(ArithmeticOperation.Addition);
 		}
 
 		private void AddUndoItem(Rectangle blockAffected, UndoOriginalBehavior behavior)
 		{
 			if (blockAffected.Width != 0)
 			{
-				byte[,] affectedBlockData = this.GetAffectedBlockData(blockAffected);
-				this.m_undoStack.Push(new UndoItem(blockAffected.Location, affectedBlockData, behavior, this.m_sequence, this.m_channelOrderMapping));
-				this.toolStripButtonUndo.Enabled = this.undoToolStripMenuItem.Enabled = true;
-				this.UpdateUndoText();
-				this.toolStripButtonRedo.Enabled = this.redoToolStripMenuItem.Enabled = false;
-				this.m_redoStack.Clear();
-				this.UpdateRedoText();
+				byte[,] affectedBlockData = GetAffectedBlockData(blockAffected);
+				m_undoStack.Push(new UndoItem(blockAffected.Location, affectedBlockData, behavior, m_sequence, m_channelOrderMapping));
+				toolStripButtonUndo.Enabled = undoToolStripMenuItem.Enabled = true;
+				UpdateUndoText();
+				toolStripButtonRedo.Enabled = redoToolStripMenuItem.Enabled = false;
+				m_redoStack.Clear();
+				UpdateRedoText();
 				base.IsDirty = true;
 			}
 		}
@@ -177,89 +177,89 @@ namespace VixenEditor
 			{
 				if (isRelative)
 				{
-					blockAffected.X += this.hScrollBar1.Value;
-					blockAffected.Y += this.vScrollBar1.Value;
+					blockAffected.X += hScrollBar1.Value;
+					blockAffected.Y += vScrollBar1.Value;
 				}
-				this.AddUndoItem(blockAffected, behavior);
+				AddUndoItem(blockAffected, behavior);
 			}
 		}
 
 		private void AffectGrid(int startRow, int startCol, byte[,] values)
 		{
-			this.AddUndoItem(new Rectangle(startCol, startRow, values.GetLength(1), values.GetLength(0)), UndoOriginalBehavior.Overwrite);
+			AddUndoItem(new Rectangle(startCol, startRow, values.GetLength(1), values.GetLength(0)), UndoOriginalBehavior.Overwrite);
 			for (int i = 0; i < values.GetLength(0); i++)
 			{
-				int num = this.m_channelOrderMapping[startRow + i];
+				int num = m_channelOrderMapping[startRow + i];
 				for (int j = 0; j < values.GetLength(1); j++)
 				{
-					this.m_sequence.EventValues[num, startCol + j] = values[i, j];
+					m_sequence.EventValues[num, startCol + j] = values[i, j];
 				}
 			}
-			this.pictureBoxGrid.Refresh();
+			pictureBoxGrid.Refresh();
 			base.IsDirty = true;
 		}
 
 		private void allChannelsToFullIntensityForThisEventToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (this.m_selectedEventIndex != -1)
+			if (m_selectedEventIndex != -1)
 			{
-				Rectangle blockAffected = new Rectangle(this.m_selectedEventIndex, 0, 1, this.m_sequence.ChannelCount);
-				this.AddUndoItem(blockAffected, UndoOriginalBehavior.Overwrite);
-				for (int i = 0; i < this.m_sequence.ChannelCount; i++)
+				Rectangle blockAffected = new Rectangle(m_selectedEventIndex, 0, 1, m_sequence.ChannelCount);
+				AddUndoItem(blockAffected, UndoOriginalBehavior.Overwrite);
+				for (int i = 0; i < m_sequence.ChannelCount; i++)
 				{
-					this.m_sequence.EventValues[this.m_channelOrderMapping[i], this.m_selectedEventIndex] = this.m_drawingLevel;
+					m_sequence.EventValues[m_channelOrderMapping[i], m_selectedEventIndex] = m_drawingLevel;
 				}
-				this.InvalidateRect(blockAffected);
+				InvalidateRect(blockAffected);
 			}
 		}
 
 		private void allEventsToFullIntensityToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.FillChannel(this.m_selectedLineIndex);
+			FillChannel(m_selectedLineIndex);
 		}
 
 		private void ArithmeticPaste(ArithmeticOperation operation)
 		{
-			if (this.m_systemInterface.Clipboard != null)
+			if (m_systemInterface.Clipboard != null)
 			{
-				this.AddUndoItem(new Rectangle(this.m_normalizedRange.X, this.m_normalizedRange.Y, this.m_systemInterface.Clipboard.GetLength(1), this.m_systemInterface.Clipboard.GetLength(0)), UndoOriginalBehavior.Overwrite);
-				byte[,] clipboard = this.m_systemInterface.Clipboard;
+				AddUndoItem(new Rectangle(m_normalizedRange.X, m_normalizedRange.Y, m_systemInterface.Clipboard.GetLength(1), m_systemInterface.Clipboard.GetLength(0)), UndoOriginalBehavior.Overwrite);
+				byte[,] clipboard = m_systemInterface.Clipboard;
 				int length = clipboard.GetLength(0);
 				int num3 = clipboard.GetLength(1);
-				for (int i = 0; (i < length) && ((this.m_normalizedRange.Top + i) < this.m_sequence.ChannelCount); i++)
+				for (int i = 0; (i < length) && ((m_normalizedRange.Top + i) < m_sequence.ChannelCount); i++)
 				{
-					int num4 = this.m_channelOrderMapping[this.m_normalizedRange.Top + i];
-					for (int j = 0; (j < num3) && ((this.m_normalizedRange.Left + j) < this.m_sequence.TotalEventPeriods); j++)
+					int num4 = m_channelOrderMapping[m_normalizedRange.Top + i];
+					for (int j = 0; (j < num3) && ((m_normalizedRange.Left + j) < m_sequence.TotalEventPeriods); j++)
 					{
-						byte num5 = this.m_sequence.EventValues[num4, this.m_normalizedRange.Left + j];
+						byte num5 = m_sequence.EventValues[num4, m_normalizedRange.Left + j];
 						switch (operation)
 						{
 							case ArithmeticOperation.Addition:
-								this.m_sequence.EventValues[num4, this.m_normalizedRange.Left + j] = (byte) Math.Min(num5 + clipboard[i, j], (int) this.m_sequence.MaximumLevel);
+								m_sequence.EventValues[num4, m_normalizedRange.Left + j] = (byte) Math.Min(num5 + clipboard[i, j], (int) m_sequence.MaximumLevel);
 								break;
 
 							case ArithmeticOperation.Subtraction:
-								this.m_sequence.EventValues[num4, this.m_normalizedRange.Left + j] = (byte) Math.Max(num5 - clipboard[i, j], (int) this.m_sequence.MinimumLevel);
+								m_sequence.EventValues[num4, m_normalizedRange.Left + j] = (byte) Math.Max(num5 - clipboard[i, j], (int) m_sequence.MinimumLevel);
 								break;
 
 							case ArithmeticOperation.Scale:
-								this.m_sequence.EventValues[num4, this.m_normalizedRange.Left + j] = (byte) Math.Max(Math.Min(num5 * (((float) clipboard[i, j]) / 255f), (float) this.m_sequence.MaximumLevel), (float) this.m_sequence.MinimumLevel);
+								m_sequence.EventValues[num4, m_normalizedRange.Left + j] = (byte) Math.Max(Math.Min(num5 * (((float) clipboard[i, j]) / 255f), (float) m_sequence.MaximumLevel), (float) m_sequence.MinimumLevel);
 								break;
 
 							case ArithmeticOperation.Min:
-								this.m_sequence.EventValues[num4, this.m_normalizedRange.Left + j] = Math.Max(Math.Min(clipboard[i, j], num5), this.m_sequence.MinimumLevel);
+								m_sequence.EventValues[num4, m_normalizedRange.Left + j] = Math.Max(Math.Min(clipboard[i, j], num5), m_sequence.MinimumLevel);
 								break;
 
 							case ArithmeticOperation.Max:
-								this.m_sequence.EventValues[num4, this.m_normalizedRange.Left + j] = Math.Min(Math.Max(clipboard[i, j], num5), this.m_sequence.MaximumLevel);
+								m_sequence.EventValues[num4, m_normalizedRange.Left + j] = Math.Min(Math.Max(clipboard[i, j], num5), m_sequence.MaximumLevel);
 								break;
 						}
-						this.m_sequence.EventValues[num4, this.m_normalizedRange.Left + j] = Math.Min(this.m_sequence.EventValues[num4, this.m_normalizedRange.Left + j], this.m_sequence.MaximumLevel);
-						this.m_sequence.EventValues[num4, this.m_normalizedRange.Left + j] = Math.Max(this.m_sequence.EventValues[num4, this.m_normalizedRange.Left + j], this.m_sequence.MinimumLevel);
+						m_sequence.EventValues[num4, m_normalizedRange.Left + j] = Math.Min(m_sequence.EventValues[num4, m_normalizedRange.Left + j], m_sequence.MaximumLevel);
+						m_sequence.EventValues[num4, m_normalizedRange.Left + j] = Math.Max(m_sequence.EventValues[num4, m_normalizedRange.Left + j], m_sequence.MinimumLevel);
 					}
 				}
 				base.IsDirty = true;
-				this.pictureBoxGrid.Refresh();
+				pictureBoxGrid.Refresh();
 			}
 		}
 
@@ -267,12 +267,12 @@ namespace VixenEditor
 		{
 			int length = array.GetLength(0);
 			int num3 = array.GetLength(1);
-			for (int i = 0; (i < length) && ((this.m_normalizedRange.Top + i) < this.m_sequence.ChannelCount); i++)
+			for (int i = 0; (i < length) && ((m_normalizedRange.Top + i) < m_sequence.ChannelCount); i++)
 			{
-				int num4 = this.m_channelOrderMapping[this.m_normalizedRange.Top + i];
-				for (int j = 0; (j < num3) && ((this.m_normalizedRange.Left + j) < this.m_sequence.TotalEventPeriods); j++)
+				int num4 = m_channelOrderMapping[m_normalizedRange.Top + i];
+				for (int j = 0; (j < num3) && ((m_normalizedRange.Left + j) < m_sequence.TotalEventPeriods); j++)
 				{
-					this.m_sequence.EventValues[num4, this.m_normalizedRange.Left + j] = array[i, j];
+					m_sequence.EventValues[num4, m_normalizedRange.Left + j] = array[i, j];
 				}
 			}
 			base.IsDirty = true;
@@ -280,72 +280,72 @@ namespace VixenEditor
 
 		private void AssignChannelArray(List<VixenPlus.Channel> channels)
 		{
-			this.m_sequence.Channels = channels;
-			this.textBoxChannelCount.Text = this.m_sequence.ChannelCount.ToString();
-			this.VScrollCheck();
+			m_sequence.Channels = channels;
+			textBoxChannelCount.Text = m_sequence.ChannelCount.ToString();
+			VScrollCheck();
 		}
 
 		private void attachSequenceToToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.openFileDialog1.Filter = "Profile | *.pro";
-			this.openFileDialog1.DefaultExt = "pro";
-			this.openFileDialog1.InitialDirectory = Paths.ProfilePath;
-			this.openFileDialog1.FileName = string.Empty;
-			if (this.openFileDialog1.ShowDialog() == DialogResult.OK)
+			openFileDialog1.Filter = "Profile | *.pro";
+			openFileDialog1.DefaultExt = "pro";
+			openFileDialog1.InitialDirectory = Paths.ProfilePath;
+			openFileDialog1.FileName = string.Empty;
+			if (openFileDialog1.ShowDialog() == DialogResult.OK)
 			{
-				this.SetProfile(this.openFileDialog1.FileName);
+				SetProfile(openFileDialog1.FileName);
 			}
 		}
 
 		private void BooleanPaste(BooleanOperation operation)
 		{
-			if (this.m_systemInterface.Clipboard != null)
+			if (m_systemInterface.Clipboard != null)
 			{
-				this.AddUndoItem(new Rectangle(this.m_normalizedRange.X, this.m_normalizedRange.Y, this.m_systemInterface.Clipboard.GetLength(1), this.m_systemInterface.Clipboard.GetLength(0)), UndoOriginalBehavior.Overwrite);
-				byte[,] clipboard = this.m_systemInterface.Clipboard;
+				AddUndoItem(new Rectangle(m_normalizedRange.X, m_normalizedRange.Y, m_systemInterface.Clipboard.GetLength(1), m_systemInterface.Clipboard.GetLength(0)), UndoOriginalBehavior.Overwrite);
+				byte[,] clipboard = m_systemInterface.Clipboard;
 				int length = clipboard.GetLength(0);
 				int num3 = clipboard.GetLength(1);
-				for (int i = 0; (i < length) && ((this.m_normalizedRange.Top + i) < this.m_sequence.ChannelCount); i++)
+				for (int i = 0; (i < length) && ((m_normalizedRange.Top + i) < m_sequence.ChannelCount); i++)
 				{
-					int num4 = this.m_channelOrderMapping[this.m_normalizedRange.Top + i];
-					for (int j = 0; (j < num3) && ((this.m_normalizedRange.Left + j) < this.m_sequence.TotalEventPeriods); j++)
+					int num4 = m_channelOrderMapping[m_normalizedRange.Top + i];
+					for (int j = 0; (j < num3) && ((m_normalizedRange.Left + j) < m_sequence.TotalEventPeriods); j++)
 					{
 						switch (operation)
 						{
 							case BooleanOperation.OR:
 							{
-								byte num1 = this.m_sequence.EventValues[num4, this.m_normalizedRange.Left + j];
+								byte num1 = m_sequence.EventValues[num4, m_normalizedRange.Left + j];
 								num1 = (byte) (num1 | clipboard[i, j]);
 								break;
 							}
 							case BooleanOperation.AND:
 							{
-								byte num6 = this.m_sequence.EventValues[num4, this.m_normalizedRange.Left + j];
+								byte num6 = m_sequence.EventValues[num4, m_normalizedRange.Left + j];
 								num6 = (byte) (num6 & clipboard[i, j]);
 								break;
 							}
 							case BooleanOperation.XOR:
 							{
-								byte num7 = this.m_sequence.EventValues[num4, this.m_normalizedRange.Left + j];
+								byte num7 = m_sequence.EventValues[num4, m_normalizedRange.Left + j];
 								num7 = (byte) (num7 ^ clipboard[i, j]);
 								break;
 							}
 							case BooleanOperation.NOR:
-								this.m_sequence.EventValues[num4, this.m_normalizedRange.Left + j] = (byte) ~(clipboard[i, j] | this.m_sequence.EventValues[num4, this.m_normalizedRange.Left + j]);
+								m_sequence.EventValues[num4, m_normalizedRange.Left + j] = (byte) ~(clipboard[i, j] | m_sequence.EventValues[num4, m_normalizedRange.Left + j]);
 								break;
 
 							case BooleanOperation.NAND:
-								this.m_sequence.EventValues[num4, this.m_normalizedRange.Left + j] = (byte) ~(clipboard[i, j] & this.m_sequence.EventValues[num4, this.m_normalizedRange.Left + j]);
+								m_sequence.EventValues[num4, m_normalizedRange.Left + j] = (byte) ~(clipboard[i, j] & m_sequence.EventValues[num4, m_normalizedRange.Left + j]);
 								break;
 
 							case BooleanOperation.XNOR:
-								this.m_sequence.EventValues[num4, this.m_normalizedRange.Left + j] = (byte) ~(clipboard[i, j] ^ this.m_sequence.EventValues[num4, this.m_normalizedRange.Left + j]);
+								m_sequence.EventValues[num4, m_normalizedRange.Left + j] = (byte) ~(clipboard[i, j] ^ m_sequence.EventValues[num4, m_normalizedRange.Left + j]);
 								break;
 						}
 					}
 				}
 				base.IsDirty = true;
-				this.pictureBoxGrid.Refresh();
+				pictureBoxGrid.Refresh();
 			}
 		}
 
@@ -398,10 +398,10 @@ namespace VixenEditor
 			for (int i = 0; i < num4; i++)
 			{
 				int num16 = left;
-				int num14 = Math.Min(num16 + brush.Length, this.m_sequence.TotalEventPeriods) - num16;
+				int num14 = Math.Min(num16 + brush.Length, m_sequence.TotalEventPeriods) - num16;
 				for (int j = 0; j < num14; j++)
 				{
-					this.m_sequence.EventValues[this.m_channelOrderMapping[top], num16 + j] = brush[j];
+					m_sequence.EventValues[m_channelOrderMapping[top], num16 + j] = brush[j];
 				}
 				if (num5 < 0)
 				{
@@ -467,7 +467,7 @@ namespace VixenEditor
 			int top = rect.Top;
 			for (int i = 0; i < num4; i++)
 			{
-				this.m_sequence.EventValues[this.m_channelOrderMapping[top], left] = this.m_drawingLevel;
+				m_sequence.EventValues[m_channelOrderMapping[top], left] = m_drawingLevel;
 				if (num5 < 0)
 				{
 					num5 += num6;
@@ -486,13 +486,13 @@ namespace VixenEditor
 
 		private byte[,] CellsToArray()
 		{
-			byte[,] buffer = new byte[this.m_normalizedRange.Height, this.m_normalizedRange.Width];
-			for (int i = 0; i < this.m_normalizedRange.Height; i++)
+			byte[,] buffer = new byte[m_normalizedRange.Height, m_normalizedRange.Width];
+			for (int i = 0; i < m_normalizedRange.Height; i++)
 			{
-				int num2 = this.m_channelOrderMapping[this.m_normalizedRange.Top + i];
-				for (int j = 0; j < this.m_normalizedRange.Width; j++)
+				int num2 = m_channelOrderMapping[m_normalizedRange.Top + i];
+				for (int j = 0; j < m_normalizedRange.Width; j++)
 				{
-					buffer[i, j] = this.m_sequence.EventValues[num2, this.m_normalizedRange.Left + j];
+					buffer[i, j] = m_sequence.EventValues[num2, m_normalizedRange.Left + j];
 				}
 			}
 			return buffer;
@@ -501,28 +501,28 @@ namespace VixenEditor
 		private Rectangle CellsToPixels(Rectangle relativeCells)
 		{
 			Rectangle rectangle = new Rectangle();
-			rectangle.X = (Math.Min(relativeCells.Left, relativeCells.Right) * this.m_periodPixelWidth) + 1;
-			rectangle.Y = (Math.Min(relativeCells.Top, relativeCells.Bottom) * this.m_gridRowHeight) + 1;
-			rectangle.Width = ((Math.Abs(relativeCells.Width) + 1) * this.m_periodPixelWidth) - 1;
-			rectangle.Height = ((Math.Abs(relativeCells.Height) + 1) * this.m_gridRowHeight) - 1;
+			rectangle.X = (Math.Min(relativeCells.Left, relativeCells.Right) * m_periodPixelWidth) + 1;
+			rectangle.Y = (Math.Min(relativeCells.Top, relativeCells.Bottom) * m_gridRowHeight) + 1;
+			rectangle.Width = ((Math.Abs(relativeCells.Width) + 1) * m_periodPixelWidth) - 1;
+			rectangle.Height = ((Math.Abs(relativeCells.Height) + 1) * m_gridRowHeight) - 1;
 			return rectangle;
 		}
 
 		private bool ChannelClickValid()
 		{
 			bool flag = false;
-			if (this.pictureBoxChannels.PointToClient(Control.MousePosition).Y > this.pictureBoxTime.Height)
+			if (pictureBoxChannels.PointToClient(Control.MousePosition).Y > pictureBoxTime.Height)
 			{
-				this.m_selectedLineIndex = this.vScrollBar1.Value + ((this.pictureBoxChannels.PointToClient(Control.MousePosition).Y - this.pictureBoxTime.Height) / this.m_gridRowHeight);
-				if (this.m_selectedLineIndex < this.m_sequence.ChannelCount)
+				m_selectedLineIndex = vScrollBar1.Value + ((pictureBoxChannels.PointToClient(Control.MousePosition).Y - pictureBoxTime.Height) / m_gridRowHeight);
+				if (m_selectedLineIndex < m_sequence.ChannelCount)
 				{
-					this.m_editingChannelSortedIndex = this.m_channelOrderMapping[this.m_selectedLineIndex];
-					flag = (this.m_editingChannelSortedIndex >= 0) && (this.m_editingChannelSortedIndex < this.m_sequence.ChannelCount);
+					m_editingChannelSortedIndex = m_channelOrderMapping[m_selectedLineIndex];
+					flag = (m_editingChannelSortedIndex >= 0) && (m_editingChannelSortedIndex < m_sequence.ChannelCount);
 				}
 			}
 			if (flag)
 			{
-				this.m_currentlyEditingChannel = this.SelectedChannel = this.m_sequence.Channels[this.m_editingChannelSortedIndex];
+				m_currentlyEditingChannel = SelectedChannel = m_sequence.Channels[m_editingChannelSortedIndex];
 			}
 			return flag;
 		}
@@ -530,19 +530,19 @@ namespace VixenEditor
 		private void ChannelCountChanged()
 		{
 			base.IsDirty = true;
-			this.textBoxChannelCount.Text = this.m_sequence.ChannelCount.ToString();
-			this.pictureBoxChannels.Refresh();
-			this.pictureBoxGrid.Refresh();
+			textBoxChannelCount.Text = m_sequence.ChannelCount.ToString();
+			pictureBoxChannels.Refresh();
+			pictureBoxGrid.Refresh();
 		}
 
 		private void channelOutputMaskToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.EditSequenceChannelMask();
+			EditSequenceChannelMask();
 		}
 
 		private void channelPropertiesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.ShowChannelProperties();
+			ShowChannelProperties();
 		}
 
 		private DialogResult CheckDirty()
@@ -550,11 +550,11 @@ namespace VixenEditor
 			DialogResult none = DialogResult.None;
 			if (base.IsDirty)
 			{
-				string str = (this.m_sequence.Name == null) ? "this unnamed sequence" : this.m_sequence.Name;
+				string str = (m_sequence.Name == null) ? "this unnamed sequence" : m_sequence.Name;
 				none = MessageBox.Show(string.Format("Save changes to {0}?", str), Vendor.ProductName, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 				if (none == DialogResult.Yes)
 				{
-					this.m_systemInterface.InvokeSave(this);
+					m_systemInterface.InvokeSave(this);
 				}
 			}
 			return none;
@@ -563,15 +563,15 @@ namespace VixenEditor
 		private void CheckMaximums()
 		{
 			bool flag = false;
-			for (int i = 0; i < this.m_sequence.ChannelCount; i++)
+			for (int i = 0; i < m_sequence.ChannelCount; i++)
 			{
-				int num3 = this.m_channelOrderMapping[i];
-				for (int j = 0; j < this.m_sequence.TotalEventPeriods; j++)
+				int num3 = m_channelOrderMapping[i];
+				for (int j = 0; j < m_sequence.TotalEventPeriods; j++)
 				{
-					byte num2 = this.m_sequence.EventValues[num3, j];
+					byte num2 = m_sequence.EventValues[num3, j];
 					if (num2 != 0)
 					{
-						this.m_sequence.EventValues[num3, j] = Math.Min(num2, this.m_sequence.MaximumLevel);
+						m_sequence.EventValues[num3, j] = Math.Min(num2, m_sequence.MaximumLevel);
 					}
 				}
 			}
@@ -584,13 +584,13 @@ namespace VixenEditor
 		private void CheckMinimums()
 		{
 			bool flag = false;
-			for (int i = 0; i < this.m_sequence.ChannelCount; i++)
+			for (int i = 0; i < m_sequence.ChannelCount; i++)
 			{
-				int num3 = this.m_channelOrderMapping[i];
-				for (int j = 0; j < this.m_sequence.TotalEventPeriods; j++)
+				int num3 = m_channelOrderMapping[i];
+				for (int j = 0; j < m_sequence.TotalEventPeriods; j++)
 				{
-					byte num2 = this.m_sequence.EventValues[num3, j];
-					this.m_sequence.EventValues[num3, j] = Math.Max(num2, this.m_sequence.MinimumLevel);
+					byte num2 = m_sequence.EventValues[num3, j];
+					m_sequence.EventValues[num3, j] = Math.Max(num2, m_sequence.MinimumLevel);
 					flag = true;
 				}
 			}
@@ -602,15 +602,15 @@ namespace VixenEditor
 
 		private void clearAllChannelsForThisEventToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (this.m_selectedEventIndex != -1)
+			if (m_selectedEventIndex != -1)
 			{
-				Rectangle blockAffected = new Rectangle(this.m_selectedEventIndex, 0, 1, this.m_sequence.ChannelCount);
-				this.AddUndoItem(blockAffected, UndoOriginalBehavior.Overwrite);
-				for (int i = 0; i < this.m_sequence.ChannelCount; i++)
+				Rectangle blockAffected = new Rectangle(m_selectedEventIndex, 0, 1, m_sequence.ChannelCount);
+				AddUndoItem(blockAffected, UndoOriginalBehavior.Overwrite);
+				for (int i = 0; i < m_sequence.ChannelCount; i++)
 				{
-					this.m_sequence.EventValues[this.m_channelOrderMapping[i], this.m_selectedEventIndex] = this.m_sequence.MinimumLevel;
+					m_sequence.EventValues[m_channelOrderMapping[i], m_selectedEventIndex] = m_sequence.MinimumLevel;
 				}
-				this.InvalidateRect(blockAffected);
+				InvalidateRect(blockAffected);
 			}
 		}
 
@@ -618,129 +618,129 @@ namespace VixenEditor
 		{
 			if (MessageBox.Show("Clear all events in the sequence?", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 			{
-				Rectangle normalizedRange = this.m_normalizedRange;
-				this.m_normalizedRange = new Rectangle(0, 0, this.m_sequence.TotalEventPeriods, this.m_sequence.ChannelCount);
-				this.TurnCellsOff();
-				this.m_normalizedRange = normalizedRange;
-				this.pictureBoxGrid.Refresh();
+				Rectangle normalizedRange = m_normalizedRange;
+				m_normalizedRange = new Rectangle(0, 0, m_sequence.TotalEventPeriods, m_sequence.ChannelCount);
+				TurnCellsOff();
+				m_normalizedRange = normalizedRange;
+				pictureBoxGrid.Refresh();
 			}
 		}
 
 		private void ClearChannel(int lineIndex)
 		{
-			this.AddUndoItem(new Rectangle(0, lineIndex, this.m_sequence.TotalEventPeriods, 1), UndoOriginalBehavior.Overwrite);
-			for (int i = 0; i < this.m_sequence.TotalEventPeriods; i++)
+			AddUndoItem(new Rectangle(0, lineIndex, m_sequence.TotalEventPeriods, 1), UndoOriginalBehavior.Overwrite);
+			for (int i = 0; i < m_sequence.TotalEventPeriods; i++)
 			{
-				this.m_sequence.EventValues[this.m_editingChannelSortedIndex, i] = this.m_sequence.MinimumLevel;
+				m_sequence.EventValues[m_editingChannelSortedIndex, i] = m_sequence.MinimumLevel;
 			}
-			this.pictureBoxGrid.Refresh();
+			pictureBoxGrid.Refresh();
 		}
 
 		private void clearChannelEventsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.ClearChannel(this.m_selectedLineIndex);
+			ClearChannel(m_selectedLineIndex);
 		}
 
 		private void contextMenuChannels_Opening(object sender, CancelEventArgs e)
 		{
-			e.Cancel = !this.ChannelClickValid();
+			e.Cancel = !ChannelClickValid();
 		}
 
 		private void contextMenuGrid_Opening(object sender, CancelEventArgs e)
 		{
-			if (this.m_currentlyEditingChannel == null)
+			if (m_currentlyEditingChannel == null)
 			{
 				e.Cancel = true;
 			}
-			this.saveAsARoutineToolStripMenuItem.Enabled = this.m_normalizedRange.Width >= 1;
+			saveAsARoutineToolStripMenuItem.Enabled = m_normalizedRange.Width >= 1;
 		}
 
 		private void contextMenuTime_Opening(object sender, CancelEventArgs e)
 		{
-			this.m_selectedEventIndex = this.hScrollBar1.Value + (this.pictureBoxTime.PointToClient(Control.MousePosition).X / this.m_periodPixelWidth);
+			m_selectedEventIndex = hScrollBar1.Value + (pictureBoxTime.PointToClient(Control.MousePosition).X / m_periodPixelWidth);
 		}
 
 		private void CopyCells()
 		{
-			this.m_systemInterface.Clipboard = this.CellsToArray();
+			m_systemInterface.Clipboard = CellsToArray();
 		}
 
 		private void copyChannelEventsToClipboardToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			byte[,] buffer = new byte[1, this.m_sequence.TotalEventPeriods];
-			for (int i = 0; i < this.m_sequence.TotalEventPeriods; i++)
+			byte[,] buffer = new byte[1, m_sequence.TotalEventPeriods];
+			for (int i = 0; i < m_sequence.TotalEventPeriods; i++)
 			{
-				buffer[0, i] = this.m_sequence.EventValues[this.m_editingChannelSortedIndex, i];
+				buffer[0, i] = m_sequence.EventValues[m_editingChannelSortedIndex, i];
 			}
-			this.m_systemInterface.Clipboard = buffer;
+			m_systemInterface.Clipboard = buffer;
 		}
 
 		private void copyChannelToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			new ChannelCopyDialog(this.m_affectGrid, this.m_sequence, this.m_channelOrderMapping).Show();
+			new ChannelCopyDialog(m_affectGrid, m_sequence, m_channelOrderMapping).Show();
 		}
 
 		private void createFromSequenceToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Profile objectInContext = new Profile();
-			objectInContext.InheritChannelsFrom(this.m_sequence);
-			objectInContext.InheritPlugInDataFrom(this.m_sequence);
-			objectInContext.InheritSortsFrom(this.m_sequence);
+			objectInContext.InheritChannelsFrom(m_sequence);
+			objectInContext.InheritPlugInDataFrom(m_sequence);
+			objectInContext.InheritSortsFrom(m_sequence);
 			ProfileManagerDialog dialog = new ProfileManagerDialog(objectInContext);
 			if ((dialog.ShowDialog() == DialogResult.OK) && (MessageBox.Show("Do you want to attach this sequence to the new profile?", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes))
 			{
-				this.SetProfile(objectInContext);
+				SetProfile(objectInContext);
 			}
 			dialog.Dispose();
 		}
 
 		private void currentProgramsSettingsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			SequenceSettingsDialog dialog = new SequenceSettingsDialog(this.m_sequence);
-			int minimumLevel = this.m_sequence.MinimumLevel;
-			int maximumLevel = this.m_sequence.MaximumLevel;
-			int eventPeriod = this.m_sequence.EventPeriod;
+			SequenceSettingsDialog dialog = new SequenceSettingsDialog(m_sequence);
+			int minimumLevel = m_sequence.MinimumLevel;
+			int maximumLevel = m_sequence.MaximumLevel;
+			int eventPeriod = m_sequence.EventPeriod;
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
-				if (minimumLevel != this.m_sequence.MinimumLevel)
+				if (minimumLevel != m_sequence.MinimumLevel)
 				{
-					this.CheckMinimums();
-					if (this.m_drawingLevel < this.m_sequence.MinimumLevel)
+					CheckMinimums();
+					if (m_drawingLevel < m_sequence.MinimumLevel)
 					{
-						this.SetDrawingLevel(this.m_sequence.MinimumLevel);
+						SetDrawingLevel(m_sequence.MinimumLevel);
 						MessageBox.Show("Drawing level was below the sequence minimum, so it has been adjusted.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 					}
 				}
-				if (maximumLevel != this.m_sequence.MaximumLevel)
+				if (maximumLevel != m_sequence.MaximumLevel)
 				{
-					this.CheckMaximums();
-					if (this.m_drawingLevel > this.m_sequence.MaximumLevel)
+					CheckMaximums();
+					if (m_drawingLevel > m_sequence.MaximumLevel)
 					{
-						this.SetDrawingLevel(this.m_sequence.MaximumLevel);
+						SetDrawingLevel(m_sequence.MaximumLevel);
 						MessageBox.Show("Drawing level was above the sequence maximum, so it has been adjusted.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 					}
 				}
-				if (eventPeriod != this.m_sequence.EventPeriod)
+				if (eventPeriod != m_sequence.EventPeriod)
 				{
-					this.HScrollCheck();
-					this.ParseAudioWaveform();
-					this.pictureBoxTime.Refresh();
+					HScrollCheck();
+					ParseAudioWaveform();
+					pictureBoxTime.Refresh();
 				}
-				this.pictureBoxGrid.Refresh();
+				pictureBoxGrid.Refresh();
 			}
 			dialog.Dispose();
 		}
 
 		private void DeleteChannelFromSort(int naturalIndex)
 		{
-			this.m_channelOrderMapping.Remove(naturalIndex);
-			for (int i = 0; i < this.m_channelOrderMapping.Count; i++)
+			m_channelOrderMapping.Remove(naturalIndex);
+			for (int i = 0; i < m_channelOrderMapping.Count; i++)
 			{
-				if (this.m_channelOrderMapping[i] > naturalIndex)
+				if (m_channelOrderMapping[i] > naturalIndex)
 				{
 					List<int> list;
 					int num2;
-					(list = this.m_channelOrderMapping)[num2 = i] = list[num2] - 1;
+					(list = m_channelOrderMapping)[num2 = i] = list[num2] - 1;
 				}
 			}
 		}
@@ -749,7 +749,7 @@ namespace VixenEditor
 		{
 			if (MessageBox.Show("Do you wish to detach this sequence from its profile?\n\nThis will not cause anything to be deleted.\nVixen will attempt to reload channel and plugin data from the sequence.", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 			{
-				this.SetProfile((Profile) null);
+				SetProfile((Profile) null);
 			}
 		}
 
@@ -758,7 +758,7 @@ namespace VixenEditor
 			int num = effectParameters[0];
 			if (num != 0)
 			{
-				int num2 = (int) Math.Round((double) ((1000f / ((float) this.m_sequence.EventPeriod)) / ((float) num)), MidpointRounding.AwayFromZero);
+				int num2 = (int) Math.Round((double) ((1000f / ((float) m_sequence.EventPeriod)) / ((float) num)), MidpointRounding.AwayFromZero);
 				if (num2 != 0)
 				{
 					int length = values.GetLength(1);
@@ -767,7 +767,7 @@ namespace VixenEditor
 					for (int i = 0; i < length; i += num2)
 					{
 						int num4 = Math.Min(length, i + num2) - i;
-						byte num6 = (byte) Math.Max(random.NextDouble() * this.m_sequence.MaximumLevel, (double) this.m_sequence.MinimumLevel);
+						byte num6 = (byte) Math.Max(random.NextDouble() * m_sequence.MaximumLevel, (double) m_sequence.MinimumLevel);
 						for (int j = 0; j < num4; j++)
 						{
 							for (int k = 0; k < num8; k++)
@@ -782,20 +782,20 @@ namespace VixenEditor
 
 		private void DisableWaveformButton()
 		{
-			this.toolStripButtonWaveform.Enabled = false;
-			this.toolStripComboBoxWaveformZoom.Enabled = false;
-			this.toolStripLabelWaveformZoom.Enabled = false;
+			toolStripButtonWaveform.Enabled = false;
+			toolStripComboBoxWaveformZoom.Enabled = false;
+			toolStripLabelWaveformZoom.Enabled = false;
 		}
 
 		private void DisableWaveformDisplay()
 		{
-			this.toolStripButtonWaveform.Checked = false;
-			this.m_waveformPixelData = null;
-			this.m_waveformPCMData = null;
-			this.pictureBoxTime.Height = 60;
-			this.pictureBoxTime.Refresh();
-			this.pictureBoxChannels.Refresh();
-			this.DisableWaveformButton();
+			toolStripButtonWaveform.Checked = false;
+			m_waveformPixelData = null;
+			m_waveformPCMData = null;
+			pictureBoxTime.Height = 60;
+			pictureBoxTime.Refresh();
+			pictureBoxChannels.Refresh();
+			DisableWaveformButton();
 		}
 
 		private void DisjointedInsert(int x, int y, int width, int height, int[] channelIndexes)
@@ -803,9 +803,9 @@ namespace VixenEditor
 			for (int i = 0; i < height; i++)
 			{
 				int num = channelIndexes[i];
-				for (int j = ((this.m_sequence.TotalEventPeriods - x) - width) - 1; j >= 0; j--)
+				for (int j = ((m_sequence.TotalEventPeriods - x) - width) - 1; j >= 0; j--)
 				{
-					this.m_sequence.EventValues[num, (j + x) + width] = this.m_sequence.EventValues[num, j + x];
+					m_sequence.EventValues[num, (j + x) + width] = m_sequence.EventValues[num, j + x];
 				}
 			}
 		}
@@ -817,7 +817,7 @@ namespace VixenEditor
 				int num = channelIndexes[i];
 				for (int j = 0; j < data.GetLength(1); j++)
 				{
-					this.m_sequence.EventValues[num, j + x] = data[i, j];
+					m_sequence.EventValues[num, j + x] = data[i, j];
 				}
 			}
 		}
@@ -831,9 +831,9 @@ namespace VixenEditor
 			{
 				num = channelIndexes[num3];
 				num2 = 0;
-				while (num2 < ((this.m_sequence.TotalEventPeriods - x) - width))
+				while (num2 < ((m_sequence.TotalEventPeriods - x) - width))
 				{
-					this.m_sequence.EventValues[num, num2 + x] = this.m_sequence.EventValues[num, (num2 + x) + width];
+					m_sequence.EventValues[num, num2 + x] = m_sequence.EventValues[num, (num2 + x) + width];
 					num2++;
 				}
 			}
@@ -842,7 +842,7 @@ namespace VixenEditor
 				num = channelIndexes[num3];
 				for (num2 = 0; num2 < width; num2++)
 				{
-					this.m_sequence.EventValues[num, (this.m_sequence.TotalEventPeriods - width) + num2] = this.m_sequence.MinimumLevel;
+					m_sequence.EventValues[num, (m_sequence.TotalEventPeriods - width) + num2] = m_sequence.MinimumLevel;
 				}
 			}
 		}
@@ -853,38 +853,38 @@ namespace VixenEditor
 		{
 			Point point = new Point();
 			Point point2 = new Point();
-			point.X = (this.m_normalizedRange.Left - this.hScrollBar1.Value) * this.m_periodPixelWidth;
-			point.Y = (this.m_normalizedRange.Top - this.vScrollBar1.Value) * this.m_gridRowHeight;
-			point2.X = (this.m_normalizedRange.Right - this.hScrollBar1.Value) * this.m_periodPixelWidth;
-			point2.Y = (this.m_normalizedRange.Bottom - this.vScrollBar1.Value) * this.m_gridRowHeight;
-			this.m_selectionRectangle.X = point.X;
-			this.m_selectionRectangle.Y = point.Y;
-			this.m_selectionRectangle.Width = point2.X - point.X;
-			this.m_selectionRectangle.Height = point2.Y - point.Y;
-			if (this.m_selectionRectangle.Width == 0)
+			point.X = (m_normalizedRange.Left - hScrollBar1.Value) * m_periodPixelWidth;
+			point.Y = (m_normalizedRange.Top - vScrollBar1.Value) * m_gridRowHeight;
+			point2.X = (m_normalizedRange.Right - hScrollBar1.Value) * m_periodPixelWidth;
+			point2.Y = (m_normalizedRange.Bottom - vScrollBar1.Value) * m_gridRowHeight;
+			m_selectionRectangle.X = point.X;
+			m_selectionRectangle.Y = point.Y;
+			m_selectionRectangle.Width = point2.X - point.X;
+			m_selectionRectangle.Height = point2.Y - point.Y;
+			if (m_selectionRectangle.Width == 0)
 			{
-				this.m_selectionRectangle.Width = this.m_periodPixelWidth;
+				m_selectionRectangle.Width = m_periodPixelWidth;
 			}
-			if (this.m_selectionRectangle.Height == 0)
+			if (m_selectionRectangle.Height == 0)
 			{
-				this.m_selectionRectangle.Height = this.m_gridRowHeight;
+				m_selectionRectangle.Height = m_gridRowHeight;
 			}
-			this.pictureBoxGrid.Invalidate(this.m_selectionRectangle);
-			this.pictureBoxGrid.Update();
+			pictureBoxGrid.Invalidate(m_selectionRectangle);
+			pictureBoxGrid.Update();
 		}
 
 		private void EditSequenceChannelMask()
 		{
-			ChannelOutputMaskDialog dialog = new ChannelOutputMaskDialog(this.m_sequence.Channels);
+			ChannelOutputMaskDialog dialog = new ChannelOutputMaskDialog(m_sequence.Channels);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
-				foreach (VixenPlus.Channel channel in this.m_sequence.Channels)
+				foreach (VixenPlus.Channel channel in m_sequence.Channels)
 				{
 					channel.Enabled = true;
 				}
 				foreach (int num in dialog.DisabledChannels)
 				{
-					this.m_sequence.Channels[num].Enabled = false;
+					m_sequence.Channels[num].Enabled = false;
 				}
 				base.IsDirty = true;
 			}
@@ -893,39 +893,39 @@ namespace VixenEditor
 
 		private void EnableWaveformButton()
 		{
-			if (this.m_sequence.Audio != null)
+			if (m_sequence.Audio != null)
 			{
-				this.toolStripButtonWaveform.Enabled = true;
-				if (this.toolStripButtonWaveform.Checked)
+				toolStripButtonWaveform.Enabled = true;
+				if (toolStripButtonWaveform.Checked)
 				{
-					this.toolStripComboBoxWaveformZoom.Enabled = true;
-					this.toolStripLabelWaveformZoom.Enabled = true;
+					toolStripComboBoxWaveformZoom.Enabled = true;
+					toolStripLabelWaveformZoom.Enabled = true;
 				}
 			}
 		}
 
 		private void EraseRectangleEntity(Rectangle rect)
 		{
-			rect.Offset(-this.hScrollBar1.Value, -this.vScrollBar1.Value);
-			Rectangle rc = this.CellsToPixels(rect);
+			rect.Offset(-hScrollBar1.Value, -vScrollBar1.Value);
+			Rectangle rc = CellsToPixels(rect);
 			rect.X = -1;
-			this.pictureBoxGrid.Invalidate(rc);
+			pictureBoxGrid.Invalidate(rc);
 		}
 
 		private void EraseSelectedRange()
 		{
-			Rectangle rc = this.SelectionToRectangle();
-			this.m_normalizedRange.Width = this.m_selectedRange.Width = 0;
-			this.pictureBoxGrid.Invalidate(rc);
+			Rectangle rc = SelectionToRectangle();
+			m_normalizedRange.Width = m_selectedRange.Width = 0;
+			pictureBoxGrid.Invalidate(rc);
 		}
 
 		private void exportChannelNamesListToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			string path = Path.Combine(Paths.ImportExportPath, this.m_sequence.Name + "_channels.txt");
+			string path = Path.Combine(Paths.ImportExportPath, m_sequence.Name + "_channels.txt");
 			StreamWriter writer = new StreamWriter(path);
 			try
 			{
-				foreach (VixenPlus.Channel channel in this.m_sequence.Channels)
+				foreach (VixenPlus.Channel channel in m_sequence.Channels)
 				{
 					writer.WriteLine(channel.Name);
 				}
@@ -939,12 +939,12 @@ namespace VixenEditor
 
 		private void FillChannel(int lineIndex)
 		{
-			this.AddUndoItem(new Rectangle(0, lineIndex, this.m_sequence.TotalEventPeriods, 1), UndoOriginalBehavior.Overwrite);
-			for (int i = 0; i < this.m_sequence.TotalEventPeriods; i++)
+			AddUndoItem(new Rectangle(0, lineIndex, m_sequence.TotalEventPeriods, 1), UndoOriginalBehavior.Overwrite);
+			for (int i = 0; i < m_sequence.TotalEventPeriods; i++)
 			{
-				this.m_sequence.EventValues[this.m_editingChannelSortedIndex, i] = this.m_drawingLevel;
+				m_sequence.EventValues[m_editingChannelSortedIndex, i] = m_drawingLevel;
 			}
-			this.pictureBoxGrid.Refresh();
+			pictureBoxGrid.Refresh();
 			base.IsDirty = true;
 		}
 
@@ -952,15 +952,15 @@ namespace VixenEditor
 		{
 			if (MessageBox.Show("This will detach the sequence from the profile and bring the profile data into the sequence.\nIs this what you want to do?", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.No)
 			{
-				Profile profile = this.m_sequence.Profile;
-				this.m_sequence.Profile = null;
+				Profile profile = m_sequence.Profile;
+				m_sequence.Profile = null;
 				List<VixenPlus.Channel> list = new List<VixenPlus.Channel>();
 				list.AddRange(profile.Channels);
-				this.m_sequence.Channels = list;
-				this.m_sequence.Sorts.LoadFrom(profile.Sorts);
-				this.m_sequence.PlugInData.LoadFromXml(profile.PlugInData.RootNode.ParentNode);
+				m_sequence.Channels = list;
+				m_sequence.Sorts.LoadFrom(profile.Sorts);
+				m_sequence.PlugInData.LoadFromXml(profile.PlugInData.RootNode.ParentNode);
 				base.IsDirty = true;
-				this.ReactToProfileAssignment();
+				ReactToProfileAssignment();
 			}
 		}
 
@@ -976,21 +976,21 @@ namespace VixenEditor
 				blockAffected.Y += blockAffected.Height;
 				blockAffected.Height = -blockAffected.Height;
 			}
-			if (blockAffected.Right > this.m_sequence.TotalEventPeriods)
+			if (blockAffected.Right > m_sequence.TotalEventPeriods)
 			{
-				blockAffected.Width = this.m_sequence.TotalEventPeriods - blockAffected.Left;
+				blockAffected.Width = m_sequence.TotalEventPeriods - blockAffected.Left;
 			}
-			if (blockAffected.Bottom > this.m_sequence.ChannelCount)
+			if (blockAffected.Bottom > m_sequence.ChannelCount)
 			{
-				blockAffected.Height = this.m_sequence.ChannelCount - blockAffected.Top;
+				blockAffected.Height = m_sequence.ChannelCount - blockAffected.Top;
 			}
 			byte[,] buffer = new byte[blockAffected.Height, blockAffected.Width];
 			for (int i = 0; i < blockAffected.Height; i++)
 			{
-				int num3 = this.m_channelOrderMapping[blockAffected.Y + i];
+				int num3 = m_channelOrderMapping[blockAffected.Y + i];
 				for (int j = 0; j < blockAffected.Width; j++)
 				{
-					buffer[i, j] = this.m_sequence.EventValues[num3, blockAffected.X + j];
+					buffer[i, j] = m_sequence.EventValues[num3, blockAffected.X + j];
 				}
 			}
 			return buffer;
@@ -1001,13 +1001,13 @@ namespace VixenEditor
 			if ((cellX >= 0) && (cellY >= 0))
 			{
 				int num;
-				if (this.m_actualLevels)
+				if (m_actualLevels)
 				{
-					num = this.m_sequence.EventValues[this.m_channelOrderMapping[cellY], cellX];
+					num = m_sequence.EventValues[m_channelOrderMapping[cellY], cellX];
 					intensityText = string.Format("{0}", num);
 					return num;
 				}
-				num = (int) Math.Round((double) ((this.m_sequence.EventValues[this.m_channelOrderMapping[cellY], cellX] * 100f) / 255f), MidpointRounding.AwayFromZero);
+				num = (int) Math.Round((double) ((m_sequence.EventValues[m_channelOrderMapping[cellY], cellX] * 100f) / 255f), MidpointRounding.AwayFromZero);
 				intensityText = string.Format("{0}%", num);
 				return num;
 			}
@@ -1017,14 +1017,14 @@ namespace VixenEditor
 
 		private VixenPlus.Channel GetChannelAt(Point point)
 		{
-			return this.GetChannelAtSortedIndex(this.GetLineIndexAt(point));
+			return GetChannelAtSortedIndex(GetLineIndexAt(point));
 		}
 
 		private VixenPlus.Channel GetChannelAtSortedIndex(int index)
 		{
-			if (index < this.m_channelOrderMapping.Count)
+			if (index < m_channelOrderMapping.Count)
 			{
-				return this.m_sequence.Channels[this.m_channelOrderMapping[index]];
+				return m_sequence.Channels[m_channelOrderMapping[index]];
 			}
 			return null;
 		}
@@ -1033,19 +1033,19 @@ namespace VixenEditor
 		{
 			if (channel != null)
 			{
-				return new Rectangle(0, ((this.GetChannelSortedIndex(channel) - this.vScrollBar1.Value) * this.m_gridRowHeight) + this.pictureBoxTime.Height, this.pictureBoxChannels.Width, this.m_gridRowHeight);
+				return new Rectangle(0, ((GetChannelSortedIndex(channel) - vScrollBar1.Value) * m_gridRowHeight) + pictureBoxTime.Height, pictureBoxChannels.Width, m_gridRowHeight);
 			}
 			return Rectangle.Empty;
 		}
 
 		private int GetChannelNaturalIndex(VixenPlus.Channel channel)
 		{
-			return this.m_sequence.Channels.IndexOf(channel);
+			return m_sequence.Channels.IndexOf(channel);
 		}
 
 		private int GetChannelSortedIndex(VixenPlus.Channel channel)
 		{
-			return this.m_channelOrderMapping.IndexOf(this.m_sequence.Channels.IndexOf(channel));
+			return m_channelOrderMapping.IndexOf(m_sequence.Channels.IndexOf(channel));
 		}
 
 		private Color GetGradientColor(Color startColor, Color endColor, int level)
@@ -1059,7 +1059,7 @@ namespace VixenEditor
 
 		private int GetLineIndexAt(Point point)
 		{
-			return (((point.Y - this.pictureBoxTime.Height) / this.m_gridRowHeight) + this.vScrollBar1.Value);
+			return (((point.Y - pictureBoxTime.Height) / m_gridRowHeight) + vScrollBar1.Value);
 		}
 
 		private byte[,] GetRoutine()
@@ -1156,62 +1156,62 @@ namespace VixenEditor
 
 		private void halfSpeedToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.SetAudioSpeed(0.5f);
+			SetAudioSpeed(0.5f);
 		}
 
 		private void hScrollBar1_ValueChanged(object sender, EventArgs e)
 		{
-			this.pictureBoxGrid.Refresh();
-			this.pictureBoxTime.Refresh();
+			pictureBoxGrid.Refresh();
+			pictureBoxTime.Refresh();
 		}
 
 		private void HScrollCheck()
 		{
-			if (this.m_periodPixelWidth != 0)
+			if (m_periodPixelWidth != 0)
 			{
-				this.m_visibleEventPeriods = this.pictureBoxGrid.Width / this.m_periodPixelWidth;
-				this.hScrollBar1.LargeChange = this.m_visibleEventPeriods;
-				this.hScrollBar1.Maximum = Math.Max(0, this.m_sequence.TotalEventPeriods - 1);
-				this.hScrollBar1.Enabled = this.m_visibleEventPeriods < this.m_sequence.TotalEventPeriods;
-				if (!this.hScrollBar1.Enabled)
+				m_visibleEventPeriods = pictureBoxGrid.Width / m_periodPixelWidth;
+				hScrollBar1.LargeChange = m_visibleEventPeriods;
+				hScrollBar1.Maximum = Math.Max(0, m_sequence.TotalEventPeriods - 1);
+				hScrollBar1.Enabled = m_visibleEventPeriods < m_sequence.TotalEventPeriods;
+				if (!hScrollBar1.Enabled)
 				{
-					this.hScrollBar1.Value = this.hScrollBar1.Minimum;
+					hScrollBar1.Value = hScrollBar1.Minimum;
 				}
-				else if ((this.hScrollBar1.Value + this.m_visibleEventPeriods) > this.m_sequence.TotalEventPeriods)
+				else if ((hScrollBar1.Value + m_visibleEventPeriods) > m_sequence.TotalEventPeriods)
 				{
-					this.m_selectedRange.X += this.m_visibleEventPeriods - this.m_sequence.TotalEventPeriods;
-					this.m_normalizedRange.X += this.m_visibleEventPeriods - this.m_sequence.TotalEventPeriods;
-					this.hScrollBar1.Value = this.m_sequence.TotalEventPeriods - this.m_visibleEventPeriods;
+					m_selectedRange.X += m_visibleEventPeriods - m_sequence.TotalEventPeriods;
+					m_normalizedRange.X += m_visibleEventPeriods - m_sequence.TotalEventPeriods;
+					hScrollBar1.Value = m_sequence.TotalEventPeriods - m_visibleEventPeriods;
 				}
 			}
-			if (this.hScrollBar1.Maximum >= 0)
+			if (hScrollBar1.Maximum >= 0)
 			{
-				if (this.hScrollBar1.Value == -1)
+				if (hScrollBar1.Value == -1)
 				{
-					this.hScrollBar1.Value = 0;
+					hScrollBar1.Value = 0;
 				}
-				if (this.hScrollBar1.Minimum == -1)
+				if (hScrollBar1.Minimum == -1)
 				{
-					this.hScrollBar1.Minimum = 0;
+					hScrollBar1.Minimum = 0;
 				}
 			}
 		}
 
 		private void importChannelNamesListToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (this.m_sequence.Profile != null)
+			if (m_sequence.Profile != null)
 			{
 				MessageBox.Show("Can't import channel names when attached to a profile.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 			}
 			else
 			{
-				this.openFileDialog1.Filter = "Text file | *.txt";
-				this.openFileDialog1.DefaultExt = "txt";
-				this.openFileDialog1.InitialDirectory = Paths.ImportExportPath;
-				this.openFileDialog1.FileName = string.Empty;
-				if (this.openFileDialog1.ShowDialog() == DialogResult.OK)
+				openFileDialog1.Filter = "Text file | *.txt";
+				openFileDialog1.DefaultExt = "txt";
+				openFileDialog1.InitialDirectory = Paths.ImportExportPath;
+				openFileDialog1.FileName = string.Empty;
+				if (openFileDialog1.ShowDialog() == DialogResult.OK)
 				{
-					StreamReader reader = new StreamReader(this.openFileDialog1.FileName);
+					StreamReader reader = new StreamReader(openFileDialog1.FileName);
 					List<string> list = new List<string>();
 					try
 					{
@@ -1220,12 +1220,12 @@ namespace VixenEditor
 						{
 							list.Add(str);
 						}
-						this.SetChannelCount(list.Count);
+						SetChannelCount(list.Count);
 						for (int i = 0; i < list.Count; i++)
 						{
-							this.m_sequence.Channels[i].Name = list[i];
+							m_sequence.Channels[i].Name = list[i];
 						}
-						this.pictureBoxChannels.Refresh();
+						pictureBoxChannels.Refresh();
 						MessageBox.Show("Channel name list import complete", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 					}
 					finally
@@ -1239,212 +1239,212 @@ namespace VixenEditor
 
 		private void Init()
 		{
-			this.m_initializing = true;
-			this.InitializeComponent();
-			this.m_initializing = false;
-			int num = this.pictureBoxTime.Height - 10;
-			this.m_gridRowHeight = this.m_preferences.GetInteger("MaxRowHeight");
-			this.m_periodPixelWidth = this.m_preferences.GetInteger("MaxColumnWidth");
-			this.m_showPositionMarker = this.m_preferences.GetBoolean("ShowPositionMarker");
-			this.m_autoScrolling = this.m_preferences.GetBoolean("AutoScrolling");
-			this.m_intensityLargeDelta = this.m_preferences.GetInteger("IntensityLargeDelta");
-			this.m_showingGradient = !this.m_preferences.GetBoolean("BarLevels");
-			this.m_channelBackBrush = new SolidBrush(Color.White);
-			this.m_timeBackBrush = new SolidBrush(Color.FromArgb(0xff, 0xff, 0xe0));
-			this.m_gridBackBrush = new SolidBrush(Color.FromArgb(0xc0, 0xc0, 0xc0));
-			//this.m_arrowBitmap = new Bitmap(this.pictureBoxOutputArrow.Image);
-			//this.m_arrowBitmap.MakeTransparent(this.m_arrowBitmap.GetPixel(0, 0));
-			this.m_gridGraphics = this.pictureBoxGrid.CreateGraphics();
-			this.m_dimmingShimmerGenerator = new FrequencyEffectGenerator(this.DimmingShimmerGenerator);
-			this.m_sparkleGenerator = new FrequencyEffectGenerator(this.SparkleGenerator);
-			this.m_intensityAdjustDialog = new IntensityAdjustDialog(this.m_actualLevels);
-			this.m_intensityAdjustDialog.VisibleChanged += new EventHandler(this.m_intensityAdjustDialog_VisibleChanged);
-			this.m_affectGrid = new AffectGridDelegate(this.AffectGrid);
-			this.m_pluginCheckHandler = new EventHandler(this.plugInItem_CheckedChanged);
-			this.m_channelOrderMapping = new List<int>();
-			for (int i = 0; i < this.m_sequence.ChannelCount; i++)
+			m_initializing = true;
+			InitializeComponent();
+			m_initializing = false;
+			int num = pictureBoxTime.Height - 10;
+			m_gridRowHeight = m_preferences.GetInteger("MaxRowHeight");
+			m_periodPixelWidth = m_preferences.GetInteger("MaxColumnWidth");
+			m_showPositionMarker = m_preferences.GetBoolean("ShowPositionMarker");
+			m_autoScrolling = m_preferences.GetBoolean("AutoScrolling");
+			m_intensityLargeDelta = m_preferences.GetInteger("IntensityLargeDelta");
+			m_showingGradient = !m_preferences.GetBoolean("BarLevels");
+			m_channelBackBrush = new SolidBrush(Color.White);
+			m_timeBackBrush = new SolidBrush(Color.FromArgb(0xff, 0xff, 0xe0));
+			m_gridBackBrush = new SolidBrush(Color.FromArgb(0xc0, 0xc0, 0xc0));
+			//m_arrowBitmap = new Bitmap(pictureBoxOutputArrow.Image);
+			//m_arrowBitmap.MakeTransparent(m_arrowBitmap.GetPixel(0, 0));
+			m_gridGraphics = pictureBoxGrid.CreateGraphics();
+			m_dimmingShimmerGenerator = new FrequencyEffectGenerator(DimmingShimmerGenerator);
+			m_sparkleGenerator = new FrequencyEffectGenerator(SparkleGenerator);
+			m_intensityAdjustDialog = new IntensityAdjustDialog(m_actualLevels);
+			m_intensityAdjustDialog.VisibleChanged += new EventHandler(m_intensityAdjustDialog_VisibleChanged);
+			m_affectGrid = new AffectGridDelegate(AffectGrid);
+			m_pluginCheckHandler = new EventHandler(plugInItem_CheckedChanged);
+			m_channelOrderMapping = new List<int>();
+			for (int i = 0; i < m_sequence.ChannelCount; i++)
 			{
-				this.m_channelOrderMapping.Add(i);
+				m_channelOrderMapping.Add(i);
 			}
-			this.ReadFromSequence();
-			this.m_executionContextHandle = this.m_executionInterface.RequestContext(true, false, this);
-			this.toolStripComboBoxColumnZoom.SelectedIndex = this.toolStripComboBoxColumnZoom.Items.Count - 1;
-			this.toolStripComboBoxRowZoom.SelectedIndex = this.toolStripComboBoxRowZoom.Items.Count - 1;
-			this.SyncAudioButton();
-			this.m_mouseWheelVerticalDelta = this.m_preferences.GetInteger("MouseWheelVerticalDelta");
-			this.m_mouseWheelHorizontalDelta = this.m_preferences.GetInteger("MouseWheelHorizontalDelta");
-			if (this.m_preferences.GetBoolean("SaveZoomLevels"))
+			ReadFromSequence();
+			m_executionContextHandle = m_executionInterface.RequestContext(true, false, this);
+			toolStripComboBoxColumnZoom.SelectedIndex = toolStripComboBoxColumnZoom.Items.Count - 1;
+			toolStripComboBoxRowZoom.SelectedIndex = toolStripComboBoxRowZoom.Items.Count - 1;
+			SyncAudioButton();
+			m_mouseWheelVerticalDelta = m_preferences.GetInteger("MouseWheelVerticalDelta");
+			m_mouseWheelHorizontalDelta = m_preferences.GetInteger("MouseWheelHorizontalDelta");
+			if (m_preferences.GetBoolean("SaveZoomLevels"))
 			{
-				int index = this.toolStripComboBoxColumnZoom.Items.IndexOf(this.m_preferences.GetChildString("SaveZoomLevels", "column"));
+				int index = toolStripComboBoxColumnZoom.Items.IndexOf(m_preferences.GetChildString("SaveZoomLevels", "column"));
 				if (index != -1)
 				{
-					this.toolStripComboBoxColumnZoom.SelectedIndex = index;
+					toolStripComboBoxColumnZoom.SelectedIndex = index;
 				}
-				index = this.toolStripComboBoxRowZoom.Items.IndexOf(this.m_preferences.GetChildString("SaveZoomLevels", "row"));
+				index = toolStripComboBoxRowZoom.Items.IndexOf(m_preferences.GetChildString("SaveZoomLevels", "row"));
 				if (index != -1)
 				{
-					this.toolStripComboBoxRowZoom.SelectedIndex = index;
+					toolStripComboBoxRowZoom.SelectedIndex = index;
 				}
 			}
-			if (this.m_sequence.WindowWidth != 0)
+			if (m_sequence.WindowWidth != 0)
 			{
-				base.Width = this.m_sequence.WindowWidth;
+				base.Width = m_sequence.WindowWidth;
 			}
-			if (this.m_sequence.WindowHeight != 0)
+			if (m_sequence.WindowHeight != 0)
 			{
-				base.Height = this.m_sequence.WindowHeight;
+				base.Height = m_sequence.WindowHeight;
 			}
-			if (this.m_sequence.ChannelWidth != 0)
+			if (m_sequence.ChannelWidth != 0)
 			{
-				this.splitContainer1.SplitterDistance = this.m_sequence.ChannelWidth;
+				splitContainer1.SplitterDistance = m_sequence.ChannelWidth;
 			}
-			this.toolStripComboBoxWaveformZoom.SelectedItem = "100%";
-			this.SetDrawingLevel(this.m_sequence.MaximumLevel);
-			this.m_executionInterface.SetSynchronousContext(this.m_executionContextHandle, this.m_sequence);
-			this.UpdateLevelDisplay();
+			toolStripComboBoxWaveformZoom.SelectedItem = "100%";
+			SetDrawingLevel(m_sequence.MaximumLevel);
+			m_executionInterface.SetSynchronousContext(m_executionContextHandle, m_sequence);
+			UpdateLevelDisplay();
 			base.IsDirty = false;
-			this.pictureBoxChannels.AllowDrop = true;
+			pictureBoxChannels.AllowDrop = true;
 		}
 
 		
 
 		private void InsertChannelIntoSort(int naturalIndex, int sortedIndex)
 		{
-			for (int i = 0; i < this.m_channelOrderMapping.Count; i++)
+			for (int i = 0; i < m_channelOrderMapping.Count; i++)
 			{
-				if (this.m_channelOrderMapping[i] >= naturalIndex)
+				if (m_channelOrderMapping[i] >= naturalIndex)
 				{
 					List<int> list;
 					int num2;
-					(list = this.m_channelOrderMapping)[num2 = i] = list[num2] + 1;
+					(list = m_channelOrderMapping)[num2 = i] = list[num2] + 1;
 				}
 			}
-			this.m_channelOrderMapping.Insert(sortedIndex, naturalIndex);
+			m_channelOrderMapping.Insert(sortedIndex, naturalIndex);
 		}
 
 		private void IntensityAdjustDialogCheck()
 		{
-			if (!this.m_intensityAdjustDialog.Visible)
+			if (!m_intensityAdjustDialog.Visible)
 			{
-				this.m_intensityAdjustDialog.Show();
+				m_intensityAdjustDialog.Show();
 				base.BringToFront();
 			}
 		}
 
 		private void InvalidateRect(Rectangle rect)
 		{
-			rect.X -= this.hScrollBar1.Value;
-			rect.Y -= this.vScrollBar1.Value;
-			this.m_selectionRectangle.X = Math.Min(rect.Left, rect.Right) * this.m_periodPixelWidth;
-			this.m_selectionRectangle.Y = Math.Min(rect.Top, rect.Bottom) * this.m_gridRowHeight;
-			this.m_selectionRectangle.Width = Math.Abs((int) ((rect.Width + 1) * this.m_periodPixelWidth));
-			this.m_selectionRectangle.Height = Math.Abs((int) ((rect.Height + 1) * this.m_gridRowHeight));
-			if (this.m_selectionRectangle.Width == 0)
+			rect.X -= hScrollBar1.Value;
+			rect.Y -= vScrollBar1.Value;
+			m_selectionRectangle.X = Math.Min(rect.Left, rect.Right) * m_periodPixelWidth;
+			m_selectionRectangle.Y = Math.Min(rect.Top, rect.Bottom) * m_gridRowHeight;
+			m_selectionRectangle.Width = Math.Abs((int) ((rect.Width + 1) * m_periodPixelWidth));
+			m_selectionRectangle.Height = Math.Abs((int) ((rect.Height + 1) * m_gridRowHeight));
+			if (m_selectionRectangle.Width == 0)
 			{
-				this.m_selectionRectangle.Width = this.m_periodPixelWidth;
+				m_selectionRectangle.Width = m_periodPixelWidth;
 			}
-			if (this.m_selectionRectangle.Height == 0)
+			if (m_selectionRectangle.Height == 0)
 			{
-				this.m_selectionRectangle.Height = this.m_gridRowHeight;
+				m_selectionRectangle.Height = m_gridRowHeight;
 			}
-			this.pictureBoxGrid.Invalidate(this.m_selectionRectangle);
-			this.pictureBoxGrid.Update();
+			pictureBoxGrid.Invalidate(m_selectionRectangle);
+			pictureBoxGrid.Update();
 		}
 
 		private int LineIndexToChannelIndex(int lineIndex)
 		{
-			if ((lineIndex >= 0) && (lineIndex < this.m_channelOrderMapping.Count))
+			if ((lineIndex >= 0) && (lineIndex < m_channelOrderMapping.Count))
 			{
-				return this.m_channelOrderMapping[lineIndex];
+				return m_channelOrderMapping[lineIndex];
 			}
 			return -1;
 		}
 
 		private void loadARoutineToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			byte[,] routine = this.GetRoutine();
+			byte[,] routine = GetRoutine();
 			if (routine != null)
 			{
-				this.AddUndoItem(new Rectangle(this.m_normalizedRange.X, this.m_normalizedRange.Y, routine.GetLength(1), routine.GetLength(0)), UndoOriginalBehavior.Overwrite);
-				this.ArrayToCells(routine);
-				this.pictureBoxGrid.Refresh();
+				AddUndoItem(new Rectangle(m_normalizedRange.X, m_normalizedRange.Y, routine.GetLength(1), routine.GetLength(0)), UndoOriginalBehavior.Overwrite);
+				ArrayToCells(routine);
+				pictureBoxGrid.Refresh();
 			}
 		}
 
 		private void loadRoutineToClipboardToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.m_systemInterface.Clipboard = this.GetRoutine();
+			m_systemInterface.Clipboard = GetRoutine();
 		}
 
 		private void LoadSequencePlugins()
 		{
-			this.m_systemInterface.VerifySequenceHardwarePlugins(this.m_sequence);
+			m_systemInterface.VerifySequenceHardwarePlugins(m_sequence);
 			int num = 0;
 			bool flag = false;
-			this.toolStripDropDownButtonPlugins.DropDownItems.Clear();
-			foreach (XmlNode node in this.m_sequence.PlugInData.GetAllPluginData())
+			toolStripDropDownButtonPlugins.DropDownItems.Clear();
+			foreach (XmlNode node in m_sequence.PlugInData.GetAllPluginData())
 			{
 				ToolStripMenuItem item = new ToolStripMenuItem(string.Format("{0} ({1}-{2})", node.Attributes["name"].Value, node.Attributes["from"].Value, node.Attributes["to"].Value));
 				item.Checked = bool.Parse(node.Attributes["enabled"].Value);
 				item.CheckOnClick = true;
-				item.CheckedChanged += this.m_pluginCheckHandler;
+				item.CheckedChanged += m_pluginCheckHandler;
 				item.Tag = num.ToString();
 				num++;
-				this.toolStripDropDownButtonPlugins.DropDownItems.Add(item);
+				toolStripDropDownButtonPlugins.DropDownItems.Add(item);
 				flag |= item.Checked;
 			}
-			if (this.toolStripDropDownButtonPlugins.DropDownItems.Count > 0)
+			if (toolStripDropDownButtonPlugins.DropDownItems.Count > 0)
 			{
-				this.toolStripDropDownButtonPlugins.DropDownItems.Add("-");
-				this.toolStripDropDownButtonPlugins.DropDownItems.Add("Select all", null, new EventHandler(this.selectAllToolStripMenuItem_Click));
-				this.toolStripDropDownButtonPlugins.DropDownItems.Add("Unselect all", null, new EventHandler(this.unselectAllToolStripMenuItem_Click));
+				toolStripDropDownButtonPlugins.DropDownItems.Add("-");
+				toolStripDropDownButtonPlugins.DropDownItems.Add("Select all", null, new EventHandler(selectAllToolStripMenuItem_Click));
+				toolStripDropDownButtonPlugins.DropDownItems.Add("Unselect all", null, new EventHandler(unselectAllToolStripMenuItem_Click));
 			}
 		}
 
 		private void LoadSequenceSorts()
 		{
-			this.toolStripComboBoxChannelOrder.BeginUpdate();
-			string item = (string) this.toolStripComboBoxChannelOrder.Items[0];
-			string str2 = (string) this.toolStripComboBoxChannelOrder.Items[this.toolStripComboBoxChannelOrder.Items.Count - 1];
-			this.toolStripComboBoxChannelOrder.Items.Clear();
-			this.toolStripComboBoxChannelOrder.Items.Add(item);
-			foreach (VixenPlus.SortOrder order in this.m_sequence.Sorts)
+			toolStripComboBoxChannelOrder.BeginUpdate();
+			string item = (string) toolStripComboBoxChannelOrder.Items[0];
+			string str2 = (string) toolStripComboBoxChannelOrder.Items[toolStripComboBoxChannelOrder.Items.Count - 1];
+			toolStripComboBoxChannelOrder.Items.Clear();
+			toolStripComboBoxChannelOrder.Items.Add(item);
+			foreach (VixenPlus.SortOrder order in m_sequence.Sorts)
 			{
-				this.toolStripComboBoxChannelOrder.Items.Add(order);
+				toolStripComboBoxChannelOrder.Items.Add(order);
 			}
-			this.toolStripComboBoxChannelOrder.Items.Add(str2);
-			if (this.m_sequence.LastSort != -1)
+			toolStripComboBoxChannelOrder.Items.Add(str2);
+			if (m_sequence.LastSort != -1)
 			{
-				this.toolStripComboBoxChannelOrder.SelectedIndex = this.m_sequence.LastSort + 1;
+				toolStripComboBoxChannelOrder.SelectedIndex = m_sequence.LastSort + 1;
 			}
-			this.toolStripComboBoxChannelOrder.EndUpdate();
+			toolStripComboBoxChannelOrder.EndUpdate();
 		}
 
 		private void m_intensityAdjustDialog_VisibleChanged(object sender, EventArgs e)
 		{
-			if (!this.m_intensityAdjustDialog.Visible)
+			if (!m_intensityAdjustDialog.Visible)
 			{
 				int left;
 				int num2;
 				int num4;
 				int num8;
-				this.AddUndoItem(this.m_normalizedRange, UndoOriginalBehavior.Overwrite);
-				int delta = this.m_intensityAdjustDialog.Delta;
-				int bottom = this.m_normalizedRange.Bottom;
-				int right = this.m_normalizedRange.Right;
-				if (this.m_actualLevels)
+				AddUndoItem(m_normalizedRange, UndoOriginalBehavior.Overwrite);
+				int delta = m_intensityAdjustDialog.Delta;
+				int bottom = m_normalizedRange.Bottom;
+				int right = m_normalizedRange.Right;
+				if (m_actualLevels)
 				{
-					for (num8 = this.m_normalizedRange.Top; num8 < bottom; num8++)
+					for (num8 = m_normalizedRange.Top; num8 < bottom; num8++)
 					{
-						num2 = this.m_channelOrderMapping[num8];
-						if (this.m_sequence.Channels[num2].Enabled)
+						num2 = m_channelOrderMapping[num8];
+						if (m_sequence.Channels[num2].Enabled)
 						{
-							left = this.m_normalizedRange.Left;
+							left = m_normalizedRange.Left;
 							while (left < right)
 							{
-								num4 = this.m_sequence.EventValues[num2, left] + delta;
-								num4 = Math.Max(Math.Min(num4, this.m_sequence.MaximumLevel), this.m_sequence.MinimumLevel);
-								this.m_sequence.EventValues[num2, left] = (byte) num4;
+								num4 = m_sequence.EventValues[num2, left] + delta;
+								num4 = Math.Max(Math.Min(num4, m_sequence.MaximumLevel), m_sequence.MinimumLevel);
+								m_sequence.EventValues[num2, left] = (byte) num4;
 								left++;
 							}
 						}
@@ -1452,70 +1452,70 @@ namespace VixenEditor
 				}
 				else
 				{
-					for (num8 = this.m_normalizedRange.Top; num8 < bottom; num8++)
+					for (num8 = m_normalizedRange.Top; num8 < bottom; num8++)
 					{
-						num2 = this.m_channelOrderMapping[num8];
-						if (this.m_sequence.Channels[num2].Enabled)
+						num2 = m_channelOrderMapping[num8];
+						if (m_sequence.Channels[num2].Enabled)
 						{
-							for (left = this.m_normalizedRange.Left; left < right; left++)
+							for (left = m_normalizedRange.Left; left < right; left++)
 							{
-								num4 = ((int) Math.Round((double) ((this.m_sequence.EventValues[num2, left] * 100f) / 255f), MidpointRounding.AwayFromZero)) + delta;
+								num4 = ((int) Math.Round((double) ((m_sequence.EventValues[num2, left] * 100f) / 255f), MidpointRounding.AwayFromZero)) + delta;
 								int num5 = (int) Math.Round((double) ((((float) num4) / 100f) * 255f), MidpointRounding.AwayFromZero);
-								num5 = Math.Max(Math.Min(num5, this.m_sequence.MaximumLevel), this.m_sequence.MinimumLevel);
-								this.m_sequence.EventValues[num2, left] = (byte) num5;
+								num5 = Math.Max(Math.Min(num5, m_sequence.MaximumLevel), m_sequence.MinimumLevel);
+								m_sequence.EventValues[num2, left] = (byte) num5;
 							}
 						}
 					}
 				}
-				this.pictureBoxGrid.Refresh();
+				pictureBoxGrid.Refresh();
 			}
 			else
 			{
-				this.m_intensityAdjustDialog.LargeDelta = this.m_intensityLargeDelta;
+				m_intensityAdjustDialog.LargeDelta = m_intensityLargeDelta;
 			}
 		}
 
 		private void m_positionTimer_Tick(object sender, EventArgs e)
 		{
 			int num;
-			if (this.m_executionInterface.EngineStatus(this.m_executionContextHandle, out num) == 0)
+			if (m_executionInterface.EngineStatus(m_executionContextHandle, out num) == 0)
 			{
-				this.ProgramEnded();
+				ProgramEnded();
 			}
 			else
 			{
-				int num2 = num / this.m_sequence.EventPeriod;
-				if (num2 != this.m_position)
+				int num2 = num / m_sequence.EventPeriod;
+				if (num2 != m_position)
 				{
-					this.toolStripLabelExecutionPoint.Text = string.Format("{0:d2}:{1:d2}", num / 0xea60, (num % 0xea60) / 0x3e8);
-					this.m_previousPosition = this.m_position;
-					this.m_position = num2;
-					if ((this.m_position < this.hScrollBar1.Value) || (this.m_position > (this.hScrollBar1.Value + this.m_visibleEventPeriods)))
+					toolStripLabelExecutionPoint.Text = string.Format("{0:d2}:{1:d2}", num / 0xea60, (num % 0xea60) / 0x3e8);
+					m_previousPosition = m_position;
+					m_position = num2;
+					if ((m_position < hScrollBar1.Value) || (m_position > (hScrollBar1.Value + m_visibleEventPeriods)))
 					{
-						if (this.m_autoScrolling)
+						if (m_autoScrolling)
 						{
-							if (this.m_position != -1)
+							if (m_position != -1)
 							{
-								if (this.m_position >= this.m_sequence.TotalEventPeriods)
+								if (m_position >= m_sequence.TotalEventPeriods)
 								{
-									this.m_previousPosition = this.m_position = this.m_sequence.TotalEventPeriods - 1;
+									m_previousPosition = m_position = m_sequence.TotalEventPeriods - 1;
 								}
-								this.hScrollBar1.Value = this.m_position;
-								this.toolStripLabelExecutionPoint.Text = string.Format("{0:d2}:{1:d2}", num / 0xea60, (num % 0xea60) / 0x3e8);
+								hScrollBar1.Value = m_position;
+								toolStripLabelExecutionPoint.Text = string.Format("{0:d2}:{1:d2}", num / 0xea60, (num % 0xea60) / 0x3e8);
 							}
 						}
 						else
 						{
-							this.UpdateProgress();
+							UpdateProgress();
 						}
 					}
-					else if (this.m_showPositionMarker)
+					else if (m_showPositionMarker)
 					{
-						this.UpdateProgress();
+						UpdateProgress();
 					}
 					else
 					{
-						this.toolStripLabelExecutionPoint.Text = string.Format("{0:d2}:{1:d2}", num / 0xea60, (num % 0xea60) / 0x3e8);
+						toolStripLabelExecutionPoint.Text = string.Format("{0:d2}:{1:d2}", num / 0xea60, (num % 0xea60) / 0x3e8);
 					}
 				}
 			}
@@ -1523,34 +1523,34 @@ namespace VixenEditor
 
 		private void maxToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.ArithmeticPaste(ArithmeticOperation.Max);
+			ArithmeticPaste(ArithmeticOperation.Max);
 		}
 
 		private void minToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.ArithmeticPaste(ArithmeticOperation.Min);
+			ArithmeticPaste(ArithmeticOperation.Min);
 		}
 
 		public override EventSequence New()
 		{
-			return this.New(new EventSequence(this.m_systemInterface.UserPreferences));
+			return New(new EventSequence(m_systemInterface.UserPreferences));
 		}
 
 		public override EventSequence New(EventSequence seedSequence)
 		{
-			this.m_sequence = seedSequence;
-			this.m_preferences = this.m_systemInterface.UserPreferences;
-			this.m_dataNode = this.m_sequence.Extensions[this.FileExtension];
-			this.Init();
-			if (this.m_sequence.Name == null)
+			m_sequence = seedSequence;
+			m_preferences = m_systemInterface.UserPreferences;
+			m_dataNode = m_sequence.Extensions[FileExtension];
+			Init();
+			if (m_sequence.Name == null)
 			{
-				this.Text = "Unnamed sequence";
+				Text = "Unnamed sequence";
 			}
 			else
 			{
-				this.Text = this.m_sequence.Name;
+				Text = m_sequence.Name;
 			}
-			return this.m_sequence;
+			return m_sequence;
 		}
 
 		private Rectangle NormalizeRect(Rectangle rect)
@@ -1573,13 +1573,13 @@ namespace VixenEditor
 
 		private void normalSpeedToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.SetAudioSpeed(1f);
+			SetAudioSpeed(1f);
 		}
 
 		private void normalToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.normalToolStripMenuItem.Checked = true;
-			this.paintFromClipboardToolStripMenuItem.Checked = false;
+			normalToolStripMenuItem.Checked = true;
+			paintFromClipboardToolStripMenuItem.Checked = false;
 		}
 
 		public override void Notify(Notification notification, object data)
@@ -1587,32 +1587,32 @@ namespace VixenEditor
 			switch (notification)
 			{
 				case Notification.PreferenceChange:
-					this.UpdateRowHeight();
-					this.UpdateColumnWidth();
-					this.m_showPositionMarker = this.m_preferences.GetBoolean("ShowPositionMarker");
-					this.m_autoScrolling = this.m_preferences.GetBoolean("AutoScrolling");
-					this.m_mouseWheelVerticalDelta = this.m_preferences.GetInteger("MouseWheelVerticalDelta");
-					this.m_mouseWheelHorizontalDelta = this.m_preferences.GetInteger("MouseWheelHorizontalDelta");
-					this.m_intensityLargeDelta = this.m_preferences.GetInteger("IntensityLargeDelta");
-					this.RefreshAll();
+					UpdateRowHeight();
+					UpdateColumnWidth();
+					m_showPositionMarker = m_preferences.GetBoolean("ShowPositionMarker");
+					m_autoScrolling = m_preferences.GetBoolean("AutoScrolling");
+					m_mouseWheelVerticalDelta = m_preferences.GetInteger("MouseWheelVerticalDelta");
+					m_mouseWheelHorizontalDelta = m_preferences.GetInteger("MouseWheelHorizontalDelta");
+					m_intensityLargeDelta = m_preferences.GetInteger("IntensityLargeDelta");
+					RefreshAll();
 					break;
 
 				case Notification.KeyDown:
-					this.StandardSequence_KeyDown(null, (KeyEventArgs) data);
+					StandardSequence_KeyDown(null, (KeyEventArgs) data);
 					break;
 
 				case Notification.SequenceChange:
-					this.RefreshAll();
+					RefreshAll();
 					base.IsDirty = true;
 					break;
 
 				case Notification.ProfileChange:
 				{
-					VixenPlus.SortOrder currentOrder = this.m_sequence.Sorts.CurrentOrder;
-					this.m_sequence.ReloadProfile();
-					this.m_sequence.Sorts.CurrentOrder = currentOrder;
-					this.LoadSequenceSorts();
-					this.RefreshAll();
+					VixenPlus.SortOrder currentOrder = m_sequence.Sorts.CurrentOrder;
+					m_sequence.ReloadProfile();
+					m_sequence.Sorts.CurrentOrder = currentOrder;
+					LoadSequenceSorts();
+					RefreshAll();
 					break;
 				}
 			}
@@ -1621,13 +1621,13 @@ namespace VixenEditor
 		public override void OnDirtyChanged(EventArgs e)
 		{
 			base.OnDirtyChanged(e);
-			this.tbsSave.Enabled = base.IsDirty;
+			tbsSave.Enabled = base.IsDirty;
 		}
 
 		protected override void OnMouseWheel(MouseEventArgs e)
 		{
 			bool flag = (Control.ModifierKeys & Keys.Shift) == Keys.None;
-			if (this.m_preferences.GetBoolean("FlipScrollBehavior"))
+			if (m_preferences.GetBoolean("FlipScrollBehavior"))
 			{
 				flag = !flag;
 			}
@@ -1635,81 +1635,81 @@ namespace VixenEditor
 			{
 				if (e.Delta > 0)
 				{
-					if (this.vScrollBar1.Value >= (this.vScrollBar1.Minimum + this.m_mouseWheelVerticalDelta))
+					if (vScrollBar1.Value >= (vScrollBar1.Minimum + m_mouseWheelVerticalDelta))
 					{
-						this.vScrollBar1.Value -= this.m_mouseWheelVerticalDelta;
+						vScrollBar1.Value -= m_mouseWheelVerticalDelta;
 					}
 					else
 					{
-						this.vScrollBar1.Value = this.vScrollBar1.Minimum;
+						vScrollBar1.Value = vScrollBar1.Minimum;
 					}
 				}
-				else if (this.vScrollBar1.Value <= (this.vScrollBar1.Maximum - (this.m_visibleRowCount + this.m_mouseWheelVerticalDelta)))
+				else if (vScrollBar1.Value <= (vScrollBar1.Maximum - (m_visibleRowCount + m_mouseWheelVerticalDelta)))
 				{
-					this.vScrollBar1.Value += this.m_mouseWheelVerticalDelta;
+					vScrollBar1.Value += m_mouseWheelVerticalDelta;
 				}
 				else
 				{
-					this.vScrollBar1.Value = Math.Max((this.vScrollBar1.Maximum - this.m_visibleRowCount) + 1, 0);
+					vScrollBar1.Value = Math.Max((vScrollBar1.Maximum - m_visibleRowCount) + 1, 0);
 				}
 			}
 			else if (e.Delta > 0)
 			{
-				if (this.hScrollBar1.Value >= (this.hScrollBar1.Minimum + this.m_mouseWheelHorizontalDelta))
+				if (hScrollBar1.Value >= (hScrollBar1.Minimum + m_mouseWheelHorizontalDelta))
 				{
-					this.hScrollBar1.Value -= this.m_mouseWheelHorizontalDelta;
+					hScrollBar1.Value -= m_mouseWheelHorizontalDelta;
 				}
 				else
 				{
-					this.hScrollBar1.Value = this.hScrollBar1.Minimum;
+					hScrollBar1.Value = hScrollBar1.Minimum;
 				}
 			}
-			else if (this.hScrollBar1.Value <= (this.hScrollBar1.Maximum - (this.m_visibleEventPeriods + this.m_mouseWheelHorizontalDelta)))
+			else if (hScrollBar1.Value <= (hScrollBar1.Maximum - (m_visibleEventPeriods + m_mouseWheelHorizontalDelta)))
 			{
-				this.hScrollBar1.Value += this.m_mouseWheelHorizontalDelta;
+				hScrollBar1.Value += m_mouseWheelHorizontalDelta;
 			}
 			else
 			{
-				this.hScrollBar1.Value = Math.Max((this.hScrollBar1.Maximum - this.m_visibleEventPeriods) + 1, 0);
+				hScrollBar1.Value = Math.Max((hScrollBar1.Maximum - m_visibleEventPeriods) + 1, 0);
 			}
 		}
 
 		public override EventSequence Open(string filePath)
 		{
-			this.m_sequence = new EventSequence(filePath);
-			this.Text = this.m_sequence.Name;
-			this.m_dataNode = this.m_sequence.Extensions[this.FileExtension];
-			this.m_preferences = this.m_systemInterface.UserPreferences;
-			this.Init();
-			return this.m_sequence;
+			m_sequence = new EventSequence(filePath);
+			Text = m_sequence.Name;
+			m_dataNode = m_sequence.Extensions[FileExtension];
+			m_preferences = m_systemInterface.UserPreferences;
+			Init();
+			return m_sequence;
 		}
 
 		private void otherToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.SetVariablePlaybackSpeed(new Point(0, 0));
+			SetVariablePlaybackSpeed(new Point(0, 0));
 		}
 
 		private void paintFromClipboardToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.normalToolStripMenuItem.Checked = false;
-			this.paintFromClipboardToolStripMenuItem.Checked = true;
+			normalToolStripMenuItem.Checked = false;
+			paintFromClipboardToolStripMenuItem.Checked = true;
 		}
 
 		private void ParseAudioWaveform()
 		{
 			string str;
-			if ((this.m_sequence.Audio != null) && File.Exists(str = Path.Combine(Paths.AudioPath, this.m_sequence.Audio.FileName)))
+			if ((m_sequence.Audio != null) && File.Exists(str = Path.Combine(Paths.AudioPath, m_sequence.Audio.FileName)))
 			{
-				if (this.toolStripButtonWaveform.Checked)
+				if (toolStripButtonWaveform.Checked)
 				{
 					VixenEditor.ProgressDialog dialog = new VixenEditor.ProgressDialog();
 					dialog.Show();
 					dialog.Message = "Parsing sound data, please wait...";
-					this.Cursor = Cursors.WaitCursor;
+					Cursor = Cursors.WaitCursor;
 					try
 					{
-						this.m_waveformPCMData = new uint[this.m_sequence.TotalEventPeriods * this.m_periodPixelWidth];
-						this.m_waveformPixelData = new uint[this.m_sequence.TotalEventPeriods * this.m_periodPixelWidth];
+						m_waveformPCMData = new uint[m_sequence.TotalEventPeriods * m_periodPixelWidth];
+						m_waveformPixelData = new uint[m_sequence.TotalEventPeriods * m_periodPixelWidth];
 						SOUND_TYPE rAW = SOUND_TYPE.RAW;
 						SOUND_FORMAT nONE = SOUND_FORMAT.NONE;
 						float volume = 0f;
@@ -1725,9 +1725,9 @@ namespace VixenEditor
 						sound.getDefaults(ref frequency, ref volume, ref pan, ref priority);
 						sound.getLength(ref length, TIMEUNIT.PCMBYTES);
 						double num8 = (((double) length) / ((double) channels)) / ((double) (bits / 8));
-						double num9 = num8 / ((double) this.m_sequence.TotalEventPeriods);
-						double num10 = num9 / ((double) this.m_periodPixelWidth);
-						double num11 = ((double) this.m_sequence.EventPeriod) / ((double) this.m_periodPixelWidth);
+						double num9 = num8 / ((double) m_sequence.TotalEventPeriods);
+						double num10 = num9 / ((double) m_periodPixelWidth);
+						double num11 = ((double) m_sequence.EventPeriod) / ((double) m_periodPixelWidth);
 						double num12 = frequency / 1000f;
 						int num14 = 0;
 						int num15 = 0;
@@ -1736,59 +1736,59 @@ namespace VixenEditor
 						uint num18 = 0;
 						sound.getLength(ref num18, TIMEUNIT.MS);
 						int index = 0;
-						for (double i = 0.0; (index < this.m_waveformPCMData.Length) && (i < num18); i += num11)
+						for (double i = 0.0; (index < m_waveformPCMData.Length) && (i < num18); i += num11)
 						{
 							int startSample = (int) (i * num12);
-							uint num16 = this.GetSampleMinMax(startSample, (int) Math.Min(num10, num8 - startSample), sound, bits, channels);
+							uint num16 = GetSampleMinMax(startSample, (int) Math.Min(num10, num8 - startSample), sound, bits, channels);
 							num14 = Math.Max(num14, (short) (num16 >> 0x10));
 							num15 = Math.Min(num15, (short) (num16 & 0xffff));
-							this.m_waveformPCMData[index] = num16;
+							m_waveformPCMData[index] = num16;
 							index++;
 						}
-						this.m_waveform100PercentAmplitude = this.m_waveformMaxAmplitude = Math.Max(num14, -num15);
-						this.PCMToPixels(this.m_waveformPCMData, this.m_waveformPixelData);
+						m_waveform100PercentAmplitude = m_waveformMaxAmplitude = Math.Max(num14, -num15);
+						PCMToPixels(m_waveformPCMData, m_waveformPixelData);
 						sound.release();
 					}
 					finally
 					{
-						this.Cursor = Cursors.Default;
+						Cursor = Cursors.Default;
 						dialog.Hide();
 					}
 				}
 				else
 				{
-					this.m_waveformPCMData = null;
-					this.m_waveformPixelData = null;
+					m_waveformPCMData = null;
+					m_waveformPixelData = null;
 				}
-				this.EnableWaveformButton();
+				EnableWaveformButton();
 			}
 			else
 			{
-				this.DisableWaveformDisplay();
+				DisableWaveformDisplay();
 			}
 		}
 
 		private void pasteFullChannelEventsFromClipboardToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (this.m_systemInterface.Clipboard != null)
+			if (m_systemInterface.Clipboard != null)
 			{
-				this.AddUndoItem(new Rectangle(0, this.m_selectedLineIndex, this.m_systemInterface.Clipboard.GetLength(1), 1), UndoOriginalBehavior.Overwrite);
-				int num2 = Math.Min(this.m_systemInterface.Clipboard.GetLength(1), this.m_sequence.TotalEventPeriods);
+				AddUndoItem(new Rectangle(0, m_selectedLineIndex, m_systemInterface.Clipboard.GetLength(1), 1), UndoOriginalBehavior.Overwrite);
+				int num2 = Math.Min(m_systemInterface.Clipboard.GetLength(1), m_sequence.TotalEventPeriods);
 				for (int i = 0; i < num2; i++)
 				{
-					this.m_sequence.EventValues[this.m_editingChannelSortedIndex, i] = this.m_systemInterface.Clipboard[0, i];
+					m_sequence.EventValues[m_editingChannelSortedIndex, i] = m_systemInterface.Clipboard[0, i];
 				}
 				base.IsDirty = true;
-				this.pictureBoxGrid.Refresh();
+				pictureBoxGrid.Refresh();
 			}
 		}
 
 		private void PasteOver()
 		{
-			if (this.m_systemInterface.Clipboard != null)
+			if (m_systemInterface.Clipboard != null)
 			{
-				this.ArrayToCells(this.m_systemInterface.Clipboard);
-				this.pictureBoxGrid.Refresh();
+				ArrayToCells(m_systemInterface.Clipboard);
+				pictureBoxGrid.Refresh();
 			}
 		}
 
@@ -1797,16 +1797,16 @@ namespace VixenEditor
 			int length = PCMData.Length;
 			short num3 = -32768;
 			short num4 = 0x7fff;
-			int waveformOffset = this.m_waveformOffset;
-			int num6 = -this.m_waveformOffset;
-			double num7 = ((double) this.m_waveformMaxAmplitude) / ((double) Math.Max(waveformOffset, num6));
+			int waveformOffset = m_waveformOffset;
+			int num6 = -m_waveformOffset;
+			double num7 = ((double) m_waveformMaxAmplitude) / ((double) Math.Max(waveformOffset, num6));
 			for (int i = 0; i < length; i++)
 			{
 				uint num2 = PCMData[i];
-				num3 = (short) (((double) Math.Min((short) (num2 >> 0x10), this.m_waveformMaxAmplitude)) / num7);
+				num3 = (short) (((double) Math.Min((short) (num2 >> 0x10), m_waveformMaxAmplitude)) / num7);
 				num3 = (short) Math.Max((short)num3, (short)0);
 				num3 = (short) Math.Min(num3, waveformOffset);
-				num4 = (short) (((double) Math.Max((short) (num2 & 0xffff), -this.m_waveformMaxAmplitude)) / num7);
+				num4 = (short) (((double) Math.Max((short) (num2 & 0xffff), -m_waveformMaxAmplitude)) / num7);
 				num4 = (short)Math.Min((short)num4, (short)0);
 				num4 = (short) Math.Max(num4, num6);
 				pixelData[i] = (uint) ((num3 << 0x10) | ((ushort) num4));
@@ -1818,30 +1818,30 @@ namespace VixenEditor
 			if (e.Data.GetDataPresent(typeof(VixenPlus.Channel)))
 			{
 				VixenPlus.Channel data = (VixenPlus.Channel) e.Data.GetData(typeof(VixenPlus.Channel));
-				VixenPlus.Channel channelAt = this.GetChannelAt(this.pictureBoxChannels.PointToClient(new Point(e.X, e.Y)));
+				VixenPlus.Channel channelAt = GetChannelAt(pictureBoxChannels.PointToClient(new Point(e.X, e.Y)));
 				if (data != channelAt)
 				{
 					if (e.Effect == DragDropEffects.Copy)
 					{
-						this.m_sequence.CopyChannel(data, channelAt);
-						this.RefreshAll();
+						m_sequence.CopyChannel(data, channelAt);
+						RefreshAll();
 						base.IsDirty = true;
 					}
 					else if (e.Effect == DragDropEffects.Move)
 					{
 						int channelSortedIndex;
-						int channelNaturalIndex = this.GetChannelNaturalIndex(data);
-						this.m_channelOrderMapping.Remove(channelNaturalIndex);
+						int channelNaturalIndex = GetChannelNaturalIndex(data);
+						m_channelOrderMapping.Remove(channelNaturalIndex);
 						if (channelAt != null)
 						{
-							channelSortedIndex = this.GetChannelSortedIndex(channelAt);
+							channelSortedIndex = GetChannelSortedIndex(channelAt);
 						}
 						else
 						{
-							channelSortedIndex = this.m_channelOrderMapping.Count;
+							channelSortedIndex = m_channelOrderMapping.Count;
 						}
-						this.m_channelOrderMapping.Insert(channelSortedIndex, channelNaturalIndex);
-						this.RefreshAll();
+						m_channelOrderMapping.Insert(channelSortedIndex, channelNaturalIndex);
+						RefreshAll();
 						base.IsDirty = true;
 					}
 				}
@@ -1852,26 +1852,26 @@ namespace VixenEditor
 		{
 			if (e.Data.GetDataPresent(typeof(VixenPlus.Channel)))
 			{
-				Point point = this.pictureBoxChannels.PointToClient(new Point(e.X, e.Y));
-				int lineIndexAt = this.GetLineIndexAt(point);
-				if (this.vScrollBar1.Enabled)
+				Point point = pictureBoxChannels.PointToClient(new Point(e.X, e.Y));
+				int lineIndexAt = GetLineIndexAt(point);
+				if (vScrollBar1.Enabled)
 				{
-					if ((this.vScrollBar1.Value > this.vScrollBar1.Minimum) && ((lineIndexAt - this.vScrollBar1.Value) < 2))
+					if ((vScrollBar1.Value > vScrollBar1.Minimum) && ((lineIndexAt - vScrollBar1.Value) < 2))
 					{
-						this.vScrollBar1.Value--;
+						vScrollBar1.Value--;
 						Thread.Sleep(50);
-						lineIndexAt = this.GetLineIndexAt(point);
+						lineIndexAt = GetLineIndexAt(point);
 					}
-					else if ((this.vScrollBar1.Value < this.vScrollBar1.Maximum) && ((lineIndexAt - this.vScrollBar1.Value) > (this.m_visibleRowCount - 2)))
+					else if ((vScrollBar1.Value < vScrollBar1.Maximum) && ((lineIndexAt - vScrollBar1.Value) > (m_visibleRowCount - 2)))
 					{
-						this.vScrollBar1.Value++;
+						vScrollBar1.Value++;
 						Thread.Sleep(50);
-						lineIndexAt = this.GetLineIndexAt(point);
+						lineIndexAt = GetLineIndexAt(point);
 					}
 				}
 				if ((Control.ModifierKeys & Keys.Control) != Keys.None)
 				{
-					if ((lineIndexAt >= 0) && (lineIndexAt < this.m_sequence.ChannelCount))
+					if ((lineIndexAt >= 0) && (lineIndexAt < m_sequence.ChannelCount))
 					{
 						e.Effect = DragDropEffects.Copy;
 					}
@@ -1893,25 +1893,25 @@ namespace VixenEditor
 
 		private void pictureBoxChannels_MouseDoubleClick(object sender, MouseEventArgs e)
 		{
-			if (this.ChannelClickValid())
+			if (ChannelClickValid())
 			{
 				int num = 2;
 				if (e.X < 10)
 				{
 					num = 0;
 				}
-				else if (this.m_showingOutputs && (e.X < 50))
+				else if (m_showingOutputs && (e.X < 50))
 				{
 					num = 1;
 				}
 				switch (num)
 				{
 					case 1:
-						this.ReorderChannelOutputs();
+						ReorderChannelOutputs();
 						break;
 
 					case 2:
-						this.ShowChannelProperties();
+						ShowChannelProperties();
 						break;
 				}
 			}
@@ -1919,21 +1919,21 @@ namespace VixenEditor
 
 		private void pictureBoxChannels_MouseDown(object sender, MouseEventArgs e)
 		{
-			this.ChannelClickValid();
-			this.m_mouseDownAtInChannels = e.Location;
+			ChannelClickValid();
+			m_mouseDownAtInChannels = e.Location;
 		}
 
 		private void pictureBoxChannels_MouseMove(object sender, MouseEventArgs e)
 		{
-			if ((((e.Button & MouseButtons.Left) != MouseButtons.None) && (this.m_mouseDownAtInChannels != Point.Empty)) && ((Math.Abs((int) (e.X - this.m_mouseDownAtInChannels.X)) > 3) || (Math.Abs((int) (e.Y - this.m_mouseDownAtInChannels.Y)) > 3)))
+			if ((((e.Button & MouseButtons.Left) != MouseButtons.None) && (m_mouseDownAtInChannels != Point.Empty)) && ((Math.Abs((int) (e.X - m_mouseDownAtInChannels.X)) > 3) || (Math.Abs((int) (e.Y - m_mouseDownAtInChannels.Y)) > 3)))
 			{
-				base.DoDragDrop(this.SelectedChannel, DragDropEffects.Move | DragDropEffects.Copy);
+				base.DoDragDrop(SelectedChannel, DragDropEffects.Move | DragDropEffects.Copy);
 			}
 		}
 
 		private void pictureBoxChannels_MouseUp(object sender, MouseEventArgs e)
 		{
-			this.m_mouseDownAtInChannels = Point.Empty;
+			m_mouseDownAtInChannels = Point.Empty;
 		}
 
 		private void pictureBoxChannels_Paint(object sender, PaintEventArgs e)
@@ -1942,13 +1942,13 @@ namespace VixenEditor
 			int num2;
 			int num3;
 			int num5;
-			e.Graphics.FillRectangle(this.m_channelBackBrush, e.Graphics.VisibleClipBounds);
-			int height = this.pictureBoxTime.Height;
-			if (this.toolStripComboBoxRowZoom.SelectedIndex <= 4)
+			e.Graphics.FillRectangle(m_channelBackBrush, e.Graphics.VisibleClipBounds);
+			int height = pictureBoxTime.Height;
+			if (toolStripComboBoxRowZoom.SelectedIndex <= 4)
 			{
 				num2 = 0;
 			}
-			else if (this.toolStripComboBoxRowZoom.SelectedIndex >= 8)
+			else if (toolStripComboBoxRowZoom.SelectedIndex >= 8)
 			{
 				num2 = 3;
 			}
@@ -1956,97 +1956,97 @@ namespace VixenEditor
 			{
 				num2 = 1;
 			}
-			bool boolean = this.m_preferences.GetBoolean("ShowNaturalChannelNumber");
-			int x = boolean ? (((this.m_sequence.ChannelCount.ToString().Length + 1) * 6) + 10) : 10;
-			if (!this.m_showingOutputs)
+			bool boolean = m_preferences.GetBoolean("ShowNaturalChannelNumber");
+			int x = boolean ? (((m_sequence.ChannelCount.ToString().Length + 1) * 6) + 10) : 10;
+			if (!m_showingOutputs)
 			{
-				for (num5 = this.vScrollBar1.Value; (num5 >= 0) && (num5 < this.m_sequence.ChannelCount); num5++)
+				for (num5 = vScrollBar1.Value; (num5 >= 0) && (num5 < m_sequence.ChannelCount); num5++)
 				{
-					num3 = this.m_channelOrderMapping[num5];
-					channel = this.m_sequence.Channels[num3];
-					if (channel == this.SelectedChannel)
+					num3 = m_channelOrderMapping[num5];
+					channel = m_sequence.Channels[num3];
+					if (channel == SelectedChannel)
 					{
-						e.Graphics.FillRectangle(SystemBrushes.Highlight, 0, height, this.pictureBoxChannels.Width, this.m_gridRowHeight);
+						e.Graphics.FillRectangle(SystemBrushes.Highlight, 0, height, pictureBoxChannels.Width, m_gridRowHeight);
 					}
 					else
 					{
-						e.Graphics.FillRectangle(channel.Brush, 0, height, this.pictureBoxChannels.Width, this.m_gridRowHeight);
+						e.Graphics.FillRectangle(channel.Brush, 0, height, pictureBoxChannels.Width, m_gridRowHeight);
 					}
 					if (boolean)
 					{
-						e.Graphics.DrawString(string.Format("{0}:", num3 + 1), this.m_channelNameFont, Brushes.Black, 10f, (float) (height + num2));
+						e.Graphics.DrawString(string.Format("{0}:", num3 + 1), m_channelNameFont, Brushes.Black, 10f, (float) (height + num2));
 					}
-					if (channel == this.SelectedChannel)
+					if (channel == SelectedChannel)
 					{
-						e.Graphics.DrawString(channel.Name, this.m_channelNameFont, SystemBrushes.HighlightText, (float) x, (float) (height + num2));
+						e.Graphics.DrawString(channel.Name, m_channelNameFont, SystemBrushes.HighlightText, (float) x, (float) (height + num2));
 					}
 					else
 					{
-						e.Graphics.DrawString(channel.Name, this.m_channelNameFont, Brushes.Black, (float) x, (float) (height + num2));
+						e.Graphics.DrawString(channel.Name, m_channelNameFont, Brushes.Black, (float) x, (float) (height + num2));
 					}
-					height += this.m_gridRowHeight;
+					height += m_gridRowHeight;
 				}
 			}
 			else
 			{
 				int num8;
-				int width = Math.Min(this.m_gridRowHeight - 4, this.pictureBoxOutputArrow.Height);
-				int num7 = (this.m_gridRowHeight - width) >> 1;
+				int width = Math.Min(m_gridRowHeight - 4, pictureBoxOutputArrow.Height);
+				int num7 = (m_gridRowHeight - width) >> 1;
 				SolidBrush brush = new SolidBrush(Color.White);
 				if (boolean)
 				{
-					for (num5 = this.vScrollBar1.Value; (num5 >= 0) && (num5 < this.m_sequence.ChannelCount); num5++)
+					for (num5 = vScrollBar1.Value; (num5 >= 0) && (num5 < m_sequence.ChannelCount); num5++)
 					{
-						num3 = this.m_channelOrderMapping[num5];
-						channel = this.m_sequence.Channels[num3];
+						num3 = m_channelOrderMapping[num5];
+						channel = m_sequence.Channels[num3];
 						brush.Color = Color.FromArgb(0xc0, Color.Gray);
-						if (channel == this.SelectedChannel)
+						if (channel == SelectedChannel)
 						{
-							e.Graphics.FillRectangle(SystemBrushes.Highlight, 0, height, this.pictureBoxChannels.Width, this.m_gridRowHeight);
+							e.Graphics.FillRectangle(SystemBrushes.Highlight, 0, height, pictureBoxChannels.Width, m_gridRowHeight);
 						}
 						else
 						{
-							e.Graphics.FillRectangle(channel.Brush, 0, height, this.pictureBoxChannels.Width, this.m_gridRowHeight);
+							e.Graphics.FillRectangle(channel.Brush, 0, height, pictureBoxChannels.Width, m_gridRowHeight);
 						}
-						e.Graphics.DrawString(string.Format("{0}:", num3 + 1), this.m_channelNameFont, Brushes.Black, 10f, (float) (height + num2));
-						e.Graphics.FillRectangle(brush, x, height + 1, 40, this.m_gridRowHeight - 2);
-						if (this.toolStripComboBoxRowZoom.SelectedIndex > 4)
+						e.Graphics.DrawString(string.Format("{0}:", num3 + 1), m_channelNameFont, Brushes.Black, 10f, (float) (height + num2));
+						e.Graphics.FillRectangle(brush, x, height + 1, 40, m_gridRowHeight - 2);
+						if (toolStripComboBoxRowZoom.SelectedIndex > 4)
 						{
-							e.Graphics.DrawRectangle(Pens.Black, x, height + 1, 40, this.m_gridRowHeight - 2);
+							e.Graphics.DrawRectangle(Pens.Black, x, height + 1, 40, m_gridRowHeight - 2);
 						}
-						e.Graphics.DrawImage(this.m_arrowBitmap, x + 2, height + num7, width, width);
+						e.Graphics.DrawImage(m_arrowBitmap, x + 2, height + num7, width, width);
 						num8 = channel.OutputChannel + 1;
-						e.Graphics.DrawString(num8.ToString(), this.m_channelNameFont, Brushes.Black, (float) (x + 0x10), (float) (height + num2));
-						e.Graphics.DrawString(channel.Name, this.m_channelNameFont, Brushes.Black, (float) (x + 0x2c), (float) (height + num2));
-						height += this.m_gridRowHeight;
+						e.Graphics.DrawString(num8.ToString(), m_channelNameFont, Brushes.Black, (float) (x + 0x10), (float) (height + num2));
+						e.Graphics.DrawString(channel.Name, m_channelNameFont, Brushes.Black, (float) (x + 0x2c), (float) (height + num2));
+						height += m_gridRowHeight;
 					}
 				}
 				else
 				{
-					for (num5 = this.vScrollBar1.Value; (num5 >= 0) && (num5 < this.m_sequence.ChannelCount); num5++)
+					for (num5 = vScrollBar1.Value; (num5 >= 0) && (num5 < m_sequence.ChannelCount); num5++)
 					{
-						num3 = this.m_channelOrderMapping[num5];
-						channel = this.m_sequence.Channels[num3];
+						num3 = m_channelOrderMapping[num5];
+						channel = m_sequence.Channels[num3];
 						brush.Color = Color.FromArgb(0xc0, Color.Gray);
-						e.Graphics.FillRectangle(channel.Brush, 0, height, this.pictureBoxChannels.Width, this.m_gridRowHeight);
-						e.Graphics.FillRectangle(brush, 10, height + 1, 40, this.m_gridRowHeight - 2);
-						if (this.toolStripComboBoxRowZoom.SelectedIndex > 4)
+						e.Graphics.FillRectangle(channel.Brush, 0, height, pictureBoxChannels.Width, m_gridRowHeight);
+						e.Graphics.FillRectangle(brush, 10, height + 1, 40, m_gridRowHeight - 2);
+						if (toolStripComboBoxRowZoom.SelectedIndex > 4)
 						{
-							e.Graphics.DrawRectangle(Pens.Black, 10, height + 1, 40, this.m_gridRowHeight - 2);
+							e.Graphics.DrawRectangle(Pens.Black, 10, height + 1, 40, m_gridRowHeight - 2);
 						}
-						e.Graphics.DrawImage(this.m_arrowBitmap, 12, height + num7, width, width);
+						e.Graphics.DrawImage(m_arrowBitmap, 12, height + num7, width, width);
 						num8 = channel.OutputChannel + 1;
-						e.Graphics.DrawString(num8.ToString(), this.m_channelNameFont, Brushes.Black, 26f, (float) (height + num2));
-						e.Graphics.DrawString(channel.Name, this.m_channelNameFont, Brushes.Black, 54f, (float) (height + num2));
-						height += this.m_gridRowHeight;
+						e.Graphics.DrawString(num8.ToString(), m_channelNameFont, Brushes.Black, 26f, (float) (height + num2));
+						e.Graphics.DrawString(channel.Name, m_channelNameFont, Brushes.Black, 54f, (float) (height + num2));
+						height += m_gridRowHeight;
 					}
 				}
 				brush.Dispose();
 			}
-			e.Graphics.FillRectangle(Brushes.White, 0, 0, 5, this.pictureBoxChannels.Height);
-			if (this.m_mouseChannelCaret != -1)
+			e.Graphics.FillRectangle(Brushes.White, 0, 0, 5, pictureBoxChannels.Height);
+			if (m_mouseChannelCaret != -1)
 			{
-				e.Graphics.FillRectangle(this.m_channelCaretBrush, 0, ((this.m_mouseChannelCaret - this.vScrollBar1.Value) * this.m_gridRowHeight) + this.pictureBoxTime.Height, 5, this.m_gridRowHeight);
+				e.Graphics.FillRectangle(m_channelCaretBrush, 0, ((m_mouseChannelCaret - vScrollBar1.Value) * m_gridRowHeight) + pictureBoxTime.Height, 5, m_gridRowHeight);
 			}
 		}
 
@@ -2056,16 +2056,16 @@ namespace VixenEditor
 
 		private void pictureBoxChannels_Resize(object sender, EventArgs e)
 		{
-			this.pictureBoxChannels.Refresh();
+			pictureBoxChannels.Refresh();
 		}
 
 		private void pictureBoxGrid_DoubleClick(object sender, EventArgs e)
 		{
-			if (this.m_currentlyEditingChannel != null)
+			if (m_currentlyEditingChannel != null)
 			{
-				this.AddUndoItem(this.m_normalizedRange, UndoOriginalBehavior.Overwrite);
-				this.m_sequence.EventValues[this.m_editingChannelSortedIndex, this.m_normalizedRange.X] = (this.m_sequence.EventValues[this.m_editingChannelSortedIndex, this.m_normalizedRange.X] > this.m_sequence.MinimumLevel) ? this.m_sequence.MinimumLevel : this.m_drawingLevel;
-				this.UpdateGrid(this.m_gridGraphics, new Rectangle((this.m_normalizedRange.X - this.hScrollBar1.Value) * this.m_periodPixelWidth, (this.m_editingChannelSortedIndex - this.vScrollBar1.Value) * this.m_gridRowHeight, this.m_periodPixelWidth, this.m_gridRowHeight));
+				AddUndoItem(m_normalizedRange, UndoOriginalBehavior.Overwrite);
+				m_sequence.EventValues[m_editingChannelSortedIndex, m_normalizedRange.X] = (m_sequence.EventValues[m_editingChannelSortedIndex, m_normalizedRange.X] > m_sequence.MinimumLevel) ? m_sequence.MinimumLevel : m_drawingLevel;
+				UpdateGrid(m_gridGraphics, new Rectangle((m_normalizedRange.X - hScrollBar1.Value) * m_periodPixelWidth, (m_editingChannelSortedIndex - vScrollBar1.Value) * m_gridRowHeight, m_periodPixelWidth, m_gridRowHeight));
 			}
 		}
 
@@ -2073,88 +2073,88 @@ namespace VixenEditor
 		{
 			if (e.Button == MouseButtons.Left)
 			{
-				this.m_mouseDownInGrid = true;
+				m_mouseDownInGrid = true;
                 lblFollowMouse.Visible = true;
-				this.m_mouseDownAtInGrid.X = (e.X / this.m_periodPixelWidth) + this.hScrollBar1.Value;
-				this.m_mouseDownAtInGrid.Y = (e.Y / this.m_gridRowHeight) + this.vScrollBar1.Value;
-				if (this.m_normalizedRange.Width != 0)
+				m_mouseDownAtInGrid.X = (e.X / m_periodPixelWidth) + hScrollBar1.Value;
+				m_mouseDownAtInGrid.Y = (e.Y / m_gridRowHeight) + vScrollBar1.Value;
+				if (m_normalizedRange.Width != 0)
 				{
-					this.EraseSelectedRange();
+					EraseSelectedRange();
 				}
 				if ((Control.ModifierKeys & Keys.Control) != Keys.None)
 				{
-					this.m_selectedLineIndex = (e.Y / this.m_gridRowHeight) + this.vScrollBar1.Value;
-					this.m_editingChannelSortedIndex = this.m_channelOrderMapping[this.m_selectedLineIndex];
-					this.m_currentlyEditingChannel = this.m_sequence.Channels[this.m_editingChannelSortedIndex];
-					this.m_lineRect.X = this.m_mouseDownAtInGrid.X;
-					this.m_lineRect.Y = this.m_mouseDownAtInGrid.Y;
-					this.m_lineRect.Width = 0;
-					this.m_lineRect.Height = 0;
-					this.InvalidateRect(this.m_lineRect);
+					m_selectedLineIndex = (e.Y / m_gridRowHeight) + vScrollBar1.Value;
+					m_editingChannelSortedIndex = m_channelOrderMapping[m_selectedLineIndex];
+					m_currentlyEditingChannel = m_sequence.Channels[m_editingChannelSortedIndex];
+					m_lineRect.X = m_mouseDownAtInGrid.X;
+					m_lineRect.Y = m_mouseDownAtInGrid.Y;
+					m_lineRect.Width = 0;
+					m_lineRect.Height = 0;
+					InvalidateRect(m_lineRect);
 				}
 				else if ((Control.ModifierKeys & Keys.Shift) != Keys.None)
 				{
 					Rectangle rect = new Rectangle();
-					rect.X = this.m_normalizedRange.X;
-					rect.Y = this.m_normalizedRange.Y;
-					rect.Width = ((this.hScrollBar1.Value + ((int) Math.Floor((double) (((float) e.X) / ((float) this.m_periodPixelWidth))))) - this.m_normalizedRange.Left) + 1;
+					rect.X = m_normalizedRange.X;
+					rect.Y = m_normalizedRange.Y;
+					rect.Width = ((hScrollBar1.Value + ((int) Math.Floor((double) (((float) e.X) / ((float) m_periodPixelWidth))))) - m_normalizedRange.Left) + 1;
 					if (rect.Width < 0)
 					{
 						rect.Width--;
 					}
-					rect.Height = ((this.vScrollBar1.Value + (e.Y / this.m_gridRowHeight)) - this.m_normalizedRange.Top) + 1;
+					rect.Height = ((vScrollBar1.Value + (e.Y / m_gridRowHeight)) - m_normalizedRange.Top) + 1;
 					if (rect.Height < 0)
 					{
 						rect.Height--;
 					}
-					if (rect.Bottom > this.m_sequence.ChannelCount)
+					if (rect.Bottom > m_sequence.ChannelCount)
 					{
-						rect.Height = this.m_sequence.ChannelCount - rect.Y;
+						rect.Height = m_sequence.ChannelCount - rect.Y;
 					}
-					if (rect.Right > this.m_sequence.TotalEventPeriods)
+					if (rect.Right > m_sequence.TotalEventPeriods)
 					{
-						rect.Width = this.m_sequence.TotalEventPeriods - rect.X;
+						rect.Width = m_sequence.TotalEventPeriods - rect.X;
 					}
-					this.m_normalizedRange = this.NormalizeRect(rect);
-					this.DrawSelectedRange();
+					m_normalizedRange = NormalizeRect(rect);
+					DrawSelectedRange();
 				}
-				else if ((((e.Y / this.m_gridRowHeight) + this.vScrollBar1.Value) < this.m_sequence.ChannelCount) && (((e.X / this.m_periodPixelWidth) + this.hScrollBar1.Value) < this.m_sequence.TotalEventPeriods))
+				else if ((((e.Y / m_gridRowHeight) + vScrollBar1.Value) < m_sequence.ChannelCount) && (((e.X / m_periodPixelWidth) + hScrollBar1.Value) < m_sequence.TotalEventPeriods))
 				{
-					this.m_selectedLineIndex = (e.Y / this.m_gridRowHeight) + this.vScrollBar1.Value;
-					this.m_editingChannelSortedIndex = this.m_channelOrderMapping[this.m_selectedLineIndex];
-					this.m_currentlyEditingChannel = this.m_sequence.Channels[this.m_editingChannelSortedIndex];
-					this.m_selectedRange.X = this.hScrollBar1.Value + ((int) Math.Floor((double) (((float) e.X) / ((float) this.m_periodPixelWidth))));
-					this.m_selectedRange.Y = this.m_selectedLineIndex;
-					this.m_selectedRange.Width = 1;
-					this.m_selectedRange.Height = 1;
-					this.m_normalizedRange = this.m_selectedRange;
-					this.DrawSelectedRange();
+					m_selectedLineIndex = (e.Y / m_gridRowHeight) + vScrollBar1.Value;
+					m_editingChannelSortedIndex = m_channelOrderMapping[m_selectedLineIndex];
+					m_currentlyEditingChannel = m_sequence.Channels[m_editingChannelSortedIndex];
+					m_selectedRange.X = hScrollBar1.Value + ((int) Math.Floor((double) (((float) e.X) / ((float) m_periodPixelWidth))));
+					m_selectedRange.Y = m_selectedLineIndex;
+					m_selectedRange.Width = 1;
+					m_selectedRange.Height = 1;
+					m_normalizedRange = m_selectedRange;
+					DrawSelectedRange();
 				}
 				else
 				{
-					this.m_currentlyEditingChannel = null;
-					this.m_editingChannelSortedIndex = -1;
-					this.m_selectedLineIndex = -1;
+					m_currentlyEditingChannel = null;
+					m_editingChannelSortedIndex = -1;
+					m_selectedLineIndex = -1;
 				}
-				this.UpdatePositionLabel(this.m_normalizedRange, false);
+				UpdatePositionLabel(m_normalizedRange, false);
                 UpdateFollowMouse(new Point(m_mouseDownAtInGrid.X,m_mouseDownAtInGrid.Y));
 			}
 		}
 
 		private void pictureBoxGrid_MouseLeave(object sender, EventArgs e)
 		{
-			this.toolStripLabelCellIntensity.Text = string.Empty;
-			this.toolStripLabelCurrentCell.Text = string.Empty;
+			toolStripLabelCellIntensity.Text = string.Empty;
+			toolStripLabelCurrentCell.Text = string.Empty;
 		}
 
 		private void pictureBoxGrid_MouseMove(object sender, MouseEventArgs e)
 		{
 			int num8;
 			Rectangle rectangle;
-			int cellX = e.X / this.m_periodPixelWidth;
-			int cellY = e.Y / this.m_gridRowHeight;
-			this.toolStripLabelCellIntensity.Text = string.Empty;
-			this.toolStripLabelCurrentCell.Text = string.Empty;
+			int cellX = e.X / m_periodPixelWidth;
+			int cellY = e.Y / m_gridRowHeight;
+			toolStripLabelCellIntensity.Text = string.Empty;
+			toolStripLabelCurrentCell.Text = string.Empty;
 			if (cellX < 0)
 			{
 				cellX = 0;
@@ -2163,24 +2163,24 @@ namespace VixenEditor
 			{
 				cellY = 0;
 			}
-			cellX += this.hScrollBar1.Value;
-			cellY += this.vScrollBar1.Value;
-			if (cellX >= this.m_sequence.TotalEventPeriods)
+			cellX += hScrollBar1.Value;
+			cellY += vScrollBar1.Value;
+			if (cellX >= m_sequence.TotalEventPeriods)
 			{
-				cellX = this.m_sequence.TotalEventPeriods - 1;
+				cellX = m_sequence.TotalEventPeriods - 1;
 			}
-			if (cellY >= this.m_sequence.ChannelCount)
+			if (cellY >= m_sequence.ChannelCount)
 			{
-				cellY = this.m_sequence.ChannelCount - 1;
+				cellY = m_sequence.ChannelCount - 1;
 			}
-			if ((e.Button != MouseButtons.Left) || !this.m_mouseDownInGrid)
+			if ((e.Button != MouseButtons.Left) || !m_mouseDownInGrid)
 			{
 				goto Label_0733;
 			}
-			if (this.m_lineRect.Left == -1)
+			if (m_lineRect.Left == -1)
 			{
 				int num7 = 0;
-				if (e.X > this.pictureBoxGrid.Width)
+				if (e.X > pictureBoxGrid.Width)
 				{
 					num7 |= 0x10;
 				}
@@ -2188,7 +2188,7 @@ namespace VixenEditor
 				{
 					num7 |= 0x1000;
 				}
-				if (e.Y > this.pictureBoxGrid.Height)
+				if (e.Y > pictureBoxGrid.Height)
 				{
 					num7 |= 1;
 				}
@@ -2199,73 +2199,73 @@ namespace VixenEditor
 				switch (num7)
 				{
 					case 0x100:
-						this.ScrollSelectionUp(cellX, cellY);
+						ScrollSelectionUp(cellX, cellY);
 						goto Label_0715;
 
 					case 0x1000:
-						this.ScrollSelectionLeft(cellX, cellY);
+						ScrollSelectionLeft(cellX, cellY);
 						goto Label_0715;
 
 					case 0x1100:
-						this.ScrollSelectionLeft(cellX, cellY);
-						this.ScrollSelectionUp(cellX, cellY);
+						ScrollSelectionLeft(cellX, cellY);
+						ScrollSelectionUp(cellX, cellY);
 						goto Label_0715;
 
 					case 0:
-						this.EraseSelectedRange();
-						if (cellX >= this.m_mouseDownAtInGrid.X)
+						EraseSelectedRange();
+						if (cellX >= m_mouseDownAtInGrid.X)
 						{
-							if (cellX > this.m_mouseDownAtInGrid.X)
+							if (cellX > m_mouseDownAtInGrid.X)
 							{
-								this.m_selectedRange.Width = (cellX - this.m_selectedRange.Left) + 1;
+								m_selectedRange.Width = (cellX - m_selectedRange.Left) + 1;
 							}
 							else
 							{
-								this.m_selectedRange.Width = 1;
+								m_selectedRange.Width = 1;
 							}
 						}
 						else
 						{
-							this.m_selectedRange.Width = cellX - this.m_selectedRange.Left;
+							m_selectedRange.Width = cellX - m_selectedRange.Left;
 						}
-						if (cellY < this.m_mouseDownAtInGrid.Y)
+						if (cellY < m_mouseDownAtInGrid.Y)
 						{
-							this.m_selectedRange.Height = cellY - this.m_selectedRange.Top;
+							m_selectedRange.Height = cellY - m_selectedRange.Top;
 						}
-						else if (cellY > this.m_mouseDownAtInGrid.Y)
+						else if (cellY > m_mouseDownAtInGrid.Y)
 						{
-							this.m_selectedRange.Height = (cellY - this.m_selectedRange.Top) + 1;
+							m_selectedRange.Height = (cellY - m_selectedRange.Top) + 1;
 						}
 						else
 						{
-							this.m_selectedRange.Height = 1;
+							m_selectedRange.Height = 1;
 						}
-						this.m_normalizedRange = this.NormalizeRect(this.m_selectedRange);
-						this.DrawSelectedRange();
+						m_normalizedRange = NormalizeRect(m_selectedRange);
+						DrawSelectedRange();
 						goto Label_0715;
 
 					case 1:
-						this.ScrollSelectionDown(cellX, cellY);
+						ScrollSelectionDown(cellX, cellY);
 						goto Label_0715;
 
 					case 0x10:
-						this.ScrollSelectionRight(cellX, cellY);
+						ScrollSelectionRight(cellX, cellY);
 						goto Label_0715;
 
 					case 0x11:
-						this.ScrollSelectionRight(cellX, cellY);
-						this.ScrollSelectionDown(cellX, cellY);
+						ScrollSelectionRight(cellX, cellY);
+						ScrollSelectionDown(cellX, cellY);
 						goto Label_0715;
 				}
 				goto Label_0715;
 			}
-			this.EraseRectangleEntity(this.m_lineRect);
+			EraseRectangleEntity(m_lineRect);
 			if ((Control.ModifierKeys & Keys.Shift) != Keys.None)
 			{
 				int num5;
 				int num6;
-				int num3 = cellX - this.m_mouseDownAtInGrid.X;
-				int num4 = cellY - this.m_mouseDownAtInGrid.Y;
+				int num3 = cellX - m_mouseDownAtInGrid.X;
+				int num4 = cellY - m_mouseDownAtInGrid.Y;
 				if (num3 >= 0)
 				{
 					if (num4 >= 0)
@@ -2334,264 +2334,264 @@ namespace VixenEditor
 				switch (num5)
 				{
 					case 1:
-						this.m_lineRect.Width = -num6;
-						this.m_lineRect.Height = -num6;
+						m_lineRect.Width = -num6;
+						m_lineRect.Height = -num6;
 						goto Label_0473;
 
 					case 2:
-						this.m_lineRect.Width = 0;
-						this.m_lineRect.Height = num4;
+						m_lineRect.Width = 0;
+						m_lineRect.Height = num4;
 						goto Label_0473;
 
 					case 3:
-						this.m_lineRect.Width = num6;
-						this.m_lineRect.Height = -num6;
+						m_lineRect.Width = num6;
+						m_lineRect.Height = -num6;
 						goto Label_0473;
 
 					case 4:
-						this.m_lineRect.Width = num3;
-						this.m_lineRect.Height = 0;
+						m_lineRect.Width = num3;
+						m_lineRect.Height = 0;
 						goto Label_0473;
 
 					case 5:
-						this.m_lineRect.Width = num6;
-						this.m_lineRect.Height = num6;
+						m_lineRect.Width = num6;
+						m_lineRect.Height = num6;
 						goto Label_0473;
 
 					case 6:
-						this.m_lineRect.Width = 0;
-						this.m_lineRect.Height = num4;
+						m_lineRect.Width = 0;
+						m_lineRect.Height = num4;
 						goto Label_0473;
 
 					case 7:
-						this.m_lineRect.Width = -num6;
-						this.m_lineRect.Height = num6;
+						m_lineRect.Width = -num6;
+						m_lineRect.Height = num6;
 						goto Label_0473;
 
 					case 8:
-						this.m_lineRect.Width = num3;
-						this.m_lineRect.Height = 0;
+						m_lineRect.Width = num3;
+						m_lineRect.Height = 0;
 						goto Label_0473;
 				}
 			}
 			else
 			{
-				if (cellX < this.m_mouseDownAtInGrid.X)
+				if (cellX < m_mouseDownAtInGrid.X)
 				{
-					this.m_lineRect.Width = cellX - this.m_lineRect.Left;
+					m_lineRect.Width = cellX - m_lineRect.Left;
 				}
-				else if (cellX > this.m_mouseDownAtInGrid.X)
+				else if (cellX > m_mouseDownAtInGrid.X)
 				{
-					this.m_lineRect.Width = cellX - this.m_lineRect.Left;
-				}
-				else
-				{
-					this.m_lineRect.Width = 0;
-				}
-				if (cellY < this.m_mouseDownAtInGrid.Y)
-				{
-					this.m_lineRect.Height = cellY - this.m_lineRect.Top;
-				}
-				else if (cellY > this.m_mouseDownAtInGrid.Y)
-				{
-					this.m_lineRect.Height = cellY - this.m_lineRect.Top;
+					m_lineRect.Width = cellX - m_lineRect.Left;
 				}
 				else
 				{
-					this.m_lineRect.Height = 0;
+					m_lineRect.Width = 0;
+				}
+				if (cellY < m_mouseDownAtInGrid.Y)
+				{
+					m_lineRect.Height = cellY - m_lineRect.Top;
+				}
+				else if (cellY > m_mouseDownAtInGrid.Y)
+				{
+					m_lineRect.Height = cellY - m_lineRect.Top;
+				}
+				else
+				{
+					m_lineRect.Height = 0;
 				}
 			}
 		Label_0473:
-			this.InvalidateRect(this.m_lineRect);
-			this.UpdatePositionLabel(this.NormalizeRect(new Rectangle(this.m_lineRect.X, this.m_lineRect.Y, this.m_lineRect.Width + 1, this.m_lineRect.Height)), true);
+			InvalidateRect(m_lineRect);
+			UpdatePositionLabel(NormalizeRect(new Rectangle(m_lineRect.X, m_lineRect.Y, m_lineRect.Width + 1, m_lineRect.Height)), true);
             //UpdateFollowMouse(e.Location);
 			goto Label_0733;
 		Label_0715:
-			this.m_lastCellX = cellX;
-			this.m_lastCellY = cellY;
-			this.UpdatePositionLabel(this.m_normalizedRange, false);
+			m_lastCellX = cellX;
+			m_lastCellY = cellY;
+			UpdatePositionLabel(m_normalizedRange, false);
             //UpdateFollowMouse(e.Location);
 		Label_0733:
 			num8 = 0;
 			int num9 = 0;
 			int y = 0;
 			int num11 = 0;
-			if ((cellX != this.m_mouseTimeCaret) || (cellY != this.m_mouseChannelCaret))
+			if ((cellX != m_mouseTimeCaret) || (cellY != m_mouseChannelCaret))
 			{
-				num8 = (Math.Min(cellX, this.m_mouseTimeCaret) - this.hScrollBar1.Value) * this.m_periodPixelWidth;
-				num9 = ((Math.Max(cellX, this.m_mouseTimeCaret) - this.hScrollBar1.Value) + 1) * this.m_periodPixelWidth;
-				y = (Math.Min(cellY, this.m_mouseChannelCaret) - this.vScrollBar1.Value) * this.m_gridRowHeight;
-				num11 = ((Math.Max(cellY, this.m_mouseChannelCaret) - this.vScrollBar1.Value) + 1) * this.m_gridRowHeight;
+				num8 = (Math.Min(cellX, m_mouseTimeCaret) - hScrollBar1.Value) * m_periodPixelWidth;
+				num9 = ((Math.Max(cellX, m_mouseTimeCaret) - hScrollBar1.Value) + 1) * m_periodPixelWidth;
+				y = (Math.Min(cellY, m_mouseChannelCaret) - vScrollBar1.Value) * m_gridRowHeight;
+				num11 = ((Math.Max(cellY, m_mouseChannelCaret) - vScrollBar1.Value) + 1) * m_gridRowHeight;
 			}
-			if (cellY != this.m_mouseChannelCaret)
+			if (cellY != m_mouseChannelCaret)
 			{
-				rectangle = new Rectangle(0, this.pictureBoxTime.Height + (this.m_gridRowHeight * (this.m_mouseChannelCaret - this.vScrollBar1.Value)), 5, this.m_gridRowHeight);
-				this.m_mouseChannelCaret = -1;
-				this.pictureBoxChannels.Invalidate(rectangle);
-				this.pictureBoxChannels.Update();
-				if (cellY < this.m_sequence.ChannelCount)
+				rectangle = new Rectangle(0, pictureBoxTime.Height + (m_gridRowHeight * (m_mouseChannelCaret - vScrollBar1.Value)), 5, m_gridRowHeight);
+				m_mouseChannelCaret = -1;
+				pictureBoxChannels.Invalidate(rectangle);
+				pictureBoxChannels.Update();
+				if (cellY < m_sequence.ChannelCount)
 				{
-					this.m_mouseChannelCaret = cellY;
-					rectangle.Y = this.pictureBoxTime.Height + (this.m_gridRowHeight * (this.m_mouseChannelCaret - this.vScrollBar1.Value));
-					this.pictureBoxChannels.Invalidate(rectangle);
-					this.pictureBoxChannels.Update();
+					m_mouseChannelCaret = cellY;
+					rectangle.Y = pictureBoxTime.Height + (m_gridRowHeight * (m_mouseChannelCaret - vScrollBar1.Value));
+					pictureBoxChannels.Invalidate(rectangle);
+					pictureBoxChannels.Update();
 				}
 				else
 				{
-					this.m_mouseChannelCaret = -1;
+					m_mouseChannelCaret = -1;
 				}
 			}
-			if (cellX != this.m_mouseTimeCaret)
+			if (cellX != m_mouseTimeCaret)
 			{
-				rectangle = new Rectangle(this.m_periodPixelWidth * (this.m_mouseTimeCaret - this.hScrollBar1.Value), 0, this.m_periodPixelWidth, 5);
-				this.m_mouseTimeCaret = -1;
-				this.pictureBoxTime.Invalidate(rectangle);
-				this.pictureBoxTime.Update();
-				if (cellX < this.m_sequence.TotalEventPeriods)
+				rectangle = new Rectangle(m_periodPixelWidth * (m_mouseTimeCaret - hScrollBar1.Value), 0, m_periodPixelWidth, 5);
+				m_mouseTimeCaret = -1;
+				pictureBoxTime.Invalidate(rectangle);
+				pictureBoxTime.Update();
+				if (cellX < m_sequence.TotalEventPeriods)
 				{
-					this.m_mouseTimeCaret = cellX;
-					rectangle.X = this.m_periodPixelWidth * (this.m_mouseTimeCaret - this.hScrollBar1.Value);
-					this.pictureBoxTime.Invalidate(rectangle);
-					this.pictureBoxTime.Update();
+					m_mouseTimeCaret = cellX;
+					rectangle.X = m_periodPixelWidth * (m_mouseTimeCaret - hScrollBar1.Value);
+					pictureBoxTime.Invalidate(rectangle);
+					pictureBoxTime.Update();
 				}
 				else
 				{
-					this.m_mouseTimeCaret = -1;
+					m_mouseTimeCaret = -1;
 				}
 			}
 			if (num8 != num9)
 			{
-				this.pictureBoxGrid.Invalidate(new Rectangle(num8, 0, num9 - num8, this.pictureBoxGrid.Height));
-				this.pictureBoxGrid.Update();
-				this.pictureBoxGrid.Invalidate(new Rectangle(0, y, this.pictureBoxGrid.Width, num11 - y));
-				this.pictureBoxGrid.Update();
+				pictureBoxGrid.Invalidate(new Rectangle(num8, 0, num9 - num8, pictureBoxGrid.Height));
+				pictureBoxGrid.Update();
+				pictureBoxGrid.Invalidate(new Rectangle(0, y, pictureBoxGrid.Width, num11 - y));
+				pictureBoxGrid.Update();
 			}
 			if ((cellX >= 0) && (cellY >= 0))
 			{
 				string str;
-				this.GetCellIntensity(cellX, cellY, out str);
-				this.toolStripLabelCellIntensity.Text = str;
-				this.toolStripLabelCurrentCell.Text = string.Format("{0} , {1}", this.TimeString(cellX * this.m_sequence.EventPeriod), this.m_sequence.Channels[this.m_channelOrderMapping[cellY]].Name);
+				GetCellIntensity(cellX, cellY, out str);
+				toolStripLabelCellIntensity.Text = str;
+				toolStripLabelCurrentCell.Text = string.Format("{0} , {1}", TimeString(cellX * m_sequence.EventPeriod), m_sequence.Channels[m_channelOrderMapping[cellY]].Name);
 			}
             UpdateFollowMouse(new Point(e.X,e.Y/*e.X + hScrollBar1.Size.Height , e.Y + vScrollBar1.Size.Width*/));
 		}
 
 		private void pictureBoxGrid_MouseUp(object sender, MouseEventArgs e)
 		{
-			this.m_mouseDownInGrid = false;
+			m_mouseDownInGrid = false;
             lblFollowMouse.Visible = false;
-			if (this.m_lineRect.Left != -1)
+			if (m_lineRect.Left != -1)
 			{
-				bool flag = this.paintFromClipboardToolStripMenuItem.Checked && (this.m_systemInterface.Clipboard != null);
+				bool flag = paintFromClipboardToolStripMenuItem.Checked && (m_systemInterface.Clipboard != null);
 				if (flag)
 				{
-					Rectangle rect = this.NormalizeRect(this.m_lineRect);
-					rect.Width += this.m_systemInterface.Clipboard.GetLength(1);
-					this.EraseRectangleEntity(rect);
+					Rectangle rect = NormalizeRect(m_lineRect);
+					rect.Width += m_systemInterface.Clipboard.GetLength(1);
+					EraseRectangleEntity(rect);
 					rect.Width++;
 					rect.Height++;
-					this.AddUndoItem(rect, UndoOriginalBehavior.Overwrite);
+					AddUndoItem(rect, UndoOriginalBehavior.Overwrite);
 				}
 				else
 				{
-					this.EraseRectangleEntity(this.m_lineRect);
-					Rectangle blockAffected = this.NormalizeRect(this.m_lineRect);
+					EraseRectangleEntity(m_lineRect);
+					Rectangle blockAffected = NormalizeRect(m_lineRect);
 					blockAffected.Width++;
 					blockAffected.Height++;
-					this.AddUndoItem(blockAffected, UndoOriginalBehavior.Overwrite);
+					AddUndoItem(blockAffected, UndoOriginalBehavior.Overwrite);
 				}
 				if (!flag)
 				{
-					this.BresenhamValues(this.m_lineRect);
+					BresenhamValues(m_lineRect);
 				}
 				else
 				{
-					byte[] brush = new byte[this.m_systemInterface.Clipboard.GetLength(1)];
+					byte[] brush = new byte[m_systemInterface.Clipboard.GetLength(1)];
 					for (int i = 0; i < brush.Length; i++)
 					{
-						brush[i] = this.m_systemInterface.Clipboard[0, i];
+						brush[i] = m_systemInterface.Clipboard[0, i];
 					}
-					this.BresenhamPaint(this.m_lineRect, brush);
+					BresenhamPaint(m_lineRect, brush);
 				}
-				this.m_lineRect.X = -1;
-				this.UpdatePositionLabel(this.m_normalizedRange, false);
+				m_lineRect.X = -1;
+				UpdatePositionLabel(m_normalizedRange, false);
                 //UpdateFollowMouse(e.Location);
 			}
 		}
 
 		private void pictureBoxGrid_Paint(object sender, PaintEventArgs e)
 		{
-			e.Graphics.FillRectangle(this.m_gridBackBrush, e.ClipRectangle);
-			if (this.m_sequence.ChannelCount != 0)
+			e.Graphics.FillRectangle(m_gridBackBrush, e.ClipRectangle);
+			if (m_sequence.ChannelCount != 0)
 			{
 				int num2 = 0;
 				int num3 = 0;
 				Point point = new Point();
 				Point point2 = new Point();
-				int num = e.ClipRectangle.Left / this.m_periodPixelWidth;
+				int num = e.ClipRectangle.Left / m_periodPixelWidth;
 				point.Y = e.ClipRectangle.Top;
-				point2.Y = Math.Min(e.ClipRectangle.Bottom, (this.m_sequence.ChannelCount - this.vScrollBar1.Value) * this.m_gridRowHeight);
-				int num4 = Math.Min(e.ClipRectangle.Right, (this.m_sequence.TotalEventPeriods - this.hScrollBar1.Value) * this.m_periodPixelWidth);
+				point2.Y = Math.Min(e.ClipRectangle.Bottom, (m_sequence.ChannelCount - vScrollBar1.Value) * m_gridRowHeight);
+				int num4 = Math.Min(e.ClipRectangle.Right, (m_sequence.TotalEventPeriods - hScrollBar1.Value) * m_periodPixelWidth);
 				num2 = 0;
 				while (num2 < num4)
 				{
-					num2 = this.m_periodPixelWidth * num;
+					num2 = m_periodPixelWidth * num;
 					point.X = num2;
 					point2.X = num2;
 					e.Graphics.DrawLine(Pens.Gray, point, point2);
 					num++;
 				}
-				num = e.ClipRectangle.Top / this.m_gridRowHeight;
+				num = e.ClipRectangle.Top / m_gridRowHeight;
 				point.X = e.ClipRectangle.Left;
-				point2.X = Math.Min(e.ClipRectangle.Right, (this.m_sequence.TotalEventPeriods - this.hScrollBar1.Value) * this.m_periodPixelWidth);
-				num4 = Math.Min(e.ClipRectangle.Bottom, (this.m_sequence.ChannelCount - this.vScrollBar1.Value) * this.m_gridRowHeight);
+				point2.X = Math.Min(e.ClipRectangle.Right, (m_sequence.TotalEventPeriods - hScrollBar1.Value) * m_periodPixelWidth);
+				num4 = Math.Min(e.ClipRectangle.Bottom, (m_sequence.ChannelCount - vScrollBar1.Value) * m_gridRowHeight);
 				num3 = 0;
 				while (num3 < num4)
 				{
-					num3 = this.m_gridRowHeight * num;
+					num3 = m_gridRowHeight * num;
 					point.Y = num3;
 					point2.Y = num3;
 					e.Graphics.DrawLine(Pens.Gray, point, point2);
 					num++;
 				}
-				this.UpdateGrid(e.Graphics, e.ClipRectangle);
-				if (this.m_positionTimer.Enabled)
+				UpdateGrid(e.Graphics, e.ClipRectangle);
+				if (m_positionTimer.Enabled)
 				{
-					num3 = Math.Min(e.ClipRectangle.Bottom, (this.m_sequence.ChannelCount - this.vScrollBar1.Value) * this.m_gridRowHeight);
-					if ((this.m_previousPosition != -1) && (this.m_previousPosition >= this.hScrollBar1.Value))
+					num3 = Math.Min(e.ClipRectangle.Bottom, (m_sequence.ChannelCount - vScrollBar1.Value) * m_gridRowHeight);
+					if ((m_previousPosition != -1) && (m_previousPosition >= hScrollBar1.Value))
 					{
-						num2 = (this.m_previousPosition - this.hScrollBar1.Value) * this.m_periodPixelWidth;
+						num2 = (m_previousPosition - hScrollBar1.Value) * m_periodPixelWidth;
 						e.Graphics.DrawLine(Pens.Gray, num2, 0, num2, num3);
 					}
-					num2 = (this.m_position - this.hScrollBar1.Value) * this.m_periodPixelWidth;
+					num2 = (m_position - hScrollBar1.Value) * m_periodPixelWidth;
 					e.Graphics.DrawLine(Pens.Yellow, num2, 0, num2, num3);
 				}
 				else
 				{
-					if (this.m_lineRect.Left != -1)
+					if (m_lineRect.Left != -1)
 					{
-						int num7 = ((this.m_lineRect.Left - this.hScrollBar1.Value) * this.m_periodPixelWidth) + (this.m_periodPixelWidth >> 1);
-						int num8 = ((this.m_lineRect.Top - this.vScrollBar1.Value) * this.m_gridRowHeight) + (this.m_gridRowHeight >> 1);
-						int num9 = num7 + (this.m_lineRect.Width * this.m_periodPixelWidth);
-						int num10 = num8 + (this.m_lineRect.Height * this.m_gridRowHeight);
+						int num7 = ((m_lineRect.Left - hScrollBar1.Value) * m_periodPixelWidth) + (m_periodPixelWidth >> 1);
+						int num8 = ((m_lineRect.Top - vScrollBar1.Value) * m_gridRowHeight) + (m_gridRowHeight >> 1);
+						int num9 = num7 + (m_lineRect.Width * m_periodPixelWidth);
+						int num10 = num8 + (m_lineRect.Height * m_gridRowHeight);
 						e.Graphics.DrawLine(Pens.Blue, num7, num8, num9, num10);
 					}
 					else
 					{
-						if (this.m_normalizedRange.Left > this.m_sequence.TotalEventPeriods)
+						if (m_normalizedRange.Left > m_sequence.TotalEventPeriods)
 						{
-							this.m_normalizedRange.Width = 0;
+							m_normalizedRange.Width = 0;
 						}
-						Rectangle range = Rectangle.Intersect(this.m_normalizedRange, Rectangle.FromLTRB(this.hScrollBar1.Value, this.vScrollBar1.Value, (this.hScrollBar1.Value + this.m_visibleEventPeriods) + 1, (this.vScrollBar1.Value + this.m_visibleRowCount) + 1));
+						Rectangle range = Rectangle.Intersect(m_normalizedRange, Rectangle.FromLTRB(hScrollBar1.Value, vScrollBar1.Value, (hScrollBar1.Value + m_visibleEventPeriods) + 1, (vScrollBar1.Value + m_visibleRowCount) + 1));
 						if (!range.IsEmpty)
 						{
-							e.Graphics.FillRectangle(this.m_selectionBrush, this.RangeToRectangle(range));
+							e.Graphics.FillRectangle(m_selectionBrush, RangeToRectangle(range));
 						}
 					}
-					if (this.toolStripButtonToggleCrossHairs.Checked)
+					if (toolStripButtonToggleCrossHairs.Checked)
 					{
-						int num11 = ((this.m_mouseTimeCaret - this.hScrollBar1.Value) * this.m_periodPixelWidth) + ((int) (this.m_periodPixelWidth * 0.5f));
-						int num12 = ((this.m_mouseChannelCaret - this.vScrollBar1.Value) * this.m_gridRowHeight) + ((int) (this.m_gridRowHeight * 0.5f));
+						int num11 = ((m_mouseTimeCaret - hScrollBar1.Value) * m_periodPixelWidth) + ((int) (m_periodPixelWidth * 0.5f));
+						int num12 = ((m_mouseChannelCaret - vScrollBar1.Value) * m_gridRowHeight) + ((int) (m_gridRowHeight * 0.5f));
 						if (((num11 > e.ClipRectangle.Left) && (num11 < e.ClipRectangle.Right)) || ((num12 > e.ClipRectangle.Top) && (num12 < e.ClipRectangle.Bottom)))
 						{
 							e.Graphics.DrawLine(Pens.Yellow, num11, 0, num11, base.Height);
@@ -2604,11 +2604,11 @@ namespace VixenEditor
 
 		private void pictureBoxGrid_Resize(object sender, EventArgs e)
 		{
-			if (!this.m_initializing)
+			if (!m_initializing)
 			{
-				this.VScrollCheck();
-				this.HScrollCheck();
-				this.pictureBoxGrid.Refresh();
+				VScrollCheck();
+				HScrollCheck();
+				pictureBoxGrid.Refresh();
 			}
 		}
 
@@ -2616,15 +2616,15 @@ namespace VixenEditor
 		{
 			int x;
 			int num2;
-			e.Graphics.FillRectangle(this.m_timeBackBrush, e.ClipRectangle);
+			e.Graphics.FillRectangle(m_timeBackBrush, e.ClipRectangle);
 			Point point = new Point();
 			Point point2 = new Point();
-			point.Y = this.pictureBoxTime.Height - 20;
-			point2.Y = this.pictureBoxTime.Height - 5;
+			point.Y = pictureBoxTime.Height - 20;
+			point2.Y = pictureBoxTime.Height - 5;
 			if ((e.ClipRectangle.Bottom >= point.Y) || (e.ClipRectangle.Top <= point2.Y))
 			{
-				num2 = x = e.ClipRectangle.X / this.m_periodPixelWidth;
-				for (x *= this.m_periodPixelWidth; (x < e.ClipRectangle.Right) && ((num2 + this.hScrollBar1.Value) <= this.m_sequence.TotalEventPeriods); x += this.m_periodPixelWidth)
+				num2 = x = e.ClipRectangle.X / m_periodPixelWidth;
+				for (x *= m_periodPixelWidth; (x < e.ClipRectangle.Right) && ((num2 + hScrollBar1.Value) <= m_sequence.TotalEventPeriods); x += m_periodPixelWidth)
 				{
 					if (num2 != 0)
 					{
@@ -2635,14 +2635,14 @@ namespace VixenEditor
 					num2++;
 				}
 			}
-			point.Y = this.pictureBoxTime.Height - 30;
+			point.Y = pictureBoxTime.Height - 30;
 			if ((e.ClipRectangle.Bottom >= point.Y) || (e.ClipRectangle.Top <= point2.Y))
 			{
 				x = e.ClipRectangle.X;
-				float eventPeriod = this.m_sequence.EventPeriod;
-				float num4 = (this.hScrollBar1.Value + (((float) e.ClipRectangle.Left) / ((float) this.m_periodPixelWidth))) * eventPeriod;
-				int num5 = Math.Min((int) ((this.hScrollBar1.Value + (e.ClipRectangle.Right / this.m_periodPixelWidth)) * eventPeriod), this.m_sequence.Time);
-				float num6 = 1000f / ((float) this.m_sequence.EventPeriod);
+				float eventPeriod = m_sequence.EventPeriod;
+				float num4 = (hScrollBar1.Value + (((float) e.ClipRectangle.Left) / ((float) m_periodPixelWidth))) * eventPeriod;
+				int num5 = Math.Min((int) ((hScrollBar1.Value + (e.ClipRectangle.Right / m_periodPixelWidth)) * eventPeriod), m_sequence.Time);
+				float num6 = 1000f / ((float) m_sequence.EventPeriod);
 				if (!((num4 % 1000f) == 0f))
 				{
 					num2 = (((int) num4) / 0x3e8) * 0x3e8;
@@ -2656,7 +2656,7 @@ namespace VixenEditor
 					if (num2 != 0)
 					{
 						string str;
-						x = e.ClipRectangle.Left + ((int) (((num2 - num4) / 1000f) * (this.m_periodPixelWidth * num6)));
+						x = e.ClipRectangle.Left + ((int) (((num2 - num4) / 1000f) * (m_periodPixelWidth * num6)));
 						point.X = x;
 						point2.X = x;
 						e.Graphics.DrawLine(Pens.Black, point, point2);
@@ -2671,36 +2671,36 @@ namespace VixenEditor
 						{
 							str = string.Format(":{0:d2}", num2 / 0x3e8);
 						}
-						SizeF ef = e.Graphics.MeasureString(str, this.m_timeFont);
-						e.Graphics.DrawString(str, this.m_timeFont, Brushes.Black, (float) (x - (ef.Width / 2f)), (float) ((point.Y - ef.Height) - 5f));
+						SizeF ef = e.Graphics.MeasureString(str, m_timeFont);
+						e.Graphics.DrawString(str, m_timeFont, Brushes.Black, (float) (x - (ef.Width / 2f)), (float) ((point.Y - ef.Height) - 5f));
 					}
 					num2 += 0x3e8;
 				}
 			}
-			point.Y = this.pictureBoxTime.Height - 0x23;
-			point2.Y = this.pictureBoxTime.Height - 20;
-			if (((e.ClipRectangle.Bottom >= point.Y) || (e.ClipRectangle.Top <= point2.Y)) && (this.m_showPositionMarker && (this.m_position != -1)))
+			point.Y = pictureBoxTime.Height - 0x23;
+			point2.Y = pictureBoxTime.Height - 20;
+			if (((e.ClipRectangle.Bottom >= point.Y) || (e.ClipRectangle.Top <= point2.Y)) && (m_showPositionMarker && (m_position != -1)))
 			{
-				x = this.m_periodPixelWidth * (this.m_position - this.hScrollBar1.Value);
-				if (x < this.pictureBoxTime.Width)
+				x = m_periodPixelWidth * (m_position - hScrollBar1.Value);
+				if (x < pictureBoxTime.Width)
 				{
 					point.X = x;
 					point2.X = x;
 					e.Graphics.DrawLine(Pens.Red, point, point2);
 				}
 			}
-			if (this.m_mouseTimeCaret != -1)
+			if (m_mouseTimeCaret != -1)
 			{
-				e.Graphics.FillRectangle(this.m_channelCaretBrush, (this.m_mouseTimeCaret - this.hScrollBar1.Value) * this.m_periodPixelWidth, 0, this.m_periodPixelWidth, 5);
+				e.Graphics.FillRectangle(m_channelCaretBrush, (m_mouseTimeCaret - hScrollBar1.Value) * m_periodPixelWidth, 0, m_periodPixelWidth, 5);
 			}
-			if (this.toolStripButtonWaveform.Checked)
+			if (toolStripButtonWaveform.Checked)
 			{
-				int index = this.hScrollBar1.Value * this.m_periodPixelWidth;
-				int num9 = Math.Min(index + ((this.m_visibleEventPeriods + 1) * this.m_periodPixelWidth), this.m_waveformPixelData.Length);
+				int index = hScrollBar1.Value * m_periodPixelWidth;
+				int num9 = Math.Min(index + ((m_visibleEventPeriods + 1) * m_periodPixelWidth), m_waveformPixelData.Length);
 				int num7 = 0;
 				while (index < num9)
 				{
-					e.Graphics.DrawLine(Pens.Blue, (float) num7, (float) (this.m_waveformOffset - (this.m_waveformPixelData[index] >> 0x10)), (float) num7, (float) (this.m_waveformOffset - ((short) (this.m_waveformPixelData[index] & 0xffff))));
+					e.Graphics.DrawLine(Pens.Blue, (float) num7, (float) (m_waveformOffset - (m_waveformPixelData[index] >> 0x10)), (float) num7, (float) (m_waveformOffset - ((short) (m_waveformPixelData[index] & 0xffff))));
 					num7++;
 					index++;
 				}
@@ -2709,8 +2709,8 @@ namespace VixenEditor
 
 		private void PlaceSparkle(byte[,] valueArray, int row, int startCol, int decayTime, byte minIntensity, byte maxIntensity)
 		{
-			int num = (int) (Math.Round((double) (1000f / ((float) this.m_sequence.EventPeriod)), MidpointRounding.AwayFromZero) * 0.1);
-			int num2 = (int) Math.Round((double) (((float) decayTime) / ((float) this.m_sequence.EventPeriod)), MidpointRounding.AwayFromZero);
+			int num = (int) (Math.Round((double) (1000f / ((float) m_sequence.EventPeriod)), MidpointRounding.AwayFromZero) * 0.1);
+			int num2 = (int) Math.Round((double) (((float) decayTime) / ((float) m_sequence.EventPeriod)), MidpointRounding.AwayFromZero);
 			if ((startCol + num) >= valueArray.GetLength(1))
 			{
 				num = valueArray.GetLength(1) - startCol;
@@ -2744,24 +2744,24 @@ namespace VixenEditor
 
 		private void playAtTheSelectedPointToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.playAtTheSelectedPointToolStripMenuItem.Checked = true;
-			this.playOnlyTheSelectedRangeToolStripMenuItem.Checked = false;
-			this.tsbPlayFrom.ToolTipText = "Play this sequence starting at the selection point (F6)";
+			playAtTheSelectedPointToolStripMenuItem.Checked = true;
+			playOnlyTheSelectedRangeToolStripMenuItem.Checked = false;
+			tsbPlayFrom.ToolTipText = "Play this sequence starting at the selection point (F6)";
 		}
 
 		private void playOnlyTheSelectedRangeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.playOnlyTheSelectedRangeToolStripMenuItem.Checked = true;
-			this.playAtTheSelectedPointToolStripMenuItem.Checked = false;
-			this.tsbPlayFrom.ToolTipText = "Play the selected range of this sequence (F6)";
+			playOnlyTheSelectedRangeToolStripMenuItem.Checked = true;
+			playAtTheSelectedPointToolStripMenuItem.Checked = false;
+			tsbPlayFrom.ToolTipText = "Play the selected range of this sequence (F6)";
 		}
 
 		private void plugInItem_CheckedChanged(object sender, EventArgs e)
 		{
 			ToolStripMenuItem item = (ToolStripMenuItem) sender;
-			this.m_sequence.PlugInData.GetPlugInData((string) item.Tag).Attributes["enabled"].Value = item.Checked.ToString();
+			m_sequence.PlugInData.GetPlugInData((string) item.Tag).Attributes["enabled"].Value = item.Checked.ToString();
 			bool flag = false;
-			foreach (ToolStripItem item2 in this.toolStripDropDownButtonPlugins.DropDownItems)
+			foreach (ToolStripItem item2 in toolStripDropDownButtonPlugins.DropDownItems)
 			{
 				if (item2 is ToolStripMenuItem)
 				{
@@ -2780,11 +2780,11 @@ namespace VixenEditor
 			float top = e.MarginBounds.Top;
 			float height = e.Graphics.MeasureString("Mg", font4).Height;
 			SolidBrush brush = new SolidBrush(Color.FromArgb(0xe8, 0xe8, 0xe8));
-			List<OutputPlugin> list = new List<OutputPlugin>(this.m_sequence.PlugInData.GetOutputPlugins());
+			List<OutputPlugin> list = new List<OutputPlugin>(m_sequence.PlugInData.GetOutputPlugins());
 			List<string> list2 = new List<string>();
-			if (this.m_printingChannelIndex == 0)
+			if (m_printingChannelIndex == 0)
 			{
-				e.Graphics.DrawString(this.m_sequence.Name, font, Brushes.Black, (float) e.MarginBounds.Left, top);
+				e.Graphics.DrawString(m_sequence.Name, font, Brushes.Black, (float) e.MarginBounds.Left, top);
 				top += e.Graphics.MeasureString("Mg", font).Height;
 				e.Graphics.DrawString(DateTime.Today.ToShortDateString(), font2, Brushes.Black, (float) e.MarginBounds.Left, top);
 				top += e.Graphics.MeasureString("Mg", font2).Height;
@@ -2800,14 +2800,14 @@ namespace VixenEditor
 				e.Graphics.DrawString("Controller", font3, Brushes.Black, (float) (e.MarginBounds.Left + 350), top);
 				top += 30f;
 			}
-			while ((this.m_printingChannelIndex < this.m_sequence.ChannelCount) && ((top + height) < e.MarginBounds.Bottom))
+			while ((m_printingChannelIndex < m_sequence.ChannelCount) && ((top + height) < e.MarginBounds.Bottom))
 			{
-				if ((this.m_printingChannelIndex % 2) == 1)
+				if ((m_printingChannelIndex % 2) == 1)
 				{
 					e.Graphics.FillRectangle(brush, (float) e.MarginBounds.Left, top - 1f, (float) e.MarginBounds.Width, height);
 				}
-				int num3 = this.m_printingChannelList[this.m_printingChannelIndex].OutputChannel + 1;
-				e.Graphics.DrawString(this.m_printingChannelList[this.m_printingChannelIndex].Name, font4, Brushes.Black, (float) (e.MarginBounds.Left + 10), top);
+				int num3 = m_printingChannelList[m_printingChannelIndex].OutputChannel + 1;
+				e.Graphics.DrawString(m_printingChannelList[m_printingChannelIndex].Name, font4, Brushes.Black, (float) (e.MarginBounds.Left + 10), top);
 				e.Graphics.DrawString(num3.ToString(), font4, Brushes.Black, (float) (e.MarginBounds.Left + 0x113), top);
 				list2.Clear();
 				foreach (OutputPlugin plugin in list)
@@ -2818,7 +2818,7 @@ namespace VixenEditor
 					}
 				}
 				e.Graphics.DrawString(string.Join(", ", list2.ToArray()), font4, Brushes.Black, (float) (e.MarginBounds.Left + 350), top);
-				this.m_printingChannelIndex++;
+				m_printingChannelIndex++;
 				top += height;
 			}
 			brush.Dispose();
@@ -2826,102 +2826,102 @@ namespace VixenEditor
 			font2.Dispose();
 			font3.Dispose();
 			font4.Dispose();
-			e.HasMorePages = this.m_printingChannelIndex < this.m_sequence.ChannelCount;
+			e.HasMorePages = m_printingChannelIndex < m_sequence.ChannelCount;
 		}
 
 		private void ProgramEnded()
 		{
-			this.m_positionTimer.Stop();
-			this.SetEditingState(true);
-			this.pictureBoxGrid.Refresh();
+			m_positionTimer.Stop();
+			SetEditingState(true);
+			pictureBoxGrid.Refresh();
 		}
 
 		private void quarterSpeedToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.SetAudioSpeed(0.25f);
+			SetAudioSpeed(0.25f);
 		}
 
 		private void Ramp(int startingLevel, int endingLevel)
 		{
-			this.AddUndoItem(this.m_normalizedRange, UndoOriginalBehavior.Overwrite);
-			int bottom = this.m_normalizedRange.Bottom;
-			int right = this.m_normalizedRange.Right;
-			int left = this.m_normalizedRange.Left;
-			for (int i = this.m_normalizedRange.Top; i < bottom; i++)
+			AddUndoItem(m_normalizedRange, UndoOriginalBehavior.Overwrite);
+			int bottom = m_normalizedRange.Bottom;
+			int right = m_normalizedRange.Right;
+			int left = m_normalizedRange.Left;
+			for (int i = m_normalizedRange.Top; i < bottom; i++)
 			{
-				int num6 = this.m_channelOrderMapping[i];
-				if (this.m_sequence.Channels[num6].Enabled)
+				int num6 = m_channelOrderMapping[i];
+				if (m_sequence.Channels[num6].Enabled)
 				{
 					for (int j = left; j < right; j++)
 					{
 						byte minimumLevel = (byte) (((((float) (j - left)) / ((float) ((right - left) - 1))) * (endingLevel - startingLevel)) + startingLevel);
-						if (minimumLevel < this.m_sequence.MinimumLevel)
+						if (minimumLevel < m_sequence.MinimumLevel)
 						{
-							minimumLevel = this.m_sequence.MinimumLevel;
+							minimumLevel = m_sequence.MinimumLevel;
 						}
-						else if (minimumLevel > this.m_sequence.MaximumLevel)
+						else if (minimumLevel > m_sequence.MaximumLevel)
 						{
-							minimumLevel = this.m_sequence.MaximumLevel;
+							minimumLevel = m_sequence.MaximumLevel;
 						}
-						this.m_sequence.EventValues[num6, j] = minimumLevel;
+						m_sequence.EventValues[num6, j] = minimumLevel;
 					}
 				}
 			}
-			this.m_selectionRectangle.Width = 0;
-			this.pictureBoxGrid.Invalidate(this.SelectionToRectangle());
+			m_selectionRectangle.Width = 0;
+			pictureBoxGrid.Invalidate(SelectionToRectangle());
 		}
 
 		private Rectangle RangeToRectangle(Rectangle range)
 		{
 			Rectangle rectangle = new Rectangle();
-			rectangle.X = ((range.X - this.hScrollBar1.Value) * this.m_periodPixelWidth) + 1;
-			rectangle.Y = ((range.Y - this.vScrollBar1.Value) * this.m_gridRowHeight) + 1;
-			rectangle.Width = (range.Width * this.m_periodPixelWidth) - 1;
-			rectangle.Height = (range.Height * this.m_gridRowHeight) - 1;
+			rectangle.X = ((range.X - hScrollBar1.Value) * m_periodPixelWidth) + 1;
+			rectangle.Y = ((range.Y - vScrollBar1.Value) * m_gridRowHeight) + 1;
+			rectangle.Width = (range.Width * m_periodPixelWidth) - 1;
+			rectangle.Height = (range.Height * m_gridRowHeight) - 1;
 			return rectangle;
 		}
 
 		private void ReactEditingStateToProfileAssignment()
 		{
-			bool flag = this.m_sequence.Profile != null;
-			this.textBoxChannelCount.ReadOnly = flag;
-			this.toolStripDropDownButtonPlugins.Enabled = !flag;
-			this.toolStripButtonSaveOrder.Enabled = !flag;
-			this.toolStripButtonChannelOutputMask.Enabled = !flag;
+			bool flag = m_sequence.Profile != null;
+			textBoxChannelCount.ReadOnly = flag;
+			toolStripDropDownButtonPlugins.Enabled = !flag;
+			toolStripButtonSaveOrder.Enabled = !flag;
+			toolStripButtonChannelOutputMask.Enabled = !flag;
 		}
 
 		private void ReactToProfileAssignment()
 		{
 			//TODO: This is always false for a reason right now
-			//bool flag = this.m_sequence.Profile != null;
+			//bool flag = m_sequence.Profile != null;
 			var flag = false;
-			this.flattenProfileIntoSequenceToolStripMenuItem.Enabled = flag;
-			this.detachSequenceFromItsProfileToolStripMenuItem.Enabled = flag;
-			this.channelOutputMaskToolStripMenuItem.Enabled = !flag;
-			this.ReactEditingStateToProfileAssignment();
-			this.SetOrderArraySize(this.m_sequence.ChannelCount);
-			this.textBoxChannelCount.Text = this.m_sequence.ChannelCount.ToString();
-			this.VScrollCheck();
-			this.pictureBoxChannels.Refresh();
-			this.pictureBoxGrid.Refresh();
-			this.LoadSequenceSorts();
-			this.LoadSequencePlugins();
+			flattenProfileIntoSequenceToolStripMenuItem.Enabled = flag;
+			detachSequenceFromItsProfileToolStripMenuItem.Enabled = flag;
+			channelOutputMaskToolStripMenuItem.Enabled = !flag;
+			ReactEditingStateToProfileAssignment();
+			SetOrderArraySize(m_sequence.ChannelCount);
+			textBoxChannelCount.Text = m_sequence.ChannelCount.ToString();
+			VScrollCheck();
+			pictureBoxChannels.Refresh();
+			pictureBoxGrid.Refresh();
+			LoadSequenceSorts();
+			LoadSequencePlugins();
 		}
 
 		private void ReadFromSequence()
 		{
-			this.Text = this.m_sequence.Name;
-			this.SetProgramTime(this.m_sequence.Time);
-			this.ReactToProfileAssignment();
-			this.pictureBoxChannels.Refresh();
-			this.VScrollCheck();
+			Text = m_sequence.Name;
+			SetProgramTime(m_sequence.Time);
+			ReactToProfileAssignment();
+			pictureBoxChannels.Refresh();
+			VScrollCheck();
 		}
 
 		private void Redo()
 		{
-			if (this.m_redoStack.Count != 0)
+			if (m_redoStack.Count != 0)
 			{
-				UndoItem item = (UndoItem) this.m_redoStack.Pop();
+				UndoItem item = (UndoItem) m_redoStack.Pop();
 				int height = 0;
 				int width = 0;
 				if (item.Data != null)
@@ -2929,67 +2929,67 @@ namespace VixenEditor
 					height = item.Data.GetLength(0);
 					width = item.Data.GetLength(1);
 				}
-				this.toolStripButtonRedo.Enabled = this.redoToolStripMenuItem.Enabled = this.m_redoStack.Count > 0;
+				toolStripButtonRedo.Enabled = redoToolStripMenuItem.Enabled = m_redoStack.Count > 0;
 				base.IsDirty = true;
-				UndoItem item2 = new UndoItem(item.Location, this.GetAffectedBlockData(new Rectangle(item.Location.X, item.Location.Y, item.Data.GetLength(1), item.Data.GetLength(0))), item.Behavior, this.m_sequence, this.m_channelOrderMapping);
+				UndoItem item2 = new UndoItem(item.Location, GetAffectedBlockData(new Rectangle(item.Location.X, item.Location.Y, item.Data.GetLength(1), item.Data.GetLength(0))), item.Behavior, m_sequence, m_channelOrderMapping);
 				switch (item.Behavior)
 				{
 					case UndoOriginalBehavior.Overwrite:
-						this.DisjointedOverwrite(item.Location.X, item.Location.Y, item.Data, item.ReferencedChannels);
-						this.pictureBoxGrid.Invalidate(new Rectangle((item.Location.X - this.hScrollBar1.Value) * this.m_periodPixelWidth, (item.Location.Y - this.vScrollBar1.Value) * this.m_gridRowHeight, width * this.m_periodPixelWidth, height * this.m_gridRowHeight));
+						DisjointedOverwrite(item.Location.X, item.Location.Y, item.Data, item.ReferencedChannels);
+						pictureBoxGrid.Invalidate(new Rectangle((item.Location.X - hScrollBar1.Value) * m_periodPixelWidth, (item.Location.Y - vScrollBar1.Value) * m_gridRowHeight, width * m_periodPixelWidth, height * m_gridRowHeight));
 						break;
 
 					case UndoOriginalBehavior.Removal:
-						this.DisjointedRemove(item.Location.X, item.Location.Y, width, height, item.ReferencedChannels);
-						this.pictureBoxGrid.Refresh();
+						DisjointedRemove(item.Location.X, item.Location.Y, width, height, item.ReferencedChannels);
+						pictureBoxGrid.Refresh();
 						break;
 
 					case UndoOriginalBehavior.Insertion:
-						this.DisjointedInsert(item.Location.X, item.Location.Y, width, height, item.ReferencedChannels);
-						this.DisjointedOverwrite(item.Location.X, item.Location.Y, item.Data, item.ReferencedChannels);
-						this.pictureBoxGrid.Refresh();
+						DisjointedInsert(item.Location.X, item.Location.Y, width, height, item.ReferencedChannels);
+						DisjointedOverwrite(item.Location.X, item.Location.Y, item.Data, item.ReferencedChannels);
+						pictureBoxGrid.Refresh();
 						break;
 				}
-				this.UpdateRedoText();
-				this.m_undoStack.Push(item2);
-				this.toolStripButtonUndo.Enabled = this.undoToolStripMenuItem.Enabled = true;
-				this.UpdateUndoText();
+				UpdateRedoText();
+				m_undoStack.Push(item2);
+				toolStripButtonUndo.Enabled = undoToolStripMenuItem.Enabled = true;
+				UpdateUndoText();
 			}
 		}
 
 		private void RefreshAll()
 		{
-			this.SetOrderArraySize(this.m_sequence.ChannelCount);
-			this.textBoxChannelCount.Text = this.m_sequence.ChannelCount.ToString();
-			this.textBoxProgramLength.Text = this.TimeString(this.m_sequence.Time);
-			this.pictureBoxGrid.Refresh();
-			this.pictureBoxChannels.Refresh();
-			this.pictureBoxTime.Refresh();
-			this.VScrollCheck();
-			this.HScrollCheck();
+			SetOrderArraySize(m_sequence.ChannelCount);
+			textBoxChannelCount.Text = m_sequence.ChannelCount.ToString();
+			textBoxProgramLength.Text = TimeString(m_sequence.Time);
+			pictureBoxGrid.Refresh();
+			pictureBoxChannels.Refresh();
+			pictureBoxTime.Refresh();
+			VScrollCheck();
+			HScrollCheck();
 		}
 
 		private void ReorderChannelOutputs()
 		{
-			if (this.m_sequence.Profile != null)
+			if (m_sequence.Profile != null)
 			{
 				MessageBox.Show("This sequence is attached to a profile.\nChanges made to the profile's channel outputs will be reflected here.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 			}
 			else
 			{
-				ChannelOrderDialog dialog = new ChannelOrderDialog(this.m_sequence.OutputChannels, null);
+				ChannelOrderDialog dialog = new ChannelOrderDialog(m_sequence.OutputChannels, null);
 				dialog.Text = "Channel Output Mapping";
 				if (dialog.ShowDialog() == DialogResult.OK)
 				{
 					List<VixenPlus.Channel> channelMapping = dialog.ChannelMapping;
-					foreach (VixenPlus.Channel channel in this.m_sequence.Channels)
+					foreach (VixenPlus.Channel channel in m_sequence.Channels)
 					{
 						channel.OutputChannel = channelMapping.IndexOf(channel);
 					}
-					if (this.m_showingOutputs)
+					if (m_showingOutputs)
 					{
-						this.pictureBoxChannels.Refresh();
-						this.pictureBoxGrid.Refresh();
+						pictureBoxChannels.Refresh();
+						pictureBoxGrid.Refresh();
 					}
 					base.IsDirty = true;
 				}
@@ -2999,19 +2999,19 @@ namespace VixenEditor
 
 		private void reorderChannelOutputsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.ReorderChannelOutputs();
+			ReorderChannelOutputs();
 		}
 
 		private void Reset()
 		{
-			this.hScrollBar1.Value = this.hScrollBar1.Minimum;
-			this.toolStripLabelExecutionPoint.Text = "00:00";
+			hScrollBar1.Value = hScrollBar1.Minimum;
+			toolStripLabelExecutionPoint.Text = "00:00";
 		}
 
 		private void resetAllToolbarsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			VixenEditor.ToolStripManager.LoadSettings(this, this.m_preferences.XmlDoc.DocumentElement, "reset");
-			foreach (ToolStripItem item in this.toolbarsToolStripMenuItem.DropDownItems)
+			VixenEditor.ToolStripManager.LoadSettings(this, m_preferences.XmlDoc.DocumentElement, "reset");
+			foreach (ToolStripItem item in toolbarsToolStripMenuItem.DropDownItems)
 			{
 				if ((item is ToolStripMenuItem) && (item.Tag != null))
 				{
@@ -3022,7 +3022,7 @@ namespace VixenEditor
 
 		public override DialogResult RunWizard(ref EventSequence resultSequence)
 		{
-			NewSequenceWizardDialog dialog = new NewSequenceWizardDialog(this.m_systemInterface.UserPreferences);
+			NewSequenceWizardDialog dialog = new NewSequenceWizardDialog(m_systemInterface.UserPreferences);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
 				resultSequence = dialog.Sequence;
@@ -3054,7 +3054,7 @@ namespace VixenEditor
 			if (result != DialogResult.Cancel)
 			{
 				StreamWriter writer = new StreamWriter(path);
-				byte[,] buffer = this.CellsToArray();
+				byte[,] buffer = CellsToArray();
 				for (int i = 0; i < buffer.GetLength(0); i++)
 				{
 					for (int j = 0; j < buffer.GetLength(1); j++)
@@ -3070,113 +3070,113 @@ namespace VixenEditor
 
 		public override void SaveTo(string filePath)
 		{
-			this.m_sequence.SaveTo(filePath);
+			m_sequence.SaveTo(filePath);
 			base.IsDirty = false;
 		}
 
 		private void saveToolbarPositionsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			VixenEditor.ToolStripManager.SaveSettings(this, this.m_preferences.XmlDoc.DocumentElement);
-			this.m_preferences.Flush();
+			VixenEditor.ToolStripManager.SaveSettings(this, m_preferences.XmlDoc.DocumentElement);
+			m_preferences.Flush();
 			MessageBox.Show("Done.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 		}
 
 		private void scaleToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.ArithmeticPaste(ArithmeticOperation.Scale);
+			ArithmeticPaste(ArithmeticOperation.Scale);
 		}
 
 		private void ScrollSelectionDown(int cellX, int cellY)
 		{
-			int num = this.pictureBoxGrid.PointToScreen(new Point(this.pictureBoxGrid.Left, this.pictureBoxGrid.Bottom)).Y - this.pictureBoxTime.Height;
-			this.m_selectedRange.Width = (cellX + 1) - this.m_selectedRange.Left;
+			int num = pictureBoxGrid.PointToScreen(new Point(pictureBoxGrid.Left, pictureBoxGrid.Bottom)).Y - pictureBoxTime.Height;
+			m_selectedRange.Width = (cellX + 1) - m_selectedRange.Left;
 			while (Control.MousePosition.Y > num)
 			{
-				cellY = this.pictureBoxGrid.PointToClient(Control.MousePosition).Y / this.m_periodPixelWidth;
-				cellY += this.vScrollBar1.Value;
-				if (cellY >= (this.m_sequence.ChannelCount - 1))
+				cellY = pictureBoxGrid.PointToClient(Control.MousePosition).Y / m_periodPixelWidth;
+				cellY += vScrollBar1.Value;
+				if (cellY >= (m_sequence.ChannelCount - 1))
 				{
-					this.m_normalizedRange.Height = this.m_selectedRange.Height = this.m_sequence.ChannelCount - this.m_selectedRange.Y;
-					if (cellX != this.m_lastCellX)
+					m_normalizedRange.Height = m_selectedRange.Height = m_sequence.ChannelCount - m_selectedRange.Y;
+					if (cellX != m_lastCellX)
 					{
-						this.pictureBoxGrid.Refresh();
+						pictureBoxGrid.Refresh();
 					}
 				}
-				if (this.vScrollBar1.Value > (this.vScrollBar1.Maximum - this.vScrollBar1.LargeChange))
+				if (vScrollBar1.Value > (vScrollBar1.Maximum - vScrollBar1.LargeChange))
 				{
 					break;
 				}
-				if (this.vScrollBar1.Value < (this.vScrollBar1.Maximum - this.vScrollBar1.LargeChange))
+				if (vScrollBar1.Value < (vScrollBar1.Maximum - vScrollBar1.LargeChange))
 				{
-					this.m_selectedRange.Height++;
-					this.m_normalizedRange.Height++;
+					m_selectedRange.Height++;
+					m_normalizedRange.Height++;
 				}
-				this.vScrollBar1.Value++;
+				vScrollBar1.Value++;
 			}
 		}
 
 		private void ScrollSelectionLeft(int cellX, int cellY)
 		{
-			int x = this.pictureBoxGrid.PointToScreen(new Point(this.pictureBoxGrid.Left, this.pictureBoxGrid.Top)).X;
-			while ((Control.MousePosition.X < x) && (this.hScrollBar1.Value != 0))
+			int x = pictureBoxGrid.PointToScreen(new Point(pictureBoxGrid.Left, pictureBoxGrid.Top)).X;
+			while ((Control.MousePosition.X < x) && (hScrollBar1.Value != 0))
 			{
-				this.m_selectedRange.Height = (cellY + 1) - this.m_selectedRange.Top;
-				this.m_selectedRange.Width--;
-				this.m_normalizedRange = this.NormalizeRect(this.m_selectedRange);
-				this.hScrollBar1.Value--;
+				m_selectedRange.Height = (cellY + 1) - m_selectedRange.Top;
+				m_selectedRange.Width--;
+				m_normalizedRange = NormalizeRect(m_selectedRange);
+				hScrollBar1.Value--;
 			}
 		}
 
 		private void ScrollSelectionRight(int cellX, int cellY)
 		{
-			int x = this.pictureBoxGrid.PointToScreen(new Point(this.pictureBoxGrid.Right, this.pictureBoxGrid.Top)).X;
-			this.m_selectedRange.Height = (cellY + 1) - this.m_selectedRange.Top;
+			int x = pictureBoxGrid.PointToScreen(new Point(pictureBoxGrid.Right, pictureBoxGrid.Top)).X;
+			m_selectedRange.Height = (cellY + 1) - m_selectedRange.Top;
 			while (Control.MousePosition.X > x)
 			{
-				cellX = this.pictureBoxGrid.PointToClient(Control.MousePosition).X / this.m_periodPixelWidth;
-				cellX += this.hScrollBar1.Value;
-				if (cellX >= (this.m_sequence.TotalEventPeriods - 1))
+				cellX = pictureBoxGrid.PointToClient(Control.MousePosition).X / m_periodPixelWidth;
+				cellX += hScrollBar1.Value;
+				if (cellX >= (m_sequence.TotalEventPeriods - 1))
 				{
-					this.m_normalizedRange.Width = this.m_selectedRange.Width = this.m_sequence.TotalEventPeriods - this.m_selectedRange.X;
-					if (cellY != this.m_lastCellY)
+					m_normalizedRange.Width = m_selectedRange.Width = m_sequence.TotalEventPeriods - m_selectedRange.X;
+					if (cellY != m_lastCellY)
 					{
-						this.pictureBoxGrid.Refresh();
+						pictureBoxGrid.Refresh();
 					}
 				}
-				if (this.hScrollBar1.Value > (this.hScrollBar1.Maximum - this.hScrollBar1.LargeChange))
+				if (hScrollBar1.Value > (hScrollBar1.Maximum - hScrollBar1.LargeChange))
 				{
 					break;
 				}
-				if (this.hScrollBar1.Value < (this.hScrollBar1.Maximum - this.hScrollBar1.LargeChange))
+				if (hScrollBar1.Value < (hScrollBar1.Maximum - hScrollBar1.LargeChange))
 				{
-					this.m_selectedRange.Width++;
-					this.m_normalizedRange.Width++;
+					m_selectedRange.Width++;
+					m_normalizedRange.Width++;
 				}
-				this.hScrollBar1.Value++;
+				hScrollBar1.Value++;
 			}
 		}
 
 		private void ScrollSelectionUp(int cellX, int cellY)
 		{
-			int y = this.pictureBoxGrid.PointToScreen(new Point(this.pictureBoxGrid.Left, this.pictureBoxGrid.Top)).Y;
-			while ((Control.MousePosition.Y < y) && (this.vScrollBar1.Value != 0))
+			int y = pictureBoxGrid.PointToScreen(new Point(pictureBoxGrid.Left, pictureBoxGrid.Top)).Y;
+			while ((Control.MousePosition.Y < y) && (vScrollBar1.Value != 0))
 			{
-				this.m_selectedRange.Width = (cellX + 1) - this.m_selectedRange.Left;
-				this.m_selectedRange.Height--;
-				this.m_normalizedRange = this.NormalizeRect(this.m_selectedRange);
-				this.vScrollBar1.Value--;
+				m_selectedRange.Width = (cellX + 1) - m_selectedRange.Left;
+				m_selectedRange.Height--;
+				m_normalizedRange = NormalizeRect(m_selectedRange);
+				vScrollBar1.Value--;
 			}
 		}
 
 		private bool SelectableControlFocused()
 		{
-			Control terminalSelectableControl = this.GetTerminalSelectableControl();
+			Control terminalSelectableControl = GetTerminalSelectableControl();
 			return ((terminalSelectableControl != null) && terminalSelectableControl.CanSelect);
 		}
 
 		private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			foreach (ToolStripItem item in this.toolStripDropDownButtonPlugins.DropDownItems)
+			foreach (ToolStripItem item in toolStripDropDownButtonPlugins.DropDownItems)
 			{
 				if (!(item is ToolStripMenuItem))
 				{
@@ -3184,7 +3184,7 @@ namespace VixenEditor
 				}
 				((ToolStripMenuItem) item).Checked = true;
 			}
-			if (this.toolStripDropDownButtonPlugins.DropDownItems.Count > 3)
+			if (toolStripDropDownButtonPlugins.DropDownItems.Count > 3)
 			{
 			}
 		}
@@ -3192,35 +3192,35 @@ namespace VixenEditor
 		private Rectangle SelectionToRectangle()
 		{
 			Rectangle rectangle = new Rectangle();
-			rectangle.X = ((this.m_normalizedRange.X - this.hScrollBar1.Value) * this.m_periodPixelWidth) + 1;
-			rectangle.Y = ((this.m_normalizedRange.Y - this.vScrollBar1.Value) * this.m_gridRowHeight) + 1;
-			rectangle.Width = (this.m_normalizedRange.Width * this.m_periodPixelWidth) - 1;
-			rectangle.Height = (this.m_normalizedRange.Height * this.m_gridRowHeight) - 1;
+			rectangle.X = ((m_normalizedRange.X - hScrollBar1.Value) * m_periodPixelWidth) + 1;
+			rectangle.Y = ((m_normalizedRange.Y - vScrollBar1.Value) * m_gridRowHeight) + 1;
+			rectangle.Width = (m_normalizedRange.Width * m_periodPixelWidth) - 1;
+			rectangle.Height = (m_normalizedRange.Height * m_gridRowHeight) - 1;
 			return rectangle;
 		}
 
 		private void setAllChannelColorsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (this.m_sequence.Profile != null)
+			if (m_sequence.Profile != null)
 			{
 				MessageBox.Show("This sequence is attached to a profile.\nChanges to the profile affect all sequences attached to it.\n\nIf this is what you want to do, please use the profile manager.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 			}
 			else
 			{
-				AllChannelsColorDialog dialog = new AllChannelsColorDialog(this.m_sequence.Channels);
+				AllChannelsColorDialog dialog = new AllChannelsColorDialog(m_sequence.Channels);
 				if (dialog.ShowDialog() == DialogResult.OK)
 				{
-					int channelCount = this.m_sequence.ChannelCount;
+					int channelCount = m_sequence.ChannelCount;
 					List<Color> channelColors = dialog.ChannelColors;
 					for (int i = 0; i < channelCount; i++)
 					{
-						this.m_sequence.Channels[i].Color = channelColors[i];
+						m_sequence.Channels[i].Color = channelColors[i];
 					}
 				}
 				dialog.Dispose();
 				base.IsDirty = true;
-				this.pictureBoxChannels.Refresh();
-				this.pictureBoxGrid.Refresh();
+				pictureBoxChannels.Refresh();
+				pictureBoxGrid.Refresh();
 			}
 		}
 
@@ -3228,55 +3228,55 @@ namespace VixenEditor
 		{
 			if ((rate > 0f) && (rate <= 1f))
 			{
-				this.xToolStripMenuItem.Checked = false;
-				this.xToolStripMenuItem1.Checked = false;
-				this.xToolStripMenuItem2.Checked = false;
-				this.normalToolStripMenuItem1.Checked = false;
-				this.otherToolStripMenuItem.Checked = false;
-				this.SpeedQtrTsb.Checked = false;
-				this.SpeedHalfTsb.Checked = false;
-				this.SpeedThreeQtrTsb.Checked = false;
-				this.SpeedNormalTsb.Checked = false;
-				this.SpeedVariableTsb.Checked = false;
+				xToolStripMenuItem.Checked = false;
+				xToolStripMenuItem1.Checked = false;
+				xToolStripMenuItem2.Checked = false;
+				normalToolStripMenuItem1.Checked = false;
+				otherToolStripMenuItem.Checked = false;
+				SpeedQtrTsb.Checked = false;
+				SpeedHalfTsb.Checked = false;
+				SpeedThreeQtrTsb.Checked = false;
+				SpeedNormalTsb.Checked = false;
+				SpeedVariableTsb.Checked = false;
 				if (rate == 0.25f)
 				{
-					this.xToolStripMenuItem.Checked = true;
-					this.SpeedQtrTsb.Checked = true;
+					xToolStripMenuItem.Checked = true;
+					SpeedQtrTsb.Checked = true;
 				}
 				else if (rate == 0.5f)
 				{
-					this.xToolStripMenuItem1.Checked = true;
-					this.SpeedHalfTsb.Checked = true;
+					xToolStripMenuItem1.Checked = true;
+					SpeedHalfTsb.Checked = true;
 				}
 				else if (rate == 0.75f)
 				{
-					this.xToolStripMenuItem2.Checked = true;
-					this.SpeedThreeQtrTsb.Checked = true;
+					xToolStripMenuItem2.Checked = true;
+					SpeedThreeQtrTsb.Checked = true;
 				}
 				else if (rate == 1f)
 				{
-					this.normalToolStripMenuItem1.Checked = true;
-					this.SpeedNormalTsb.Checked = true;
+					normalToolStripMenuItem1.Checked = true;
+					SpeedNormalTsb.Checked = true;
 				}
 				else
 				{
-					this.otherToolStripMenuItem.Checked = true;
-					this.SpeedVariableTsb.Checked = true;
+					otherToolStripMenuItem.Checked = true;
+					SpeedVariableTsb.Checked = true;
 				}
-				this.m_executionInterface.SetAudioSpeed(this.m_executionContextHandle, rate);
+				m_executionInterface.SetAudioSpeed(m_executionContextHandle, rate);
 			}
 		}
 
 		private void SetChannelCount(int count)
 		{
-			if (count != this.m_sequence.ChannelCount)
+			if (count != m_sequence.ChannelCount)
 			{
 				int num;
 				bool flag = false;
-				int num2 = Math.Min(this.m_sequence.ChannelCount, count);
+				int num2 = Math.Min(m_sequence.ChannelCount, count);
 				for (num = 0; num < num2; num++)
 				{
-					if (this.m_sequence.Channels[num].OutputChannel > (count - 1))
+					if (m_sequence.Channels[num].OutputChannel > (count - 1))
 					{
 						flag = true;
 						break;
@@ -3286,20 +3286,20 @@ namespace VixenEditor
 				{
 					if (MessageBox.Show("With the new channel count, some channels would refer to outputs that no longer exist.\nTo keep the sequence valid, channel outputs would have to be reset.\n\nDo you want to keep the new channel count?", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) != DialogResult.Yes)
 					{
-						this.textBoxChannelCount.Text = this.m_sequence.ChannelCount.ToString();
+						textBoxChannelCount.Text = m_sequence.ChannelCount.ToString();
 						return;
 					}
-					for (num = 0; num < this.m_sequence.ChannelCount; num++)
+					for (num = 0; num < m_sequence.ChannelCount; num++)
 					{
-						this.m_sequence.Channels[num].OutputChannel = num;
+						m_sequence.Channels[num].OutputChannel = num;
 					}
 				}
-				this.SetOrderArraySize(count);
-				this.m_sequence.ChannelCount = count;
-				this.textBoxChannelCount.Text = count.ToString();
-				this.VScrollCheck();
-				this.pictureBoxChannels.Refresh();
-				this.pictureBoxGrid.Refresh();
+				SetOrderArraySize(count);
+				m_sequence.ChannelCount = count;
+				textBoxChannelCount.Text = count.ToString();
+				VScrollCheck();
+				pictureBoxChannels.Refresh();
+				pictureBoxGrid.Refresh();
 				base.IsDirty = true;
 				MessageBox.Show("Channel count has been updated.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 			}
@@ -3307,14 +3307,14 @@ namespace VixenEditor
 
 		private void SetDrawingLevel(byte level)
 		{
-			this.m_drawingLevel = level;
-			if (this.m_actualLevels)
+			m_drawingLevel = level;
+			if (m_actualLevels)
 			{
-				this.toolStripLabelCurrentDrawingIntensity.Text = level.ToString();
+				toolStripLabelCurrentDrawingIntensity.Text = level.ToString();
 			}
 			else
 			{
-				this.toolStripLabelCurrentDrawingIntensity.Text = string.Format("{0}%", (int) Math.Round((double) ((level * 100f) / 255f), MidpointRounding.AwayFromZero));
+				toolStripLabelCurrentDrawingIntensity.Text = string.Format("{0}%", (int) Math.Round((double) ((level * 100f) / 255f), MidpointRounding.AwayFromZero));
 			}
 		}
 
@@ -3322,39 +3322,39 @@ namespace VixenEditor
 		{
 			if (state)
 			{
-				this.EnableWaveformButton();
+				EnableWaveformButton();
 			}
 			else
 			{
-				this.DisableWaveformButton();
+				DisableWaveformButton();
 			}
-			this.toolStripEditing.Enabled = state;
-			this.toolStripEffect.Enabled = state;
-			this.toolStripSequenceSettings.Enabled = state;
-			this.toolStripDropDownButtonPlugins.Enabled = state;
-			this.toolStripDisplaySettings.Enabled = state;
-			this.ReactEditingStateToProfileAssignment();
+			toolStripEditing.Enabled = state;
+			toolStripEffect.Enabled = state;
+			toolStripSequenceSettings.Enabled = state;
+			toolStripDropDownButtonPlugins.Enabled = state;
+			toolStripDisplaySettings.Enabled = state;
+			ReactEditingStateToProfileAssignment();
 		}
 
 		private void SetOrderArraySize(int count)
 		{
-			if (count < this.m_channelOrderMapping.Count)
+			if (count < m_channelOrderMapping.Count)
 			{
 				List<int> list = new List<int>();
-				list.AddRange(this.m_channelOrderMapping);
+				list.AddRange(m_channelOrderMapping);
 				foreach (int num in list)
 				{
 					if (num >= count)
 					{
-						this.m_channelOrderMapping.Remove(num);
+						m_channelOrderMapping.Remove(num);
 					}
 				}
 			}
 			else
 			{
-				for (int i = this.m_channelOrderMapping.Count; i < count; i++)
+				for (int i = m_channelOrderMapping.Count; i < count; i++)
 				{
-					this.m_channelOrderMapping.Add(i);
+					m_channelOrderMapping.Add(i);
 				}
 			}
 		}
@@ -3363,18 +3363,18 @@ namespace VixenEditor
 		{
 			if (filePath != null)
 			{
-				this.SetProfile(new Profile(this.openFileDialog1.FileName));
+				SetProfile(new Profile(openFileDialog1.FileName));
 			}
 			else
 			{
-				this.SetProfile((Profile) null);
+				SetProfile((Profile) null);
 			}
 		}
 
 		private void SetProfile(Profile profile)
 		{
-			this.m_sequence.Profile = profile;
-			this.ReactToProfileAssignment();
+			m_sequence.Profile = profile;
+			ReactToProfileAssignment();
 			base.IsDirty = true;
 		}
 
@@ -3382,18 +3382,18 @@ namespace VixenEditor
 		{
 			try
 			{
-				this.m_sequence.Time = milliseconds;
+				m_sequence.Time = milliseconds;
 			}
 			catch
 			{
 				MessageBox.Show("Cannot set the sequence length.\nThere is audio associated which would exceed that length.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-				this.textBoxProgramLength.Text = this.TimeString(this.m_sequence.Time);
+				textBoxProgramLength.Text = TimeString(m_sequence.Time);
 				return false;
 			}
-			this.textBoxProgramLength.Text = this.TimeString(this.m_sequence.Time);
-			this.HScrollCheck();
-			this.pictureBoxTime.Refresh();
-			this.pictureBoxGrid.Refresh();
+			textBoxProgramLength.Text = TimeString(m_sequence.Time);
+			HScrollCheck();
+			pictureBoxTime.Refresh();
+			pictureBoxGrid.Refresh();
 			return true;
 		}
 
@@ -3409,10 +3409,10 @@ namespace VixenEditor
 				dialog.StartPosition = FormStartPosition.Manual;
 				dialog.Location = dialogScreenCoords;
 			}
-			dialog.Rate = this.m_executionInterface.GetAudioSpeed(this.m_executionContextHandle);
+			dialog.Rate = m_executionInterface.GetAudioSpeed(m_executionContextHandle);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
-				this.SetAudioSpeed(dialog.Rate);
+				SetAudioSpeed(dialog.Rate);
 			}
 			dialog.Dispose();
 		}
@@ -3420,60 +3420,60 @@ namespace VixenEditor
 		private void ShowChannelProperties()
 		{
 			List<VixenPlus.Channel> channels = new List<VixenPlus.Channel>();
-			channels.AddRange(this.m_sequence.Channels);
+			channels.AddRange(m_sequence.Channels);
 			for (int i = 0; i < channels.Count; i++)
 			{
-				channels[i] = this.m_sequence.Channels[this.m_channelOrderMapping[i]];
+				channels[i] = m_sequence.Channels[m_channelOrderMapping[i]];
 			}
-			ChannelPropertyDialog dialog = new ChannelPropertyDialog(channels, this.SelectedChannel, true);
+			ChannelPropertyDialog dialog = new ChannelPropertyDialog(channels, SelectedChannel, true);
 			dialog.ShowDialog();
 			dialog.Dispose();
-			this.pictureBoxChannels.Refresh();
-			this.pictureBoxGrid.Refresh();
+			pictureBoxChannels.Refresh();
+			pictureBoxGrid.Refresh();
 			base.IsDirty = true;
 		}
 
 		private void sortByChannelNumberToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.m_printingChannelList = this.m_sequence.Channels;
-			if (this.printDialog.ShowDialog() == DialogResult.OK)
+			m_printingChannelList = m_sequence.Channels;
+			if (printDialog.ShowDialog() == DialogResult.OK)
 			{
-				this.printDocument.DocumentName = "Vixen channel configuration";
-				this.m_printingChannelIndex = 0;
-				this.printDocument.Print();
+				printDocument.DocumentName = "Vixen channel configuration";
+				m_printingChannelIndex = 0;
+				printDocument.Print();
 			}
 		}
 
 		private void sortByChannelOutputToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.m_printingChannelList = new List<VixenPlus.Channel>();
-			VixenPlus.Channel[] collection = new VixenPlus.Channel[this.m_sequence.ChannelCount];
-			foreach (VixenPlus.Channel channel in this.m_sequence.Channels)
+			m_printingChannelList = new List<VixenPlus.Channel>();
+			VixenPlus.Channel[] collection = new VixenPlus.Channel[m_sequence.ChannelCount];
+			foreach (VixenPlus.Channel channel in m_sequence.Channels)
 			{
 				collection[channel.OutputChannel] = channel;
 			}
-			this.m_printingChannelList.AddRange(collection);
-			if (this.printDialog.ShowDialog() == DialogResult.OK)
+			m_printingChannelList.AddRange(collection);
+			if (printDialog.ShowDialog() == DialogResult.OK)
 			{
-				this.printDocument.DocumentName = "Vixen channel configuration";
-				this.m_printingChannelIndex = 0;
-				this.printDocument.Print();
+				printDocument.DocumentName = "Vixen channel configuration";
+				m_printingChannelIndex = 0;
+				printDocument.Print();
 			}
 		}
 
 		private void SparkleGenerator(byte[,] values, params int[] effectParameters)
 		{
-			int num = 0x3e8 / this.m_sequence.EventPeriod;
+			int num = 0x3e8 / m_sequence.EventPeriod;
 			int maxValue = num - effectParameters[0];
 			int decayTime = effectParameters[1];
 			for (int i = 0; i < values.GetLength(0); i++)
 			{
 				for (int k = 0; k < values.GetLength(1); k++)
 				{
-					values[i, k] = this.m_sequence.MinimumLevel;
+					values[i, k] = m_sequence.MinimumLevel;
 				}
 			}
-			int num6 = (int) Math.Round((double) (((float) decayTime) / ((float) this.m_sequence.EventPeriod)), MidpointRounding.AwayFromZero);
+			int num6 = (int) Math.Round((double) (((float) decayTime) / ((float) m_sequence.EventPeriod)), MidpointRounding.AwayFromZero);
 			int length = values.GetLength(0);
 			int num8 = values.GetLength(1);
 			int[] numArray = new int[num8];
@@ -3489,92 +3489,92 @@ namespace VixenEditor
 			{
 				if (numArray[j] != 0)
 				{
-					this.PlaceSparkle(values, numArray[j] - 1, j, decayTime, (byte) effectParameters[2], (byte) effectParameters[3]);
+					PlaceSparkle(values, numArray[j] - 1, j, decayTime, (byte) effectParameters[2], (byte) effectParameters[3]);
 				}
 			}
 		}
 
 		private void StandardSequence_Activated(object sender, EventArgs e)
 		{
-			base.ActiveControl = this.m_lastSelectableControl;
+			base.ActiveControl = m_lastSelectableControl;
 		}
 
 		private void StandardSequence_Deactivate(object sender, EventArgs e)
 		{
-			this.m_lastSelectableControl = this.GetTerminalSelectableControl();
+			m_lastSelectableControl = GetTerminalSelectableControl();
 		}
 
 		private void StandardSequence_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			if ((e.CloseReason == CloseReason.UserClosing) && (this.CheckDirty() == DialogResult.Cancel))
+			if ((e.CloseReason == CloseReason.UserClosing) && (CheckDirty() == DialogResult.Cancel))
 			{
 				e.Cancel = true;
 			}
 			else
 			{
-				if (this.m_executionInterface.EngineStatus(this.m_executionContextHandle) != 0)
+				if (m_executionInterface.EngineStatus(m_executionContextHandle) != 0)
 				{
-					this.toolStripButtonStop_Click(null, null);
+					toolStripButtonStop_Click(null, null);
 				}
-				if (this.m_preferences.GetBoolean("SaveZoomLevels"))
+				if (m_preferences.GetBoolean("SaveZoomLevels"))
 				{
-					this.m_preferences.SetChildString("SaveZoomLevels", "row", this.toolStripComboBoxRowZoom.SelectedItem.ToString());
-					this.m_preferences.SetChildString("SaveZoomLevels", "column", this.toolStripComboBoxColumnZoom.SelectedItem.ToString());
-					this.m_preferences.Flush();
+					m_preferences.SetChildString("SaveZoomLevels", "row", toolStripComboBoxRowZoom.SelectedItem.ToString());
+					m_preferences.SetChildString("SaveZoomLevels", "column", toolStripComboBoxColumnZoom.SelectedItem.ToString());
+					m_preferences.Flush();
 				}
-				this.m_sequence.UpdateMetrics(base.Width, base.Height, this.splitContainer1.SplitterDistance);
-				this.m_executionInterface.ReleaseContext(this.m_executionContextHandle);
+				m_sequence.UpdateMetrics(base.Width, base.Height, splitContainer1.SplitterDistance);
+				m_executionInterface.ReleaseContext(m_executionContextHandle);
 			}
 		}
 
 		private void StandardSequence_KeyDown(object sender, KeyEventArgs e)
 		{
 			int num;
-			bool flag = this.m_executionInterface.EngineStatus(this.m_executionContextHandle) == 1;
-			bool flag2 = this.m_normalizedRange.Width > 0;
+			bool flag = m_executionInterface.EngineStatus(m_executionContextHandle) == 1;
+			bool flag2 = m_normalizedRange.Width > 0;
 			switch (e.KeyCode)
 			{
 				case Keys.Prior:
-					if (this.vScrollBar1.Value > 0)
+					if (vScrollBar1.Value > 0)
 					{
-						num = Math.Min(this.m_visibleRowCount, this.vScrollBar1.Value);
-						this.m_selectedRange.Y -= num;
-						this.m_normalizedRange.Y -= num;
-						this.vScrollBar1.Value -= num;
+						num = Math.Min(m_visibleRowCount, vScrollBar1.Value);
+						m_selectedRange.Y -= num;
+						m_normalizedRange.Y -= num;
+						vScrollBar1.Value -= num;
 						e.Handled = true;
 					}
 					goto Label_0355;
 
 				case Keys.Next:
-					if (this.vScrollBar1.Value < (this.m_sequence.ChannelCount - this.m_visibleRowCount))
+					if (vScrollBar1.Value < (m_sequence.ChannelCount - m_visibleRowCount))
 					{
-						int num2 = Math.Min(this.m_sequence.ChannelCount - this.vScrollBar1.Value, this.m_visibleRowCount);
-						int num3 = Math.Min(this.m_sequence.ChannelCount - this.m_normalizedRange.Bottom, this.m_visibleRowCount);
+						int num2 = Math.Min(m_sequence.ChannelCount - vScrollBar1.Value, m_visibleRowCount);
+						int num3 = Math.Min(m_sequence.ChannelCount - m_normalizedRange.Bottom, m_visibleRowCount);
 						num = Math.Min(num2, num3);
-						this.m_selectedRange.Y += num;
-						this.m_normalizedRange.Y += num;
-						this.vScrollBar1.Value += num;
+						m_selectedRange.Y += num;
+						m_normalizedRange.Y += num;
+						vScrollBar1.Value += num;
 						e.Handled = true;
 					}
 					goto Label_0355;
 
 				case Keys.End:
-					if (this.hScrollBar1.Value < (this.m_sequence.TotalEventPeriods - this.m_visibleEventPeriods))
+					if (hScrollBar1.Value < (m_sequence.TotalEventPeriods - m_visibleEventPeriods))
 					{
-						int num4 = this.m_sequence.TotalEventPeriods - this.m_visibleEventPeriods;
-						this.m_selectedRange.X = num4;
-						this.m_normalizedRange.X = num4;
-						this.hScrollBar1.Value = num4;
+						int num4 = m_sequence.TotalEventPeriods - m_visibleEventPeriods;
+						m_selectedRange.X = num4;
+						m_normalizedRange.X = num4;
+						hScrollBar1.Value = num4;
 						e.Handled = true;
 					}
 					goto Label_0355;
 
 				case Keys.Home:
-					if (this.hScrollBar1.Value > 0)
+					if (hScrollBar1.Value > 0)
 					{
-						this.m_selectedRange.X = 0;
-						this.m_normalizedRange.X = 0;
-						this.hScrollBar1.Value = 0;
+						m_selectedRange.X = 0;
+						m_normalizedRange.X = 0;
+						hScrollBar1.Value = 0;
 						e.Handled = true;
 					}
 					goto Label_0355;
@@ -3596,25 +3596,25 @@ namespace VixenEditor
 					return;
 				}
 				case Keys.F6:
-					if (this.tsbPlayFrom.Enabled)
+					if (tsbPlayFrom.Enabled)
 					{
-						this.toolStripButtonPlayPoint_Click(null, null);
+						toolStripButtonPlayPoint_Click(null, null);
 						e.Handled = true;
 					}
 					goto Label_0355;
 
 				case Keys.F7:
-					if (this.tsbPause.Enabled)
+					if (tsbPause.Enabled)
 					{
-						this.toolStripButtonPause_Click(null, null);
+						toolStripButtonPause_Click(null, null);
 						e.Handled = true;
 					}
 					goto Label_0355;
 
 				case Keys.F8:
-					if (this.tsbStop.Enabled)
+					if (tsbStop.Enabled)
 					{
-						this.toolStripButtonStop_Click(null, null);
+						toolStripButtonStop_Click(null, null);
 						e.Handled = true;
 					}
 					goto Label_0355;
@@ -3622,9 +3622,9 @@ namespace VixenEditor
 				default:
 					goto Label_0355;
 			}
-			if (this.tsbPlay.Enabled)
+			if (tsbPlay.Enabled)
 			{
-				this.toolStripButtonPlay_Click(null, null);
+				toolStripButtonPlay_Click(null, null);
 				e.Handled = true;
 			}
 		Label_0355:
@@ -3633,12 +3633,12 @@ namespace VixenEditor
 				int index = ((int) e.KeyCode) - 0x30;
 				if ((Control.ModifierKeys & Keys.Shift) != Keys.None)
 				{
-					this.m_bookmarks[index] = (this.m_bookmarks[index] == this.m_normalizedRange.Left) ? -1 : this.m_normalizedRange.Left;
-					this.pictureBoxTime.Refresh();
+					m_bookmarks[index] = (m_bookmarks[index] == m_normalizedRange.Left) ? -1 : m_normalizedRange.Left;
+					pictureBoxTime.Refresh();
 				}
-				else if (this.m_bookmarks[index] != -1)
+				else if (m_bookmarks[index] != -1)
 				{
-					this.hScrollBar1.Value = this.m_bookmarks[index];
+					hScrollBar1.Value = m_bookmarks[index];
 				}
 				return;
 			}
@@ -3652,102 +3652,102 @@ namespace VixenEditor
 				{
 					int num6;
 					int num7;
-					if ((this.SelectableControlFocused() && !this.pictureBoxChannels.Focused) && !this.pictureBoxGrid.Focused)
+					if ((SelectableControlFocused() && !pictureBoxChannels.Focused) && !pictureBoxGrid.Focused)
 					{
 						goto Label_0C71;
 					}
-					if (this.m_executionInterface.EngineStatus(this.m_executionContextHandle, out num7) != 1)
+					if (m_executionInterface.EngineStatus(m_executionContextHandle, out num7) != 1)
 					{
 						int left;
 						int num13;
-						this.AddUndoItem(this.m_normalizedRange, UndoOriginalBehavior.Overwrite);
-						int num10 = this.m_normalizedRange.Height * this.m_normalizedRange.Width;
+						AddUndoItem(m_normalizedRange, UndoOriginalBehavior.Overwrite);
+						int num10 = m_normalizedRange.Height * m_normalizedRange.Width;
 						int num11 = 0;
-						for (num13 = this.m_normalizedRange.Top; num13 < this.m_normalizedRange.Bottom; num13++)
+						for (num13 = m_normalizedRange.Top; num13 < m_normalizedRange.Bottom; num13++)
 						{
-							num6 = this.m_channelOrderMapping[num13];
-							left = this.m_normalizedRange.Left;
-							while (left < this.m_normalizedRange.Right)
+							num6 = m_channelOrderMapping[num13];
+							left = m_normalizedRange.Left;
+							while (left < m_normalizedRange.Right)
 							{
-								if (this.m_sequence.EventValues[num6, left] > this.m_sequence.MinimumLevel)
+								if (m_sequence.EventValues[num6, left] > m_sequence.MinimumLevel)
 								{
 									num11++;
 								}
 								left++;
 							}
 						}
-						byte num14 = (num11 == num10) ? this.m_sequence.MinimumLevel : this.m_drawingLevel;
-						for (num13 = this.m_normalizedRange.Top; num13 < this.m_normalizedRange.Bottom; num13++)
+						byte num14 = (num11 == num10) ? m_sequence.MinimumLevel : m_drawingLevel;
+						for (num13 = m_normalizedRange.Top; num13 < m_normalizedRange.Bottom; num13++)
 						{
-							num6 = this.m_channelOrderMapping[num13];
-							for (left = this.m_normalizedRange.Left; left < this.m_normalizedRange.Right; left++)
+							num6 = m_channelOrderMapping[num13];
+							for (left = m_normalizedRange.Left; left < m_normalizedRange.Right; left++)
 							{
-								this.m_sequence.EventValues[num6, left] = num14;
+								m_sequence.EventValues[num6, left] = num14;
 							}
 						}
-						this.pictureBoxGrid.Invalidate(new Rectangle((this.m_normalizedRange.Left - this.hScrollBar1.Value) * this.m_periodPixelWidth, (this.m_normalizedRange.Top - this.vScrollBar1.Value) * this.m_gridRowHeight, this.m_normalizedRange.Width * this.m_periodPixelWidth, this.m_normalizedRange.Height * this.m_gridRowHeight));
+						pictureBoxGrid.Invalidate(new Rectangle((m_normalizedRange.Left - hScrollBar1.Value) * m_periodPixelWidth, (m_normalizedRange.Top - vScrollBar1.Value) * m_gridRowHeight, m_normalizedRange.Width * m_periodPixelWidth, m_normalizedRange.Height * m_gridRowHeight));
 						e.Handled = true;
 						goto Label_0C71;
 					}
-					int x = num7 / this.m_sequence.EventPeriod;
-					this.AddUndoItem(new Rectangle(x, this.m_normalizedRange.Top, 1, this.m_normalizedRange.Height), UndoOriginalBehavior.Overwrite);
-					for (int i = this.m_normalizedRange.Top; i < this.m_normalizedRange.Bottom; i++)
+					int x = num7 / m_sequence.EventPeriod;
+					AddUndoItem(new Rectangle(x, m_normalizedRange.Top, 1, m_normalizedRange.Height), UndoOriginalBehavior.Overwrite);
+					for (int i = m_normalizedRange.Top; i < m_normalizedRange.Bottom; i++)
 					{
-						num6 = this.m_channelOrderMapping[i];
-						this.m_sequence.EventValues[num6, x] = this.m_drawingLevel;
+						num6 = m_channelOrderMapping[i];
+						m_sequence.EventValues[num6, x] = m_drawingLevel;
 					}
-					this.pictureBoxGrid.Invalidate(new Rectangle((x - this.hScrollBar1.Value) * this.m_periodPixelWidth, (this.m_normalizedRange.Top - this.vScrollBar1.Value) * this.m_gridRowHeight, this.m_periodPixelWidth, this.m_normalizedRange.Height * this.m_gridRowHeight));
+					pictureBoxGrid.Invalidate(new Rectangle((x - hScrollBar1.Value) * m_periodPixelWidth, (m_normalizedRange.Top - vScrollBar1.Value) * m_gridRowHeight, m_periodPixelWidth, m_normalizedRange.Height * m_gridRowHeight));
 					return;
 				}
 				case Keys.Left:
-					if (!this.pictureBoxChannels.Focused && !this.pictureBoxGrid.Focused)
+					if (!pictureBoxChannels.Focused && !pictureBoxGrid.Focused)
 					{
 						goto Label_0C71;
 					}
-					if ((this.hScrollBar1.Value > 0) || (this.m_normalizedRange.Left > 0))
+					if ((hScrollBar1.Value > 0) || (m_normalizedRange.Left > 0))
 					{
-						this.m_selectedRange.X--;
-						this.m_normalizedRange.X--;
-						if ((this.m_normalizedRange.Left + 1) <= this.hScrollBar1.Value)
+						m_selectedRange.X--;
+						m_normalizedRange.X--;
+						if ((m_normalizedRange.Left + 1) <= hScrollBar1.Value)
 						{
-							this.hScrollBar1.Value--;
+							hScrollBar1.Value--;
 							break;
 						}
-						this.pictureBoxGrid.Invalidate(new Rectangle((this.m_normalizedRange.Left - this.hScrollBar1.Value) * this.m_periodPixelWidth, (this.m_normalizedRange.Top - this.vScrollBar1.Value) * this.m_gridRowHeight, (this.m_normalizedRange.Width + 1) * this.m_periodPixelWidth, this.m_normalizedRange.Height * this.m_gridRowHeight));
+						pictureBoxGrid.Invalidate(new Rectangle((m_normalizedRange.Left - hScrollBar1.Value) * m_periodPixelWidth, (m_normalizedRange.Top - vScrollBar1.Value) * m_gridRowHeight, (m_normalizedRange.Width + 1) * m_periodPixelWidth, m_normalizedRange.Height * m_gridRowHeight));
 					}
 					break;
 
 				case Keys.Up:
-					if ((this.pictureBoxChannels.Focused || (this.pictureBoxGrid.Focused && !e.Control)) && ((this.vScrollBar1.Value > 0) || (this.m_normalizedRange.Top > 0)))
+					if ((pictureBoxChannels.Focused || (pictureBoxGrid.Focused && !e.Control)) && ((vScrollBar1.Value > 0) || (m_normalizedRange.Top > 0)))
 					{
-						this.m_selectedRange.Y--;
-						this.m_normalizedRange.Y--;
-						if ((this.m_normalizedRange.Top + 1) <= this.vScrollBar1.Value)
+						m_selectedRange.Y--;
+						m_normalizedRange.Y--;
+						if ((m_normalizedRange.Top + 1) <= vScrollBar1.Value)
 						{
-							this.vScrollBar1.Value--;
+							vScrollBar1.Value--;
 						}
 						else
 						{
-							this.pictureBoxGrid.Invalidate(new Rectangle((this.m_normalizedRange.Left - this.hScrollBar1.Value) * this.m_periodPixelWidth, (this.m_normalizedRange.Top - this.vScrollBar1.Value) * this.m_gridRowHeight, this.m_normalizedRange.Width * this.m_periodPixelWidth, (this.m_normalizedRange.Height + 1) * this.m_gridRowHeight));
+							pictureBoxGrid.Invalidate(new Rectangle((m_normalizedRange.Left - hScrollBar1.Value) * m_periodPixelWidth, (m_normalizedRange.Top - vScrollBar1.Value) * m_gridRowHeight, m_normalizedRange.Width * m_periodPixelWidth, (m_normalizedRange.Height + 1) * m_gridRowHeight));
 						}
 					}
 					e.Handled = true;
 					goto Label_0C71;
 
 				case Keys.Right:
-					if (this.pictureBoxChannels.Focused || this.pictureBoxGrid.Focused)
+					if (pictureBoxChannels.Focused || pictureBoxGrid.Focused)
 					{
-						if (this.m_normalizedRange.Right < this.m_sequence.TotalEventPeriods)
+						if (m_normalizedRange.Right < m_sequence.TotalEventPeriods)
 						{
-							this.m_selectedRange.X++;
-							this.m_normalizedRange.X++;
-							if (((this.m_normalizedRange.Right - 1) - this.hScrollBar1.Value) >= this.m_visibleEventPeriods)
+							m_selectedRange.X++;
+							m_normalizedRange.X++;
+							if (((m_normalizedRange.Right - 1) - hScrollBar1.Value) >= m_visibleEventPeriods)
 							{
-								this.hScrollBar1.Value++;
+								hScrollBar1.Value++;
 							}
 							else
 							{
-								this.pictureBoxGrid.Invalidate(new Rectangle(((this.m_normalizedRange.Left - this.hScrollBar1.Value) - 1) * this.m_periodPixelWidth, (this.m_normalizedRange.Top - this.vScrollBar1.Value) * this.m_gridRowHeight, (this.m_normalizedRange.Width + 1) * this.m_periodPixelWidth, this.m_normalizedRange.Height * this.m_gridRowHeight));
+								pictureBoxGrid.Invalidate(new Rectangle(((m_normalizedRange.Left - hScrollBar1.Value) - 1) * m_periodPixelWidth, (m_normalizedRange.Top - vScrollBar1.Value) * m_gridRowHeight, (m_normalizedRange.Width + 1) * m_periodPixelWidth, m_normalizedRange.Height * m_gridRowHeight));
 							}
 						}
 						e.Handled = true;
@@ -3755,17 +3755,17 @@ namespace VixenEditor
 					goto Label_0C71;
 
 				case Keys.Down:
-					if ((this.pictureBoxChannels.Focused || (this.pictureBoxGrid.Focused && !e.Control)) && (this.m_normalizedRange.Bottom < this.m_sequence.ChannelCount))
+					if ((pictureBoxChannels.Focused || (pictureBoxGrid.Focused && !e.Control)) && (m_normalizedRange.Bottom < m_sequence.ChannelCount))
 					{
-						this.m_selectedRange.Y++;
-						this.m_normalizedRange.Y++;
-						if (((this.m_normalizedRange.Bottom - 1) - this.vScrollBar1.Value) >= this.m_visibleRowCount)
+						m_selectedRange.Y++;
+						m_normalizedRange.Y++;
+						if (((m_normalizedRange.Bottom - 1) - vScrollBar1.Value) >= m_visibleRowCount)
 						{
-							this.vScrollBar1.Value++;
+							vScrollBar1.Value++;
 						}
 						else
 						{
-							this.pictureBoxGrid.Invalidate(new Rectangle((this.m_normalizedRange.Left - this.hScrollBar1.Value) * this.m_periodPixelWidth, ((this.m_normalizedRange.Top - this.vScrollBar1.Value) - 1) * this.m_gridRowHeight, this.m_normalizedRange.Width * this.m_periodPixelWidth, (this.m_normalizedRange.Height + 1) * this.m_gridRowHeight));
+							pictureBoxGrid.Invalidate(new Rectangle((m_normalizedRange.Left - hScrollBar1.Value) * m_periodPixelWidth, ((m_normalizedRange.Top - vScrollBar1.Value) - 1) * m_gridRowHeight, m_normalizedRange.Width * m_periodPixelWidth, (m_normalizedRange.Height + 1) * m_gridRowHeight));
 						}
 					}
 					e.Handled = true;
@@ -3776,7 +3776,7 @@ namespace VixenEditor
 			}
 			e.Handled = true;
 		Label_0C71:
-			if (!flag && this.pictureBoxGrid.Focused)
+			if (!flag && pictureBoxGrid.Focused)
 			{
 				if ((((e.KeyCode < Keys.A) || (e.KeyCode > Keys.Z)) || ((Control.ModifierKeys & Keys.Control) != Keys.None)) || ((Control.ModifierKeys & Keys.Alt) != Keys.None))
 				{
@@ -3785,8 +3785,8 @@ namespace VixenEditor
 						case Keys.Up:
 							if (e.Control)
 							{
-								this.IntensityAdjustDialogCheck();
-								this.m_intensityAdjustDialog.Delta = e.Alt ? 1 : this.m_intensityLargeDelta;
+								IntensityAdjustDialogCheck();
+								m_intensityAdjustDialog.Delta = e.Alt ? 1 : m_intensityLargeDelta;
 							}
 							e.Handled = true;
 							goto Label_0EBD;
@@ -3797,8 +3797,8 @@ namespace VixenEditor
 						case Keys.Down:
 							if (e.Control)
 							{
-								this.IntensityAdjustDialogCheck();
-								this.m_intensityAdjustDialog.Delta = e.Alt ? -1 : -this.m_intensityLargeDelta;
+								IntensityAdjustDialogCheck();
+								m_intensityAdjustDialog.Delta = e.Alt ? -1 : -m_intensityLargeDelta;
 							}
 							e.Handled = true;
 							goto Label_0EBD;
@@ -3809,7 +3809,7 @@ namespace VixenEditor
 					switch (e.KeyCode)
 					{
 						case Keys.A:
-							this.toolStripButtonRandom_Click(null, null);
+							toolStripButtonRandom_Click(null, null);
 							e.Handled = true;
 							goto Label_0EBD;
 
@@ -3821,74 +3821,74 @@ namespace VixenEditor
 							goto Label_0EBD;
 
 						case Keys.E:
-							this.toolStripButtonShimmerDimming_Click(null, null);
+							toolStripButtonShimmerDimming_Click(null, null);
 							e.Handled = true;
 							goto Label_0EBD;
 
 						case Keys.F:
 							if (!e.Shift)
 							{
-								this.toolStripButtonRampOff_Click(null, null);
+								toolStripButtonRampOff_Click(null, null);
 							}
 							else
 							{
-								this.toolStripButtonPartialRampOff_Click(null, null);
+								toolStripButtonPartialRampOff_Click(null, null);
 							}
 							e.Handled = true;
 							goto Label_0EBD;
 
 						case Keys.H:
-							this.toolStripButtonMirrorHorizontal_Click(null, null);
+							toolStripButtonMirrorHorizontal_Click(null, null);
 							e.Handled = true;
 							goto Label_0EBD;
 
 						case Keys.I:
-							this.toolStripButtonIntensity_Click(null, null);
+							toolStripButtonIntensity_Click(null, null);
 							e.Handled = true;
 							goto Label_0EBD;
 
 						case Keys.R:
 							if (!e.Shift)
 							{
-								this.toolStripButtonRampOn_Click(null, null);
+								toolStripButtonRampOn_Click(null, null);
 							}
 							else
 							{
-								this.toolStripButtonPartialRampOn_Click(null, null);
+								toolStripButtonPartialRampOn_Click(null, null);
 							}
 							e.Handled = true;
 							goto Label_0EBD;
 
 						case Keys.S:
-							this.toolStripButtonSparkle_Click(null, null);
+							toolStripButtonSparkle_Click(null, null);
 							e.Handled = true;
 							goto Label_0EBD;
 
 						case Keys.T:
-							this.toolStripButtonInvert_Click(null, null);
+							toolStripButtonInvert_Click(null, null);
 							e.Handled = true;
 							goto Label_0EBD;
 
 						case Keys.V:
-							this.toolStripButtonMirrorVertical_Click(null, null);
+							toolStripButtonMirrorVertical_Click(null, null);
 							e.Handled = true;
 							goto Label_0EBD;
 					}
 				}
 			}
 		Label_0EBD:
-			if (!(flag || (!this.pictureBoxChannels.Focused && !this.pictureBoxGrid.Focused)))
+			if (!(flag || (!pictureBoxChannels.Focused && !pictureBoxGrid.Focused)))
 			{
 				int channelSortedIndex;
 				switch (e.KeyCode)
 				{
 					case Keys.Insert:
-						if (this.SelectedChannel != null)
+						if (SelectedChannel != null)
 						{
-							channelSortedIndex = this.GetChannelSortedIndex(this.SelectedChannel);
-							int naturalIndex = this.m_sequence.InsertChannel(channelSortedIndex);
-							this.InsertChannelIntoSort(naturalIndex, channelSortedIndex);
-							this.ChannelCountChanged();
+							channelSortedIndex = GetChannelSortedIndex(SelectedChannel);
+							int naturalIndex = m_sequence.InsertChannel(channelSortedIndex);
+							InsertChannelIntoSort(naturalIndex, channelSortedIndex);
+							ChannelCountChanged();
 						}
 						e.Handled = true;
 						return;
@@ -3896,25 +3896,25 @@ namespace VixenEditor
 					case Keys.Delete:
 						if (!e.Shift)
 						{
-							if (this.SelectedChannel != null)
+							if (SelectedChannel != null)
 							{
-								this.ClearChannel(this.GetChannelSortedIndex(this.SelectedChannel));
+								ClearChannel(GetChannelSortedIndex(SelectedChannel));
 							}
 						}
-						else if ((this.SelectedChannel != null) && (MessageBox.Show(string.Format("Delete channel {0}?", this.SelectedChannel.Name), "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes))
+						else if ((SelectedChannel != null) && (MessageBox.Show(string.Format("Delete channel {0}?", SelectedChannel.Name), "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes))
 						{
-							channelSortedIndex = this.GetChannelSortedIndex(this.SelectedChannel);
-							this.m_sequence.DeleteChannel(this.SelectedChannel.Id);
-							this.DeleteChannelFromSort(channelSortedIndex);
-							this.ChannelCountChanged();
+							channelSortedIndex = GetChannelSortedIndex(SelectedChannel);
+							m_sequence.DeleteChannel(SelectedChannel.Id);
+							DeleteChannelFromSort(channelSortedIndex);
+							ChannelCountChanged();
 						}
 						e.Handled = true;
 						return;
 
 					case Keys.D6:
-						if (e.Shift && (this.SelectedChannel != null))
+						if (e.Shift && (SelectedChannel != null))
 						{
-							this.FillChannel(this.GetChannelSortedIndex(this.SelectedChannel));
+							FillChannel(GetChannelSortedIndex(SelectedChannel));
 						}
 						e.Handled = true;
 						return;
@@ -3924,16 +3924,16 @@ namespace VixenEditor
 
 		private void StandardSequence_Load(object sender, EventArgs e)
 		{
-			VixenEditor.ToolStripManager.SaveSettings(this, this.m_preferences.XmlDoc.DocumentElement, "reset");
-			this.m_preferences.Flush();
-			VixenEditor.ToolStripManager.LoadSettings(this, this.m_preferences.XmlDoc.DocumentElement);
-			ToolStripPanel[] panelArray = new ToolStripPanel[] { this.toolStripContainer1.TopToolStripPanel, this.toolStripContainer1.BottomToolStripPanel, this.toolStripContainer1.LeftToolStripPanel, this.toolStripContainer1.RightToolStripPanel };
+			VixenEditor.ToolStripManager.SaveSettings(this, m_preferences.XmlDoc.DocumentElement, "reset");
+			m_preferences.Flush();
+			VixenEditor.ToolStripManager.LoadSettings(this, m_preferences.XmlDoc.DocumentElement);
+			ToolStripPanel[] panelArray = new ToolStripPanel[] { toolStripContainer1.TopToolStripPanel, toolStripContainer1.BottomToolStripPanel, toolStripContainer1.LeftToolStripPanel, toolStripContainer1.RightToolStripPanel };
 			List<string> list = new List<string>();
 			foreach (ToolStripPanel panel in panelArray)
 			{
 				foreach (ToolStrip strip in panel.Controls)
 				{
-					this.m_toolStrips[strip.Text] = strip;
+					m_toolStrips[strip.Text] = strip;
 					list.Add(strip.Text);
 				}
 			}
@@ -3944,26 +3944,26 @@ namespace VixenEditor
 			foreach (string str in list)
 			{
 				ToolStripMenuItem item = new ToolStripMenuItem(str);
-				item.Tag = this.m_toolStrips[str];
-				item.Checked = this.m_toolStrips[str].Visible;
+				item.Tag = m_toolStrips[str];
+				item.Checked = m_toolStrips[str].Visible;
 				item.CheckOnClick = true;
-				item.CheckStateChanged += this.m_toolStripCheckStateChangeHandler;
-				this.toolbarsToolStripMenuItem.DropDownItems.Insert(position++, item);
+				item.CheckStateChanged += m_toolStripCheckStateChangeHandler;
+				toolbarsToolStripMenuItem.DropDownItems.Insert(position++, item);
 			}
-			this.m_actualLevels = this.m_preferences.GetBoolean("ActualLevels");
+			m_actualLevels = m_preferences.GetBoolean("ActualLevels");
             UpdateToolbarMenu();
-			this.UpdateLevelDisplay();
+			UpdateLevelDisplay();
 		}
 
 		private void subtractionToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.ArithmeticPaste(ArithmeticOperation.Subtraction);
+			ArithmeticPaste(ArithmeticOperation.Subtraction);
 		}
 
 		private void SyncAudioButton()
 		{
-			this.tsbAudio.Checked = this.m_sequence.Audio != null;
-			this.tsbAudio.ToolTipText = (this.m_sequence.Audio != null) ? this.m_sequence.Audio.Name : "Add audio";
+			tsbAudio.Checked = m_sequence.Audio != null;
+			tsbAudio.ToolTipText = (m_sequence.Audio != null) ? m_sequence.Audio.Name : "Add audio";
 		}
 
 		private void textBoxChannelCount_KeyPress(object sender, KeyPressEventArgs e)
@@ -3972,27 +3972,27 @@ namespace VixenEditor
 			{
 				e.Handled = true;
 				int result = 0;
-				if (int.TryParse(this.textBoxChannelCount.Text, out result))
+				if (int.TryParse(textBoxChannelCount.Text, out result))
 				{
-					if (result < this.m_sequence.ChannelCount)
+					if (result < m_sequence.ChannelCount)
 					{
 						if (MessageBox.Show("This will reduce the number of channels and potentially lose data.\n\nAccept new channel count?", Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 						{
-							this.SetChannelCount(result);
+							SetChannelCount(result);
 						}
 						else
 						{
-							this.textBoxChannelCount.Text = this.m_sequence.ChannelCount.ToString();
+							textBoxChannelCount.Text = m_sequence.ChannelCount.ToString();
 						}
 					}
-					else if (result > this.m_sequence.ChannelCount)
+					else if (result > m_sequence.ChannelCount)
 					{
-						this.SetChannelCount(result);
+						SetChannelCount(result);
 					}
 				}
 				else
 				{
-					this.textBoxChannelCount.Text = this.m_sequence.ChannelCount.ToString();
+					textBoxChannelCount.Text = m_sequence.ChannelCount.ToString();
 					MessageBox.Show("Please provide a valid number.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				}
 			}
@@ -4009,7 +4009,7 @@ namespace VixenEditor
 				string s = "0";
 				string str2 = string.Empty;
 				string str3 = "0";
-				string text = this.textBoxProgramLength.Text;
+				string text = textBoxProgramLength.Text;
 				int index = text.IndexOf(':');
 				if (index != -1)
 				{
@@ -4050,10 +4050,10 @@ namespace VixenEditor
 				num4 = (num4 + (num3 * 0x3e8)) + (num2 * 0xea60);
 				if (num4 == 0)
 				{
-					this.textBoxProgramLength.Text = this.TimeString(this.m_sequence.Time);
+					textBoxProgramLength.Text = TimeString(m_sequence.Time);
 					MessageBox.Show("Not a valid format for time.\nUse one of the following:\n\nSeconds\nMinutes:Seconds\nSeconds.Milliseconds\nMinutes:Seconds.Milliseconds", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				}
-				else if (this.SetProgramTime(num4))
+				else if (SetProgramTime(num4))
 				{
 					base.IsDirty = true;
 					MessageBox.Show("Sequence length has been updated.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
@@ -4068,99 +4068,99 @@ namespace VixenEditor
 
 		private void toggleOutputChannelsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.m_showingOutputs = !this.m_showingOutputs;
-			this.pictureBoxChannels.Refresh();
+			m_showingOutputs = !m_showingOutputs;
+			pictureBoxChannels.Refresh();
 		}
 
 		private void toolStripButtonAudio_Click(object sender, EventArgs e)
 		{
-			Audio audio = this.m_sequence.Audio;
-			int integer = this.m_preferences.GetInteger("SoundDevice");
-			this.Cursor = Cursors.WaitCursor;
-			AudioDialog dialog = new AudioDialog(this.m_sequence, this.m_preferences.GetBoolean("EventSequenceAutoSize"), integer);
-			this.Cursor = Cursors.Default;
-			Audio audio2 = this.m_sequence.Audio;
+			Audio audio = m_sequence.Audio;
+			int integer = m_preferences.GetInteger("SoundDevice");
+			Cursor = Cursors.WaitCursor;
+			AudioDialog dialog = new AudioDialog(m_sequence, m_preferences.GetBoolean("EventSequenceAutoSize"), integer);
+			Cursor = Cursors.Default;
+			Audio audio2 = m_sequence.Audio;
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
-				this.SetProgramTime(this.m_sequence.Time);
+				SetProgramTime(m_sequence.Time);
 				base.IsDirty = true;
-				this.pictureBoxGrid.Refresh();
+				pictureBoxGrid.Refresh();
 			}
-			this.SyncAudioButton();
-			base.IsDirty |= audio2 != this.m_sequence.Audio;
-			if (audio != this.m_sequence.Audio)
+			SyncAudioButton();
+			base.IsDirty |= audio2 != m_sequence.Audio;
+			if (audio != m_sequence.Audio)
 			{
-				this.ParseAudioWaveform();
-				this.pictureBoxTime.Refresh();
+				ParseAudioWaveform();
+				pictureBoxTime.Refresh();
 			}
 			dialog.Dispose();
 		}
 
 		private void toolStripButtonChangeIntensity_Click(object sender, EventArgs e)
 		{
-			DrawingIntensityDialog dialog = new DrawingIntensityDialog(this.m_sequence, this.m_drawingLevel, this.m_actualLevels);
+			DrawingIntensityDialog dialog = new DrawingIntensityDialog(m_sequence, m_drawingLevel, m_actualLevels);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
-				this.SetDrawingLevel(dialog.SelectedIntensity);
+				SetDrawingLevel(dialog.SelectedIntensity);
 			}
 			dialog.Dispose();
 		}
 
 		private void toolStripButtonChannelOutputMask_Click(object sender, EventArgs e)
 		{
-			this.EditSequenceChannelMask();
+			EditSequenceChannelMask();
 		}
 
 		private void toolStripButtonCopy_Click(object sender, EventArgs e)
 		{
-			this.CopyCells();
+			CopyCells();
 		}
 
 		private void toolStripButtonCut_Click(object sender, EventArgs e)
 		{
-			this.CopyCells();
-			this.TurnCellsOff();
+			CopyCells();
+			TurnCellsOff();
 		}
 
 		private void toolStripButtonDeleteOrder_Click(object sender, EventArgs e)
 		{
-			if (MessageBox.Show(string.Format("Delete channel order '{0}'?", this.toolStripComboBoxChannelOrder.Text), Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+			if (MessageBox.Show(string.Format("Delete channel order '{0}'?", toolStripComboBoxChannelOrder.Text), Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 			{
-				this.m_sequence.Sorts.Remove((VixenPlus.SortOrder) this.toolStripComboBoxChannelOrder.SelectedItem);
-				this.toolStripComboBoxChannelOrder.Items.RemoveAt(this.toolStripComboBoxChannelOrder.SelectedIndex);
-				this.toolStripButtonDeleteOrder.Enabled = false;
+				m_sequence.Sorts.Remove((VixenPlus.SortOrder) toolStripComboBoxChannelOrder.SelectedItem);
+				toolStripComboBoxChannelOrder.Items.RemoveAt(toolStripComboBoxChannelOrder.SelectedIndex);
+				toolStripButtonDeleteOrder.Enabled = false;
 				base.IsDirty = true;
 			}
 		}
 
 		private void toolStripButtonFindAndReplace_Click(object sender, EventArgs e)
 		{
-			if ((this.m_normalizedRange.Width == 0) || (this.m_normalizedRange.Height == 0))
+			if ((m_normalizedRange.Width == 0) || (m_normalizedRange.Height == 0))
 			{
 				MessageBox.Show("There are no cells to search", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 			}
 			else
 			{
-				FindAndReplaceDialog dialog = new FindAndReplaceDialog(this.m_sequence.MinimumLevel, this.m_sequence.MaximumLevel, this.m_actualLevels);
+				FindAndReplaceDialog dialog = new FindAndReplaceDialog(m_sequence.MinimumLevel, m_sequence.MaximumLevel, m_actualLevels);
 				if (dialog.ShowDialog() == DialogResult.OK)
 				{
 					int left;
 					int num4;
 					int num5;
-					this.AddUndoItem(this.m_normalizedRange, UndoOriginalBehavior.Overwrite);
+					AddUndoItem(m_normalizedRange, UndoOriginalBehavior.Overwrite);
 					byte findValue = dialog.FindValue;
 					byte replaceWithValue = dialog.ReplaceWithValue;
-					if (this.m_actualLevels)
+					if (m_actualLevels)
 					{
-						for (num5 = this.m_normalizedRange.Top; num5 < this.m_normalizedRange.Bottom; num5++)
+						for (num5 = m_normalizedRange.Top; num5 < m_normalizedRange.Bottom; num5++)
 						{
-							num4 = this.m_channelOrderMapping[num5];
-							left = this.m_normalizedRange.Left;
-							while (left < this.m_normalizedRange.Right)
+							num4 = m_channelOrderMapping[num5];
+							left = m_normalizedRange.Left;
+							while (left < m_normalizedRange.Right)
 							{
-								if (this.m_sequence.EventValues[num4, left] == findValue)
+								if (m_sequence.EventValues[num4, left] == findValue)
 								{
-									this.m_sequence.EventValues[num4, left] = replaceWithValue;
+									m_sequence.EventValues[num4, left] = replaceWithValue;
 								}
 								left++;
 							}
@@ -4168,20 +4168,20 @@ namespace VixenEditor
 					}
 					else
 					{
-						for (num5 = this.m_normalizedRange.Top; num5 < this.m_normalizedRange.Bottom; num5++)
+						for (num5 = m_normalizedRange.Top; num5 < m_normalizedRange.Bottom; num5++)
 						{
-							num4 = this.m_channelOrderMapping[num5];
-							for (left = this.m_normalizedRange.Left; left < this.m_normalizedRange.Right; left++)
+							num4 = m_channelOrderMapping[num5];
+							for (left = m_normalizedRange.Left; left < m_normalizedRange.Right; left++)
 							{
-								if (((byte) Math.Round((double) ((this.m_sequence.EventValues[num4, left] * 100f) / 255f), MidpointRounding.AwayFromZero)) == findValue)
+								if (((byte) Math.Round((double) ((m_sequence.EventValues[num4, left] * 100f) / 255f), MidpointRounding.AwayFromZero)) == findValue)
 								{
-									this.m_sequence.EventValues[num4, left] = (byte) Math.Round((double) ((((float) replaceWithValue) / 100f) * 255f), MidpointRounding.AwayFromZero);
+									m_sequence.EventValues[num4, left] = (byte) Math.Round((double) ((((float) replaceWithValue) / 100f) * 255f), MidpointRounding.AwayFromZero);
 								}
 							}
 						}
 					}
 					base.IsDirty = true;
-					this.pictureBoxGrid.Refresh();
+					pictureBoxGrid.Refresh();
 				}
 				dialog.Dispose();
 			}
@@ -4189,24 +4189,24 @@ namespace VixenEditor
 
 		private void toolStripButtonInsertPaste_Click(object sender, EventArgs e)
 		{
-			if (this.m_systemInterface.Clipboard != null)
+			if (m_systemInterface.Clipboard != null)
 			{
-				byte[,] clipboard = this.m_systemInterface.Clipboard;
+				byte[,] clipboard = m_systemInterface.Clipboard;
 				int length = clipboard.GetLength(0);
 				int width = clipboard.GetLength(1);
-				int left = this.m_normalizedRange.Left;
+				int left = m_normalizedRange.Left;
 				int num5 = left + width;
-				int num6 = this.m_sequence.TotalEventPeriods - num5;
-				for (int i = 0; (i < length) && ((this.m_normalizedRange.Top + i) < this.m_sequence.ChannelCount); i++)
+				int num6 = m_sequence.TotalEventPeriods - num5;
+				for (int i = 0; (i < length) && ((m_normalizedRange.Top + i) < m_sequence.ChannelCount); i++)
 				{
-					int num7 = this.m_channelOrderMapping[this.m_normalizedRange.Top + i];
-					for (int j = Math.Min(num6, this.m_sequence.TotalEventPeriods - this.m_normalizedRange.Left) - 1; j >= 0; j--)
+					int num7 = m_channelOrderMapping[m_normalizedRange.Top + i];
+					for (int j = Math.Min(num6, m_sequence.TotalEventPeriods - m_normalizedRange.Left) - 1; j >= 0; j--)
 					{
-						this.m_sequence.EventValues[num7, num5 + j] = this.m_sequence.EventValues[num7, left + j];
+						m_sequence.EventValues[num7, num5 + j] = m_sequence.EventValues[num7, left + j];
 					}
 				}
-				this.PasteOver();
-				this.AddUndoItem(new Rectangle(this.m_normalizedRange.X, this.m_normalizedRange.Y, width, length), UndoOriginalBehavior.Insertion);
+				PasteOver();
+				AddUndoItem(new Rectangle(m_normalizedRange.X, m_normalizedRange.Y, width, length), UndoOriginalBehavior.Insertion);
 			}
 		}
 
@@ -4219,12 +4219,12 @@ namespace VixenEditor
 				string str;
 				TextQueryDialog dialog;
 				flag = true;
-				if (this.m_actualLevels)
+				if (m_actualLevels)
 				{
 					str = "255";
-					if ((this.m_normalizedRange.Width == 1) && (this.m_normalizedRange.Height == 1))
+					if ((m_normalizedRange.Width == 1) && (m_normalizedRange.Height == 1))
 					{
-						str = this.m_sequence.EventValues[this.m_channelOrderMapping[this.m_normalizedRange.Top], this.m_normalizedRange.Left].ToString();
+						str = m_sequence.EventValues[m_channelOrderMapping[m_normalizedRange.Top], m_normalizedRange.Left].ToString();
 					}
 					dialog = new TextQueryDialog(Vendor.ProductName, "What intensity level (0-255)?", str);
 					if (dialog.ShowDialog() != DialogResult.OK)
@@ -4247,9 +4247,9 @@ namespace VixenEditor
 				else
 				{
 					str = "100";
-					if ((this.m_normalizedRange.Width == 1) && (this.m_normalizedRange.Height == 1))
+					if ((m_normalizedRange.Width == 1) && (m_normalizedRange.Height == 1))
 					{
-						str = ((int) Math.Round((double) ((this.m_sequence.EventValues[this.m_channelOrderMapping[this.m_normalizedRange.Top], this.m_normalizedRange.Left] * 100f) / 255f), MidpointRounding.AwayFromZero)).ToString();
+						str = ((int) Math.Round((double) ((m_sequence.EventValues[m_channelOrderMapping[m_normalizedRange.Top], m_normalizedRange.Left] * 100f) / 255f), MidpointRounding.AwayFromZero)).ToString();
 					}
 					dialog = new TextQueryDialog(Vendor.ProductName, "What % intensity (0-100)?", str);
 					if (dialog.ShowDialog() != DialogResult.OK)
@@ -4277,224 +4277,224 @@ namespace VixenEditor
 					}
 				}
 			}
-			this.AddUndoItem(this.m_normalizedRange, UndoOriginalBehavior.Overwrite);
-			int bottom = this.m_normalizedRange.Bottom;
-			int right = this.m_normalizedRange.Right;
-			for (int i = this.m_normalizedRange.Top; i < bottom; i++)
+			AddUndoItem(m_normalizedRange, UndoOriginalBehavior.Overwrite);
+			int bottom = m_normalizedRange.Bottom;
+			int right = m_normalizedRange.Right;
+			for (int i = m_normalizedRange.Top; i < bottom; i++)
 			{
-				int num5 = this.m_channelOrderMapping[i];
-				if (this.m_sequence.Channels[num5].Enabled)
+				int num5 = m_channelOrderMapping[i];
+				if (m_sequence.Channels[num5].Enabled)
 				{
-					for (int j = this.m_normalizedRange.Left; j < right; j++)
+					for (int j = m_normalizedRange.Left; j < right; j++)
 					{
-						this.m_sequence.EventValues[num5, j] = (byte) result;
+						m_sequence.EventValues[num5, j] = (byte) result;
 					}
 				}
 			}
-			this.m_selectionRectangle.Width = 0;
-			this.pictureBoxGrid.Invalidate(this.SelectionToRectangle());
+			m_selectionRectangle.Width = 0;
+			pictureBoxGrid.Invalidate(SelectionToRectangle());
 		}
 
 		private void toolStripButtonInvert_Click(object sender, EventArgs e)
 		{
-			this.AddUndoItem(this.m_normalizedRange, UndoOriginalBehavior.Overwrite);
-			int bottom = this.m_normalizedRange.Bottom;
-			int right = this.m_normalizedRange.Right;
-			for (int i = this.m_normalizedRange.Top; i < bottom; i++)
+			AddUndoItem(m_normalizedRange, UndoOriginalBehavior.Overwrite);
+			int bottom = m_normalizedRange.Bottom;
+			int right = m_normalizedRange.Right;
+			for (int i = m_normalizedRange.Top; i < bottom; i++)
 			{
-				int num4 = this.m_channelOrderMapping[i];
-				if (this.m_sequence.Channels[num4].Enabled)
+				int num4 = m_channelOrderMapping[i];
+				if (m_sequence.Channels[num4].Enabled)
 				{
-					for (int j = this.m_normalizedRange.Left; j < right; j++)
+					for (int j = m_normalizedRange.Left; j < right; j++)
 					{
-						this.m_sequence.EventValues[num4, j] = (byte) (this.m_sequence.MaximumLevel - this.m_sequence.EventValues[num4, j]);
+						m_sequence.EventValues[num4, j] = (byte) (m_sequence.MaximumLevel - m_sequence.EventValues[num4, j]);
 					}
 				}
 			}
-			this.m_selectionRectangle.Width = 0;
-			this.pictureBoxGrid.Invalidate(this.SelectionToRectangle());
+			m_selectionRectangle.Width = 0;
+			pictureBoxGrid.Invalidate(SelectionToRectangle());
 		}
 
 		private void toolStripButtonLoop_CheckedChanged(object sender, EventArgs e)
 		{
-			this.m_executionInterface.SetLoopState(this.m_executionContextHandle, this.tsbLoop.Checked);
+			m_executionInterface.SetLoopState(m_executionContextHandle, tsbLoop.Checked);
 		}
 
 		private void toolStripButtonMirrorHorizontal_Click(object sender, EventArgs e)
 		{
-			byte[,] buffer = new byte[this.m_normalizedRange.Height, this.m_normalizedRange.Width];
-			for (int i = 0; i < this.m_normalizedRange.Height; i++)
+			byte[,] buffer = new byte[m_normalizedRange.Height, m_normalizedRange.Width];
+			for (int i = 0; i < m_normalizedRange.Height; i++)
 			{
-				int num3 = this.m_channelOrderMapping[this.m_normalizedRange.Top + i];
+				int num3 = m_channelOrderMapping[m_normalizedRange.Top + i];
 				int num2 = 0;
-				int num = this.m_normalizedRange.Width - 1;
+				int num = m_normalizedRange.Width - 1;
 				while (num >= 0)
 				{
-					buffer[i, num2] = this.m_sequence.EventValues[num3, this.m_normalizedRange.Left + num];
+					buffer[i, num2] = m_sequence.EventValues[num3, m_normalizedRange.Left + num];
 					num--;
 					num2++;
 				}
 			}
-			this.m_systemInterface.Clipboard = buffer;
+			m_systemInterface.Clipboard = buffer;
 		}
 
 		private void toolStripButtonMirrorVertical_Click(object sender, EventArgs e)
 		{
-			byte[,] buffer = new byte[this.m_normalizedRange.Height, this.m_normalizedRange.Width];
+			byte[,] buffer = new byte[m_normalizedRange.Height, m_normalizedRange.Width];
 			int num2 = 0;
-			int num4 = this.m_normalizedRange.Height - 1;
+			int num4 = m_normalizedRange.Height - 1;
 			while (num4 >= 0)
 			{
-				int num3 = this.m_channelOrderMapping[this.m_normalizedRange.Top + num4];
-				for (int i = 0; i < this.m_normalizedRange.Width; i++)
+				int num3 = m_channelOrderMapping[m_normalizedRange.Top + num4];
+				for (int i = 0; i < m_normalizedRange.Width; i++)
 				{
-					buffer[num2, i] = this.m_sequence.EventValues[num3, this.m_normalizedRange.Left + i];
+					buffer[num2, i] = m_sequence.EventValues[num3, m_normalizedRange.Left + i];
 				}
 				num4--;
 				num2++;
 			}
-			this.m_systemInterface.Clipboard = buffer;
+			m_systemInterface.Clipboard = buffer;
 		}
 
 		private void toolStripButtonOff_Click(object sender, EventArgs e)
 		{
-			this.TurnCellsOff();
+			TurnCellsOff();
 		}
 
 		private void toolStripButtonOn_Click(object sender, EventArgs e)
 		{
-			this.AddUndoItem(this.m_normalizedRange, UndoOriginalBehavior.Overwrite);
-			int bottom = this.m_normalizedRange.Bottom;
-			int right = this.m_normalizedRange.Right;
-			for (int i = this.m_normalizedRange.Top; i < bottom; i++)
+			AddUndoItem(m_normalizedRange, UndoOriginalBehavior.Overwrite);
+			int bottom = m_normalizedRange.Bottom;
+			int right = m_normalizedRange.Right;
+			for (int i = m_normalizedRange.Top; i < bottom; i++)
 			{
-				int num4 = this.m_channelOrderMapping[i];
-				if (this.m_sequence.Channels[num4].Enabled)
+				int num4 = m_channelOrderMapping[i];
+				if (m_sequence.Channels[num4].Enabled)
 				{
-					for (int j = this.m_normalizedRange.Left; j < right; j++)
+					for (int j = m_normalizedRange.Left; j < right; j++)
 					{
-						this.m_sequence.EventValues[num4, j] = this.m_drawingLevel;
+						m_sequence.EventValues[num4, j] = m_drawingLevel;
 					}
 				}
 			}
-			this.m_selectionRectangle.Width = 0;
-			this.pictureBoxGrid.Invalidate(this.SelectionToRectangle());
+			m_selectionRectangle.Width = 0;
+			pictureBoxGrid.Invalidate(SelectionToRectangle());
 		}
 
 		private void toolStripButtonOpaquePaste_Click(object sender, EventArgs e)
 		{
-			if (this.m_systemInterface.Clipboard != null)
+			if (m_systemInterface.Clipboard != null)
 			{
-				this.AddUndoItem(new Rectangle(this.m_normalizedRange.X, this.m_normalizedRange.Y, this.m_systemInterface.Clipboard.GetLength(1), this.m_systemInterface.Clipboard.GetLength(0)), UndoOriginalBehavior.Overwrite);
-				this.PasteOver();
+				AddUndoItem(new Rectangle(m_normalizedRange.X, m_normalizedRange.Y, m_systemInterface.Clipboard.GetLength(1), m_systemInterface.Clipboard.GetLength(0)), UndoOriginalBehavior.Overwrite);
+				PasteOver();
 			}
 		}
 
 		private void toolStripButtonPartialRampOff_Click(object sender, EventArgs e)
 		{
-			RampQueryDialog dialog = new RampQueryDialog(this.m_sequence.MinimumLevel, this.m_sequence.MaximumLevel, true, this.m_actualLevels);
+			RampQueryDialog dialog = new RampQueryDialog(m_sequence.MinimumLevel, m_sequence.MaximumLevel, true, m_actualLevels);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
-				this.Ramp(dialog.StartingLevel, dialog.EndingLevel);
+				Ramp(dialog.StartingLevel, dialog.EndingLevel);
 			}
 			dialog.Dispose();
 		}
 
 		private void toolStripButtonPartialRampOn_Click(object sender, EventArgs e)
 		{
-			RampQueryDialog dialog = new RampQueryDialog(this.m_sequence.MinimumLevel, this.m_sequence.MaximumLevel, false, this.m_actualLevels);
+			RampQueryDialog dialog = new RampQueryDialog(m_sequence.MinimumLevel, m_sequence.MaximumLevel, false, m_actualLevels);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
-				this.Ramp(dialog.StartingLevel, dialog.EndingLevel);
+				Ramp(dialog.StartingLevel, dialog.EndingLevel);
 			}
 			dialog.Dispose();
 		}
 
 		private void toolStripButtonPause_Click(object sender, EventArgs e)
 		{
-			if (this.m_executionInterface.EngineStatus(this.m_executionContextHandle) == 1)
+			if (m_executionInterface.EngineStatus(m_executionContextHandle) == 1)
 			{
-				this.m_positionTimer.Stop();
-				this.m_executionInterface.ExecutePause(this.m_executionContextHandle);
-				this.SetEditingState(true);
+				m_positionTimer.Stop();
+				m_executionInterface.ExecutePause(m_executionContextHandle);
+				SetEditingState(true);
 			}
 		}
 
 		private void toolStripButtonPlay_Click(object sender, EventArgs e)
 		{
 			int sequencePosition = 0;
-			int num = this.m_executionInterface.EngineStatus(this.m_executionContextHandle, out sequencePosition);
+			int num = m_executionInterface.EngineStatus(m_executionContextHandle, out sequencePosition);
 			if (num != 1)
 			{
 				if (num != 2)
 				{
-					this.Reset();
+					Reset();
 				}
-				if (this.m_executionInterface.ExecutePlay(this.m_executionContextHandle, sequencePosition, 0))
+				if (m_executionInterface.ExecutePlay(m_executionContextHandle, sequencePosition, 0))
 				{
-					this.m_positionTimer.Start();
-					this.SetEditingState(false);
+					m_positionTimer.Start();
+					SetEditingState(false);
 				}
 			}
 		}
 
 		private void toolStripButtonPlayPoint_Click(object sender, EventArgs e)
 		{
-			if (this.m_executionInterface.EngineStatus(this.m_executionContextHandle) != 1)
+			if (m_executionInterface.EngineStatus(m_executionContextHandle) != 1)
 			{
-				this.SetEditingState(false);
-				if (this.playOnlyTheSelectedRangeToolStripMenuItem.Checked)
+				SetEditingState(false);
+				if (playOnlyTheSelectedRangeToolStripMenuItem.Checked)
 				{
-					this.m_executionInterface.ExecutePlay(this.m_executionContextHandle, this.m_normalizedRange.Left * this.m_sequence.EventPeriod, this.m_normalizedRange.Right * this.m_sequence.EventPeriod);
+					m_executionInterface.ExecutePlay(m_executionContextHandle, m_normalizedRange.Left * m_sequence.EventPeriod, m_normalizedRange.Right * m_sequence.EventPeriod);
 				}
 				else
 				{
-					this.m_executionInterface.ExecutePlay(this.m_executionContextHandle, this.m_normalizedRange.Left * this.m_sequence.EventPeriod, this.m_sequence.TotalEventPeriods * this.m_sequence.EventPeriod);
+					m_executionInterface.ExecutePlay(m_executionContextHandle, m_normalizedRange.Left * m_sequence.EventPeriod, m_sequence.TotalEventPeriods * m_sequence.EventPeriod);
 				}
-				this.m_positionTimer.Start();
+				m_positionTimer.Start();
 			}
 		}
 
 		private void toolStripButtonPlaySpeedHalf_Click(object sender, EventArgs e)
 		{
-			this.SetAudioSpeed(0.5f);
+			SetAudioSpeed(0.5f);
 		}
 
 		private void toolStripButtonPlaySpeedNormal_Click(object sender, EventArgs e)
 		{
-			this.SetAudioSpeed(1f);
+			SetAudioSpeed(1f);
 		}
 
 		private void toolStripButtonPlaySpeedQuarter_Click(object sender, EventArgs e)
 		{
-			this.SetAudioSpeed(0.25f);
+			SetAudioSpeed(0.25f);
 		}
 
 		private void toolStripButtonPlaySpeedThreeQuarters_Click(object sender, EventArgs e)
 		{
-			this.SetAudioSpeed(0.75f);
+			SetAudioSpeed(0.75f);
 		}
 
 		private void toolStripButtonPlaySpeedVariable_Click(object sender, EventArgs e)
 		{
-			this.SetVariablePlaybackSpeed(this.toolStripExecutionControl.PointToScreen(new Point(this.SpeedVariableTsb.Bounds.Right, this.SpeedVariableTsb.Bounds.Top)));
+			SetVariablePlaybackSpeed(toolStripExecutionControl.PointToScreen(new Point(SpeedVariableTsb.Bounds.Right, SpeedVariableTsb.Bounds.Top)));
 		}
 
 		private void toolStripButtonRampOff_Click(object sender, EventArgs e)
 		{
-			this.Ramp(this.m_sequence.MaximumLevel, this.m_sequence.MinimumLevel);
+			Ramp(m_sequence.MaximumLevel, m_sequence.MinimumLevel);
 		}
 
 		private void toolStripButtonRampOn_Click(object sender, EventArgs e)
 		{
-			this.Ramp(this.m_sequence.MinimumLevel, this.m_sequence.MaximumLevel);
+			Ramp(m_sequence.MinimumLevel, m_sequence.MaximumLevel);
 		}
 
 		private void toolStripButtonRandom_Click(object sender, EventArgs e)
 		{
-			RandomParametersDialog dialog = new RandomParametersDialog(this.m_sequence.MinimumLevel, this.m_sequence.MaximumLevel, this.m_actualLevels);
-			int maximumLevel = this.m_sequence.MaximumLevel;
-			int intensityMax = this.m_sequence.MaximumLevel;
+			RandomParametersDialog dialog = new RandomParametersDialog(m_sequence.MinimumLevel, m_sequence.MaximumLevel, m_actualLevels);
+			int maximumLevel = m_sequence.MaximumLevel;
+			int intensityMax = m_sequence.MaximumLevel;
 			int num5 = 0;
 			Random random = null;
 			if (dialog.ShowDialog() == DialogResult.OK)
@@ -4510,36 +4510,36 @@ namespace VixenEditor
 					num5 = Math.Abs((int) (intensityMax - maximumLevel));
 					random = new Random();
 				}
-				this.AddUndoItem(this.m_normalizedRange, UndoOriginalBehavior.Overwrite);
+				AddUndoItem(m_normalizedRange, UndoOriginalBehavior.Overwrite);
 				List<int> list = new List<int>();
 				Random random2 = new Random();
-				int top = this.m_normalizedRange.Top;
-				while (top < this.m_normalizedRange.Bottom)
+				int top = m_normalizedRange.Top;
+				while (top < m_normalizedRange.Bottom)
 				{
-					num10 = this.m_channelOrderMapping[top];
-					if (this.m_sequence.Channels[num10].Enabled)
+					num10 = m_channelOrderMapping[top];
+					if (m_sequence.Channels[num10].Enabled)
 					{
-						left = this.m_normalizedRange.Left;
-						while (left < this.m_normalizedRange.Right)
+						left = m_normalizedRange.Left;
+						while (left < m_normalizedRange.Right)
 						{
-							this.m_sequence.EventValues[num10, left] = this.m_sequence.MinimumLevel;
+							m_sequence.EventValues[num10, left] = m_sequence.MinimumLevel;
 							left++;
 						}
 					}
 					top++;
 				}
-				for (left = this.m_normalizedRange.Left; left < this.m_normalizedRange.Right; left += periodLength)
+				for (left = m_normalizedRange.Left; left < m_normalizedRange.Right; left += periodLength)
 				{
 					int num8;
 					if (dialog.UseSaturation)
 					{
 						if (random2.Next(2) > 0)
 						{
-							num8 = (int) Math.Ceiling((double) ((this.m_normalizedRange.Height * saturationLevel) - 0.1));
+							num8 = (int) Math.Ceiling((double) ((m_normalizedRange.Height * saturationLevel) - 0.1));
 						}
 						else
 						{
-							num8 = (int) Math.Floor((double) (this.m_normalizedRange.Height * saturationLevel));
+							num8 = (int) Math.Floor((double) (m_normalizedRange.Height * saturationLevel));
 						}
 					}
 					else
@@ -4547,16 +4547,16 @@ namespace VixenEditor
 						num8 = 0;
 						while (num8 == 0)
 						{
-							num8 = random2.Next(this.m_normalizedRange.Height + 1);
+							num8 = random2.Next(m_normalizedRange.Height + 1);
 						}
 					}
 					list.Clear();
-					for (top = this.m_normalizedRange.Top; top < this.m_normalizedRange.Bottom; top++)
+					for (top = m_normalizedRange.Top; top < m_normalizedRange.Bottom; top++)
 					{
-						num10 = this.m_channelOrderMapping[top];
+						num10 = m_channelOrderMapping[top];
 						list.Add(num10);
 					}
-					byte drawingLevel = this.m_drawingLevel;
+					byte drawingLevel = m_drawingLevel;
 					while (num8-- > 0)
 					{
 						int index = random2.Next(list.Count);
@@ -4564,52 +4564,52 @@ namespace VixenEditor
 						{
 							drawingLevel = (byte) random.Next(maximumLevel, intensityMax + 1);
 						}
-						for (int i = 0; (i < periodLength) && ((left + i) < this.m_normalizedRange.Right); i++)
+						for (int i = 0; (i < periodLength) && ((left + i) < m_normalizedRange.Right); i++)
 						{
-							this.m_sequence.EventValues[list[index], left + i] = drawingLevel;
+							m_sequence.EventValues[list[index], left + i] = drawingLevel;
 						}
 						list.RemoveAt(index);
 					}
 				}
-				this.m_selectionRectangle.Width = 0;
-				this.pictureBoxGrid.Invalidate(this.SelectionToRectangle());
+				m_selectionRectangle.Width = 0;
+				pictureBoxGrid.Invalidate(SelectionToRectangle());
 			}
 			dialog.Dispose();
 		}
 
 		private void toolStripButtonRedo_Click(object sender, EventArgs e)
 		{
-			this.Redo();
+			Redo();
 		}
 
 		private void toolStripButtonRemoveCells_Click(object sender, EventArgs e)
 		{
-			if (this.m_normalizedRange.Width != 0)
+			if (m_normalizedRange.Width != 0)
 			{
-				int right = this.m_normalizedRange.Right;
-				int num2 = this.m_sequence.TotalEventPeriods - right;
-				this.AddUndoItem(new Rectangle(this.m_normalizedRange.Left, this.m_normalizedRange.Top, this.m_normalizedRange.Width, this.m_normalizedRange.Height), UndoOriginalBehavior.Removal);
-				for (int i = 0; i < this.m_normalizedRange.Height; i++)
+				int right = m_normalizedRange.Right;
+				int num2 = m_sequence.TotalEventPeriods - right;
+				AddUndoItem(new Rectangle(m_normalizedRange.Left, m_normalizedRange.Top, m_normalizedRange.Width, m_normalizedRange.Height), UndoOriginalBehavior.Removal);
+				for (int i = 0; i < m_normalizedRange.Height; i++)
 				{
-					int num3 = this.m_channelOrderMapping[this.m_normalizedRange.Top + i];
+					int num3 = m_channelOrderMapping[m_normalizedRange.Top + i];
 					int num4 = 0;
 					while (num4 < num2)
 					{
-						this.m_sequence.EventValues[num3, (right - this.m_normalizedRange.Width) + num4] = this.m_sequence.EventValues[num3, right + num4];
+						m_sequence.EventValues[num3, (right - m_normalizedRange.Width) + num4] = m_sequence.EventValues[num3, right + num4];
 						num4++;
 					}
-					for (num4 = (right + num2) - this.m_normalizedRange.Width; num4 < this.m_sequence.TotalEventPeriods; num4++)
+					for (num4 = (right + num2) - m_normalizedRange.Width; num4 < m_sequence.TotalEventPeriods; num4++)
 					{
-						this.m_sequence.EventValues[num3, num4] = this.m_sequence.MinimumLevel;
+						m_sequence.EventValues[num3, num4] = m_sequence.MinimumLevel;
 					}
 				}
-				this.pictureBoxGrid.Refresh();
+				pictureBoxGrid.Refresh();
 			}
 		}
 
 		private void toolStripButtonSave_Click(object sender, EventArgs e)
 		{
-			this.m_systemInterface.InvokeSave(this);
+			m_systemInterface.InvokeSave(this);
 		}
 
 		private void toolStripButtonSaveOrder_Click(object sender, EventArgs e)
@@ -4625,7 +4625,7 @@ namespace VixenEditor
 					return;
 				}
 				no = DialogResult.Yes;
-				foreach (VixenPlus.SortOrder order2 in this.m_sequence.Sorts)
+				foreach (VixenPlus.SortOrder order2 in m_sequence.Sorts)
 				{
 					if (order2.Name == dialog.Response)
 					{
@@ -4642,14 +4642,14 @@ namespace VixenEditor
 			if (item != null)
 			{
 				item.ChannelIndexes.Clear();
-				item.ChannelIndexes.AddRange(this.m_channelOrderMapping);
-				this.toolStripComboBoxChannelOrder.SelectedItem = item;
+				item.ChannelIndexes.AddRange(m_channelOrderMapping);
+				toolStripComboBoxChannelOrder.SelectedItem = item;
 			}
 			else
 			{
-				this.m_sequence.Sorts.Add(item = new VixenPlus.SortOrder(dialog.Response, this.m_channelOrderMapping));
-				this.toolStripComboBoxChannelOrder.Items.Insert(this.toolStripComboBoxChannelOrder.Items.Count - 1, item);
-				this.toolStripComboBoxChannelOrder.SelectedIndex = this.toolStripComboBoxChannelOrder.Items.Count - 2;
+				m_sequence.Sorts.Add(item = new VixenPlus.SortOrder(dialog.Response, m_channelOrderMapping));
+				toolStripComboBoxChannelOrder.Items.Insert(toolStripComboBoxChannelOrder.Items.Count - 1, item);
+				toolStripComboBoxChannelOrder.SelectedIndex = toolStripComboBoxChannelOrder.Items.Count - 2;
 			}
 			dialog.Dispose();
 			base.IsDirty = true;
@@ -4657,75 +4657,75 @@ namespace VixenEditor
 
 		private void toolStripButtonShimmerDimming_Click(object sender, EventArgs e)
 		{
-			int maxFrequency = 0x3e8 / this.m_sequence.EventPeriod;
-			EffectFrequencyDialog dialog = new EffectFrequencyDialog("Shimmer (dimming)", maxFrequency, this.m_dimmingShimmerGenerator);
+			int maxFrequency = 0x3e8 / m_sequence.EventPeriod;
+			EffectFrequencyDialog dialog = new EffectFrequencyDialog("Shimmer (dimming)", maxFrequency, m_dimmingShimmerGenerator);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
-				this.AddUndoItem(this.m_normalizedRange, UndoOriginalBehavior.Overwrite);
-				int bottom = this.m_normalizedRange.Bottom;
-				int right = this.m_normalizedRange.Right;
-				byte[,] values = new byte[this.m_normalizedRange.Height, this.m_normalizedRange.Width];
-				this.DimmingShimmerGenerator(values, new int[] { dialog.Frequency });
-				int top = this.m_normalizedRange.Top;
+				AddUndoItem(m_normalizedRange, UndoOriginalBehavior.Overwrite);
+				int bottom = m_normalizedRange.Bottom;
+				int right = m_normalizedRange.Right;
+				byte[,] values = new byte[m_normalizedRange.Height, m_normalizedRange.Width];
+				DimmingShimmerGenerator(values, new int[] { dialog.Frequency });
+				int top = m_normalizedRange.Top;
 				for (int i = 0; top < bottom; i++)
 				{
-					int num5 = this.m_channelOrderMapping[top];
-					if (this.m_sequence.Channels[num5].Enabled)
+					int num5 = m_channelOrderMapping[top];
+					if (m_sequence.Channels[num5].Enabled)
 					{
-						int left = this.m_normalizedRange.Left;
+						int left = m_normalizedRange.Left;
 						for (int j = 0; left < right; j++)
 						{
-							this.m_sequence.EventValues[num5, left] = values[i, j];
+							m_sequence.EventValues[num5, left] = values[i, j];
 							left++;
 						}
 					}
 					top++;
 				}
-				this.m_selectionRectangle.Width = 0;
-				this.pictureBoxGrid.Invalidate(this.SelectionToRectangle());
+				m_selectionRectangle.Width = 0;
+				pictureBoxGrid.Invalidate(SelectionToRectangle());
 			}
 			dialog.Dispose();
 		}
 
 		private void toolStripButtonSparkle_Click(object sender, EventArgs e)
 		{
-			int maxFrequency = 0x3e8 / this.m_sequence.EventPeriod;
-			SparkleParamsDialog dialog = new SparkleParamsDialog(maxFrequency, this.m_sparkleGenerator, this.m_sequence.MinimumLevel, this.m_sequence.MaximumLevel, this.m_drawingLevel, this.m_actualLevels);
+			int maxFrequency = 0x3e8 / m_sequence.EventPeriod;
+			SparkleParamsDialog dialog = new SparkleParamsDialog(maxFrequency, m_sparkleGenerator, m_sequence.MinimumLevel, m_sequence.MaximumLevel, m_drawingLevel, m_actualLevels);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
-				this.AddUndoItem(this.m_normalizedRange, UndoOriginalBehavior.Overwrite);
-				int bottom = this.m_normalizedRange.Bottom;
-				int right = this.m_normalizedRange.Right;
-				byte[,] values = new byte[this.m_normalizedRange.Height, this.m_normalizedRange.Width];
-				this.SparkleGenerator(values, new int[] { dialog.Frequency, dialog.DecayTime, dialog.MinimumIntensity, dialog.MaximumIntensity });
-				int top = this.m_normalizedRange.Top;
+				AddUndoItem(m_normalizedRange, UndoOriginalBehavior.Overwrite);
+				int bottom = m_normalizedRange.Bottom;
+				int right = m_normalizedRange.Right;
+				byte[,] values = new byte[m_normalizedRange.Height, m_normalizedRange.Width];
+				SparkleGenerator(values, new int[] { dialog.Frequency, dialog.DecayTime, dialog.MinimumIntensity, dialog.MaximumIntensity });
+				int top = m_normalizedRange.Top;
 				for (int i = 0; top < bottom; i++)
 				{
-					int num5 = this.m_channelOrderMapping[top];
-					if (this.m_sequence.Channels[num5].Enabled)
+					int num5 = m_channelOrderMapping[top];
+					if (m_sequence.Channels[num5].Enabled)
 					{
-						int left = this.m_normalizedRange.Left;
+						int left = m_normalizedRange.Left;
 						for (int j = 0; left < right; j++)
 						{
-							this.m_sequence.EventValues[num5, left] = values[i, j];
+							m_sequence.EventValues[num5, left] = values[i, j];
 							left++;
 						}
 					}
 					top++;
 				}
-				this.m_selectionRectangle.Width = 0;
-				this.pictureBoxGrid.Invalidate(this.SelectionToRectangle());
+				m_selectionRectangle.Width = 0;
+				pictureBoxGrid.Invalidate(SelectionToRectangle());
 			}
 			dialog.Dispose();
 		}
 
 		private void toolStripButtonStop_Click(object sender, EventArgs e)
 		{
-			if (this.m_executionInterface.EngineStatus(this.m_executionContextHandle) != 0)
+			if (m_executionInterface.EngineStatus(m_executionContextHandle) != 0)
 			{
-				this.m_positionTimer.Stop();
-				this.ProgramEnded();
-				this.m_executionInterface.ExecuteStop(this.m_executionContextHandle);
+				m_positionTimer.Stop();
+				ProgramEnded();
+				m_executionInterface.ExecuteStop(m_executionContextHandle);
 			}
 		}
 
@@ -4733,7 +4733,7 @@ namespace VixenEditor
 		{
 			try
 			{
-				new TestChannelsDialog(this.m_sequence, this.m_executionInterface).Show();
+				new TestChannelsDialog(m_sequence, m_executionInterface).Show();
 			}
 			catch (Exception exception)
 			{
@@ -4745,7 +4745,7 @@ namespace VixenEditor
 		{
 			try
 			{
-				new TestConsoleDialog(this.m_sequence, this.m_executionInterface).Show();
+				new TestConsoleDialog(m_sequence, m_executionInterface).Show();
 			}
 			catch (Exception exception)
 			{
@@ -4755,194 +4755,194 @@ namespace VixenEditor
 
 		private void toolStripButtonToggleCellText_Click(object sender, EventArgs e)
 		{
-			this.m_showCellText = !this.m_showCellText;
+			m_showCellText = !m_showCellText;
 			toolStripButtonToggleCellText.BackgroundImage = m_showCellText
 				                                                ? global::Properties.Resources.Ball_Green
 				                                                : global::Properties.Resources.Ball_Red;
-			this.pictureBoxGrid.Refresh();
+			pictureBoxGrid.Refresh();
 		}
 
 		private void toolStripButtonToggleCrossHairs_Click(object sender, EventArgs e)
 		{
-			if (!this.toolStripButtonToggleCrossHairs.Checked)
+			if (!toolStripButtonToggleCrossHairs.Checked)
 			{
-				this.pictureBoxGrid.Invalidate(new Rectangle((this.m_mouseTimeCaret - this.hScrollBar1.Value) * this.m_periodPixelWidth, 0, this.m_periodPixelWidth, this.pictureBoxGrid.Height));
-				this.pictureBoxGrid.Update();
-				this.pictureBoxGrid.Invalidate(new Rectangle(0, (this.m_mouseChannelCaret - this.vScrollBar1.Value) * this.m_gridRowHeight, this.pictureBoxGrid.Width, this.m_gridRowHeight));
-				this.pictureBoxGrid.Update();
+				pictureBoxGrid.Invalidate(new Rectangle((m_mouseTimeCaret - hScrollBar1.Value) * m_periodPixelWidth, 0, m_periodPixelWidth, pictureBoxGrid.Height));
+				pictureBoxGrid.Update();
+				pictureBoxGrid.Invalidate(new Rectangle(0, (m_mouseChannelCaret - vScrollBar1.Value) * m_gridRowHeight, pictureBoxGrid.Width, m_gridRowHeight));
+				pictureBoxGrid.Update();
 			}
 		}
 
 		private void toolStripButtonToggleLevels_Click(object sender, EventArgs e)
 		{
-			this.m_actualLevels = !this.m_actualLevels;
+			m_actualLevels = !m_actualLevels;
 			//toolStripButtonToggleLevels.Image = m_actualLevels
 			//                                        ? global::Properties.Resources.level_Number
 			//                                        : global::Properties.Resources.level_Percent;
-			this.m_preferences.SetBoolean("ActualLevels", this.m_actualLevels);
-			this.UpdateLevelDisplay();
-			this.pictureBoxGrid.Refresh();
+			m_preferences.SetBoolean("ActualLevels", m_actualLevels);
+			UpdateLevelDisplay();
+			pictureBoxGrid.Refresh();
 		}
 
 		private void toolStripButtonToggleRamps_Click(object sender, EventArgs e)
 		{
-			this.m_showingGradient = !this.m_showingGradient;
-			this.m_preferences.SetBoolean("BarLevels", !this.m_showingGradient);
-			this.pictureBoxGrid.Refresh();
+			m_showingGradient = !m_showingGradient;
+			m_preferences.SetBoolean("BarLevels", !m_showingGradient);
+			pictureBoxGrid.Refresh();
 		}
 
 		private void toolStripButtonTransparentPaste_Click(object sender, EventArgs e)
 		{
-			if (this.m_systemInterface.Clipboard != null)
+			if (m_systemInterface.Clipboard != null)
 			{
-				this.AddUndoItem(new Rectangle(this.m_normalizedRange.X, this.m_normalizedRange.Y, this.m_systemInterface.Clipboard.GetLength(1), this.m_systemInterface.Clipboard.GetLength(0)), UndoOriginalBehavior.Overwrite);
-				byte[,] clipboard = this.m_systemInterface.Clipboard;
+				AddUndoItem(new Rectangle(m_normalizedRange.X, m_normalizedRange.Y, m_systemInterface.Clipboard.GetLength(1), m_systemInterface.Clipboard.GetLength(0)), UndoOriginalBehavior.Overwrite);
+				byte[,] clipboard = m_systemInterface.Clipboard;
 				int length = clipboard.GetLength(0);
 				int num3 = clipboard.GetLength(1);
-				int minimumLevel = this.m_sequence.MinimumLevel;
-				for (int i = 0; (i < length) && ((this.m_normalizedRange.Top + i) < this.m_sequence.ChannelCount); i++)
+				int minimumLevel = m_sequence.MinimumLevel;
+				for (int i = 0; (i < length) && ((m_normalizedRange.Top + i) < m_sequence.ChannelCount); i++)
 				{
-					int num4 = this.m_channelOrderMapping[this.m_normalizedRange.Top + i];
-					for (int j = 0; (j < num3) && ((this.m_normalizedRange.Left + j) < this.m_sequence.TotalEventPeriods); j++)
+					int num4 = m_channelOrderMapping[m_normalizedRange.Top + i];
+					for (int j = 0; (j < num3) && ((m_normalizedRange.Left + j) < m_sequence.TotalEventPeriods); j++)
 					{
 						byte num5 = clipboard[i, j];
 						if (num5 > minimumLevel)
 						{
-							this.m_sequence.EventValues[num4, this.m_normalizedRange.Left + j] = num5;
+							m_sequence.EventValues[num4, m_normalizedRange.Left + j] = num5;
 						}
 					}
 				}
 				base.IsDirty = true;
-				this.pictureBoxGrid.Refresh();
+				pictureBoxGrid.Refresh();
 			}
 		}
 
 		private void toolStripButtonUndo_Click(object sender, EventArgs e)
 		{
-			this.Undo();
+			Undo();
 		}
 
 		private void toolStripButtonWaveform_Click(object sender, EventArgs e)
 		{
-			if (this.m_executionInterface.EngineStatus(this.m_executionContextHandle) != 1)
+			if (m_executionInterface.EngineStatus(m_executionContextHandle) != 1)
 			{
-				if ((this.m_waveformPixelData == null) || (this.m_waveformPCMData == null))
+				if ((m_waveformPixelData == null) || (m_waveformPCMData == null))
 				{
-					this.ParseAudioWaveform();
+					ParseAudioWaveform();
 				}
-				if (this.toolStripButtonWaveform.Checked)
+				if (toolStripButtonWaveform.Checked)
 				{
-					this.pictureBoxTime.Height = 120;
-					this.EnableWaveformButton();
+					pictureBoxTime.Height = 120 * m_waveformMaxAmplitude;
+					EnableWaveformButton();
 				}
 				else
 				{
-					this.pictureBoxTime.Height = 60;
-					this.toolStripLabelWaveformZoom.Enabled = false;
-					this.toolStripComboBoxWaveformZoom.Enabled = false;
+					pictureBoxTime.Height = 60;
+					toolStripLabelWaveformZoom.Enabled = false;
+					toolStripComboBoxWaveformZoom.Enabled = false;
 				}
-				this.pictureBoxTime.Refresh();
-				this.pictureBoxChannels.Refresh();
+				pictureBoxTime.Refresh();
+				pictureBoxChannels.Refresh();
 			}
 		}
 
 		private void toolStripComboBoxChannelOrder_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (this.toolStripComboBoxChannelOrder.SelectedIndex != -1)
+			if (toolStripComboBoxChannelOrder.SelectedIndex != -1)
 			{
-				if ((this.m_sequence.Profile != null) && (this.toolStripComboBoxChannelOrder.SelectedIndex == 0))
+				if ((m_sequence.Profile != null) && (toolStripComboBoxChannelOrder.SelectedIndex == 0))
 				{
-					this.toolStripComboBoxChannelOrder.SelectedIndex = -1;
+					toolStripComboBoxChannelOrder.SelectedIndex = -1;
 					MessageBox.Show("This sequence is attached to a profile.\nChanges to the profile affect all sequences attached to it.\n\nIf this is what you want to do, please use the profile manager.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 				}
 				else
 				{
-					if (this.toolStripComboBoxChannelOrder.SelectedIndex == 0)
+					if (toolStripComboBoxChannelOrder.SelectedIndex == 0)
 					{
-						if (this.m_sequence.ChannelCount == 0)
+						if (m_sequence.ChannelCount == 0)
 						{
 							MessageBox.Show("There are no channels to reorder.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 							return;
 						}
-						this.toolStripButtonDeleteOrder.Enabled = false;
-						this.toolStripComboBoxChannelOrder.SelectedIndex = -1;
-						ChannelOrderDialog dialog = new ChannelOrderDialog(this.m_sequence.Channels, this.m_channelOrderMapping);
+						toolStripButtonDeleteOrder.Enabled = false;
+						toolStripComboBoxChannelOrder.SelectedIndex = -1;
+						ChannelOrderDialog dialog = new ChannelOrderDialog(m_sequence.Channels, m_channelOrderMapping);
 						if (dialog.ShowDialog() == DialogResult.OK)
 						{
-							this.m_channelOrderMapping.Clear();
+							m_channelOrderMapping.Clear();
 							foreach (VixenPlus.Channel channel in dialog.ChannelMapping)
 							{
-								this.m_channelOrderMapping.Add(this.m_sequence.Channels.IndexOf(channel));
+								m_channelOrderMapping.Add(m_sequence.Channels.IndexOf(channel));
 							}
 							base.IsDirty = true;
 						}
 						dialog.Dispose();
 					}
-					else if (this.toolStripComboBoxChannelOrder.SelectedIndex == (this.toolStripComboBoxChannelOrder.Items.Count - 1))
+					else if (toolStripComboBoxChannelOrder.SelectedIndex == (toolStripComboBoxChannelOrder.Items.Count - 1))
 					{
-						this.toolStripButtonDeleteOrder.Enabled = false;
-						this.toolStripComboBoxChannelOrder.SelectedIndex = -1;
-						this.m_channelOrderMapping.Clear();
-						for (int i = 0; i < this.m_sequence.ChannelCount; i++)
+						toolStripButtonDeleteOrder.Enabled = false;
+						toolStripComboBoxChannelOrder.SelectedIndex = -1;
+						m_channelOrderMapping.Clear();
+						for (int i = 0; i < m_sequence.ChannelCount; i++)
 						{
-							this.m_channelOrderMapping.Add(i);
+							m_channelOrderMapping.Add(i);
 						}
-						this.m_sequence.LastSort = -1;
-						if (this.m_sequence.Profile == null)
+						m_sequence.LastSort = -1;
+						if (m_sequence.Profile == null)
 						{
 							base.IsDirty = true;
 						}
 					}
 					else
 					{
-						this.m_channelOrderMapping.Clear();
-						this.m_channelOrderMapping.AddRange(((VixenPlus.SortOrder) this.toolStripComboBoxChannelOrder.SelectedItem).ChannelIndexes);
-						this.m_sequence.LastSort = this.toolStripComboBoxChannelOrder.SelectedIndex - 1;
-						this.toolStripButtonDeleteOrder.Enabled = true;
-						if (this.m_sequence.Profile == null)
+						m_channelOrderMapping.Clear();
+						m_channelOrderMapping.AddRange(((VixenPlus.SortOrder) toolStripComboBoxChannelOrder.SelectedItem).ChannelIndexes);
+						m_sequence.LastSort = toolStripComboBoxChannelOrder.SelectedIndex - 1;
+						toolStripButtonDeleteOrder.Enabled = true;
+						if (m_sequence.Profile == null)
 						{
 							base.IsDirty = true;
 						}
 					}
-					this.pictureBoxChannels.Refresh();
-					this.pictureBoxGrid.Refresh();
+					pictureBoxChannels.Refresh();
+					pictureBoxGrid.Refresh();
 				}
 			}
 		}
 
 		private void toolStripComboBoxColumnZoom_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (this.toolStripComboBoxColumnZoom.SelectedIndex != -1)
+			if (toolStripComboBoxColumnZoom.SelectedIndex != -1)
 			{
-				this.UpdateColumnWidth();
+				UpdateColumnWidth();
 			}
 		}
 
 		private void toolStripComboBoxRowZoom_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (this.toolStripComboBoxRowZoom.SelectedIndex != -1)
+			if (toolStripComboBoxRowZoom.SelectedIndex != -1)
 			{
-				this.UpdateRowHeight();
+				UpdateRowHeight();
 			}
 		}
 
 		private void toolStripComboBoxWaveformZoom_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if ((this.m_executionInterface.EngineStatus(this.m_executionContextHandle) != 1) && ((this.toolStripComboBoxWaveformZoom.SelectedIndex != -1) && this.toolStripComboBoxWaveformZoom.Enabled))
+			if ((m_executionInterface.EngineStatus(m_executionContextHandle) != 1) && ((toolStripComboBoxWaveformZoom.SelectedIndex != -1) && toolStripComboBoxWaveformZoom.Enabled))
 			{
-				string selectedItem = (string) this.toolStripComboBoxWaveformZoom.SelectedItem;
-				this.m_waveformMaxAmplitude = (int) ((100f / ((float) Convert.ToInt32(selectedItem.Substring(0, selectedItem.Length - 1)))) * this.m_waveform100PercentAmplitude);
-				this.PCMToPixels(this.m_waveformPCMData, this.m_waveformPixelData);
-				this.pictureBoxTime.Refresh();
+				string selectedItem = (string) toolStripComboBoxWaveformZoom.SelectedItem;
+				m_waveformMaxAmplitude = (int) ((100f / ((float) Convert.ToInt32(selectedItem.Substring(0, selectedItem.Length - 1)))) * m_waveform100PercentAmplitude);
+				PCMToPixels(m_waveformPCMData, m_waveformPixelData);
+				pictureBoxTime.Refresh();
 			}
 		}
 
 		private void toolStripDropDownButtonPlugins_Click(object sender, EventArgs e)
 		{
-			PluginListDialog dialog = new PluginListDialog(this.m_sequence);
+			PluginListDialog dialog = new PluginListDialog(m_sequence);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
-				this.toolStripDropDownButtonPlugins.DropDownItems.Clear();
+				toolStripDropDownButtonPlugins.DropDownItems.Clear();
 				int num = 0;
 				bool flag = false;
 				foreach (object[] objArray in dialog.MappedPluginList)
@@ -4950,17 +4950,17 @@ namespace VixenEditor
 					ToolStripMenuItem item = new ToolStripMenuItem((string) objArray[0]);
 					item.Checked = (bool) objArray[1];
 					item.CheckOnClick = true;
-					item.CheckedChanged += new EventHandler(this.plugInItem_CheckedChanged);
+					item.CheckedChanged += new EventHandler(plugInItem_CheckedChanged);
 					item.Tag = num.ToString();
 					num++;
-					this.toolStripDropDownButtonPlugins.DropDownItems.Add(item);
+					toolStripDropDownButtonPlugins.DropDownItems.Add(item);
 					flag |= item.Checked;
 				}
-				if (this.toolStripDropDownButtonPlugins.DropDownItems.Count > 0)
+				if (toolStripDropDownButtonPlugins.DropDownItems.Count > 0)
 				{
-					this.toolStripDropDownButtonPlugins.DropDownItems.Add("-");
-					this.toolStripDropDownButtonPlugins.DropDownItems.Add("Select all", null, new EventHandler(this.selectAllToolStripMenuItem_Click));
-					this.toolStripDropDownButtonPlugins.DropDownItems.Add("Unselect all", null, new EventHandler(this.unselectAllToolStripMenuItem_Click));
+					toolStripDropDownButtonPlugins.DropDownItems.Add("-");
+					toolStripDropDownButtonPlugins.DropDownItems.Add("Select all", null, new EventHandler(selectAllToolStripMenuItem_Click));
+					toolStripDropDownButtonPlugins.DropDownItems.Add("Unselect all", null, new EventHandler(unselectAllToolStripMenuItem_Click));
 				}
 				base.IsDirty = true;
 			}
@@ -4976,59 +4976,59 @@ namespace VixenEditor
 
 		private void toolStripMenuItemPasteAnd_Click(object sender, EventArgs e)
 		{
-			this.BooleanPaste(BooleanOperation.AND);
+			BooleanPaste(BooleanOperation.AND);
 		}
 
 		private void toolStripMenuItemPasteNand_Click(object sender, EventArgs e)
 		{
-			this.BooleanPaste(BooleanOperation.NAND);
+			BooleanPaste(BooleanOperation.NAND);
 		}
 
 		private void toolStripMenuItemPasteNor_Click(object sender, EventArgs e)
 		{
-			this.BooleanPaste(BooleanOperation.NOR);
+			BooleanPaste(BooleanOperation.NOR);
 		}
 
 		private void toolStripMenuItemPasteOr_Click(object sender, EventArgs e)
 		{
-			this.BooleanPaste(BooleanOperation.OR);
+			BooleanPaste(BooleanOperation.OR);
 		}
 
 		private void toolStripMenuItemPasteXnor_Click(object sender, EventArgs e)
 		{
-			this.BooleanPaste(BooleanOperation.XNOR);
+			BooleanPaste(BooleanOperation.XNOR);
 		}
 
 		private void toolStripMenuItemPasteXor_Click(object sender, EventArgs e)
 		{
-			this.BooleanPaste(BooleanOperation.XOR);
+			BooleanPaste(BooleanOperation.XOR);
 		}
 
 		private void TurnCellsOff()
 		{
-			this.AddUndoItem(this.m_normalizedRange, UndoOriginalBehavior.Overwrite);
-			int bottom = this.m_normalizedRange.Bottom;
-			int right = this.m_normalizedRange.Right;
-			for (int i = this.m_normalizedRange.Top; i < bottom; i++)
+			AddUndoItem(m_normalizedRange, UndoOriginalBehavior.Overwrite);
+			int bottom = m_normalizedRange.Bottom;
+			int right = m_normalizedRange.Right;
+			for (int i = m_normalizedRange.Top; i < bottom; i++)
 			{
-				int num4 = this.m_channelOrderMapping[i];
-				if (this.m_sequence.Channels[num4].Enabled)
+				int num4 = m_channelOrderMapping[i];
+				if (m_sequence.Channels[num4].Enabled)
 				{
-					for (int j = this.m_normalizedRange.Left; j < right; j++)
+					for (int j = m_normalizedRange.Left; j < right; j++)
 					{
-						this.m_sequence.EventValues[num4, j] = this.m_sequence.MinimumLevel;
+						m_sequence.EventValues[num4, j] = m_sequence.MinimumLevel;
 					}
 				}
 			}
-			this.m_selectionRectangle.Width = 0;
-			this.pictureBoxGrid.Invalidate(this.SelectionToRectangle());
+			m_selectionRectangle.Width = 0;
+			pictureBoxGrid.Invalidate(SelectionToRectangle());
 		}
 
 		private void Undo()
 		{
-			if (this.m_undoStack.Count != 0)
+			if (m_undoStack.Count != 0)
 			{
-				UndoItem item = (UndoItem) this.m_undoStack.Pop();
+				UndoItem item = (UndoItem) m_undoStack.Pop();
 				int length = 0;
 				int num2 = 0;
 				if (item.Data != null)
@@ -5036,40 +5036,40 @@ namespace VixenEditor
 					length = item.Data.GetLength(0);
 					num2 = item.Data.GetLength(1);
 				}
-				this.toolStripButtonUndo.Enabled = this.undoToolStripMenuItem.Enabled = this.m_undoStack.Count > 0;
-				if (this.m_undoStack.Count > 0)
+				toolStripButtonUndo.Enabled = undoToolStripMenuItem.Enabled = m_undoStack.Count > 0;
+				if (m_undoStack.Count > 0)
 				{
 					base.IsDirty = true;
 				}
-				UndoItem item2 = new UndoItem(item.Location, this.GetAffectedBlockData(new Rectangle(item.Location.X, item.Location.Y, item.Data.GetLength(1), item.Data.GetLength(0))), item.Behavior, this.m_sequence, this.m_channelOrderMapping);
+				UndoItem item2 = new UndoItem(item.Location, GetAffectedBlockData(new Rectangle(item.Location.X, item.Location.Y, item.Data.GetLength(1), item.Data.GetLength(0))), item.Behavior, m_sequence, m_channelOrderMapping);
 				switch (item.Behavior)
 				{
 					case UndoOriginalBehavior.Overwrite:
-						this.DisjointedOverwrite(item.Location.X, item.Location.Y, item.Data, item.ReferencedChannels);
-						this.pictureBoxGrid.Refresh();
+						DisjointedOverwrite(item.Location.X, item.Location.Y, item.Data, item.ReferencedChannels);
+						pictureBoxGrid.Refresh();
 						break;
 
 					case UndoOriginalBehavior.Removal:
-						this.DisjointedInsert(item.Location.X, item.Location.Y, item.Data.GetLength(1), item.Data.GetLength(0), item.ReferencedChannels);
-						this.DisjointedOverwrite(item.Location.X, item.Location.Y, item.Data, item.ReferencedChannels);
-						this.pictureBoxGrid.Refresh();
+						DisjointedInsert(item.Location.X, item.Location.Y, item.Data.GetLength(1), item.Data.GetLength(0), item.ReferencedChannels);
+						DisjointedOverwrite(item.Location.X, item.Location.Y, item.Data, item.ReferencedChannels);
+						pictureBoxGrid.Refresh();
 						break;
 
 					case UndoOriginalBehavior.Insertion:
-						this.DisjointedRemove(item.Location.X, item.Location.Y, item.Data.GetLength(1), item.Data.GetLength(0), item.ReferencedChannels);
-						this.pictureBoxGrid.Refresh();
+						DisjointedRemove(item.Location.X, item.Location.Y, item.Data.GetLength(1), item.Data.GetLength(0), item.ReferencedChannels);
+						pictureBoxGrid.Refresh();
 						break;
 				}
-				this.UpdateUndoText();
-				this.m_redoStack.Push(item2);
-				this.toolStripButtonRedo.Enabled = this.redoToolStripMenuItem.Enabled = true;
-				this.UpdateRedoText();
+				UpdateUndoText();
+				m_redoStack.Push(item2);
+				toolStripButtonRedo.Enabled = redoToolStripMenuItem.Enabled = true;
+				UpdateRedoText();
 			}
 		}
 
 		private void unselectAllToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			foreach (ToolStripItem item in this.toolStripDropDownButtonPlugins.DropDownItems)
+			foreach (ToolStripItem item in toolStripDropDownButtonPlugins.DropDownItems)
 			{
 				if (!(item is ToolStripMenuItem))
 				{
@@ -5081,19 +5081,19 @@ namespace VixenEditor
 
 		private void UpdateColumnWidth()
 		{
-			double num = (this.toolStripComboBoxColumnZoom.SelectedIndex + 1) * 0.1;
-			this.m_periodPixelWidth = (int) (this.m_preferences.GetInteger("MaxColumnWidth") * num);
-			this.HScrollCheck();
-			this.ParseAudioWaveform();
-			this.pictureBoxGrid.Refresh();
-			this.pictureBoxTime.Refresh();
+			double num = (toolStripComboBoxColumnZoom.SelectedIndex + 1) * 0.1;
+			m_periodPixelWidth = (int) (m_preferences.GetInteger("MaxColumnWidth") * num);
+			HScrollCheck();
+			ParseAudioWaveform();
+			pictureBoxGrid.Refresh();
+			pictureBoxTime.Refresh();
 		}
 
 		private void UpdateGrid(Graphics g, Rectangle clipRect)
 		{
-			if (this.m_sequence.ChannelCount != 0)
+			if (m_sequence.ChannelCount != 0)
 			{
-				using (Font font = new Font(this.Font.FontFamily, (this.m_periodPixelWidth <= 20) ? ((float) 5) : ((this.m_periodPixelWidth <= 25) ? ((float) 6) : ((this.m_periodPixelWidth < 50) ? ((float) 8) : ((float) 10)))))
+				using (Font font = new Font(Font.FontFamily, (m_periodPixelWidth <= 20) ? ((float) 5) : ((m_periodPixelWidth <= 25) ? ((float) 6) : ((m_periodPixelWidth < 50) ? ((float) 8) : ((float) 10)))))
 				{
 					using (SolidBrush brush = new SolidBrush(Color.White))
 					{
@@ -5102,53 +5102,53 @@ namespace VixenEditor
 						int num7;
 						VixenPlus.Channel channel;
 						string str;
-						int num5 = ((clipRect.X / this.m_periodPixelWidth) * this.m_periodPixelWidth) + 1;
-						int y = ((clipRect.Y / this.m_gridRowHeight) * this.m_gridRowHeight) + 1;
-						int num6 = (clipRect.X / this.m_periodPixelWidth) + this.hScrollBar1.Value;
-						int cellY = (clipRect.Y / this.m_gridRowHeight) + this.vScrollBar1.Value;
-						if (!this.m_showingGradient)
+						int num5 = ((clipRect.X / m_periodPixelWidth) * m_periodPixelWidth) + 1;
+						int y = ((clipRect.Y / m_gridRowHeight) * m_gridRowHeight) + 1;
+						int num6 = (clipRect.X / m_periodPixelWidth) + hScrollBar1.Value;
+						int cellY = (clipRect.Y / m_gridRowHeight) + vScrollBar1.Value;
+						if (!m_showingGradient)
 						{
 							goto Label_0329;
 						}
-						while ((y < clipRect.Bottom) && (cellY < this.m_sequence.ChannelCount))
+						while ((y < clipRect.Bottom) && (cellY < m_sequence.ChannelCount))
 						{
-							num7 = this.m_channelOrderMapping[cellY];
-							channel = this.m_sequence.Channels[num7];
+							num7 = m_channelOrderMapping[cellY];
+							channel = m_sequence.Channels[num7];
 							num3 = num5;
 							num = num6;
-							while ((num3 < clipRect.Right) && (num < this.m_sequence.TotalEventPeriods))
+							while ((num3 < clipRect.Right) && (num < m_sequence.TotalEventPeriods))
 							{
-								brush.Color = this.GetGradientColor(this.m_gridBackBrush.Color, channel.Color, this.m_sequence.EventValues[num7, num]);
-								g.FillRectangle(brush, num3, y, this.m_periodPixelWidth - 1, this.m_gridRowHeight - 1);
-								if (this.m_showCellText && (this.GetCellIntensity(num, cellY, out str) > 0))
+								brush.Color = GetGradientColor(m_gridBackBrush.Color, channel.Color, m_sequence.EventValues[num7, num]);
+								g.FillRectangle(brush, num3, y, m_periodPixelWidth - 1, m_gridRowHeight - 1);
+								if (m_showCellText && (GetCellIntensity(num, cellY, out str) > 0))
 								{
-									g.DrawString(str, font, Brushes.Black, new RectangleF((float) num3, (float) y, (float) (this.m_periodPixelWidth - 1), (float) (this.m_gridRowHeight - 1)));
+									g.DrawString(str, font, Brushes.Black, new RectangleF((float) num3, (float) y, (float) (m_periodPixelWidth - 1), (float) (m_gridRowHeight - 1)));
 								}
-								num3 += this.m_periodPixelWidth;
+								num3 += m_periodPixelWidth;
 								num++;
 							}
-							y += this.m_gridRowHeight;
+							y += m_gridRowHeight;
 							cellY++;
 						}
 						return;
 					Label_0222:
-						num7 = this.m_channelOrderMapping[cellY];
-						channel = this.m_sequence.Channels[num7];
+						num7 = m_channelOrderMapping[cellY];
+						channel = m_sequence.Channels[num7];
 						num3 = num5;
-						for (num = num6; (num3 < clipRect.Right) && (num < this.m_sequence.TotalEventPeriods); num++)
+						for (num = num6; (num3 < clipRect.Right) && (num < m_sequence.TotalEventPeriods); num++)
 						{
-							int height = ((this.m_gridRowHeight - 1) * this.m_sequence.EventValues[num7, num]) / 0xff;
-							g.FillRectangle(channel.Brush, num3, ((y + this.m_gridRowHeight) - 1) - height, this.m_periodPixelWidth - 1, height);
-							if (this.m_showCellText && (this.GetCellIntensity(num, cellY, out str) > 0))
+							int height = ((m_gridRowHeight - 1) * m_sequence.EventValues[num7, num]) / 0xff;
+							g.FillRectangle(channel.Brush, num3, ((y + m_gridRowHeight) - 1) - height, m_periodPixelWidth - 1, height);
+							if (m_showCellText && (GetCellIntensity(num, cellY, out str) > 0))
 							{
-								g.DrawString(str, font, Brushes.Black, new RectangleF((float) num3, (float) y, (float) (this.m_periodPixelWidth - 1), (float) (this.m_gridRowHeight - 1)));
+								g.DrawString(str, font, Brushes.Black, new RectangleF((float) num3, (float) y, (float) (m_periodPixelWidth - 1), (float) (m_gridRowHeight - 1)));
 							}
-							num3 += this.m_periodPixelWidth;
+							num3 += m_periodPixelWidth;
 						}
-						y += this.m_gridRowHeight;
+						y += m_gridRowHeight;
 						cellY++;
 					Label_0329:
-						if ((y < clipRect.Bottom) && (cellY < this.m_sequence.ChannelCount))
+						if ((y < clipRect.Bottom) && (cellY < m_sequence.ChannelCount))
 						{
 							goto Label_0222;
 						}
@@ -5159,20 +5159,20 @@ namespace VixenEditor
 
 		private void UpdateLevelDisplay()
 		{
-			this.SetDrawingLevel(this.m_drawingLevel);
-			if (this.m_actualLevels)
+			SetDrawingLevel(m_drawingLevel);
+			if (m_actualLevels)
 			{
 				toolStripButtonToggleLevels.Image = global::Properties.Resources.Percent;
-				//this.toolStripButtonToggleLevels.Image = this.pictureBoxLevelPercent.Image;
-				this.toolStripButtonToggleLevels.Text = this.toolStripButtonToggleLevels.ToolTipText = "Show intensity levels as percent (0-100%)";
+				//toolStripButtonToggleLevels.Image = pictureBoxLevelPercent.Image;
+				toolStripButtonToggleLevels.Text = toolStripButtonToggleLevels.ToolTipText = "Show intensity levels as percent (0-100%)";
 			}
 			else
 			{
 				toolStripButtonToggleLevels.Image = global::Properties.Resources.number;
-				//this.toolStripButtonToggleLevels.Image = this.pictureBoxLevelNumber.Image;
-				this.toolStripButtonToggleLevels.Text = this.toolStripButtonToggleLevels.ToolTipText = "Show actual intensity levels (0-255)";
+				//toolStripButtonToggleLevels.Image = pictureBoxLevelNumber.Image;
+				toolStripButtonToggleLevels.Text = toolStripButtonToggleLevels.ToolTipText = "Show actual intensity levels (0-255)";
 			}
-			this.m_intensityAdjustDialog.ActualLevels = this.m_actualLevels;
+			m_intensityAdjustDialog.ActualLevels = m_actualLevels;
 		}
 
         private void UpdateToolbarMenu()
@@ -5185,21 +5185,21 @@ namespace VixenEditor
 
         private void UpdatePositionLabel(Rectangle rect, bool zeroWidthIsValid)
         {
-            int milliseconds = rect.Left * this.m_sequence.EventPeriod;
-            string str = this.TimeString(milliseconds);
+            int milliseconds = rect.Left * m_sequence.EventPeriod;
+            string str = TimeString(milliseconds);
             if (rect.Width > 1)
             {
-                int num2 = (rect.Right - 1) * this.m_sequence.EventPeriod;
-                string str2 = this.TimeString(num2);
-                this.labelPosition.Text = string.Format("{0} - {1}\n({2})", str, str2, this.TimeString(num2 - milliseconds));
+                int num2 = (rect.Right - 1) * m_sequence.EventPeriod;
+                string str2 = TimeString(num2);
+                labelPosition.Text = string.Format("{0} - {1}\n({2})", str, str2, TimeString(num2 - milliseconds));
             }
             else if (((rect.Width == 0) && zeroWidthIsValid) || (rect.Width == 1))
             {
-                this.labelPosition.Text = str;
+                labelPosition.Text = str;
             }
             else
             {
-                this.labelPosition.Text = string.Empty;
+                labelPosition.Text = string.Empty;
             }
         }
 
@@ -5215,103 +5215,103 @@ namespace VixenEditor
 
 		private void UpdateProgress()
 		{
-			int x = (this.m_previousPosition - this.hScrollBar1.Value) * this.m_periodPixelWidth;
-			this.pictureBoxTime.Invalidate(new Rectangle(x, this.pictureBoxTime.Height - 0x23, this.m_periodPixelWidth + this.m_periodPixelWidth, 15));
-			this.pictureBoxGrid.Invalidate(new Rectangle(x, 0, this.m_periodPixelWidth + this.m_periodPixelWidth, this.pictureBoxGrid.Height));
+			int x = (m_previousPosition - hScrollBar1.Value) * m_periodPixelWidth;
+			pictureBoxTime.Invalidate(new Rectangle(x, pictureBoxTime.Height - 0x23, m_periodPixelWidth + m_periodPixelWidth, 15));
+			pictureBoxGrid.Invalidate(new Rectangle(x, 0, m_periodPixelWidth + m_periodPixelWidth, pictureBoxGrid.Height));
 		}
 
 		private void UpdateRedoText()
 		{
-			if (this.m_redoStack.Count > 0)
+			if (m_redoStack.Count > 0)
 			{
-				this.toolStripButtonRedo.ToolTipText = this.redoToolStripMenuItem.Text = "Redo: " + ((UndoItem) this.m_redoStack.Peek()).ToString();
+				toolStripButtonRedo.ToolTipText = redoToolStripMenuItem.Text = "Redo: " + ((UndoItem) m_redoStack.Peek()).ToString();
 			}
 			else
 			{
-				this.toolStripButtonRedo.ToolTipText = this.redoToolStripMenuItem.Text = "Redo";
+				toolStripButtonRedo.ToolTipText = redoToolStripMenuItem.Text = "Redo";
 			}
 		}
 
 		private void UpdateRowHeight()
 		{
-			if (this.toolStripComboBoxRowZoom.SelectedIndex >= 6)
+			if (toolStripComboBoxRowZoom.SelectedIndex >= 6)
 			{
-				if (!(this.m_channelNameFont.Size == 8f))
+				if (!(m_channelNameFont.Size == 8f))
 				{
-					this.m_channelNameFont.Dispose();
-					this.m_channelNameFont = new Font("Arial", 8f);
+					m_channelNameFont.Dispose();
+					m_channelNameFont = new Font("Arial", 8f);
 				}
 			}
-			else if (this.toolStripComboBoxRowZoom.SelectedIndex <= 3)
+			else if (toolStripComboBoxRowZoom.SelectedIndex <= 3)
 			{
-				if (!(this.m_channelNameFont.Size == 5f))
+				if (!(m_channelNameFont.Size == 5f))
 				{
-					this.m_channelNameFont.Dispose();
-					this.m_channelNameFont = new Font("Arial", 5f);
+					m_channelNameFont.Dispose();
+					m_channelNameFont = new Font("Arial", 5f);
 				}
 			}
-			else if (!(this.m_channelNameFont.Size == 7f))
+			else if (!(m_channelNameFont.Size == 7f))
 			{
-				this.m_channelNameFont.Dispose();
-				this.m_channelNameFont = new Font("Arial", 7f);
+				m_channelNameFont.Dispose();
+				m_channelNameFont = new Font("Arial", 7f);
 			}
-			double num = (this.toolStripComboBoxRowZoom.SelectedIndex + 1) * 0.1;
-			this.m_gridRowHeight = (int) (this.m_preferences.GetInteger("MaxRowHeight") * num);
-			this.VScrollCheck();
-			this.pictureBoxGrid.Refresh();
-			this.pictureBoxChannels.Refresh();
+			double num = (toolStripComboBoxRowZoom.SelectedIndex + 1) * 0.1;
+			m_gridRowHeight = (int) (m_preferences.GetInteger("MaxRowHeight") * num);
+			VScrollCheck();
+			pictureBoxGrid.Refresh();
+			pictureBoxChannels.Refresh();
 		}
 
 		private void UpdateUndoText()
 		{
-			if (this.m_undoStack.Count > 0)
+			if (m_undoStack.Count > 0)
 			{
-				this.toolStripButtonUndo.ToolTipText = this.undoToolStripMenuItem.Text = "Undo: " + ((UndoItem) this.m_undoStack.Peek()).ToString();
+				toolStripButtonUndo.ToolTipText = undoToolStripMenuItem.Text = "Undo: " + ((UndoItem) m_undoStack.Peek()).ToString();
 			}
 			else
 			{
-				this.toolStripButtonUndo.ToolTipText = this.undoToolStripMenuItem.Text = "Undo";
+				toolStripButtonUndo.ToolTipText = undoToolStripMenuItem.Text = "Undo";
 			}
 		}
 
 		private void vScrollBar1_ValueChanged(object sender, EventArgs e)
 		{
-			this.pictureBoxGrid.Refresh();
-			this.pictureBoxChannels.Refresh();
+			pictureBoxGrid.Refresh();
+			pictureBoxChannels.Refresh();
 		}
 
 		private void VScrollCheck()
 		{
-			this.m_visibleRowCount = this.pictureBoxGrid.Height / this.m_gridRowHeight;
-			this.vScrollBar1.Maximum = this.m_sequence.ChannelCount - 1;
-			this.vScrollBar1.LargeChange = this.m_visibleRowCount;
-			this.vScrollBar1.Enabled = this.m_visibleRowCount < this.m_sequence.ChannelCount;
-			if (!this.vScrollBar1.Enabled)
+			m_visibleRowCount = pictureBoxGrid.Height / m_gridRowHeight;
+			vScrollBar1.Maximum = m_sequence.ChannelCount - 1;
+			vScrollBar1.LargeChange = m_visibleRowCount;
+			vScrollBar1.Enabled = m_visibleRowCount < m_sequence.ChannelCount;
+			if (!vScrollBar1.Enabled)
 			{
-				this.vScrollBar1.Value = this.vScrollBar1.Minimum;
+				vScrollBar1.Value = vScrollBar1.Minimum;
 			}
-			else if ((this.vScrollBar1.Value + this.m_visibleRowCount) > this.m_sequence.ChannelCount)
+			else if ((vScrollBar1.Value + m_visibleRowCount) > m_sequence.ChannelCount)
 			{
-				this.m_selectedRange.Y += this.m_visibleRowCount - this.m_sequence.ChannelCount;
-				this.m_normalizedRange.Y += this.m_visibleRowCount - this.m_sequence.ChannelCount;
-				this.vScrollBar1.Value = this.m_sequence.ChannelCount - this.m_visibleRowCount;
+				m_selectedRange.Y += m_visibleRowCount - m_sequence.ChannelCount;
+				m_normalizedRange.Y += m_visibleRowCount - m_sequence.ChannelCount;
+				vScrollBar1.Value = m_sequence.ChannelCount - m_visibleRowCount;
 			}
-			if (this.vScrollBar1.Maximum >= 0)
+			if (vScrollBar1.Maximum >= 0)
 			{
-				if (this.vScrollBar1.Value == -1)
+				if (vScrollBar1.Value == -1)
 				{
-					this.vScrollBar1.Value = 0;
+					vScrollBar1.Value = 0;
 				}
-				if (this.vScrollBar1.Minimum == -1)
+				if (vScrollBar1.Minimum == -1)
 				{
-					this.vScrollBar1.Minimum = 0;
+					vScrollBar1.Minimum = 0;
 				}
 			}
 		}
 
 		private void xToolStripMenuItem2_Click(object sender, EventArgs e)
 		{
-			this.SetAudioSpeed(0.75f);
+			SetAudioSpeed(0.75f);
 		}
 
 		public override string Author
@@ -5350,23 +5350,23 @@ namespace VixenEditor
 		{
 			get
 			{
-				return this.m_selectedChannel;
+				return m_selectedChannel;
 			}
 			set
 			{
-				if (this.m_selectedChannel != value)
+				if (m_selectedChannel != value)
 				{
-					VixenPlus.Channel selectedChannel = this.m_selectedChannel;
-					this.m_selectedChannel = value;
+					VixenPlus.Channel selectedChannel = m_selectedChannel;
+					m_selectedChannel = value;
 					if (selectedChannel != null)
 					{
-						this.pictureBoxChannels.Invalidate(this.GetChannelNameRect(selectedChannel));
+						pictureBoxChannels.Invalidate(GetChannelNameRect(selectedChannel));
 					}
-					if (this.m_selectedChannel != null)
+					if (m_selectedChannel != null)
 					{
-						this.pictureBoxChannels.Invalidate(this.GetChannelNameRect(this.m_selectedChannel));
+						pictureBoxChannels.Invalidate(GetChannelNameRect(m_selectedChannel));
 					}
-					this.pictureBoxChannels.Update();
+					pictureBoxChannels.Update();
 				}
 			}
 		}
@@ -5375,11 +5375,11 @@ namespace VixenEditor
 		{
 			get
 			{
-				return this.m_sequence;
+				return m_sequence;
 			}
 			set
 			{
-				this.m_sequence = value;
+				m_sequence = value;
 			}
 		}
 
