@@ -56,16 +56,6 @@ namespace VixenPlus
 			_registeredFileTypes = new Dictionary<string, IUIPlugIn>();
 			_timersPath = Path.Combine(Paths.DataPath, "timers");
 			//helpProvider.HelpNamespace = Path.Combine(Paths.BinaryPath, Vendor.ProductName + ".chm");
-			var path = Path.Combine(Paths.BinaryPath, "prepare.exe");
-			if (File.Exists(path))
-			{
-				Process process = Process.Start(path);
-				if (process != null)
-				{
-					process.WaitForExit();
-				}
-				File.Delete(path);
-			}
 			_preferences = Preference2.GetInstance();
 			_preferences.PreferenceChange += PreferencesPreferenceChange;
 			_host = new Host(this);

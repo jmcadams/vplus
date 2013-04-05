@@ -2892,7 +2892,9 @@ namespace VixenEditor
 
 		private void ReactToProfileAssignment()
 		{
-			bool flag = this.m_sequence.Profile != null;
+			//TODO: This is always false for a reason right now
+			//bool flag = this.m_sequence.Profile != null;
+			var flag = false;
 			this.flattenProfileIntoSequenceToolStripMenuItem.Enabled = flag;
 			this.detachSequenceFromItsProfileToolStripMenuItem.Enabled = flag;
 			this.channelOutputMaskToolStripMenuItem.Enabled = !flag;
@@ -5203,7 +5205,8 @@ namespace VixenEditor
 
         private void UpdateFollowMouse(Point mousePoint)
         {
-            lblFollowMouse.Text = labelPosition.Text;
+			var rowCount = m_normalizedRange.Height;
+            lblFollowMouse.Text = labelPosition.Text + Environment.NewLine + rowCount  + " Channel" + ((rowCount == 1) ? "" : "s");
             mousePoint.X -= lblFollowMouse.Size.Width;
             mousePoint.Y += 24;
             lblFollowMouse.Location = mousePoint;

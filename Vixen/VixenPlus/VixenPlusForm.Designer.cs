@@ -228,6 +228,7 @@ namespace VixenPlus{
             this.toolStripMenuItem5,
             this.timersToolStripMenuItem,
             this.restartCurrentTimerToolStripMenuItem});
+			this.programsToolStripMenuItem.Enabled = false;
 			this.programsToolStripMenuItem.Name = "programsToolStripMenuItem";
 			this.programsToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
 			this.programsToolStripMenuItem.Text = "Programs";
@@ -288,6 +289,7 @@ namespace VixenPlus{
             this.turnOnQueryServerToolStripMenuItem,
             this.toolStripMenuItem1,
             this.preferencesToolStripMenuItem});
+			this.utilityToolStripMenuItem.Enabled = false;
 			this.utilityToolStripMenuItem.Name = "utilityToolStripMenuItem";
 			this.utilityToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
 			this.utilityToolStripMenuItem.Text = "Tools";
@@ -371,6 +373,7 @@ namespace VixenPlus{
 			// 
 			// addInsToolStripMenuItem
 			// 
+			this.addInsToolStripMenuItem.Enabled = false;
 			this.addInsToolStripMenuItem.Name = "addInsToolStripMenuItem";
 			this.addInsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
 			this.addInsToolStripMenuItem.Text = "Add-ins";
@@ -382,6 +385,7 @@ namespace VixenPlus{
 			this.triggersToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.viewRegisteredResponsesToolStripMenuItem,
             this.toolStripMenuItem7});
+			this.triggersToolStripMenuItem.Enabled = false;
 			this.triggersToolStripMenuItem.Name = "triggersToolStripMenuItem";
 			this.triggersToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
 			this.triggersToolStripMenuItem.Text = "Triggers";
