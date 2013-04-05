@@ -1,7 +1,4 @@
-using System;
 using System.ComponentModel;
-using System.Drawing;
-using System.Drawing.Printing;
 using System.Windows.Forms;
 
 namespace VixenEditor{
@@ -532,7 +529,7 @@ namespace VixenEditor{
 			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-			this.printDocument = new System.Drawing.Printing.PrintDocument();
+			this._printDocument = new System.Drawing.Printing.PrintDocument();
 			this.printDialog = new System.Windows.Forms.PrintDialog();
 			this.printPreviewDialog = new System.Windows.Forms.PrintPreviewDialog();
 			this.m_positionTimer = new System.Windows.Forms.Timer(this.components);
@@ -2990,12 +2987,12 @@ namespace VixenEditor{
 			// 
 			// printDocument
 			// 
-			this.printDocument.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument_PrintPage);
+			this._printDocument.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument_PrintPage);
 			// 
 			// printDialog
 			// 
 			this.printDialog.AllowPrintToFile = false;
-			this.printDialog.Document = this.printDocument;
+			this.printDialog.Document = this._printDocument;
 			this.printDialog.UseEXDialog = true;
 			// 
 			// printPreviewDialog
@@ -3003,7 +3000,7 @@ namespace VixenEditor{
 			this.printPreviewDialog.AutoScrollMargin = new System.Drawing.Size(0, 0);
 			this.printPreviewDialog.AutoScrollMinSize = new System.Drawing.Size(0, 0);
 			this.printPreviewDialog.ClientSize = new System.Drawing.Size(400, 300);
-			this.printPreviewDialog.Document = this.printDocument;
+			this.printPreviewDialog.Document = this._printDocument;
 			this.printPreviewDialog.Enabled = true;
 			this.printPreviewDialog.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog.Icon")));
 			this.printPreviewDialog.Name = "printPreviewDialog";
@@ -3069,30 +3066,30 @@ namespace VixenEditor{
 
 		protected override void Dispose(bool disposing)
 		{
-			if (this.m_channelBackBrush != null)
+			if (this._channelBackBrush != null)
 			{
-				this.m_channelBackBrush.Dispose();
+				this._channelBackBrush.Dispose();
 			}
-			if (this.m_timeBackBrush != null)
+			if (this._timeBackBrush != null)
 			{
-				this.m_timeBackBrush.Dispose();
+				this._timeBackBrush.Dispose();
 			}
-			if (this.m_gridBackBrush != null)
+			if (this._gridBackBrush != null)
 			{
-				this.m_gridBackBrush.Dispose();
+				this._gridBackBrush.Dispose();
 			}
-			this.m_channelNameFont.Dispose();
-			this.m_timeFont.Dispose();
-			this.m_selectionBrush.Dispose();
-			this.m_positionBrush.Dispose();
-			this.m_channelCaretBrush.Dispose();
-			if (this.m_arrowBitmap != null)
+			this._channelNameFont.Dispose();
+			this._timeFont.Dispose();
+			this._selectionBrush.Dispose();
+			this._positionBrush.Dispose();
+			this._channelCaretBrush.Dispose();
+			if (this._arrowBitmap != null)
 			{
-				this.m_arrowBitmap.Dispose();
+				this._arrowBitmap.Dispose();
 			}
-			if (this.m_gridGraphics != null)
+			if (this._gridGraphics != null)
 			{
-				this.m_gridGraphics.Dispose();
+				this._gridGraphics.Dispose();
 			}
 			base.Dispose(disposing);
 		}

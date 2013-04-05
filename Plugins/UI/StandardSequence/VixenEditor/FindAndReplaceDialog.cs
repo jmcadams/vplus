@@ -1,55 +1,55 @@
+using System.Globalization;
+
 namespace VixenEditor {
 	using System;
-	using System.ComponentModel;
-	using System.Drawing;
-	using System.Windows.Forms;
+    using System.Windows.Forms;
 
 	public partial class FindAndReplaceDialog : Form {
-		private bool m_actualLevels;
+		private readonly bool _actualLevels;
 
 		public FindAndReplaceDialog(byte minimum, byte maximum, bool actualLevels) {
 			int num;
 			int num2;
-			this.components = null;
-			this.InitializeComponent();
-			this.m_actualLevels = actualLevels;
+			components = null;
+			InitializeComponent();
+			_actualLevels = actualLevels;
 			if (actualLevels) {
 				num = minimum;
 				num2 = maximum;
 			}
 			else {
-				num = (int)Math.Round((double)((((float)minimum) / 255f) * 100f), MidpointRounding.AwayFromZero);
-				num2 = (int)Math.Round((double)((((float)maximum) / 255f) * 100f), MidpointRounding.AwayFromZero);
+				num = (int)Math.Round(minimum / 255f * 100f, MidpointRounding.AwayFromZero);
+				num2 = (int)Math.Round(maximum / 255f * 100f, MidpointRounding.AwayFromZero);
 			}
-			this.numericUpDownFind.Minimum = num;
-			this.numericUpDownReplaceWith.Minimum = num;
-			this.numericUpDownFind.Maximum = num2;
-			this.numericUpDownReplaceWith.Maximum = num2;
+			numericUpDownFind.Minimum = num;
+			numericUpDownReplaceWith.Minimum = num;
+			numericUpDownFind.Maximum = num2;
+			numericUpDownReplaceWith.Maximum = num2;
 		}
 
 		private void numericUpDownFind_Enter(object sender, EventArgs e) {
-			this.numericUpDownFind.Select(0, this.numericUpDownFind.Value.ToString().Length);
+			numericUpDownFind.Select(0, numericUpDownFind.Value.ToString(CultureInfo.InvariantCulture).Length);
 		}
 
 		private void numericUpDownReplaceWith_Enter(object sender, EventArgs e) {
-			this.numericUpDownReplaceWith.Select(0, this.numericUpDownReplaceWith.Value.ToString().Length);
+			numericUpDownReplaceWith.Select(0, numericUpDownReplaceWith.Value.ToString(CultureInfo.InvariantCulture).Length);
 		}
 
 		public byte FindValue {
 			get {
-				if (this.m_actualLevels) {
-					return (byte)this.numericUpDownFind.Value;
+				if (_actualLevels) {
+					return (byte)numericUpDownFind.Value;
 				}
-				return (byte)this.numericUpDownFind.Value;
+				return (byte)numericUpDownFind.Value;
 			}
 		}
 
 		public byte ReplaceWithValue {
 			get {
-				if (this.m_actualLevels) {
-					return (byte)this.numericUpDownReplaceWith.Value;
+				if (_actualLevels) {
+					return (byte)numericUpDownReplaceWith.Value;
 				}
-				return (byte)this.numericUpDownReplaceWith.Value;
+				return (byte)numericUpDownReplaceWith.Value;
 			}
 		}
 	}

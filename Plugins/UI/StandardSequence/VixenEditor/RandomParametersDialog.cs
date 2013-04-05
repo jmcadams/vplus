@@ -1,70 +1,70 @@
+using System.Globalization;
+
 namespace VixenEditor {
 	using System;
-	using System.ComponentModel;
-	using System.Drawing;
-	using System.Windows.Forms;
+    using System.Windows.Forms;
 
 	internal partial class RandomParametersDialog : Form {
-		private bool m_actualLevels;
+		private readonly bool _actualLevels;
 
 		public RandomParametersDialog(int minLevel, int maxLevel, bool actualLevels) {
-			this.InitializeComponent();
-			this.m_actualLevels = actualLevels;
+			InitializeComponent();
+			_actualLevels = actualLevels;
 			if (actualLevels) {
-				this.label7.Visible = this.label8.Visible = false;
-				this.numericUpDownIntensityMin.Minimum = this.numericUpDownIntensityMax.Minimum = minLevel;
-				this.numericUpDownIntensityMin.Maximum = this.numericUpDownIntensityMax.Maximum = maxLevel;
+				label7.Visible = label8.Visible = false;
+				numericUpDownIntensityMin.Minimum = numericUpDownIntensityMax.Minimum = minLevel;
+				numericUpDownIntensityMin.Maximum = numericUpDownIntensityMax.Maximum = maxLevel;
 			}
 			else {
-				this.numericUpDownIntensityMin.Minimum = this.numericUpDownIntensityMax.Minimum = (minLevel * 100) / 0xff;
-				this.numericUpDownIntensityMin.Maximum = this.numericUpDownIntensityMax.Maximum = (maxLevel * 100) / 0xff;
+				numericUpDownIntensityMin.Minimum = numericUpDownIntensityMax.Minimum = minLevel * 100 / 255;
+				numericUpDownIntensityMin.Maximum = numericUpDownIntensityMax.Maximum = maxLevel * 100 / 255;
 			}
-			this.numericUpDownIntensityMax.Value = this.numericUpDownIntensityMax.Maximum;
+			numericUpDownIntensityMax.Value = numericUpDownIntensityMax.Maximum;
 		}
 
 		private void UpDownEnter(object sender, EventArgs e) {
-			((NumericUpDown)sender).Select(0, ((NumericUpDown)sender).Value.ToString().Length);
+			((NumericUpDown)sender).Select(0, ((NumericUpDown)sender).Value.ToString(CultureInfo.InvariantCulture).Length);
 		}
 
 		public int IntensityMax {
 			get {
-				if (this.m_actualLevels) {
-					return (int)this.numericUpDownIntensityMax.Value;
+				if (_actualLevels) {
+					return (int)numericUpDownIntensityMax.Value;
 				}
-				return ((((int)this.numericUpDownIntensityMax.Value) * 0xff) / 100);
+				return ((((int)numericUpDownIntensityMax.Value) * 255) / 100);
 			}
 		}
 
 		public int IntensityMin {
 			get {
-				if (this.m_actualLevels) {
-					return (int)this.numericUpDownIntensityMin.Value;
+				if (_actualLevels) {
+					return (int)numericUpDownIntensityMin.Value;
 				}
-				return ((((int)this.numericUpDownIntensityMin.Value) * 0xff) / 100);
+				return ((((int)numericUpDownIntensityMin.Value) * 255) / 100);
 			}
 		}
 
 		public int PeriodLength {
 			get {
-				return (int)this.numericUpDownPeriodLength.Value;
+				return (int)numericUpDownPeriodLength.Value;
 			}
 		}
 
 		public float SaturationLevel {
 			get {
-				return (((float)this.numericUpDownSaturationLevel.Value) / 100f);
+				return (((float)numericUpDownSaturationLevel.Value) / 100f);
 			}
 		}
 
 		public bool UseSaturation {
 			get {
-				return this.checkBoxUseSaturation.Checked;
+				return checkBoxUseSaturation.Checked;
 			}
 		}
 
 		public bool VaryIntensity {
 			get {
-				return this.checkBoxIntensityLevel.Checked;
+				return checkBoxIntensityLevel.Checked;
 			}
 		}
 	}

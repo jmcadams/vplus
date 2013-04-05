@@ -1,93 +1,95 @@
+using System.Globalization;
+
 namespace VixenEditor {
 	using System;
 	using System.Collections.Generic;
-	using System.ComponentModel;
-	using System.Drawing;
-	using System.Windows.Forms;
+    using System.Windows.Forms;
 	using VixenPlus;
 
 	internal partial class TestChannelsDialog : Form {
-		private byte[] m_channelLevels;
-		private List<Channel> m_channels;
-		private int m_executionContextHandle;
-		private IExecution m_executionInterface;
-		private bool m_internal = false;
-		private EventSequence m_sequence;
+		private readonly byte[] _channelLevels;
+        private readonly List<Channel> _channels;
+        private readonly int _executionContextHandle;
+        private readonly IExecution _executionInterface;
+		private bool _internal;
+        private readonly EventSequence _sequence;
 
 		public TestChannelsDialog(EventSequence sequence, IExecution executionInterface) {
-			this.InitializeComponent();
-			this.m_executionInterface = executionInterface;
-			this.m_sequence = sequence;
-			this.m_channels = sequence.Channels;
-			this.listBoxChannels.Items.AddRange(this.m_channels.ToArray());
-			this.trackBar.Maximum = ((ISystem)Interfaces.Available["ISystem"]).UserPreferences.GetBoolean("ActualLevels") ? 0xff : 100;
-			this.m_channelLevels = new byte[sequence.ChannelCount];
-			this.m_executionContextHandle = this.m_executionInterface.RequestContext(false, true, null);
-			this.m_executionInterface.SetAsynchronousContext(this.m_executionContextHandle, this.m_sequence);
-			base.BringToFront();
-			this.trackBar.Value = this.trackBar.Maximum;
+			InitializeComponent();
+			_executionInterface = executionInterface;
+			_sequence = sequence;
+			_channels = sequence.Channels;
+		    if (_channels != null) {
+		        listBoxChannels.Items.AddRange(_channels.ToArray());
+		    }
+		    trackBar.Maximum = ((ISystem)Interfaces.Available["ISystem"]).UserPreferences.GetBoolean("ActualLevels") ? 0xff : 100;
+			_channelLevels = new byte[sequence.ChannelCount];
+			_executionContextHandle = _executionInterface.RequestContext(false, true, null);
+			_executionInterface.SetAsynchronousContext(_executionContextHandle, _sequence);
+			BringToFront();
+			trackBar.Value = trackBar.Maximum;
 		}
 
 		private void buttonAllOff_Click(object sender, EventArgs e) {
-			this.m_internal = true;
-			this.listBoxChannels.BeginUpdate();
-			for (int i = 0; i < this.listBoxChannels.Items.Count; i++) {
-				this.listBoxChannels.SetSelected(i, false);
-				this.m_channelLevels[this.m_channels[i].OutputChannel] = 0;
+			_internal = true;
+			listBoxChannels.BeginUpdate();
+			for (int i = 0; i < listBoxChannels.Items.Count; i++) {
+				listBoxChannels.SetSelected(i, false);
+				_channelLevels[_channels[i].OutputChannel] = 0;
 			}
-			this.listBoxChannels.EndUpdate();
-			this.m_internal = false;
-			this.UpdateOutput();
+			listBoxChannels.EndUpdate();
+			_internal = false;
+			UpdateOutput();
 		}
 
 		private void buttonAllOn_Click(object sender, EventArgs e) {
-			this.m_internal = true;
-			this.listBoxChannels.BeginUpdate();
-			for (int i = 0; i < this.listBoxChannels.Items.Count; i++) {
-				this.listBoxChannels.SetSelected(i, true);
-				this.m_channelLevels[this.m_channels[i].OutputChannel] = this.LevelFromTrackBar();
+			_internal = true;
+			listBoxChannels.BeginUpdate();
+			for (var i = 0; i < listBoxChannels.Items.Count; i++) {
+				listBoxChannels.SetSelected(i, true);
+				_channelLevels[_channels[i].OutputChannel] = LevelFromTrackBar();
 			}
-			this.listBoxChannels.EndUpdate();
-			this.m_internal = false;
-			this.UpdateOutput();
+			listBoxChannels.EndUpdate();
+			_internal = false;
+			UpdateOutput();
 		}
 
 		private void buttonDone_Click(object sender, EventArgs e) {
-			base.Close();
+			Close();
 		}
 
 		private byte LevelFromTrackBar() {
-			return ((this.trackBar.Maximum == 0xff) ? ((byte)this.trackBar.Value) : ((byte)Math.Round((double)((this.trackBar.Value * 255f) / 100f))));
+			return ((trackBar.Maximum == 0xff) ? ((byte)trackBar.Value) : ((byte)Math.Round(trackBar.Value * 255f / 100f)));
 		}
 
 		private void listBoxChannels_SelectedIndexChanged(object sender, EventArgs e) {
-			if (!this.m_internal) {
-				this.UpdateAllChannels();
+			if (!_internal) {
+				UpdateAllChannels();
 			}
 		}
 
 		private void TestChannelsDialog_FormClosing(object sender, FormClosingEventArgs e) {
-			this.m_executionInterface.ReleaseContext(this.m_executionContextHandle);
+			_executionInterface.ReleaseContext(_executionContextHandle);
 		}
 
 		private void trackBar_ValueChanged(object sender, EventArgs e) {
-			this.labelLevel.Text = this.trackBar.Value.ToString();
-			byte num = (this.trackBar.Maximum == 0xff) ? ((byte)this.trackBar.Value) : ((byte)Math.Round((double)((this.trackBar.Value * 255f) / 100f)));
-			foreach (int num2 in this.listBoxChannels.SelectedIndices) {
-				this.m_channelLevels[this.m_channels[num2].OutputChannel] = num;
+			labelLevel.Text = trackBar.Value.ToString(CultureInfo.InvariantCulture);
+			var num = (trackBar.Maximum == 0xff) ? ((byte)trackBar.Value) : ((byte)Math.Round(trackBar.Value * 255f / 100f));
+			foreach (int num2 in listBoxChannels.SelectedIndices) {
+				_channelLevels[_channels[num2].OutputChannel] = num;
 			}
-			this.UpdateOutput();
+			UpdateOutput();
 		}
 
 		private void UpdateAllChannels() {
-			for (int i = 0; i < this.m_channelLevels.Length; i++) {
-				this.m_channelLevels[this.m_channels[i].OutputChannel] = this.listBoxChannels.GetSelected(i) ? this.LevelFromTrackBar() : ((byte)0);
+			for (var i = 0; i < _channelLevels.Length; i++) {
+				_channelLevels[_channels[i].OutputChannel] = listBoxChannels.GetSelected(i) ? LevelFromTrackBar() : ((byte)0);
 			}
-			this.UpdateOutput();
+			UpdateOutput();
 		}
 
 		private void UpdateOutput() {
-			this.m_executionInterface.SetChannelStates(this.m_executionContextHandle, this.m_channelLevels);
+			_executionInterface.SetChannelStates(_executionContextHandle, _channelLevels);
 		}
 	}
 }

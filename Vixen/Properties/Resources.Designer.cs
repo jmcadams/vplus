@@ -60,6 +60,13 @@ namespace Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap VixenPlus {
+            get {
+                object obj = ResourceManager.GetObject("VixenPlus", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Add-in error:
         ///

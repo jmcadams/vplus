@@ -89,8 +89,8 @@ namespace VixenEditor {
 			if (disposing && (this.components != null)) {
 				this.components.Dispose();
 			}
-			if (this.m_brush != null) {
-				this.m_brush.Dispose();
+			if (this._solidBrush != null) {
+				this._solidBrush.Dispose();
 			}
 			base.Dispose(disposing);
 		}

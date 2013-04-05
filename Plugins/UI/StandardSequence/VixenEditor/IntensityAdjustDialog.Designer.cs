@@ -43,8 +43,8 @@ namespace VixenEditor {
 			if (disposing && (this.components != null)) {
 				this.components.Dispose();
 			}
-			if (this.m_graphics != null) {
-				this.m_graphics.Dispose();
+			if (this._graphics != null) {
+				this._graphics.Dispose();
 			}
 			base.Dispose(disposing);
 		}

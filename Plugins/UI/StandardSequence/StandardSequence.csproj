@@ -179,7 +179,6 @@
     <Compile Include="VixenEditor\StandardSequence.Designer.cs">
       <DependentUpon>StandardSequence.cs</DependentUpon>
     </Compile>
-    <Compile Include="VixenEditor\StandardSequese.ToolStripMenus.cs" />
     <Compile Include="VixenEditor\TestChannelsDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -188,6 +187,9 @@
     </Compile>
     <Compile Include="VixenEditor\TestConsoleDialog.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VixenEditor\TestConsoleDialog.Designer.cs">
+      <DependentUpon>TestConsoleDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="VixenEditor\ThinSelection.cs">
       <SubType>Form</SubType>

@@ -1,47 +1,45 @@
 namespace VixenEditor {
 	using System;
 	using System.Collections.Generic;
-	using System.ComponentModel;
-	using System.Drawing;
-	using System.Windows.Forms;
+    using System.Windows.Forms;
 	using VixenPlus;
 
 	internal partial class ChannelCopyDialog : Form {
-		private AffectGridDelegate m_affectGrid;
-		private EventSequence m_sequence;
-		private List<int> m_sortOrder;
-		private byte[,] m_values;
+		private readonly AffectGridDelegate _affectGridDelegate;
+		private readonly EventSequence _eventSequence;
+		private readonly List<int> _sortOrder;
+		private readonly byte[,] _sequenceData;
 
-		public ChannelCopyDialog(AffectGridDelegate affectGrid, EventSequence sequence, List<int> sortOrder) {
-			this.InitializeComponent();
-			Channel[] items = new Channel[sequence.ChannelCount];
-			for (int i = 0; i < sortOrder.Count; i++) {
-				items[i] = sequence.Channels[sortOrder[i]];
+		public ChannelCopyDialog(AffectGridDelegate affectGridDelegate, EventSequence sequence, List<int> sortOrder) {
+			InitializeComponent();
+			var channels = new Channel[sequence.ChannelCount];
+			for (var i = 0; i < sortOrder.Count; i++) {
+				channels[i] = sequence.Channels[sortOrder[i]];
 			}
-			this.comboBoxSourceChannel.Items.AddRange(items);
-			this.comboBoxDestinationChannel.Items.AddRange(items);
-			if (this.comboBoxSourceChannel.Items.Count > 0) {
-				this.comboBoxSourceChannel.SelectedIndex = 0;
+			comboBoxSourceChannel.Items.AddRange(channels);
+			comboBoxDestinationChannel.Items.AddRange(channels);
+			if (comboBoxSourceChannel.Items.Count > 0) {
+				comboBoxSourceChannel.SelectedIndex = 0;
 			}
-			if (this.comboBoxDestinationChannel.Items.Count > 0) {
-				this.comboBoxDestinationChannel.SelectedIndex = 0;
+			if (comboBoxDestinationChannel.Items.Count > 0) {
+				comboBoxDestinationChannel.SelectedIndex = 0;
 			}
-			this.m_sequence = sequence;
-			this.m_sortOrder = sortOrder;
-			this.m_values = new byte[1, sequence.TotalEventPeriods];
-			this.m_affectGrid = affectGrid;
+			_eventSequence = sequence;
+			_sortOrder = sortOrder;
+			_sequenceData = new byte[1, sequence.TotalEventPeriods];
+			_affectGridDelegate = affectGridDelegate;
 		}
 
 		private void buttonCopy_Click(object sender, EventArgs e) {
-			int num = this.m_sortOrder[this.comboBoxSourceChannel.SelectedIndex];
-			for (int i = 0; i < this.m_sequence.TotalEventPeriods; i++) {
-				this.m_values[0, i] = this.m_sequence.EventValues[num, i];
+			var num = _sortOrder[comboBoxSourceChannel.SelectedIndex];
+			for (var i = 0; i < _eventSequence.TotalEventPeriods; i++) {
+				_sequenceData[0, i] = _eventSequence.EventValues[num, i];
 			}
-			this.m_affectGrid(this.comboBoxDestinationChannel.SelectedIndex, 0, this.m_values);
+			_affectGridDelegate(comboBoxDestinationChannel.SelectedIndex, 0, _sequenceData);
 		}
 
 		private void buttonDone_Click(object sender, EventArgs e) {
-			base.Close();
+			Close();
 		}
 	}
 }

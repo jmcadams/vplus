@@ -1,42 +1,40 @@
 namespace VixenEditor {
 	using System;
-	using System.ComponentModel;
-	using System.Drawing;
-	using System.Windows.Forms;
+    using System.Windows.Forms;
 	using VixenPlus;
 
 	internal partial class DrawingIntensityDialog : Form {
 
-		private bool m_actualLevels;
+		private readonly bool _actualLevels;
 
 		public DrawingIntensityDialog(EventSequence sequence, byte currentLevel, bool actualLevels) {
-			this.InitializeComponent();
-			this.m_actualLevels = actualLevels;
+			InitializeComponent();
+			_actualLevels = actualLevels;
 			if (actualLevels) {
-				this.numericUpDownLevel.Minimum = sequence.MinimumLevel;
-				this.numericUpDownLevel.Maximum = sequence.MaximumLevel;
-				this.numericUpDownLevel.Value = currentLevel;
+				numericUpDownLevel.Minimum = sequence.MinimumLevel;
+				numericUpDownLevel.Maximum = sequence.MaximumLevel;
+				numericUpDownLevel.Value = currentLevel;
 			}
 			else {
-				this.numericUpDownLevel.Minimum = (int)Math.Round((double)((sequence.MinimumLevel * 100f) / 255f), MidpointRounding.AwayFromZero);
-				this.numericUpDownLevel.Maximum = (int)Math.Round((double)((sequence.MaximumLevel * 100f) / 255f), MidpointRounding.AwayFromZero);
-				this.numericUpDownLevel.Value = (int)Math.Round((double)((currentLevel * 100f) / 255f), MidpointRounding.AwayFromZero);
+				numericUpDownLevel.Minimum = (int)Math.Round(sequence.MinimumLevel * 100f / 255f, MidpointRounding.AwayFromZero);
+				numericUpDownLevel.Maximum = (int)Math.Round(sequence.MaximumLevel * 100f / 255f, MidpointRounding.AwayFromZero);
+				numericUpDownLevel.Value = (int)Math.Round(currentLevel * 100f / 255f, MidpointRounding.AwayFromZero);
 			}
 		}
 
 		private void buttonReset_Click(object sender, EventArgs e) {
-			this.numericUpDownLevel.Value = this.numericUpDownLevel.Maximum;
+			numericUpDownLevel.Value = numericUpDownLevel.Maximum;
 		}
 
 		//ComponentResourceManager manager = new ComponentResourceManager(typeof(DrawingIntensityDialog));
-		//this.label1.Text = manager.GetString("label1.Text");
+		//label1.Text = manager.GetString("label1.Text");
 
 		public byte SelectedIntensity {
 			get {
-				if (this.m_actualLevels) {
-					return (byte)this.numericUpDownLevel.Value;
+				if (_actualLevels) {
+					return (byte)numericUpDownLevel.Value;
 				}
-				return (byte)((this.numericUpDownLevel.Value / 100M) * 255M);
+				return (byte)((numericUpDownLevel.Value / 100M) * 255M);
 			}
 		}
 	}

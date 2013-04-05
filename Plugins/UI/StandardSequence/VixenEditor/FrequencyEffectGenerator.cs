@@ -1,7 +1,4 @@
-﻿namespace VixenEditor
-{
-    using System;
-    using System.Runtime.CompilerServices;
+﻿namespace VixenEditor {
 
     internal delegate void FrequencyEffectGenerator(byte[,] values, params int[] effectParameters);
 }

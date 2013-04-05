@@ -1,6 +1,4 @@
-﻿namespace VixenPlus
-{
-    using System;
+﻿namespace VixenPlus {
 
     internal enum UndoOriginalBehavior
     {

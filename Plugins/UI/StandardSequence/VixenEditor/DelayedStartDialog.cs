@@ -1,26 +1,25 @@
 namespace VixenEditor {
 	using System;
-	using System.ComponentModel;
-	using System.Drawing;
+    using System.Drawing;
 	using System.Windows.Forms;
 
 	public partial class DelayedStartDialog : Form {
-		private int m_countdown;
+		private int _countdown;
 
 		public DelayedStartDialog() {
-			this.InitializeComponent();
+			InitializeComponent();
 		}
 
 		private void buttonStartStop_Click(object sender, EventArgs e) {
-			if (!this.timer.Enabled) {
-				this.m_countdown = (int)this.numericUpDownDelay.Value;
-				this.UpdateCountdown();
-				this.timer.Start();
+			if (!timer.Enabled) {
+				_countdown = (int)numericUpDownDelay.Value;
+				UpdateCountdown();
+				timer.Start();
 			}
 			else {
-				this.timer.Stop();
-				this.buttonStartStop.ForeColor = Color.Black;
-				this.buttonStartStop.Text = "Start";
+				timer.Stop();
+				buttonStartStop.ForeColor = Color.Black;
+				buttonStartStop.Text = "Start";
 			}
 		}
 
@@ -28,23 +27,20 @@ namespace VixenEditor {
 		}
 
 		private void timer_Tick(object sender, EventArgs e) {
-			if (--this.m_countdown == 0) {
-				this.timer.Stop();
-				base.DialogResult = System.Windows.Forms.DialogResult.OK;
+			if (--_countdown == 0) {
+				timer.Stop();
+				DialogResult = DialogResult.OK;
 			}
 			else {
-				this.UpdateCountdown();
+				UpdateCountdown();
 			}
 		}
 
 		private void UpdateCountdown() {
-			if (this.m_countdown > 10) {
-				this.buttonStartStop.ForeColor = Color.Green;
-			}
-			else {
-				this.buttonStartStop.ForeColor = Color.Red;
-			}
-			this.buttonStartStop.Text = string.Format("Stop ({0})", this.m_countdown);
+		    buttonStartStop.ForeColor = _countdown > 10
+		                                    ? Color.Green
+		                                    : Color.Red;
+		    buttonStartStop.Text = string.Format("Stop ({0})", _countdown);
 		}
 	}
 }

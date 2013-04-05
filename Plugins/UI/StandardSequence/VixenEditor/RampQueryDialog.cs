@@ -1,63 +1,63 @@
+using System.Globalization;
+
 namespace VixenEditor {
 	using System;
-	using System.ComponentModel;
-	using System.Drawing;
-	using System.Windows.Forms;
+    using System.Windows.Forms;
 
 	internal partial class RampQueryDialog : Form {
-		private bool m_actualLevels;
+		private readonly bool _actualLevels;
 
 		public RampQueryDialog(int minLevel, int maxLevel, bool descending, bool actualLevels) {
 			int num;
 			int num2;
-			this.components = null;
-			this.InitializeComponent();
-			this.m_actualLevels = actualLevels;
+			components = null;
+			InitializeComponent();
+			_actualLevels = actualLevels;
 			if (actualLevels) {
 				num = minLevel;
 				num2 = maxLevel;
 			}
 			else {
-				num = (int)Math.Round((double)((((float)minLevel) / 255f) * 100f), MidpointRounding.AwayFromZero);
-				num2 = (int)Math.Round((double)((((float)maxLevel) / 255f) * 100f), MidpointRounding.AwayFromZero);
+				num = (int)Math.Round(minLevel / 255f * 100f, MidpointRounding.AwayFromZero);
+				num2 = (int)Math.Round(maxLevel / 255f * 100f, MidpointRounding.AwayFromZero);
 			}
-			this.numericUpDownStart.Minimum = num;
-			this.numericUpDownEnd.Minimum = num;
-			this.numericUpDownStart.Maximum = num2;
-			this.numericUpDownEnd.Maximum = num2;
+			numericUpDownStart.Minimum = num;
+			numericUpDownEnd.Minimum = num;
+			numericUpDownStart.Maximum = num2;
+			numericUpDownEnd.Maximum = num2;
 			if (!descending) {
-				this.numericUpDownStart.Value = this.numericUpDownEnd.Minimum;
-				this.numericUpDownEnd.Value = this.numericUpDownEnd.Maximum;
+				numericUpDownStart.Value = numericUpDownEnd.Minimum;
+				numericUpDownEnd.Value = numericUpDownEnd.Maximum;
 			}
 			else {
-				this.numericUpDownStart.Value = this.numericUpDownEnd.Maximum;
-				this.numericUpDownEnd.Value = this.numericUpDownEnd.Minimum;
+				numericUpDownStart.Value = numericUpDownEnd.Maximum;
+				numericUpDownEnd.Value = numericUpDownEnd.Minimum;
 			}
 		}
 
 		private void numericUpDownEnd_Enter(object sender, EventArgs e) {
-			this.numericUpDownEnd.Select(0, this.numericUpDownEnd.Value.ToString().Length);
+			numericUpDownEnd.Select(0, numericUpDownEnd.Value.ToString(CultureInfo.InvariantCulture).Length);
 		}
 
 		private void numericUpDownStart_Enter(object sender, EventArgs e) {
-			this.numericUpDownStart.Select(0, this.numericUpDownStart.Value.ToString().Length);
+			numericUpDownStart.Select(0, numericUpDownStart.Value.ToString(CultureInfo.InvariantCulture).Length);
 		}
 
 		public int EndingLevel {
 			get {
-				if (this.m_actualLevels) {
-					return (int)this.numericUpDownEnd.Value;
+				if (_actualLevels) {
+					return (int)numericUpDownEnd.Value;
 				}
-				return (int)((this.numericUpDownEnd.Value / 100M) * 255M);
+				return (int)((numericUpDownEnd.Value / 100M) * 255M);
 			}
 		}
 
 		public int StartingLevel {
 			get {
-				if (this.m_actualLevels) {
-					return (int)this.numericUpDownStart.Value;
+				if (_actualLevels) {
+					return (int)numericUpDownStart.Value;
 				}
-				return (int)((this.numericUpDownStart.Value / 100M) * 255M);
+				return (int)((numericUpDownStart.Value / 100M) * 255M);
 			}
 		}
 	}

@@ -17,6 +17,8 @@ namespace VixenPlus
 {
 	internal sealed partial class VixenPlusForm : Form, ISystem
 	{
+        private const int EXPECTATION_DELAY = 2500;
+
 		private const int HistoryMax = 7;
 		private List<string> _history;
 
@@ -58,7 +60,8 @@ namespace VixenPlus
 			Ensure(Paths.CurveLibraryPath);
 			var splash = new Splash();
 			splash.Show();
-			splash.Refresh();
+            splash.FadeIn();
+            //splash.Refresh();
 			InitializeComponent();
 			SetVendorData();
 			_registeredFileTypes = new Dictionary<string, IUIPlugIn>();
@@ -74,7 +77,7 @@ namespace VixenPlus
 			LoadHistory();
 			_loadableData = new LoadableData();
 			_loadableData.LoadFromXml(_preferences.XmlDoc.DocumentElement);
-			splash.Task = "Loading UI";
+			//splash.Task = "Loading UI";
 			LoadUIPlugins();
 			Cursor = Cursors.WaitCursor;
 			try
@@ -105,6 +108,13 @@ namespace VixenPlus
 			}
 			_host.StartBackgroundObjects();
 			SetShutdownTime(_preferences.GetString("ShutdownTime"));
+
+            // Going to set this here, initially it was 3000 ms, right now we're not loading anything,
+            // want to set future expectations
+
+            Thread.Sleep(EXPECTATION_DELAY);
+
+            splash.FadeOut();
 			splash.Hide();
 			splash.Dispose();
 			if (!(list.Contains("no_update") || File.Exists(Path.Combine(Paths.DataPath, "no.update"))))
@@ -112,6 +122,8 @@ namespace VixenPlus
 				CheckForUpdates();
 			}
 		}
+
+
 
 		public int GetExecutingTimerExecutionContextHandle(int executingTimerIndex)
 		{

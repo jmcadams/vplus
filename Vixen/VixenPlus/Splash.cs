@@ -1,28 +1,33 @@
 ﻿using System;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace VixenPlus
 {
-	internal partial class Splash : Form
-	{
-		public Splash()
-		{
-			InitializeComponent();
-			lblAppName.Text = Vendor.ProductName;
+    internal partial class Splash : Form
+    {
+        private const int FADE_MS = 40;
 
-			Version version = Assembly.GetExecutingAssembly().GetName().Version;
-			lblAppVersion.Text = string.Format("Version {0}.{1} Build {2}", version.Major, version.Minor, version.Build);
-			lblTask.Text = "Loading...";
-		}
+        public Splash()
+        {
+            InitializeComponent();
+        }
 
-		public string Task
-		{
-			set
-			{
-				lblTask.Text = value;
-				Refresh();
-			}
-		}
-	}
+        public void FadeIn() {
+            for (var i = 0; i < 100; i += 10) {
+                this.Opacity = (double)(i / 100d);
+                this.Refresh();
+                Thread.Sleep(FADE_MS);
+            }
+        }
+
+        public void FadeOut() {
+            for (var i = 100; i > 10; i -= 10) {
+                this.Opacity = (double)(i / 100d);
+                this.Refresh();
+                Thread.Sleep(FADE_MS);
+            }
+        }
+    }
 }

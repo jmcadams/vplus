@@ -1,34 +1,35 @@
-﻿namespace VixenEditor
+﻿using System.Globalization;
+
+namespace VixenEditor
 {
-    using System;
     using System.Collections.Generic;
+    using System.Drawing;
     using System.Windows.Forms;
     using System.Xml;
     using VixenPlus;
-    using System.Drawing;
 
     internal static class ToolStripManager
     {
 
-        internal const int ICON_SIZE_SMALL = 24;
-        internal const int ICON_SIZE_MEDIUM = 36;
-        internal const int ICON_SIZE_LARGE = 48;
+        internal const int IconSizeSmall = 24;
+        internal const int IconSizeMedium = 36;
+        internal const int IconSizeLarge = 48;
 
-        private static int ICON_SIZE = ICON_SIZE_MEDIUM;
+        private static int _iconSize = IconSizeMedium;
 
-        public static int iconSize
+        public static int IconSize
         {
             get
             {
-                return ICON_SIZE;
+                return _iconSize;
             }
             set
             {
-                if (value == ICON_SIZE_SMALL ||
-                    value == ICON_SIZE_MEDIUM ||
-                    value == ICON_SIZE_LARGE)
+                if (value == IconSizeSmall ||
+                    value == IconSizeMedium ||
+                    value == IconSizeLarge)
                 {
-                    ICON_SIZE = value;
+                    _iconSize = value;
                 }
             }
         }
@@ -50,7 +51,7 @@
 					var sizeNode = node2.SelectSingleNode("Size");
                     if (sizeNode != null)
                     {
-                        iconSize = int.Parse(sizeNode.InnerText);
+                        IconSize = int.Parse(sizeNode.InnerText);
                     }
 
 					var lockedNode = node2.SelectSingleNode("Locked");
@@ -58,36 +59,35 @@
 						Locked = bool.Parse(lockedNode.InnerText);
 					}
 
-                    foreach (Control control in form.Controls)
-                    {
-                        if (control is ToolStripContainer)
+                    foreach (Control control in form.Controls) {
+                        var toolStripContainer = control as ToolStripContainer;
+                        if (toolStripContainer != null)
                         {
-                            ToolStripContainer container = (ToolStripContainer) control;
-                            List<ToolStrip> toolStrips = new List<ToolStrip>();
-                            foreach (ToolStrip strip in container.TopToolStripPanel.Controls)
+                            var toolStrips = new List<ToolStrip>();
+                            foreach (ToolStrip strip in toolStripContainer.TopToolStripPanel.Controls)
                             {
                                 toolStrips.Add(strip);
                             }
-                            foreach (ToolStrip strip in container.LeftToolStripPanel.Controls)
+                            foreach (ToolStrip strip in toolStripContainer.LeftToolStripPanel.Controls)
                             {
                                 toolStrips.Add(strip);
                             }
-                            foreach (ToolStrip strip in container.RightToolStripPanel.Controls)
+                            foreach (ToolStrip strip in toolStripContainer.RightToolStripPanel.Controls)
                             {
                                 toolStrips.Add(strip);
                             }
-                            foreach (ToolStrip strip in container.BottomToolStripPanel.Controls)
+                            foreach (ToolStrip strip in toolStripContainer.BottomToolStripPanel.Controls)
                             {
                                 toolStrips.Add(strip);
                             }
-                            container.TopToolStripPanel.Controls.Clear();
-                            container.LeftToolStripPanel.Controls.Clear();
-                            container.RightToolStripPanel.Controls.Clear();
-                            container.BottomToolStripPanel.Controls.Clear();
-                            ReadPanel(node2.SelectSingleNode("*[@name=\"TopToolStripPanel\"]"), container.TopToolStripPanel, toolStrips);
-                            ReadPanel(node2.SelectSingleNode("*[@name=\"LeftToolStripPanel\"]"), container.LeftToolStripPanel, toolStrips);
-                            ReadPanel(node2.SelectSingleNode("*[@name=\"RightToolStripPanel\"]"), container.RightToolStripPanel, toolStrips);
-                            ReadPanel(node2.SelectSingleNode("*[@name=\"BottomToolStripPanel\"]"), container.BottomToolStripPanel, toolStrips);
+                            toolStripContainer.TopToolStripPanel.Controls.Clear();
+                            toolStripContainer.LeftToolStripPanel.Controls.Clear();
+                            toolStripContainer.RightToolStripPanel.Controls.Clear();
+                            toolStripContainer.BottomToolStripPanel.Controls.Clear();
+                            ReadPanel(node2.SelectSingleNode("*[@name=\"TopToolStripPanel\"]"), toolStripContainer.TopToolStripPanel, toolStrips);
+                            ReadPanel(node2.SelectSingleNode("*[@name=\"LeftToolStripPanel\"]"), toolStripContainer.LeftToolStripPanel, toolStrips);
+                            ReadPanel(node2.SelectSingleNode("*[@name=\"RightToolStripPanel\"]"), toolStripContainer.RightToolStripPanel, toolStrips);
+                            ReadPanel(node2.SelectSingleNode("*[@name=\"BottomToolStripPanel\"]"), toolStripContainer.BottomToolStripPanel, toolStrips);
                             break;
                         }
                     }
@@ -95,34 +95,37 @@
             }
         }
 
-        private static void ReadPanel(XmlNode panelNode, ToolStripPanel toolStripPanel, List<ToolStrip> toolStrips)
+        private static void ReadPanel(XmlNode panelNode, ToolStripPanel toolStripPanel, ICollection<ToolStrip> toolStrips)
         {
-            if (toolStripPanel != null)
-            {
-                foreach (XmlNode node in panelNode.SelectNodes("Strip"))
-                {
-                    ToolStrip item = null;
-                    foreach (ToolStrip strip2 in toolStrips)
+            if (toolStripPanel != null) {
+                var stripNodes = panelNode.SelectNodes("Strip");
+                if (stripNodes != null) {
+                    foreach (XmlNode node in stripNodes)
                     {
-                        strip2.ImageScalingSize = new System.Drawing.Size(iconSize, iconSize);
-                        resizeChildren(strip2.Items);
-
-                        if (strip2.Name == node.Attributes["name"].Value)
+                        ToolStrip item = null;
+                        foreach (var strip2 in toolStrips)
                         {
-                            item = strip2;
-                            break;
+                            strip2.ImageScalingSize = new Size(IconSize, IconSize);
+                            ResizeChildren(strip2.Items);
+
+                            if (node.Attributes != null && strip2.Name == node.Attributes["name"].Value)
+                            {
+                                item = strip2;
+                                break;
+                            }
+
                         }
+                        if (item != null) {
+                            toolStrips.Remove(item);
 
-                    }
-                    if (item != null)
-                    {
-                        toolStrips.Remove(item);
+                            var strArray = node.Attributes["location"].Value.Split(new[] {','});
+                            toolStripPanel.Join(item, int.Parse(strArray[0]), int.Parse(strArray[1]));
 
-                        string[] strArray = node.Attributes["location"].Value.Split(new char[] { ',' });
-                        toolStripPanel.Join(item, int.Parse(strArray[0]), int.Parse(strArray[1]));
-
-                        item.Visible = bool.Parse(node.Attributes["visible"].Value);
-						item.GripStyle = Locked ? ToolStripGripStyle.Hidden : ToolStripGripStyle.Visible;
+                            item.Visible = bool.Parse(node.Attributes["visible"].Value);
+                            item.GripStyle = Locked
+                                                 ? ToolStripGripStyle.Hidden
+                                                 : ToolStripGripStyle.Visible;
+                        }
                     }
                 }
             }
@@ -135,18 +138,16 @@
 
         public static void SaveSettings(Form form, XmlNode parentNode, string key)
         {
-            XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(Xml.GetNodeAlways(parentNode, "ToolStripConfiguration"), key);
-            Xml.SetNewValue(emptyNodeAlways, "Size", iconSize.ToString());
+            var emptyNodeAlways = Xml.GetEmptyNodeAlways(Xml.GetNodeAlways(parentNode, "ToolStripConfiguration"), key);
+            Xml.SetNewValue(emptyNodeAlways, "Size", IconSize.ToString(CultureInfo.InvariantCulture));
 			Xml.SetNewValue(emptyNodeAlways, "Locked", Locked.ToString());
-            foreach (Control control in form.Controls)
-            {
-                if (control is ToolStripContainer)
-                {
-                    ToolStripContainer container = (ToolStripContainer) control;
-                    WritePanel(emptyNodeAlways, container.TopToolStripPanel, "TopToolStripPanel");
-                    WritePanel(emptyNodeAlways, container.LeftToolStripPanel, "LeftToolStripPanel");
-                    WritePanel(emptyNodeAlways, container.RightToolStripPanel, "RightToolStripPanel");
-                    WritePanel(emptyNodeAlways, container.BottomToolStripPanel, "BottomToolStripPanel");
+            foreach (Control control in form.Controls) {
+                var stripContainer = control as ToolStripContainer;
+                if (stripContainer != null) {
+                    WritePanel(emptyNodeAlways, stripContainer.TopToolStripPanel, "TopToolStripPanel");
+                    WritePanel(emptyNodeAlways, stripContainer.LeftToolStripPanel, "LeftToolStripPanel");
+                    WritePanel(emptyNodeAlways, stripContainer.RightToolStripPanel, "RightToolStripPanel");
+                    WritePanel(emptyNodeAlways, stripContainer.BottomToolStripPanel, "BottomToolStripPanel");
                     break;
                 }
             }
@@ -156,8 +157,8 @@
         {
             XmlNode node = Xml.SetNewValue(parentNode, "Panel", string.Empty);
             Xml.SetAttribute(node, "name", toolStripPanelName);
-            List<ToolStrip> list = new List<ToolStrip>();
-            List<Control> list2 = new List<Control>();
+            var list = new List<ToolStrip>();
+            var list2 = new List<Control>();
             foreach (ToolStripPanelRow row in toolStripPanel.Rows)
             {
                 list2.Clear();
@@ -185,37 +186,37 @@
                     list.Add(strip);
                 }
             }
-            foreach (Control control in list)
+            foreach (var control in list)
             {
-                XmlNode node2 = Xml.SetNewValue(node, "Strip", string.Empty);
+                var node2 = Xml.SetNewValue(node, "Strip", string.Empty);
                 Xml.SetAttribute(node2, "name", control.Name);
                 Xml.SetAttribute(node2, "location", string.Format("{0},{1}", control.Location.X, control.Location.Y));
                 Xml.SetAttribute(node2, "visible", control.Visible.ToString());
             }
         }
 
-        public static void resizeToolStrips(Form form)
+        public static void ResizeToolStrips(Form form)
         {
-            foreach (Control control in form.Controls)
-            {
-                if (control is ToolStripContainer)
+            foreach (Control control in form.Controls) {
+                var container = control as ToolStripContainer;
+                if (container != null)
                 {
-                    foreach (ToolStrip toolStrip in ((ToolStripContainer)control).TopToolStripPanel.Controls)
+                    foreach (ToolStrip toolStrip in container.TopToolStripPanel.Controls)
                     {
-                        toolStrip.ImageScalingSize = new Size(iconSize, iconSize);
-                        resizeChildren(toolStrip.Items);
+                        toolStrip.ImageScalingSize = new Size(IconSize, IconSize);
+                        ResizeChildren(toolStrip.Items);
                     }
                 }
             }
         }
 
-        private static void resizeChildren(ToolStripItemCollection toolStripItems)
+        private static void ResizeChildren(ToolStripItemCollection toolStripItems)
         {
-            foreach (var item in toolStripItems)
-            {
-                if (item is ToolStripButton)
+            foreach (var item in toolStripItems) {
+                var button = item as ToolStripButton;
+                if (button != null)
                 {
-                    ((ToolStripButton)item).Size = new Size(iconSize, iconSize);
+                    button.Size = new Size(IconSize, IconSize);
                 }
             }
         }
