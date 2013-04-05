@@ -180,6 +180,7 @@ namespace VixenPlus{
 			this.setBackgroundSequenceToolStripMenuItem.Name = "setBackgroundSequenceToolStripMenuItem";
 			this.setBackgroundSequenceToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
 			this.setBackgroundSequenceToolStripMenuItem.Text = "Set background sequence";
+			this.setBackgroundSequenceToolStripMenuItem.Visible = false;
 			this.setBackgroundSequenceToolStripMenuItem.Click += new System.EventHandler(this.setBackgroundSequenceToolStripMenuItem_Click);
 			// 
 			// channelDimmingCurvesToolStripMenuItem
@@ -187,12 +188,14 @@ namespace VixenPlus{
 			this.channelDimmingCurvesToolStripMenuItem.Name = "channelDimmingCurvesToolStripMenuItem";
 			this.channelDimmingCurvesToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
 			this.channelDimmingCurvesToolStripMenuItem.Text = "Channel dimming curves";
+			this.channelDimmingCurvesToolStripMenuItem.Visible = false;
 			this.channelDimmingCurvesToolStripMenuItem.Click += new System.EventHandler(this.channelDimmingCurvesToolStripMenuItem_Click);
 			// 
 			// toolStripMenuItem6
 			// 
 			this.toolStripMenuItem6.Name = "toolStripMenuItem6";
 			this.toolStripMenuItem6.Size = new System.Drawing.Size(244, 6);
+			this.toolStripMenuItem6.Visible = false;
 			// 
 			// recentToolStripMenuItem
 			// 
@@ -238,6 +241,7 @@ namespace VixenPlus{
 			this.copyASequenceToolStripMenuItem.Name = "copyASequenceToolStripMenuItem";
 			this.copyASequenceToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
 			this.copyASequenceToolStripMenuItem.Text = "Copy sequence event data";
+			this.copyASequenceToolStripMenuItem.Visible = false;
 			this.copyASequenceToolStripMenuItem.Click += new System.EventHandler(this.copyASequenceToolStripMenuItem_Click);
 			// 
 			// copyChannelColorsToolStripMenuItem
@@ -245,6 +249,7 @@ namespace VixenPlus{
 			this.copyChannelColorsToolStripMenuItem.Name = "copyChannelColorsToolStripMenuItem";
 			this.copyChannelColorsToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
 			this.copyChannelColorsToolStripMenuItem.Text = "Copy channel colors";
+			this.copyChannelColorsToolStripMenuItem.Visible = false;
 			this.copyChannelColorsToolStripMenuItem.Click += new System.EventHandler(this.copyChannelColorsToolStripMenuItem_Click);
 			// 
 			// copyPluginaddinDataToolStripMenuItem
@@ -252,12 +257,14 @@ namespace VixenPlus{
 			this.copyPluginaddinDataToolStripMenuItem.Name = "copyPluginaddinDataToolStripMenuItem";
 			this.copyPluginaddinDataToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
 			this.copyPluginaddinDataToolStripMenuItem.Text = "Copy data";
+			this.copyPluginaddinDataToolStripMenuItem.Visible = false;
 			this.copyPluginaddinDataToolStripMenuItem.Click += new System.EventHandler(this.copyPluginaddinDataToolStripMenuItem_Click);
 			// 
 			// toolStripMenuItem4
 			// 
 			this.toolStripMenuItem4.Name = "toolStripMenuItem4";
 			this.toolStripMenuItem4.Size = new System.Drawing.Size(259, 6);
+			this.toolStripMenuItem4.Visible = false;
 			// 
 			// setSoundDeviceToolStripMenuItem
 			// 
@@ -286,6 +293,7 @@ namespace VixenPlus{
 			this.diagnosticsToolStripMenuItem.Name = "diagnosticsToolStripMenuItem";
 			this.diagnosticsToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
 			this.diagnosticsToolStripMenuItem.Text = "Diagnostics";
+			this.diagnosticsToolStripMenuItem.Visible = false;
 			this.diagnosticsToolStripMenuItem.Click += new System.EventHandler(this.diagnosticsToolStripMenuItem_Click);
 			// 
 			// turnOnQueryServerToolStripMenuItem
@@ -321,14 +329,14 @@ namespace VixenPlus{
 			// tileToolStripMenuItem
 			// 
 			this.tileToolStripMenuItem.Name = "tileToolStripMenuItem";
-			this.tileToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+			this.tileToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.tileToolStripMenuItem.Text = "Tile";
 			this.tileToolStripMenuItem.Click += new System.EventHandler(this.tileToolStripMenuItem_Click);
 			// 
 			// cascadeToolStripMenuItem
 			// 
 			this.cascadeToolStripMenuItem.Name = "cascadeToolStripMenuItem";
-			this.cascadeToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+			this.cascadeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.cascadeToolStripMenuItem.Text = "Cascade";
 			this.cascadeToolStripMenuItem.Click += new System.EventHandler(this.cascadeToolStripMenuItem_Click);
 			// 
@@ -351,6 +359,7 @@ namespace VixenPlus{
 			this.contentsToolStripMenuItem.ShortcutKeyDisplayString = "F1";
 			this.contentsToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
 			this.contentsToolStripMenuItem.Text = "Contents";
+			this.contentsToolStripMenuItem.Visible = false;
 			// 
 			// onlineSupportForumToolStripMenuItem
 			// 
@@ -364,6 +373,7 @@ namespace VixenPlus{
 			this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
 			this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
 			this.checkForUpdatesToolStripMenuItem.Text = "Check for updates";
+			this.checkForUpdatesToolStripMenuItem.Visible = false;
 			this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
 			// 
 			// toolStripMenuItem3
