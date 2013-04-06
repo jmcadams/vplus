@@ -748,34 +748,32 @@ namespace VixenEditor
 			}
 		}
 
-		private void DimmingShimmerGenerator(byte[,] values, params int[] effectParameters)
-		{
-            var num = effectParameters[0];
-			if (num != 0)
-			{
-                var num2 = (int)Math.Round((double)((1000f / ((float)_sequence.EventPeriod)) / ((float)num)), MidpointRounding.AwayFromZero);
-				if (num2 != 0)
-				{
-                    var length = values.GetLength(1);
-                    var num8 = values.GetLength(0);
-					var random = new Random();
-                    for (var i = 0; i < length; i += num2)
-					{
-                        var num4 = Math.Min(length, i + num2) - i;
-                        var num6 = (byte)Math.Max(random.NextDouble() * _sequence.MaximumLevel, _sequence.MinimumLevel);
-                        for (var j = 0; j < num4; j++)
-						{
-                            for (var k = 0; k < num8; k++)
-							{
-								values[k, i + j] = num6;
-							}
-						}
-					}
-				}
-			}
-		}
 
-		private void DisableWaveformButton()
+	    private void DimmingShimmerGenerator(byte[,] values, params int[] effectParameters) {
+	        var effectsCount = effectParameters[0];
+	        if (effectsCount != 0) {
+	            var rowOffsetPerCycle = (int) Math.Round(_sequence.EventsPerSecond / effectsCount, MidpointRounding.AwayFromZero);
+	            if (rowOffsetPerCycle != 0) {
+	                var length = values.GetLength(1);
+	                var cols = values.GetLength(0);
+	                var random = new Random();
+	                for (var rowOffset = 0; rowOffset < length; rowOffset += rowOffsetPerCycle) {
+	                    //todo there should be a lot of properties to _sequence, like nextRandomOrMinimum
+	                    var randomValue = (byte) Math.Max(random.NextDouble() * _sequence.MaximumLevel, _sequence.MinimumLevel);
+
+	                    var rows = Math.Min(length, rowOffset + rowOffsetPerCycle) - rowOffset;
+	                    for (var row = 0; row < rows; row++) {
+	                        for (var col = 0; col < cols; col++) {
+	                            values[col, rowOffset + row] = randomValue;
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	    }
+
+
+	    private void DisableWaveformButton()
 		{
 			toolStripButtonWaveform.Enabled = false;
 			toolStripComboBoxWaveformZoom.Enabled = false;
@@ -1910,6 +1908,7 @@ namespace VixenEditor
 			_mouseDownAtInChannels = Point.Empty;
 		}
 
+        //major refactor done, seems stable.
         private void pictureBoxChannels_Paint(object sender, PaintEventArgs e) {
             e.Graphics.FillRectangle(_channelBackBrush, e.Graphics.VisibleClipBounds);
 
@@ -1990,9 +1989,11 @@ namespace VixenEditor
             }
         }
 
+/*
 		private void pictureBoxChannels_QueryContinueDrag(object sender, QueryContinueDragEventArgs e)
 		{
 		}
+*/
 
 		private void pictureBoxChannels_Resize(object sender, EventArgs e)
 		{
@@ -2034,10 +2035,10 @@ namespace VixenEditor
 				}
 				else if ((ModifierKeys & Keys.Shift) != Keys.None)
 				{
-					Rectangle rect = new Rectangle();
+					var rect = new Rectangle();
 					rect.X = _normalizedRange.X;
 					rect.Y = _normalizedRange.Y;
-					rect.Width = ((hScrollBar1.Value + ((int) Math.Floor((double) (((float) e.X) / ((float) _periodPixelWidth))))) - _normalizedRange.Left) + 1;
+					rect.Width = ((hScrollBar1.Value + (int) Math.Floor(e.X / ((float) _periodPixelWidth))) - _normalizedRange.Left) + 1;
 					if (rect.Width < 0)
 					{
 						rect.Width--;
@@ -2087,6 +2088,7 @@ namespace VixenEditor
 			toolStripLabelCurrentCell.Text = string.Empty;
 		}
 
+        //TODO Refactor
 		private void pictureBoxGrid_MouseMove(object sender, MouseEventArgs e)
 		{
 			int num8;
@@ -2417,10 +2419,10 @@ namespace VixenEditor
             lblFollowMouse.Visible = false;
 			if (_lineRect.Left != -1)
 			{
-				bool flag = paintFromClipboardToolStripMenuItem.Checked && (_systemInterface.Clipboard != null);
+				var flag = paintFromClipboardToolStripMenuItem.Checked && (_systemInterface.Clipboard != null);
 				if (flag)
 				{
-					Rectangle rect = NormalizeRect(_lineRect);
+					var rect = NormalizeRect(_lineRect);
 					rect.Width += _systemInterface.Clipboard.GetLength(1);
 					EraseRectangleEntity(rect);
 					rect.Width++;
@@ -2430,7 +2432,7 @@ namespace VixenEditor
 				else
 				{
 					EraseRectangleEntity(_lineRect);
-					Rectangle blockAffected = NormalizeRect(_lineRect);
+					var blockAffected = NormalizeRect(_lineRect);
 					blockAffected.Width++;
 					blockAffected.Height++;
 					AddUndoItem(blockAffected, UndoOriginalBehavior.Overwrite);
@@ -2441,8 +2443,8 @@ namespace VixenEditor
 				}
 				else
 				{
-					byte[] brush = new byte[_systemInterface.Clipboard.GetLength(1)];
-					for (int i = 0; i < brush.Length; i++)
+					var brush = new byte[_systemInterface.Clipboard.GetLength(1)];
+					for (var i = 0; i < brush.Length; i++)
 					{
 						brush[i] = _systemInterface.Clipboard[0, i];
 					}
@@ -2459,57 +2461,58 @@ namespace VixenEditor
 			e.Graphics.FillRectangle(_gridBackBrush, e.ClipRectangle);
 			if (_sequence.ChannelCount != 0)
 			{
-				int num2 = 0;
-				int num3 = 0;
-				Point point = new Point();
-				Point point2 = new Point();
-				int num = e.ClipRectangle.Left / _periodPixelWidth;
-				point.Y = e.ClipRectangle.Top;
-				point2.Y = Math.Min(e.ClipRectangle.Bottom, (_sequence.ChannelCount - vScrollBar1.Value) * _gridRowHeight);
-				int num4 = Math.Min(e.ClipRectangle.Right, (_sequence.TotalEventPeriods - hScrollBar1.Value) * _periodPixelWidth);
-				num2 = 0;
-				while (num2 < num4)
+			    var startPoint = new Point();
+				var endPoint = new Point();
+				
+                var cellCount = e.ClipRectangle.Left / _periodPixelWidth;
+
+				startPoint.Y = e.ClipRectangle.Top;
+				endPoint.Y = Math.Min(e.ClipRectangle.Bottom, (_sequence.ChannelCount - vScrollBar1.Value) * _gridRowHeight);
+				
+                var pixelLimit = Math.Min(e.ClipRectangle.Right, (_sequence.TotalEventPeriods - hScrollBar1.Value) * _periodPixelWidth);
+				var startPixelX = 0;
+				while (startPixelX < pixelLimit)
 				{
-					num2 = _periodPixelWidth * num;
-					point.X = num2;
-					point2.X = num2;
-					e.Graphics.DrawLine(Pens.Gray, point, point2);
-					num++;
+					startPixelX = _periodPixelWidth * cellCount;
+					startPoint.X = startPixelX;
+					endPoint.X = startPixelX;
+					e.Graphics.DrawLine(Pens.Gray, startPoint, endPoint);
+					cellCount++;
 				}
-				num = e.ClipRectangle.Top / _gridRowHeight;
-				point.X = e.ClipRectangle.Left;
-				point2.X = Math.Min(e.ClipRectangle.Right, (_sequence.TotalEventPeriods - hScrollBar1.Value) * _periodPixelWidth);
-				num4 = Math.Min(e.ClipRectangle.Bottom, (_sequence.ChannelCount - vScrollBar1.Value) * _gridRowHeight);
-				num3 = 0;
-				while (num3 < num4)
+				cellCount = e.ClipRectangle.Top / _gridRowHeight;
+				startPoint.X = e.ClipRectangle.Left;
+				endPoint.X = Math.Min(e.ClipRectangle.Right, (_sequence.TotalEventPeriods - hScrollBar1.Value) * _periodPixelWidth);
+				pixelLimit = Math.Min(e.ClipRectangle.Bottom, (_sequence.ChannelCount - vScrollBar1.Value) * _gridRowHeight);
+				var startPixelY = 0;
+				while (startPixelY < pixelLimit)
 				{
-					num3 = _gridRowHeight * num;
-					point.Y = num3;
-					point2.Y = num3;
-					e.Graphics.DrawLine(Pens.Gray, point, point2);
-					num++;
+					startPixelY = _gridRowHeight * cellCount;
+					startPoint.Y = startPixelY;
+					endPoint.Y = startPixelY;
+					e.Graphics.DrawLine(Pens.Gray, startPoint, endPoint);
+					cellCount++;
 				}
 				UpdateGrid(e.Graphics, e.ClipRectangle);
 				if (m_positionTimer.Enabled)
 				{
-					num3 = Math.Min(e.ClipRectangle.Bottom, (_sequence.ChannelCount - vScrollBar1.Value) * _gridRowHeight);
+					startPixelY = Math.Min(e.ClipRectangle.Bottom, (_sequence.ChannelCount - vScrollBar1.Value) * _gridRowHeight);
 					if ((_previousPosition != -1) && (_previousPosition >= hScrollBar1.Value))
 					{
-						num2 = (_previousPosition - hScrollBar1.Value) * _periodPixelWidth;
-						e.Graphics.DrawLine(Pens.Gray, num2, 0, num2, num3);
+						startPixelX = (_previousPosition - hScrollBar1.Value) * _periodPixelWidth;
+						e.Graphics.DrawLine(Pens.Gray, startPixelX, 0, startPixelX, startPixelY);
 					}
-					num2 = (_position - hScrollBar1.Value) * _periodPixelWidth;
-					e.Graphics.DrawLine(Pens.Yellow, num2, 0, num2, num3);
+					startPixelX = (_position - hScrollBar1.Value) * _periodPixelWidth;
+					e.Graphics.DrawLine(Pens.Yellow, startPixelX, 0, startPixelX, startPixelY);
 				}
 				else
 				{
 					if (_lineRect.Left != -1)
 					{
-						int num7 = ((_lineRect.Left - hScrollBar1.Value) * _periodPixelWidth) + (_periodPixelWidth >> 1);
-						int num8 = ((_lineRect.Top - vScrollBar1.Value) * _gridRowHeight) + (_gridRowHeight >> 1);
-						int num9 = num7 + (_lineRect.Width * _periodPixelWidth);
-						int num10 = num8 + (_lineRect.Height * _gridRowHeight);
-						e.Graphics.DrawLine(Pens.Blue, num7, num8, num9, num10);
+						var left = ((_lineRect.Left - hScrollBar1.Value) * _periodPixelWidth) + (_periodPixelWidth >> 1);
+                        var top = ((_lineRect.Top - vScrollBar1.Value) * _gridRowHeight) + (_gridRowHeight >> 1);
+                        var width = left + (_lineRect.Width * _periodPixelWidth);
+                        var height = top + (_lineRect.Height * _gridRowHeight);
+						e.Graphics.DrawLine(Pens.Blue, left, top, width, height);
 					}
 					else
 					{
@@ -2525,12 +2528,12 @@ namespace VixenEditor
 					}
 					if (toolStripButtonToggleCrossHairs.Checked)
 					{
-						int num11 = ((_mouseTimeCaret - hScrollBar1.Value) * _periodPixelWidth) + ((int) (_periodPixelWidth * 0.5f));
-						int num12 = ((_mouseChannelCaret - vScrollBar1.Value) * _gridRowHeight) + ((int) (_gridRowHeight * 0.5f));
-						if (((num11 > e.ClipRectangle.Left) && (num11 < e.ClipRectangle.Right)) || ((num12 > e.ClipRectangle.Top) && (num12 < e.ClipRectangle.Bottom)))
+						var x = ((_mouseTimeCaret - hScrollBar1.Value) * _periodPixelWidth) + ((int) (_periodPixelWidth * 0.5f));
+						var y = ((_mouseChannelCaret - vScrollBar1.Value) * _gridRowHeight) + ((int) (_gridRowHeight * 0.5f));
+						if (((x > e.ClipRectangle.Left) && (x < e.ClipRectangle.Right)) || ((y > e.ClipRectangle.Top) && (y < e.ClipRectangle.Bottom)))
 						{
-							e.Graphics.DrawLine(Pens.Yellow, num11, 0, num11, Height);
-							e.Graphics.DrawLine(Pens.Yellow, 0, num12, Width, num12);
+							e.Graphics.DrawLine(Pens.Yellow, x, 0, x, Height);
+							e.Graphics.DrawLine(Pens.Yellow, 0, y, Width, y);
 						}
 					}
 				}
@@ -2550,64 +2553,64 @@ namespace VixenEditor
 		private void pictureBoxTime_Paint(object sender, PaintEventArgs e)
 		{
 			int x;
-			int num2;
+
 			e.Graphics.FillRectangle(_timeBackBrush, e.ClipRectangle);
-			Point point = new Point();
-			Point point2 = new Point();
+			var point = new Point();
+			var point2 = new Point();
 			point.Y = pictureBoxTime.Height - 20;
 			point2.Y = pictureBoxTime.Height - 5;
 			if ((e.ClipRectangle.Bottom >= point.Y) || (e.ClipRectangle.Top <= point2.Y))
 			{
-				num2 = x = e.ClipRectangle.X / _periodPixelWidth;
-				for (x *= _periodPixelWidth; (x < e.ClipRectangle.Right) && ((num2 + hScrollBar1.Value) <= _sequence.TotalEventPeriods); x += _periodPixelWidth)
+				var rightmosCell = x = e.ClipRectangle.X / _periodPixelWidth;
+				for (x *= _periodPixelWidth; (x < e.ClipRectangle.Right) && ((rightmosCell + hScrollBar1.Value) <= _sequence.TotalEventPeriods); x += _periodPixelWidth)
 				{
-					if (num2 != 0)
+					if (rightmosCell != 0)
 					{
 						point.X = x;
 						point2.X = x;
 						e.Graphics.DrawLine(Pens.Black, point, point2);
 					}
-					num2++;
+					rightmosCell++;
 				}
 			}
 			point.Y = pictureBoxTime.Height - 30;
 			if ((e.ClipRectangle.Bottom >= point.Y) || (e.ClipRectangle.Top <= point2.Y))
 			{
+                var num2 = 0;
 				x = e.ClipRectangle.X;
 				float eventPeriod = _sequence.EventPeriod;
-				float num4 = (hScrollBar1.Value + (((float) e.ClipRectangle.Left) / ((float) _periodPixelWidth))) * eventPeriod;
-				int num5 = Math.Min((int) ((hScrollBar1.Value + (e.ClipRectangle.Right / _periodPixelWidth)) * eventPeriod), _sequence.Time);
-				float num6 = 1000f / ((float) _sequence.EventPeriod);
-				if (!((num4 % 1000f) == 0f))
+				float startMills = (               hScrollBar1.Value + (e.ClipRectangle.Left / ((float) _periodPixelWidth))) * eventPeriod;
+				int endMills = Math.Min((int) ((hScrollBar1.Value + (e.ClipRectangle.Right / _periodPixelWidth)) * eventPeriod), _sequence.Time);
+				float eventCount = 1000f / _sequence.EventPeriod;
+				if (!((startMills % 1000f) == 0f))
 				{
-					num2 = (((int) num4) / 0x3e8) * 0x3e8;
+					num2 = (((int) startMills) / 1000) * 1000;
 				}
 				else
 				{
-					num2 = (int) num4;
+					num2 = (int) startMills;
 				}
-				while ((x < e.ClipRectangle.Right) && (num2 <= num5))
+				while ((x < e.ClipRectangle.Right) && (num2 <= endMills))
 				{
 					if (num2 != 0)
 					{
-						string str;
-						x = e.ClipRectangle.Left + ((int) (((num2 - num4) / 1000f) * (_periodPixelWidth * num6)));
+					    x = e.ClipRectangle.Left + ((int) (((num2 - startMills) / 1000f) * (_periodPixelWidth * eventCount)));
 						point.X = x;
 						point2.X = x;
 						e.Graphics.DrawLine(Pens.Black, point, point2);
 						point.X++;
 						point2.X++;
 						e.Graphics.DrawLine(Pens.Black, point, point2);
-						str = num2 >= 60000
-						          ? string.Format("{0}:{1:d2}", num2 / 60000, (num2 % 60000) / 1000)
-						          : string.Format(":{0:d2}", num2 / 1000);
-						SizeF ef = e.Graphics.MeasureString(str, _timeFont);
+						string str = num2 >= 60000
+						                 ? string.Format("{0}:{1:d2}", num2 / 60000, (num2 % 60000) / 1000)
+						                 : string.Format(":{0:d2}", num2 / 1000);
+						var ef = e.Graphics.MeasureString(str, _timeFont);
 						e.Graphics.DrawString(str, _timeFont, Brushes.Black, (float) (x - (ef.Width / 2f)), (float) ((point.Y - ef.Height) - 5f));
 					}
-					num2 += 0x3e8;
+					num2 += 1000;
 				}
 			}
-			point.Y = pictureBoxTime.Height - 0x23;
+			point.Y = pictureBoxTime.Height - 35;
 			point2.Y = pictureBoxTime.Height - 20;
 			if (((e.ClipRectangle.Bottom >= point.Y) || (e.ClipRectangle.Top <= point2.Y)) && (_showPositionMarker && (_position != -1)))
 			{
@@ -2676,7 +2679,7 @@ namespace VixenEditor
 		{
 			playAtTheSelectedPointToolStripMenuItem.Checked = true;
 			playOnlyTheSelectedRangeToolStripMenuItem.Checked = false;
-			tsbPlayFrom.ToolTipText = "Play this sequence starting at the selection point (F6)";
+			tsbPlayFrom.ToolTipText = "Play this sequence starting at the selection startPoint (F6)";
 		}
 
 		private void playOnlyTheSelectedRangeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3325,7 +3328,7 @@ namespace VixenEditor
 
 		private void SetVariablePlaybackSpeed(Point dialogScreenCoords)
 		{
-			AudioSpeedDialog dialog = new AudioSpeedDialog();
+			var dialog = new AudioSpeedDialog();
 			if ((dialogScreenCoords.X == 0) && (dialogScreenCoords.Y == 0))
 			{
 				dialog.StartPosition = FormStartPosition.CenterScreen;
@@ -3399,7 +3402,7 @@ namespace VixenEditor
 					values[i, k] = _sequence.MinimumLevel;
 				}
 			}
-            //var num6 = (int) Math.Round(decayTime / ((float) _sequence.EventPeriod), MidpointRounding.AwayFromZero);
+            //var eventCount = (int) Math.Round(decayTime / ((float) _sequence.EventPeriod), MidpointRounding.AwayFromZero);
 			var length = values.GetLength(0);
 			var num8 = values.GetLength(1);
 			var numArray = new int[num8];
@@ -3934,7 +3937,7 @@ namespace VixenEditor
 			{
 				int heightAddition;
 				int mappedChannel;
-				int num4;
+				int pixelLimit;
 				e.Handled = true;
 				string s = "0";
 				string str2 = string.Empty;
@@ -3971,19 +3974,19 @@ namespace VixenEditor
 				}
 				try
 				{
-					num4 = int.Parse(str3);
+					pixelLimit = int.Parse(str3);
 				}
 				catch
 				{
-					num4 = 0;
+					pixelLimit = 0;
 				}
-				num4 = (num4 + (mappedChannel * 0x3e8)) + (heightAddition * 0xea60);
-				if (num4 == 0)
+				pixelLimit = (pixelLimit + (mappedChannel * 0x3e8)) + (heightAddition * 0xea60);
+				if (pixelLimit == 0)
 				{
 					textBoxProgramLength.Text = TimeString(_sequence.Time);
 					MessageBox.Show("Not a valid format for time.\nUse one of the following:\n\nSeconds\nMinutes:Seconds\nSeconds.Milliseconds\nMinutes:Seconds.Milliseconds", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				}
-				else if (SetProgramTime(num4))
+				else if (SetProgramTime(pixelLimit))
 				{
 					IsDirty = true;
 					MessageBox.Show("Sequence length has been updated.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);

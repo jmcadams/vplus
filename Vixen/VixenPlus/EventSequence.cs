@@ -153,6 +153,8 @@ namespace VixenPlus
 			}
 		}
 
+        public double EventsPerSecond {get { return 1000f / _eventPeriod; }}
+
 		public byte[,] EventValues
 		{
 			get { return _eventValues; }

@@ -1323,7 +1323,7 @@ namespace VixenEditor{
 			this.pictureBoxChannels.DragOver += new System.Windows.Forms.DragEventHandler(this.pictureBoxChannels_DragOver);
 			this.pictureBoxChannels.GiveFeedback += new System.Windows.Forms.GiveFeedbackEventHandler(this.pictureBoxChannels_GiveFeedback);
 			this.pictureBoxChannels.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxChannels_Paint);
-			this.pictureBoxChannels.QueryContinueDrag += new System.Windows.Forms.QueryContinueDragEventHandler(this.pictureBoxChannels_QueryContinueDrag);
+            //this.pictureBoxChannels.QueryContinueDrag += new System.Windows.Forms.QueryContinueDragEventHandler(this.pictureBoxChannels_QueryContinueDrag);
 			this.pictureBoxChannels.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.pictureBoxChannels_MouseDoubleClick);
 			this.pictureBoxChannels.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxChannels_MouseDown);
 			this.pictureBoxChannels.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxChannels_MouseMove);
@@ -2121,8 +2121,8 @@ namespace VixenEditor{
 			this.tsbPlayFrom.ImageTransparentColor = System.Drawing.Color.White;
 			this.tsbPlayFrom.Name = "tsbPlayFrom";
 			this.tsbPlayFrom.Size = new System.Drawing.Size(64, 52);
-			this.tsbPlayFrom.Text = "Play this sequence starting at the selection point (F6)";
-			this.tsbPlayFrom.ToolTipText = "Play this sequence starting at the selection point (F6)";
+			this.tsbPlayFrom.Text = "Play this sequence starting at the selection startPoint (F6)";
+			this.tsbPlayFrom.ToolTipText = "Play this sequence starting at the selection startPoint (F6)";
 			this.tsbPlayFrom.Click += new System.EventHandler(this.toolStripButtonPlayPoint_Click);
 			// 
 			// playAtTheSelectedPointToolStripMenuItem
@@ -2131,7 +2131,7 @@ namespace VixenEditor{
 			this.playAtTheSelectedPointToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.playAtTheSelectedPointToolStripMenuItem.Name = "playAtTheSelectedPointToolStripMenuItem";
 			this.playAtTheSelectedPointToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-			this.playAtTheSelectedPointToolStripMenuItem.Text = "Play at the selected point";
+			this.playAtTheSelectedPointToolStripMenuItem.Text = "Play at the selected startPoint";
 			this.playAtTheSelectedPointToolStripMenuItem.Click += new System.EventHandler(this.playAtTheSelectedPointToolStripMenuItem_Click);
 			// 
 			// playOnlyTheSelectedRangeToolStripMenuItem
