@@ -53,14 +53,28 @@ namespace VixenPlus
 			return Node.SelectNodes("PlugIn");
 		}
 
+        // TODO this is where 2.1 profiles break
 		public XmlNodeList GetAllPluginData(PluginType type)
 		{
-			return Node.SelectNodes(string.Format("PlugIn[@type='{0}']", type));
+            var node = Node.SelectNodes(string.Format("PlugIn[@type='{0}']", type));
+		    if (node != null &&
+		        node.Count == 0 &&
+		        type == PluginType.Output) { // Hack for 2.1
+		        node = GetAllPluginData();
+		    }
+		    return node;
 		}
 
 		public XmlNodeList GetAllPluginData(PluginType type, bool enabledOnly)
 		{
-			return Node.SelectNodes(string.Format("PlugIn[@enabled='{0}' and @type='{1}']", enabledOnly, type));
+            var node = Node.SelectNodes(string.Format("PlugIn[@enabled='{0}' and @type='{1}']", enabledOnly, type));
+            if (node != null &&
+                node.Count == 0 &&
+                type == PluginType.Output) { // Hack for 2.1
+                    node = Node.SelectNodes(string.Format("PlugIn[@enabled='{0}']", enabledOnly));
+            }
+
+			return node;
 		}
 
 		public int GetHighestChannel(bool enabledOnly)

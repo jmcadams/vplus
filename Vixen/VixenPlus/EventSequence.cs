@@ -846,7 +846,9 @@ namespace VixenPlus
 				_eventValues = buffer2;
 			}
 			_totalEventPeriods = _eventValues.GetLength(1);
-			foreach (XmlNode node in _plugInData.GetAllPluginData(SetupData.PluginType.Output))
+		    var allPlugIns = _plugInData.GetAllPluginData(SetupData.PluginType.Output);
+			
+            foreach (XmlNode node in allPlugIns)
 			{
 				if (node.Attributes != null && int.Parse(node.Attributes["from"].Value) > list.Count)
 				{
