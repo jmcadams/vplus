@@ -17,7 +17,7 @@ namespace VixenPlus
 {
 	internal sealed partial class VixenPlusForm : Form, ISystem
 	{
-        private const int EXPECTATION_DELAY = 2500;
+        private const int EXPECTATION_DELAY = 500;
 
 		private const int HistoryMax = 7;
 		private List<string> _history;

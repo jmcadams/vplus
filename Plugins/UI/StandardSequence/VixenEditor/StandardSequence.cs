@@ -1242,8 +1242,8 @@ namespace VixenEditor
 			_intensityLargeDelta = _preferences.GetInteger("IntensityLargeDelta");
 			_showingGradient = !_preferences.GetBoolean("BarLevels");
 			_channelBackBrush = new SolidBrush(Color.White);
-			_timeBackBrush = new SolidBrush(Color.FromArgb(0xff, 0xff, 0xe0));
-			_gridBackBrush = new SolidBrush(Color.FromArgb(0xc0, 0xc0, 0xc0));
+		    _timeBackBrush = new SolidBrush(Color.FromArgb(16,16,16));
+		    _gridBackBrush = new SolidBrush(Color.FromArgb(192, 192, 192));
 			//_arrowBitmap = new Bitmap(pictureBoxOutputArrow.Image);
 			//_arrowBitmap.MakeTransparent(_arrowBitmap.GetPixel(0, 0));
 			_gridGraphics = pictureBoxGrid.CreateGraphics();
@@ -1897,7 +1897,7 @@ namespace VixenEditor
 
 		private void pictureBoxChannels_MouseMove(object sender, MouseEventArgs e)
 		{
-			if ((((e.Button & MouseButtons.Left) != MouseButtons.None) && (_mouseDownAtInChannels != Point.Empty)) && ((Math.Abs((int) (e.X - _mouseDownAtInChannels.X)) > 3) || (Math.Abs((int) (e.Y - _mouseDownAtInChannels.Y)) > 3)))
+			if ((((e.Button & MouseButtons.Left) != MouseButtons.None) && (_mouseDownAtInChannels != Point.Empty)) && ((Math.Abs(e.X - _mouseDownAtInChannels.X) > 3) || (Math.Abs(e.Y - _mouseDownAtInChannels.Y) > 3)))
 			{
 				DoDragDrop(SelectedChannel, DragDropEffects.Move | DragDropEffects.Copy);
 			}
@@ -2553,73 +2553,74 @@ namespace VixenEditor
 		private void pictureBoxTime_Paint(object sender, PaintEventArgs e)
 		{
 			int x;
+		    var timePen = Pens.White;
+		    var timeBrush = Brushes.White;
+		    var tickPen = Pens.Red;
 
 			e.Graphics.FillRectangle(_timeBackBrush, e.ClipRectangle);
-			var point = new Point();
-			var point2 = new Point();
-			point.Y = pictureBoxTime.Height - 20;
-			point2.Y = pictureBoxTime.Height - 5;
-			if ((e.ClipRectangle.Bottom >= point.Y) || (e.ClipRectangle.Top <= point2.Y))
+			var topLeftPt = new Point();
+			var bottomRightPt = new Point();
+			topLeftPt.Y = pictureBoxTime.Height - 20;
+			bottomRightPt.Y = pictureBoxTime.Height - 5;
+			if ((e.ClipRectangle.Bottom >= topLeftPt.Y) || (e.ClipRectangle.Top <= bottomRightPt.Y))
 			{
 				var rightmosCell = x = e.ClipRectangle.X / _periodPixelWidth;
 				for (x *= _periodPixelWidth; (x < e.ClipRectangle.Right) && ((rightmosCell + hScrollBar1.Value) <= _sequence.TotalEventPeriods); x += _periodPixelWidth)
 				{
 					if (rightmosCell != 0)
 					{
-						point.X = x;
-						point2.X = x;
-						e.Graphics.DrawLine(Pens.Black, point, point2);
+						topLeftPt.X = x;
+						bottomRightPt.X = x;
+						e.Graphics.DrawLine(timePen, topLeftPt, bottomRightPt);
 					}
 					rightmosCell++;
 				}
 			}
-			point.Y = pictureBoxTime.Height - 30;
-			if ((e.ClipRectangle.Bottom >= point.Y) || (e.ClipRectangle.Top <= point2.Y))
+			topLeftPt.Y = pictureBoxTime.Height - 30;
+			if ((e.ClipRectangle.Bottom >= topLeftPt.Y) || (e.ClipRectangle.Top <= bottomRightPt.Y))
 			{
-                var num2 = 0;
 				x = e.ClipRectangle.X;
-				float eventPeriod = _sequence.EventPeriod;
-				float startMills = (               hScrollBar1.Value + (e.ClipRectangle.Left / ((float) _periodPixelWidth))) * eventPeriod;
-				int endMills = Math.Min((int) ((hScrollBar1.Value + (e.ClipRectangle.Right / _periodPixelWidth)) * eventPeriod), _sequence.Time);
-				float eventCount = 1000f / _sequence.EventPeriod;
-				if (!((startMills % 1000f) == 0f))
+				var eventPeriod = _sequence.EventPeriod;
+				var startMills = (hScrollBar1.Value + (e.ClipRectangle.Left / ((float) _periodPixelWidth))) * eventPeriod;
+				var endMills = Math.Min((hScrollBar1.Value + (e.ClipRectangle.Right / _periodPixelWidth)) * eventPeriod, _sequence.Time);
+			    var eventCount = (float)_sequence.EventsPerSecond;
+
+			    var currentMills = (!(0f.Equals(startMills % 1000f)))
+			               ? (((int) startMills) / 1000) * 1000
+			               : (int) startMills;
+
+				while ((x < e.ClipRectangle.Right) && (currentMills <= endMills))
 				{
-					num2 = (((int) startMills) / 1000) * 1000;
-				}
-				else
-				{
-					num2 = (int) startMills;
-				}
-				while ((x < e.ClipRectangle.Right) && (num2 <= endMills))
-				{
-					if (num2 != 0)
+					if (currentMills != 0)
 					{
-					    x = e.ClipRectangle.Left + ((int) (((num2 - startMills) / 1000f) * (_periodPixelWidth * eventCount)));
-						point.X = x;
-						point2.X = x;
-						e.Graphics.DrawLine(Pens.Black, point, point2);
-						point.X++;
-						point2.X++;
-						e.Graphics.DrawLine(Pens.Black, point, point2);
-						string str = num2 >= 60000
-						                 ? string.Format("{0}:{1:d2}", num2 / 60000, (num2 % 60000) / 1000)
-						                 : string.Format(":{0:d2}", num2 / 1000);
+					    x = e.ClipRectangle.Left + ((int) (((currentMills - startMills) / 1000f) * (_periodPixelWidth * eventCount)));
+						topLeftPt.X = x;
+						bottomRightPt.X = x;
+						e.Graphics.DrawLine(timePen, topLeftPt, bottomRightPt);
+						topLeftPt.X++;
+						bottomRightPt.X++;
+						e.Graphics.DrawLine(timePen, topLeftPt, bottomRightPt);
+						var str = currentMills >= 60000
+						                 ? string.Format("{0}:{1:d2}", currentMills / 60000, (currentMills % 60000) / 1000)
+						                 : string.Format(":{0:d2}", currentMills / 1000);
 						var ef = e.Graphics.MeasureString(str, _timeFont);
-						e.Graphics.DrawString(str, _timeFont, Brushes.Black, (float) (x - (ef.Width / 2f)), (float) ((point.Y - ef.Height) - 5f));
+						e.Graphics.DrawString(str, _timeFont, timeBrush, x - (ef.Width / 2f), topLeftPt.Y - ef.Height - 5f);
 					}
-					num2 += 1000;
+					currentMills += 1000;
 				}
 			}
-			point.Y = pictureBoxTime.Height - 35;
-			point2.Y = pictureBoxTime.Height - 20;
-			if (((e.ClipRectangle.Bottom >= point.Y) || (e.ClipRectangle.Top <= point2.Y)) && (_showPositionMarker && (_position != -1)))
+
+			topLeftPt.Y = pictureBoxTime.Height - 35;
+			bottomRightPt.Y = pictureBoxTime.Height - 20;
+
+			if (((e.ClipRectangle.Bottom >= topLeftPt.Y) || (e.ClipRectangle.Top <= bottomRightPt.Y)) && (_showPositionMarker && (_position != -1)))
 			{
 				x = _periodPixelWidth * (_position - hScrollBar1.Value);
 				if (x < pictureBoxTime.Width)
 				{
-					point.X = x;
-					point2.X = x;
-					e.Graphics.DrawLine(Pens.Red, point, point2);
+					topLeftPt.X = x;
+					bottomRightPt.X = x;
+					e.Graphics.DrawLine(tickPen, topLeftPt, bottomRightPt);
 				}
 			}
 			if (_mouseTimeCaret != -1)
@@ -2628,22 +2629,31 @@ namespace VixenEditor
 			}
 			if (toolStripButtonWaveform.Checked)
 			{
-				int index = hScrollBar1.Value * _periodPixelWidth;
-				int num9 = Math.Min(index + ((_visibleEventPeriods + 1) * _periodPixelWidth), _waveformPixelData.Length);
-				int num7 = 0;
-				while (index < num9)
-				{
-					e.Graphics.DrawLine(Pens.Blue, (float) num7, (float) (_waveformOffset - (_waveformPixelData[index] >> 0x10)), (float) num7, (float) (_waveformOffset - ((short) (_waveformPixelData[index] & 0xffff))));
-					num7++;
-					index++;
-				}
+				DrawWaveform(e);
 			}
 		}
 
-		private void PlaceSparkle(byte[,] valueArray, int row, int startCol, int decayTime, byte minIntensity, byte maxIntensity)
+
+	    private void DrawWaveform(PaintEventArgs e) {
+            var wavePen = Pens.White;
+
+	        var startPosition = hScrollBar1.Value * _periodPixelWidth;
+	        var endPosition = Math.Min(startPosition + ((_visibleEventPeriods + 1) * _periodPixelWidth), _waveformPixelData.Length);
+	        var waveformPosition = 0;
+	        
+            while (startPosition < endPosition) {
+	            e.Graphics.DrawLine(wavePen, waveformPosition, _waveformOffset - (_waveformPixelData[startPosition] >> 16),
+	                waveformPosition, _waveformOffset - ((short) (_waveformPixelData[startPosition] & 0xffff)));
+	            waveformPosition++;
+	            startPosition++;
+	        }
+	    }
+
+
+	    private void PlaceSparkle(byte[,] valueArray, int row, int startCol, int decayTime, byte minIntensity, byte maxIntensity)
 		{
-			int num = (int) (Math.Round((double) (1000f / ((float) _sequence.EventPeriod)), MidpointRounding.AwayFromZero) * 0.1);
-			int num2 = (int) Math.Round((double) (((float) decayTime) / ((float) _sequence.EventPeriod)), MidpointRounding.AwayFromZero);
+			var num = (int) (Math.Round(_sequence.EventsPerSecond, MidpointRounding.AwayFromZero) * 0.1);
+			var num2 = (int) Math.Round(((float) decayTime) / _sequence.EventPeriod, MidpointRounding.AwayFromZero);
 			if ((startCol + num) >= valueArray.GetLength(1))
 			{
 				num = valueArray.GetLength(1) - startCol;
@@ -2691,75 +2701,78 @@ namespace VixenEditor
 
 		private void plugInItem_CheckedChanged(object sender, EventArgs e)
 		{
-			ToolStripMenuItem item = (ToolStripMenuItem) sender;
-			_sequence.PlugInData.GetPlugInData((string) item.Tag).Attributes["enabled"].Value = item.Checked.ToString();
-			bool flag = false;
-			foreach (ToolStripItem item2 in toolStripDropDownButtonPlugins.DropDownItems)
-			{
-				if (item2 is ToolStripMenuItem)
-				{
-					flag |= ((ToolStripMenuItem) item2).Checked;
-				}
-			}
+			var item = (ToolStripMenuItem) sender;
+		    var attributes = _sequence.PlugInData.GetPlugInData((string) item.Tag).Attributes;
+		    if (attributes != null) {
+		        attributes["enabled"].Value = item.Checked.ToString();
+		    }
+		    //bool flag = false;
+            //foreach (ToolStripItem item2 in toolStripDropDownButtonPlugins.DropDownItems)
+            //{
+            //    if (item2 is ToolStripMenuItem)
+            //    {
+            //        flag |= ((ToolStripMenuItem) item2).Checked;
+            //    }
+            //}
 			IsDirty = true;
 		}
 
 		private void printDocument_PrintPage(object sender, PrintPageEventArgs e)
 		{
-			Font font = new Font("Arial", 16f, FontStyle.Bold);
-			Font font2 = new Font("Arial", 12f, FontStyle.Bold);
-			Font font3 = new Font("Arial", 10f, FontStyle.Bold);
-			Font font4 = new Font("Arial", 10f);
-			float top = e.MarginBounds.Top;
-			float height = e.Graphics.MeasureString("Mg", font4).Height;
-			SolidBrush brush = new SolidBrush(Color.FromArgb(0xe8, 0xe8, 0xe8));
-			List<OutputPlugin> list = new List<OutputPlugin>(_sequence.PlugInData.GetOutputPlugins());
-			List<string> list2 = new List<string>();
-			if (_printingChannelIndex == 0)
-			{
-				e.Graphics.DrawString(_sequence.Name, font, Brushes.Black, (float) e.MarginBounds.Left, top);
-				top += e.Graphics.MeasureString("Mg", font).Height;
-				e.Graphics.DrawString(DateTime.Today.ToShortDateString(), font2, Brushes.Black, (float) e.MarginBounds.Left, top);
-				top += e.Graphics.MeasureString("Mg", font2).Height;
-				Pen pen = new Pen(Brushes.Black, 3f);
-				e.Graphics.DrawLine(pen, (float) e.MarginBounds.Left, top, (float) e.MarginBounds.Right, top);
-				pen.Dispose();
-				top += 20f;
-				e.Graphics.FillRectangle(brush, (float) e.MarginBounds.Left, top, (float) e.MarginBounds.Width, 24f);
-				e.Graphics.DrawRectangle(Pens.Black, (float) e.MarginBounds.Left, top, (float) e.MarginBounds.Width, 24f);
-				top += 4f;
-				e.Graphics.DrawString("Name", font3, Brushes.Black, (float) (e.MarginBounds.Left + 10), top);
-				e.Graphics.DrawString("Output #", font3, Brushes.Black, (float) (e.MarginBounds.Left + 0x113), top);
-				e.Graphics.DrawString("Controller", font3, Brushes.Black, (float) (e.MarginBounds.Left + 350), top);
-				top += 30f;
-			}
-			while ((_printingChannelIndex < _sequence.ChannelCount) && ((top + height) < e.MarginBounds.Bottom))
-			{
-				if ((_printingChannelIndex % 2) == 1)
-				{
-					e.Graphics.FillRectangle(brush, (float) e.MarginBounds.Left, top - 1f, (float) e.MarginBounds.Width, height);
-				}
-				int num3 = _printingChannelList[_printingChannelIndex].OutputChannel + 1;
-				e.Graphics.DrawString(_printingChannelList[_printingChannelIndex].Name, font4, Brushes.Black, (float) (e.MarginBounds.Left + 10), top);
-				e.Graphics.DrawString(num3.ToString(), font4, Brushes.Black, (float) (e.MarginBounds.Left + 0x113), top);
-				list2.Clear();
-				foreach (OutputPlugin plugin in list)
-				{
-					if ((plugin.Enabled && (plugin.ChannelFrom <= num3)) && (plugin.ChannelTo >= num3))
-					{
-						list2.Add(plugin.Name);
-					}
-				}
-				e.Graphics.DrawString(string.Join(", ", list2.ToArray()), font4, Brushes.Black, (float) (e.MarginBounds.Left + 350), top);
-				_printingChannelIndex++;
-				top += height;
-			}
-			brush.Dispose();
-			font.Dispose();
-			font2.Dispose();
-			font3.Dispose();
-			font4.Dispose();
-			e.HasMorePages = _printingChannelIndex < _sequence.ChannelCount;
+            //Font font = new Font("Arial", 16f, FontStyle.Bold);
+            //Font font2 = new Font("Arial", 12f, FontStyle.Bold);
+            //Font font3 = new Font("Arial", 10f, FontStyle.Bold);
+            //Font font4 = new Font("Arial", 10f);
+            //float top = e.MarginBounds.Top;
+            //float height = e.Graphics.MeasureString("Mg", font4).Height;
+            //SolidBrush brush = new SolidBrush(Color.FromArgb(0xe8, 0xe8, 0xe8));
+            //List<OutputPlugin> list = new List<OutputPlugin>(_sequence.PlugInData.GetOutputPlugins());
+            //List<string> list2 = new List<string>();
+            //if (_printingChannelIndex == 0)
+            //{
+            //    e.Graphics.DrawString(_sequence.Name, font, Brushes.Black, (float) e.MarginBounds.Left, top);
+            //    top += e.Graphics.MeasureString("Mg", font).Height;
+            //    e.Graphics.DrawString(DateTime.Today.ToShortDateString(), font2, Brushes.Black, (float) e.MarginBounds.Left, top);
+            //    top += e.Graphics.MeasureString("Mg", font2).Height;
+            //    Pen pen = new Pen(Brushes.Black, 3f);
+            //    e.Graphics.DrawLine(pen, (float) e.MarginBounds.Left, top, (float) e.MarginBounds.Right, top);
+            //    pen.Dispose();
+            //    top += 20f;
+            //    e.Graphics.FillRectangle(brush, (float) e.MarginBounds.Left, top, (float) e.MarginBounds.Width, 24f);
+            //    e.Graphics.DrawRectangle(Pens.Black, (float) e.MarginBounds.Left, top, (float) e.MarginBounds.Width, 24f);
+            //    top += 4f;
+            //    e.Graphics.DrawString("Name", font3, Brushes.Black, (float) (e.MarginBounds.Left + 10), top);
+            //    e.Graphics.DrawString("Output #", font3, Brushes.Black, (float) (e.MarginBounds.Left + 0x113), top);
+            //    e.Graphics.DrawString("Controller", font3, Brushes.Black, (float) (e.MarginBounds.Left + 350), top);
+            //    top += 30f;
+            //}
+            //while ((_printingChannelIndex < _sequence.ChannelCount) && ((top + height) < e.MarginBounds.Bottom))
+            //{
+            //    if ((_printingChannelIndex % 2) == 1)
+            //    {
+            //        e.Graphics.FillRectangle(brush, (float) e.MarginBounds.Left, top - 1f, (float) e.MarginBounds.Width, height);
+            //    }
+            //    int num3 = _printingChannelList[_printingChannelIndex].OutputChannel + 1;
+            //    e.Graphics.DrawString(_printingChannelList[_printingChannelIndex].Name, font4, Brushes.Black, (float) (e.MarginBounds.Left + 10), top);
+            //    e.Graphics.DrawString(num3.ToString(), font4, Brushes.Black, (float) (e.MarginBounds.Left + 0x113), top);
+            //    list2.Clear();
+            //    foreach (OutputPlugin plugin in list)
+            //    {
+            //        if ((plugin.Enabled && (plugin.ChannelFrom <= num3)) && (plugin.ChannelTo >= num3))
+            //        {
+            //            list2.Add(plugin.Name);
+            //        }
+            //    }
+            //    e.Graphics.DrawString(string.Join(", ", list2.ToArray()), font4, Brushes.Black, (float) (e.MarginBounds.Left + 350), top);
+            //    _printingChannelIndex++;
+            //    top += height;
+            //}
+            //brush.Dispose();
+            //font.Dispose();
+            //font2.Dispose();
+            //font3.Dispose();
+            //font4.Dispose();
+            //e.HasMorePages = _printingChannelIndex < _sequence.ChannelCount;
 		}
 
 		private void ProgramEnded()
@@ -2777,26 +2790,26 @@ namespace VixenEditor
 		private void Ramp(int startingLevel, int endingLevel)
 		{
 			AddUndoItem(_normalizedRange, UndoOriginalBehavior.Overwrite);
-			int bottom = _normalizedRange.Bottom;
-			int right = _normalizedRange.Right;
-			int left = _normalizedRange.Left;
-			for (int i = _normalizedRange.Top; i < bottom; i++)
+			var bottom = _normalizedRange.Bottom;
+			var right = _normalizedRange.Right;
+			var left = _normalizedRange.Left;
+			for (var top = _normalizedRange.Top; top < bottom; top++)
 			{
-				int num6 = _channelOrderMapping[i];
-				if (_sequence.Channels[num6].Enabled)
+				var channelOrder = _channelOrderMapping[top];
+				if (_sequence.Channels[channelOrder].Enabled)
 				{
-					for (int j = left; j < right; j++)
+					for (var column = left; column < right; column++)
 					{
-						byte minimumLevel = (byte) (((((float) (j - left)) / ((float) ((right - left) - 1))) * (endingLevel - startingLevel)) + startingLevel);
-						if (minimumLevel < _sequence.MinimumLevel)
+						var computedLevel = (byte) ((((column - left) / ((float) ((right - left) - 1))) * (endingLevel - startingLevel)) + startingLevel);
+						if (computedLevel < _sequence.MinimumLevel)
 						{
-							minimumLevel = _sequence.MinimumLevel;
+							computedLevel = _sequence.MinimumLevel;
 						}
-						else if (minimumLevel > _sequence.MaximumLevel)
+						else if (computedLevel > _sequence.MaximumLevel)
 						{
-							minimumLevel = _sequence.MaximumLevel;
+							computedLevel = _sequence.MaximumLevel;
 						}
-						_sequence.EventValues[num6, j] = minimumLevel;
+						_sequence.EventValues[channelOrder, column] = computedLevel;
 					}
 				}
 			}
@@ -2804,19 +2817,20 @@ namespace VixenEditor
 			pictureBoxGrid.Invalidate(SelectionToRectangle());
 		}
 
-		private Rectangle RangeToRectangle(Rectangle range)
-		{
-			Rectangle rectangle = new Rectangle();
-			rectangle.X = ((range.X - hScrollBar1.Value) * _periodPixelWidth) + 1;
-			rectangle.Y = ((range.Y - vScrollBar1.Value) * _gridRowHeight) + 1;
-			rectangle.Width = (range.Width * _periodPixelWidth) - 1;
-			rectangle.Height = (range.Height * _gridRowHeight) - 1;
-			return rectangle;
-		}
 
-		private void ReactEditingStateToProfileAssignment()
+	    private Rectangle RangeToRectangle(Rectangle range) {
+	        return new Rectangle {
+	                                 X = ((range.X - hScrollBar1.Value) * _periodPixelWidth) + 1,
+	                                 Y = ((range.Y - vScrollBar1.Value) * _gridRowHeight) + 1,
+	                                 Width = (range.Width * _periodPixelWidth) - 1,
+	                                 Height = (range.Height * _gridRowHeight) - 1
+	                             };
+	    }
+
+
+	    private void ReactEditingStateToProfileAssignment()
 		{
-			bool flag = _sequence.Profile != null;
+			var flag = _sequence.Profile != null;
 			textBoxChannelCount.ReadOnly = flag;
 			toolStripDropDownButtonPlugins.Enabled = !flag;
 			toolStripButtonSaveOrder.Enabled = !flag;
@@ -2854,9 +2868,9 @@ namespace VixenEditor
 		{
 			if (_redoStack.Count != 0)
 			{
-				UndoItem item = (UndoItem) _redoStack.Pop();
-				int height = 0;
-				int width = 0;
+				var item = (UndoItem) _redoStack.Pop();
+				var height = 0;
+				var width = 0;
 				if (item.Data != null)
 				{
 					height = item.Data.GetLength(0);
@@ -2864,7 +2878,7 @@ namespace VixenEditor
 				}
 				toolStripButtonRedo.Enabled = redoToolStripMenuItem.Enabled = _redoStack.Count > 0;
 				IsDirty = true;
-				UndoItem item2 = new UndoItem(item.Location, GetAffectedBlockData(new Rectangle(item.Location.X, item.Location.Y, item.Data.GetLength(1), item.Data.GetLength(0))), item.Behavior, _sequence, _channelOrderMapping);
+				var item2 = new UndoItem(item.Location, GetAffectedBlockData(new Rectangle(item.Location.X, item.Location.Y, item.Data.GetLength(1), item.Data.GetLength(0))), item.Behavior, _sequence, _channelOrderMapping);
 				switch (item.Behavior)
 				{
 					case UndoOriginalBehavior.Overwrite:
@@ -3392,7 +3406,7 @@ namespace VixenEditor
 
 		private void SparkleGenerator(byte[,] values, params int[] effectParameters)
 		{
-            var num = 1000 / _sequence.EventPeriod;
+            var num = (int)_sequence.EventsPerSecond;// 1000 / _sequence.EventPeriod;;
             var maxValue = num - effectParameters[0];
             var decayTime = effectParameters[1];
             for (var i = 0; i < values.GetLength(0); i++)
@@ -3943,17 +3957,17 @@ namespace VixenEditor
 				string str2 = string.Empty;
 				string str3 = "0";
 				string text = textBoxProgramLength.Text;
-				int index = text.IndexOf(':');
-				if (index != -1)
+				int startPosition = text.IndexOf(':');
+				if (startPosition != -1)
 				{
-					s = text.Substring(0, index).Trim();
-					text = text.Substring(index + 1);
+					s = text.Substring(0, startPosition).Trim();
+					text = text.Substring(startPosition + 1);
 				}
-				index = text.IndexOf('.');
-				if (index != -1)
+				startPosition = text.IndexOf('.');
+				if (startPosition != -1)
 				{
-					str3 = text.Substring(index + 1).Trim();
-					text = text.Substring(0, index);
+					str3 = text.Substring(startPosition + 1).Trim();
+					text = text.Substring(0, startPosition);
 				}
 				str2 = text;
 				try
@@ -4591,7 +4605,7 @@ namespace VixenEditor
 
 		private void toolStripButtonShimmerDimming_Click(object sender, EventArgs e)
 		{
-			int maxFrequency = 0x3e8 / _sequence.EventPeriod;
+            var maxFrequency = (int)_sequence.EventsPerSecond;// 1000 / _sequence.EventPeriod;;
 			var dialog = new EffectFrequencyDialog("Shimmer (dimming)", maxFrequency, _dimmingShimmerGenerator);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
@@ -4621,9 +4635,8 @@ namespace VixenEditor
 			dialog.Dispose();
 		}
 
-		private void toolStripButtonSparkle_Click(object sender, EventArgs e)
-		{
-            var maxFrequency = 0x3e8 / _sequence.EventPeriod;
+		private void toolStripButtonSparkle_Click(object sender, EventArgs e) {
+		    var maxFrequency = (int) _sequence.EventsPerSecond;// 1000 / _sequence.EventPeriod;
             var dialog = new SparkleParamsDialog(maxFrequency, _sparkleGenerator, _sequence.MinimumLevel, _sequence.MaximumLevel, _drawingLevel, _actualLevels);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{

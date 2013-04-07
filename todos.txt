@@ -13,3 +13,7 @@ Low,incomplete,Separate Audio file and Events
 Low,incomplete,I think test channels and test console should be combined after groups
 Low,incomplete,Enable SaveAs toolbar button
 Low,incomplete,Clean up the preferences
+
+
+Grab handle on the waveform size instead of with zoom level
+New background color for wave: C0C0C0 background selected: 9494aa peak wave: 3232c8 mid wave: 6464dc
