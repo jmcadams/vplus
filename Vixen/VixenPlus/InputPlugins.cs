@@ -35,14 +35,14 @@ namespace VixenPlus
 			if (allPluginData.Count != 0)
 			{
 				var builder = new StringBuilder();
-				var dialog = new ProgressDialog();
-				dialog.Show();
+                //var dialog = new ProgressDialog();
+                //dialog.Show();
 				foreach (XmlNode node in allPluginData)
 				{
 					if (node.Attributes != null)
 					{
 						string pluginName = node.Attributes["name"].Value;
-						dialog.Message = "Verifying " + pluginName;
+                        //dialog.Message = "Verifying " + pluginName;
 						if (FindPlugin(pluginName) == null)
 						{
 							if (node.OwnerDocument != null)
@@ -69,8 +69,8 @@ namespace VixenPlus
 						}
 					}
 				}
-				dialog.Hide();
-				dialog.Dispose();
+                //dialog.Hide();
+                //dialog.Dispose();
 				if (builder.Length != 0)
 				{
 					string str3 = (_object is EventSequence) ? "sequence" : "program";

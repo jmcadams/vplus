@@ -54,6 +54,7 @@ namespace VixenPlus
 			}
 			finally
 			{
+                dialog.Dispose();
 				Cursor = Cursors.Default;
 				GC.Collect();
 			}

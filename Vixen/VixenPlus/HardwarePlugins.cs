@@ -100,8 +100,8 @@ namespace VixenPlus
 		public static List<IHardwarePlugin> LoadPlugins(string directory, string interfaceName)
 		{
 			var list = new List<IHardwarePlugin>();
-			var dialog = new ProgressDialog();
-			dialog.Show();
+            //var dialog = new ProgressDialog();
+            //dialog.Show();
 			foreach (string str in Directory.GetFiles(directory, "*.dll", SearchOption.TopDirectoryOnly))
 			{
 				IHardwarePlugin plugin;
@@ -116,7 +116,7 @@ namespace VixenPlus
 							{
 								if (type2.Name == interfaceName)
 								{
-									dialog.Message = "Loading " + Path.GetFileName(str);
+                                    //dialog.Message = "Loading " + Path.GetFileName(str);
 									plugin = (IHardwarePlugin) Activator.CreateInstance(type);
 									PluginCache[str] = plugin;
 								}
@@ -132,8 +132,8 @@ namespace VixenPlus
 					list.Add(plugin);
 				}
 			}
-			dialog.Hide();
-			dialog.Dispose();
+            //dialog.Hide();
+            //dialog.Dispose();
 			return list;
 		}
 	}
