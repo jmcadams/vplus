@@ -15,7 +15,7 @@ namespace VixenPlus
         }
 
         public void FadeIn() {
-            for (var i = 0; i < 100; i += 10) {
+            for (var i = 0; i <= 100; i += 10) {
                 this.Opacity = (double)(i / 100d);
                 this.Refresh();
                 Thread.Sleep(FADE_MS);
@@ -23,7 +23,7 @@ namespace VixenPlus
         }
 
         public void FadeOut() {
-            for (var i = 100; i > 10; i -= 10) {
+            for (var i = 100; i > 0; i -= 10) {
                 this.Opacity = (double)(i / 100d);
                 this.Refresh();
                 Thread.Sleep(FADE_MS);
