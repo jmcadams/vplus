@@ -1290,6 +1290,7 @@ namespace VixenEditor
 			{
 				splitContainer1.SplitterDistance = _sequence.ChannelWidth;
 			}
+            splitContainer2.SplitterDistance = 60;// pictureBoxTime.Height - hScrollBar1.Height;
 			toolStripComboBoxWaveformZoom.SelectedItem = "100%";
 			SetDrawingLevel(_sequence.MaximumLevel);
 			_executionInterface.SetSynchronousContext(_executionContextHandle, _sequence);
@@ -3573,7 +3574,8 @@ namespace VixenEditor
 		Label_0355:
 			if ((((ModifierKeys & Keys.Control) != Keys.None) && (e.KeyCode >= Keys.D0)) && (e.KeyCode <= Keys.D9))
 			{
-				int index = ((int) e.KeyCode) - 0x30;
+				int index = ((int) e.KeyCode) - 48;
+                e.Handled = true;
 				if ((ModifierKeys & Keys.Shift) != Keys.None)
 				{
 					_bookmarks[index] = (_bookmarks[index] == _normalizedRange.Left) ? -1 : _normalizedRange.Left;
@@ -4777,11 +4779,15 @@ namespace VixenEditor
 				if (toolStripButtonWaveform.Checked)
 				{
                     pictureBoxTime.Height = 120; //TODO  (int)(120 * ((toolStripComboBoxWaveformZoom.SelectedIndex + 1) * .1));
+                    splitContainer2.SplitterDistance = 120;
+                    splitContainer2.Enabled = true;
 					EnableWaveformButton();
 				}
 				else
 				{
 					pictureBoxTime.Height = 60;
+                    splitContainer2.SplitterDistance = 60;
+                    splitContainer2.Enabled = false;
 					toolStripLabelWaveformZoom.Enabled = false;
 					toolStripComboBoxWaveformZoom.Enabled = false;
 				}
@@ -5032,73 +5038,53 @@ namespace VixenEditor
 			pictureBoxTime.Refresh();
 		}
 
-		private void UpdateGrid(Graphics g, Rectangle clipRect)
-		{
-			if (_sequence.ChannelCount != 0)
-			{
-				using (var font = new Font(Font.FontFamily, (_periodPixelWidth <= 20) ? 5 : ((_periodPixelWidth <= 25) ?  6 : ((_periodPixelWidth < 50) ? 8 : 10 ))))
-				{
-					using (var brush = new SolidBrush(Color.White))
-					{
-						int num;
-						int num3;
-						int num7;
-						VixenPlus.Channel channel;
-						string str;
-						int num5 = ((clipRect.X / _periodPixelWidth) * _periodPixelWidth) + 1;
-						int y = ((clipRect.Y / _gridRowHeight) * _gridRowHeight) + 1;
-						int num6 = (clipRect.X / _periodPixelWidth) + hScrollBar1.Value;
-						int cellY = (clipRect.Y / _gridRowHeight) + vScrollBar1.Value;
-						if (!_showingGradient)
-						{
-							goto Label_0329;
-						}
-						while ((y < clipRect.Bottom) && (cellY < _sequence.ChannelCount))
-						{
-							num7 = _channelOrderMapping[cellY];
-							channel = _sequence.Channels[num7];
-							num3 = num5;
-							num = num6;
-							while ((num3 < clipRect.Right) && (num < _sequence.TotalEventPeriods))
-							{
-								brush.Color = GetGradientColor(_gridBackBrush.Color, channel.Color, _sequence.EventValues[num7, num]);
-								g.FillRectangle(brush, num3, y, _periodPixelWidth - 1, _gridRowHeight - 1);
-								if (_showCellText && (GetCellIntensity(num, cellY, out str) > 0))
-								{
-									g.DrawString(str, font, Brushes.Black, new RectangleF(num3, y,  (_periodPixelWidth - 1), (_gridRowHeight - 1)));
-								}
-								num3 += _periodPixelWidth;
-								num++;
-							}
-							y += _gridRowHeight;
-							cellY++;
-						}
-						return;
-					Label_0222:
-						num7 = _channelOrderMapping[cellY];
-						channel = _sequence.Channels[num7];
-						num3 = num5;
-						for (num = num6; (num3 < clipRect.Right) && (num < _sequence.TotalEventPeriods); num++)
-						{
-							int height = ((_gridRowHeight - 1) * _sequence.EventValues[num7, num]) / 0xff;
-							g.FillRectangle(channel.Brush, num3, ((y + _gridRowHeight) - 1) - height, _periodPixelWidth - 1, height);
-							if (_showCellText && (GetCellIntensity(num, cellY, out str) > 0))
-							{
-								g.DrawString(str, font, Brushes.Black, new RectangleF((float) num3, (float) y, (float) (_periodPixelWidth - 1), (float) (_gridRowHeight - 1)));
-							}
-							num3 += _periodPixelWidth;
-						}
-						y += _gridRowHeight;
-						cellY++;
-					Label_0329:
-						if ((y < clipRect.Bottom) && (cellY < _sequence.ChannelCount))
-						{
-							goto Label_0222;
-						}
-					}
-				}
-			}
-		}
+        private void UpdateGrid(Graphics g, Rectangle clipRect)
+        {
+            if (_sequence.ChannelCount != 0)
+            {
+                var fontSize = (_periodPixelWidth <= 20) ? 5 : ((_periodPixelWidth <= 25) ? 6 : ((_periodPixelWidth < 50) ? 8 : 10));
+                using (var font = new Font(Font.FontFamily, fontSize))
+                {
+                    using (var brush = new SolidBrush(Color.White))
+                    {
+                        string cellIntensity;
+                        var initialX = ((clipRect.X / _periodPixelWidth) * _periodPixelWidth) + 1;
+                        int currentY = ((clipRect.Y / _gridRowHeight) * _gridRowHeight) + 1;
+                        int startEvent = (clipRect.X / _periodPixelWidth) + hScrollBar1.Value;
+                        int channelIndex = (clipRect.Y / _gridRowHeight) + vScrollBar1.Value;
+                        
+                        while ((currentY < clipRect.Bottom) && (channelIndex < _sequence.ChannelCount))
+                        {
+                            var currentChannel = _channelOrderMapping[channelIndex];
+                            var channel = _sequence.Channels[currentChannel];
+                            var currentX = initialX;
+
+                            for (var currentEventCount = startEvent; (currentX < clipRect.Right) && (currentEventCount < _sequence.TotalEventPeriods); currentEventCount++)
+                            {
+                                if (_showingGradient)
+                                {
+                                    brush.Color = GetGradientColor(_gridBackBrush.Color, channel.Color, _sequence.EventValues[currentChannel, currentEventCount]);
+                                    g.FillRectangle(brush, currentX, currentY, _periodPixelWidth - 1, _gridRowHeight - 1);
+                                }
+                                else
+                                {
+                                    int height = ((_gridRowHeight - 1) * _sequence.EventValues[currentChannel, currentEventCount]) / 255;
+                                    g.FillRectangle(channel.Brush, currentX, ((currentY + _gridRowHeight) - 1) - height, _periodPixelWidth - 1, height);
+                                }
+
+                                if (_showCellText && (GetCellIntensity(currentEventCount, channelIndex, out cellIntensity) > 0))
+                                {
+                                    g.DrawString(cellIntensity, font, Brushes.Black, new RectangleF(currentX, currentY, (_periodPixelWidth - 1), (_gridRowHeight - 1)));
+                                }
+                                currentX += _periodPixelWidth;
+                            }
+                            currentY += _gridRowHeight;
+                            channelIndex++;
+                        }
+                    }
+                }
+            }
+        }
 
 		private void UpdateLevelDisplay()
 		{
@@ -5378,6 +5364,23 @@ namespace VixenEditor
             toolStripExecutionControl.GripStyle = style;
             toolStripSequenceSettings.GripStyle = style;
             toolStripText.GripStyle = style;
+        }
+
+        //private void splitContainer2_SplitterMoving(object sender, SplitterCancelEventArgs e)
+        //{
+        //    System.Diagnostics.Debug.Print(String.Format("x:{0}, y:{1}, sx:{2}, sy:{3}",e.MouseCursorX, e.MouseCursorY, e.SplitX, e.SplitY));
+        //}
+
+        //private void splitContainer2_StyleChanged(object sender, EventArgs e)
+        //{
+        //    e.
+        //}
+
+        private void splitContainer2_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            pictureBoxTime.Height = e.SplitY;
+            pictureBoxChannels.Refresh();
+            pictureBoxGrid.Refresh();
         }
 
 	}

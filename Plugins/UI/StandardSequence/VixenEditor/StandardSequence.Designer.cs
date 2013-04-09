@@ -825,8 +825,8 @@ namespace VixenEditor{
             // insertPasteToolStripMenuItem
             // 
             this.insertPasteToolStripMenuItem.Name = "insertPasteToolStripMenuItem";
-            this.insertPasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
-                        | System.Windows.Forms.Keys.V)));
+            this.insertPasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.V)));
             this.insertPasteToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.insertPasteToolStripMenuItem.Text = "Insert paste";
             this.insertPasteToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonInsertPaste_Click);
@@ -841,8 +841,8 @@ namespace VixenEditor{
             // clearAllToolStripMenuItem
             // 
             this.clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
-            this.clearAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
-                        | System.Windows.Forms.Keys.A)));
+            this.clearAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.A)));
             this.clearAllToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.clearAllToolStripMenuItem.Text = "Clear all";
             this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearAllToolStripMenuItem_Click);
@@ -1297,8 +1297,8 @@ namespace VixenEditor{
             // 
             // labelPosition
             // 
-            this.labelPosition.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelPosition.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labelPosition.BackColor = System.Drawing.Color.White;
             this.labelPosition.Location = new System.Drawing.Point(12, 9);
             this.labelPosition.Name = "labelPosition";
@@ -1412,6 +1412,7 @@ namespace VixenEditor{
             // splitContainer2.Panel1
             // 
             this.splitContainer2.Panel1.Controls.Add(this.pictureBoxTime);
+            this.splitContainer2.Panel1MinSize = 60;
             // 
             // splitContainer2.Panel2
             // 
@@ -1419,10 +1420,12 @@ namespace VixenEditor{
             this.splitContainer2.Panel2.Controls.Add(this.pictureBoxGrid);
             this.splitContainer2.Panel2.Controls.Add(this.vScrollBar1);
             this.splitContainer2.Panel2.Controls.Add(this.hScrollBar1);
+            this.splitContainer2.Panel2MinSize = 60;
             this.splitContainer2.Size = new System.Drawing.Size(803, 243);
             this.splitContainer2.SplitterDistance = 60;
             this.splitContainer2.TabIndex = 5;
             this.splitContainer2.TabStop = false;
+            this.splitContainer2.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer2_SplitterMoved);
             // 
             // pictureBoxTime
             // 
@@ -1435,7 +1438,6 @@ namespace VixenEditor{
             this.pictureBoxTime.TabIndex = 1;
             this.pictureBoxTime.TabStop = false;
             this.pictureBoxTime.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxTime_Paint);
-
             // 
             // contextMenuTime
             // 
