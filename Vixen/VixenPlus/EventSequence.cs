@@ -495,6 +495,7 @@ namespace VixenPlus
 			return false;
 		}
 
+        //todo this is broken since there are not any channels showing up here...
 		public int InsertChannel(int sortedIndex)
 		{
 			int count = LastSort >= 0 ? _channels.Count : sortedIndex;

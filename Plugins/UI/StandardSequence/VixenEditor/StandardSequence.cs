@@ -3474,8 +3474,8 @@ namespace VixenEditor
 		private void StandardSequence_KeyDown(object sender, KeyEventArgs e)
 		{
 			int num;
-			bool flag = _executionInterface.EngineStatus(_executionContextHandle) == 1;
-			bool flag2 = _normalizedRange.Width > 0;
+			bool isExecutionRunning = _executionInterface.EngineStatus(_executionContextHandle) == 1;
+			bool isRangeNormalized = _normalizedRange.Width > 0;
 			switch (e.KeyCode)
 			{
 				case Keys.Prior:
@@ -3487,6 +3487,7 @@ namespace VixenEditor
 						vScrollBar1.Value -= num;
 						e.Handled = true;
 					}
+                    break;
 					goto Label_0355;
 
 				case Keys.Next:
@@ -3587,7 +3588,7 @@ namespace VixenEditor
 				}
 				return;
 			}
-			if (!flag2)
+			if (!isRangeNormalized)
 			{
 				goto Label_0EBD;
 			}
@@ -3721,7 +3722,7 @@ namespace VixenEditor
 			}
 			e.Handled = true;
 		Label_0C71:
-			if (!flag && pictureBoxGrid.Focused)
+			if (!isExecutionRunning && pictureBoxGrid.Focused)
 			{
 				if ((((e.KeyCode < Keys.A) || (e.KeyCode > Keys.Z)) || ((ModifierKeys & Keys.Control) != Keys.None)) || ((ModifierKeys & Keys.Alt) != Keys.None))
 				{
@@ -3822,50 +3823,53 @@ namespace VixenEditor
 				}
 			}
 		Label_0EBD:
-			if (!(flag || (!pictureBoxChannels.Focused && !pictureBoxGrid.Focused)))
+			if (!(isExecutionRunning || (!pictureBoxChannels.Focused && !pictureBoxGrid.Focused)))
 			{
-				int channelSortedIndex;
-				switch (e.KeyCode)
-				{
-					case Keys.Insert:
-						if (SelectedChannel != null)
-						{
-							channelSortedIndex = GetChannelSortedIndex(SelectedChannel);
-							int naturalIndex = _sequence.InsertChannel(channelSortedIndex);
-							InsertChannelIntoSort(naturalIndex, channelSortedIndex);
-							ChannelCountChanged();
-						}
-						e.Handled = true;
-						return;
-
-					case Keys.Delete:
-						if (!e.Shift)
-						{
-							if (SelectedChannel != null)
-							{
-								ClearChannel(GetChannelSortedIndex(SelectedChannel));
-							}
-						}
-						else if ((SelectedChannel != null) && (MessageBox.Show(string.Format("Delete channel {0}?", SelectedChannel.Name), "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes))
-						{
-							channelSortedIndex = GetChannelSortedIndex(SelectedChannel);
-							_sequence.DeleteChannel(SelectedChannel.Id);
-							DeleteChannelFromSort(channelSortedIndex);
-							ChannelCountChanged();
-						}
-						e.Handled = true;
-						return;
-
-					case Keys.D6:
-						if (e.Shift && (SelectedChannel != null))
-						{
-							FillChannel(GetChannelSortedIndex(SelectedChannel));
-						}
-						e.Handled = true;
-						return;
-				}
+                handleChannelKeyPress(e);
 			}
 		}
+
+        private void handleChannelKeyPress(KeyEventArgs e)
+        {
+            if (null == SelectedChannel)
+            {
+                return;
+            }
+
+            var channelSortedIndex = GetChannelSortedIndex(SelectedChannel);
+
+            switch (e.KeyCode)
+            {
+                case Keys.Insert:
+                    int naturalIndex = _sequence.InsertChannel(channelSortedIndex);
+                    InsertChannelIntoSort(naturalIndex, channelSortedIndex);
+                    ChannelCountChanged();
+                    e.Handled = true;
+                    break;
+
+                case Keys.Delete:
+                    if (!e.Shift)
+                    {
+                        ClearChannel(channelSortedIndex);
+                    }
+                    else if ((MessageBox.Show(string.Format("Delete channel {0}?", SelectedChannel.Name), "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes))
+                    {
+                        _sequence.DeleteChannel(SelectedChannel.Id);
+                        DeleteChannelFromSort(channelSortedIndex);
+                        ChannelCountChanged();
+                    }
+                    e.Handled = true;
+                    break;
+
+                case Keys.D6:
+                    if (e.Shift)
+                    {
+                        FillChannel(channelSortedIndex);
+                    }
+                    e.Handled = true;
+                    break;
+            }
+        }
 
 		private void StandardSequence_Load(object sender, EventArgs e)
 		{
