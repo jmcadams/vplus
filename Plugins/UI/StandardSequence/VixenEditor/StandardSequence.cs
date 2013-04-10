@@ -3473,42 +3473,62 @@ namespace VixenEditor
 		private void StandardSequence_KeyDown(object sender, KeyEventArgs e)
 		{
 		    var isExecutionRunning = _executionInterface.EngineStatus(_executionContextHandle) == 1;
-            var isRangeNormalized = _normalizedRange.Width > 0;
+            //var isRangeNormalized = _normalizedRange.Width > 0;
 		    
             HandelGlobalKeys(e);
+            System.Diagnostics.Debug.Print("e.handled: {1} - {0} ", e.Handled,"After HandleGlobalKeys");
 
             // TODO Move this to its own method and need to add drawing of the bookmark to the paint event for the pictureBoxTime object
-            if (e.Control &&
-                e.KeyCode >= Keys.D0 &&
-                e.KeyCode <= Keys.D9) {
-				int index = ((int) e.KeyCode) - (int)Keys.D0;
-                e.Handled = true;
-				if (e.Shift)
-				{
-					_bookmarks[index] = (_bookmarks[index] == _normalizedRange.Left) ? -1 : _normalizedRange.Left;
-					pictureBoxTime.Refresh();
-				}
-				else if (_bookmarks[index] != -1)
-				{
-					hScrollBar1.Value = _bookmarks[index];
-				}
-				return;
-			}
+		    if (e.Control && e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D9) {
+		        int index = ((int) e.KeyCode) - (int) Keys.D0;
+		        e.Handled = true;
+		        if (e.Shift) {
+		            _bookmarks[index] = (_bookmarks[index] == _normalizedRange.Left) ? -1 : _normalizedRange.Left;
+		            pictureBoxTime.Refresh();
+		        }
+		        else if (_bookmarks[index] != -1) {
+		            hScrollBar1.Value = _bookmarks[index];
+		        }
+		        return;
+		    }
+		    System.Diagnostics.Debug.Print("e.handled: {1} - {0} ", e.Handled, "After Bookmark Keys");
 
-			if (!isRangeNormalized)
+            // if there is a selected area
+			if (!(_normalizedRange.Width > 0))
 			{
 				goto Label_0EBD;
 			}
 
-			switch (e.KeyCode) {
-                #region Space and Direction Keys
+			if (!e.Handled) HandleOtherKeys(e);
+            System.Diagnostics.Debug.Print("e.handled: {1} - {0} ", e.Handled, "On HandleOtherKeys");
+
+		    if (!e.Handled && !isExecutionRunning && pictureBoxGrid.Focused) {
+		        HandleIntensityAdjustKeys(e);
+                if (!e.Handled) HandleAtoZKeys(e);
+		    }
+            System.Diagnostics.Debug.Print("e.handled: {1} - {0} ", e.Handled, "After standard Keys break");
+
+		Label_0EBD:
+            System.Diagnostics.Debug.Print("e.handled: {1} - {0} ", e.Handled, "After selected area goto");
+
+			if (!(isExecutionRunning || (!pictureBoxChannels.Focused && !pictureBoxGrid.Focused)))
+			{
+                HandleChannelKeyPress(e);
+                System.Diagnostics.Debug.Print("after HandleChannelKeyPress e.handled: {0} ", e.Handled);
+			}
+            System.Diagnostics.Debug.Print("before exit e.handled: {0} ", e.Handled);
+        }
+
+        // todo refactor
+        private void HandleOtherKeys(KeyEventArgs e) {
+            switch (e.KeyCode) {
                 case Keys.Space:
 				{
 					int num6;
 					int num7;
 					if ((SelectableControlFocused() && !pictureBoxChannels.Focused) && !pictureBoxGrid.Focused)
 					{
-						goto Label_0C71;
+						break;
 					}
 					if (_executionInterface.EngineStatus(_executionContextHandle, out num7) != 1)
 					{
@@ -3541,7 +3561,7 @@ namespace VixenEditor
 						}
 						pictureBoxGrid.Invalidate(new Rectangle((_normalizedRange.Left - hScrollBar1.Value) * _periodPixelWidth, (_normalizedRange.Top - vScrollBar1.Value) * _gridRowHeight, _normalizedRange.Width * _periodPixelWidth, _normalizedRange.Height * _gridRowHeight));
 						e.Handled = true;
-						goto Label_0C71;
+					    break;
 					}
 					int x = num7 / _sequence.EventPeriod;
 					AddUndoItem(new Rectangle(x, _normalizedRange.Top, 1, _normalizedRange.Height), UndoOriginalBehavior.Overwrite);
@@ -3551,15 +3571,16 @@ namespace VixenEditor
 						_sequence.EventValues[num6, x] = _drawingLevel;
 					}
 					pictureBoxGrid.Invalidate(new Rectangle((x - hScrollBar1.Value) * _periodPixelWidth, (_normalizedRange.Top - vScrollBar1.Value) * _gridRowHeight, _periodPixelWidth, _normalizedRange.Height * _gridRowHeight));
-					return;
+					return;// why no break here?
 				}
 				case Keys.Left:
 					if (!pictureBoxChannels.Focused && !pictureBoxGrid.Focused)
 					{
-						goto Label_0C71;
+    					break; // this was goto, skips e.handled, so still would be false?
 					}
 					if ((hScrollBar1.Value > 0) || (_normalizedRange.Left > 0))
 					{
+						e.Handled = true;
 						_selectedRange.X--;
 						_normalizedRange.X--;
 						if ((_normalizedRange.Left + 1) <= hScrollBar1.Value)
@@ -3574,7 +3595,8 @@ namespace VixenEditor
 				case Keys.Up:
 					if ((pictureBoxChannels.Focused || (pictureBoxGrid.Focused && !e.Control)) && ((vScrollBar1.Value > 0) || (_normalizedRange.Top > 0)))
 					{
-						_selectedRange.Y--;
+                        e.Handled = true;
+                        _selectedRange.Y--;
 						_normalizedRange.Y--;
 						if ((_normalizedRange.Top + 1) <= vScrollBar1.Value)
 						{
@@ -3584,16 +3606,16 @@ namespace VixenEditor
 						{
 							pictureBoxGrid.Invalidate(new Rectangle((_normalizedRange.Left - hScrollBar1.Value) * _periodPixelWidth, (_normalizedRange.Top - vScrollBar1.Value) * _gridRowHeight, _normalizedRange.Width * _periodPixelWidth, (_normalizedRange.Height + 1) * _gridRowHeight));
 						}
-					}
-					e.Handled = true;
-					goto Label_0C71;
+                    }
+					break;
 
 				case Keys.Right:
 					if (pictureBoxChannels.Focused || pictureBoxGrid.Focused)
 					{
 						if (_normalizedRange.Right < _sequence.TotalEventPeriods)
 						{
-							_selectedRange.X++;
+                            e.Handled = true;
+                            _selectedRange.X++;
 							_normalizedRange.X++;
 							if (((_normalizedRange.Right - 1) - hScrollBar1.Value) >= _visibleEventPeriods)
 							{
@@ -3604,14 +3626,14 @@ namespace VixenEditor
 								pictureBoxGrid.Invalidate(new Rectangle(((_normalizedRange.Left - hScrollBar1.Value) - 1) * _periodPixelWidth, (_normalizedRange.Top - vScrollBar1.Value) * _gridRowHeight, (_normalizedRange.Width + 1) * _periodPixelWidth, _normalizedRange.Height * _gridRowHeight));
 							}
 						}
-						e.Handled = true;
 					}
-					goto Label_0C71;
+					break;
 
 				case Keys.Down:
 					if ((pictureBoxChannels.Focused || (pictureBoxGrid.Focused && !e.Control)) && (_normalizedRange.Bottom < _sequence.ChannelCount))
 					{
-						_selectedRange.Y++;
+                        e.Handled = true;
+                        _selectedRange.Y++;
 						_normalizedRange.Y++;
 						if (((_normalizedRange.Bottom - 1) - vScrollBar1.Value) >= _visibleRowCount)
 						{
@@ -3622,120 +3644,96 @@ namespace VixenEditor
 							pictureBoxGrid.Invalidate(new Rectangle((_normalizedRange.Left - hScrollBar1.Value) * _periodPixelWidth, ((_normalizedRange.Top - vScrollBar1.Value) - 1) * _gridRowHeight, _normalizedRange.Width * _periodPixelWidth, (_normalizedRange.Height + 1) * _gridRowHeight));
 						}
 					}
-					e.Handled = true;
-					goto Label_0C71;
+					break;
 
-				default:
-					goto Label_0C71;
 			}
-			e.Handled = true;
-                #endregion
-        Label_0C71:
+        }
 
-		    #region modified up and down keys + lettered keys
+        /// <summary>
+        ///  Process the A - Z keys and their SAC variants
+        ///  Currently using A,E,F,H,I,R,S,T,V & X
+        ///  Was also using: B,C,D,G & U - but these did nothing.
+        /// </summary>
+        /// <param name="e"></param>
+	    private void HandleAtoZKeys(KeyEventArgs e) {
+	        if (e.KeyCode >= Keys.A && e.KeyCode <= Keys.Z) {
+	            switch (e.KeyCode) {
+	                case Keys.A:
+	                    toolStripButtonRandom_Click(null, null);
+	                    e.Handled = true;
+	                    break;
 
-		    if (!isExecutionRunning &&
-		        pictureBoxGrid.Focused) {
-		        if ((((e.KeyCode < Keys.A) || (e.KeyCode > Keys.Z)) || ((ModifierKeys & Keys.Control) != Keys.None)) ||
-		            ((ModifierKeys & Keys.Alt) != Keys.None)) {
-		            switch (e.KeyCode) {
-		                case Keys.Up:
-		                    if (e.Control) {
-		                        IntensityAdjustDialogCheck();
-		                        m_intensityAdjustDialog.Delta = e.Alt ? 1 : _intensityLargeDelta;
-		                    }
-		                    e.Handled = true;
-		                    goto Label_0EBD;
+	                case Keys.E:
+	                    toolStripButtonShimmerDimming_Click(null, null);
+	                    e.Handled = true;
+	                    break;
 
-		                case Keys.Right:
-		                    goto Label_0EBD;
+	                case Keys.F:
+	                    if (!e.Shift) {
+	                        toolStripButtonRampOff_Click(null, null);
+	                    }
+	                    else {
+	                        toolStripButtonPartialRampOff_Click(null, null);
+	                    }
+	                    e.Handled = true;
+	                    break;
 
-		                case Keys.Down:
-		                    if (e.Control) {
-		                        IntensityAdjustDialogCheck();
-		                        m_intensityAdjustDialog.Delta = e.Alt ? -1 : -_intensityLargeDelta;
-		                    }
-		                    e.Handled = true;
-		                    goto Label_0EBD;
-		            }
-		        }
-		        else {
-		            switch (e.KeyCode) {
-		                case Keys.A:
-		                    toolStripButtonRandom_Click(null, null);
-		                    e.Handled = true;
-		                    goto Label_0EBD;
+	                case Keys.H:
+	                    toolStripButtonMirrorHorizontal_Click(null, null);
+	                    e.Handled = true;
+	                    break;
 
-		                case Keys.B:
-		                case Keys.C:
-		                case Keys.D:
-		                case Keys.G:
-		                case Keys.U:
-		                    goto Label_0EBD;
+	                case Keys.I:
+	                    toolStripButtonIntensity_Click(null, null);
+	                    e.Handled = true;
+	                    break;
 
-		                case Keys.E:
-		                    toolStripButtonShimmerDimming_Click(null, null);
-		                    e.Handled = true;
-		                    goto Label_0EBD;
+	                case Keys.R:
+	                    if (!e.Shift) {
+	                        toolStripButtonRampOn_Click(null, null);
+	                    }
+	                    else {
+	                        toolStripButtonPartialRampOn_Click(null, null);
+	                    }
+	                    e.Handled = true;
+	                    break;
 
-		                case Keys.F:
-		                    if (!e.Shift) {
-		                        toolStripButtonRampOff_Click(null, null);
-		                    }
-		                    else {
-		                        toolStripButtonPartialRampOff_Click(null, null);
-		                    }
-		                    e.Handled = true;
-		                    goto Label_0EBD;
+	                case Keys.S:
+	                    toolStripButtonSparkle_Click(null, null);
+	                    e.Handled = true;
+	                    break;
 
-		                case Keys.H:
-		                    toolStripButtonMirrorHorizontal_Click(null, null);
-		                    e.Handled = true;
-		                    goto Label_0EBD;
+	                case Keys.T:
+	                    toolStripButtonInvert_Click(null, null);
+	                    e.Handled = true;
+	                    break;
 
-		                case Keys.I:
-		                    toolStripButtonIntensity_Click(null, null);
-		                    e.Handled = true;
-		                    goto Label_0EBD;
+	                case Keys.V:
+	                    toolStripButtonMirrorVertical_Click(null, null);
+	                    e.Handled = true;
+	                    break;
 
-		                case Keys.R:
-		                    if (!e.Shift) {
-		                        toolStripButtonRampOn_Click(null, null);
-		                    }
-		                    else {
-		                        toolStripButtonPartialRampOn_Click(null, null);
-		                    }
-		                    e.Handled = true;
-		                    goto Label_0EBD;
+	                case Keys.X:
+	                    toolStripButtonToggleCrossHairs_Click(null, null);
+	                    toolStripButtonToggleCrossHairs.Checked = true;
+	                    e.Handled = true;
+	                    break;
+	            }
+	        }
+	    }
 
-		                case Keys.S:
-		                    toolStripButtonSparkle_Click(null, null);
-		                    e.Handled = true;
-		                    goto Label_0EBD;
 
-		                case Keys.T:
-		                    toolStripButtonInvert_Click(null, null);
-		                    e.Handled = true;
-		                    goto Label_0EBD;
+	    private void HandleIntensityAdjustKeys(KeyEventArgs e) {
+            if ((e.KeyCode == Keys.Up) || (e.KeyCode == Keys.Down) && e.Control) {
+                IntensityAdjustDialogCheck();
+                var change = e.Alt ? 1 : _intensityLargeDelta;
+                m_intensityAdjustDialog.Delta = (e.KeyCode == Keys.Up) ? change : -change;
+                e.Handled = true;
+            }
+	    }
 
-		                case Keys.V:
-		                    toolStripButtonMirrorVertical_Click(null, null);
-		                    e.Handled = true;
-		                    goto Label_0EBD;
-		            }
-		        }
-		    }
 
-		    #endregion
-
-		Label_0EBD:
-			if (!(isExecutionRunning || (!pictureBoxChannels.Focused && !pictureBoxGrid.Focused)))
-			{
-                HandleChannelKeyPress(e);
-			}
-		}
-        
-        private void HandelGlobalKeys(KeyEventArgs e) {
+	    private void HandelGlobalKeys(KeyEventArgs e) {
             switch (e.KeyCode) {
                 case Keys.Prior:
                     if (vScrollBar1.Value > 0) {
@@ -3786,9 +3784,9 @@ namespace VixenEditor
                                     return;
                                 }
                             }
-                            toolStripButtonPlay_Click(null, null);
-                            e.Handled = true;
                         }
+                        toolStripButtonPlay_Click(null, null);
+                        e.Handled = true;
                     }
                     break;
 
@@ -4702,18 +4700,18 @@ namespace VixenEditor
 			pictureBoxGrid.Refresh();
 		}
 
-		private void toolStripButtonToggleCrossHairs_Click(object sender, EventArgs e)
-		{
-			if (!toolStripButtonToggleCrossHairs.Checked)
-			{
-				pictureBoxGrid.Invalidate(new Rectangle((_mouseTimeCaret - hScrollBar1.Value) * _periodPixelWidth, 0, _periodPixelWidth, pictureBoxGrid.Height));
-				pictureBoxGrid.Update();
-				pictureBoxGrid.Invalidate(new Rectangle(0, (_mouseChannelCaret - vScrollBar1.Value) * _gridRowHeight, pictureBoxGrid.Width, _gridRowHeight));
-				pictureBoxGrid.Update();
-			}
-		}
 
-		private void toolStripButtonToggleLevels_Click(object sender, EventArgs e)
+	    private void toolStripButtonToggleCrossHairs_Click(object sender, EventArgs e) {
+            // Cant check on click here since the paint method depends on the crosshairs flag, so we set it right away.
+	        toolStripButtonToggleCrossHairs.Checked = !toolStripButtonToggleCrossHairs.Checked;
+
+            pictureBoxGrid.Invalidate(new Rectangle((_mouseTimeCaret - hScrollBar1.Value) * _periodPixelWidth, 0, _periodPixelWidth, pictureBoxGrid.Height));
+            pictureBoxGrid.Invalidate(new Rectangle(0, (_mouseChannelCaret - vScrollBar1.Value) * _gridRowHeight, pictureBoxGrid.Width, _gridRowHeight));
+	        pictureBoxGrid.Update();
+	    }
+
+
+	    private void toolStripButtonToggleLevels_Click(object sender, EventArgs e)
 		{
 			_actualLevels = !_actualLevels;
 			_preferences.SetBoolean("ActualLevels", _actualLevels);
