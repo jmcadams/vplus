@@ -1947,7 +1947,7 @@ namespace VixenEditor
             #endregion
             #region Showing Outputs
             else {
-                var width = Math.Min(_gridRowHeight - 4, 11);
+                var width = Math.Min(_gridRowHeight - 4, 11); // 11 came from the height of an arrow which was 11x11
                 var heightOffset = (_gridRowHeight - width) >> 1;
                 var brush = new SolidBrush(Color.White);
 
@@ -1956,7 +1956,7 @@ namespace VixenEditor
                     mappedChannel = _channelOrderMapping[channelOffset];
                     channel = _sequence.Channels[mappedChannel];
 
-                    brush.Color = Color.FromArgb(0xc0, Color.Gray);
+                    brush.Color = Color.FromArgb(192, Color.Gray);
 
                     e.Graphics.FillRectangle(channel == SelectedChannel && showNaturalChannelNumbers ? SystemBrushes.Highlight : channel.Brush,
                             0, height, pictureBoxChannels.Width, _gridRowHeight);
@@ -2092,8 +2092,7 @@ namespace VixenEditor
         //TODO Refactor
 		private void pictureBoxGrid_MouseMove(object sender, MouseEventArgs e)
 		{
-			int num8;
-			Rectangle rectangle;
+		    Rectangle rectangle;
 			int cellX = e.X / _periodPixelWidth;
 			int cellY = e.Y / _gridRowHeight;
 			toolStripLabelCellIntensity.Text = string.Empty;
@@ -2350,7 +2349,7 @@ namespace VixenEditor
 			UpdatePositionLabel(_normalizedRange, false);
             //UpdateFollowMouse(e.Location);
 		Label_0733:
-			num8 = 0;
+			int num8 = 0;
 			int num9 = 0;
 			int y = 0;
 			int num11 = 0;
@@ -2636,14 +2635,14 @@ namespace VixenEditor
 
 
 	    private void DrawWaveform(PaintEventArgs e) {
-            var wavePen = Pens.White;
-
 	        var startPosition = hScrollBar1.Value * _periodPixelWidth;
 	        var endPosition = Math.Min(startPosition + ((_visibleEventPeriods + 1) * _periodPixelWidth), _waveformPixelData.Length);
 	        var waveformPosition = 0;
-	        
-            while (startPosition < endPosition) {
-	            e.Graphics.DrawLine(wavePen, waveformPosition, _waveformOffset - (_waveformPixelData[startPosition] >> 16),
+
+	        var wavePen = Pens.White;
+	        while (startPosition < endPosition) {
+	            e.Graphics.DrawLine(
+	                wavePen, waveformPosition, _waveformOffset - (_waveformPixelData[startPosition] >> 16),
 	                waveformPosition, _waveformOffset - ((short) (_waveformPixelData[startPosition] & 0xffff)));
 	            waveformPosition++;
 	            startPosition++;
@@ -3473,111 +3472,18 @@ namespace VixenEditor
 
 		private void StandardSequence_KeyDown(object sender, KeyEventArgs e)
 		{
-			int num;
-			bool isExecutionRunning = _executionInterface.EngineStatus(_executionContextHandle) == 1;
-			bool isRangeNormalized = _normalizedRange.Width > 0;
-			switch (e.KeyCode)
-			{
-				case Keys.Prior:
-					if (vScrollBar1.Value > 0)
-					{
-						num = Math.Min(_visibleRowCount, vScrollBar1.Value);
-						_selectedRange.Y -= num;
-						_normalizedRange.Y -= num;
-						vScrollBar1.Value -= num;
-						e.Handled = true;
-					}
-                    break;
-					goto Label_0355;
+		    var isExecutionRunning = _executionInterface.EngineStatus(_executionContextHandle) == 1;
+            var isRangeNormalized = _normalizedRange.Width > 0;
+		    
+            HandelGlobalKeys(e);
 
-				case Keys.Next:
-					if (vScrollBar1.Value < (_sequence.ChannelCount - _visibleRowCount))
-					{
-						int num2 = Math.Min(_sequence.ChannelCount - vScrollBar1.Value, _visibleRowCount);
-						int num3 = Math.Min(_sequence.ChannelCount - _normalizedRange.Bottom, _visibleRowCount);
-						num = Math.Min(num2, num3);
-						_selectedRange.Y += num;
-						_normalizedRange.Y += num;
-						vScrollBar1.Value += num;
-						e.Handled = true;
-					}
-					goto Label_0355;
-
-				case Keys.End:
-					if (hScrollBar1.Value < (_sequence.TotalEventPeriods - _visibleEventPeriods))
-					{
-						int num4 = _sequence.TotalEventPeriods - _visibleEventPeriods;
-						_selectedRange.X = num4;
-						_normalizedRange.X = num4;
-						hScrollBar1.Value = num4;
-						e.Handled = true;
-					}
-					goto Label_0355;
-
-				case Keys.Home:
-					if (hScrollBar1.Value > 0)
-					{
-						_selectedRange.X = 0;
-						_normalizedRange.X = 0;
-						hScrollBar1.Value = 0;
-						e.Handled = true;
-					}
-					goto Label_0355;
-
-				case Keys.F5:
-				{
-					if (!e.Alt)
-					{
-						break;
-					}
-					var dialog = new DelayedStartDialog();
-					if (dialog.ShowDialog() == DialogResult.OK)
-					{
-						dialog.Dispose();
-						e.Handled = true;
-						break;
-					}
-					dialog.Dispose();
-					return;
-				}
-				case Keys.F6:
-					if (tsbPlayFrom.Enabled)
-					{
-						toolStripButtonPlayPoint_Click(null, null);
-						e.Handled = true;
-					}
-					goto Label_0355;
-
-				case Keys.F7:
-					if (tsbPause.Enabled)
-					{
-						toolStripButtonPause_Click(null, null);
-						e.Handled = true;
-					}
-					goto Label_0355;
-
-				case Keys.F8:
-					if (tsbStop.Enabled)
-					{
-						toolStripButtonStop_Click(null, null);
-						e.Handled = true;
-					}
-					goto Label_0355;
-
-				default:
-					goto Label_0355;
-			}
-			if (tsbPlay.Enabled)
-			{
-				toolStripButtonPlay_Click(null, null);
-				e.Handled = true;
-			}
-		Label_0355:
-			if ((((ModifierKeys & Keys.Control) != Keys.None) && (e.KeyCode >= Keys.D0)) && (e.KeyCode <= Keys.D9))
-			{
-				int index = ((int) e.KeyCode) - 48;
+            // TODO Move this to its own method and need to add drawing of the bookmark to the paint event for the pictureBoxTime object
+            if (e.Control &&
+                e.KeyCode >= Keys.D0 &&
+                e.KeyCode <= Keys.D9) {
+				int index = ((int) e.KeyCode) - (int)Keys.D0;
                 e.Handled = true;
-				if ((ModifierKeys & Keys.Shift) != Keys.None)
+				if (e.Shift)
 				{
 					_bookmarks[index] = (_bookmarks[index] == _normalizedRange.Left) ? -1 : _normalizedRange.Left;
 					pictureBoxTime.Refresh();
@@ -3588,13 +3494,15 @@ namespace VixenEditor
 				}
 				return;
 			}
+
 			if (!isRangeNormalized)
 			{
 				goto Label_0EBD;
 			}
-			switch (e.KeyCode)
-			{
-				case Keys.Space:
+
+			switch (e.KeyCode) {
+                #region Space and Direction Keys
+                case Keys.Space:
 				{
 					int num6;
 					int num7;
@@ -3721,115 +3629,194 @@ namespace VixenEditor
 					goto Label_0C71;
 			}
 			e.Handled = true;
-		Label_0C71:
-			if (!isExecutionRunning && pictureBoxGrid.Focused)
-			{
-				if ((((e.KeyCode < Keys.A) || (e.KeyCode > Keys.Z)) || ((ModifierKeys & Keys.Control) != Keys.None)) || ((ModifierKeys & Keys.Alt) != Keys.None))
-				{
-					switch (e.KeyCode)
-					{
-						case Keys.Up:
-							if (e.Control)
-							{
-								IntensityAdjustDialogCheck();
-								m_intensityAdjustDialog.Delta = e.Alt ? 1 : _intensityLargeDelta;
-							}
-							e.Handled = true;
-							goto Label_0EBD;
+                #endregion
+        Label_0C71:
 
-						case Keys.Right:
-							goto Label_0EBD;
+		    #region modified up and down keys + lettered keys
 
-						case Keys.Down:
-							if (e.Control)
-							{
-								IntensityAdjustDialogCheck();
-								m_intensityAdjustDialog.Delta = e.Alt ? -1 : -_intensityLargeDelta;
-							}
-							e.Handled = true;
-							goto Label_0EBD;
-					}
-				}
-				else
-				{
-					switch (e.KeyCode)
-					{
-						case Keys.A:
-							toolStripButtonRandom_Click(null, null);
-							e.Handled = true;
-							goto Label_0EBD;
+		    if (!isExecutionRunning &&
+		        pictureBoxGrid.Focused) {
+		        if ((((e.KeyCode < Keys.A) || (e.KeyCode > Keys.Z)) || ((ModifierKeys & Keys.Control) != Keys.None)) ||
+		            ((ModifierKeys & Keys.Alt) != Keys.None)) {
+		            switch (e.KeyCode) {
+		                case Keys.Up:
+		                    if (e.Control) {
+		                        IntensityAdjustDialogCheck();
+		                        m_intensityAdjustDialog.Delta = e.Alt ? 1 : _intensityLargeDelta;
+		                    }
+		                    e.Handled = true;
+		                    goto Label_0EBD;
 
-						case Keys.B:
-						case Keys.C:
-						case Keys.D:
-						case Keys.G:
-						case Keys.U:
-							goto Label_0EBD;
+		                case Keys.Right:
+		                    goto Label_0EBD;
 
-						case Keys.E:
-							toolStripButtonShimmerDimming_Click(null, null);
-							e.Handled = true;
-							goto Label_0EBD;
+		                case Keys.Down:
+		                    if (e.Control) {
+		                        IntensityAdjustDialogCheck();
+		                        m_intensityAdjustDialog.Delta = e.Alt ? -1 : -_intensityLargeDelta;
+		                    }
+		                    e.Handled = true;
+		                    goto Label_0EBD;
+		            }
+		        }
+		        else {
+		            switch (e.KeyCode) {
+		                case Keys.A:
+		                    toolStripButtonRandom_Click(null, null);
+		                    e.Handled = true;
+		                    goto Label_0EBD;
 
-						case Keys.F:
-							if (!e.Shift)
-							{
-								toolStripButtonRampOff_Click(null, null);
-							}
-							else
-							{
-								toolStripButtonPartialRampOff_Click(null, null);
-							}
-							e.Handled = true;
-							goto Label_0EBD;
+		                case Keys.B:
+		                case Keys.C:
+		                case Keys.D:
+		                case Keys.G:
+		                case Keys.U:
+		                    goto Label_0EBD;
 
-						case Keys.H:
-							toolStripButtonMirrorHorizontal_Click(null, null);
-							e.Handled = true;
-							goto Label_0EBD;
+		                case Keys.E:
+		                    toolStripButtonShimmerDimming_Click(null, null);
+		                    e.Handled = true;
+		                    goto Label_0EBD;
 
-						case Keys.I:
-							toolStripButtonIntensity_Click(null, null);
-							e.Handled = true;
-							goto Label_0EBD;
+		                case Keys.F:
+		                    if (!e.Shift) {
+		                        toolStripButtonRampOff_Click(null, null);
+		                    }
+		                    else {
+		                        toolStripButtonPartialRampOff_Click(null, null);
+		                    }
+		                    e.Handled = true;
+		                    goto Label_0EBD;
 
-						case Keys.R:
-							if (!e.Shift)
-							{
-								toolStripButtonRampOn_Click(null, null);
-							}
-							else
-							{
-								toolStripButtonPartialRampOn_Click(null, null);
-							}
-							e.Handled = true;
-							goto Label_0EBD;
+		                case Keys.H:
+		                    toolStripButtonMirrorHorizontal_Click(null, null);
+		                    e.Handled = true;
+		                    goto Label_0EBD;
 
-						case Keys.S:
-							toolStripButtonSparkle_Click(null, null);
-							e.Handled = true;
-							goto Label_0EBD;
+		                case Keys.I:
+		                    toolStripButtonIntensity_Click(null, null);
+		                    e.Handled = true;
+		                    goto Label_0EBD;
 
-						case Keys.T:
-							toolStripButtonInvert_Click(null, null);
-							e.Handled = true;
-							goto Label_0EBD;
+		                case Keys.R:
+		                    if (!e.Shift) {
+		                        toolStripButtonRampOn_Click(null, null);
+		                    }
+		                    else {
+		                        toolStripButtonPartialRampOn_Click(null, null);
+		                    }
+		                    e.Handled = true;
+		                    goto Label_0EBD;
 
-						case Keys.V:
-							toolStripButtonMirrorVertical_Click(null, null);
-							e.Handled = true;
-							goto Label_0EBD;
-					}
-				}
-			}
+		                case Keys.S:
+		                    toolStripButtonSparkle_Click(null, null);
+		                    e.Handled = true;
+		                    goto Label_0EBD;
+
+		                case Keys.T:
+		                    toolStripButtonInvert_Click(null, null);
+		                    e.Handled = true;
+		                    goto Label_0EBD;
+
+		                case Keys.V:
+		                    toolStripButtonMirrorVertical_Click(null, null);
+		                    e.Handled = true;
+		                    goto Label_0EBD;
+		            }
+		        }
+		    }
+
+		    #endregion
+
 		Label_0EBD:
 			if (!(isExecutionRunning || (!pictureBoxChannels.Focused && !pictureBoxGrid.Focused)))
 			{
-                handleChannelKeyPress(e);
+                HandleChannelKeyPress(e);
 			}
 		}
+        
+        private void HandelGlobalKeys(KeyEventArgs e) {
+            switch (e.KeyCode) {
+                case Keys.Prior:
+                    if (vScrollBar1.Value > 0) {
+                        var newPosition = Math.Min(_visibleRowCount, vScrollBar1.Value);
+                        _selectedRange.Y -= newPosition;
+                        _normalizedRange.Y -= newPosition;
+                        vScrollBar1.Value -= newPosition;
+                        e.Handled = true;
+                    }
+                    break;
 
-        private void handleChannelKeyPress(KeyEventArgs e)
+                case Keys.Next:
+                    if (vScrollBar1.Value < _sequence.ChannelCount - _visibleRowCount) {
+                        int num2 = Math.Min(_sequence.ChannelCount - vScrollBar1.Value, _visibleRowCount);
+                        int num3 = Math.Min(_sequence.ChannelCount - _normalizedRange.Bottom, _visibleRowCount);
+                        var newPosition = Math.Min(num2, num3);
+                        _selectedRange.Y += newPosition;
+                        _normalizedRange.Y += newPosition;
+                        vScrollBar1.Value += newPosition;
+                        e.Handled = true;
+                    }
+                    break;
+
+                case Keys.End:
+                    if (hScrollBar1.Value < _sequence.TotalEventPeriods - _visibleEventPeriods) {
+                        int positionFromEnd = _sequence.TotalEventPeriods - _visibleEventPeriods;
+                        _selectedRange.X = positionFromEnd;
+                        _normalizedRange.X = positionFromEnd;
+                        hScrollBar1.Value = positionFromEnd;
+                        e.Handled = true;
+                    }
+                    break;
+
+                case Keys.Home:
+                    if (hScrollBar1.Value > 0) {
+                        _selectedRange.X = 0;
+                        _normalizedRange.X = 0;
+                        hScrollBar1.Value = 0;
+                        e.Handled = true;
+                    }
+                    break;
+
+                case Keys.F5:
+                    if (tsbPlay.Enabled) {
+                        if (e.Alt) {
+                            using (var dialog = new DelayedStartDialog()) {
+                                if (dialog.ShowDialog() != DialogResult.OK) {
+                                    return;
+                                }
+                            }
+                            toolStripButtonPlay_Click(null, null);
+                            e.Handled = true;
+                        }
+                    }
+                    break;
+
+                case Keys.F6:
+                    if (tsbPlayFrom.Enabled) {
+                        toolStripButtonPlayPoint_Click(null, null);
+                        e.Handled = true;
+                    }
+                    break;
+
+                case Keys.F7:
+                    if (tsbPause.Enabled) {
+                        toolStripButtonPause_Click(null, null);
+                        e.Handled = true;
+                    }
+                    break;
+
+                case Keys.F8:
+                    if (tsbStop.Enabled) {
+                        toolStripButtonStop_Click(null, null);
+                        e.Handled = true;
+                    }
+                    break;
+            }
+
+        }
+
+        private void HandleChannelKeyPress(KeyEventArgs e)
         {
             if (null == SelectedChannel)
             {
