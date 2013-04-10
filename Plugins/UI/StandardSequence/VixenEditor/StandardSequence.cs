@@ -1947,7 +1947,7 @@ namespace VixenEditor
             #endregion
             #region Showing Outputs
             else {
-                var width = Math.Min(_gridRowHeight - 4, pictureBoxOutputArrow.Height);
+                var width = Math.Min(_gridRowHeight - 4, 11);
                 var heightOffset = (_gridRowHeight - width) >> 1;
                 var brush = new SolidBrush(Color.White);
 
@@ -5096,13 +5096,11 @@ namespace VixenEditor
 			if (_actualLevels)
 			{
 				toolStripButtonToggleLevels.Image = global::Properties.Resources.Percent;
-				//toolStripButtonToggleLevels.Image = pictureBoxLevelPercent.Image;
 				toolStripButtonToggleLevels.Text = toolStripButtonToggleLevels.ToolTipText = "Show intensity levels as percent (0-100%)";
 			}
 			else
 			{
 				toolStripButtonToggleLevels.Image = global::Properties.Resources.number;
-				//toolStripButtonToggleLevels.Image = pictureBoxLevelNumber.Image;
 				toolStripButtonToggleLevels.Text = toolStripButtonToggleLevels.ToolTipText = "Show actual intensity levels (0-255)";
 			}
 			m_intensityAdjustDialog.ActualLevels = _actualLevels;
