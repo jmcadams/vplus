@@ -1219,11 +1219,11 @@ namespace VixenEditor{
             // toolStripContainer1.ContentPanel
             // 
             this.toolStripContainer1.ContentPanel.Controls.Add(this.splitContainer1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(984, 243);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(984, 219);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
+            this.toolStripContainer1.Location = new System.Drawing.Point(0, 24);
             this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(984, 539);
+            this.toolStripContainer1.Size = new System.Drawing.Size(984, 515);
             this.toolStripContainer1.TabIndex = 1;
             this.toolStripContainer1.Text = "toolStripContainer1";
             // 
@@ -1250,7 +1250,7 @@ namespace VixenEditor{
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(984, 243);
+            this.splitContainer1.Size = new System.Drawing.Size(984, 219);
             this.splitContainer1.SplitterDistance = 177;
             this.splitContainer1.TabIndex = 20;
             // 
@@ -1272,7 +1272,7 @@ namespace VixenEditor{
             this.pictureBoxChannels.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxChannels.Location = new System.Drawing.Point(0, 0);
             this.pictureBoxChannels.Name = "pictureBoxChannels";
-            this.pictureBoxChannels.Size = new System.Drawing.Size(177, 243);
+            this.pictureBoxChannels.Size = new System.Drawing.Size(177, 219);
             this.pictureBoxChannels.TabIndex = 11;
             this.pictureBoxChannels.TabStop = false;
             this.pictureBoxChannels.DragDrop += new System.Windows.Forms.DragEventHandler(this.pictureBoxChannels_DragDrop);
@@ -1399,8 +1399,8 @@ namespace VixenEditor{
             this.splitContainer2.Panel2.Controls.Add(this.pictureBoxGrid);
             this.splitContainer2.Panel2.Controls.Add(this.vScrollBar1);
             this.splitContainer2.Panel2.Controls.Add(this.hScrollBar1);
-            this.splitContainer2.Size = new System.Drawing.Size(803, 243);
-            this.splitContainer2.SplitterDistance = 60;
+            this.splitContainer2.Size = new System.Drawing.Size(803, 219);
+            this.splitContainer2.SplitterDistance = 54;
             this.splitContainer2.TabIndex = 5;
             this.splitContainer2.TabStop = false;
             this.splitContainer2.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer2_SplitterMoved);
@@ -1459,7 +1459,7 @@ namespace VixenEditor{
             this.pictureBoxGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxGrid.Location = new System.Drawing.Point(0, 0);
             this.pictureBoxGrid.Name = "pictureBoxGrid";
-            this.pictureBoxGrid.Size = new System.Drawing.Size(786, 162);
+            this.pictureBoxGrid.Size = new System.Drawing.Size(786, 144);
             this.pictureBoxGrid.TabIndex = 5;
             this.pictureBoxGrid.TabStop = false;
             this.pictureBoxGrid.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxGrid_Paint);
@@ -1821,14 +1821,14 @@ namespace VixenEditor{
             this.vScrollBar1.Dock = System.Windows.Forms.DockStyle.Right;
             this.vScrollBar1.Location = new System.Drawing.Point(786, 0);
             this.vScrollBar1.Name = "vScrollBar1";
-            this.vScrollBar1.Size = new System.Drawing.Size(17, 162);
+            this.vScrollBar1.Size = new System.Drawing.Size(17, 144);
             this.vScrollBar1.TabIndex = 4;
             this.vScrollBar1.ValueChanged += new System.EventHandler(this.vScrollBar1_ValueChanged);
             // 
             // hScrollBar1
             // 
             this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.hScrollBar1.Location = new System.Drawing.Point(0, 162);
+            this.hScrollBar1.Location = new System.Drawing.Point(0, 144);
             this.hScrollBar1.Name = "hScrollBar1";
             this.hScrollBar1.Size = new System.Drawing.Size(803, 17);
             this.hScrollBar1.TabIndex = 3;
@@ -2437,7 +2437,7 @@ namespace VixenEditor{
             // toolStripLabelCurrentIntensity
             // 
             this.toolStripLabelCurrentIntensity.Name = "toolStripLabelCurrentIntensity";
-            this.toolStripLabelCurrentIntensity.Size = new System.Drawing.Size(146, 15);
+            this.toolStripLabelCurrentIntensity.Size = new System.Drawing.Size(146, 52);
             this.toolStripLabelCurrentIntensity.Text = "Currently drawing at 100%";
             this.toolStripLabelCurrentIntensity.Visible = false;
             // 
@@ -2713,7 +2713,7 @@ namespace VixenEditor{
             this.toolStripButtonDeleteOrder});
             this.toolStripDisplaySettings.Location = new System.Drawing.Point(3, 220);
             this.toolStripDisplaySettings.Name = "toolStripDisplaySettings";
-            this.toolStripDisplaySettings.Size = new System.Drawing.Size(637, 51);
+            this.toolStripDisplaySettings.Size = new System.Drawing.Size(606, 51);
             this.toolStripDisplaySettings.TabIndex = 5;
             this.toolStripDisplaySettings.Text = "Display settings";
             // 

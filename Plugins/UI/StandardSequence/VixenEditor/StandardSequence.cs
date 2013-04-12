@@ -53,7 +53,7 @@ namespace VixenEditor {
         private readonly SolidBrush _positionBrush;
         private Preference2 _preferences;
         private int _previousPosition;
-        private int _printingChannelIndex;
+        //private int _printingChannelIndex;
         private List<VixenPlus.Channel> _printingChannelList;
         private readonly Stack _redoStack;
         private VixenPlus.Channel _selectedChannel;
@@ -148,10 +148,10 @@ namespace VixenEditor {
         }
 
 
-        private void AddUndoItem(Rectangle blockAffected, UndoOriginalBehavior behavior) {
+        private void AddUndoItem(Rectangle blockAffected, UndoOriginalBehavior behavior, string originalAction) {
             if (blockAffected.Width != 0) {
                 byte[,] affectedBlockData = GetAffectedBlockData(blockAffected);
-                _undoStack.Push(new UndoItem(blockAffected.Location, affectedBlockData, behavior, _sequence, _channelOrderMapping));
+                _undoStack.Push(new UndoItem(blockAffected.Location, affectedBlockData, behavior, _sequence, _channelOrderMapping, originalAction));
                 toolStripButtonUndo.Enabled = undoToolStripMenuItem.Enabled = true;
                 UpdateUndoText();
                 toolStripButtonRedo.Enabled = redoToolStripMenuItem.Enabled = false;
@@ -179,7 +179,7 @@ namespace VixenEditor {
 
 
         private void AffectGrid(int startRow, int startCol, byte[,] values) {
-            AddUndoItem(new Rectangle(startCol, startRow, values.GetLength(1), values.GetLength(0)), UndoOriginalBehavior.Overwrite);
+            AddUndoItem(new Rectangle(startCol, startRow, values.GetLength(1), values.GetLength(0)), UndoOriginalBehavior.Overwrite, "Copy Channel Data");
             for (int i = 0; i < values.GetLength(0); i++) {
                 int num = _channelOrderMapping[startRow + i];
                 for (int j = 0; j < values.GetLength(1); j++) {
@@ -194,7 +194,7 @@ namespace VixenEditor {
         private void allChannelsToFullIntensityForThisEventToolStripMenuItem_Click(object sender, EventArgs e) {
             if (_selectedEventIndex != -1) {
                 var blockAffected = new Rectangle(_selectedEventIndex, 0, 1, _sequence.ChannelCount);
-                AddUndoItem(blockAffected, UndoOriginalBehavior.Overwrite);
+                AddUndoItem(blockAffected, UndoOriginalBehavior.Overwrite,"On");
                 for (int i = 0; i < _sequence.ChannelCount; i++) {
                     _sequence.EventValues[_channelOrderMapping[i], _selectedEventIndex] = _drawingLevel;
                 }
@@ -212,7 +212,7 @@ namespace VixenEditor {
             if (_systemInterface.Clipboard != null) {
                 AddUndoItem(
                     new Rectangle(selectedCells.X, selectedCells.Y, _systemInterface.Clipboard.GetLength(1),
-                                  _systemInterface.Clipboard.GetLength(0)), UndoOriginalBehavior.Overwrite);
+                                  _systemInterface.Clipboard.GetLength(0)), UndoOriginalBehavior.Overwrite,"Arithmetic Paste");
                 var clipboard = _systemInterface.Clipboard;
                 var length = clipboard.GetLength(0);
                 var num3 = clipboard.GetLength(1);
@@ -297,7 +297,7 @@ namespace VixenEditor {
             if (_systemInterface.Clipboard != null) {
                 AddUndoItem(
                     new Rectangle(selectedCells.X, selectedCells.Y, _systemInterface.Clipboard.GetLength(1),
-                                  _systemInterface.Clipboard.GetLength(0)), UndoOriginalBehavior.Overwrite);
+                                  _systemInterface.Clipboard.GetLength(0)), UndoOriginalBehavior.Overwrite, "Boolean Paste");
                 byte[,] clipboard = _systemInterface.Clipboard;
                 int length = clipboard.GetLength(0);
                 int num3 = clipboard.GetLength(1);
@@ -565,7 +565,7 @@ namespace VixenEditor {
         private void clearAllChannelsForThisEventToolStripMenuItem_Click(object sender, EventArgs e) {
             if (_selectedEventIndex != -1) {
                 var blockAffected = new Rectangle(_selectedEventIndex, 0, 1, _sequence.ChannelCount);
-                AddUndoItem(blockAffected, UndoOriginalBehavior.Overwrite);
+                AddUndoItem(blockAffected, UndoOriginalBehavior.Overwrite, "Clear values");
                 for (var i = 0; i < _sequence.ChannelCount; i++) {
                     _sequence.EventValues[_channelOrderMapping[i], _selectedEventIndex] = _sequence.MinimumLevel;
                 }
@@ -587,7 +587,7 @@ namespace VixenEditor {
 
 
         private void ClearChannel(int lineIndex) {
-            AddUndoItem(new Rectangle(0, lineIndex, _sequence.TotalEventPeriods, 1), UndoOriginalBehavior.Overwrite);
+            AddUndoItem(new Rectangle(0, lineIndex, _sequence.TotalEventPeriods, 1), UndoOriginalBehavior.Overwrite, "Clear Channel");
             for (var i = 0; i < _sequence.TotalEventPeriods; i++) {
                 _sequence.EventValues[_editingChannelSortedIndex, i] = _sequence.MinimumLevel;
             }
@@ -870,7 +870,7 @@ namespace VixenEditor {
 
 
         private void FillChannel(int lineIndex) {
-            AddUndoItem(new Rectangle(0, lineIndex, _sequence.TotalEventPeriods, 1), UndoOriginalBehavior.Overwrite);
+            AddUndoItem(new Rectangle(0, lineIndex, _sequence.TotalEventPeriods, 1), UndoOriginalBehavior.Overwrite,"Fill");
             for (var i = 0; i < _sequence.TotalEventPeriods; i++) {
                 _sequence.EventValues[_editingChannelSortedIndex, i] = _drawingLevel;
             }
@@ -1255,7 +1255,7 @@ namespace VixenEditor {
             var routine = GetRoutine();
             if (routine != null) {
                 AddUndoItem(new Rectangle(selectedCells.X, selectedCells.Y, routine.GetLength(1), routine.GetLength(0)),
-                            UndoOriginalBehavior.Overwrite);
+                            UndoOriginalBehavior.Overwrite, "Load Routine");
                 ArrayToCells(routine);
                 pictureBoxGrid.Refresh();
             }
@@ -1314,7 +1314,7 @@ namespace VixenEditor {
                 int num2;
                 int num4;
                 int num8;
-                AddUndoItem(selectedCells, UndoOriginalBehavior.Overwrite);
+                AddUndoItem(selectedCells, UndoOriginalBehavior.Overwrite,"Adjust intensity");
                 var delta = m_intensityAdjustDialog.Delta;
                 var bottom = selectedCells.Bottom;
                 var right = selectedCells.Right;
@@ -1600,7 +1600,7 @@ namespace VixenEditor {
 
         private void pasteFullChannelEventsFromClipboardToolStripMenuItem_Click(object sender, EventArgs e) {
             if (_systemInterface.Clipboard != null) {
-                AddUndoItem(new Rectangle(0, _selectedLineIndex, _systemInterface.Clipboard.GetLength(1), 1), UndoOriginalBehavior.Overwrite);
+                AddUndoItem(new Rectangle(0, _selectedLineIndex, _systemInterface.Clipboard.GetLength(1), 1), UndoOriginalBehavior.Overwrite,"Paste");
                 var num2 = Math.Min(_systemInterface.Clipboard.GetLength(1), _sequence.TotalEventPeriods);
                 for (int i = 0; i < num2; i++) {
                     _sequence.EventValues[_editingChannelSortedIndex, i] = _systemInterface.Clipboard[0, i];
@@ -1842,7 +1842,7 @@ namespace VixenEditor {
 
         private void pictureBoxGrid_DoubleClick(object sender, EventArgs e) {
             if (_currentlyEditingChannel != null) {
-                AddUndoItem(selectedCells, UndoOriginalBehavior.Overwrite);
+                AddUndoItem(selectedCells, UndoOriginalBehavior.Overwrite, "Double Click");
                 _sequence.EventValues[_editingChannelSortedIndex, selectedCells.X] =
                     (_sequence.EventValues[_editingChannelSortedIndex, selectedCells.X] > _sequence.MinimumLevel)
                         ? _sequence.MinimumLevel : _drawingLevel;
@@ -2205,14 +2205,14 @@ namespace VixenEditor {
                     EraseRectangleEntity(rect);
                     rect.Width++;
                     rect.Height++;
-                    AddUndoItem(rect, UndoOriginalBehavior.Overwrite);
+                    AddUndoItem(rect, UndoOriginalBehavior.Overwrite, "Chase Lines from Clipboard");
                 }
                 else {
                     EraseRectangleEntity(_lineRect);
                     var blockAffected = NormalizeRect(_lineRect);
                     blockAffected.Width++;
                     blockAffected.Height++;
-                    AddUndoItem(blockAffected, UndoOriginalBehavior.Overwrite);
+                    AddUndoItem(blockAffected, UndoOriginalBehavior.Overwrite, "Chase Lines");
                 }
                 if (!flag) {
                     BresenhamValues(_lineRect);
@@ -2534,7 +2534,12 @@ namespace VixenEditor {
 
 
         private void Ramp(int startingLevel, int endingLevel) {
-            AddUndoItem(selectedCells, UndoOriginalBehavior.Overwrite);
+            var originalAction = (startingLevel > endingLevel) ? "Fade" : "Ramp";
+            if ((startingLevel != _sequence.MinimumLevel && endingLevel != _sequence.MinimumLevel) ||
+                (startingLevel != _sequence.MaximumLevel && endingLevel != _sequence.MaximumLevel)) {
+                originalAction = "Partial " + originalAction;
+            }
+            AddUndoItem(selectedCells, UndoOriginalBehavior.Overwrite, originalAction);
             var bottom = selectedCells.Bottom;
             var right = selectedCells.Right;
             var left = selectedCells.Left;
@@ -2616,7 +2621,7 @@ namespace VixenEditor {
                 IsDirty = true;
                 var item2 = new UndoItem(item.Location,
                                          GetAffectedBlockData(new Rectangle(item.Location.X, item.Location.Y, item.Data.GetLength(1),
-                                                                            item.Data.GetLength(0))), item.Behavior, _sequence, _channelOrderMapping);
+                                                                            item.Data.GetLength(0))), item.Behavior, _sequence, _channelOrderMapping, item.OriginalAction);
                 switch (item.Behavior) {
                     case UndoOriginalBehavior.Overwrite:
                         DisjointedOverwrite(item.Location.X, item.Data, item.ReferencedChannels);
@@ -3068,7 +3073,7 @@ namespace VixenEditor {
             _printingChannelList = _sequence.Channels;
             if (printDialog.ShowDialog() == DialogResult.OK) {
                 _printDocument.DocumentName = "Vixen channel configuration";
-                _printingChannelIndex = 0;
+                //_printingChannelIndex = 0;
                 _printDocument.Print();
             }
         }
@@ -3083,7 +3088,7 @@ namespace VixenEditor {
             _printingChannelList.AddRange(collection);
             if (printDialog.ShowDialog() == DialogResult.OK) {
                 _printDocument.DocumentName = "Vixen channel configuration";
-                _printingChannelIndex = 0;
+                //_printingChannelIndex = 0;
                 _printDocument.Print();
             }
         }
@@ -3193,7 +3198,6 @@ namespace VixenEditor {
                     
                     int currentPosition;
                     if (_executionInterface.EngineStatus(_executionContextHandle, out currentPosition) != 1) {
-                        AddUndoItem(selectedCells, UndoOriginalBehavior.Overwrite);
                         
                         var nonZeroCellCount = 0;
 
@@ -3207,7 +3211,15 @@ namespace VixenEditor {
                         }
 
                         var selectedCellsCount = selectedCells.Height * selectedCells.Width;
-                        var level = (nonZeroCellCount == selectedCellsCount) ? _sequence.MinimumLevel : _drawingLevel;
+                        var level = _drawingLevel;
+                        var originalAction = "On";
+                        if (nonZeroCellCount == selectedCellsCount) {
+                            level = _sequence.MinimumLevel;
+                            originalAction = "Off";
+                        }
+
+                        AddUndoItem(selectedCells, UndoOriginalBehavior.Overwrite, originalAction);
+
                         for (var top = selectedCells.Top; top < selectedCells.Bottom; top++) {
                             var channel = _channelOrderMapping[top];
                             for (var left = selectedCells.Left; left < selectedCells.Right; left++) {
@@ -3222,7 +3234,7 @@ namespace VixenEditor {
                         break;
                     }
                     var currentEvent = currentPosition / _sequence.EventPeriod;
-                    AddUndoItem(new Rectangle(currentEvent, selectedCells.Top, 1, selectedCells.Height), UndoOriginalBehavior.Overwrite);
+                    AddUndoItem(new Rectangle(currentEvent, selectedCells.Top, 1, selectedCells.Height), UndoOriginalBehavior.Overwrite,"On");
                     
                     for (int i = selectedCells.Top; i < selectedCells.Bottom; i++) {
                         var channel = _channelOrderMapping[i];
@@ -3735,7 +3747,7 @@ namespace VixenEditor {
                     int left;
                     int num4;
                     int num5;
-                    AddUndoItem(selectedCells, UndoOriginalBehavior.Overwrite);
+                    AddUndoItem(selectedCells, UndoOriginalBehavior.Overwrite,"Find and Replace");
                     var findValue = dialog.FindValue;
                     var replaceWithValue = dialog.ReplaceWithValue;
                     if (_actualLevels) {
@@ -3784,7 +3796,7 @@ namespace VixenEditor {
                     }
                 }
                 PasteOver();
-                AddUndoItem(new Rectangle(selectedCells.X, selectedCells.Y, width, length), UndoOriginalBehavior.Insertion);
+                AddUndoItem(new Rectangle(selectedCells.X, selectedCells.Y, width, length), UndoOriginalBehavior.Insertion,"Insert Paste");
             }
         }
 
@@ -3850,7 +3862,7 @@ namespace VixenEditor {
                     }
                 }
             }
-            AddUndoItem(selectedCells, UndoOriginalBehavior.Overwrite);
+            AddUndoItem(selectedCells, UndoOriginalBehavior.Overwrite,"Intensity");
             int bottom = selectedCells.Bottom;
             int right = selectedCells.Right;
             for (int i = selectedCells.Top; i < bottom; i++) {
@@ -3867,7 +3879,7 @@ namespace VixenEditor {
 
 
         private void toolStripButtonInvert_Click(object sender, EventArgs e) {
-            AddUndoItem(selectedCells, UndoOriginalBehavior.Overwrite);
+            AddUndoItem(selectedCells, UndoOriginalBehavior.Overwrite,"Invert");
             int bottom = selectedCells.Bottom;
             int right = selectedCells.Right;
             for (int i = selectedCells.Top; i < bottom; i++) {
@@ -3926,7 +3938,7 @@ namespace VixenEditor {
 
 
         private void toolStripButtonOn_Click(object sender, EventArgs e) {
-            AddUndoItem(selectedCells, UndoOriginalBehavior.Overwrite);
+            AddUndoItem(selectedCells, UndoOriginalBehavior.Overwrite,"On");
             int bottom = selectedCells.Bottom;
             int right = selectedCells.Right;
             for (int i = selectedCells.Top; i < bottom; i++) {
@@ -3946,7 +3958,7 @@ namespace VixenEditor {
             if (_systemInterface.Clipboard != null) {
                 AddUndoItem(
                     new Rectangle(selectedCells.X, selectedCells.Y, _systemInterface.Clipboard.GetLength(1),
-                                  _systemInterface.Clipboard.GetLength(0)), UndoOriginalBehavior.Overwrite);
+                                  _systemInterface.Clipboard.GetLength(0)), UndoOriginalBehavior.Overwrite,"Opaque Paste");
                 PasteOver();
             }
         }
@@ -4062,7 +4074,7 @@ namespace VixenEditor {
                     //channelOffset = Math.Abs((int) (intensityMax - maximumLevel));
                     random = new Random();
                 }
-                AddUndoItem(selectedCells, UndoOriginalBehavior.Overwrite);
+                AddUndoItem(selectedCells, UndoOriginalBehavior.Overwrite,"Random");
                 var list = new List<int>();
                 var random2 = new Random();
                 var top = selectedCells.Top;
@@ -4127,7 +4139,7 @@ namespace VixenEditor {
                 int right = selectedCells.Right;
                 int num2 = _sequence.TotalEventPeriods - right;
                 AddUndoItem(new Rectangle(selectedCells.Left, selectedCells.Top, selectedCells.Width, selectedCells.Height),
-                            UndoOriginalBehavior.Removal);
+                            UndoOriginalBehavior.Removal,"Remove");
                 for (int i = 0; i < selectedCells.Height; i++) {
                     int num3 = _channelOrderMapping[selectedCells.Top + i];
                     int num4 = 0;
@@ -4192,7 +4204,7 @@ namespace VixenEditor {
             var maxFrequency = (int) _sequence.EventsPerSecond; // 1000 / _sequence.EventPeriod;;
             var dialog = new EffectFrequencyDialog("Shimmer (dimming)", maxFrequency, _dimmingShimmerGenerator);
             if (dialog.ShowDialog() == DialogResult.OK) {
-                AddUndoItem(selectedCells, UndoOriginalBehavior.Overwrite);
+                AddUndoItem(selectedCells, UndoOriginalBehavior.Overwrite,"Shimmer");
                 var bottom = selectedCells.Bottom;
                 var right = selectedCells.Right;
                 var values = new byte[selectedCells.Height,selectedCells.Width];
@@ -4221,7 +4233,7 @@ namespace VixenEditor {
             var dialog = new SparkleParamsDialog(maxFrequency, _sparkleGenerator, _sequence.MinimumLevel, _sequence.MaximumLevel, _drawingLevel,
                                                  _actualLevels);
             if (dialog.ShowDialog() == DialogResult.OK) {
-                AddUndoItem(selectedCells, UndoOriginalBehavior.Overwrite);
+                AddUndoItem(selectedCells, UndoOriginalBehavior.Overwrite,"Sparkle");
                 var bottom = selectedCells.Bottom;
                 var right = selectedCells.Right;
                 var values = new byte[selectedCells.Height,selectedCells.Width];
@@ -4312,7 +4324,7 @@ namespace VixenEditor {
             if (_systemInterface.Clipboard != null) {
                 AddUndoItem(
                     new Rectangle(selectedCells.X, selectedCells.Y, _systemInterface.Clipboard.GetLength(1),
-                                  _systemInterface.Clipboard.GetLength(0)), UndoOriginalBehavior.Overwrite);
+                                  _systemInterface.Clipboard.GetLength(0)), UndoOriginalBehavior.Overwrite,"Transparent Paste");
                 byte[,] clipboard = _systemInterface.Clipboard;
                 int length = clipboard.GetLength(0);
                 int num3 = clipboard.GetLength(1);
@@ -4502,7 +4514,7 @@ namespace VixenEditor {
 
 
         private void TurnCellsOff() {
-            AddUndoItem(selectedCells, UndoOriginalBehavior.Overwrite);
+            AddUndoItem(selectedCells, UndoOriginalBehavior.Overwrite,"Off");
             int bottom = selectedCells.Bottom;
             int right = selectedCells.Right;
             for (int i = selectedCells.Top; i < bottom; i++) {
@@ -4534,7 +4546,7 @@ namespace VixenEditor {
                 }
                 var item2 = new UndoItem(item.Location,
                                          GetAffectedBlockData(new Rectangle(item.Location.X, item.Location.Y, item.Data.GetLength(1),
-                                                                            item.Data.GetLength(0))), item.Behavior, _sequence, _channelOrderMapping);
+                                                                            item.Data.GetLength(0))), item.Behavior, _sequence, _channelOrderMapping, item.OriginalAction);
                 switch (item.Behavior) {
                     case UndoOriginalBehavior.Overwrite:
                         DisjointedOverwrite(item.Location.X, item.Data, item.ReferencedChannels);
