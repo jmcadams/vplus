@@ -10,38 +10,47 @@ namespace VixenEditor {
 		private Panel panel1;
 
 		private void InitializeComponent() {
-			this.labelMessage = new Label();
-			this.panel1 = new Panel();
-			this.panel1.SuspendLayout();
-			base.SuspendLayout();
-			this.labelMessage.AutoSize = true;
-			this.labelMessage.Location = new Point(11, 29);
-			this.labelMessage.Name = "labelMessage";
-			this.labelMessage.Size = new Size(0x36, 13);
-			this.labelMessage.TabIndex = 0;
-			this.labelMessage.Text = "Loading...";
-			this.panel1.AutoSize = true;
-			this.panel1.BorderStyle = BorderStyle.FixedSingle;
-			this.panel1.Controls.Add(this.labelMessage);
-			this.panel1.Dock = DockStyle.Fill;
-			this.panel1.Location = new Point(0, 0);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new Size(0x14d, 0x48);
-			this.panel1.TabIndex = 1;
-			base.AutoScaleDimensions = new SizeF(6f, 13f);
-			base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.AutoSize = true;
-			base.ClientSize = new Size(0x14d, 0x48);
-			base.Controls.Add(this.panel1);
-			base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-			base.Name = "ProgressDialog";
-			base.ShowInTaskbar = false;
-			base.StartPosition = FormStartPosition.CenterScreen;
-			base.TopMost = true;
-			this.panel1.ResumeLayout(false);
-			this.panel1.PerformLayout();
-			base.ResumeLayout(false);
-			base.PerformLayout();
+            this.labelMessage = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel1.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // labelMessage
+            // 
+            this.labelMessage.Location = new System.Drawing.Point(11, 8);
+            this.labelMessage.Name = "labelMessage";
+            this.labelMessage.Size = new System.Drawing.Size(309, 54);
+            this.labelMessage.TabIndex = 0;
+            this.labelMessage.Text = "Loading...";
+            this.labelMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // panel1
+            // 
+            this.panel1.AutoSize = true;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.labelMessage);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(333, 72);
+            this.panel1.TabIndex = 1;
+            // 
+            // ProgressDialog
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(333, 72);
+            this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Name = "ProgressDialog";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.TopMost = true;
+            this.panel1.ResumeLayout(false);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
 		}
 		#endregion
 
