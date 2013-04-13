@@ -1019,8 +1019,6 @@ namespace VixenEditor {
 
 
         private static uint GetSampleMinMax(int startSample, int sampleCount, Sound sound, int bitsPerSample, int audioChannels) {
-            var max = short.MinValue;
-            var min = short.MaxValue;
             var bytesPerSample = (bitsPerSample >> 3) * audioChannels;
 
             var audioByte = startSample * bytesPerSample;
@@ -1033,7 +1031,11 @@ namespace VixenEditor {
 
             var destination = new byte[length];
             Marshal.Copy(ptr1, destination, 0, length);
+            
             audioByte = 0;
+            var max = short.MinValue;
+            var min = short.MaxValue;
+            
             for (var currentSample = 0; currentSample < sampleCount; currentSample++) {
                 for (var currentAudioChannel = 0; currentAudioChannel < audioChannels; currentAudioChannel++) {
                     var amplitude = (bitsPerSample == 16)
