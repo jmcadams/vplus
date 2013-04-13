@@ -712,22 +712,25 @@ namespace VixenEditor {
 
         private void DimmingShimmerGenerator(byte[,] values, params int[] effectParameters) {
             var effectsCount = effectParameters[0];
-            if (effectsCount != 0) {
-                var rowOffsetPerCycle = (int) Math.Round(_sequence.EventsPerSecond / effectsCount, MidpointRounding.AwayFromZero);
-                if (rowOffsetPerCycle != 0) {
-                    var length = values.GetLength(1);
-                    var cols = values.GetLength(0);
-                    var random = new Random();
-                    for (var rowOffset = 0; rowOffset < length; rowOffset += rowOffsetPerCycle) {
-                        //todo there should be a lot of properties to _sequence, like nextRandomOrMinimum
-                        var randomValue = (byte) Math.Max(random.NextDouble() * _sequence.MaximumLevel, _sequence.MinimumLevel);
+            if (effectsCount == 0) {
+                return;
+            }
 
-                        var rows = Math.Min(length, rowOffset + rowOffsetPerCycle) - rowOffset;
-                        for (var row = 0; row < rows; row++) {
-                            for (var col = 0; col < cols; col++) {
-                                values[col, rowOffset + row] = randomValue;
-                            }
-                        }
+            var rowPerCycle = (int) Math.Round(_sequence.EventsPerSecond / effectsCount, MidpointRounding.AwayFromZero);
+            if (rowPerCycle == 0) {
+                return;
+            }
+
+            var totalRows = values.GetLength(1);
+            var cols = values.GetLength(0);
+            var random = new Random();
+            for (var rowOffset = 0; rowOffset < totalRows; rowOffset += rowPerCycle) {
+                var randomValue = (byte) Math.Max(random.NextDouble() * _sequence.MaximumLevel, _sequence.MinimumLevel);
+
+                var rows = Math.Min(totalRows, rowOffset + rowPerCycle) - rowOffset;
+                for (var row = 0; row < rows; row++) {
+                    for (var col = 0; col < cols; col++) {
+                        values[col, rowOffset + row] = randomValue;
                     }
                 }
             }
