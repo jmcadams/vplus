@@ -1018,48 +1018,35 @@ namespace VixenEditor {
         }
 
 
-        private static uint GetSampleMinMax(int startSample, int sampleCount, Sound sound, int bits, int channels) {
-            int num10;
-            int num12;
-            short num = -32768;
-            short num2 = 32767;
-            //var num3 = startSample + sampleCount;
-            var num4 = (bits >> 3) * channels;
-            var num5 = startSample * num4;
-            //var num6 = num3 * num4;
-            var length = num4 * sampleCount;
-            var destination = new byte[length];
-            var zero = IntPtr.Zero;
+        private static uint GetSampleMinMax(int startSample, int sampleCount, Sound sound, int bitsPerSample, int audioChannels) {
+            var max = short.MinValue;
+            var min = short.MaxValue;
+            var bytesPerSample = (bitsPerSample >> 3) * audioChannels;
+
+            var audioByte = startSample * bytesPerSample;
+            var length = bytesPerSample * sampleCount;
+            var ptr1 = IntPtr.Zero;
             var ptr2 = IntPtr.Zero;
-            uint num8 = 0;
-            uint num9 = 0;
-            sound.@lock((uint) num5, (uint) length, ref zero, ref ptr2, ref num8, ref num9);
-            Marshal.Copy(zero, destination, 0, length);
-            num5 = 0;
-            if (bits == 16) {
-                for (num12 = 0; num12 < sampleCount; num12++) {
-                    num10 = 0;
-                    while (num10 < channels) {
-                        var num11 = BitConverter.ToInt16(destination, num5 + (num10 * 2));
-                        num = Math.Max(num, num11);
-                        num2 = Math.Min(num2, num11);
-                        num10++;
-                    }
-                    num5 += num4;
+            uint refLen1 = 0;
+            uint refLen2 = 0;
+            sound.@lock((uint) audioByte, (uint) length, ref ptr1, ref ptr2, ref refLen1, ref refLen2);
+
+            var destination = new byte[length];
+            Marshal.Copy(ptr1, destination, 0, length);
+            audioByte = 0;
+            for (var currentSample = 0; currentSample < sampleCount; currentSample++) {
+                for (var currentAudioChannel = 0; currentAudioChannel < audioChannels; currentAudioChannel++) {
+                    var amplitude = (bitsPerSample == 16)
+                                        ? BitConverter.ToInt16(destination, audioByte + (currentAudioChannel * 2))
+                                        : (sbyte) destination[audioByte + currentAudioChannel];
+                    max = Math.Max(max, amplitude);
+                    min = Math.Min(min, amplitude);
                 }
+                audioByte += bytesPerSample;
             }
-            else if (bits == 8) {
-                for (num12 = 0; num12 < sampleCount; num12++) {
-                    for (num10 = 0; num10 < channels; num10++) {
-                        var num13 = (sbyte) destination[num5 + num10];
-                        num = Math.Max(num, num13);
-                        num2 = Math.Min(num2, num13);
-                    }
-                    num5 += num4;
-                }
-            }
-            sound.unlock(zero, ptr2, num8, num9);
-            return (uint) ((num << 16) | ((ushort) num2));
+
+            sound.unlock(ptr1, ptr2, refLen1, refLen2);
+            return (uint) ((max << 16) | ((ushort) min));
         }
 
 
@@ -1539,59 +1526,65 @@ namespace VixenEditor {
         }
 
 
-        //TODO Refactor
         private void ParseAudioWaveform() {
             string str;
             if ((_sequence.Audio != null) && File.Exists(str = Path.Combine(Paths.AudioPath, _sequence.Audio.FileName))) {
                 if (toolStripButtonWaveform.Checked) {
-                    var dialog = new VixenEditor.ProgressDialog();
+                    var dialog = new ProgressDialog();
                     dialog.Show();
-                    dialog.Message = "Parsing sound data, please wait...";
+                    dialog.Message = "Computing waveform, please wait...";
                     Cursor = Cursors.WaitCursor;
                     try {
                         _waveformPcmData = new uint[_sequence.TotalEventPeriods * _periodPixelWidth];
                         _waveformPixelData = new uint[_sequence.TotalEventPeriods * _periodPixelWidth];
-                        var rAW = SOUND_TYPE.RAW;
-                        var nONE = SOUND_FORMAT.NONE;
-                        float volume = 0f;
-                        float pan = 0f;
-                        int priority = 0;
+
+
                         Sound sound = null;
-                        int channels = 0;
-                        int bits = 0;
-                        float frequency = 0f;
-                        uint length = 0;
                         fmod.GetInstance(-1).SystemObject.createSound(str, MODE._2D | MODE.HARDWARE | MODE.CREATESAMPLE, ref sound);
-                        sound.getFormat(ref rAW, ref nONE, ref channels, ref bits);
-                        sound.getDefaults(ref frequency, ref volume, ref pan, ref priority);
-                        sound.getLength(ref length, TIMEUNIT.PCMBYTES);
-                        double num8 = (((double) length) / ((double) channels)) / ((double) (bits / 8));
-                        double num9 = num8 / ((double) _sequence.TotalEventPeriods);
-                        double num10 = num9 / ((double) _periodPixelWidth);
-                        double num11 = ((double) _sequence.EventPeriod) / ((double) _periodPixelWidth);
-                        double num12 = frequency / 1000f;
-                        int num14 = 0;
-                        int num15 = 0;
-                        num14 = 0;
-                        num15 = 0;
-                        uint num18 = 0;
-                        sound.getLength(ref num18, TIMEUNIT.MS);
-                        int index = 0;
-                        for (double i = 0.0; (index < _waveformPcmData.Length) && (i < num18); i += num11) {
-                            int startSample = (int) (i * num12);
-                            uint num16 = GetSampleMinMax(startSample, (int) Math.Min(num10, num8 - startSample), sound, bits, channels);
-                            num14 = Math.Max(num14, (short) (num16 >> 0x10));
-                            num15 = Math.Min(num15, (short) (num16 & 0xffff));
-                            _waveformPcmData[index] = num16;
+
+                        var raw = SOUND_TYPE.RAW;
+                        var none = SOUND_FORMAT.NONE;
+                        var audioChannels = 0;
+                        var bitsPerSample = 0;
+                        sound.getFormat(ref raw, ref none, ref audioChannels, ref bitsPerSample);
+
+                        var audioFrequency = 0f;
+                        var volume = 0f;
+                        var pan = 0f;
+                        var priority = 0;
+                        sound.getDefaults(ref audioFrequency, ref volume, ref pan, ref priority);
+
+                        uint lengthInBytes = 0;
+                        sound.getLength(ref lengthInBytes, TIMEUNIT.PCMBYTES);
+
+                        uint lengthInMs = 0;
+                        sound.getLength(ref lengthInMs, TIMEUNIT.MS);
+
+                        var totalBytes = (lengthInBytes / (double)audioChannels) / (bitsPerSample / 8);
+                        var bytesPerEvent = totalBytes / _sequence.TotalEventPeriods;
+                        var bytesPerPixel = bytesPerEvent / _periodPixelWidth;
+                        var pixelsPerEvent = _sequence.EventPeriod / ((double) _periodPixelWidth);
+                        double hertz = audioFrequency / 1000f;
+                        var posAmplitude = 0;
+                        var negAmplitude = 0;
+
+                        var index = 0;
+                        for (var i = 0.0; (index < _waveformPcmData.Length) && (i < lengthInMs); i += pixelsPerEvent) {
+                            var startSample = (int) (i * hertz);
+                            var sampleMinMax = GetSampleMinMax(startSample, (int) Math.Min(bytesPerPixel, totalBytes - startSample), sound, bitsPerSample, audioChannels);
+                            posAmplitude = Math.Max(posAmplitude, (short) (sampleMinMax >> 16));
+                            negAmplitude = Math.Min(negAmplitude, (short) (sampleMinMax & 65535));
+                            _waveformPcmData[index] = sampleMinMax;
                             index++;
                         }
-                        _waveform100PercentAmplitude = _waveformMaxAmplitude = Math.Max(num14, -num15);
+                        _waveform100PercentAmplitude = _waveformMaxAmplitude = Math.Max(posAmplitude, -negAmplitude);
                         PcmToPixels(_waveformPcmData, _waveformPixelData);
                         sound.release();
                     }
                     finally {
                         Cursor = Cursors.Default;
                         dialog.Hide();
+                        dialog.Dispose();
                     }
                 }
                 else {

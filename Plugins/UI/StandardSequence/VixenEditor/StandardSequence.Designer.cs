@@ -3060,10 +3060,10 @@ namespace VixenEditor{
 			this._selectionBrush.Dispose();
 			this._positionBrush.Dispose();
 			this._channelCaretBrush.Dispose();
-			if (this._arrowBitmap != null)
-			{
-				this._arrowBitmap.Dispose();
-			}
+            //if (this._arrowBitmap != null)
+            //{
+            //    this._arrowBitmap.Dispose();
+            //}
 			if (this._gridGraphics != null)
 			{
 				this._gridGraphics.Dispose();
