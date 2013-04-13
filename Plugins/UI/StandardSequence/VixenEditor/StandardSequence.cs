@@ -179,7 +179,8 @@ namespace VixenEditor {
 
 
         private void AffectGrid(int startRow, int startCol, byte[,] values) {
-            AddUndoItem(new Rectangle(startCol, startRow, values.GetLength(1), values.GetLength(0)), UndoOriginalBehavior.Overwrite, "Copy Channel Data");
+            AddUndoItem(new Rectangle(startCol, startRow, values.GetLength(1), values.GetLength(0)), UndoOriginalBehavior.Overwrite,
+                        "Copy Channel Data");
             for (int i = 0; i < values.GetLength(0); i++) {
                 int num = _channelOrderMapping[startRow + i];
                 for (int j = 0; j < values.GetLength(1); j++) {
@@ -194,7 +195,7 @@ namespace VixenEditor {
         private void allChannelsToFullIntensityForThisEventToolStripMenuItem_Click(object sender, EventArgs e) {
             if (_selectedEventIndex != -1) {
                 var blockAffected = new Rectangle(_selectedEventIndex, 0, 1, _sequence.ChannelCount);
-                AddUndoItem(blockAffected, UndoOriginalBehavior.Overwrite,"On");
+                AddUndoItem(blockAffected, UndoOriginalBehavior.Overwrite, "On");
                 for (int i = 0; i < _sequence.ChannelCount; i++) {
                     _sequence.EventValues[_channelOrderMapping[i], _selectedEventIndex] = _drawingLevel;
                 }
@@ -211,8 +212,8 @@ namespace VixenEditor {
         private void ArithmeticPaste(ArithmeticOperation operation) {
             if (_systemInterface.Clipboard != null) {
                 AddUndoItem(
-                    new Rectangle(_selectedCells.X, _selectedCells.Y, _systemInterface.Clipboard.GetLength(1),
-                                  _systemInterface.Clipboard.GetLength(0)), UndoOriginalBehavior.Overwrite,"Arithmetic Paste");
+                    new Rectangle(_selectedCells.X, _selectedCells.Y, _systemInterface.Clipboard.GetLength(1), _systemInterface.Clipboard.GetLength(0)),
+                    UndoOriginalBehavior.Overwrite, "Arithmetic Paste");
                 var clipboard = _systemInterface.Clipboard;
                 var length = clipboard.GetLength(0);
                 var num3 = clipboard.GetLength(1);
@@ -222,13 +223,11 @@ namespace VixenEditor {
                         var num5 = _sequence.EventValues[num4, _selectedCells.Left + j];
                         switch (operation) {
                             case ArithmeticOperation.Addition:
-                                _sequence.EventValues[num4, _selectedCells.Left + j] =
-                                    (byte) Math.Min(num5 + clipboard[i, j], _sequence.MaximumLevel);
+                                _sequence.EventValues[num4, _selectedCells.Left + j] = (byte) Math.Min(num5 + clipboard[i, j], _sequence.MaximumLevel);
                                 break;
 
                             case ArithmeticOperation.Subtraction:
-                                _sequence.EventValues[num4, _selectedCells.Left + j] =
-                                    (byte) Math.Max(num5 - clipboard[i, j], _sequence.MinimumLevel);
+                                _sequence.EventValues[num4, _selectedCells.Left + j] = (byte) Math.Max(num5 - clipboard[i, j], _sequence.MinimumLevel);
                                 break;
 
                             case ArithmeticOperation.Scale:
@@ -238,18 +237,18 @@ namespace VixenEditor {
 
                             case ArithmeticOperation.Min:
                                 _sequence.EventValues[num4, _selectedCells.Left + j] = Math.Max(Math.Min(clipboard[i, j], num5),
-                                                                                                  _sequence.MinimumLevel);
+                                                                                                _sequence.MinimumLevel);
                                 break;
 
                             case ArithmeticOperation.Max:
                                 _sequence.EventValues[num4, _selectedCells.Left + j] = Math.Min(Math.Max(clipboard[i, j], num5),
-                                                                                                  _sequence.MaximumLevel);
+                                                                                                _sequence.MaximumLevel);
                                 break;
                         }
                         _sequence.EventValues[num4, _selectedCells.Left + j] = Math.Min(_sequence.EventValues[num4, _selectedCells.Left + j],
-                                                                                          _sequence.MaximumLevel);
+                                                                                        _sequence.MaximumLevel);
                         _sequence.EventValues[num4, _selectedCells.Left + j] = Math.Max(_sequence.EventValues[num4, _selectedCells.Left + j],
-                                                                                          _sequence.MinimumLevel);
+                                                                                        _sequence.MinimumLevel);
                     }
                 }
                 IsDirty = true;
@@ -296,7 +295,7 @@ namespace VixenEditor {
             if (_systemInterface.Clipboard == null) {
                 return;
             }
-            
+
             var clipboard = _systemInterface.Clipboard;
             var height = clipboard.GetLength(0);
             var width = clipboard.GetLength(1);
@@ -479,11 +478,11 @@ namespace VixenEditor {
 
         private Rectangle CellsToPixels(Rectangle relativeCells) {
             return new Rectangle {
-                                     X = (Math.Min(relativeCells.Left, relativeCells.Right) * _periodPixelWidth) + 1,
-                                     Y = (Math.Min(relativeCells.Top, relativeCells.Bottom) * _gridRowHeight) + 1,
-                                     Width = ((Math.Abs(relativeCells.Width) + 1) * _periodPixelWidth) - 1,
-                                     Height = ((Math.Abs(relativeCells.Height) + 1) * _gridRowHeight) - 1
-                                 };
+                X = (Math.Min(relativeCells.Left, relativeCells.Right) * _periodPixelWidth) + 1,
+                Y = (Math.Min(relativeCells.Top, relativeCells.Bottom) * _gridRowHeight) + 1,
+                Width = ((Math.Abs(relativeCells.Width) + 1) * _periodPixelWidth) - 1,
+                Height = ((Math.Abs(relativeCells.Height) + 1) * _gridRowHeight) - 1
+            };
         }
 
 
@@ -876,7 +875,7 @@ namespace VixenEditor {
 
 
         private void FillChannel(int lineIndex) {
-            AddUndoItem(new Rectangle(0, lineIndex, _sequence.TotalEventPeriods, 1), UndoOriginalBehavior.Overwrite,"Fill");
+            AddUndoItem(new Rectangle(0, lineIndex, _sequence.TotalEventPeriods, 1), UndoOriginalBehavior.Overwrite, "Fill");
             for (var i = 0; i < _sequence.TotalEventPeriods; i++) {
                 _sequence.EventValues[_editingChannelSortedIndex, i] = _drawingLevel;
             }
@@ -1275,25 +1274,29 @@ namespace VixenEditor {
 
         private void LoadSequencePlugins() {
             _systemInterface.VerifySequenceHardwarePlugins(_sequence);
-            var num = 0;
+            var count = 0;
             toolStripDropDownButtonPlugins.DropDownItems.Clear();
             foreach (XmlNode node in _sequence.PlugInData.GetAllPluginData()) {
-                //todo refactor
-                var item =
-                    new ToolStripMenuItem(string.Format("{0} ({1}-{2})", node.Attributes["name"].Value, node.Attributes["from"].Value,
-                                                        node.Attributes["to"].Value));
-                item.Checked = bool.Parse(node.Attributes["enabled"].Value);
-                item.CheckOnClick = true;
+                if (node.Attributes == null) {
+                    continue;
+                }
+
+                var menuText = string.Format("{0} ({1}-{2})", node.Attributes["name"].Value, node.Attributes["from"].Value,
+                                             node.Attributes["to"].Value);
+                var item = new ToolStripMenuItem(menuText)
+                {Checked = bool.Parse(node.Attributes["enabled"].Value), CheckOnClick = true, Tag = count.ToString(CultureInfo.InvariantCulture)};
                 item.CheckedChanged += _pluginCheckHandler;
-                item.Tag = num.ToString(CultureInfo.InvariantCulture);
-                num++;
+                count++;
                 toolStripDropDownButtonPlugins.DropDownItems.Add(item);
             }
-            if (toolStripDropDownButtonPlugins.DropDownItems.Count > 0) {
-                toolStripDropDownButtonPlugins.DropDownItems.Add("-");
-                toolStripDropDownButtonPlugins.DropDownItems.Add("Select all", null, selectAllToolStripMenuItem_Click);
-                toolStripDropDownButtonPlugins.DropDownItems.Add("Unselect all", null, unselectAllToolStripMenuItem_Click);
+
+            if (count <= 0) {
+                return;
             }
+
+            toolStripDropDownButtonPlugins.DropDownItems.Add("-");
+            toolStripDropDownButtonPlugins.DropDownItems.Add("Select all", null, selectAllToolStripMenuItem_Click);
+            toolStripDropDownButtonPlugins.DropDownItems.Add("Unselect all", null, unselectAllToolStripMenuItem_Click);
         }
 
 
@@ -1320,7 +1323,7 @@ namespace VixenEditor {
                 int num2;
                 int num4;
                 int num8;
-                AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite,"Adjust intensity");
+                AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, "Adjust intensity");
                 var delta = m_intensityAdjustDialog.Delta;
                 var bottom = _selectedCells.Bottom;
                 var right = _selectedCells.Right;
@@ -1343,8 +1346,7 @@ namespace VixenEditor {
                         num2 = _channelOrderMapping[num8];
                         if (_sequence.Channels[num2].Enabled) {
                             for (left = _selectedCells.Left; left < right; left++) {
-                                num4 = ((int) Math.Round(_sequence.EventValues[num2, left] * 100f / 255f, MidpointRounding.AwayFromZero)) +
-                                       delta;
+                                num4 = ((int) Math.Round(_sequence.EventValues[num2, left] * 100f / 255f, MidpointRounding.AwayFromZero)) + delta;
                                 var num5 = (int) Math.Round(num4 / 100f * 255f, MidpointRounding.AwayFromZero);
                                 num5 = Math.Max(Math.Min(num5, _sequence.MaximumLevel), _sequence.MinimumLevel);
                                 _sequence.EventValues[num2, left] = (byte) num5;
@@ -1422,9 +1424,9 @@ namespace VixenEditor {
 
         private static Rectangle NormalizeRect(Rectangle rect) {
             return new Rectangle {
-                                     X = Math.Min(rect.Left, rect.Right), Y = Math.Min(rect.Top, rect.Bottom), Width = Math.Abs(rect.Width) + (rect.Width < 0 ? 1 : 0),
-                                     Height = Math.Abs(rect.Height) + (rect.Height < 0 ? 1 : 0)
-                                 };
+                X = Math.Min(rect.Left, rect.Right), Y = Math.Min(rect.Top, rect.Bottom), Width = Math.Abs(rect.Width) + (rect.Width < 0 ? 1 : 0),
+                Height = Math.Abs(rect.Height) + (rect.Height < 0 ? 1 : 0)
+            };
         }
 
 
@@ -1606,7 +1608,7 @@ namespace VixenEditor {
 
         private void pasteFullChannelEventsFromClipboardToolStripMenuItem_Click(object sender, EventArgs e) {
             if (_systemInterface.Clipboard != null) {
-                AddUndoItem(new Rectangle(0, _selectedLineIndex, _systemInterface.Clipboard.GetLength(1), 1), UndoOriginalBehavior.Overwrite,"Paste");
+                AddUndoItem(new Rectangle(0, _selectedLineIndex, _systemInterface.Clipboard.GetLength(1), 1), UndoOriginalBehavior.Overwrite, "Paste");
                 var num2 = Math.Min(_systemInterface.Clipboard.GetLength(1), _sequence.TotalEventPeriods);
                 for (int i = 0; i < num2; i++) {
                     _sequence.EventValues[_editingChannelSortedIndex, i] = _systemInterface.Clipboard[0, i];
@@ -2207,7 +2209,7 @@ namespace VixenEditor {
                 return;
             }
 
-             if (paintFromClipboardToolStripMenuItem.Checked && (_systemInterface.Clipboard != null)) {
+            if (paintFromClipboardToolStripMenuItem.Checked && (_systemInterface.Clipboard != null)) {
                 var rect = NormalizeRect(_lineRect);
                 var clipLen = _systemInterface.Clipboard.GetLength(1);
                 rect.Width += clipLen;
@@ -2571,9 +2573,9 @@ namespace VixenEditor {
 
         private Rectangle RangeToRectangle(Rectangle range) {
             return new Rectangle {
-                                     X = ((range.X - hScrollBar1.Value) * _periodPixelWidth) + 1, Y = ((range.Y - vScrollBar1.Value) * _gridRowHeight) + 1,
-                                     Width = (range.Width * _periodPixelWidth) - 1, Height = (range.Height * _gridRowHeight) - 1
-                                 };
+                X = ((range.X - hScrollBar1.Value) * _periodPixelWidth) + 1, Y = ((range.Y - vScrollBar1.Value) * _gridRowHeight) + 1,
+                Width = (range.Width * _periodPixelWidth) - 1, Height = (range.Height * _gridRowHeight) - 1
+            };
         }
 
 
@@ -2626,7 +2628,8 @@ namespace VixenEditor {
                 IsDirty = true;
                 var item2 = new UndoItem(item.Location,
                                          GetAffectedBlockData(new Rectangle(item.Location.X, item.Location.Y, item.Data.GetLength(1),
-                                                                            item.Data.GetLength(0))), item.Behavior, _sequence, _channelOrderMapping, item.OriginalAction);
+                                                                            item.Data.GetLength(0))), item.Behavior, _sequence, _channelOrderMapping,
+                                         item.OriginalAction);
                 switch (item.Behavior) {
                     case UndoOriginalBehavior.Overwrite:
                         DisjointedOverwrite(item.Location.X, item.Data, item.ReferencedChannels);
@@ -2770,6 +2773,7 @@ namespace VixenEditor {
             ArithmeticPaste(ArithmeticOperation.Scale);
         }
 
+
         //todo cellY should not be passed
         private void ScrollSelectionDown(int cellX, int cellY) {
             var num = pictureBoxGrid.PointToScreen(new Point(pictureBoxGrid.Left, pictureBoxGrid.Bottom)).Y - pictureBoxTime.Height;
@@ -2794,6 +2798,7 @@ namespace VixenEditor {
             }
         }
 
+
         //todo cellX should not be passed
         private void ScrollSelectionLeft(int cellX, int cellY) {
             int x = pictureBoxGrid.PointToScreen(new Point(pictureBoxGrid.Left, pictureBoxGrid.Top)).X;
@@ -2804,6 +2809,7 @@ namespace VixenEditor {
                 hScrollBar1.Value--;
             }
         }
+
 
         //todo cellX should not be passed
         private void ScrollSelectionRight(int cellX, int cellY) {
@@ -2859,11 +2865,10 @@ namespace VixenEditor {
 
 
         private Rectangle SelectionToRectangle() {
-            return new Rectangle {   X = ((_selectedCells.X - hScrollBar1.Value) * _periodPixelWidth) + 1,
-                                     Y = ((_selectedCells.Y - vScrollBar1.Value) * _gridRowHeight) + 1, 
-                                     Width = (_selectedCells.Width * _periodPixelWidth) - 1,
-                                     Height = (_selectedCells.Height * _gridRowHeight) - 1
-                                 };
+            return new Rectangle {
+                X = ((_selectedCells.X - hScrollBar1.Value) * _periodPixelWidth) + 1, Y = ((_selectedCells.Y - vScrollBar1.Value) * _gridRowHeight) + 1,
+                Width = (_selectedCells.Width * _periodPixelWidth) - 1, Height = (_selectedCells.Height * _gridRowHeight) - 1
+            };
         }
 
 
@@ -2965,8 +2970,9 @@ namespace VixenEditor {
         private void SetDrawingLevel(byte level) {
             _drawingLevel = level;
             toolStripLabelCurrentDrawingIntensity.Text = _actualLevels
-                                                    ? level.ToString(CultureInfo.InvariantCulture)
-                                                    : string.Format("{0}%", (int)Math.Round(level * 100f / 255f,MidpointRounding.AwayFromZero));
+                                                             ? level.ToString(CultureInfo.InvariantCulture)
+                                                             : string.Format("{0}%",
+                                                                             (int) Math.Round(level * 100f / 255f, MidpointRounding.AwayFromZero));
         }
 
 
@@ -3156,12 +3162,12 @@ namespace VixenEditor {
         private void StandardSequence_KeyDown(object sender, KeyEventArgs keyEvent) {
             HandelGlobalKeys(keyEvent);
 
-            if (!keyEvent.Handled) HandleBookmarkKeys(keyEvent); 
+            if (!keyEvent.Handled) HandleBookmarkKeys(keyEvent);
 
             var isNotRunning = _executionInterface.EngineStatus(_executionContextHandle) != 1;
-            
+
             // Keys here only work on selected areas if they exist.
-            if (!keyEvent.Handled && _selectedCells.Width > 0 ) {
+            if (!keyEvent.Handled && _selectedCells.Width > 0) {
                 HandleSpaceAndArrowKeys(keyEvent);
 
                 if (!keyEvent.Handled && isNotRunning && pictureBoxGrid.Focused) {
@@ -3175,9 +3181,10 @@ namespace VixenEditor {
             }
         }
 
+
         private void HandleBookmarkKeys(KeyEventArgs e) {
             if (e.Control && e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D9) {
-                var index = ((int)e.KeyCode) - (int)Keys.D0;
+                var index = ((int) e.KeyCode) - (int) Keys.D0;
                 e.Handled = true;
 
                 if (e.Shift) {
@@ -3190,6 +3197,7 @@ namespace VixenEditor {
             }
         }
 
+
         // todo refactor
         private void HandleSpaceAndArrowKeys(KeyEventArgs e) {
             switch (e.KeyCode) {
@@ -3197,15 +3205,15 @@ namespace VixenEditor {
                     if ((SelectableControlFocused() && !pictureBoxChannels.Focused) && !pictureBoxGrid.Focused) {
                         break;
                     }
-                    
+
                     int currentPosition;
                     if (_executionInterface.EngineStatus(_executionContextHandle, out currentPosition) != 1) {
-                        
+
                         var nonZeroCellCount = 0;
 
                         for (var top = _selectedCells.Top; top < _selectedCells.Bottom; top++) {
                             var channel = _channelOrderMapping[top];
-                            for (var left = _selectedCells.Left; left < _selectedCells.Right; left++ ) {
+                            for (var left = _selectedCells.Left; left < _selectedCells.Right; left++) {
                                 if (_sequence.EventValues[channel, left] > _sequence.MinimumLevel) {
                                     nonZeroCellCount++;
                                 }
@@ -3236,8 +3244,8 @@ namespace VixenEditor {
                         break;
                     }
                     var currentEvent = currentPosition / _sequence.EventPeriod;
-                    AddUndoItem(new Rectangle(currentEvent, _selectedCells.Top, 1, _selectedCells.Height), UndoOriginalBehavior.Overwrite,"On");
-                    
+                    AddUndoItem(new Rectangle(currentEvent, _selectedCells.Top, 1, _selectedCells.Height), UndoOriginalBehavior.Overwrite, "On");
+
                     for (int i = _selectedCells.Top; i < _selectedCells.Bottom; i++) {
                         var channel = _channelOrderMapping[i];
                         _sequence.EventValues[channel, currentEvent] = _drawingLevel;
@@ -3262,8 +3270,7 @@ namespace VixenEditor {
                         }
                         pictureBoxGrid.Invalidate(new Rectangle((_selectedCells.Left - hScrollBar1.Value) * _periodPixelWidth,
                                                                 (_selectedCells.Top - vScrollBar1.Value) * _gridRowHeight,
-                                                                (_selectedCells.Width + 1) * _periodPixelWidth,
-                                                                _selectedCells.Height * _gridRowHeight));
+                                                                (_selectedCells.Width + 1) * _periodPixelWidth, _selectedCells.Height * _gridRowHeight));
                     }
                     break;
 
@@ -3491,6 +3498,7 @@ namespace VixenEditor {
             }
         }
 
+
         //TODO Need to test the insert and delete channel code
         private void HandleChannelKeyPress(KeyEventArgs e) {
             var selectedChannelIndex = GetChannelSortedIndex(SelectedChannel);
@@ -3501,7 +3509,8 @@ namespace VixenEditor {
 
                     if (e.Shift) {
                         FillChannel(selectedChannelIndex);
-                    } else if (_sequence.Profile == null && _sequence.ChannelCount > 0) {
+                    }
+                    else if (_sequence.Profile == null && _sequence.ChannelCount > 0) {
                         var naturalIndex = _sequence.InsertChannel(selectedChannelIndex);
                         InsertChannelIntoSort(naturalIndex, selectedChannelIndex);
                         ChannelCountChanged();
@@ -3516,8 +3525,8 @@ namespace VixenEditor {
                         ClearChannel(selectedChannelIndex);
                     }
                     else if (_sequence.Profile == null && _sequence.ChannelCount > 0 &&
-                        (MessageBox.Show(string.Format("Delete channel {0}?", SelectedChannel.Name), "Confirm", MessageBoxButtons.YesNo,
-                                         MessageBoxIcon.Question) == DialogResult.Yes)) {
+                             (MessageBox.Show(string.Format("Delete channel {0}?", SelectedChannel.Name), "Confirm", MessageBoxButtons.YesNo,
+                                              MessageBoxIcon.Question) == DialogResult.Yes)) {
                         _sequence.DeleteChannel(SelectedChannel.Id);
                         DeleteChannelFromSort(selectedChannelIndex);
                         ChannelCountChanged();
@@ -3533,9 +3542,9 @@ namespace VixenEditor {
             _preferences.Flush();
             ToolStripManager.LoadSettings(this, _preferences.XmlDoc.DocumentElement);
             var panelArray = new ToolStripPanel[] {
-                                                      toolStripContainer1.TopToolStripPanel, toolStripContainer1.BottomToolStripPanel, toolStripContainer1.LeftToolStripPanel,
-                                                      toolStripContainer1.RightToolStripPanel
-                                                  };
+                toolStripContainer1.TopToolStripPanel, toolStripContainer1.BottomToolStripPanel, toolStripContainer1.LeftToolStripPanel,
+                toolStripContainer1.RightToolStripPanel
+            };
             var list = new List<string>();
             foreach (var panel in panelArray) {
                 foreach (ToolStrip strip in panel.Controls) {
@@ -3749,7 +3758,7 @@ namespace VixenEditor {
                     int left;
                     int num4;
                     int num5;
-                    AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite,"Find and Replace");
+                    AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, "Find and Replace");
                     var findValue = dialog.FindValue;
                     var replaceWithValue = dialog.ReplaceWithValue;
                     if (_actualLevels) {
@@ -3798,7 +3807,7 @@ namespace VixenEditor {
                     }
                 }
                 PasteOver();
-                AddUndoItem(new Rectangle(_selectedCells.X, _selectedCells.Y, width, length), UndoOriginalBehavior.Insertion,"Insert Paste");
+                AddUndoItem(new Rectangle(_selectedCells.X, _selectedCells.Y, width, length), UndoOriginalBehavior.Insertion, "Insert Paste");
             }
         }
 
@@ -3814,8 +3823,7 @@ namespace VixenEditor {
                     str = "255";
                     if ((_selectedCells.Width == 1) && (_selectedCells.Height == 1)) {
                         str =
-                            _sequence.EventValues[_channelOrderMapping[_selectedCells.Top], _selectedCells.Left].ToString(
-                                CultureInfo.InvariantCulture);
+                            _sequence.EventValues[_channelOrderMapping[_selectedCells.Top], _selectedCells.Left].ToString(CultureInfo.InvariantCulture);
                     }
                     dialog = new TextQueryDialog(Vendor.ProductName, "What intensity level (0-255)?", str);
                     if (dialog.ShowDialog() != DialogResult.OK) {
@@ -3864,7 +3872,7 @@ namespace VixenEditor {
                     }
                 }
             }
-            AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite,"Intensity");
+            AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, "Intensity");
             int bottom = _selectedCells.Bottom;
             int right = _selectedCells.Right;
             for (int i = _selectedCells.Top; i < bottom; i++) {
@@ -3881,7 +3889,7 @@ namespace VixenEditor {
 
 
         private void toolStripButtonInvert_Click(object sender, EventArgs e) {
-            AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite,"Invert");
+            AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, "Invert");
             int bottom = _selectedCells.Bottom;
             int right = _selectedCells.Right;
             for (int i = _selectedCells.Top; i < bottom; i++) {
@@ -3940,7 +3948,7 @@ namespace VixenEditor {
 
 
         private void toolStripButtonOn_Click(object sender, EventArgs e) {
-            AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite,"On");
+            AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, "On");
             int bottom = _selectedCells.Bottom;
             int right = _selectedCells.Right;
             for (int i = _selectedCells.Top; i < bottom; i++) {
@@ -3959,8 +3967,8 @@ namespace VixenEditor {
         private void toolStripButtonOpaquePaste_Click(object sender, EventArgs e) {
             if (_systemInterface.Clipboard != null) {
                 AddUndoItem(
-                    new Rectangle(_selectedCells.X, _selectedCells.Y, _systemInterface.Clipboard.GetLength(1),
-                                  _systemInterface.Clipboard.GetLength(0)), UndoOriginalBehavior.Overwrite,"Opaque Paste");
+                    new Rectangle(_selectedCells.X, _selectedCells.Y, _systemInterface.Clipboard.GetLength(1), _systemInterface.Clipboard.GetLength(0)),
+                    UndoOriginalBehavior.Overwrite, "Opaque Paste");
                 PasteOver();
             }
         }
@@ -4076,7 +4084,7 @@ namespace VixenEditor {
                     //channelOffset = Math.Abs((int) (intensityMax - maximumLevel));
                     random = new Random();
                 }
-                AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite,"Random");
+                AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, "Random");
                 var list = new List<int>();
                 var random2 = new Random();
                 var top = _selectedCells.Top;
@@ -4141,7 +4149,7 @@ namespace VixenEditor {
                 int right = _selectedCells.Right;
                 int num2 = _sequence.TotalEventPeriods - right;
                 AddUndoItem(new Rectangle(_selectedCells.Left, _selectedCells.Top, _selectedCells.Width, _selectedCells.Height),
-                            UndoOriginalBehavior.Removal,"Remove");
+                            UndoOriginalBehavior.Removal, "Remove");
                 for (int i = 0; i < _selectedCells.Height; i++) {
                     int num3 = _channelOrderMapping[_selectedCells.Top + i];
                     int num4 = 0;
@@ -4206,7 +4214,7 @@ namespace VixenEditor {
             var maxFrequency = (int) _sequence.EventsPerSecond; // 1000 / _sequence.EventPeriod;;
             var dialog = new EffectFrequencyDialog("Shimmer (dimming)", maxFrequency, _dimmingShimmerGenerator);
             if (dialog.ShowDialog() == DialogResult.OK) {
-                AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite,"Shimmer");
+                AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, "Shimmer");
                 var bottom = _selectedCells.Bottom;
                 var right = _selectedCells.Right;
                 var values = new byte[_selectedCells.Height,_selectedCells.Width];
@@ -4235,7 +4243,7 @@ namespace VixenEditor {
             var dialog = new SparkleParamsDialog(maxFrequency, _sparkleGenerator, _sequence.MinimumLevel, _sequence.MaximumLevel, _drawingLevel,
                                                  _actualLevels);
             if (dialog.ShowDialog() == DialogResult.OK) {
-                AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite,"Sparkle");
+                AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, "Sparkle");
                 var bottom = _selectedCells.Bottom;
                 var right = _selectedCells.Right;
                 var values = new byte[_selectedCells.Height,_selectedCells.Width];
@@ -4325,8 +4333,8 @@ namespace VixenEditor {
         private void toolStripButtonTransparentPaste_Click(object sender, EventArgs e) {
             if (_systemInterface.Clipboard != null) {
                 AddUndoItem(
-                    new Rectangle(_selectedCells.X, _selectedCells.Y, _systemInterface.Clipboard.GetLength(1),
-                                  _systemInterface.Clipboard.GetLength(0)), UndoOriginalBehavior.Overwrite,"Transparent Paste");
+                    new Rectangle(_selectedCells.X, _selectedCells.Y, _systemInterface.Clipboard.GetLength(1), _systemInterface.Clipboard.GetLength(0)),
+                    UndoOriginalBehavior.Overwrite, "Transparent Paste");
                 byte[,] clipboard = _systemInterface.Clipboard;
                 int length = clipboard.GetLength(0);
                 int num3 = clipboard.GetLength(1);
@@ -4462,7 +4470,7 @@ namespace VixenEditor {
                 int num = 0;
                 foreach (object[] objArray in dialog.MappedPluginList) {
                     var item = new ToolStripMenuItem((string) objArray[0])
-                               {Checked = (bool) objArray[1], CheckOnClick = true, Tag = num.ToString(CultureInfo.InvariantCulture)};
+                    {Checked = (bool) objArray[1], CheckOnClick = true, Tag = num.ToString(CultureInfo.InvariantCulture)};
                     item.CheckedChanged += plugInItem_CheckedChanged;
                     num++;
                     toolStripDropDownButtonPlugins.DropDownItems.Add(item);
@@ -4516,7 +4524,7 @@ namespace VixenEditor {
 
 
         private void TurnCellsOff() {
-            AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite,"Off");
+            AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, "Off");
             int bottom = _selectedCells.Bottom;
             int right = _selectedCells.Right;
             for (int i = _selectedCells.Top; i < bottom; i++) {
@@ -4548,7 +4556,8 @@ namespace VixenEditor {
                 }
                 var item2 = new UndoItem(item.Location,
                                          GetAffectedBlockData(new Rectangle(item.Location.X, item.Location.Y, item.Data.GetLength(1),
-                                                                            item.Data.GetLength(0))), item.Behavior, _sequence, _channelOrderMapping, item.OriginalAction);
+                                                                            item.Data.GetLength(0))), item.Behavior, _sequence, _channelOrderMapping,
+                                         item.OriginalAction);
                 switch (item.Behavior) {
                     case UndoOriginalBehavior.Overwrite:
                         DisjointedOverwrite(item.Location.X, item.Data, item.ReferencedChannels);
@@ -4793,17 +4802,19 @@ namespace VixenEditor {
         private VixenPlus.Channel SelectedChannel {
             get { return _selectedChannel; }
             set {
-                if (_selectedChannel != value) {
-                    VixenPlus.Channel selectedChannel = _selectedChannel;
-                    _selectedChannel = value;
-                    if (selectedChannel != null) {
-                        pictureBoxChannels.Invalidate(GetChannelNameRect(selectedChannel));
-                    }
-                    if (_selectedChannel != null) {
-                        pictureBoxChannels.Invalidate(GetChannelNameRect(_selectedChannel));
-                    }
-                    pictureBoxChannels.Update();
+                if (_selectedChannel == value) {
+                    return;
                 }
+
+                var selectedChannel = _selectedChannel;
+                _selectedChannel = value;
+                if (selectedChannel != null) {
+                    pictureBoxChannels.Invalidate(GetChannelNameRect(selectedChannel));
+                }
+                if (_selectedChannel != null) {
+                    pictureBoxChannels.Invalidate(GetChannelNameRect(_selectedChannel));
+                }
+                pictureBoxChannels.Update();
             }
         }
 
@@ -4828,10 +4839,6 @@ namespace VixenEditor {
             NAND,
             XNOR
         }
-
-        /*
-                private delegate void ToolStripUpdateDelegate(int seconds);
-        */
 
 
         private void smallToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -4868,6 +4875,7 @@ namespace VixenEditor {
             toolStripSequenceSettings.GripStyle = style;
             toolStripText.GripStyle = style;
         }
+
 
         //private void splitContainer2_SplitterMoving(object sender, SplitterCancelEventArgs keyEvent)
         //{
