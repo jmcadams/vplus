@@ -18,7 +18,7 @@ namespace VixenEditor {
     public partial class StandardSequence : UIBase {
         private bool _actualLevels;
         private AffectGridDelegate _affectGridDelegate;
-        private readonly Bitmap _arrowBitmap;
+        //private readonly Bitmap _arrowBitmap;
         private bool _autoScrolling;
         private readonly int[] _bookmarks;
         private SolidBrush _channelBackBrush;
@@ -126,7 +126,7 @@ namespace VixenEditor {
             _waveformOffset = 0x24;
             _showingOutputs = false;
             _selectedLineIndex = 0;
-            _arrowBitmap = null; //todo I don't think this is ever set to anything
+            //_arrowBitmap = null;
             _bookmarks = new[] {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
             _showingGradient = true;
             _actualLevels = false;
@@ -292,7 +292,6 @@ namespace VixenEditor {
         }
 
 
-        //TODO: I think this is broken
         private void BooleanPaste(BooleanOperation operation) {
             if (_systemInterface.Clipboard == null) {
                 return;
@@ -1812,7 +1811,7 @@ namespace VixenEditor {
                         e.Graphics.DrawRectangle(Pens.Black, x, height + 1, 40, _gridRowHeight - 2);
                     }
 
-                    e.Graphics.DrawImage(_arrowBitmap, x + 2, height + heightOffset, width, width);
+                    //e.Graphics.DrawImage(_arrowBitmap, x + 2, height + heightOffset, width, width);
                     e.Graphics.DrawString(String.Format("{0}", channel.OutputChannel + 1), _channelNameFont, Brushes.Black, x + 16,
                                           height + heightAddition);
                     e.Graphics.DrawString(channel.Name, _channelNameFont, Brushes.Black, x + 44, height + heightAddition);
