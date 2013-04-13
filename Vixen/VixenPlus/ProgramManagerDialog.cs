@@ -27,7 +27,7 @@ namespace VixenPlus
 			_executionInterface = (IExecution) Interfaces.Available["IExecution"];
 			_executionContextHandle = _executionInterface.RequestContext(true, false, null);
 			_executionInterface.SetSynchronousProgramChangeHandler(_executionContextHandle, ProgramChanged);
-			_programBrush = new SolidBrush(Color.FromArgb(0xc2, 0xd3, 0xfc));
+			_programBrush = new SolidBrush(Color.FromArgb(194, 211, 252));
 			_programBoldFont = new Font(listBoxPrograms.Font.FontFamily, 12f, FontStyle.Bold);
 			_programSmallFont = new Font(listBoxPrograms.Font.FontFamily, 8f);
 			dialog.Show();
