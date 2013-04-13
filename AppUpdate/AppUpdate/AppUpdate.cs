@@ -61,10 +61,10 @@
                 }
                 this.m_keyFile = Path.GetFileName(this.m_currentProcess.MainModule.FileName);
                 this.m_currentVersion = new Version(this.m_currentProcess.MainModule.FileVersionInfo.FileVersion);
-                ProgressDialog dialog = new ProgressDialog();
-                dialog.Message = "Contacting update site";
-                dialog.Show();
-                dialog.Refresh();
+                //ProgressDialog dialog = new ProgressDialog();
+                //dialog.Message = "Contacting update site";
+                //dialog.Show();
+                //dialog.Refresh();
                 this.m_migrations = new List<Migration>();
                 this.m_client = new WebClient();
                 try
@@ -75,8 +75,8 @@
                     }
                     catch
                     {
-                        dialog.Hide();
-                        dialog.Dispose();
+                        //dialog.Hide();
+                        //dialog.Dispose();
                         return;
                     }
                     reader = new StreamReader(stream);
@@ -103,15 +103,15 @@
                 }
                 finally
                 {
-                    dialog.Hide();
-                    dialog.Dispose();
+                    //dialog.Hide();
+                    //dialog.Dispose();
                 }
                 if (this.m_currentVersionMigration != null)
                 {
-                    dialog = new ProgressDialog();
-                    dialog.Message = "Checking for updates";
-                    dialog.Show();
-                    dialog.Refresh();
+                    //dialog = new ProgressDialog();
+                    //dialog.Message = "Checking for updates";
+                    //dialog.Show();
+                    //dialog.Refresh();
                     try
                     {
                         if (this.m_currentVersionMigration.VersionCatalogFile[0] == '/')
@@ -191,8 +191,8 @@
                     }
                     finally
                     {
-                        dialog.Hide();
-                        dialog.Dispose();
+                        //dialog.Hide();
+                        //dialog.Dispose();
                     }
                 }
                 if ((this.m_migrations.Count != 0) || flag2)
