@@ -2197,37 +2197,36 @@ namespace VixenEditor {
         private void pictureBoxGrid_MouseUp(object sender, MouseEventArgs e) {
             _mouseDownInGrid = false;
             lblFollowMouse.Visible = false;
-            if (_lineRect.Left != -1) {
-                var flag = paintFromClipboardToolStripMenuItem.Checked && (_systemInterface.Clipboard != null);
-                if (flag) {
-                    var rect = NormalizeRect(_lineRect);
-                    rect.Width += _systemInterface.Clipboard.GetLength(1);
-                    EraseRectangleEntity(rect);
-                    rect.Width++;
-                    rect.Height++;
-                    AddUndoItem(rect, UndoOriginalBehavior.Overwrite, "Chase Lines from Clipboard");
-                }
-                else {
-                    EraseRectangleEntity(_lineRect);
-                    var blockAffected = NormalizeRect(_lineRect);
-                    blockAffected.Width++;
-                    blockAffected.Height++;
-                    AddUndoItem(blockAffected, UndoOriginalBehavior.Overwrite, "Chase Lines");
-                }
-                if (!flag) {
-                    BresenhamLine(_lineRect);
-                }
-                else {
-                    var brush = new byte[_systemInterface.Clipboard.GetLength(1)];
-                    for (var i = 0; i < brush.Length; i++) {
-                        brush[i] = _systemInterface.Clipboard[0, i];
-                    }
-                    BresenhamLine(_lineRect, brush);
-                }
-                _lineRect.X = -1;
-                UpdatePositionLabel(selectedCells, false);
-                //UpdateFollowMouse(keyEvent.Location);
+            if (_lineRect.Left == -1) {
+                return;
             }
+
+             if (paintFromClipboardToolStripMenuItem.Checked && (_systemInterface.Clipboard != null)) {
+                var rect = NormalizeRect(_lineRect);
+                var clipLen = _systemInterface.Clipboard.GetLength(1);
+                rect.Width += clipLen;
+                EraseRectangleEntity(rect);
+                rect.Width++;
+                rect.Height++;
+                AddUndoItem(rect, UndoOriginalBehavior.Overwrite, "Chase Lines from Clipboard");
+                var brush = new byte[clipLen];
+                for (var i = 0; i < clipLen; i++) {
+                    brush[i] = _systemInterface.Clipboard[0, i];
+                }
+                BresenhamLine(_lineRect, brush);
+            }
+            else {
+                EraseRectangleEntity(_lineRect);
+                var rect = NormalizeRect(_lineRect);
+                rect.Width++;
+                rect.Height++;
+                AddUndoItem(rect, UndoOriginalBehavior.Overwrite, "Chase Lines");
+                BresenhamLine(_lineRect);
+            }
+
+            _lineRect.X = -1;
+            UpdatePositionLabel(selectedCells, false);
+            //UpdateFollowMouse(keyEvent.Location);
         }
 
 
