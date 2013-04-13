@@ -342,120 +342,120 @@ namespace VixenEditor {
         }
 
 
-        private void BresenhamPaint(Rectangle rect, byte[] brush) {
-            int num4;
-            int num5;
-            int num6;
-            int num7;
-            int num9;
-            int num10;
-            int num12;
-            int num13;
-            int num2 = Math.Abs(rect.Width);
-            int num3 = Math.Abs(rect.Height);
-            if (num2 >= num3) {
-                num4 = num2 + 1;
-                num5 = (num3 << 1) - num2;
-                num6 = num3 << 1;
-                num7 = (num3 - num2) << 1;
-                num9 = 1;
-                num10 = 1;
-                num12 = 0;
-                num13 = 1;
+        private void BresenhamLine(Rectangle rect, byte[] brush) {
+            int iterations;
+            int diff;
+            int negDiffIncr;
+            int posDiffIncr;
+            int negDiffLeftIncr;
+            int posDiffLeftIncr;
+            int negDiffTopIncr;
+            int posDiffTopIncr;
+            var width = Math.Abs(rect.Width);
+            var height = Math.Abs(rect.Height);
+            if (width >= height) {
+                iterations = width + 1;
+                diff = (height << 1) - width;
+                negDiffIncr = height << 1;
+                posDiffIncr = (height - width) << 1;
+                negDiffLeftIncr = 1;
+                posDiffLeftIncr = 1;
+                negDiffTopIncr = 0;
+                posDiffTopIncr = 1;
             }
             else {
-                num4 = num3 + 1;
-                num5 = (num2 << 1) - num3;
-                num6 = num2 << 1;
-                num7 = (num2 - num3) << 1;
-                num9 = 0;
-                num10 = 1;
-                num12 = 1;
-                num13 = 1;
+                iterations = height + 1;
+                diff = (width << 1) - height;
+                negDiffIncr = width << 1;
+                posDiffIncr = (width - height) << 1;
+                negDiffLeftIncr = 0;
+                posDiffLeftIncr = 1;
+                negDiffTopIncr = 1;
+                posDiffTopIncr = 1;
             }
             if (rect.Left > rect.Right) {
-                num9 = -num9;
-                num10 = -num10;
+                negDiffLeftIncr = -negDiffLeftIncr;
+                posDiffLeftIncr = -posDiffLeftIncr;
             }
             if (rect.Top > rect.Bottom) {
-                num12 = -num12;
-                num13 = -num13;
+                negDiffTopIncr = -negDiffTopIncr;
+                posDiffTopIncr = -posDiffTopIncr;
             }
-            int left = rect.Left;
-            int top = rect.Top;
-            for (int i = 0; i < num4; i++) {
-                int num16 = left;
-                int num14 = Math.Min(num16 + brush.Length, _sequence.TotalEventPeriods) - num16;
-                for (int j = 0; j < num14; j++) {
-                    _sequence.EventValues[_channelOrderMapping[top], num16 + j] = brush[j];
+            var left = rect.Left;
+            var top = rect.Top;
+            for (var i = 0; i < iterations; i++) {
+                //int num16 = left;
+                var columns = Math.Min(left + brush.Length, _sequence.TotalEventPeriods) - left;
+                for (var j = 0; j < columns; j++) {
+                    _sequence.EventValues[_channelOrderMapping[top], left + j] = brush[j];
                 }
-                if (num5 < 0) {
-                    num5 += num6;
-                    left += num9;
-                    top += num12;
+                if (diff < 0) {
+                    diff += negDiffIncr;
+                    left += negDiffLeftIncr;
+                    top += negDiffTopIncr;
                 }
                 else {
-                    num5 += num7;
-                    left += num10;
-                    top += num13;
+                    diff += posDiffIncr;
+                    left += posDiffLeftIncr;
+                    top += posDiffTopIncr;
                 }
             }
             IsDirty = true;
         }
 
 
-        private void BresenhamValues(Rectangle rect) {
-            int num4;
-            int num5;
-            int num6;
-            int num7;
-            int num9;
-            int num10;
-            int num12;
-            int num13;
-            int num2 = Math.Abs(rect.Width);
-            int num3 = Math.Abs(rect.Height);
-            if (num2 >= num3) {
-                num4 = num2 + 1;
-                num5 = (num3 << 1) - num2;
-                num6 = num3 << 1;
-                num7 = (num3 - num2) << 1;
-                num9 = 1;
-                num10 = 1;
-                num12 = 0;
-                num13 = 1;
+        private void BresenhamLine(Rectangle rect) {
+            int iterations;
+            int diff;
+            int negDiffIncr;
+            int posDiffIncr;
+            int negDiffLeftIncr;
+            int posDiffLeftIncr;
+            int negDiffTopIncr;
+            int posDiffTopIncr;
+            var width = Math.Abs(rect.Width);
+            var height = Math.Abs(rect.Height);
+            if (width >= height) {
+                iterations = width + 1;
+                diff = (height << 1) - width;
+                negDiffIncr = height << 1;
+                posDiffIncr = (height - width) << 1;
+                negDiffLeftIncr = 1;
+                posDiffLeftIncr = 1;
+                negDiffTopIncr = 0;
+                posDiffTopIncr = 1;
             }
             else {
-                num4 = num3 + 1;
-                num5 = (num2 << 1) - num3;
-                num6 = num2 << 1;
-                num7 = (num2 - num3) << 1;
-                num9 = 0;
-                num10 = 1;
-                num12 = 1;
-                num13 = 1;
+                iterations = height + 1;
+                diff = (width << 1) - height;
+                negDiffIncr = width << 1;
+                posDiffIncr = (width - height) << 1;
+                negDiffLeftIncr = 0;
+                posDiffLeftIncr = 1;
+                negDiffTopIncr = 1;
+                posDiffTopIncr = 1;
             }
             if (rect.Left > rect.Right) {
-                num9 = -num9;
-                num10 = -num10;
+                negDiffLeftIncr = -negDiffLeftIncr;
+                posDiffLeftIncr = -posDiffLeftIncr;
             }
             if (rect.Top > rect.Bottom) {
-                num12 = -num12;
-                num13 = -num13;
+                negDiffTopIncr = -negDiffTopIncr;
+                posDiffTopIncr = -posDiffTopIncr;
             }
             int left = rect.Left;
             int top = rect.Top;
-            for (int i = 0; i < num4; i++) {
+            for (var i = 0; i < iterations; i++) {
                 _sequence.EventValues[_channelOrderMapping[top], left] = _drawingLevel;
-                if (num5 < 0) {
-                    num5 += num6;
-                    left += num9;
-                    top += num12;
+                if (diff < 0) {
+                    diff += negDiffIncr;
+                    left += negDiffLeftIncr;
+                    top += negDiffTopIncr;
                 }
                 else {
-                    num5 += num7;
-                    left += num10;
-                    top += num13;
+                    diff += posDiffIncr;
+                    left += posDiffLeftIncr;
+                    top += posDiffTopIncr;
                 }
             }
             IsDirty = true;
@@ -2190,7 +2190,7 @@ namespace VixenEditor {
                 toolStripLabelCurrentCell.Text = string.Format("{0} , {1}", TimeString(cellX * _sequence.EventPeriod),
                                                                _sequence.Channels[_channelOrderMapping[cellY]].Name);
             }
-            UpdateFollowMouse(new Point(e.X, e.Y /*keyEvent.X + hScrollBar1.Size.Height , keyEvent.Y + vScrollBar1.Size.Width*/));
+            UpdateFollowMouse(new Point(e.X, e.Y));
         }
 
 
@@ -2215,14 +2215,14 @@ namespace VixenEditor {
                     AddUndoItem(blockAffected, UndoOriginalBehavior.Overwrite, "Chase Lines");
                 }
                 if (!flag) {
-                    BresenhamValues(_lineRect);
+                    BresenhamLine(_lineRect);
                 }
                 else {
                     var brush = new byte[_systemInterface.Clipboard.GetLength(1)];
                     for (var i = 0; i < brush.Length; i++) {
                         brush[i] = _systemInterface.Clipboard[0, i];
                     }
-                    BresenhamPaint(_lineRect, brush);
+                    BresenhamLine(_lineRect, brush);
                 }
                 _lineRect.X = -1;
                 UpdatePositionLabel(selectedCells, false);
