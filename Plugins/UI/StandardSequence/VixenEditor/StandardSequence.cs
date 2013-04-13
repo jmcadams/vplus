@@ -3247,7 +3247,7 @@ namespace VixenEditor {
                 }
                 case Keys.Left:
                     if (!pictureBoxChannels.Focused && !pictureBoxGrid.Focused) {
-                        break; // this was goto, skips keyEvent.handled, so still would be false?
+                        break;
                     }
                     if ((hScrollBar1.Value > 0) || (selectedCells.Left > 0)) {
                         e.Handled = true;

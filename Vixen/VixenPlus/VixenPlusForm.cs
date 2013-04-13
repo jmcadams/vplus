@@ -17,7 +17,11 @@ namespace VixenPlus
 {
 	internal sealed partial class VixenPlusForm : Form, ISystem
 	{
-        private const int EXPECTATION_DELAY = 500;
+#if debug
+        private const int ExpectationDelay = 0;
+#else
+        private const int ExpectationDelay = 2500;
+#endif
 
 		private const int HistoryMax = 7;
 		private List<string> _history;
@@ -112,7 +116,7 @@ namespace VixenPlus
             // Going to set this here, initially it was 3000 ms, right now we're not loading anything,
             // want to set future expectations
 
-            Thread.Sleep(EXPECTATION_DELAY);
+            Thread.Sleep(ExpectationDelay);
 
             splash.FadeOut();
 			splash.Hide();
