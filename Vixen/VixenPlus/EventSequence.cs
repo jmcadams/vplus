@@ -428,6 +428,7 @@ namespace VixenPlus
 			}
 		}
 
+        //TODO This is not working either.
 		public void DeleteChannel(ulong channelId)
 		{
 			int index = Channels.IndexOf(FindChannel(channelId));
