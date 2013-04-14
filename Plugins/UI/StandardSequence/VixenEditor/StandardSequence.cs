@@ -610,40 +610,43 @@ namespace VixenEditor {
 
 
         private void currentProgramsSettingsToolStripMenuItem_Click(object sender, EventArgs e) {
-            using (var dialog = new SequenceSettingsDialog(_sequence)) {
-                var originalMinimumLevel = _sequence.MinimumLevel;
-                var originalMaximumLevel = _sequence.MaximumLevel;
-                var originalEventPeriod = _sequence.EventPeriod; 
+            var originalMinimumLevel = _sequence.MinimumLevel;
+            var originalMaximumLevel = _sequence.MaximumLevel;
+            var originalEventPeriod = _sequence.EventPeriod;
 
+            using (var dialog = new SequenceSettingsDialog(_sequence)) {
                 if (dialog.ShowDialog() != DialogResult.OK) {
                     return;
                 }
-                
-                if (originalMinimumLevel != _sequence.MinimumLevel) {
-                    CheckMinimums();
-                    if (_drawingLevel < _sequence.MinimumLevel) {
-                        var message = String.Format("Drawing level adjusted to {0}.\nIt was {1} which was below the sequence minimum.",
-                                                    _sequence.MinimumLevel, _drawingLevel);
-                        SetDrawingLevel(_sequence.MinimumLevel);
-                        MessageBox.Show(message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                    }
-                }
-                if (originalMaximumLevel != _sequence.MaximumLevel) {
-                    CheckMaximums();
-                    if (_drawingLevel > _sequence.MaximumLevel) {
-                        var message = String.Format("Drawing level adjusted to {0}.\nIt was {1} which was above the sequence maximum.",
-                                                    _sequence.MaximumLevel, _drawingLevel);
-                        SetDrawingLevel(_sequence.MaximumLevel);
-                        MessageBox.Show(message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                    }
-                }
-                if (originalEventPeriod != _sequence.EventPeriod) {
-                    HScrollCheck();
-                    ParseAudioWaveform();
-                    pictureBoxTime.Refresh();
-                }
-                pictureBoxGrid.Refresh();
             }
+
+            if (originalMinimumLevel != _sequence.MinimumLevel) {
+                CheckMinimums();
+                if (_drawingLevel < _sequence.MinimumLevel) {
+                    var message = String.Format("Drawing level adjusted to {0}.\nIt was {1} which was below the sequence minimum.",
+                                                _sequence.MinimumLevel, _drawingLevel);
+                    SetDrawingLevel(_sequence.MinimumLevel);
+                    MessageBox.Show(message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                }
+            }
+
+            if (originalMaximumLevel != _sequence.MaximumLevel) {
+                CheckMaximums();
+                if (_drawingLevel > _sequence.MaximumLevel) {
+                    var message = String.Format("Drawing level adjusted to {0}.\nIt was {1} which was above the sequence maximum.",
+                                                _sequence.MaximumLevel, _drawingLevel);
+                    SetDrawingLevel(_sequence.MaximumLevel);
+                    MessageBox.Show(message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                }
+            }
+
+            if (originalEventPeriod != _sequence.EventPeriod) {
+                HScrollCheck();
+                ParseAudioWaveform();
+                pictureBoxTime.Refresh();
+            }
+
+            pictureBoxGrid.Refresh();
         }
 
 
@@ -793,10 +796,9 @@ namespace VixenEditor {
                 foreach (var num in dialog.DisabledChannels) {
                     _sequence.Channels[num].Enabled = false;
                 }
-
-                IsDirty = true;
-                //todo redraw the channel box with some indication that they are masked.
             }
+            IsDirty = true;
+            //todo redraw the channel box with some indication that they are masked.
         }
 
 
@@ -814,37 +816,33 @@ namespace VixenEditor {
             toolStripComboBoxWaveformZoom.Enabled = true;
             toolStripLabelWaveformZoom.Enabled = true;
         }
-        #endregion
+
 
         private void EraseRectangleEntity(Rectangle rect) {
             rect.Offset(-hScrollBar1.Value, -vScrollBar1.Value);
             var rc = CellsToRectangle(rect);
-            rect.X = -1;
+            rect.X = -1; // todo does this get passed back?
             pictureBoxGrid.Invalidate(rc);
         }
 
 
         private void EraseSelectedRange() {
-            Rectangle rc = SelectionToRectangle();
+            var rc = SelectionToRectangle();
             _selectedCells.Width = _selectedRange.Width = 0;
             pictureBoxGrid.Invalidate(rc);
         }
 
 
         private void exportChannelNamesListToolStripMenuItem_Click(object sender, EventArgs e) {
-            string path = Path.Combine(Paths.ImportExportPath, _sequence.Name + "_channels.txt");
-            var writer = new StreamWriter(path);
-            try {
-                foreach (VixenPlus.Channel channel in _sequence.Channels) {
-                    writer.WriteLine(channel.Name);
+            var path = Path.Combine(Paths.ImportExportPath, _sequence.Name + "_channels.txt");
+            using (var sw = new StreamWriter(path, false)) {
+                foreach (var channel in _sequence.Channels) {
+                    sw.WriteLine(channel.Name);
                 }
-                MessageBox.Show("Channel name list exported to " + path, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
-            finally {
-                writer.Close();
-            }
+            MessageBox.Show("Channel name list exported to " + path, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
-
+        #endregion
 
         private void FillChannel(int lineIndex) {
             AddUndoItem(new Rectangle(0, lineIndex, _sequence.TotalEventPeriods, 1), UndoOriginalBehavior.Overwrite, "Fill");
