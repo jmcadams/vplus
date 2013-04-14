@@ -1277,7 +1277,6 @@ namespace VixenEditor{
             this.pictureBoxChannels.TabStop = false;
             this.pictureBoxChannels.DragDrop += new System.Windows.Forms.DragEventHandler(this.pictureBoxChannels_DragDrop);
             this.pictureBoxChannels.DragOver += new System.Windows.Forms.DragEventHandler(this.pictureBoxChannels_DragOver);
-            this.pictureBoxChannels.GiveFeedback += new System.Windows.Forms.GiveFeedbackEventHandler(this.pictureBoxChannels_GiveFeedback);
             this.pictureBoxChannels.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxChannels_Paint);
             this.pictureBoxChannels.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.pictureBoxChannels_MouseDoubleClick);
             this.pictureBoxChannels.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxChannels_MouseDown);
