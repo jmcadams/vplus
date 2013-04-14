@@ -798,18 +798,23 @@ namespace VixenEditor {
                 //todo redraw the channel box with some indication that they are masked.
             }
         }
-        #endregion
+
 
         private void EnableWaveformButton() {
-            if (_sequence.Audio != null) {
-                toolStripButtonWaveform.Enabled = true;
-                if (toolStripButtonWaveform.Checked) {
-                    toolStripComboBoxWaveformZoom.Enabled = true;
-                    toolStripLabelWaveformZoom.Enabled = true;
-                }
+            if (_sequence.Audio == null) {
+                return;
             }
-        }
 
+            toolStripButtonWaveform.Enabled = true;
+            
+            if (!toolStripButtonWaveform.Checked) {
+                return;
+            }
+
+            toolStripComboBoxWaveformZoom.Enabled = true;
+            toolStripLabelWaveformZoom.Enabled = true;
+        }
+        #endregion
 
         private void EraseRectangleEntity(Rectangle rect) {
             rect.Offset(-hScrollBar1.Value, -vScrollBar1.Value);
