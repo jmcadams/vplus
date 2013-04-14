@@ -145,7 +145,7 @@ namespace VixenEditor {
             _toolStripCheckStateChangeHandler = toolStripItem_CheckStateChanged;
         }
 
-        #region Start refactor here
+        #region There are mostly refactored
         private void additionToolStripMenuItem_Click(object sender, EventArgs e) {
             ArithmeticPaste(ArithmeticOperation.Addition);
         }
@@ -243,7 +243,7 @@ namespace VixenEditor {
             pictureBoxGrid.Refresh();
         }
 
-
+        //TODO should this be inlined?
         private void ArrayToCells(byte[,] array) {
             CopyToEventValues(_selectedCells.Left, _selectedCells.Top, array);
             IsDirty = true;
@@ -650,17 +650,13 @@ namespace VixenEditor {
         }
 
 
-        //todo test and refactor once the delete routine works
         private void DeleteChannelFromSort(int naturalIndex) {
             _channelOrderMapping.Remove(naturalIndex);
-            for (var i = 0; i < _channelOrderMapping.Count; i++) {
-                if (_channelOrderMapping[i] <= naturalIndex) {
-                    continue;
+            for (var channel = 0; channel < _channelOrderMapping.Count; channel++) {
+                if (_channelOrderMapping[channel] > naturalIndex) {
+                    _channelOrderMapping[channel]--;
                 }
-                List<int> list;
-                int num2;
-                (list = _channelOrderMapping)[num2 = i] = list[num2] - 1;
-            }
+            } 
         }
 
 
@@ -907,7 +903,7 @@ namespace VixenEditor {
 
             if (column >= 0 && row >= 0) {
                 var value = _sequence.EventValues[_channelOrderMapping[row], column];
-                intensity = _actualLevels ? value : (int) Math.Round(value * 100f / Cell8BitMax, MidpointRounding.AwayFromZero);
+                intensity = _actualLevels ? value : ToPercentage(value);
                 intensityText = string.Format(_actualLevels ? "{0}" : "{0}%", intensity);
             }
 
@@ -1064,7 +1060,7 @@ namespace VixenEditor {
                 hScrollBar1.Minimum = 0;
             }
         }
-        #endregion
+
 
         private void importChannelNamesListToolStripMenuItem_Click(object sender, EventArgs e) {
             if (_sequence.Profile != null) {
@@ -1072,14 +1068,13 @@ namespace VixenEditor {
                                 MessageBoxIcon.Hand);
             }
             else {
-                openFileDialog1.Filter = "Text file | *.txt";
-                openFileDialog1.DefaultExt = "txt";
+                openFileDialog1.Filter = @"Text file | *.txt";
+                openFileDialog1.DefaultExt = @"txt";
                 openFileDialog1.InitialDirectory = Paths.ImportExportPath;
                 openFileDialog1.FileName = string.Empty;
                 if (openFileDialog1.ShowDialog() == DialogResult.OK) {
-                    var reader = new StreamReader(openFileDialog1.FileName);
-                    var list = new List<string>();
-                    try {
+                    using (var reader = new StreamReader(openFileDialog1.FileName)) {
+                        var list = new List<string>();
                         string str;
                         while ((str = reader.ReadLine()) != null) {
                             list.Add(str);
@@ -1089,32 +1084,29 @@ namespace VixenEditor {
                             _sequence.Channels[i].Name = list[i];
                         }
                         pictureBoxChannels.Refresh();
-                        MessageBox.Show("Channel name list import complete", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                    }
-                    finally {
-                        reader.Close();
-                        reader.Dispose();
+                        MessageBox.Show("Channel name list import complete", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                     }
                 }
             }
         }
 
-
+        //TODO Not refactored
         private void Init() {
             _initializing = true;
             InitializeComponent();
             _initializing = false;
+
             _gridRowHeight = _preferences.GetInteger("MaxRowHeight");
             _periodPixelWidth = _preferences.GetInteger("MaxColumnWidth");
             _showPositionMarker = _preferences.GetBoolean("ShowPositionMarker");
             _autoScrolling = _preferences.GetBoolean("AutoScrolling");
             _intensityLargeDelta = _preferences.GetInteger("IntensityLargeDelta");
             _showingGradient = !_preferences.GetBoolean("BarLevels");
+
             _channelBackBrush = new SolidBrush(Color.White);
             _timeBackBrush = new SolidBrush(Color.FromArgb(16, 16, 16));
             _gridBackBrush = new SolidBrush(Color.FromArgb(192, 192, 192));
-            //_arrowBitmap = new Bitmap(pictureBoxOutputArrow.Image);
-            //_arrowBitmap.MakeTransparent(_arrowBitmap.GetPixel(0, 0));
+
             _gridGraphics = pictureBoxGrid.CreateGraphics();
             _dimmingShimmerGenerator = DimmingShimmerGenerator;
             _sparkleGenerator = SparkleGenerator;
@@ -1162,13 +1154,10 @@ namespace VixenEditor {
         }
 
 
-
         private void InsertChannelIntoSort(int naturalIndex, int sortedIndex) {
-            for (int i = 0; i < _channelOrderMapping.Count; i++) {
-                if (_channelOrderMapping[i] >= naturalIndex) {
-                    List<int> list;
-                    int num2;
-                    (list = _channelOrderMapping)[num2 = i] = list[num2] + 1;
+            for (var channel = 0; channel < _channelOrderMapping.Count; channel++) {
+                if (_channelOrderMapping[channel] >= naturalIndex) {
+                    _channelOrderMapping[channel]++;
                 }
             }
             _channelOrderMapping.Insert(sortedIndex, naturalIndex);
@@ -1176,16 +1165,17 @@ namespace VixenEditor {
 
 
         private void IntensityAdjustDialogCheck() {
-            if (!m_intensityAdjustDialog.Visible) {
-                m_intensityAdjustDialog.Show();
-                BringToFront();
+            if (m_intensityAdjustDialog.Visible) {
+                return;
             }
+
+            m_intensityAdjustDialog.Show();
+            BringToFront();
         }
 
 
         private void InvalidateRect(Rectangle rect) {
-            rect.X -= hScrollBar1.Value;
-            rect.Y -= vScrollBar1.Value;
+            rect.Offset(-hScrollBar1.Value, -vScrollBar1.Value);
             _selectionRectangle.X = Math.Min(rect.Left, rect.Right) * _periodPixelWidth;
             _selectionRectangle.Y = Math.Min(rect.Top, rect.Bottom) * _gridRowHeight;
             _selectionRectangle.Width = Math.Abs((rect.Width + 1) * _periodPixelWidth);
@@ -1201,26 +1191,16 @@ namespace VixenEditor {
         }
 
 
-        /*
-                private int LineIndexToChannelIndex(int lineIndex)
-                {
-                    if ((lineIndex >= 0) && (lineIndex < _channelOrderMapping.Count))
-                    {
-                        return _channelOrderMapping[lineIndex];
-                    }
-                    return -1;
-                }
-        */
-
-
         private void loadARoutineToolStripMenuItem_Click(object sender, EventArgs e) {
             var routine = GetRoutine();
-            if (routine != null) {
-                AddUndoItem(new Rectangle(_selectedCells.X, _selectedCells.Y, routine.GetLength(1), routine.GetLength(0)),
-                            UndoOriginalBehavior.Overwrite, "Load Routine");
-                ArrayToCells(routine);
-                pictureBoxGrid.Refresh();
+            if (routine == null) {
+                return;
             }
+
+            AddUndoItem(new Rectangle(_selectedCells.X, _selectedCells.Y, routine.GetLength(IndexColsOrWidth), routine.GetLength(IndexRowsOrHeight)),
+                        UndoOriginalBehavior.Overwrite, "Load Routine");
+            ArrayToCells(routine);
+            pictureBoxGrid.Refresh();
         }
 
 
@@ -1238,8 +1218,7 @@ namespace VixenEditor {
                     continue;
                 }
 
-                var menuText = string.Format("{0} ({1}-{2})", node.Attributes["name"].Value, node.Attributes["from"].Value,
-                                             node.Attributes["to"].Value);
+                var menuText = string.Format("{0} ({1}-{2})", node.Attributes["name"].Value, node.Attributes["from"].Value, node.Attributes["to"].Value);
                 var item = new ToolStripMenuItem(menuText)
                 {Checked = bool.Parse(node.Attributes["enabled"].Value), CheckOnClick = true, Tag = count.ToString(CultureInfo.InvariantCulture)};
                 item.CheckedChanged += _pluginCheckHandler;
@@ -1259,14 +1238,14 @@ namespace VixenEditor {
 
         private void LoadSequenceSorts() {
             toolStripComboBoxChannelOrder.BeginUpdate();
-            var item = (string) toolStripComboBoxChannelOrder.Items[0];
-            var str2 = (string) toolStripComboBoxChannelOrder.Items[toolStripComboBoxChannelOrder.Items.Count - 1];
+            var defineNewOrder = (string) toolStripComboBoxChannelOrder.Items[0];
+            var restoreNaturalOrder = (string) toolStripComboBoxChannelOrder.Items[toolStripComboBoxChannelOrder.Items.Count - 1];
             toolStripComboBoxChannelOrder.Items.Clear();
-            toolStripComboBoxChannelOrder.Items.Add(item);
+            toolStripComboBoxChannelOrder.Items.Add(defineNewOrder);
             foreach (var order in _sequence.Sorts) {
                 toolStripComboBoxChannelOrder.Items.Add(order);
             }
-            toolStripComboBoxChannelOrder.Items.Add(str2);
+            toolStripComboBoxChannelOrder.Items.Add(restoreNaturalOrder);
             if (_sequence.LastSort != -1) {
                 toolStripComboBoxChannelOrder.SelectedIndex = _sequence.LastSort + 1;
             }
@@ -1276,39 +1255,20 @@ namespace VixenEditor {
 
         private void m_intensityAdjustDialog_VisibleChanged(object sender, EventArgs e) {
             if (!m_intensityAdjustDialog.Visible) {
-                int left;
-                int num2;
-                int num4;
-                int num8;
                 AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, "Adjust intensity");
                 var delta = m_intensityAdjustDialog.Delta;
-                var bottom = _selectedCells.Bottom;
-                var right = _selectedCells.Right;
-                if (_actualLevels) {
-                    for (num8 = _selectedCells.Top; num8 < bottom; num8++) {
-                        num2 = _channelOrderMapping[num8];
-                        if (_sequence.Channels[num2].Enabled) {
-                            left = _selectedCells.Left;
-                            while (left < right) {
-                                num4 = _sequence.EventValues[num2, left] + delta;
-                                num4 = Math.Max(Math.Min(num4, _sequence.MaximumLevel), _sequence.MinimumLevel);
-                                _sequence.EventValues[num2, left] = (byte) num4;
-                                left++;
-                            }
-                        }
+                for (var top = _selectedCells.Top; top < _selectedCells.Bottom; top++) {
+                    var channel = _channelOrderMapping[top];
+                    if (!_sequence.Channels[channel].Enabled) {
+                        continue;
                     }
-                }
-                else {
-                    for (num8 = _selectedCells.Top; num8 < bottom; num8++) {
-                        num2 = _channelOrderMapping[num8];
-                        if (_sequence.Channels[num2].Enabled) {
-                            for (left = _selectedCells.Left; left < right; left++) {
-                                num4 = ((int) Math.Round(_sequence.EventValues[num2, left] * 100f / 255f, MidpointRounding.AwayFromZero)) + delta;
-                                var num5 = (int) Math.Round(num4 / 100f * 255f, MidpointRounding.AwayFromZero);
-                                num5 = Math.Max(Math.Min(num5, _sequence.MaximumLevel), _sequence.MinimumLevel);
-                                _sequence.EventValues[num2, left] = (byte) num5;
-                            }
-                        }
+
+                    for (var left = _selectedCells.Left; left < _selectedCells.Right; left++) {
+                        var newValue = _actualLevels
+                                           ? _sequence.EventValues[channel, left] + delta
+                                           : ToValue(ToPercentage(_sequence.EventValues[channel, left]) + delta);
+                        newValue = Math.Max(Math.Min(newValue, _sequence.MaximumLevel), _sequence.MinimumLevel);
+                        _sequence.EventValues[channel, left] = (byte) newValue;
                     }
                 }
                 pictureBoxGrid.Refresh();
@@ -1320,37 +1280,41 @@ namespace VixenEditor {
 
 
         private void m_positionTimer_Tick(object sender, EventArgs e) {
-            int num;
-            if (_executionInterface.EngineStatus(_executionContextHandle, out num) == 0) {
+            int executionPosition;
+            
+            if (_executionInterface.EngineStatus(_executionContextHandle, out executionPosition) == 0) {
                 ProgramEnded();
+                return;
             }
-            else {
-                var num2 = num / _sequence.EventPeriod;
-                if (num2 != _position) {
-                    toolStripLabelExecutionPoint.Text = string.Format("{0:d2}:{1:d2}", num / 60000, (num % 60000) / 1000);
-                    _previousPosition = _position;
-                    _position = num2;
-                    if ((_position < hScrollBar1.Value) || (_position > (hScrollBar1.Value + _visibleEventPeriods))) {
-                        if (_autoScrolling) {
-                            if (_position != -1) {
-                                if (_position >= _sequence.TotalEventPeriods) {
-                                    _previousPosition = _position = _sequence.TotalEventPeriods - 1;
-                                }
-                                hScrollBar1.Value = _position;
-                                toolStripLabelExecutionPoint.Text = string.Format("{0:d2}:{1:d2}", num / 60000, (num % 60000) / 1000);
-                            }
+
+            var currentPosition = executionPosition / _sequence.EventPeriod;
+            if (currentPosition == _position) {
+                return;
+            }
+
+            toolStripLabelExecutionPoint.Text = TimeFormatWithoutMills(executionPosition);
+            _previousPosition = _position;
+            _position = currentPosition;
+
+            if ((_position < hScrollBar1.Value) || (_position > (hScrollBar1.Value + _visibleEventPeriods))) {
+                if (_autoScrolling) {
+                    if (_position != -1) {
+                        if (_position >= _sequence.TotalEventPeriods) {
+                            _previousPosition = _position = _sequence.TotalEventPeriods - 1;
                         }
-                        else {
-                            UpdateProgress();
-                        }
-                    }
-                    else if (_showPositionMarker) {
-                        UpdateProgress();
-                    }
-                    else {
-                        toolStripLabelExecutionPoint.Text = string.Format("{0:d2}:{1:d2}", num / 60000, (num % 60000) / 1000);
+                        hScrollBar1.Value = _position;
+                        toolStripLabelExecutionPoint.Text = TimeFormatWithoutMills(executionPosition);
                     }
                 }
+                else {
+                    UpdateProgress();
+                }
+            }
+            else if (_showPositionMarker) {
+                UpdateProgress();
+            }
+            else {
+                toolStripLabelExecutionPoint.Text = TimeFormatWithoutMills(executionPosition);
             }
         }
 
@@ -1381,7 +1345,9 @@ namespace VixenEditor {
 
         private static Rectangle NormalizeRect(Rectangle rect) {
             return new Rectangle {
-                X = Math.Min(rect.Left, rect.Right), Y = Math.Min(rect.Top, rect.Bottom), Width = Math.Abs(rect.Width) + (rect.Width < 0 ? 1 : 0),
+                X = Math.Min(rect.Left, rect.Right),
+                Y = Math.Min(rect.Top, rect.Bottom),
+                Width = Math.Abs(rect.Width) + (rect.Width < 0 ? 1 : 0),
                 Height = Math.Abs(rect.Height) + (rect.Height < 0 ? 1 : 0)
             };
         }
@@ -1421,7 +1387,7 @@ namespace VixenEditor {
                     break;
 
                 case Notification.ProfileChange: {
-                    VixenPlus.SortOrder currentOrder = _sequence.Sorts.CurrentOrder;
+                    var currentOrder = _sequence.Sorts.CurrentOrder;
                     _sequence.ReloadProfile();
                     _sequence.Sorts.CurrentOrder = currentOrder;
                     LoadSequenceSorts();
@@ -1439,39 +1405,26 @@ namespace VixenEditor {
 
 
         protected override void OnMouseWheel(MouseEventArgs e) {
-            var flag = (ModifierKeys & Keys.Shift) == Keys.None;
+            var isVertical = ModifierKeys != Keys.Shift;
             if (_preferences.GetBoolean("FlipScrollBehavior")) {
-                flag = !flag;
+                isVertical = !isVertical;
             }
-            if (flag) {
-                if (e.Delta > 0) {
-                    if (vScrollBar1.Value >= (vScrollBar1.Minimum + _mouseWheelVerticalDelta)) {
-                        vScrollBar1.Value -= _mouseWheelVerticalDelta;
-                    }
-                    else {
-                        vScrollBar1.Value = vScrollBar1.Minimum;
-                    }
-                }
-                else if (vScrollBar1.Value <= (vScrollBar1.Maximum - (_visibleRowCount + _mouseWheelVerticalDelta))) {
-                    vScrollBar1.Value += _mouseWheelVerticalDelta;
-                }
-                else {
-                    vScrollBar1.Value = Math.Max((vScrollBar1.Maximum - _visibleRowCount) + 1, 0);
-                }
-            }
-            else if (e.Delta > 0) {
-                if (hScrollBar1.Value >= (hScrollBar1.Minimum + _mouseWheelHorizontalDelta)) {
-                    hScrollBar1.Value -= _mouseWheelHorizontalDelta;
-                }
-                else {
-                    hScrollBar1.Value = hScrollBar1.Minimum;
-                }
-            }
-            else if (hScrollBar1.Value <= (hScrollBar1.Maximum - (_visibleEventPeriods + _mouseWheelHorizontalDelta))) {
-                hScrollBar1.Value += _mouseWheelHorizontalDelta;
+
+            if (isVertical) {
+                DoMouseWheel(e, vScrollBar1, _mouseWheelVerticalDelta, _visibleRowCount);
             }
             else {
-                hScrollBar1.Value = Math.Max((hScrollBar1.Maximum - _visibleEventPeriods) + 1, 0);
+                DoMouseWheel(e, hScrollBar1, _mouseWheelHorizontalDelta, _visibleEventPeriods);
+            }
+        }
+
+
+        private static void DoMouseWheel(MouseEventArgs e, ScrollBar sb, int delta, int max) {
+            if (e.Delta > 0) {
+                sb.Value = sb.Value >= sb.Minimum + delta ? sb.Value - delta : sb.Minimum;
+            }
+            else {
+                sb.Value = sb.Value <= sb.Maximum - (max + delta) ? sb.Value + delta : Math.Max(sb.Maximum - max + 1, 0);
             }
         }
 
@@ -1529,7 +1482,7 @@ namespace VixenEditor {
                             uint lengthInMs = 0;
                             sound.getLength(ref lengthInMs, TIMEUNIT.MS);
 
-                            var totalBytes = (lengthInBytes / (double)audioChannels) / (bitsPerSample / 8);
+                            var totalBytes = (lengthInBytes / (double)audioChannels) / (bitsPerSample / 8.0);
                             var bytesPerEvent = totalBytes / _sequence.TotalEventPeriods;
                             var bytesPerPixel = bytesPerEvent / _periodPixelWidth;
                             var pixelsPerEvent = _sequence.EventPeriod / ((double) _periodPixelWidth);
@@ -1569,32 +1522,35 @@ namespace VixenEditor {
 
 
         private void pasteFullChannelEventsFromClipboardToolStripMenuItem_Click(object sender, EventArgs e) {
-            if (_systemInterface.Clipboard != null) {
-                AddUndoItem(new Rectangle(0, _selectedLineIndex, _systemInterface.Clipboard.GetLength(1), 1), UndoOriginalBehavior.Overwrite, "Paste");
-                var num2 = Math.Min(_systemInterface.Clipboard.GetLength(1), _sequence.TotalEventPeriods);
-                for (int i = 0; i < num2; i++) {
-                    _sequence.EventValues[_editingChannelSortedIndex, i] = _systemInterface.Clipboard[0, i];
-                }
-                IsDirty = true;
-                pictureBoxGrid.Refresh();
+            if (_systemInterface.Clipboard == null) {
+                return;
             }
+
+            var width = Math.Min(_systemInterface.Clipboard.GetLength(IndexColsOrWidth), _sequence.TotalEventPeriods);
+            AddUndoItem(new Rectangle(0, _selectedLineIndex, width, 1), UndoOriginalBehavior.Overwrite, "Paste");
+            for (var col = 0; col < width; col++) {
+                _sequence.EventValues[_editingChannelSortedIndex, col] = _systemInterface.Clipboard[0, col];
+            }
+            IsDirty = true;
+            pictureBoxGrid.Refresh();
         }
 
 
         private void PasteOver() {
-            if (_systemInterface.Clipboard != null) {
-                ArrayToCells(_systemInterface.Clipboard);
-                pictureBoxGrid.Refresh();
+            if (_systemInterface.Clipboard == null) {
+                return;
             }
+
+            ArrayToCells(_systemInterface.Clipboard);
+            pictureBoxGrid.Refresh();
         }
 
 
-        private void PcmToPixels(uint[] pcmDataValues, uint[] pixelData) {
-            var pcmDataLength = pcmDataValues.Length;
+        private void PcmToPixels(IList<uint> pcmDataValues, IList<uint> pixelData) {
             var waveformOffset = _waveformOffset;
             var negativeOffset = -_waveformOffset;
-            var amplitudeDivisor = _waveformMaxAmplitude / ((double) Math.Max(waveformOffset, negativeOffset));
-            for (var i = 0; i < pcmDataLength; i++) {
+            var amplitudeDivisor = _waveformMaxAmplitude / (double) Math.Max(waveformOffset, negativeOffset);
+            for (var i = 0; i < pcmDataValues.Count; i++) {
                 var pcmData = pcmDataValues[i];
 
                 var minAmp = (short) (Math.Min((short) (pcmData >> 16), _waveformMaxAmplitude) / amplitudeDivisor);
@@ -1676,9 +1632,6 @@ namespace VixenEditor {
         }
 
 
-        private void pictureBoxChannels_GiveFeedback(object sender, GiveFeedbackEventArgs e) {}
-
-
         private void pictureBoxChannels_MouseDoubleClick(object sender, MouseEventArgs e) {
             if ((!ChannelClickValid()) || e.X < 10) {
                 return;
@@ -1700,9 +1653,10 @@ namespace VixenEditor {
 
 
         private void pictureBoxChannels_MouseMove(object sender, MouseEventArgs e) {
-            if ((((e.Button & MouseButtons.Left) != MouseButtons.None) && (_mouseDownAtInChannels != Point.Empty)) &&
-                ((Math.Abs(e.X - _mouseDownAtInChannels.X) > 3) || (Math.Abs(e.Y - _mouseDownAtInChannels.Y) > 3))) {
-                DoDragDrop(SelectedChannel, DragDropEffects.Move | DragDropEffects.Copy);
+            if ((e.Button & MouseButtons.Left) != MouseButtons.None 
+                && _mouseDownAtInChannels != Point.Empty 
+                && (Math.Abs(e.X - _mouseDownAtInChannels.X) > 3 || Math.Abs(e.Y - _mouseDownAtInChannels.Y) > 3)) {
+                    DoDragDrop(SelectedChannel, DragDropEffects.Move | DragDropEffects.Copy);
             }
         }
 
@@ -1796,91 +1750,92 @@ namespace VixenEditor {
         }
 
 
-        /*
-                private void pictureBoxChannels_QueryContinueDrag(object sender, QueryContinueDragEventArgs keyEvent)
-                {
-                }
-        */
-
-
         private void pictureBoxChannels_Resize(object sender, EventArgs e) {
             pictureBoxChannels.Refresh();
         }
 
 
         private void pictureBoxGrid_DoubleClick(object sender, EventArgs e) {
-            if (_currentlyEditingChannel != null) {
-                AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, "Double Click");
-                _sequence.EventValues[_editingChannelSortedIndex, _selectedCells.X] =
-                    (_sequence.EventValues[_editingChannelSortedIndex, _selectedCells.X] > _sequence.MinimumLevel)
-                        ? _sequence.MinimumLevel : _drawingLevel;
-                UpdateGrid(_gridGraphics,
-                           new Rectangle((_selectedCells.X - hScrollBar1.Value) * _periodPixelWidth,
-                                         (_editingChannelSortedIndex - vScrollBar1.Value) * _gridRowHeight, _periodPixelWidth, _gridRowHeight));
+            if (_currentlyEditingChannel == null) {
+                return;
             }
+            
+            AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, "Double Click");
+            _sequence.EventValues[_editingChannelSortedIndex, _selectedCells.X] =
+                (_sequence.EventValues[_editingChannelSortedIndex, _selectedCells.X] > _sequence.MinimumLevel)
+                    ? _sequence.MinimumLevel : _drawingLevel;
+            UpdateGrid(_gridGraphics,
+                       new Rectangle((_selectedCells.X - hScrollBar1.Value) * _periodPixelWidth,
+                                     (_editingChannelSortedIndex - vScrollBar1.Value) * _gridRowHeight, _periodPixelWidth, _gridRowHeight));
         }
 
 
         private void pictureBoxGrid_MouseDown(object sender, MouseEventArgs e) {
-            if (e.Button == MouseButtons.Left) {
-                _mouseDownInGrid = true;
-                lblFollowMouse.Visible = true;
-                _mouseDownAtInGrid.X = (e.X / _periodPixelWidth) + hScrollBar1.Value;
-                _mouseDownAtInGrid.Y = (e.Y / _gridRowHeight) + vScrollBar1.Value;
-                if (_selectedCells.Width != 0) {
-                    EraseSelectedRange();
-                }
-                if ((ModifierKeys & Keys.Control) != Keys.None) {
-                    _selectedLineIndex = (e.Y / _gridRowHeight) + vScrollBar1.Value;
-                    _editingChannelSortedIndex = _channelOrderMapping[_selectedLineIndex];
-                    _currentlyEditingChannel = _sequence.Channels[_editingChannelSortedIndex];
-                    _lineRect.X = _mouseDownAtInGrid.X;
-                    _lineRect.Y = _mouseDownAtInGrid.Y;
-                    _lineRect.Width = 0;
-                    _lineRect.Height = 0;
-                    InvalidateRect(_lineRect);
-                }
-                else if ((ModifierKeys & Keys.Shift) != Keys.None) {
-                    var rect = new Rectangle();
-                    rect.X = _selectedCells.X;
-                    rect.Y = _selectedCells.Y;
-                    rect.Width = ((hScrollBar1.Value + (int) Math.Floor(e.X / ((float) _periodPixelWidth))) - _selectedCells.Left) + 1;
-                    if (rect.Width < 0) {
-                        rect.Width--;
-                    }
-                    rect.Height = ((vScrollBar1.Value + (e.Y / _gridRowHeight)) - _selectedCells.Top) + 1;
-                    if (rect.Height < 0) {
-                        rect.Height--;
-                    }
-                    if (rect.Bottom > _sequence.ChannelCount) {
-                        rect.Height = _sequence.ChannelCount - rect.Y;
-                    }
-                    if (rect.Right > _sequence.TotalEventPeriods) {
-                        rect.Width = _sequence.TotalEventPeriods - rect.X;
-                    }
-                    _selectedCells = NormalizeRect(rect);
-                    DrawSelectedRange();
-                }
-                else if ((((e.Y / _gridRowHeight) + vScrollBar1.Value) < _sequence.ChannelCount) &&
-                         (((e.X / _periodPixelWidth) + hScrollBar1.Value) < _sequence.TotalEventPeriods)) {
-                    _selectedLineIndex = (e.Y / _gridRowHeight) + vScrollBar1.Value;
-                    _editingChannelSortedIndex = _channelOrderMapping[_selectedLineIndex];
-                    _currentlyEditingChannel = _sequence.Channels[_editingChannelSortedIndex];
-                    _selectedRange.X = hScrollBar1.Value + ((int) Math.Floor(e.X / ((float) _periodPixelWidth)));
-                    _selectedRange.Y = _selectedLineIndex;
-                    _selectedRange.Width = 1;
-                    _selectedRange.Height = 1;
-                    _selectedCells = _selectedRange;
-                    DrawSelectedRange();
-                }
-                else {
-                    _currentlyEditingChannel = null;
-                    _editingChannelSortedIndex = -1;
-                    _selectedLineIndex = -1;
-                }
-                UpdatePositionLabel(_selectedCells, false);
-                UpdateFollowMouse(new Point(_mouseDownAtInGrid.X, _mouseDownAtInGrid.Y));
+            if (e.Button != MouseButtons.Left) {
+                return;
             }
+
+            _mouseDownInGrid = true;
+            lblFollowMouse.Visible = true;
+            _mouseDownAtInGrid.X = (e.X / _periodPixelWidth) + hScrollBar1.Value;
+            _mouseDownAtInGrid.Y = (e.Y / _gridRowHeight) + vScrollBar1.Value;
+            
+            if (_selectedCells.Width != 0) {
+                EraseSelectedRange();
+            }
+
+            if (ModifierKeys == Keys.Control) {
+                _selectedLineIndex = (e.Y / _gridRowHeight) + vScrollBar1.Value;
+                _editingChannelSortedIndex = _channelOrderMapping[_selectedLineIndex];
+                _currentlyEditingChannel = _sequence.Channels[_editingChannelSortedIndex];
+                _lineRect.X = _mouseDownAtInGrid.X;
+                _lineRect.Y = _mouseDownAtInGrid.Y;
+                _lineRect.Width = 0;
+                _lineRect.Height = 0;
+                InvalidateRect(_lineRect);
+            }
+            else if (ModifierKeys == Keys.Shift) {
+                var rect = new Rectangle {
+                    X = _selectedCells.X,
+                    Y = _selectedCells.Y,
+                    Width = (hScrollBar1.Value + (int) Math.Floor(e.X / (float) _periodPixelWidth) - _selectedCells.Left) + 1,
+                    Height = (vScrollBar1.Value + (e.Y / _gridRowHeight) - _selectedCells.Top) + 1
+                };
+
+                if (rect.Width < 0) {
+                    rect.Width--;
+                }
+                if (rect.Height < 0) {
+                    rect.Height--;
+                }
+                if (rect.Bottom > _sequence.ChannelCount) {
+                    rect.Height = _sequence.ChannelCount - rect.Y;
+                }
+                if (rect.Right > _sequence.TotalEventPeriods) {
+                    rect.Width = _sequence.TotalEventPeriods - rect.X;
+                }
+                _selectedCells = NormalizeRect(rect);
+                DrawSelectedRange();
+            }
+            else if ((e.Y / _gridRowHeight) + vScrollBar1.Value < _sequence.ChannelCount &&
+                     (e.X / _periodPixelWidth) + hScrollBar1.Value < _sequence.TotalEventPeriods) {
+                _selectedLineIndex = (e.Y / _gridRowHeight) + vScrollBar1.Value;
+                _editingChannelSortedIndex = _channelOrderMapping[_selectedLineIndex];
+                _currentlyEditingChannel = _sequence.Channels[_editingChannelSortedIndex];
+                _selectedRange.X = hScrollBar1.Value + ((int) Math.Floor(e.X / ((float) _periodPixelWidth)));
+                _selectedRange.Y = _selectedLineIndex;
+                _selectedRange.Width = 1;
+                _selectedRange.Height = 1;
+                _selectedCells = _selectedRange;
+                DrawSelectedRange();
+            }
+            else {
+                _currentlyEditingChannel = null;
+                _editingChannelSortedIndex = -1;
+                _selectedLineIndex = -1;
+            }
+            UpdatePositionLabel(_selectedCells, false);
+            UpdateFollowMouse(new Point(_mouseDownAtInGrid.X, _mouseDownAtInGrid.Y));
         }
 
 
@@ -1888,13 +1843,13 @@ namespace VixenEditor {
             toolStripLabelCellIntensity.Text = string.Empty;
             toolStripLabelCurrentCell.Text = string.Empty;
         }
-
+        #endregion
 
         //TODO Refactor
         private void pictureBoxGrid_MouseMove(object sender, MouseEventArgs e) {
             Rectangle rectangle;
-            int cellX = e.X / _periodPixelWidth;
-            int cellY = e.Y / _gridRowHeight;
+            var cellX = e.X / _periodPixelWidth;
+            var cellY = e.Y / _gridRowHeight;
             toolStripLabelCellIntensity.Text = string.Empty;
             toolStripLabelCurrentCell.Text = string.Empty;
             if (cellX < 0) {
@@ -1923,7 +1878,7 @@ namespace VixenEditor {
                     num7 |= 0x1000;
                 }
                 if (e.Y > pictureBoxGrid.Height) {
-                    num7 |= 1;
+                    num7 |= 0x1;
                 }
                 else if (e.Y < 0) {
                     num7 |= 0x100;
@@ -1986,7 +1941,6 @@ namespace VixenEditor {
             EraseRectangleEntity(_lineRect);
             if ((ModifierKeys & Keys.Shift) != Keys.None) {
                 int num5;
-                int num6;
                 int num3 = cellX - _mouseDownAtInGrid.X;
                 int num4 = cellY - _mouseDownAtInGrid.Y;
                 if (num3 >= 0) {
@@ -2031,7 +1985,7 @@ namespace VixenEditor {
                 else {
                     num5 = 1;
                 }
-                num6 = Math.Abs(Math.Abs(num3) < Math.Abs(num4) ? num3 : num4);
+                int num6 = Math.Abs(Math.Abs(num3) < Math.Abs(num4) ? num3 : num4);
                 switch (num5) {
                     case 1:
                         _lineRect.Width = -num6;
@@ -2097,13 +2051,11 @@ namespace VixenEditor {
             Label_0473:
             InvalidateRect(_lineRect);
             UpdatePositionLabel(NormalizeRect(new Rectangle(_lineRect.X, _lineRect.Y, _lineRect.Width + 1, _lineRect.Height)), true);
-            //UpdateFollowMouse(keyEvent.Location);
             goto Label_0733;
             Label_0715:
             _lastCellX = cellX;
             _lastCellY = cellY;
             UpdatePositionLabel(_selectedCells, false);
-            //UpdateFollowMouse(keyEvent.Location);
             Label_0733:
             int num8 = 0;
             int num9 = 0;
@@ -2155,7 +2107,7 @@ namespace VixenEditor {
                 string str;
                 GetCellIntensity(cellX, cellY, out str);
                 toolStripLabelCellIntensity.Text = str;
-                toolStripLabelCurrentCell.Text = string.Format("{0} , {1}", TimeString(cellX * _sequence.EventPeriod),
+                toolStripLabelCurrentCell.Text = string.Format("{0} , {1}", TimeFormatWithMills(cellX * _sequence.EventPeriod),
                                                                _sequence.Channels[_channelOrderMapping[cellY]].Name);
             }
             UpdateFollowMouse(new Point(e.X, e.Y));
@@ -2325,8 +2277,8 @@ namespace VixenEditor {
                         bottomRightPt.X++;
                         e.Graphics.DrawLine(timePen, topLeftPt, bottomRightPt);
                         var str = currentMills >= 60000
-                                      ? string.Format("{0}:{1:d2}", currentMills / 60000, (currentMills % 60000) / 1000)
-                                      : string.Format(":{0:d2}", currentMills / 1000);
+                                      ? TimeFormatWithoutMills(currentMills)
+                                      : TimeFormatMillsOnly(currentMills);
                         var ef = e.Graphics.MeasureString(str, _timeFont);
                         e.Graphics.DrawString(str, _timeFont, timeBrush, x - (ef.Width / 2f), topLeftPt.Y - ef.Height - 5f);
                     }
@@ -2620,7 +2572,7 @@ namespace VixenEditor {
         private void RefreshAll() {
             SetOrderArraySize(_sequence.ChannelCount);
             textBoxChannelCount.Text = _sequence.ChannelCount.ToString();
-            textBoxProgramLength.Text = TimeString(_sequence.Time);
+            textBoxProgramLength.Text = TimeFormatWithMills(_sequence.Time);
             pictureBoxGrid.Refresh();
             pictureBoxChannels.Refresh();
             pictureBoxTime.Refresh();
@@ -2928,8 +2880,7 @@ namespace VixenEditor {
             _drawingLevel = level;
             toolStripLabelCurrentDrawingIntensity.Text = _actualLevels
                                                              ? level.ToString(CultureInfo.InvariantCulture)
-                                                             : string.Format("{0}%",
-                                                                             (int) Math.Round(level * 100f / 255f, MidpointRounding.AwayFromZero));
+                                                             : string.Format("{0}%", ToPercentage(level));
         }
 
 
@@ -2991,10 +2942,10 @@ namespace VixenEditor {
             catch {
                 MessageBox.Show("Cannot set the sequence length.\nThere is audio associated which would exceed that length.", Vendor.ProductName,
                                 MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                textBoxProgramLength.Text = TimeString(_sequence.Time);
+                textBoxProgramLength.Text = TimeFormatWithMills(_sequence.Time);
                 return false;
             }
-            textBoxProgramLength.Text = TimeString(_sequence.Time);
+            textBoxProgramLength.Text = TimeFormatWithMills(_sequence.Time);
             HScrollCheck();
             pictureBoxTime.Refresh();
             pictureBoxGrid.Refresh();
@@ -3060,7 +3011,7 @@ namespace VixenEditor {
 
 
         private void SparkleGenerator(byte[,] values, params int[] effectParameters) {
-            var num = (int) _sequence.EventsPerSecond; // 1000 / _sequence.EventPeriod;
+            var num = (int) _sequence.EventsPerSecond;
             var maxValue = num - effectParameters[0];
             var decayTime = effectParameters[1];
             for (var i = 0; i < values.GetLength(0); i++) {
@@ -3635,8 +3586,28 @@ namespace VixenEditor {
         */
 
 
-        private string TimeString(int milliseconds) {
-            return string.Format("{0:d2}:{1:d2}.{2:d3}", milliseconds / 60000, (milliseconds % 60000) / 1000, milliseconds % 1000);
+        private static string TimeFormatMillsOnly(int mills) {
+            return string.Format(":{0:d2}", mills / 1000);
+        }
+        
+        
+        private static string TimeFormatWithoutMills(int mills) {
+            return string.Format("{0:d2}:{1:d2}", mills / 60000, (mills % 60000) / 1000);
+        }
+
+
+        private static string TimeFormatWithMills(int mills) {
+            return string.Format("{0:d2}:{1:d2}.{2:d3}", mills / 60000, (mills % 60000) / 1000, mills % 1000);
+        }
+        
+        
+        private static int ToPercentage(int value) {
+            return (int)Math.Round(value * 100f / Cell8BitMax, MidpointRounding.AwayFromZero);
+        }
+
+
+        private static int ToValue(int percentage) {
+            return (int)Math.Round(percentage / 100f * Cell8BitMax, MidpointRounding.AwayFromZero);
         }
 
 
@@ -3734,9 +3705,8 @@ namespace VixenEditor {
                         for (num5 = _selectedCells.Top; num5 < _selectedCells.Bottom; num5++) {
                             num4 = _channelOrderMapping[num5];
                             for (left = _selectedCells.Left; left < _selectedCells.Right; left++) {
-                                if ((byte) Math.Round(_sequence.EventValues[num4, left] * 100f / 255f, MidpointRounding.AwayFromZero) == findValue) {
-                                    _sequence.EventValues[num4, left] =
-                                        (byte) Math.Round(replaceWithValue / 100f * 255f, MidpointRounding.AwayFromZero);
+                                if ((byte) ToPercentage(_sequence.EventValues[num4, left]) == findValue) {
+                                    _sequence.EventValues[num4, left] = (byte) ToValue(replaceWithValue);
                                 }
                             }
                         }
@@ -4168,7 +4138,7 @@ namespace VixenEditor {
 
 
         private void toolStripButtonShimmerDimming_Click(object sender, EventArgs e) {
-            var maxFrequency = (int) _sequence.EventsPerSecond; // 1000 / _sequence.EventPeriod;;
+            var maxFrequency = (int) _sequence.EventsPerSecond;
             var dialog = new EffectFrequencyDialog("Shimmer (dimming)", maxFrequency, _dimmingShimmerGenerator);
             if (dialog.ShowDialog() == DialogResult.OK) {
                 AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, "Shimmer");
@@ -4196,7 +4166,7 @@ namespace VixenEditor {
 
 
         private void toolStripButtonSparkle_Click(object sender, EventArgs e) {
-            var maxFrequency = (int) _sequence.EventsPerSecond; // 1000 / _sequence.EventPeriod;
+            var maxFrequency = (int) _sequence.EventsPerSecond;
             var dialog = new SparkleParamsDialog(maxFrequency, _sparkleGenerator, _sequence.MinimumLevel, _sequence.MaximumLevel, _drawingLevel,
                                                  _actualLevels);
             if (dialog.ShowDialog() == DialogResult.OK) {
@@ -4627,11 +4597,11 @@ namespace VixenEditor {
 
         private void UpdatePositionLabel(Rectangle rect, bool zeroWidthIsValid) {
             int milliseconds = rect.Left * _sequence.EventPeriod;
-            string str = TimeString(milliseconds);
+            string str = TimeFormatWithMills(milliseconds);
             if (rect.Width > 1) {
                 int num2 = (rect.Right - 1) * _sequence.EventPeriod;
-                string str2 = TimeString(num2);
-                labelPosition.Text = string.Format("{0} - {1}\n({2})", str, str2, TimeString(num2 - milliseconds));
+                string str2 = TimeFormatWithMills(num2);
+                labelPosition.Text = string.Format("{0} - {1}\n({2})", str, str2, TimeFormatWithMills(num2 - milliseconds));
             }
             else if (((rect.Width == 0) && zeroWidthIsValid) || (rect.Width == 1)) {
                 labelPosition.Text = str;
