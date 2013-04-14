@@ -667,7 +667,7 @@ namespace VixenEditor {
                 SetProfile((Profile) null);
             }
         }
-        #endregion  
+ 
 
         private void DimmingShimmerGenerator(byte[,] values, params int[] effectParameters) {
             var effectsCount = effectParameters[0];
@@ -675,21 +675,21 @@ namespace VixenEditor {
                 return;
             }
 
-            var rowPerCycle = (int) Math.Round(_sequence.EventsPerSecond / effectsCount, MidpointRounding.AwayFromZero);
-            if (rowPerCycle == 0) {
+            var colsPerCycle = (int) Math.Round(_sequence.EventsPerSecond / effectsCount, MidpointRounding.AwayFromZero);
+            if (colsPerCycle == 0) {
                 return;
             }
 
-            var totalRows = values.GetLength(1);
-            var cols = values.GetLength(0);
+            var rows = values.GetLength(IndexRowsOrHeight);
+            var totalCols = values.GetLength(IndexColsOrWidth);
             var random = new Random();
-            for (var rowOffset = 0; rowOffset < totalRows; rowOffset += rowPerCycle) {
-                var randomValue = (byte) Math.Max(random.NextDouble() * _sequence.MaximumLevel, _sequence.MinimumLevel);
 
-                var rows = Math.Min(totalRows, rowOffset + rowPerCycle) - rowOffset;
-                for (var row = 0; row < rows; row++) {
-                    for (var col = 0; col < cols; col++) {
-                        values[col, rowOffset + row] = randomValue;
+            for (var colOffset = 0; colOffset < totalCols; colOffset += colsPerCycle) {
+                var randomValue = (byte) Math.Max(random.NextDouble() * _sequence.MaximumLevel, _sequence.MinimumLevel);
+                var cols = Math.Min(totalCols, colOffset + colsPerCycle) - colOffset;
+                for (var col = 0; col < cols; col++) {
+                    for (var row = 0; row < rows; row++) {
+                        values[row, colOffset + col] = randomValue;
                     }
                 }
             }
@@ -714,68 +714,71 @@ namespace VixenEditor {
         }
 
 
-        private void DisjointedInsert(int x, int width, int height, int[] channelIndexes) {
-            for (var i = 0; i < height; i++) {
-                var num = channelIndexes[i];
-                for (var j = ((_sequence.TotalEventPeriods - x) - width) - 1; j >= 0; j--) {
-                    _sequence.EventValues[num, (j + x) + width] = _sequence.EventValues[num, j + x];
+        private void DisjointedInsert(int colOffset, int width, int height, IList<int> channelIndexes) {
+            for (var row = 0; row < height; row++) {
+                var channel = channelIndexes[row];
+                for (var col = _sequence.TotalEventPeriods - colOffset - width - 1; col >= 0; col--) {
+                    _sequence.EventValues[channel, col + colOffset + width] = _sequence.EventValues[channel, col + colOffset];
                 }
             }
         }
 
 
-        private void DisjointedOverwrite(int x, byte[,] data, int[] channelIndexes) {
-            for (var i = 0; i < data.GetLength(0); i++) {
-                var num = channelIndexes[i];
-                for (var j = 0; j < data.GetLength(1); j++) {
-                    _sequence.EventValues[num, j + x] = data[i, j];
+        private void DisjointedOverwrite(int colOffset, byte[,] data, IList<int> channelIndexes) {
+            for (var row = 0; row < data.GetLength(IndexRowsOrHeight); row++) {
+                var channel = channelIndexes[row];
+                for (var col = 0; col < data.GetLength(IndexColsOrWidth); col++) {
+                    _sequence.EventValues[channel, col + colOffset] = data[row, col];
                 }
             }
         }
 
 
-        private void DisjointedRemove(int x, int width, int height, int[] channelIndexes) {
-            int num;
-            int num2;
-            int num3;
-            for (num3 = 0; num3 < height; num3++) {
-                num = channelIndexes[num3];
-                num2 = 0;
-                while (num2 < ((_sequence.TotalEventPeriods - x) - width)) {
-                    _sequence.EventValues[num, num2 + x] = _sequence.EventValues[num, (num2 + x) + width];
-                    num2++;
+        private void DisjointedRemove(int colOffset, int width, int height, IList<int> channelIndexes) {
+            for (var row = 0; row < height; row++) {
+                var channel = channelIndexes[row];
+                for (var col = 0; col < _sequence.TotalEventPeriods - colOffset - width; col++ ) {
+                    _sequence.EventValues[channel, col + colOffset] = _sequence.EventValues[channel, col + colOffset + width];
                 }
             }
-            for (num3 = 0; num3 < height; num3++) {
-                num = channelIndexes[num3];
-                for (num2 = 0; num2 < width; num2++) {
-                    _sequence.EventValues[num, (_sequence.TotalEventPeriods - width) + num2] = _sequence.MinimumLevel;
+
+            for (var row = 0; row < height; row++) {
+                var channel = channelIndexes[row];
+                for (var col = 0; col < width; col++) {
+                    _sequence.EventValues[channel, _sequence.TotalEventPeriods - width + col] = _sequence.MinimumLevel;
                 }
             }
         }
 
 
         private void DrawSelectedRange() {
-            var point = new Point();
-            var point2 = new Point();
-            point.X = (_selectedCells.Left - hScrollBar1.Value) * _periodPixelWidth;
-            point.Y = (_selectedCells.Top - vScrollBar1.Value) * _gridRowHeight;
-            point2.X = (_selectedCells.Right - hScrollBar1.Value) * _periodPixelWidth;
-            point2.Y = (_selectedCells.Bottom - vScrollBar1.Value) * _gridRowHeight;
-            _selectionRectangle.X = point.X;
-            _selectionRectangle.Y = point.Y;
-            _selectionRectangle.Width = point2.X - point.X;
-            _selectionRectangle.Height = point2.Y - point.Y;
+            var leftTop = new Point {
+                X = (_selectedCells.Left - hScrollBar1.Value) * _periodPixelWidth, 
+                Y = (_selectedCells.Top - vScrollBar1.Value) * _gridRowHeight
+            };
+
+            var rightBottom = new Point {
+                X = (_selectedCells.Right - hScrollBar1.Value) * _periodPixelWidth,
+                Y = (_selectedCells.Bottom - vScrollBar1.Value) * _gridRowHeight
+            };
+
+            _selectionRectangle.X = leftTop.X;
+            _selectionRectangle.Y = leftTop.Y;
+            _selectionRectangle.Width = rightBottom.X - leftTop.X;
+            _selectionRectangle.Height = rightBottom.Y - leftTop.Y;
+            
             if (_selectionRectangle.Width == 0) {
                 _selectionRectangle.Width = _periodPixelWidth;
             }
+            
             if (_selectionRectangle.Height == 0) {
                 _selectionRectangle.Height = _gridRowHeight;
             }
+            
             pictureBoxGrid.Invalidate(_selectionRectangle);
             pictureBoxGrid.Update();
         }
-
+        #endregion
 
         private void EditSequenceChannelMask() {
             var dialog = new ChannelOutputMaskDialog(_sequence.Channels);
