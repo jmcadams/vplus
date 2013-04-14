@@ -751,6 +751,7 @@ namespace FMOD
         Channel::set3DCustomRolloff
     ]
     */
+    [FlagsAttribute]
     public enum MODE :uint
     {
         DEFAULT                = 0x00000000,  /* FMOD_DEFAULT is a default sound type.  Equivalent to all the defaults listed below.  FMOD_LOOP_OFF, FMOD_2D, FMOD_HARDWARE. */
