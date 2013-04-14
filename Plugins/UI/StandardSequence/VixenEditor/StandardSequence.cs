@@ -778,22 +778,27 @@ namespace VixenEditor {
             pictureBoxGrid.Invalidate(_selectionRectangle);
             pictureBoxGrid.Update();
         }
-        #endregion
+
 
         private void EditSequenceChannelMask() {
-            var dialog = new ChannelOutputMaskDialog(_sequence.Channels);
-            if (dialog.ShowDialog() == DialogResult.OK) {
-                foreach (VixenPlus.Channel channel in _sequence.Channels) {
+            using (var dialog = new ChannelOutputMaskDialog(_sequence.Channels)) {
+                if (dialog.ShowDialog() != DialogResult.OK) {
+                    return;
+                }
+
+                foreach (var channel in _sequence.Channels) {
                     channel.Enabled = true;
                 }
-                foreach (int num in dialog.DisabledChannels) {
+
+                foreach (var num in dialog.DisabledChannels) {
                     _sequence.Channels[num].Enabled = false;
                 }
-                IsDirty = true;
-            }
-            dialog.Dispose();
-        }
 
+                IsDirty = true;
+                //todo redraw the channel box with some indication that they are masked.
+            }
+        }
+        #endregion
 
         private void EnableWaveformButton() {
             if (_sequence.Audio != null) {
