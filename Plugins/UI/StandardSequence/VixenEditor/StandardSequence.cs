@@ -145,7 +145,7 @@ namespace VixenEditor {
             _toolStripCheckStateChangeHandler = toolStripItem_CheckStateChanged;
         }
 
-        #region There are mostly refactored
+        #region These are mostly refactored
         private void additionToolStripMenuItem_Click(object sender, EventArgs e) {
             ArithmeticPaste(ArithmeticOperation.Addition);
         }
@@ -1845,30 +1845,42 @@ namespace VixenEditor {
         }
         #endregion
 
+
         //TODO Refactor
         private void pictureBoxGrid_MouseMove(object sender, MouseEventArgs e) {
-            Rectangle rectangle;
-            var cellX = e.X / _periodPixelWidth;
-            var cellY = e.Y / _gridRowHeight;
+            #region Setup
+
             toolStripLabelCellIntensity.Text = string.Empty;
             toolStripLabelCurrentCell.Text = string.Empty;
-            if (cellX < 0) {
-                cellX = 0;
-            }
-            if (cellY < 0) {
-                cellY = 0;
-            }
-            cellX += hScrollBar1.Value;
-            cellY += vScrollBar1.Value;
-            if (cellX >= _sequence.TotalEventPeriods) {
-                cellX = _sequence.TotalEventPeriods - 1;
-            }
-            if (cellY >= _sequence.ChannelCount) {
-                cellY = _sequence.ChannelCount - 1;
-            }
+
+            var cellX = Math.Min((Math.Max(e.X / _periodPixelWidth, 0) + hScrollBar1.Value), _sequence.TotalEventPeriods - 1);
+
+            var cellY = Math.Min((Math.Max(e.Y / _gridRowHeight, 0) + vScrollBar1.Value), _sequence.ChannelCount - 1);
+
+            //var cellX = Math.Max(e.X / _periodPixelWidth, 0);
+            //if (cellX < 0) {
+            //    cellX = 0;
+            //}
+            //cellX += hScrollBar1.Value;
+            //if (cellX >= _sequence.TotalEventPeriods) {
+            //    cellX = _sequence.TotalEventPeriods - 1;
+            //}
+
+            //var cellY = e.Y / _gridRowHeight;
+            //if (cellY < 0) {
+            //    cellY = 0;
+            //}
+            //cellY += vScrollBar1.Value;
+            //if (cellY >= _sequence.ChannelCount) {
+            //    cellY = _sequence.ChannelCount - 1;
+            //}
+
+            #endregion
+
             if ((e.Button != MouseButtons.Left) || !_mouseDownInGrid) {
-                goto Label_0733;
+                goto FinishUp;
             }
+            #region _lineRect.Left == -1 (goto finish up at the end)
             if (_lineRect.Left == -1) {
                 int num7 = 0;
                 if (e.X > pictureBoxGrid.Width) {
@@ -1886,16 +1898,16 @@ namespace VixenEditor {
                 switch (num7) {
                     case 0x100:
                         ScrollSelectionUp(cellX);
-                        goto Label_0715;
+                        break;
 
                     case 0x1000:
                         ScrollSelectionLeft(cellY);
-                        goto Label_0715;
+                        break;
 
                     case 0x1100:
                         ScrollSelectionLeft(cellY);
                         ScrollSelectionUp(cellX);
-                        goto Label_0715;
+                        break;
 
                     case 0:
                         EraseSelectedRange();
@@ -1921,24 +1933,31 @@ namespace VixenEditor {
                         }
                         _selectedCells = NormalizeRect(_selectedRange);
                         DrawSelectedRange();
-                        goto Label_0715;
+                        break;
 
                     case 1:
                         ScrollSelectionDown(cellX);
-                        goto Label_0715;
+                        break;
 
                     case 0x10:
                         ScrollSelectionRight(cellY);
-                        goto Label_0715;
+                        break;
 
                     case 0x11:
                         ScrollSelectionRight(cellY);
                         ScrollSelectionDown(cellX);
-                        goto Label_0715;
+                        break;
                 }
-                goto Label_0715;
+                _lastCellX = cellX;
+                _lastCellY = cellY;
+                UpdatePositionLabel(_selectedCells, false);
+                goto FinishUp;
             }
+            #endregion
             EraseRectangleEntity(_lineRect);
+
+            #region Shift pressed or Not?
+
             if ((ModifierKeys & Keys.Shift) != Keys.None) {
                 int num5;
                 int num3 = cellX - _mouseDownAtInGrid.X;
@@ -1990,42 +2009,42 @@ namespace VixenEditor {
                     case 1:
                         _lineRect.Width = -num6;
                         _lineRect.Height = -num6;
-                        goto Label_0473;
+                        break;
 
                     case 2:
                         _lineRect.Width = 0;
                         _lineRect.Height = num4;
-                        goto Label_0473;
+                        break;
 
                     case 3:
                         _lineRect.Width = num6;
                         _lineRect.Height = -num6;
-                        goto Label_0473;
+                        break;
 
                     case 4:
                         _lineRect.Width = num3;
                         _lineRect.Height = 0;
-                        goto Label_0473;
+                        break;
 
                     case 5:
                         _lineRect.Width = num6;
                         _lineRect.Height = num6;
-                        goto Label_0473;
+                        break;
 
                     case 6:
                         _lineRect.Width = 0;
                         _lineRect.Height = num4;
-                        goto Label_0473;
+                        break;
 
                     case 7:
                         _lineRect.Width = -num6;
                         _lineRect.Height = num6;
-                        goto Label_0473;
+                        break;
 
                     case 8:
                         _lineRect.Width = num3;
                         _lineRect.Height = 0;
-                        goto Label_0473;
+                        break;
                 }
             }
             else {
@@ -2048,15 +2067,16 @@ namespace VixenEditor {
                     _lineRect.Height = 0;
                 }
             }
-            Label_0473:
+
+            #endregion
+
             InvalidateRect(_lineRect);
             UpdatePositionLabel(NormalizeRect(new Rectangle(_lineRect.X, _lineRect.Y, _lineRect.Width + 1, _lineRect.Height)), true);
-            goto Label_0733;
-            Label_0715:
-            _lastCellX = cellX;
-            _lastCellY = cellY;
-            UpdatePositionLabel(_selectedCells, false);
-            Label_0733:
+
+        FinishUp:
+
+            #region Exiting
+
             int num8 = 0;
             int num9 = 0;
             int y = 0;
@@ -2068,7 +2088,7 @@ namespace VixenEditor {
                 num11 = ((Math.Max(cellY, _mouseChannelCaret) - vScrollBar1.Value) + 1) * _gridRowHeight;
             }
             if (cellY != _mouseChannelCaret) {
-                rectangle = new Rectangle(0, pictureBoxTime.Height + (_gridRowHeight * (_mouseChannelCaret - vScrollBar1.Value)), 5, _gridRowHeight);
+                var rectangle = new Rectangle(0, pictureBoxTime.Height + (_gridRowHeight * (_mouseChannelCaret - vScrollBar1.Value)), 5, _gridRowHeight);
                 _mouseChannelCaret = -1;
                 pictureBoxChannels.Invalidate(rectangle);
                 pictureBoxChannels.Update();
@@ -2083,7 +2103,7 @@ namespace VixenEditor {
                 }
             }
             if (cellX != _mouseTimeCaret) {
-                rectangle = new Rectangle(_periodPixelWidth * (_mouseTimeCaret - hScrollBar1.Value), 0, _periodPixelWidth, 5);
+                var rectangle = new Rectangle(_periodPixelWidth * (_mouseTimeCaret - hScrollBar1.Value), 0, _periodPixelWidth, 5);
                 _mouseTimeCaret = -1;
                 pictureBoxTime.Invalidate(rectangle);
                 pictureBoxTime.Update();
@@ -2111,6 +2131,9 @@ namespace VixenEditor {
                                                                _sequence.Channels[_channelOrderMapping[cellY]].Name);
             }
             UpdateFollowMouse(new Point(e.X, e.Y));
+
+            #endregion
+
         }
 
 
@@ -4529,7 +4552,7 @@ namespace VixenEditor {
             pictureBoxTime.Refresh();
         }
 
-
+        //TODO Check the history on this, I think a subtle bug was introduced (wont draw correct on all circumastance)
         private void UpdateGrid(Graphics g, Rectangle clipRect) {
             if (_sequence.ChannelCount != 0) {
                 var fontSize = (_periodPixelWidth <= 20) ? 5 : ((_periodPixelWidth <= 25) ? 6 : ((_periodPixelWidth < 50) ? 8 : 10));
