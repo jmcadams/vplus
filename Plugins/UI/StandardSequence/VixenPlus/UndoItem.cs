@@ -25,7 +25,13 @@ namespace VixenPlus
         public override string ToString()
         {
             var num = Location.X * _sequence.EventPeriod;
-            return string.Format("{0} of {1} x {2} cells at {3}:{4:d2}.{5:d3}", new object[] { OriginalAction, Data.GetLength(1), Data.GetLength(0), num / 60000, (num % 60000) / 1000, num % 1000 });
+            var width = Data.GetLength(1);
+            var length = Data.GetLength(0);
+            var result = (width * length == 1)
+            ? string.Format("{0} at {1}:{2:d2}.{3:d3}",  OriginalAction,  num / 60000, (num % 60000) / 1000, num % 1000 )
+            : string.Format("{0} of {1} x {2} cells at {3}:{4:d2}.{5:d3}", OriginalAction, width, length, num / 60000, (num % 60000) / 1000, num % 1000 );
+            
+            return result;
         }
 
 
