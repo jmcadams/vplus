@@ -86,6 +86,7 @@ namespace VixenEditor {
         private const int IndexRowsOrHeight = 0;
         private const int IndexColsOrWidth = 1;
         private const byte Cell8BitMax = 255;
+        private const int caretSize = 5;  //TODO should this be a preference?
 
         public StandardSequence() {
             object obj2;
@@ -1843,10 +1844,8 @@ namespace VixenEditor {
             toolStripLabelCellIntensity.Text = string.Empty;
             toolStripLabelCurrentCell.Text = string.Empty;
         }
-        #endregion
 
 
-        //TODO Refactor
         private void pictureBoxGrid_MouseMove(object sender, MouseEventArgs e) {
             toolStripLabelCellIntensity.Text = string.Empty;
             toolStripLabelCurrentCell.Text = string.Empty;
@@ -1855,156 +1854,179 @@ namespace VixenEditor {
             var cellY = Math.Min((Math.Max(e.Y / _gridRowHeight, 0) + vScrollBar1.Value), _sequence.ChannelCount - 1);
 
             if ((e.Button == MouseButtons.Left) && _mouseDownInGrid) {
-                if (_lineRect.Left == -1) { // Drawing a selection box
-                    var directionFlag = (e.X > pictureBoxGrid.Width ? 0x0010 : (e.X < 0 ? 0x1000 : 0x0))
-                                      | (e.Y > pictureBoxGrid.Height ? 0x0001 : (e.Y < 0 ? 0x0100 : 0x0));
-
-                    if (directionFlag == 0x0) {
-                        EraseSelectedRange();
-
-                        _selectedRange.Width = (cellX >= _mouseDownAtInGrid.X)
-                            ? (cellX > _mouseDownAtInGrid.X)
-                                ? cellX - _selectedRange.Left + 1
-                                : 1
-                            : cellX - _selectedRange.Left;
-
-                        _selectedRange.Height = (cellY < _mouseDownAtInGrid.Y)
-                            ? cellY - _selectedRange.Top
-                            : (cellY > _mouseDownAtInGrid.Y)
-                                ? cellY - _selectedRange.Top + 1
-                                : 1;
-
-                        _selectedCells = NormalizeRect(_selectedRange);
-                        DrawSelectedRange();
-                    }
-
-                    if ((directionFlag & 0x0001) == 0x0001) { ScrollSelectionDown(cellX); }
-                    if ((directionFlag & 0x0010) == 0x0010) { ScrollSelectionRight(cellY); }
-                    if ((directionFlag & 0x0100) == 0x0100) { ScrollSelectionUp(cellX); }
-                    if ((directionFlag & 0x1000) == 0x1000) { ScrollSelectionLeft(cellY); }
-
-                    _lastCellX = cellX;
-                    _lastCellY = cellY;
-                    UpdatePositionLabel(_selectedCells, false);
-                } else { // Drawing a Chase line
-                    EraseRectangleEntity(_lineRect);
-
-                    if ((ModifierKeys & Keys.Shift) != Keys.None) { // Constrained to 45 degree angles
-                        var x = cellX - _mouseDownAtInGrid.X;
-                        var xMidpoint = x / 2;
-                        var y = cellY - _mouseDownAtInGrid.Y;
-                        var yMidpoint = y / 2;
-                        var offset = Math.Abs(Math.Abs(x) < Math.Abs(y) ? x : y);
-                        string lineAngle;
-
-                        if (x >= 0) {
-                            if (y >= 0) {
-                                lineAngle = (y < xMidpoint) ? "N-S" : (x < yMidpoint) ? "E-W" : "NE";    // x >= 0 & y >= 0
-                            } else {
-                                lineAngle = (y >= -xMidpoint) ? "N-S" : (x < -yMidpoint) ? "E-W" : "SE"; // x >= 0 & y < 0
-                            }
-                        } else
-                            if (y >= 0) {
-                                lineAngle = (y < -xMidpoint) ? "N-S" : (x >= -yMidpoint) ? "E-W" : "SW"; // x < 0 & y >= 0
-                            } else {
-                                lineAngle = (y >= xMidpoint) ? "N-S" : (x >= yMidpoint) ? "E-W" : "NW";  // x < 0 & y < 0
-                            }
-
-                        switch (lineAngle) {
-                            case "N-S":
-                                _lineRect.Width = x;
-                                _lineRect.Height = 0;
-                                break;
-
-                            case "E-W":
-                                _lineRect.Width = 0;
-                                _lineRect.Height = y;
-                                break;
-
-                            case "NE":
-                                _lineRect.Width = offset;
-                                _lineRect.Height = offset;
-                                break;
-
-                            case "SE":
-                                _lineRect.Width = offset;
-                                _lineRect.Height = -offset;
-                                break;
-
-                            case "SW":
-                                _lineRect.Width = -offset;
-                                _lineRect.Height = offset;
-                                break;
-
-                            case "NW":
-                                _lineRect.Width = -offset;
-                                _lineRect.Height = -offset;
-                                break;
-                        }
-                    } else { // Freeform
-                        _lineRect.Width = (cellX != _mouseDownAtInGrid.X) ? cellX - _lineRect.Left : 0;
-                        _lineRect.Height = (cellY != _mouseDownAtInGrid.Y) ? cellY - _lineRect.Top : 0;
-                    }
-
-                    InvalidateRect(_lineRect);
-                    UpdatePositionLabel(NormalizeRect(new Rectangle(_lineRect.X, _lineRect.Y, _lineRect.Width + 1, _lineRect.Height)), true);
+                if (_lineRect.Left == -1) { 
+                    DrawSelectionBox(e.X, e.Y, cellX, cellY);
+                } else {
+                    DrawChaseLine(cellX, cellY);
                 }
             }
 
-            int num8 = 0;
-            int num9 = 0;
-            int num10 = 0;
-            int num11 = 0;
-            if ((cellX != _mouseTimeCaret) || (cellY != _mouseChannelCaret)) {
-                num8 = (Math.Min(cellX, _mouseTimeCaret) - hScrollBar1.Value) * _periodPixelWidth;
-                num9 = ((Math.Max(cellX, _mouseTimeCaret) - hScrollBar1.Value) + 1) * _periodPixelWidth;
-                num10 = (Math.Min(cellY, _mouseChannelCaret) - vScrollBar1.Value) * _gridRowHeight;
-                num11 = ((Math.Max(cellY, _mouseChannelCaret) - vScrollBar1.Value) + 1) * _gridRowHeight;
+            DrawCarets(cellX, cellY);
+            UpdateToolStrip(cellX, cellY);
+            UpdateFollowMouse(new Point(e.X, e.Y));
+        }
+
+
+        private void DrawSelectionBox(int mouseX, int mouseY, int cellX, int cellY) {
+            var directionFlag = (mouseX > pictureBoxGrid.Width ? 0x0010 : (mouseX < 0 ? 0x1000 : 0x0))
+                  | (mouseY > pictureBoxGrid.Height ? 0x0001 : (mouseY < 0 ? 0x0100 : 0x0));
+
+            if (directionFlag == 0x0) {
+                EraseSelectedRange();
+
+                _selectedRange.Width = (cellX >= _mouseDownAtInGrid.X)
+                    ? (cellX > _mouseDownAtInGrid.X)
+                        ? cellX - _selectedRange.Left + 1
+                        : 1
+                    : cellX - _selectedRange.Left;
+
+                _selectedRange.Height = (cellY < _mouseDownAtInGrid.Y)
+                    ? cellY - _selectedRange.Top
+                    : (cellY > _mouseDownAtInGrid.Y)
+                        ? cellY - _selectedRange.Top + 1
+                        : 1;
+
+                _selectedCells = NormalizeRect(_selectedRange);
+                DrawSelectedRange();
             }
+
+            if ((directionFlag & 0x0001) == 0x0001) { ScrollSelectionDown(cellX); }
+            if ((directionFlag & 0x0010) == 0x0010) { ScrollSelectionRight(cellY); }
+            if ((directionFlag & 0x0100) == 0x0100) { ScrollSelectionUp(cellX); }
+            if ((directionFlag & 0x1000) == 0x1000) { ScrollSelectionLeft(cellY); }
+
+            _lastCellX = cellX;
+            _lastCellY = cellY;
+            UpdatePositionLabel(_selectedCells, false);
+        }
+
+
+        private void DrawChaseLine(int cellX, int cellY) {
+            EraseRectangleEntity(_lineRect);
+
+            if ((ModifierKeys & Keys.Shift) != Keys.None) { // Constrained to 45 degree angles
+                var x = cellX - _mouseDownAtInGrid.X;
+                var xMidpoint = x / 2;
+                var y = cellY - _mouseDownAtInGrid.Y;
+                var yMidpoint = y / 2;
+                var offset = Math.Abs(Math.Abs(x) < Math.Abs(y) ? x : y);
+                string lineAngle;
+
+                if (x >= 0) {
+                    if (y >= 0) {
+                        lineAngle = (y < xMidpoint) ? "N-S" : (x < yMidpoint) ? "E-W" : "NE";    // x >= 0 & y >= 0
+                    }
+                    else {
+                        lineAngle = (y >= -xMidpoint) ? "N-S" : (x < -yMidpoint) ? "E-W" : "SE"; // x >= 0 & y < 0
+                    }
+                }
+                else
+                    if (y >= 0) {
+                        lineAngle = (y < -xMidpoint) ? "N-S" : (x >= -yMidpoint) ? "E-W" : "SW"; // x < 0 & y >= 0
+                    }
+                    else {
+                        lineAngle = (y >= xMidpoint) ? "N-S" : (x >= yMidpoint) ? "E-W" : "NW";  // x < 0 & y < 0
+                    }
+
+                switch (lineAngle) {
+                    case "N-S":
+                        _lineRect.Width = x;
+                        _lineRect.Height = 0;
+                        break;
+
+                    case "E-W":
+                        _lineRect.Width = 0;
+                        _lineRect.Height = y;
+                        break;
+
+                    case "NE":
+                        _lineRect.Width = offset;
+                        _lineRect.Height = offset;
+                        break;
+
+                    case "SE":
+                        _lineRect.Width = offset;
+                        _lineRect.Height = -offset;
+                        break;
+
+                    case "SW":
+                        _lineRect.Width = -offset;
+                        _lineRect.Height = offset;
+                        break;
+
+                    case "NW":
+                        _lineRect.Width = -offset;
+                        _lineRect.Height = -offset;
+                        break;
+                }
+            }
+            else { // Freeform
+                _lineRect.Width = (cellX != _mouseDownAtInGrid.X) ? cellX - _lineRect.Left : 0;
+                _lineRect.Height = (cellY != _mouseDownAtInGrid.Y) ? cellY - _lineRect.Top : 0;
+            }
+
+            InvalidateRect(_lineRect);
+            UpdatePositionLabel(NormalizeRect(new Rectangle(_lineRect.X, _lineRect.Y, _lineRect.Width + 1, _lineRect.Height)), true);
+
+        }
+
+
+        private void DrawCarets(int cellX, int cellY) {
             if (cellY != _mouseChannelCaret) {
-                var rectangle = new Rectangle(0, pictureBoxTime.Height + (_gridRowHeight * (_mouseChannelCaret - vScrollBar1.Value)), 5, _gridRowHeight);
+                var rectangle = new Rectangle(0, pictureBoxTime.Height + (_gridRowHeight * (_mouseChannelCaret - vScrollBar1.Value)), caretSize, _gridRowHeight);
                 _mouseChannelCaret = -1;
                 pictureBoxChannels.Invalidate(rectangle);
-                pictureBoxChannels.Update();
                 if (cellY < _sequence.ChannelCount) {
                     _mouseChannelCaret = cellY;
                     rectangle.Y = pictureBoxTime.Height + (_gridRowHeight * (_mouseChannelCaret - vScrollBar1.Value));
                     pictureBoxChannels.Invalidate(rectangle);
-                    pictureBoxChannels.Update();
                 }
-                else {
-                    _mouseChannelCaret = -1;
-                }
+                pictureBoxChannels.Update();
             }
+            
             if (cellX != _mouseTimeCaret) {
-                var rectangle = new Rectangle(_periodPixelWidth * (_mouseTimeCaret - hScrollBar1.Value), 0, _periodPixelWidth, 5);
+                var rectangle = new Rectangle(_periodPixelWidth * (_mouseTimeCaret - hScrollBar1.Value), 0, _periodPixelWidth, caretSize);
                 _mouseTimeCaret = -1;
                 pictureBoxTime.Invalidate(rectangle);
-                pictureBoxTime.Update();
                 if (cellX < _sequence.TotalEventPeriods) {
                     _mouseTimeCaret = cellX;
                     rectangle.X = _periodPixelWidth * (_mouseTimeCaret - hScrollBar1.Value);
                     pictureBoxTime.Invalidate(rectangle);
-                    pictureBoxTime.Update();
                 }
-                else {
-                    _mouseTimeCaret = -1;
-                }
+                pictureBoxTime.Update();
             }
-            if (num8 != num9) {
-                pictureBoxGrid.Invalidate(new Rectangle(num8, 0, num9 - num8, pictureBoxGrid.Height));
-                pictureBoxGrid.Update();
-                pictureBoxGrid.Invalidate(new Rectangle(0, num10, pictureBoxGrid.Width, num11 - num10));
-                pictureBoxGrid.Update();
+
+            if ((cellX == _mouseTimeCaret) && (cellY == _mouseChannelCaret)) {
+                return;
             }
-            if ((cellX >= 0) && (cellY >= 0)) {
-                string str;
-                GetCellIntensity(cellX, cellY, out str);
-                toolStripLabelCellIntensity.Text = str;
-                toolStripLabelCurrentCell.Text = string.Format("{0} , {1}", TimeFormatWithMills(cellX * _sequence.EventPeriod),
-                                                               _sequence.Channels[_channelOrderMapping[cellY]].Name);
+
+            var xMin = (Math.Min(cellX, _mouseTimeCaret) - hScrollBar1.Value) * _periodPixelWidth;
+            var xMax = ((Math.Max(cellX, _mouseTimeCaret) - hScrollBar1.Value) + 1) * _periodPixelWidth;
+
+            if (xMin == xMax) {
+                return;
             }
-            UpdateFollowMouse(new Point(e.X, e.Y));
+            
+            var yMin = (Math.Min(cellY, _mouseChannelCaret) - vScrollBar1.Value) * _gridRowHeight;
+            var yMax = ((Math.Max(cellY, _mouseChannelCaret) - vScrollBar1.Value) + 1) * _gridRowHeight;
+
+
+            pictureBoxGrid.Invalidate(new Rectangle(xMin, 0, xMax - xMin, pictureBoxGrid.Height));
+            pictureBoxGrid.Invalidate(new Rectangle(0, yMin, pictureBoxGrid.Width, yMax - yMin));
+            pictureBoxGrid.Update();
+        }
+
+
+        private void UpdateToolStrip(int cellX, int cellY) {
+            if ((cellX < 0) || (cellY < 0)) {
+                return;
+            }
+
+            string intensity;
+            GetCellIntensity(cellX, cellY, out intensity);
+            toolStripLabelCellIntensity.Text = intensity;
+            toolStripLabelCurrentCell.Text = string.Format("{0} , {1}", TimeFormatWithMills(cellX * _sequence.EventPeriod),
+                                                           _sequence.Channels[_channelOrderMapping[cellY]].Name);
         }
 
 
@@ -2017,7 +2039,7 @@ namespace VixenEditor {
 
             if (paintFromClipboardToolStripMenuItem.Checked && (_systemInterface.Clipboard != null)) {
                 var rect = NormalizeRect(_lineRect);
-                var clipLen = _systemInterface.Clipboard.GetLength(1);
+                var clipLen = _systemInterface.Clipboard.GetLength(IndexColsOrWidth);
                 rect.Width += clipLen;
                 EraseRectangleEntity(rect);
                 rect.Width++;
@@ -2025,7 +2047,7 @@ namespace VixenEditor {
                 AddUndoItem(rect, UndoOriginalBehavior.Overwrite, "Chase Lines from Clipboard");
                 var brush = new byte[clipLen];
                 for (var i = 0; i < clipLen; i++) {
-                    brush[i] = _systemInterface.Clipboard[0, i];
+                    brush[i] = _systemInterface.Clipboard[IndexRowsOrHeight, i];
                 }
                 BresenhamLine(_lineRect, brush);
             }
@@ -2046,73 +2068,75 @@ namespace VixenEditor {
 
         private void pictureBoxGrid_Paint(object sender, PaintEventArgs e) {
             e.Graphics.FillRectangle(_gridBackBrush, e.ClipRectangle);
-            if (_sequence.ChannelCount != 0) {
-                var startPoint = new Point();
-                var endPoint = new Point();
+            if (_sequence.ChannelCount == 0) {
+                return;
+            }
 
-                var cellCount = e.ClipRectangle.Left / _periodPixelWidth;
+            var startPoint = new Point();
+            var endPoint = new Point();
 
-                startPoint.Y = e.ClipRectangle.Top;
-                endPoint.Y = Math.Min(e.ClipRectangle.Bottom, (_sequence.ChannelCount - vScrollBar1.Value) * _gridRowHeight);
+            var cellCount = e.ClipRectangle.Left / _periodPixelWidth;
 
-                var pixelLimit = Math.Min(e.ClipRectangle.Right, (_sequence.TotalEventPeriods - hScrollBar1.Value) * _periodPixelWidth);
-                var startPixelX = 0;
-                while (startPixelX < pixelLimit) {
-                    startPixelX = _periodPixelWidth * cellCount;
-                    startPoint.X = startPixelX;
-                    endPoint.X = startPixelX;
-                    e.Graphics.DrawLine(Pens.Gray, startPoint, endPoint);
-                    cellCount++;
+            startPoint.Y = e.ClipRectangle.Top;
+            endPoint.Y = Math.Min(e.ClipRectangle.Bottom, (_sequence.ChannelCount - vScrollBar1.Value) * _gridRowHeight);
+
+            var pixelLimit = Math.Min(e.ClipRectangle.Right, (_sequence.TotalEventPeriods - hScrollBar1.Value) * _periodPixelWidth);
+            var startPixelX = 0;
+            while (startPixelX < pixelLimit) {
+                startPixelX = _periodPixelWidth * cellCount;
+                startPoint.X = startPixelX;
+                endPoint.X = startPixelX;
+                e.Graphics.DrawLine(Pens.Gray, startPoint, endPoint);
+                cellCount++;
+            }
+            cellCount = e.ClipRectangle.Top / _gridRowHeight;
+            startPoint.X = e.ClipRectangle.Left;
+            endPoint.X = Math.Min(e.ClipRectangle.Right, (_sequence.TotalEventPeriods - hScrollBar1.Value) * _periodPixelWidth);
+            pixelLimit = Math.Min(e.ClipRectangle.Bottom, (_sequence.ChannelCount - vScrollBar1.Value) * _gridRowHeight);
+            var startPixelY = 0;
+            while (startPixelY < pixelLimit) {
+                startPixelY = _gridRowHeight * cellCount;
+                startPoint.Y = startPixelY;
+                endPoint.Y = startPixelY;
+                e.Graphics.DrawLine(Pens.Gray, startPoint, endPoint);
+                cellCount++;
+            }
+            UpdateGrid(e.Graphics, e.ClipRectangle);
+            if (m_positionTimer.Enabled) {
+                startPixelY = Math.Min(e.ClipRectangle.Bottom, (_sequence.ChannelCount - vScrollBar1.Value) * _gridRowHeight);
+                if ((_previousPosition != -1) && (_previousPosition >= hScrollBar1.Value)) {
+                    startPixelX = (_previousPosition - hScrollBar1.Value) * _periodPixelWidth;
+                    e.Graphics.DrawLine(Pens.Gray, startPixelX, 0, startPixelX, startPixelY);
                 }
-                cellCount = e.ClipRectangle.Top / _gridRowHeight;
-                startPoint.X = e.ClipRectangle.Left;
-                endPoint.X = Math.Min(e.ClipRectangle.Right, (_sequence.TotalEventPeriods - hScrollBar1.Value) * _periodPixelWidth);
-                pixelLimit = Math.Min(e.ClipRectangle.Bottom, (_sequence.ChannelCount - vScrollBar1.Value) * _gridRowHeight);
-                var startPixelY = 0;
-                while (startPixelY < pixelLimit) {
-                    startPixelY = _gridRowHeight * cellCount;
-                    startPoint.Y = startPixelY;
-                    endPoint.Y = startPixelY;
-                    e.Graphics.DrawLine(Pens.Gray, startPoint, endPoint);
-                    cellCount++;
-                }
-                UpdateGrid(e.Graphics, e.ClipRectangle);
-                if (m_positionTimer.Enabled) {
-                    startPixelY = Math.Min(e.ClipRectangle.Bottom, (_sequence.ChannelCount - vScrollBar1.Value) * _gridRowHeight);
-                    if ((_previousPosition != -1) && (_previousPosition >= hScrollBar1.Value)) {
-                        startPixelX = (_previousPosition - hScrollBar1.Value) * _periodPixelWidth;
-                        e.Graphics.DrawLine(Pens.Gray, startPixelX, 0, startPixelX, startPixelY);
-                    }
-                    startPixelX = (_position - hScrollBar1.Value) * _periodPixelWidth;
-                    e.Graphics.DrawLine(Pens.Yellow, startPixelX, 0, startPixelX, startPixelY);
+                startPixelX = (_position - hScrollBar1.Value) * _periodPixelWidth;
+                e.Graphics.DrawLine(Pens.Yellow, startPixelX, 0, startPixelX, startPixelY);
+            }
+            else {
+                if (_lineRect.Left != -1) {
+                    var left = ((_lineRect.Left - hScrollBar1.Value) * _periodPixelWidth) + (_periodPixelWidth >> 1);
+                    var top = ((_lineRect.Top - vScrollBar1.Value) * _gridRowHeight) + (_gridRowHeight >> 1);
+                    var width = left + (_lineRect.Width * _periodPixelWidth);
+                    var height = top + (_lineRect.Height * _gridRowHeight);
+                    e.Graphics.DrawLine(Pens.Blue, left, top, width, height);
                 }
                 else {
-                    if (_lineRect.Left != -1) {
-                        var left = ((_lineRect.Left - hScrollBar1.Value) * _periodPixelWidth) + (_periodPixelWidth >> 1);
-                        var top = ((_lineRect.Top - vScrollBar1.Value) * _gridRowHeight) + (_gridRowHeight >> 1);
-                        var width = left + (_lineRect.Width * _periodPixelWidth);
-                        var height = top + (_lineRect.Height * _gridRowHeight);
-                        e.Graphics.DrawLine(Pens.Blue, left, top, width, height);
+                    if (_selectedCells.Left > _sequence.TotalEventPeriods) {
+                        _selectedCells.Width = 0;
                     }
-                    else {
-                        if (_selectedCells.Left > _sequence.TotalEventPeriods) {
-                            _selectedCells.Width = 0;
-                        }
-                        Rectangle range = Rectangle.Intersect(_selectedCells,
-                                                              Rectangle.FromLTRB(hScrollBar1.Value, vScrollBar1.Value,
-                                                                                 (hScrollBar1.Value + _visibleEventPeriods) + 1,
-                                                                                 (vScrollBar1.Value + _visibleRowCount) + 1));
-                        if (!range.IsEmpty) {
-                            e.Graphics.FillRectangle(_selectionBrush, RangeToRectangle(range));
-                        }
+                    var range = Rectangle.Intersect(_selectedCells,
+                                                          Rectangle.FromLTRB(hScrollBar1.Value, vScrollBar1.Value,
+                                                                             (hScrollBar1.Value + _visibleEventPeriods) + 1,
+                                                                             (vScrollBar1.Value + _visibleRowCount) + 1));
+                    if (!range.IsEmpty) {
+                        e.Graphics.FillRectangle(_selectionBrush, RangeToRectangle(range));
                     }
-                    if (toolStripButtonToggleCrossHairs.Checked) {
-                        var x = ((_mouseTimeCaret - hScrollBar1.Value) * _periodPixelWidth) + ((int) (_periodPixelWidth * 0.5f));
-                        var y = ((_mouseChannelCaret - vScrollBar1.Value) * _gridRowHeight) + ((int) (_gridRowHeight * 0.5f));
-                        if (((x > e.ClipRectangle.Left) && (x < e.ClipRectangle.Right)) || ((y > e.ClipRectangle.Top) && (y < e.ClipRectangle.Bottom))) {
-                            e.Graphics.DrawLine(Pens.Yellow, x, 0, x, Height);
-                            e.Graphics.DrawLine(Pens.Yellow, 0, y, Width, y);
-                        }
+                }
+                if (toolStripButtonToggleCrossHairs.Checked) {
+                    var x = ((_mouseTimeCaret - hScrollBar1.Value) * _periodPixelWidth) + ((int) (_periodPixelWidth * 0.5f));
+                    var y = ((_mouseChannelCaret - vScrollBar1.Value) * _gridRowHeight) + ((int) (_gridRowHeight * 0.5f));
+                    if (((x > e.ClipRectangle.Left) && (x < e.ClipRectangle.Right)) || ((y > e.ClipRectangle.Top) && (y < e.ClipRectangle.Bottom))) {
+                        e.Graphics.DrawLine(Pens.Yellow, x, 0, x, Height);
+                        e.Graphics.DrawLine(Pens.Yellow, 0, y, Width, y);
                     }
                 }
             }
@@ -2120,12 +2144,15 @@ namespace VixenEditor {
 
 
         private void pictureBoxGrid_Resize(object sender, EventArgs e) {
-            if (!_initializing) {
-                VScrollCheck();
-                HScrollCheck();
-                pictureBoxGrid.Refresh();
+            if (_initializing) {
+                return;
             }
+
+            VScrollCheck();
+            HScrollCheck();
+            pictureBoxGrid.Refresh();
         }
+        #endregion
 
 
         private void pictureBoxTime_Paint(object sender, PaintEventArgs e) {
