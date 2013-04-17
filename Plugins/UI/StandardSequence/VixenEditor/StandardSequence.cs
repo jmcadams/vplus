@@ -1972,22 +1972,36 @@ namespace VixenEditor {
 
 
         private void DrawCarets(int cellX, int cellY) {
+            var xMin = 0;
+            var xMax = 0;
+            var yMin = 0;
+            var yMax = 0;
+            if ((cellX != _mouseTimeCaret) || (cellY != _mouseChannelCaret)) {
+                xMin = (Math.Min(cellX, _mouseTimeCaret) - hScrollBar1.Value) * _periodPixelWidth;
+                xMax = ((Math.Max(cellX, _mouseTimeCaret) - hScrollBar1.Value) + 1) * _periodPixelWidth;
+                yMin = (Math.Min(cellY, _mouseChannelCaret) - vScrollBar1.Value) * _gridRowHeight;
+                yMax = ((Math.Max(cellY, _mouseChannelCaret) - vScrollBar1.Value) + 1) * _gridRowHeight;
+            }
+
             if (cellY != _mouseChannelCaret) {
                 var rectangle = new Rectangle(0, pictureBoxTime.Height + (_gridRowHeight * (_mouseChannelCaret - vScrollBar1.Value)), caretSize, _gridRowHeight);
                 _mouseChannelCaret = -1;
                 pictureBoxChannels.Invalidate(rectangle);
+                //pictureBoxChannels.Update();
                 if (cellY < _sequence.ChannelCount) {
                     _mouseChannelCaret = cellY;
                     rectangle.Y = pictureBoxTime.Height + (_gridRowHeight * (_mouseChannelCaret - vScrollBar1.Value));
                     pictureBoxChannels.Invalidate(rectangle);
+
                 }
                 pictureBoxChannels.Update();
             }
-            
+
             if (cellX != _mouseTimeCaret) {
                 var rectangle = new Rectangle(_periodPixelWidth * (_mouseTimeCaret - hScrollBar1.Value), 0, _periodPixelWidth, caretSize);
                 _mouseTimeCaret = -1;
                 pictureBoxTime.Invalidate(rectangle);
+                //pictureBoxTime.Update();
                 if (cellX < _sequence.TotalEventPeriods) {
                     _mouseTimeCaret = cellX;
                     rectangle.X = _periodPixelWidth * (_mouseTimeCaret - hScrollBar1.Value);
@@ -1996,24 +2010,19 @@ namespace VixenEditor {
                 pictureBoxTime.Update();
             }
 
-            if ((cellX == _mouseTimeCaret) && (cellY == _mouseChannelCaret)) {
-                return;
+            if (xMin != xMax) {
+                pictureBoxGrid.Invalidate(new Rectangle(xMin, 0, xMax - xMin, pictureBoxGrid.Height));
+                //pictureBoxGrid.Update();
+                pictureBoxGrid.Invalidate(new Rectangle(0, yMin, pictureBoxGrid.Width, yMax - yMin));
+                pictureBoxGrid.Update();
             }
-
-            var xMin = (Math.Min(cellX, _mouseTimeCaret) - hScrollBar1.Value) * _periodPixelWidth;
-            var xMax = ((Math.Max(cellX, _mouseTimeCaret) - hScrollBar1.Value) + 1) * _periodPixelWidth;
-
-            if (xMin == xMax) {
-                return;
+            if ((cellX >= 0) && (cellY >= 0)) {
+                string str;
+                GetCellIntensity(cellX, cellY, out str);
+                toolStripLabelCellIntensity.Text = str;
+                toolStripLabelCurrentCell.Text = string.Format("{0} , {1}", TimeFormatWithMills(cellX * _sequence.EventPeriod),
+                                                               _sequence.Channels[_channelOrderMapping[cellY]].Name);
             }
-            
-            var yMin = (Math.Min(cellY, _mouseChannelCaret) - vScrollBar1.Value) * _gridRowHeight;
-            var yMax = ((Math.Max(cellY, _mouseChannelCaret) - vScrollBar1.Value) + 1) * _gridRowHeight;
-
-
-            pictureBoxGrid.Invalidate(new Rectangle(xMin, 0, xMax - xMin, pictureBoxGrid.Height));
-            pictureBoxGrid.Invalidate(new Rectangle(0, yMin, pictureBoxGrid.Width, yMax - yMin));
-            pictureBoxGrid.Update();
         }
 
 
@@ -2062,7 +2071,6 @@ namespace VixenEditor {
 
             _lineRect.X = -1;
             UpdatePositionLabel(_selectedCells, false);
-            //UpdateFollowMouse(keyEvent.Location);
         }
 
 
