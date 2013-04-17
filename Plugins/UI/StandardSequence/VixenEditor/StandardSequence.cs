@@ -24,6 +24,7 @@ namespace VixenEditor {
         private SolidBrush _channelBackBrush;
         private readonly SolidBrush _channelCaretBrush;
         private Font _channelNameFont;
+        private Font _channelStrikeoutFont;
         private List<int> _channelOrderMapping;
         private VixenPlus.Channel _currentlyEditingChannel;
         private FrequencyEffectGenerator _dimmingShimmerGenerator;
@@ -86,7 +87,7 @@ namespace VixenEditor {
         private const int IndexRowsOrHeight = 0;
         private const int IndexColsOrWidth = 1;
         private const byte Cell8BitMax = 255;
-        private const int caretSize = 5;  //TODO should this be a preference?
+        private const int CaretSize = 5;  //TODO should this be a preference?
 
         public StandardSequence() {
             object obj2;
@@ -99,6 +100,7 @@ namespace VixenEditor {
             _timeBackBrush = null;
             _gridBackBrush = null;
             _channelNameFont = new Font("Arial", 8f);
+            _channelStrikeoutFont = new Font("Arial", 8f, FontStyle.Strikeout);
             _timeFont = new Font("Arial", 8f);
             _selectedChannel = null;
             _currentlyEditingChannel = null;
@@ -403,8 +405,8 @@ namespace VixenEditor {
             var isValid = false;
             var mouseY = pictureBoxChannels.PointToClient(MousePosition).Y;
             
-            if (mouseY > pictureBoxTime.Height) {
-                _selectedLineIndex = vScrollBar1.Value + (mouseY - pictureBoxTime.Height) / _gridRowHeight;
+            if (mouseY > pictureBoxTime.Height + splitContainer2.SplitterWidth) {
+                _selectedLineIndex = vScrollBar1.Value + (mouseY - (pictureBoxTime.Height + splitContainer2.SplitterWidth)) / _gridRowHeight;
                 if (_selectedLineIndex < _sequence.ChannelCount) {
                     _editingChannelSortedIndex = _channelOrderMapping[_selectedLineIndex];
                     isValid = (_editingChannelSortedIndex >= 0) && (_editingChannelSortedIndex < _sequence.ChannelCount);
@@ -568,8 +570,6 @@ namespace VixenEditor {
         }
 
 
-        //TODO One thing that appears to happen is that a rectangle is formed with the same values, maybe we should pass that in instead
-        //TODO This would make for less mistakes?
         private void CopyToEventValues(int startCol, int startRow, int width, int height, byte value) {
             var endRow = startRow + height;
             var endCol = startCol + width;
@@ -795,7 +795,8 @@ namespace VixenEditor {
                 }
             }
             IsDirty = true;
-            //todo redraw the channel box with some indication that they are masked.
+            pictureBoxChannels.Invalidate();
+            pictureBoxChannels.Refresh();
         }
 
 
@@ -818,7 +819,7 @@ namespace VixenEditor {
         private void EraseRectangleEntity(Rectangle rect) {
             rect.Offset(-hScrollBar1.Value, -vScrollBar1.Value);
             var rc = CellsToRectangle(rect);
-            rect.X = -1; // todo does this get passed back?
+            rect.X = -1; // todo does this get passed back? Nope 4/17/2013
             pictureBoxGrid.Invalidate(rc);
         }
 
@@ -924,7 +925,7 @@ namespace VixenEditor {
 
         private Rectangle GetChannelNameRect(VixenPlus.Channel channel) {
             return channel != null
-                        ? new Rectangle(0, (GetChannelSortedIndex(channel) - vScrollBar1.Value) * _gridRowHeight + pictureBoxTime.Height, pictureBoxChannels.Width, _gridRowHeight) 
+                        ? new Rectangle(0, (GetChannelSortedIndex(channel) - vScrollBar1.Value) * _gridRowHeight + pictureBoxTime.Height + splitContainer2.SplitterWidth, pictureBoxChannels.Width, _gridRowHeight) 
                         : Rectangle.Empty;
         }
 
@@ -949,7 +950,7 @@ namespace VixenEditor {
 
 
         private int GetLineIndexAt(Point point) {
-            return (point.Y - pictureBoxTime.Height) / _gridRowHeight + vScrollBar1.Value;
+            return (point.Y - (pictureBoxTime.Height + splitContainer2.SplitterWidth)) / _gridRowHeight + vScrollBar1.Value;
         }
 
 
@@ -1675,7 +1676,7 @@ namespace VixenEditor {
             int mappedChannel;
             int channelOffset;
 
-            var height = pictureBoxTime.Height;
+            var height = pictureBoxTime.Height + splitContainer2.SplitterWidth;
             var selectedZoom = toolStripComboBoxRowZoom.SelectedIndex;
             var heightAddition = (selectedZoom <= 4) ? 0 : (selectedZoom >= 8) ? 3 : 1;
             var showNaturalChannelNumbers = _preferences.GetBoolean("ShowNaturalChannelNumber");
@@ -1693,12 +1694,21 @@ namespace VixenEditor {
                     e.Graphics.FillRectangle(isChannelSelected ? SystemBrushes.Highlight : channel.Brush ?? _channelBackBrush, 0, height, pictureBoxChannels.Width,
                                              _gridRowHeight);
 
+                    var textBrush = Brushes.White;
+                    if (!isChannelSelected) {
+                        var bgColor = channel.Brush != null ? channel.Brush.Color : _channelBackBrush.Color;
+                        var a = 1 - (0.299 * bgColor.R + 0.587 * bgColor.G + 0.114 * bgColor.G) / 255;
+                        if (a < 0.5) textBrush = Brushes.Black;
+                    } 
+                    
                     if (showNaturalChannelNumbers) {
-                        e.Graphics.DrawString(string.Format("{0}:", mappedChannel + 1), _channelNameFont, Brushes.Black, 10f, height + heightAddition);
+                        e.Graphics.DrawString(string.Format("{0}:", mappedChannel + 1), _channelNameFont, textBrush, 10f, height + heightAddition);
                     }
 
-                    e.Graphics.DrawString(channel.Name, _channelNameFont, isChannelSelected ? SystemBrushes.HighlightText : Brushes.Black, x,
-                                          height + heightAddition);
+                    e.Graphics.DrawString(channel.Name,
+                                          channel.Enabled ? _channelNameFont : _channelStrikeoutFont,
+                                          isChannelSelected ? SystemBrushes.HighlightText : textBrush,
+                                          x, height + heightAddition);
 
                     height += _gridRowHeight;
                 }
@@ -1718,8 +1728,16 @@ namespace VixenEditor {
                     e.Graphics.FillRectangle(channel == SelectedChannel && showNaturalChannelNumbers ? SystemBrushes.Highlight : channel.Brush ?? _channelBackBrush, 0,
                                              height, pictureBoxChannels.Width, _gridRowHeight);
 
+                    var textBrush = Brushes.White;
+                    if (channel != SelectedChannel) {
+                        var bgColor = channel.Brush != null ? channel.Brush.Color : _channelBackBrush.Color;
+                        var a = 1 - (0.299 * bgColor.R + 0.587 * bgColor.G + 0.114 * bgColor.G) / 255;
+                        if (a < 0.5) textBrush = Brushes.Black;
+                    } 
+
+
                     if (showNaturalChannelNumbers) {
-                        e.Graphics.DrawString(string.Format("{0}:", mappedChannel + 1), _channelNameFont, Brushes.Black, 10f, height + heightAddition);
+                        e.Graphics.DrawString(string.Format("{0}:", mappedChannel + 1), _channelNameFont, textBrush, 10f, height + heightAddition);
                     }
                     else {
                         x = 10;
@@ -1732,9 +1750,12 @@ namespace VixenEditor {
                         e.Graphics.DrawRectangle(Pens.Black, x, height + 1, 40, _gridRowHeight - 2);
                     }
 
-                    e.Graphics.DrawString(String.Format("{0}", channel.OutputChannel + 1), _channelNameFont, Brushes.Black, x + 16,
-                                          height + heightAddition);
-                    e.Graphics.DrawString(channel.Name, _channelNameFont, Brushes.Black, x + 44, height + heightAddition);
+                    e.Graphics.DrawString(String.Format("{0}", channel.OutputChannel + 1),
+                                          channel.Enabled ? _channelNameFont : _channelStrikeoutFont, textBrush,
+                                          x + 16, height + heightAddition);
+
+                    e.Graphics.DrawString(channel.Name, channel.Enabled ? _channelNameFont : _channelStrikeoutFont,
+                                          textBrush, x + 44, height + heightAddition);
 
                     height += _gridRowHeight;
                 }
@@ -1745,7 +1766,7 @@ namespace VixenEditor {
             }
             e.Graphics.FillRectangle(Brushes.White, 0, 0, 5, pictureBoxChannels.Height);
             if (_mouseChannelCaret != -1) {
-                e.Graphics.FillRectangle(_channelCaretBrush, 0, ((_mouseChannelCaret - vScrollBar1.Value) * _gridRowHeight) + pictureBoxTime.Height, 5,
+                e.Graphics.FillRectangle(_channelCaretBrush, 0, ((_mouseChannelCaret - vScrollBar1.Value) * _gridRowHeight) + pictureBoxTime.Height+ splitContainer2.SplitterWidth, 5,
                                          _gridRowHeight);
             }
         }
@@ -1984,13 +2005,13 @@ namespace VixenEditor {
             }
 
             if (cellY != _mouseChannelCaret) {
-                var rectangle = new Rectangle(0, pictureBoxTime.Height + (_gridRowHeight * (_mouseChannelCaret - vScrollBar1.Value)), caretSize, _gridRowHeight);
+                var rectangle = new Rectangle(0, pictureBoxTime.Height + splitContainer2.SplitterWidth + (_gridRowHeight * (_mouseChannelCaret - vScrollBar1.Value)), CaretSize, _gridRowHeight);
                 _mouseChannelCaret = -1;
                 pictureBoxChannels.Invalidate(rectangle);
                 //pictureBoxChannels.Update();
                 if (cellY < _sequence.ChannelCount) {
                     _mouseChannelCaret = cellY;
-                    rectangle.Y = pictureBoxTime.Height + (_gridRowHeight * (_mouseChannelCaret - vScrollBar1.Value));
+                    rectangle.Y = pictureBoxTime.Height + splitContainer2.SplitterWidth + (_gridRowHeight * (_mouseChannelCaret - vScrollBar1.Value));
                     pictureBoxChannels.Invalidate(rectangle);
 
                 }
@@ -1998,7 +2019,7 @@ namespace VixenEditor {
             }
 
             if (cellX != _mouseTimeCaret) {
-                var rectangle = new Rectangle(_periodPixelWidth * (_mouseTimeCaret - hScrollBar1.Value), 0, _periodPixelWidth, caretSize);
+                var rectangle = new Rectangle(_periodPixelWidth * (_mouseTimeCaret - hScrollBar1.Value), 0, _periodPixelWidth, CaretSize);
                 _mouseTimeCaret = -1;
                 pictureBoxTime.Invalidate(rectangle);
                 //pictureBoxTime.Update();
@@ -2190,11 +2211,11 @@ namespace VixenEditor {
             if ((e.ClipRectangle.Bottom >= topLeftPt.Y) || (e.ClipRectangle.Top <= bottomRightPt.Y)) {
                 x = e.ClipRectangle.X;
                 var eventPeriod = _sequence.EventPeriod;
-                var startMills = (hScrollBar1.Value + (e.ClipRectangle.Left / ((float) _periodPixelWidth))) * eventPeriod;
+                var startMills = (hScrollBar1.Value + (e.ClipRectangle.Left / (float) _periodPixelWidth)) * eventPeriod;
                 var endMills = Math.Min((hScrollBar1.Value + (e.ClipRectangle.Right / _periodPixelWidth)) * eventPeriod, _sequence.Time);
                 var eventCount = (float) _sequence.EventsPerSecond;
 
-                var currentMills = (!(0f.Equals(startMills % 1000f))) ? (((int) startMills) / 1000) * 1000 : (int) startMills;
+                var currentMills = (!0f.Equals(startMills % 1000f)) ? (int) startMills / 1000 * 1000 : (int) startMills;
 
                 while ((x < e.ClipRectangle.Right) && (currentMills <= endMills)) {
                     if (currentMills != 0) {
@@ -4553,7 +4574,7 @@ namespace VixenEditor {
 
         private void UpdateProgress() {
             int x = (_previousPosition - hScrollBar1.Value) * _periodPixelWidth;
-            pictureBoxTime.Invalidate(new Rectangle(x, pictureBoxTime.Height - 0x23, _periodPixelWidth + _periodPixelWidth, 15));
+            pictureBoxTime.Invalidate(new Rectangle(x, pictureBoxTime.Height - 35, _periodPixelWidth + _periodPixelWidth, 15));
             pictureBoxGrid.Invalidate(new Rectangle(x, 0, _periodPixelWidth + _periodPixelWidth, pictureBoxGrid.Height));
         }
 
@@ -4584,6 +4605,8 @@ namespace VixenEditor {
             if (fontSize > 0f) {
                 _channelNameFont.Dispose();
                 _channelNameFont = new Font("Arial", fontSize);
+                _channelStrikeoutFont.Dispose();
+                _channelStrikeoutFont = new Font("Arial", fontSize, FontStyle.Strikeout);
             }
 
             var num = (toolStripComboBoxRowZoom.SelectedIndex + 1) * 0.1;

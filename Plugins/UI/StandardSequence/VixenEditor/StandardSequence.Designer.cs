@@ -3055,6 +3055,7 @@ namespace VixenEditor{
 				this._gridBackBrush.Dispose();
 			}
 			this._channelNameFont.Dispose();
+            this._channelStrikeoutFont.Dispose();
 			this._timeFont.Dispose();
 			this._selectionBrush.Dispose();
 			this._positionBrush.Dispose();
