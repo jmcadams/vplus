@@ -219,6 +219,7 @@
     <Compile Include="VixenEditor\ToolStripManager.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="VixenEditor\Utils.cs" />
     <Compile Include="VixenPlus\UndoItem.cs" />
     <Compile Include="VixenPlus\UndoOriginalBehavior.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
