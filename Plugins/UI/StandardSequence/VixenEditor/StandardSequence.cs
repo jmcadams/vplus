@@ -84,9 +84,6 @@ namespace VixenEditor {
         private uint[] _waveformPixelData;
         private PrintDocument _printDocument;
 
-        private const int IndexRowsOrHeight = 0;
-        private const int IndexColsOrWidth = 1;
-        private const byte Cell8BitMax = 255;
         private const int CaretSize = 5;  //TODO should this be a preference?
 
         public StandardSequence() {
@@ -171,7 +168,7 @@ namespace VixenEditor {
 
 
         private void AffectGrid(int startRow, int startCol, byte[,] values) {
-            AddUndoItem(new Rectangle(startCol, startRow, values.GetLength(IndexColsOrWidth), values.GetLength(IndexRowsOrHeight)),
+            AddUndoItem(new Rectangle(startCol, startRow, values.GetLength(Utils.IndexColsOrWidth), values.GetLength(Utils.IndexRowsOrHeight)),
                 UndoOriginalBehavior.Overwrite, "Copy Channel Data");
             CopyToEventValues(startCol, startRow, values);
             pictureBoxGrid.Refresh();
@@ -202,8 +199,8 @@ namespace VixenEditor {
             }
 
             var clipboard = _systemInterface.Clipboard;
-            var height = clipboard.GetLength(IndexRowsOrHeight);
-            var width = clipboard.GetLength(IndexColsOrWidth);
+            var height = clipboard.GetLength(Utils.IndexRowsOrHeight);
+            var width = clipboard.GetLength(Utils.IndexColsOrWidth);
             
             AddUndoItem(new Rectangle(_selectedCells.X, _selectedCells.Y, width, height), UndoOriginalBehavior.Overwrite, "Arithmetic Paste");
 
@@ -226,7 +223,7 @@ namespace VixenEditor {
                             break;
 
                         case ArithmeticOperation.Scale:
-                            currentValue = (byte) Math.Max(Math.Min(currentValue * (clipValue / (float) Cell8BitMax), maxLevel), minLevel);
+                            currentValue = (byte) Math.Max(Math.Min(currentValue * (clipValue / (float) Utils.Cell8BitMax), maxLevel), minLevel);
                             break;
 
                         case ArithmeticOperation.Min:
@@ -237,8 +234,6 @@ namespace VixenEditor {
                             currentValue = Math.Min(Math.Max(clipValue, currentValue), maxLevel);
                             break;
                     }
-                    //TODO: I am not sure this MaxMin Check here is necessary
-                    currentValue = Math.Max(Math.Min(currentValue, maxLevel), minLevel);
                     _sequence.EventValues[channel, colOffset + col] = currentValue;
                 }
             }
@@ -246,7 +241,7 @@ namespace VixenEditor {
             pictureBoxGrid.Refresh();
         }
 
-        //TODO should this be inlined?
+
         private void ArrayToCells(byte[,] array) {
             CopyToEventValues(_selectedCells.Left, _selectedCells.Top, array);
             IsDirty = true;
@@ -558,8 +553,8 @@ namespace VixenEditor {
 
 
         private void CopyToEventValues(int startCol, int startRow, byte[,] data) {
-            var rows = data.GetLength(IndexRowsOrHeight);
-            var columns = data.GetLength(IndexColsOrWidth);
+            var rows = data.GetLength(Utils.IndexRowsOrHeight);
+            var columns = data.GetLength(Utils.IndexColsOrWidth);
             
             for (var row = 0; row < rows && startRow + row < _sequence.ChannelCount; row++) {
                 var channel = _channelOrderMapping[startRow + row];
@@ -680,8 +675,8 @@ namespace VixenEditor {
                 return;
             }
 
-            var rows = values.GetLength(IndexRowsOrHeight);
-            var totalCols = values.GetLength(IndexColsOrWidth);
+            var rows = values.GetLength(Utils.IndexRowsOrHeight);
+            var totalCols = values.GetLength(Utils.IndexColsOrWidth);
             var random = new Random();
 
             for (var colOffset = 0; colOffset < totalCols; colOffset += colsPerCycle) {
@@ -725,9 +720,9 @@ namespace VixenEditor {
 
 
         private void DisjointedOverwrite(int colOffset, byte[,] data, IList<int> channelIndexes) {
-            for (var row = 0; row < data.GetLength(IndexRowsOrHeight); row++) {
+            for (var row = 0; row < data.GetLength(Utils.IndexRowsOrHeight); row++) {
                 var channel = channelIndexes[row];
-                for (var col = 0; col < data.GetLength(IndexColsOrWidth); col++) {
+                for (var col = 0; col < data.GetLength(Utils.IndexColsOrWidth); col++) {
                     _sequence.EventValues[channel, col + colOffset] = data[row, col];
                 }
             }
@@ -819,7 +814,6 @@ namespace VixenEditor {
         private void EraseRectangleEntity(Rectangle rect) {
             rect.Offset(-hScrollBar1.Value, -vScrollBar1.Value);
             var rc = CellsToRectangle(rect);
-            rect.X = -1; // todo does this get passed back? Nope 4/17/2013
             pictureBoxGrid.Invalidate(rc);
         }
 
@@ -905,7 +899,7 @@ namespace VixenEditor {
 
             if (column >= 0 && row >= 0) {
                 var value = _sequence.EventValues[_channelOrderMapping[row], column];
-                intensity = _actualLevels ? value : ToPercentage(value);
+                intensity = _actualLevels ? value : Utils.ToPercentage(value);
                 intensityText = string.Format(_actualLevels ? "{0}" : "{0}%", intensity);
             }
 
@@ -941,7 +935,7 @@ namespace VixenEditor {
 
 
         private static Color GetGradientColor(Color startColor, Color endColor, int level) {
-            var num = level / (float)Cell8BitMax;
+            var num = level / (float)Utils.Cell8BitMax;
             var r = (int) (((endColor.R - startColor.R) * num) + startColor.R);
             var g = (int) (((endColor.G - startColor.G) * num) + startColor.G);
             var b = (int) (((endColor.B - startColor.B) * num) + startColor.B);
@@ -1199,7 +1193,7 @@ namespace VixenEditor {
                 return;
             }
 
-            AddUndoItem(new Rectangle(_selectedCells.X, _selectedCells.Y, routine.GetLength(IndexColsOrWidth), routine.GetLength(IndexRowsOrHeight)),
+            AddUndoItem(new Rectangle(_selectedCells.X, _selectedCells.Y, routine.GetLength(Utils.IndexColsOrWidth), routine.GetLength(Utils.IndexRowsOrHeight)),
                         UndoOriginalBehavior.Overwrite, "Load Routine");
             ArrayToCells(routine);
             pictureBoxGrid.Refresh();
@@ -1268,7 +1262,7 @@ namespace VixenEditor {
                     for (var left = _selectedCells.Left; left < _selectedCells.Right; left++) {
                         var newValue = _actualLevels
                                            ? _sequence.EventValues[channel, left] + delta
-                                           : ToValue(ToPercentage(_sequence.EventValues[channel, left]) + delta);
+                                           : Utils.ToValue(Utils.ToPercentage(_sequence.EventValues[channel, left]) + delta);
                         newValue = Math.Max(Math.Min(newValue, _sequence.MaximumLevel), _sequence.MinimumLevel);
                         _sequence.EventValues[channel, left] = (byte) newValue;
                     }
@@ -1294,7 +1288,7 @@ namespace VixenEditor {
                 return;
             }
 
-            toolStripLabelExecutionPoint.Text = TimeFormatWithoutMills(executionPosition);
+            toolStripLabelExecutionPoint.Text = Utils.TimeFormatWithoutMills(executionPosition);
             _previousPosition = _position;
             _position = currentPosition;
 
@@ -1305,7 +1299,7 @@ namespace VixenEditor {
                             _previousPosition = _position = _sequence.TotalEventPeriods - 1;
                         }
                         hScrollBar1.Value = _position;
-                        toolStripLabelExecutionPoint.Text = TimeFormatWithoutMills(executionPosition);
+                        toolStripLabelExecutionPoint.Text = Utils.TimeFormatWithoutMills(executionPosition);
                     }
                 }
                 else {
@@ -1316,7 +1310,7 @@ namespace VixenEditor {
                 UpdateProgress();
             }
             else {
-                toolStripLabelExecutionPoint.Text = TimeFormatWithoutMills(executionPosition);
+                toolStripLabelExecutionPoint.Text = Utils.TimeFormatWithoutMills(executionPosition);
             }
         }
 
@@ -1528,7 +1522,7 @@ namespace VixenEditor {
                 return;
             }
 
-            var width = Math.Min(_systemInterface.Clipboard.GetLength(IndexColsOrWidth), _sequence.TotalEventPeriods);
+            var width = Math.Min(_systemInterface.Clipboard.GetLength(Utils.IndexColsOrWidth), _sequence.TotalEventPeriods);
             AddUndoItem(new Rectangle(0, _selectedLineIndex, width, 1), UndoOriginalBehavior.Overwrite, "Paste");
             for (var col = 0; col < width; col++) {
                 _sequence.EventValues[_editingChannelSortedIndex, col] = _systemInterface.Clipboard[0, col];
@@ -1668,7 +1662,6 @@ namespace VixenEditor {
         }
 
 
-        //TODO Want to make text a high contrast color in this routine.
         private void pictureBoxChannels_Paint(object sender, PaintEventArgs e) {
             e.Graphics.FillRectangle(_channelBackBrush, e.Graphics.VisibleClipBounds);
 
@@ -1694,21 +1687,16 @@ namespace VixenEditor {
                     e.Graphics.FillRectangle(isChannelSelected ? SystemBrushes.Highlight : channel.Brush ?? _channelBackBrush, 0, height, pictureBoxChannels.Width,
                                              _gridRowHeight);
 
-                    var textBrush = Brushes.White;
-                    if (!isChannelSelected) {
-                        var bgColor = channel.Brush != null ? channel.Brush.Color : _channelBackBrush.Color;
-                        var a = 1 - (0.299 * bgColor.R + 0.587 * bgColor.G + 0.114 * bgColor.G) / 255;
-                        if (a < 0.5) textBrush = Brushes.Black;
-                    } 
+                    var textBrush = isChannelSelected 
+                        ? SystemBrushes.HighlightText 
+                        : Utils.GetTextColor(channel.Brush != null ? channel.Brush.Color : _channelBackBrush.Color);
                     
                     if (showNaturalChannelNumbers) {
                         e.Graphics.DrawString(string.Format("{0}:", mappedChannel + 1), _channelNameFont, textBrush, 10f, height + heightAddition);
                     }
 
-                    e.Graphics.DrawString(channel.Name,
-                                          channel.Enabled ? _channelNameFont : _channelStrikeoutFont,
-                                          isChannelSelected ? SystemBrushes.HighlightText : textBrush,
-                                          x, height + heightAddition);
+                    e.Graphics.DrawString(channel.Name, channel.Enabled ? _channelNameFont : _channelStrikeoutFont,
+                                          textBrush, x, height + heightAddition);
 
                     height += _gridRowHeight;
                 }
@@ -1722,19 +1710,16 @@ namespace VixenEditor {
 
                     mappedChannel = _channelOrderMapping[channelOffset];
                     channel = _sequence.Channels[mappedChannel];
+                    var isChannelSelected = (channel == SelectedChannel);
 
                     brush.Color = Color.FromArgb(192, Color.Gray);
 
-                    e.Graphics.FillRectangle(channel == SelectedChannel && showNaturalChannelNumbers ? SystemBrushes.Highlight : channel.Brush ?? _channelBackBrush, 0,
+                    e.Graphics.FillRectangle(isChannelSelected && showNaturalChannelNumbers ? SystemBrushes.Highlight : channel.Brush ?? _channelBackBrush, 0,
                                              height, pictureBoxChannels.Width, _gridRowHeight);
 
-                    var textBrush = Brushes.White;
-                    if (channel != SelectedChannel) {
-                        var bgColor = channel.Brush != null ? channel.Brush.Color : _channelBackBrush.Color;
-                        var a = 1 - (0.299 * bgColor.R + 0.587 * bgColor.G + 0.114 * bgColor.G) / 255;
-                        if (a < 0.5) textBrush = Brushes.Black;
-                    } 
-
+                    var textBrush = isChannelSelected
+                        ? SystemBrushes.HighlightText
+                        : Utils.GetTextColor(channel.Brush != null ? channel.Brush.Color : _channelBackBrush.Color);
 
                     if (showNaturalChannelNumbers) {
                         e.Graphics.DrawString(string.Format("{0}:", mappedChannel + 1), _channelNameFont, textBrush, 10f, height + heightAddition);
@@ -2041,7 +2026,7 @@ namespace VixenEditor {
                 string str;
                 GetCellIntensity(cellX, cellY, out str);
                 toolStripLabelCellIntensity.Text = str;
-                toolStripLabelCurrentCell.Text = string.Format("{0} , {1}", TimeFormatWithMills(cellX * _sequence.EventPeriod),
+                toolStripLabelCurrentCell.Text = string.Format("{0} , {1}", Utils.TimeFormatWithMills(cellX * _sequence.EventPeriod),
                                                                _sequence.Channels[_channelOrderMapping[cellY]].Name);
             }
         }
@@ -2055,7 +2040,7 @@ namespace VixenEditor {
             string intensity;
             GetCellIntensity(cellX, cellY, out intensity);
             toolStripLabelCellIntensity.Text = intensity;
-            toolStripLabelCurrentCell.Text = string.Format("{0} , {1}", TimeFormatWithMills(cellX * _sequence.EventPeriod),
+            toolStripLabelCurrentCell.Text = string.Format("{0} , {1}", Utils.TimeFormatWithMills(cellX * _sequence.EventPeriod),
                                                            _sequence.Channels[_channelOrderMapping[cellY]].Name);
         }
 
@@ -2069,7 +2054,7 @@ namespace VixenEditor {
 
             if (paintFromClipboardToolStripMenuItem.Checked && (_systemInterface.Clipboard != null)) {
                 var rect = NormalizeRect(_lineRect);
-                var clipLen = _systemInterface.Clipboard.GetLength(IndexColsOrWidth);
+                var clipLen = _systemInterface.Clipboard.GetLength(Utils.IndexColsOrWidth);
                 rect.Width += clipLen;
                 EraseRectangleEntity(rect);
                 rect.Width++;
@@ -2077,7 +2062,7 @@ namespace VixenEditor {
                 AddUndoItem(rect, UndoOriginalBehavior.Overwrite, "Chase Lines from Clipboard");
                 var brush = new byte[clipLen];
                 for (var i = 0; i < clipLen; i++) {
-                    brush[i] = _systemInterface.Clipboard[IndexRowsOrHeight, i];
+                    brush[i] = _systemInterface.Clipboard[Utils.IndexRowsOrHeight, i];
                 }
                 BresenhamLine(_lineRect, brush);
             }
@@ -2181,7 +2166,6 @@ namespace VixenEditor {
             HScrollCheck();
             pictureBoxGrid.Refresh();
         }
-        #endregion
 
 
         private void pictureBoxTime_Paint(object sender, PaintEventArgs e) {
@@ -2227,8 +2211,8 @@ namespace VixenEditor {
                         bottomRightPt.X++;
                         e.Graphics.DrawLine(timePen, topLeftPt, bottomRightPt);
                         var str = currentMills >= 60000
-                                      ? TimeFormatWithoutMills(currentMills)
-                                      : TimeFormatMillsOnly(currentMills);
+                                      ? Utils.TimeFormatWithoutMills(currentMills)
+                                      : Utils.TimeFormatMillsOnly(currentMills);
                         var ef = e.Graphics.MeasureString(str, _timeFont);
                         e.Graphics.DrawString(str, _timeFont, timeBrush, x - (ef.Width / 2f), topLeftPt.Y - ef.Height - 5f);
                     }
@@ -2272,30 +2256,34 @@ namespace VixenEditor {
 
 
         private void PlaceSparkle(byte[,] valueArray, int row, int startCol, int decayTime, byte minIntensity, byte maxIntensity) {
-            var num = (int) (Math.Round(_sequence.EventsPerSecond, MidpointRounding.AwayFromZero) * 0.1);
-            var num2 = (int) Math.Round(((float) decayTime) / _sequence.EventPeriod, MidpointRounding.AwayFromZero);
-            if ((startCol + num) >= valueArray.GetLength(1)) {
-                num = valueArray.GetLength(1) - startCol;
+            var valueCount = valueArray.GetLength(Utils.IndexColsOrWidth);
+
+            var minEvents = (int)(Math.Round(_sequence.EventsPerSecond * 0.1, MidpointRounding.AwayFromZero));
+            if ((startCol + minEvents) >= valueCount) {
+                minEvents = valueCount - startCol;
             }
-            if (((startCol + num) + num2) >= valueArray.GetLength(1)) {
-                num2 = (valueArray.GetLength(1) - startCol) - num;
-                if (num2 < 0) {
-                    num2 = 0;
-                }
+
+            int columnOffset;
+            for (columnOffset = 0; columnOffset < minEvents; columnOffset++) {
+                valueArray[row, startCol + columnOffset] = maxIntensity;
             }
-            int num3 = 0;
-            while (num3 < num) {
-                valueArray[row, startCol + num3] = maxIntensity;
-                num3++;
+
+            var decayPeriods = (int)Math.Round(((float)decayTime) / _sequence.EventPeriod, MidpointRounding.AwayFromZero);
+            if (((startCol + minEvents) + decayPeriods) >= valueCount) {
+                decayPeriods = (valueCount - startCol) - minEvents;
             }
-            if (num2 != 0) {
-                byte num4 = (byte) ((maxIntensity - minIntensity) / num2);
-                byte num5 = (byte) (maxIntensity - num4);
-                num3 = startCol + num;
-                while (--num2 > 0) {
-                    valueArray[row, num3++] = num5;
-                    num5 = (byte) (num5 - num4);
-                }
+            
+            if (decayPeriods <= 0) {
+                return;
+            }
+
+            var currentDecay = (byte) ((maxIntensity - minIntensity) / decayPeriods);
+            var currentValue = (byte) (maxIntensity - currentDecay);
+            
+            columnOffset = startCol + minEvents;
+            while (--decayPeriods > 0) {
+                valueArray[row, columnOffset++] = currentValue;
+                currentValue -= currentDecay;
             }
         }
 
@@ -2320,14 +2308,6 @@ namespace VixenEditor {
             if (attributes != null) {
                 attributes["enabled"].Value = item.Checked.ToString();
             }
-            //bool flag = false;
-            //foreach (ToolStripItem item2 in toolStripDropDownButtonPlugins.DropDownItems)
-            //{
-            //    if (item2 is ToolStripMenuItem)
-            //    {
-            //        flag |= ((ToolStripMenuItem) item2).Checked;
-            //    }
-            //}
             IsDirty = true;
         }
 
@@ -2414,18 +2394,20 @@ namespace VixenEditor {
             var left = _selectedCells.Left;
             for (var top = _selectedCells.Top; top < bottom; top++) {
                 var channelOrder = _channelOrderMapping[top];
-                if (_sequence.Channels[channelOrder].Enabled) {
-                    for (var column = left; column < right; column++) {
-                        var computedLevel =
-                            (byte) ((((column - left) / ((float) ((right - left) - 1))) * (endingLevel - startingLevel)) + startingLevel);
-                        if (computedLevel < _sequence.MinimumLevel) {
-                            computedLevel = _sequence.MinimumLevel;
-                        }
-                        else if (computedLevel > _sequence.MaximumLevel) {
-                            computedLevel = _sequence.MaximumLevel;
-                        }
-                        _sequence.EventValues[channelOrder, column] = computedLevel;
+                if (!_sequence.Channels[channelOrder].Enabled) {
+                    continue;
+                }
+
+                for (var column = left; column < right; column++) {
+                    var computedLevel =
+                        (byte) ((((column - left) / ((float) ((right - left) - 1))) * (endingLevel - startingLevel)) + startingLevel);
+                    if (computedLevel < _sequence.MinimumLevel) {
+                        computedLevel = _sequence.MinimumLevel;
                     }
+                    else if (computedLevel > _sequence.MaximumLevel) {
+                        computedLevel = _sequence.MaximumLevel;
+                    }
+                    _sequence.EventValues[channelOrder, column] = computedLevel;
                 }
             }
             _selectionRectangle.Width = 0;
@@ -2452,14 +2434,14 @@ namespace VixenEditor {
 
         private void ReactToProfileAssignment() {
             //TODO: This is always false for a reason right now
-            //bool flag = _sequence.Profile != null;
-            var flag = false;
+            bool flag = _sequence.Profile != null;
+            //var flag = false;
             flattenProfileIntoSequenceToolStripMenuItem.Enabled = flag;
             detachSequenceFromItsProfileToolStripMenuItem.Enabled = flag;
             channelOutputMaskToolStripMenuItem.Enabled = !flag;
             ReactEditingStateToProfileAssignment();
             SetOrderArraySize(_sequence.ChannelCount);
-            textBoxChannelCount.Text = _sequence.ChannelCount.ToString();
+            textBoxChannelCount.Text = _sequence.ChannelCount.ToString(CultureInfo.InvariantCulture);
             VScrollCheck();
             pictureBoxChannels.Refresh();
             pictureBoxGrid.Refresh();
@@ -2478,51 +2460,50 @@ namespace VixenEditor {
 
 
         private void Redo() {
-            if (_redoStack.Count != 0) {
-                var item = (UndoItem) _redoStack.Pop();
-                var height = 0;
-                var width = 0;
-                if (item.Data != null) {
-                    height = item.Data.GetLength(0);
-                    width = item.Data.GetLength(1);
-                }
-                toolStripButtonRedo.Enabled = redoToolStripMenuItem.Enabled = _redoStack.Count > 0;
-                IsDirty = true;
-                var item2 = new UndoItem(item.Location,
-                                         GetAffectedBlockData(new Rectangle(item.Location.X, item.Location.Y, item.Data.GetLength(1),
-                                                                            item.Data.GetLength(0))), item.Behavior, _sequence, _channelOrderMapping,
-                                         item.OriginalAction);
-                switch (item.Behavior) {
-                    case UndoOriginalBehavior.Overwrite:
-                        DisjointedOverwrite(item.Location.X, item.Data, item.ReferencedChannels);
-                        pictureBoxGrid.Invalidate(new Rectangle((item.Location.X - hScrollBar1.Value) * _periodPixelWidth,
-                                                                (item.Location.Y - vScrollBar1.Value) * _gridRowHeight, width * _periodPixelWidth,
-                                                                height * _gridRowHeight));
-                        break;
-
-                    case UndoOriginalBehavior.Removal:
-                        DisjointedRemove(item.Location.X, width, height, item.ReferencedChannels);
-                        pictureBoxGrid.Refresh();
-                        break;
-
-                    case UndoOriginalBehavior.Insertion:
-                        DisjointedInsert(item.Location.X, width, height, item.ReferencedChannels);
-                        DisjointedOverwrite(item.Location.X, item.Data, item.ReferencedChannels);
-                        pictureBoxGrid.Refresh();
-                        break;
-                }
-                UpdateRedoText();
-                _undoStack.Push(item2);
-                toolStripButtonUndo.Enabled = undoToolStripMenuItem.Enabled = true;
-                UpdateUndoText();
+            if (_redoStack.Count == 0) {
+                return;
             }
+
+            var undo = (UndoItem) _redoStack.Pop();
+            var height = undo.Data == null ? 0 : undo.Data.GetLength(Utils.IndexRowsOrHeight);
+            var width = undo.Data == null ? 0 : undo.Data.GetLength(Utils.IndexColsOrWidth);
+
+            toolStripButtonRedo.Enabled = redoToolStripMenuItem.Enabled = _redoStack.Count > 0;
+            IsDirty = true;
+
+            var redo = new UndoItem(undo.Location, GetAffectedBlockData(new Rectangle(undo.Location.X, undo.Location.Y, width, height)),
+                                     undo.Behavior, _sequence, _channelOrderMapping, undo.OriginalAction);
+            
+            switch (undo.Behavior) {
+                case UndoOriginalBehavior.Overwrite:
+                    DisjointedOverwrite(undo.Location.X, undo.Data, undo.ReferencedChannels);
+                    pictureBoxGrid.Invalidate(new Rectangle((undo.Location.X - hScrollBar1.Value) * _periodPixelWidth,
+                                                            (undo.Location.Y - vScrollBar1.Value) * _gridRowHeight, width * _periodPixelWidth,
+                                                            height * _gridRowHeight));
+                    break;
+
+                case UndoOriginalBehavior.Removal:
+                    DisjointedRemove(undo.Location.X, width, height, undo.ReferencedChannels);
+                    pictureBoxGrid.Refresh();
+                    break;
+
+                case UndoOriginalBehavior.Insertion:
+                    DisjointedInsert(undo.Location.X, width, height, undo.ReferencedChannels);
+                    DisjointedOverwrite(undo.Location.X, undo.Data, undo.ReferencedChannels);
+                    pictureBoxGrid.Refresh();
+                    break;
+            }
+            UpdateRedoText();
+            _undoStack.Push(redo);
+            toolStripButtonUndo.Enabled = undoToolStripMenuItem.Enabled = true;
+            UpdateUndoText();
         }
 
 
         private void RefreshAll() {
             SetOrderArraySize(_sequence.ChannelCount);
             textBoxChannelCount.Text = _sequence.ChannelCount.ToString();
-            textBoxProgramLength.Text = TimeFormatWithMills(_sequence.Time);
+            textBoxProgramLength.Text = Utils.TimeFormatWithMills(_sequence.Time);
             pictureBoxGrid.Refresh();
             pictureBoxChannels.Refresh();
             pictureBoxTime.Refresh();
@@ -2535,22 +2516,23 @@ namespace VixenEditor {
             if (_sequence.Profile != null) {
                 MessageBox.Show("This sequence is attached to a profile.\nChanges made to the profile's channel outputs will be reflected here.",
                                 Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;
             }
-            else {
-                ChannelOrderDialog dialog = new ChannelOrderDialog(_sequence.OutputChannels, null);
-                dialog.Text = "Channel Output Mapping";
-                if (dialog.ShowDialog() == DialogResult.OK) {
-                    List<VixenPlus.Channel> channelMapping = dialog.ChannelMapping;
-                    foreach (VixenPlus.Channel channel in _sequence.Channels) {
-                        channel.OutputChannel = channelMapping.IndexOf(channel);
-                    }
-                    if (_showingOutputs) {
-                        pictureBoxChannels.Refresh();
-                        pictureBoxGrid.Refresh();
-                    }
-                    IsDirty = true;
+
+            using (var dialog = new ChannelOrderDialog(_sequence.OutputChannels, null) {Text = "Channel Output Mapping"}) {
+                if (dialog.ShowDialog() != DialogResult.OK) {
+                    return;
                 }
-                dialog.Dispose();
+
+                var channelMapping = dialog.ChannelMapping;
+                foreach (var channel in _sequence.Channels) {
+                    channel.OutputChannel = channelMapping.IndexOf(channel);
+                }
+                if (_showingOutputs) {
+                    pictureBoxChannels.Refresh();
+                    pictureBoxGrid.Refresh();
+                }
+                IsDirty = true;
             }
         }
 
@@ -2567,7 +2549,7 @@ namespace VixenEditor {
 
 
         private void resetAllToolbarsToolStripMenuItem_Click(object sender, EventArgs e) {
-            VixenEditor.ToolStripManager.LoadSettings(this, _preferences.XmlDoc.DocumentElement, "reset");
+            ToolStripManager.LoadSettings(this, _preferences.XmlDoc.DocumentElement, "reset");
             foreach (ToolStripItem item in toolbarsToolStripMenuItem.DropDownItems) {
                 if ((item is ToolStripMenuItem) && (item.Tag != null)) {
                     ((ToolStripMenuItem) item).Checked = true;
@@ -2577,44 +2559,52 @@ namespace VixenEditor {
 
 
         public override DialogResult RunWizard(ref EventSequence resultSequence) {
-            NewSequenceWizardDialog dialog = new NewSequenceWizardDialog(_systemInterface.UserPreferences);
-            if (dialog.ShowDialog() == DialogResult.OK) {
-                resultSequence = dialog.Sequence;
-                dialog.Dispose();
-                return DialogResult.OK;
+            DialogResult result;
+            using (var dialog = new NewSequenceWizardDialog(_systemInterface.UserPreferences)) {
+                result = dialog.ShowDialog();
+                if (result == DialogResult.OK) {
+                    resultSequence = dialog.Sequence;
+                }
             }
-            dialog.Dispose();
-            return DialogResult.Cancel;
+            return result;
         }
 
 
         private void saveAsARoutineToolStripMenuItem_Click(object sender, EventArgs e) {
             DialogResult result;
             var path = string.Empty;
-            var dialog = new TextQueryDialog(Vendor.ProductName, "Name of the routine", string.Empty);
-            do {
-                if ((result = dialog.ShowDialog()) == DialogResult.OK) {
+            using (var dialog = new TextQueryDialog(Vendor.ProductName, "Name of the routine", string.Empty)) {
+                do {
+                    result = dialog.ShowDialog();
+                    if (result != DialogResult.OK) {
+                        continue;
+                    }
+
                     path = Path.Combine(Paths.RoutinePath, Path.GetFileNameWithoutExtension(dialog.Response) + ".vir");
                     if (File.Exists(path)) {
                         result = MessageBox.Show("File already exists.  Overwrite?", Vendor.ProductName, MessageBoxButtons.YesNoCancel,
                                                  MessageBoxIcon.Question);
                     }
-                }
-            } while (result == DialogResult.No);
-            dialog.Dispose();
-            if (result != DialogResult.Cancel) {
-                var writer = new StreamWriter(path);
+                } while (result == DialogResult.No);
+            }
+
+            if (result == DialogResult.Cancel) {
+                return;
+            }
+
+            using (var writer = new StreamWriter(path)) {
                 var buffer = CellsToArray();
-                for (var i = 0; i < buffer.GetLength(0); i++) {
-                    for (var j = 0; j < buffer.GetLength(1); j++) {
-                        writer.Write(buffer[i, j].ToString(CultureInfo.InvariantCulture) + " ");
+                var rows = buffer.GetLength(Utils.IndexRowsOrHeight);
+                var cols = buffer.GetLength(Utils.IndexColsOrWidth);
+                for (var row = 0; row < rows; row++) {
+                    for (var col = 0; col < cols; col++) {
+                        writer.Write(buffer[row, col].ToString(CultureInfo.InvariantCulture) + " ");
                     }
                     writer.WriteLine();
                 }
-                writer.Close();
-                MessageBox.Show(string.Format("Routine \"{0}\" has been saved", Path.GetFileNameWithoutExtension(path)), Vendor.ProductName,
-                                MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
+            MessageBox.Show(string.Format("Routine \"{0}\" has been saved", Path.GetFileNameWithoutExtension(path)), Vendor.ProductName,
+                            MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
 
@@ -2637,9 +2627,10 @@ namespace VixenEditor {
 
 
         private void ScrollSelectionDown(int cellX) {
-            var num = pictureBoxGrid.PointToScreen(new Point(pictureBoxGrid.Left, pictureBoxGrid.Bottom)).Y - pictureBoxTime.Height;
-            _selectedRange.Width = (cellX + 1) - _selectedRange.Left;
-            while (MousePosition.Y > num) {
+            _selectedRange.Width = cellX + 1 - _selectedRange.Left;
+
+            var y = pictureBoxGrid.PointToScreen(new Point(pictureBoxGrid.Left, pictureBoxGrid.Bottom)).Y - pictureBoxTime.Height;
+            while (MousePosition.Y > y) {
                 var cellY = pictureBoxGrid.PointToClient(MousePosition).Y / _periodPixelWidth;
                 cellY += vScrollBar1.Value;
                 if (cellY >= (_sequence.ChannelCount - 1)) {
@@ -2661,7 +2652,7 @@ namespace VixenEditor {
 
 
         private void ScrollSelectionLeft(int cellY) {
-            int x = pictureBoxGrid.PointToScreen(new Point(pictureBoxGrid.Left, pictureBoxGrid.Top)).X;
+            var x = pictureBoxGrid.PointToScreen(new Point(pictureBoxGrid.Left, pictureBoxGrid.Top)).X;
             while ((MousePosition.X < x) && (hScrollBar1.Value != 0)) {
                 _selectedRange.Height = (cellY + 1) - _selectedRange.Top;
                 _selectedRange.Width--;
@@ -2672,8 +2663,9 @@ namespace VixenEditor {
 
 
         private void ScrollSelectionRight(int cellY) {
-            var x = pictureBoxGrid.PointToScreen(new Point(pictureBoxGrid.Right, pictureBoxGrid.Top)).X;
             _selectedRange.Height = (cellY + 1) - _selectedRange.Top;
+
+            var x = pictureBoxGrid.PointToScreen(new Point(pictureBoxGrid.Right, pictureBoxGrid.Top)).X;
             while (MousePosition.X > x) {
                 var cellX = pictureBoxGrid.PointToClient(MousePosition).X / _periodPixelWidth;
                 cellX += hScrollBar1.Value;
@@ -2719,7 +2711,7 @@ namespace VixenEditor {
                 }
                 ((ToolStripMenuItem) item).Checked = true;
             }
-            if (toolStripDropDownButtonPlugins.DropDownItems.Count > 3) {}
+            if (toolStripDropDownButtonPlugins.DropDownItems.Count > 3) {} //TODO: WTF
         }
 
 
@@ -2736,9 +2728,10 @@ namespace VixenEditor {
                 MessageBox.Show(
                     "This sequence is attached to a profile.\nChanges to the profile affect all sequences attached to it.\n\nIf this is what you want to do, please use the profile manager.",
                     Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;
             }
-            else {
-                var dialog = new AllChannelsColorDialog(_sequence.Channels);
+
+            using (var dialog = new AllChannelsColorDialog(_sequence.Channels)) {
                 if (dialog.ShowDialog() == DialogResult.OK) {
                     var channelCount = _sequence.ChannelCount;
                     var channelColors = dialog.ChannelColors;
@@ -2746,83 +2739,86 @@ namespace VixenEditor {
                         _sequence.Channels[i].Color = channelColors[i];
                     }
                 }
-                dialog.Dispose();
-                IsDirty = true;
-                pictureBoxChannels.Refresh();
-                pictureBoxGrid.Refresh();
             }
+            IsDirty = true;
+            pictureBoxChannels.Refresh();
+            pictureBoxGrid.Refresh();
         }
 
 
         private void SetAudioSpeed(float rate) {
-            if ((rate > 0f) && (rate <= 1f)) {
-                xToolStripMenuItem.Checked = false;
-                xToolStripMenuItem1.Checked = false;
-                xToolStripMenuItem2.Checked = false;
-                normalToolStripMenuItem1.Checked = false;
-                otherToolStripMenuItem.Checked = false;
-                SpeedQtrTsb.Checked = false;
-                SpeedHalfTsb.Checked = false;
-                SpeedThreeQtrTsb.Checked = false;
-                SpeedNormalTsb.Checked = false;
-                SpeedVariableTsb.Checked = false;
-                if (Equals(rate, 0.25f)) {
-                    xToolStripMenuItem.Checked = true;
-                    SpeedQtrTsb.Checked = true;
-                }
-                else if (Equals(rate, 0.5f)) {
-                    xToolStripMenuItem1.Checked = true;
-                    SpeedHalfTsb.Checked = true;
-                }
-                else if (Equals(rate, 0.75f)) {
-                    xToolStripMenuItem2.Checked = true;
-                    SpeedThreeQtrTsb.Checked = true;
-                }
-                else if (Equals(rate, 1f)) {
-                    normalToolStripMenuItem1.Checked = true;
-                    SpeedNormalTsb.Checked = true;
-                }
-                else {
-                    otherToolStripMenuItem.Checked = true;
-                    SpeedVariableTsb.Checked = true;
-                }
-                _executionInterface.SetAudioSpeed(_executionContextHandle, rate);
+            if ((!(rate > 0f)) || (!(rate <= 1f))) {
+                return;
             }
+
+            xToolStripMenuItem.Checked = false;
+            xToolStripMenuItem1.Checked = false;
+            xToolStripMenuItem2.Checked = false;
+            normalToolStripMenuItem1.Checked = false;
+            otherToolStripMenuItem.Checked = false;
+            SpeedQtrTsb.Checked = false;
+            SpeedHalfTsb.Checked = false;
+            SpeedThreeQtrTsb.Checked = false;
+            SpeedNormalTsb.Checked = false;
+            SpeedVariableTsb.Checked = false;
+            if (Equals(rate, 0.25f)) {
+                xToolStripMenuItem.Checked = true;
+                SpeedQtrTsb.Checked = true;
+            }
+            else if (Equals(rate, 0.5f)) {
+                xToolStripMenuItem1.Checked = true;
+                SpeedHalfTsb.Checked = true;
+            }
+            else if (Equals(rate, 0.75f)) {
+                xToolStripMenuItem2.Checked = true;
+                SpeedThreeQtrTsb.Checked = true;
+            }
+            else if (Equals(rate, 1f)) {
+                normalToolStripMenuItem1.Checked = true;
+                SpeedNormalTsb.Checked = true;
+            }
+            else {
+                otherToolStripMenuItem.Checked = true;
+                SpeedVariableTsb.Checked = true;
+            }
+            _executionInterface.SetAudioSpeed(_executionContextHandle, rate);
         }
 
 
         private void SetChannelCount(int count) {
-            if (count != _sequence.ChannelCount) {
-                int num;
-                bool flag = false;
-                int num2 = Math.Min(_sequence.ChannelCount, count);
-                for (num = 0; num < num2; num++) {
-                    if (_sequence.Channels[num].OutputChannel > (count - 1)) {
-                        flag = true;
-                        break;
-                    }
-                }
-                if (flag) {
-                    if (
-                        MessageBox.Show(
-                            "With the new channel count, some channels would refer to outputs that no longer exist.\nTo keep the sequence valid, channel outputs would have to be reset.\n\nDo you want to keep the new channel count?",
-                            Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) != DialogResult.Yes) {
-                        textBoxChannelCount.Text = _sequence.ChannelCount.ToString(CultureInfo.InvariantCulture);
-                        return;
-                    }
-                    for (num = 0; num < _sequence.ChannelCount; num++) {
-                        _sequence.Channels[num].OutputChannel = num;
-                    }
-                }
-                SetOrderArraySize(count);
-                _sequence.ChannelCount = count;
-                textBoxChannelCount.Text = count.ToString(CultureInfo.InvariantCulture);
-                VScrollCheck();
-                pictureBoxChannels.Refresh();
-                pictureBoxGrid.Refresh();
-                IsDirty = true;
-                MessageBox.Show("Channel count has been updated.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            if (count == _sequence.ChannelCount) {
+                return;
             }
+
+            int channel;
+            var flag = false;
+            var channelCount = Math.Min(_sequence.ChannelCount, count);
+            for (channel = 0; channel < channelCount; channel++) {
+                if (_sequence.Channels[channel].OutputChannel > (count - 1)) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag) {
+                if (
+                    MessageBox.Show(
+                        "With the new channel count, some channels would refer to outputs that no longer exist.\nTo keep the sequence valid, channel outputs would have to be reset.\n\nDo you want to keep the new channel count?",
+                        Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) != DialogResult.Yes) {
+                    textBoxChannelCount.Text = _sequence.ChannelCount.ToString(CultureInfo.InvariantCulture);
+                    return;
+                }
+                for (channel = 0; channel < _sequence.ChannelCount; channel++) {
+                    _sequence.Channels[channel].OutputChannel = channel;
+                }
+            }
+            SetOrderArraySize(count);
+            _sequence.ChannelCount = count;
+            textBoxChannelCount.Text = count.ToString(CultureInfo.InvariantCulture);
+            VScrollCheck();
+            pictureBoxChannels.Refresh();
+            pictureBoxGrid.Refresh();
+            IsDirty = true;
+            MessageBox.Show("Channel count has been updated.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
 
@@ -2830,7 +2826,7 @@ namespace VixenEditor {
             _drawingLevel = level;
             toolStripLabelCurrentDrawingIntensity.Text = _actualLevels
                                                              ? level.ToString(CultureInfo.InvariantCulture)
-                                                             : string.Format("{0}%", ToPercentage(level));
+                                                             : string.Format("{0}%", Utils.ToPercentage(level));
         }
 
 
@@ -2854,9 +2850,9 @@ namespace VixenEditor {
             if (count < _channelOrderMapping.Count) {
                 var list = new List<int>();
                 list.AddRange(_channelOrderMapping);
-                foreach (var num in list) {
-                    if (num >= count) {
-                        _channelOrderMapping.Remove(num);
+                foreach (var channel in list) {
+                    if (channel >= count) {
+                        _channelOrderMapping.Remove(channel);
                     }
                 }
             }
@@ -2885,38 +2881,37 @@ namespace VixenEditor {
         }
 
 
-        private bool SetProgramTime(int milliseconds) {
+        private void SetProgramTime(int milliseconds) {
             try {
                 _sequence.Time = milliseconds;
             }
             catch {
                 MessageBox.Show("Cannot set the sequence length.\nThere is audio associated which would exceed that length.", Vendor.ProductName,
                                 MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                textBoxProgramLength.Text = TimeFormatWithMills(_sequence.Time);
-                return false;
+                textBoxProgramLength.Text = Utils.TimeFormatWithMills(_sequence.Time);
+                return;
             }
-            textBoxProgramLength.Text = TimeFormatWithMills(_sequence.Time);
+            textBoxProgramLength.Text = Utils.TimeFormatWithMills(_sequence.Time);
             HScrollCheck();
             pictureBoxTime.Refresh();
             pictureBoxGrid.Refresh();
-            return true;
         }
 
 
         private void SetVariablePlaybackSpeed(Point dialogScreenCoords) {
-            var dialog = new AudioSpeedDialog();
-            if ((dialogScreenCoords.X == 0) && (dialogScreenCoords.Y == 0)) {
-                dialog.StartPosition = FormStartPosition.CenterScreen;
+            using (var dialog = new AudioSpeedDialog()) {
+                if ((dialogScreenCoords.X == 0) && (dialogScreenCoords.Y == 0)) {
+                    dialog.StartPosition = FormStartPosition.CenterScreen;
+                }
+                else {
+                    dialog.StartPosition = FormStartPosition.Manual;
+                    dialog.Location = dialogScreenCoords;
+                }
+                dialog.Rate = _executionInterface.GetAudioSpeed(_executionContextHandle);
+                if (dialog.ShowDialog() == DialogResult.OK) {
+                    SetAudioSpeed(dialog.Rate);
+                }
             }
-            else {
-                dialog.StartPosition = FormStartPosition.Manual;
-                dialog.Location = dialogScreenCoords;
-            }
-            dialog.Rate = _executionInterface.GetAudioSpeed(_executionContextHandle);
-            if (dialog.ShowDialog() == DialogResult.OK) {
-                SetAudioSpeed(dialog.Rate);
-            }
-            dialog.Dispose();
         }
 
 
@@ -2926,9 +2921,9 @@ namespace VixenEditor {
             for (var i = 0; i < channels.Count; i++) {
                 channels[i] = _sequence.Channels[_channelOrderMapping[i]];
             }
-            var dialog = new ChannelPropertyDialog(channels, SelectedChannel, true);
-            dialog.ShowDialog();
-            dialog.Dispose();
+            using (var dialog = new ChannelPropertyDialog(channels, SelectedChannel, true)) {
+                dialog.ShowDialog();
+            }
             pictureBoxChannels.Refresh();
             pictureBoxGrid.Refresh();
             IsDirty = true;
@@ -2936,53 +2931,56 @@ namespace VixenEditor {
 
 
         private void sortByChannelNumberToolStripMenuItem_Click(object sender, EventArgs e) {
-            _printingChannelList = _sequence.Channels;
-            if (printDialog.ShowDialog() == DialogResult.OK) {
-                _printDocument.DocumentName = "Vixen channel configuration";
-                //_printingChannelIndex = 0;
-                _printDocument.Print();
-            }
+            //_printingChannelList = _sequence.Channels;
+            //if (printDialog.ShowDialog() != DialogResult.OK) {
+            //    return;
+            //}
+
+            //_printDocument.DocumentName = "Vixen channel configuration";
+            ////_printingChannelIndex = 0;
+            //_printDocument.Print();
         }
 
 
         private void sortByChannelOutputToolStripMenuItem_Click(object sender, EventArgs e) {
-            _printingChannelList = new List<VixenPlus.Channel>();
-            var collection = new VixenPlus.Channel[_sequence.ChannelCount];
-            foreach (var channel in _sequence.Channels) {
-                collection[channel.OutputChannel] = channel;
-            }
-            _printingChannelList.AddRange(collection);
-            if (printDialog.ShowDialog() == DialogResult.OK) {
-                _printDocument.DocumentName = "Vixen channel configuration";
-                //_printingChannelIndex = 0;
-                _printDocument.Print();
-            }
+            //_printingChannelList = new List<VixenPlus.Channel>();
+            //var collection = new VixenPlus.Channel[_sequence.ChannelCount];
+            //foreach (var channel in _sequence.Channels) {
+            //    collection[channel.OutputChannel] = channel;
+            //}
+            //_printingChannelList.AddRange(collection);
+            
+            //if (printDialog.ShowDialog() != DialogResult.OK) {
+            //    return;
+            //}
+            //_printDocument.DocumentName = "Vixen channel configuration";
+            ////_printingChannelIndex = 0;
+            //_printDocument.Print();
         }
 
 
         private void SparkleGenerator(byte[,] values, params int[] effectParameters) {
-            var num = (int) _sequence.EventsPerSecond;
-            var maxValue = num - effectParameters[0];
+            var maxValue = (int)_sequence.EventsPerSecond - effectParameters[0];
             var decayTime = effectParameters[1];
-            for (var i = 0; i < values.GetLength(0); i++) {
-                for (var k = 0; k < values.GetLength(1); k++) {
-                    values[i, k] = _sequence.MinimumLevel;
+            var height = values.GetLength(Utils.IndexRowsOrHeight);
+            var width = values.GetLength(Utils.IndexColsOrWidth);            
+            
+          
+            for (var row = 0; row < height; row++) {
+                for (var col = 0; col < width; col++) {
+                    values[row, col] = _sequence.MinimumLevel;
                 }
             }
-            //var eventCount = (int) Math.Round(decayTime / ((float) _sequence.EventPeriod), MidpointRounding.AwayFromZero);
-            var length = values.GetLength(0);
-            var num8 = values.GetLength(1);
-            var numArray = new int[num8];
-            var index = 0;
+
+            var sparkleArray = new int[width];
             var random = new Random();
-            while (index < num8) {
-                numArray[index] = random.Next(length) + 1;
-                var num10 = random.Next(maxValue);
-                index += Math.Max(num10, 1);
+            for (var index = 0; index < width; ) {
+                sparkleArray[index] = random.Next(height) + 1;
+                index += Math.Max(random.Next(maxValue), 1);
             }
-            for (var j = 0; j < numArray.Length; j++) {
-                if (numArray[j] != 0) {
-                    PlaceSparkle(values, numArray[j] - 1, j, decayTime, (byte) effectParameters[2], (byte) effectParameters[3]);
+            for (var sparkleElement = 0; sparkleElement < sparkleArray.Length; sparkleElement++) {
+                if (sparkleArray[sparkleElement] != 0) {
+                    PlaceSparkle(values, sparkleArray[sparkleElement] - 1, sparkleElement, decayTime, (byte) effectParameters[2], (byte) effectParameters[3]);
                 }
             }
         }
@@ -3041,22 +3039,23 @@ namespace VixenEditor {
 
 
         private void HandleBookmarkKeys(KeyEventArgs e) {
-            if (e.Control && e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D9) {
-                var index = ((int) e.KeyCode) - (int) Keys.D0;
-                e.Handled = true;
+            if (!e.Control || e.KeyCode < Keys.D0 || e.KeyCode > Keys.D9) {
+                return;
+            }
 
-                if (e.Shift) {
-                    _bookmarks[index] = (_bookmarks[index] == _selectedCells.Left) ? -1 : _selectedCells.Left;
-                    pictureBoxTime.Refresh();
-                }
-                else if (_bookmarks[index] != -1) {
-                    hScrollBar1.Value = _bookmarks[index];
-                }
+            var index = ((int) e.KeyCode) - (int) Keys.D0;
+            e.Handled = true;
+
+            if (e.Shift) {
+                _bookmarks[index] = (_bookmarks[index] == _selectedCells.Left) ? -1 : _selectedCells.Left;
+                pictureBoxTime.Refresh();
+            }
+            else if (_bookmarks[index] != -1) {
+                hScrollBar1.Value = _bookmarks[index];
             }
         }
 
 
-        // todo refactor
         private void HandleSpaceAndArrowKeys(KeyEventArgs e) {
             switch (e.KeyCode) {
                 case Keys.Space: {
@@ -3266,12 +3265,14 @@ namespace VixenEditor {
 
 
         private void HandleIntensityAdjustKeys(KeyEventArgs e) {
-            if (((e.KeyCode == Keys.Up) || (e.KeyCode == Keys.Down)) && e.Control) {
-                IntensityAdjustDialogCheck();
-                var change = e.Alt ? 1 : _intensityLargeDelta;
-                m_intensityAdjustDialog.Delta = (e.KeyCode == Keys.Up) ? change : -change;
-                e.Handled = true;
+            if (((e.KeyCode != Keys.Up) && (e.KeyCode != Keys.Down)) || !e.Control) {
+                return;
             }
+
+            IntensityAdjustDialogCheck();
+            var change = e.Alt ? 1 : _intensityLargeDelta;
+            m_intensityAdjustDialog.Delta = (e.KeyCode == Keys.Up) ? change : -change;
+            e.Handled = true;
         }
 
 
@@ -3536,37 +3537,12 @@ namespace VixenEditor {
         */
 
 
-        private static string TimeFormatMillsOnly(int mills) {
-            return string.Format(":{0:d2}", mills / 1000);
-        }
-        
-        
-        private static string TimeFormatWithoutMills(int mills) {
-            return string.Format("{0:d2}:{1:d2}", mills / 60000, (mills % 60000) / 1000);
-        }
-
-
-        private static string TimeFormatWithMills(int mills) {
-            return string.Format("{0:d2}:{1:d2}.{2:d3}", mills / 60000, (mills % 60000) / 1000, mills % 1000);
-        }
-        
-        
-        private static int ToPercentage(int value) {
-            return (int)Math.Round(value * 100f / Cell8BitMax, MidpointRounding.AwayFromZero);
-        }
-
-
-        private static int ToValue(int percentage) {
-            return (int)Math.Round(percentage / 100f * Cell8BitMax, MidpointRounding.AwayFromZero);
-        }
-
-
         private void toggleOutputChannelsToolStripMenuItem_Click(object sender, EventArgs e) {
             _showingOutputs = !_showingOutputs;
             pictureBoxChannels.Refresh();
         }
 
-
+        //TODO: Refactor when you understand what is being done after the assignment of the dialog.
         private void toolStripButtonAudio_Click(object sender, EventArgs e) {
             var audio = _sequence.Audio;
             var integer = _preferences.GetInteger("SoundDevice");
@@ -3590,11 +3566,11 @@ namespace VixenEditor {
 
 
         private void toolStripButtonChangeIntensity_Click(object sender, EventArgs e) {
-            var dialog = new DrawingIntensityDialog(_sequence, _drawingLevel, _actualLevels);
-            if (dialog.ShowDialog() == DialogResult.OK) {
-                SetDrawingLevel(dialog.SelectedIntensity);
+            using (var dialog = new DrawingIntensityDialog(_sequence, _drawingLevel, _actualLevels)) {
+                if (dialog.ShowDialog() == DialogResult.OK) {
+                    SetDrawingLevel(dialog.SelectedIntensity);
+                }
             }
-            dialog.Dispose();
         }
 
 
@@ -3615,151 +3591,137 @@ namespace VixenEditor {
 
 
         private void toolStripButtonDeleteOrder_Click(object sender, EventArgs e) {
-            if (
-                MessageBox.Show(string.Format("Delete channel order '{0}'?", toolStripComboBoxChannelOrder.Text), Vendor.ProductName,
-                                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
-                _sequence.Sorts.Remove((VixenPlus.SortOrder) toolStripComboBoxChannelOrder.SelectedItem);
-                toolStripComboBoxChannelOrder.Items.RemoveAt(toolStripComboBoxChannelOrder.SelectedIndex);
-                toolStripButtonDeleteOrder.Enabled = false;
-                IsDirty = true;
+            if (MessageBox.Show(string.Format("Delete channel order '{0}'?", toolStripComboBoxChannelOrder.Text), Vendor.ProductName,
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
+                return;
             }
+
+            _sequence.Sorts.Remove((VixenPlus.SortOrder) toolStripComboBoxChannelOrder.SelectedItem);
+            toolStripComboBoxChannelOrder.Items.RemoveAt(toolStripComboBoxChannelOrder.SelectedIndex);
+            toolStripButtonDeleteOrder.Enabled = false;
+            IsDirty = true;
         }
 
 
         private void toolStripButtonFindAndReplace_Click(object sender, EventArgs e) {
             if ((_selectedCells.Width == 0) || (_selectedCells.Height == 0)) {
                 MessageBox.Show("There are no cells to search", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;
             }
-            else {
-                var dialog = new FindAndReplaceDialog(_sequence.MinimumLevel, _sequence.MaximumLevel, _actualLevels);
-                if (dialog.ShowDialog() == DialogResult.OK) {
-                    int left;
-                    int num4;
-                    int num5;
-                    AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, "Find and Replace");
-                    var findValue = dialog.FindValue;
-                    var replaceWithValue = dialog.ReplaceWithValue;
-                    if (_actualLevels) {
-                        for (num5 = _selectedCells.Top; num5 < _selectedCells.Bottom; num5++) {
-                            num4 = _channelOrderMapping[num5];
-                            left = _selectedCells.Left;
-                            while (left < _selectedCells.Right) {
-                                if (_sequence.EventValues[num4, left] == findValue) {
-                                    _sequence.EventValues[num4, left] = replaceWithValue;
-                                }
-                                left++;
-                            }
-                        }
-                    }
-                    else {
-                        for (num5 = _selectedCells.Top; num5 < _selectedCells.Bottom; num5++) {
-                            num4 = _channelOrderMapping[num5];
-                            for (left = _selectedCells.Left; left < _selectedCells.Right; left++) {
-                                if ((byte) ToPercentage(_sequence.EventValues[num4, left]) == findValue) {
-                                    _sequence.EventValues[num4, left] = (byte) ToValue(replaceWithValue);
-                                }
-                            }
-                        }
-                    }
-                    IsDirty = true;
-                    pictureBoxGrid.Refresh();
+
+            using (var dialog = new FindAndReplaceDialog(_sequence.MinimumLevel, _sequence.MaximumLevel, _actualLevels)) {
+                if (dialog.ShowDialog() != DialogResult.OK) {
+                    return;
                 }
-                dialog.Dispose();
+
+                AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, "Find and Replace");
+                var findValue = dialog.FindValue;
+                var replaceWithValue = _actualLevels ? dialog.ReplaceWithValue : (byte) Utils.ToValue(dialog.ReplaceWithValue);
+                for (var row = _selectedCells.Top; row < _selectedCells.Bottom; row++) {
+                    var channel = _channelOrderMapping[row];
+                    for (var left = _selectedCells.Left; left < _selectedCells.Right; left++) {
+                        var currentValue = _actualLevels
+                                               ? _sequence.EventValues[channel, left] 
+                                               : Utils.ToPercentage(_sequence.EventValues[channel, left]);
+                        if (currentValue == findValue) {
+                            _sequence.EventValues[channel, left] = replaceWithValue;
+                        }
+                    }
+                }
+                IsDirty = true;
+                pictureBoxGrid.Refresh();
             }
         }
 
 
         private void toolStripButtonInsertPaste_Click(object sender, EventArgs e) {
-            if (_systemInterface.Clipboard != null) {
-                byte[,] clipboard = _systemInterface.Clipboard;
-                int length = clipboard.GetLength(0);
-                int width = clipboard.GetLength(1);
-                int left = _selectedCells.Left;
-                int num5 = left + width;
-                int num6 = _sequence.TotalEventPeriods - num5;
-                for (int i = 0; (i < length) && ((_selectedCells.Top + i) < _sequence.ChannelCount); i++) {
-                    int num7 = _channelOrderMapping[_selectedCells.Top + i];
-                    for (int j = Math.Min(num6, _sequence.TotalEventPeriods - _selectedCells.Left) - 1; j >= 0; j--) {
-                        _sequence.EventValues[num7, num5 + j] = _sequence.EventValues[num7, left + j];
-                    }
-                }
-                PasteOver();
-                AddUndoItem(new Rectangle(_selectedCells.X, _selectedCells.Y, width, length), UndoOriginalBehavior.Insertion, "Insert Paste");
+            if (_systemInterface.Clipboard == null) {
+                return;
             }
-        }
 
+            var rows = _systemInterface.Clipboard.GetLength(Utils.IndexRowsOrHeight);
+            var cols = _systemInterface.Clipboard.GetLength(Utils.IndexColsOrWidth);
+            var oldColumnOffset = _selectedCells.Left;
+            var newColumnOffset = oldColumnOffset + cols;
+            var maxPeriods = Math.Min(_sequence.TotalEventPeriods - newColumnOffset, _sequence.TotalEventPeriods - oldColumnOffset);
+
+            for (var row = 0; (row < rows) && ((_selectedCells.Top + row) < _sequence.ChannelCount); row++) {
+                var channel = _channelOrderMapping[_selectedCells.Top + row];
+                for (var col = maxPeriods - 1; col >= 0; col--) {
+                    _sequence.EventValues[channel, newColumnOffset + col] = _sequence.EventValues[channel, oldColumnOffset + col];
+                }
+            }
+
+            PasteOver();
+            AddUndoItem(new Rectangle(_selectedCells.X, _selectedCells.Y, cols, rows), UndoOriginalBehavior.Insertion, "Insert Paste");
+        }
+#endregion
 
         private void toolStripButtonIntensity_Click(object sender, EventArgs e) {
-            int result = 0;
-            bool flag = false;
+            var result = 0;
+            var flag = false;
+            var top = _selectedCells.Top;
+            var left = _selectedCells.Left;
+            var isSingleCell = (_selectedCells.Width == 1) && (_selectedCells.Height == 1);
+            
             while (!flag) {
-                string str;
-                TextQueryDialog dialog;
                 flag = true;
                 if (_actualLevels) {
-                    str = "255";
-                    if ((_selectedCells.Width == 1) && (_selectedCells.Height == 1)) {
-                        str =
-                            _sequence.EventValues[_channelOrderMapping[_selectedCells.Top], _selectedCells.Left].ToString(CultureInfo.InvariantCulture);
-                    }
-                    dialog = new TextQueryDialog(Vendor.ProductName, "What intensity level (0-255)?", str);
-                    if (dialog.ShowDialog() != DialogResult.OK) {
-                        dialog.Dispose();
-                        return;
-                    }
-                    if (!int.TryParse(dialog.Response, out result)) {
-                        MessageBox.Show("Not a valid number.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        flag = false;
-                    }
-                    if ((result < 0) || (result > 0xff)) {
-                        MessageBox.Show("Not a valid value.\nPlease select a value between 0 and 255.", Vendor.ProductName, MessageBoxButtons.OK,
-                                        MessageBoxIcon.Exclamation);
-                        flag = false;
-                    }
-                    dialog.Dispose();
-                }
-                else {
-                    str = "100";
-                    if ((_selectedCells.Width == 1) && (_selectedCells.Height == 1)) {
-                        str =
-                            ((int)
-                             Math.Round(
-                                 (double) ((_sequence.EventValues[_channelOrderMapping[_selectedCells.Top], _selectedCells.Left] * 100f) / 255f),
-                                 MidpointRounding.AwayFromZero)).ToString(CultureInfo.InvariantCulture);
-                    }
-                    dialog = new TextQueryDialog(Vendor.ProductName, "What % intensity (0-100)?", str);
-                    if (dialog.ShowDialog() != DialogResult.OK) {
-                        dialog.Dispose();
-                        return;
-                    }
-                    try {
-                        result = (int) Math.Round((double) ((Convert.ToSingle(dialog.Response) * 255f) / 100f), MidpointRounding.AwayFromZero);
-                        if ((result < 0) || (result > 0xff)) {
-                            MessageBox.Show("Not a valid value.\nPlease select a value between 0 and 100.", Vendor.ProductName, MessageBoxButtons.OK,
+                    var initialValue = isSingleCell 
+                        ? _sequence.EventValues[_channelOrderMapping[top], left].ToString(CultureInfo.InvariantCulture) 
+                        : @"255";
+
+                    using (var dialog = new TextQueryDialog(Vendor.ProductName, "What intensity level (0-255)?", initialValue)) {
+                        if (dialog.ShowDialog() != DialogResult.OK) {
+                            return;
+                        }
+                        if (!int.TryParse(dialog.Response, out result)) {
+                            MessageBox.Show("Not a valid number.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            flag = false;
+                        }
+                        if ((result < 0) || (result > 255)) {
+                            MessageBox.Show("Not a valid value.\nPlease select a value between 0 and 255.", Vendor.ProductName, MessageBoxButtons.OK,
                                             MessageBoxIcon.Exclamation);
                             flag = false;
                         }
                     }
-                    catch {
-                        MessageBox.Show("Not a valid number.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        flag = false;
-                    }
-                    finally {
-                        dialog.Dispose();
+                }
+                else {
+                    var initialValue = isSingleCell 
+                        ? Utils.ToPercentage(_sequence.EventValues[_channelOrderMapping[top], left]).ToString(CultureInfo.InvariantCulture) 
+                        : @"100";
+
+                    using (var dialog = new TextQueryDialog(Vendor.ProductName, "What % intensity (0-100)?", initialValue)) {
+                        if (dialog.ShowDialog() != DialogResult.OK) {
+                            return;
+                        }
+                        try {
+                            result = Utils.ToValue(Convert.ToSingle(dialog.Response));
+                            if ((result < 0) || (result > 255)) {
+                                MessageBox.Show("Not a valid value.\nPlease select a value between 0 and 100.", Vendor.ProductName, MessageBoxButtons.OK,
+                                                MessageBoxIcon.Exclamation);
+                                flag = false;
+                            }
+                        }
+                        catch {
+                            MessageBox.Show("Not a valid number.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            flag = false;
+                        }
                     }
                 }
             }
             AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, "Intensity");
-            int bottom = _selectedCells.Bottom;
-            int right = _selectedCells.Right;
-            for (int i = _selectedCells.Top; i < bottom; i++) {
-                int num5 = _channelOrderMapping[i];
-                if (_sequence.Channels[num5].Enabled) {
-                    for (int j = _selectedCells.Left; j < right; j++) {
-                        _sequence.EventValues[num5, j] = (byte) result;
-                    }
+
+            for (var row = top; row < _selectedCells.Bottom; row++) {
+                var channel = _channelOrderMapping[row];
+                if (!_sequence.Channels[channel].Enabled) {
+                    continue;
+                }
+                for (var col = _selectedCells.Left; col < _selectedCells.Right; col++) {
+                    _sequence.EventValues[channel, col] = (byte) result;
                 }
             }
+
             _selectionRectangle.Width = 0;
             pictureBoxGrid.Invalidate(SelectionToRectangle());
         }
@@ -4547,11 +4509,11 @@ namespace VixenEditor {
 
         private void UpdatePositionLabel(Rectangle rect, bool zeroWidthIsValid) {
             int milliseconds = rect.Left * _sequence.EventPeriod;
-            string str = TimeFormatWithMills(milliseconds);
+            string str = Utils.TimeFormatWithMills(milliseconds);
             if (rect.Width > 1) {
                 int num2 = (rect.Right - 1) * _sequence.EventPeriod;
-                string str2 = TimeFormatWithMills(num2);
-                labelPosition.Text = string.Format("{0} - {1}\n({2})", str, str2, TimeFormatWithMills(num2 - milliseconds));
+                string str2 = Utils.TimeFormatWithMills(num2);
+                labelPosition.Text = string.Format("{0} - {1}\n({2})", str, str2, Utils.TimeFormatWithMills(num2 - milliseconds));
             }
             else if (((rect.Width == 0) && zeroWidthIsValid) || (rect.Width == 1)) {
                 labelPosition.Text = str;
