@@ -21,8 +21,8 @@ namespace VixenEditor
         }
 
 
-        public static string TimeFormatWithoutMills(int mills) {
-            return String.Format("{0:d2}:{1:d2}", mills / MillsPerMinute, (mills % MillsPerMinute) / MillsPerSecond);
+        public static string TimeFormatWithoutMills(int mills, bool suppressLeadingZero = false) {
+            return String.Format(suppressLeadingZero ? "{0:d}:{1:d2}" : "{0:d2}:{1:d2}", mills / MillsPerMinute, (mills % MillsPerMinute) / MillsPerSecond);
         }
 
 
