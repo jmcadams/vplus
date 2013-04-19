@@ -2,23 +2,24 @@ namespace VixenPlus
 {
     public static class Vendor
     {
-        public static string ProductDescription = "Lighting Control Software";
-        public static string ProductName = "Vixen Plus";
-        public static string ProductURL = "http://www.vixenplus.com/";
+        public const string ProductDescription = "Lighting Control Software";
+        public const string ProductName = "Vixen Plus";
+        public const string ProductURL = "http://www.vixenplus.com/";
 
-        public static string ModuleAuthoring = "Artisan";
-        public static string ModulePreview = "Rehersal";
-        public static string ModuleManager = "Roadie";
-        public static string ModuleScheduler = "Conductor";
+        public const string ModuleAuthoring = "Artisan";
+        public const string ModulePreview = "Rehersal";
+        public const string ModuleManager = "Roadie";
+        public const string ModuleScheduler = "Conductor";
 
-        public static string DataExtension = "vda";
-        public static string ProfilExtension = "pro";
-        public static string ProgramExtension = "vpr";
-        public static string SequenceExtension = "vix";
+        public const string DataExtension = "vda";
+        public const string ProfilExtension = "pro";
+        public const string ProgramExtension = "vpr";
+        public const string RoutineExtension = "vir";
+        public const string SequenceExtension = "vix";
 
-        public static string SupportURL = "http://diychristmas.org/phpbb/viewforum.php?f=34";
+        public const string SupportURL = "http://diychristmas.org/phpbb/viewforum.php?f=34";
 
-        public static string UpdateURL = "http://www.vixenplus.com/updates/";
-        public static string UpdateFile = "/ver.xml";
+        public const string UpdateURL = "http://www.vixenplus.com/updates/";
+        public const string UpdateFile = "/ver.xml";
     }
 }
