@@ -1856,7 +1856,7 @@ namespace VixenEditor{
             this.toolStripButtonChannelOutputMask});
             this.toolStripSequenceSettings.Location = new System.Drawing.Point(3, 0);
             this.toolStripSequenceSettings.Name = "toolStripSequenceSettings";
-            this.toolStripSequenceSettings.Size = new System.Drawing.Size(579, 55);
+            this.toolStripSequenceSettings.Size = new System.Drawing.Size(610, 55);
             this.toolStripSequenceSettings.TabIndex = 1;
             this.toolStripSequenceSettings.Text = "Sequence settings";
             // 
@@ -1865,7 +1865,6 @@ namespace VixenEditor{
             this.newSeqTsb.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.newSeqTsb.Enabled = false;
             this.newSeqTsb.Image = global::Properties.Resources._new;
-            this.newSeqTsb.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.newSeqTsb.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.newSeqTsb.Name = "newSeqTsb";
             this.newSeqTsb.Size = new System.Drawing.Size(52, 52);
