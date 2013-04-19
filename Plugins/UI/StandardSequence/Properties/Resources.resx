@@ -274,11 +274,250 @@
   <data name="crosshairs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\crosshairs.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="new" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\new.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="open" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\open.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClearAllEventsInSequencePrompt" xml:space="preserve">
+    <value>Clear all events in the sequence?</value>
+  </data>
+  <data name="AttachToNewProfile" xml:space="preserve">
+    <value>Do you want to attach this sequence to the new profile?</value>
+  </data>
+  <data name="CantImportChannels" xml:space="preserve">
+    <value>Can't import channel names when a sequence is attached to a profile.</value>
+  </data>
+  <data name="Channel" xml:space="preserve">
+    <value>Channel</value>
+  </data>
+  <data name="ChannelNameImport" xml:space="preserve">
+    <value>Channel name import done.</value>
+  </data>
+  <data name="ChannelNameListExported" xml:space="preserve">
+    <value>Channel name list exported to</value>
+  </data>
+  <data name="ChannelOrderDialogText" xml:space="preserve">
+    <value>Channel Output Mapping</value>
+  </data>
+  <data name="Channels" xml:space="preserve">
+    <value>Channels</value>
+  </data>
+  <data name="ComputingWaveform" xml:space="preserve">
+    <value>Computing waveform, one moment, please.</value>
+  </data>
+  <data name="CopyText" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="CutText" xml:space="preserve">
+    <value>Cut</value>
+  </data>
+  <data name="DetachSequenceFromProfile" xml:space="preserve">
+    <value>Do you wish to detach this sequence from its profile?\n\nThis will not cause anything to be deleted.\nVixen Plus will attempt to reload channel and plugin data from the sequence.</value>
+  </data>
+  <data name="FlattendProfileIntoSequence" xml:space="preserve">
+    <value>This will detach the sequence from the profile and bring the profile data into the sequence.\nIs this what you want to do?</value>
+  </data>
+  <data name="LoadRoutine" xml:space="preserve">
+    <value>Load Routine</value>
+  </data>
+  <data name="OverwriteFilePrompt" xml:space="preserve">
+    <value>File already exists.  Overwrite?</value>
+  </data>
+  <data name="PasteText" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="PlayFromStartPoint" xml:space="preserve">
+    <value>Play this sequence starting at the selection startPoint (F6)</value>
+  </data>
+  <data name="PlayRange" xml:space="preserve">
+    <value>Play the selected range of this sequence (F6)</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="UseProfileToEditChannels" xml:space="preserve">
+    <value>This sequence is attached to a profile.\nEdit the profile to make changes to the channel information.</value>
+  </data>
+  <data name="RoutineNamePrompt" xml:space="preserve">
+    <value>Name of the routine</value>
+  </data>
+  <data name="SaveChanges_Unnamed" xml:space="preserve">
+    <value>this unnamed sequence</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Select All</value>
+  </data>
+  <data name="StringFormat_DrawingLevelAbove" xml:space="preserve">
+    <value>Drawing level adjusted to {0}.\nIt was {1} which was above the sequence maximum.</value>
+  </data>
+  <data name="StringFormat_DrawingLevelBelow" xml:space="preserve">
+    <value>Drawing level adjusted to {0}.\nIt was {1} which was below the sequence minimum.</value>
+  </data>
+  <data name="StringFormat_RoutineSaved" xml:space="preserve">
+    <value>Routine \"{0}\" has been saved</value>
+  </data>
+  <data name="StringFormat_SaveChanges" xml:space="preserve">
+    <value>Save changes to {0}?</value>
+  </data>
+  <data name="TextFile" xml:space="preserve">
+    <value>Text file</value>
+  </data>
+  <data name="UndoText_AdjustIntensity" xml:space="preserve">
+    <value>Adjust Intensity</value>
+  </data>
+  <data name="UndoText_ArithmeticPaste" xml:space="preserve">
+    <value>Arithmetic Paste</value>
+  </data>
+  <data name="UndoText_BooleanPaste" xml:space="preserve">
+    <value>Boolean Paste</value>
+  </data>
+  <data name="UndoText_ChaseLines" xml:space="preserve">
+    <value>Chase Lines</value>
+  </data>
+  <data name="UndoText_ClearAllEvents" xml:space="preserve">
+    <value>Clear All Events</value>
+  </data>
+  <data name="UndoText_ClearChannel" xml:space="preserve">
+    <value>Clear Channel</value>
+  </data>
+  <data name="UndoText_ClearValues" xml:space="preserve">
+    <value>Clear Values</value>
+  </data>
+  <data name="UndoText_CopyChannelData" xml:space="preserve">
+    <value>Copy Channel Data</value>
+  </data>
+  <data name="UndoText_DoubleClick" xml:space="preserve">
+    <value>Double Click</value>
+  </data>
+  <data name="UndoText_EventOn" xml:space="preserve">
+    <value>Event On</value>
+  </data>
+  <data name="UndoText_Fade" xml:space="preserve">
+    <value>Fade</value>
+  </data>
+  <data name="UndoText_Fill" xml:space="preserve">
+    <value>Fill</value>
+  </data>
+  <data name="UndoText_Partial" xml:space="preserve">
+    <value>Partial</value>
+  </data>
+  <data name="UndoText_Ramp" xml:space="preserve">
+    <value>Ramp</value>
+  </data>
+  <data name="UnnamedSequence" xml:space="preserve">
+    <value>Unnamed Sequence</value>
+  </data>
+  <data name="UnselectAll" xml:space="preserve">
+    <value>Unselect All</value>
+  </data>
+  <data name="ToolbarSettingsSaved" xml:space="preserve">
+    <value>Toolbar Settings Saved.</value>
+  </data>
+  <data name="ChannelCountUpdated" xml:space="preserve">
+    <value>Channel count has been updated.</value>
+  </data>
+  <data name="NewChannelCountPrompt" xml:space="preserve">
+    <value>With the new channel count, some channels would refer to outputs that no longer exist.\nTo keep the sequence valid, channel outputs would have to be reset.\n\nDo you want to keep the new channel count?</value>
+  </data>
+  <data name="SetProgramTimeError" xml:space="preserve">
+    <value>Cannot set the sequence length.
+There is audio associated which would exceed that length.</value>
+  </data>
+  <data name="AudioButtonAddText" xml:space="preserve">
+    <value>Add Audio</value>
+  </data>
+  <data name="DeleteChannelConfirmation" xml:space="preserve">
+    <value>Confirm Delete</value>
+  </data>
+  <data name="FindAndReplace" xml:space="preserve">
+    <value>Find and Replace</value>
+  </data>
+  <data name="IntensityLevelPrompt" xml:space="preserve">
+    <value>What intensity level (0-255)?</value>
+  </data>
+  <data name="IntensityPercentPrompt" xml:space="preserve">
+    <value>What % intensity (0-100)?</value>
+  </data>
+  <data name="NoSelectionToSearch" xml:space="preserve">
+    <value>Please select cells to search.</value>
+  </data>
+  <data name="OffText" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="OnText" xml:space="preserve">
+    <value>On</value>
+  </data>
+  <data name="StringFormat_DeleteChannel" xml:space="preserve">
+    <value>Delete channel {0}?</value>
+  </data>
+  <data name="StringFormat_DeleteChannelOrder" xml:space="preserve">
+    <value>Delete channel order '{0}'?</value>
+  </data>
+  <data name="UndoText_InsertPaste" xml:space="preserve">
+    <value>Insert Paste</value>
+  </data>
+  <data name="InvalidNumber" xml:space="preserve">
+    <value>Not a valid number.</value>
+  </data>
+  <data name="InvalidValue" xml:space="preserve">
+    <value>Not a valid value.
+Please select a value between 0 and 255.</value>
+  </data>
+  <data name="InvalidPercentage" xml:space="preserve">
+    <value>Not a valid value.
+Please select a value between 0 and 100.</value>
+  </data>
+  <data name="OverwriteNamePrompt" xml:space="preserve">
+    <value>This name is already in use.\nDo you want to overwrite it?</value>
+  </data>
+  <data name="ReorderNameHeading" xml:space="preserve">
+    <value>New Order</value>
+  </data>
+  <data name="ReorderNamePrompt" xml:space="preserve">
+    <value>What name would you like to give to this ordering of the channels?</value>
+  </data>
+  <data name="UndoText_Intensity" xml:space="preserve">
+    <value>Intensity</value>
+  </data>
+  <data name="UndoText_Invert" xml:space="preserve">
+    <value>Invert</value>
+  </data>
+  <data name="UndoText_OpaquePaste" xml:space="preserve">
+    <value>OpaquePaste</value>
+  </data>
+  <data name="UndoText_Random" xml:space="preserve">
+    <value>Random</value>
+  </data>
+  <data name="UndoText_RemoveCells" xml:space="preserve">
+    <value>Remove Cells</value>
+  </data>
+  <data name="ShimmerPrompt" xml:space="preserve">
+    <value>Shimmer (dimming)</value>
+  </data>
+  <data name="UndoText_Shimmer" xml:space="preserve">
+    <value>Shimmer</value>
+  </data>
+  <data name="UndoText_Sparkle" xml:space="preserve">
+    <value>Sparkle</value>
+  </data>
+  <data name="UndoText_TransparentPaste" xml:space="preserve">
+    <value>Transparent Paste</value>
+  </data>
+  <data name="NoChannelsToReorder" xml:space="preserve">
+    <value>There are no channels to reorder.</value>
+  </data>
+  <data name="ToolTip_IntensityPercent" xml:space="preserve">
+    <value>Show intensity levels as percent (0-100%)</value>
+  </data>
+  <data name="ToolTip_IntensityLevel" xml:space="preserve">
+    <value>Show actual intensity levels (0-255)</value>
+  </data>
+  <data name="RedoText" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="UndoText" xml:space="preserve">
+    <value>Undo</value>
   </data>
 </root>

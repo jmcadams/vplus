@@ -74,10 +74,28 @@ namespace Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to attach this sequence to the new profile?.
+        /// </summary>
+        internal static string AttachToNewProfile {
+            get {
+                return ResourceManager.GetString("AttachToNewProfile", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap audio_note {
             get {
                 object obj = ResourceManager.GetObject("audio_note", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Audio.
+        /// </summary>
+        internal static string AudioButtonAddText {
+            get {
+                return ResourceManager.GetString("AudioButtonAddText", resourceCulture);
             }
         }
         
@@ -95,6 +113,69 @@ namespace Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Can&apos;t import channel names when a sequence is attached to a profile..
+        /// </summary>
+        internal static string CantImportChannels {
+            get {
+                return ResourceManager.GetString("CantImportChannels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channel.
+        /// </summary>
+        internal static string Channel {
+            get {
+                return ResourceManager.GetString("Channel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channel count has been updated..
+        /// </summary>
+        internal static string ChannelCountUpdated {
+            get {
+                return ResourceManager.GetString("ChannelCountUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channel name import done..
+        /// </summary>
+        internal static string ChannelNameImport {
+            get {
+                return ResourceManager.GetString("ChannelNameImport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channel name list exported to.
+        /// </summary>
+        internal static string ChannelNameListExported {
+            get {
+                return ResourceManager.GetString("ChannelNameListExported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channel Output Mapping.
+        /// </summary>
+        internal static string ChannelOrderDialogText {
+            get {
+                return ResourceManager.GetString("ChannelOrderDialogText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channels.
+        /// </summary>
+        internal static string Channels {
+            get {
+                return ResourceManager.GetString("Channels", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap choose_speed {
             get {
                 object obj = ResourceManager.GetObject("choose_speed", resourceCulture);
@@ -102,10 +183,37 @@ namespace Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Clear all events in the sequence?.
+        /// </summary>
+        internal static string ClearAllEventsInSequencePrompt {
+            get {
+                return ResourceManager.GetString("ClearAllEventsInSequencePrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Computing waveform, one moment, please..
+        /// </summary>
+        internal static string ComputingWaveform {
+            get {
+                return ResourceManager.GetString("ComputingWaveform", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap copy {
             get {
                 object obj = ResourceManager.GetObject("copy", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy.
+        /// </summary>
+        internal static string CopyText {
+            get {
+                return ResourceManager.GetString("CopyText", resourceCulture);
             }
         }
         
@@ -123,10 +231,55 @@ namespace Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Cut.
+        /// </summary>
+        internal static string CutText {
+            get {
+                return ResourceManager.GetString("CutText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm Delete.
+        /// </summary>
+        internal static string DeleteChannelConfirmation {
+            get {
+                return ResourceManager.GetString("DeleteChannelConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you wish to detach this sequence from its profile?\n\nThis will not cause anything to be deleted.\nVixen Plus will attempt to reload channel and plugin data from the sequence..
+        /// </summary>
+        internal static string DetachSequenceFromProfile {
+            get {
+                return ResourceManager.GetString("DetachSequenceFromProfile", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap fade {
             get {
                 object obj = ResourceManager.GetObject("fade", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find and Replace.
+        /// </summary>
+        internal static string FindAndReplace {
+            get {
+                return ResourceManager.GetString("FindAndReplace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This will detach the sequence from the profile and bring the profile data into the sequence.\nIs this what you want to do?.
+        /// </summary>
+        internal static string FlattendProfileIntoSequence {
+            get {
+                return ResourceManager.GetString("FlattendProfileIntoSequence", resourceCulture);
             }
         }
         
@@ -151,6 +304,53 @@ namespace Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to What intensity level (0-255)?.
+        /// </summary>
+        internal static string IntensityLevelPrompt {
+            get {
+                return ResourceManager.GetString("IntensityLevelPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What % intensity (0-100)?.
+        /// </summary>
+        internal static string IntensityPercentPrompt {
+            get {
+                return ResourceManager.GetString("IntensityPercentPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not a valid number..
+        /// </summary>
+        internal static string InvalidNumber {
+            get {
+                return ResourceManager.GetString("InvalidNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not a valid value.
+        ///Please select a value between 0 and 100..
+        /// </summary>
+        internal static string InvalidPercentage {
+            get {
+                return ResourceManager.GetString("InvalidPercentage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not a valid value.
+        ///Please select a value between 0 and 255..
+        /// </summary>
+        internal static string InvalidValue {
+            get {
+                return ResourceManager.GetString("InvalidValue", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap invert {
             get {
                 object obj = ResourceManager.GetObject("invert", resourceCulture);
@@ -169,6 +369,15 @@ namespace Properties {
             get {
                 object obj = ResourceManager.GetObject("level_Percent", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load Routine.
+        /// </summary>
+        internal static string LoadRoutine {
+            get {
+                return ResourceManager.GetString("LoadRoutine", resourceCulture);
             }
         }
         
@@ -200,6 +409,33 @@ namespace Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to With the new channel count, some channels would refer to outputs that no longer exist.\nTo keep the sequence valid, channel outputs would have to be reset.\n\nDo you want to keep the new channel count?.
+        /// </summary>
+        internal static string NewChannelCountPrompt {
+            get {
+                return ResourceManager.GetString("NewChannelCountPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are no channels to reorder..
+        /// </summary>
+        internal static string NoChannelsToReorder {
+            get {
+                return ResourceManager.GetString("NoChannelsToReorder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select cells to search..
+        /// </summary>
+        internal static string NoSelectionToSearch {
+            get {
+                return ResourceManager.GetString("NoSelectionToSearch", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap number {
             get {
                 object obj = ResourceManager.GetObject("number", resourceCulture);
@@ -214,6 +450,15 @@ namespace Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Off.
+        /// </summary>
+        internal static string OffText {
+            get {
+                return ResourceManager.GetString("OffText", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap on {
             get {
                 object obj = ResourceManager.GetObject("on", resourceCulture);
@@ -221,10 +466,37 @@ namespace Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to On.
+        /// </summary>
+        internal static string OnText {
+            get {
+                return ResourceManager.GetString("OnText", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap open {
             get {
                 object obj = ResourceManager.GetObject("open", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File already exists.  Overwrite?.
+        /// </summary>
+        internal static string OverwriteFilePrompt {
+            get {
+                return ResourceManager.GetString("OverwriteFilePrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This name is already in use.\nDo you want to overwrite it?.
+        /// </summary>
+        internal static string OverwriteNamePrompt {
+            get {
+                return ResourceManager.GetString("OverwriteNamePrompt", resourceCulture);
             }
         }
         
@@ -277,6 +549,15 @@ namespace Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Paste.
+        /// </summary>
+        internal static string PasteText {
+            get {
+                return ResourceManager.GetString("PasteText", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap pause {
             get {
                 object obj = ResourceManager.GetObject("pause", resourceCulture);
@@ -302,6 +583,33 @@ namespace Properties {
             get {
                 object obj = ResourceManager.GetObject("play_from", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play this sequence starting at the selection startPoint (F6).
+        /// </summary>
+        internal static string PlayFromStartPoint {
+            get {
+                return ResourceManager.GetString("PlayFromStartPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play the selected range of this sequence (F6).
+        /// </summary>
+        internal static string PlayRange {
+            get {
+                return ResourceManager.GetString("PlayRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile.
+        /// </summary>
+        internal static string Profile {
+            get {
+                return ResourceManager.GetString("Profile", resourceCulture);
             }
         }
         
@@ -333,10 +641,46 @@ namespace Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Redo.
+        /// </summary>
+        internal static string RedoText {
+            get {
+                return ResourceManager.GetString("RedoText", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap remove {
             get {
                 object obj = ResourceManager.GetObject("remove", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Order.
+        /// </summary>
+        internal static string ReorderNameHeading {
+            get {
+                return ResourceManager.GetString("ReorderNameHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What name would you like to give to this ordering of the channels?.
+        /// </summary>
+        internal static string ReorderNamePrompt {
+            get {
+                return ResourceManager.GetString("ReorderNamePrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name of the routine.
+        /// </summary>
+        internal static string RoutineNamePrompt {
+            get {
+                return ResourceManager.GetString("RoutineNamePrompt", resourceCulture);
             }
         }
         
@@ -354,10 +698,28 @@ namespace Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to this unnamed sequence.
+        /// </summary>
+        internal static string SaveChanges_Unnamed {
+            get {
+                return ResourceManager.GetString("SaveChanges_Unnamed", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap search {
             get {
                 object obj = ResourceManager.GetObject("search", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select All.
+        /// </summary>
+        internal static string SelectAll {
+            get {
+                return ResourceManager.GetString("SelectAll", resourceCulture);
             }
         }
         
@@ -368,10 +730,29 @@ namespace Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot set the sequence length.
+        ///There is audio associated which would exceed that length..
+        /// </summary>
+        internal static string SetProgramTimeError {
+            get {
+                return ResourceManager.GetString("SetProgramTimeError", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap shimmer {
             get {
                 object obj = ResourceManager.GetObject("shimmer", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shimmer (dimming).
+        /// </summary>
+        internal static string ShimmerPrompt {
+            get {
+                return ResourceManager.GetString("ShimmerPrompt", resourceCulture);
             }
         }
         
@@ -396,6 +777,60 @@ namespace Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Delete channel {0}?.
+        /// </summary>
+        internal static string StringFormat_DeleteChannel {
+            get {
+                return ResourceManager.GetString("StringFormat_DeleteChannel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete channel order &apos;{0}&apos;?.
+        /// </summary>
+        internal static string StringFormat_DeleteChannelOrder {
+            get {
+                return ResourceManager.GetString("StringFormat_DeleteChannelOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drawing level adjusted to {0}.\nIt was {1} which was above the sequence maximum..
+        /// </summary>
+        internal static string StringFormat_DrawingLevelAbove {
+            get {
+                return ResourceManager.GetString("StringFormat_DrawingLevelAbove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drawing level adjusted to {0}.\nIt was {1} which was below the sequence minimum..
+        /// </summary>
+        internal static string StringFormat_DrawingLevelBelow {
+            get {
+                return ResourceManager.GetString("StringFormat_DrawingLevelBelow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Routine \&quot;{0}\&quot; has been saved.
+        /// </summary>
+        internal static string StringFormat_RoutineSaved {
+            get {
+                return ResourceManager.GetString("StringFormat_RoutineSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save changes to {0}?.
+        /// </summary>
+        internal static string StringFormat_SaveChanges {
+            get {
+                return ResourceManager.GetString("StringFormat_SaveChanges", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap subtract {
             get {
                 object obj = ResourceManager.GetObject("subtract", resourceCulture);
@@ -410,6 +845,15 @@ namespace Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Text file.
+        /// </summary>
+        internal static string TextFile {
+            get {
+                return ResourceManager.GetString("TextFile", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap three_quarter_note {
             get {
                 object obj = ResourceManager.GetObject("three_quarter_note", resourceCulture);
@@ -417,10 +861,280 @@ namespace Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Toolbar Settings Saved..
+        /// </summary>
+        internal static string ToolbarSettingsSaved {
+            get {
+                return ResourceManager.GetString("ToolbarSettingsSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show actual intensity levels (0-255).
+        /// </summary>
+        internal static string ToolTip_IntensityLevel {
+            get {
+                return ResourceManager.GetString("ToolTip_IntensityLevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show intensity levels as percent (0-100%).
+        /// </summary>
+        internal static string ToolTip_IntensityPercent {
+            get {
+                return ResourceManager.GetString("ToolTip_IntensityPercent", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap undo {
             get {
                 object obj = ResourceManager.GetObject("undo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Undo.
+        /// </summary>
+        internal static string UndoText {
+            get {
+                return ResourceManager.GetString("UndoText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adjust Intensity.
+        /// </summary>
+        internal static string UndoText_AdjustIntensity {
+            get {
+                return ResourceManager.GetString("UndoText_AdjustIntensity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arithmetic Paste.
+        /// </summary>
+        internal static string UndoText_ArithmeticPaste {
+            get {
+                return ResourceManager.GetString("UndoText_ArithmeticPaste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boolean Paste.
+        /// </summary>
+        internal static string UndoText_BooleanPaste {
+            get {
+                return ResourceManager.GetString("UndoText_BooleanPaste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chase Lines.
+        /// </summary>
+        internal static string UndoText_ChaseLines {
+            get {
+                return ResourceManager.GetString("UndoText_ChaseLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear All Events.
+        /// </summary>
+        internal static string UndoText_ClearAllEvents {
+            get {
+                return ResourceManager.GetString("UndoText_ClearAllEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear Channel.
+        /// </summary>
+        internal static string UndoText_ClearChannel {
+            get {
+                return ResourceManager.GetString("UndoText_ClearChannel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear Values.
+        /// </summary>
+        internal static string UndoText_ClearValues {
+            get {
+                return ResourceManager.GetString("UndoText_ClearValues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Channel Data.
+        /// </summary>
+        internal static string UndoText_CopyChannelData {
+            get {
+                return ResourceManager.GetString("UndoText_CopyChannelData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Double Click.
+        /// </summary>
+        internal static string UndoText_DoubleClick {
+            get {
+                return ResourceManager.GetString("UndoText_DoubleClick", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Event On.
+        /// </summary>
+        internal static string UndoText_EventOn {
+            get {
+                return ResourceManager.GetString("UndoText_EventOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fade.
+        /// </summary>
+        internal static string UndoText_Fade {
+            get {
+                return ResourceManager.GetString("UndoText_Fade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fill.
+        /// </summary>
+        internal static string UndoText_Fill {
+            get {
+                return ResourceManager.GetString("UndoText_Fill", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insert Paste.
+        /// </summary>
+        internal static string UndoText_InsertPaste {
+            get {
+                return ResourceManager.GetString("UndoText_InsertPaste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Intensity.
+        /// </summary>
+        internal static string UndoText_Intensity {
+            get {
+                return ResourceManager.GetString("UndoText_Intensity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invert.
+        /// </summary>
+        internal static string UndoText_Invert {
+            get {
+                return ResourceManager.GetString("UndoText_Invert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OpaquePaste.
+        /// </summary>
+        internal static string UndoText_OpaquePaste {
+            get {
+                return ResourceManager.GetString("UndoText_OpaquePaste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partial.
+        /// </summary>
+        internal static string UndoText_Partial {
+            get {
+                return ResourceManager.GetString("UndoText_Partial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ramp.
+        /// </summary>
+        internal static string UndoText_Ramp {
+            get {
+                return ResourceManager.GetString("UndoText_Ramp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random.
+        /// </summary>
+        internal static string UndoText_Random {
+            get {
+                return ResourceManager.GetString("UndoText_Random", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Cells.
+        /// </summary>
+        internal static string UndoText_RemoveCells {
+            get {
+                return ResourceManager.GetString("UndoText_RemoveCells", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shimmer.
+        /// </summary>
+        internal static string UndoText_Shimmer {
+            get {
+                return ResourceManager.GetString("UndoText_Shimmer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sparkle.
+        /// </summary>
+        internal static string UndoText_Sparkle {
+            get {
+                return ResourceManager.GetString("UndoText_Sparkle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transparent Paste.
+        /// </summary>
+        internal static string UndoText_TransparentPaste {
+            get {
+                return ResourceManager.GetString("UndoText_TransparentPaste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unnamed Sequence.
+        /// </summary>
+        internal static string UnnamedSequence {
+            get {
+                return ResourceManager.GetString("UnnamedSequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unselect All.
+        /// </summary>
+        internal static string UnselectAll {
+            get {
+                return ResourceManager.GetString("UnselectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This sequence is attached to a profile.\nEdit the profile to make changes to the channel information..
+        /// </summary>
+        internal static string UseProfileToEditChannels {
+            get {
+                return ResourceManager.GetString("UseProfileToEditChannels", resourceCulture);
             }
         }
         
