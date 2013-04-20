@@ -2444,7 +2444,7 @@ namespace VixenEditor {
 
 
         private void ReactToProfileAssignment() {
-            bool flag = _sequence.Profile != null;
+            var flag = _sequence.Profile != null;
             flattenProfileIntoSequenceToolStripMenuItem.Enabled = flag;
             detachSequenceFromItsProfileToolStripMenuItem.Enabled = flag;
             channelOutputMaskToolStripMenuItem.Enabled = !flag;
