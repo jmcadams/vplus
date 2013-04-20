@@ -4585,7 +4585,7 @@ namespace VixenEditor {
         }
 
         public override string FileExtension {
-            get { return Vendor.SequenceExtension; }
+            get { return @"." + Vendor.SequenceExtension; }
         }
 
         public override string FileTypeDescription {
