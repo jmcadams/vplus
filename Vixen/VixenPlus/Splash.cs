@@ -7,7 +7,7 @@ namespace VixenPlus
 {
     internal partial class Splash : Form
     {
-        private const int FADE_MS = 40;
+        private const int FadeMS = 40;
 
         public Splash()
         {
@@ -15,19 +15,21 @@ namespace VixenPlus
         }
 
         public void FadeIn() {
-            for (var i = 0; i <= 100; i += 10) {
-                this.Opacity = (double)(i / 100d);
-                this.Refresh();
-                Thread.Sleep(FADE_MS);
+            if (!Visible) Show();
+            for (var opacity = 0d; opacity <= 1d; opacity += 0.1d) {
+                Opacity = opacity;
+                Refresh();
+                Thread.Sleep(FadeMS);
             }
         }
 
         public void FadeOut() {
-            for (var i = 100; i > 0; i -= 10) {
-                this.Opacity = (double)(i / 100d);
-                this.Refresh();
-                Thread.Sleep(FADE_MS);
+            for (var opacity = 1d; opacity > 0d; opacity -= 0.1d) {
+                Opacity = opacity;
+                Refresh();
+                Thread.Sleep(FadeMS);
             }
+            if (Visible) Hide();
         }
     }
 }
