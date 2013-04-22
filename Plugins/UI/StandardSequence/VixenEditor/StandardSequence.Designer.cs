@@ -354,7 +354,6 @@ namespace VixenEditor{
             this.contextMenuTime = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.clearAllChannelsForThisEventToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.allChannelsToFullIntensityForThisEventToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lblFollowMouse = new System.Windows.Forms.Label();
             this.contextMenuGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.onToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.offToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -418,6 +417,8 @@ namespace VixenEditor{
             this.toolStripComboBoxWaveformZoom = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonChannelOutputMask = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator19 = new System.Windows.Forms.ToolStripSeparator();
+            this.profileToolStripLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStripExecutionControl = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButtonPlugins = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -518,8 +519,7 @@ namespace VixenEditor{
             this.printDialog = new System.Windows.Forms.PrintDialog();
             this.printPreviewDialog = new System.Windows.Forms.PrintPreviewDialog();
             this.m_positionTimer = new System.Windows.Forms.Timer(this.components);
-            this.toolStripSeparator19 = new System.Windows.Forms.ToolStripSeparator();
-            this.profileToolStripLabel = new System.Windows.Forms.ToolStripLabel();
+            this.lblFollowMouse = new System.Windows.Forms.Label();
             this.pictureBoxChannels = new VixenEditor.SelectablePictureBox();
             this.pictureBoxGrid = new VixenEditor.SelectablePictureBox();
             this.menuStrip.SuspendLayout();
@@ -1373,7 +1373,6 @@ namespace VixenEditor{
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.lblFollowMouse);
             this.splitContainer2.Panel2.Controls.Add(this.pictureBoxGrid);
             this.splitContainer2.Panel2.Controls.Add(this.vScrollBar1);
             this.splitContainer2.Panel2.Controls.Add(this.hScrollBar1);
@@ -1417,18 +1416,6 @@ namespace VixenEditor{
             this.allChannelsToFullIntensityForThisEventToolStripMenuItem.Size = new System.Drawing.Size(292, 22);
             this.allChannelsToFullIntensityForThisEventToolStripMenuItem.Text = "All channels to full intensity for this event";
             this.allChannelsToFullIntensityForThisEventToolStripMenuItem.Click += new System.EventHandler(this.allChannelsToFullIntensityForThisEventToolStripMenuItem_Click);
-            // 
-            // lblFollowMouse
-            // 
-            this.lblFollowMouse.AutoSize = true;
-            this.lblFollowMouse.BackColor = System.Drawing.Color.White;
-            this.lblFollowMouse.Location = new System.Drawing.Point(3, 9);
-            this.lblFollowMouse.Name = "lblFollowMouse";
-            this.lblFollowMouse.Size = new System.Drawing.Size(35, 13);
-            this.lblFollowMouse.TabIndex = 6;
-            this.lblFollowMouse.Text = "label1";
-            this.lblFollowMouse.TextAlign = System.Drawing.ContentAlignment.BottomRight;
-            this.lblFollowMouse.Visible = false;
             // 
             // contextMenuGrid
             // 
@@ -1819,7 +1806,7 @@ namespace VixenEditor{
             this.profileToolStripLabel});
             this.toolStripSequenceSettings.Location = new System.Drawing.Point(3, 0);
             this.toolStripSequenceSettings.Name = "toolStripSequenceSettings";
-            this.toolStripSequenceSettings.Size = new System.Drawing.Size(696, 55);
+            this.toolStripSequenceSettings.Size = new System.Drawing.Size(665, 55);
             this.toolStripSequenceSettings.TabIndex = 1;
             this.toolStripSequenceSettings.Text = "Sequence settings";
             // 
@@ -1998,6 +1985,19 @@ namespace VixenEditor{
             this.toolStripButtonChannelOutputMask.Text = "Channel Output Mask";
             this.toolStripButtonChannelOutputMask.ToolTipText = "Enable/disable channels for this sequence";
             this.toolStripButtonChannelOutputMask.Click += new System.EventHandler(this.toolStripButtonChannelOutputMask_Click);
+            // 
+            // toolStripSeparator19
+            // 
+            this.toolStripSeparator19.Name = "toolStripSeparator19";
+            this.toolStripSeparator19.Size = new System.Drawing.Size(6, 55);
+            // 
+            // profileToolStripLabel
+            // 
+            this.profileToolStripLabel.AutoSize = false;
+            this.profileToolStripLabel.Name = "profileToolStripLabel";
+            this.profileToolStripLabel.Size = new System.Drawing.Size(80, 52);
+            this.profileToolStripLabel.Text = "profile";
+            this.profileToolStripLabel.ToolTipText = "Click to Edit";
             // 
             // toolStripExecutionControl
             // 
@@ -2950,18 +2950,18 @@ namespace VixenEditor{
             this.m_positionTimer.Interval = 1;
             this.m_positionTimer.Tick += new System.EventHandler(this.m_positionTimer_Tick);
             // 
-            // toolStripSeparator19
+            // lblFollowMouse
             // 
-            this.toolStripSeparator19.Name = "toolStripSeparator19";
-            this.toolStripSeparator19.Size = new System.Drawing.Size(6, 55);
-            // 
-            // profileToolStripLabel
-            // 
-            this.profileToolStripLabel.AutoSize = false;
-            this.profileToolStripLabel.Name = "profileToolStripLabel";
-            this.profileToolStripLabel.Size = new System.Drawing.Size(80, 52);
-            this.profileToolStripLabel.Text = "profile";
-            this.profileToolStripLabel.ToolTipText = "Click to Edit";
+            this.lblFollowMouse.AutoSize = true;
+            this.lblFollowMouse.BackColor = System.Drawing.Color.White;
+            this.lblFollowMouse.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblFollowMouse.Location = new System.Drawing.Point(445, 263);
+            this.lblFollowMouse.Name = "lblFollowMouse";
+            this.lblFollowMouse.Size = new System.Drawing.Size(97, 15);
+            this.lblFollowMouse.TabIndex = 8;
+            this.lblFollowMouse.Text = "FollowMouseLabel";
+            this.lblFollowMouse.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.lblFollowMouse.Visible = false;
             // 
             // pictureBoxChannels
             // 
@@ -3004,6 +3004,7 @@ namespace VixenEditor{
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(984, 539);
+            this.Controls.Add(this.lblFollowMouse);
             this.Controls.Add(this.toolStripContainer1);
             this.Controls.Add(this.menuStrip);
             this.KeyPreview = true;
@@ -3027,7 +3028,6 @@ namespace VixenEditor{
             this.contextMenuChannels.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
-            this.splitContainer2.Panel2.PerformLayout();
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTime)).EndInit();
             this.contextMenuTime.ResumeLayout(false);
@@ -3096,7 +3096,6 @@ namespace VixenEditor{
 		private ToolStripTextBox textBoxProgramLength;
         private SplitContainer splitContainer2;
         private PictureBox pictureBoxTime;
-        private Label lblFollowMouse;
         private SelectablePictureBox pictureBoxGrid;
         private VScrollBar vScrollBar1;
         private HScrollBar hScrollBar1;
@@ -3112,6 +3111,7 @@ namespace VixenEditor{
         private ToolStripMenuItem resetAllToolbarsToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator19;
         private ToolStripLabel profileToolStripLabel;
+        private Label lblFollowMouse;
 
 
 	}

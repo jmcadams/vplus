@@ -11,6 +11,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 using FMOD;
+using CommonUtils;
 
 using Properties;
 
@@ -1851,7 +1852,7 @@ namespace VixenEditor {
                 _selectedLineIndex = -1;
             }
             UpdatePositionLabel(_selectedCells, false);
-            UpdateFollowMouse(new Point(_mouseDownAtInGrid.X, _mouseDownAtInGrid.Y));
+            //UpdateFollowMouse(new Point(_mouseDownAtInGrid.X, _mouseDownAtInGrid.Y));
         }
 
 
@@ -1862,23 +1863,28 @@ namespace VixenEditor {
 
 
         private void pictureBoxGrid_MouseMove(object sender, MouseEventArgs e) {
-            toolStripLabelCellIntensity.Text = string.Empty;
-            toolStripLabelCurrentCell.Text = string.Empty;
-
             var cellX = Math.Min((Math.Max(e.X / _gridColWidth, 0) + hScrollBar1.Value), _sequence.TotalEventPeriods - 1);
             var cellY = Math.Min((Math.Max(e.Y / _gridRowHeight, 0) + vScrollBar1.Value), _sequence.ChannelCount - 1);
 
+            if (cellX == _lastCellX && cellY == _lastCellY) {
+                return;
+            }
+
+            toolStripLabelCellIntensity.Text = string.Empty;
+            toolStripLabelCurrentCell.Text = string.Empty;
             if ((e.Button == MouseButtons.Left) && _mouseDownInGrid) {
-                if (_lineRect.Left == -1) { 
+                if (_lineRect.Left == -1) {
                     DrawSelectionBox(e.X, e.Y, cellX, cellY);
-                } else {
+                }
+                else {
                     DrawChaseLine(cellX, cellY);
                 }
             }
 
             DrawCarets(cellX, cellY);
             UpdateToolStrip(cellX, cellY);
-            UpdateFollowMouse(new Point(e.X, e.Y));
+            _lastCellX = cellX;
+            _lastCellY = cellY;
         }
 
 
@@ -1910,8 +1916,6 @@ namespace VixenEditor {
             if ((directionFlag & 0x0100) == 0x0100) { ScrollSelectionUp(cellX); }
             if ((directionFlag & 0x1000) == 0x1000) { ScrollSelectionLeft(cellY); }
 
-            _lastCellX = cellX;
-            _lastCellY = cellY;
             UpdatePositionLabel(_selectedCells, false);
         }
 
@@ -1981,6 +1985,7 @@ namespace VixenEditor {
             }
 
             InvalidateRect(_lineRect);
+            pictureBoxGrid.Refresh();
             UpdatePositionLabel(NormalizeRect(new Rectangle(_lineRect.X, _lineRect.Y, _lineRect.Width + 1, _lineRect.Height)), true);
 
         }
@@ -2002,42 +2007,35 @@ namespace VixenEditor {
                 var rectangle = new Rectangle(0, pictureBoxTime.Height + splitContainer2.SplitterWidth + (_gridRowHeight * (_mouseChannelCaret - vScrollBar1.Value)), CaretSize, _gridRowHeight);
                 _mouseChannelCaret = -1;
                 pictureBoxChannels.Invalidate(rectangle);
-                //pictureBoxChannels.Update();
+                pictureBoxChannels.Update();
                 if (cellY < _sequence.ChannelCount) {
                     _mouseChannelCaret = cellY;
                     rectangle.Y = pictureBoxTime.Height + splitContainer2.SplitterWidth + (_gridRowHeight * (_mouseChannelCaret - vScrollBar1.Value));
                     pictureBoxChannels.Invalidate(rectangle);
-
+                    pictureBoxChannels.Update();
                 }
-                pictureBoxChannels.Update();
             }
 
             if (cellX != _mouseTimeCaret) {
                 var rectangle = new Rectangle(_gridColWidth * (_mouseTimeCaret - hScrollBar1.Value), 0, _gridColWidth, CaretSize);
                 _mouseTimeCaret = -1;
                 pictureBoxTime.Invalidate(rectangle);
-                //pictureBoxTime.Update();
+                pictureBoxTime.Update();
                 if (cellX < _sequence.TotalEventPeriods) {
                     _mouseTimeCaret = cellX;
                     rectangle.X = _gridColWidth * (_mouseTimeCaret - hScrollBar1.Value);
                     pictureBoxTime.Invalidate(rectangle);
+                    pictureBoxTime.Update();
                 }
-                pictureBoxTime.Update();
             }
 
-            if (xMin != xMax) {
-                pictureBoxGrid.Invalidate(new Rectangle(xMin, 0, xMax - xMin, pictureBoxGrid.Height));
-                //pictureBoxGrid.Update();
-                pictureBoxGrid.Invalidate(new Rectangle(0, yMin, pictureBoxGrid.Width, yMax - yMin));
-                pictureBoxGrid.Update();
+            if (xMin == xMax || !toolStripButtonToggleCrossHairs.Checked) {
+                return;
             }
-            if ((cellX >= 0) && (cellY >= 0)) {
-                string str;
-                GetCellIntensity(cellX, cellY, out str);
-                toolStripLabelCellIntensity.Text = str;
-                toolStripLabelCurrentCell.Text = string.Format("{0} , {1}", Utils.TimeFormatWithMills(cellX * _sequence.EventPeriod),
-                                                               _sequence.Channels[_channelOrderMapping[cellY]].Name);
-            }
+
+            pictureBoxGrid.Invalidate(new Rectangle(xMin, 0, xMax - xMin, pictureBoxGrid.Height));
+            pictureBoxGrid.Invalidate(new Rectangle(0, yMin, pictureBoxGrid.Width, yMax - yMin));
+            pictureBoxGrid.Update();
         }
 
 
@@ -2177,55 +2175,58 @@ namespace VixenEditor {
         }
 
         //TODO This has got a bug when you don't use an event period that divides in 1000 evenly.
-        //Also it doesn't seem to use the clip rectangle properly since it is redrawing the ticks and such with each mouse move
         private void pictureBoxTime_Paint(object sender, PaintEventArgs e) {
-            int x;
-            var timePen = Pens.White;
-            var timeBrush = Brushes.White;
-            var tickPen = Pens.Red;
-
             e.Graphics.FillRectangle(_timeBackBrush, e.ClipRectangle);
+            
             var topLeftPt = new Point();
             var bottomRightPt = new Point();
             topLeftPt.Y = pictureBoxTime.Height - 20;
             bottomRightPt.Y = pictureBoxTime.Height - 5;
-            if ((e.ClipRectangle.Bottom >= topLeftPt.Y) || (e.ClipRectangle.Top <= bottomRightPt.Y)) {
-                var rightmosCell = x = e.ClipRectangle.X / _gridColWidth;
+            var drawingRect = new Rectangle(0, topLeftPt.Y, pictureBoxTime.Width, bottomRightPt.Y - topLeftPt.Y);
+
+            if (e.ClipRectangle.IntersectsWith(drawingRect)) {
+                var x = e.ClipRectangle.X / _gridColWidth;
+                var rightmosCell = x;
                 for (x *= _gridColWidth; (x < e.ClipRectangle.Right) && ((rightmosCell + hScrollBar1.Value) <= _sequence.TotalEventPeriods);
                      x += _gridColWidth) {
                     if (rightmosCell != 0) {
                         topLeftPt.X = x;
                         bottomRightPt.X = x;
-                        e.Graphics.DrawLine(timePen, topLeftPt, bottomRightPt);
+                        e.Graphics.DrawLine(Pens.White, topLeftPt, bottomRightPt);
                     }
                     rightmosCell++;
                 }
             }
+
             topLeftPt.Y = pictureBoxTime.Height - 30;
-            if ((e.ClipRectangle.Bottom >= topLeftPt.Y) || (e.ClipRectangle.Top <= bottomRightPt.Y)) {
-                x = e.ClipRectangle.X;
+            drawingRect.X = 0;
+            drawingRect.Width = pictureBoxTime.Width;
+            drawingRect.Y = topLeftPt.Y;
+            drawingRect.Height = bottomRightPt.Y - topLeftPt.Y;
+
+            if (e.ClipRectangle.IntersectsWith(drawingRect)) {
+                var x = e.ClipRectangle.X;
                 var eventPeriod = _sequence.EventPeriod;
                 var startMills = (hScrollBar1.Value + (e.ClipRectangle.Left / (float) _gridColWidth)) * eventPeriod;
                 var endMills = Math.Min((hScrollBar1.Value + (e.ClipRectangle.Right / _gridColWidth)) * eventPeriod, _sequence.Time);
                 var eventCount = (float) _sequence.EventsPerSecond;
 
                 var currentMills = (!0f.Equals(startMills % 1000f)) ? (int) startMills / 1000 * 1000  : (int)startMills;
-                //System.Diagnostics.Debug.Print("Mills with math: {0} Mills Int: {1} Current:{2} Mod: {3}",(int) startMills / 1000 * 1000, (int)startMills, currentMills, startMills % 1000f);
 
                 while ((x < e.ClipRectangle.Right) && (currentMills <= endMills)) {
                     if (currentMills != 0) {
                         x = e.ClipRectangle.Left + ((int) (((currentMills - startMills) / Utils.MillsPerSecond) * (_gridColWidth * eventCount)));
                         topLeftPt.X = x;
                         bottomRightPt.X = x;
-                        e.Graphics.DrawLine(timePen, topLeftPt, bottomRightPt);
+                        e.Graphics.DrawLine(Pens.White, topLeftPt, bottomRightPt);
                         topLeftPt.X++;
                         bottomRightPt.X++;
-                        e.Graphics.DrawLine(timePen, topLeftPt, bottomRightPt);
+                        e.Graphics.DrawLine(Pens.White, topLeftPt, bottomRightPt);
                         var time = currentMills >= Utils.MillsPerMinute
                                       ? Utils.TimeFormatWithoutMills(currentMills, true)
                                       : Utils.TimeFormatMillsOnly(currentMills);
                         var ef = e.Graphics.MeasureString(time, _timeFont);
-                        e.Graphics.DrawString(time, _timeFont, timeBrush, x - (ef.Width / 2f), topLeftPt.Y - ef.Height - 5f);
+                        e.Graphics.DrawString(time, _timeFont, Brushes.White, x - (ef.Width / 2f), topLeftPt.Y - ef.Height - 5f);
                     }
                     currentMills += Utils.MillsPerSecond;
                 }
@@ -2233,19 +2234,29 @@ namespace VixenEditor {
 
             topLeftPt.Y = pictureBoxTime.Height - 35;
             bottomRightPt.Y = pictureBoxTime.Height - 20;
+            drawingRect.X = 0;
+            drawingRect.Width = pictureBoxTime.Width;
+            drawingRect.Y = topLeftPt.Y;
+            drawingRect.Height = bottomRightPt.Y - topLeftPt.Y;
 
-            if (((e.ClipRectangle.Bottom >= topLeftPt.Y) || (e.ClipRectangle.Top <= bottomRightPt.Y)) && (_showPositionMarker && (_position != -1))) {
-                x = _gridColWidth * (_position - hScrollBar1.Value);
+            if (e.ClipRectangle.IntersectsWith(drawingRect) && _showPositionMarker && _position != -1) {
+                var x = _gridColWidth * (_position - hScrollBar1.Value);
                 if (x < pictureBoxTime.Width) {
                     topLeftPt.X = x;
                     bottomRightPt.X = x;
-                    e.Graphics.DrawLine(tickPen, topLeftPt, bottomRightPt);
+                    e.Graphics.DrawLine(Pens.Red, topLeftPt, bottomRightPt);
                 }
             }
             if (_mouseTimeCaret != -1) {
                 e.Graphics.FillRectangle(_channelCaretBrush, (_mouseTimeCaret - hScrollBar1.Value) * _gridColWidth, 0, _gridColWidth, CaretSize);
             }
-            if (toolStripButtonWaveform.Checked) {
+            //TODO: Figure out the coordinates of the waveform and see if it needs to be redrawn
+
+            drawingRect.X = 0;
+            drawingRect.Width = pictureBoxTime.Width;
+            drawingRect.Y = 6;
+            drawingRect.Height = pictureBoxTime.Height;
+            if (toolStripButtonWaveform.Checked && e.ClipRectangle.IntersectsWith(drawingRect)) {
                 DrawWaveform(e);
             }
         }
@@ -2254,14 +2265,13 @@ namespace VixenEditor {
         private void DrawWaveform(PaintEventArgs e) {
             var startPosition = hScrollBar1.Value * _gridColWidth;
             var endPosition = Math.Min(startPosition + ((_visibleEventPeriods + 1) * _gridColWidth), _waveformPixelData.Length);
-            var waveformPosition = 0;
-
+            const int waveformOffset = 6;
             var wavePen = Pens.White;
-            while (startPosition < endPosition) {
-                e.Graphics.DrawLine(wavePen, waveformPosition, _waveformOffset - (_waveformPixelData[startPosition] >> 16), waveformPosition,
-                                    _waveformOffset - ((short) (_waveformPixelData[startPosition] & 0xffff)));
-                waveformPosition++;
-                startPosition++;
+            for (var x = 0; startPosition < endPosition; startPosition++ ) {
+                var y1 = _waveformOffset - ((short)(_waveformPixelData[startPosition] >> 16)) + waveformOffset;
+                var y2 = _waveformOffset - ((short)(_waveformPixelData[startPosition] & 0xffff)) + waveformOffset;
+                e.Graphics.DrawLine(wavePen, x, y1, x, y2);
+                x++;
             }
         }
 
@@ -2635,6 +2645,7 @@ namespace VixenEditor {
         }
 
 
+        //TODO These seem to pause if not moved out far enough.
         private void ScrollSelectionDown(int cellX) {
             _selectedRange.Width = cellX + 1 - _selectedRange.Left;
 
@@ -4468,9 +4479,11 @@ namespace VixenEditor {
                 var endTime = Utils.TimeFormatWithMills(endMills);
                 var elapsedTime = Utils.TimeFormatWithMills(endMills - startMills);
                 labelPosition.Text = string.Format("{0} - {1}\n({2})", startTime, endTime, elapsedTime);
+                UpdateFollowMouse();
             }
             else if (((rect.Width == 0) && zeroWidthIsValid) || (rect.Width == 1)) {
                 labelPosition.Text = startTime;
+                UpdateFollowMouse();
             }
             else {
                 labelPosition.Text = string.Empty;
@@ -4478,12 +4491,14 @@ namespace VixenEditor {
         }
 
 
-        private void UpdateFollowMouse(Point mousePoint) {
+        //TODO Need to figure out how to position this consistently without magic numbers.
+        private void UpdateFollowMouse() {
             var rowCount = _selectedCells.Height;
             lblFollowMouse.Text = labelPosition.Text + Environment.NewLine + rowCount + @" " + (rowCount == 1 ? Resources.Channel : Resources.Channels);
-            mousePoint.X -= lblFollowMouse.Size.Width;
-            mousePoint.Y += 24;
-            lblFollowMouse.Location = mousePoint;
+            var x = Cursor.Position.X - lblFollowMouse.Width - Left - 8;
+            var y = Cursor.Position.Y - 58 - Top;
+            //if (y > Height - hScrollBar1.Height - 58) y = Height - hScrollBar1.Height - 58; 
+            lblFollowMouse.Location = new Point(x, y);
         }
 
 
