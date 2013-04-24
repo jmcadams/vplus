@@ -199,13 +199,14 @@ namespace VixenEditor
         {
             foreach (Control control in form.Controls) {
                 var container = control as ToolStripContainer;
-                if (container != null)
+                if (container == null)
                 {
-                    foreach (ToolStrip toolStrip in container.TopToolStripPanel.Controls)
-                    {
-                        toolStrip.ImageScalingSize = new Size(IconSize, IconSize);
-                        ResizeChildren(toolStrip.Items);
-                    }
+                    continue;
+                }
+                foreach (ToolStrip toolStrip in container.TopToolStripPanel.Controls)
+                {
+                    toolStrip.ImageScalingSize = new Size(IconSize, IconSize);
+                    ResizeChildren(toolStrip.Items);
                 }
             }
         }
@@ -214,7 +215,15 @@ namespace VixenEditor
         {
             foreach (var item in toolStripItems) {
                 var button = item as ToolStripButton;
-                if (button != null)
+                if (button == null)
+                {
+                    var label = item as ToolStripLabel;
+                    if (label != null)
+                    {
+                        label.Size = new Size(label.Width, IconSize);
+                    }
+                }
+                else
                 {
                     button.Size = new Size(IconSize, IconSize);
                 }
