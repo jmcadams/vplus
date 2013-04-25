@@ -1471,12 +1471,14 @@ namespace VixenEditor {
                         dialog.Show();
                         dialog.Message = Resources.ComputingWaveform;
                         Cursor = Cursors.WaitCursor;
-                        try {
-                            _waveformPcmData = new uint[_sequence.TotalEventPeriods * _gridColWidth];
-                            _waveformPixelData = new uint[_sequence.TotalEventPeriods * _gridColWidth];
+                        try
+                        {
+                            _waveformPcmData = new uint[_sequence.TotalEventPeriods*_gridColWidth];
+                            _waveformPixelData = new uint[_sequence.TotalEventPeriods*_gridColWidth];
 
                             Sound sound = null;
-                            fmod.GetInstance(-1).SystemObject.createSound(str, MODE._2D | MODE.HARDWARE | MODE.CREATESAMPLE, ref sound);
+                            fmod.GetInstance(-1)
+                                .SystemObject.createSound(str, MODE._2D | MODE.HARDWARE | MODE.CREATESAMPLE, ref sound);
 
                             var raw = SOUND_TYPE.RAW;
                             var none = SOUND_FORMAT.NONE;
@@ -1496,18 +1498,20 @@ namespace VixenEditor {
                             uint lengthInMs = 0;
                             sound.getLength(ref lengthInMs, TIMEUNIT.MS);
 
-                            var totalBytes = (lengthInBytes / (double)audioChannels) / (bitsPerSample / 8.0);
-                            var bytesPerEvent = totalBytes / _sequence.TotalEventPeriods;
-                            var pixelsPerByte = bytesPerEvent / _gridColWidth;
-                            var pixelsPerEvent = _sequence.EventPeriod / ((double) _gridColWidth);
-                            double hertz = audioFrequency / 1000f;
+                            var totalBytes = (lengthInBytes/(double) audioChannels)/(bitsPerSample/8.0);
+                            var bytesPerEvent = totalBytes/_sequence.TotalEventPeriods;
+                            var pixelsPerByte = bytesPerEvent/_gridColWidth;
+                            var pixelsPerEvent = _sequence.EventPeriod/((double) _gridColWidth);
+                            double hertz = audioFrequency/1000f;
                             var posAmplitude = 0;
                             var negAmplitude = 0;
 
                             var index = 0;
                             for (var i = 0.0; (index < _waveformPcmData.Length) && (i < lengthInMs); i += pixelsPerEvent) {
-                                var startSample = (int) (i * hertz);
-                                var sampleMinMax = GetSampleMinMax(startSample, (int) Math.Min(pixelsPerByte, totalBytes - startSample), sound, bitsPerSample, audioChannels);
+                                var startSample = (int) (i*hertz);
+                                var sampleMinMax = GetSampleMinMax(startSample,
+                                                                   (int)Math.Min(pixelsPerByte, totalBytes - startSample),
+                                                                   sound, bitsPerSample, audioChannels);
                                 posAmplitude = Math.Max(posAmplitude, (short) (sampleMinMax >> 16));
                                 negAmplitude = Math.Min(negAmplitude, (short) (sampleMinMax & 0xffff));
                                 _waveformPcmData[index] = sampleMinMax;
@@ -1517,7 +1521,8 @@ namespace VixenEditor {
                             PcmToPixels(_waveformPcmData, _waveformPixelData);
                             sound.release();
                         }
-                        finally {
+                        finally
+                        {
                             Cursor = Cursors.Default;
                             dialog.Hide();
                         }
@@ -1560,18 +1565,19 @@ namespace VixenEditor {
         }
 
 
-        private void PcmToPixels(IList<uint> pcmDataValues, IList<uint> pixelData) {
+        private void PcmToPixels(IList<uint> pcmDataValues, IList<uint> pixelData)
+        {
             var waveformOffset = _waveformCenterLine;
             var negativeOffset = -_waveformCenterLine;
-            var amplitudeDivisor = _waveformMaxAmplitude / (double) Math.Max(waveformOffset, negativeOffset);
+            var amplitudeDivisor = _waveformMaxAmplitude/(double) Math.Max(waveformOffset, negativeOffset);
             for (var i = 0; i < pcmDataValues.Count; i++) {
                 var pcmData = pcmDataValues[i];
 
-                var lsb = (short) (Math.Min((short) (pcmData >> 16), _waveformMaxAmplitude) / amplitudeDivisor);
+                var lsb = (short) (Math.Min((short) (pcmData >> 16), _waveformMaxAmplitude)/amplitudeDivisor);
                 lsb = Math.Max(lsb, (short) 0);
                 lsb = (short) Math.Min(lsb, waveformOffset);
 
-                var msb = (short) (Math.Max((short) (pcmData & 0xffff), -_waveformMaxAmplitude) / amplitudeDivisor);
+                var msb = (short) (Math.Max((short) (pcmData & 0xffff), -_waveformMaxAmplitude)/amplitudeDivisor);
                 msb = Math.Min(msb, (short) 0);
                 msb = (short) Math.Max(msb, negativeOffset);
 
@@ -2262,19 +2268,25 @@ namespace VixenEditor {
         }
 
 
-        private void DrawWaveform(PaintEventArgs e) {
-            var startPosition = hScrollBar1.Value * _gridColWidth;
-            var endPosition = Math.Min(startPosition + ((_visibleEventPeriods + 1) * _gridColWidth), _waveformPixelData.Length);
-            var scaleFactor = splitContainer2.SplitterDistance/60f;
-            System.Diagnostics.Debug.Print("Scale: {0:R}", scaleFactor);
-            var centerLine = (int)Math.Round(_waveformCenterLine * scaleFactor, MidpointRounding.AwayFromZero) + WaveformOffset;
-            for (var x = 0; startPosition < endPosition; startPosition++ ) {
-                var y1 = centerLine - (int)Math.Round(((short)(_waveformPixelData[startPosition] >> 16) * scaleFactor),MidpointRounding.AwayFromZero);
-                var y2 = centerLine - (int)Math.Round(((short)(_waveformPixelData[startPosition] & 0xffff) * scaleFactor),MidpointRounding.AwayFromZero);
+        private void DrawWaveform(PaintEventArgs e)
+        {
+            var startPosition = hScrollBar1.Value*_gridColWidth;
+            var endPosition = Math.Min(startPosition + ((_visibleEventPeriods + 1)*_gridColWidth),_waveformPixelData.Length);
+            // 49f = 6px caret + 35px tick mark + 8px timeFont
+            // 79f = 120px size when initially maximized - 49f from above.
+            var scaleFactor = ((splitContainer2.SplitterDistance - 49f)/71f);
+            var centerLine = (int)(_waveformCenterLine * (scaleFactor)) + WaveformOffset;
+            var x = 0;
+            for (; startPosition < endPosition; startPosition++)
+            {
+                var pix = _waveformPixelData[startPosition];
+
+                var y1 = centerLine - (short) (pix >> 16)*(scaleFactor);
+                var y2 = centerLine - (short) (pix & 0xffff)*(scaleFactor);
                 e.Graphics.DrawLine(Pens.White, x, y1, x, y2);
                 x++;
             }
-            e.Graphics.DrawLine(Pens.Red, 0, centerLine + WaveformOffset, pictureBoxTime.Width, centerLine + WaveformOffset);
+            e.Graphics.DrawLine(Pens.Red, 0, centerLine, x-1, centerLine);
         }
 
 
@@ -4501,7 +4513,6 @@ namespace VixenEditor {
             lblFollowMouse.Text = labelPosition.Text + Environment.NewLine + rowCount + @" " + (rowCount == 1 ? Resources.Channel : Resources.Channels);
             var x = Cursor.Position.X - lblFollowMouse.Width - Left - 8;
             var y = Cursor.Position.Y - 58 - Top;
-            //if (y > Height - hScrollBar1.Height - 58) y = Height - hScrollBar1.Height - 58; 
             lblFollowMouse.Location = new Point(x, y);
         }
 
@@ -4520,6 +4531,10 @@ namespace VixenEditor {
             else {
                 toolStripButtonRedo.ToolTipText = redoToolStripMenuItem.Text = Resources.RedoText;
             }
+            toolStripEditing.SuspendLayout();
+            toolStripButtonRedo.Visible = false;
+            toolStripButtonRedo.Visible = true;
+            toolStripEditing.ResumeLayout(true);
         }
 
 
@@ -4558,6 +4573,10 @@ namespace VixenEditor {
             else {
                 toolStripButtonUndo.ToolTipText = undoToolStripMenuItem.Text = Resources.UndoText;
             }
+            toolStripEditing.SuspendLayout();
+            toolStripButtonUndo.Visible = false;
+            toolStripButtonUndo.Visible = true;
+            toolStripEditing.ResumeLayout(true);
         }
 
 
@@ -4691,6 +4710,10 @@ namespace VixenEditor {
 
         private void splitContainer2_SplitterMoved(object sender, SplitterEventArgs e)
         {
+            if (_executionInterface.EngineStatus(_executionContextHandle) == 1) {
+                return;
+            }
+
             Cursor.Current = Cursors.Default;
             pictureBoxTime.Height = e.SplitY;
             pictureBoxTime.Refresh();
@@ -4700,6 +4723,12 @@ namespace VixenEditor {
 
         private void splitContainer2_SplitterMoving(object sender, SplitterCancelEventArgs e)
         {
+            if (_executionInterface.EngineStatus(_executionContextHandle) == 1)
+            {
+                e.Cancel = true;
+                return;
+            }
+
             Cursor.Current = Cursors.HSplit;
         }
 
