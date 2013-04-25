@@ -520,4 +520,10 @@ Please select a value between 0 and 100.</value>
   <data name="UndoText" xml:space="preserve">
     <value>Undo</value>
   </data>
+  <data name="RedoTextEmpty" xml:space="preserve">
+    <value>Nothing to Redo</value>
+  </data>
+  <data name="UndoTextEmpty" xml:space="preserve">
+    <value>Nothing to Undo</value>
+  </data>
 </root>

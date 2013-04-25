@@ -650,6 +650,15 @@ namespace Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Nothing to Redo.
+        /// </summary>
+        internal static string RedoTextEmpty {
+            get {
+                return ResourceManager.GetString("RedoTextEmpty", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap remove {
             get {
                 object obj = ResourceManager.GetObject("remove", resourceCulture);
@@ -1108,6 +1117,15 @@ namespace Properties {
         internal static string UndoText_TransparentPaste {
             get {
                 return ResourceManager.GetString("UndoText_TransparentPaste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nothing to Undo.
+        /// </summary>
+        internal static string UndoTextEmpty {
+            get {
+                return ResourceManager.GetString("UndoTextEmpty", resourceCulture);
             }
         }
         
