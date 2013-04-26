@@ -226,7 +226,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="VixenEditor.ChannelCopyDialog.resources" />
     <EmbeddedResource Include="VixenEditor.ConsoleTrackBar.resources" />
     <EmbeddedResource Include="VixenEditor.DelayedStartDialog.resources" />
     <EmbeddedResource Include="VixenEditor.DrawingIntensityDialog.resources" />
@@ -241,6 +240,9 @@
     <EmbeddedResource Include="VixenEditor.TestConsoleDialog.resources" />
     <EmbeddedResource Include="VixenEditor\AudioSpeedDialog.resx">
       <DependentUpon>AudioSpeedDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenEditor\ChannelCopyDialog.resx">
+      <DependentUpon>ChannelCopyDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\ProgressDialog.resx">
       <DependentUpon>ProgressDialog.cs</DependentUpon>

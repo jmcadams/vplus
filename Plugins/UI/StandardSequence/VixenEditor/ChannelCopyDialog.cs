@@ -13,8 +13,8 @@ namespace VixenEditor {
         public ChannelCopyDialog(AffectGridDelegate affectGridDelegate, EventSequence sequence, List<int> sortOrder) {
             InitializeComponent();
             var channels = new Channel[sequence.ChannelCount];
-            for (var i = 0; i < sortOrder.Count; i++) {
-                channels[i] = sequence.Channels[sortOrder[i]];
+            for (var channel = 0; channel < sortOrder.Count; channel++) {
+                channels[channel] = sequence.Channels[sortOrder[channel]];
             }
             comboBoxSourceChannel.Items.AddRange(channels);
             comboBoxDestinationChannel.Items.AddRange(channels);
@@ -31,9 +31,9 @@ namespace VixenEditor {
         }
 
         private void buttonCopy_Click(object sender, EventArgs e) {
-            var num = _sortOrder[comboBoxSourceChannel.SelectedIndex];
-            for (var i = 0; i < _eventSequence.TotalEventPeriods; i++) {
-                _sequenceData[0, i] = _eventSequence.EventValues[num, i];
+            var channel = _sortOrder[comboBoxSourceChannel.SelectedIndex];
+            for (var column = 0; column < _eventSequence.TotalEventPeriods; column++) {
+                _sequenceData[0, column] = _eventSequence.EventValues[channel, column];
             }
             _affectGridDelegate(comboBoxDestinationChannel.SelectedIndex, 0, _sequenceData);
         }
