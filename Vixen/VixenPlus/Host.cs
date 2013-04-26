@@ -348,9 +348,9 @@ namespace VixenPlus
 			if ((_backgroundSequence != null) && Preference2.GetBoolean("EnableBackgroundSequence"))
 			{
 				CreateBackgroundContext();
-				if (_executionInterface.EngineStatus(_backgroundExecutionContextHandle) == 0)
+				if (_executionInterface.EngineStatus(_backgroundExecutionContextHandle) == CommonUtils.Utils.ExecutionStopped)
 				{
-					_backgroundSequenceDelayTimer.Interval = Preference2.GetInteger("BackgroundSequenceDelay")*0x3e8;
+					_backgroundSequenceDelayTimer.Interval = Preference2.GetInteger("BackgroundSequenceDelay")*1000;
 					_backgroundSequenceDelayTimer.Enabled = true;
 				}
 			}

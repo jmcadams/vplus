@@ -147,7 +147,6 @@ namespace VixenEditor {
             _toolStripCheckStateChangeHandler = toolStripItem_CheckStateChanged;
         }
 
-        #region These are mostly refactored
 
         private void additionToolStripMenuItem_Click(object sender, EventArgs e) {
             ArithmeticPaste(ArithmeticOperation.Addition);
@@ -1286,7 +1285,7 @@ namespace VixenEditor {
         private void m_positionTimer_Tick(object sender, EventArgs e) {
             int executionPosition;
 
-            if (_executionInterface.EngineStatus(_executionContextHandle, out executionPosition) == 0) {
+            if (_executionInterface.EngineStatus(_executionContextHandle, out executionPosition) == Utils.ExecutionStopped) {
                 ProgramEnded();
                 return;
             }
@@ -1786,7 +1785,7 @@ namespace VixenEditor {
             }
 
             _mouseDownInGrid = true;
-            lblFollowMouse.Visible = true;
+            lblFollowMouse.Visible = true & (_executionInterface.EngineStatus(_executionContextHandle) != Utils.ExecutionRunning);
             _mouseDownAtInGrid.X = (e.X / _gridColWidth) + hScrollBar1.Value;
             _mouseDownAtInGrid.Y = (e.Y / _gridRowHeight) + vScrollBar1.Value;
 
@@ -1857,9 +1856,13 @@ namespace VixenEditor {
             var cellX = Math.Min((Math.Max(e.X / _gridColWidth, 0) + hScrollBar1.Value), _sequence.TotalEventPeriods - 1);
             var cellY = Math.Min((Math.Max(e.Y / _gridRowHeight, 0) + vScrollBar1.Value), _sequence.ChannelCount - 1);
 
+            if (cellX == _lastCellX && cellY == _lastCellY && RectangleToScreen(pictureBoxGrid.ClientRectangle).Contains(e.Location)) {
+                return;
+            }
+
             toolStripLabelCellIntensity.Text = string.Empty;
             toolStripLabelCurrentCell.Text = string.Empty;
-            if ((e.Button == MouseButtons.Left) && _mouseDownInGrid) {
+            if ((e.Button == MouseButtons.Left) && _mouseDownInGrid && _executionInterface.EngineStatus(_executionContextHandle) != Utils.ExecutionRunning) {
                 if (_lineRect.Left == -1) {
                     DrawSelectionBox(e.X, e.Y, cellX, cellY);
                 }
@@ -2957,7 +2960,7 @@ namespace VixenEditor {
                 e.Cancel = true;
             }
             else {
-                if (_executionInterface.EngineStatus(_executionContextHandle) != 0) {
+                if (_executionInterface.EngineStatus(_executionContextHandle) != Utils.ExecutionStopped) {
                     toolStripButtonStop_Click(null, null);
                 }
                 if (_preferences.GetBoolean("SaveZoomLevels")) {
@@ -2976,7 +2979,7 @@ namespace VixenEditor {
 
             if (!keyEvent.Handled) HandleBookmarkKeys(keyEvent);
 
-            var isNotRunning = _executionInterface.EngineStatus(_executionContextHandle) != 1;
+            var isNotRunning = _executionInterface.EngineStatus(_executionContextHandle) != Utils.ExecutionRunning;
 
             // Keys here only work on selected areas if they exist.
             if (!keyEvent.Handled && _selectedCells.Width > 0) {
@@ -3020,7 +3023,7 @@ namespace VixenEditor {
                     }
 
                     int currentPosition;
-                    if (_executionInterface.EngineStatus(_executionContextHandle, out currentPosition) != 1) {
+                    if (_executionInterface.EngineStatus(_executionContextHandle, out currentPosition) != Utils.ExecutionRunning) {
 
                         var nonZeroCellCount = 0;
 
@@ -3776,7 +3779,7 @@ namespace VixenEditor {
 
 
         private void toolStripButtonPause_Click(object sender, EventArgs e) {
-            if (_executionInterface.EngineStatus(_executionContextHandle) != 1) {
+            if (_executionInterface.EngineStatus(_executionContextHandle) != Utils.ExecutionRunning) {
                 return;
             }
 
@@ -3790,11 +3793,11 @@ namespace VixenEditor {
             int sequencePosition;
             var executionStatus = _executionInterface.EngineStatus(_executionContextHandle, out sequencePosition);
             
-            if (executionStatus == 1) { // Running
+            if (executionStatus == Utils.ExecutionRunning) {
                 return;
             }
             
-            if (executionStatus != 2) { //Paused
+            if (executionStatus != Utils.ExecutionPaused) {
                 Reset();
             }
             
@@ -3808,7 +3811,7 @@ namespace VixenEditor {
 
 
         private void toolStripButtonPlayPoint_Click(object sender, EventArgs e) {
-            if (_executionInterface.EngineStatus(_executionContextHandle) == 1) {
+            if (_executionInterface.EngineStatus(_executionContextHandle) == Utils.ExecutionRunning) {
                 return;
             }
 
@@ -3909,7 +3912,6 @@ namespace VixenEditor {
             Redo();
         }
 
-        #endregion
 
         private void toolStripButtonRemoveCells_Click(object sender, EventArgs e) {
             if (_selectedCells.Width == 0) {
@@ -4017,7 +4019,7 @@ namespace VixenEditor {
 
 
         private void toolStripButtonStop_Click(object sender, EventArgs e) {
-            if (_executionInterface.EngineStatus(_executionContextHandle) == 0) {
+            if (_executionInterface.EngineStatus(_executionContextHandle) == Utils.ExecutionStopped) {
                 return;
             }
 
@@ -4110,7 +4112,7 @@ namespace VixenEditor {
 
 
         private void toolStripButtonWaveform_Click(object sender, EventArgs e) {
-            if (_executionInterface.EngineStatus(_executionContextHandle) == 1) {
+            if (_executionInterface.EngineStatus(_executionContextHandle) == Utils.ExecutionRunning) {
                 return;
             }
 
@@ -4628,7 +4630,7 @@ namespace VixenEditor {
 
 
         private void splitContainer2_SplitterMoved(object sender, SplitterEventArgs e) {
-            if (_executionInterface.EngineStatus(_executionContextHandle) == 1) {
+            if (_executionInterface.EngineStatus(_executionContextHandle) == Utils.ExecutionRunning) {
                 return;
             }
 
@@ -4641,7 +4643,7 @@ namespace VixenEditor {
 
 
         private void splitContainer2_SplitterMoving(object sender, SplitterCancelEventArgs e) {
-            if (_executionInterface.EngineStatus(_executionContextHandle) == 1) {
+            if (_executionInterface.EngineStatus(_executionContextHandle) == Utils.ExecutionRunning) {
                 e.Cancel = true;
                 return;
             }
@@ -4661,6 +4663,10 @@ namespace VixenEditor {
 
 
         private void pictureBoxTime_DoubleClick(object sender, EventArgs e) {
+            if (_executionInterface.EngineStatus(_executionContextHandle) != Utils.ExecutionStopped) {
+                return;
+            }
+
             toolStripButtonWaveform.Checked = !toolStripButtonWaveform.Checked;
             toolStripButtonWaveform_Click(null, null);
         }

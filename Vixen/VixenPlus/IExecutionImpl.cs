@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 
+using CommonUtils;
+
 namespace VixenPlus
 {
-	internal class ExecutionImpl : IExecution, IQueryable
-	{
-		private readonly string _errorLog;
+	internal class ExecutionImpl : IExecution, IQueryable {
+	    private readonly string _errorLog;
 		private readonly Host _host;
 		private readonly Preference2 _preferences;
 		private readonly Dictionary<int, ExecutionContext> _registeredContexts;
@@ -25,54 +25,52 @@ namespace VixenPlus
 			_errorLog = Path.Combine(Paths.DataPath, "iexecution.err");
 		}
 
-		public int EngineStatus(int contextHandle)
-		{
+		public int EngineStatus(int contextHandle) {
+		    var status = Utils.ExecutionStopped;
 			ExecutionContext context;
 			if (!_registeredContexts.TryGetValue(contextHandle, out context))
 			{
-				return 0;
+				return status;
 			}
-			int num = 0;
 			if (context.SynchronousEngineInstance == null)
 			{
-				return 0;
+				return status;
 			}
 			if (context.SynchronousEngineInstance.IsPaused)
 			{
-				num = 2;
+				status = Utils.ExecutionPaused;
 			}
 			else if (context.SynchronousEngineInstance.IsRunning)
 			{
-				num = 1;
+				status = Utils.ExecutionRunning;
 			}
-			return num;
+			return status;
 		}
 
-		public int EngineStatus(int contextHandle, out int position)
-		{
+		public int EngineStatus(int contextHandle, out int position) {
+		    var status = Utils.ExecutionStopped;
 			position = 0;
 			ExecutionContext context;
 			if (!_registeredContexts.TryGetValue(contextHandle, out context))
 			{
-				return 0;
+				return status;
 			}
-			int num = 0;
-			position = 0;
+
 			if (context.SynchronousEngineInstance == null)
 			{
-				return 0;
+				return status;
 			}
 			if (context.SynchronousEngineInstance.IsPaused)
 			{
-				num = 2;
+                status = Utils.ExecutionPaused;
 				position = context.SynchronousEngineInstance.Position;
 			}
 			else if (context.SynchronousEngineInstance.IsRunning)
 			{
-				num = 1;
+                status = Utils.ExecutionRunning;
 				position = context.SynchronousEngineInstance.Position;
 			}
-			return num;
+			return status;
 		}
 
 		public bool ExecuteChannelOff(int contextHandle, int channelIndex)
@@ -100,7 +98,7 @@ namespace VixenPlus
 			}
 			else
 			{
-				for (int i = 0; i < context.AsynchronousEngineBuffer.Length; i++)
+				for (var i = 0; i < context.AsynchronousEngineBuffer.Length; i++)
 				{
 					context.AsynchronousEngineBuffer[i] = 0;
 				}
@@ -142,13 +140,13 @@ namespace VixenPlus
 			}
 			if (channelIndex != -1)
 			{
-				context.AsynchronousEngineBuffer[channelIndex] = (byte) ((percentLevel*0xff)/100);
+				context.AsynchronousEngineBuffer[channelIndex] = (byte) ((percentLevel*255)/100);
 			}
 			else
 			{
-				for (int i = 0; i < context.AsynchronousEngineBuffer.Length; i++)
+				for (var i = 0; i < context.AsynchronousEngineBuffer.Length; i++)
 				{
-					context.AsynchronousEngineBuffer[i] = (byte) ((percentLevel*0xff)/100);
+					context.AsynchronousEngineBuffer[i] = (byte) ((percentLevel*255)/100);
 				}
 			}
 			try
@@ -185,13 +183,13 @@ namespace VixenPlus
 			{
 				context.AsynchronousEngineBuffer[channelIndex] = (context.AsynchronousEngineBuffer[channelIndex] > 0)
 					                                                 ? ((byte) 0)
-					                                                 : ((byte) 0xff);
+					                                                 : ((byte) 255);
 			}
 			else
 			{
-				for (int i = 0; i < context.AsynchronousEngineBuffer.Length; i++)
+				for (var i = 0; i < context.AsynchronousEngineBuffer.Length; i++)
 				{
-					context.AsynchronousEngineBuffer[i] = (context.AsynchronousEngineBuffer[i] > 0) ? ((byte) 0) : ((byte) 0xff);
+					context.AsynchronousEngineBuffer[i] = (context.AsynchronousEngineBuffer[i] > 0) ? ((byte) 0) : ((byte) 255);
 				}
 			}
 			try
@@ -278,11 +276,11 @@ namespace VixenPlus
 					return false;
 				}
 			}
-			string str = context.SynchronousEngineInstance.CurrentObject.Key.ToString(CultureInfo.InvariantCulture);
+			var str = context.SynchronousEngineInstance.CurrentObject.Key.ToString(CultureInfo.InvariantCulture);
 			Host.Communication["KeyInterceptor_" + str] = context.KeyInterceptor;
 			Host.Communication["ExecutionContext_" + str] = context;
-			bool flag = context.SynchronousEngineInstance.Play(startMillisecond, endMillisecond, logAudio);
-			foreach (Form form in context.OutputPlugInForms)
+			var flag = context.SynchronousEngineInstance.Play(startMillisecond, endMillisecond, logAudio);
+			foreach (var form in context.OutputPlugInForms)
 			{
 				form.BringToFront();
 			}
@@ -847,24 +845,24 @@ namespace VixenPlus
 
 		private bool RequestorIsLocal(StackFrame requestorFrame)
 		{
-			Assembly assembly = requestorFrame.GetMethod().Module.Assembly;
-			bool flag = false;
-			bool flag2 = false;
-			bool flag3 = false;
-			using (Process process = Process.GetCurrentProcess())
+			var assembly = requestorFrame.GetMethod().Module.Assembly;
+			var flag = false;
+			var flag2 = false;
+			var flag3 = false;
+			using (var process = Process.GetCurrentProcess())
 			{
 				if (requestorFrame.GetMethod().Module.Name == process.MainModule.ModuleName)
 				{
 					return true;
 				}
 			}
-			foreach (Type type in assembly.GetExportedTypes())
+			foreach (var type in assembly.GetExportedTypes())
 			{
 				if (type.BaseType != null)
 				{
 					flag |= type.BaseType.Name == "UIBase";
 				}
-				foreach (Type type2 in type.GetInterfaces())
+				foreach (var type2 in type.GetInterfaces())
 				{
 					flag3 |= type2.Name == "IVixenMDI";
 					flag2 |= type2.Name == "IAddIn";

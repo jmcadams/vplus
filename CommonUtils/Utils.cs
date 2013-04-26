@@ -9,6 +9,11 @@ namespace CommonUtils {
         public const int MillsPerSecond = 1000;
         public const int MillsPerMinute = 60 * MillsPerSecond;
 
+        public const int ExecutionStopped = 0;
+        public const int ExecutionPaused = 2;
+        public const int ExecutionRunning = 1;
+
+
         public static Brush GetTextColor(Color backgroundColor) {
             return ((backgroundColor.R * 299) + (backgroundColor.G * 587) + (backgroundColor.B * 114)) / 1000 >= 128 ? Brushes.Black : Brushes.White;
         }

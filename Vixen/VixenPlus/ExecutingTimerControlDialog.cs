@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Forms;
+using CommonUtils;
 
 namespace VixenPlus
 {
@@ -104,7 +105,7 @@ namespace VixenPlus
 		{
 			var selectedItem = (TimerContext) listBoxTimers.SelectedItem;
 			int sequencePosition;
-			if (selectedItem.ExecutionInterface.EngineStatus(selectedItem.ExecutionContextHandle, out sequencePosition) == 2)
+			if (selectedItem.ExecutionInterface.EngineStatus(selectedItem.ExecutionContextHandle, out sequencePosition) == Utils.ExecutionPaused)
 			{
 				selectedItem.ExecutionInterface.ExecutePlay(selectedItem.ExecutionContextHandle, sequencePosition, 0);
 			}
@@ -117,10 +118,10 @@ namespace VixenPlus
 			{
 				list.Add(context);
 			}
-			foreach (TimerContext context in list)
+			foreach (var context in list)
 			{
 				int sequencePosition;
-				if (context.ExecutionInterface.EngineStatus(context.ExecutionContextHandle, out sequencePosition) == 2)
+				if (context.ExecutionInterface.EngineStatus(context.ExecutionContextHandle, out sequencePosition) == Utils.ExecutionPaused)
 				{
 					context.ExecutionInterface.ExecutePlay(context.ExecutionContextHandle, sequencePosition, 0);
 				}
@@ -302,7 +303,7 @@ namespace VixenPlus
 		private void StopExecutingTimer(TimerContext context)
 		{
 			context.Stopping = true;
-			if (context.ExecutionInterface.EngineStatus(context.ExecutionContextHandle) != 0)
+			if (context.ExecutionInterface.EngineStatus(context.ExecutionContextHandle) != Utils.ExecutionStopped)
 			{
 				context.ExecutionInterface.ExecuteStop(context.ExecutionContextHandle);
 				context.Timer.NotValidUntil = DateTime.Today + context.Timer.EndTime;
@@ -324,7 +325,7 @@ namespace VixenPlus
 			foreach (TimerContext context in list)
 			{
 				if ((((context.Timer.ObjectLength.TotalMilliseconds == 0.0) && !context.Stopping) &&
-				     (context.ExecutionInterface.EngineStatus(context.ExecutionContextHandle) != 0)) &&
+				     (context.ExecutionInterface.EngineStatus(context.ExecutionContextHandle) != Utils.ExecutionStopped)) &&
 				    (DateTime.Now > context.EndDateTime))
 				{
 					StopExecutingTimer(context);

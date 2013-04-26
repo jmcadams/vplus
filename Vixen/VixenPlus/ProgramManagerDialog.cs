@@ -422,7 +422,7 @@ namespace VixenPlus
 				return;
 			}
 			GetCrossFadeValue();
-			if (_executionInterface.EngineStatus(_executionContextHandle) != 0)
+			if (_executionInterface.EngineStatus(_executionContextHandle) != CommonUtils.Utils.ExecutionStopped)
 			{
 				_executionInterface.ExecuteStop(_executionContextHandle);
 				pictureBoxRunProgram.Image = pictureBoxRun.Image;
