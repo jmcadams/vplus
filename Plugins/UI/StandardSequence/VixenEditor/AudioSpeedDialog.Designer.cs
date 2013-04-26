@@ -32,6 +32,7 @@ namespace VixenEditor {
             this.trackBar.TabIndex = 0;
             this.trackBar.Value = 100;
             this.trackBar.Scroll += new System.EventHandler(this.trackBar_Scroll);
+            this.trackBar.KeyDown += new System.Windows.Forms.KeyEventHandler(this.trackBar_KeyDown);
             // 
             // labelValue
             // 
