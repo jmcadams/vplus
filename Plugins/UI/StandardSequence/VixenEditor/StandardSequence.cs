@@ -1852,14 +1852,10 @@ namespace VixenEditor {
             toolStripLabelCurrentCell.Text = string.Empty;
         }
 
-
+        //TODO there are still issues with the label drawing and updating stuff that is not necessary.
         private void pictureBoxGrid_MouseMove(object sender, MouseEventArgs e) {
             var cellX = Math.Min((Math.Max(e.X / _gridColWidth, 0) + hScrollBar1.Value), _sequence.TotalEventPeriods - 1);
             var cellY = Math.Min((Math.Max(e.Y / _gridRowHeight, 0) + vScrollBar1.Value), _sequence.ChannelCount - 1);
-
-            if (cellX == _lastCellX && cellY == _lastCellY) {
-                return;
-            }
 
             toolStripLabelCellIntensity.Text = string.Empty;
             toolStripLabelCurrentCell.Text = string.Empty;
@@ -2583,12 +2579,11 @@ namespace VixenEditor {
         }
 
 
-        //TODO These seem to pause if not moved out far enough. (Bug, drawing too far to the right!)
         private void ScrollSelectionDown(int cellX) {
             _selectedRange.Width = cellX + 1 - _selectedRange.Left;
 
             var y = pictureBoxGrid.PointToScreen(new Point(pictureBoxGrid.Left, pictureBoxGrid.Bottom)).Y - pictureBoxTime.Height;
-            while (MousePosition.Y > y) {
+            while (MousePosition.Y > y && MouseButtons == MouseButtons.Left) {
                 var cellY = pictureBoxGrid.PointToClient(MousePosition).Y / _gridColWidth;
                 cellY += vScrollBar1.Value;
                 if (cellY >= (_sequence.ChannelCount - 1)) {
@@ -2605,17 +2600,21 @@ namespace VixenEditor {
                     _selectedCells.Height++;
                 }
                 vScrollBar1.Value++;
+                // Ugly, but it is the only way I've found that we seem to be able to catch that the mouse button is not down anymore :(
+                Application.DoEvents();
             }
         }
 
 
         private void ScrollSelectionLeft(int cellY) {
             var x = pictureBoxGrid.PointToScreen(new Point(pictureBoxGrid.Left, pictureBoxGrid.Top)).X;
-            while ((MousePosition.X < x) && (hScrollBar1.Value != 0)) {
+            while (MousePosition.X < x && hScrollBar1.Value != 0 && MouseButtons == MouseButtons.Left) {
                 _selectedRange.Height = (cellY + 1) - _selectedRange.Top;
                 _selectedRange.Width--;
                 _selectedCells = NormalizeRect(_selectedRange);
                 hScrollBar1.Value--;
+                // Ugly, but it is the only way I've found that we seem to be able to catch that the mouse button is not down anymore :(
+                Application.DoEvents();
             }
         }
 
@@ -2624,7 +2623,7 @@ namespace VixenEditor {
             _selectedRange.Height = (cellY + 1) - _selectedRange.Top;
 
             var x = pictureBoxGrid.PointToScreen(new Point(pictureBoxGrid.Right, pictureBoxGrid.Top)).X;
-            while (MousePosition.X > x) {
+            while (MousePosition.X > x && MouseButtons == MouseButtons.Left) {
                 var cellX = pictureBoxGrid.PointToClient(MousePosition).X / _gridColWidth;
                 cellX += hScrollBar1.Value;
                 if (cellX >= (_sequence.TotalEventPeriods - 1)) {
@@ -2641,17 +2640,21 @@ namespace VixenEditor {
                     _selectedCells.Width++;
                 }
                 hScrollBar1.Value++;
+                // Ugly, but it is the only way I've found that we seem to be able to catch that the mouse button is not down anymore :(
+                Application.DoEvents();
             }
         }
 
 
         private void ScrollSelectionUp(int cellX) {
             var y = pictureBoxGrid.PointToScreen(new Point(pictureBoxGrid.Left, pictureBoxGrid.Top)).Y;
-            while ((MousePosition.Y < y) && (vScrollBar1.Value != 0)) {
+            while (MousePosition.Y < y && (vScrollBar1.Value != 0) && MouseButtons == MouseButtons.Left) {
                 _selectedRange.Width = (cellX + 1) - _selectedRange.Left;
                 _selectedRange.Height--;
                 _selectedCells = NormalizeRect(_selectedRange);
                 vScrollBar1.Value--;
+                // Ugly, but it is the only way I've found that we seem to be able to catch that the mouse button is not down anymore :(
+                Application.DoEvents();
             }
         }
 
