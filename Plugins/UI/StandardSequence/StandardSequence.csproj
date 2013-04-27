@@ -129,6 +129,9 @@
     <Compile Include="VixenEditor\ConsoleTrackBar.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="VixenEditor\ConsoleTrackBar.Designer.cs">
+      <DependentUpon>ConsoleTrackBar.cs</DependentUpon>
+    </Compile>
     <Compile Include="VixenEditor\DelayedStartDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -226,7 +229,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="VixenEditor.ConsoleTrackBar.resources" />
     <EmbeddedResource Include="VixenEditor.DelayedStartDialog.resources" />
     <EmbeddedResource Include="VixenEditor.DrawingIntensityDialog.resources" />
     <EmbeddedResource Include="VixenEditor.EffectFrequencyDialog.resources" />
@@ -243,6 +245,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\ChannelCopyDialog.resx">
       <DependentUpon>ChannelCopyDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenEditor\ConsoleTrackBar.resx">
+      <DependentUpon>ConsoleTrackBar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\ProgressDialog.resx">
       <DependentUpon>ProgressDialog.cs</DependentUpon>
