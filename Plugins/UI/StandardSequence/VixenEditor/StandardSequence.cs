@@ -3279,6 +3279,7 @@ namespace VixenEditor {
 
                 case Keys.F5:
                     if (tsbPlay.Enabled) {
+                        e.Handled = true; 
                         if (e.Alt) {
                             using (var dialog = new DelayedStartDialog()) {
                                 if (dialog.ShowDialog() != DialogResult.OK) {
@@ -3287,7 +3288,6 @@ namespace VixenEditor {
                             }
                         }
                         toolStripButtonPlay_Click(null, null);
-                        e.Handled = true;
                     }
                     break;
 
