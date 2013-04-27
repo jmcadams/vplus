@@ -81,7 +81,9 @@ namespace VixenPlus
 
 		public static bool InvokeRequired
 		{
-			get { return Application.OpenForms[0].InvokeRequired; }
+		    get {
+		        return Application.OpenForms.Count > 0 && Application.OpenForms[0].InvokeRequired; 
+		    }
 		}
 
 		public MusicPlayer MusicPlayer
