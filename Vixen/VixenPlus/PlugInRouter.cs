@@ -246,6 +246,7 @@ namespace VixenPlus
 								{
 									plugin.ShutdownInternal();
 								}
+                                //TODO This causes a bug is another window is open that uses this xObject since the xObject gets removed.
 								_sequenceInputPlugins.Remove(routerContext.ExecutableObject);
 							}
 						}
