@@ -229,7 +229,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="VixenEditor.DelayedStartDialog.resources" />
     <EmbeddedResource Include="VixenEditor.DrawingIntensityDialog.resources" />
     <EmbeddedResource Include="VixenEditor.EffectFrequencyDialog.resources" />
     <EmbeddedResource Include="VixenEditor.FindAndReplaceDialog.resources" />
@@ -248,6 +247,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\ConsoleTrackBar.resx">
       <DependentUpon>ConsoleTrackBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenEditor\DelayedStartDialog.resx">
+      <DependentUpon>DelayedStartDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\ProgressDialog.resx">
       <DependentUpon>ProgressDialog.cs</DependentUpon>

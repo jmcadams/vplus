@@ -217,6 +217,15 @@ namespace Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Stop ({0}).
+        /// </summary>
+        internal static string CountdownStop {
+            get {
+                return ResourceManager.GetString("CountdownStop", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap crosshairs {
             get {
                 object obj = ResourceManager.GetObject("crosshairs", resourceCulture);
@@ -776,6 +785,15 @@ namespace Properties {
             get {
                 object obj = ResourceManager.GetObject("sparkle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        internal static string Start {
+            get {
+                return ResourceManager.GetString("Start", resourceCulture);
             }
         }
         
