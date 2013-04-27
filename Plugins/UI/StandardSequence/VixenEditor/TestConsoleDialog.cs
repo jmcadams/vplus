@@ -29,14 +29,14 @@ namespace VixenEditor {
             }
             strArray[0] = Resources.Unassigned;
             foreach (var control in groupBox2.Controls) {
-                var item = control as ConsoleTrackBar;
-                if ((item == null) || (item.Master == null)) {
+                var trackBar = control as ConsoleTrackBar;
+                if ((trackBar == null) || (trackBar.Master == null)) {
                     continue;
                 }
 
-                item.TextStrings = strArray;
-                item.ResetIndex = 0;
-                _channelControls.Add(item);
+                trackBar.TextStrings = strArray;
+                trackBar.ResetIndex = 0;
+                _channelControls.Add(trackBar);
             }
         }
 
@@ -47,8 +47,8 @@ namespace VixenEditor {
 
 
         private void consoleTrackBar_ValueChanged(object sender) {
-            var bar = sender as ConsoleTrackBar;
-            if (bar == null || bar.SelectedTextIndex <= 0) {
+            var trackBar = sender as ConsoleTrackBar;
+            if (trackBar == null || trackBar.SelectedTextIndex <= 0) {
                 return;
             }
             UpdateChannelFrom(sender as ConsoleTrackBar);
