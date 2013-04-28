@@ -415,6 +415,8 @@ namespace VixenEditor{
             this.toolStripDropDownButtonPlugins = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbPlay = new System.Windows.Forms.ToolStripButton();
+            this.tsbPlayPoint = new System.Windows.Forms.ToolStripButton();
+            this.tsbPlayRange = new System.Windows.Forms.ToolStripButton();
             this.tsbPause = new System.Windows.Forms.ToolStripButton();
             this.tsbStop = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabelProgess = new System.Windows.Forms.ToolStripLabel();
@@ -508,8 +510,6 @@ namespace VixenEditor{
             this.printPreviewDialog = new System.Windows.Forms.PrintPreviewDialog();
             this.m_positionTimer = new System.Windows.Forms.Timer(this.components);
             this.lblFollowMouse = new System.Windows.Forms.Label();
-            this.tsbPlayRange = new System.Windows.Forms.ToolStripButton();
-            this.tsbPlayPoint = new System.Windows.Forms.ToolStripButton();
             this.pictureBoxChannels = new VixenEditor.SelectablePictureBox();
             this.pictureBoxGrid = new VixenEditor.SelectablePictureBox();
             this.menuStrip.SuspendLayout();
@@ -1980,6 +1980,30 @@ namespace VixenEditor{
             this.tsbPlay.Text = "Play this sequence (F5)";
             this.tsbPlay.Click += new System.EventHandler(this.toolStripButtonPlay_Click);
             // 
+            // tsbPlayPoint
+            // 
+            this.tsbPlayPoint.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.tsbPlayPoint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbPlayPoint.Enabled = false;
+            this.tsbPlayPoint.Image = global::Properties.Resources.play_from;
+            this.tsbPlayPoint.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbPlayPoint.Name = "tsbPlayPoint";
+            this.tsbPlayPoint.Size = new System.Drawing.Size(52, 52);
+            this.tsbPlayPoint.ToolTipText = "Play from point";
+            this.tsbPlayPoint.Click += new System.EventHandler(this.toolStripButtonPlayPoint_Click);
+            // 
+            // tsbPlayRange
+            // 
+            this.tsbPlayRange.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.tsbPlayRange.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbPlayRange.Enabled = false;
+            this.tsbPlayRange.Image = global::Properties.Resources.play_range;
+            this.tsbPlayRange.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbPlayRange.Name = "tsbPlayRange";
+            this.tsbPlayRange.Size = new System.Drawing.Size(52, 52);
+            this.tsbPlayRange.ToolTipText = "Play Range";
+            this.tsbPlayRange.Click += new System.EventHandler(this.toolStripButtonPlayRange_Click);
+            // 
             // tsbPause
             // 
             this.tsbPause.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
@@ -2035,6 +2059,7 @@ namespace VixenEditor{
             // 
             // SpeedQtrTsb
             // 
+            this.SpeedQtrTsb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.SpeedQtrTsb.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.SpeedQtrTsb.Image = ((System.Drawing.Image)(resources.GetObject("SpeedQtrTsb.Image")));
             this.SpeedQtrTsb.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -2045,6 +2070,7 @@ namespace VixenEditor{
             // 
             // SpeedHalfTsb
             // 
+            this.SpeedHalfTsb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.SpeedHalfTsb.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.SpeedHalfTsb.Image = ((System.Drawing.Image)(resources.GetObject("SpeedHalfTsb.Image")));
             this.SpeedHalfTsb.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -2055,6 +2081,7 @@ namespace VixenEditor{
             // 
             // SpeedThreeQtrTsb
             // 
+            this.SpeedThreeQtrTsb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.SpeedThreeQtrTsb.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.SpeedThreeQtrTsb.Image = ((System.Drawing.Image)(resources.GetObject("SpeedThreeQtrTsb.Image")));
             this.SpeedThreeQtrTsb.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -2065,6 +2092,8 @@ namespace VixenEditor{
             // 
             // SpeedNormalTsb
             // 
+            this.SpeedNormalTsb.BackgroundImage = global::Properties.Resources.Ball_Green;
+            this.SpeedNormalTsb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.SpeedNormalTsb.Checked = true;
             this.SpeedNormalTsb.CheckState = System.Windows.Forms.CheckState.Checked;
             this.SpeedNormalTsb.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -2077,6 +2106,7 @@ namespace VixenEditor{
             // 
             // SpeedVariableTsb
             // 
+            this.SpeedVariableTsb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.SpeedVariableTsb.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.SpeedVariableTsb.Image = ((System.Drawing.Image)(resources.GetObject("SpeedVariableTsb.Image")));
             this.SpeedVariableTsb.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -2851,30 +2881,6 @@ namespace VixenEditor{
             this.lblFollowMouse.Text = "FollowMouseLabel";
             this.lblFollowMouse.TextAlign = System.Drawing.ContentAlignment.BottomRight;
             this.lblFollowMouse.Visible = false;
-            // 
-            // tsbPlayRange
-            // 
-            this.tsbPlayRange.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.tsbPlayRange.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbPlayRange.Enabled = false;
-            this.tsbPlayRange.Image = global::Properties.Resources.play_range;
-            this.tsbPlayRange.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbPlayRange.Name = "tsbPlayRange";
-            this.tsbPlayRange.Size = new System.Drawing.Size(52, 52);
-            this.tsbPlayRange.ToolTipText = "Play Range";
-            this.tsbPlayRange.Click += new System.EventHandler(this.toolStripButtonPlayRange_Click);
-            // 
-            // tsbPlayPoint
-            // 
-            this.tsbPlayPoint.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.tsbPlayPoint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbPlayPoint.Enabled = false;
-            this.tsbPlayPoint.Image = global::Properties.Resources.play_from;
-            this.tsbPlayPoint.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbPlayPoint.Name = "tsbPlayPoint";
-            this.tsbPlayPoint.Size = new System.Drawing.Size(52, 52);
-            this.tsbPlayPoint.ToolTipText = "Play from point";
-            this.tsbPlayPoint.Click += new System.EventHandler(this.toolStripButtonPlayPoint_Click);
             // 
             // pictureBoxChannels
             // 

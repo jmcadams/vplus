@@ -2746,6 +2746,13 @@ namespace VixenEditor {
                 otherToolStripMenuItem.Checked = true;
                 SpeedVariableTsb.Checked = true;
             }
+
+            SpeedQtrTsb.BackgroundImage = ToolStripManager.GetBackground(SpeedQtrTsb.Checked);
+            SpeedHalfTsb.BackgroundImage = ToolStripManager.GetBackground(SpeedHalfTsb.Checked);
+            SpeedThreeQtrTsb.BackgroundImage = ToolStripManager.GetBackground(SpeedThreeQtrTsb.Checked);
+            SpeedNormalTsb.BackgroundImage = ToolStripManager.GetBackground(SpeedNormalTsb.Checked);
+            SpeedVariableTsb.BackgroundImage = ToolStripManager.GetBackground(SpeedVariableTsb.Checked);
+
             _executionInterface.SetAudioSpeed(_executionContextHandle, rate);
         }
 
