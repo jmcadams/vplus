@@ -1,5 +1,7 @@
 ﻿using System.Globalization;
 
+using Properties;
+
 namespace VixenEditor
 {
     using System.Collections.Generic;
@@ -16,6 +18,8 @@ namespace VixenEditor
         internal const int IconSizeLarge = 48;
 
         private static int _iconSize = IconSizeMedium;
+        private static Image _onBackground;
+
 
         public static int IconSize
         {
@@ -25,14 +29,23 @@ namespace VixenEditor
             }
             set
             {
-                if (value == IconSizeSmall ||
-                    value == IconSizeMedium ||
-                    value == IconSizeLarge)
-                {
+                if (value != _iconSize && (value == IconSizeSmall || value == IconSizeMedium || value == IconSizeLarge)) {
                     _iconSize = value;
+                    ResizeBackgroundImages();
                 }
             }
         }
+
+
+        private static void ResizeBackgroundImages() {
+            _onBackground = CommonUtils.Utils.ResizeImage(Resources.Ball_Green, _iconSize);
+        }
+
+
+        public static Image GetBackground(bool isOn) {
+            return isOn ? _onBackground : null;
+        }
+
 
         public static void LoadSettings(Form form, XmlNode parentNode)
         {
@@ -48,16 +61,16 @@ namespace VixenEditor
                 if (node2 != null)
                 {
                     
-					var sizeNode = node2.SelectSingleNode("Size");
+                    var sizeNode = node2.SelectSingleNode("Size");
                     if (sizeNode != null)
                     {
                         IconSize = int.Parse(sizeNode.InnerText);
                     }
 
-					var lockedNode = node2.SelectSingleNode("Locked");
-					if (lockedNode != null) {
-						Locked = bool.Parse(lockedNode.InnerText);
-					}
+                    var lockedNode = node2.SelectSingleNode("Locked");
+                    if (lockedNode != null) {
+                        Locked = bool.Parse(lockedNode.InnerText);
+                    }
 
                     foreach (Control control in form.Controls) {
                         var toolStripContainer = control as ToolStripContainer;
@@ -140,7 +153,7 @@ namespace VixenEditor
         {
             var emptyNodeAlways = Xml.GetEmptyNodeAlways(Xml.GetNodeAlways(parentNode, "ToolStripConfiguration"), key);
             Xml.SetNewValue(emptyNodeAlways, "Size", IconSize.ToString(CultureInfo.InvariantCulture));
-			Xml.SetNewValue(emptyNodeAlways, "Locked", Locked.ToString());
+            Xml.SetNewValue(emptyNodeAlways, "Locked", Locked.ToString());
             foreach (Control control in form.Controls) {
                 var stripContainer = control as ToolStripContainer;
                 if (stripContainer != null) {
@@ -220,18 +233,21 @@ namespace VixenEditor
                     var label = item as ToolStripLabel;
                     if (label != null)
                     {
-                        label.Size = new Size(label.Width, IconSize);
+                        label.Size = new Size(label.Width, _iconSize);
                     }
                 }
                 else
                 {
                     button.Size = new Size(IconSize, IconSize);
+                    if (button.BackgroundImage != null) {
+                        button.BackgroundImage = GetBackground(true);
+                    }
                 }
             }
         }
 
 
-		public static bool Locked { get; set; }
-	}
+        public static bool Locked { get; set; }
+    }
 }
 
