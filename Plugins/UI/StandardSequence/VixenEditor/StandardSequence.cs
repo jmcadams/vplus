@@ -3399,6 +3399,14 @@ namespace VixenEditor {
                 toolbarsToolStripMenuItem.DropDownItems.Insert(position++, menuItem);
             }
             _actualLevels = _preferences.GetBoolean("ActualLevels");
+            if (_actualLevels) {
+                toolStripButtonToggleLevels.Image = Resources.level_Percent;
+                toolStripButtonToggleCellText.Image = Resources.number;
+            }
+            else {
+                toolStripButtonToggleLevels.Image = Resources.level_Number;
+                toolStripButtonToggleCellText.Image = Resources.Percent;
+            }
             UpdateToolbarMenu();
             UpdateLevelDisplay();
         }
