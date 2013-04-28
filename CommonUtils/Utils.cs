@@ -14,6 +14,7 @@ namespace CommonUtils {
         public const int ExecutionRunning = 1;
 
 
+        // see: http://en.wikipedia.org/wiki/YIQ
         public static Brush GetTextColor(Color backgroundColor) {
             return ((backgroundColor.R * 299) + (backgroundColor.G * 587) + (backgroundColor.B * 114)) / 1000 >= 128 ? Brushes.Black : Brushes.White;
         }
@@ -45,6 +46,21 @@ namespace CommonUtils {
 
         public static int ToValue(float percentage) {
             return (int)Math.Round(percentage / 100f * Cell8BitMax, MidpointRounding.AwayFromZero);
+        }
+
+
+        public static Bitmap ResizeImage(Image image, int size) {
+            var result = new Bitmap(size, size);
+            result.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+            using (var graphics = Graphics.FromImage(result)) {
+                graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                graphics.DrawImage(image, 0, 0, result.Width, result.Height);
+            }
+
+            return result;
         }
     }
 }
