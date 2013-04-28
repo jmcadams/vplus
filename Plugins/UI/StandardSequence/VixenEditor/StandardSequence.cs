@@ -1152,6 +1152,7 @@ namespace VixenEditor {
             UpdateLevelDisplay();
             IsDirty = false;
             pictureBoxChannels.AllowDrop = true;
+            WindowState = FormWindowState.Maximized;
         }
 
 
@@ -1855,6 +1856,8 @@ namespace VixenEditor {
         private void pictureBoxGrid_MouseMove(object sender, MouseEventArgs e) {
             var cellX = Math.Min((Math.Max(e.X / _gridColWidth, 0) + hScrollBar1.Value), _sequence.TotalEventPeriods - 1);
             var cellY = Math.Min((Math.Max(e.Y / _gridRowHeight, 0) + vScrollBar1.Value), _sequence.ChannelCount - 1);
+            tsbPlayPoint.Enabled = _selectedCells.Width > 0;
+            tsbPlayRange.Enabled = _selectedCells.Width > 1;
 
             if (cellX == _lastCellX && cellY == _lastCellY && RectangleToScreen(pictureBoxGrid.ClientRectangle).Contains(e.Location)) {
                 return;
@@ -2305,18 +2308,18 @@ namespace VixenEditor {
         }
 
 
-        private void playAtTheSelectedPointToolStripMenuItem_Click(object sender, EventArgs e) {
-            playAtTheSelectedPointToolStripMenuItem.Checked = true;
-            playOnlyTheSelectedRangeToolStripMenuItem.Checked = false;
-            tsbPlayFrom.ToolTipText = Resources.PlayFromStartPoint;
-        }
+        //private void playAtTheSelectedPointToolStripMenuItem_Click(object sender, EventArgs e) {
+        //    playAtTheSelectedPointToolStripMenuItem.Checked = true;
+        //    playOnlyTheSelectedRangeToolStripMenuItem.Checked = false;
+        //    tsbPlayFrom.ToolTipText = Resources.PlayFromStartPoint;
+        //}
 
 
-        private void playOnlyTheSelectedRangeToolStripMenuItem_Click(object sender, EventArgs e) {
-            playOnlyTheSelectedRangeToolStripMenuItem.Checked = true;
-            playAtTheSelectedPointToolStripMenuItem.Checked = false;
-            tsbPlayFrom.ToolTipText = Resources.PlayRange;
-        }
+        //private void playOnlyTheSelectedRangeToolStripMenuItem_Click(object sender, EventArgs e) {
+        //    playOnlyTheSelectedRangeToolStripMenuItem.Checked = true;
+        //    playAtTheSelectedPointToolStripMenuItem.Checked = false;
+        //    tsbPlayFrom.ToolTipText = Resources.PlayRange;
+        //}
 
 
         private void plugInItem_CheckedChanged(object sender, EventArgs e) {
@@ -2332,6 +2335,7 @@ namespace VixenEditor {
         private void ProgramEnded() {
             m_positionTimer.Stop();
             SetEditingState(true);
+            UpdatePlayButtons(0);
             pictureBoxGrid.Refresh();
         }
 
@@ -2801,6 +2805,12 @@ namespace VixenEditor {
             toolStripSequenceSettings.Enabled = state;
             toolStripDropDownButtonPlugins.Enabled = state;
             toolStripDisplaySettings.Enabled = state;
+            tsbLoop.Enabled = state;
+            SpeedQtrTsb.Enabled = state;
+            SpeedHalfTsb.Enabled = state;
+            SpeedThreeQtrTsb.Enabled = state;
+            SpeedNormalTsb.Enabled = state;
+            SpeedVariableTsb.Enabled = state;
             ReactEditingStateToProfileAssignment();
         }
 
@@ -3292,7 +3302,10 @@ namespace VixenEditor {
                     break;
 
                 case Keys.F6:
-                    if (tsbPlayFrom.Enabled) {
+                    if (e.Alt && tsbPlayRange.Enabled) {
+                        toolStripButtonPlayRange_Click(null, null);
+                        e.Handled = true;
+                    }else if (tsbPlayPoint.Enabled) {
                         toolStripButtonPlayPoint_Click(null, null);
                         e.Handled = true;
                     }
@@ -3704,6 +3717,7 @@ namespace VixenEditor {
 
         private void toolStripButtonLoop_CheckedChanged(object sender, EventArgs e) {
             _executionInterface.SetLoopState(_executionContextHandle, tsbLoop.Checked);
+            tsbLoop.BackgroundImage = ToolStripManager.GetBackground(tsbLoop.Checked);
         }
 
 
@@ -3783,8 +3797,21 @@ namespace VixenEditor {
                 return;
             }
 
+            UpdatePlayButtons(8);
             m_positionTimer.Stop();
             _executionInterface.ExecutePause(_executionContextHandle);
+            SetEditingState(true);
+        }
+
+
+        private void toolStripButtonStop_Click(object sender, EventArgs e) {
+            if (_executionInterface.EngineStatus(_executionContextHandle) == Utils.ExecutionStopped) {
+                return;
+            }
+            UpdatePlayButtons(0);
+            m_positionTimer.Stop();
+            ProgramEnded();
+            _executionInterface.ExecuteStop(_executionContextHandle);
             SetEditingState(true);
         }
 
@@ -3805,6 +3832,7 @@ namespace VixenEditor {
                 return;
             }
 
+            UpdatePlayButtons(1);
             m_positionTimer.Start();
             SetEditingState(false);
         }
@@ -3816,14 +3844,32 @@ namespace VixenEditor {
             }
 
             SetEditingState(false);
-            if (playOnlyTheSelectedRangeToolStripMenuItem.Checked) {
-                _executionInterface.ExecutePlay(_executionContextHandle, _selectedCells.Left * _sequence.EventPeriod,
-                                                _selectedCells.Right * _sequence.EventPeriod);
+            _executionInterface.ExecutePlay(_executionContextHandle, _selectedCells.Left * _sequence.EventPeriod,
+                                            _sequence.TotalEventPeriods * _sequence.EventPeriod);
+            UpdatePlayButtons(2);
+            m_positionTimer.Start();
+        }
+
+
+        //TODO Remove magic numbers
+        private void UpdatePlayButtons(int button) {
+            tsbPlay.BackgroundImage = ToolStripManager.GetBackground((button & 0x1) == 0x1);
+            tsbPlayPoint.BackgroundImage = ToolStripManager.GetBackground((button & 0x2) == 0x2);
+            tsbPlayRange.BackgroundImage = ToolStripManager.GetBackground((button & 0x4) == 0x4);
+            tsbPause.BackgroundImage = ToolStripManager.GetBackground((button & 0x8) == 0x8);
+            tsbPause.Enabled = tsbStop.Enabled = (button != 0);
+        }
+
+
+        private void toolStripButtonPlayRange_Click(object sender, EventArgs e) {
+            if (_executionInterface.EngineStatus(_executionContextHandle) == Utils.ExecutionRunning) {
+                return;
             }
-            else {
-                _executionInterface.ExecutePlay(_executionContextHandle, _selectedCells.Left * _sequence.EventPeriod,
-                                                _sequence.TotalEventPeriods * _sequence.EventPeriod);
-            }
+
+            SetEditingState(false);
+            _executionInterface.ExecutePlay(_executionContextHandle, _selectedCells.Left * _sequence.EventPeriod,
+                                            _selectedCells.Right * _sequence.EventPeriod);
+            UpdatePlayButtons(4);
             m_positionTimer.Start();
         }
 
@@ -4018,17 +4064,6 @@ namespace VixenEditor {
         }
 
 
-        private void toolStripButtonStop_Click(object sender, EventArgs e) {
-            if (_executionInterface.EngineStatus(_executionContextHandle) == Utils.ExecutionStopped) {
-                return;
-            }
-
-            m_positionTimer.Stop();
-            ProgramEnded();
-            _executionInterface.ExecuteStop(_executionContextHandle);
-        }
-
-
         private void toolStripButtonTestChannels_Click(object sender, EventArgs e) {
             try {
                 new TestChannelsDialog(_sequence, _executionInterface).Show();
@@ -4051,7 +4086,7 @@ namespace VixenEditor {
 
         private void toolStripButtonToggleCellText_Click(object sender, EventArgs e) {
             _showCellText = !_showCellText;
-            toolStripButtonToggleCellText.BackgroundImage = _showCellText ? Resources.Ball_Green : Resources.Ball_Red;
+            toolStripButtonToggleCellText.BackgroundImage = ToolStripManager.GetBackground(_showCellText);
             pictureBoxGrid.Refresh();
         }
 
@@ -4059,6 +4094,7 @@ namespace VixenEditor {
         private void toolStripButtonToggleCrossHairs_Click(object sender, EventArgs e) {
             // Cant check on click here since the paint method depends on the crosshairs flag, so we set it right away.
             toolStripButtonToggleCrossHairs.Checked = !toolStripButtonToggleCrossHairs.Checked;
+            toolStripButtonToggleCrossHairs.BackgroundImage = ToolStripManager.GetBackground(toolStripButtonToggleCrossHairs.Checked);
 
             pictureBoxGrid.Invalidate(new Rectangle((_mouseTimeCaret - hScrollBar1.Value) * _gridColWidth, 0, _gridColWidth, pictureBoxGrid.Height));
             pictureBoxGrid.Invalidate(new Rectangle(0, (_mouseChannelCaret - vScrollBar1.Value) * _gridRowHeight, pictureBoxGrid.Width, _gridRowHeight));
@@ -4069,6 +4105,7 @@ namespace VixenEditor {
         private void toolStripButtonToggleLevels_Click(object sender, EventArgs e) {
             _actualLevels = !_actualLevels;
             _preferences.SetBoolean("ActualLevels", _actualLevels);
+            toolStripButtonToggleCellText.Image = _actualLevels ? Resources.level_Number : Resources.level_Percent;
             UpdateLevelDisplay();
             pictureBoxGrid.Refresh();
         }
@@ -4388,11 +4425,11 @@ namespace VixenEditor {
             SetDrawingLevel(_drawingLevel);
             if (_actualLevels) {
                 toolStripButtonToggleLevels.Image = Resources.Percent;
-                toolStripButtonToggleLevels.Text = toolStripButtonToggleLevels.ToolTipText = Resources.ToolTip_IntensityPercent;
+                toolStripButtonToggleLevels.ToolTipText = Resources.ToolTip_IntensityPercent;
             }
             else {
                 toolStripButtonToggleLevels.Image = Resources.number;
-                toolStripButtonToggleLevels.Text = toolStripButtonToggleLevels.ToolTipText = Resources.ToolTip_IntensityLevel;
+                toolStripButtonToggleLevels.ToolTipText = Resources.ToolTip_IntensityLevel;
             }
             m_intensityAdjustDialog.ActualLevels = _actualLevels;
         }
@@ -4671,5 +4708,23 @@ namespace VixenEditor {
             toolStripButtonWaveform_Click(null, null);
         }
 
+
+        private void openSequenceTsb_Click(object sender, EventArgs e) {
+            SendKeys.Send("^o");
+        }
+
+        private void tsbSaveAs_Click(object sender, EventArgs e) {
+            SendKeys.Send("^a");
+            //_systemInterface.InstantiateForm()
+        }
+
+        private void profileToolStripLabel_Click(object sender, EventArgs e) {
+            SendKeys.Send("^m");
+        }
+
+        private void newSeqTsb_Click(object sender, EventArgs e) {
+            var tsi = new ToolStripMenuItem {Tag = new StandardSequence()};
+            _systemInterface.InvokeNew(tsi);
+        }
     }
 }

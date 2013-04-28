@@ -432,9 +432,6 @@
     <None Include="Resources\add.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\crosshairs.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\wave.png" />
   </ItemGroup>
   <ItemGroup>
@@ -450,9 +447,6 @@
     <None Include="Resources\level Number.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\level Percent.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\level Number2.png" />
   </ItemGroup>
   <ItemGroup>
@@ -460,6 +454,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\level Percent.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\crosshairs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\play range.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
