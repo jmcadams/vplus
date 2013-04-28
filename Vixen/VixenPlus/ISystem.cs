@@ -20,5 +20,7 @@ namespace VixenPlus
 		bool InvokeSave(UIBase pluginInstance);
 		List<ILoadable> LoadableList(string interfaceName);
 		void VerifySequenceHardwarePlugins(EventSequence sequence);
+
+	    void InvokeNew(object sender);
 	}
 }

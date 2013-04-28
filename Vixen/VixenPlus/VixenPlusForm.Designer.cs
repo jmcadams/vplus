@@ -139,46 +139,48 @@ namespace VixenPlus{
             // newLightingProgramToolStripMenuItem
             // 
             this.newLightingProgramToolStripMenuItem.Name = "newLightingProgramToolStripMenuItem";
-            this.newLightingProgramToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            this.newLightingProgramToolStripMenuItem.Text = "New event sequence";
+            this.newLightingProgramToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.newLightingProgramToolStripMenuItem.Text = "New sequence";
             // 
             // openALightingProgramToolStripMenuItem
             // 
             this.openALightingProgramToolStripMenuItem.Name = "openALightingProgramToolStripMenuItem";
             this.openALightingProgramToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openALightingProgramToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            this.openALightingProgramToolStripMenuItem.Text = "Open an event sequence";
+            this.openALightingProgramToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.openALightingProgramToolStripMenuItem.Text = "&Open a sequence";
             this.openALightingProgramToolStripMenuItem.Click += new System.EventHandler(this.openALightingProgramToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(244, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(207, 6);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.saveToolStripMenuItem.Text = "&Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            this.saveAsToolStripMenuItem.Text = "Save As";
+            this.saveAsToolStripMenuItem.ShortcutKeyDisplayString = "";
+            this.saveAsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.saveAsToolStripMenuItem.Text = "Save &As";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // toolStripMenuItem8
             // 
             this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(244, 6);
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(207, 6);
             // 
             // setBackgroundSequenceToolStripMenuItem
             // 
             this.setBackgroundSequenceToolStripMenuItem.Name = "setBackgroundSequenceToolStripMenuItem";
-            this.setBackgroundSequenceToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.setBackgroundSequenceToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
             this.setBackgroundSequenceToolStripMenuItem.Text = "Set background sequence";
             this.setBackgroundSequenceToolStripMenuItem.Visible = false;
             this.setBackgroundSequenceToolStripMenuItem.Click += new System.EventHandler(this.setBackgroundSequenceToolStripMenuItem_Click);
@@ -186,7 +188,7 @@ namespace VixenPlus{
             // channelDimmingCurvesToolStripMenuItem
             // 
             this.channelDimmingCurvesToolStripMenuItem.Name = "channelDimmingCurvesToolStripMenuItem";
-            this.channelDimmingCurvesToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.channelDimmingCurvesToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
             this.channelDimmingCurvesToolStripMenuItem.Text = "Channel dimming curves";
             this.channelDimmingCurvesToolStripMenuItem.Visible = false;
             this.channelDimmingCurvesToolStripMenuItem.Click += new System.EventHandler(this.channelDimmingCurvesToolStripMenuItem_Click);
@@ -194,13 +196,13 @@ namespace VixenPlus{
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(244, 6);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(207, 6);
             this.toolStripMenuItem6.Visible = false;
             // 
             // recentToolStripMenuItem
             // 
             this.recentToolStripMenuItem.Name = "recentToolStripMenuItem";
-            this.recentToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.recentToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
             this.recentToolStripMenuItem.Text = "Recent";
             // 
             // viewToolStripMenuItem
@@ -214,8 +216,9 @@ namespace VixenPlus{
             // manageToolStripMenuItem
             // 
             this.manageToolStripMenuItem.Name = "manageToolStripMenuItem";
-            this.manageToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.manageToolStripMenuItem.Text = "Manage";
+            this.manageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
+            this.manageToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.manageToolStripMenuItem.Text = "&Manage";
             this.manageToolStripMenuItem.Click += new System.EventHandler(this.manageToolStripMenuItem_Click);
             // 
             // utilityToolStripMenuItem

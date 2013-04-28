@@ -215,6 +215,12 @@ namespace VixenPlus
             InputPlugins.VerifyPlugIns(sequence);
         }
 
+
+        public void InvokeNew(object sender) {
+             NewMenuItemClick(sender, null);
+        }
+
+
         public string[] AudioDevices
         {
             get { return _audioDevices ?? (_audioDevices = fmod.GetSoundDeviceList()); }
@@ -781,7 +787,7 @@ namespace VixenPlus
             process.Start();
         }
 
-        private void openALightingProgramToolStripMenuItem_Click(object sender, EventArgs e)
+        public void openALightingProgramToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var num = 0;
             var num2 = 1;
