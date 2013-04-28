@@ -409,12 +409,13 @@ namespace VixenPlus
 						lock (_runLock)
 						{
 							_isRunning = false;
+						    _isPaused = false;
 						}
 						_secondaryEngine.Stop();
 					}
 				}
 			}
-			else if (_isRunning && (_plugInRouter != null))
+			else if ((_isRunning || _isPaused) && _plugInRouter != null)
 			{
 				StopExecution();
 				_engineContexts[_primaryContext].CurrentSequence = null;
