@@ -595,6 +595,13 @@ namespace Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap play_range {
+            get {
+                object obj = ResourceManager.GetObject("play_range", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Play this sequence starting at the selection startPoint (F6).
         /// </summary>
