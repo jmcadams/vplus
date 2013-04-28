@@ -11,74 +11,82 @@ namespace VixenEditor {
 		#region Windows Form Designer generated code
 		private Button buttonCancel;
 		private Button buttonOK;
-		private Button buttonReset;
-		private GroupBox groupBox1;
-		private Label label1;
-		private NumericUpDown numericUpDownLevel;
+        private Button buttonReset;
+		private Label lblInfo;
+		private NumericUpDown udLevel;
 
 		private void InitializeComponent() {
-			this.label1 = new Label();
-			this.numericUpDownLevel = new NumericUpDown();
-			this.buttonReset = new Button();
-			this.groupBox1 = new GroupBox();
-			this.buttonOK = new Button();
-			this.buttonCancel = new Button();
-			this.numericUpDownLevel.BeginInit();
-			this.groupBox1.SuspendLayout();
-			base.SuspendLayout();
-			this.label1.Location = new Point(6, 0x10);
-			this.label1.Name = "label1";
-			this.label1.Size = new Size(0x10f, 90);
-			this.label1.TabIndex = 0;
-			this.numericUpDownLevel.Location = new Point(0x6f, 0x74);
-			this.numericUpDownLevel.Name = "numericUpDownLevel";
-			this.numericUpDownLevel.Size = new Size(60, 20);
-			this.numericUpDownLevel.TabIndex = 1;
-			this.buttonReset.Location = new Point(0x49, 0x8e);
-			this.buttonReset.Name = "buttonReset";
-			this.buttonReset.Size = new Size(0x89, 23);
-			this.buttonReset.TabIndex = 2;
-			this.buttonReset.Text = "Reset to sequence's max";
-			this.buttonReset.UseVisualStyleBackColor = true;
-			this.buttonReset.Click += new EventHandler(this.buttonReset_Click);
-			this.groupBox1.Controls.Add(this.label1);
-			this.groupBox1.Controls.Add(this.buttonReset);
-			this.groupBox1.Controls.Add(this.numericUpDownLevel);
-			this.groupBox1.Location = new Point(12, 12);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new Size(0x11b, 0xb2);
-			this.groupBox1.TabIndex = 3;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Intensity Level";
-			this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.buttonOK.Location = new Point(140, 0xc4);
-			this.buttonOK.Name = "buttonOK";
-			this.buttonOK.Size = new Size(0x4b, 23);
-			this.buttonOK.TabIndex = 4;
-			this.buttonOK.Text = "OK";
-			this.buttonOK.UseVisualStyleBackColor = true;
-			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.buttonCancel.Location = new Point(0xdd, 0xc4);
-			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.Size = new Size(0x4b, 23);
-			this.buttonCancel.TabIndex = 5;
-			this.buttonCancel.Text = "Cancel";
-			this.buttonCancel.UseVisualStyleBackColor = true;
-			base.AcceptButton = this.buttonOK;
-			base.AutoScaleDimensions = new SizeF(6f, 13f);
-			base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			base.CancelButton = this.buttonCancel;
-			base.ClientSize = new Size(0x134, 0xe5);
-			base.Controls.Add(this.buttonCancel);
-			base.Controls.Add(this.buttonOK);
-			base.Controls.Add(this.groupBox1);
-			base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-			base.Name = "DrawingIntensityDialog";
-			base.StartPosition = FormStartPosition.CenterScreen;
-			this.Text = "Drawing Intensity";
-			this.numericUpDownLevel.EndInit();
-			this.groupBox1.ResumeLayout(false);
-			base.ResumeLayout(false);
+            this.lblInfo = new System.Windows.Forms.Label();
+            this.udLevel = new System.Windows.Forms.NumericUpDown();
+            this.buttonReset = new System.Windows.Forms.Button();
+            this.buttonOK = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.udLevel)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // lblInfo
+            // 
+            this.lblInfo.Location = new System.Drawing.Point(12, 9);
+            this.lblInfo.Name = "lblInfo";
+            this.lblInfo.Size = new System.Drawing.Size(203, 90);
+            this.lblInfo.TabIndex = 0;
+            this.lblInfo.Text = "Info Label";
+            this.lblInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // udLevel
+            // 
+            this.udLevel.Location = new System.Drawing.Point(12, 105);
+            this.udLevel.Name = "udLevel";
+            this.udLevel.Size = new System.Drawing.Size(60, 20);
+            this.udLevel.TabIndex = 1;
+            // 
+            // buttonReset
+            // 
+            this.buttonReset.Location = new System.Drawing.Point(78, 102);
+            this.buttonReset.Name = "buttonReset";
+            this.buttonReset.Size = new System.Drawing.Size(137, 23);
+            this.buttonReset.TabIndex = 2;
+            this.buttonReset.Text = "Set to sequence\'s max";
+            this.buttonReset.UseVisualStyleBackColor = true;
+            this.buttonReset.Click += new System.EventHandler(this.buttonReset_Click);
+            // 
+            // buttonOK
+            // 
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.buttonOK.Location = new System.Drawing.Point(140, 131);
+            this.buttonOK.Name = "buttonOK";
+            this.buttonOK.Size = new System.Drawing.Size(75, 23);
+            this.buttonOK.TabIndex = 4;
+            this.buttonOK.Text = "OK";
+            this.buttonOK.UseVisualStyleBackColor = true;
+            // 
+            // buttonCancel
+            // 
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonCancel.Location = new System.Drawing.Point(59, 131);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancel.TabIndex = 5;
+            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.UseVisualStyleBackColor = true;
+            // 
+            // DrawingIntensityDialog
+            // 
+            this.AcceptButton = this.buttonOK;
+            this.CancelButton = this.buttonCancel;
+            this.ClientSize = new System.Drawing.Size(223, 161);
+            this.Controls.Add(this.lblInfo);
+            this.Controls.Add(this.buttonCancel);
+            this.Controls.Add(this.udLevel);
+            this.Controls.Add(this.buttonReset);
+            this.Controls.Add(this.buttonOK);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Name = "DrawingIntensityDialog";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Drawing Intensity";
+            ((System.ComponentModel.ISupportInitialize)(this.udLevel)).EndInit();
+            this.ResumeLayout(false);
+
 		}
 		#endregion
 

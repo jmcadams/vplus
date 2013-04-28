@@ -1,41 +1,42 @@
 namespace VixenEditor {
-	using System;
+    using System;
     using System.Windows.Forms;
-	using VixenPlus;
 
-	internal partial class DrawingIntensityDialog : Form {
+    using VixenPlus;
+    using CommonUtils;
 
-		private readonly bool _actualLevels;
+    internal partial class DrawingIntensityDialog : Form {
 
-		public DrawingIntensityDialog(EventSequence sequence, byte currentLevel, bool actualLevels) {
-			InitializeComponent();
-			_actualLevels = actualLevels;
-			if (actualLevels) {
-				numericUpDownLevel.Minimum = sequence.MinimumLevel;
-				numericUpDownLevel.Maximum = sequence.MaximumLevel;
-				numericUpDownLevel.Value = currentLevel;
-			}
-			else {
-				numericUpDownLevel.Minimum = (int)Math.Round(sequence.MinimumLevel * 100f / 255f, MidpointRounding.AwayFromZero);
-				numericUpDownLevel.Maximum = (int)Math.Round(sequence.MaximumLevel * 100f / 255f, MidpointRounding.AwayFromZero);
-				numericUpDownLevel.Value = (int)Math.Round(currentLevel * 100f / 255f, MidpointRounding.AwayFromZero);
-			}
-		}
+        private readonly bool _actualLevels;
 
-		private void buttonReset_Click(object sender, EventArgs e) {
-			numericUpDownLevel.Value = numericUpDownLevel.Maximum;
-		}
 
-		//ComponentResourceManager manager = new ComponentResourceManager(typeof(DrawingIntensityDialog));
-		//label1.Text = manager.GetString("label1.Text");
+        public DrawingIntensityDialog(EventSequence sequence, byte currentLevel, bool actualLevels) {
+            InitializeComponent();
+            _actualLevels = actualLevels;
 
-		public byte SelectedIntensity {
-			get {
-				if (_actualLevels) {
-					return (byte)numericUpDownLevel.Value;
-				}
-				return (byte)((numericUpDownLevel.Value / 100M) * 255M);
-			}
-		}
-	}
+            if (actualLevels) {
+                udLevel.Minimum = sequence.MinimumLevel;
+                udLevel.Maximum = sequence.MaximumLevel;
+                udLevel.Value = currentLevel;
+            }
+            else {
+                udLevel.Minimum = Utils.ToPercentage(sequence.MinimumLevel);
+                udLevel.Maximum = Utils.ToPercentage(sequence.MaximumLevel);
+                udLevel.Value = Utils.ToPercentage(currentLevel);
+            }
+
+            lblInfo.Text = string.Format("Current Settings:\nIntensity: {0}{3}\nMinimum Allowed: {1}{3}\nMaximum Allowed: {2}{3}",
+                udLevel.Value, udLevel.Minimum, udLevel.Maximum, actualLevels ? "" : "%");
+        }
+
+
+        private void buttonReset_Click(object sender, EventArgs e) {
+            udLevel.Value = udLevel.Maximum;
+        }
+
+
+        public byte SelectedIntensity {
+            get { return (byte)(_actualLevels ? udLevel.Value : Utils.ToPercentage((int)udLevel.Value)); }
+        }
+    }
 }
