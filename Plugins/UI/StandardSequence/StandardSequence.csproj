@@ -229,7 +229,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="VixenEditor.IntensityAdjustDialog.resources" />
     <EmbeddedResource Include="VixenEditor.Properties.Resources.resources" />
     <EmbeddedResource Include="VixenEditor.RampQueryDialog.resources" />
     <EmbeddedResource Include="VixenEditor.RandomParametersDialog.resources" />
@@ -256,6 +255,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\FindAndReplaceDialog.resx">
       <DependentUpon>FindAndReplaceDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenEditor\IntensityAdjustDialog.resx">
+      <DependentUpon>IntensityAdjustDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\ProgressDialog.resx">
       <DependentUpon>ProgressDialog.cs</DependentUpon>

@@ -8,43 +8,44 @@ namespace VixenEditor {
 		private System.ComponentModel.IContainer components = null;
 
 		#region Windows Form Designer generated code
-		private Label labelDelta;
+		private Label lblDelta;
 
 		private void InitializeComponent() {
-			this.labelDelta = new Label();
-			base.SuspendLayout();
-			this.labelDelta.AutoSize = true;
-			this.labelDelta.Font = new Font("Microsoft Sans Serif", 20f, FontStyle.Regular, GraphicsUnit.Point, 0);
-			this.labelDelta.Location = new Point(12, 10);
-			this.labelDelta.Name = "labelDelta";
-			this.labelDelta.Size = new Size(0x63, 0x1f);
-			this.labelDelta.TabIndex = 0;
-			this.labelDelta.Text = "+100%";
-			base.AutoScaleDimensions = new SizeF(6f, 13f);
-			base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			base.ClientSize = new Size(0x7b, 50);
-			base.ControlBox = false;
-			base.Controls.Add(this.labelDelta);
-			base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-			base.KeyPreview = true;
-			base.Name = "IntensityAdjustDialog";
-			base.StartPosition = FormStartPosition.CenterScreen;
-			this.Text = "Intensity Adjustment";
-			base.TopMost = true;
-			base.VisibleChanged += new EventHandler(this.IntensityAdjustDialog_VisibleChanged);
-			base.KeyUp += new KeyEventHandler(this.IntensityAdjustDialog_KeyUp);
-			base.KeyDown += new KeyEventHandler(this.IntensityAdjustDialog_KeyDown);
-			base.ResumeLayout(false);
-			base.PerformLayout();
+            this.lblDelta = new System.Windows.Forms.Label();
+            this.SuspendLayout();
+            // 
+            // lblDelta
+            // 
+            this.lblDelta.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDelta.Location = new System.Drawing.Point(1, 10);
+            this.lblDelta.Name = "lblDelta";
+            this.lblDelta.Size = new System.Drawing.Size(121, 31);
+            this.lblDelta.TabIndex = 0;
+            this.lblDelta.Text = "+100%";
+            this.lblDelta.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // IntensityAdjustDialog
+            // 
+            this.ClientSize = new System.Drawing.Size(123, 50);
+            this.ControlBox = false;
+            this.Controls.Add(this.lblDelta);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.KeyPreview = true;
+            this.Name = "IntensityAdjustDialog";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Intensity Adjustment";
+            this.TopMost = true;
+            this.VisibleChanged += new System.EventHandler(this.IntensityAdjustDialog_VisibleChanged);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.IntensityAdjustDialog_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.IntensityAdjustDialog_KeyUp);
+            this.ResumeLayout(false);
+
 		}
 		#endregion
 
 		protected override void Dispose(bool disposing) {
 			if (disposing && (this.components != null)) {
 				this.components.Dispose();
-			}
-			if (this._graphics != null) {
-				this._graphics.Dispose();
 			}
 			base.Dispose(disposing);
 		}
