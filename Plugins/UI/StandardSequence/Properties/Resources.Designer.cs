@@ -710,6 +710,15 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Replace specified values in the .
+        /// </summary>
+        internal static string Replace_selected_values_in_the_ {
+            get {
+                return ResourceManager.GetString("Replace_selected_values_in_the_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name of the routine.
         /// </summary>
         internal static string RoutineNamePrompt {

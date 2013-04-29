@@ -542,4 +542,7 @@ Please select a value between 0 and 100.</value>
 	<data name="Frequency" xml:space="preserve">
     <value>Frequency</value>
   </data>
+	<data name="Replace_selected_values_in_the_" xml:space="preserve">
+    <value>Replace specified values in the </value>
+  </data>
 </root>

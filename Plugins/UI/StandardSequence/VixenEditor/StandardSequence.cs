@@ -3593,22 +3593,26 @@ namespace VixenEditor {
 
 
         private void toolStripButtonFindAndReplace_Click(object sender, EventArgs e) {
-            if ((_selectedCells.Width == 0) || (_selectedCells.Height == 0)) {
-                MessageBox.Show(Resources.NoSelectionToSearch, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                return;
-            }
+            var entireSequence = (_selectedCells.Width == 0) || (_selectedCells.Height == 0);
+            //if ((_selectedCells.Width == 0) || (_selectedCells.Height == 0)) {
+                //MessageBox.Show(Resources.NoSelectionToSearch, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                //return;
+            //}
 
-            using (var dialog = new FindAndReplaceDialog(_sequence.MinimumLevel, _sequence.MaximumLevel, _actualLevels)) {
+            using (var dialog = new FindAndReplaceDialog(_sequence.MinimumLevel, _sequence.MaximumLevel, _actualLevels,
+                                                         entireSequence ? "entire sequence" : "selected cells")) {
                 if (dialog.ShowDialog() != DialogResult.OK) {
                     return;
                 }
 
-                AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, Resources.FindAndReplace);
+                var replaceSelection = entireSequence ? new Rectangle(0, 0, _sequence.TotalEventPeriods, _sequence.ChannelCount) : _selectedCells;
+
+                AddUndoItem(replaceSelection, UndoOriginalBehavior.Overwrite, Resources.FindAndReplace);
                 var findValue = dialog.FindValue;
                 var replaceWithValue = _actualLevels ? dialog.ReplaceWithValue : (byte) Utils.ToValue(dialog.ReplaceWithValue);
-                for (var row = _selectedCells.Top; row < _selectedCells.Bottom; row++) {
+                for (var row = replaceSelection.Top; row < replaceSelection.Bottom; row++) {
                     var channel = _channelOrderMapping[row];
-                    for (var left = _selectedCells.Left; left < _selectedCells.Right; left++) {
+                    for (var left = replaceSelection.Left; left < replaceSelection.Right; left++) {
                         var currentValue = _actualLevels
                                                ? _sequence.EventValues[channel, left] : Utils.ToPercentage(_sequence.EventValues[channel, left]);
                         if (currentValue == findValue) {
@@ -4740,6 +4744,11 @@ namespace VixenEditor {
         private void newSeqTsb_Click(object sender, EventArgs e) {
             var tsi = new ToolStripMenuItem {Tag = new StandardSequence()};
             _systemInterface.InvokeNew(tsi);
+        }
+
+        private void selectNoneToolStripMenuItem_Click(object sender, EventArgs e) {
+            _selectedCells.Width = _selectedCells.Height = 0;
+            pictureBoxGrid.Refresh();
         }
     }
 }
