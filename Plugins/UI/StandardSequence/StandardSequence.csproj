@@ -230,9 +230,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor.Properties.Resources.resources" />
-    <EmbeddedResource Include="VixenEditor.RampQueryDialog.resources" />
     <EmbeddedResource Include="VixenEditor.RandomParametersDialog.resources" />
-    <EmbeddedResource Include="VixenEditor.SparkleParamsDialog.resources" />
     <EmbeddedResource Include="VixenEditor.TestChannelsDialog.resources" />
     <EmbeddedResource Include="VixenEditor.TestConsoleDialog.resources" />
     <EmbeddedResource Include="VixenEditor\AudioSpeedDialog.resx">
@@ -261,6 +259,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\ProgressDialog.resx">
       <DependentUpon>ProgressDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenEditor\RampQueryDialog.resx">
+      <DependentUpon>RampQueryDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenEditor\SparkleParamsDialog.resx">
+      <DependentUpon>SparkleParamsDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\StandardSequence.resx">
       <DependentUpon>StandardSequence.cs</DependentUpon>
