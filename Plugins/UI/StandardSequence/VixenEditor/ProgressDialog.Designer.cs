@@ -6,29 +6,29 @@ namespace VixenEditor {
 		private System.ComponentModel.IContainer components = null;
 
 		#region Windows Form Designer generated code
-		private Label labelMessage;
+		private Label lblMessage;
 		private Panel panel1;
 
 		private void InitializeComponent() {
-            this.labelMessage = new System.Windows.Forms.Label();
+            this.lblMessage = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // labelMessage
+            // lblMessage
             // 
-            this.labelMessage.Location = new System.Drawing.Point(11, 8);
-            this.labelMessage.Name = "labelMessage";
-            this.labelMessage.Size = new System.Drawing.Size(309, 54);
-            this.labelMessage.TabIndex = 0;
-            this.labelMessage.Text = "Loading...";
-            this.labelMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblMessage.Location = new System.Drawing.Point(11, 8);
+            this.lblMessage.Name = "lblMessage";
+            this.lblMessage.Size = new System.Drawing.Size(309, 54);
+            this.lblMessage.TabIndex = 0;
+            this.lblMessage.Text = "Loading...";
+            this.lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel1
             // 
             this.panel1.AutoSize = true;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.labelMessage);
+            this.panel1.Controls.Add(this.lblMessage);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
@@ -37,8 +37,6 @@ namespace VixenEditor {
             // 
             // ProgressDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(333, 72);
             this.Controls.Add(this.panel1);

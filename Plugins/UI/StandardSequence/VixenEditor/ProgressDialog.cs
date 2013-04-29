@@ -9,8 +9,8 @@ namespace VixenEditor {
 
 		public string Message {
 			set {
-				labelMessage.Text = value;
-				labelMessage.Refresh();
+				lblMessage.Text = value;
+				lblMessage.Refresh();
 			}
 		}
 	}
