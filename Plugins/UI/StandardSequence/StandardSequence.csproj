@@ -231,8 +231,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor.Properties.Resources.resources" />
     <EmbeddedResource Include="VixenEditor.RandomParametersDialog.resources" />
-    <EmbeddedResource Include="VixenEditor.TestChannelsDialog.resources" />
-    <EmbeddedResource Include="VixenEditor.TestConsoleDialog.resources" />
     <EmbeddedResource Include="VixenEditor\AudioSpeedDialog.resx">
       <DependentUpon>AudioSpeedDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -269,6 +267,12 @@
     <EmbeddedResource Include="VixenEditor\StandardSequence.resx">
       <DependentUpon>StandardSequence.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenEditor\TestChannelsDialog.resx">
+      <DependentUpon>TestChannelsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenEditor\TestConsoleDialog.resx">
+      <DependentUpon>TestConsoleDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\ThinSelection.resx">
       <DependentUpon>ThinSelection.cs</DependentUpon>

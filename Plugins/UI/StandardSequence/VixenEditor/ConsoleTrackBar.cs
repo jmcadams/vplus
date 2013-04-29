@@ -161,13 +161,7 @@ namespace VixenEditor {
         private void textBox_Leave(object sender, EventArgs e) {
             int enteredValue;
             if (int.TryParse(_textBox.Text, out enteredValue)) {
-                if (enteredValue < 0) {
-                    enteredValue = 0;
-                }
-                else if (enteredValue > 255) {
-                    enteredValue = 255;
-                }
-                SetValue(enteredValue);
+                SetValue(Math.Max(0, Math.Min(255, enteredValue)));
             }
             else {
                 _textBox.Text = _trackBar.Value.ToString(CultureInfo.InvariantCulture);
