@@ -292,6 +292,15 @@ namespace Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Frequency.
+        /// </summary>
+        internal static string Frequency {
+            get {
+                return ResourceManager.GetString("Frequency", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap gradient_or_ramp {
             get {
                 object obj = ResourceManager.GetObject("gradient_or_ramp", resourceCulture);
