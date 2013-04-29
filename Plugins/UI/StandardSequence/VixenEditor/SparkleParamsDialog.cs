@@ -1,57 +1,62 @@
+using System;
+using System.Drawing;
+using System.Globalization;
+using System.Timers;
+using System.Windows.Forms;
+using CommonUtils;
+
 namespace VixenEditor {
-    using System;
-    using System.Drawing;
-    using System.Timers;
-    using System.Windows.Forms;
+
 
     internal partial class SparkleParamsDialog : Form {
-        private readonly bool _actualLevels;
-        private readonly SolidBrush _brush;
         private int _decay;
+        private int _frequency;
+        private int _min;
+        private int _max = 100;
+        private int _tickCount;
+
+        private readonly bool _actualLevels;
         private readonly System.Timers.Timer _drawTimer;
         private readonly FrequencyEffectGenerator _effectGenerator;
         private readonly byte[,] _effectValues;
-        private int _frequency;
-        private int _max = 100;
         private readonly int _maxColumn;
-        private int _min;
-        private int _tickCount;
         private readonly Point[][] _treePoints = new Point[4][];
 
-        public SparkleParamsDialog(int maxFrequency, FrequencyEffectGenerator effectGenerator, byte sequenceMin, byte sequenceMax, byte currentDrawingIntensity, bool actualLevels) {
+
+        public SparkleParamsDialog(int maxFrequency, FrequencyEffectGenerator effectGenerator, byte minimum, byte maximum,
+                                   byte currentDrawingIntensity, bool actualLevels) {
             InitializeComponent();
             _actualLevels = actualLevels;
-            _brush = new SolidBrush(Color.Black);
             trackBarFrequency.Maximum = maxFrequency;
             _effectGenerator = effectGenerator;
             m_refreshInvoker = pictureBoxExample.Refresh;
-            _effectValues = new byte[4, maxFrequency * 5];
+            _effectValues = new byte[4,maxFrequency * 5];
             _maxColumn = _effectValues.GetLength(1);
-            _min = sequenceMin;
+            _min = minimum;
             _max = currentDrawingIntensity;
             var effectParameters = new int[4];
             effectParameters[2] = _min;
             effectParameters[3] = _max;
             effectGenerator(_effectValues, effectParameters);
             _tickCount = 0;
-            _treePoints[0] = new[] { new Point(22, 46), new Point(37, 91), new Point(7, 91) };
-            _treePoints[1] = new[] { new Point(67, 46), new Point(82, 91), new Point(52, 91) };
-            _treePoints[2] = new[] { new Point(112, 46), new Point(127, 91), new Point(97, 91) };
-            _treePoints[3] = new[] { new Point(157, 46), new Point(172, 91), new Point(142, 91) };
+            
+            _treePoints[0] = new[] {new Point(22, 36), new Point(37, 91), new Point(7, 91)};
+            _treePoints[1] = new[] {new Point(67, 36), new Point(82, 91), new Point(52, 91)};
+            _treePoints[2] = new[] {new Point(112, 36), new Point(127, 91), new Point(97, 91)};
+            _treePoints[3] = new[] {new Point(157, 36), new Point(172, 91), new Point(142, 91)};
+            
             _drawTimer = new System.Timers.Timer(100.0);
             _drawTimer.Elapsed += m_drawTimer_Elapsed;
             _drawTimer.Start();
-            if (actualLevels) {
-                numericUpDownMin.Minimum = numericUpDownMax.Minimum = numericUpDownMin.Value = sequenceMin;
-                numericUpDownMin.Maximum = numericUpDownMax.Maximum = sequenceMax;
-                numericUpDownMax.Value = _max;
-            }
-            else {
-                numericUpDownMin.Minimum = numericUpDownMax.Minimum = numericUpDownMin.Value = (int)Math.Round(sequenceMin * 100f / 255f, MidpointRounding.AwayFromZero);
-                numericUpDownMin.Maximum = numericUpDownMax.Maximum = (int)Math.Round(sequenceMax * 100f / 255f, MidpointRounding.AwayFromZero);
-                numericUpDownMax.Value = (int)Math.Round(_max * 100f / 255f, MidpointRounding.AwayFromZero);
-            }
+
+            udMin.Minimum = udMax.Minimum = udMin.Value = actualLevels ? minimum : Utils.ToPercentage(minimum);
+            udMin.Maximum = udMax.Maximum = actualLevels ? maximum : Utils.ToPercentage(maximum);
+            udMax.Value = actualLevels ? _max : Utils.ToPercentage(_max);
+
+            lblDecay.Text = trackBarDecay.Value.ToString(CultureInfo.InvariantCulture);
+            lblFreq.Text = trackBarFrequency.Value.ToString(CultureInfo.InvariantCulture);
         }
+
 
         private void m_drawTimer_Elapsed(object sender, ElapsedEventArgs e) {
             BeginInvoke(m_refreshInvoker);
@@ -60,25 +65,18 @@ namespace VixenEditor {
             }
         }
 
+
         private void numericUpDownMax_ValueChanged(object sender, EventArgs e) {
-            if (_actualLevels) {
-                _max = (int)numericUpDownMax.Value;
-            }
-            else {
-                _max = (((int)numericUpDownMax.Value) * 0xff) / 100;
-            }
+            _max = (int) (_actualLevels ? udMax.Value : Utils.ToPercentage((int) udMax.Value));
             Regenerate();
         }
 
+
         private void numericUpDownMin_ValueChanged(object sender, EventArgs e) {
-            if (_actualLevels) {
-                _min = (int)numericUpDownMin.Value;
-            }
-            else {
-                _min = (((int)numericUpDownMin.Value) * 0xff) / 100;
-            }
+            _min = (int) (_actualLevels ? udMin.Value : Utils.ToPercentage((int) udMin.Value));
             Regenerate();
         }
+
 
         private void pictureBoxExample_Paint(object sender, PaintEventArgs e) {
             if (!_drawTimer.Enabled) {
@@ -97,49 +95,48 @@ namespace VixenEditor {
             }
         }
 
+
         private void Regenerate() {
-            _drawTimer.Stop();
-            _effectGenerator(_effectValues, new[] { _frequency, _decay, _min, _max });
+            //_drawTimer.Stop();
+            _effectGenerator(_effectValues, new[] {_frequency, _decay, _min, _max});
             _tickCount = 0;
-            _drawTimer.Start();
+            //_drawTimer.Start();
         }
+
 
         private void SparkleParamsDialog_FormClosing(object sender, FormClosingEventArgs e) {
             _drawTimer.Stop();
         }
 
+
         private void trackBarDecay_Scroll(object sender, EventArgs e) {
             _decay = trackBarDecay.Value;
+            lblDecay.Text = trackBarDecay.Value.ToString(CultureInfo.InvariantCulture);
             Regenerate();
         }
+
 
         private void trackBarFrequency_Scroll(object sender, EventArgs e) {
             _frequency = trackBarFrequency.Value;
+            lblFreq.Text = trackBarFrequency.Value.ToString(CultureInfo.InvariantCulture);
             Regenerate();
         }
 
+
         public int DecayTime {
-            get {
-                return trackBarDecay.Value;
-            }
+            get { return trackBarDecay.Value; }
         }
 
         public int Frequency {
-            get {
-                return trackBarFrequency.Value;
-            }
+            get { return trackBarFrequency.Value; }
         }
 
         public byte MaximumIntensity {
-            get {
-                return (byte)_max;
-            }
+            get { return (byte) _max; }
         }
 
         public byte MinimumIntensity {
-            get {
-                return (byte)_min;
-            }
+            get { return (byte) _min; }
         }
     }
 }
