@@ -3400,12 +3400,12 @@ namespace VixenEditor {
             }
             _actualLevels = _preferences.GetBoolean("ActualLevels");
             if (_actualLevels) {
-                toolStripButtonToggleLevels.Image = Resources.level_Percent;
-                toolStripButtonToggleCellText.Image = Resources.number;
+                toolStripButtonToggleLevels.Image = Resources.Percent;
+                toolStripButtonToggleCellText.Image = Resources.level_Number;
             }
             else {
-                toolStripButtonToggleLevels.Image = Resources.level_Number;
-                toolStripButtonToggleCellText.Image = Resources.Percent;
+                toolStripButtonToggleLevels.Image = Resources.number;
+                toolStripButtonToggleCellText.Image = Resources.level_Percent;
             }
             UpdateToolbarMenu();
             UpdateLevelDisplay();
