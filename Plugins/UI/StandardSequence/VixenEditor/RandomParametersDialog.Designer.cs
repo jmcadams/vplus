@@ -1,247 +1,311 @@
 namespace VixenEditor {
-	using System;
-	using System.Windows.Forms;
-	using System.Drawing;
-	using System.Collections;
+    using System;
+    using System.Windows.Forms;
+    using System.Drawing;
+    using System.Collections;
 
-	internal partial class RandomParametersDialog {
-		private System.ComponentModel.IContainer components = null;
+    internal partial class RandomParametersDialog {
+        private System.ComponentModel.IContainer components = null;
 
-		#region Windows Form Designer generated code
-		private Button buttonCancel;
-		private Button buttonOK;
-		private CheckBox checkBoxIntensityLevel;
-		private CheckBox checkBoxUseSaturation;
-		private GroupBox groupBox1;
-		private GroupBox groupBox2;
-		private GroupBox groupBox3;
-		private Label label1;
-		private Label label2;
-		private Label label3;
-		private Label label4;
-		private Label label5;
-		private Label label6;
-		private Label label7;
-		private Label label8;
-		private Label label9;
-		private NumericUpDown numericUpDownIntensityMax;
-		private NumericUpDown numericUpDownIntensityMin;
-		private NumericUpDown numericUpDownPeriodLength;
-		private NumericUpDown numericUpDownSaturationLevel;
+        #region Windows Form Designer generated code
+        private Button buttonCancel;
+        private Button buttonOK;
+        private CheckBox checkBoxIntensityLevel;
+        private CheckBox checkBoxUseSaturation;
+        private GroupBox groupBox1;
+        private GroupBox groupBox2;
+        private GroupBox groupBox3;
+        private Label label1;
+        private Label lblPctSaturation;
+        private Label label3;
+        private Label label4;
+        private Label label5;
+        private Label label6;
+        private Label lblPctMin;
+        private Label lblPctMax;
+        private Label label9;
+        private NumericUpDown udMax;
+        private NumericUpDown udMin;
+        private NumericUpDown udPeriods;
+        private NumericUpDown udSaturation;
 
-		private void InitializeComponent() {
-			this.label1 = new Label();
-			this.numericUpDownSaturationLevel = new NumericUpDown();
-			this.label2 = new Label();
-			this.buttonOK = new Button();
-			this.buttonCancel = new Button();
-			this.groupBox1 = new GroupBox();
-			this.checkBoxUseSaturation = new CheckBox();
-			this.label3 = new Label();
-			this.groupBox2 = new GroupBox();
-			this.numericUpDownPeriodLength = new NumericUpDown();
-			this.label4 = new Label();
-			this.groupBox3 = new GroupBox();
-			this.label9 = new Label();
-			this.label8 = new Label();
-			this.numericUpDownIntensityMax = new NumericUpDown();
-			this.label7 = new Label();
-			this.numericUpDownIntensityMin = new NumericUpDown();
-			this.label6 = new Label();
-			this.label5 = new Label();
-			this.checkBoxIntensityLevel = new CheckBox();
-			this.numericUpDownSaturationLevel.BeginInit();
-			this.groupBox1.SuspendLayout();
-			this.groupBox2.SuspendLayout();
-			this.numericUpDownPeriodLength.BeginInit();
-			this.groupBox3.SuspendLayout();
-			this.numericUpDownIntensityMax.BeginInit();
-			this.numericUpDownIntensityMin.BeginInit();
-			base.SuspendLayout();
-			this.label1.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
-			this.label1.Location = new Point(0x10, 23);
-			this.label1.Name = "label1";
-			this.label1.Size = new Size(0xec, 0x37);
-			this.label1.TabIndex = 1;
-			this.label1.Text = "Adjust the saturation level to determine how many channels are on during a given event period.  The default is 50%, meaning half of the channels will be on.";
-			this.numericUpDownSaturationLevel.Location = new Point(0x62, 0x5e);
-			this.numericUpDownSaturationLevel.Name = "numericUpDownSaturationLevel";
-			this.numericUpDownSaturationLevel.Size = new Size(0x2e, 20);
-			this.numericUpDownSaturationLevel.TabIndex = 2;
-			int[] bitsSat = new int[4];
-			bitsSat[0] = 50;
-			this.numericUpDownSaturationLevel.Value = new decimal(bitsSat);
-			this.numericUpDownSaturationLevel.Enter += new EventHandler(this.UpDownEnter);
-			this.label2.AutoSize = true;
-			this.label2.Location = new Point(0x94, 0x60);
-			this.label2.Name = "label2";
-			this.label2.Size = new Size(15, 13);
-			this.label2.TabIndex = 3;
-			this.label2.Text = "%";
-			this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-			this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.buttonOK.Location = new Point(0x7c, 0x1b1);
-			this.buttonOK.Name = "buttonOK";
-			this.buttonOK.Size = new Size(0x4b, 23);
-			this.buttonOK.TabIndex = 4;
-			this.buttonOK.Text = "OK";
-			this.buttonOK.UseVisualStyleBackColor = true;
-			this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.buttonCancel.Location = new Point(0xcd, 0x1b1);
-			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.Size = new Size(0x4b, 23);
-			this.buttonCancel.TabIndex = 5;
-			this.buttonCancel.Text = "Cancel";
-			this.buttonCancel.UseVisualStyleBackColor = true;
-			this.groupBox1.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
-			this.groupBox1.Controls.Add(this.checkBoxUseSaturation);
-			this.groupBox1.Controls.Add(this.label1);
-			this.groupBox1.Controls.Add(this.numericUpDownSaturationLevel);
-			this.groupBox1.Controls.Add(this.label2);
-			this.groupBox1.Location = new Point(12, 60);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new Size(0x10c, 0x89);
-			this.groupBox1.TabIndex = 1;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "groupBox1";
-			this.checkBoxUseSaturation.ForeColor = Color.FromArgb(0, 70, 0xd5);
-			this.checkBoxUseSaturation.Location = new Point(8, -4);
-			this.checkBoxUseSaturation.Name = "checkBoxUseSaturation";
-			this.checkBoxUseSaturation.Size = new Size(110, 24);
-			this.checkBoxUseSaturation.TabIndex = 0;
-			this.checkBoxUseSaturation.Text = "Ensure Saturation";
-			this.checkBoxUseSaturation.UseVisualStyleBackColor = true;
-			this.label3.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
-			this.label3.Location = new Point(12, 9);
-			this.label3.Name = "label3";
-			this.label3.Size = new Size(0x10c, 0x30);
-			this.label3.TabIndex = 0;
-			this.label3.Text = "If you want a truly random result with no intensity variation, you can press Enter or click OK right now.  Or you can adjust the parameters below.";
-			this.groupBox2.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
-			this.groupBox2.Controls.Add(this.numericUpDownPeriodLength);
-			this.groupBox2.Controls.Add(this.label4);
-			this.groupBox2.Location = new Point(12, 0xcb);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new Size(0x10c, 0x6c);
-			this.groupBox2.TabIndex = 2;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Period length";
-			this.numericUpDownPeriodLength.Location = new Point(0x62, 0x43);
-			int[] bitsMin = new int[4];
-			bitsMin[0] = 1;
-			this.numericUpDownPeriodLength.Minimum = new decimal(bitsMin);
-			this.numericUpDownPeriodLength.Name = "numericUpDownPeriodLength";
-			this.numericUpDownPeriodLength.Size = new Size(0x2e, 20);
-			this.numericUpDownPeriodLength.TabIndex = 1;
-			int[] bitsValue = new int[4];
-			bitsValue[0] = 1;
-			this.numericUpDownPeriodLength.Value = new decimal(bitsValue);
-			this.numericUpDownPeriodLength.Enter += new EventHandler(this.UpDownEnter);
-			this.label4.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
-			this.label4.Location = new Point(0x10, 27);
-			this.label4.Name = "label4";
-			this.label4.Size = new Size(0xec, 0x21);
-			this.label4.TabIndex = 0;
-			this.label4.Text = "How many event periods would you like each 'on' event to last?";
-			this.groupBox3.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top;
-			this.groupBox3.Controls.Add(this.label9);
-			this.groupBox3.Controls.Add(this.label8);
-			this.groupBox3.Controls.Add(this.numericUpDownIntensityMax);
-			this.groupBox3.Controls.Add(this.label7);
-			this.groupBox3.Controls.Add(this.numericUpDownIntensityMin);
-			this.groupBox3.Controls.Add(this.label6);
-			this.groupBox3.Controls.Add(this.label5);
-			this.groupBox3.Controls.Add(this.checkBoxIntensityLevel);
-			this.groupBox3.Location = new Point(12, 0x13d);
-			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new Size(0x10c, 110);
-			this.groupBox3.TabIndex = 3;
-			this.groupBox3.TabStop = false;
-			this.groupBox3.Text = "Intensity levels";
-			this.label9.AutoSize = true;
-			this.label9.Location = new Point(0x7d, 0x4b);
-			this.label9.Name = "label9";
-			this.label9.Size = new Size(25, 13);
-			this.label9.TabIndex = 5;
-			this.label9.Text = "and";
-			this.label8.AutoSize = true;
-			this.label8.Location = new Point(0xc7, 0x4b);
-			this.label8.Name = "label8";
-			this.label8.Size = new Size(15, 13);
-			this.label8.TabIndex = 7;
-			this.label8.Text = "%";
-			this.numericUpDownIntensityMax.Location = new Point(0x9f, 0x49);
-			this.numericUpDownIntensityMax.Name = "numericUpDownIntensityMax";
-			this.numericUpDownIntensityMax.Size = new Size(40, 20);
-			this.numericUpDownIntensityMax.TabIndex = 6;
-			this.numericUpDownIntensityMax.Enter += new EventHandler(this.UpDownEnter);
-			this.label7.AutoSize = true;
-			this.label7.Location = new Point(0x6f, 0x4b);
-			this.label7.Name = "label7";
-			this.label7.Size = new Size(15, 13);
-			this.label7.TabIndex = 4;
-			this.label7.Text = "%";
-			this.numericUpDownIntensityMin.Location = new Point(0x47, 0x49);
-			this.numericUpDownIntensityMin.Name = "numericUpDownIntensityMin";
-			this.numericUpDownIntensityMin.Size = new Size(40, 20);
-			this.numericUpDownIntensityMin.TabIndex = 3;
-			this.numericUpDownIntensityMin.Enter += new EventHandler(this.UpDownEnter);
-			this.label6.AutoSize = true;
-			this.label6.Location = new Point(0x10, 0x4b);
-			this.label6.Name = "label6";
-			this.label6.Size = new Size(0x31, 13);
-			this.label6.TabIndex = 2;
-			this.label6.Text = "Between";
-			this.label5.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
-			this.label5.Location = new Point(0x10, 29);
-			this.label5.Name = "label5";
-			this.label5.Size = new Size(0xec, 0x21);
-			this.label5.TabIndex = 1;
-			this.label5.Text = "Randomly adjust the intensity level of the activated cells within a specified range.";
-			this.checkBoxIntensityLevel.AutoSize = true;
-			this.checkBoxIntensityLevel.ForeColor = Color.FromArgb(0, 70, 0xd5);
-			this.checkBoxIntensityLevel.Location = new Point(8, 0);
-			this.checkBoxIntensityLevel.Name = "checkBoxIntensityLevel";
-			this.checkBoxIntensityLevel.Size = new Size(0x7b, 0x11);
-			this.checkBoxIntensityLevel.TabIndex = 0;
-			this.checkBoxIntensityLevel.Text = "Vary Intensity Levels";
-			this.checkBoxIntensityLevel.UseVisualStyleBackColor = true;
-			base.AcceptButton = this.buttonOK;
-			base.AutoScaleDimensions = new SizeF(6f, 13f);
-			base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			base.CancelButton = this.buttonCancel;
-			base.ClientSize = new Size(0x124, 0x1d4);
-			base.Controls.Add(this.groupBox3);
-			base.Controls.Add(this.groupBox2);
-			base.Controls.Add(this.label3);
-			base.Controls.Add(this.groupBox1);
-			base.Controls.Add(this.buttonCancel);
-			base.Controls.Add(this.buttonOK);
-			base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-			base.MaximizeBox = false;
-			base.MinimizeBox = false;
-			base.Name = "RandomParametersDialog";
-			base.StartPosition = FormStartPosition.CenterScreen;
-			this.Text = "Random Parameters";
-			this.numericUpDownSaturationLevel.EndInit();
-			this.groupBox1.ResumeLayout(false);
-			this.groupBox1.PerformLayout();
-			this.groupBox2.ResumeLayout(false);
-			this.numericUpDownPeriodLength.EndInit();
-			this.groupBox3.ResumeLayout(false);
-			this.groupBox3.PerformLayout();
-			this.numericUpDownIntensityMax.EndInit();
-			this.numericUpDownIntensityMin.EndInit();
-			base.ResumeLayout(false);
-		}
-		#endregion
+        private void InitializeComponent() {
+            this.label1 = new System.Windows.Forms.Label();
+            this.udSaturation = new System.Windows.Forms.NumericUpDown();
+            this.lblPctSaturation = new System.Windows.Forms.Label();
+            this.buttonOK = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBoxUseSaturation = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.udPeriods = new System.Windows.Forms.NumericUpDown();
+            this.label4 = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.lblPctMax = new System.Windows.Forms.Label();
+            this.udMax = new System.Windows.Forms.NumericUpDown();
+            this.lblPctMin = new System.Windows.Forms.Label();
+            this.udMin = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.checkBoxIntensityLevel = new System.Windows.Forms.CheckBox();
+            ((System.ComponentModel.ISupportInitialize)(this.udSaturation)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udPeriods)).BeginInit();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udMax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udMin)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(16, 23);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(236, 55);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Adjust the saturation level to determine how many channels are on during a given " +
+    "event period.  The default is 50%, meaning half of the channels will be on.";
+            // 
+            // udSaturation
+            // 
+            this.udSaturation.Location = new System.Drawing.Point(98, 94);
+            this.udSaturation.Name = "udSaturation";
+            this.udSaturation.Size = new System.Drawing.Size(46, 20);
+            this.udSaturation.TabIndex = 2;
+            this.udSaturation.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.udSaturation.Enter += new System.EventHandler(this.UpDownEnter);
+            // 
+            // lblPctSaturation
+            // 
+            this.lblPctSaturation.AutoSize = true;
+            this.lblPctSaturation.Location = new System.Drawing.Point(148, 96);
+            this.lblPctSaturation.Name = "lblPctSaturation";
+            this.lblPctSaturation.Size = new System.Drawing.Size(15, 13);
+            this.lblPctSaturation.TabIndex = 3;
+            this.lblPctSaturation.Text = "%";
+            // 
+            // buttonOK
+            // 
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.buttonOK.Location = new System.Drawing.Point(124, 433);
+            this.buttonOK.Name = "buttonOK";
+            this.buttonOK.Size = new System.Drawing.Size(75, 23);
+            this.buttonOK.TabIndex = 4;
+            this.buttonOK.Text = "OK";
+            this.buttonOK.UseVisualStyleBackColor = true;
+            // 
+            // buttonCancel
+            // 
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonCancel.Location = new System.Drawing.Point(205, 433);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancel.TabIndex = 5;
+            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.checkBoxUseSaturation);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.udSaturation);
+            this.groupBox1.Controls.Add(this.lblPctSaturation);
+            this.groupBox1.Location = new System.Drawing.Point(12, 60);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(268, 137);
+            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "groupBox1";
+            // 
+            // checkBoxUseSaturation
+            // 
+            this.checkBoxUseSaturation.ForeColor = System.Drawing.Color.FromArgb(0, 70, 213);
+            this.checkBoxUseSaturation.Location = new System.Drawing.Point(8, -4);
+            this.checkBoxUseSaturation.Name = "checkBoxUseSaturation";
+            this.checkBoxUseSaturation.Size = new System.Drawing.Size(110, 24);
+            this.checkBoxUseSaturation.TabIndex = 0;
+            this.checkBoxUseSaturation.Text = "Ensure Saturation";
+            this.checkBoxUseSaturation.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.Location = new System.Drawing.Point(12, 9);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(268, 48);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "If you want a truly random result with no intensity variation, you can press Ente" +
+    "r or click OK right now.  Or you can adjust the parameters below.";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.udPeriods);
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Location = new System.Drawing.Point(12, 203);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(268, 108);
+            this.groupBox2.TabIndex = 2;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Period length";
+            // 
+            // udPeriods
+            // 
+            this.udPeriods.Location = new System.Drawing.Point(98, 67);
+            this.udPeriods.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udPeriods.Name = "udPeriods";
+            this.udPeriods.Size = new System.Drawing.Size(46, 20);
+            this.udPeriods.TabIndex = 1;
+            this.udPeriods.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udPeriods.Enter += new System.EventHandler(this.UpDownEnter);
+            // 
+            // label4
+            // 
+            this.label4.Location = new System.Drawing.Point(16, 27);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(236, 33);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "How many event periods would you like each \'on\' event to last?";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label9);
+            this.groupBox3.Controls.Add(this.lblPctMax);
+            this.groupBox3.Controls.Add(this.udMax);
+            this.groupBox3.Controls.Add(this.lblPctMin);
+            this.groupBox3.Controls.Add(this.udMin);
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Controls.Add(this.checkBoxIntensityLevel);
+            this.groupBox3.Location = new System.Drawing.Point(12, 317);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(268, 110);
+            this.groupBox3.TabIndex = 3;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Intensity levels";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(125, 75);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(25, 13);
+            this.label9.TabIndex = 5;
+            this.label9.Text = "and";
+            // 
+            // lblPctMax
+            // 
+            this.lblPctMax.AutoSize = true;
+            this.lblPctMax.Location = new System.Drawing.Point(199, 75);
+            this.lblPctMax.Name = "lblPctMax";
+            this.lblPctMax.Size = new System.Drawing.Size(15, 13);
+            this.lblPctMax.TabIndex = 7;
+            this.lblPctMax.Text = "%";
+            // 
+            // udMax
+            // 
+            this.udMax.Location = new System.Drawing.Point(159, 73);
+            this.udMax.Name = "udMax";
+            this.udMax.Size = new System.Drawing.Size(40, 20);
+            this.udMax.TabIndex = 6;
+            this.udMax.Enter += new System.EventHandler(this.UpDownEnter);
+            // 
+            // lblPctMin
+            // 
+            this.lblPctMin.AutoSize = true;
+            this.lblPctMin.Location = new System.Drawing.Point(111, 75);
+            this.lblPctMin.Name = "lblPctMin";
+            this.lblPctMin.Size = new System.Drawing.Size(15, 13);
+            this.lblPctMin.TabIndex = 4;
+            this.lblPctMin.Text = "%";
+            // 
+            // udMin
+            // 
+            this.udMin.Location = new System.Drawing.Point(71, 73);
+            this.udMin.Name = "udMin";
+            this.udMin.Size = new System.Drawing.Size(40, 20);
+            this.udMin.TabIndex = 3;
+            this.udMin.Enter += new System.EventHandler(this.UpDownEnter);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(16, 75);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(49, 13);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "Between";
+            // 
+            // label5
+            // 
+            this.label5.Location = new System.Drawing.Point(16, 29);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(236, 33);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "Randomly adjust the intensity level of the activated cells within a specified ran" +
+    "ge.";
+            // 
+            // checkBoxIntensityLevel
+            // 
+            this.checkBoxIntensityLevel.AutoSize = true;
+            this.checkBoxIntensityLevel.ForeColor = System.Drawing.Color.FromArgb(0, 70, 213);
+            this.checkBoxIntensityLevel.Location = new System.Drawing.Point(8, 0);
+            this.checkBoxIntensityLevel.Name = "checkBoxIntensityLevel";
+            this.checkBoxIntensityLevel.Size = new System.Drawing.Size(123, 17);
+            this.checkBoxIntensityLevel.TabIndex = 0;
+            this.checkBoxIntensityLevel.Text = "Vary Intensity Levels";
+            this.checkBoxIntensityLevel.UseVisualStyleBackColor = true;
+            // 
+            // RandomParametersDialog
+            // 
+            this.AcceptButton = this.buttonOK;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.buttonCancel;
+            this.ClientSize = new System.Drawing.Size(292, 468);
+            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.buttonCancel);
+            this.Controls.Add(this.buttonOK);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "RandomParametersDialog";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Random Parameters";
+            ((System.ComponentModel.ISupportInitialize)(this.udSaturation)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.udPeriods)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udMax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udMin)).EndInit();
+            this.ResumeLayout(false);
 
-		protected override void Dispose(bool disposing) {
-			if (disposing && (this.components != null)) {
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-	}
+        }
+        #endregion
+
+        protected override void Dispose(bool disposing) {
+            if (disposing && (this.components != null)) {
+                this.components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
 }

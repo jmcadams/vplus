@@ -230,7 +230,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor.Properties.Resources.resources" />
-    <EmbeddedResource Include="VixenEditor.RandomParametersDialog.resources" />
     <EmbeddedResource Include="VixenEditor\AudioSpeedDialog.resx">
       <DependentUpon>AudioSpeedDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -260,6 +259,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\RampQueryDialog.resx">
       <DependentUpon>RampQueryDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenEditor\RandomParametersDialog.resx">
+      <DependentUpon>RandomParametersDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\SparkleParamsDialog.resx">
       <DependentUpon>SparkleParamsDialog.cs</DependentUpon>
