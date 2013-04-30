@@ -110,7 +110,7 @@ namespace VixenEditor {
             this.lblHeader.Size = new System.Drawing.Size(268, 48);
             this.lblHeader.TabIndex = 9;
             this.lblHeader.Text = "For standard random results without intensity variation, you can press Enter or c" +
-                "lick OK, otherwise adjust the parameters below.";
+    "lick OK, otherwise adjust the parameters below.";
             // 
             // udPeriods
             // 

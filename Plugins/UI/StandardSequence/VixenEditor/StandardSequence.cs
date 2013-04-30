@@ -3929,44 +3929,23 @@ namespace VixenEditor {
 
 
         private void toolStripButtonRandom_Click(object sender, EventArgs e) {
-            int intensityMin = _sequence.MaximumLevel;
-            int intensityMax = _sequence.MaximumLevel;
-            var random = new Random();
             using (var dialog = new RandomParametersDialog(_sequence.MinimumLevel, _sequence.MaximumLevel, _actualLevels, _showingGradient)) {
                 if (dialog.ShowDialog() != DialogResult.OK) {
                     return;
                 }
 
-                var saturationLevel = dialog.SaturationLevel;
-                var periodLength = dialog.PeriodLength;
-                if (dialog.VaryIntensity) {
-                    intensityMin = dialog.IntensityMin;
-                    intensityMax = dialog.IntensityMax;
-                }
                 AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, Resources.UndoText_Random);
-                var affectedRows = new List<int>();
 
                 SetSelectedCellValue(_sequence.MinimumLevel);
 
-                for (var left = _selectedCells.Left; left < _selectedCells.Right; left += periodLength) {
-                    var saturation = dialog.UseSaturation
-                                         ? random.Next(2) > 2
-                                               ? (int) Math.Ceiling(_selectedCells.Height * saturationLevel - 0.1)
-                                               : (int) Math.Floor(_selectedCells.Height * saturationLevel) : random.Next(1, _selectedCells.Height + 1);
-
-                    affectedRows.Clear();
-                    for (var top = _selectedCells.Top; top < _selectedCells.Bottom; top++) {
-                        affectedRows.Add(_channelOrderMapping[top]);
-                    }
-                    while (saturation-- > 0) {
-                        var index = random.Next(affectedRows.Count);
-                        var drawingLevel = dialog.VaryIntensity ? (byte) random.Next(intensityMin, intensityMax + 1) : _drawingLevel;
-                        for (var i = 0; (i < periodLength) && ((left + i) < _selectedCells.Right); i++) {
-                            _sequence.EventValues[affectedRows[index], left + i] = drawingLevel;
-                        }
-                        affectedRows.RemoveAt(index);
+                var events = dialog.GetEventValues(_selectedCells.Height, _selectedCells.Width);
+                for (var row = _selectedCells.Top; row < _selectedCells.Bottom; row ++) {
+                    var channel = _channelOrderMapping[row];
+                    for (var col = _selectedCells.Left; col < _selectedCells.Right; col++) {
+                        _sequence.EventValues[channel, col] = events[row - _selectedCells.Top, col - _selectedCells.Left];
                     }
                 }
+
                 _selectionRectangle.Width = 0;
                 pictureBoxGrid.Invalidate(SelectionToRectangle());
             }

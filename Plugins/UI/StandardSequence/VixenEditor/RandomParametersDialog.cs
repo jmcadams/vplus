@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
@@ -31,27 +30,27 @@ namespace VixenEditor {
         }
 
 
-        public int IntensityMax {
+        private int IntensityMax {
             get { return (int) (_actualLevels ? udMax.Value : CommonUtils.Utils.ToValue((int) udMax.Value)); }
         }
 
-        public int IntensityMin {
+        private int IntensityMin {
             get { return (int) (_actualLevels ? udMin.Value : CommonUtils.Utils.ToValue((int) udMin.Value)); }
         }
 
-        public int PeriodLength {
+        private int PeriodLength {
             get { return (int) udPeriods.Value; }
         }
 
-        public float SaturationLevel {
-            get { return (((float) udSaturation.Value) / 100f); }
+        private float SaturationLevel {
+            get { return ((float) udSaturation.Value / 100f); }
         }
 
-        public bool UseSaturation {
+        private bool UseSaturation {
             get { return checkBoxUseSaturation.Checked; }
         }
 
-        public bool VaryIntensity {
+        private bool VaryIntensity {
             get { return checkBoxIntensityLevel.Checked; }
         }
 
@@ -68,6 +67,17 @@ namespace VixenEditor {
         }
 
 
+        private void ud_ValueChanged(object sender, EventArgs e) {
+            if (sender.Equals(udMin) && udMin.Value > udMax.Value) {
+                udMax.Value = udMin.Value;
+            }
+            if (sender.Equals(udMax) && udMax.Value < udMin.Value) {
+                udMin.Value = udMax.Value;
+            }
+            pbExample.Refresh();
+        }
+
+
         private void pbExample_Paint(object sender, PaintEventArgs e) {
             var g = e.Graphics;
             g.Clear(pbExample.BackColor);
@@ -76,67 +86,52 @@ namespace VixenEditor {
                 g.DrawLine(Pens.Black, i, 0, i, pbExample.Width);
                 g.DrawLine(Pens.Black, 0, i, pbExample.Height, i);
             }
-            var random = new Random();
-            var affectedRows = new List<int>();
-            var eventValues = new byte[CellWidthAndHeight,CellWidthAndHeight];
-            for (var columns = 0; columns < CellWidthAndHeight; columns += PeriodLength) {
-                var saturation = UseSaturation
-                                     ? random.Next(2) > 2
-                                           ? (int) Math.Max(1, Math.Ceiling(CellWidthAndHeight * SaturationLevel - 0.1))
-                                           : (int) Math.Max(1, Math.Floor(CellWidthAndHeight * SaturationLevel))
-                                     : random.Next(1, CellWidthAndHeight + 1);
 
-                for (var rows = 0; rows < CellWidthAndHeight; rows++) {
-                    affectedRows.Add(rows);
-                }
-                while (saturation-- > 0) {
-                    var index = random.Next(affectedRows.Count);
-                    var drawingLevel = (byte) (VaryIntensity ? random.Next(IntensityMin, IntensityMax + 1) : udMax.Maximum);
-                    drawingLevel = (byte)(_actualLevels ? drawingLevel : CommonUtils.Utils.ToValue(drawingLevel));
-                    for (var i = 0; (i < PeriodLength && columns + i < CellWidthAndHeight); i++) {
-                        eventValues[affectedRows[index], columns + i] = drawingLevel;
-                    }
-                    affectedRows.RemoveAt(index);
-                }
-            }
-
-            var rowColors = new Color[]
-            {Color.Red, Color.Blue, Color.Green, Color.White};
+            var rowColors = new[] {Color.Red, Color.Blue, Color.Green, Color.White};
+            var eventValues = GetEventValues(CellWidthAndHeight, CellWidthAndHeight);
 
             using (var brush = new SolidBrush(Color.Black)) {
-                var y = 1;
                 for (var rows = 0; rows < CellWidthAndHeight; rows++) {
-                    var x = 1;
                     for (var columns = 0; columns < CellWidthAndHeight; columns++) {
                         brush.Color = Color.FromArgb(_isGradient ? eventValues[rows, columns] : 255, rowColors[rows % rowColors.Length]);
                         var height = _isGradient ? CellSize : (int) (CellSize * ((float) eventValues[rows, columns] / 255));
-                        g.FillRectangle(brush, x, y + CellSize - height, CellSize - 1, height - 1);
-                        x += CellSize;
+                        g.FillRectangle(brush, columns * CellSize + 1, (rows + 1) * CellSize - height + 1, CellSize - 1, height - 1);
                     }
-                    y += CellSize;
                 }
             }
         }
 
 
-        private void ud_ValueChanged(object sender, EventArgs e) {
-            if (sender.Equals(udMin)) {
-                if (udMin == udMax) {
-                    return;
+        public byte[,] GetEventValues(int rows, int columns) {
+            var random = new Random();
+            var eventValues = new byte[rows,columns];
+            var satTarget = (int) (UseSaturation ? SaturationLevel * (rows * columns) : random.Next(1, rows * columns));
+            var computedSaturation = 0;
+
+            while (computedSaturation < satTarget) {
+                var row = random.Next(rows);
+                var column = random.Next(columns);
+                if (eventValues[row, column] != 0) {
+                    continue;
                 }
-                if (udMin.Value > udMax.Value) {
-                    udMax.Value = udMin.Value;
+
+                var drawingLevel = (byte) (VaryIntensity ? random.Next(IntensityMin, IntensityMax + 1) : udMax.Maximum);
+                drawingLevel = (byte) (_actualLevels ? drawingLevel : CommonUtils.Utils.ToValue(drawingLevel));
+                for (var i = 0; (i < PeriodLength && column + i < columns); i++) {
+                    eventValues[row, column + i] = drawingLevel;
+                }
+
+                computedSaturation = 0;
+                for (row = 0; row < rows; row++) {
+                    for (column = 0; column < columns; column++) {
+                        if (eventValues[row, column] != 0) {
+                            computedSaturation++;
+                        }
+                    }
                 }
             }
-            if (sender.Equals(udMax)) {
-                if (udMax == udMin) {
-                    return;
-                }
-                if (udMax.Value < udMin.Value) {
-                    udMin.Value = udMax.Value;
-                }
-            }
-            pbExample.Refresh();
+            return eventValues;
         }
+
     }
 }
