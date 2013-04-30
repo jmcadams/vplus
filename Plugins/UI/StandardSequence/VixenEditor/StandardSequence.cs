@@ -3932,7 +3932,7 @@ namespace VixenEditor {
             int intensityMin = _sequence.MaximumLevel;
             int intensityMax = _sequence.MaximumLevel;
             var random = new Random();
-            using (var dialog = new RandomParametersDialog(_sequence.MinimumLevel, _sequence.MaximumLevel, _actualLevels)) {
+            using (var dialog = new RandomParametersDialog(_sequence.MinimumLevel, _sequence.MaximumLevel, _actualLevels, _showingGradient)) {
                 if (dialog.ShowDialog() != DialogResult.OK) {
                     return;
                 }
