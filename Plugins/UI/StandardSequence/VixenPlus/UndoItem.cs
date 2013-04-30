@@ -27,7 +27,7 @@ namespace VixenPlus {
             var rows = Data.GetLength(Utils.IndexRowsOrHeight);
 
             return (columns > 1 || rows > 1)
-                       ? string.Format("{0} of {1} x {2} cells {3}", OriginalAction, columns, rows, formattedTime)
+                       ? string.Format("{0} of {1} x {2} cells at {3}", OriginalAction, columns, rows, formattedTime)
                        : string.Format("{0} {1}", OriginalAction, formattedTime);
         }
 
