@@ -4383,37 +4383,36 @@ namespace VixenEditor {
             }
 
             var fontSize = (_gridColWidth <= 20) ? 5 : ((_gridColWidth <= 25) ? 6 : ((_gridColWidth < 50) ? 8 : 10));
-            using (var font = new Font(Font.FontFamily, fontSize)) {
-                using (var brush = new SolidBrush(Color.White)) {
-                    var initialX = (clipRect.X / _gridColWidth * _gridColWidth) + 1;
-                    var startEvent = (clipRect.X / _gridColWidth) + hScrollBar1.Value;
-                    var channelIndex = (clipRect.Y / _gridRowHeight) + vScrollBar1.Value;
+            using (var font = new Font(Font.FontFamily, fontSize))
+            using (var brush = new SolidBrush(Color.White)) {
+                var initialX = (clipRect.X / _gridColWidth * _gridColWidth) + 1;
+                var startEvent = (clipRect.X / _gridColWidth) + hScrollBar1.Value;
+                var channelIndex = (clipRect.Y / _gridRowHeight) + vScrollBar1.Value;
 
-                    var y = (clipRect.Y / _gridRowHeight * _gridRowHeight) + 1;
-                    while ((y < clipRect.Bottom) && (channelIndex < _sequence.ChannelCount)) {
-                        var currentChannel = _channelOrderMapping[channelIndex];
-                        var channel = _sequence.Channels[currentChannel];
-                        var x = initialX;
+                var y = (clipRect.Y / _gridRowHeight * _gridRowHeight) + 1;
+                while ((y < clipRect.Bottom) && (channelIndex < _sequence.ChannelCount)) {
+                    var currentChannel = _channelOrderMapping[channelIndex];
+                    var channel = _sequence.Channels[currentChannel];
+                    var x = initialX;
 
-                        for (var @event = startEvent; (x < clipRect.Right) && (@event < _sequence.TotalEventPeriods); @event++) {
-                            if (_showingGradient) {
-                                brush.Color = GetGradientColor(_gridBackBrush.Color, channel.Color, _sequence.EventValues[currentChannel, @event]);
-                                g.FillRectangle(brush, x, y, _gridColWidth - 1, _gridRowHeight - 1);
-                            }
-                            else {
-                                var height = ((_gridRowHeight - 1) * _sequence.EventValues[currentChannel, @event]) / 255;
-                                g.FillRectangle(channel.Brush ?? _channelBackBrush, x, ((y + _gridRowHeight) - 1) - height, _gridColWidth - 1, height);
-                            }
-
-                            string cellIntensity;
-                            if (_showCellText && (GetCellIntensity(@event, channelIndex, out cellIntensity) > 0)) {
-                                g.DrawString(cellIntensity, font, Brushes.Black, new RectangleF(x, y, (_gridColWidth - 1), (_gridRowHeight - 1)));
-                            }
-                            x += _gridColWidth;
+                    for (var @event = startEvent; (x < clipRect.Right) && (@event < _sequence.TotalEventPeriods); @event++) {
+                        if (_showingGradient) {
+                            brush.Color = GetGradientColor(_gridBackBrush.Color, channel.Color, _sequence.EventValues[currentChannel, @event]);
+                            g.FillRectangle(brush, x, y, _gridColWidth - 1, _gridRowHeight - 1);
                         }
-                        y += _gridRowHeight;
-                        channelIndex++;
+                        else {
+                            var height = ((_gridRowHeight - 1) * _sequence.EventValues[currentChannel, @event]) / 255;
+                            g.FillRectangle(channel.Brush ?? _channelBackBrush, x, ((y + _gridRowHeight) - 1) - height, _gridColWidth - 1, height);
+                        }
+
+                        string cellIntensity;
+                        if (_showCellText && (GetCellIntensity(@event, channelIndex, out cellIntensity) > 0)) {
+                            g.DrawString(cellIntensity, font, Brushes.Black, new RectangleF(x, y, (_gridColWidth - 1), (_gridRowHeight - 1)));
+                        }
+                        x += _gridColWidth;
                     }
+                    y += _gridRowHeight;
+                    channelIndex++;
                 }
             }
         }
