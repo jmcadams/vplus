@@ -1859,7 +1859,7 @@ namespace VixenEditor {
             tsbPlayPoint.Enabled = _selectedCells.Width > 0;
             tsbPlayRange.Enabled = _selectedCells.Width > 1;
 
-            if (cellX == _lastCellX && cellY == _lastCellY && RectangleToScreen(pictureBoxGrid.ClientRectangle).Contains(e.Location)) {
+            if (cellX == _lastCellX && cellY == _lastCellY && pictureBoxGrid.ClientRectangle.Contains(e.Location)) {
                 return;
             }
 
@@ -4447,7 +4447,7 @@ namespace VixenEditor {
             if (rect.Width > 1) {
                 var endMills = (rect.Right - 1) * _sequence.EventPeriod;
                 var endTime = Utils.TimeFormatWithMills(endMills);
-                var elapsedTime = Utils.TimeFormatWithMills(endMills - startMills);
+                var elapsedTime = Utils.TimeFormatWithMills(endMills - startMills + _sequence.EventPeriod);
                 labelPosition.Text = string.Format("{0} - {1}\n({2})", startTime, endTime, elapsedTime);
                 UpdateFollowMouse();
             }
@@ -4461,27 +4461,31 @@ namespace VixenEditor {
         }
 
 
-        //TODO Need to figure out how to position this consistently without magic numbers.
         private void UpdateFollowMouse() {
             var rowCount = _selectedCells.Height;
-            //lblFollowMouse.Text = labelPosition.Text + Environment.NewLine + rowCount + @" " +
-            //                      (rowCount == 1 ? Resources.Channel : Resources.Channels);
+            lblFollowMouse.Text = labelPosition.Text + Environment.NewLine + rowCount + @" " +
+                                  (rowCount == 1 ? Resources.Channel : Resources.Channels);
+            
             var position = Cursor.Position;
+            position.X -= lblFollowMouse.Width;
+            position.X = ((position.X / _gridColWidth) + 1) * _gridColWidth;
+            position.Y = ((position.Y / _gridRowHeight) + 1) * _gridRowHeight;
+            position = pictureBoxGrid.PointToClient(position);
+
             var tl = (new Point(pictureBoxGrid.ClientRectangle.Left, pictureBoxGrid.ClientRectangle.Top));
             var br = (new Point(pictureBoxGrid.ClientRectangle.Right, pictureBoxGrid.ClientRectangle.Bottom));
-            lblFollowMouse.Text = String.Format("Ty:{0} Lx:{1} By:{2} Rx:{3} My:{4} Mx:{5} ", tl.Y, tl.X, br.Y, br.X, position.Y, position.X);
-            position.X -= lblFollowMouse.Width;
-            if (position.Y > br.Y) {
-                position.Y = br.Y;
+            if (position.Y + lblFollowMouse.Height > br.Y) {
+                position.Y = br.Y - lblFollowMouse.Height;
             } else
-            if (position.Y < tl.Y) {
-                position.Y = tl.Y;
-            }
+                if (position.Y < tl.Y) {
+                    position.Y = 0;
+                }
 
             if (position.X < tl.X) {
-                position.X = tl.X;
+                position.X = 0;
             }
-            lblFollowMouse.Location = MdiParent.PointToScreen(position);
+
+            lblFollowMouse.Location = position;
         }
 
 
