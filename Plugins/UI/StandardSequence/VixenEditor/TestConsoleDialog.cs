@@ -24,7 +24,7 @@ namespace VixenEditor {
             _executionInterface.SetAsynchronousContext(_executionContextHandle, sequence);
             _channelLevels = new byte[sequence.ChannelCount];
             _channels = new Channel[sequence.ChannelCount + 1];
-            _channels[0] = new Channel(Resources.Unassigned, Color.WhiteSmoke, 0);
+            _channels[0] = new Channel(Resources.Unassigned, Color.Gainsboro, 0);
 
             for (var channel = 1; channel <= sequence.ChannelCount; channel++) {
                 _channels[channel] = sequence.Channels[channel - 1];
