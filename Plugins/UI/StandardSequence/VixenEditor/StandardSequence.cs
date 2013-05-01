@@ -1882,8 +1882,8 @@ namespace VixenEditor {
 
 
         private void DrawSelectionBox(int mouseX, int mouseY, int cellX, int cellY) {
-            var directionFlag = (mouseX > pictureBoxGrid.Width ? 0x0010 : (mouseX < 0 ? 0x1000 : 0x0)) |
-                                (mouseY > pictureBoxGrid.Height ? 0x0001 : (mouseY < 0 ? 0x0100 : 0x0));
+            var directionFlag = (mouseX > pictureBoxGrid.Width ? 0x2 : (mouseX < 0 ? 0x8 : 0x0)) |
+                                (mouseY > pictureBoxGrid.Height ? 0x1 : (mouseY < 0 ? 0x4 : 0x0));
 
             if (directionFlag == 0x0) {
                 EraseSelectedRange();
@@ -1898,16 +1898,16 @@ namespace VixenEditor {
                 DrawSelectedRange();
             }
 
-            if ((directionFlag & 0x0001) == 0x0001) {
+            if ((directionFlag & 0x1) == 0x1) {
                 ScrollSelectionDown(cellX);
             }
-            if ((directionFlag & 0x0010) == 0x0010) {
+            if ((directionFlag & 0x2) == 0x2) {
                 ScrollSelectionRight(cellY);
             }
-            if ((directionFlag & 0x0100) == 0x0100) {
+            if ((directionFlag & 0x4) == 0x4) {
                 ScrollSelectionUp(cellX);
             }
-            if ((directionFlag & 0x1000) == 0x1000) {
+            if ((directionFlag & 0x8) == 0x8) {
                 ScrollSelectionLeft(cellY);
             }
 
@@ -4464,11 +4464,24 @@ namespace VixenEditor {
         //TODO Need to figure out how to position this consistently without magic numbers.
         private void UpdateFollowMouse() {
             var rowCount = _selectedCells.Height;
-            lblFollowMouse.Text = labelPosition.Text + Environment.NewLine + rowCount + @" " +
-                                  (rowCount == 1 ? Resources.Channel : Resources.Channels);
-            var x = Cursor.Position.X - lblFollowMouse.Width - Left - 8;
-            var y = Cursor.Position.Y - 58 - Top;
-            lblFollowMouse.Location = new Point(x, y);
+            //lblFollowMouse.Text = labelPosition.Text + Environment.NewLine + rowCount + @" " +
+            //                      (rowCount == 1 ? Resources.Channel : Resources.Channels);
+            var position = Cursor.Position;
+            var tl = (new Point(pictureBoxGrid.ClientRectangle.Left, pictureBoxGrid.ClientRectangle.Top));
+            var br = (new Point(pictureBoxGrid.ClientRectangle.Right, pictureBoxGrid.ClientRectangle.Bottom));
+            lblFollowMouse.Text = String.Format("Ty:{0} Lx:{1} By:{2} Rx:{3} My:{4} Mx:{5} ", tl.Y, tl.X, br.Y, br.X, position.Y, position.X);
+            position.X -= lblFollowMouse.Width;
+            if (position.Y > br.Y) {
+                position.Y = br.Y;
+            } else
+            if (position.Y < tl.Y) {
+                position.Y = tl.Y;
+            }
+
+            if (position.X < tl.X) {
+                position.X = tl.X;
+            }
+            lblFollowMouse.Location = MdiParent.PointToScreen(position);
         }
 
 
