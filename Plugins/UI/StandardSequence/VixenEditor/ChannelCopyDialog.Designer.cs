@@ -36,12 +36,14 @@ namespace VixenEditor {
             // 
             // comboBoxSourceChannel
             // 
+            this.comboBoxSourceChannel.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.comboBoxSourceChannel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSourceChannel.FormattingEnabled = true;
             this.comboBoxSourceChannel.Location = new System.Drawing.Point(121, 6);
             this.comboBoxSourceChannel.Name = "comboBoxSourceChannel";
             this.comboBoxSourceChannel.Size = new System.Drawing.Size(159, 21);
             this.comboBoxSourceChannel.TabIndex = 1;
+            this.comboBoxSourceChannel.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.comboBox_DrawItem);
             // 
             // label2
             // 
@@ -54,12 +56,14 @@ namespace VixenEditor {
             // 
             // comboBoxDestinationChannel
             // 
+            this.comboBoxDestinationChannel.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.comboBoxDestinationChannel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxDestinationChannel.FormattingEnabled = true;
             this.comboBoxDestinationChannel.Location = new System.Drawing.Point(121, 32);
             this.comboBoxDestinationChannel.Name = "comboBoxDestinationChannel";
             this.comboBoxDestinationChannel.Size = new System.Drawing.Size(159, 21);
             this.comboBoxDestinationChannel.TabIndex = 3;
+            this.comboBoxDestinationChannel.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.comboBox_DrawItem);
             // 
             // buttonCopy
             // 
