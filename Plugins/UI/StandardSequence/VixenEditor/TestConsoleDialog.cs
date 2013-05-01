@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 using Properties;
@@ -22,19 +23,20 @@ namespace VixenEditor {
             _executionContextHandle = _executionInterface.RequestContext(false, true, null);
             _executionInterface.SetAsynchronousContext(_executionContextHandle, sequence);
             _channelLevels = new byte[sequence.ChannelCount];
-            _channels = sequence.Channels.ToArray();
-            var strArray = new string[sequence.ChannelCount + 1];
+            _channels = new Channel[sequence.ChannelCount + 1];
+            _channels[0] = new Channel(Resources.Unassigned, Color.WhiteSmoke, 0);
+
             for (var channel = 1; channel <= sequence.ChannelCount; channel++) {
-                strArray[channel] = sequence.Channels[channel - 1].Name;
+                _channels[channel] = sequence.Channels[channel - 1];
             }
-            strArray[0] = Resources.Unassigned;
+
             foreach (var control in groupBox2.Controls) {
                 var trackBar = control as ConsoleTrackBar;
                 if ((trackBar == null) || (trackBar.Master == null)) {
                     continue;
                 }
 
-                trackBar.TextStrings = strArray;
+                trackBar.TextStrings = _channels;
                 trackBar.ResetIndex = 0;
                 _channelControls.Add(trackBar);
             }

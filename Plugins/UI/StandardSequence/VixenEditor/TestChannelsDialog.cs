@@ -28,7 +28,7 @@ namespace VixenEditor {
                 listBoxChannels.Items.AddRange(_channels.ToArray());
                 // ReSharper restore CoVariantArrayConversion
             }
-            _actualLevels = ((ISystem)Interfaces.Available["ISystem"]).UserPreferences.GetBoolean("ActualLevels");
+            _actualLevels = ((ISystem) Interfaces.Available["ISystem"]).UserPreferences.GetBoolean("ActualLevels");
             trackBar.Maximum = _actualLevels ? 255 : 100;
             _channelLevels = new byte[sequence.ChannelCount];
             _executionContextHandle = _executionInterface.RequestContext(false, true, null);
@@ -67,7 +67,7 @@ namespace VixenEditor {
 
 
         private byte LevelFromTrackBar() {
-            return (byte)(_actualLevels ? trackBar.Value : Utils.ToValue(trackBar.Value));
+            return (byte) (_actualLevels ? trackBar.Value : Utils.ToValue(trackBar.Value));
         }
 
 
@@ -90,7 +90,7 @@ namespace VixenEditor {
 
         private void trackBar_ValueChanged(object sender, EventArgs e) {
             labelLevel.Text = trackBar.Value.ToString(CultureInfo.InvariantCulture);
-            var level = (byte)(_actualLevels ? trackBar.Value : Utils.ToValue(trackBar.Value));
+            var level = (byte) (_actualLevels ? trackBar.Value : Utils.ToValue(trackBar.Value));
             foreach (int channel in listBoxChannels.SelectedIndices) {
                 _channelLevels[_channels[channel].OutputChannel] = level;
             }
@@ -106,15 +106,14 @@ namespace VixenEditor {
         private void listBox_DrawItem(object sender, DrawItemEventArgs e) {
             e.DrawBackground();
 
-            using (var backgroundBrush = new SolidBrush(_channels[e.Index].Color)) {
-                using (var contrastingBrush = Utils.GetTextColor(backgroundBrush.Color)) {
-                    var g = e.Graphics;
-                    g.FillRectangle(backgroundBrush, e.Bounds);
-                    g.DrawString(_channels[e.Index].Name, e.Font, contrastingBrush, listBoxChannels.GetItemRectangle(e.Index).Location);
+            using (var backgroundBrush = new SolidBrush(_channels[e.Index].Color))
+            using (var g = e.Graphics) {
+                g.FillRectangle(backgroundBrush, e.Bounds);
 
-                    if ((e.State & DrawItemState.Selected) == DrawItemState.Selected) {
-                        g.DrawString("\u2714", e.Font, contrastingBrush, e.Bounds.Width - e.Bounds.Height, e.Bounds.Y);
-                    }
+                var contrastingBrush = Utils.GetTextColor(backgroundBrush.Color);
+                g.DrawString(_channels[e.Index].Name, e.Font, contrastingBrush, listBoxChannels.GetItemRectangle(e.Index).Location);
+                if ((e.State & DrawItemState.Selected) == DrawItemState.Selected) {
+                    g.DrawString("\u2714", e.Font, contrastingBrush, e.Bounds.Width - e.Bounds.Height, e.Bounds.Y);
                 }
             }
 

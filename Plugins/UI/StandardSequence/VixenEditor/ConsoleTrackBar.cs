@@ -3,8 +3,8 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.Windows.Forms;
-
 using Properties;
+using VixenPlus;
 
 namespace VixenEditor {
 
@@ -14,7 +14,7 @@ namespace VixenEditor {
         private ConsoleTrackBar _master;
         private int _resetIndex = -1;
         private int _selectedTextIndex = -1;
-        private string[] _channelNames;
+        private Channel[] _channelNames;
         public event ValueChangedHandler ValueChanged;
 
 
@@ -52,7 +52,8 @@ namespace VixenEditor {
             }
 
             if (selection.SelectedIndex != ResetIndex) {
-                Text = _channelNames[_selectedTextIndex = selection.SelectedIndex];
+                Text = _channelNames[_selectedTextIndex = selection.SelectedIndex].Name;
+                _panelText.BackColor = _channelNames[_selectedTextIndex].Color;
             }
             else {
                 ResetAssignment();
@@ -69,13 +70,14 @@ namespace VixenEditor {
             e.Graphics.TranslateTransform(2f, -(_panelText.Bottom - 5), MatrixOrder.Append);
             e.Graphics.RotateTransform(-90f, MatrixOrder.Append);
             e.Graphics.TranslateTransform(2f, _panelText.Bottom - 5, MatrixOrder.Append);
-            e.Graphics.DrawString(Text, _panelText.Font, _panelText.Enabled ? Brushes.White : Brushes.WhiteSmoke, 2f, _panelText.Bottom - 5);
+            e.Graphics.DrawString(Text, _panelText.Font, _panelText.Enabled ? CommonUtils.Utils.GetTextColor(_panelText.BackColor) : Brushes.WhiteSmoke, 2f, _panelText.Bottom - 5);
             e.Graphics.ResetTransform();
         }
 
 
         private void ResetAssignment() {
             Text = Resources.Unassigned;
+            _panelText.BackColor = Color.Gainsboro;
             _selectedTextIndex = -1;
         }
 
@@ -140,7 +142,7 @@ namespace VixenEditor {
             get { return _selectedTextIndex; }
         }
 
-        public string[] TextStrings {
+        public Channel[] TextStrings {
             set {
                 _channelNames = value;
                 _panelText.Enabled = (_channelNames != null) && (_channelNames.Length > 0);
