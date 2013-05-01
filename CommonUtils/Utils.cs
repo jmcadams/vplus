@@ -26,7 +26,8 @@ namespace CommonUtils {
 
 
         public static string TimeFormatWithoutMills(int mills, bool suppressLeadingZero = false) {
-            return String.Format(suppressLeadingZero ? "{0:d}:{1:d2}" : "{0:d2}:{1:d2}", mills / MillsPerMinute, (mills % MillsPerMinute) / MillsPerSecond);
+            return String.Format(suppressLeadingZero ? "{0:d}:{1:d2}" : "{0:d2}:{1:d2}", mills / MillsPerMinute,
+                                 (mills % MillsPerMinute) / MillsPerSecond);
         }
 
 
@@ -36,16 +37,17 @@ namespace CommonUtils {
 
 
         public static int ToPercentage(int value) {
-            return (int)Math.Round(value * 100f / Cell8BitMax, MidpointRounding.AwayFromZero);
+            return (int) Math.Round(value * 100f / Cell8BitMax, MidpointRounding.AwayFromZero);
         }
 
 
         public static int ToValue(int percentage) {
-            return (int)Math.Round(percentage / 100f * Cell8BitMax, MidpointRounding.AwayFromZero);
+            return (int) Math.Round(percentage / 100f * Cell8BitMax, MidpointRounding.AwayFromZero);
         }
 
+
         public static int ToValue(float percentage) {
-            return (int)Math.Round(percentage / 100f * Cell8BitMax, MidpointRounding.AwayFromZero);
+            return (int) Math.Round(percentage / 100f * Cell8BitMax, MidpointRounding.AwayFromZero);
         }
 
 
@@ -53,11 +55,11 @@ namespace CommonUtils {
             var result = new Bitmap(size, size);
             result.SetResolution(image.HorizontalResolution, image.VerticalResolution);
 
-            using (var graphics = Graphics.FromImage(result)) {
-                graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-                graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-                graphics.DrawImage(image, 0, 0, result.Width, result.Height);
+            using (var g = Graphics.FromImage(result)) {
+                g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                g.DrawImage(image, 0, 0, result.Width, result.Height);
             }
 
             return result;
