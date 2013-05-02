@@ -60,6 +60,45 @@ namespace Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to  is missing or does not contain a valid engine.
+        /// </summary>
+        internal static string EngineMissingOrInvalid {
+            get {
+                return ResourceManager.GetString("EngineMissingOrInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error when shutting down the plugin:
+        ///.
+        /// </summary>
+        internal static string engineShutDownError {
+            get {
+                return ResourceManager.GetString("engineShutDownError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///
+        ///Execution has been stopped..
+        /// </summary>
+        internal static string EngineStoppedError {
+            get {
+                return ResourceManager.GetString("EngineStoppedError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugin error.
+        /// </summary>
+        internal static string EngineStoppedHeading {
+            get {
+                return ResourceManager.GetString("EngineStoppedHeading", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap VixenPlus {
             get {
                 object obj = ResourceManager.GetObject("VixenPlus", resourceCulture);
