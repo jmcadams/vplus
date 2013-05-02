@@ -1,126 +1,105 @@
 ﻿using System;
 using System.IO;
 
-namespace VixenPlus
-{
-	internal class EventSequenceStub : IDisposable
-	{
-		private EventSequence _eventSequence;
-		private string _filename;
-		private int _length;
-		private string _lengthString;
+namespace VixenPlus {
+    internal class EventSequenceStub : IDisposable {
+        private int _length;
 
-		public EventSequenceStub(EventSequence sequence)
-		{
-			_filename = string.Empty;
-			_length = 0;
-			_lengthString = string.Empty;
-			AudioName = string.Empty;
-			AudioFileName = string.Empty;
-			_eventSequence = null;
-			_filename = sequence.FileName;
-			Length = sequence.Time;
-			if (sequence.Audio != null)
-			{
-				AudioName = sequence.Audio.Name;
-				AudioFileName = sequence.Audio.FileName;
-			}
-			_eventSequence = sequence;
-			Mask = _eventSequence.Mask;
-		}
 
-		public EventSequenceStub(string fileName, bool referenceSequence)
-		{
-			_filename = string.Empty;
-			_length = 0;
-			_lengthString = string.Empty;
-			AudioName = string.Empty;
-			AudioFileName = string.Empty;
-			_eventSequence = null;
-			var sequence = new EventSequence(fileName);
-			_filename = sequence.FileName;
-			Length = sequence.Time;
-			if (sequence.Audio != null)
-			{
-				AudioName = sequence.Audio.Name;
-				AudioFileName = sequence.Audio.FileName;
-			}
-			Mask = sequence.Mask;
-			if (referenceSequence)
-			{
-				_eventSequence = sequence;
-			}
-			else
-			{
-				sequence.Dispose();
-			}
-		}
+        public EventSequenceStub(EventSequence sequence) {
+            FileName = string.Empty;
+            _length = 0;
+            LengthString = string.Empty;
+            AudioName = string.Empty;
+            AudioFileName = string.Empty;
+            Sequence = null;
+            FileName = sequence.FileName;
+            Length = sequence.Time;
+            if (sequence.Audio != null) {
+                AudioName = sequence.Audio.Name;
+                AudioFileName = sequence.Audio.FileName;
+            }
+            Sequence = sequence;
+            Mask = Sequence.Mask;
+        }
 
-		public string AudioFileName { get; set; }
 
-		public string AudioName { get; set; }
+        public EventSequenceStub(string fileName, bool referenceSequence) {
+            FileName = string.Empty;
+            _length = 0;
+            LengthString = string.Empty;
+            AudioName = string.Empty;
+            AudioFileName = string.Empty;
+            Sequence = null;
+            var sequence = new EventSequence(fileName);
+            FileName = sequence.FileName;
+            Length = sequence.Time;
+            if (sequence.Audio != null) {
+                AudioName = sequence.Audio.Name;
+                AudioFileName = sequence.Audio.FileName;
+            }
+            Mask = sequence.Mask;
+            if (referenceSequence) {
+                Sequence = sequence;
+            }
+            else {
+                sequence.Dispose();
+            }
+        }
 
-		public string FileName
-		{
-			get { return _filename; }
-		}
 
-		public int Length
-		{
-			get { return _length; }
-			set
-			{
-				_length = value;
-				_lengthString = string.Format("{0}:{1:d2}", _length/60000, (_length%60000)/1000);
-			}
-		}
+        public string AudioFileName { get; set; }
 
-		public string LengthString
-		{
-			get { return _lengthString; }
-		}
+        public string AudioName { get; set; }
 
-		public byte[][] Mask { get; set; }
+        public string FileName { get; private set; }
 
-		public string Name
-		{
-			get { return Path.GetFileNameWithoutExtension(_filename); }
-			set { _filename = Path.ChangeExtension(value, ".vpr"); }
-		}
+        public int Length {
+            get { return _length; }
+            set {
+                _length = value;
+                LengthString = CommonUtils.Utils.TimeFormatWithoutMills(Length, true);
+            }
+        }
 
-		public EventSequence Sequence
-		{
-			get { return _eventSequence; }
-		}
+        public string LengthString { get; private set; }
 
-		public void Dispose()
-		{
-			Dispose(true);
-		}
+        public byte[][] Mask { get; set; }
 
-		public void Dispose(bool disposing)
-		{
-			if (_eventSequence != null)
-			{
-				_eventSequence.Dispose();
-				_eventSequence = null;
-			}
-			GC.SuppressFinalize(this);
-		}
+        public string Name {
+            get { return Path.GetFileNameWithoutExtension(FileName); }
+            set { FileName = Path.ChangeExtension(value, ".vpr"); }
+        }
 
-		~EventSequenceStub()
-		{
-			Dispose(false);
-		}
+        public EventSequence Sequence { get; private set; }
 
-		public EventSequence RetrieveSequence()
-		{
-			return _eventSequence ?? (_eventSequence = new EventSequence(_filename));
-		}
 
-		public override string ToString()
-		{
-			return string.Format("{0} ({1})", Name, _lengthString);
-		}
-	}
+        public void Dispose() {
+            Dispose(true);
+        }
+
+
+        public void Dispose(bool disposing) {
+            if (Sequence != null) {
+                Sequence.Dispose();
+                Sequence = null;
+            }
+            GC.SuppressFinalize(this);
+        }
+
+
+        ~EventSequenceStub() {
+            Dispose(false);
+        }
+
+
+        public EventSequence RetrieveSequence() {
+            return Sequence ?? (Sequence = new EventSequence(FileName));
+        }
+
+
+        public override string ToString() {
+            return string.Format("{0} ({1})", Name, LengthString);
+        }
+    }
 }
