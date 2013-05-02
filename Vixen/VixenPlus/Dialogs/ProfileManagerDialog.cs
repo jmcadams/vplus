@@ -40,9 +40,16 @@ namespace VixenPlus.Dialogs
             pictureBoxReturnFromProfileEdit.Image = bitmap;
             _channelOrderMapping = new List<int>();
             var profile = objectInContext as Profile;
-            if (profile != null)
-            {
-                if (listBoxProfiles.Items.IndexOf(profile) == -1)
+            if (profile != null) {
+                var profileListed = false;
+                foreach (var item in listBoxProfiles.Items) {
+                    if (((Profile) item).Name != profile.Name) {
+                        continue;
+                    }
+                    profileListed = true;
+                    break;
+                }
+                if (!profileListed)
                 {
                     listBoxProfiles.Items.Add(profile);
                 }

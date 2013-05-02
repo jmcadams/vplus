@@ -4733,7 +4733,17 @@ namespace VixenEditor {
         }
 
         private void profileToolStripLabel_Click(object sender, EventArgs e) {
-            SendKeys.Send("^m");
+            if (_sequence.Profile == null) {
+                return;
+            }
+
+            using (var dialog = new ProfileManagerDialog(_sequence.Profile)) {
+                if ((dialog.ShowDialog() == DialogResult.OK) &&
+                    (MessageBox.Show(Resources.AttachToNewProfile, Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
+                     DialogResult.Yes)) {
+                         SetProfile(_sequence.Profile);
+                }
+            }
         }
 
         private void newSeqTsb_Click(object sender, EventArgs e) {
