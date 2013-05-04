@@ -2191,6 +2191,7 @@ namespace VixenEditor {
             var bottomRightPt = new Point(0, pictureBoxTime.Height - 5);
             var drawingRect = new Rectangle(0, topLeftPt.Y, pictureBoxTime.Width, bottomRightPt.Y - topLeftPt.Y);
 
+            //Draw the small tick marks
             if (e.ClipRectangle.IntersectsWith(drawingRect)) {
                 var x = e.ClipRectangle.X / _gridColWidth;
                 var rightmosCell = x;
@@ -2211,6 +2212,7 @@ namespace VixenEditor {
             drawingRect.Y = topLeftPt.Y;
             drawingRect.Height = bottomRightPt.Y - topLeftPt.Y;
 
+            // Draw the large ticks and time Seconds
             if (e.ClipRectangle.IntersectsWith(drawingRect)) {
                 var x = e.ClipRectangle.X;
                 var eventPeriod = _sequence.EventPeriod;
@@ -2218,7 +2220,7 @@ namespace VixenEditor {
                 var endMills = Math.Min((hScrollBar1.Value + (e.ClipRectangle.Right / _gridColWidth)) * eventPeriod, _sequence.Time);
                 var eventCount = (float) _sequence.EventsPerSecond;
 
-                var currentMills = (!0f.Equals(startMills % 1000f)) ? (int) startMills / 1000 * 1000 : (int) startMills;
+                var currentMills = (!0f.Equals(startMills % Utils.MillsPerSecond)) ? (int)startMills / 1000 * 1000 : (int)startMills;
 
                 while ((x < e.ClipRectangle.Right) && (currentMills <= endMills)) {
                     if (currentMills != 0) {
@@ -2232,7 +2234,7 @@ namespace VixenEditor {
                         var time = currentMills >= Utils.MillsPerMinute
                                        ? Utils.TimeFormatWithoutMills(currentMills, true) : Utils.TimeFormatMillsOnly(currentMills);
                         var ef = e.Graphics.MeasureString(time, _timeFont);
-                        e.Graphics.DrawString(time, _timeFont, Brushes.White, x - (ef.Width / 2f), topLeftPt.Y - ef.Height - 5f);
+                        e.Graphics.DrawString(time, _timeFont, Brushes.White, x - (ef.Width / 2f), topLeftPt.Y - ef.Height - CaretSize);
                     }
                     currentMills += Utils.MillsPerSecond;
                 }
@@ -2245,6 +2247,7 @@ namespace VixenEditor {
             drawingRect.Y = topLeftPt.Y;
             drawingRect.Height = bottomRightPt.Y - topLeftPt.Y;
 
+            // Draw the position marker
             if (e.ClipRectangle.IntersectsWith(drawingRect) && _showPositionMarker && _position != -1) {
                 var x = _gridColWidth * (_position - hScrollBar1.Value);
                 if (x < pictureBoxTime.Width) {
@@ -2253,6 +2256,8 @@ namespace VixenEditor {
                     e.Graphics.DrawLine(Pens.Red, topLeftPt, bottomRightPt);
                 }
             }
+
+            //Draw the column caret
             if (_mouseTimeCaret != -1) {
                 e.Graphics.FillRectangle(_channelCaretBrush, (_mouseTimeCaret - hScrollBar1.Value) * _gridColWidth, 0, _gridColWidth, CaretSize);
             }
@@ -2261,6 +2266,8 @@ namespace VixenEditor {
             drawingRect.Width = pictureBoxTime.Width;
             drawingRect.Y = WaveformOffset;
             drawingRect.Height = pictureBoxTime.Height;
+            
+            //Draw the waveform
             if (toolStripButtonWaveform.Checked && e.ClipRectangle.IntersectsWith(drawingRect)) {
                 DrawWaveform(e);
             }
