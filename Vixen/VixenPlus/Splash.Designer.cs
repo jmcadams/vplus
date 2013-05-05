@@ -27,7 +27,7 @@ namespace VixenPlus
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Splash";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.TopMost = true;
             this.TransparencyKey = System.Drawing.Color.Gainsboro;
             this.ResumeLayout(false);

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Threading;
 using System.Windows.Forms;
-using System.Threading;
 
 namespace VixenPlus
 {
@@ -12,10 +10,16 @@ namespace VixenPlus
         public Splash()
         {
             InitializeComponent();
+
         }
 
         public void FadeIn() {
-            if (!Visible) Show();
+            if (!Visible) {
+                Show();
+                var big = Screen.AllScreens[2];
+                Left = big.Bounds.X + (big.WorkingArea.Width - Width) /2;
+                Top = big.Bounds.Y + (big.WorkingArea.Height - Height) / 2;
+            }
             for (var opacity = 0d; opacity <= 1d; opacity += 0.1d) {
                 Opacity = opacity;
                 Refresh();

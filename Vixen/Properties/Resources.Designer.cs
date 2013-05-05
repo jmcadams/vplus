@@ -99,6 +99,24 @@ namespace Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Engine assembly.
+        /// </summary>
+        internal static string Filter_EngineAssembly {
+            get {
+                return ResourceManager.GetString("Filter_EngineAssembly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select an engine assembly.
+        /// </summary>
+        internal static string Title_SelectEngine {
+            get {
+                return ResourceManager.GetString("Title_SelectEngine", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap VixenPlus {
             get {
                 object obj = ResourceManager.GetObject("VixenPlus", resourceCulture);

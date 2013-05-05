@@ -121,6 +121,9 @@ namespace VixenPlus
                 Thread.Sleep(ExpectationDelay);
 
                 splash.FadeOut();
+                var big = Screen.AllScreens[2];
+                Left = big.Bounds.Left;// +(big.WorkingArea.Width - Width) / 2;
+                Top = big.Bounds.Top; // +(big.WorkingArea.Height - Height) / 2;
             }
         }
 
