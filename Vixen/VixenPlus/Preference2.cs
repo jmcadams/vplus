@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace VixenPlus
@@ -83,7 +84,7 @@ namespace VixenPlus
 			flag |= VerifyPreference("RemoteLibraryFileName", "");
 			if (flag | VerifyPreference("DefaultSequenceDirectory", ""))
 			{
-				Flush();
+				SaveSettings();
 			}
 		}
 
@@ -100,7 +101,7 @@ namespace VixenPlus
 
 		public event OnPreferenceChange PreferenceChange;
 
-		public void Flush()
+		public void SaveSettings()
 		{
 			_xmlDocument.Save(_preferenceFileName);
 		}
@@ -283,5 +284,19 @@ namespace VixenPlus
 			}
 			return flag;
 		}
+
+        public Screen GetScreen(string displayName) {
+            var screen = Screen.AllScreens[0];
+
+            foreach (var s in Screen.AllScreens) {
+                if (!s.DeviceName.Equals(displayName)) {
+                    continue;
+                }
+                screen = s;
+                break;
+            }
+
+            return screen;
+        }
 	}
 }
