@@ -1,168 +1,137 @@
-namespace Preview
-{
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Drawing;
-    using System.Drawing.Imaging;
-    using System.IO;
-    using System.Windows.Forms;
-    using System.Xml;
-    using VixenPlus;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Windows.Forms;
+using System.Xml;
 
-    public class PreviewDialog : OutputPlugInUIBase
-    {
-		//private byte color = 0;
-        private IContainer components = null;
-        private uint[,] m_backBuffer;
-        private int m_cellSize;
-        private SolidBrush m_channelBrush = new SolidBrush(Color.Black);
-        private Color[] m_channelColors;
-        private Dictionary<int, List<uint>> m_channelDictionary;
-        private byte[] m_channelValues = new byte[0];
-        private Image m_originalBackground = null;
-        private int m_startChannel;
-        private PictureBox pictureBoxShowGrid;
+using VixenPlus;
 
-        public PreviewDialog(XmlNode setupNode, List<Channel> channels, int startChannel)
-        {
-            this.InitializeComponent();
-            try
-            {
-                this.m_startChannel = startChannel;
-                this.m_channelDictionary = new Dictionary<int, List<uint>>();
-                bool flag = bool.Parse(VixenPlus.Xml.GetNodeAlways(setupNode, "RedirectOutputs", "False").InnerText);
-                this.m_channelColors = new Color[channels.Count - startChannel];
-                for (int i = startChannel; i < channels.Count; i++)
-                {
-                    int outputChannel;
-                    if (flag)
-                    {
-                        outputChannel = i;
-                    }
-                    else
-                    {
-                        outputChannel = channels[i].OutputChannel;
-                    }
-                    if (outputChannel >= startChannel)
-                    {
-                        this.m_channelColors[outputChannel - startChannel] = channels[i].Color;
+namespace Preview {
+    public partial class PreviewDialog : OutputPlugInUIBase {
+        private readonly uint[,] _backBuffer;
+        private readonly int _cellSize;
+        private readonly SolidBrush _channelBrush = new SolidBrush(Color.Black);
+        private readonly Color[] _channelColors;
+        private readonly Dictionary<int, List<uint>> _channelDictionary;
+        private byte[] _channelValues = new byte[0];
+        private readonly Image _originalBackground;
+        private readonly int _startChannel;
+
+
+
+        public PreviewDialog(XmlNode setupNode, IList<Channel> channels, int startChannel) {
+            InitializeComponent();
+            try {
+                _startChannel = startChannel;
+                _channelDictionary = new Dictionary<int, List<uint>>();
+                var flag = bool.Parse(VixenPlus.Xml.GetNodeAlways(setupNode, "RedirectOutputs", "False").InnerText);
+                _channelColors = new Color[channels.Count - startChannel];
+                for (var i = startChannel; i < channels.Count; i++) {
+                    var outputChannel = flag ? i : channels[i].OutputChannel;
+                    if (outputChannel >= startChannel) {
+                        _channelColors[outputChannel - startChannel] = channels[i].Color;
                     }
                 }
-                foreach (XmlNode node in setupNode.SelectNodes("Channels/Channel"))
-                {
-                    int num3 = Convert.ToInt32(node.Attributes["number"].Value);
-                    if (num3 >= this.m_startChannel)
-                    {
+                var xmlNodeList = setupNode.SelectNodes("Channels/Channel");
+                if (xmlNodeList != null) {
+                    foreach (XmlNode node in xmlNodeList) {
+                        if (node.Attributes == null) {
+                            continue;
+                        }
+
+                        var num3 = Convert.ToInt32(node.Attributes["number"].Value);
+                        if (num3 < _startChannel) {
+                            continue;
+                        }
+
                         int num5;
-                        List<uint> list = new List<uint>();
-                        byte[] buffer = Convert.FromBase64String(node.InnerText);
-                        for (int j = 0; j < buffer.Length; j += 4)
-                        {
+                        var list = new List<uint>();
+                        var buffer = Convert.FromBase64String(node.InnerText);
+                        for (var j = 0; j < buffer.Length; j += 4) {
                             list.Add(BitConverter.ToUInt32(buffer, j));
                         }
-                        if ((num5 = num3 - this.m_startChannel) < channels.Count)
-                        {
-                            if (flag)
-                            {
-                                this.m_channelDictionary[num5] = list;
-                            }
-                            else
-                            {
-                                this.m_channelDictionary[channels[num5].OutputChannel] = list;
-                            }
+                        if ((num5 = num3 - _startChannel) >= channels.Count) {
+                            continue;
+                        }
+                        if (flag) {
+                            _channelDictionary[num5] = list;
+                        }
+                        else {
+                            _channelDictionary[channels[num5].OutputChannel] = list;
                         }
                     }
                 }
-                byte[] buffer2 = Convert.FromBase64String(setupNode.SelectSingleNode("BackgroundImage").InnerText);
-                if (buffer2.Length > 0)
-                {
-                    MemoryStream stream = new MemoryStream(buffer2);
-                    this.m_originalBackground = new Bitmap(stream);
-                    stream.Dispose();
+                var selectSingleNode = setupNode.SelectSingleNode("BackgroundImage");
+                if (selectSingleNode != null) {
+                    var buffer2 = Convert.FromBase64String(selectSingleNode.InnerText);
+                    if (buffer2.Length > 0) {
+                        using (var stream = new MemoryStream(buffer2)) {
+                            _originalBackground = new Bitmap(stream);
+                        }
+                    }
                 }
-                XmlNode node2 = setupNode.SelectSingleNode("Display");
-                this.m_cellSize = Convert.ToInt32(node2.SelectSingleNode("PixelSize").InnerText);
-                if (this.m_originalBackground == null)
-                {
-                    this.SetPictureBoxSize(Convert.ToInt32(node2.SelectSingleNode("Width").InnerText) * (this.m_cellSize + 1), Convert.ToInt32(node2.SelectSingleNode("Height").InnerText) * (this.m_cellSize + 1));
+                var node2 = setupNode.SelectSingleNode("Display");
+                if (node2 == null) {
+                    return;
                 }
-                else
-                {
-                    this.SetPictureBoxSize(this.m_originalBackground.Width, this.m_originalBackground.Height);
+
+                var singleNode = node2.SelectSingleNode("PixelSize");
+                if (singleNode != null) {
+                    _cellSize = Convert.ToInt32(singleNode.InnerText);
                 }
-                this.SetBrightness(((float) (int.Parse(node2.SelectSingleNode("Brightness").InnerText) - 10)) / 10f);
-                this.m_backBuffer = new uint[Convert.ToInt32(node2.SelectSingleNode("Height").InnerText), Convert.ToInt32(node2.SelectSingleNode("Width").InnerText)];
+                if (_originalBackground == null) {
+                    var xmlNode = node2.SelectSingleNode("Width");
+                    if (xmlNode != null) {
+                        var node = node2.SelectSingleNode("Height");
+                        if (node != null) {
+                            SetPictureBoxSize(Convert.ToInt32(xmlNode.InnerText) * (_cellSize + 1), Convert.ToInt32(node.InnerText) * (_cellSize + 1));
+                        }
+                    }
+                }
+                else {
+                    SetPictureBoxSize(_originalBackground.Width, _originalBackground.Height);
+                }
+                var selectSingleNode1 = node2.SelectSingleNode("Brightness");
+                if (selectSingleNode1 != null) {
+                    SetBrightness((int.Parse(selectSingleNode1.InnerText) - 10) / 10f);
+                }
+                var singleNode1 = node2.SelectSingleNode("Height");
+                if (singleNode1 != null) {
+                    var xmlNode = node2.SelectSingleNode("Width");
+                    if (xmlNode != null) {
+                        _backBuffer = new uint[Convert.ToInt32(singleNode1.InnerText),Convert.ToInt32(xmlNode.InnerText)];
+                    }
+                }
             }
-            catch (NullReferenceException exception)
-            {
+            catch (NullReferenceException exception) {
                 throw new Exception(exception.Message + "\n\nHave you run the setup?");
             }
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (this.components != null))
-            {
-                this.components.Dispose();
-            }
-            if (this.m_channelBrush != null)
-            {
-                this.m_channelBrush.Dispose();
-            }
-            if (this.m_originalBackground != null)
-            {
-                this.m_originalBackground.Dispose();
-            }
-            base.Dispose(disposing);
-        }
 
-        private void InitializeComponent()
-        {
-            this.pictureBoxShowGrid = new PictureBox();
-            ((ISupportInitialize) this.pictureBoxShowGrid).BeginInit();
-            base.SuspendLayout();
-            this.pictureBoxShowGrid.BackColor = Color.Transparent;
-            this.pictureBoxShowGrid.BackgroundImageLayout = ImageLayout.None;
-            this.pictureBoxShowGrid.Location = new Point(0, 0);
-            this.pictureBoxShowGrid.Name = "pictureBoxShowGrid";
-            this.pictureBoxShowGrid.Size = new Size(0x240, 0x120);
-            this.pictureBoxShowGrid.TabIndex = 14;
-            this.pictureBoxShowGrid.TabStop = false;
-            this.pictureBoxShowGrid.Paint += new PaintEventHandler(this.pictureBoxShowGrid_Paint);
-            base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = Color.Black;
-            base.ClientSize = new Size(0x240, 0x11e);
-            base.ControlBox = false;
-            base.Controls.Add(this.pictureBoxShowGrid);
-            base.Name = "PreviewDialog";
-            base.StartPosition = FormStartPosition.Manual;
-            this.Text = "Sequence Preview";
-            base.FormClosing += new FormClosingEventHandler(this.PreviewDialog_FormClosing);
-            ((ISupportInitialize) this.pictureBoxShowGrid).EndInit();
-            base.ResumeLayout(false);
-        }
 
-        private void pictureBoxShowGrid_Paint(object sender, PaintEventArgs e)
-        {
-            e.Graphics.FillRectangle(Brushes.Transparent, this.pictureBoxShowGrid.ClientRectangle);
-            int length = this.m_backBuffer.GetLength(0);
-            int num2 = this.m_backBuffer.GetLength(1);
-            int num5 = this.m_cellSize + 1;
-            int y = 0;
-            int num8 = 0;
-            while (num8 < length)
-            {
-                int x = 0;
-                int num7 = 0;
-                while (num7 < num2)
-                {
-                    uint num6 = this.m_backBuffer[num8, num7];
-                    if ((num6 & 0xff000000) > 0)
-                    {
-                        this.m_channelBrush.Color = Color.FromArgb((int) num6);
-                        e.Graphics.FillRectangle(this.m_channelBrush, x, y, this.m_cellSize, this.m_cellSize);
+
+
+
+
+
+        private void pictureBoxShowGrid_Paint(object sender, PaintEventArgs e) {
+            e.Graphics.FillRectangle(Brushes.Transparent, _pictureBoxShowGrid.ClientRectangle);
+            var length = _backBuffer.GetLength(0);
+            var num2 = _backBuffer.GetLength(1);
+            var num5 = _cellSize + 1;
+            var y = 0;
+            var num8 = 0;
+            while (num8 < length) {
+                var x = 0;
+                var num7 = 0;
+                while (num7 < num2) {
+                    var num6 = _backBuffer[num8, num7];
+                    if ((num6 & 0xff000000) > 0) {
+                        _channelBrush.Color = Color.FromArgb((int) num6);
+                        e.Graphics.FillRectangle(_channelBrush, x, y, _cellSize, _cellSize);
                     }
                     num7++;
                     x += num5;
@@ -172,54 +141,48 @@ namespace Preview
             }
         }
 
-        private void PreviewDialog_FormClosing(object sender, FormClosingEventArgs e)
-        {
+
+        private static void PreviewDialog_FormClosing(object sender, FormClosingEventArgs e) {
             e.Cancel = e.CloseReason == CloseReason.UserClosing;
         }
 
-        private void Recalc()
-        {
-            int index = 0;
-            Array.Clear(this.m_backBuffer, 0, this.m_backBuffer.Length);
-            int length = this.m_backBuffer.GetLength(1);
-            int num15 = this.m_backBuffer.GetLength(0);
-            foreach (byte num16 in this.m_channelValues)
-            {
-                Color color = this.m_channelColors[index];
-                if (this.m_channelDictionary.ContainsKey(index) && (num16 > 0))
-                {
-                    foreach (uint num17 in this.m_channelDictionary[index])
-                    {
-                        int num6 = (int) (num17 >> 0x10);
-                        int num7 = ((int) num17) & 0xffff;
-                        if ((num6 < length) && (num7 < num15))
-                        {
+
+        private void Recalc() {
+            var index = 0;
+            Array.Clear(_backBuffer, 0, _backBuffer.Length);
+            var length = _backBuffer.GetLength(1);
+            var num15 = _backBuffer.GetLength(0);
+            foreach (var num16 in _channelValues) {
+                var color = _channelColors[index];
+                if (_channelDictionary.ContainsKey(index) && (num16 > 0)) {
+                    foreach (var num17 in _channelDictionary[index]) {
+                        var num6 = (int) (num17 >> 0x10);
+                        var num7 = ((int) num17) & 0xffff;
+                        if ((num6 < length) && (num7 < num15)) {
                             byte r;
                             byte g;
                             byte b;
                             byte num8;
-                            uint num2 = this.m_backBuffer[num7, num6];
-                            if (num2 == 0)
-                            {
+                            var num2 = _backBuffer[num7, num6];
+                            if (num2 == 0) {
                                 num8 = num16;
                                 r = color.R;
                                 g = color.G;
                                 b = color.B;
                             }
-                            else
-                            {
+                            else {
                                 num8 = Math.Max(num16, (byte) (num2 >> 24));
-                                float num12 = ((float) (num2 >> 24)) / ((float) num8);
-                                float num13 = ((float) num16) / ((float) num8);
-                                byte num9 = (byte) ((num2 >> 0x10) & 0xff);
-                                byte num10 = (byte) ((num2 >> 8) & 0xff);
-                                byte num11 = (byte) (num2 & 0xff);
+                                var num12 = (num2 >> 24) / ((float) num8);
+                                var num13 = num16 / ((float) num8);
+                                var num9 = (byte) ((num2 >> 0x10) & 0xff);
+                                var num10 = (byte) ((num2 >> 8) & 0xff);
+                                var num11 = (byte) (num2 & 0xff);
                                 r = (byte) (((int) ((num9 * num12) + (color.R * num13))) >> 1);
                                 g = (byte) (((int) ((num10 * num12) + (color.G * num13))) >> 1);
                                 b = (byte) (((int) ((num11 * num12) + (color.B * num13))) >> 1);
                             }
                             num2 = (uint) ((((num8 << 24) | (r << 0x10)) | (g << 8)) | b);
-                            this.m_backBuffer[num7, num6] = num2;
+                            _backBuffer[num7, num6] = num2;
                         }
                     }
                 }
@@ -227,67 +190,66 @@ namespace Preview
             }
         }
 
-        private void SetBrightness(float value)
-        {
-            if (this.m_originalBackground != null)
-            {
-                Image image = new Bitmap(this.m_originalBackground);
-                float[][] newColorMatrix = new float[5][];
-                float[] numArray2 = new float[5];
-                numArray2[0] = 1f;
-                newColorMatrix[0] = numArray2;
-                numArray2 = new float[5];
-                numArray2[1] = 1f;
-                newColorMatrix[1] = numArray2;
-                numArray2 = new float[5];
-                numArray2[2] = 1f;
-                newColorMatrix[2] = numArray2;
-                numArray2 = new float[5];
-                numArray2[3] = 1f;
-                newColorMatrix[3] = numArray2;
-                numArray2 = new float[5];
-                numArray2[0] = value;
-                numArray2[1] = value;
-                numArray2[2] = value;
-                numArray2[4] = 1f;
-                newColorMatrix[4] = numArray2;
-                ColorMatrix matrix = new ColorMatrix(newColorMatrix);
-                Graphics graphics = Graphics.FromImage(image);
-                ImageAttributes imageAttr = new ImageAttributes();
-                imageAttr.SetColorMatrix(matrix);
-                graphics.DrawImage(image, new Rectangle(0, 0, image.Width, image.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, imageAttr);
-                graphics.Dispose();
-                imageAttr.Dispose();
-                this.pictureBoxShowGrid.BackgroundImage = image;
+
+        private void SetBrightness(float value) {
+            if (_originalBackground == null) {
+                return;
             }
+
+            Image image = new Bitmap(_originalBackground);
+            var newColorMatrix = new float[5][];
+            var numArray2 = new float[5];
+            numArray2[0] = 1f;
+            newColorMatrix[0] = numArray2;
+            numArray2 = new float[5];
+            numArray2[1] = 1f;
+            newColorMatrix[1] = numArray2;
+            numArray2 = new float[5];
+            numArray2[2] = 1f;
+            newColorMatrix[2] = numArray2;
+            numArray2 = new float[5];
+            numArray2[3] = 1f;
+            newColorMatrix[3] = numArray2;
+            numArray2 = new float[5];
+            numArray2[0] = value;
+            numArray2[1] = value;
+            numArray2[2] = value;
+            numArray2[4] = 1f;
+            newColorMatrix[4] = numArray2;
+            var matrix = new ColorMatrix(newColorMatrix);
+            var graphics = Graphics.FromImage(image);
+            var imageAttr = new ImageAttributes();
+            imageAttr.SetColorMatrix(matrix);
+            graphics.DrawImage(image, new Rectangle(0, 0, image.Width, image.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, imageAttr);
+            graphics.Dispose();
+            imageAttr.Dispose();
+            _pictureBoxShowGrid.BackgroundImage = image;
         }
 
-        private void SetPictureBoxSize(int width, int height)
-        {
-            int num = width - this.pictureBoxShowGrid.Width;
-            int num2 = height - this.pictureBoxShowGrid.Height;
-            base.Width += num;
-            base.Height += num2;
-            this.pictureBoxShowGrid.Width += num;
-            this.pictureBoxShowGrid.Height += num2;
+
+        private void SetPictureBoxSize(int width, int height) {
+            var num = width - _pictureBoxShowGrid.Width;
+            var num2 = height - _pictureBoxShowGrid.Height;
+            Width += num;
+            Height += num2;
+            _pictureBoxShowGrid.Width += num;
+            _pictureBoxShowGrid.Height += num2;
         }
 
-        public void UpdateWith(byte[] channelValues)
-        {
-            this.m_channelValues = channelValues;
-            this.Recalc();
-            this.pictureBoxShowGrid.Refresh();
+
+        public void UpdateWith(byte[] channelValues) {
+            _channelValues = channelValues;
+            Recalc();
+            _pictureBoxShowGrid.Refresh();
         }
 
-        protected override System.Windows.Forms.CreateParams CreateParams
-        {
-            get
-            {
-                System.Windows.Forms.CreateParams createParams = base.CreateParams;
+
+        protected override CreateParams CreateParams {
+            get {
+                var createParams = base.CreateParams;
                 createParams.ClassStyle |= 0x200;
                 return createParams;
             }
         }
     }
 }
-

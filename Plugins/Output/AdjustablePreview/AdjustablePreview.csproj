@@ -115,6 +115,9 @@
     <Compile Include="Preview\PreviewDialog.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Preview\PreviewDialog.Designer.cs">
+      <DependentUpon>PreviewDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Preview\ReorderDialog.cs">
       <SubType>Form</SubType>
     </Compile>

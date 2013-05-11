@@ -1,125 +1,100 @@
-namespace Preview
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Reflection;
-    using System.Windows.Forms;
-    using System.Xml;
-    using VixenPlus;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using System.Xml;
+using VixenPlus;
 
-    public class Preview : IEventDrivenOutputPlugIn, IOutputPlugIn, IHardwarePlugin, IPlugIn, ISetup
-    {
-        private List<Channel> m_channels = null;
-        private List<Form> m_dialogList;
-        private PreviewDialog m_previewDialog = null;
-        private SetupData m_setupData;
-        private SetupDialog m_setupDialog = null;
-        private XmlNode m_setupNode;
-        private int m_startChannel;
+namespace Preview {
+    public class Preview : IEventDrivenOutputPlugIn {
+        private readonly List<Channel> _channels;
+        private PreviewDialog _previewDialog;
+        private SetupData _setupData;
+        private SetupDialog _setupDialog;
+        private XmlNode _setupNode;
+        private int _startChannel;
 
-        public Preview()
-        {
-            this.m_channels = new List<Channel>();
-            this.m_dialogList = new List<Form>();
+
+        public Preview() {
+            _channels = new List<Channel>();
         }
 
-        public void Event(byte[] channelValues)
-        {
-            if (((this.m_previewDialog != null) && !this.m_previewDialog.Disposing) && !this.m_previewDialog.IsDisposed)
-            {
-                this.m_previewDialog.UpdateWith(channelValues);
+
+        public void Event(byte[] channelValues) {
+            if (((_previewDialog != null) && !_previewDialog.Disposing) && !_previewDialog.IsDisposed) {
+                _previewDialog.UpdateWith(channelValues);
             }
         }
 
-        public void Initialize(IExecutable executableObject, SetupData setupData, XmlNode setupNode)
-        {
-            this.m_channels.Clear();
-            this.m_channels.AddRange(executableObject.Channels);
-            this.m_setupData = setupData;
-            this.m_setupNode = setupNode;
-            this.m_startChannel = Convert.ToInt32(this.m_setupNode.Attributes["from"].Value) - 1;
-            this.m_setupData.GetBytes(this.m_setupNode, "BackgroundImage", new byte[0]);
+
+        public void Initialize(IExecutable executableObject, SetupData setupData, XmlNode setupNode) {
+            _channels.Clear();
+            _channels.AddRange(executableObject.Channels);
+            _setupData = setupData;
+            _setupNode = setupNode;
+            _startChannel = Convert.ToInt32(_setupNode.Attributes["from"].Value) - 1;
+            setupData.GetBytes(_setupNode, "BackgroundImage", new byte[0]);
         }
 
-        public void Setup()
-        {
-            if (this.m_channels.Count == 0)
-            {
-                MessageBox.Show("The item you are trying to create a preview for has no channels.", "Preview", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+
+        public void Setup() {
+            if (_channels.Count == 0) {
+                MessageBox.Show("The item you are trying to create a preview for has no channels.", "Preview", MessageBoxButtons.OK,
+                                MessageBoxIcon.Hand);
             }
-            else
-            {
-                this.m_setupDialog = new SetupDialog(this.m_setupData, this.m_setupNode, this.m_channels, this.m_startChannel);
-                this.m_setupDialog.ShowDialog();
-                this.m_setupDialog.Dispose();
+            else {
+                _setupDialog = new SetupDialog(_setupData, _setupNode, _channels, _startChannel);
+                _setupDialog.ShowDialog();
+                _setupDialog.Dispose();
             }
         }
 
-        public void Shutdown()
-        {
-            if (this.m_previewDialog != null)
-            {
-                if (this.m_previewDialog.InvokeRequired)
-                {
-                    this.m_previewDialog.BeginInvoke(new MethodInvoker(this.m_previewDialog.Dispose));
+
+        public void Shutdown() {
+            if (_previewDialog != null) {
+                if (_previewDialog.InvokeRequired) {
+                    _previewDialog.BeginInvoke(new MethodInvoker(_previewDialog.Dispose));
                 }
-                else
-                {
-                    this.m_previewDialog.Dispose();
+                else {
+                    _previewDialog.Dispose();
                 }
-                this.m_previewDialog = null;
+                _previewDialog = null;
             }
-            this.m_channels.Clear();
-            this.m_setupData = null;
-            this.m_setupNode = null;
+            _channels.Clear();
+            _setupData = null;
+            _setupNode = null;
         }
 
-        public void Startup()
-        {
-            if (this.m_channels.Count != 0)
-            {
-                ISystem system = (ISystem) Interfaces.Available["ISystem"];
-                ConstructorInfo constructor = typeof(PreviewDialog).GetConstructor(new System.Type[] { typeof(XmlNode), typeof(List<Channel>), typeof(int) });
-                this.m_previewDialog = (PreviewDialog) system.InstantiateForm(constructor, new object[] { this.m_setupNode, this.m_channels, this.m_startChannel });
+
+        public void Startup() {
+            if (_channels.Count == 0) {
+                return;
             }
+            var system = (ISystem) Interfaces.Available["ISystem"];
+            var constructor =
+                typeof (PreviewDialog).GetConstructor(new[] {typeof (XmlNode), typeof (List<Channel>), typeof (int)});
+            _previewDialog = (PreviewDialog) system.InstantiateForm(constructor, new object[] {_setupNode, _channels, _startChannel});
         }
 
-        public override string ToString()
-        {
-            return this.Name;
+
+        public override string ToString() {
+            return Name;
         }
 
-        public string Author
-        {
-            get
-            {
-                return "Vixen and VixenPlus Developers";
-            }
+
+        public string Author {
+            get { return "Vixen and VixenPlus Developers"; }
         }
 
-        public string Description
-        {
-            get
-            {
-                return "Adjustable sequence preview plugin for Vixen";
-            }
+        public string Description {
+            get { return "Adjustable sequence preview plugin for Vixen"; }
         }
 
-        public VixenPlus.HardwareMap[] HardwareMap
-        {
-            get
-            {
-                return new VixenPlus.HardwareMap[0];
-            }
+        public HardwareMap[] HardwareMap {
+            get { return new HardwareMap[0]; }
         }
 
-        public string Name
-        {
-            get
-            {
-                return "Adjustable preview";
-            }
+        public string Name {
+            get { return "Adjustable preview"; }
         }
     }
 }
-
