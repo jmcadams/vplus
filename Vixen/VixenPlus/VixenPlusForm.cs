@@ -64,12 +64,13 @@ namespace VixenPlus
             Ensure(Paths.SourceFilePath);
             Ensure(Paths.CurveLibraryPath);
             using (var splash = new Splash()) {
-                splash.FadeIn();
+                _preferences = Preference2.GetInstance();
+                var screen = _preferences.GetScreen(_preferences.GetString("PrimaryDisplay"));
+                splash.FadeIn(screen);
                 InitializeComponent();
                 SetVendorData();
                 _registeredFileTypes = new Dictionary<string, IUIPlugIn>();
                 _timersPath = Path.Combine(Paths.DataPath, "timers");
-                _preferences = Preference2.GetInstance();
                 _preferences.PreferenceChange += PreferencesPreferenceChange;
                 _host = new Host(this);
                 _loadables = new Dictionary<string, List<LoadedObject>>();
@@ -115,15 +116,11 @@ namespace VixenPlus
                     CheckForUpdates();
                 }
 
-                // Going to set this here, initially it was 3000 ms, right now we're not loading anything,
-                // want to set future expectations
-
                 Thread.Sleep(ExpectationDelay);
 
                 splash.FadeOut();
-                var big = Screen.AllScreens[2];
-                Left = big.Bounds.Left;// +(big.WorkingArea.Width - Width) / 2;
-                Top = big.Bounds.Top; // +(big.WorkingArea.Height - Height) / 2;
+                Left = screen.Bounds.Left;
+                Top = screen.Bounds.Top;
             }
         }
 
@@ -445,7 +442,7 @@ namespace VixenPlus
             {
                 Xml.SetNewValue(emptyNodeAlways, "Item", str);
             }
-            _preferences.Flush();
+            _preferences.SaveSettings();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -460,7 +457,7 @@ namespace VixenPlus
             }
             _host.StopBackgroundObjects();
             _host.BackgroundSequenceName = null;
-            _preferences.Flush();
+            _preferences.SaveSettings();
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)

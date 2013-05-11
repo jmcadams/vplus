@@ -13,12 +13,11 @@ namespace VixenPlus
 
         }
 
-        public void FadeIn() {
+        public void FadeIn(Screen screen) {
             if (!Visible) {
+                Left = screen.Bounds.X + (screen.WorkingArea.Width - Width) /2;
+                Top = screen.Bounds.Y + (screen.WorkingArea.Height - Height) / 2;
                 Show();
-                var big = Screen.AllScreens[2];
-                Left = big.Bounds.X + (big.WorkingArea.Width - Width) /2;
-                Top = big.Bounds.Y + (big.WorkingArea.Height - Height) / 2;
             }
             for (var opacity = 0d; opacity <= 1d; opacity += 0.1d) {
                 Opacity = opacity;
