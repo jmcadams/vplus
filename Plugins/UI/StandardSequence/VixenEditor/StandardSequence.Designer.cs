@@ -575,6 +575,7 @@ namespace VixenEditor{
             this.exportChannelNamesListToolStripMenuItem.Name = "exportChannelNamesListToolStripMenuItem";
             this.exportChannelNamesListToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
             this.exportChannelNamesListToolStripMenuItem.Text = "Export channel names list";
+            this.exportChannelNamesListToolStripMenuItem.Visible = false;
             this.exportChannelNamesListToolStripMenuItem.Click += new System.EventHandler(this.exportChannelNamesListToolStripMenuItem_Click);
             // 
             // importChannelNamesListToolStripMenuItem
@@ -584,6 +585,7 @@ namespace VixenEditor{
             this.importChannelNamesListToolStripMenuItem.Name = "importChannelNamesListToolStripMenuItem";
             this.importChannelNamesListToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
             this.importChannelNamesListToolStripMenuItem.Text = "Import channel names list";
+            this.importChannelNamesListToolStripMenuItem.Visible = false;
             this.importChannelNamesListToolStripMenuItem.Click += new System.EventHandler(this.importChannelNamesListToolStripMenuItem_Click);
             // 
             // printChannelConfigurationToolStripMenuItem
@@ -596,6 +598,7 @@ namespace VixenEditor{
             this.printChannelConfigurationToolStripMenuItem.Name = "printChannelConfigurationToolStripMenuItem";
             this.printChannelConfigurationToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
             this.printChannelConfigurationToolStripMenuItem.Text = "Print channel configuration";
+            this.printChannelConfigurationToolStripMenuItem.Visible = false;
             // 
             // sortByChannelNumberToolStripMenuItem
             // 
@@ -617,6 +620,7 @@ namespace VixenEditor{
             this.toolStripMenuItem13.MergeIndex = 9;
             this.toolStripMenuItem13.Name = "toolStripMenuItem13";
             this.toolStripMenuItem13.Size = new System.Drawing.Size(216, 6);
+            this.toolStripMenuItem13.Visible = false;
             // 
             // audioToolStripMenuItem1
             // 
@@ -852,18 +856,21 @@ namespace VixenEditor{
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
             this.toolStripMenuItem4.Size = new System.Drawing.Size(198, 6);
+            this.toolStripMenuItem4.Visible = false;
             // 
             // copyChannelToolStripMenuItem
             // 
             this.copyChannelToolStripMenuItem.Name = "copyChannelToolStripMenuItem";
             this.copyChannelToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.copyChannelToolStripMenuItem.Text = "Copy channel";
+            this.copyChannelToolStripMenuItem.Visible = false;
             this.copyChannelToolStripMenuItem.Click += new System.EventHandler(this.copyChannelToolStripMenuItem_Click);
             // 
             // toolStripMenuItem22
             // 
             this.toolStripMenuItem22.Name = "toolStripMenuItem22";
             this.toolStripMenuItem22.Size = new System.Drawing.Size(198, 6);
+            this.toolStripMenuItem22.Visible = false;
             // 
             // audioSpeedToolStripMenuItem
             // 
@@ -877,6 +884,7 @@ namespace VixenEditor{
             this.audioSpeedToolStripMenuItem.Name = "audioSpeedToolStripMenuItem";
             this.audioSpeedToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.audioSpeedToolStripMenuItem.Text = "Audio speed";
+            this.audioSpeedToolStripMenuItem.Visible = false;
             // 
             // xToolStripMenuItem
             // 
@@ -2012,7 +2020,7 @@ namespace VixenEditor{
             this.toolStripLabelIntensity});
             this.toolStripExecutionControl.Location = new System.Drawing.Point(3, 55);
             this.toolStripExecutionControl.Name = "toolStripExecutionControl";
-            this.toolStripExecutionControl.Size = new System.Drawing.Size(852, 55);
+            this.toolStripExecutionControl.Size = new System.Drawing.Size(712, 55);
             this.toolStripExecutionControl.TabIndex = 2;
             this.toolStripExecutionControl.Text = "Execution control";
             // 

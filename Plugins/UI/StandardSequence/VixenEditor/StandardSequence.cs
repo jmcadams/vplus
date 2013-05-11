@@ -2520,6 +2520,8 @@ namespace VixenEditor {
                     ((ToolStripMenuItem) item).Checked = true;
                 }
             }
+            UpdateToolbarMenu();
+            toolStripContainer1.Refresh();
         }
 
 
@@ -2581,7 +2583,7 @@ namespace VixenEditor {
 
         private void saveToolbarPositionsToolStripMenuItem_Click(object sender, EventArgs e) {
             ToolStripManager.SaveSettings(this, _preferences.XmlDoc.DocumentElement);
-            _preferences.Flush();
+            _preferences.SaveSettings();
             MessageBox.Show(Resources.ToolbarSettingsSaved, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
@@ -2992,7 +2994,7 @@ namespace VixenEditor {
                 if (_preferences.GetBoolean("SaveZoomLevels")) {
                     _preferences.SetChildString("SaveZoomLevels", "row", toolStripComboBoxRowZoom.SelectedItem.ToString());
                     _preferences.SetChildString("SaveZoomLevels", "column", toolStripComboBoxColumnZoom.SelectedItem.ToString());
-                    _preferences.Flush();
+                    _preferences.SaveSettings();
                 }
                 _sequence.UpdateMetrics(Width, Height, splitContainer1.SplitterDistance);
                 _executionInterface.ReleaseContext(_executionContextHandle);
@@ -3387,9 +3389,9 @@ namespace VixenEditor {
 
 
         private void StandardSequence_Load(object sender, EventArgs e) {
-            ToolStripManager.SaveSettings(this, _preferences.XmlDoc.DocumentElement, "reset");
-            _preferences.Flush();
             ToolStripManager.LoadSettings(this, _preferences.XmlDoc.DocumentElement);
+            ToolStripManager.SaveSettings(this, _preferences.XmlDoc.DocumentElement, "reset");
+            _preferences.SaveSettings();
             var panelArray = new[] {
                 toolStripContainer1.TopToolStripPanel, toolStripContainer1.BottomToolStripPanel, toolStripContainer1.LeftToolStripPanel,
                 toolStripContainer1.RightToolStripPanel
