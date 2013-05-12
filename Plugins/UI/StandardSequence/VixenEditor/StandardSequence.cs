@@ -4646,9 +4646,7 @@ namespace VixenEditor {
             }
 
             using (var dialog = new ProfileManagerDialog(_sequence.Profile)) {
-                if ((dialog.ShowDialog() == DialogResult.OK) &&
-                    (MessageBox.Show(Resources.AttachToNewProfile, Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
-                     DialogResult.Yes)) {
+                if ((dialog.ShowDialog() == DialogResult.OK)) {
                          SetProfile(_sequence.Profile);
                 }
             }
