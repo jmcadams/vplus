@@ -24,7 +24,7 @@ namespace VixenPlus.Dialogs
         public ProfileManagerDialog(object objectInContext)
         {
             InitializeComponent();
-            foreach (string str in Directory.GetFiles(Paths.ProfilePath, "*.pro"))
+            foreach (var str in Directory.GetFiles(Paths.ProfilePath, "*.pro"))
             {
                 try
                 {
