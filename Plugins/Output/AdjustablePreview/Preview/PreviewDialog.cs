@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -6,19 +7,20 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 
+using CommonUtils;
+
 using VixenPlus;
 
 namespace Preview {
     public partial class PreviewDialog : OutputPlugInUIBase {
-        private readonly uint[,] _backBuffer;
-        private readonly int _cellSize;
+        private uint[,] _backBuffer;
+        private int _cellSize;
         private readonly SolidBrush _channelBrush = new SolidBrush(Color.Black);
         private readonly Color[] _channelColors;
         private readonly Dictionary<int, List<uint>> _channelDictionary;
         private byte[] _channelValues = new byte[0];
-        private readonly Image _originalBackground;
+        private Image _originalBackground;
         private readonly int _startChannel;
-
 
 
         public PreviewDialog(XmlNode setupNode, IList<Channel> channels, int startChannel) {
@@ -26,84 +28,13 @@ namespace Preview {
             try {
                 _startChannel = startChannel;
                 _channelDictionary = new Dictionary<int, List<uint>>();
-                var flag = bool.Parse(VixenPlus.Xml.GetNodeAlways(setupNode, "RedirectOutputs", "False").InnerText);
                 _channelColors = new Color[channels.Count - startChannel];
-                for (var i = startChannel; i < channels.Count; i++) {
-                    var outputChannel = flag ? i : channels[i].OutputChannel;
-                    if (outputChannel >= startChannel) {
-                        _channelColors[outputChannel - startChannel] = channels[i].Color;
-                    }
-                }
-                var xmlNodeList = setupNode.SelectNodes("Channels/Channel");
-                if (xmlNodeList != null) {
-                    foreach (XmlNode node in xmlNodeList) {
-                        if (node.Attributes == null) {
-                            continue;
-                        }
+                var isOutputRedirected = bool.Parse(VixenPlus.Xml.GetNodeAlways(setupNode, "RedirectOutputs", "False").InnerText);
 
-                        var num3 = Convert.ToInt32(node.Attributes["number"].Value);
-                        if (num3 < _startChannel) {
-                            continue;
-                        }
-
-                        int num5;
-                        var list = new List<uint>();
-                        var buffer = Convert.FromBase64String(node.InnerText);
-                        for (var j = 0; j < buffer.Length; j += 4) {
-                            list.Add(BitConverter.ToUInt32(buffer, j));
-                        }
-                        if ((num5 = num3 - _startChannel) >= channels.Count) {
-                            continue;
-                        }
-                        if (flag) {
-                            _channelDictionary[num5] = list;
-                        }
-                        else {
-                            _channelDictionary[channels[num5].OutputChannel] = list;
-                        }
-                    }
-                }
-                var selectSingleNode = setupNode.SelectSingleNode("BackgroundImage");
-                if (selectSingleNode != null) {
-                    var buffer2 = Convert.FromBase64String(selectSingleNode.InnerText);
-                    if (buffer2.Length > 0) {
-                        using (var stream = new MemoryStream(buffer2)) {
-                            _originalBackground = new Bitmap(stream);
-                        }
-                    }
-                }
-                var node2 = setupNode.SelectSingleNode("Display");
-                if (node2 == null) {
-                    return;
-                }
-
-                var singleNode = node2.SelectSingleNode("PixelSize");
-                if (singleNode != null) {
-                    _cellSize = Convert.ToInt32(singleNode.InnerText);
-                }
-                if (_originalBackground == null) {
-                    var xmlNode = node2.SelectSingleNode("Width");
-                    if (xmlNode != null) {
-                        var node = node2.SelectSingleNode("Height");
-                        if (node != null) {
-                            SetPictureBoxSize(Convert.ToInt32(xmlNode.InnerText) * (_cellSize + 1), Convert.ToInt32(node.InnerText) * (_cellSize + 1));
-                        }
-                    }
-                }
-                else {
-                    SetPictureBoxSize(_originalBackground.Width, _originalBackground.Height);
-                }
-                var selectSingleNode1 = node2.SelectSingleNode("Brightness");
-                if (selectSingleNode1 != null) {
-                    SetBrightness((int.Parse(selectSingleNode1.InnerText) - 10) / 10f);
-                }
-                var singleNode1 = node2.SelectSingleNode("Height");
-                if (singleNode1 != null) {
-                    var xmlNode = node2.SelectSingleNode("Width");
-                    if (xmlNode != null) {
-                        _backBuffer = new uint[Convert.ToInt32(singleNode1.InnerText),Convert.ToInt32(xmlNode.InnerText)];
-                    }
-                }
+                SetChannelColors(channels, startChannel, isOutputRedirected);
+                SetChannelBitmaps(channels, isOutputRedirected, setupNode.SelectNodes("Channels/Channel"));
+                SetBackgroundImage(setupNode.SelectSingleNode("BackgroundImage"));
+                SetDisplayInfo(setupNode.SelectSingleNode("Display"));
             }
             catch (NullReferenceException exception) {
                 throw new Exception(exception.Message + "\n\nHave you run the setup?");
@@ -111,33 +42,114 @@ namespace Preview {
         }
 
 
+        private void SetDisplayInfo(XmlNode displayInfo) {
+            if (displayInfo == null) {
+                return;
+            }
+
+            var singleNode = displayInfo.SelectSingleNode("PixelSize");
+            if (singleNode != null) {
+                _cellSize = Convert.ToInt32(singleNode.InnerText);
+            }
+
+            if (_originalBackground == null) {
+                var obgWidth = displayInfo.SelectSingleNode("Width");
+                var obgHeight = displayInfo.SelectSingleNode("Height");
+
+                if (obgWidth != null && obgHeight != null) {
+                    SetPictureBoxSize(Convert.ToInt32(obgWidth.InnerText) * (_cellSize + 1), Convert.ToInt32(obgHeight.InnerText) * (_cellSize + 1));
+                }
+            }
+            else {
+                SetPictureBoxSize(_originalBackground.Width, _originalBackground.Height);
+            }
+
+            var bgBrightness = displayInfo.SelectSingleNode("Brightness");
+            if (bgBrightness != null) {
+                SetBrightness((int.Parse(bgBrightness.InnerText) - 10) / 10f);
+            }
+
+            var bgWidth = displayInfo.SelectSingleNode("Width");
+            var bgHeight = displayInfo.SelectSingleNode("Height");
+            if (bgWidth != null && bgHeight != null) {
+                _backBuffer = new uint[Convert.ToInt32(bgHeight.InnerText),Convert.ToInt32(bgWidth.InnerText)];
+            }
+        }
 
 
+        private void SetChannelColors(IList<Channel> channels, int startChannel, bool isOutputRedirected) {
+            for (var i = startChannel; i < channels.Count; i++) {
+                var outputChannel = isOutputRedirected ? i : channels[i].OutputChannel;
+                if (outputChannel >= startChannel) {
+                    _channelColors[outputChannel - startChannel] = channels[i].Color;
+                }
+            }
+        }
 
 
+        private void SetBackgroundImage(XmlNode xmlBackgroundImage) {
+            if (xmlBackgroundImage == null) {
+                return;
+            }
+
+            var bitmapData = Convert.FromBase64String(xmlBackgroundImage.InnerText);
+            if (bitmapData.Length <= 0) {
+                return;
+            }
+
+            using (var stream = new MemoryStream(bitmapData)) {
+                _originalBackground = new Bitmap(stream);
+            }
+        }
+
+
+        private void SetChannelBitmaps(IList<Channel> channels, bool isOutputRedirected, IEnumerable xmlChannels) {
+            if (xmlChannels == null) {
+                return;
+            }
+
+            foreach (XmlNode aChannel in xmlChannels) {
+                if (aChannel.Attributes == null) {
+                    continue;
+                }
+
+                var channelNumber = Convert.ToInt32(aChannel.Attributes["number"].Value);
+                if (channelNumber < _startChannel) {
+                    continue;
+                }
+
+                var channelBitmapData = new List<uint>();
+                var bitmap = Convert.FromBase64String(aChannel.InnerText);
+                for (var i = 0; i < bitmap.Length; i += 4) {
+                    channelBitmapData.Add(BitConverter.ToUInt32(bitmap, i));
+                }
+
+                int channelIndex;
+                if ((channelIndex = channelNumber - _startChannel) >= channels.Count) {
+                    continue;
+                }
+
+                var mappedIndex = isOutputRedirected ? channelIndex : channels[channelIndex].OutputChannel;
+                _channelDictionary[mappedIndex] = channelBitmapData;
+            }
+        }
 
 
         private void pictureBoxShowGrid_Paint(object sender, PaintEventArgs e) {
-            e.Graphics.FillRectangle(Brushes.Transparent, _pictureBoxShowGrid.ClientRectangle);
-            var length = _backBuffer.GetLength(0);
-            var num2 = _backBuffer.GetLength(1);
-            var num5 = _cellSize + 1;
-            var y = 0;
-            var num8 = 0;
-            while (num8 < length) {
-                var x = 0;
-                var num7 = 0;
-                while (num7 < num2) {
-                    var num6 = _backBuffer[num8, num7];
-                    if ((num6 & 0xff000000) > 0) {
-                        _channelBrush.Color = Color.FromArgb((int) num6);
-                        e.Graphics.FillRectangle(_channelBrush, x, y, _cellSize, _cellSize);
+            e.Graphics.FillRectangle(Brushes.Transparent, pictureBoxShowGrid.ClientRectangle);
+            var height = _backBuffer.GetLength(Utils.IndexRowsOrHeight);
+            var width = _backBuffer.GetLength(Utils.IndexColsOrWidth);
+            var cellOffset = _cellSize + 1;
+
+            for (var row = 0; row < height; row++) {
+                for (var column = 0; column < width; column++) {
+                    var num6 = _backBuffer[row, column];
+                    if ((num6 & 0xff000000) <= 0) {
+                        continue;
                     }
-                    num7++;
-                    x += num5;
+                    _channelBrush.Color = Color.FromArgb((int) num6);
+                    e.Graphics.FillRectangle(_channelBrush, column * cellOffset, row * cellOffset, _cellSize, _cellSize);
                 }
-                num8++;
-                y += num5;
             }
         }
 
@@ -147,43 +159,39 @@ namespace Preview {
         }
 
 
-        private void Recalc() {
-            var index = 0;
+        private void RecalcColors() {
             Array.Clear(_backBuffer, 0, _backBuffer.Length);
-            var length = _backBuffer.GetLength(1);
-            var num15 = _backBuffer.GetLength(0);
-            foreach (var num16 in _channelValues) {
-                var color = _channelColors[index];
-                if (_channelDictionary.ContainsKey(index) && (num16 > 0)) {
-                    foreach (var num17 in _channelDictionary[index]) {
-                        var num6 = (int) (num17 >> 0x10);
-                        var num7 = ((int) num17) & 0xffff;
-                        if ((num6 < length) && (num7 < num15)) {
-                            byte r;
-                            byte g;
-                            byte b;
-                            byte num8;
-                            var num2 = _backBuffer[num7, num6];
-                            if (num2 == 0) {
-                                num8 = num16;
-                                r = color.R;
-                                g = color.G;
-                                b = color.B;
-                            }
-                            else {
-                                num8 = Math.Max(num16, (byte) (num2 >> 24));
-                                var num12 = (num2 >> 24) / ((float) num8);
-                                var num13 = num16 / ((float) num8);
-                                var num9 = (byte) ((num2 >> 0x10) & 0xff);
-                                var num10 = (byte) ((num2 >> 8) & 0xff);
-                                var num11 = (byte) (num2 & 0xff);
-                                r = (byte) (((int) ((num9 * num12) + (color.R * num13))) >> 1);
-                                g = (byte) (((int) ((num10 * num12) + (color.G * num13))) >> 1);
-                                b = (byte) (((int) ((num11 * num12) + (color.B * num13))) >> 1);
-                            }
-                            num2 = (uint) ((((num8 << 24) | (r << 0x10)) | (g << 8)) | b);
-                            _backBuffer[num7, num6] = num2;
+            var height = _backBuffer.GetLength(Utils.IndexRowsOrHeight);
+            var width = _backBuffer.GetLength(Utils.IndexColsOrWidth);
+            var index = 0;
+            foreach (var alpha in _channelValues) {
+                var channelColor = _channelColors[index];
+                if (_channelDictionary.ContainsKey(index) && (alpha > 0)) {
+                    foreach (var point in _channelDictionary[index]) {
+                        var column = (int) (point >> 16);
+                        var row = ((int) point) & 0xffff;
+                        if ((column >= width) || (row >= height)) {
+                            continue;
                         }
+
+                        var a = alpha;
+                        var r = channelColor.R;
+                        var g = channelColor.G;
+                        var b = channelColor.B;
+                        var pointEventValue = _backBuffer[row, column];
+                        if (pointEventValue != 0) {
+                            var eventColor = Color.FromArgb((int)pointEventValue);
+
+                            a = Math.Max(alpha, eventColor.A);
+                            var channelAlpha = alpha / ((float)a);
+                            var existingAlpha = eventColor.A / ((float)a);
+
+                            r = (byte)(((int)((eventColor.R * existingAlpha) + (channelColor.R * channelAlpha))) >> 1);
+                            g = (byte)(((int)((eventColor.G * existingAlpha) + (channelColor.G * channelAlpha))) >> 1);
+                            b = (byte)(((int)((eventColor.B * existingAlpha) + (channelColor.B * channelAlpha))) >> 1);
+                        }
+                        pointEventValue = (uint) ((((a << 24) | (r << 16)) | (g << 8)) | b);
+                        _backBuffer[row, column] = pointEventValue;
                     }
                 }
                 index++;
@@ -191,56 +199,39 @@ namespace Preview {
         }
 
 
-        private void SetBrightness(float value) {
+        private void SetBrightness(float opacity) {
             if (_originalBackground == null) {
                 return;
             }
 
             Image image = new Bitmap(_originalBackground);
-            var newColorMatrix = new float[5][];
-            var numArray2 = new float[5];
-            numArray2[0] = 1f;
-            newColorMatrix[0] = numArray2;
-            numArray2 = new float[5];
-            numArray2[1] = 1f;
-            newColorMatrix[1] = numArray2;
-            numArray2 = new float[5];
-            numArray2[2] = 1f;
-            newColorMatrix[2] = numArray2;
-            numArray2 = new float[5];
-            numArray2[3] = 1f;
-            newColorMatrix[3] = numArray2;
-            numArray2 = new float[5];
-            numArray2[0] = value;
-            numArray2[1] = value;
-            numArray2[2] = value;
-            numArray2[4] = 1f;
-            newColorMatrix[4] = numArray2;
-            var matrix = new ColorMatrix(newColorMatrix);
-            var graphics = Graphics.FromImage(image);
-            var imageAttr = new ImageAttributes();
-            imageAttr.SetColorMatrix(matrix);
-            graphics.DrawImage(image, new Rectangle(0, 0, image.Width, image.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, imageAttr);
-            graphics.Dispose();
-            imageAttr.Dispose();
-            _pictureBoxShowGrid.BackgroundImage = image;
+
+            using (var g = Graphics.FromImage(image)) {
+                using (var attributes = new ImageAttributes()) {
+                    var matrix = new ColorMatrix {Matrix40 = opacity, Matrix41 = opacity, Matrix42 = opacity};
+                    attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+                    attributes.SetColorMatrix(matrix);
+                    g.DrawImage(image, new Rectangle(0, 0, image.Width, image.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, attributes);
+                }
+            }
+            pictureBoxShowGrid.BackgroundImage = image;
         }
 
 
         private void SetPictureBoxSize(int width, int height) {
-            var num = width - _pictureBoxShowGrid.Width;
-            var num2 = height - _pictureBoxShowGrid.Height;
-            Width += num;
-            Height += num2;
-            _pictureBoxShowGrid.Width += num;
-            _pictureBoxShowGrid.Height += num2;
+            var computedWidth = width - pictureBoxShowGrid.Width;
+            var computedHeight = height - pictureBoxShowGrid.Height;
+            Width += computedWidth;
+            Height += computedHeight;
+            pictureBoxShowGrid.Width += computedWidth;
+            pictureBoxShowGrid.Height += computedHeight;
         }
 
 
         public void UpdateWith(byte[] channelValues) {
             _channelValues = channelValues;
-            Recalc();
-            _pictureBoxShowGrid.Refresh();
+            RecalcColors();
+            pictureBoxShowGrid.Refresh();
         }
 
 

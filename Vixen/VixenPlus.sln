@@ -234,7 +234,7 @@ Global
 		{718CA82A-D7C4-440C-953F-DD3CC2ADC99D} = {CC4DA2F3-FB84-42A0-B620-315B4A18B97A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_BuildVersioningStyle = None.None.Increment.None
 		BuildVersion_UpdateAssemblyVersion = False
+		BuildVersion_BuildVersioningStyle = None.None.Increment.None
 	EndGlobalSection
 EndGlobal

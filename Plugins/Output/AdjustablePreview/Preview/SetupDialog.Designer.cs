@@ -89,7 +89,7 @@ namespace Preview {
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(406, 32);
+            this.buttonOK.Location = new System.Drawing.Point(468, 32);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 4;
@@ -101,7 +101,7 @@ namespace Preview {
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(487, 32);
+            this.buttonCancel.Location = new System.Drawing.Point(549, 32);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 5;
@@ -132,7 +132,7 @@ namespace Preview {
             this.toolStripButtonResetSize});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(576, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(638, 25);
             this.toolStrip1.TabIndex = 8;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -232,7 +232,7 @@ namespace Preview {
             this.toolStripButtonReorder});
             this.toolStrip2.Location = new System.Drawing.Point(0, 25);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(576, 25);
+            this.toolStrip2.Size = new System.Drawing.Size(638, 25);
             this.toolStrip2.TabIndex = 12;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -312,9 +312,8 @@ namespace Preview {
             this.toolStripButtonReorder.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButtonReorder.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonReorder.Name = "toolStripButtonReorder";
-            this.toolStripButtonReorder.Size = new System.Drawing.Size(65, 19);
+            this.toolStripButtonReorder.Size = new System.Drawing.Size(65, 22);
             this.toolStripButtonReorder.Text = "Copy cells";
-            this.toolStripButtonReorder.Visible = false;
             this.toolStripButtonReorder.Click += new System.EventHandler(this.toolStripButtonReorder_Click);
             // 
             // pictureBoxSetupGrid
@@ -343,7 +342,7 @@ namespace Preview {
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 338);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(576, 69);
+            this.panel1.Size = new System.Drawing.Size(638, 69);
             this.panel1.TabIndex = 14;
             // 
             // checkBoxRedirectOutputs
@@ -385,14 +384,14 @@ namespace Preview {
             this.panelPictureBoxContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelPictureBoxContainer.Location = new System.Drawing.Point(0, 50);
             this.panelPictureBoxContainer.Name = "panelPictureBoxContainer";
-            this.panelPictureBoxContainer.Size = new System.Drawing.Size(576, 288);
+            this.panelPictureBoxContainer.Size = new System.Drawing.Size(638, 288);
             this.panelPictureBoxContainer.TabIndex = 15;
             // 
             // SetupDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(576, 407);
+            this.ClientSize = new System.Drawing.Size(638, 407);
             this.Controls.Add(this.panelPictureBoxContainer);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip2);
@@ -428,8 +427,8 @@ namespace Preview {
 			if (disposing && (this.components != null)) {
 				this.components.Dispose();
 			}
-			if (this.m_originalBackground != null) {
-				this.m_originalBackground.Dispose();
+			if (this._originalBackground != null) {
+				this._originalBackground.Dispose();
 			}
 			base.Dispose(disposing);
 		}

@@ -1,453 +1,514 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Globalization;
+using System.IO;
+using System.Text;
+using System.Windows.Forms;
+using System.Xml;
+using VixenPlus;
+
 namespace Preview {
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel;
-	using System.Drawing;
-	using System.Drawing.Imaging;
-	using System.IO;
-	using System.Text;
-	using System.Windows.Forms;
-	using System.Xml;
-	using VixenPlus;
+    public partial class SetupDialog : Form {
+        private string _backgroundImageFileName;
+        private int _cellSize;
+        private Dictionary<int, List<uint>> _channelDictionary;
+        private readonly List<Channel> _channels;
+        private bool _controlDown;
+        private bool _dirty;
+        private Image _originalBackground;
+        private bool _resizing;
+        private readonly SetupData _setupData;
+        private readonly XmlNode _setupNode;
+        private readonly int _startChannel;
 
-	public partial class SetupDialog : Form {
-		private string m_backgroundImageFileName;
-		private int m_cellSize;
-		private Dictionary<int, List<uint>> m_channelDictionary;
-		private List<Channel> m_channels;
-		private bool m_controlDown;
-		private bool m_dirty;
-		private Image m_originalBackground;
-		private bool m_resizing;
-		private SetupData m_setupData;
-		private XmlNode m_setupNode;
-		private int m_startChannel;
 
-		public SetupDialog(SetupData setupData, XmlNode setupNode, List<Channel> channels, int startChannel) {
-			int num;
-			this.m_setupNode = null;
-			this.m_setupData = null;
-			this.m_backgroundImageFileName = string.Empty;
-			this.m_dirty = false;
-			this.m_channelDictionary = new Dictionary<int, List<uint>>();
-			this.m_channels = null;
-			this.m_controlDown = false;
-			this.m_originalBackground = null;
-			this.m_resizing = false;
-			this.components = null;
-			this.InitializeComponent();
-			this.m_setupData = setupData;
-			this.m_setupNode = setupNode;
-			this.m_startChannel = startChannel;
-			this.toolStripComboBoxPixelSize.SelectedIndex = 7;
-			this.toolStripComboBoxChannels.BeginUpdate();
-			for (num = this.m_startChannel; num < channels.Count; num++) {
-				this.toolStripComboBoxChannels.Items.Add(string.Format("{0}: {1}", num + 1, channels[num].Name));
-			}
-			this.toolStripComboBoxChannels.EndUpdate();
-			this.m_channels = new List<Channel>();
-			for (num = this.m_startChannel; num < channels.Count; num++) {
-				this.m_channels.Add(channels[num]);
-			}
-			this.UpdateFromSetupNode();
-		}
+        public SetupDialog(SetupData setupData, XmlNode setupNode, List<Channel> channels, int startChannel) {
+            int num;
+            _setupNode = null;
+            _setupData = null;
+            _backgroundImageFileName = string.Empty;
+            _dirty = false;
+            _channelDictionary = new Dictionary<int, List<uint>>();
+            _channels = null;
+            _controlDown = false;
+            _originalBackground = null;
+            _resizing = false;
+            components = null;
+            InitializeComponent();
+            _setupData = setupData;
+            _setupNode = setupNode;
+            _startChannel = startChannel;
+            toolStripComboBoxPixelSize.SelectedIndex = 7;
+            toolStripComboBoxChannels.BeginUpdate();
+            for (num = _startChannel; num < channels.Count; num++) {
+                toolStripComboBoxChannels.Items.Add(string.Format("{0}: {1}", num + 1, channels[num].Name));
+            }
+            toolStripComboBoxChannels.EndUpdate();
+            _channels = new List<Channel>();
+            for (num = _startChannel; num < channels.Count; num++) {
+                _channels.Add(channels[num]);
+            }
+            UpdateFromSetupNode();
+        }
 
-		private void allChannelsToolStripMenuItem_Click(object sender, EventArgs e) {
-			this.m_channelDictionary.Clear();
-			this.pictureBoxSetupGrid.Refresh();
-			this.m_dirty = true;
-		}
 
-		private void buttonOK_Click(object sender, EventArgs e) {
-			this.UpdateSetup();
-			this.m_dirty = false;
-		}
+        private void allChannelsToolStripMenuItem_Click(object sender, EventArgs e) {
+            _channelDictionary.Clear();
+            pictureBoxSetupGrid.Refresh();
+            _dirty = true;
+        }
 
-		//ComponentResourceManager manager = new ComponentResourceManager(typeof(SetupDialog));
-		//this.toolStripDropDownButtonUpdate.Image = (Image)manager.GetObject("toolStripDropDownButtonUpdate.Image");
-		//this.toolStripButtonResetSize.Image = (Image)manager.GetObject("toolStripButtonResetSize.Image");
-		//this.toolStripDropDownButtonClear.Image = (Image)manager.GetObject("toolStripDropDownButtonClear.Image");
-		//this.toolStripButtonLoadImage.Image = (Image)manager.GetObject("toolStripButtonLoadImage.Image");
-		//this.toolStripButtonClearImage.Image = (Image)manager.GetObject("toolStripButtonClearImage.Image");
-		//this.toolStripButtonSaveImage.Image = (Image)manager.GetObject("toolStripButtonSaveImage.Image");
-		//this.toolStripButtonReorder.Image = (Image)manager.GetObject("toolStripButtonReorder.Image");
 
-		private void pictureBoxSetupGrid_MouseEvent(object sender, MouseEventArgs e) {
-			if ((e.X >= 0) && (e.Y >= 0)) {
-				int x = e.X / (this.m_cellSize + 1);
-				int y = e.Y / (this.m_cellSize + 1);
-				if ((x < this.pictureBoxSetupGrid.Width) && (y < this.pictureBoxSetupGrid.Height)) {
-					if (e.Button == MouseButtons.Left) {
-						this.SetPixelChannelReference(this.toolStripComboBoxChannels.SelectedIndex, x, y);
-					}
-					else if (e.Button == MouseButtons.Right) {
-						if (!this.m_controlDown) {
-							this.ResetPixelChannelReference(this.toolStripComboBoxChannels.SelectedIndex, x, y);
-						}
-						else {
-							this.ResetPixelChannelReference(-1, x, y);
-						}
-					}
-					else {
-						uint item = (uint)((x << 0x10) | y);
-						StringBuilder builder = new StringBuilder();
-						foreach (int num4 in this.m_channelDictionary.Keys) {
-							if ((num4 < this.m_channels.Count) && this.m_channelDictionary[num4].Contains(item)) {
-								builder.AppendFormat("{0}, ", this.toolStripComboBoxChannels.Items[num4]);
-							}
-						}
-						if (builder.Length > 0) {
-							string str = builder.ToString();
-							this.labelChannel.Text = str.Substring(0, str.Length - 2);
-						}
-						else {
-							this.labelChannel.Text = string.Empty;
-						}
-					}
-				}
-			}
-		}
+        private void buttonOK_Click(object sender, EventArgs e) {
+            UpdateSetup();
+            _dirty = false;
+        }
 
-		private void pictureBoxSetupGrid_Paint(object sender, PaintEventArgs e) {
-			int num;
-			int num2;
-			bool flag = this.m_originalBackground != null;
-			SolidBrush brush = new SolidBrush(Color.Black);
-			int selectedIndex = this.toolStripComboBoxChannels.SelectedIndex;
-			if (flag) {
-				e.Graphics.FillRectangle(Brushes.Transparent, e.ClipRectangle.Left, e.ClipRectangle.Top, e.ClipRectangle.Width, e.ClipRectangle.Height);
-			}
-			else {
-				e.Graphics.FillRectangle(Brushes.Black, e.ClipRectangle.Left, e.ClipRectangle.Top, e.ClipRectangle.Width, e.ClipRectangle.Height);
-			}
-			foreach (int num4 in this.m_channelDictionary.Keys) {
-				if ((num4 != selectedIndex) && (num4 < this.m_channels.Count)) {
-					brush.Color = Color.FromArgb(0x80, this.m_channels[num4].Color);
-					foreach (uint num5 in this.m_channelDictionary[num4]) {
-						num = (int)((num5 >> 0x10) * (this.m_cellSize + 1));
-						num2 = (int)((num5 & 0xffff) * (this.m_cellSize + 1));
-						if (e.ClipRectangle.Contains(num, num2)) {
-							e.Graphics.FillRectangle(brush, num, num2, this.m_cellSize, this.m_cellSize);
-						}
-					}
-				}
-			}
-			if (this.m_channelDictionary.ContainsKey(selectedIndex)) {
-				Channel channel = this.m_channels[selectedIndex];
-				foreach (uint num5 in this.m_channelDictionary[selectedIndex]) {
-					num = (int)((num5 >> 0x10) * (this.m_cellSize + 1));
-					num2 = (int)((num5 & 0xffff) * (this.m_cellSize + 1));
-					if (e.ClipRectangle.Contains(num, num2)) {
-						e.Graphics.FillRectangle(channel.Brush, num, num2, this.m_cellSize, this.m_cellSize);
-					}
-				}
-			}
-			brush.Dispose();
-		}
 
-		private void ResetPixelChannelReference(int channelIndex, int x, int y) {
-			if (channelIndex == -1) {
-				uint item = (uint)((x << 0x10) | y);
-				foreach (List<uint> list in this.m_channelDictionary.Values) {
-					list.Remove(item);
-				}
-				this.pictureBoxSetupGrid.Invalidate(new Rectangle(x * (this.m_cellSize + 1), y * (this.m_cellSize + 1), this.m_cellSize, this.m_cellSize));
-			}
-			else {
-				List<uint> list2;
-				if (this.m_channelDictionary.TryGetValue(channelIndex, out list2)) {
-					list2.Remove((uint)((x << 0x10) | y));
-					this.pictureBoxSetupGrid.Invalidate(new Rectangle(x * (this.m_cellSize + 1), y * (this.m_cellSize + 1), this.m_cellSize, this.m_cellSize));
-				}
-			}
-			this.m_dirty = true;
-		}
+        //ComponentResourceManager manager = new ComponentResourceManager(typeof(SetupDialog));
+        //toolStripDropDownButtonUpdate.Image = (Image)manager.GetObject("toolStripDropDownButtonUpdate.Image");
+        //toolStripButtonResetSize.Image = (Image)manager.GetObject("toolStripButtonResetSize.Image");
+        //toolStripDropDownButtonClear.Image = (Image)manager.GetObject("toolStripDropDownButtonClear.Image");
+        //toolStripButtonLoadImage.Image = (Image)manager.GetObject("toolStripButtonLoadImage.Image");
+        //toolStripButtonClearImage.Image = (Image)manager.GetObject("toolStripButtonClearImage.Image");
+        //toolStripButtonSaveImage.Image = (Image)manager.GetObject("toolStripButtonSaveImage.Image");
+        //toolStripButtonReorder.Image = (Image)manager.GetObject("toolStripButtonReorder.Image");
 
-		private void selectedChannelToolStripMenuItem_Click(object sender, EventArgs e) {
-			if (this.toolStripComboBoxChannels.SelectedIndex != -1) {
-				this.m_channelDictionary.Remove(this.toolStripComboBoxChannels.SelectedIndex);
-				this.pictureBoxSetupGrid.Refresh();
-				this.m_dirty = true;
-			}
-		}
+        private void pictureBoxSetupGrid_MouseEvent(object sender, MouseEventArgs e) {
+            if ((e.X < 0) || (e.Y < 0)) {
+                return;
+            }
 
-		private void SetBackground(Bitmap bitmap) {
-			if (this.m_originalBackground != null) {
-				this.m_originalBackground.Dispose();
-			}
-			this.m_originalBackground = bitmap;
-			this.labelBrightness.Visible = this.trackBarBrightness.Visible = this.toolStripButtonSaveImage.Enabled = bitmap != null;
-			this.toolStripTextBoxResolutionX.Enabled = this.toolStripTextBoxResolutionY.Enabled = bitmap == null;
-			if (bitmap != null) {
-				this.trackBarBrightness.Value = 10;
-			}
-		}
+            var x = e.X / (_cellSize + 1);
+            var y = e.Y / (_cellSize + 1);
+            if ((x >= pictureBoxSetupGrid.Width) || (y >= pictureBoxSetupGrid.Height)) {
+                return;
+            }
 
-		private void SetBrightness(float value) {
-			if (this.m_originalBackground != null) {
-				Image image = new Bitmap(this.m_originalBackground);
-				float[][] newColorMatrix = new float[5][];
-				float[] numArray2 = new float[5];
-				numArray2[0] = 1f;
-				newColorMatrix[0] = numArray2;
-				numArray2 = new float[5];
-				numArray2[1] = 1f;
-				newColorMatrix[1] = numArray2;
-				numArray2 = new float[5];
-				numArray2[2] = 1f;
-				newColorMatrix[2] = numArray2;
-				numArray2 = new float[5];
-				numArray2[3] = 1f;
-				newColorMatrix[3] = numArray2;
-				numArray2 = new float[5];
-				numArray2[0] = value;
-				numArray2[1] = value;
-				numArray2[2] = value;
-				numArray2[4] = 1f;
-				newColorMatrix[4] = numArray2;
-				ColorMatrix matrix = new ColorMatrix(newColorMatrix);
-				Graphics graphics = Graphics.FromImage(image);
-				ImageAttributes imageAttr = new ImageAttributes();
-				imageAttr.SetColorMatrix(matrix);
-				graphics.DrawImage(image, new Rectangle(0, 0, image.Width, image.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, imageAttr);
-				graphics.Dispose();
-				imageAttr.Dispose();
-				this.pictureBoxSetupGrid.BackgroundImage = image;
-			}
-		}
+            switch (e.Button) {
+                case MouseButtons.Left:
+                    SetPixelChannelReference(toolStripComboBoxChannels.SelectedIndex, x, y);
+                    break;
+                case MouseButtons.Right:
+                    if (!_controlDown) {
+                        ResetPixelChannelReference(toolStripComboBoxChannels.SelectedIndex, x, y);
+                    }
+                    else {
+                        ResetPixelChannelReference(-1, x, y);
+                    }
+                    break;
+                default:
+                    var item = (uint) ((x << 0x10) | y);
+                    var builder = new StringBuilder();
+                    foreach (var num4 in _channelDictionary.Keys) {
+                        if ((num4 < _channels.Count) && _channelDictionary[num4].Contains(item)) {
+                            builder.AppendFormat("{0}, ", toolStripComboBoxChannels.Items[num4]);
+                        }
+                    }
+                    if (builder.Length > 0) {
+                        var str = builder.ToString();
+                        labelChannel.Text = str.Substring(0, str.Length - 2);
+                    }
+                    else {
+                        labelChannel.Text = string.Empty;
+                    }
+                    break;
+            }
+        }
 
-		private void SetPictureBoxSize(int width, int height) {
-			this.pictureBoxSetupGrid.Width = width;
-			this.pictureBoxSetupGrid.Height = height;
-			this.UpdatePosition();
-			this.pictureBoxSetupGrid.Refresh();
-		}
 
-		private void SetPixelChannelReference(int channelIndex, int x, int y) {
-			if (channelIndex != -1) {
-				List<uint> list;
-				if (!this.m_channelDictionary.TryGetValue(channelIndex, out list)) {
-					list = new List<uint>();
-					this.m_channelDictionary[channelIndex] = list;
-				}
-				uint item = (uint)((x << 0x10) | y);
-				if (!list.Contains(item)) {
-					list.Add(item);
-				}
-				this.pictureBoxSetupGrid.Invalidate(new Rectangle(x * (this.m_cellSize + 1), y * (this.m_cellSize + 1), this.m_cellSize, this.m_cellSize));
-				this.m_dirty = true;
-			}
-		}
+        private void pictureBoxSetupGrid_Paint(object sender, PaintEventArgs e) {
+            var hasOriginalBackground = _originalBackground != null;
+            using (var brush = new SolidBrush(Color.Black)) {
+                var selectedIndex = toolStripComboBoxChannels.SelectedIndex;
+                e.Graphics.FillRectangle(hasOriginalBackground ? Brushes.Transparent : Brushes.Black, e.ClipRectangle.Left, e.ClipRectangle.Top,
+                                         e.ClipRectangle.Width, e.ClipRectangle.Height);
+                int num;
+                int num2;
+                foreach (var num4 in _channelDictionary.Keys) {
+                    if ((num4 == selectedIndex) || (num4 >= _channels.Count)) {
+                        continue;
+                    }
 
-		private void SetupDialog_FormClosing(object sender, FormClosingEventArgs e) {
-			if (this.m_dirty) {
-				switch (MessageBox.Show("Keep changes?", "Vixen preview", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)) {
-					case DialogResult.Cancel:
-						e.Cancel = true;
-						break;
+                    brush.Color = Color.FromArgb(0x80, _channels[num4].Color);
+                    foreach (var num5 in _channelDictionary[num4]) {
+                        num = (int) ((num5 >> 0x10) * (_cellSize + 1));
+                        num2 = (int) ((num5 & 0xffff) * (_cellSize + 1));
+                        if (e.ClipRectangle.Contains(num, num2)) {
+                            e.Graphics.FillRectangle(brush, num, num2, _cellSize, _cellSize);
+                        }
+                    }
+                }
 
-					case DialogResult.Yes:
-						this.UpdateSetup();
-						break;
-				}
-			}
-		}
+                if (!_channelDictionary.ContainsKey(selectedIndex)) {
+                    return;
+                }
 
-		private void SetupDialog_KeyDown(object sender, KeyEventArgs e) {
-			this.m_controlDown = e.Control;
-		}
+                var channel = _channels[selectedIndex];
+                foreach (var num5 in _channelDictionary[selectedIndex]) {
+                    num = (int) ((num5 >> 0x10) * (_cellSize + 1));
+                    num2 = (int) ((num5 & 0xffff) * (_cellSize + 1));
+                    if (e.ClipRectangle.Contains(num, num2)) {
+                        e.Graphics.FillRectangle(channel.Brush, num, num2, _cellSize, _cellSize);
+                    }
+                }
+            }
+        }
 
-		private void SetupDialog_KeyUp(object sender, KeyEventArgs e) {
-			this.m_controlDown = e.Control;
-		}
 
-		private void SetupDialog_Resize(object sender, EventArgs e) {
-			if (!this.m_resizing) {
-				this.UpdatePosition();
-			}
-		}
+        private void ResetPixelChannelReference(int channelIndex, int x, int y) {
+            if (channelIndex == -1) {
+                var item = (uint) ((x << 0x10) | y);
+                foreach (var list in _channelDictionary.Values) {
+                    list.Remove(item);
+                }
+                pictureBoxSetupGrid.Invalidate(new Rectangle(x * (_cellSize + 1), y * (_cellSize + 1), _cellSize, _cellSize));
+            }
+            else {
+                List<uint> list2;
+                if (_channelDictionary.TryGetValue(channelIndex, out list2)) {
+                    list2.Remove((uint) ((x << 0x10) | y));
+                    pictureBoxSetupGrid.Invalidate(new Rectangle(x * (_cellSize + 1), y * (_cellSize + 1), _cellSize, _cellSize));
+                }
+            }
+            _dirty = true;
+        }
 
-		private void SetupDialog_ResizeBegin(object sender, EventArgs e) {
-			this.m_resizing = true;
-		}
 
-		private void SetupDialog_ResizeEnd(object sender, EventArgs e) {
-			this.m_resizing = false;
-			this.UpdatePosition();
-		}
+        private void selectedChannelToolStripMenuItem_Click(object sender, EventArgs e) {
+            if (toolStripComboBoxChannels.SelectedIndex == -1) {
+                return;
+            }
 
-		private void toolStripButtonClearImage_Click(object sender, EventArgs e) {
-			this.pictureBoxSetupGrid.BackgroundImage = null;
-			this.SetBackground(null);
-			this.m_backgroundImageFileName = string.Empty;
-			this.m_dirty = true;
-		}
+            _channelDictionary.Remove(toolStripComboBoxChannels.SelectedIndex);
+            pictureBoxSetupGrid.Refresh();
+            _dirty = true;
+        }
 
-		private void toolStripButtonLoadImage_Click(object sender, EventArgs e) {
-			if (this.openFileDialog.ShowDialog() == DialogResult.OK) {
-				FileStream stream = new FileStream(this.openFileDialog.FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
-				byte[] buffer = new byte[stream.Length];
-				stream.Read(buffer, 0, (int)stream.Length);
-				stream.Close();
-				stream.Dispose();
-				MemoryStream stream2 = new MemoryStream(buffer);
-				Bitmap bitmap = new Bitmap(stream2);
-				stream2.Close();
-				stream2.Dispose();
-				this.SetPictureBoxSize(bitmap.Width, bitmap.Height);
-				this.SetBackground(bitmap);
-				this.SetBrightness(0f);
-				this.m_backgroundImageFileName = this.openFileDialog.FileName;
-				this.m_dirty = true;
-			}
-		}
 
-		private void toolStripButtonReorder_Click(object sender, EventArgs e) {
-		}
+        private void SetBackground(Image bitmap) {
+            if (_originalBackground != null) {
+                _originalBackground.Dispose();
+            }
+            _originalBackground = bitmap;
+            labelBrightness.Visible = trackBarBrightness.Visible = toolStripButtonSaveImage.Enabled = bitmap != null;
+            toolStripTextBoxResolutionX.Enabled = toolStripTextBoxResolutionY.Enabled = bitmap == null;
+            if (bitmap != null) {
+                trackBarBrightness.Value = 10;
+            }
+        }
 
-		private void toolStripButtonResetSize_Click(object sender, EventArgs e) {
-			if (this.m_originalBackground != null) {
-				this.SetPictureBoxSize(this.m_originalBackground.Width, this.m_originalBackground.Height);
-				this.UpdateSizeUI();
-			}
-		}
 
-		private void toolStripButtonSaveImage_Click(object sender, EventArgs e) {
-			if (this.saveFileDialog.ShowDialog() == DialogResult.OK) {
-				new Bitmap(this.m_originalBackground).Save(Path.ChangeExtension(this.saveFileDialog.FileName, ".jpg"), ImageFormat.Jpeg);
-				MessageBox.Show("File saved.", "Preview", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-			}
-		}
+        private void SetBrightness(float opacity) {
+            if (_originalBackground == null) {
+                return;
+            }
 
-		private void toolStripComboBoxChannels_SelectedIndexChanged(object sender, EventArgs e) {
-			this.pictureBoxSetupGrid.Refresh();
-		}
+            Image image = new Bitmap(_originalBackground);
 
-		private void toolStripDropDownButtonUpdate_Click(object sender, EventArgs e) {
-			int width;
-			int height;
-			this.m_cellSize = this.toolStripComboBoxPixelSize.SelectedIndex + 1;
-			try {
-				width = int.Parse(this.toolStripTextBoxResolutionX.Text) * (this.m_cellSize + 1);
-			}
-			catch {
-				width = this.pictureBoxSetupGrid.Width;
-			}
-			try {
-				height = int.Parse(this.toolStripTextBoxResolutionY.Text) * (this.m_cellSize + 1);
-			}
-			catch {
-				height = this.pictureBoxSetupGrid.Height;
-			}
-			this.SetPictureBoxSize(width, height);
-		}
+            using (var g = Graphics.FromImage(image)) {
+                using (var attributes = new ImageAttributes()) {
+                    var matrix = new ColorMatrix {Matrix40 = opacity, Matrix41 = opacity, Matrix42 = opacity};
+                    attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+                    attributes.SetColorMatrix(matrix);
+                    g.DrawImage(image, new Rectangle(0, 0, image.Width, image.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, attributes);
+                }
+            }
 
-		private void trackBarBrightness_ValueChanged(object sender, EventArgs e) {
-			this.SetBrightness(((float)(this.trackBarBrightness.Value - 10)) / 10f);
-		}
+            pictureBoxSetupGrid.BackgroundImage = image;
+        }
 
-		private void UpdateFromSetupNode() {
-			int num;
-			int num2;
-			this.checkBoxRedirectOutputs.Checked = this.m_setupData.GetBoolean(this.m_setupNode, "RedirectOutputs", false);
-			XmlNode setupDataNode = this.m_setupNode.SelectSingleNode("Display");
-			if (setupDataNode != null) {
-				num2 = Convert.ToInt32(setupDataNode.SelectSingleNode("Height").InnerText);
-				num = Convert.ToInt32(setupDataNode.SelectSingleNode("Width").InnerText);
-				this.m_cellSize = Convert.ToInt32(setupDataNode.SelectSingleNode("PixelSize").InnerText);
-			}
-			else {
-				num2 = 0x20;
-				num = 0x40;
-				this.m_cellSize = 8;
-			}
-			this.SetPictureBoxSize(num * (this.m_cellSize + 1), num2 * (this.m_cellSize + 1));
-			this.UpdateSizeUI();
-			byte[] buffer = Convert.FromBase64String(this.m_setupNode.SelectSingleNode("BackgroundImage").InnerText);
-			if (buffer.Length > 0) {
-				MemoryStream stream = new MemoryStream(buffer);
-				this.SetBackground(new Bitmap(stream));
-				stream.Dispose();
-			}
-			else {
-				this.SetBackground(null);
-			}
-			if (setupDataNode != null) {
-				this.trackBarBrightness.Value = this.m_setupData.GetInteger(setupDataNode, "Brightness", 10);
-				this.trackBarBrightness_ValueChanged(null, null);
-			}
-			foreach (XmlNode node2 in this.m_setupNode.SelectNodes("Channels/Channel")) {
-				int num3 = Convert.ToInt32(node2.Attributes["number"].Value);
-				if (num3 >= this.m_startChannel) {
-					List<uint> list = new List<uint>();
-					byte[] buffer2 = Convert.FromBase64String(node2.InnerText);
-					for (int i = 0; i < buffer2.Length; i += 4) {
-						list.Add(BitConverter.ToUInt32(buffer2, i));
-					}
-					this.m_channelDictionary[num3 - this.m_startChannel] = list;
-				}
-			}
-			this.pictureBoxSetupGrid.Refresh();
-		}
 
-		private void UpdatePosition() {
-			Point point = new Point();
-			if (this.pictureBoxSetupGrid.Width > this.panelPictureBoxContainer.Width) {
-				point.X = 0;
-			}
-			else {
-				point.X = ((this.panelPictureBoxContainer.Width - this.pictureBoxSetupGrid.Width) / 2) + base.ClientRectangle.Left;
-			}
-			if (this.pictureBoxSetupGrid.Height > this.panelPictureBoxContainer.Height) {
-				point.Y = 0;
-			}
-			else {
-				point.Y = ((this.panelPictureBoxContainer.Height - this.pictureBoxSetupGrid.Height) / 2) + base.ClientRectangle.Top;
-			}
-			this.pictureBoxSetupGrid.Location = point;
-			int num = this.trackBarBrightness.Right - this.labelBrightness.Left;
-			int num2 = this.panel1.Width / 2;
-			this.labelBrightness.Left = num2 - (num / 2);
-			this.trackBarBrightness.Left = (this.labelBrightness.Left + num) - this.trackBarBrightness.Width;
-		}
+        private void SetPictureBoxSize(int width, int height) {
+            pictureBoxSetupGrid.Width = width;
+            pictureBoxSetupGrid.Height = height;
+            UpdatePosition();
+            pictureBoxSetupGrid.Refresh();
+        }
 
-		private void UpdateSetup() {
-			XmlNode contextNode = Xml.SetValue(this.m_setupNode, "Display", string.Empty);
-			Xml.SetValue(contextNode, "Height", this.toolStripTextBoxResolutionY.Text);
-			Xml.SetValue(contextNode, "Width", this.toolStripTextBoxResolutionX.Text);
-			Xml.SetValue(contextNode, "PixelSize", this.m_cellSize.ToString());
-			Xml.SetValue(contextNode, "Brightness", this.trackBarBrightness.Value.ToString());
-			if (this.m_originalBackground != null) {
-				if (this.m_backgroundImageFileName != string.Empty) {
-					FileStream stream = new FileStream(this.m_backgroundImageFileName, FileMode.Open, FileAccess.Read, FileShare.Read);
-					byte[] buffer = new byte[stream.Length];
-					stream.Read(buffer, 0, (int)stream.Length);
-					this.m_setupNode.SelectSingleNode("BackgroundImage").InnerText = Convert.ToBase64String(buffer);
-					stream.Close();
-					stream.Dispose();
-				}
-			}
-			else {
-				this.m_setupNode.SelectSingleNode("BackgroundImage").InnerText = Convert.ToBase64String(new byte[0]);
-			}
-			XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(this.m_setupNode, "Channels");
-			List<byte> list = new List<byte>();
-			foreach (int num in this.m_channelDictionary.Keys) {
-				list.Clear();
-				XmlNode node = Xml.SetNewValue(emptyNodeAlways, "Channel", string.Empty);
-				Xml.SetAttribute(node, "number", (num + this.m_startChannel).ToString());
-				foreach (uint num2 in this.m_channelDictionary[num]) {
-					list.AddRange(BitConverter.GetBytes(num2));
-				}
-				node.InnerText = Convert.ToBase64String(list.ToArray());
-			}
-			this.m_setupData.SetBoolean(this.m_setupNode, "RedirectOutputs", this.checkBoxRedirectOutputs.Checked);
-		}
 
-		private void UpdateSizeUI() {
-			this.toolStripTextBoxResolutionX.Text = (this.pictureBoxSetupGrid.Width / (this.m_cellSize + 1)).ToString();
-			this.toolStripTextBoxResolutionY.Text = (this.pictureBoxSetupGrid.Height / (this.m_cellSize + 1)).ToString();
-			this.toolStripComboBoxPixelSize.SelectedIndex = this.m_cellSize - 1;
-		}
-	}
+        private void SetPixelChannelReference(int channelIndex, int x, int y) {
+            if (channelIndex == -1) {
+                return;
+            }
+
+            List<uint> list;
+            if (!_channelDictionary.TryGetValue(channelIndex, out list)) {
+                list = new List<uint>();
+                _channelDictionary[channelIndex] = list;
+            }
+            var item = (uint) ((x << 0x10) | y);
+            if (!list.Contains(item)) {
+                list.Add(item);
+            }
+            pictureBoxSetupGrid.Invalidate(new Rectangle(x * (_cellSize + 1), y * (_cellSize + 1), _cellSize, _cellSize));
+            _dirty = true;
+        }
+
+
+        private void SetupDialog_FormClosing(object sender, FormClosingEventArgs e) {
+            if (!_dirty) {
+                return;
+            }
+
+            switch (MessageBox.Show("Keep changes?", "Vixen preview", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)) {
+                case DialogResult.Cancel:
+                    e.Cancel = true;
+                    break;
+
+                case DialogResult.Yes:
+                    UpdateSetup();
+                    break;
+            }
+        }
+
+
+        private void SetupDialog_KeyDown(object sender, KeyEventArgs e) {
+            _controlDown = e.Control;
+        }
+
+
+        private void SetupDialog_KeyUp(object sender, KeyEventArgs e) {
+            _controlDown = e.Control;
+        }
+
+
+        private void SetupDialog_Resize(object sender, EventArgs e) {
+            if (!_resizing) {
+                UpdatePosition();
+            }
+        }
+
+
+        private void SetupDialog_ResizeBegin(object sender, EventArgs e) {
+            _resizing = true;
+        }
+
+
+        private void SetupDialog_ResizeEnd(object sender, EventArgs e) {
+            _resizing = false;
+            UpdatePosition();
+        }
+
+
+        private void toolStripButtonClearImage_Click(object sender, EventArgs e) {
+            pictureBoxSetupGrid.BackgroundImage = null;
+            SetBackground(null);
+            _backgroundImageFileName = string.Empty;
+            _dirty = true;
+        }
+
+
+        private void toolStripButtonLoadImage_Click(object sender, EventArgs e) {
+            if (openFileDialog.ShowDialog() != DialogResult.OK) {
+                return;
+            }
+
+            byte[] buffer;
+            using (var stream = new FileStream(openFileDialog.FileName, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+                buffer = new byte[stream.Length];
+                stream.Read(buffer, 0, (int) stream.Length);
+            }
+            Bitmap bitmap;
+            using (var stream2 = new MemoryStream(buffer)) {
+                bitmap = new Bitmap(stream2);
+            }
+            SetPictureBoxSize(bitmap.Width, bitmap.Height);
+            SetBackground(bitmap);
+            SetBrightness(0f);
+            _backgroundImageFileName = openFileDialog.FileName;
+            _dirty = true;
+        }
+
+
+        private void toolStripButtonReorder_Click(object sender, EventArgs e) {
+            using (var reorder = new ReorderDialog(_channels, _channelDictionary)) {
+                reorder.ShowDialog();
+                if (reorder.DialogResult == DialogResult.OK) {
+                    _channelDictionary = reorder.ChannelDictionary;
+                }
+            }
+        }
+
+
+        private void toolStripButtonResetSize_Click(object sender, EventArgs e) {
+            if (_originalBackground == null) {
+                return;
+            }
+
+            SetPictureBoxSize(_originalBackground.Width, _originalBackground.Height);
+            UpdateSizeUI();
+        }
+
+
+        private void toolStripButtonSaveImage_Click(object sender, EventArgs e) {
+            if (saveFileDialog.ShowDialog() != DialogResult.OK) {
+                return;
+            }
+
+            new Bitmap(_originalBackground).Save(Path.ChangeExtension(saveFileDialog.FileName, ".jpg"), ImageFormat.Jpeg);
+            MessageBox.Show("File saved.", "Preview", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+        }
+
+
+        private void toolStripComboBoxChannels_SelectedIndexChanged(object sender, EventArgs e) {
+            pictureBoxSetupGrid.Refresh();
+        }
+
+
+        private void toolStripDropDownButtonUpdate_Click(object sender, EventArgs e) {
+            int width;
+            int height;
+            _cellSize = toolStripComboBoxPixelSize.SelectedIndex + 1;
+            try {
+                width = int.Parse(toolStripTextBoxResolutionX.Text) * (_cellSize + 1);
+            }
+            catch {
+                width = pictureBoxSetupGrid.Width;
+            }
+            try {
+                height = int.Parse(toolStripTextBoxResolutionY.Text) * (_cellSize + 1);
+            }
+            catch {
+                height = pictureBoxSetupGrid.Height;
+            }
+            SetPictureBoxSize(width, height);
+        }
+
+
+        private void trackBarBrightness_ValueChanged(object sender, EventArgs e) {
+            SetBrightness((trackBarBrightness.Value - 10) / 10f);
+        }
+
+
+        private void UpdateFromSetupNode() {
+            var width = 64;
+            var height = 32;
+            _cellSize = 8;
+
+            checkBoxRedirectOutputs.Checked = _setupData.GetBoolean(_setupNode, "RedirectOutputs", false);
+            var setupDataNode = _setupNode.SelectSingleNode("Display");
+            if (setupDataNode != null) {
+                var heightNode = setupDataNode.SelectSingleNode("Height");
+                if (heightNode != null) {
+                    height = Convert.ToInt32(heightNode.InnerText);
+                }
+                var widthNode = setupDataNode.SelectSingleNode("Width");
+                if (widthNode != null) {
+                    width = Convert.ToInt32(widthNode.InnerText);
+                }
+                var pixelSizeNode = setupDataNode.SelectSingleNode("PixelSize");
+                if (pixelSizeNode != null) {
+                    _cellSize = Convert.ToInt32(pixelSizeNode.InnerText);
+                }
+            }
+
+            SetPictureBoxSize(width * (_cellSize + 1), height * (_cellSize + 1));
+            UpdateSizeUI();
+            var backgroundImageNode = _setupNode.SelectSingleNode("BackgroundImage");
+            if (backgroundImageNode != null) {
+                var buffer = Convert.FromBase64String(backgroundImageNode.InnerText);
+                if (buffer.Length > 0) {
+                    using (var stream = new MemoryStream(buffer)) {
+                        SetBackground(new Bitmap(stream));
+                    }
+                }
+                else {
+                    SetBackground(null);
+                }
+            }
+            if (setupDataNode != null) {
+                trackBarBrightness.Value = _setupData.GetInteger(setupDataNode, "Brightness", 10);
+                trackBarBrightness_ValueChanged(null, null);
+            }
+            var channelNode = _setupNode.SelectNodes("Channels/Channel");
+            if (channelNode != null) {
+                foreach (XmlNode channel in channelNode) {
+                    if (channel.Attributes != null) {
+                        var num3 = Convert.ToInt32(channel.Attributes["number"].Value);
+                        if (num3 < _startChannel) {
+                            continue;
+                        }
+                        var list = new List<uint>();
+                        var buffer2 = Convert.FromBase64String(channel.InnerText);
+                        for (var i = 0; i < buffer2.Length; i += 4) {
+                            list.Add(BitConverter.ToUInt32(buffer2, i));
+                        }
+                        _channelDictionary[num3 - _startChannel] = list;
+                    }
+                }
+            }
+            pictureBoxSetupGrid.Refresh();
+        }
+
+
+        private void UpdatePosition() {
+            var point = new Point();
+            if (pictureBoxSetupGrid.Width > panelPictureBoxContainer.Width) {
+                point.X = 0;
+            }
+            else {
+                point.X = ((panelPictureBoxContainer.Width - pictureBoxSetupGrid.Width) / 2) + ClientRectangle.Left;
+            }
+            if (pictureBoxSetupGrid.Height > panelPictureBoxContainer.Height) {
+                point.Y = 0;
+            }
+            else {
+                point.Y = ((panelPictureBoxContainer.Height - pictureBoxSetupGrid.Height) / 2) + ClientRectangle.Top;
+            }
+            pictureBoxSetupGrid.Location = point;
+            int num = trackBarBrightness.Right - labelBrightness.Left;
+            int num2 = panel1.Width / 2;
+            labelBrightness.Left = num2 - (num / 2);
+            trackBarBrightness.Left = (labelBrightness.Left + num) - trackBarBrightness.Width;
+        }
+
+
+        private void UpdateSetup() {
+            var contextNode = Xml.SetValue(_setupNode, "Display", string.Empty);
+            Xml.SetValue(contextNode, "Height", toolStripTextBoxResolutionY.Text);
+            Xml.SetValue(contextNode, "Width", toolStripTextBoxResolutionX.Text);
+            Xml.SetValue(contextNode, "PixelSize", _cellSize.ToString(CultureInfo.InvariantCulture));
+            Xml.SetValue(contextNode, "Brightness", trackBarBrightness.Value.ToString(CultureInfo.InvariantCulture));
+            if (_originalBackground != null) {
+                if (_backgroundImageFileName != string.Empty) {
+                    using (var stream = new FileStream(_backgroundImageFileName, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+                        var buffer = new byte[stream.Length];
+                        stream.Read(buffer, 0, (int) stream.Length);
+                        var backgroundImageNode = _setupNode.SelectSingleNode("BackgroundImage");
+                        if (backgroundImageNode != null) {
+                            backgroundImageNode.InnerText = Convert.ToBase64String(buffer);
+                        }
+                    }
+                }
+            }
+            else {
+                var backgroundImageNode = _setupNode.SelectSingleNode("BackgroundImage");
+                if (backgroundImageNode != null) {
+                    backgroundImageNode.InnerText = Convert.ToBase64String(new byte[0]);
+                }
+            }
+            var emptyNodeAlways = Xml.GetEmptyNodeAlways(_setupNode, "Channels");
+            var list = new List<byte>();
+            foreach (var num in _channelDictionary.Keys) {
+                list.Clear();
+                var node = Xml.SetNewValue(emptyNodeAlways, "Channel", string.Empty);
+                Xml.SetAttribute(node, "number", (num + _startChannel).ToString(CultureInfo.InvariantCulture));
+                foreach (var num2 in _channelDictionary[num]) {
+                    list.AddRange(BitConverter.GetBytes(num2));
+                }
+                node.InnerText = Convert.ToBase64String(list.ToArray());
+            }
+            _setupData.SetBoolean(_setupNode, "RedirectOutputs", checkBoxRedirectOutputs.Checked);
+        }
+
+
+        private void UpdateSizeUI() {
+            toolStripTextBoxResolutionX.Text = (pictureBoxSetupGrid.Width / (_cellSize + 1)).ToString(CultureInfo.InvariantCulture);
+            toolStripTextBoxResolutionY.Text = (pictureBoxSetupGrid.Height / (_cellSize + 1)).ToString(CultureInfo.InvariantCulture);
+            toolStripComboBoxPixelSize.SelectedIndex = _cellSize - 1;
+        }
+    }
 }

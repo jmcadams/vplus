@@ -86,9 +86,11 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AdjustablePreview, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing">
       <Name>System.Drawing</Name>
     </Reference>
@@ -134,8 +136,9 @@
       <SubType>Code</SubType>
     </Compile>
     <EmbeddedResource Include="AdjustablePreview.Properties.Resources.resources" />
-    <EmbeddedResource Include="Preview.PreviewDialog.resources" />
-    <EmbeddedResource Include="Preview.ReorderDialog.resources" />
+    <EmbeddedResource Include="Preview\ReorderDialog.resx">
+      <DependentUpon>ReorderDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Preview\SetupDialog.resx">
       <DependentUpon>SetupDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -158,6 +161,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\CommonUtils\CommonUtils.csproj">
+      <Project>{43B2665C-A5AB-4908-8E6D-C08975513E12}</Project>
+      <Name>CommonUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\VixenControls\CommonControls.csproj">
+      <Project>{6B127E8D-35CC-409E-9E66-520FBA86E283}</Project>
+      <Name>CommonControls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Vixen\VixenPlus.csproj">
       <Project>{FA99E3F3-4783-485F-A37E-0E24F823E5AE}</Project>
       <Name>VixenPlus</Name>
