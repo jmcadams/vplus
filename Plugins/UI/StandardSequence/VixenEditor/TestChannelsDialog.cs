@@ -29,7 +29,7 @@ namespace VixenEditor {
                 // ReSharper restore CoVariantArrayConversion
             }
             _actualLevels = ((ISystem) Interfaces.Available["ISystem"]).UserPreferences.GetBoolean("ActualLevels");
-            trackBar.Maximum = _actualLevels ? 255 : 100;
+            trackBar.Maximum = _actualLevels ? 255 : 100; //todo should these come from preferences?
             _channelLevels = new byte[sequence.ChannelCount];
             _executionContextHandle = _executionInterface.RequestContext(false, true, null);
             _executionInterface.SetAsynchronousContext(_executionContextHandle, _sequence);
