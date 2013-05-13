@@ -6,55 +6,55 @@ using System.Collections;
 
 namespace VixenPlus
 {
-	internal partial class InputPluginDialog
-	{
-		private IContainer components = null;
+    internal partial class InputPluginDialog
+    {
+        private IContainer components = null;
 
-		#region Windows Form Designer generated code
-		private Button buttonAddMappingSet;
-		private Button buttonCancel;
-		private Button buttonClearInputChannels;
-		private Button buttonMoveDown;
-		private Button buttonMoveUp;
-		private Button buttonOK;
-		private Button buttonRemoveMappingSet;
-		private Button buttonRenameMappingSet;
-		private CheckBox checkBoxEnabled;
-		private CheckBox checkBoxLiveUpdate;
-		private CheckBox checkBoxRecord;
-		private ColumnHeader columnHeader1;
-		private ComboBox comboBoxMappingSet;
-		private ComboBox comboBoxSingleIteratorInput;
-		private GroupBox groupBox2;
-		private GroupBox groupBoxChannels;
-		private GroupBox groupBoxIOMapping;
-		private ImageList imageList;
-		private Label label1;
-		private Label label2;
-		private Label label3;
-		private Label label4;
-		private ListBox listBoxChannels;
-		private ListBox listBoxInputs;
-		private ListBox listBoxIteratorInputs;
-		private ListBox listBoxMappedChannels;
-		private ListBox listBoxMappingSets;
-		private ListView listViewMappingSets;
-		private Panel panel1;
-		private RadioButton radioButtonMultipleIterators;
-		private RadioButton radioButtonNoIterator;
-		private RadioButton radioButtonSingleIterator;
-		private System.Windows.Forms.TabControl tabControlIterators;
-		private System.Windows.Forms.TabControl tabControlMappingSets;
-		private System.Windows.Forms.TabControl tabControlPlugin;
-		private TabPage tabPageInputOutputMapping;
-		private TabPage tabPageMappingIteration;
-		private TabPage tabPageMappingSets;
-		private TabPage tabPageMultipleIterators;
-		private TabPage tabPageSetDefinitions;
-		private TabPage tabPageSingleIterator;
+        #region Windows Form Designer generated code
+        private Button buttonAddMappingSet;
+        private Button buttonCancel;
+        private Button buttonClearInputChannels;
+        private Button buttonMoveDown;
+        private Button buttonMoveUp;
+        private Button buttonOK;
+        private Button buttonRemoveMappingSet;
+        private Button buttonRenameMappingSet;
+        private CheckBox checkBoxEnabled;
+        private CheckBox checkBoxLiveUpdate;
+        private CheckBox checkBoxRecord;
+        private ColumnHeader columnHeader1;
+        private ComboBox comboBoxMappingSet;
+        private ComboBox comboBoxSingleIteratorInput;
+        private GroupBox groupBox2;
+        private GroupBox groupBoxChannels;
+        private GroupBox groupBoxIOMapping;
+        private ImageList imageList;
+        private Label label1;
+        private Label label2;
+        private Label label3;
+        private Label label4;
+        private ListBox listBoxChannels;
+        private ListBox listBoxInputs;
+        private ListBox listBoxIteratorInputs;
+        private ListBox listBoxMappedChannels;
+        private ListBox listBoxMappingSets;
+        private ListView listViewMappingSets;
+        private Panel panel1;
+        private RadioButton radioButtonMultipleIterators;
+        private RadioButton radioButtonNoIterator;
+        private RadioButton radioButtonSingleIterator;
+        private System.Windows.Forms.TabControl tabControlIterators;
+        private System.Windows.Forms.TabControl tabControlMappingSets;
+        private System.Windows.Forms.TabControl tabControlPlugin;
+        private TabPage tabPageInputOutputMapping;
+        private TabPage tabPageMappingIteration;
+        private TabPage tabPageMappingSets;
+        private TabPage tabPageMultipleIterators;
+        private TabPage tabPageSetDefinitions;
+        private TabPage tabPageSingleIterator;
 
-		private void InitializeComponent()
-		{
+        private void InitializeComponent()
+        {
             this.components = new System.ComponentModel.Container();
             this.groupBoxIOMapping = new System.Windows.Forms.GroupBox();
             this.listBoxInputs = new System.Windows.Forms.ListBox();
@@ -605,16 +605,16 @@ namespace VixenPlus
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
-		#endregion
+        }
+        #endregion
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (this.components != null))
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-	}
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (this.components != null))
+            {
+                this.components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
 }

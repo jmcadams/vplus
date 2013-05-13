@@ -1,15 +1,15 @@
 namespace VixenPlus{
-	using System;
-	using System.Windows.Forms;
-	using System.Drawing;
-	using System.ComponentModel;
-	using System.Collections;
+    using System;
+    using System.Windows.Forms;
+    using System.Drawing;
+    using System.ComponentModel;
+    using System.Collections;
 
-	internal partial class TimerDialog{
-		private IContainer components;
+    internal partial class TimerDialog{
+        private IContainer components;
 
-		#region Windows Form Designer generated code
-		private Button buttonCancel;
+        #region Windows Form Designer generated code
+        private Button buttonCancel;
 private Button buttonOK;
 private Button buttonSelectProgram;
 private Button buttonSelectSequence;
@@ -58,7 +58,7 @@ private TabPage tabPageYearly;
 private TextBox textBoxRepeatInterval;
 private TextBox textBoxSpecificDay;
 
-		private void InitializeComponent()
+        private void InitializeComponent()
         {
             this.components = new Container();
             this.panel1 = new Panel();
@@ -517,9 +517,9 @@ private TextBox textBoxSpecificDay;
             this.groupBox1.PerformLayout();
             base.ResumeLayout(false);
         }
-		#endregion
+        #endregion
 
-		protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing && (this.components != null))
             {
@@ -527,5 +527,5 @@ private TextBox textBoxSpecificDay;
             }
             base.Dispose(disposing);
         }
-	}
+    }
 }

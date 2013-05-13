@@ -1,4 +1,4 @@
 ﻿namespace VixenPlus
 {
-	public delegate void EngineErrorHandler(string message);
+    public delegate void EngineErrorHandler(string message);
 }

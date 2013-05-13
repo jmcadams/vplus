@@ -6,12 +6,12 @@ using System.Collections;
 
 namespace VixenPlus
 {
-	internal partial class ScheduleDialog
+    internal partial class ScheduleDialog
     {
         private IContainer components = null;
 
-		#region Windows Form Designer generated code
-		private Button buttonCancel;
+        #region Windows Form Designer generated code
+        private Button buttonCancel;
 private Button buttonOK;
 private CheckBox checkBoxDisableSchedule;
 private ContextMenuStrip contextMenuStrip;
@@ -30,7 +30,7 @@ private ToolStripSeparator toolStripSeparator2;
 private ToolTip toolTip;
 private VScrollBar vScrollBar;
 
-		private void InitializeComponent()
+        private void InitializeComponent()
         {
             this.components = new Container();
             this.menuStrip = new MenuStrip();
@@ -181,9 +181,9 @@ private VScrollBar vScrollBar;
             base.ResumeLayout(false);
             base.PerformLayout();
         }
-		#endregion
+        #endregion
 
-		protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing && (this.components != null))
             {
@@ -200,5 +200,5 @@ private VScrollBar vScrollBar;
             this._timeLinePen.Dispose();
             base.Dispose(disposing);
         }
-	}
+    }
 }

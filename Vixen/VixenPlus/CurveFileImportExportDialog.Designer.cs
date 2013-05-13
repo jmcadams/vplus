@@ -6,12 +6,12 @@ using System.Collections;
 
 namespace VixenPlus
 {
-	internal partial class CurveFileImportExportDialog
+    internal partial class CurveFileImportExportDialog
     {
         private IContainer components = null;
 
-		#region Windows Form Designer generated code
-		private Button buttonCancel;
+        #region Windows Form Designer generated code
+        private Button buttonCancel;
 private Button btnFile;
 private Button buttonOK;
 private ColumnHeader columnHeader1;
@@ -33,7 +33,7 @@ private ListView listViewCurvesExport;
 private ListView listViewCurvesImport;
 private OpenFileDialog openFileDialog;
 
-		private void InitializeComponent()
+        private void InitializeComponent()
         {
             this.btnFile = new Button();
             this.labelFile = new Label();
@@ -208,9 +208,9 @@ private OpenFileDialog openFileDialog;
             base.ResumeLayout(false);
             base.PerformLayout();
         }
-		#endregion
+        #endregion
 
-		protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing && (this.components != null))
             {
@@ -218,5 +218,5 @@ private OpenFileDialog openFileDialog;
             }
             base.Dispose(disposing);
         }
-	}
+    }
 }

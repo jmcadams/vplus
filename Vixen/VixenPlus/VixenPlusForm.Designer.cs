@@ -1,60 +1,60 @@
 namespace VixenPlus{
-	using System;
-	using System.Windows.Forms;
-	using System.Drawing;
-	using System.ComponentModel;
-	using System.Collections;
+    using System;
+    using System.Windows.Forms;
+    using System.Drawing;
+    using System.ComponentModel;
+    using System.Collections;
 
-	internal sealed partial class VixenPlusForm{
-		private IContainer components;
+    internal sealed partial class VixenPlusForm{
+        private IContainer components;
 
-		#region Windows Form Designer generated code
-		private ToolStripMenuItem aboutToolStripMenuItem1;
-		private ToolStripMenuItem cascadeToolStripMenuItem;
-		private ToolStripMenuItem channelDimmingCurvesToolStripMenuItem;
-		private ToolStripMenuItem checkForUpdatesToolStripMenuItem;
-		private ToolStripMenuItem contentsToolStripMenuItem;
-		private ToolStripMenuItem copyASequenceToolStripMenuItem;
-		private ToolStripMenuItem copyChannelColorsToolStripMenuItem;
-		private ToolStripMenuItem copyPluginaddinDataToolStripMenuItem;
-		private ToolStripMenuItem diagnosticsToolStripMenuItem;
-		private HelpProvider helpProvider;
-		private ToolStripMenuItem helpToolStripMenuItem;
-		private ToolStripMenuItem manageToolStripMenuItem;
-		private MenuStrip menuStrip1;
-		private ToolStripMenuItem musicPlayerToolStripMenuItem;
-		private ToolStripMenuItem newLightingProgramToolStripMenuItem;
-		private ToolStripMenuItem onlineSupportForumToolStripMenuItem;
-		private ToolStripMenuItem openALightingProgramToolStripMenuItem;
-		private OpenFileDialog openFileDialog1;
-		private ToolStripMenuItem preferencesToolStripMenuItem;
-		private ToolStripMenuItem viewToolStripMenuItem;
-		private ToolStripMenuItem programToolStripMenuItem;
-		private ToolStripMenuItem recentToolStripMenuItem;
-		private ToolStripMenuItem saveAsToolStripMenuItem;
-		private SaveFileDialog saveFileDialog1;
-		private ToolStripMenuItem saveToolStripMenuItem;
-		private System.Windows.Forms.Timer scheduleTimer;
-		private ToolStripMenuItem setBackgroundSequenceToolStripMenuItem;
-		private ToolStripMenuItem setSoundDeviceToolStripMenuItem;
-		private System.Windows.Forms.Timer shutdownTimer;
-		private StatusStrip statusStrip;
-		private ToolStripMenuItem tileToolStripMenuItem;
-		private ToolStripSeparator toolStripMenuItem1;
-		private ToolStripSeparator toolStripMenuItem2;
-		private ToolStripSeparator toolStripMenuItem3;
-		private ToolStripSeparator toolStripMenuItem4;
-		private ToolStripSeparator toolStripMenuItem6;
-		private ToolStripSeparator toolStripMenuItem8;
-		private ToolStripProgressBar toolStripProgressBarBackgroundSequenceRunning;
-		private ToolStripStatusLabel toolStripStatusLabelMusic;
-		private ToolStripMenuItem turnOnQueryServerToolStripMenuItem;
-		private ToolStripMenuItem utilityToolStripMenuItem;
-		private ToolStripMenuItem visualChannelLayoutToolStripMenuItem;
-		private ToolStripMenuItem windowsToolStripMenuItem;
+        #region Windows Form Designer generated code
+        private ToolStripMenuItem aboutToolStripMenuItem1;
+        private ToolStripMenuItem cascadeToolStripMenuItem;
+        private ToolStripMenuItem channelDimmingCurvesToolStripMenuItem;
+        private ToolStripMenuItem checkForUpdatesToolStripMenuItem;
+        private ToolStripMenuItem contentsToolStripMenuItem;
+        private ToolStripMenuItem copyASequenceToolStripMenuItem;
+        private ToolStripMenuItem copyChannelColorsToolStripMenuItem;
+        private ToolStripMenuItem copyPluginaddinDataToolStripMenuItem;
+        private ToolStripMenuItem diagnosticsToolStripMenuItem;
+        private HelpProvider helpProvider;
+        private ToolStripMenuItem helpToolStripMenuItem;
+        private ToolStripMenuItem manageToolStripMenuItem;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem musicPlayerToolStripMenuItem;
+        private ToolStripMenuItem newLightingProgramToolStripMenuItem;
+        private ToolStripMenuItem onlineSupportForumToolStripMenuItem;
+        private ToolStripMenuItem openALightingProgramToolStripMenuItem;
+        private OpenFileDialog openFileDialog1;
+        private ToolStripMenuItem preferencesToolStripMenuItem;
+        private ToolStripMenuItem viewToolStripMenuItem;
+        private ToolStripMenuItem programToolStripMenuItem;
+        private ToolStripMenuItem recentToolStripMenuItem;
+        private ToolStripMenuItem saveAsToolStripMenuItem;
+        private SaveFileDialog saveFileDialog1;
+        private ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.Timer scheduleTimer;
+        private ToolStripMenuItem setBackgroundSequenceToolStripMenuItem;
+        private ToolStripMenuItem setSoundDeviceToolStripMenuItem;
+        private System.Windows.Forms.Timer shutdownTimer;
+        private StatusStrip statusStrip;
+        private ToolStripMenuItem tileToolStripMenuItem;
+        private ToolStripSeparator toolStripMenuItem1;
+        private ToolStripSeparator toolStripMenuItem2;
+        private ToolStripSeparator toolStripMenuItem3;
+        private ToolStripSeparator toolStripMenuItem4;
+        private ToolStripSeparator toolStripMenuItem6;
+        private ToolStripSeparator toolStripMenuItem8;
+        private ToolStripProgressBar toolStripProgressBarBackgroundSequenceRunning;
+        private ToolStripStatusLabel toolStripStatusLabelMusic;
+        private ToolStripMenuItem turnOnQueryServerToolStripMenuItem;
+        private ToolStripMenuItem utilityToolStripMenuItem;
+        private ToolStripMenuItem visualChannelLayoutToolStripMenuItem;
+        private ToolStripMenuItem windowsToolStripMenuItem;
 
-		private void InitializeComponent()
-		{
+        private void InitializeComponent()
+        {
             this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.programToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -465,16 +465,16 @@ namespace VixenPlus{
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
-		#endregion
+        }
+        #endregion
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (this.components != null))
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-	}
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (this.components != null))
+            {
+                this.components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
 }

@@ -6,15 +6,15 @@ using System.Collections;
 
 namespace VixenPlus
 {
-	internal partial class ProgressDialog
+    internal partial class ProgressDialog
     {
         private IContainer components = null;
 
-		#region Windows Form Designer generated code
-		private Label labelMessage;
+        #region Windows Form Designer generated code
+        private Label labelMessage;
 private Panel panel1;
 
-		private void InitializeComponent()
+        private void InitializeComponent()
         {
             this.labelMessage = new Label();
             this.panel1 = new Panel();
@@ -49,9 +49,9 @@ private Panel panel1;
             base.ResumeLayout(false);
             base.PerformLayout();
         }
-		#endregion
+        #endregion
 
-		protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing && (this.components != null))
             {
@@ -59,5 +59,5 @@ private Panel panel1;
             }
             base.Dispose(disposing);
         }
-	}
+    }
 }

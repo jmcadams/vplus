@@ -5,17 +5,17 @@ using System.ComponentModel;
 using System.Collections;
 
 namespace VixenEditor {
-	internal partial class DrawingIntensityDialog {
-		private IContainer components = null;
+    internal partial class DrawingIntensityDialog {
+        private IContainer components = null;
 
-		#region Windows Form Designer generated code
-		private Button buttonCancel;
-		private Button buttonOK;
+        #region Windows Form Designer generated code
+        private Button buttonCancel;
+        private Button buttonOK;
         private Button buttonReset;
-		private Label lblInfo;
-		private NumericUpDown udLevel;
+        private Label lblInfo;
+        private NumericUpDown udLevel;
 
-		private void InitializeComponent() {
+        private void InitializeComponent() {
             this.lblInfo = new System.Windows.Forms.Label();
             this.udLevel = new System.Windows.Forms.NumericUpDown();
             this.buttonReset = new System.Windows.Forms.Button();
@@ -87,14 +87,14 @@ namespace VixenEditor {
             ((System.ComponentModel.ISupportInitialize)(this.udLevel)).EndInit();
             this.ResumeLayout(false);
 
-		}
-		#endregion
+        }
+        #endregion
 
-		protected override void Dispose(bool disposing) {
-			if (disposing && (this.components != null)) {
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-	}
+        protected override void Dispose(bool disposing) {
+            if (disposing && (this.components != null)) {
+                this.components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
 }

@@ -6,12 +6,12 @@ using System.Collections;
 
 namespace VixenPlus
 {
-	internal partial class BackgroundSequenceDialog
-	{
-		private IContainer components = null;
+    internal partial class BackgroundSequenceDialog
+    {
+        private IContainer components = null;
 
-		#region Windows Form Designer generated code
-		private Button buttonCancel;
+        #region Windows Form Designer generated code
+        private Button buttonCancel;
         private Button buttonClear;
         private Button buttonOK;
         private Button buttonSelect;
@@ -21,8 +21,8 @@ namespace VixenPlus
         private Label labelSequenceName;
         private OpenFileDialog openFileDialog;
 
-		private void InitializeComponent()
-		{
+        private void InitializeComponent()
+        {
             this.lblMessage = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.buttonClear = new System.Windows.Forms.Button();
@@ -143,16 +143,16 @@ namespace VixenPlus
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
-		}
-		#endregion
+        }
+        #endregion
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (this.components != null))
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-	}
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (this.components != null))
+            {
+                this.components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
 }

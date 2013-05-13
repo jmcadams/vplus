@@ -1,10 +1,10 @@
 ﻿namespace VixenPlus
 {
-	public interface ITriggerPlugin : ILoadable
-	{
-		string InterfaceTypeName { get; }
+    public interface ITriggerPlugin : ILoadable
+    {
+        string InterfaceTypeName { get; }
 
-		int TriggerCount { get; }
-		void Setup();
-	}
+        int TriggerCount { get; }
+        void Setup();
+    }
 }

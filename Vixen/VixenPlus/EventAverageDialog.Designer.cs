@@ -6,16 +6,16 @@ using System.Collections;
 
 namespace VixenPlus
 {
-	internal partial class EventAverageDialog
-	{
-		#region Windows Form Designer generated code
-		private Button buttonDone;
+    internal partial class EventAverageDialog
+    {
+        #region Windows Form Designer generated code
+        private Button buttonDone;
 private ColumnHeader columnHeader1;
 private ColumnHeader columnHeader2;
 private ColumnHeader columnHeader3;
 private ListView lvData;
 
-		private void InitializeComponent()
+        private void InitializeComponent()
         {
             this.lvData = new ListView();
             this.buttonDone = new Button();
@@ -56,9 +56,9 @@ private ListView lvData;
             this.Text = "Plugin Event Averages";
             base.ResumeLayout(false);
         }
-		#endregion
+        #endregion
 
-		protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing && (this.components != null))
             {
@@ -66,5 +66,5 @@ private ListView lvData;
             }
             base.Dispose(disposing);
         }
-	}
+    }
 }

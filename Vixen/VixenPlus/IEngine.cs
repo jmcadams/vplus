@@ -3,20 +3,20 @@ using System.Xml;
 
 namespace VixenPlus
 {
-	public interface IEngine : IDisposable
-	{
-		XmlDocument CommDoc { set; }
+    public interface IEngine : IDisposable
+    {
+        XmlDocument CommDoc { set; }
 
-		HardwareUpdateDelegate HardwareUpdate { set; }
+        HardwareUpdateDelegate HardwareUpdate { set; }
 
-		bool IsRunning { get; }
-		event OnEngineError EngineError;
+        bool IsRunning { get; }
+        event OnEngineError EngineError;
 
-		event EventHandler EngineStopped;
+        event EventHandler EngineStopped;
 
-		void Initialize(EventSequence sequence);
-		void Pause();
-		bool Play();
-		void Stop();
-	}
+        void Initialize(EventSequence sequence);
+        void Pause();
+        bool Play();
+        void Stop();
+    }
 }

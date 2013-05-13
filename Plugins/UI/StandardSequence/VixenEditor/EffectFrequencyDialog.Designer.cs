@@ -5,18 +5,18 @@ using System.ComponentModel;
 using System.Collections;
 
 namespace VixenEditor {
-	internal partial class EffectFrequencyDialog {
-		private IContainer components = null;
+    internal partial class EffectFrequencyDialog {
+        private IContainer components = null;
 
-		#region Windows Form Designer generated code
-		private Button buttonCancel;
-		private Button buttonOK;
-		private GroupBox groupBox1;
-		private MethodInvoker m_refreshInvoker;
-		private PictureBox pictureBoxExample;
-		private TrackBar trackBarFrequency;
+        #region Windows Form Designer generated code
+        private Button buttonCancel;
+        private Button buttonOK;
+        private GroupBox groupBox1;
+        private MethodInvoker m_refreshInvoker;
+        private PictureBox pictureBoxExample;
+        private TrackBar trackBarFrequency;
 
-		private void InitializeComponent() {
+        private void InitializeComponent() {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblValue = new System.Windows.Forms.Label();
             this.pictureBoxExample = new System.Windows.Forms.PictureBox();
@@ -114,16 +114,16 @@ namespace VixenEditor {
             ((System.ComponentModel.ISupportInitialize)(this.trackBarFrequency)).EndInit();
             this.ResumeLayout(false);
 
-		}
-		#endregion
+        }
+        #endregion
 
-		protected override void Dispose(bool disposing) {
-			if (disposing && (this.components != null)) {
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        protected override void Dispose(bool disposing) {
+            if (disposing && (this.components != null)) {
+                this.components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
         private Label lblValue;
-	}
+    }
 }

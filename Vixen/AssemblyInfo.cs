@@ -9,9 +9,9 @@ using System.Runtime.InteropServices;
 [assembly: CompilationRelaxations(8)]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly:
-	Debuggable(
-		DebuggableAttribute.DebuggingModes.DisableOptimizations | DebuggableAttribute.DebuggingModes.EnableEditAndContinue |
-		DebuggableAttribute.DebuggingModes.IgnoreSymbolStoreSequencePoints | DebuggableAttribute.DebuggingModes.Default)]
+    Debuggable(
+        DebuggableAttribute.DebuggingModes.DisableOptimizations | DebuggableAttribute.DebuggingModes.EnableEditAndContinue |
+        DebuggableAttribute.DebuggingModes.IgnoreSymbolStoreSequencePoints | DebuggableAttribute.DebuggingModes.Default)]
 [assembly: RuntimeCompatibility(WrapNonExceptionThrows = true)]
 [assembly: ComVisible(false)]
 [assembly: AssemblyTrademark("")]

@@ -1,15 +1,15 @@
 namespace VixenPlus.Dialogs{
-	using System;
-	using System.Windows.Forms;
-	using System.Drawing;
-	using System.ComponentModel;
-	using System.Collections;
+    using System;
+    using System.Windows.Forms;
+    using System.Drawing;
+    using System.ComponentModel;
+    using System.Collections;
 
-	public partial class ProfileManagerDialog{
-		private IContainer components;
+    public partial class ProfileManagerDialog{
+        private IContainer components;
 
-		#region Windows Form Designer generated code
-		private Button buttonAddMultipleProfileChannels;
+        #region Windows Form Designer generated code
+        private Button buttonAddMultipleProfileChannels;
 private Button buttonAddProfileChannel;
 private Button buttonCancel;
 private Button buttonChangeProfileName;
@@ -43,8 +43,8 @@ private TextBox textBoxProfileChannelCount;
 private ToolTip toolTip;
 private TreeView treeViewProfile;
 
-		private void InitializeComponent()
-		{
+        private void InitializeComponent()
+        {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProfileManagerDialog));
             this.panel1 = new System.Windows.Forms.Panel();
@@ -489,23 +489,23 @@ private TreeView treeViewProfile;
             this.tabEditProfile.PerformLayout();
             this.ResumeLayout(false);
 
-		}
-		#endregion
+        }
+        #endregion
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (this.components != null))
-			{
-				this.components.Dispose();
-			}
-			this._pictureFont.Dispose();
-			this._picturePen.Dispose();
-			this._pictureBrush.Dispose();
-			if (this.m_hoveredButton != null)
-			{
-				this.m_hoveredButton.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-	}
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (this.components != null))
+            {
+                this.components.Dispose();
+            }
+            this._pictureFont.Dispose();
+            this._picturePen.Dispose();
+            this._pictureBrush.Dispose();
+            if (this.m_hoveredButton != null)
+            {
+                this.m_hoveredButton.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
 }

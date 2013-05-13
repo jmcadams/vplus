@@ -1,7 +1,7 @@
 ﻿namespace VixenPlus
 {
-	public interface ISetup
-	{
-		void Setup();
-	}
+    public interface ISetup
+    {
+        void Setup();
+    }
 }

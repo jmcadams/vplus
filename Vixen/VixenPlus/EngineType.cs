@@ -1,8 +1,8 @@
 ﻿namespace VixenPlus
 {
-	public enum EngineType
-	{
-		Standard,
-		Procedural
-	}
+    public enum EngineType
+    {
+        Standard,
+        Procedural
+    }
 }

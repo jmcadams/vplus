@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace VixenPlusServerUI
 {
-	internal static class Program
+    internal static class Program
     {
         [STAThread]
         private static void Main(string[] args)

@@ -5,18 +5,18 @@ using System.ComponentModel;
 using System.Collections;
 
 namespace VixenEditor {
-	internal partial class ChannelCopyDialog {
-		private IContainer components = null;
+    internal partial class ChannelCopyDialog {
+        private IContainer components = null;
 
-		#region Windows Form Designer generated code
-		private Button buttonCopy;
-		private Button buttonDone;
-		private ComboBox comboBoxDestinationChannel;
-		private ComboBox comboBoxSourceChannel;
-		private Label label1;
-		private Label label2;
+        #region Windows Form Designer generated code
+        private Button buttonCopy;
+        private Button buttonDone;
+        private ComboBox comboBoxDestinationChannel;
+        private ComboBox comboBoxSourceChannel;
+        private Label label1;
+        private Label label2;
 
-		private void InitializeComponent() {
+        private void InitializeComponent() {
             this.label1 = new System.Windows.Forms.Label();
             this.comboBoxSourceChannel = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -110,14 +110,14 @@ namespace VixenEditor {
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
-		#endregion
+        }
+        #endregion
 
-		protected override void Dispose(bool disposing) {
-			if (disposing && (this.components != null)) {
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-	}
+        protected override void Dispose(bool disposing) {
+            if (disposing && (this.components != null)) {
+                this.components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
 }

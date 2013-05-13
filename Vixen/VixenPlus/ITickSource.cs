@@ -1,7 +1,7 @@
 ﻿namespace VixenPlus
 {
-	public interface ITickSource
-	{
-		int Milliseconds { get; }
-	}
+    public interface ITickSource
+    {
+        int Milliseconds { get; }
+    }
 }

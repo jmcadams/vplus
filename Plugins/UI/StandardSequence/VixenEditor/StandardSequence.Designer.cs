@@ -3,249 +3,249 @@ using System.Windows.Forms;
 
 namespace VixenEditor{
 
-	public partial class StandardSequence{
-		private IContainer components;
+    public partial class StandardSequence{
+        private IContainer components;
 
-		#region Windows Form Designer generated code
-		private ColorDialog colorDialog1;
-		private ContextMenuStrip contextMenuChannels;
-		private ContextMenuStrip contextMenuGrid;
-		private ContextMenuStrip contextMenuTime;
+        #region Windows Form Designer generated code
+        private ColorDialog colorDialog1;
+        private ContextMenuStrip contextMenuChannels;
+        private ContextMenuStrip contextMenuGrid;
+        private ContextMenuStrip contextMenuTime;
         private Control m_lastSelectableControl;
-		private IntensityAdjustDialog m_intensityAdjustDialog;
-		private Label labelPosition;
-		private MenuStrip menuStrip;
+        private IntensityAdjustDialog m_intensityAdjustDialog;
+        private Label labelPosition;
+        private MenuStrip menuStrip;
         private OpenFileDialog openFileDialog1;
-		private PrintDialog printDialog;
-		private PrintPreviewDialog printPreviewDialog;
-		private SaveFileDialog saveFileDialog;
+        private PrintDialog printDialog;
+        private PrintPreviewDialog printPreviewDialog;
+        private SaveFileDialog saveFileDialog;
         private SelectablePictureBox pictureBoxChannels;
-		private SplitContainer splitContainer1;
-		private System.Windows.Forms.Timer m_positionTimer;
-		private ToolStrip toolStripDisplaySettings;
-		private ToolStrip toolStripEditing;
-		private ToolStrip toolStripEffect;
-		private ToolStrip toolStripExecutionControl;
-		private ToolStrip toolStripSequenceSettings;
-		private ToolStrip toolStripText;
-		private ToolStripButton tsbAudio;
-		private ToolStripButton toolStripButtonChangeIntensity;
-		private ToolStripButton toolStripButtonChannelOutputMask;
-		private ToolStripButton toolStripButtonCopy;
-		private ToolStripButton toolStripButtonCut;
-		private ToolStripButton toolStripButtonDeleteOrder;
-		private ToolStripButton toolStripButtonFindAndReplace;
-		private ToolStripButton toolStripButtonInsertPaste;
-		private ToolStripButton toolStripButtonIntensity;
-		private ToolStripButton toolStripButtonInvert;
-		private ToolStripButton tsbLoop;
-		private ToolStripButton toolStripButtonMirrorHorizontal;
-		private ToolStripButton toolStripButtonMirrorVertical;
-		private ToolStripButton toolStripButtonOff;
-		private ToolStripButton toolStripButtonOn;
-		private ToolStripButton toolStripButtonOpaquePaste;
-		private ToolStripButton toolStripButtonPartialRampOff;
-		private ToolStripButton toolStripButtonPartialRampOn;
-		private ToolStripButton tsbPause;
-		private ToolStripButton tsbPlay;
-		private ToolStripButton SpeedHalfTsb;
-		private ToolStripButton SpeedNormalTsb;
-		private ToolStripButton SpeedQtrTsb;
-		private ToolStripButton SpeedThreeQtrTsb;
-		private ToolStripButton SpeedVariableTsb;
-		private ToolStripButton toolStripButtonRampOff;
-		private ToolStripButton toolStripButtonRampOn;
-		private ToolStripButton toolStripButtonRandom;
-		private ToolStripButton toolStripButtonRedo;
-		private ToolStripButton toolStripButtonRemoveCells;
-		private ToolStripButton tbsSave;
-		private ToolStripButton toolStripButtonSaveOrder;
-		private ToolStripButton toolStripButtonShimmerDimming;
-		private ToolStripButton toolStripButtonSparkle;
-		private ToolStripButton tsbStop;
-		private ToolStripButton tbsTestChannels;
-		private ToolStripButton tbsTestConsole;
-		private ToolStripButton toolStripButtonToggleCellText;
-		private ToolStripButton toolStripButtonToggleCrossHairs;
-		private ToolStripButton toolStripButtonToggleLevels;
-		private ToolStripButton toolStripButtonToggleRamps;
-		private ToolStripButton toolStripButtonTransparentPaste;
-		private ToolStripButton toolStripButtonUndo;
-		private ToolStripButton tsbSaveAs;
-		private ToolStripComboBox toolStripComboBoxChannelOrder;
-		private ToolStripComboBox toolStripComboBoxColumnZoom;
-		private ToolStripComboBox toolStripComboBoxRowZoom;
-		private ToolStripContainer toolStripContainer1;
-		private ToolStripDropDownButton toolStripDropDownButtonPlugins;
-		private ToolStripLabel toolStripLabel10;
-		private ToolStripLabel toolStripLabel3;
-		private ToolStripLabel toolStripLabel4;
-		private ToolStripLabel toolStripLabel5;
-		private ToolStripLabel toolStripLabel6;
-		private ToolStripLabel toolStripLabel8;
-		private ToolStripLabel toolStripLabelCellIntensity;
-		private ToolStripLabel toolStripLabelCurrentCell;
+        private SplitContainer splitContainer1;
+        private System.Windows.Forms.Timer m_positionTimer;
+        private ToolStrip toolStripDisplaySettings;
+        private ToolStrip toolStripEditing;
+        private ToolStrip toolStripEffect;
+        private ToolStrip toolStripExecutionControl;
+        private ToolStrip toolStripSequenceSettings;
+        private ToolStrip toolStripText;
+        private ToolStripButton tsbAudio;
+        private ToolStripButton toolStripButtonChangeIntensity;
+        private ToolStripButton toolStripButtonChannelOutputMask;
+        private ToolStripButton toolStripButtonCopy;
+        private ToolStripButton toolStripButtonCut;
+        private ToolStripButton toolStripButtonDeleteOrder;
+        private ToolStripButton toolStripButtonFindAndReplace;
+        private ToolStripButton toolStripButtonInsertPaste;
+        private ToolStripButton toolStripButtonIntensity;
+        private ToolStripButton toolStripButtonInvert;
+        private ToolStripButton tsbLoop;
+        private ToolStripButton toolStripButtonMirrorHorizontal;
+        private ToolStripButton toolStripButtonMirrorVertical;
+        private ToolStripButton toolStripButtonOff;
+        private ToolStripButton toolStripButtonOn;
+        private ToolStripButton toolStripButtonOpaquePaste;
+        private ToolStripButton toolStripButtonPartialRampOff;
+        private ToolStripButton toolStripButtonPartialRampOn;
+        private ToolStripButton tsbPause;
+        private ToolStripButton tsbPlay;
+        private ToolStripButton SpeedHalfTsb;
+        private ToolStripButton SpeedNormalTsb;
+        private ToolStripButton SpeedQtrTsb;
+        private ToolStripButton SpeedThreeQtrTsb;
+        private ToolStripButton SpeedVariableTsb;
+        private ToolStripButton toolStripButtonRampOff;
+        private ToolStripButton toolStripButtonRampOn;
+        private ToolStripButton toolStripButtonRandom;
+        private ToolStripButton toolStripButtonRedo;
+        private ToolStripButton toolStripButtonRemoveCells;
+        private ToolStripButton tbsSave;
+        private ToolStripButton toolStripButtonSaveOrder;
+        private ToolStripButton toolStripButtonShimmerDimming;
+        private ToolStripButton toolStripButtonSparkle;
+        private ToolStripButton tsbStop;
+        private ToolStripButton tbsTestChannels;
+        private ToolStripButton tbsTestConsole;
+        private ToolStripButton toolStripButtonToggleCellText;
+        private ToolStripButton toolStripButtonToggleCrossHairs;
+        private ToolStripButton toolStripButtonToggleLevels;
+        private ToolStripButton toolStripButtonToggleRamps;
+        private ToolStripButton toolStripButtonTransparentPaste;
+        private ToolStripButton toolStripButtonUndo;
+        private ToolStripButton tsbSaveAs;
+        private ToolStripComboBox toolStripComboBoxChannelOrder;
+        private ToolStripComboBox toolStripComboBoxColumnZoom;
+        private ToolStripComboBox toolStripComboBoxRowZoom;
+        private ToolStripContainer toolStripContainer1;
+        private ToolStripDropDownButton toolStripDropDownButtonPlugins;
+        private ToolStripLabel toolStripLabel10;
+        private ToolStripLabel toolStripLabel3;
+        private ToolStripLabel toolStripLabel4;
+        private ToolStripLabel toolStripLabel5;
+        private ToolStripLabel toolStripLabel6;
+        private ToolStripLabel toolStripLabel8;
+        private ToolStripLabel toolStripLabelCellIntensity;
+        private ToolStripLabel toolStripLabelCurrentCell;
         private ToolStripLabel toolStripLabelCurrentDrawingIntensity;
-		private ToolStripLabel toolStripLabelExecutionPoint;
-		private ToolStripLabel toolStripLabelIntensity;
-		private ToolStripLabel toolStripLabelProgess;
-		private ToolStripMenuItem aNDToolStripMenuItem1;
-		private ToolStripMenuItem aNDToolStripMenuItem;
-		private ToolStripMenuItem additionToolStripMenuItem1;
-		private ToolStripMenuItem additionToolStripMenuItem;
-		private ToolStripMenuItem allChannelsToFullIntensityForThisEventToolStripMenuItem;
-		private ToolStripMenuItem allEventsToFullIntensityToolStripMenuItem;
-		private ToolStripMenuItem arithmeticPasteToolStripMenuItem;
-		private ToolStripMenuItem attachSequenceToToolStripMenuItem;
-		private ToolStripMenuItem audioSpeedToolStripMenuItem;
-		private ToolStripMenuItem audioToolStripMenuItem1;
-		private ToolStripMenuItem booleanPasteToolStripMenuItem1;
-		private ToolStripMenuItem booleanPasteToolStripMenuItem;
-		private ToolStripMenuItem channelOutputMaskToolStripMenuItem;
-		private ToolStripMenuItem channelPropertiesToolStripMenuItem;
-		private ToolStripMenuItem chaseLinesToolStripMenuItem;
-		private ToolStripMenuItem clearAllChannelsForThisEventToolStripMenuItem;
-		private ToolStripMenuItem clearAllToolStripMenuItem;
-		private ToolStripMenuItem clearChannelEventsToolStripMenuItem;
-		private ToolStripMenuItem copyChannelEventsToClipboardToolStripMenuItem;
-		private ToolStripMenuItem copyChannelToolStripMenuItem1;
-		private ToolStripMenuItem copyChannelToolStripMenuItem;
-		private ToolStripMenuItem copyToolStripMenuItem1;
-		private ToolStripMenuItem copyToolStripMenuItem;
-		private ToolStripMenuItem createFromSequenceToolStripMenuItem;
-		private ToolStripMenuItem currentProgramsSettingsToolStripMenuItem;
-		private ToolStripMenuItem cutToolStripMenuItem1;
-		private ToolStripMenuItem cutToolStripMenuItem;
-		private ToolStripMenuItem detachSequenceFromItsProfileToolStripMenuItem;
-		private ToolStripMenuItem editToolStripMenuItem;
-		private ToolStripMenuItem effectsToolStripMenuItem;
-		private ToolStripMenuItem exportChannelNamesListToolStripMenuItem;
-		private ToolStripMenuItem findAndReplaceToolStripMenuItem1;
-		private ToolStripMenuItem findAndReplaceToolStripMenuItem;
-		private ToolStripMenuItem flattenProfileIntoSequenceToolStripMenuItem;
-		private ToolStripMenuItem importChannelNamesListToolStripMenuItem;
-		private ToolStripMenuItem insertPasteToolStripMenuItem1;
-		private ToolStripMenuItem insertPasteToolStripMenuItem;
-		private ToolStripMenuItem invertToolStripMenuItem1;
-		private ToolStripMenuItem invertToolStripMenuItem;
-		private ToolStripMenuItem loadARoutineToolStripMenuItem;
-		private ToolStripMenuItem loadRoutineToClipboardToolStripMenuItem;
-		private ToolStripMenuItem maxToolStripMenuItem1;
-		private ToolStripMenuItem maxToolStripMenuItem;
-		private ToolStripMenuItem minToolStripMenuItem1;
-		private ToolStripMenuItem minToolStripMenuItem;
-		private ToolStripMenuItem mirrorHorizontallyToolStripMenuItem1;
-		private ToolStripMenuItem mirrorHorizontallyToolStripMenuItem;
-		private ToolStripMenuItem mirrorVerticallyToolStripMenuItem1;
-		private ToolStripMenuItem mirrorVerticallyToolStripMenuItem;
-		private ToolStripMenuItem nANDToolStripMenuItem1;
-		private ToolStripMenuItem nANDToolStripMenuItem;
-		private ToolStripMenuItem nORToolStripMenuItem1;
-		private ToolStripMenuItem nORToolStripMenuItem;
-		private ToolStripMenuItem normalToolStripMenuItem1;
-		private ToolStripMenuItem normalToolStripMenuItem;
-		private ToolStripMenuItem oRToolStripMenuItem1;
-		private ToolStripMenuItem oRToolStripMenuItem;
-		private ToolStripMenuItem offToolStripMenuItem1;
-		private ToolStripMenuItem offToolStripMenuItem;
-		private ToolStripMenuItem onToolStripMenuItem1;
-		private ToolStripMenuItem onToolStripMenuItem;
-		private ToolStripMenuItem opaquePasteToolStripMenuItem1;
-		private ToolStripMenuItem opaquePasteToolStripMenuItem;
-		private ToolStripMenuItem otherToolStripMenuItem;
-		private ToolStripMenuItem paintFromClipboardToolStripMenuItem;
-		private ToolStripMenuItem partialRampOffToolStripMenuItem1;
-		private ToolStripMenuItem partialRampOffToolStripMenuItem;
-		private ToolStripMenuItem partialRampOnToolStripMenuItem1;
-		private ToolStripMenuItem partialRampOnToolStripMenuItem;
-		private ToolStripMenuItem pasteFullChannelEventsFromClipboardToolStripMenuItem;
-		private ToolStripMenuItem pasteToolStripMenuItem1;
+        private ToolStripLabel toolStripLabelExecutionPoint;
+        private ToolStripLabel toolStripLabelIntensity;
+        private ToolStripLabel toolStripLabelProgess;
+        private ToolStripMenuItem aNDToolStripMenuItem1;
+        private ToolStripMenuItem aNDToolStripMenuItem;
+        private ToolStripMenuItem additionToolStripMenuItem1;
+        private ToolStripMenuItem additionToolStripMenuItem;
+        private ToolStripMenuItem allChannelsToFullIntensityForThisEventToolStripMenuItem;
+        private ToolStripMenuItem allEventsToFullIntensityToolStripMenuItem;
+        private ToolStripMenuItem arithmeticPasteToolStripMenuItem;
+        private ToolStripMenuItem attachSequenceToToolStripMenuItem;
+        private ToolStripMenuItem audioSpeedToolStripMenuItem;
+        private ToolStripMenuItem audioToolStripMenuItem1;
+        private ToolStripMenuItem booleanPasteToolStripMenuItem1;
+        private ToolStripMenuItem booleanPasteToolStripMenuItem;
+        private ToolStripMenuItem channelOutputMaskToolStripMenuItem;
+        private ToolStripMenuItem channelPropertiesToolStripMenuItem;
+        private ToolStripMenuItem chaseLinesToolStripMenuItem;
+        private ToolStripMenuItem clearAllChannelsForThisEventToolStripMenuItem;
+        private ToolStripMenuItem clearAllToolStripMenuItem;
+        private ToolStripMenuItem clearChannelEventsToolStripMenuItem;
+        private ToolStripMenuItem copyChannelEventsToClipboardToolStripMenuItem;
+        private ToolStripMenuItem copyChannelToolStripMenuItem1;
+        private ToolStripMenuItem copyChannelToolStripMenuItem;
+        private ToolStripMenuItem copyToolStripMenuItem1;
+        private ToolStripMenuItem copyToolStripMenuItem;
+        private ToolStripMenuItem createFromSequenceToolStripMenuItem;
+        private ToolStripMenuItem currentProgramsSettingsToolStripMenuItem;
+        private ToolStripMenuItem cutToolStripMenuItem1;
+        private ToolStripMenuItem cutToolStripMenuItem;
+        private ToolStripMenuItem detachSequenceFromItsProfileToolStripMenuItem;
+        private ToolStripMenuItem editToolStripMenuItem;
+        private ToolStripMenuItem effectsToolStripMenuItem;
+        private ToolStripMenuItem exportChannelNamesListToolStripMenuItem;
+        private ToolStripMenuItem findAndReplaceToolStripMenuItem1;
+        private ToolStripMenuItem findAndReplaceToolStripMenuItem;
+        private ToolStripMenuItem flattenProfileIntoSequenceToolStripMenuItem;
+        private ToolStripMenuItem importChannelNamesListToolStripMenuItem;
+        private ToolStripMenuItem insertPasteToolStripMenuItem1;
+        private ToolStripMenuItem insertPasteToolStripMenuItem;
+        private ToolStripMenuItem invertToolStripMenuItem1;
+        private ToolStripMenuItem invertToolStripMenuItem;
+        private ToolStripMenuItem loadARoutineToolStripMenuItem;
+        private ToolStripMenuItem loadRoutineToClipboardToolStripMenuItem;
+        private ToolStripMenuItem maxToolStripMenuItem1;
+        private ToolStripMenuItem maxToolStripMenuItem;
+        private ToolStripMenuItem minToolStripMenuItem1;
+        private ToolStripMenuItem minToolStripMenuItem;
+        private ToolStripMenuItem mirrorHorizontallyToolStripMenuItem1;
+        private ToolStripMenuItem mirrorHorizontallyToolStripMenuItem;
+        private ToolStripMenuItem mirrorVerticallyToolStripMenuItem1;
+        private ToolStripMenuItem mirrorVerticallyToolStripMenuItem;
+        private ToolStripMenuItem nANDToolStripMenuItem1;
+        private ToolStripMenuItem nANDToolStripMenuItem;
+        private ToolStripMenuItem nORToolStripMenuItem1;
+        private ToolStripMenuItem nORToolStripMenuItem;
+        private ToolStripMenuItem normalToolStripMenuItem1;
+        private ToolStripMenuItem normalToolStripMenuItem;
+        private ToolStripMenuItem oRToolStripMenuItem1;
+        private ToolStripMenuItem oRToolStripMenuItem;
+        private ToolStripMenuItem offToolStripMenuItem1;
+        private ToolStripMenuItem offToolStripMenuItem;
+        private ToolStripMenuItem onToolStripMenuItem1;
+        private ToolStripMenuItem onToolStripMenuItem;
+        private ToolStripMenuItem opaquePasteToolStripMenuItem1;
+        private ToolStripMenuItem opaquePasteToolStripMenuItem;
+        private ToolStripMenuItem otherToolStripMenuItem;
+        private ToolStripMenuItem paintFromClipboardToolStripMenuItem;
+        private ToolStripMenuItem partialRampOffToolStripMenuItem1;
+        private ToolStripMenuItem partialRampOffToolStripMenuItem;
+        private ToolStripMenuItem partialRampOnToolStripMenuItem1;
+        private ToolStripMenuItem partialRampOnToolStripMenuItem;
+        private ToolStripMenuItem pasteFullChannelEventsFromClipboardToolStripMenuItem;
+        private ToolStripMenuItem pasteToolStripMenuItem1;
         private ToolStripMenuItem pasteToolStripMenuItem;
-		private ToolStripMenuItem printChannelConfigurationToolStripMenuItem;
-		private ToolStripMenuItem viewToolStripMenuItem;
-		private ToolStripMenuItem programToolStripMenuItem;
-		private ToolStripMenuItem rampOffToolStripMenuItem1;
-		private ToolStripMenuItem rampOffToolStripMenuItem;
-		private ToolStripMenuItem rampOnToolStripMenuItem1;
-		private ToolStripMenuItem rampOnToolStripMenuItem;
-		private ToolStripMenuItem randomToolStripMenuItem1;
-		private ToolStripMenuItem randomToolStripMenuItem;
-		private ToolStripMenuItem redoToolStripMenuItem;
-		private ToolStripMenuItem removeCellsToolStripMenuItem1;
-		private ToolStripMenuItem removeCellsToolStripMenuItem;
+        private ToolStripMenuItem printChannelConfigurationToolStripMenuItem;
+        private ToolStripMenuItem viewToolStripMenuItem;
+        private ToolStripMenuItem programToolStripMenuItem;
+        private ToolStripMenuItem rampOffToolStripMenuItem1;
+        private ToolStripMenuItem rampOffToolStripMenuItem;
+        private ToolStripMenuItem rampOnToolStripMenuItem1;
+        private ToolStripMenuItem rampOnToolStripMenuItem;
+        private ToolStripMenuItem randomToolStripMenuItem1;
+        private ToolStripMenuItem randomToolStripMenuItem;
+        private ToolStripMenuItem redoToolStripMenuItem;
+        private ToolStripMenuItem removeCellsToolStripMenuItem1;
+        private ToolStripMenuItem removeCellsToolStripMenuItem;
         private ToolStripMenuItem reorderChannelOutputsToolStripMenuItem;
         private ToolStripMenuItem saveAsARoutineToolStripMenuItem;
-		private ToolStripMenuItem scaleToolStripMenuItem1;
-		private ToolStripMenuItem scaleToolStripMenuItem;
-		private ToolStripMenuItem setAllChannelColorsToolStripMenuItem;
-		private ToolStripMenuItem setIntensityToolStripMenuItem1;
-		private ToolStripMenuItem setIntensityToolStripMenuItem;
-		private ToolStripMenuItem shimmerToolStripMenuItem1;
-		private ToolStripMenuItem shimmerToolStripMenuItem;
-		private ToolStripMenuItem sortByChannelNumberToolStripMenuItem;
-		private ToolStripMenuItem sortByChannelOutputToolStripMenuItem;
-		private ToolStripMenuItem sparkleToolStripMenuItem1;
-		private ToolStripMenuItem sparkleToolStripMenuItem;
-		private ToolStripMenuItem subtractionToolStripMenuItem1;
-		private ToolStripMenuItem subtractionToolStripMenuItem;
-		private ToolStripMenuItem toggleOutputChannelsToolStripMenuItem;
-		private ToolStripMenuItem toolStripMenuItemPasteAnd;
-		private ToolStripMenuItem toolStripMenuItemPasteNand;
-		private ToolStripMenuItem toolStripMenuItemPasteNor;
-		private ToolStripMenuItem toolStripMenuItemPasteOr;
-		private ToolStripMenuItem toolStripMenuItemPasteXnor;
+        private ToolStripMenuItem scaleToolStripMenuItem1;
+        private ToolStripMenuItem scaleToolStripMenuItem;
+        private ToolStripMenuItem setAllChannelColorsToolStripMenuItem;
+        private ToolStripMenuItem setIntensityToolStripMenuItem1;
+        private ToolStripMenuItem setIntensityToolStripMenuItem;
+        private ToolStripMenuItem shimmerToolStripMenuItem1;
+        private ToolStripMenuItem shimmerToolStripMenuItem;
+        private ToolStripMenuItem sortByChannelNumberToolStripMenuItem;
+        private ToolStripMenuItem sortByChannelOutputToolStripMenuItem;
+        private ToolStripMenuItem sparkleToolStripMenuItem1;
+        private ToolStripMenuItem sparkleToolStripMenuItem;
+        private ToolStripMenuItem subtractionToolStripMenuItem1;
+        private ToolStripMenuItem subtractionToolStripMenuItem;
+        private ToolStripMenuItem toggleOutputChannelsToolStripMenuItem;
+        private ToolStripMenuItem toolStripMenuItemPasteAnd;
+        private ToolStripMenuItem toolStripMenuItemPasteNand;
+        private ToolStripMenuItem toolStripMenuItemPasteNor;
+        private ToolStripMenuItem toolStripMenuItemPasteOr;
+        private ToolStripMenuItem toolStripMenuItemPasteXnor;
         private ToolStripMenuItem toolStripMenuItemPasteXor;
-		private ToolStripMenuItem transparentPasteToolStripMenuItem1;
-		private ToolStripMenuItem transparentPasteToolStripMenuItem;
-		private ToolStripMenuItem undoToolStripMenuItem;
-		private ToolStripMenuItem xNORToolStripMenuItem1;
-		private ToolStripMenuItem xNORToolStripMenuItem;
-		private ToolStripMenuItem xORToolStripMenuItem1;
-		private ToolStripMenuItem xORToolStripMenuItem;
-		private ToolStripMenuItem xToolStripMenuItem1;
-		private ToolStripMenuItem xToolStripMenuItem2;
-		private ToolStripMenuItem xToolStripMenuItem;
-		private ToolStripSeparator toolStripMenuItem10;
-		private ToolStripSeparator toolStripMenuItem11;
-		private ToolStripSeparator toolStripMenuItem12;
-		private ToolStripSeparator toolStripMenuItem13;
+        private ToolStripMenuItem transparentPasteToolStripMenuItem1;
+        private ToolStripMenuItem transparentPasteToolStripMenuItem;
+        private ToolStripMenuItem undoToolStripMenuItem;
+        private ToolStripMenuItem xNORToolStripMenuItem1;
+        private ToolStripMenuItem xNORToolStripMenuItem;
+        private ToolStripMenuItem xORToolStripMenuItem1;
+        private ToolStripMenuItem xORToolStripMenuItem;
+        private ToolStripMenuItem xToolStripMenuItem1;
+        private ToolStripMenuItem xToolStripMenuItem2;
+        private ToolStripMenuItem xToolStripMenuItem;
+        private ToolStripSeparator toolStripMenuItem10;
+        private ToolStripSeparator toolStripMenuItem11;
+        private ToolStripSeparator toolStripMenuItem12;
+        private ToolStripSeparator toolStripMenuItem13;
         private ToolStripSeparator toolStripMenuItem14;
-		private ToolStripSeparator toolStripMenuItem16;
-		private ToolStripSeparator toolStripMenuItem17;
-		private ToolStripSeparator toolStripMenuItem18;
-		private ToolStripSeparator toolStripMenuItem19;
-		private ToolStripSeparator toolStripMenuItem20;
-		private ToolStripSeparator toolStripMenuItem21;
-		private ToolStripSeparator toolStripMenuItem22;
-		private ToolStripSeparator toolStripMenuItem23;
-		private ToolStripSeparator toolStripMenuItem24;
-		private ToolStripSeparator toolStripMenuItem2;
-		private ToolStripSeparator toolStripMenuItem3;
-		private ToolStripSeparator toolStripMenuItem4;
-		private ToolStripSeparator toolStripMenuItem5;
-		private ToolStripSeparator toolStripMenuItem6;
-		private ToolStripSeparator toolStripMenuItem7;
-		private ToolStripSeparator toolStripMenuItem8;
-		private ToolStripSeparator toolStripMenuItem9;
-		private ToolStripSeparator toolStripSeparator10;
-		private ToolStripSeparator toolStripSeparator11;
-		private ToolStripSeparator toolStripSeparator13;
-		private ToolStripSeparator toolStripSeparator14;
-		private ToolStripSeparator toolStripSeparator15;
-		private ToolStripSeparator toolStripSeparator16;
-		private ToolStripSeparator toolStripSeparator17;
-		private ToolStripSeparator toolStripSeparator18;
-		private ToolStripSeparator toolStripSeparator1;
+        private ToolStripSeparator toolStripMenuItem16;
+        private ToolStripSeparator toolStripMenuItem17;
+        private ToolStripSeparator toolStripMenuItem18;
+        private ToolStripSeparator toolStripMenuItem19;
+        private ToolStripSeparator toolStripMenuItem20;
+        private ToolStripSeparator toolStripMenuItem21;
+        private ToolStripSeparator toolStripMenuItem22;
+        private ToolStripSeparator toolStripMenuItem23;
+        private ToolStripSeparator toolStripMenuItem24;
+        private ToolStripSeparator toolStripMenuItem2;
+        private ToolStripSeparator toolStripMenuItem3;
+        private ToolStripSeparator toolStripMenuItem4;
+        private ToolStripSeparator toolStripMenuItem5;
+        private ToolStripSeparator toolStripMenuItem6;
+        private ToolStripSeparator toolStripMenuItem7;
+        private ToolStripSeparator toolStripMenuItem8;
+        private ToolStripSeparator toolStripMenuItem9;
+        private ToolStripSeparator toolStripSeparator10;
+        private ToolStripSeparator toolStripSeparator11;
+        private ToolStripSeparator toolStripSeparator13;
+        private ToolStripSeparator toolStripSeparator14;
+        private ToolStripSeparator toolStripSeparator15;
+        private ToolStripSeparator toolStripSeparator16;
+        private ToolStripSeparator toolStripSeparator17;
+        private ToolStripSeparator toolStripSeparator18;
+        private ToolStripSeparator toolStripSeparator1;
         private ToolStripSeparator toolStripSeparator2;
-		private ToolStripSeparator toolStripSeparator4;
-		private ToolStripSeparator toolStripSeparator5;
-		private ToolStripSeparator toolStripSeparator6;
+        private ToolStripSeparator toolStripSeparator4;
+        private ToolStripSeparator toolStripSeparator5;
+        private ToolStripSeparator toolStripSeparator6;
         private ToolStripSeparator toolStripSeparator8;
-		private ToolStripSplitButton toolStripSplitButtonArithmeticPaste;
+        private ToolStripSplitButton toolStripSplitButtonArithmeticPaste;
         private ToolStripSplitButton toolStripSplitButtonBooleanPaste;
 
-		private void InitializeComponent()
-		{
+        private void InitializeComponent()
+        {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StandardSequence));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
@@ -2987,49 +2987,49 @@ namespace VixenEditor{
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
-		#endregion
+        }
+        #endregion
 
-		protected override void Dispose(bool disposing)
-		{
-			if (this._channelBackBrush != null)
-			{
-				this._channelBackBrush.Dispose();
-			}
-			if (this._timeBackBrush != null)
-			{
-				this._timeBackBrush.Dispose();
-			}
-			if (this._gridBackBrush != null)
-			{
-				this._gridBackBrush.Dispose();
-			}
-			this._channelNameFont.Dispose();
+        protected override void Dispose(bool disposing)
+        {
+            if (this._channelBackBrush != null)
+            {
+                this._channelBackBrush.Dispose();
+            }
+            if (this._timeBackBrush != null)
+            {
+                this._timeBackBrush.Dispose();
+            }
+            if (this._gridBackBrush != null)
+            {
+                this._gridBackBrush.Dispose();
+            }
+            this._channelNameFont.Dispose();
             this._channelStrikeoutFont.Dispose();
-			this._timeFont.Dispose();
-			this._selectionBrush.Dispose();
-			this._positionBrush.Dispose();
-			this._channelCaretBrush.Dispose();
+            this._timeFont.Dispose();
+            this._selectionBrush.Dispose();
+            this._positionBrush.Dispose();
+            this._channelCaretBrush.Dispose();
             //if (this._arrowBitmap != null)
             //{
             //    this._arrowBitmap.Dispose();
             //}
-			if (this._gridGraphics != null)
-			{
-				this._gridGraphics.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+            if (this._gridGraphics != null)
+            {
+                this._gridGraphics.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
         private ToolStripButton toolStripButtonWaveform;
-		private ToolStripButton newSeqTsb;
+        private ToolStripButton newSeqTsb;
         private ToolStripButton openSequenceTsb;
-		private ToolStripSeparator toolStripSeparator9;
-		private ToolStripLabel toolStripLabel1;
-		private ToolStripTextBox textBoxChannelCount;
-		private ToolStripSeparator toolStripSeparator12;
-		private ToolStripLabel toolStripLabel2;
-		private ToolStripTextBox textBoxProgramLength;
+        private ToolStripSeparator toolStripSeparator9;
+        private ToolStripLabel toolStripLabel1;
+        private ToolStripTextBox textBoxChannelCount;
+        private ToolStripSeparator toolStripSeparator12;
+        private ToolStripLabel toolStripLabel2;
+        private ToolStripTextBox textBoxProgramLength;
         private SplitContainer splitContainer2;
         private PictureBox pictureBoxTime;
         private SelectablePictureBox pictureBoxGrid;
@@ -3053,7 +3053,7 @@ namespace VixenEditor{
         private ToolStripMenuItem selectNoneToolStripMenuItem;
 
 
-	}
+    }
 }
 
 //this.pictureBoxChannels.QueryContinueDrag += new System.Windows.Forms.QueryContinueDragEventHandler(this.pictureBoxChannels_QueryContinueDrag);

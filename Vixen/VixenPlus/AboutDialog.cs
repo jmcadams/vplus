@@ -5,33 +5,33 @@ using System.Windows.Forms;
 
 namespace VixenPlus
 {
-	internal partial class AboutDialog : Form
-	{
-		public AboutDialog()
-		{
-			InitializeComponent();
+    internal partial class AboutDialog : Form
+    {
+        public AboutDialog()
+        {
+            InitializeComponent();
 
-			Text = "About " + Vendor.ProductName;
+            Text = "About " + Vendor.ProductName;
 
-			lblName.Text = Vendor.ProductName;
-			lblDescription.Text = Vendor.ProductDescription;
+            lblName.Text = Vendor.ProductName;
+            lblDescription.Text = Vendor.ProductDescription;
 
-			Version version = Assembly.GetExecutingAssembly().GetName().Version;
-			labelVersion.Text = string.Format("Version {0}", version);
+            Version version = Assembly.GetExecutingAssembly().GetName().Version;
+            labelVersion.Text = string.Format("Version {0}", version);
 
-			llblURL.Text = Vendor.ProductURL;
-		}
+            llblURL.Text = Vendor.ProductURL;
+        }
 
-		public override sealed string Text
-		{
-			get { return base.Text; }
-			set { base.Text = value; }
-		}
+        public override sealed string Text
+        {
+            get { return base.Text; }
+            set { base.Text = value; }
+        }
 
-		private void llblURL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-		{
-			llblURL.LinkVisited = true;
-			Process.Start(Vendor.ProductURL);
-		}
-	}
+        private void llblURL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            llblURL.LinkVisited = true;
+            Process.Start(Vendor.ProductURL);
+        }
+    }
 }

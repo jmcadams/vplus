@@ -1,6 +1,6 @@
 ﻿namespace VixenPlus
 {
-	using System.Collections.Generic;
+    using System.Collections.Generic;
 
     internal class VixenSequenceProgram
     {

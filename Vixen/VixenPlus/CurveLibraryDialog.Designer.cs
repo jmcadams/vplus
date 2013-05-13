@@ -3,12 +3,12 @@ using System.ComponentModel;
 
 namespace VixenPlus
 {
-	internal partial class CurveLibraryDialog
+    internal partial class CurveLibraryDialog
     {
         private IContainer components = null;
 
-		#region Windows Form Designer generated code
-		private Button buttonCancel;
+        #region Windows Form Designer generated code
+        private Button buttonCancel;
 private Button buttonChangeRemoteLocation;
 private Button btnOkay;
 private Button buttonReload;
@@ -30,7 +30,7 @@ private Label label5;
 private Label labelDownloadMessage;
 private ListView listViewRecords;
 
-		private void InitializeComponent()
+        private void InitializeComponent()
         {
             this.btnOkay = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
@@ -312,9 +312,9 @@ private ListView listViewRecords;
             this.PerformLayout();
 
         }
-		#endregion
+        #endregion
 
-		protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing && (this.components != null))
             {
@@ -322,5 +322,5 @@ private ListView listViewRecords;
             }
             base.Dispose(disposing);
         }
-	}
+    }
 }

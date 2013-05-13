@@ -1,14 +1,14 @@
 namespace VixenEditor{
-	using System;
-	using System.Windows.Forms;
-	using System.Drawing;
-	using System.ComponentModel;
-	using System.Collections;
+    using System;
+    using System.Windows.Forms;
+    using System.Drawing;
+    using System.ComponentModel;
+    using System.Collections;
 
-	internal partial class TestConsoleDialog{
+    internal partial class TestConsoleDialog{
 
-		#region Windows Form Designer generated code
-		private Button buttonDone;
+        #region Windows Form Designer generated code
+        private Button buttonDone;
 private ConsoleTrackBar consoleTrackBar1;
 private ConsoleTrackBar consoleTrackBar2;
 private ConsoleTrackBar consoleTrackBar3;
@@ -20,8 +20,8 @@ private ConsoleTrackBar consoleTrackBarMaster;
 private GroupBox groupBox1;
 private GroupBox groupBox2;
 
-		private void InitializeComponent()
-		{
+        private void InitializeComponent()
+        {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.consoleTrackBarMaster = new VixenEditor.ConsoleTrackBar();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -201,12 +201,12 @@ private GroupBox groupBox2;
             this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
-		}
-		#endregion
+        }
+        #endregion
 
-		protected override void Dispose(bool disposing)
-		{
-			base.Dispose(disposing);
-		}
-	}
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+        }
+    }
 }

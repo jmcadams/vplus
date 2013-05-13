@@ -6,18 +6,18 @@ using System.Collections;
 
 namespace VixenPlus
 {
-	internal partial class AboutDialog
-	{
-		private System.ComponentModel.IContainer components = null;
+    internal partial class AboutDialog
+    {
+        private System.ComponentModel.IContainer components = null;
 
-		#region Windows Form Designer generated code
-		private System.Windows.Forms.Button btnOkay;
-		private System.Windows.Forms.Label lblName;
-		private System.Windows.Forms.Label lblDescription;
-		private System.Windows.Forms.Label labelVersion;
+        #region Windows Form Designer generated code
+        private System.Windows.Forms.Button btnOkay;
+        private System.Windows.Forms.Label lblName;
+        private System.Windows.Forms.Label lblDescription;
+        private System.Windows.Forms.Label labelVersion;
 
-		private void InitializeComponent()
-		{
+        private void InitializeComponent()
+        {
             this.btnOkay = new System.Windows.Forms.Button();
             this.lblName = new System.Windows.Forms.Label();
             this.lblDescription = new System.Windows.Forms.Label();
@@ -103,18 +103,18 @@ namespace VixenPlus
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
-		#endregion
+        }
+        #endregion
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (this.components != null))
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (this.components != null))
+            {
+                this.components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-		private LinkLabel llblURL;
-	}
+        private LinkLabel llblURL;
+    }
 }

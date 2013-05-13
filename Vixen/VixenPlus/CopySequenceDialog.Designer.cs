@@ -6,12 +6,12 @@ using System.Collections;
 
 namespace VixenPlus
 {
-	internal sealed partial class CopySequenceDialog
+    internal sealed partial class CopySequenceDialog
     {
         private IContainer components = null;
 
-		#region Windows Form Designer generated code
-		private Button buttonApply;
+        #region Windows Form Designer generated code
+        private Button buttonApply;
 private Button buttonAutoMap;
 private Button buttonCancel;
 private Button buttonOK;
@@ -29,7 +29,7 @@ private Label label1;
 private Label label2;
 private ListView listViewMapping;
 
-		private void InitializeComponent()
+        private void InitializeComponent()
         {
             this.gbAll = new GroupBox();
             this.buttonApply = new Button();
@@ -205,9 +205,9 @@ private ListView listViewMapping;
             base.ResumeLayout(false);
             base.PerformLayout();
         }
-		#endregion
+        #endregion
 
-		protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing && (this.components != null))
             {
@@ -215,5 +215,5 @@ private ListView listViewMapping;
             }
             base.Dispose(disposing);
         }
-	}
+    }
 }

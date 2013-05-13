@@ -1,15 +1,15 @@
 namespace VixenPlus{
-	using System;
-	using System.Windows.Forms;
-	using System.Drawing;
-	using System.ComponentModel;
-	using System.Collections;
+    using System;
+    using System.Windows.Forms;
+    using System.Drawing;
+    using System.ComponentModel;
+    using System.Collections;
 
-	internal sealed partial class ProgramManagerDialog{
-		private IContainer components;
+    internal sealed partial class ProgramManagerDialog{
+        private IContainer components;
 
-		#region Windows Form Designer generated code
-		private AddEditRemove addEditRemove;
+        #region Windows Form Designer generated code
+        private AddEditRemove addEditRemove;
 private Button buttonCancel;
 private Button buttonOK;
 private Button buttonRadioAction;
@@ -32,7 +32,7 @@ private RadioButton radioButtonProgramPlugin;
 private RadioButton radioButtonSequencePlugin;
 private System.Windows.Forms.Timer timer;
 
-		private void InitializeComponent()
+        private void InitializeComponent()
         {
             this.components = new Container();
             this.listBoxPrograms = new ListBox();
@@ -273,9 +273,9 @@ private System.Windows.Forms.Timer timer;
             ((ISupportInitialize) this.pictureBoxStop).EndInit();
             base.ResumeLayout(false);
         }
-		#endregion
+        #endregion
 
-		protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing && (this.components != null))
             {
@@ -295,5 +295,5 @@ private System.Windows.Forms.Timer timer;
             }
             base.Dispose(disposing);
         }
-	}
+    }
 }

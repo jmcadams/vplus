@@ -2,31 +2,31 @@
 
 namespace VixenPlus
 {
-	internal class EngineTimer : ITickSource, IDisposable
-	{
-		private TickCallDelegate _tickCall;
+    internal class EngineTimer : ITickSource, IDisposable
+    {
+        private TickCallDelegate _tickCall;
 
-		internal EngineTimer(TickCallDelegate tickCall)
-		{
-			_tickCall = tickCall.Invoke;
-		}
+        internal EngineTimer(TickCallDelegate tickCall)
+        {
+            _tickCall = tickCall.Invoke;
+        }
 
-		public void Dispose()
-		{
-			_tickCall = null;
-			GC.SuppressFinalize(this);
-		}
+        public void Dispose()
+        {
+            _tickCall = null;
+            GC.SuppressFinalize(this);
+        }
 
-		public int Milliseconds
-		{
-			get { return _tickCall(); }
-		}
+        public int Milliseconds
+        {
+            get { return _tickCall(); }
+        }
 
-		~EngineTimer()
-		{
-			Dispose();
-		}
+        ~EngineTimer()
+        {
+            Dispose();
+        }
 
-		internal delegate int TickCallDelegate();
-	}
+        internal delegate int TickCallDelegate();
+    }
 }

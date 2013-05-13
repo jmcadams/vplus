@@ -9,17 +9,17 @@
         public static XmlNode CloneNode(XmlDocument doc, XmlNode finalNode, bool deep)
         {
             var stack = new Stack<XmlNode>();
-	        var element = finalNode as XmlElement;
-	        while (finalNode != null && element != null)
+            var element = finalNode as XmlElement;
+            while (finalNode != null && element != null)
             {
                 stack.Push(finalNode);
                 finalNode = finalNode.ParentNode;
             }
             var node = stack.Pop();
             var node2 = doc.SelectSingleNode("//" + node.Name) ?? doc.AppendChild(doc.ImportNode(node, false));
-	        while (stack.Count > 0)
+            while (stack.Count > 0)
             {
-	            node = stack.Pop();
+                node = stack.Pop();
                 XmlNode node3 = node.Attributes["name"] != null ? node2.SelectSingleNode(node.Name + string.Format("[@name = \"{0}\"]", node.Attributes["name"].Value)) : node2.SelectSingleNode(node.Name);
                 node2 = node3 ?? node2.AppendChild(stack.Count == 0 ? doc.ImportNode(node, deep) : doc.ImportNode(node, false));
             }

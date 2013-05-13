@@ -1,19 +1,19 @@
 namespace VixenPlus.Dialogs{
-	using System;
-	using System.Windows.Forms;
-	using System.Drawing;
-	using System.Collections;
+    using System;
+    using System.Windows.Forms;
+    using System.Drawing;
+    using System.Collections;
 
-	public partial class ChannelOutputMaskDialog{
-		private System.ComponentModel.IContainer components = null;
+    public partial class ChannelOutputMaskDialog{
+        private System.ComponentModel.IContainer components = null;
 
-		#region Windows Form Designer generated code
-		private Button buttonCancel;
+        #region Windows Form Designer generated code
+        private Button buttonCancel;
 private Button buttonOK;
 private CheckedListBox checkedListBoxChannels;
 private Label label1;
 
-		private void InitializeComponent()
+        private void InitializeComponent()
         {
             this.label1 = new Label();
             this.checkedListBoxChannels = new CheckedListBox();
@@ -63,9 +63,9 @@ private Label label1;
             base.ResumeLayout(false);
             base.PerformLayout();
         }
-		#endregion
+        #endregion
 
-		protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing && (this.components != null))
             {
@@ -73,5 +73,5 @@ private Label label1;
             }
             base.Dispose(disposing);
         }
-	}
+    }
 }

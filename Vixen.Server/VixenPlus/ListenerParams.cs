@@ -1,6 +1,6 @@
 ﻿namespace VixenPlus
 {
-	using System.Net.Sockets;
+    using System.Net.Sockets;
     using System.Threading;
 
     internal class ListenerParams

@@ -1,13 +1,13 @@
 ﻿namespace VixenPlus
 {
-	internal interface IMedia : ITickSource
-	{
-		string[] OutputTypes { get; }
+    internal interface IMedia : ITickSource
+    {
+        string[] OutputTypes { get; }
 
-		int Position { get; set; }
+        int Position { get; set; }
 
-		bool SupportsVariableSpeeds { get; }
-		string[] GetOutputDevices(int outputTypeIndex);
-		int Load(string mediaFileName);
-	}
+        bool SupportsVariableSpeeds { get; }
+        string[] GetOutputDevices(int outputTypeIndex);
+        int Load(string mediaFileName);
+    }
 }

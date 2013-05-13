@@ -31,14 +31,14 @@ namespace Spectrum
             bool result;
             bool.TryParse(Xml.GetNodeAlways(_mDataNode, "LockSliders", true.ToString()).InnerText, out result);
             var list = new List<FrequencyBandMapping>();
-	        var xmlNodeList = _mDataNode.SelectNodes("Bands/*");
-	        if (xmlNodeList != null)
-		        foreach (XmlNode node in xmlNodeList)
-		        {
-			        list.Add(new FrequencyBandMapping(node));
-		        }
-	        var dialog = new SpectrumDialog(sequence) {LockSliders = result, Mappings = list.ToArray(), ScaleFactor = num};
-	        if (dialog.ShowDialog() == DialogResult.OK)
+            var xmlNodeList = _mDataNode.SelectNodes("Bands/*");
+            if (xmlNodeList != null)
+                foreach (XmlNode node in xmlNodeList)
+                {
+                    list.Add(new FrequencyBandMapping(node));
+                }
+            var dialog = new SpectrumDialog(sequence) {LockSliders = result, Mappings = list.ToArray(), ScaleFactor = num};
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
                 Xml.SetValue(_mDataNode, "Scale", dialog.ScaleFactor.ToString(CultureInfo.InvariantCulture));
                 Xml.SetValue(_mDataNode, "LockSliders", dialog.LockSliders.ToString());

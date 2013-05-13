@@ -6,18 +6,18 @@ using System.Collections;
 
 namespace VixenPlus
 {
-	internal partial class ShutdownDialog
+    internal partial class ShutdownDialog
     {
         private IContainer components = null;
 
-		#region Windows Form Designer generated code
-		private Button buttonAbort;
+        #region Windows Form Designer generated code
+        private Button buttonAbort;
 private Label label1;
 private Label labelShutdownMessage;
 private Panel panel1;
 private PictureBox pictureBox1;
 
-		private void InitializeComponent()
+        private void InitializeComponent()
         {
             this.pictureBox1 = new PictureBox();
             this.label1 = new Label();
@@ -77,9 +77,9 @@ private PictureBox pictureBox1;
             this.panel1.PerformLayout();
             base.ResumeLayout(false);
         }
-		#endregion
+        #endregion
 
-		protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing && (this.components != null))
             {
@@ -87,5 +87,5 @@ private PictureBox pictureBox1;
             }
             base.Dispose(disposing);
         }
-	}
+    }
 }

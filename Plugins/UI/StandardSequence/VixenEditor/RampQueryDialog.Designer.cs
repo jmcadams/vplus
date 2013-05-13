@@ -1,22 +1,22 @@
 namespace VixenEditor {
-	using System;
-	using System.Windows.Forms;
-	using System.Drawing;
-	using System.ComponentModel;
-	using System.Collections;
+    using System;
+    using System.Windows.Forms;
+    using System.Drawing;
+    using System.ComponentModel;
+    using System.Collections;
 
-	internal partial class RampQueryDialog {
-		private IContainer components;
+    internal partial class RampQueryDialog {
+        private IContainer components;
 
-		#region Windows Form Designer generated code
-		private Button buttonCancel;
-		private Button buttonOK;
-		private Label label1;
-		private Label label2;
-		private NumericUpDown numericUpDownEnd;
-		private NumericUpDown numericUpDownStart;
+        #region Windows Form Designer generated code
+        private Button buttonCancel;
+        private Button buttonOK;
+        private Label label1;
+        private Label label2;
+        private NumericUpDown numericUpDownEnd;
+        private NumericUpDown numericUpDownStart;
 
-		private void InitializeComponent() {
+        private void InitializeComponent() {
             this.label1 = new System.Windows.Forms.Label();
             this.numericUpDownStart = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
@@ -106,14 +106,14 @@ namespace VixenEditor {
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
-		#endregion
+        }
+        #endregion
 
-		protected override void Dispose(bool disposing) {
-			if (disposing && (this.components != null)) {
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-	}
+        protected override void Dispose(bool disposing) {
+            if (disposing && (this.components != null)) {
+                this.components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
 }

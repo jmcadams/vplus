@@ -1,8 +1,8 @@
 ﻿namespace VixenPlus
 {
-	internal enum ObjectType
-	{
-		Sequence,
-		Program
-	}
+    internal enum ObjectType
+    {
+        Sequence,
+        Program
+    }
 }

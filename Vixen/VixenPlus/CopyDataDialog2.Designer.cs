@@ -6,12 +6,12 @@ using System.Collections;
 
 namespace VixenPlus
 {
-	internal partial class CopyDataDialog2
+    internal partial class CopyDataDialog2
     {
         private IContainer components = null;
 
-		#region Windows Form Designer generated code
-		private Button btnCopy;
+        #region Windows Form Designer generated code
+        private Button btnCopy;
 private Button buttonDone;
 private Button buttonFromFile;
 private Button buttonFromProgram;
@@ -30,7 +30,7 @@ private OpenFileDialog openFileDialog;
 private SaveFileDialog saveFileDialog;
 private TreeView treeViewFrom;
 
-		private void InitializeComponent()
+        private void InitializeComponent()
         {
             this.btnCopy = new Button();
             this.treeViewFrom = new TreeView();
@@ -186,9 +186,9 @@ private TreeView treeViewFrom;
             base.ResumeLayout(false);
             base.PerformLayout();
         }
-		#endregion
+        #endregion
 
-		protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing && (this.components != null))
             {
@@ -196,5 +196,5 @@ private TreeView treeViewFrom;
             }
             base.Dispose(disposing);
         }
-	}
+    }
 }

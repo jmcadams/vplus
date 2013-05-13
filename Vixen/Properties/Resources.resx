@@ -190,10 +190,10 @@ Execution has been stopped.</value>
   <data name="EngineMissingOrInvalid" xml:space="preserve">
     <value> is missing or does not contain a valid engine</value>
   </data>
-	<data name="Filter_EngineAssembly" xml:space="preserve">
+    <data name="Filter_EngineAssembly" xml:space="preserve">
     <value>Engine assembly</value>
   </data>
-	<data name="Title_SelectEngine" xml:space="preserve">
+    <data name="Title_SelectEngine" xml:space="preserve">
     <value>Select an engine assembly</value>
   </data>
 </root>

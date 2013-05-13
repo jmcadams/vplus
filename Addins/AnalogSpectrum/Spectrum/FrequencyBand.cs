@@ -7,17 +7,17 @@ namespace Spectrum
 
     internal class FrequencyBand
     {
-	    private const int Spectrumsize = 512;
-	    private const float BandWidth = (22050/Spectrumsize);
-	    private static readonly double FrequencyBandwidthMultiplier = Math.Pow(2.0, 0.16666666666666666);
+        private const int Spectrumsize = 512;
+        private const float BandWidth = (22050/Spectrumsize);
+        private static readonly double FrequencyBandwidthMultiplier = Math.Pow(2.0, 0.16666666666666666);
         private readonly string _mCenterFrequency;
-	    private readonly int _mFmodHighFrequencyIndex;
+        private readonly int _mFmodHighFrequencyIndex;
         private readonly int _mFmodLowFrequencyIndex;
         private readonly int _mHighFrequency;
         private readonly int _mLowFrequency;
         private Rectangle _mMaxSliderRegion;
         private Rectangle _mMinSliderRegion;
-	    private Rectangle _mRegion;
+        private Rectangle _mRegion;
         private float _mResponseLevelMax = 1f;
         private float _mResponseLevelMin;
 
@@ -44,9 +44,9 @@ namespace Spectrum
             }
         }
 
-	    public float CurrentScaledLevel { get; set; }
+        public float CurrentScaledLevel { get; set; }
 
-	    public int FmodHighFrequency
+        public int FmodHighFrequency
         {
             get
             {
@@ -118,9 +118,9 @@ namespace Spectrum
             }
         }
 
-	    public int MouseOffset { get; set; }
+        public int MouseOffset { get; set; }
 
-	    public Rectangle Region
+        public Rectangle Region
         {
             get
             {

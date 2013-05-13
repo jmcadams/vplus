@@ -1,19 +1,19 @@
 namespace VixenPlus.Dialogs{
-	using System;
-	using System.Windows.Forms;
-	using System.Drawing;
-	using System.Collections;
+    using System;
+    using System.Windows.Forms;
+    using System.Drawing;
+    using System.Collections;
 
-	public partial class TextQueryDialog{
-		private System.ComponentModel.IContainer components = null;
+    public partial class TextQueryDialog{
+        private System.ComponentModel.IContainer components = null;
 
-		#region Windows Form Designer generated code
-		private Button buttonCancel;
+        #region Windows Form Designer generated code
+        private Button buttonCancel;
 private Button buttonOK;
 private Label labelQuery;
 private TextBox textBoxResponse;
 
-		private void InitializeComponent()
+        private void InitializeComponent()
         {
             this.labelQuery = new Label();
             this.textBoxResponse = new TextBox();
@@ -62,9 +62,9 @@ private TextBox textBoxResponse;
             base.ResumeLayout(false);
             base.PerformLayout();
         }
-		#endregion
+        #endregion
 
-		protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing && (this.components != null))
             {
@@ -72,5 +72,5 @@ private TextBox textBoxResponse;
             }
             base.Dispose(disposing);
         }
-	}
+    }
 }

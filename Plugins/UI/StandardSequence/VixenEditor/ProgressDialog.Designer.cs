@@ -1,15 +1,15 @@
 namespace VixenEditor {
-	using System.Drawing;
-	using System.Windows.Forms;
+    using System.Drawing;
+    using System.Windows.Forms;
 
-	internal partial class ProgressDialog {
-		private System.ComponentModel.IContainer components = null;
+    internal partial class ProgressDialog {
+        private System.ComponentModel.IContainer components = null;
 
-		#region Windows Form Designer generated code
-		private Label lblMessage;
-		private Panel panel1;
+        #region Windows Form Designer generated code
+        private Label lblMessage;
+        private Panel panel1;
 
-		private void InitializeComponent() {
+        private void InitializeComponent() {
             this.lblMessage = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
@@ -49,14 +49,14 @@ namespace VixenEditor {
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
-		#endregion
+        }
+        #endregion
 
-		protected override void Dispose(bool disposing) {
-			if (disposing && (this.components != null)) {
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-	}
+        protected override void Dispose(bool disposing) {
+            if (disposing && (this.components != null)) {
+                this.components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
 }

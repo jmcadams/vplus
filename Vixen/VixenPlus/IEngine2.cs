@@ -2,22 +2,22 @@
 
 namespace VixenPlus
 {
-	internal interface IEngine2 : IObjectQuery, IDisposable
-	{
-		int MediaOutputDevice { get; set; }
+    internal interface IEngine2 : IObjectQuery, IDisposable
+    {
+        int MediaOutputDevice { get; set; }
 
-		string Name { get; }
+        string Name { get; }
 
-		ITickSource TimingSource { get; set; }
-		event EngineErrorHandler EngineError;
+        ITickSource TimingSource { get; set; }
+        event EngineErrorHandler EngineError;
 
-		event EventHandler ProgramEnd;
+        event EventHandler ProgramEnd;
 
-		event EventHandler SequenceChange;
+        event EventHandler SequenceChange;
 
-		void Initialize(object obj);
-		void Initialize(EventSequence obj);
-		void Initialize(Profile obj);
-		void Initialize(SequenceProgram obj);
-	}
+        void Initialize(object obj);
+        void Initialize(EventSequence obj);
+        void Initialize(Profile obj);
+        void Initialize(SequenceProgram obj);
+    }
 }

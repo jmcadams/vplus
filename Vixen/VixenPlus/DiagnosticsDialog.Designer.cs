@@ -6,12 +6,12 @@ using System.Collections;
 
 namespace VixenPlus
 {
-	internal partial class DiagnosticsDialog
+    internal partial class DiagnosticsDialog
     {
         private IContainer components = null;
 
-		#region Windows Form Designer generated code
-		private Button buttonDone;
+        #region Windows Form Designer generated code
+        private Button buttonDone;
 private Button buttonDumpTimers;
 private Button buttonShowOutputPluginDurations;
 private CheckBox checkBoxGetEventAverages;
@@ -23,7 +23,7 @@ private System.Windows.Forms.TabControl tcPage;
 private TabPage tabPageOutputPlugins;
 private TabPage tabPageTimers;
 
-		private void InitializeComponent()
+        private void InitializeComponent()
         {
             this.tcPage = new System.Windows.Forms.TabControl();
             this.tabPageTimers = new TabPage();
@@ -143,9 +143,9 @@ private TabPage tabPageTimers;
             this.tabPageOutputPlugins.PerformLayout();
             base.ResumeLayout(false);
         }
-		#endregion
+        #endregion
 
-		protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing && (this.components != null))
             {
@@ -153,5 +153,5 @@ private TabPage tabPageTimers;
             }
             base.Dispose(disposing);
         }
-	}
+    }
 }

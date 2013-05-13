@@ -3,32 +3,32 @@ using System.Xml;
 
 namespace VixenPlus.Dialogs
 {
-	internal class HardwarePlugin
-	{
-		private readonly List<Controller> _controllers;
-		private readonly XmlNode _dataNode;
-		private readonly IOutputPlugIn _plugin;
+    internal class HardwarePlugin
+    {
+        private readonly List<Controller> _controllers;
+        private readonly XmlNode _dataNode;
+        private readonly IOutputPlugIn _plugin;
 
-		public HardwarePlugin(IOutputPlugIn plugin, XmlNode dataNode)
-		{
-			_plugin = plugin;
-			_dataNode = dataNode;
-			_controllers = new List<Controller>();
-		}
+        public HardwarePlugin(IOutputPlugIn plugin, XmlNode dataNode)
+        {
+            _plugin = plugin;
+            _dataNode = dataNode;
+            _controllers = new List<Controller>();
+        }
 
-		public List<Controller> Controllers
-		{
-			get { return _controllers; }
-		}
+        public List<Controller> Controllers
+        {
+            get { return _controllers; }
+        }
 
-		public XmlNode DataNode
-		{
-			get { return _dataNode; }
-		}
+        public XmlNode DataNode
+        {
+            get { return _dataNode; }
+        }
 
-		public IOutputPlugIn Plugin
-		{
-			get { return _plugin; }
-		}
-	}
+        public IOutputPlugIn Plugin
+        {
+            get { return _plugin; }
+        }
+    }
 }

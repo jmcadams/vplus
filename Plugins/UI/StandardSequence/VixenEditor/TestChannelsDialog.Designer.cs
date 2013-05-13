@@ -1,21 +1,21 @@
 namespace VixenEditor {
-	using System;
-	using System.Windows.Forms;
-	using System.Drawing;
-	using System.Collections;
+    using System;
+    using System.Windows.Forms;
+    using System.Drawing;
+    using System.Collections;
 
-	internal partial class TestChannelsDialog {
-		private System.ComponentModel.IContainer components = null;
+    internal partial class TestChannelsDialog {
+        private System.ComponentModel.IContainer components = null;
 
-		#region Windows Form Designer generated code
-		private Button buttonDone;
-		private Button buttonSelectAll;
+        #region Windows Form Designer generated code
+        private Button buttonDone;
+        private Button buttonSelectAll;
         private Button buttonUnselectAll;
-		private Label labelLevel;
-		private ListBox listBoxChannels;
-		private TrackBar trackBar;
+        private Label labelLevel;
+        private ListBox listBoxChannels;
+        private TrackBar trackBar;
 
-		private void InitializeComponent() {
+        private void InitializeComponent() {
             this.buttonDone = new System.Windows.Forms.Button();
             this.listBoxChannels = new System.Windows.Forms.ListBox();
             this.labelLevel = new System.Windows.Forms.Label();
@@ -112,14 +112,14 @@ namespace VixenEditor {
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
-		#endregion
+        }
+        #endregion
 
-		protected override void Dispose(bool disposing) {
-			if (disposing && (this.components != null)) {
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-	}
+        protected override void Dispose(bool disposing) {
+            if (disposing && (this.components != null)) {
+                this.components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
 }

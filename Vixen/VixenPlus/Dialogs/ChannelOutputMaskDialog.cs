@@ -3,32 +3,32 @@ using System.Windows.Forms;
 
 namespace VixenPlus.Dialogs
 {
-	public partial class ChannelOutputMaskDialog : Form
-	{
-		public ChannelOutputMaskDialog(IEnumerable<Channel> channels)
-		{
-			InitializeComponent();
-			foreach (Channel channel in channels)
-			{
-				checkedListBoxChannels.Items.Add(channel, channel.Enabled);
-			}
-		}
+    public partial class ChannelOutputMaskDialog : Form
+    {
+        public ChannelOutputMaskDialog(IEnumerable<Channel> channels)
+        {
+            InitializeComponent();
+            foreach (Channel channel in channels)
+            {
+                checkedListBoxChannels.Items.Add(channel, channel.Enabled);
+            }
+        }
 
-		public List<int> DisabledChannels
-		{
-			get
-			{
-				var list = new List<int>();
-				for (int i = 0; i < checkedListBoxChannels.Items.Count; i++)
-				{
-					list.Add(i);
-				}
-				foreach (int num2 in checkedListBoxChannels.CheckedIndices)
-				{
-					list.Remove(num2);
-				}
-				return list;
-			}
-		}
-	}
+        public List<int> DisabledChannels
+        {
+            get
+            {
+                var list = new List<int>();
+                for (int i = 0; i < checkedListBoxChannels.Items.Count; i++)
+                {
+                    list.Add(i);
+                }
+                foreach (int num2 in checkedListBoxChannels.CheckedIndices)
+                {
+                    list.Remove(num2);
+                }
+                return list;
+            }
+        }
+    }
 }

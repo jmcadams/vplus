@@ -4,13 +4,13 @@ using System.Drawing;
 using System.Collections;
 
 namespace VixenEditor {
-	internal partial class IntensityAdjustDialog {
-		private System.ComponentModel.IContainer components = null;
+    internal partial class IntensityAdjustDialog {
+        private System.ComponentModel.IContainer components = null;
 
-		#region Windows Form Designer generated code
-		private Label lblDelta;
+        #region Windows Form Designer generated code
+        private Label lblDelta;
 
-		private void InitializeComponent() {
+        private void InitializeComponent() {
             this.lblDelta = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -40,14 +40,14 @@ namespace VixenEditor {
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.IntensityAdjustDialog_KeyUp);
             this.ResumeLayout(false);
 
-		}
-		#endregion
+        }
+        #endregion
 
-		protected override void Dispose(bool disposing) {
-			if (disposing && (this.components != null)) {
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-	}
+        protected override void Dispose(bool disposing) {
+            if (disposing && (this.components != null)) {
+                this.components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
 }

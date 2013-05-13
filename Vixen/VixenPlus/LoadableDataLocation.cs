@@ -1,8 +1,8 @@
 ﻿namespace VixenPlus
 {
-	public enum LoadableDataLocation
-	{
-		Sequence,
-		Application
-	}
+    public enum LoadableDataLocation
+    {
+        Sequence,
+        Application
+    }
 }

@@ -1,20 +1,20 @@
 ﻿namespace AnalogSpectrum.Properties
 {
-	using System.CodeDom.Compiler;
+    using System.CodeDom.Compiler;
     using System.ComponentModel;
     using System.Diagnostics;
     using System.Globalization;
-	using System.Runtime.CompilerServices;
+    using System.Runtime.CompilerServices;
 
     [DebuggerNonUserCode, GeneratedCode("System.Resources.Tools.StronglyTypedResourceBuilder", "2.0.0.0"), CompilerGenerated]
     internal class Resources
     {
-	    private static System.Resources.ResourceManager _resourceMan;
+        private static System.Resources.ResourceManager _resourceMan;
 
-	    [EditorBrowsable(EditorBrowsableState.Advanced)]
-	    internal static CultureInfo Culture { get; set; }
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        internal static CultureInfo Culture { get; set; }
 
-	    [EditorBrowsable(EditorBrowsableState.Advanced)]
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
         internal static System.Resources.ResourceManager ResourceManager
         {
             get

@@ -1,14 +1,14 @@
 namespace VixenPlus{
-	using System;
-	using System.Windows.Forms;
-	using System.Drawing;
-	using System.Collections;
+    using System;
+    using System.Windows.Forms;
+    using System.Drawing;
+    using System.Collections;
 
-	internal partial class MusicPlayerDialog{
-		private System.ComponentModel.IContainer components = null;
+    internal partial class MusicPlayerDialog{
+        private System.ComponentModel.IContainer components = null;
 
-		#region Windows Form Designer generated code
-		private Button buttonAdd;
+        #region Windows Form Designer generated code
+        private Button buttonAdd;
 private Button buttonCancel;
 private Button buttonDown;
 private Button buttonOK;
@@ -27,7 +27,7 @@ private OpenFileDialog openFileDialog;
 private TextBox textBoxNarrative;
 private TextBox textBoxNarrativeIntervalCount;
 
-		private void InitializeComponent()
+        private void InitializeComponent()
         {
             this.groupBox1 = new GroupBox();
             this.buttonDown = new Button();
@@ -208,9 +208,9 @@ private TextBox textBoxNarrativeIntervalCount;
             base.ResumeLayout(false);
             base.PerformLayout();
         }
-		#endregion
+        #endregion
 
-		protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing && (this.components != null))
             {
@@ -218,5 +218,5 @@ private TextBox textBoxNarrativeIntervalCount;
             }
             base.Dispose(disposing);
         }
-	}
+    }
 }

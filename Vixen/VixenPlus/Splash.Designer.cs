@@ -3,14 +3,14 @@ using System.Windows.Forms;
 
 namespace VixenPlus
 {
-	internal partial class Splash
-	{
-		private IContainer components = null;
+    internal partial class Splash
+    {
+        private IContainer components = null;
 
-		#region Windows Form Designer generated code
-		
-		private void InitializeComponent()
-		{
+        #region Windows Form Designer generated code
+        
+        private void InitializeComponent()
+        {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Splash));
             this.SuspendLayout();
             // 
@@ -32,16 +32,16 @@ namespace VixenPlus
             this.TransparencyKey = System.Drawing.Color.Gainsboro;
             this.ResumeLayout(false);
 
-		}
-		#endregion
+        }
+        #endregion
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (this.components != null))
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-	}
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (this.components != null))
+            {
+                this.components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
 }
