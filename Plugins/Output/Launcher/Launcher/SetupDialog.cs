@@ -1,11 +1,10 @@
+using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
 namespace Launcher {
-	using System;
-	using System.ComponentModel;
-	using System.Drawing;
-	using System.Windows.Forms;
-
 	public partial class SetupDialog : Form {
-		private int m_selectedIndex = -1;
+		private int _selectedIndex = -1;
 
 		public SetupDialog(string[][] programs) {
 			this.InitializeComponent();
@@ -27,8 +26,8 @@ namespace Launcher {
 		}
 
 		private void buttonRemove_Click(object sender, EventArgs e) {
-			this.listViewPrograms.Items.RemoveAt(this.m_selectedIndex);
-			this.m_selectedIndex = -1;
+			this.listViewPrograms.Items.RemoveAt(this._selectedIndex);
+			this._selectedIndex = -1;
 			this.SelectIndex(-1);
 		}
 
@@ -61,15 +60,15 @@ namespace Launcher {
 		}
 
 		private void SelectIndex(int index) {
-			if (this.m_selectedIndex != -1) {
-				this.listViewPrograms.Items[this.m_selectedIndex].SubItems[0].Text = this.textBoxPath.Text;
-				this.listViewPrograms.Items[this.m_selectedIndex].SubItems[1].Text = this.textBoxParameters.Text;
-				this.listViewPrograms.Items[this.m_selectedIndex].SubItems[2].Text = this.textBoxTriggerValue.Text;
+			if (this._selectedIndex != -1) {
+				this.listViewPrograms.Items[this._selectedIndex].SubItems[0].Text = this.textBoxPath.Text;
+				this.listViewPrograms.Items[this._selectedIndex].SubItems[1].Text = this.textBoxParameters.Text;
+				this.listViewPrograms.Items[this._selectedIndex].SubItems[2].Text = this.textBoxTriggerValue.Text;
 			}
-			this.m_selectedIndex = index;
+			this._selectedIndex = index;
 			if (index >= 0) {
 				this.listViewPrograms.RedrawItems(index, index, false);
-				ListViewItem item = this.listViewPrograms.Items[this.m_selectedIndex];
+				ListViewItem item = this.listViewPrograms.Items[this._selectedIndex];
 				this.buttonFileDialog.Top = item.Position.Y + this.listViewPrograms.Top;
 				this.buttonFileDialog.Visible = true;
 				this.textBoxPath.Top = 2 + this.buttonFileDialog.Top;
@@ -106,7 +105,7 @@ namespace Launcher {
 		}
 
 		private void textBoxPath_Leave(object sender, EventArgs e) {
-			this.SelectIndex(this.m_selectedIndex);
+			this.SelectIndex(this._selectedIndex);
 		}
 
 		public string[][] Programs {

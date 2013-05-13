@@ -1,119 +1,115 @@
-namespace Launcher
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Windows.Forms;
-    using System.Xml;
-    using VixenPlus;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Windows.Forms;
+using System.Xml;
 
-    public class Launcher : IEventDrivenOutputPlugIn, IOutputPlugIn, IHardwarePlugin, IPlugIn, ISetup
-    {
-        private SetupData m_setupData;
-        private XmlNode m_setupNode;
-        private Dictionary<byte, string[]> m_targets = new Dictionary<byte, string[]>();
+using CommonUtils;
 
-        public void Event(byte[] channelValues)
-        {
-            foreach (byte num in channelValues)
-            {
+using VixenPlus;
+
+namespace Launcher {
+    public class Launcher : IEventDrivenOutputPlugIn {
+        private XmlNode _setupNode;
+        private readonly Dictionary<byte, string[]> _targets = new Dictionary<byte, string[]>();
+
+
+        public void Event(byte[] channelValues) {
+            foreach (var channelValue in channelValues) {
                 string[] strArray;
-                if (this.m_targets.TryGetValue(num, out strArray))
-                {
-                    Process process = new Process();
-                    process.StartInfo = new ProcessStartInfo(strArray[0], strArray[1]);
-                    process.Start();
+                if (!_targets.TryGetValue(channelValue, out strArray)) {
+                    continue;
+                }
+
+                var process = new Process {StartInfo = new ProcessStartInfo(strArray[0], strArray[1])};
+                process.Start();
+            }
+        }
+
+
+        public void Initialize(IExecutable executableObject, SetupData setupData, XmlNode setupNode) {
+            _setupNode = setupNode;
+            if (_setupNode.SelectSingleNode("Programs") == null) {
+                Xml.GetNodeAlways(_setupNode, "Programs");
+            }
+        }
+
+
+        public void Setup() {
+            var programList = _setupNode.SelectNodes("Programs/Program");
+            if (programList == null) {
+                return;
+            }
+
+            var num = 0;
+            var programs = new string[programList.Count][];
+            foreach (XmlNode node in programList) {
+                if (node.Attributes == null) {
+                    continue;
+                }
+
+                programs[num++] = new[] {node.InnerText, node.Attributes["params"].Value, node.Attributes["trigger"].Value};
+            }
+            var dialog = new SetupDialog(programs);
+            if (dialog.ShowDialog() != DialogResult.OK) {
+                return;
+            }
+
+            var contextNode = _setupNode.SelectSingleNode("Programs");
+            if (contextNode == null) {
+                return;
+            }
+            contextNode.RemoveAll();
+            foreach (var parameters in dialog.Programs) {
+                var programNode = Xml.SetNewValue(contextNode, "Program", parameters[0]);
+                Xml.SetAttribute(programNode, "params", parameters[1]);
+                Xml.SetAttribute(programNode, "trigger", parameters[2]);
+            }
+        }
+
+
+        public void Shutdown() {}
+
+
+        public void Startup() {
+            _targets.Clear();
+            var programsNode = _setupNode.SelectNodes("Programs/Program");
+            if (programsNode == null) {
+                return;
+            }
+
+            foreach (XmlNode programNode in programsNode) {
+                if (programNode.Attributes == null) {
+                    continue;
+                }
+                var num = (byte) Utils.ToValue(Convert.ToSingle(programNode.Attributes["trigger"].Value));
+                if (File.Exists(programNode.InnerText)) {
+                    _targets[num] = new[] {programNode.InnerText, programNode.Attributes["params"].Value};
                 }
             }
         }
 
-        public void Initialize(IExecutable executableObject, SetupData setupData, XmlNode setupNode)
-        {
-            this.m_setupData = setupData;
-            this.m_setupNode = setupNode;
-            if (this.m_setupNode.SelectSingleNode("Programs") == null)
-            {
-                Xml.GetNodeAlways(this.m_setupNode, "Programs");
-            }
+
+        public override string ToString() {
+            return Name;
         }
 
-        public void Setup()
-        {
-            XmlNodeList list = this.m_setupNode.SelectNodes("Programs/Program");
-            string[][] programs = new string[list.Count][];
-            int num = 0;
-            foreach (XmlNode node in list)
-            {
-                programs[num++] = new string[] { node.InnerText, node.Attributes["params"].Value, node.Attributes["trigger"].Value };
-            }
-            SetupDialog dialog = new SetupDialog(programs);
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                XmlNode contextNode = this.m_setupNode.SelectSingleNode("Programs");
-                contextNode.RemoveAll();
-                foreach (string[] strArray2 in dialog.Programs)
-                {
-                    XmlNode node3 = Xml.SetNewValue(contextNode, "Program", strArray2[0]);
-                    Xml.SetAttribute(node3, "params", strArray2[1]);
-                    Xml.SetAttribute(node3, "trigger", strArray2[2]);
-                }
-            }
+
+        public string Author {
+            get { return "Vixen and VixenPlus Developers"; }
         }
 
-        public void Shutdown()
-        {
+        public string Description {
+            get { return "External program launcher"; }
         }
 
-        public void Startup()
-        {
-            this.m_targets.Clear();
-            foreach (XmlNode node in this.m_setupNode.SelectNodes("Programs/Program"))
-            {
-                byte num = (byte) Math.Round((double) ((Convert.ToSingle(node.Attributes["trigger"].Value) * 255f) / 100f), MidpointRounding.AwayFromZero);
-                if (File.Exists(node.InnerText))
-                {
-                    this.m_targets[num] = new string[] { node.InnerText, node.Attributes["params"].Value };
-                }
-            }
+        public HardwareMap[] HardwareMap {
+            get { return new HardwareMap[0]; }
         }
 
-        public override string ToString()
-        {
-            return this.Name;
-        }
-
-        public string Author
-        {
-            get
-            {
-                return "Vixen and VixenPlus Developers";
-            }
-        }
-
-        public string Description
-        {
-            get
-            {
-                return "External program launcher";
-            }
-        }
-
-        public VixenPlus.HardwareMap[] HardwareMap
-        {
-            get
-            {
-                return new VixenPlus.HardwareMap[0];
-            }
-        }
-
-        public string Name
-        {
-            get
-            {
-                return "Launcher";
-            }
+        public string Name {
+            get { return "Launcher"; }
         }
     }
 }
-
