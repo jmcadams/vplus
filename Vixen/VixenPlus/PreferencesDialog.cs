@@ -26,8 +26,8 @@ namespace VixenPlus {
             InitializeComponent();
             _preferences = Preference2.GetInstance();
             _uiPlugins = uiPlugins;
-            foreach (var @in in uiPlugins) {
-                comboBoxSequenceType.Items.Add(@in.FileTypeDescription);
+            foreach (var plugIn in uiPlugins) {
+                comboBoxSequenceType.Items.Add(plugIn.FileTypeDescription);
             }
             treeView.Nodes["nodeGeneral"].Tag = generalTab;
             treeView.Nodes["nodeScreen"].Tag = screenTab;
@@ -86,13 +86,11 @@ namespace VixenPlus {
         }
 
 
-        //ComponentResourceManager manager = new ComponentResourceManager(typeof(PreferencesDialog));
-        //this.label25.Text = manager.GetString("label25.Text");
-
-
         private void PopulateAudioDeviceList() {
             comboBoxDefaultAudioDevice.Items.Add("Use application's default device");
+            // ReSharper disable CoVariantArrayConversion
             comboBoxDefaultAudioDevice.Items.AddRange(fmod.GetSoundDeviceList());
+            // ReSharper restore CoVariantArrayConversion
         }
 
 
@@ -140,7 +138,7 @@ namespace VixenPlus {
                 case (int) RootNodes.SequenceEditing: {
                     _preferences.SetString("MaxColumnWidth", textBoxMaxColumnWidth.Text);
                     _preferences.SetString("MaxRowHeight", textBoxMaxRowHeight.Text);
-                    int index = textBoxIntensityLargeDelta.Text.Trim().IndexOf('%');
+                    var index = textBoxIntensityLargeDelta.Text.Trim().IndexOf('%');
                     if (index != -1) {
                         textBoxIntensityLargeDelta.Text = textBoxIntensityLargeDelta.Text.Substring(0, index).Trim();
                     }
@@ -216,7 +214,9 @@ namespace VixenPlus {
                 var selectedIndex = box.SelectedIndex;
                 box.BeginUpdate();
                 box.Items.Clear();
+                // ReSharper disable CoVariantArrayConversion
                 box.Items.AddRange(list.ToArray());
+                // ReSharper restore CoVariantArrayConversion
                 if (selectedIndex < box.Items.Count) {
                     box.SelectedIndex = selectedIndex;
                 }
@@ -322,21 +322,21 @@ namespace VixenPlus {
                     return;
 
                 case (int) RootNodes.RemoteExecution: {
-                    var str4 = _preferences.GetString("SynchronousData");
-                    if (str4 != "Embedded") {
-                        if (str4 == "Default") {
+                    var syncType = _preferences.GetString("SynchronousData");
+                    if (syncType != "Embedded") {
+                        if (syncType == "Default") {
                             radioButtonSyncDefaultProfileData.Checked = true;
                         }
                         else {
                             radioButtonSyncProfileData.Checked = true;
-                            comboBoxSyncProfile.SelectedIndex = comboBoxSyncProfile.Items.IndexOf(str4);
+                            comboBoxSyncProfile.SelectedIndex = comboBoxSyncProfile.Items.IndexOf(syncType);
                         }
                     }
                     else {
                         radioButtonSyncEmbeddedData.Checked = true;
                     }
-                    str4 = _preferences.GetString("AsynchronousData");
-                    switch (str4) {
+                    syncType = _preferences.GetString("AsynchronousData");
+                    switch (syncType) {
                         case "Sync":
                             radioButtonAsyncSyncObject.Checked = true;
                             break;
@@ -345,7 +345,7 @@ namespace VixenPlus {
                             break;
                         default:
                             radioButtonAsyncProfileData.Checked = true;
-                            comboBoxAsyncProfile.SelectedIndex = comboBoxAsyncProfile.Items.IndexOf(str4);
+                            comboBoxAsyncProfile.SelectedIndex = comboBoxAsyncProfile.Items.IndexOf(syncType);
                             break;
                     }
                     return;
