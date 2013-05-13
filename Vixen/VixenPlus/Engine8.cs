@@ -682,7 +682,7 @@ namespace VixenPlus {
                 return;
             }
 
-            lock (_runLock) {
+            //lock (_runLock) {
                 if (_secondaryEngine != null) {
                     _secondaryEngine.Pause();
                     IsPaused = true;
@@ -704,7 +704,7 @@ namespace VixenPlus {
                     IsPaused = true;
                     _isRunning = false;
                 }
-            }
+            //}
         }
 
 
