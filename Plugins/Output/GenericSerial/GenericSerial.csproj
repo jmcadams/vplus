@@ -113,7 +113,9 @@
     <Compile Include="Global.cs">
       <SubType>Code</SubType>
     </Compile>
-    <EmbeddedResource Include="GenericSerial.SetupDialog.resources" />
+    <EmbeddedResource Include="GenericSerial\SetupDialog.resx">
+      <DependentUpon>SetupDialog.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
