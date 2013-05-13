@@ -102,8 +102,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdjustablePreview\Properties\Resources.cs">
-      <SubType>Code</SubType>
+    <Compile Include="AdjustablePreview\Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -135,7 +137,13 @@
     <Compile Include="Preview\Xml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <EmbeddedResource Include="AdjustablePreview.Properties.Resources.resources" />
+    <EmbeddedResource Include="AdjustablePreview\Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Preview\PreviewDialog.resx">
+      <DependentUpon>PreviewDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Preview\ReorderDialog.resx">
       <DependentUpon>ReorderDialog.cs</DependentUpon>
     </EmbeddedResource>

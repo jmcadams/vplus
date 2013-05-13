@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
+
+using AdjustablePreview.Properties;
+
 using VixenPlus;
 
 namespace Preview {
@@ -14,6 +17,7 @@ namespace Preview {
         public ReorderDialog(List<Channel> channels, Dictionary<int, List<uint>> channelDictionary) {
             InitializeComponent();
             ResetLabel();
+            UpdateButtons();
             foreach (var pair in channelDictionary) {
                 List<uint> list;
                 _channelDictionary[pair.Key] = list = new List<uint>();
@@ -26,39 +30,30 @@ namespace Preview {
 
 
         private void buttonClear_Click(object sender, EventArgs e) {
-            if (comboBoxTo.SelectedIndex == -1) {
-                MessageBox.Show("Please select a channel to clear.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-            }
-            else {
-                _channelDictionary.Remove(comboBoxTo.SelectedIndex);
-                MessageBox.Show(string.Format("Channel '{0}' has been cleared.", comboBoxTo.SelectedItem), Vendor.ProductName, MessageBoxButtons.OK,
-                                MessageBoxIcon.Asterisk);
-            }
+            _channelDictionary.Remove(comboBoxTo.SelectedIndex);
+            SetLabel(Resources.ChannelCleared);
         }
 
 
         private void buttonCopy_Click(object sender, EventArgs e) {
             timerFade.Stop();
             ResetLabel();
-            if ((comboBoxFrom.SelectedIndex == -1) || (comboBoxTo.SelectedIndex == -1)) {
-                MessageBox.Show("Please select channels to copy from and to.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+            List<uint> list;
+            if (!_channelDictionary.TryGetValue(comboBoxFrom.SelectedIndex, out list)) {
+                SetLabel(Resources.NothingToCopy);
             }
             else {
-                List<uint> list;
-                if (!_channelDictionary.TryGetValue(comboBoxFrom.SelectedIndex, out list)) {
-                    MessageBox.Show(string.Format("{0} has no cells drawn.", comboBoxFrom.SelectedItem), Vendor.ProductName, MessageBoxButtons.OK,
-                                    MessageBoxIcon.Hand);
-                }
-                else {
-                    _channelDictionary[comboBoxTo.SelectedIndex] = list;
-                    timerFade.Start();
-                    lblChannelCopied.Text = "Channel Copied";
-                    //MessageBox.Show(
-                    //    string.Format("Channel '{0}' has been copied to channel '{1}'.", comboBoxFrom.SelectedItem, comboBoxTo.SelectedItem),
-                    //    Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                }
+                _channelDictionary[comboBoxTo.SelectedIndex] = list;
+                SetLabel(Resources.ChannelCopied);
             }
         }
+
+
+        private void SetLabel(string text) {
+            timerFade.Start();
+            lblChannelCopied.Text = text;
+        }
+
 
         private void ResetLabel() {
             lblChannelCopied.Text = "";
@@ -70,14 +65,26 @@ namespace Preview {
             get { return _channelDictionary; }
         }
 
+
         private void timerFade_Tick(object sender, EventArgs e) {
             timerFade.Stop();
-            for (var i = 1; i < 16; i++) {
-                lblChannelCopied.ForeColor = Color.FromArgb(255 - (i * 16), Color.FromKnownColor(KnownColor.ControlText));
+            for (var i = 15; i > 0; i--) {
+                lblChannelCopied.ForeColor = Color.FromArgb(i * 16, Color.FromKnownColor(KnownColor.ControlText));
                 Application.DoEvents();
-                Thread.Sleep(20);
+                Thread.Sleep(33);
             }
             ResetLabel();
+        }
+
+
+        private void comboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            UpdateButtons();
+        }
+
+
+        private void UpdateButtons() {
+            buttonCopy.Enabled = (comboBoxFrom.SelectedIndex != -1) && (comboBoxTo.SelectedIndex != -1);
+            buttonClear.Enabled = (comboBoxTo.SelectedIndex != -1);
         }
     }
 }

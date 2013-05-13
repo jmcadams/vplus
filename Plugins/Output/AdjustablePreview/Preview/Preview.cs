@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml;
+
+using AdjustablePreview.Properties;
+
 using VixenPlus;
 
 namespace Preview {
@@ -31,15 +34,16 @@ namespace Preview {
             _channels.AddRange(executableObject.Channels);
             _setupData = setupData;
             _setupNode = setupNode;
-            _startChannel = Convert.ToInt32(_setupNode.Attributes["from"].Value) - 1;
+            if (_setupNode.Attributes != null) {
+                _startChannel = Convert.ToInt32(_setupNode.Attributes["from"].Value) - 1;
+            }
             setupData.GetBytes(_setupNode, "BackgroundImage", new byte[0]);
         }
 
 
         public void Setup() {
             if (_channels.Count == 0) {
-                MessageBox.Show("The item you are trying to create a preview for has no channels.", "Preview", MessageBoxButtons.OK,
-                                MessageBoxIcon.Hand);
+                MessageBox.Show(Resources.NoChannelsInProfile, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
             }
             else {
                 _setupDialog = new SetupDialog(_setupData, _setupNode, _channels, _startChannel);
@@ -86,7 +90,7 @@ namespace Preview {
         }
 
         public string Description {
-            get { return "Adjustable sequence preview plugin for Vixen"; }
+            get { return "Built in previewer for VixenPlus"; }
         }
 
         public HardwareMap[] HardwareMap {

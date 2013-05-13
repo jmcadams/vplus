@@ -79,6 +79,15 @@ namespace AdjustablePreview.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Background image saved..
+        /// </summary>
+        internal static string ImageSaved {
+            get {
+                return ResourceManager.GetString("ImageSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are not any channels to create a preview in the selected profile..
         /// </summary>
         internal static string NoChannelsInProfile {
@@ -93,6 +102,15 @@ namespace AdjustablePreview.Properties {
         internal static string NothingToCopy {
             get {
                 return ResourceManager.GetString("NothingToCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Would you like to save your changes?.
+        /// </summary>
+        internal static string SaveChanges {
+            get {
+                return ResourceManager.GetString("SaveChanges", resourceCulture);
             }
         }
     }

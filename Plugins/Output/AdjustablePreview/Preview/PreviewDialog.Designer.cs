@@ -11,29 +11,35 @@ namespace Preview{
         private PictureBox pictureBoxShowGrid;
 
         private void InitializeComponent() {
-            pictureBoxShowGrid = new PictureBox();
-            ((ISupportInitialize) pictureBoxShowGrid).BeginInit();
-            SuspendLayout();
-            pictureBoxShowGrid.BackColor = Color.Transparent;
-            pictureBoxShowGrid.BackgroundImageLayout = ImageLayout.None;
-            pictureBoxShowGrid.Location = new Point(0, 0);
-            pictureBoxShowGrid.Name = "_pictureBoxShowGrid";
-            pictureBoxShowGrid.Size = new Size(576, 288);
-            pictureBoxShowGrid.TabIndex = 14;
-            pictureBoxShowGrid.TabStop = false;
-            pictureBoxShowGrid.Paint += pictureBoxShowGrid_Paint;
-            AutoScaleDimensions = new SizeF(6f, 13f);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            BackColor = Color.Black;
-            ClientSize = new Size(576, 286);
-            ControlBox = false;
-            Controls.Add(pictureBoxShowGrid);
-            Name = "PreviewDialog";
-            StartPosition = FormStartPosition.Manual;
-            Text = "Sequence Preview";
-            FormClosing += PreviewDialog_FormClosing;
-            ((ISupportInitialize) pictureBoxShowGrid).EndInit();
-            ResumeLayout(false);
+            this.pictureBoxShowGrid = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxShowGrid)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // pictureBoxShowGrid
+            // 
+            this.pictureBoxShowGrid.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBoxShowGrid.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pictureBoxShowGrid.Location = new System.Drawing.Point(0, 0);
+            this.pictureBoxShowGrid.Name = "pictureBoxShowGrid";
+            this.pictureBoxShowGrid.Size = new System.Drawing.Size(576, 288);
+            this.pictureBoxShowGrid.TabIndex = 14;
+            this.pictureBoxShowGrid.TabStop = false;
+            this.pictureBoxShowGrid.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxShowGrid_Paint);
+            // 
+            // PreviewDialog
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Black;
+            this.ClientSize = new System.Drawing.Size(576, 286);
+            this.ControlBox = false;
+            this.Controls.Add(this.pictureBoxShowGrid);
+            this.Name = "PreviewDialog";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.Text = "Sequence Preview";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxShowGrid)).EndInit();
+            this.ResumeLayout(false);
+
         }
         #endregion
 

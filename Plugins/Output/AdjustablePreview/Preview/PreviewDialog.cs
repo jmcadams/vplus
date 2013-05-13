@@ -25,20 +25,15 @@ namespace Preview {
 
         public PreviewDialog(XmlNode setupNode, IList<Channel> channels, int startChannel) {
             InitializeComponent();
-            try {
-                _startChannel = startChannel;
-                _channelDictionary = new Dictionary<int, List<uint>>();
-                _channelColors = new Color[channels.Count - startChannel];
-                var isOutputRedirected = bool.Parse(VixenPlus.Xml.GetNodeAlways(setupNode, "RedirectOutputs", "False").InnerText);
+            _startChannel = startChannel;
+            _channelDictionary = new Dictionary<int, List<uint>>();
+            _channelColors = new Color[channels.Count - startChannel];
+            var isOutputRedirected = bool.Parse(VixenPlus.Xml.GetNodeAlways(setupNode, "RedirectOutputs", "False").InnerText);
 
-                SetChannelColors(channels, startChannel, isOutputRedirected);
-                SetChannelBitmaps(channels, isOutputRedirected, setupNode.SelectNodes("Channels/Channel"));
-                SetBackgroundImage(setupNode.SelectSingleNode("BackgroundImage"));
-                SetDisplayInfo(setupNode.SelectSingleNode("Display"));
-            }
-            catch (NullReferenceException exception) {
-                throw new Exception(exception.Message + "\n\nHave you run the setup?");
-            }
+            SetChannelColors(channels, startChannel, isOutputRedirected);
+            SetChannelBitmaps(channels, isOutputRedirected, setupNode.SelectNodes("Channels/Channel"));
+            SetBackgroundImage(setupNode.SelectSingleNode("BackgroundImage"));
+            SetDisplayInfo(setupNode.SelectSingleNode("Display"));
         }
 
 
@@ -143,11 +138,11 @@ namespace Preview {
 
             for (var row = 0; row < height; row++) {
                 for (var column = 0; column < width; column++) {
-                    var num6 = _backBuffer[row, column];
-                    if ((num6 & 0xff000000) <= 0) {
+                    var pointEventValue = _backBuffer[row, column];
+                    if ((pointEventValue & 0xff000000) <= 0) {
                         continue;
                     }
-                    _channelBrush.Color = Color.FromArgb((int) num6);
+                    _channelBrush.Color = Color.FromArgb((int) pointEventValue);
                     e.Graphics.FillRectangle(_channelBrush, column * cellOffset, row * cellOffset, _cellSize, _cellSize);
                 }
             }
@@ -180,15 +175,15 @@ namespace Preview {
                         var b = channelColor.B;
                         var pointEventValue = _backBuffer[row, column];
                         if (pointEventValue != 0) {
-                            var eventColor = Color.FromArgb((int)pointEventValue);
+                            var eventColor = Color.FromArgb((int) pointEventValue);
 
                             a = Math.Max(alpha, eventColor.A);
-                            var channelAlpha = alpha / ((float)a);
-                            var existingAlpha = eventColor.A / ((float)a);
+                            var channelAlpha = alpha / ((float) a);
+                            var existingAlpha = eventColor.A / ((float) a);
 
-                            r = (byte)(((int)((eventColor.R * existingAlpha) + (channelColor.R * channelAlpha))) >> 1);
-                            g = (byte)(((int)((eventColor.G * existingAlpha) + (channelColor.G * channelAlpha))) >> 1);
-                            b = (byte)(((int)((eventColor.B * existingAlpha) + (channelColor.B * channelAlpha))) >> 1);
+                            r = (byte) (((int) ((eventColor.R * existingAlpha) + (channelColor.R * channelAlpha))) >> 1);
+                            g = (byte) (((int) ((eventColor.G * existingAlpha) + (channelColor.G * channelAlpha))) >> 1);
+                            b = (byte) (((int) ((eventColor.B * existingAlpha) + (channelColor.B * channelAlpha))) >> 1);
                         }
                         pointEventValue = (uint) ((((a << 24) | (r << 16)) | (g << 8)) | b);
                         _backBuffer[row, column] = pointEventValue;
@@ -235,10 +230,12 @@ namespace Preview {
         }
 
 
+        private const int ClassStyleNoClose = 0x200;
+
         protected override CreateParams CreateParams {
             get {
                 var createParams = base.CreateParams;
-                createParams.ClassStyle |= 0x200;
+                createParams.ClassStyle |= ClassStyleNoClose;
                 return createParams;
             }
         }

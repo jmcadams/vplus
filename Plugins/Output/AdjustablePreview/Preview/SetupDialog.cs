@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -7,6 +8,9 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
+
+using AdjustablePreview.Properties;
+
 using VixenPlus;
 
 namespace Preview {
@@ -24,32 +28,26 @@ namespace Preview {
         private readonly int _startChannel;
 
 
-        public SetupDialog(SetupData setupData, XmlNode setupNode, List<Channel> channels, int startChannel) {
-            int num;
-            _setupNode = null;
-            _setupData = null;
+        public SetupDialog(SetupData setupData, XmlNode setupNode, IList<Channel> channels, int startChannel) {
             _backgroundImageFileName = string.Empty;
             _dirty = false;
             _channelDictionary = new Dictionary<int, List<uint>>();
-            _channels = null;
             _controlDown = false;
             _originalBackground = null;
             _resizing = false;
-            components = null;
             InitializeComponent();
             _setupData = setupData;
             _setupNode = setupNode;
             _startChannel = startChannel;
+            _channels = new List<Channel>();
+
             toolStripComboBoxPixelSize.SelectedIndex = 7;
             toolStripComboBoxChannels.BeginUpdate();
-            for (num = _startChannel; num < channels.Count; num++) {
-                toolStripComboBoxChannels.Items.Add(string.Format("{0}: {1}", num + 1, channels[num].Name));
+            for (var channel = _startChannel; channel < channels.Count; channel++) {
+                toolStripComboBoxChannels.Items.Add(string.Format("{0}: {1}", channel + 1, channels[channel].Name));
+                _channels.Add(channels[channel]);
             }
             toolStripComboBoxChannels.EndUpdate();
-            _channels = new List<Channel>();
-            for (num = _startChannel; num < channels.Count; num++) {
-                _channels.Add(channels[num]);
-            }
             UpdateFromSetupNode();
         }
 
@@ -66,15 +64,6 @@ namespace Preview {
             _dirty = false;
         }
 
-
-        //ComponentResourceManager manager = new ComponentResourceManager(typeof(SetupDialog));
-        //toolStripDropDownButtonUpdate.Image = (Image)manager.GetObject("toolStripDropDownButtonUpdate.Image");
-        //toolStripButtonResetSize.Image = (Image)manager.GetObject("toolStripButtonResetSize.Image");
-        //toolStripDropDownButtonClear.Image = (Image)manager.GetObject("toolStripDropDownButtonClear.Image");
-        //toolStripButtonLoadImage.Image = (Image)manager.GetObject("toolStripButtonLoadImage.Image");
-        //toolStripButtonClearImage.Image = (Image)manager.GetObject("toolStripButtonClearImage.Image");
-        //toolStripButtonSaveImage.Image = (Image)manager.GetObject("toolStripButtonSaveImage.Image");
-        //toolStripButtonReorder.Image = (Image)manager.GetObject("toolStripButtonReorder.Image");
 
         private void pictureBoxSetupGrid_MouseEvent(object sender, MouseEventArgs e) {
             if ((e.X < 0) || (e.Y < 0)) {
@@ -253,7 +242,7 @@ namespace Preview {
                 return;
             }
 
-            switch (MessageBox.Show("Keep changes?", "Vixen preview", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)) {
+            switch (MessageBox.Show(Resources.SaveChanges, Vendor.ProductName, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)) {
                 case DialogResult.Cancel:
                     e.Cancel = true;
                     break;
@@ -349,7 +338,7 @@ namespace Preview {
             }
 
             new Bitmap(_originalBackground).Save(Path.ChangeExtension(saveFileDialog.FileName, ".jpg"), ImageFormat.Jpeg);
-            MessageBox.Show("File saved.", "Preview", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            MessageBox.Show(Resources.ImageSaved, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
 
@@ -389,80 +378,97 @@ namespace Preview {
             _cellSize = 8;
 
             checkBoxRedirectOutputs.Checked = _setupData.GetBoolean(_setupNode, "RedirectOutputs", false);
-            var setupDataNode = _setupNode.SelectSingleNode("Display");
-            if (setupDataNode != null) {
-                var heightNode = setupDataNode.SelectSingleNode("Height");
-                if (heightNode != null) {
-                    height = Convert.ToInt32(heightNode.InnerText);
-                }
-                var widthNode = setupDataNode.SelectSingleNode("Width");
-                if (widthNode != null) {
-                    width = Convert.ToInt32(widthNode.InnerText);
-                }
-                var pixelSizeNode = setupDataNode.SelectSingleNode("PixelSize");
-                if (pixelSizeNode != null) {
-                    _cellSize = Convert.ToInt32(pixelSizeNode.InnerText);
-                }
-            }
 
+            SetDisplay(ref width, ref height, _setupNode.SelectSingleNode("Display"));
             SetPictureBoxSize(width * (_cellSize + 1), height * (_cellSize + 1));
             UpdateSizeUI();
-            var backgroundImageNode = _setupNode.SelectSingleNode("BackgroundImage");
-            if (backgroundImageNode != null) {
-                var buffer = Convert.FromBase64String(backgroundImageNode.InnerText);
-                if (buffer.Length > 0) {
-                    using (var stream = new MemoryStream(buffer)) {
-                        SetBackground(new Bitmap(stream));
-                    }
-                }
-                else {
-                    SetBackground(null);
-                }
-            }
-            if (setupDataNode != null) {
-                trackBarBrightness.Value = _setupData.GetInteger(setupDataNode, "Brightness", 10);
-                trackBarBrightness_ValueChanged(null, null);
-            }
-            var channelNode = _setupNode.SelectNodes("Channels/Channel");
-            if (channelNode != null) {
-                foreach (XmlNode channel in channelNode) {
-                    if (channel.Attributes != null) {
-                        var num3 = Convert.ToInt32(channel.Attributes["number"].Value);
-                        if (num3 < _startChannel) {
-                            continue;
-                        }
-                        var list = new List<uint>();
-                        var buffer2 = Convert.FromBase64String(channel.InnerText);
-                        for (var i = 0; i < buffer2.Length; i += 4) {
-                            list.Add(BitConverter.ToUInt32(buffer2, i));
-                        }
-                        _channelDictionary[num3 - _startChannel] = list;
-                    }
-                }
-            }
+            SetBackgroundImage(_setupNode.SelectSingleNode("BackgroundImage"), _setupNode.SelectSingleNode("Display"));
+            SetChannels(_setupNode.SelectNodes("Channels/Channel"));
+
             pictureBoxSetupGrid.Refresh();
         }
 
 
+        private void SetChannels(IEnumerable channelNode) {
+            if (channelNode == null) {
+                return;
+            }
+
+            foreach (XmlNode channel in channelNode) {
+                if (channel.Attributes == null) {
+                    continue;
+                }
+
+                var channelNumber = Convert.ToInt32(channel.Attributes["number"].Value);
+                if (channelNumber < _startChannel) {
+                    continue;
+                }
+                var channelDirectory = new List<uint>();
+                var channelBitmap = Convert.FromBase64String(channel.InnerText);
+                for (var i = 0; i < channelBitmap.Length; i += 4) {
+                    channelDirectory.Add(BitConverter.ToUInt32(channelBitmap, i));
+                }
+                _channelDictionary[channelNumber - _startChannel] = channelDirectory;
+            }
+        }
+
+
+        private void SetBackgroundImage(XmlNode backgroundImageNode, XmlNode setupDataNode) {
+            if (backgroundImageNode == null) {
+                return;
+            }
+
+            var image = Convert.FromBase64String(backgroundImageNode.InnerText);
+            if (image.Length > 0) {
+                using (var stream = new MemoryStream(image)) {
+                    SetBackground(new Bitmap(stream));
+                }
+            }
+            else {
+                SetBackground(null);
+            }
+
+            trackBarBrightness.Value = _setupData.GetInteger(setupDataNode, "Brightness", 10);
+            trackBarBrightness_ValueChanged(null, null);
+        }
+
+
+        private void SetDisplay(ref int width, ref int height, XmlNode setupDataNode) {
+            if (setupDataNode == null) {
+                return;
+            }
+
+            var heightNode = setupDataNode.SelectSingleNode("Height");
+            if (heightNode != null) {
+                height = Convert.ToInt32(heightNode.InnerText);
+            }
+
+            var widthNode = setupDataNode.SelectSingleNode("Width");
+            if (widthNode != null) {
+                width = Convert.ToInt32(widthNode.InnerText);
+            }
+
+            var pixelSizeNode = setupDataNode.SelectSingleNode("PixelSize");
+            if (pixelSizeNode != null) {
+                _cellSize = Convert.ToInt32(pixelSizeNode.InnerText);
+            }
+        }
+
+
         private void UpdatePosition() {
-            var point = new Point();
-            if (pictureBoxSetupGrid.Width > panelPictureBoxContainer.Width) {
-                point.X = 0;
-            }
-            else {
-                point.X = ((panelPictureBoxContainer.Width - pictureBoxSetupGrid.Width) / 2) + ClientRectangle.Left;
-            }
-            if (pictureBoxSetupGrid.Height > panelPictureBoxContainer.Height) {
-                point.Y = 0;
-            }
-            else {
-                point.Y = ((panelPictureBoxContainer.Height - pictureBoxSetupGrid.Height) / 2) + ClientRectangle.Top;
-            }
+            var point = new Point {
+                X =
+                    pictureBoxSetupGrid.Width > panelPictureBoxContainer.Width
+                        ? 0 : ((panelPictureBoxContainer.Width - pictureBoxSetupGrid.Width) / 2) + ClientRectangle.Left,
+                Y =
+                    pictureBoxSetupGrid.Height > panelPictureBoxContainer.Height
+                        ? 0 : ((panelPictureBoxContainer.Height - pictureBoxSetupGrid.Height) / 2) + ClientRectangle.Top
+            };
             pictureBoxSetupGrid.Location = point;
-            int num = trackBarBrightness.Right - labelBrightness.Left;
-            int num2 = panel1.Width / 2;
-            labelBrightness.Left = num2 - (num / 2);
-            trackBarBrightness.Left = (labelBrightness.Left + num) - trackBarBrightness.Width;
+            var brightnessGutter = trackBarBrightness.Right - labelBrightness.Left;
+            var panelCenter = panel1.Width / 2;
+            labelBrightness.Left = panelCenter - (brightnessGutter / 2);
+            trackBarBrightness.Left = (labelBrightness.Left + brightnessGutter) - trackBarBrightness.Width;
         }
 
 
@@ -491,15 +497,15 @@ namespace Preview {
                 }
             }
             var emptyNodeAlways = Xml.GetEmptyNodeAlways(_setupNode, "Channels");
-            var list = new List<byte>();
+            var channelDictionary = new List<byte>();
             foreach (var num in _channelDictionary.Keys) {
-                list.Clear();
+                channelDictionary.Clear();
                 var node = Xml.SetNewValue(emptyNodeAlways, "Channel", string.Empty);
                 Xml.SetAttribute(node, "number", (num + _startChannel).ToString(CultureInfo.InvariantCulture));
                 foreach (var num2 in _channelDictionary[num]) {
-                    list.AddRange(BitConverter.GetBytes(num2));
+                    channelDictionary.AddRange(BitConverter.GetBytes(num2));
                 }
-                node.InnerText = Convert.ToBase64String(list.ToArray());
+                node.InnerText = Convert.ToBase64String(channelDictionary.ToArray());
             }
             _setupData.SetBoolean(_setupNode, "RedirectOutputs", checkBoxRedirectOutputs.Checked);
         }

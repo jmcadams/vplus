@@ -110,4 +110,10 @@
 	<data name="ChannelCopied" xml:space="preserve">
     <value>Channel Copied</value>
   </data>
+	<data name="SaveChanges" xml:space="preserve">
+    <value>Would you like to save your changes?</value>
+  </data>
+	<data name="ImageSaved" xml:space="preserve">
+    <value>Background image saved.</value>
+  </data>
 </root>

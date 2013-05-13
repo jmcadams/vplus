@@ -6,7 +6,7 @@ namespace Preview {
 	using System.Collections;
 
 	public partial class SetupDialog {
-		private IContainer components;
+	    private IContainer components = null;
 
 		#region Windows Form Designer generated code
 		private ToolStripMenuItem allChannelsToolStripMenuItem;
@@ -402,6 +402,7 @@ namespace Preview {
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Setup for sequence preview";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SetupDialog_FormClosing);
             this.ResizeBegin += new System.EventHandler(this.SetupDialog_ResizeBegin);
             this.ResizeEnd += new System.EventHandler(this.SetupDialog_ResizeEnd);
