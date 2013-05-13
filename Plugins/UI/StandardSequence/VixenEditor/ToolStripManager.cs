@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Collections;
+using System.Globalization;
 
 using Properties;
 
@@ -43,6 +44,9 @@ namespace VixenEditor
 
 
         public static Image GetBackground(bool isOn) {
+            if (_onBackground == null) {
+                ResizeBackgroundImages();
+            }
             return isOn ? _onBackground : null;
         }
 
@@ -224,7 +228,7 @@ namespace VixenEditor
             }
         }
 
-        private static void ResizeChildren(ToolStripItemCollection toolStripItems)
+        private static void ResizeChildren(IEnumerable toolStripItems)
         {
             foreach (var item in toolStripItems) {
                 var button = item as ToolStripButton;
