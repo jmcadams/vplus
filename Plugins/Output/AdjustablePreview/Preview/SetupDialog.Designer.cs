@@ -1,49 +1,49 @@
+using System;
+using System.Windows.Forms;
+using System.Drawing;
+using System.ComponentModel;
+using System.Collections;
+
 namespace Preview {
-	using System;
-	using System.Windows.Forms;
-	using System.Drawing;
-	using System.ComponentModel;
-	using System.Collections;
+    public partial class SetupDialog {
+        private IContainer components = null;
 
-	public partial class SetupDialog {
-	    private IContainer components = null;
+        #region Windows Form Designer generated code
+        private ToolStripMenuItem allChannelsToolStripMenuItem;
+        private Button buttonCancel;
+        private Button buttonOK;
+        private CheckBox checkBoxRedirectOutputs;
+        private Label labelBrightness;
+        private Label labelChannel;
+        private OpenFileDialog openFileDialog;
+        private Panel panel1;
+        private Panel panelPictureBoxContainer;
+        private PictureBox pictureBoxSetupGrid;
+        private SaveFileDialog saveFileDialog;
+        private ToolStripMenuItem selectedChannelToolStripMenuItem;
+        private ToolStrip toolStrip1;
+        private ToolStrip toolStrip2;
+        private ToolStripButton toolStripButtonClearImage;
+        private ToolStripButton toolStripButtonLoadImage;
+        private ToolStripButton toolStripButtonReorder;
+        private ToolStripButton toolStripButtonResetSize;
+        private ToolStripButton toolStripButtonSaveImage;
+        private ToolStripComboBox toolStripComboBoxChannels;
+        private ToolStripComboBox toolStripComboBoxPixelSize;
+        private ToolStripDropDownButton toolStripDropDownButtonClear;
+        private ToolStripButton toolStripDropDownButtonUpdate;
+        private ToolStripLabel toolStripLabel1;
+        private ToolStripLabel toolStripLabel2;
+        private ToolStripLabel toolStripLabel3;
+        private ToolStripSeparator toolStripSeparator1;
+        private ToolStripSeparator toolStripSeparator2;
+        private ToolStripSeparator toolStripSeparator3;
+        private ToolStripSeparator toolStripSeparator4;
+        private ToolStripTextBox toolStripTextBoxResolutionX;
+        private ToolStripTextBox toolStripTextBoxResolutionY;
+        private TrackBar trackBarBrightness;
 
-		#region Windows Form Designer generated code
-		private ToolStripMenuItem allChannelsToolStripMenuItem;
-		private Button buttonCancel;
-		private Button buttonOK;
-		private CheckBox checkBoxRedirectOutputs;
-		private Label labelBrightness;
-		private Label labelChannel;
-		private OpenFileDialog openFileDialog;
-		private Panel panel1;
-		private Panel panelPictureBoxContainer;
-		private PictureBox pictureBoxSetupGrid;
-		private SaveFileDialog saveFileDialog;
-		private ToolStripMenuItem selectedChannelToolStripMenuItem;
-		private ToolStrip toolStrip1;
-		private ToolStrip toolStrip2;
-		private ToolStripButton toolStripButtonClearImage;
-		private ToolStripButton toolStripButtonLoadImage;
-		private ToolStripButton toolStripButtonReorder;
-		private ToolStripButton toolStripButtonResetSize;
-		private ToolStripButton toolStripButtonSaveImage;
-		private ToolStripComboBox toolStripComboBoxChannels;
-		private ToolStripComboBox toolStripComboBoxPixelSize;
-		private ToolStripDropDownButton toolStripDropDownButtonClear;
-		private ToolStripButton toolStripDropDownButtonUpdate;
-		private ToolStripLabel toolStripLabel1;
-		private ToolStripLabel toolStripLabel2;
-		private ToolStripLabel toolStripLabel3;
-		private ToolStripSeparator toolStripSeparator1;
-		private ToolStripSeparator toolStripSeparator2;
-		private ToolStripSeparator toolStripSeparator3;
-		private ToolStripSeparator toolStripSeparator4;
-		private ToolStripTextBox toolStripTextBoxResolutionX;
-		private ToolStripTextBox toolStripTextBoxResolutionY;
-		private TrackBar trackBarBrightness;
-
-		private void InitializeComponent() {
+        private void InitializeComponent() {
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.labelChannel = new System.Windows.Forms.Label();
@@ -421,17 +421,17 @@ namespace Preview {
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
-		#endregion
+        }
+        #endregion
 
-		protected override void Dispose(bool disposing) {
-			if (disposing && (this.components != null)) {
-				this.components.Dispose();
-			}
-			if (this._originalBackground != null) {
-				this._originalBackground.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-	}
+        protected override void Dispose(bool disposing) {
+            if (disposing && (this.components != null)) {
+                this.components.Dispose();
+            }
+            if (this._originalBackground != null) {
+                this._originalBackground.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
 }
