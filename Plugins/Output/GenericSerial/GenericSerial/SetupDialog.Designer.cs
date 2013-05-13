@@ -1,25 +1,25 @@
 namespace GenericSerial {
-	using System;
-	using System.Drawing;
-	using System.Windows.Forms;
+    using System;
+    using System.Drawing;
+    using System.Windows.Forms;
 
-	internal partial class SetupDialog {
-		private System.ComponentModel.IContainer components = null;
+    internal partial class SetupDialog {
+        private System.ComponentModel.IContainer components = null;
 
-		#region Windows Form Designer generated code
-		private Button buttonCancel;
-		private Button buttonOK;
-		private CheckBox checkBoxFooter;
-		private CheckBox checkBoxHeader;
-		private ComboBox comboBoxBaud;
-		private GroupBox groupBox1;
-		private GroupBox groupBox2;
-		private Label label1;
+        #region Windows Form Designer generated code
+        private Button buttonCancel;
+        private Button buttonOK;
+        private CheckBox checkBoxFooter;
+        private CheckBox checkBoxHeader;
+        private ComboBox comboBoxBaud;
+        private GroupBox groupBox1;
+        private GroupBox groupBox2;
+        private Label label1;
         private Label label2;
-		private TextBox textBoxFooter;
-		private TextBox textBoxHeader;
+        private TextBox textBoxFooter;
+        private TextBox textBoxHeader;
 
-		private void InitializeComponent() {
+        private void InitializeComponent() {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.comboBoxPort = new System.Windows.Forms.ComboBox();
             this.comboBoxData = new System.Windows.Forms.ComboBox();
@@ -266,15 +266,15 @@ namespace GenericSerial {
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
-		}
-		#endregion
+        }
+        #endregion
 
-		protected override void Dispose(bool disposing) {
-			if (disposing && (this.components != null)) {
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        protected override void Dispose(bool disposing) {
+            if (disposing && (this.components != null)) {
+                this.components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
         private ComboBox comboBoxData;
         private ComboBox comboBoxStop;
@@ -283,5 +283,5 @@ namespace GenericSerial {
         private Label label3;
         private Label label4;
         private ComboBox comboBoxPort;
-	}
+    }
 }

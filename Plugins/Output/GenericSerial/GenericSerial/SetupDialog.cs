@@ -12,7 +12,9 @@ namespace GenericSerial {
 
         public SetupDialog(XmlNode setupNode) {
             InitializeComponent();
+            // ReSharper disable CoVariantArrayConversion
             comboBoxPort.Items.AddRange(SerialPort.GetPortNames());
+            // ReSharper restore CoVariantArrayConversion
 
             _setupNode = setupNode;
 
