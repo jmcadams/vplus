@@ -5,358 +5,299 @@ using System.IO;
 using System.Text;
 using System.Xml;
 
-namespace VixenPlus
-{
-    public class Profile : IExecutable
-    {
+namespace VixenPlus {
+    public class Profile : IExecutable {
         private readonly List<int> _channelOutputs;
-        private readonly ulong _key;
-        private readonly SetupData _plugInData;
         private List<Channel> _channelObjects;
-        private string _fileName;
         private List<Channel> _frozenChannelList;
         private byte[][] _frozenMask;
         private List<Channel> _frozenOutputChannelList;
         private bool _isFrozen;
-        private SortOrders _sortOrders;
 
-        public Profile()
-        {
-            _fileName = string.Empty;
+
+        public Profile() {
+            FileName = string.Empty;
             _isFrozen = false;
             TreatAsLocal = false;
             UserData = null;
-            _key = Host.GetUniqueKey();
+            Key = Host.GetUniqueKey();
             _channelObjects = new List<Channel>();
             _channelOutputs = new List<int>();
-            _plugInData = new SetupData();
-            _sortOrders = new SortOrders();
+            PlugInData = new SetupData();
+            Sorts = new SortOrders();
         }
 
-        public Profile(string fileName)
-        {
-            _fileName = string.Empty;
-            _isFrozen = false;
-            TreatAsLocal = false;
-            UserData = null;
-            _key = Host.GetUniqueKey();
-            _channelObjects = new List<Channel>();
-            _channelOutputs = new List<int>();
-            _plugInData = new SetupData();
-            _sortOrders = new SortOrders();
+
+        public Profile(string fileName) : this() {
             ReloadFrom(fileName);
         }
 
-        public int LastSort
-        {
-            get { return _sortOrders.LastSort; }
-            set { _sortOrders.LastSort = value; }
+
+        public int LastSort {
+            get { return Sorts.LastSort; }
+            set { Sorts.LastSort = value; }
         }
 
-        public SortOrders Sorts
-        {
-            get { return _sortOrders; }
-        }
+        public SortOrders Sorts { get; private set; }
 
-        public void Dispose()
-        {
+
+        public void Dispose() {
             Dispose(true);
         }
 
-        public int AudioDeviceIndex
-        {
+
+        public int AudioDeviceIndex {
             get { return -1; }
         }
 
-        public int AudioDeviceVolume
-        {
+        public int AudioDeviceVolume {
             get { return 100; }
         }
 
-        public bool CanBePlayed
-        {
+        public bool CanBePlayed {
             get { return false; }
         }
 
-        public List<Channel> Channels
-        {
-            get
-            {
-                if (_isFrozen)
-                {
+        public List<Channel> Channels {
+            get {
+                if (_isFrozen) {
                     return _frozenChannelList;
                 }
                 var list = new List<Channel>(_channelObjects);
-                for (int i = 0; i < list.Count; i++)
-                {
+                for (var i = 0; i < list.Count; i++) {
                     list[i].OutputChannel = _channelOutputs[i];
                 }
                 return list;
             }
         }
 
-        public string FileName
-        {
-            get { return _fileName; }
-            set { _fileName = value; }
-        }
+        public string FileName { get; set; }
 
-        public ulong Key
-        {
-            get { return _key; }
-        }
+        public ulong Key { get; private set; }
 
-        public byte[][] Mask
-        {
-            get
-            {
-                if (_isFrozen)
-                {
+        public byte[][] Mask {
+            get {
+                if (_isFrozen) {
                     return _frozenMask;
                 }
-                List<Channel> channels = Channels;
-                var buffer = new byte[channels.Count];
-                for (int i = 0; i < channels.Count; i++)
-                {
-                    buffer[i] = channels[i].Enabled ? ((byte) 0xff) : ((byte) 0);
+                var buffer = new byte[Channels.Count];
+                for (var i = 0; i < Channels.Count; i++) {
+                    buffer[i] = Channels[i].Enabled ? ((byte) 255) : ((byte) 0);
                 }
                 return new[] {buffer};
             }
             set { }
         }
 
-        public string Name
-        {
-            get { return Path.GetFileNameWithoutExtension(_fileName); }
-            set
-            {
-                _fileName = Path.Combine(string.IsNullOrEmpty(_fileName) ? Paths.ProfilePath : Path.GetDirectoryName(_fileName),
-                                         value + ".pro");
-            }
+        public string Name {
+            get { return Path.GetFileNameWithoutExtension(FileName); }
+            // ReSharper disable AssignNullToNotNullAttribute
+            set { FileName = Path.Combine(string.IsNullOrEmpty(FileName) ? Paths.ProfilePath : Path.GetDirectoryName(FileName), value + ".pro"); }
+            // ReSharper restore AssignNullToNotNullAttribute
         }
 
-        public List<Channel> OutputChannels
-        {
-            get
-            {
-                if (_isFrozen)
-                {
+        public List<Channel> OutputChannels {
+            get {
+                if (_isFrozen) {
                     return _frozenOutputChannelList;
                 }
-                List<Channel> channels = Channels;
-                var list2 = new List<Channel>(channels);
-                for (int i = 0; i < list2.Count; i++)
-                {
-                    list2[_channelOutputs[i]] = channels[i];
+                var channelOutputs = new List<Channel>(Channels);
+                for (var i = 0; i < channelOutputs.Count; i++) {
+                    channelOutputs[_channelOutputs[i]] = Channels[i];
                 }
-                return list2;
+                return channelOutputs;
             }
-            set
-            {
-                List<Channel> channels = Channels;
-                for (int i = 0; i < channels.Count; i++)
-                {
-                    _channelOutputs[i] = value.IndexOf(channels[i]);
+            set {
+                for (var i = 0; i < Channels.Count; i++) {
+                    _channelOutputs[i] = value.IndexOf(Channels[i]);
                 }
             }
         }
 
-        public SetupData PlugInData
-        {
-            get { return _plugInData; }
-        }
+        public SetupData PlugInData { get; private set; }
 
         public bool TreatAsLocal { get; set; }
 
         public object UserData { get; set; }
 
-        public void AddChannelObject(Channel channelObject)
-        {
+
+        public void AddChannelObject(Channel channelObject) {
             _channelObjects.Add(channelObject);
             _channelOutputs.Add(_channelOutputs.Count);
-            _sortOrders.UpdateChannelCounts(Channels.Count);
+            Sorts.UpdateChannelCounts(Channels.Count);
         }
 
-        public void Dispose(bool disposing)
-        {
-            foreach (Channel channel in _channelObjects)
-            {
+
+        public void Dispose(bool disposing) {
+            foreach (var channel in _channelObjects) {
                 channel.Dispose();
             }
             GC.SuppressFinalize(this);
         }
 
-        ~Profile()
-        {
+
+        ~Profile() {
             Dispose(false);
         }
 
+
         public void Freeze() {
-            if (!_isFrozen) {
-                _frozenChannelList = Channels;
-                _frozenOutputChannelList = OutputChannels;
-                _frozenMask = Mask;
-                _isFrozen = true;
+            if (_isFrozen) {
+                return;
             }
+
+            _frozenChannelList = Channels;
+            _frozenOutputChannelList = OutputChannels;
+            _frozenMask = Mask;
+            _isFrozen = true;
         }
 
-        public void InheritChannelsFrom(EventSequence sequence)
-        {
+
+        public void InheritChannelsFrom(EventSequence sequence) {
             _channelObjects = sequence.Channels;
             _channelOutputs.Clear();
-            foreach (Channel channel in sequence.Channels)
-            {
+            foreach (var channel in sequence.Channels) {
                 _channelOutputs.Add(channel.OutputChannel);
             }
-            _sortOrders.UpdateChannelCounts(Channels.Count);
+            Sorts.UpdateChannelCounts(Channels.Count);
         }
 
-        public void InheritPlugInDataFrom(EventSequence sequence)
-        {
-            _plugInData.LoadFromXml(sequence.PlugInData.RootNode.ParentNode);
+
+        public void InheritPlugInDataFrom(EventSequence sequence) {
+            PlugInData.LoadFromXml(sequence.PlugInData.RootNode.ParentNode);
         }
 
-        public void InheritSortsFrom(EventSequence sequence)
-        {
-            _sortOrders = (sequence.Sorts == null) ? null : sequence.Sorts.Clone();
+
+        public void InheritSortsFrom(EventSequence sequence) {
+            Sorts = (sequence.Sorts == null) ? null : sequence.Sorts.Clone();
         }
 
-        public void MoveChannelObject(int oldIndex, int newIndex)
-        {
-            Channel item = _channelObjects[oldIndex];
+
+        public void MoveChannelObject(int oldIndex, int newIndex) {
+            var item = _channelObjects[oldIndex];
             _channelObjects.RemoveAt(oldIndex);
             _channelObjects.Insert(newIndex, item);
         }
 
-        //TODO This is broken!
-        private void RedirectAndRemoveOutput(int channelObjectIndex, int channelObjectOutputIndex)
-        {
-            int num = _channelOutputs[channelObjectIndex];
-            int index = _channelOutputs.IndexOf(channelObjectOutputIndex);
-            _channelOutputs.RemoveAt(channelObjectIndex);
-            _channelOutputs[index] = num;
+
+        public void RemoveChannel(Channel channelObject) {
+            //Find where the associated channel info is
+            var objectIndex = _channelObjects.IndexOf(channelObject);
+            var outputIndex = _channelOutputs[objectIndex];
+
+            //remove them
+            _channelOutputs.RemoveAt(objectIndex);
+            _channelObjects.RemoveAt(objectIndex);
+
+            // Now update the output mapping for the channel
+            for (var i = 0; i < _channelOutputs.Count; i++) {
+                if (_channelOutputs[i] > outputIndex) {
+                    _channelOutputs[i]--;
+                }
+            }
+
+            Sorts.UpdateChannelCounts(Channels.Count);
         }
 
-        public void Reload()
-        {
+
+        public void Reload() {
             var document = new XmlDocument();
-            document.Load(_fileName);
+            document.Load(FileName);
             XmlNode documentElement = document.DocumentElement;
             _channelObjects.Clear();
             _channelOutputs.Clear();
-            if (documentElement != null)
-            {
-                XmlNodeList channelObjectsNode = documentElement.SelectNodes("ChannelObjects/*");
-                if (channelObjectsNode != null)
-                {
-                    foreach (XmlNode node2 in channelObjectsNode)
-                    {
-                        _channelObjects.Add(new Channel(node2));
+            if (documentElement != null) {
+                var channelObjectsNode = documentElement.SelectNodes("ChannelObjects/*");
+                if (channelObjectsNode != null) {
+                    foreach (XmlNode channelObject in channelObjectsNode) {
+                        _channelObjects.Add(new Channel(channelObject));
                     }
                 }
 
-                XmlNode outputNodes = documentElement.SelectSingleNode("Outputs");
-                if (outputNodes != null)
-                {
-                    foreach (string str in outputNodes.InnerText.Split(new[] {','}))
-                    {
-                        if (str.Length > 0)
-                        {
-                            _channelOutputs.Add(Convert.ToInt32(str));
+                var outputNodes = documentElement.SelectSingleNode("Outputs");
+                if (outputNodes != null) {
+                    foreach (var outputChannel in outputNodes.InnerText.Split(new[] {','})) {
+                        if (outputChannel.Length > 0) {
+                            _channelOutputs.Add(Convert.ToInt32(outputChannel));
                         }
                     }
                 }
             }
-            _plugInData.LoadFromXml(documentElement);
-            _sortOrders.LoadFromXml(documentElement);
-            List<Channel> channels = Channels;
-            if (documentElement != null)
-            {
-                XmlNode disabledChannelsNode = documentElement.SelectSingleNode("DisabledChannels");
-                if (disabledChannelsNode != null)
-                {
-                    foreach (string str2 in disabledChannelsNode.InnerText.Split(new[] {','}))
-                    {
-                        if (str2 != string.Empty)
-                        {
-                            channels[Convert.ToInt32(str2)].Enabled = false;
+            PlugInData.LoadFromXml(documentElement);
+            Sorts.LoadFromXml(documentElement);
+            if (documentElement != null) {
+                var disabledChannelsNode = documentElement.SelectSingleNode("DisabledChannels");
+                if (disabledChannelsNode != null) {
+                    foreach (var disabledChannel in disabledChannelsNode.InnerText.Split(new[] {','})) {
+                        if (disabledChannel != string.Empty) {
+                            Channels[Convert.ToInt32(disabledChannel)].Enabled = false;
                         }
                     }
                 }
             }
-            if (_isFrozen)
-            {
-                _isFrozen = false;
-                Freeze();
+            if (!_isFrozen) {
+                return;
             }
+
+            _isFrozen = false;
+            Freeze();
         }
 
-        public void ReloadFrom(string fileName)
-        {
-            _fileName = fileName;
+
+        public void ReloadFrom(string fileName) {
+            FileName = fileName;
             Reload();
         }
 
-        public void RemoveChannelObject(Channel channelObject)
-        {
-            int index = _channelObjects.IndexOf(channelObject);
-            RedirectAndRemoveOutput(index, index);
-            _channelObjects.Remove(channelObject);
-            _sortOrders.UpdateChannelCounts(Channels.Count);
-        }
 
-        public void SaveToFile()
-        {
-            XmlDocument ownerDocument = SaveToXml(null).OwnerDocument;
-            if (ownerDocument != null)
-            {
-                ownerDocument.Save(_fileName);
+
+        public void SaveToFile() {
+            var ownerDocument = SaveToXml(null).OwnerDocument;
+            if (ownerDocument != null) {
+                ownerDocument.Save(FileName);
             }
         }
 
-        public XmlNode SaveToXml(XmlDocument doc)
-        {
-            XmlNode documentElement;
-            if (doc == null)
-            {
+
+        public XmlNode SaveToXml(XmlDocument doc) {
+            XmlNode profile;
+            
+            if (doc == null) {
                 doc = Xml.CreateXmlDocument("Profile");
-                documentElement = doc.DocumentElement;
+                profile = doc.DocumentElement;
             }
-            else
-            {
-                documentElement = doc.CreateElement("Profile");
+            else {
+                profile = doc.CreateElement("Profile");
             }
-            XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(documentElement, "ChannelObjects");
-            foreach (Channel channel in _channelObjects)
-            {
+
+            var emptyNodeAlways = Xml.GetEmptyNodeAlways(profile, "ChannelObjects");
+            foreach (var channel in _channelObjects) {
                 emptyNodeAlways.AppendChild(channel.SaveToXml(doc));
             }
             var builder = new StringBuilder();
-            foreach (int num in _channelOutputs)
-            {
+            foreach (var num in _channelOutputs) {
                 builder.AppendFormat("{0},", num);
             }
-            Xml.GetEmptyNodeAlways(documentElement, "Outputs").InnerText = builder.ToString().TrimEnd(new[] {','});
-            if (documentElement != null)
-            {
-                documentElement.AppendChild(doc.ImportNode(_plugInData.RootNode, true));
-                _sortOrders.SaveToXml(documentElement);
+            Xml.GetEmptyNodeAlways(profile, "Outputs").InnerText = builder.ToString().TrimEnd(new[] {','});
+            
+            if (profile != null) {
+                profile.AppendChild(doc.ImportNode(PlugInData.RootNode, true));
+                Sorts.SaveToXml(profile);
             }
-            var list = new List<string>();
-            List<Channel> channels = Channels;
-            for (int i = 0; i < channels.Count; i++)
-            {
-                if (!channels[i].Enabled)
-                {
-                    list.Add(i.ToString(CultureInfo.InvariantCulture));
+            
+            var disabledChannels = new List<string>();
+            for (var i = 0; i < Channels.Count; i++) {
+                if (!Channels[i].Enabled) {
+                    disabledChannels.Add(i.ToString(CultureInfo.InvariantCulture));
                 }
             }
-            Xml.SetValue(documentElement, "DisabledChannels", string.Join(",", list.ToArray()));
-            return documentElement;
+            Xml.SetValue(profile, "DisabledChannels", string.Join(",", disabledChannels.ToArray()));
+            
+            return profile;
         }
 
-        public override string ToString()
-        {
+
+        public override string ToString() {
             return Name;
         }
     }
