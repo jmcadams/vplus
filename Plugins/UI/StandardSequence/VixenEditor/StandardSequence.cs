@@ -4644,11 +4644,16 @@ namespace VixenEditor {
             if (_sequence.Profile == null) {
                 return;
             }
-
-            using (var dialog = new ProfileManagerDialog(_sequence.Profile)) {
-                if ((dialog.ShowDialog() == DialogResult.OK)) {
-                         SetProfile(_sequence.Profile);
+            var objectInContext = new Profile {FileName = _sequence.Profile.FileName};
+            objectInContext.InheritChannelsFrom(_sequence);
+            objectInContext.InheritPlugInDataFrom(_sequence);
+            objectInContext.InheritSortsFrom(_sequence);
+            using (var dialog = new ProfileManagerDialog(objectInContext)) {
+                if ((dialog.ShowDialog() != DialogResult.OK)) {
+                    return;
                 }
+                objectInContext.SaveToFile();
+                SetProfile(objectInContext);
             }
         }
 
