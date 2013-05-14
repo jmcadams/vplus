@@ -2,228 +2,164 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
+using System.Windows.Forms;
 using System.Xml;
 
-namespace VixenPlus
-{
-    public class Channel : IDisposable, IComparable<Channel>
-    {
-        private readonly ulong _id;
+using CommonUtils;
+
+namespace VixenPlus {
+    public class Channel : IDisposable, IComparable<Channel> {
         private Color _color;
-        private byte[] _dimmingCurve;
-        private bool _enabled;
-        private string _name;
-        private int _outputChannel;
-        private SolidBrush _solidBrush;
-        private readonly bool _isV21Style;
 
-        public Channel(XmlNode channelNode)
-        {
-            _solidBrush = null;
-            _outputChannel = 0;
-            _enabled = true;
-            _dimmingCurve = null;
-            if (channelNode.Attributes != null)
-            {
-                _name = (_isV21Style = (channelNode.Attributes["name"] == null))
-                            ? channelNode.InnerText
-                            : channelNode.Attributes["name"].Value;
 
-                Color = Color.FromArgb(Convert.ToInt32(channelNode.Attributes["color"].Value));
-                _outputChannel = Convert.ToInt32(channelNode.Attributes["output"].Value);
-                _id = ulong.Parse(channelNode.Attributes["id"].Value);
-                _enabled = bool.Parse(channelNode.Attributes["enabled"].Value);
-                if (channelNode["Curve"] != null)
-                {
-                    _dimmingCurve = new byte[256];
-                    string[] strArray = channelNode["Curve"].InnerText.Split(new[] { ',' });
-                    int num = Math.Min(strArray.Length, 256);
-                    for (int i = 0; i < num; i++)
-                    {
-                        byte num2;
-                        if (byte.TryParse(strArray[i], out num2))
-                        {
-                            _dimmingCurve[i] = num2;
-                        }
-                        else
-                        {
-                            _dimmingCurve[i] = (byte)i;
-                        }
-                    }
+        public Channel(XmlNode channelNode) {
+            Brush = null;
+            OutputChannel = 0;
+            Enabled = true;
+            DimmingCurve = null;
+            if (channelNode.Attributes == null) {
+                return;
+            }
+
+            CanDoDimming = (channelNode.Attributes["name"] != null);
+            // ReSharper disable PossibleNullReferenceException
+            Name = CanDoDimming ? channelNode.Attributes["name"].Value : channelNode.InnerText;
+            // ReSharper restore PossibleNullReferenceException
+
+            Color = Color.FromArgb(Convert.ToInt32(channelNode.Attributes["color"].Value));
+            OutputChannel = Convert.ToInt32(channelNode.Attributes["output"].Value);
+            Id = ulong.Parse(channelNode.Attributes["id"].Value);
+            Enabled = bool.Parse(channelNode.Attributes["enabled"].Value);
+            if (channelNode["Curve"] == null) {
+                return;
+            }
+
+            DimmingCurve = new byte[256];
+            var strArray = channelNode["Curve"].InnerText.Split(new[] {','});
+            var num = Math.Min(strArray.Length, 256);
+            for (var i = 0; i < num; i++) {
+                byte num2;
+                if (byte.TryParse(strArray[i], out num2)) {
+                    DimmingCurve[i] = num2;
+                }
+                else {
+                    DimmingCurve[i] = (byte) i;
                 }
             }
         }
 
-        public Channel(string name, int outputChannel)
-        {
-            _solidBrush = null;
-            _outputChannel = 0;
-            _enabled = true;
-            _dimmingCurve = null;
-            _name = name;
+
+        public Channel(string name, int outputChannel) {
+            Brush = null;
+            OutputChannel = 0;
+            Enabled = true;
+            DimmingCurve = null;
+            Name = name;
             Color = Color.FromArgb(-1);
-            _id = Host.GetUniqueKey();
-            _outputChannel = outputChannel;
+            Id = Host.GetUniqueKey();
+            OutputChannel = outputChannel;
         }
 
-        public Channel(string name, Color color, int outputChannel)
-        {
-            _solidBrush = null;
-            _outputChannel = 0;
-            _enabled = true;
-            _dimmingCurve = null;
-            _name = name;
+
+        public Channel(string name, Color color, int outputChannel) : this(name, outputChannel) {
             Color = color;
-            _id = Host.GetUniqueKey();
-            _outputChannel = outputChannel;
         }
 
-        public Channel(string name, int outputChannel, bool ensureUniqueId)
-        {
-            _solidBrush = null;
-            _outputChannel = 0;
-            _enabled = true;
-            _dimmingCurve = null;
-            _name = name;
-            Color = Color.FromArgb(-1);
-            if (ensureUniqueId)
-            {
-                long ticks = DateTime.Now.Ticks;
-                while (ticks == DateTime.Now.Ticks)
-                {
-                }
+
+        public Channel(string name, int outputChannel, bool ensureUniqueId) : this (name, outputChannel) {
+            if (ensureUniqueId) {
+                var ticks = DateTime.Now.Ticks;
+                while (ticks == DateTime.Now.Ticks) {}
             }
-            _id = Host.GetUniqueKey();
-            _outputChannel = outputChannel;
+            Id = Host.GetUniqueKey();
         }
 
-        public Channel(string name, Color color, int outputChannel, bool ensureUniqueId)
-        {
-            _solidBrush = null;
-            _outputChannel = 0;
-            _enabled = true;
-            _dimmingCurve = null;
-            _name = name;
+
+        public Channel(string name, Color color, int outputChannel, bool ensureUniqueId) : this(name, outputChannel) {
             Color = color;
-            if (ensureUniqueId)
-            {
-                long ticks = DateTime.Now.Ticks;
-                while (ticks == DateTime.Now.Ticks)
-                {
-                }
+            if (ensureUniqueId) {
+                var ticks = DateTime.Now.Ticks;
+                while (ticks == DateTime.Now.Ticks) {}
             }
-            _id = Host.GetUniqueKey();
-            _outputChannel = outputChannel;
+            Id = Host.GetUniqueKey();
         }
 
-        public SolidBrush Brush
-        {
-            get { return _solidBrush; }
-        }
 
-        public Color Color
-        {
+        public SolidBrush Brush { get; private set; }
+
+        public Color Color {
             get { return _color; }
-            set
-            {
-                if (_color.ToArgb() != value.ToArgb())
-                {
-                    _color = value;
-                    if (_solidBrush != null)
-                    {
-                        _solidBrush.Dispose();
-                    }
-                    _solidBrush = new SolidBrush(value);
+            set {
+                if (_color.ToArgb() == value.ToArgb()) {
+                    return;
                 }
+
+                _color = value;
+                if (Brush != null) {
+                    Brush.Dispose();
+                }
+                Brush = new SolidBrush(value);
             }
         }
 
-        public byte[] DimmingCurve
-        {
-            get { return _dimmingCurve; }
-            set { _dimmingCurve = value; }
-        }
+        public byte[] DimmingCurve { get; set; }
 
-        public bool Enabled
-        {
-            get { return _enabled; }
-            set { _enabled = value; }
-        }
+        public bool Enabled { get; set; }
 
-        public ulong Id
-        {
-            get { return _id; }
-        }
+        public ulong Id { get; private set; }
 
-        public bool CanDoDimming
-        {
-            get { return !_isV21Style;  }
-        }
+        public bool CanDoDimming { get; private set; }
 
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
+        public string Name { get; set; }
 
-        public int OutputChannel
-        {
-            get { return _outputChannel; }
-            set { _outputChannel = value; }
-        }
+        public int OutputChannel { get; set; }
 
-        public int CompareTo(Channel other)
-        {
+
+        public int CompareTo(Channel other) {
             return Id.CompareTo(other.Id);
         }
 
-        public void Dispose()
-        {
-            if (_solidBrush != null)
-            {
-                _solidBrush.Dispose();
-                _solidBrush = null;
+
+        public void Dispose() {
+            if (Brush != null) {
+                Brush.Dispose();
+                Brush = null;
             }
             GC.SuppressFinalize(this);
         }
 
-        public Channel Clone()
-        {
+
+        public Channel Clone() {
             var channel = (Channel) MemberwiseClone();
-            channel._solidBrush = new SolidBrush(_solidBrush.Color);
-            if (_dimmingCurve != null)
-            {
-                channel._dimmingCurve = new byte[_dimmingCurve.Length];
-                _dimmingCurve.CopyTo(channel._dimmingCurve, 0);
+            channel.Brush = new SolidBrush(Brush.Color);
+            if (DimmingCurve != null) {
+                channel.DimmingCurve = new byte[DimmingCurve.Length];
+                DimmingCurve.CopyTo(channel.DimmingCurve, 0);
             }
             return channel;
         }
 
-        ~Channel()
-        {
+
+        ~Channel() {
             Dispose();
         }
 
-        public XmlNode SaveToXml(XmlDocument doc)
-        {
+
+        public XmlNode SaveToXml(XmlDocument doc) {
             XmlNode node = doc.CreateElement("Channel");
-            if (_isV21Style)
-            {
-                node.InnerText = _name;
+            if (CanDoDimming) {
+                Xml.SetAttribute(node, "name", Name);
             }
-            else
-            {
-                Xml.SetAttribute(node, "name", _name);
+            else {
+                node.InnerText = Name;
             }
-            Xml.SetAttribute(node, "color", _color.ToArgb().ToString(CultureInfo.InvariantCulture));
-            Xml.SetAttribute(node, "output", _outputChannel.ToString(CultureInfo.InvariantCulture));
-            Xml.SetAttribute(node, "id", _id.ToString(CultureInfo.InvariantCulture));
-            Xml.SetAttribute(node, "enabled", _enabled.ToString());
-            if (_dimmingCurve != null)
-            {
+            Xml.SetAttribute(node, "color", Color.ToArgb().ToString(CultureInfo.InvariantCulture));
+            Xml.SetAttribute(node, "output", OutputChannel.ToString(CultureInfo.InvariantCulture));
+            Xml.SetAttribute(node, "id", Id.ToString(CultureInfo.InvariantCulture));
+            Xml.SetAttribute(node, "enabled", Enabled.ToString());
+            if (DimmingCurve != null) {
                 var list = new List<string>();
-                foreach (byte num in _dimmingCurve)
-                {
+                foreach (var num in DimmingCurve) {
                     list.Add(num.ToString(CultureInfo.InvariantCulture));
                 }
                 Xml.SetValue(node, "Curve", string.Join(",", list.ToArray()));
@@ -231,9 +167,43 @@ namespace VixenPlus
             return node;
         }
 
-        public override string ToString()
-        {
-            return _name;
+
+        public override string ToString() {
+            return Name;
+        }
+
+
+        public static void DrawItem(DrawItemEventArgs e, Channel channels) {
+            e.DrawBackground();
+
+            using (var backgroundBrush = new SolidBrush(channels.Color))
+            using (var g = e.Graphics) {
+                g.FillRectangle(backgroundBrush, e.Bounds);
+                var contrastingBrush = Utils.GetTextColor(backgroundBrush.Color);
+                g.DrawString(channels.Name, e.Font, contrastingBrush, new RectangleF(e.Bounds.Location, e.Bounds.Size));
+            }
+
+            e.DrawFocusRectangle();
+        }
+
+
+        public static void DrawItem(ListBox lb, DrawItemEventArgs e, Channel channels, bool drawFocus = true) {
+            e.DrawBackground();
+
+            using (var backgroundBrush = new SolidBrush(channels.Color))
+            using (var g = e.Graphics) {
+                g.FillRectangle(backgroundBrush, e.Bounds);
+
+                var contrastingBrush = Utils.GetTextColor(backgroundBrush.Color);
+                g.DrawString(channels.Name, e.Font, contrastingBrush, lb.GetItemRectangle(e.Index).Location);
+                if ((e.State & DrawItemState.Selected) == DrawItemState.Selected) {
+                    g.DrawString("\u2714", e.Font, contrastingBrush, e.Bounds.Width - e.Bounds.Height, e.Bounds.Y);
+                }
+            }
+
+            if (drawFocus) {
+                e.DrawFocusRectangle();
+            }
         }
     }
 }
