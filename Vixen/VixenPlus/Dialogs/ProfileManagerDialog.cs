@@ -61,8 +61,7 @@ namespace VixenPlus.Dialogs
             }
         }
 
-        private void AddProfileChannel()
-        {
+        private void AddProfileChannel() {
             int num = treeViewProfile.Nodes.Count + 1;
             var channelObject = new Channel("Channel " + num.ToString(CultureInfo.InvariantCulture), 0);
             _contextProfile.AddChannelObject(channelObject);
@@ -460,6 +459,7 @@ namespace VixenPlus.Dialogs
             }
         }
 
+        //TODO this is not "deselecting" the node after deletion and the node selected is not drawn as selected
         private void RemoveSelectedProfileChannelObjects()
         {
             if (treeViewProfile.SelectedNode.Level != 0)
