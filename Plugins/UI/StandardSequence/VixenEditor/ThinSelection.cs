@@ -29,18 +29,12 @@ namespace VixenEditor {
 
 
         private void listBox_DrawItem(object sender, DrawItemEventArgs e) {
-            e.DrawBackground();
-
-            using (var backgroundBrush = new SolidBrush(_channels[e.Index].Color))
-            using (var g = e.Graphics) {
-                g.FillRectangle(backgroundBrush, e.Bounds);
-
-                var contrastingBrush = Utils.GetTextColor(backgroundBrush.Color);
-                g.DrawString(_channels[e.Index].Name, e.Font, contrastingBrush, listBox.GetItemRectangle(e.Index).Location);
-                if ((e.State & DrawItemState.Selected) == DrawItemState.Selected) {
-                    g.DrawString("\u2714", e.Font, contrastingBrush, e.Bounds.Width - e.Bounds.Height, e.Bounds.Y);
-                }
+            var lb = sender as ListBox;
+            if (lb == null) {
+                return;
             }
+
+            Channel.DrawItem(lb, e, _channels[e.Index], false);
         }
 
 

@@ -56,16 +56,7 @@ namespace VixenEditor {
                 return;
             }
 
-            e.DrawBackground();
-
-            using (var backgroundBrush = new SolidBrush(_channels[e.Index].Color))
-            using (var g = e.Graphics) {
-                g.FillRectangle(backgroundBrush, e.Bounds);
-                var contrastingBrush = Utils.GetTextColor(backgroundBrush.Color);
-                g.DrawString(_channels[e.Index].Name, e.Font, contrastingBrush, new RectangleF(e.Bounds.Location, e.Bounds.Size));
-            }
-
-            e.DrawFocusRectangle();
+            Channel.DrawItem(e, _channels[e.Index]);
         }
     }
 }
