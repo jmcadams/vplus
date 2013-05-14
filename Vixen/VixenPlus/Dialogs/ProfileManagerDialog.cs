@@ -459,7 +459,6 @@ namespace VixenPlus.Dialogs
             }
         }
 
-        //TODO this is not "deselecting" the node after deletion and the node selected is not drawn as selected
         private void RemoveSelectedProfileChannelObjects()
         {
             if (treeViewProfile.SelectedNode.Level != 0)
@@ -471,8 +470,10 @@ namespace VixenPlus.Dialogs
                                 MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 _channelOrderMapping.RemoveAt(_contextProfile.Channels.IndexOf((Channel) treeViewProfile.SelectedNode.Tag));
-                _contextProfile.RemoveChannelObject((Channel) treeViewProfile.SelectedNode.Tag);
+                _contextProfile.RemoveChannel((Channel) treeViewProfile.SelectedNode.Tag);
                 treeViewProfile.Nodes.Remove(treeViewProfile.SelectedNode);
+                treeViewProfile.SelectedNode = null;
+                treeViewProfile_AfterSelect(null, null);
             }
         }
 
