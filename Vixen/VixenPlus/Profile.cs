@@ -98,6 +98,7 @@ namespace VixenPlus
         public string FileName
         {
             get { return _fileName; }
+            set { _fileName = value; }
         }
 
         public ulong Key
@@ -190,10 +191,8 @@ namespace VixenPlus
             Dispose(false);
         }
 
-        public void Freeze()
-        {
-            if (!_isFrozen)
-            {
+        public void Freeze() {
+            if (!_isFrozen) {
                 _frozenChannelList = Channels;
                 _frozenOutputChannelList = OutputChannels;
                 _frozenMask = Mask;
@@ -229,12 +228,13 @@ namespace VixenPlus
             _channelObjects.Insert(newIndex, item);
         }
 
+        //TODO This is broken!
         private void RedirectAndRemoveOutput(int channelObjectIndex, int channelObjectOutputIndex)
         {
             int num = _channelOutputs[channelObjectIndex];
             int index = _channelOutputs.IndexOf(channelObjectOutputIndex);
-            _channelOutputs[index] = num;
             _channelOutputs.RemoveAt(channelObjectIndex);
+            _channelOutputs[index] = num;
         }
 
         public void Reload()
