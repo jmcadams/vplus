@@ -5,12 +5,13 @@ using System.IO;
 using System.Threading;
 using System.Timers;
 using System.Windows.Forms;
+
+using CommonUtils;
+
 using FMOD;
 
-namespace VixenPlus.Dialogs
-{
-    public partial class AudioDialog : Form
-    {
+namespace VixenPlus.Dialogs {
+    public partial class AudioDialog : Form {
         private readonly EventSequence _eventSequence;
         private readonly fmod _fmod;
         private readonly int[] _keyMap = new[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
@@ -29,8 +30,8 @@ namespace VixenPlus.Dialogs
         private SoundChannel _soundChannel;
         private int _timeOffset;
 
-        public AudioDialog(EventSequence sequence, bool autoSize, int deviceIndex)
-        {
+
+        public AudioDialog(EventSequence sequence, bool autoSize, int deviceIndex) {
             InitializeComponent();
             _fmod = (deviceIndex > 0) ? fmod.GetInstance(deviceIndex) : fmod.GetInstance(-1);
             _timer = new System.Timers.Timer(10.0);
@@ -41,27 +42,22 @@ namespace VixenPlus.Dialogs
             _newEventValues = new byte[_eventSequence.EventValues.GetLength(0),_eventSequence.EventValues.GetLength(1)];
             listBoxChannels.Items.AddRange(_eventSequence.Channels.ToArray());
             _originalAudio = sequence.Audio;
-            if (sequence.Audio != null)
-            {
-                if (LoadAudio(_eventSequence.Audio.FileName) == null)
-                {
+            if (sequence.Audio != null) {
+                if (LoadAudio(_eventSequence.Audio.FileName) == null) {
                     sequence.Audio = null;
                     buttonRemoveAudio.Enabled = false;
                     ClearAudio();
                 }
-                else
-                {
+                else {
                     buttonRemoveAudio.Enabled = true;
                 }
             }
-            else
-            {
+            else {
                 buttonRemoveAudio.Enabled = false;
                 ClearAudio();
             }
             checkBoxAutoSize.Checked = autoSize;
-            if (!autoSize)
-            {
+            if (!autoSize) {
                 UpdateRecordableLength();
             }
             var items = (_eventSequence.Channels.ToArray());
@@ -90,50 +86,46 @@ namespace VixenPlus.Dialogs
             comboBoxAudioDevice.SelectedIndex = _eventSequence.AudioDeviceIndex + 1;
         }
 
-        private void AudioDialog_FormClosing(object sender, FormClosingEventArgs e)
-        {
+
+        private void AudioDialog_FormClosing(object sender, FormClosingEventArgs e) {
             Stop();
             _fmod.ReleaseSound(_soundChannel);
             _fmod.Shutdown();
         }
 
-        private void AudioDialog_KeyDown(object sender, KeyEventArgs e)
-        {
+
+        private void AudioDialog_KeyDown(object sender, KeyEventArgs e) {
             UpdateKeyState(e, true);
         }
 
-        private void AudioDialog_KeyUp(object sender, KeyEventArgs e)
-        {
+
+        private void AudioDialog_KeyUp(object sender, KeyEventArgs e) {
             UpdateKeyState(e, false);
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
-        {
+
+        private void buttonCancel_Click(object sender, EventArgs e) {
             _eventSequence.Audio = _originalAudio;
         }
 
-        private void buttonClear_Click(object sender, EventArgs e)
-        {
-            for (int i = 0; i < _newEventValues.GetLength(1); i++)
-            {
+
+        private void buttonClear_Click(object sender, EventArgs e) {
+            for (var i = 0; i < _newEventValues.GetLength(1); i++) {
                 _newEventValues[listBoxChannels.SelectedIndex, i] = 0;
             }
-            MessageBox.Show(
-                string.Format("Channel \"{0}\" cleared of new events.", ((Channel) listBoxChannels.SelectedItem).Name),
-                Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            MessageBox.Show(string.Format("Channel \"{0}\" cleared of new events.", ((Channel) listBoxChannels.SelectedItem).Name), Vendor.ProductName,
+                            MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
-        private void buttonLoad_Click(object sender, EventArgs e)
-        {
+
+        private void buttonLoad_Click(object sender, EventArgs e) {
             openFileDialog1.InitialDirectory = Paths.AudioPath;
             openFileDialog1.DefaultExt = "wma";
             openFileDialog1.Filter = "All supported formats | *.aiff;*.asf;*.flac;*.mp2;*.mp3;*.ogg;*.wav;*.wma;*.mid";
             openFileDialog1.FileName = string.Empty;
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK) {
                 string path = Path.Combine(Paths.AudioPath, Path.GetFileName(openFileDialog1.FileName));
-                if (!File.Exists(path))
-                {
+                if (!File.Exists(path)) {
                     Cursor = Cursors.WaitCursor;
                     File.Copy(openFileDialog1.FileName, path);
                     Cursor = Cursors.Default;
@@ -143,34 +135,28 @@ namespace VixenPlus.Dialogs
             }
         }
 
-        private void buttonOK_Click(object sender, EventArgs e)
-        {
-            if ((_eventSequence.Audio != null) &&
-                (checkBoxAutoSize.Checked || (_eventSequence.Audio.Duration > _eventSequence.Time)))
-            {
+
+        private void buttonOK_Click(object sender, EventArgs e) {
+            if ((_eventSequence.Audio != null) && (checkBoxAutoSize.Checked || (_eventSequence.Audio.Duration > _eventSequence.Time))) {
                 _eventSequence.Time = _eventSequence.Audio.Duration;
             }
             _eventSequence.AudioDeviceIndex = comboBoxAudioDevice.SelectedIndex - 1;
         }
 
-        private void buttonPlayPause_Click(object sender, EventArgs e)
-        {
-            if (_playing)
-            {
+
+        private void buttonPlayPause_Click(object sender, EventArgs e) {
+            if (_playing) {
                 buttonPlayPause.Image = _paused ? pictureBoxPause.Image : pictureBoxPlayBlue.Image;
-                if (_soundChannel != null)
-                {
+                if (_soundChannel != null) {
                     _soundChannel.Paused = !_paused;
                 }
                 _timer.Enabled = _paused;
                 _paused = !_paused;
-                if (!(_paused || !progressBarCountdown.Visible))
-                {
-                    _countdownEnd = DateTime.Now + TimeSpan.FromSeconds((((progressBarCountdown.Value)/100f)*5f));
+                if (!(_paused || !progressBarCountdown.Visible)) {
+                    _countdownEnd = DateTime.Now + TimeSpan.FromSeconds((((progressBarCountdown.Value) / 100f) * 5f));
                 }
             }
-            else
-            {
+            else {
                 _countdownEnd = DateTime.Now.Add(TimeSpan.FromSeconds(5.0));
                 progressBarCountdown.Value = 100;
                 progressBarCountdown.Visible = true;
@@ -183,34 +169,34 @@ namespace VixenPlus.Dialogs
             }
         }
 
-        private void buttonRemoveAudio_Click(object sender, EventArgs e)
-        {
+
+        private void buttonRemoveAudio_Click(object sender, EventArgs e) {
             ClearAudio();
             UpdateRecordableLength();
         }
 
-        private void buttonStop_Click(object sender, EventArgs e)
-        {
+
+        private void buttonStop_Click(object sender, EventArgs e) {
             Stop();
         }
 
-        private void channelMapItem_SelectedIndexChanged(object sender, EventArgs e)
-        {
+
+        private void channelMapItem_SelectedIndexChanged(object sender, EventArgs e) {
             var box = sender as ToolStripComboBox;
-            if (box != null && box.SelectedIndex != -1)
-            {
-                int index = Convert.ToInt32(box.Tag) - 1;
-                _keyMap[index] = box.SelectedIndex;
+            if (box == null || box.SelectedIndex == -1) {
+                return;
             }
+            var index = Convert.ToInt32(box.Tag) - 1;
+            _keyMap[index] = box.SelectedIndex;
         }
 
-        private void checkBoxAutoSize_CheckedChanged(object sender, EventArgs e)
-        {
+
+        private void checkBoxAutoSize_CheckedChanged(object sender, EventArgs e) {
             UpdateRecordableLength();
         }
 
-        private void ClearAudio()
-        {
+
+        private void ClearAudio() {
             _eventSequence.Audio = null;
             labelAudioFileName.Text = "This event sequence does not have audio assigned";
             labelAudioLength.Text = string.Empty;
@@ -218,28 +204,22 @@ namespace VixenPlus.Dialogs
             _soundChannel = null;
         }
 
-        private void CopyArray(byte[,] source, byte[,] dest)
-        {
-            int num = Math.Min(source.GetLength(0), dest.GetLength(0));
-            int num2 = Math.Min(source.GetLength(1), dest.GetLength(1));
-            for (int i = 0; i < num; i++)
-            {
-                for (int j = 0; j < num2; j++)
-                {
-                    dest[i, j] = source[i, j];
+
+        private void CopyArray(byte[,] source, byte[,] dest) {
+            var rows = Math.Min(source.GetLength(Utils.IndexRowsOrHeight), dest.GetLength(Utils.IndexRowsOrHeight));
+            var columns = Math.Min(source.GetLength(Utils.IndexColsOrWidth), dest.GetLength(Utils.IndexColsOrWidth));
+            for (var row = 0; row < rows; row++) {
+                for (var column = 0; column < columns; column++) {
+                    dest[row, column] = source[row, column];
                 }
             }
         }
 
 
-        private uint GetPosition()
-        {
-            if ((_soundChannel != null) && _soundChannel.IsPlaying)
-            {
-                return _soundChannel.Position;
-            }
-            return (uint) (_stopwatch.ElapsedMilliseconds + _timeOffset);
+        private uint GetPosition() {
+            return (_soundChannel != null) && _soundChannel.IsPlaying ? _soundChannel.Position : (uint) (_stopwatch.ElapsedMilliseconds + _timeOffset);
         }
+
 
         //ComponentResourceManager manager = new ComponentResourceManager(typeof(AudioDialog));
         //this.pictureBoxPlay.Image = (Image)manager.GetObject("pictureBoxPlay.Image");
@@ -249,62 +229,48 @@ namespace VixenPlus.Dialogs
         //this.buttonPlayPause.Image = (Image) manager.GetObject("buttonPlayPause.Image");
 
 
-        private void linkLabelAssignedKeys_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
+        private void linkLabelAssignedKeys_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             contextMenuStrip.Show(linkLabelAssignedKeys.PointToScreen(new Point(0, linkLabelAssignedKeys.Height)));
         }
 
-        private void listBoxChannels_SelectedIndexChanged(object sender, EventArgs e)
-        {
+
+        private void listBoxChannels_SelectedIndexChanged(object sender, EventArgs e) {
             UpdateAudioButtons();
         }
 
-        private Audio LoadAudio(string fileName)
-        {
-            if (fileName == string.Empty)
-            {
+
+        private Audio LoadAudio(string fileName) {
+            if (fileName == string.Empty) {
                 return null;
             }
-            try
-            {
+            try {
                 _soundChannel = _fmod.LoadSound(Path.Combine(Paths.AudioPath, fileName), _soundChannel);
             }
-            catch (Exception exception)
-            {
-                MessageBox.Show("Error loading audio:\n" + exception.Message, Vendor.ProductName, MessageBoxButtons.OK,
-                                MessageBoxIcon.Exclamation);
+            catch (Exception exception) {
+                MessageBox.Show("Error loading audio:\n" + exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return null;
             }
-            if (_soundChannel == null)
-            {
+            if (_soundChannel == null) {
                 return null;
             }
             _audioFilename = fileName;
             labelAudioFileName.Text = Path.GetFileName(_audioFilename);
-            var audio = new Audio
-                {
-                    FileName = labelAudioFileName.Text,
-                    Name = _soundChannel.SoundName,
-                    Duration = (int) _soundChannel.SoundLength
-                };
-            labelAudioLength.Text = string.Format("{0:d2}:{1:d2}.{2:d3}", audio.Duration/60000, (audio.Duration%60000)/1000,
-                                                  audio.Duration%1000);
+            var audio = new Audio {FileName = labelAudioFileName.Text, Name = _soundChannel.SoundName, Duration = (int) _soundChannel.SoundLength};
+            Utils.TimeFormatWithMills(audio.Duration);
+            labelAudioLength.Text = Utils.TimeFormatWithMills(audio.Duration);
             labelAudioName.Text = string.Format("\"{0}\"", audio.Name);
             UpdateAudioButtons();
             return audio;
         }
 
-        private void TimerElapsed(object sender, ElapsedEventArgs e)
-        {
-            if (progressBarCountdown.Visible)
-            {
-                if (progressBarCountdown.Value <= 0)
-                {
+
+        private void TimerElapsed(object sender, ElapsedEventArgs e) {
+            if (progressBarCountdown.Visible) {
+                if (progressBarCountdown.Value <= 0) {
                     UpdateTotalTime();
-                    var num = (int) (((int) Invoke(new TrackBarValueDelegate(TrackBarValue)))*_smallChange);
+                    var num = (int) (((int) Invoke(new TrackBarValueDelegate(TrackBarValue))) * _smallChange);
                     _timeOffset = num;
-                    if ((_soundChannel != null) && (num < _soundChannel.SoundLength))
-                    {
+                    if ((_soundChannel != null) && (num < _soundChannel.SoundLength)) {
                         _fmod.Play(_soundChannel, true);
                         _soundChannel.Position = (uint) num;
                         _soundChannel.Paused = false;
@@ -313,68 +279,56 @@ namespace VixenPlus.Dialogs
                     _stopwatch.Start();
                     Invoke(new ProgressBarVisibleDelegate(ProgressBarVisible), new object[] {false});
                 }
-                else
-                {
-                    MethodInvoker method = delegate
-                        {
-                            TimeSpan span = (_countdownEnd - DateTime.Now);
-                            progressBarCountdown.Value = (int) ((span.TotalMilliseconds*100.0)/5000.0);
-                        };
+                else {
+                    MethodInvoker method = delegate {
+                        TimeSpan span = (_countdownEnd - DateTime.Now);
+                        progressBarCountdown.Value = (int) ((span.TotalMilliseconds * 100.0) / 5000.0);
+                    };
                     BeginInvoke(method);
                 }
             }
-            else
-            {
-                uint position = GetPosition();
-                if (position >= _maxTime)
-                {
+            else {
+                var position = GetPosition();
+                if (position >= _maxTime) {
                     Stop();
                 }
-                else
-                {
-                    var num2 = (int) ((position)/(_eventSequence.EventPeriod));
-                    if (num2 != _lastIndex)
-                    {
+                else {
+                    var num2 = (int) ((position) / (_eventSequence.EventPeriod));
+                    if (num2 != _lastIndex) {
                         _lastIndex = num2;
-                        for (int i = 0; i < _eventSequence.ChannelCount; i++)
-                        {
-                            if (_keyStates[i])
-                            {
-                                _newEventValues[i, num2] = _eventSequence.MaximumLevel;
-                                if (radioButtonSingleEvent.Checked)
-                                {
-                                    _keyStates[i] = false;
-                                }
+                        for (var i = 0; i < _eventSequence.ChannelCount; i++) {
+                            if (!_keyStates[i]) {
+                                continue;
+                            }
+                            _newEventValues[i, num2] = _eventSequence.MaximumLevel;
+                            if (radioButtonSingleEvent.Checked) {
+                                _keyStates[i] = false;
                             }
                         }
                     }
-                    MethodInvoker invoker = delegate
-                        {
-                            labelTime.Text = string.Format("{0:d2}:{1:d2}.{2:d3}", position/60000, (position%60000)/1000, position%1000);
-                            trackBarPosition.Value = (int) ((position)/_smallChange);
-                        };
+                    MethodInvoker invoker = delegate {
+                        labelTime.Text = Utils.TimeFormatWithMills((int) position);
+                        trackBarPosition.Value = (int) ((position) / _smallChange);
+                    };
                     BeginInvoke(invoker);
                 }
             }
         }
 
-        private void ProgressBarVisible(bool value)
-        {
+
+        private void ProgressBarVisible(bool value) {
             progressBarCountdown.Visible = value;
         }
 
-        private void Stop()
-        {
-            if (InvokeRequired)
-            {
+
+        private void Stop() {
+            if (InvokeRequired) {
                 BeginInvoke(new MethodInvoker(Stop));
             }
-            else
-            {
+            else {
                 _timer.Stop();
                 Thread.Sleep((int) _timer.Interval);
-                if (_soundChannel != null)
-                {
+                if (_soundChannel != null) {
                     _fmod.Stop(_soundChannel);
                 }
                 _stopwatch.Stop();
@@ -387,101 +341,87 @@ namespace VixenPlus.Dialogs
             }
         }
 
-        private void trackBarPosition_Scroll(object sender, EventArgs e)
-        {
-            var num = (int) (trackBarPosition.Value*_smallChange);
-            labelTime.Text = string.Format("{0:d2}:{1:d2}.{2:d3}", num/60000, (num%60000)/1000, num%1000);
+
+        private void trackBarPosition_Scroll(object sender, EventArgs e) {
+            var num = (int) (trackBarPosition.Value * _smallChange);
+            labelTime.Text = Utils.TimeFormatWithMills(num);
         }
 
-        private int TrackBarValue()
-        {
+
+        private int TrackBarValue() {
             return trackBarPosition.Value;
         }
 
-        private void UpdateAudioButtons()
-        {
+
+        private void UpdateAudioButtons() {
             Channel selectedItem = null;
-            if (listBoxChannels.SelectedItem != null)
-            {
+            if (listBoxChannels.SelectedItem != null) {
                 selectedItem = (Channel) listBoxChannels.SelectedItem;
             }
             buttonClear.Enabled = selectedItem != null && selectedItem.Enabled;
         }
 
-        private void UpdateKeyState(KeyEventArgs e, bool state)
-        {
-            if (!progressBarCountdown.Visible)
-            {
-                if ((e.KeyCode >= Keys.D0) && (e.KeyCode <= Keys.D9))
-                {
-                    if (e.KeyCode == Keys.D0)
-                    {
-                        _keyStates[_keyMap[9]] = state;
-                    }
-                    else
-                    {
-                        _keyStates[_keyMap[((int) e.KeyCode) - 49]] = state;
-                    }
+
+        private void UpdateKeyState(KeyEventArgs e, bool state) {
+            if (progressBarCountdown.Visible) {
+                return;
+            }
+
+            if ((e.KeyCode >= Keys.D0) && (e.KeyCode <= Keys.D9)) {
+                if (e.KeyCode == Keys.D0) {
+                    _keyStates[_keyMap[9]] = state;
                 }
-                else if ((e.KeyCode == Keys.ControlKey) && (listBoxChannels.SelectedItem != null))
-                {
-                    _keyStates[listBoxChannels.SelectedIndex] = state;
+                else {
+                    _keyStates[_keyMap[((int) e.KeyCode) - 49]] = state;
                 }
+            }
+            else if ((e.KeyCode == Keys.ControlKey) && (listBoxChannels.SelectedItem != null)) {
+                _keyStates[listBoxChannels.SelectedIndex] = state;
             }
         }
 
-        private void UpdateRecordableLength()
-        {
-            int num = UpdateTotalTime();
+
+        private void UpdateRecordableLength() {
+            var num = UpdateTotalTime();
             _maxTime = num;
             trackBarPosition.Maximum = num;
             UpdateTrackbar();
-            var dest = new byte[_newEventValues.GetLength(0),(int) Math.Ceiling(((num)/((float) _eventSequence.EventPeriod)))];
+            var dest = new byte[_newEventValues.GetLength(0),(int) Math.Ceiling(((num) / ((float) _eventSequence.EventPeriod)))];
             CopyArray(_newEventValues, dest);
             _newEventValues = dest;
         }
 
-        private int UpdateTotalTime()
-        {
-            if (InvokeRequired)
-            {
-                int milliseconds = 0;
-                Invoke((MethodInvoker) delegate
-                    {
-                        milliseconds = UpdateTotalTime();
-                    });
+
+        private int UpdateTotalTime() {
+            if (InvokeRequired) {
+                var milliseconds = 0;
+                Invoke((MethodInvoker) delegate { milliseconds = UpdateTotalTime(); });
                 return milliseconds;
             }
-            int num = (_eventSequence.Audio != null)
-                          ? (checkBoxAutoSize.Checked
-                                 ? _eventSequence.Audio.Duration
-                                 : Math.Max(_eventSequence.Time, _eventSequence.Audio.Duration))
+            var num = (_eventSequence.Audio != null)
+                          ? (checkBoxAutoSize.Checked ? _eventSequence.Audio.Duration : Math.Max(_eventSequence.Time, _eventSequence.Audio.Duration))
                           : _eventSequence.Time;
-            labelTotalTime.Text = string.Format("/ {0:d2}:{1:d2}.{2:d3}", num/60000, (num%60000)/1000, num%1000);
+            labelTotalTime.Text = Utils.TimeFormatWithMills(num);
             return num;
         }
 
-        private void UpdateTrackbar()
-        {
-            if (trackBarPosition.Maximum < 2000)
-            {
+
+        private void UpdateTrackbar() {
+            if (trackBarPosition.Maximum < 2000) {
                 _smallChange = 100f;
             }
-            else if (trackBarPosition.Maximum < 20000)
-            {
+            else if (trackBarPosition.Maximum < 20000) {
                 _smallChange = 1000f;
             }
-            else if (trackBarPosition.Maximum < 60000)
-            {
+            else if (trackBarPosition.Maximum < 60000) {
                 _smallChange = 2000f;
             }
-            else
-            {
+            else {
                 _smallChange = 5000f;
             }
-            trackBarPosition.Maximum =
-                (int) Math.Round(((trackBarPosition.Maximum)/_smallChange), MidpointRounding.AwayFromZero);
+            trackBarPosition.Maximum = (int) Math.Round(((trackBarPosition.Maximum) / _smallChange), MidpointRounding.AwayFromZero);
         }
+
 
         private delegate void ProgressBarVisibleDelegate(bool value);
 

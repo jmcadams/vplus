@@ -61,6 +61,15 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Color already exists in the list..
+        /// </summary>
+        internal static string ColorAlreadyExists {
+            get {
+                return ResourceManager.GetString("ColorAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  is missing or does not contain a valid engine.
         /// </summary>
         internal static string EngineMissingOrInvalid {

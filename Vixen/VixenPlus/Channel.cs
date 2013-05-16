@@ -50,14 +50,14 @@ namespace VixenPlus {
 
 
         public Channel(string name, int outputChannel) {
+            Name = name;
+            OutputChannel = outputChannel;
+
             Brush = null;
-            OutputChannel = 0;
             Enabled = true;
             DimmingCurve = null;
-            Name = name;
             Color = Color.FromArgb(-1);
             Id = Host.GetUniqueKey();
-            OutputChannel = outputChannel;
         }
 
 
@@ -66,7 +66,7 @@ namespace VixenPlus {
         }
 
 
-        public Channel(string name, int outputChannel, bool ensureUniqueId) : this (name, outputChannel) {
+        public Channel(string name, int outputChannel, bool ensureUniqueId) : this(name, outputChannel) {
             if (ensureUniqueId) {
                 var ticks = DateTime.Now.Ticks;
                 while (ticks == DateTime.Now.Ticks) {}
@@ -172,7 +172,7 @@ namespace VixenPlus {
             return Name;
         }
 
-
+        // For ComboBoxes
         public static void DrawItem(DrawItemEventArgs e, Channel channels) {
             e.DrawBackground();
 
@@ -187,6 +187,7 @@ namespace VixenPlus {
         }
 
 
+        // For List Boxes
         public static void DrawItem(ListBox lb, DrawItemEventArgs e, Channel channels, bool drawFocus = true) {
             e.DrawBackground();
 
@@ -204,6 +205,13 @@ namespace VixenPlus {
             if (drawFocus) {
                 e.DrawFocusRectangle();
             }
+        }
+
+
+        // For TreeViews
+        public static void DrawItem(TreeView treeView, DrawTreeNodeEventArgs e, Color channelColor) {
+            e.Graphics.FillRectangle(new SolidBrush(channelColor), e.Node.Bounds);
+            e.Graphics.DrawString(e.Node.Text, e.Node.NodeFont ?? treeView.Font, Utils.GetTextColor(channelColor), Rectangle.Inflate(e.Bounds, 2, 0));
         }
     }
 }

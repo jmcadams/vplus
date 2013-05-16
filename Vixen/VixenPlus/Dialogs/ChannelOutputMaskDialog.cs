@@ -1,33 +1,26 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace VixenPlus.Dialogs
-{
-    public partial class ChannelOutputMaskDialog : Form
-    {
-        public ChannelOutputMaskDialog(IEnumerable<Channel> channels)
-        {
+namespace VixenPlus.Dialogs {
+    public partial class ChannelOutputMaskDialog : Form {
+        public ChannelOutputMaskDialog(IEnumerable<Channel> channels) {
             InitializeComponent();
-            foreach (Channel channel in channels)
-            {
+            foreach (var channel in channels) {
                 checkedListBoxChannels.Items.Add(channel, channel.Enabled);
             }
         }
 
-        public List<int> DisabledChannels
-        {
-            get
-            {
-                var list = new List<int>();
-                for (int i = 0; i < checkedListBoxChannels.Items.Count; i++)
-                {
-                    list.Add(i);
+
+        public List<int> DisabledChannels {
+            get {
+                var disabledChannels = new List<int>();
+                for (var i = 0; i < checkedListBoxChannels.Items.Count; i++) {
+                    disabledChannels.Add(i);
                 }
-                foreach (int num2 in checkedListBoxChannels.CheckedIndices)
-                {
-                    list.Remove(num2);
+                foreach (int index in checkedListBoxChannels.CheckedIndices) {
+                    disabledChannels.Remove(index);
                 }
-                return list;
+                return disabledChannels;
             }
         }
     }

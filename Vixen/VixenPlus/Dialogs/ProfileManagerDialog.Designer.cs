@@ -173,8 +173,9 @@ private TreeView treeViewProfile;
             // pictureBoxProfileDeleteChannelOrder
             // 
             this.pictureBoxProfileDeleteChannelOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBoxProfileDeleteChannelOrder.BackColor = System.Drawing.Color.LightGray;
             this.pictureBoxProfileDeleteChannelOrder.Enabled = false;
-            this.pictureBoxProfileDeleteChannelOrder.Location = new System.Drawing.Point(498, 313);
+            this.pictureBoxProfileDeleteChannelOrder.Location = new System.Drawing.Point(498, 231);
             this.pictureBoxProfileDeleteChannelOrder.Name = "pictureBoxProfileDeleteChannelOrder";
             this.pictureBoxProfileDeleteChannelOrder.Size = new System.Drawing.Size(16, 16);
             this.pictureBoxProfileDeleteChannelOrder.TabIndex = 38;
@@ -185,7 +186,8 @@ private TreeView treeViewProfile;
             // pictureBoxProfileSaveChannelOrder
             // 
             this.pictureBoxProfileSaveChannelOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBoxProfileSaveChannelOrder.Location = new System.Drawing.Point(476, 313);
+            this.pictureBoxProfileSaveChannelOrder.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBoxProfileSaveChannelOrder.Location = new System.Drawing.Point(476, 231);
             this.pictureBoxProfileSaveChannelOrder.Name = "pictureBoxProfileSaveChannelOrder";
             this.pictureBoxProfileSaveChannelOrder.Size = new System.Drawing.Size(16, 16);
             this.pictureBoxProfileSaveChannelOrder.TabIndex = 37;
@@ -195,6 +197,7 @@ private TreeView treeViewProfile;
             // 
             // pictureBoxProfileChannelColors
             // 
+            this.pictureBoxProfileChannelColors.BackColor = System.Drawing.Color.Gray;
             this.pictureBoxProfileChannelColors.Location = new System.Drawing.Point(87, 101);
             this.pictureBoxProfileChannelColors.Name = "pictureBoxProfileChannelColors";
             this.pictureBoxProfileChannelColors.Size = new System.Drawing.Size(16, 16);
@@ -205,6 +208,7 @@ private TreeView treeViewProfile;
             // 
             // pictureBoxProfileChannelOutputMask
             // 
+            this.pictureBoxProfileChannelOutputMask.BackColor = System.Drawing.Color.DimGray;
             this.pictureBoxProfileChannelOutputMask.Location = new System.Drawing.Point(87, 77);
             this.pictureBoxProfileChannelOutputMask.Name = "pictureBoxProfileChannelOutputMask";
             this.pictureBoxProfileChannelOutputMask.Size = new System.Drawing.Size(16, 16);
@@ -215,6 +219,7 @@ private TreeView treeViewProfile;
             // 
             // pictureBoxProfileChannelOutputs
             // 
+            this.pictureBoxProfileChannelOutputs.BackColor = System.Drawing.Color.Black;
             this.pictureBoxProfileChannelOutputs.Location = new System.Drawing.Point(87, 53);
             this.pictureBoxProfileChannelOutputs.Name = "pictureBoxProfileChannelOutputs";
             this.pictureBoxProfileChannelOutputs.Size = new System.Drawing.Size(16, 16);
@@ -324,7 +329,7 @@ private TreeView treeViewProfile;
             this.comboBoxChannelOrder.Items.AddRange(new object[] {
             "Define new order...",
             "Restore natural order..."});
-            this.comboBoxChannelOrder.Location = new System.Drawing.Point(349, 308);
+            this.comboBoxChannelOrder.Location = new System.Drawing.Point(349, 226);
             this.comboBoxChannelOrder.Name = "comboBoxChannelOrder";
             this.comboBoxChannelOrder.Size = new System.Drawing.Size(121, 21);
             this.comboBoxChannelOrder.TabIndex = 23;
@@ -334,7 +339,7 @@ private TreeView treeViewProfile;
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(346, 292);
+            this.label7.Location = new System.Drawing.Point(346, 210);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(73, 13);
             this.label7.TabIndex = 22;
@@ -371,9 +376,9 @@ private TreeView treeViewProfile;
             this.buttonChangeProfileName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonChangeProfileName.Location = new System.Drawing.Point(349, 70);
             this.buttonChangeProfileName.Name = "buttonChangeProfileName";
-            this.buttonChangeProfileName.Size = new System.Drawing.Size(75, 23);
+            this.buttonChangeProfileName.Size = new System.Drawing.Size(111, 23);
             this.buttonChangeProfileName.TabIndex = 26;
-            this.buttonChangeProfileName.Text = "Change";
+            this.buttonChangeProfileName.Text = "Change Name";
             this.buttonChangeProfileName.UseVisualStyleBackColor = true;
             this.buttonChangeProfileName.Click += new System.EventHandler(this.buttonChangeProfileName_Click);
             // 
@@ -384,9 +389,9 @@ private TreeView treeViewProfile;
             this.labelProfileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelProfileName.Location = new System.Drawing.Point(390, 54);
             this.labelProfileName.Name = "labelProfileName";
-            this.labelProfileName.Size = new System.Drawing.Size(41, 13);
+            this.labelProfileName.Size = new System.Drawing.Size(75, 13);
             this.labelProfileName.TabIndex = 25;
-            this.labelProfileName.Text = "label7";
+            this.labelProfileName.Text = "ProfileName";
             // 
             // label8
             // 
@@ -413,11 +418,11 @@ private TreeView treeViewProfile;
             // 
             this.buttonRemoveProfileChannels.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRemoveProfileChannels.Enabled = false;
-            this.buttonRemoveProfileChannels.Location = new System.Drawing.Point(349, 231);
+            this.buttonRemoveProfileChannels.Location = new System.Drawing.Point(349, 184);
             this.buttonRemoveProfileChannels.Name = "buttonRemoveProfileChannels";
-            this.buttonRemoveProfileChannels.Size = new System.Drawing.Size(75, 23);
+            this.buttonRemoveProfileChannels.Size = new System.Drawing.Size(111, 23);
             this.buttonRemoveProfileChannels.TabIndex = 21;
-            this.buttonRemoveProfileChannels.Text = "Remove";
+            this.buttonRemoveProfileChannels.Text = "Remove Channel";
             this.buttonRemoveProfileChannels.UseVisualStyleBackColor = true;
             this.buttonRemoveProfileChannels.Click += new System.EventHandler(this.buttonRemoveProfileChannels_Click);
             // 
