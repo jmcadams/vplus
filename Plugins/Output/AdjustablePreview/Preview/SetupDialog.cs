@@ -328,7 +328,7 @@ namespace Preview {
             }
 
             SetPictureBoxSize(_originalBackground.Width, _originalBackground.Height);
-            UpdateSizeUI();
+            UpdateSizeUi();
         }
 
 
@@ -381,7 +381,7 @@ namespace Preview {
 
             SetDisplay(ref width, ref height, _setupNode.SelectSingleNode("Display"));
             SetPictureBoxSize(width * (_cellSize + 1), height * (_cellSize + 1));
-            UpdateSizeUI();
+            UpdateSizeUi();
             SetBackgroundImage(_setupNode.SelectSingleNode("BackgroundImage"), _setupNode.SelectSingleNode("Display"));
             SetChannels(_setupNode.SelectNodes("Channels/Channel"));
 
@@ -511,7 +511,7 @@ namespace Preview {
         }
 
 
-        private void UpdateSizeUI() {
+        private void UpdateSizeUi() {
             toolStripTextBoxResolutionX.Text = (pictureBoxSetupGrid.Width / (_cellSize + 1)).ToString(CultureInfo.InvariantCulture);
             toolStripTextBoxResolutionY.Text = (pictureBoxSetupGrid.Height / (_cellSize + 1)).ToString(CultureInfo.InvariantCulture);
             toolStripComboBoxPixelSize.SelectedIndex = _cellSize - 1;

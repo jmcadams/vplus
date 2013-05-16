@@ -37,6 +37,7 @@ namespace Preview{
             this.Name = "PreviewDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Sequence Preview";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PreviewDialog_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxShowGrid)).EndInit();
             this.ResumeLayout(false);
 
