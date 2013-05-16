@@ -1,44 +1,32 @@
 namespace Renard {
     using System;
-    using System.ComponentModel;
-    using System.Drawing;
     using System.IO.Ports;
     using System.Windows.Forms;
+
     using VixenPlus.Dialogs;
 
     public partial class SetupDialog : Form {
-        private SerialPort m_selectedPort;
-
-        public SetupDialog(SerialPort selectedPort, int protocolVersion, bool holdPort) {
-            this.InitializeComponent();
-            this.m_selectedPort = selectedPort;
-            this.comboBoxProtocolVersion.SelectedIndex = protocolVersion - 1;
-            this.checkBoxHoldPort.Checked = holdPort;
+        public SetupDialog(SerialPort selectedPort, bool holdPort) {
+            InitializeComponent();
+            SelectedPort = selectedPort;
+            checkBoxHoldPort.Checked = holdPort;
         }
+
 
         private void buttonSerialSetup_Click(object sender, EventArgs e) {
-            SerialSetupDialog dialog = new SerialSetupDialog(this.m_selectedPort);
-            if (dialog.ShowDialog() == DialogResult.OK) {
-                this.m_selectedPort = dialog.SelectedPort;
+            using (var dialog = new SerialSetupDialog(SelectedPort)) {
+                if (dialog.ShowDialog() == DialogResult.OK) {
+                    SelectedPort = dialog.SelectedPort;
+                }
             }
         }
+
 
         public bool HoldPort {
-            get {
-                return this.checkBoxHoldPort.Checked;
-            }
+            get { return checkBoxHoldPort.Checked; }
         }
 
-        public int ProtocolVersion {
-            get {
-                return (this.comboBoxProtocolVersion.SelectedIndex + 1);
-            }
-        }
 
-        public SerialPort SelectedPort {
-            get {
-                return this.m_selectedPort;
-            }
-        }
+        public SerialPort SelectedPort { get; private set; }
     }
 }

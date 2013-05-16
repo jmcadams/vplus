@@ -149,7 +149,7 @@ namespace Preview {
         }
 
 
-        private static void PreviewDialog_FormClosing(object sender, FormClosingEventArgs e) {
+        private void PreviewDialog_FormClosing(object sender, FormClosingEventArgs e) {
             e.Cancel = e.CloseReason == CloseReason.UserClosing;
         }
 

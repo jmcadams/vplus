@@ -1,313 +1,227 @@
-﻿namespace Renard
-{
+﻿using System.Collections.Generic;
+
+namespace Renard {
     using System;
     using System.IO.Ports;
     using System.Text;
     using System.Threading;
     using System.Windows.Forms;
     using System.Xml;
+
     using VixenPlus;
 
-    public class Renard : IEventDrivenOutputPlugIn, IOutputPlugIn, IHardwarePlugin, IPlugIn, ISetup
-    {
-        private byte[] m_channelValues;
-        private AutoResetEvent m_eventTrigger;
-        private bool m_holdPort;
-        private byte[] m_p1Packet = new byte[0x12];
-        private byte[] m_p1Zeroes;
-        private byte[] m_p2Packet;
-        private byte[] m_p2Zeroes;
-        private int m_protocolVersion = 1;
-        private SerialPort m_selectedPort = null;
-        private SetupData m_setupData;
-        private XmlNode m_setupNode;
-        private RunState m_state = RunState.Stopped;
-        private const int PAD_DISTANCE = 100;
+    public class Renard : IEventDrivenOutputPlugIn {
+        private byte[] _channelValues;
+        private AutoResetEvent _eventTrigger;
+        private bool _holdPort;
+        private byte[] _p1Packet = new byte[1];
+        private SerialPort _selectedPort;
+        private SetupData _setupData;
+        private XmlNode _setupNode;
+        private RunState _state = RunState.Stopped;
 
-        public Renard()
-        {
-            this.m_p1Packet[0] = 0x7e;
-            this.m_p2Packet = new byte[11];
-            this.m_p2Packet[0] = 0;
-            this.m_p1Zeroes = new byte[0x10];
-            this.m_p2Zeroes = new byte[8];
+        private const int ProtocolHeaderSize = 2;
+        private const byte ReplacementValue = 0x7c;
+        private const byte PacketIgnoreValue = 0x7d;
+        private const byte StreamStartValue = 0x7e;
+        private const byte PacketEndValue = 0x7f;
+        private const byte PacketStartValue = 0x80;
+
+        public Renard() {
+            _p1Packet[0] = StreamStartValue;
         }
 
-        public void Event(byte[] channelValues)
-        {
-            this.m_channelValues = channelValues;
-            if (this.m_holdPort)
-            {
-                this.m_eventTrigger.Set();
+
+        public void Event(byte[] channelValues) {
+            _channelValues = channelValues;
+            if (_holdPort) {
+                _eventTrigger.Set();
             }
-            else
-            {
-                if (!this.m_selectedPort.IsOpen)
-                {
-                    this.m_selectedPort.Open();
+            else {
+                if (!_selectedPort.IsOpen) {
+                    _selectedPort.Open();
                 }
-                this.FireEvent();
-                this.m_selectedPort.Close();
+                FireEvent();
+                _selectedPort.Close();
             }
         }
 
-        private void EventThread()
-        {
-            this.State = RunState.Running;
-            this.m_eventTrigger = new AutoResetEvent(false);
-            try
-            {
-                while (this.State == RunState.Running)
-                {
-                    this.m_eventTrigger.WaitOne();
-                    try
-                    {
-                        this.FireEvent();
+
+        private void EventThread() {
+            State = RunState.Running;
+            _eventTrigger = new AutoResetEvent(false);
+            try {
+                while (State == RunState.Running) {
+                    _eventTrigger.WaitOne();
+                    try {
+                        FireEvent();
                     }
-                    catch (TimeoutException)
-                    {
-                    }
+                    catch (TimeoutException) {}
                 }
             }
-            catch
-            {
-                if (this.State == RunState.Running)
-                {
-                    this.State = RunState.Stopping;
+            catch {
+                if (State == RunState.Running) {
+                    State = RunState.Stopping;
                 }
             }
-            finally
-            {
-                this.State = RunState.Stopped;
+            finally {
+                State = RunState.Stopped;
             }
         }
 
-        private void FireEvent()
-        {
-            if (this.State == RunState.Running)
-            {
-                if (this.m_protocolVersion == 1)
-                {
-                    this.Protocol1Event(this.m_channelValues);
-                }
-                else if (this.m_protocolVersion == 2)
-                {
-                    this.Protocol2Event(this.m_channelValues);
-                }
+
+        private void FireEvent() {
+            if (State != RunState.Running) {
+                return;
             }
+
+            DoEvent(_channelValues);
         }
 
-        public void Initialize(IExecutable executableObject, SetupData setupData, XmlNode setupNode)
-        {
-            this.m_setupData = setupData;
-            this.m_setupNode = setupNode;
-            this.m_selectedPort = new SerialPort(this.m_setupData.GetString(this.m_setupNode, "name", "COM1"), this.m_setupData.GetInteger(this.m_setupNode, "baud", 0x4b00), (Parity) Enum.Parse(typeof(Parity), this.m_setupData.GetString(this.m_setupNode, "parity", Parity.None.ToString())), this.m_setupData.GetInteger(this.m_setupNode, "data", 8), (StopBits) Enum.Parse(typeof(StopBits), this.m_setupData.GetString(this.m_setupNode, "stop", StopBits.One.ToString())));
-            this.m_protocolVersion = this.m_setupData.GetInteger(this.m_setupNode, "ProtocolVersion", 1);
-            this.m_holdPort = this.m_setupData.GetBoolean(this.m_setupNode, "HoldPort", true);
-            this.m_selectedPort.WriteTimeout = 500;
+
+        public void Initialize(IExecutable executableObject, SetupData setupData, XmlNode setupNode) {
+            _setupData = setupData;
+            _setupNode = setupNode;
+            _selectedPort = new SerialPort(_setupData.GetString(_setupNode, "name", "COM1"),
+                                           _setupData.GetInteger(_setupNode, "baud", 19200),
+                                           (Parity)
+                                           Enum.Parse(typeof (Parity),
+                                                      _setupData.GetString(_setupNode, "parity", Parity.None.ToString())),
+                                           _setupData.GetInteger(_setupNode, "data", 8),
+                                           (StopBits)
+                                           Enum.Parse(typeof (StopBits),
+                                                      _setupData.GetString(_setupNode, "stop", StopBits.One.ToString())));
+            _holdPort = _setupData.GetBoolean(_setupNode, "HoldPort", true);
+            _selectedPort.WriteTimeout = 500;
         }
 
-        private void Protocol1Event(byte[] channelValues)
-        {
-            int length = channelValues.Length;
-            int count = 2;
-            int num3 = (2 + (2 * length)) + ((2 + (2 * length)) / 100);
-            if (this.m_p1Packet.Length < num3)
-            {
-                this.m_p1Packet = new byte[num3];
+
+        private void DoEvent(IList<byte> channelValues) {
+            var length = channelValues.Count;
+            var count = ProtocolHeaderSize;
+            var desiredPacketLength = (ProtocolHeaderSize + length);
+            desiredPacketLength += (desiredPacketLength / 100);
+            if (_p1Packet.Length < desiredPacketLength) {
+                _p1Packet = new byte[desiredPacketLength];
             }
-            this.m_p1Packet[0] = 0x7e;
-            this.m_p1Packet[1] = 0x80;
-            for (int i = 0; i < length; i++)
-            {
-                if (channelValues[i] == 0x7d)
-                {
-                    this.m_p1Packet[count++] = 0x7c;
+            _p1Packet[0] = StreamStartValue;
+            _p1Packet[1] = PacketStartValue;
+            for (var i = 0; i < length; i++) {
+                switch (channelValues[i]) {
+                    case PacketIgnoreValue:
+                        _p1Packet[count++] = ReplacementValue;
+                        break;
+                    case StreamStartValue:
+                        _p1Packet[count++] = ReplacementValue;
+                        break;
+                    case PacketEndValue:
+                        _p1Packet[count++] = PacketStartValue;
+                        break;
+                    default:
+                        _p1Packet[count++] = channelValues[i];
+                        break;
                 }
-                else if (channelValues[i] == 0x7e)
-                {
-                    this.m_p1Packet[count++] = 0x7c;
-                }
-                else if (channelValues[i] == 0x7f)
-                {
-                    this.m_p1Packet[count++] = 0x80;
-                }
-                else
-                {
-                    this.m_p1Packet[count++] = channelValues[i];
-                }
-                if ((count % 100) == 0)
-                {
-                    this.m_p1Packet[count++] = 0x7d;
+                if ((count%100) == 0) {
+                    _p1Packet[count++] = PacketIgnoreValue;
                 }
             }
-            while ((this.m_selectedPort.WriteBufferSize - this.m_selectedPort.BytesToWrite) <= count)
-            {
+            while ((_selectedPort.WriteBufferSize - _selectedPort.BytesToWrite) <= count) {
                 Thread.Sleep(5);
             }
-            this.m_selectedPort.Write(this.m_p1Packet, 0, count);
+            _selectedPort.Write(_p1Packet, 0, count);
         }
 
-        private void Protocol2Event(byte[] channelValues)
-        {
-            byte num3 = 0x80;
-            int length = channelValues.Length;
-            byte[] array = new byte[8];
-            for (int i = 0; i < length; i += 8)
-            {
-                int num2 = Math.Min((int) (i + 7), (int) (length - 1));
-                num3 = (byte) (num3 + 1);
-                this.m_p2Packet[1] = num3;
-                if (num2 >= (length - 1))
-                {
-                    this.m_p2Zeroes.CopyTo(this.m_p2Packet, 3);
+
+        public void Setup() {
+            using (var dialog = new SetupDialog(_selectedPort, _holdPort)) {
+                if (dialog.ShowDialog() != DialogResult.OK) {
+                    return;
                 }
-                Array.Clear(array, 0, 8);
-                int index = i;
-                while (index <= num2)
-                {
-                    byte num8 = channelValues[index];
-                    byte num9 = (byte)-num8;
-                    if ((num8 >= 1) && (num8 <= 8))
-                    {
-                        array[num8 - 1] = 1;
-                    }
-                    else if ((num9 >= 1) && (num9 <= 8))
-                    {
-                        array[num9 - 1] = 1;
-                    }
-                    index++;
+
+                _selectedPort = dialog.SelectedPort;
+                _setupData.SetString(_setupNode, "name", _selectedPort.PortName);
+                _setupData.SetInteger(_setupNode, "baud", _selectedPort.BaudRate);
+                _setupData.SetString(_setupNode, "parity", _selectedPort.Parity.ToString());
+                _setupData.SetInteger(_setupNode, "data", _selectedPort.DataBits);
+                _setupData.SetString(_setupNode, "stop", _selectedPort.StopBits.ToString());
+                _holdPort = dialog.HoldPort;
+                _setupData.SetBoolean(_setupNode, "HoldPort", _holdPort);
+            }
+        }
+
+
+        public void Shutdown() {
+            if (State != RunState.Running) {
+                return;
+            }
+
+            State = RunState.Stopping;
+            while (State != RunState.Stopped) {
+                Thread.Sleep(5);
+            }
+            if (_selectedPort.IsOpen) {
+                _selectedPort.Close();
+            }
+        }
+
+
+        public void Startup() {
+            if (!(!_holdPort || _selectedPort.IsOpen)) {
+                _selectedPort.Open();
+            }
+            _selectedPort.Handshake = Handshake.None;
+            _selectedPort.Encoding = Encoding.UTF8;
+            _selectedPort.RtsEnable = true;
+            _selectedPort.DtrEnable = true;
+            if (!_holdPort) {
+                return;
+            }
+
+            new Thread(EventThread).Start();
+            while (State != RunState.Running) {
+                Thread.Sleep(1);
+            }
+        }
+
+
+        public override string ToString() {
+            return Name;
+        }
+
+
+        public string Author {
+            get { return "Vixen and Vixen+ Developers"; }
+        }
+
+        public string Description {
+            get { return "Renard Protocol Output"; }
+        }
+
+        public HardwareMap[] HardwareMap {
+            get { return new[] {new HardwareMap("Serial", int.Parse(_selectedPort.PortName.Substring(3)))}; }
+        }
+
+        public string Name {
+            get { return "Renard Dimmer"; }
+        }
+
+        private RunState State {
+            get { return _state; }
+            set {
+                _state = value;
+                if (value != RunState.Stopping) {
+                    return;
                 }
-                byte num7 = (byte) (1 + Array.IndexOf<byte>(array, 0));
-                this.m_p2Packet[2] = num7;
-                index = i;
-                int num5 = 3;
-                while (index <= num2)
-                {
-                    this.m_p2Packet[num5] = (byte) (channelValues[index] - num7);
-                    index++;
-                    num5++;
-                }
-                this.m_selectedPort.Write(this.m_p2Packet, 0, num5);
+                _eventTrigger.Set();
+                _eventTrigger.Close();
+                _eventTrigger = null;
             }
         }
 
-        public void Setup()
-        {
-            SetupDialog dialog = new SetupDialog(this.m_selectedPort, this.m_protocolVersion, this.m_holdPort);
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                this.m_selectedPort = dialog.SelectedPort;
-                this.m_setupData.SetString(this.m_setupNode, "name", this.m_selectedPort.PortName);
-                this.m_setupData.SetInteger(this.m_setupNode, "baud", this.m_selectedPort.BaudRate);
-                this.m_setupData.SetString(this.m_setupNode, "parity", this.m_selectedPort.Parity.ToString());
-                this.m_setupData.SetInteger(this.m_setupNode, "data", this.m_selectedPort.DataBits);
-                this.m_setupData.SetString(this.m_setupNode, "stop", this.m_selectedPort.StopBits.ToString());
-                this.m_protocolVersion = dialog.ProtocolVersion;
-                this.m_setupData.SetInteger(this.m_setupNode, "ProtocolVersion", this.m_protocolVersion);
-                this.m_holdPort = dialog.HoldPort;
-                this.m_setupData.SetBoolean(this.m_setupNode, "HoldPort", this.m_holdPort);
-            }
-            dialog.Dispose();
-        }
-
-        public void Shutdown()
-        {
-            if (this.State == RunState.Running)
-            {
-                this.State = RunState.Stopping;
-                while (this.State != RunState.Stopped)
-                {
-                    Thread.Sleep(5);
-                }
-                if (this.m_selectedPort.IsOpen)
-                {
-                    this.m_selectedPort.Close();
-                }
-            }
-        }
-
-        public void Startup()
-        {
-            if (!(!this.m_holdPort || this.m_selectedPort.IsOpen))
-            {
-                this.m_selectedPort.Open();
-            }
-            this.m_selectedPort.Handshake = Handshake.None;
-            this.m_selectedPort.Encoding = Encoding.UTF8;
-            this.m_selectedPort.RtsEnable = true;
-            this.m_selectedPort.DtrEnable = true;
-            if (this.m_holdPort)
-            {
-                new Thread(new ThreadStart(this.EventThread)).Start();
-                while (this.State != RunState.Running)
-                {
-                    Thread.Sleep(1);
-                }
-            }
-        }
-
-        public override string ToString()
-        {
-            return this.Name;
-        }
-
-        public string Author
-        {
-            get
-            {
-                return "Phil Short";
-            }
-        }
-
-        public string Description
-        {
-            get
-            {
-                return "Phil Short's 'Renard Dimmer' output plugin";
-            }
-        }
-
-        public VixenPlus.HardwareMap[] HardwareMap
-        {
-            get
-            {
-                return new VixenPlus.HardwareMap[] { new VixenPlus.HardwareMap("Serial", int.Parse(this.m_selectedPort.PortName.Substring(3))) };
-            }
-        }
-
-        public string Name
-        {
-            get
-            {
-                return "Renard Dimmer (modified)";
-            }
-        }
-
-        private RunState State
-        {
-            get
-            {
-                return this.m_state;
-            }
-            set
-            {
-                this.m_state = value;
-                if (value == RunState.Stopping)
-                {
-                    this.m_eventTrigger.Set();
-                    this.m_eventTrigger.Close();
-                    this.m_eventTrigger = null;
-                }
-            }
-        }
-
-        private enum RunState
-        {
+        private enum RunState {
             Running,
             Stopping,
             Stopped
         }
     }
 }
-
