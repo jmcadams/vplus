@@ -716,9 +716,6 @@
     <EmbeddedResource Include="VixenPlus\PreferencesDialog.resx">
       <DependentUpon>PreferencesDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VixenPlus\Splash.resx">
-      <DependentUpon>Splash.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="VixenPlus\VixenPlusForm.resx">
       <DependentUpon>VixenPlusForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -763,10 +760,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\VixenPlus.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\VixenPlus1.png" />
+    <None Include="Resources\VixenPlusSplash.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

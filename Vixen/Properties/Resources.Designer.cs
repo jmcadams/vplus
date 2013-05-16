@@ -126,13 +126,6 @@ namespace Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap VixenPlus {
-            get {
-                object obj = ResourceManager.GetObject("VixenPlus", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         /// <summary>
         ///   Looks up a localized string similar to Add-in error:
         ///
@@ -268,6 +261,13 @@ namespace Properties {
         internal static string VixenPlusForm_TriggerNotFoundOrStarted {
             get {
                 return ResourceManager.GetString("VixenPlusForm_TriggerNotFoundOrStarted", resourceCulture);
+            }
+        }
+        
+        internal static System.Drawing.Bitmap VixenPlusSplash {
+            get {
+                object obj = ResourceManager.GetObject("VixenPlusSplash", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }
