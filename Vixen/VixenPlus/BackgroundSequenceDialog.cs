@@ -34,31 +34,31 @@ namespace VixenPlus
         private void buttonSelect_Click(object sender, EventArgs e)
         {
             openFileDialog.InitialDirectory = _sequencesPath;
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            if (openFileDialog.ShowDialog() != DialogResult.OK) {
+                return;
+            }
+            EventSequence sequence;
+            try
             {
-                EventSequence sequence;
-                try
-                {
-                    sequence = new EventSequence(openFileDialog.FileName);
-                }
-                catch
-                {
-                    MessageBox.Show(Resources.NotAValidSequence, Vendor.ProductName, MessageBoxButtons.OK,
-                                    MessageBoxIcon.Hand);
-                    return;
-                }
-                if (sequence.EngineType != EngineType.Procedural)
-                {
-                    MessageBox.Show(
-                        Resources.ScripedSequenceOnly,
-                        Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                }
-                else
-                {
-                    labelSequenceName.Text = sequence.Name;
-                    BackgroundSequenceFileName = openFileDialog.FileName;
-                    sequence.Dispose();
-                }
+                sequence = new EventSequence(openFileDialog.FileName);
+            }
+            catch
+            {
+                MessageBox.Show(Resources.NotAValidSequence, Vendor.ProductName, MessageBoxButtons.OK,
+                                MessageBoxIcon.Hand);
+                return;
+            }
+            if (sequence.EngineType != EngineType.Procedural)
+            {
+                MessageBox.Show(
+                    Resources.ScripedSequenceOnly,
+                    Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+            }
+            else
+            {
+                labelSequenceName.Text = sequence.Name;
+                BackgroundSequenceFileName = openFileDialog.FileName;
+                sequence.Dispose();
             }
         }
     }

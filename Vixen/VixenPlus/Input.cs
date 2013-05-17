@@ -54,7 +54,7 @@ namespace VixenPlus
         {
             if (_isMappingIterator)
             {
-                bool changed = Changed;
+                var changed = Changed;
                 if (!(_wasChanged || !changed))
                 {
                     Owner.IteratorTriggered(this);
@@ -68,19 +68,19 @@ namespace VixenPlus
         public abstract byte GetValue();
 
         internal byte GetValueInternal() {
-            return _isMappingIterator ? 0 : GetValue();
+            return _isMappingIterator ? (byte) 0 : GetValue();
         }
 
 
         public void ReadData(XmlNode node)
         {
-            if (node.Attributes != null)
-            {
-                Name = node.Attributes["name"].Value;
-                _isEnabled = bool.Parse(node.Attributes["enabled"].Value);
-                Id = ulong.Parse(node.Attributes["id"].Value);
-                _isMappingIterator = bool.Parse(node.Attributes["isIterator"].Value);
+            if (node.Attributes == null) {
+                return;
             }
+            Name = node.Attributes["name"].Value;
+            _isEnabled = bool.Parse(node.Attributes["enabled"].Value);
+            Id = ulong.Parse(node.Attributes["id"].Value);
+            _isMappingIterator = bool.Parse(node.Attributes["isIterator"].Value);
         }
 
         public override string ToString()
@@ -90,7 +90,7 @@ namespace VixenPlus
 
         public XmlNode WriteData(XmlNode parentNode)
         {
-            XmlNode node = Xml.SetNewValue(parentNode, "Input", "");
+            var node = Xml.SetNewValue(parentNode, "Input", "");
             Xml.SetAttribute(node, "name", Name);
             Xml.SetAttribute(node, "enabled", Enabled.ToString());
             Xml.SetAttribute(node, "id", Id.ToString(CultureInfo.InvariantCulture));

@@ -31,7 +31,7 @@ namespace VixenPlus
             listBoxInputs.DisplayMember = "Name";
             listBoxInputs.ValueMember = "OutputChannelId";
             listBoxInputs.DataSource = _inputPlugin.Inputs;
-            foreach (Channel channel in _eventSequence.Channels)
+            foreach (var channel in _eventSequence.Channels)
             {
                 _idChannel[channel.Id.ToString(CultureInfo.InvariantCulture)] = channel;
             }
@@ -44,11 +44,11 @@ namespace VixenPlus
             }
             checkBoxLiveUpdate.Checked = _inputPlugin.LiveUpdate;
             checkBoxRecord.Checked = _inputPlugin.Record;
-            foreach (MappingSet set in _editingMappingSets)
+            foreach (var set in _editingMappingSets)
             {
                 AddMappingSetListViewItem(set);
             }
-            Input[] iterators = _inputPlugin.GetIterators();
+            var iterators = _inputPlugin.GetIterators();
             comboBoxSingleIteratorInput.Items.AddRange(iterators);
             listBoxIteratorInputs.Items.AddRange(iterators);
             switch (_inputPlugin.MappingIteratorType) {
@@ -71,7 +71,7 @@ namespace VixenPlus
             listViewMappingSets.Items.Add(mappingSet.Name);
         }
 
-        private void AssignMappingSetToInput(MappingSet mappingSet, Input input)
+        private static void AssignMappingSetToInput(MappingSet mappingSet, Input input)
         {
             if (input != null)
             {
@@ -86,19 +86,19 @@ namespace VixenPlus
 
         private void buttonClearInputChannels_Click(object sender, EventArgs e)
         {
-            if (listBoxInputs.SelectedItem != null)
-            {
-                var selectedItem = (Input) listBoxInputs.SelectedItem;
-                _editingMappingSets.GetOutputChannelIdList(selectedItem).Clear();
-                ReflectInput(selectedItem);
+            if (listBoxInputs.SelectedItem == null) {
+                return;
             }
+            var selectedItem = (Input) listBoxInputs.SelectedItem;
+            _editingMappingSets.GetOutputChannelIdList(selectedItem).Clear();
+            ReflectInput(selectedItem);
         }
 
         private void buttonMoveDown_Click(object sender, EventArgs e)
         {
-            int oldIndex = listViewMappingSets.SelectedIndices[0];
+            var oldIndex = listViewMappingSets.SelectedIndices[0];
             _editingMappingSets.MoveMappingTo(oldIndex, oldIndex + 1);
-            ListViewItem item = listViewMappingSets.Items[oldIndex];
+            var item = listViewMappingSets.Items[oldIndex];
             listViewMappingSets.Items.RemoveAt(oldIndex);
             listViewMappingSets.Items.Insert(oldIndex + 1, item);
             listViewMappingSets.Items[oldIndex].Selected = false;
@@ -107,9 +107,9 @@ namespace VixenPlus
 
         private void buttonMoveUp_Click(object sender, EventArgs e)
         {
-            int oldIndex = listViewMappingSets.SelectedIndices[0];
+            var oldIndex = listViewMappingSets.SelectedIndices[0];
             _editingMappingSets.MoveMappingTo(oldIndex, oldIndex - 1);
-            ListViewItem item = listViewMappingSets.Items[oldIndex];
+            var item = listViewMappingSets.Items[oldIndex];
             listViewMappingSets.Items.RemoveAt(oldIndex);
             listViewMappingSets.Items.Insert(oldIndex - 1, item);
             listViewMappingSets.Items[oldIndex].Selected = false;
@@ -202,41 +202,41 @@ namespace VixenPlus
 
         private void listBoxChannels_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!_isInternal)
+            if (_isInternal) {
+                return;
+            }
+            var list = new List<Channel>();
+            foreach (Channel channel in listBoxMappedChannels.Items)
             {
-                var list = new List<Channel>();
-                foreach (Channel channel in listBoxMappedChannels.Items)
+                list.Add(channel);
+            }
+            foreach (Channel channel in listBoxMappedChannels.Items)
+            {
+                if (!listBoxChannels.SelectedItems.Contains(channel))
+                {
+                    list.Remove(channel);
+                }
+            }
+            foreach (Channel channel in listBoxChannels.SelectedItems)
+            {
+                if (!list.Contains(channel))
                 {
                     list.Add(channel);
                 }
-                foreach (Channel channel in listBoxMappedChannels.Items)
-                {
-                    if (!listBoxChannels.SelectedItems.Contains(channel))
-                    {
-                        list.Remove(channel);
-                    }
-                }
-                foreach (Channel channel in listBoxChannels.SelectedItems)
-                {
-                    if (!list.Contains(channel))
-                    {
-                        list.Add(channel);
-                    }
-                }
-                if (listBoxInputs.SelectedItem != null)
-                {
-                    List<string> outputChannelIdList = _editingMappingSets.GetOutputChannelIdList((Input) listBoxInputs.SelectedItem);
-                    outputChannelIdList.Clear();
-                    foreach (Channel channel in list)
-                    {
-                        outputChannelIdList.Add(channel.Id.ToString(CultureInfo.InvariantCulture));
-                    }
-                }
-                listBoxMappedChannels.BeginUpdate();
-                listBoxMappedChannels.Items.Clear();
-                listBoxMappedChannels.Items.AddRange(list.ToArray());
-                listBoxMappedChannels.EndUpdate();
             }
+            if (listBoxInputs.SelectedItem != null)
+            {
+                var outputChannelIdList = _editingMappingSets.GetOutputChannelIdList((Input) listBoxInputs.SelectedItem);
+                outputChannelIdList.Clear();
+                foreach (var channel in list)
+                {
+                    outputChannelIdList.Add(channel.Id.ToString(CultureInfo.InvariantCulture));
+                }
+            }
+            listBoxMappedChannels.BeginUpdate();
+            listBoxMappedChannels.Items.Clear();
+            listBoxMappedChannels.Items.AddRange(list.ToArray());
+            listBoxMappedChannels.EndUpdate();
         }
 
         private void listBoxInputs_SelectedIndexChanged(object sender, EventArgs e)
@@ -306,76 +306,76 @@ namespace VixenPlus
 
         private void ReflectInput(Input input)
         {
-            if (groupBoxIOMapping.Enabled)
-            {
-                _isInternal = true;
-                listBoxChannels.ClearSelected();
-                _isInternal = false;
-                listBoxMappedChannels.Items.Clear();
-                if (listBoxInputs.SelectedValue != null)
-                {
-                    listBoxChannels.BeginUpdate();
-                    listBoxMappedChannels.BeginUpdate();
-                    _isInternal = true;
-                    foreach (string str in _editingMappingSets.GetOutputChannelIdList(input))
-                    {
-                        Channel channel;
-                        if (_idChannel.TryGetValue(str, out channel))
-                        {
-                            listBoxMappedChannels.Items.Add(channel);
-                            listBoxChannels.SetSelected(listBoxChannels.Items.IndexOf(channel), true);
-                        }
-                    }
-                    _isInternal = false;
-                    listBoxMappedChannels.EndUpdate();
-                    listBoxChannels.EndUpdate();
-                    checkBoxEnabled.Checked = input.Enabled;
-                }
+            if (!groupBoxIOMapping.Enabled) {
+                return;
             }
+            _isInternal = true;
+            listBoxChannels.ClearSelected();
+            _isInternal = false;
+            listBoxMappedChannels.Items.Clear();
+            if (listBoxInputs.SelectedValue == null) {
+                return;
+            }
+            listBoxChannels.BeginUpdate();
+            listBoxMappedChannels.BeginUpdate();
+            _isInternal = true;
+            foreach (var str in _editingMappingSets.GetOutputChannelIdList(input))
+            {
+                Channel channel;
+                if (!_idChannel.TryGetValue(str, out channel)) {
+                    continue;
+                }
+                listBoxMappedChannels.Items.Add(channel);
+                listBoxChannels.SetSelected(listBoxChannels.Items.IndexOf(channel), true);
+            }
+            _isInternal = false;
+            listBoxMappedChannels.EndUpdate();
+            listBoxChannels.EndUpdate();
+            checkBoxEnabled.Checked = input.Enabled;
         }
 
         private void tabControlMappingSets_Selecting(object sender, TabControlCancelEventArgs e)
         {
-            if (e.TabPage == tabPageInputOutputMapping)
+            if (e.TabPage != tabPageInputOutputMapping) {
+                return;
+            }
+            MappingSet selectedItem = null;
+            if (comboBoxMappingSet.SelectedItem != null)
             {
-                MappingSet selectedItem = null;
-                if (comboBoxMappingSet.SelectedItem != null)
-                {
-                    selectedItem = (MappingSet) comboBoxMappingSet.SelectedItem;
-                }
-                comboBoxMappingSet.BeginUpdate();
-                comboBoxMappingSet.Items.Clear();
-                comboBoxMappingSet.Items.AddRange(_editingMappingSets.AllSets);
-                comboBoxMappingSet.EndUpdate();
-                if ((selectedItem != null) && comboBoxMappingSet.Items.Contains(selectedItem))
-                {
-                    comboBoxMappingSet.SelectedItem = selectedItem;
-                }
-                else if (comboBoxMappingSet.Items.Count > 0)
-                {
-                    comboBoxMappingSet.SelectedIndex = 0;
-                }
-                else
-                {
-                    groupBoxIOMapping.Enabled = false;
-                }
+                selectedItem = (MappingSet) comboBoxMappingSet.SelectedItem;
+            }
+            comboBoxMappingSet.BeginUpdate();
+            comboBoxMappingSet.Items.Clear();
+            comboBoxMappingSet.Items.AddRange(_editingMappingSets.AllSets);
+            comboBoxMappingSet.EndUpdate();
+            if ((selectedItem != null) && comboBoxMappingSet.Items.Contains(selectedItem))
+            {
+                comboBoxMappingSet.SelectedItem = selectedItem;
+            }
+            else if (comboBoxMappingSet.Items.Count > 0)
+            {
+                comboBoxMappingSet.SelectedIndex = 0;
+            }
+            else
+            {
+                groupBoxIOMapping.Enabled = false;
             }
         }
 
         private void tabControlPlugin_Selecting(object sender, TabControlCancelEventArgs e)
         {
-            if (e.TabPage == tabPageMappingIteration)
-            {
-                int selectedIndex = comboBoxSingleIteratorInput.SelectedIndex;
-                comboBoxSingleIteratorInput.Items.Clear();
-                comboBoxSingleIteratorInput.Items.AddRange(_inputPlugin.GetIterators());
-                listBoxIteratorInputs.Items.Clear();
-                listBoxIteratorInputs.Items.AddRange(_inputPlugin.GetIterators());
-                comboBoxSingleIteratorInput.SelectedIndex = selectedIndex;
-                listBoxMappingSets.Items.Clear();
-                listBoxMappingSets.Items.Add("(none)");
-                listBoxMappingSets.Items.AddRange(_editingMappingSets.AllSets);
+            if (e.TabPage != tabPageMappingIteration) {
+                return;
             }
+            var selectedIndex = comboBoxSingleIteratorInput.SelectedIndex;
+            comboBoxSingleIteratorInput.Items.Clear();
+            comboBoxSingleIteratorInput.Items.AddRange(_inputPlugin.GetIterators());
+            listBoxIteratorInputs.Items.Clear();
+            listBoxIteratorInputs.Items.AddRange(_inputPlugin.GetIterators());
+            comboBoxSingleIteratorInput.SelectedIndex = selectedIndex;
+            listBoxMappingSets.Items.Clear();
+            listBoxMappingSets.Items.Add("(none)");
+            listBoxMappingSets.Items.AddRange(_editingMappingSets.AllSets);
         }
 
         private void UpdateIteratorType()

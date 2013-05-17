@@ -110,7 +110,7 @@ namespace VixenPlus {
                     _preferences.SetString("ShutdownTime",
                                            !dateTimePickerAutoShutdownTime.Checked
                                                ? string.Empty : dateTimePickerAutoShutdownTime.Value.ToString("h:mm tt"));
-                    string path = Path.Combine(Paths.DataPath, "no.update");
+                    var path = Path.Combine(Paths.DataPath, "no.update");
                     if (checkBoxDisableAutoUpdate.Checked) {
                         if (!File.Exists(path)) {
                             File.Create(path).Close();

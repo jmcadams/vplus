@@ -30,11 +30,11 @@ namespace VixenPlus
             set
             {
                 _asynchronousEngineInstance = value;
-                if (value != null)
-                {
-                    _asynchronousEngineInstance.ProgramEnd += AsynchronousEngineProgramEndHandler;
-                    _asynchronousEngineInstance.SequenceChange += AsynchronousEngineProgramChangeHandler;
+                if (value == null) {
+                    return;
                 }
+                _asynchronousEngineInstance.ProgramEnd += AsynchronousEngineProgramEndHandler;
+                _asynchronousEngineInstance.SequenceChange += AsynchronousEngineProgramChangeHandler;
             }
         }
 
@@ -44,11 +44,11 @@ namespace VixenPlus
             set
             {
                 _synchronousEngineInstance = value;
-                if (value != null)
-                {
-                    _synchronousEngineInstance.ProgramEnd += SynchronousEngineProgramEndHandler;
-                    _synchronousEngineInstance.SequenceChange += SynchronousEngineProgramChangeHandler;
+                if (value == null) {
+                    return;
                 }
+                _synchronousEngineInstance.ProgramEnd += SynchronousEngineProgramEndHandler;
+                _synchronousEngineInstance.SequenceChange += SynchronousEngineProgramChangeHandler;
             }
         }
 
@@ -87,22 +87,22 @@ namespace VixenPlus
 
         private void ReleaseAsynchronousEngine()
         {
-            if (AsynchronousEngineInstance != null)
-            {
-                AsynchronousEngineInstance.Stop();
-                AsynchronousEngineInstance.Dispose();
-                AsynchronousEngineInstance = null;
+            if (AsynchronousEngineInstance == null) {
+                return;
             }
+            AsynchronousEngineInstance.Stop();
+            AsynchronousEngineInstance.Dispose();
+            AsynchronousEngineInstance = null;
         }
 
         private void ReleaseSynchronousEngine()
         {
-            if (SynchronousEngineInstance != null)
-            {
-                SynchronousEngineInstance.Stop();
-                SynchronousEngineInstance.Dispose();
-                SynchronousEngineInstance = null;
+            if (SynchronousEngineInstance == null) {
+                return;
             }
+            SynchronousEngineInstance.Stop();
+            SynchronousEngineInstance.Dispose();
+            SynchronousEngineInstance = null;
         }
 
         private void SynchronousEngineProgramChangeHandler()

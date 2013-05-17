@@ -6,20 +6,14 @@ namespace VixenPlus
 {
     internal class ListViewItemSorter : IComparer
     {
-        private int _sortColumn;
-
-        public int SortColumn
-        {
-            get { return _sortColumn; }
-            set { _sortColumn = value; }
-        }
+        public int SortColumn { get; set; }
 
         public System.Windows.Forms.SortOrder SortOrder { get; set; }
 
         public int Compare(object x, object y)
         {
-            string text = ((ListViewItem) x).SubItems[_sortColumn].Text;
-            string strB = ((ListViewItem) y).SubItems[_sortColumn].Text;
+            var text = ((ListViewItem) x).SubItems[SortColumn].Text;
+            var strB = ((ListViewItem) y).SubItems[SortColumn].Text;
             return String.Compare(text, strB, StringComparison.OrdinalIgnoreCase);
         }
     }

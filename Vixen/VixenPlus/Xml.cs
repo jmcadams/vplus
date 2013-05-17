@@ -15,7 +15,7 @@ namespace VixenPlus {
             var node2 = targetDoc.SelectSingleNode("//" + node.Name) ?? targetDoc.AppendChild(targetDoc.ImportNode(node, false));
             while (stack.Count > 0) {
                 node = stack.Pop();
-                XmlNode node3 = node.Attributes != null && node.Attributes["name"] != null
+                var node3 = node.Attributes != null && node.Attributes["name"] != null
                                     ? node2.SelectSingleNode(node.Name + string.Format("[@name = \"{0}\"]", node.Attributes["name"].Value))
                                     : node2.SelectSingleNode(node.Name);
                 node2 = node3 ?? node2.AppendChild(stack.Count == 0 ? targetDoc.ImportNode(node, deep) : targetDoc.ImportNode(node, false));

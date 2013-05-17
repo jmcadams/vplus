@@ -116,7 +116,7 @@ namespace VixenPlus {
 
 
         public bool GetBoolean(string name) {
-            string str = GetString(name);
+            var str = GetString(name);
             return str != string.Empty && Convert.ToBoolean(str);
         }
 

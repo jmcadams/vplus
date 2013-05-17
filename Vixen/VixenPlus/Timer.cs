@@ -9,24 +9,18 @@ namespace VixenPlus
 {
     internal class Timer : IComparable<Timer>
     {
-        private List<ReferenceRectF> _displayBounds;
         private bool _isExecuting;
-        private string _objectDisplayName;
         private string _objectFileName;
         private TimeSpan _objectLength;
         private ObjectType _objectType;
-        private RecurrenceType _recurrence;
-        private object _recurrenceData;
         private DateTime _recurrenceEnd;
         private DateTime _recurrenceStart;
-        private int _repeatInterval;
-        private DateTime _startDateTime;
-        private TimeSpan _timerLength;
+
 
         public Timer()
         {
             _objectType = ObjectType.Sequence;
-            _displayBounds = new List<ReferenceRectF>();
+            DisplayBounds = new List<ReferenceRectF>();
             _isExecuting = false;
             LastExecution = DateTime.MinValue;
             NotValidUntil = DateTime.MinValue;
@@ -35,19 +29,19 @@ namespace VixenPlus
         public Timer(XmlNode timerNode)
         {
             _objectType = ObjectType.Sequence;
-            _displayBounds = new List<ReferenceRectF>();
+            DisplayBounds = new List<ReferenceRectF>();
             _isExecuting = false;
             LastExecution = DateTime.MinValue;
             NotValidUntil = DateTime.MinValue;
-            XmlElement startDateTimeNode = timerNode["StartDateTime"];
+            var startDateTimeNode = timerNode["StartDateTime"];
             if (startDateTimeNode != null)
             {
-                _startDateTime = DateTime.Parse(startDateTimeNode.InnerText);
+                StartDateTime = DateTime.Parse(startDateTimeNode.InnerText);
             }
-            XmlElement timerLenNode = timerNode["TimerLength"];
+            var timerLenNode = timerNode["TimerLength"];
             if (timerLenNode != null)
             {
-                _timerLength = TimeSpan.Parse(timerLenNode.InnerText);
+                TimerLength = TimeSpan.Parse(timerLenNode.InnerText);
             }
             XmlNode node = timerNode["Item"];
             if (node != null)
@@ -59,83 +53,80 @@ namespace VixenPlus
                 }
                 ProgramFileName = node.InnerText;
             }
-            if (_objectLength != _timerLength)
+            if (_objectLength != TimerLength)
             {
-                XmlElement repeatNode = timerNode["RepeatInterval"];
+                var repeatNode = timerNode["RepeatInterval"];
                 if (repeatNode != null)
                 {
-                    _repeatInterval = Convert.ToInt32(repeatNode.InnerText);
+                    RepeatInterval = Convert.ToInt32(repeatNode.InnerText);
                 }
             }
             XmlNode node2 = timerNode["Recurrence"];
-            if (node2 != null)
+            if (node2 == null) {
+                return;
+            }
+            if (node2.Attributes != null)
             {
-                if (node2.Attributes != null)
-                {
-                    _recurrence = (RecurrenceType) Enum.Parse(typeof (RecurrenceType), node2.Attributes["type"].Value);
-                }
-                XmlElement xmlElement = node2["StartDate"];
-                if (xmlElement != null)
-                {
-                    _recurrenceStart = DateTime.Parse(xmlElement.InnerText);
-                }
-                XmlElement element = node2["EndDate"];
-                if (element != null)
-                {
-                    _recurrenceEnd = DateTime.Parse(element.InnerText);
-                }
-                switch (_recurrence)
-                {
-                    case RecurrenceType.Weekly:
-                        XmlElement weeklyDataNode = node2["Data"];
-                        if (weeklyDataNode != null)
-                        {
-                            _recurrenceData = Convert.ToInt32(weeklyDataNode.InnerText);
-                        }
-                        break;
+                Recurrence = (RecurrenceType) Enum.Parse(typeof (RecurrenceType), node2.Attributes["type"].Value);
+            }
+            var xmlElement = node2["StartDate"];
+            if (xmlElement != null)
+            {
+                _recurrenceStart = DateTime.Parse(xmlElement.InnerText);
+            }
+            var element = node2["EndDate"];
+            if (element != null)
+            {
+                _recurrenceEnd = DateTime.Parse(element.InnerText);
+            }
+            switch (Recurrence)
+            {
+                case RecurrenceType.Weekly:
+                    var weeklyDataNode = node2["Data"];
+                    if (weeklyDataNode != null)
+                    {
+                        RecurrenceData = Convert.ToInt32(weeklyDataNode.InnerText);
+                    }
+                    break;
 
-                    case RecurrenceType.Monthly:
-                        XmlElement monthlyDataNode = node2["Data"];
-                        if (monthlyDataNode != null)
-                        {
-                            _recurrenceData = monthlyDataNode.InnerText;
-                        }
-                        break;
+                case RecurrenceType.Monthly:
+                    var monthlyDataNode = node2["Data"];
+                    if (monthlyDataNode != null)
+                    {
+                        RecurrenceData = monthlyDataNode.InnerText;
+                    }
+                    break;
 
-                    case RecurrenceType.Yearly:
-                        XmlElement yearlyDataNode = node2["Data"];
-                        if (yearlyDataNode != null)
-                        {
-                            _recurrenceData = DateTime.Parse(yearlyDataNode.InnerText);
-                        }
-                        break;
-                }
+                case RecurrenceType.Yearly:
+                    var yearlyDataNode = node2["Data"];
+                    if (yearlyDataNode != null)
+                    {
+                        RecurrenceData = DateTime.Parse(yearlyDataNode.InnerText);
+                    }
+                    break;
             }
         }
 
-        public List<ReferenceRectF> DisplayBounds
-        {
-            get { return _displayBounds; }
-            set { _displayBounds = value; }
-        }
+
+        public List<ReferenceRectF> DisplayBounds { get; set; }
 
         public DateTime EndDate
         {
             get
             {
-                DateTime time2 = _startDateTime + _timerLength;
+                var time2 = StartDateTime + TimerLength;
                 return time2.Date;
             }
         }
 
         public DateTime EndDateTime
         {
-            get { return (_startDateTime + _timerLength); }
+            get { return (StartDateTime + TimerLength); }
         }
 
         public TimeSpan EndTime
         {
-            get { return (StartTime + _timerLength); }
+            get { return (StartTime + TimerLength); }
         }
 
         public bool IsExecuting
@@ -170,32 +161,21 @@ namespace VixenPlus
             set
             {
                 _objectFileName = value;
-                _objectDisplayName = Path.GetFileName(value);
+                ProgramName = Path.GetFileName(value);
                 SetObjectPath();
             }
         }
 
-        public string ProgramName
-        {
-            get { return _objectDisplayName; }
-        }
+        public string ProgramName { get; private set; }
 
-        public RecurrenceType Recurrence
-        {
-            get { return _recurrence; }
-            set { _recurrence = value; }
-        }
+        public RecurrenceType Recurrence { get; set; }
 
-        public object RecurrenceData
-        {
-            get { return _recurrenceData; }
-            set { _recurrenceData = value; }
-        }
+        public object RecurrenceData { get; set; }
 
         public DateTime RecurrenceEnd
         {
             get {
-                return _recurrence == RecurrenceType.None ? EndDateTime : _recurrenceEnd;
+                return Recurrence == RecurrenceType.None ? EndDateTime : _recurrenceEnd;
             }
             set { _recurrenceEnd = value; }
         }
@@ -204,7 +184,7 @@ namespace VixenPlus
         {
             get
             {
-                if (_recurrence == RecurrenceType.None)
+                if (Recurrence == RecurrenceType.None)
                 {
                     return EndDateTime;
                 }
@@ -216,9 +196,9 @@ namespace VixenPlus
         {
             get
             {
-                if (_recurrence == RecurrenceType.None)
+                if (Recurrence == RecurrenceType.None)
                 {
-                    return _timerLength;
+                    return TimerLength;
                 }
                 return (_recurrenceEnd - _recurrenceStart);
             }
@@ -227,7 +207,7 @@ namespace VixenPlus
         public DateTime RecurrenceStart
         {
             get {
-                return _recurrence == RecurrenceType.None ? _startDateTime : _recurrenceStart;
+                return Recurrence == RecurrenceType.None ? StartDateTime : _recurrenceStart;
             }
             set { _recurrenceStart = value; }
         }
@@ -236,7 +216,7 @@ namespace VixenPlus
         {
             get
             {
-                if (_recurrence == RecurrenceType.None)
+                if (Recurrence == RecurrenceType.None)
                 {
                     return StartDateTime;
                 }
@@ -244,39 +224,28 @@ namespace VixenPlus
             }
         }
 
-        public int RepeatInterval
-        {
-            get { return _repeatInterval; }
-            set { _repeatInterval = value; }
-        }
+        public int RepeatInterval { get; set; }
 
         public DateTime StartDate
         {
-            get { return _startDateTime.Date; }
-            set { _startDateTime = new DateTime(value.Year, value.Month, value.Day, _startDateTime.Hour, _startDateTime.Minute, 0); }
+            get { return StartDateTime.Date; }
+            set { StartDateTime = new DateTime(value.Year, value.Month, value.Day, StartDateTime.Hour, StartDateTime.Minute, 0); }
         }
 
-        public DateTime StartDateTime
-        {
-            get { return _startDateTime; }
-            set { _startDateTime = value; }
-        }
+        public DateTime StartDateTime { get; set; }
 
         public TimeSpan StartTime
         {
-            get { return _startDateTime.TimeOfDay; }
+            get { return StartDateTime.TimeOfDay; }
             set
             {
-                _startDateTime = new DateTime(_startDateTime.Year, _startDateTime.Month, _startDateTime.Day, value.Hours,
+                StartDateTime = new DateTime(StartDateTime.Year, StartDateTime.Month, StartDateTime.Day, value.Hours,
                                               value.Minutes, 0);
             }
         }
 
-        public TimeSpan TimerLength
-        {
-            get { return _timerLength; }
-            set { _timerLength = value; }
-        }
+        public TimeSpan TimerLength { get; set; }
+
 
         public int CompareTo(Timer other)
         {
@@ -292,53 +261,53 @@ namespace VixenPlus
 
         public void Copy(Timer timer)
         {
-            _displayBounds = timer._displayBounds;
+            DisplayBounds = timer.DisplayBounds;
             _objectLength = timer._objectLength;
             ObjectType = timer.ObjectType;
             ProgramFileName = timer.ProgramFileName;
-            _objectDisplayName = timer._objectDisplayName;
-            _recurrence = timer._recurrence;
+            ProgramName = timer.ProgramName;
+            Recurrence = timer.Recurrence;
             _recurrenceEnd = timer._recurrenceEnd;
             _recurrenceStart = timer._recurrenceStart;
-            _repeatInterval = timer._repeatInterval;
-            _startDateTime = timer._startDateTime;
-            _timerLength = timer._timerLength;
-            _recurrenceData = timer._recurrenceData;
+            RepeatInterval = timer.RepeatInterval;
+            StartDateTime = timer.StartDateTime;
+            TimerLength = timer.TimerLength;
+            RecurrenceData = timer.RecurrenceData;
             _isExecuting = timer._isExecuting;
         }
 
         public void SaveToXml(XmlNode contextNode)
         {
-            XmlNode node = Xml.SetNewValue(contextNode, "Timer", string.Empty);
-            Xml.SetValue(node, "StartDateTime", _startDateTime.ToString(CultureInfo.InvariantCulture));
-            Xml.SetValue(node, "TimerLength", _timerLength.ToString());
-            XmlNode node2 = Xml.SetValue(node, "Item", Path.GetFileName(_objectFileName));
+            var node = Xml.SetNewValue(contextNode, "Timer", string.Empty);
+            Xml.SetValue(node, "StartDateTime", StartDateTime.ToString(CultureInfo.InvariantCulture));
+            Xml.SetValue(node, "TimerLength", TimerLength.ToString());
+            var node2 = Xml.SetValue(node, "Item", Path.GetFileName(_objectFileName));
             Xml.SetAttribute(node2, "length", _objectLength.ToString());
             Xml.SetAttribute(node2, "type", _objectType.ToString());
-            if (_objectLength != _timerLength)
+            if (_objectLength != TimerLength)
             {
-                Xml.SetValue(node, "RepeatInterval", _repeatInterval.ToString(CultureInfo.InvariantCulture));
+                Xml.SetValue(node, "RepeatInterval", RepeatInterval.ToString(CultureInfo.InvariantCulture));
             }
-            if (_recurrence != RecurrenceType.None)
+            if (Recurrence == RecurrenceType.None) {
+                return;
+            }
+            var node3 = Xml.SetValue(node, "Recurrence", string.Empty);
+            Xml.SetAttribute(node3, "type", Recurrence.ToString());
+            Xml.SetValue(node3, "StartDate", _recurrenceStart.ToShortDateString());
+            Xml.SetValue(node3, "EndDate", _recurrenceEnd.ToShortDateString());
+            switch (Recurrence)
             {
-                XmlNode node3 = Xml.SetValue(node, "Recurrence", string.Empty);
-                Xml.SetAttribute(node3, "type", _recurrence.ToString());
-                Xml.SetValue(node3, "StartDate", _recurrenceStart.ToShortDateString());
-                Xml.SetValue(node3, "EndDate", _recurrenceEnd.ToShortDateString());
-                switch (_recurrence)
-                {
-                    case RecurrenceType.Weekly:
-                        Xml.SetValue(node3, "Data", ((int) _recurrenceData).ToString(CultureInfo.InvariantCulture));
-                        break;
+                case RecurrenceType.Weekly:
+                    Xml.SetValue(node3, "Data", ((int) RecurrenceData).ToString(CultureInfo.InvariantCulture));
+                    break;
 
-                    case RecurrenceType.Monthly:
-                        Xml.SetValue(node3, "Data", (string) _recurrenceData);
-                        break;
+                case RecurrenceType.Monthly:
+                    Xml.SetValue(node3, "Data", (string) RecurrenceData);
+                    break;
 
-                    case RecurrenceType.Yearly:
-                        Xml.SetValue(node3, "Data", ((DateTime) _recurrenceData).ToString(CultureInfo.InvariantCulture));
-                        break;
-                }
+                case RecurrenceType.Yearly:
+                    Xml.SetValue(node3, "Data", ((DateTime) RecurrenceData).ToString(CultureInfo.InvariantCulture));
+                    break;
             }
         }
 
@@ -358,18 +327,18 @@ namespace VixenPlus
         public override string ToString()
         {
             var builder = new StringBuilder();
-            builder.Append(_objectDisplayName);
-            if (_timerLength != _objectLength)
+            builder.Append(ProgramName);
+            if (TimerLength != _objectLength)
             {
                 builder.Append("|Repeats");
-                if (_repeatInterval != 0)
+                if (RepeatInterval != 0)
                 {
-                    builder.AppendFormat(" every {0} minutes", _repeatInterval);
+                    builder.AppendFormat(" every {0} minutes", RepeatInterval);
                 }
             }
-            if (_recurrence != RecurrenceType.None)
+            if (Recurrence != RecurrenceType.None)
             {
-                builder.AppendFormat("|Recurs on a {0} basis", _recurrence.ToString().ToLower());
+                builder.AppendFormat("|Recurs on a {0} basis", Recurrence.ToString().ToLower());
             }
             return builder.ToString();
         }

@@ -2777,10 +2777,11 @@ namespace VixenEditor {
             var flag = false;
             var channelCount = Math.Min(_sequence.ChannelCount, count);
             for (channel = 0; channel < channelCount; channel++) {
-                if (_sequence.Channels[channel].OutputChannel > (count - 1)) {
-                    flag = true;
-                    break;
+                if (_sequence.Channels[channel].OutputChannel <= (count - 1)) {
+                    continue;
                 }
+                flag = true;
+                break;
             }
             if (flag) {
                 if (MessageBox.Show(Resources.NewChannelCountPrompt, Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) !=
@@ -4479,13 +4480,14 @@ namespace VixenEditor {
                 _selectedCells.Y += _visibleRowCount - _sequence.ChannelCount;
                 vScrollBar1.Value = _sequence.ChannelCount - _visibleRowCount;
             }
-            if (vScrollBar1.Maximum >= 0) {
-                if (vScrollBar1.Value == -1) {
-                    vScrollBar1.Value = 0;
-                }
-                if (vScrollBar1.Minimum == -1) {
-                    vScrollBar1.Minimum = 0;
-                }
+            if (vScrollBar1.Maximum < 0) {
+                return;
+            }
+            if (vScrollBar1.Value == -1) {
+                vScrollBar1.Value = 0;
+            }
+            if (vScrollBar1.Minimum == -1) {
+                vScrollBar1.Minimum = 0;
             }
         }
 

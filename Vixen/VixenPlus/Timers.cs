@@ -31,7 +31,7 @@ namespace VixenPlus
             if (_timers.Length > 0)
             {
                 builder.AppendLine("Timers:");
-                foreach (Timer timer in _timers)
+                foreach (var timer in _timers)
                 {
                     builder.AppendLine("   Start date: " + timer.StartDate);
                     builder.AppendLine("   Start time: " + timer.StartTime);
@@ -49,12 +49,12 @@ namespace VixenPlus
                     builder.AppendLine("   End date: " + timer.EndDate);
                     builder.AppendLine("   End time: " + timer.EndTime);
                 }
-                List<Timer> list = StartingTimers();
+                var list = StartingTimers();
                 builder.AppendLine("Starting timer count: " + list.Count);
                 if (list.Count > 0)
                 {
                     builder.AppendLine("Timers:");
-                    foreach (Timer timer in list)
+                    foreach (var timer in list)
                     {
                         builder.AppendLine(string.Format("   {0} at {1}", timer.ProgramName, timer.StartDateTime));
                     }
@@ -64,7 +64,7 @@ namespace VixenPlus
                 if (list.Count > 0)
                 {
                     builder.AppendLine("Timers:");
-                    foreach (Timer timer in list)
+                    foreach (var timer in list)
                     {
                         builder.AppendLine(string.Format("   {0} at {1}", timer.ProgramName, timer.StartDateTime));
                     }
@@ -85,27 +85,27 @@ namespace VixenPlus
 
         private List<Timer> EffectiveTimers(int deviationToleranceInMinutes)
         {
-            bool flag = Host.GetDebugValue("TimerTrace") != null;
+            var flag = Host.GetDebugValue("TimerTrace") != null;
             if (flag)
             {
                 Host.LogTo(Paths.TimerTraceFilePath, string.Format("Determining effective timers at {0}...", DateTime.Now));
             }
             var list = new List<Timer>();
-            DateTime now = DateTime.Now;
-            DateTime today = DateTime.Today;
-            foreach (Timer timer in _timers)
+            var now = DateTime.Now;
+            var today = DateTime.Today;
+            foreach (var timer in _timers)
             {
                 if (flag)
                 {
                     Host.LogTo(Paths.TimerTraceFilePath, "Timer for: " + timer.ProgramName);
-                    Host.LogTo(Paths.TimerTraceFilePath, "Recurrence: " + timer.Recurrence.ToString());
+                    Host.LogTo(Paths.TimerTraceFilePath, "Recurrence: " + timer.Recurrence);
                     if (timer.Recurrence == RecurrenceType.Weekly)
                     {
                         Host.LogTo(Paths.TimerTraceFilePath,
                                    string.Format("  {0} & {1} != 0 ({2})", (int) timer.RecurrenceData, (1) << (int) now.DayOfWeek,
                                                  (((int) timer.RecurrenceData) & ((1) << (int) now.DayOfWeek)) != 0));
                     }
-                    Host.LogTo(Paths.TimerTraceFilePath, "  Is executing? " + timer.IsExecuting.ToString());
+                    Host.LogTo(Paths.TimerTraceFilePath, "  Is executing? " + timer.IsExecuting);
                     Host.LogTo(Paths.TimerTraceFilePath,
                                string.Format("  {0} > {1} ({2})", timer.RecurrenceStart, today.AddDays(1.0),
                                              timer.RecurrenceStart > today.AddDays(1.0)));
@@ -200,7 +200,7 @@ namespace VixenPlus
 
         public void LoadFromXml(XmlNode contextNode)
         {
-            XmlNode node = contextNode.SelectSingleNode("Timers");
+            var node = contextNode.SelectSingleNode("Timers");
             const bool flag = false;
             if (node != null && node.Attributes != null)
             {
@@ -209,7 +209,7 @@ namespace VixenPlus
             var list = new List<Timer>();
             if (node != null)
             {
-                XmlNodeList timerNode = node.SelectNodes("Timer");
+                var timerNode = node.SelectNodes("Timer");
                 if (timerNode != null)
                 {
                     foreach (XmlNode node2 in timerNode)
@@ -228,7 +228,7 @@ namespace VixenPlus
         private bool RepeatingInstanceIntersects(Timer timer, DateTime intersectionDateTime)
         {
             TimeSpan span;
-            bool flag = Host.GetDebugValue("TimerTrace") != null;
+            var flag = Host.GetDebugValue("TimerTrace") != null;
             if (flag)
             {
                 Host.LogTo(Paths.TimerTraceFilePath, "DateTime intersection");
@@ -261,7 +261,7 @@ namespace VixenPlus
                 Host.LogTo(Paths.TimerTraceFilePath, string.Format("  ({0} - {1})[{2}] % {3} < {4} ({5})", args));
             }
             span = intersectionDateTime.TimeOfDay - timer.StartTime;
-            double totalMinutes = span.TotalMinutes;
+            var totalMinutes = span.TotalMinutes;
             return ((totalMinutes > 0.0) && ((totalMinutes%(timer.RepeatInterval)) < timer.TimerLength.TotalMinutes));
         }
 
@@ -270,7 +270,7 @@ namespace VixenPlus
             int num;
             double num2;
             TimeSpan span;
-            bool flag = Host.GetDebugValue("TimerTrace") != null;
+            var flag = Host.GetDebugValue("TimerTrace") != null;
             if (flag)
             {
                 Host.LogTo(Paths.TimerTraceFilePath,
@@ -314,9 +314,9 @@ namespace VixenPlus
         public void SaveToXml(XmlNode contextNode)
         {
             //XmlDocument document = contextNode.OwnerDocument ?? ((XmlDocument) contextNode);
-            XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(contextNode, "Timers");
+            var emptyNodeAlways = Xml.GetEmptyNodeAlways(contextNode, "Timers");
             Xml.SetAttribute(emptyNodeAlways, "enabled", _isDisabled ? false.ToString() : true.ToString());
-            foreach (Timer timer in _timers)
+            foreach (var timer in _timers)
             {
                 timer.SaveToXml(emptyNodeAlways);
             }
@@ -324,9 +324,9 @@ namespace VixenPlus
 
         public List<Timer> StartingTimers()
         {
-            bool flag = Host.GetDebugValue("TimerTrace") != null;
+            var flag = Host.GetDebugValue("TimerTrace") != null;
             var list = new List<Timer>();
-            foreach (Timer timer in EffectiveTimers(0))
+            foreach (var timer in EffectiveTimers(0))
             {
                 if (timer.NotValidUntil <= DateTime.Now)
                 {

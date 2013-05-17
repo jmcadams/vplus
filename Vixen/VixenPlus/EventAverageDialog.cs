@@ -14,16 +14,16 @@ namespace VixenPlus
             lvData.Columns[0].Width = 146;
             lvData.Columns[1].Width = 87;
             lvData.Columns[2].Width = 184;
-            string debugValue = string.Empty;
-            for (int i = 0; debugValue != null; i++)
+            var debugValue = string.Empty;
+            for (var i = 0; debugValue != null; i++)
             {
                 debugValue = Host.GetDebugValue("event_average_" + i.ToString(CultureInfo.InvariantCulture));
-                if (debugValue != null)
-                {
-                    string[] strArray = debugValue.Split(new[] {'|'});
-                    var item = new ListViewItem(new[] {strArray[0], string.Format("{0} - {1}", strArray[1], strArray[2]), strArray[3]});
-                    lvData.Items.Add(item);
+                if (debugValue == null) {
+                    continue;
                 }
+                var strArray = debugValue.Split(new[] {'|'});
+                var item = new ListViewItem(new[] {strArray[0], string.Format("{0} - {1}", strArray[1], strArray[2]), strArray[3]});
+                lvData.Items.Add(item);
             }
         }
     }

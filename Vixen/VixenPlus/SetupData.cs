@@ -29,7 +29,7 @@ namespace VixenPlus {
 
 
         public XmlNode CreatePlugInData(IHardwarePlugin plugIn) {
-            var node = Xml.SetNewValue(Node, "PlugIn", string.Empty);
+            var node = Xml.SetNewValue(RootNode, "PlugIn", string.Empty);
             Xml.SetAttribute(node, "name", plugIn.Name);
             Xml.SetAttribute(node, "key", plugIn.Name.GetHashCode().ToString(CultureInfo.InvariantCulture));
             Xml.SetAttribute(node, "id", (GetAllPluginData().Count - 1).ToString(CultureInfo.InvariantCulture));
@@ -51,12 +51,12 @@ namespace VixenPlus {
 
 
         public XmlNodeList GetAllPluginData() {
-            return Node.SelectNodes("PlugIn");
+            return RootNode.SelectNodes("PlugIn");
         }
 
 
         public XmlNodeList GetAllPluginData(PluginType type) {
-            var node = Node.SelectNodes(string.Format("PlugIn[@type='{0}']", type));
+            var node = RootNode.SelectNodes(string.Format("PlugIn[@type='{0}']", type));
             if (node != null && node.Count == 0 && type == PluginType.Output) { // Hack for 2.1
                 node = GetAllPluginData();
             }
@@ -65,9 +65,9 @@ namespace VixenPlus {
 
 
         public XmlNodeList GetAllPluginData(PluginType type, bool enabledOnly) {
-            var node = Node.SelectNodes(string.Format("PlugIn[@enabled='{0}' and @type='{1}']", enabledOnly, type));
+            var node = RootNode.SelectNodes(string.Format("PlugIn[@enabled='{0}' and @type='{1}']", enabledOnly, type));
             if (node != null && node.Count == 0 && type == PluginType.Output) { // Hack for 2.1
-                node = Node.SelectNodes(string.Format("PlugIn[@enabled='{0}']", enabledOnly));
+                node = RootNode.SelectNodes(string.Format("PlugIn[@enabled='{0}']", enabledOnly));
             }
 
             return node;
@@ -100,12 +100,12 @@ namespace VixenPlus {
 
 
         public XmlNode GetPlugInData(string pluginId) {
-            return Node.SelectSingleNode(string.Format("PlugIn[@id='{0}']", pluginId));
+            return RootNode.SelectSingleNode(string.Format("PlugIn[@id='{0}']", pluginId));
         }
 
 
         public void RemovePlugInData(string pluginId) {
-            Node.RemoveChild(GetPlugInData(pluginId));
+            RootNode.RemoveChild(GetPlugInData(pluginId));
             var num = 0;
             foreach (XmlNode node in GetAllPluginData()) {
                 if (node.Attributes == null) {
@@ -118,15 +118,15 @@ namespace VixenPlus {
 
 
         public void ReplaceRoot(XmlNode newBranch) {
-            var parentNode = Node.ParentNode;
+            var parentNode = RootNode.ParentNode;
             if (parentNode != null) {
-                parentNode.RemoveChild(Node);
+                parentNode.RemoveChild(RootNode);
             }
             var newChild = Document.ImportNode(newBranch, true);
             if (parentNode != null) {
                 parentNode.AppendChild(newChild);
             }
-            Node = newChild;
+            RootNode = newChild;
         }
     }
 }

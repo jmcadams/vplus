@@ -8,24 +8,22 @@ namespace VixenPlus
     {
         private readonly string _extensionName;
         protected XmlDocument Document;
-        protected XmlNode Node;
+
 
         public DataExtension(string extensionName)
         {
             _extensionName = extensionName;
             Document = Xml.CreateXmlDocument(extensionName);
-            Node = Document.DocumentElement;
+            RootNode = Document.DocumentElement;
         }
 
         public bool IsEmpty
         {
-            get { return !Node.HasChildNodes; }
+            get { return !RootNode.HasChildNodes; }
         }
 
-        public XmlNode RootNode
-        {
-            get { return Node; }
-        }
+        public XmlNode RootNode { get; protected set; }
+
 
         public DataExtension Clone()
         {
@@ -36,7 +34,7 @@ namespace VixenPlus
 
         public bool GetBoolean(XmlNode setupDataNode, string childNode, bool defaultValue)
         {
-            XmlNode node = setupDataNode.SelectSingleNode(childNode);
+            var node = setupDataNode.SelectSingleNode(childNode);
             if (node != null)
             {
                 try
@@ -54,7 +52,7 @@ namespace VixenPlus
 
         public byte[] GetBytes(XmlNode setupDataNode, string childNode, byte[] defaultValue)
         {
-            XmlNode node = setupDataNode.SelectSingleNode(childNode);
+            var node = setupDataNode.SelectSingleNode(childNode);
             if (node != null)
             {
                 try
@@ -72,7 +70,7 @@ namespace VixenPlus
 
         public int GetInteger(XmlNode setupDataNode, string childNode, int defaultValue)
         {
-            XmlNode node = setupDataNode.SelectSingleNode(childNode);
+            var node = setupDataNode.SelectSingleNode(childNode);
             if (node != null)
             {
                 try
@@ -90,7 +88,7 @@ namespace VixenPlus
 
         public string GetString(XmlNode setupDataNode, string childNode, string defaultValue)
         {
-            XmlNode node = setupDataNode.SelectSingleNode(childNode);
+            var node = setupDataNode.SelectSingleNode(childNode);
             if (node != null)
             {
                 return node.InnerText;
@@ -101,13 +99,13 @@ namespace VixenPlus
 
         public void LoadFromXml(XmlNode contextNode)
         {
-            Node = Xml.GetNodeAlways(contextNode, _extensionName);
-            Document = Node.OwnerDocument;
+            RootNode = Xml.GetNodeAlways(contextNode, _extensionName);
+            Document = RootNode.OwnerDocument;
         }
 
         public void SetBoolean(XmlNode setupDataNode, string childNode, bool value)
         {
-            XmlNode newChild = setupDataNode.SelectSingleNode(childNode);
+            var newChild = setupDataNode.SelectSingleNode(childNode);
             if (newChild == null)
             {
                 newChild = Document.CreateElement(childNode);
@@ -118,7 +116,7 @@ namespace VixenPlus
 
         public void SetBytes(XmlNode setupDataNode, string childNode, byte[] value)
         {
-            XmlNode newChild = setupDataNode.SelectSingleNode(childNode);
+            var newChild = setupDataNode.SelectSingleNode(childNode);
             if (newChild == null)
             {
                 newChild = Document.CreateElement(childNode);
@@ -129,7 +127,7 @@ namespace VixenPlus
 
         public void SetInteger(XmlNode setupDataNode, string childNode, int value)
         {
-            XmlNode newChild = setupDataNode.SelectSingleNode(childNode);
+            var newChild = setupDataNode.SelectSingleNode(childNode);
             if (newChild == null)
             {
                 newChild = Document.CreateElement(childNode);
@@ -140,7 +138,7 @@ namespace VixenPlus
 
         public void SetString(XmlNode setupDataNode, string childNode, string value)
         {
-            XmlNode newChild = setupDataNode.SelectSingleNode(childNode);
+            var newChild = setupDataNode.SelectSingleNode(childNode);
             if (newChild == null)
             {
                 newChild = Document.CreateElement(childNode);

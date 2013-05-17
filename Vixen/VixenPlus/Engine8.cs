@@ -141,9 +141,9 @@ namespace VixenPlus {
 
         public int ObjectPosition {
             get {
-                EngineContext context = _engineContexts[_primaryContext];
-                int tickCount = context.TickCount;
-                for (int i = 0; i < context.SequenceIndex; i++) {
+                var context = _engineContexts[_primaryContext];
+                var tickCount = context.TickCount;
+                for (var i = 0; i < context.SequenceIndex; i++) {
                     tickCount += CurrentObject.EventSequences[i].Length;
                 }
                 return tickCount;
@@ -204,7 +204,7 @@ namespace VixenPlus {
                     builder.AppendLine("Program: " + engine.CurrentObject.Name);
                     builder.AppendLine("Sequence count: " + engine.CurrentObject.EventSequences.Count);
                     builder.AppendLine("Sequences:");
-                    foreach (EventSequenceStub stub in engine.CurrentObject.EventSequences) {
+                    foreach (var stub in engine.CurrentObject.EventSequences) {
                         builder.AppendLine("   " + stub.FileName);
                     }
                 }
@@ -401,7 +401,7 @@ namespace VixenPlus {
 
                 int num;
                 var context = _engineContexts[_primaryContext];
-                byte[] engineBuffer = context.RouterContext.EngineBuffer;
+                var engineBuffer = context.RouterContext.EngineBuffer;
                 values.CopyTo(engineBuffer, 0);
                 _plugInRouter.BeginUpdate();
                 _plugInRouter.GetSequenceInputs(context.RouterContext.ExecutableObject, engineBuffer, true, false);
@@ -607,8 +607,8 @@ namespace VixenPlus {
             IEngine engine = null;
             try {
                 var assembly = Assembly.LoadFile(enginePath);
-                foreach (Type type in assembly.GetExportedTypes()) {
-                    foreach (Type type2 in type.GetInterfaces()) {
+                foreach (var type in assembly.GetExportedTypes()) {
+                    foreach (var type2 in type.GetInterfaces()) {
                         if (type2.Name != "IEngine") {
                             continue;
                         }

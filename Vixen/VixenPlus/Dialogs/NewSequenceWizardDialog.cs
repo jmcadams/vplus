@@ -77,7 +77,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void buttonAssignAudio_Click(object sender, EventArgs e) {
-            int integer = _preferences.GetInteger("SoundDevice");
+            var integer = _preferences.GetInteger("SoundDevice");
             var dialog = new AudioDialog(_eventSequence, _preferences.GetBoolean("EventSequenceAutoSize"), integer);
             if (dialog.ShowDialog() == DialogResult.OK) {
                 SetSequenceTime();
@@ -87,17 +87,18 @@ namespace VixenPlus.Dialogs {
 
 
         private void buttonImportChannels_Click(object sender, EventArgs e) {
-            if (openFileDialog.ShowDialog() == DialogResult.OK) {
-                var sequence = new EventSequence(openFileDialog.FileName);
-                textBoxChannelCount.Text = sequence.ChannelCount.ToString(CultureInfo.InvariantCulture);
-                var builder = new StringBuilder();
-                foreach (Channel channel in sequence.Channels) {
-                    builder.AppendLine(channel.Name);
-                }
-                textBoxChannelNames.Text = builder.ToString();
-                _eventSequence.Channels.Clear();
-                _eventSequence.Channels.AddRange(sequence.Channels);
+            if (openFileDialog.ShowDialog() != DialogResult.OK) {
+                return;
             }
+            var sequence = new EventSequence(openFileDialog.FileName);
+            textBoxChannelCount.Text = sequence.ChannelCount.ToString(CultureInfo.InvariantCulture);
+            var builder = new StringBuilder();
+            foreach (var channel in sequence.Channels) {
+                builder.AppendLine(channel.Name);
+            }
+            textBoxChannelNames.Text = builder.ToString();
+            _eventSequence.Channels.Clear();
+            _eventSequence.Channels.AddRange(sequence.Channels);
         }
 
 
@@ -127,18 +128,18 @@ namespace VixenPlus.Dialogs {
 
 
         private void buttonProfileManager_Click(object sender, EventArgs e) {
-            var dialog = new ProfileManagerDialog(null);
-            if (dialog.ShowDialog() == DialogResult.OK) {
-                PopulateProfileList();
+            using (var dialog = new ProfileManagerDialog(null)) {
+                if (dialog.ShowDialog() == DialogResult.OK) {
+                    PopulateProfileList();
+                }
             }
-            dialog.Dispose();
         }
 
 
         private void buttonSetupPlugins_Click(object sender, EventArgs e) {
-            var dialog = new PluginListDialog(_eventSequence);
-            dialog.ShowDialog();
-            dialog.Dispose();
+            using (var dialog = new PluginListDialog(_eventSequence)) {
+                dialog.ShowDialog();
+            }
         }
 
 
@@ -181,9 +182,9 @@ namespace VixenPlus.Dialogs {
             int num2;
             int num3;
             int num4;
-            string s = "0";
-            string str3 = "0";
-            int index = text.IndexOf(':');
+            var s = "0";
+            var str3 = "0";
+            var index = text.IndexOf(':');
             if (index != -1) {
                 s = text.Substring(0, index).Trim();
                 text = text.Substring(index + 1);
@@ -193,7 +194,7 @@ namespace VixenPlus.Dialogs {
                 str3 = text.Substring(index + 1).Trim();
                 text = text.Substring(0, index);
             }
-            string str2 = text;
+            var str2 = text;
             try {
                 num2 = int.Parse(s);
             }
@@ -222,7 +223,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void PopulateProfileList() {
-            int selectedIndex = comboBoxProfiles.SelectedIndex;
+            var selectedIndex = comboBoxProfiles.SelectedIndex;
             comboBoxProfiles.BeginUpdate();
             comboBoxProfiles.Items.Clear();
             comboBoxProfiles.Items.Add(Resources.None);
@@ -252,7 +253,7 @@ namespace VixenPlus.Dialogs {
             if (_skip) {
                 return;
             }
-            string text = string.Empty;
+            var text = string.Empty;
             switch (e.TabPageIndex) {
                 case 1: {
                     int num;
@@ -306,11 +307,12 @@ namespace VixenPlus.Dialogs {
                 }
                 case 4:
                     if (textBoxChannelNames.Lines.Length == Convert.ToInt32(textBoxChannelCount.Text)) {
-                        foreach (string str2 in textBoxChannelNames.Lines) {
-                            if (str2.Trim() == string.Empty) {
-                                text = Resources.ChannelNameCantBeBlank;
-                                break;
+                        foreach (var str2 in textBoxChannelNames.Lines) {
+                            if (str2.Trim() != string.Empty) {
+                                continue;
                             }
+                            text = Resources.ChannelNameCantBeBlank;
+                            break;
                         }
                         break;
                     }
@@ -318,7 +320,7 @@ namespace VixenPlus.Dialogs {
                     goto Label_0339;
 
                 case 7: {
-                    int num4 = ParseTimeString(textBoxTime.Text);
+                    var num4 = ParseTimeString(textBoxTime.Text);
                     if (num4 != 0) {
                         try {
                             _eventSequence.Time = num4;
@@ -334,7 +336,7 @@ namespace VixenPlus.Dialogs {
             }
             Cursor = Cursors.WaitCursor;
             try {
-                for (int i = 0; i < _eventSequence.ChannelCount; i++) {
+                for (var i = 0; i < _eventSequence.ChannelCount; i++) {
                     _eventSequence.Channels[i].Name = textBoxChannelNames.Lines[i];
                 }
             }
@@ -342,10 +344,11 @@ namespace VixenPlus.Dialogs {
                 Cursor = Cursors.Default;
             }
             Label_0339:
-            if (text != string.Empty) {
-                e.Cancel = true;
-                MessageBox.Show(text, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            if (text == string.Empty) {
+                return;
             }
+            e.Cancel = true;
+            MessageBox.Show(text, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
 
@@ -367,8 +370,8 @@ namespace VixenPlus.Dialogs {
                     Cursor = Cursors.WaitCursor;
                     try {
                         string[] strArray;
-                        int num = Convert.ToInt32(textBoxChannelCount.Text);
-                        int length = textBoxChannelNames.Lines.Length;
+                        var num = Convert.ToInt32(textBoxChannelCount.Text);
+                        var length = textBoxChannelNames.Lines.Length;
                         if (length < num) {
                             strArray = new string[num];
                             textBoxChannelNames.Lines.CopyTo(strArray, 0);
@@ -380,7 +383,7 @@ namespace VixenPlus.Dialogs {
                         }
                         else if (length > num) {
                             strArray = new string[num];
-                            for (int i = 0; i < num; i++) {
+                            for (var i = 0; i < num; i++) {
                                 strArray[i] = textBoxChannelNames.Lines[i];
                             }
                             textBoxChannelNames.Lines = strArray;

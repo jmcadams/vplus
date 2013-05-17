@@ -13,14 +13,12 @@ namespace VixenPlus {
         private int _crossFadeLength;
         private byte[][] _mask;
         private Profile _profile;
-        private SetupData _setupData;
-        private bool _useSequencePluginData;
 
 
         public SequenceProgram() {
             Loop = false;
             _profile = null;
-            _useSequencePluginData = false;
+            UseSequencePluginData = false;
             TreatAsLocal = false;
             UserData = null;
             _crossFadeLength = 0;
@@ -28,14 +26,14 @@ namespace VixenPlus {
             _mask = null;
             FileName = string.Empty;
             ConstructUsing();
-            _setupData = new SetupData();
+            SetupData = new SetupData();
         }
 
 
         public SequenceProgram(string fileName) {
             Loop = false;
             _profile = null;
-            _useSequencePluginData = false;
+            UseSequencePluginData = false;
             TreatAsLocal = false;
             UserData = null;
             _crossFadeLength = 0;
@@ -43,7 +41,7 @@ namespace VixenPlus {
             _mask = null;
             FileName = fileName;
             ConstructUsing();
-            _setupData = new SetupData();
+            SetupData = new SetupData();
             LoadFromXml(Xml.LoadDocument(Path.Combine(Paths.ProgramPath, fileName)));
         }
 
@@ -51,7 +49,7 @@ namespace VixenPlus {
         public SequenceProgram(EventSequence sequence) {
             Loop = false;
             _profile = null;
-            _useSequencePluginData = false;
+            UseSequencePluginData = false;
             TreatAsLocal = false;
             UserData = null;
             _crossFadeLength = 0;
@@ -59,7 +57,7 @@ namespace VixenPlus {
             _mask = null;
             FileName = sequence.FileName;
             ConstructUsing();
-            _setupData = sequence.PlugInData;
+            SetupData = sequence.PlugInData;
             EventSequences.Add(new EventSequenceStub(sequence));
         }
 
@@ -72,7 +70,7 @@ namespace VixenPlus {
         public List<string> EventSequenceFileNames {
             get {
                 var list = new List<string>();
-                foreach (EventSequenceStub stub in EventSequences) {
+                foreach (var stub in EventSequences) {
                     list.Add(Path.GetFileName(stub.FileName));
                 }
                 return list;
@@ -95,15 +93,9 @@ namespace VixenPlus {
             }
         }
 
-        public SetupData SetupData {
-            get { return _setupData; }
-            set { _setupData = value; }
-        }
+        public SetupData SetupData { get; set; }
 
-        public bool UseSequencePluginData {
-            get { return _useSequencePluginData; }
-            set { _useSequencePluginData = value; }
-        }
+        public bool UseSequencePluginData { get; set; }
 
 
         public void Dispose() {
@@ -137,8 +129,8 @@ namespace VixenPlus {
 
         public int Length {
             get {
-                int num = 0;
-                foreach (EventSequenceStub stub in EventSequences) {
+                var num = 0;
+                foreach (var stub in EventSequences) {
                     num += stub.Length;
                 }
                 return num;
@@ -150,7 +142,7 @@ namespace VixenPlus {
                 if (_profile == null) {
                     if (_mask == null) {
                         _mask = new byte[EventSequences.Count][];
-                        for (int i = 0; i < EventSequences.Count; i++) {
+                        for (var i = 0; i < EventSequences.Count; i++) {
                             _mask[i] = EventSequences[i].Mask[0];
                         }
                     }
@@ -159,10 +151,11 @@ namespace VixenPlus {
                 return _profile.Mask;
             }
             set {
-                if (_profile == null) {
-                    for (int i = 0; i < EventSequences.Count; i++) {
-                        EventSequences[i].Mask[0] = value[0];
-                    }
+                if (_profile != null) {
+                    return;
+                }
+                for (var i = 0; i < EventSequences.Count; i++) {
+                    EventSequences[i].Mask[0] = value[0];
                 }
             }
         }
@@ -180,7 +173,7 @@ namespace VixenPlus {
 
         public SetupData PlugInData {
             get {
-                return _profile == null ? _setupData : _profile.PlugInData;
+                return _profile == null ? SetupData : _profile.PlugInData;
             }
         }
 
@@ -202,7 +195,7 @@ namespace VixenPlus {
 
 
         private void AttachToProfile(string profileName) {
-            string path = Path.Combine(Paths.ProfilePath, profileName + ".pro");
+            var path = Path.Combine(Paths.ProfilePath, profileName + ".pro");
             if (File.Exists(path)) {
                 AttachToProfile(new Profile(path));
             }
@@ -236,7 +229,7 @@ namespace VixenPlus {
 
 
         public void Dispose(bool disposing) {
-            foreach (EventSequenceStub stub in EventSequences) {
+            foreach (var stub in EventSequences) {
                 stub.Dispose();
             }
             GC.SuppressFinalize(this);
@@ -256,22 +249,22 @@ namespace VixenPlus {
 
 
         private void LoadEmbeddedData(XmlNode contextNode) {
-            _setupData = new SetupData();
-            _setupData.LoadFromXml(contextNode);
+            SetupData = new SetupData();
+            SetupData.LoadFromXml(contextNode);
         }
 
 
         private void LoadFromXml(XmlNode contextNode) {
-            XmlNode node = contextNode.SelectSingleNode("Program");
+            var node = contextNode.SelectSingleNode("Program");
             if (node != null && node.Attributes != null && node.Attributes["useSequencePluginData"] != null) {
-                _useSequencePluginData = bool.Parse(node.Attributes["useSequencePluginData"].Value);
+                UseSequencePluginData = bool.Parse(node.Attributes["useSequencePluginData"].Value);
             }
             EventSequences.Clear();
             if (node != null) {
-                XmlNodeList sequenceNode = node.SelectNodes("Sequence");
+                var sequenceNode = node.SelectNodes("Sequence");
                 if (sequenceNode != null) {
                     foreach (XmlNode node2 in sequenceNode) {
-                        string path = Path.Combine(Paths.SequencePath, node2.InnerText);
+                        var path = Path.Combine(Paths.SequencePath, node2.InnerText);
                         if (File.Exists(path)) {
                             EventSequences.Add(new EventSequenceStub(path, true));
                         }
@@ -282,7 +275,7 @@ namespace VixenPlus {
                 }
             }
             if (node != null) {
-                XmlNode node3 = node.SelectSingleNode("Profile");
+                var node3 = node.SelectSingleNode("Profile");
                 if (node3 == null) {
                     LoadEmbeddedData(node);
                 }
@@ -295,7 +288,7 @@ namespace VixenPlus {
 
 
         public void Refresh() {
-            foreach (EventSequenceStub stub in EventSequences) {
+            foreach (var stub in EventSequences) {
                 if (string.IsNullOrEmpty(stub.FileName)) {
                     throw new Exception(Resources.OneOrMoreSequencesNotSaved);
                 }
@@ -308,23 +301,23 @@ namespace VixenPlus {
 
 
         public void ReloadProfile() {
-            _setupData = _profile.PlugInData;
+            SetupData = _profile.PlugInData;
         }
 
 
         public void SaveTo(string filePath) {
-            XmlDocument contextNode = Xml.CreateXmlDocument();
+            var contextNode = Xml.CreateXmlDocument();
             SaveToXml(contextNode);
             contextNode.Save(filePath);
         }
 
 
         private void SaveToXml(XmlNode contextNode) {
-            XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(contextNode, "Program");
-            if (_useSequencePluginData) {
-                Xml.SetAttribute(emptyNodeAlways, "useSequencePluginData", _useSequencePluginData.ToString());
+            var emptyNodeAlways = Xml.GetEmptyNodeAlways(contextNode, "Program");
+            if (UseSequencePluginData) {
+                Xml.SetAttribute(emptyNodeAlways, "useSequencePluginData", UseSequencePluginData.ToString());
             }
-            foreach (EventSequenceStub stub in EventSequences) {
+            foreach (var stub in EventSequences) {
                 if (string.IsNullOrEmpty(stub.FileName)) {
                     throw new Exception(Resources.SequencesMustBeSavedBeforeSavingProgram);
                 }
@@ -332,7 +325,7 @@ namespace VixenPlus {
             }
             if (_profile == null) {
                 if (emptyNodeAlways.OwnerDocument != null) {
-                    emptyNodeAlways.AppendChild(emptyNodeAlways.OwnerDocument.ImportNode(_setupData.RootNode, true));
+                    emptyNodeAlways.AppendChild(emptyNodeAlways.OwnerDocument.ImportNode(SetupData.RootNode, true));
                 }
             }
             else {

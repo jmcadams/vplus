@@ -12,8 +12,8 @@ namespace VixenPlus
         {
             get
             {
-                XmlNode node = Node.SelectSingleNode(string.Format("Extension[@type = \"{0}\"]", extensionKey)) ??
-                               Xml.SetAttribute(Node, "Extension", "type", extensionKey);
+                var node = RootNode.SelectSingleNode(string.Format("Extension[@type = \"{0}\"]", extensionKey)) ??
+                               Xml.SetAttribute(RootNode, "Extension", "type", extensionKey);
                 return node;
             }
         }

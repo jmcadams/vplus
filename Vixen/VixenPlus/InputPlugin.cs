@@ -3,18 +3,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Xml;
 
-namespace VixenPlus
-{
-    public abstract class InputPlugin : IInputPlugin
-    {
-        public enum MappingIterator
-        {
+namespace VixenPlus {
+    public abstract class InputPlugin : IInputPlugin {
+        public enum MappingIterator {
             None,
             SingleInput,
             MultiInput
         }
-
-        private bool _isRecord;
 
         //private const string AttributeId = "id";
         //private const string AttributeLiveUpdate = "liveUpdate";
@@ -27,43 +22,30 @@ namespace VixenPlus
         //private const string ElementIterator = "Iterator";
         //private const string ElementMappingSets = "MappingSets";
         //private const int InvalidId = 0;
-        private bool _liveUpdate;
-        private MappingIterator _mappingIterator = MappingIterator.None;
-        private MappingSets _mappingSets = new MappingSets();
         private XmlNode _setupNode;
-        private Input _singleIterator;
 
-        public MappingIterator MappingIteratorType
-        {
-            get { return _mappingIterator; }
-            set { _mappingIterator = value; }
+
+// ReSharper disable PublicConstructorInAbstractClass
+        public InputPlugin() {
+// ReSharper restore PublicConstructorInAbstractClass
+            MappingIteratorType = MappingIterator.None;
+            MappingSets = new MappingSets();
         }
 
-        internal MappingSets MappingSets
-        {
-            get { return _mappingSets; }
-            set { _mappingSets = value; }
-        }
 
-        public Input SingleIterator
-        {
-            get { return _singleIterator; }
-            set { _singleIterator = value; }
-        }
+        public MappingIterator MappingIteratorType { get; set; }
+
+        internal MappingSets MappingSets { get; set; }
+
+        public Input SingleIterator { get; set; }
 
         public abstract void Initialize(SetupData setupData, XmlNode setupNode);
 
-        public virtual void Setup()
-        {
-        }
+        public virtual void Setup() {}
 
-        public virtual void Shutdown()
-        {
-        }
+        public virtual void Shutdown() {}
 
-        public virtual void Startup()
-        {
-        }
+        public virtual void Startup() {}
 
         public abstract string Author { get; }
 
@@ -73,81 +55,63 @@ namespace VixenPlus
 
         public abstract Input[] Inputs { get; }
 
-        public bool LiveUpdate
-        {
-            get { return _liveUpdate; }
-            set { _liveUpdate = value; }
-        }
+        public bool LiveUpdate { get; set; }
 
         public abstract string Name { get; }
 
-        public bool Record
-        {
-            get { return _isRecord; }
-            set { _isRecord = value; }
-        }
+        public bool Record { get; set; }
+
 
         private Input FindInput(ulong id) {
             return id == 0L ? null : Array.Find(Inputs, i => i.Id == id);
         }
 
 
-        public Input[] GetIterators()
-        {
+        public Input[] GetIterators() {
             var list = new List<Input>();
-            foreach (Input input in Inputs)
-            {
-                if (input.IsMappingIterator)
-                {
+            foreach (var input in Inputs) {
+                if (input.IsMappingIterator) {
                     list.Add(input);
                 }
             }
             return list.ToArray();
         }
 
-        internal void InitializeInternal(SetupData setupData, XmlNode setupNode)
-        {
+
+        internal void InitializeInternal(SetupData setupData, XmlNode setupNode) {
             _setupNode = setupNode;
             Initialize(setupData, setupNode);
         }
 
-        internal void IteratorTriggered(Input input)
-        {
-            if (_mappingIterator == MappingIterator.SingleInput)
-            {
-                if (input == _singleIterator)
-                {
-                    _mappingSets.StepMapping();
+
+        internal void IteratorTriggered(Input input) {
+            if (MappingIteratorType == MappingIterator.SingleInput) {
+                if (input == SingleIterator) {
+                    MappingSets.StepMapping();
                 }
             }
-            else
-            {
-                _mappingSets.CurrentMappingSet = input.AssignedMappingSet;
+            else {
+                MappingSets.CurrentMappingSet = input.AssignedMappingSet;
             }
         }
 
-        internal void PluginToSetupData()
-        {
-            _mappingSets.WriteData(Xml.GetEmptyNodeAlways(_setupNode, "MappingSets"));
-            XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(_setupNode, "Inputs");
-            foreach (Input input in Inputs)
-            {
+
+        internal void PluginToSetupData() {
+            MappingSets.WriteData(Xml.GetEmptyNodeAlways(_setupNode, "MappingSets"));
+            var emptyNodeAlways = Xml.GetEmptyNodeAlways(_setupNode, "Inputs");
+            foreach (var input in Inputs) {
                 input.WriteData(emptyNodeAlways);
             }
-            XmlNode node = Xml.GetEmptyNodeAlways(_setupNode, "Iterator");
-            Xml.SetAttribute(node, "type", _mappingIterator.ToString());
-            Input[] iterators = GetIterators();
-            if (iterators.Length > 0)
-            {
-                if (MappingIteratorType == MappingIterator.SingleInput)
-                {
-                    Xml.SetAttribute(node, "Input", "id", _singleIterator.Id.ToString(CultureInfo.InvariantCulture));
+            var node = Xml.GetEmptyNodeAlways(_setupNode, "Iterator");
+            Xml.SetAttribute(node, "type", MappingIteratorType.ToString());
+            var iterators = GetIterators();
+            if (iterators.Length > 0) {
+                if (MappingIteratorType == MappingIterator.SingleInput) {
+                    Xml.SetAttribute(node, "Input", "id", SingleIterator.Id.ToString(CultureInfo.InvariantCulture));
                 }
-                else
-                {
-                    foreach (Input input in iterators)
-                    {
-                        XmlNode node2 = Xml.SetNewValue(node, "Input", "");
+                else {
+                    foreach (var input in iterators) {
+                        var node2 = Xml.SetNewValue(node, "Input", "");
                         Xml.SetAttribute(node2, "id", input.Id.ToString(CultureInfo.InvariantCulture));
                         Xml.SetAttribute(node2, "mappingId",
                                          (input.AssignedMappingSet != null)
@@ -156,70 +120,57 @@ namespace VixenPlus
                     }
                 }
             }
-            Xml.SetAttribute(_setupNode, "liveUpdate", _liveUpdate.ToString());
-            Xml.SetAttribute(_setupNode, "record", _isRecord.ToString());
+            Xml.SetAttribute(_setupNode, "liveUpdate", LiveUpdate.ToString());
+            Xml.SetAttribute(_setupNode, "record", Record.ToString());
         }
 
-        internal void SetupDataToPlugin()
-        {
+
+        internal void SetupDataToPlugin() {
             XmlNode node = _setupNode["MappingSets"];
-            if (node != null)
-            {
-                _mappingSets.ReadData(node);
+            if (node != null) {
+                MappingSets.ReadData(node);
             }
             XmlNode node2 = _setupNode["Inputs"];
-            if (node2 != null)
-            {
-                foreach (Input input in Inputs)
-                {
-                    XmlNode node3 = node2.SelectSingleNode(string.Format("{0}[@{1}=\"{2}\"]", "Input", "name", input.Name));
-                    if (node3 != null)
-                    {
+            if (node2 != null) {
+                foreach (var input in Inputs) {
+                    var node3 = node2.SelectSingleNode(string.Format("{0}[@{1}=\"{2}\"]", "Input", "name", input.Name));
+                    if (node3 != null) {
                         input.ReadData(node3);
                     }
                 }
             }
             XmlNode node4 = _setupNode["Iterator"];
-            if (node4 != null)
-            {
-                if (node4.Attributes != null)
-                {
+            if (node4 != null) {
+                if (node4.Attributes != null) {
                     MappingIteratorType = (MappingIterator) Enum.Parse(typeof (MappingIterator), node4.Attributes["type"].Value);
                 }
             }
-            else
-            {
+            else {
                 MappingIteratorType = MappingIterator.None;
             }
-            _singleIterator = null;
-            if (node4 != null)
-            {
+            SingleIterator = null;
+            if (node4 != null) {
                 switch (MappingIteratorType) {
                     case MappingIterator.SingleInput: {
                         XmlNode node5 = node4["Input"];
-                        if (node5 != null)
-                        {
-                            if (node5.Attributes != null)
-                            {
-                                _singleIterator = FindInput(ulong.Parse(node5.Attributes["id"].Value));
+                        if (node5 != null) {
+                            if (node5.Attributes != null) {
+                                SingleIterator = FindInput(ulong.Parse(node5.Attributes["id"].Value));
                             }
                         }
                     }
                         break;
                     case MappingIterator.MultiInput: {
-                        XmlNodeList inputNodes = node4.SelectNodes("Input");
-                        if (inputNodes != null)
-                        {
-                            foreach (XmlNode node5 in inputNodes)
-                            {
-                                if (node5.Attributes != null)
-                                {
-                                    Input input2 = FindInput(ulong.Parse(node5.Attributes["id"].Value));
-                                    MappingSet set = _mappingSets.FindMappingSet(ulong.Parse(node5.Attributes["mappingId"].Value));
-                                    if (input2 != null)
-                                    {
-                                        input2.AssignedMappingSet = set;
-                                    }
+                        var inputNodes = node4.SelectNodes("Input");
+                        if (inputNodes != null) {
+                            foreach (XmlNode node5 in inputNodes) {
+                                if (node5.Attributes == null) {
+                                    continue;
+                                }
+                                var input2 = FindInput(ulong.Parse(node5.Attributes["id"].Value));
+                                var set = MappingSets.FindMappingSet(ulong.Parse(node5.Attributes["mappingId"].Value));
+                                if (input2 != null) {
+                                    input2.AssignedMappingSet = set;
                                 }
                             }
                         }
@@ -227,23 +178,21 @@ namespace VixenPlus
                         break;
                 }
             }
-            if (_setupNode.Attributes != null && _setupNode.Attributes["liveUpdate"] != null)
-            {
-                _liveUpdate = bool.Parse(_setupNode.Attributes["liveUpdate"].Value);
+            if (_setupNode.Attributes != null && _setupNode.Attributes["liveUpdate"] != null) {
+                LiveUpdate = bool.Parse(_setupNode.Attributes["liveUpdate"].Value);
             }
-            if (_setupNode.Attributes != null && _setupNode.Attributes["record"] != null)
-            {
-                _isRecord = bool.Parse(_setupNode.Attributes["record"].Value);
+            if (_setupNode.Attributes != null && _setupNode.Attributes["record"] != null) {
+                Record = bool.Parse(_setupNode.Attributes["record"].Value);
             }
         }
 
-        internal void ShutdownInternal()
-        {
+
+        internal void ShutdownInternal() {
             Shutdown();
         }
 
-        internal void StartupInternal()
-        {
+
+        internal void StartupInternal() {
             Startup();
         }
     }

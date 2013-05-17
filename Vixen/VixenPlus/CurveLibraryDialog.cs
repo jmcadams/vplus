@@ -77,7 +77,7 @@ namespace VixenPlus
             }
             else if ((e.Index >= 0) && (e.Index < box.Items.Count))
             {
-                Rectangle bounds = e.Bounds;
+                var bounds = e.Bounds;
                 bounds.Inflate(-16, -2);
                 var boxItems = box.Items[e.Index] as string;
                 if (boxItems != null)
@@ -138,7 +138,7 @@ namespace VixenPlus
         {
             if (e.ColumnIndex == 2)
             {
-                Rectangle bounds = e.Bounds;
+                var bounds = e.Bounds;
                 bounds.Inflate(-16, -2);
                 var curveLibraryRecord = e.Item.Tag as CurveLibraryRecord;
                 if (curveLibraryRecord != null)
@@ -172,85 +172,85 @@ namespace VixenPlus
 
         private void LoadRecords()
         {
-            if (!_isInternal)
+            if (_isInternal) {
+                return;
+            }
+            Cursor = Cursors.WaitCursor;
+            try
             {
-                Cursor = Cursors.WaitCursor;
+                _curveLibrary.ManufacturerFilter = (comboBoxManufacturer.SelectedIndex == 0)
+                                                       ? null
+                                                       : new[]
+                                                       {
+                                                           new CurveLibrary.Filter(CurveLibrary.Filter.Operator.Equals,
+                                                                                   comboBoxManufacturer.SelectedItem.ToString())
+                                                       };
+                _curveLibrary.LightCountFilter = (comboBoxCount.SelectedIndex == 0)
+                                                     ? null
+                                                     : new[]
+                                                     {
+                                                         new CurveLibrary.Filter(CurveLibrary.Filter.Operator.Equals,
+                                                                                 comboBoxCount.SelectedItem.ToString())
+                                                     };
+                _curveLibrary.ColorFilter = (comboBoxColor.SelectedIndex == 0)
+                                                ? null
+                                                : new[]
+                                                {
+                                                    new CurveLibrary.Filter(CurveLibrary.Filter.Operator.Equals,
+                                                                            ColorFromString(comboBoxColor.SelectedItem.ToString()))
+                                                };
+                _curveLibrary.ControllerFilter = (comboBoxController.SelectedIndex == 0)
+                                                     ? null
+                                                     : new[]
+                                                     {
+                                                         new CurveLibrary.Filter(CurveLibrary.Filter.Operator.Equals,
+                                                                                 comboBoxController.SelectedItem.ToString())
+                                                     };
+                listViewRecords.BeginUpdate();
+                listViewRecords.Items.Clear();
+                btnOkay.Enabled = false;
                 try
                 {
-                    _curveLibrary.ManufacturerFilter = (comboBoxManufacturer.SelectedIndex == 0)
-                                                           ? null
-                                                           : new[]
-                                                               {
-                                                                   new CurveLibrary.Filter(CurveLibrary.Filter.Operator.Equals,
-                                                                                           comboBoxManufacturer.SelectedItem.ToString())
-                                                               };
-                    _curveLibrary.LightCountFilter = (comboBoxCount.SelectedIndex == 0)
-                                                         ? null
-                                                         : new[]
-                                                             {
-                                                                 new CurveLibrary.Filter(CurveLibrary.Filter.Operator.Equals,
-                                                                                         comboBoxCount.SelectedItem.ToString())
-                                                             };
-                    _curveLibrary.ColorFilter = (comboBoxColor.SelectedIndex == 0)
-                                                    ? null
-                                                    : new[]
-                                                        {
-                                                            new CurveLibrary.Filter(CurveLibrary.Filter.Operator.Equals,
-                                                                                    ColorFromString(comboBoxColor.SelectedItem.ToString()))
-                                                        };
-                    _curveLibrary.ControllerFilter = (comboBoxController.SelectedIndex == 0)
-                                                         ? null
-                                                         : new[]
-                                                             {
-                                                                 new CurveLibrary.Filter(CurveLibrary.Filter.Operator.Equals,
-                                                                                         comboBoxController.SelectedItem.ToString())
-                                                             };
-                    listViewRecords.BeginUpdate();
-                    listViewRecords.Items.Clear();
-                    btnOkay.Enabled = false;
-                    try
+                    foreach (var record in _curveLibrary.Read())
                     {
-                        foreach (CurveLibraryRecord record in _curveLibrary.Read())
-                        {
-                            listViewRecords.Items.Add(
-                                new ListViewItem(new[]
-                                    {
-                                        record.Manufacturer, record.LightCount, record.Color.ToString(CultureInfo.InvariantCulture), record.Controller
-                                    }))
-                                           .Tag = record;
-                        }
+                        listViewRecords.Items.Add(
+                            new ListViewItem(new[]
+                            {
+                                record.Manufacturer, record.LightCount, record.Color.ToString(CultureInfo.InvariantCulture), record.Controller
+                            }))
+                                       .Tag = record;
                     }
-                    catch (Exception exception)
-                    {
-                        MessageBox.Show(exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    }
-                    finally
-                    {
-                        listViewRecords.EndUpdate();
-                    }
-                    if (!_curveLibrary.IsFiltered)
-                    {
-                        PopulateFilter(comboBoxManufacturer, _curveLibrary.GetAllManufacturers());
-                        PopulateFilter(comboBoxCount, _curveLibrary.GetAllLightCounts());
-                        PopulateFilter(comboBoxColor, _curveLibrary.GetAllLightColors());
-                        PopulateFilter(comboBoxController, _curveLibrary.GetAllControllers());
-                    }
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
                 finally
                 {
-                    Cursor = Cursors.Default;
+                    listViewRecords.EndUpdate();
                 }
+                if (_curveLibrary.IsFiltered) {
+                    return;
+                }
+                PopulateFilter(comboBoxManufacturer, _curveLibrary.GetAllManufacturers());
+                PopulateFilter(comboBoxCount, _curveLibrary.GetAllLightCounts());
+                PopulateFilter(comboBoxColor, _curveLibrary.GetAllLightColors());
+                PopulateFilter(comboBoxController, _curveLibrary.GetAllControllers());
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
             }
         }
 
         private void PopulateFilter(ComboBox comboBox, IEnumerable<string> items)
         {
-            int selectedIndex = comboBox.SelectedIndex;
+            var selectedIndex = comboBox.SelectedIndex;
             comboBox.Items.Clear();
             comboBox.Items.Add("(All)");
-            foreach (string str2 in items)
+            foreach (var str2 in items)
             {
-                string str = comboBox != comboBoxColor ? str2 : StringFromColor(str2);
+                var str = comboBox != comboBoxColor ? str2 : StringFromColor(str2);
                 if (!comboBox.Items.Contains(str))
                 {
                     comboBox.Items.Add(str);

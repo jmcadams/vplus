@@ -118,10 +118,11 @@ namespace VixenPlus {
             if (_executionInterface == null) {
                 _executionInterface = (IExecution) Interfaces.Available["IExecution"];
             }
-            if (_backgroundExecutionContextHandle == 0) {
-                _backgroundExecutionContextHandle = _executionInterface.RequestContext(true, false, null);
-                _executionInterface.SetSynchronousContext(_backgroundExecutionContextHandle, _backgroundSequence);
+            if (_backgroundExecutionContextHandle != 0) {
+                return;
             }
+            _backgroundExecutionContextHandle = _executionInterface.RequestContext(true, false, null);
+            _executionInterface.SetSynchronousContext(_backgroundExecutionContextHandle, _backgroundSequence);
         }
 
 
@@ -195,7 +196,7 @@ namespace VixenPlus {
 
 
         public static void LogAudio(string source, string sourceNote, string audioFileName, int lengthInMilliseconds) {
-            string path = ((ISystem) Interfaces.Available["ISystem"]).UserPreferences.GetString("AudioLogFilePath");
+            var path = ((ISystem) Interfaces.Available["ISystem"]).UserPreferences.GetString("AudioLogFilePath");
             if (path.Trim().Length == 0) {
                 ((ISystem) Interfaces.Available["ISystem"]).UserPreferences.SetBoolean("LogAudioManual", false);
                 ((ISystem) Interfaces.Available["ISystem"]).UserPreferences.SetBoolean("LogAudioScheduled", false);
@@ -266,27 +267,30 @@ namespace VixenPlus {
 
 
         private void ShowBackgroundMusicThumbSucker() {
-            if (!_backgroundMusicLabel.Visible) {
-                _backgroundMusicLabel.Text = string.Empty;
-                _backgroundMusicLabel.Visible = true;
+            if (_backgroundMusicLabel.Visible) {
+                return;
             }
+            _backgroundMusicLabel.Text = string.Empty;
+            _backgroundMusicLabel.Visible = true;
         }
 
 
         private void ShowBackgroundSequenceThumbSucker() {
-            if (!_backgroundProgressBar.Visible) {
-                _backgroundProgressBar.ToolTipText = _backgroundSequence.Name + Resources.Host_isRunning;
-                _backgroundProgressBar.Visible = true;
-                _backgroundProgressBar.Enabled = true;
+            if (_backgroundProgressBar.Visible) {
+                return;
             }
+            _backgroundProgressBar.ToolTipText = _backgroundSequence.Name + Resources.Host_isRunning;
+            _backgroundProgressBar.Visible = true;
+            _backgroundProgressBar.Enabled = true;
         }
 
 
         public void StartBackgroundMusic() {
-            if ((_musicPlayer.SongCount != 0) && Preference2.GetBoolean("EnableBackgroundMusic")) {
-                _backgroundMusicDelayTimer.Interval = Preference2.GetInteger("BackgroundMusicDelay") * 0x3e8;
-                _backgroundMusicDelayTimer.Enabled = true;
+            if ((_musicPlayer.SongCount == 0) || !Preference2.GetBoolean("EnableBackgroundMusic")) {
+                return;
             }
+            _backgroundMusicDelayTimer.Interval = Preference2.GetInteger("BackgroundMusicDelay") * 0x3e8;
+            _backgroundMusicDelayTimer.Enabled = true;
         }
 
 
@@ -297,13 +301,15 @@ namespace VixenPlus {
 
 
         public void StartBackgroundSequence() {
-            if ((_backgroundSequence != null) && Preference2.GetBoolean("EnableBackgroundSequence")) {
-                CreateBackgroundContext();
-                if (_executionInterface.EngineStatus(_backgroundExecutionContextHandle) == CommonUtils.Utils.ExecutionStopped) {
-                    _backgroundSequenceDelayTimer.Interval = Preference2.GetInteger("BackgroundSequenceDelay") * 1000;
-                    _backgroundSequenceDelayTimer.Enabled = true;
-                }
+            if ((_backgroundSequence == null) || !Preference2.GetBoolean("EnableBackgroundSequence")) {
+                return;
             }
+            CreateBackgroundContext();
+            if (_executionInterface.EngineStatus(_backgroundExecutionContextHandle) != CommonUtils.Utils.ExecutionStopped) {
+                return;
+            }
+            _backgroundSequenceDelayTimer.Interval = Preference2.GetInteger("BackgroundSequenceDelay") * 1000;
+            _backgroundSequenceDelayTimer.Enabled = true;
         }
 
 
@@ -327,11 +333,12 @@ namespace VixenPlus {
 
 
         public void StopBackgroundSequenceExecution() {
-            if (_backgroundExecutionContextHandle != 0) {
-                _executionInterface.ExecuteStop(_backgroundExecutionContextHandle);
-                _executionInterface.ReleaseContext(_backgroundExecutionContextHandle);
-                _backgroundExecutionContextHandle = 0;
+            if (_backgroundExecutionContextHandle == 0) {
+                return;
             }
+            _executionInterface.ExecuteStop(_backgroundExecutionContextHandle);
+            _executionInterface.ReleaseContext(_backgroundExecutionContextHandle);
+            _backgroundExecutionContextHandle = 0;
         }
 
 

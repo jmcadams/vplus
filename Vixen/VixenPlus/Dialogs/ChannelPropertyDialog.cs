@@ -20,9 +20,9 @@ namespace VixenPlus.Dialogs
             label3.Visible = labelOutputChannel.Visible = showOutputChannel;
             GotoChannel(currentChannel);
             _preferences = ((ISystem) Interfaces.Available["ISystem"]).UserPreferences;
-            string[] strArray = _preferences.GetString("CustomColors").Split(new[] {','});
+            var strArray = _preferences.GetString("CustomColors").Split(new[] {','});
             var numArray = new int[strArray.Length];
-            for (int i = 0; i < strArray.Length; i++)
+            for (var i = 0; i < strArray.Length; i++)
             {
                 numArray[i] = int.Parse(strArray[i]);
             }
@@ -37,16 +37,16 @@ namespace VixenPlus.Dialogs
         private void buttonColor_Click(object sender, EventArgs e)
         {
             colorDialog.Color = _currentChannel.Color;
-            if (colorDialog.ShowDialog() == DialogResult.OK)
-            {
-                buttonColor.BackColor = colorDialog.Color;
-                var strArray = new string[colorDialog.CustomColors.Length];
-                for (int i = 0; i < strArray.Length; i++)
-                {
-                    strArray[i] = colorDialog.CustomColors[i].ToString(CultureInfo.InvariantCulture);
-                }
-                _preferences.SetString("CustomColors", string.Join(",", strArray));
+            if (colorDialog.ShowDialog() != DialogResult.OK) {
+                return;
             }
+            buttonColor.BackColor = colorDialog.Color;
+            var strArray = new string[colorDialog.CustomColors.Length];
+            for (var i = 0; i < strArray.Length; i++)
+            {
+                strArray[i] = colorDialog.CustomColors[i].ToString(CultureInfo.InvariantCulture);
+            }
+            _preferences.SetString("CustomColors", string.Join(",", strArray));
         }
 
         private void buttonDimmingCurve_Click(object sender, EventArgs e)
@@ -69,15 +69,15 @@ namespace VixenPlus.Dialogs
 
         private void ChannelPropertyDialog_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if ((e.KeyChar == '\r') && buttonNext.Enabled)
-            {
-                NextChannel();
-                if (ActiveControl == textBoxName)
-                {
-                    textBoxName.SelectAll();
-                }
-                e.Handled = true;
+            if ((e.KeyChar != '\r') || !buttonNext.Enabled) {
+                return;
             }
+            NextChannel();
+            if (ActiveControl == textBoxName)
+            {
+                textBoxName.SelectAll();
+            }
+            e.Handled = true;
         }
 
         private void ChannelPropertyDialog_Load(object sender, EventArgs e)
@@ -87,11 +87,11 @@ namespace VixenPlus.Dialogs
 
         private void comboBoxChannels_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!_internalChange)
-            {
-                ToChannel();
-                GotoChannel((Channel) comboBoxChannels.SelectedItem);
+            if (_internalChange) {
+                return;
             }
+            ToChannel();
+            GotoChannel((Channel) comboBoxChannels.SelectedItem);
         }
 
         private void FromChannel()
@@ -122,12 +122,12 @@ namespace VixenPlus.Dialogs
 
         private void ToChannel()
         {
-            string name = _currentChannel.Name;
+            var name = _currentChannel.Name;
             _currentChannel.Name = textBoxName.Text;
             if (name != textBoxName.Text)
             {
-                int selectedIndex = comboBoxChannels.SelectedIndex;
-                int index = comboBoxChannels.Items.IndexOf(_currentChannel);
+                var selectedIndex = comboBoxChannels.SelectedIndex;
+                var index = comboBoxChannels.Items.IndexOf(_currentChannel);
                 _internalChange = true;
                 comboBoxChannels.BeginUpdate();
                 comboBoxChannels.Items.RemoveAt(index);

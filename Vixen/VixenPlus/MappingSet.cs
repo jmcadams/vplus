@@ -34,7 +34,7 @@ namespace VixenPlus
         public object Clone()
         {
             var set = new MappingSet(Name) {Id = Id};
-            foreach (ulong num in _inputMappings.Keys)
+            foreach (var num in _inputMappings.Keys)
             {
                 List<string> list;
                 set._inputMappings[num] = list = new List<string>();
@@ -76,21 +76,20 @@ namespace VixenPlus
                 Id = ulong.Parse(dataNode.Attributes["id"].Value);
             }
             XmlNode node = dataNode["Inputs"];
-            if (node != null)
-            {
-                XmlNodeList inputNodes = node.SelectNodes("Input");
-                if (inputNodes != null)
+            if (node == null) {
+                return;
+            }
+            var inputNodes = node.SelectNodes("Input");
+            if (inputNodes == null) {
+                return;
+            }
+            foreach (XmlNode node2 in inputNodes) {
+                if (node2.InnerText.Trim().Length <= 0) {
+                    continue;
+                }
+                if (node2.Attributes != null)
                 {
-                    foreach (XmlNode node2 in inputNodes)
-                    {
-                        if (node2.InnerText.Trim().Length > 0)
-                        {
-                            if (node2.Attributes != null)
-                            {
-                                _inputMappings[ulong.Parse(node2.Attributes["id"].Value)] = new List<string>(node2.InnerText.Split(new[] {','}));
-                            }
-                        }
-                    }
+                    _inputMappings[ulong.Parse(node2.Attributes["id"].Value)] = new List<string>(node2.InnerText.Split(new[] {','}));
                 }
             }
         }
@@ -104,8 +103,8 @@ namespace VixenPlus
         {
             Xml.SetAttribute(dataNode, "name", Name);
             Xml.SetAttribute(dataNode, "id", Id.ToString(CultureInfo.InvariantCulture));
-            XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(dataNode, "Inputs");
-            foreach (ulong num in _inputMappings.Keys)
+            var emptyNodeAlways = Xml.GetEmptyNodeAlways(dataNode, "Inputs");
+            foreach (var num in _inputMappings.Keys)
             {
                 if (_inputMappings[num].Count > 0)
                 {

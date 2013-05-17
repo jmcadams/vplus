@@ -16,7 +16,7 @@
 
         public int GetExecutingTimerExecutionContextHandle(int executingTimerIndex)
         {
-            TimerContext contextOf = _controlDialog.GetContextOf(executingTimerIndex);
+            var contextOf = _controlDialog.GetContextOf(executingTimerIndex);
             return contextOf == null ? 0 : contextOf.ExecutionContextHandle;
         }
 

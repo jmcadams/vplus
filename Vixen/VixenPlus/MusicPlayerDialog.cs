@@ -64,7 +64,7 @@ namespace VixenPlus {
 
 
         private void AddSong(string fileName) {
-            Audio item = LoadSong(fileName);
+            var item = LoadSong(fileName);
             if (item != null) {
                 listBoxPlaylist.Items.Add(item);
             }
@@ -82,7 +82,7 @@ namespace VixenPlus {
                     dialog.Show();
                 }
                 Cursor = Cursors.WaitCursor;
-                foreach (string str in openFileDialog.FileNames) {
+                foreach (var str in openFileDialog.FileNames) {
                     try {
                         if (dialog != null) {
                             dialog.Message = "Adding " + Path.GetFileName(str);
@@ -106,50 +106,52 @@ namespace VixenPlus {
 
 
         private void buttonDown_Click(object sender, EventArgs e) {
-            if (listBoxPlaylist.SelectedIndex < (listBoxPlaylist.Items.Count - 1)) {
-                listBoxPlaylist.BeginUpdate();
-                object selectedItem = listBoxPlaylist.SelectedItem;
-                int selectedIndex = listBoxPlaylist.SelectedIndex;
-                listBoxPlaylist.Items.RemoveAt(listBoxPlaylist.SelectedIndex);
-                listBoxPlaylist.Items.Insert(++selectedIndex, selectedItem);
-                listBoxPlaylist.EndUpdate();
-                listBoxPlaylist.SelectedIndex = selectedIndex;
+            if (listBoxPlaylist.SelectedIndex >= (listBoxPlaylist.Items.Count - 1)) {
+                return;
             }
+            listBoxPlaylist.BeginUpdate();
+            var selectedItem = listBoxPlaylist.SelectedItem;
+            var selectedIndex = listBoxPlaylist.SelectedIndex;
+            listBoxPlaylist.Items.RemoveAt(listBoxPlaylist.SelectedIndex);
+            listBoxPlaylist.Items.Insert(++selectedIndex, selectedItem);
+            listBoxPlaylist.EndUpdate();
+            listBoxPlaylist.SelectedIndex = selectedIndex;
         }
 
 
         private void buttonOK_Click(object sender, EventArgs e) {
-            if (checkBoxEnableNarrative.Checked) {
-                try {
-                    if (Convert.ToInt32(textBoxNarrativeIntervalCount.Text) >= 2) {
-                        if ((_narrativeSong == null) || !File.Exists(Path.Combine(Paths.AudioPath, _narrativeSong.FileName))) {
-                            if (MessageBox.Show(Resources.NoNarrativeFile, Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
-                                DialogResult.No) {
-                                DialogResult = DialogResult.None;
-                            }
-                            else {
-                                checkBoxEnableNarrative.Checked = false;
-                            }
+            if (!checkBoxEnableNarrative.Checked) {
+                return;
+            }
+            try {
+                if (Convert.ToInt32(textBoxNarrativeIntervalCount.Text) >= 2) {
+                    if ((_narrativeSong == null) || !File.Exists(Path.Combine(Paths.AudioPath, _narrativeSong.FileName))) {
+                        if (MessageBox.Show(Resources.NoNarrativeFile, Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
+                            DialogResult.No) {
+                            DialogResult = DialogResult.None;
+                        }
+                        else {
+                            checkBoxEnableNarrative.Checked = false;
                         }
                     }
-                    else if (MessageBox.Show(Resources.IntervalTooSmall, Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
-                             DialogResult.No) {
-                        DialogResult = DialogResult.None;
-                    }
-                    else {
-                        checkBoxEnableNarrative.Checked = false;
-                        textBoxNarrativeIntervalCount.Text = @"0";
-                    }
                 }
-                catch {
-                    if (MessageBox.Show(Resources.IntervalInvalid, Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
-                        DialogResult.No) {
-                        DialogResult = DialogResult.None;
-                    }
-                    else {
-                        checkBoxEnableNarrative.Checked = false;
-                        textBoxNarrativeIntervalCount.Text = @"0";
-                    }
+                else if (MessageBox.Show(Resources.IntervalTooSmall, Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
+                         DialogResult.No) {
+                    DialogResult = DialogResult.None;
+                }
+                else {
+                    checkBoxEnableNarrative.Checked = false;
+                    textBoxNarrativeIntervalCount.Text = @"0";
+                }
+            }
+            catch {
+                if (MessageBox.Show(Resources.IntervalInvalid, Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
+                    DialogResult.No) {
+                    DialogResult = DialogResult.None;
+                }
+                else {
+                    checkBoxEnableNarrative.Checked = false;
+                    textBoxNarrativeIntervalCount.Text = @"0";
                 }
             }
         }
@@ -163,23 +165,25 @@ namespace VixenPlus {
         private void buttonSelectNarrative_Click(object sender, EventArgs e) {
             openFileDialog.InitialDirectory = Paths.AudioPath;
             openFileDialog.Multiselect = false;
-            if (openFileDialog.ShowDialog() == DialogResult.OK) {
-                _narrativeSong = LoadSong(openFileDialog.FileName);
-                textBoxNarrative.Text = _narrativeSong.Name;
+            if (openFileDialog.ShowDialog() != DialogResult.OK) {
+                return;
             }
+            _narrativeSong = LoadSong(openFileDialog.FileName);
+            textBoxNarrative.Text = _narrativeSong.Name;
         }
 
 
         private void buttonUp_Click(object sender, EventArgs e) {
-            if (listBoxPlaylist.SelectedIndex > 0) {
-                listBoxPlaylist.BeginUpdate();
-                object selectedItem = listBoxPlaylist.SelectedItem;
-                int selectedIndex = listBoxPlaylist.SelectedIndex;
-                listBoxPlaylist.Items.RemoveAt(listBoxPlaylist.SelectedIndex);
-                listBoxPlaylist.Items.Insert(--selectedIndex, selectedItem);
-                listBoxPlaylist.EndUpdate();
-                listBoxPlaylist.SelectedIndex = selectedIndex;
+            if (listBoxPlaylist.SelectedIndex <= 0) {
+                return;
             }
+            listBoxPlaylist.BeginUpdate();
+            var selectedItem = listBoxPlaylist.SelectedItem;
+            var selectedIndex = listBoxPlaylist.SelectedIndex;
+            listBoxPlaylist.Items.RemoveAt(listBoxPlaylist.SelectedIndex);
+            listBoxPlaylist.Items.Insert(--selectedIndex, selectedItem);
+            listBoxPlaylist.EndUpdate();
+            listBoxPlaylist.SelectedIndex = selectedIndex;
         }
 
 
@@ -201,16 +205,16 @@ namespace VixenPlus {
 
 
         private Audio LoadSong(string fileName) {
-            string str = string.Empty;
+            var str = string.Empty;
             uint num = 0;
-            string sourceFileName = fileName;
+            var sourceFileName = fileName;
             fileName = Path.GetFileName(fileName);
             if (fileName != null) {
-                string path = Path.Combine(Paths.AudioPath, fileName);
+                var path = Path.Combine(Paths.AudioPath, fileName);
                 if (!File.Exists(path)) {
                     File.Copy(sourceFileName, path);
                 }
-                object[] objArray = _fmod.LoadSoundStats(path);
+                var objArray = _fmod.LoadSoundStats(path);
                 if (objArray != null) {
                     str = (string) objArray[0];
                     num = (uint) objArray[1];

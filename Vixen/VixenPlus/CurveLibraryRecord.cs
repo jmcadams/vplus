@@ -12,7 +12,7 @@ namespace VixenPlus
         public string Manufacturer;
 
         public CurveLibraryRecord(string text) {
-            string[] strArray = text.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
+            var strArray = text.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
             switch (strArray.Length) {
                 case 3:
                     Manufacturer = strArray[0];

@@ -20,7 +20,7 @@ namespace VixenPlus
             _mirrorChannels = null;
             PrimaryChannel = FindChannel(primaryChannelName, channels);
             _mirrorChannels = new List<Channel>();
-            foreach (string str in mirrorChannelNames)
+            foreach (var str in mirrorChannelNames)
             {
                 _mirrorChannels.Add(FindChannel(str, channels));
             }
@@ -35,7 +35,7 @@ namespace VixenPlus
 
         private Channel FindChannel(string channelName, IEnumerable<Channel> channels)
         {
-            foreach (Channel channel in channels)
+            foreach (var channel in channels)
             {
                 if (channelName == channel.Name)
                 {

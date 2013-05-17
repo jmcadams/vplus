@@ -34,7 +34,7 @@ namespace VixenPlus
                 {
                     return new Rectangle(0, 0, Width, Height);
                 }
-                int height = Alignment <= TabAlignment.Bottom ? ItemSize.Height : ItemSize.Width;
+                var height = Alignment <= TabAlignment.Bottom ? ItemSize.Height : ItemSize.Width;
                 if (Appearance == TabAppearance.Normal)
                 {
                     num = 5 + (height*RowCount);
@@ -64,15 +64,15 @@ namespace VixenPlus
             get { return _hideTabs; }
             set
             {
-                if (_hideTabs != value)
-                {
-                    _hideTabs = value;
-                    if (value)
-                    {
-                        OurMultiline = true;
-                    }
-                    UpdateStyles();
+                if (_hideTabs == value) {
+                    return;
                 }
+                _hideTabs = value;
+                if (value)
+                {
+                    OurMultiline = true;
+                }
+                UpdateStyles();
             }
         }
 

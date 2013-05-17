@@ -228,10 +228,11 @@ namespace VixenPlus {
                 return _profile.Mask;
             }
             set {
-                if (_profile == null) {
-                    for (int i = 0; i < _channels.Count; i++) {
-                        _channels[i].Enabled = value[0][i] == 255;
-                    }
+                if (_profile != null) {
+                    return;
+                }
+                for (int i = 0; i < _channels.Count; i++) {
+                    _channels[i].Enabled = value[0][i] == 255;
                 }
             }
         }
@@ -322,12 +323,13 @@ namespace VixenPlus {
             var buffer = new byte[ChannelCount,TotalEventPeriods];
             int num3 = 0;
             for (int i = 0; i < _eventValues.GetLength(0); i++) {
-                if (i != index) {
-                    for (int j = 0; j < TotalEventPeriods; j++) {
-                        buffer[num3, j] = _eventValues[i, j];
-                    }
-                    num3++;
+                if (i == index) {
+                    continue;
                 }
+                for (int j = 0; j < TotalEventPeriods; j++) {
+                    buffer[num3, j] = _eventValues[i, j];
+                }
+                num3++;
             }
             _eventValues = buffer;
             _sortOrders.DeleteChannel(index);
@@ -531,10 +533,11 @@ namespace VixenPlus {
 
 
         public void ReloadProfile() {
-            if (_profile != null) {
-                _profile.Reload();
-                LoadFromProfile();
+            if (_profile == null) {
+                return;
             }
+            _profile.Reload();
+            LoadFromProfile();
         }
 
 
@@ -612,10 +615,11 @@ namespace VixenPlus {
             if (milliseconds < ExtentOfAudio()) {
                 throw new Exception(Resources.InvalidSequenceLength);
             }
-            if ((_eventValues == null) || (milliseconds != (_eventValues.GetLength(1) * _eventPeriod))) {
-                Length = milliseconds;
-                UpdateEventValueArray();
+            if ((_eventValues != null) && (milliseconds == (_eventValues.GetLength(1) * _eventPeriod))) {
+                return;
             }
+            Length = milliseconds;
+            UpdateEventValueArray();
         }
 
 
@@ -677,11 +681,12 @@ namespace VixenPlus {
                 if (node.Attributes != null && int.Parse(node.Attributes["from"].Value) > list.Count) {
                     node.Attributes["from"].Value = list.Count.ToString(CultureInfo.InvariantCulture);
                 }
-                if (node.Attributes != null) {
-                    int num21 = int.Parse(node.Attributes["to"].Value);
-                    if ((num21 == length) || (num21 > list.Count)) {
-                        node.Attributes["to"].Value = list.Count.ToString(CultureInfo.InvariantCulture);
-                    }
+                if (node.Attributes == null) {
+                    continue;
+                }
+                int num21 = int.Parse(node.Attributes["to"].Value);
+                if ((num21 == length) || (num21 > list.Count)) {
+                    node.Attributes["to"].Value = list.Count.ToString(CultureInfo.InvariantCulture);
                 }
             }
         }
@@ -689,13 +694,14 @@ namespace VixenPlus {
 
         public void UpdateMetrics(int windowWidth, int windowHeight, int channelWidth) {
             var document = new XmlDocument();
-            if (File.Exists(FileName) && ((File.GetAttributes(FileName) & FileAttributes.ReadOnly) == 0)) {
-                document.Load(FileName);
-                XmlNode contextNode = document.SelectSingleNode("//Program");
-                Xml.SetValue(contextNode, "WindowSize", string.Format("{0},{1}", windowWidth, windowHeight));
-                Xml.SetValue(contextNode, "ChannelWidth", channelWidth.ToString(CultureInfo.InvariantCulture));
-                document.Save(FileName);
+            if (!File.Exists(FileName) || ((File.GetAttributes(FileName) & FileAttributes.ReadOnly) != 0)) {
+                return;
             }
+            document.Load(FileName);
+            XmlNode contextNode = document.SelectSingleNode("//Program");
+            Xml.SetValue(contextNode, "WindowSize", string.Format("{0},{1}", windowWidth, windowHeight));
+            Xml.SetValue(contextNode, "ChannelWidth", channelWidth.ToString(CultureInfo.InvariantCulture));
+            document.Save(FileName);
         }
     }
 }

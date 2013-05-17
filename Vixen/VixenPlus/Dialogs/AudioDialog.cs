@@ -289,7 +289,7 @@ namespace VixenPlus.Dialogs {
                 }
                 else {
                     MethodInvoker method = delegate {
-                        TimeSpan span = (_countdownEnd - DateTime.Now);
+                        var span = (_countdownEnd - DateTime.Now);
                         progressBarCountdown.Value = (int) ((span.TotalMilliseconds * 100.0) / 5000.0);
                     };
                     BeginInvoke(method);

@@ -269,21 +269,21 @@ namespace VixenPlus
             }
             set
             {
-                if ((value != null) && (value.Length > 0))
-                {
-                    Host.Clipboard = value;
-                    var builder = new StringBuilder();
-                    for (var i = 0; i < value.GetLength(0); i++)
-                    {
-                        for (var j = 0; j < value.GetLength(1); j++)
-                        {
-                            builder.AppendFormat("{0},", value[i, j]);
-                        }
-                        builder.Remove(builder.Length - 1, 1);
-                        builder.AppendLine();
-                    }
-                    System.Windows.Forms.Clipboard.SetText(builder.ToString());
+                if ((value == null) || (value.Length <= 0)) {
+                    return;
                 }
+                Host.Clipboard = value;
+                var builder = new StringBuilder();
+                for (var i = 0; i < value.GetLength(0); i++)
+                {
+                    for (var j = 0; j < value.GetLength(1); j++)
+                    {
+                        builder.AppendFormat("{0},", value[i, j]);
+                    }
+                    builder.Remove(builder.Length - 1, 1);
+                    builder.AppendLine();
+                }
+                System.Windows.Forms.Clipboard.SetText(builder.ToString());
             }
         }
 
@@ -338,13 +338,13 @@ namespace VixenPlus
         private void channelDimmingCurvesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var activeMdiChild = ActiveMdiChild as IUIPlugIn;
-            if (activeMdiChild != null)
+            if (activeMdiChild == null) {
+                return;
+            }
+            var dialog = new DimmingCurveDialog(activeMdiChild.Sequence, null);
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
-                var dialog = new DimmingCurveDialog(activeMdiChild.Sequence, null);
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    activeMdiChild.IsDirty = true;
-                }
+                activeMdiChild.IsDirty = true;
             }
         }
 
@@ -429,36 +429,36 @@ namespace VixenPlus
         {
             foreach (var form in MdiChildren)
             {
-                if ((form is IUIPlugIn) && (CheckDirty((IUIPlugIn) form) == DialogResult.Cancel))
-                {
-                    e.Cancel = true;
-                    return;
+                if ((!(form is IUIPlugIn)) || (CheckDirty((IUIPlugIn) form) != DialogResult.Cancel)) {
+                    continue;
                 }
+                e.Cancel = true;
+                return;
             }
             _host.StopBackgroundObjects();
             _host.BackgroundSequenceName = null;
             _preferences.SaveSettings();
         }
 
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (ActiveMdiChild != null)
+        private void Form1_KeyDown(object sender, KeyEventArgs e) {
+            if (ActiveMdiChild == null) {
+                return;
+            }
+            if ((ActiveMdiChild is OutputPlugInUIBase) &&
+                (((OutputPlugInUIBase) ActiveMdiChild).ExecutionParent != null))
             {
-                if ((ActiveMdiChild is OutputPlugInUIBase) &&
-                    (((OutputPlugInUIBase) ActiveMdiChild).ExecutionParent != null))
+                ((OutputPlugInUIBase) ActiveMdiChild).ExecutionParent.Notify(Notification.KeyDown, e);
+            }
+            else
+            {
+                var activeMdiChild = ActiveMdiChild as IVixenMDI;
+                if (activeMdiChild != null)
                 {
-                    ((OutputPlugInUIBase) ActiveMdiChild).ExecutionParent.Notify(Notification.KeyDown, e);
-                }
-                else
-                {
-                    var activeMdiChild = ActiveMdiChild as IVixenMDI;
-                    if (activeMdiChild != null)
-                    {
-                        activeMdiChild.Notify(Notification.KeyDown, e);
-                    }
+                    activeMdiChild.Notify(Notification.KeyDown, e);
                 }
             }
         }
+
 
         private void Form1_MdiChildActivate(object sender, EventArgs e)
         {
@@ -554,63 +554,62 @@ namespace VixenPlus
 
         private void LoadUIPlugins()
         {
-            if (Directory.Exists(Paths.UIPluginPath))
+            if (!Directory.Exists(Paths.UIPluginPath)) {
+                return;
+            }
+            foreach (var str in Directory.GetFiles(Paths.UIPluginPath, "*.dll"))
             {
-                foreach (var str in Directory.GetFiles(Paths.UIPluginPath, "*.dll"))
+                Exception exception;
+                try
                 {
-                    Exception exception;
-                    try
+                    var assembly = Assembly.LoadFile(str);
+                    foreach (var exportedTypes in assembly.GetExportedTypes())
                     {
-                        var assembly = Assembly.LoadFile(str);
-                        foreach (var exportedTypes in assembly.GetExportedTypes())
-                        {
-                            foreach (Type interfaceTypes in exportedTypes.GetInterfaces())
+                        foreach (var interfaceTypes in exportedTypes.GetInterfaces()) {
+                            if (interfaceTypes.Name != "IUIPlugIn") {
+                                continue;
+                            }
+                            try
                             {
-                                if (interfaceTypes.Name == "IUIPlugIn")
+                                var inputPlugin = (IUIPlugIn) Activator.CreateInstance(exportedTypes);
+                                if (!RegisterFileType(inputPlugin.FileExtension, inputPlugin))
                                 {
-                                    try
-                                    {
-                                        var inputPlugin = (IUIPlugIn) Activator.CreateInstance(exportedTypes);
-                                        if (!RegisterFileType(inputPlugin.FileExtension, inputPlugin))
-                                        {
-                                            MessageBox.Show(
-                                                string.Format("Could not register UI plugin {0}.\nFile type is already handled.", inputPlugin.Name),
-                                                Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                                        }
-                                    }
-                                    catch (Exception exception1)
-                                    {
-                                        exception = exception1;
-                                        MessageBox.Show(
-                                            string.Format("Error when loading UI plugin from {0}:\n{1}", Path.GetFileNameWithoutExtension(str),
-                                                          exception.StackTrace), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                                    }
+                                    MessageBox.Show(
+                                        string.Format("Could not register UI plugin {0}.\nFile type is already handled.", inputPlugin.Name),
+                                        Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                                 }
+                            }
+                            catch (Exception exception1)
+                            {
+                                exception = exception1;
+                                MessageBox.Show(
+                                    string.Format("Error when loading UI plugin from {0}:\n{1}", Path.GetFileNameWithoutExtension(str),
+                                                  exception.StackTrace), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             }
                         }
                     }
-                    catch (BadImageFormatException)
-                    {
-                    }
-                    catch (Exception exception3)
-                    {
-                        exception = exception3;
-                        MessageBox.Show(string.Format("{0}:\n{1}", Path.GetFileName(str), exception.Message));
-                    }
                 }
-                foreach (var in2 in _registeredFileTypes.Values)
+                catch (BadImageFormatException)
                 {
-                    var item = newLightingProgramToolStripMenuItem.DropDownItems.Add(in2.FileTypeDescription);
-                    item.Tag = in2;
-                    item.Click += _newMenuItemClick;
                 }
-                var builder = new StringBuilder();
-                foreach (var in2 in _registeredFileTypes.Values)
+                catch (Exception exception3)
                 {
-                    builder.AppendFormat("|{0}|*{1}", in2.FileTypeDescription, in2.FileExtension);
+                    exception = exception3;
+                    MessageBox.Show(string.Format("{0}:\n{1}", Path.GetFileName(str), exception.Message));
                 }
-                KnownFileTypesFilter = builder.ToString().Remove(0, 1);
             }
+            foreach (var in2 in _registeredFileTypes.Values)
+            {
+                var item = newLightingProgramToolStripMenuItem.DropDownItems.Add(in2.FileTypeDescription);
+                item.Tag = in2;
+                item.Click += _newMenuItemClick;
+            }
+            var builder = new StringBuilder();
+            foreach (var in2 in _registeredFileTypes.Values)
+            {
+                builder.AppendFormat("|{0}|*{1}", in2.FileTypeDescription, in2.FileExtension);
+            }
+            KnownFileTypesFilter = builder.ToString().Remove(0, 1);
         }
 
         private void PreferencesPreferenceChange(string preferenceName)
@@ -785,17 +784,17 @@ namespace VixenPlus
             openFileDialog1.InitialDirectory = Paths.SequencePath;
             openFileDialog1.FileName = string.Empty;
             openFileDialog1.FilterIndex = num;
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            if (openFileDialog1.ShowDialog() != DialogResult.OK) {
+                return;
+            }
+            Cursor = Cursors.WaitCursor;
+            try
             {
-                Cursor = Cursors.WaitCursor;
-                try
-                {
-                    OpenSequence(openFileDialog1.FileName);
-                }
-                finally
-                {
-                    Cursor = Cursors.Default;
-                }
+                OpenSequence(openFileDialog1.FileName);
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
             }
         }
 
@@ -1010,13 +1009,13 @@ namespace VixenPlus
 
         private void shutdownTimer_Tick(object sender, EventArgs e)
         {
-            if ((DateTime.Now.Hour == _shutdownAt.Hour) && (DateTime.Now.Minute == _shutdownAt.Minute))
-            {
-                shutdownTimer.Stop();
-                Process.Start("shutdown", string.Format("/s /d P:4:1 /c \"Automatic shutdown by {0}\"", Vendor.ProductName));
-                Thread.Sleep(1000);
-                new ShutdownDialog().Show();
+            if ((DateTime.Now.Hour != _shutdownAt.Hour) || (DateTime.Now.Minute != _shutdownAt.Minute)) {
+                return;
             }
+            shutdownTimer.Stop();
+            Process.Start("shutdown", string.Format("/s /d P:4:1 /c \"Automatic shutdown by {0}\"", Vendor.ProductName));
+            Thread.Sleep(1000);
+            new ShutdownDialog().Show();
         }
 
         private void tileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1052,24 +1051,24 @@ namespace VixenPlus
 
         private void UpdateHistoryImages(string baseFilePath)
         {
-            if (File.Exists(baseFilePath))
+            if (!File.Exists(baseFilePath)) {
+                return;
+            }
+            var integer = _preferences.GetInteger("HistoryImages");
+            if (integer == 0) {
+                return;
+            }
+            var files = Directory.GetFiles(Paths.SequencePath, Path.GetFileName(baseFilePath) + ".bak*");
+            var num2 = files.Length + 1;
+            if (files.Length >= integer)
             {
-                var integer = _preferences.GetInteger("HistoryImages");
-                if (integer != 0)
+                num2--;
+                for (var i = 2; i <= integer; i++)
                 {
-                    var files = Directory.GetFiles(Paths.SequencePath, Path.GetFileName(baseFilePath) + ".bak*");
-                    var num2 = files.Length + 1;
-                    if (files.Length >= integer)
-                    {
-                        num2--;
-                        for (var i = 2; i <= integer; i++)
-                        {
-                            File.Copy(string.Format("{0}.bak{1}", baseFilePath, i), string.Format("{0}.bak{1}", baseFilePath, i - 1), true);
-                        }
-                    }
-                    File.Copy(baseFilePath, string.Format("{0}.bak{1}", baseFilePath, num2), true);
+                    File.Copy(string.Format("{0}.bak{1}", baseFilePath, i), string.Format("{0}.bak{1}", baseFilePath, i - 1), true);
                 }
             }
+            File.Copy(baseFilePath, string.Format("{0}.bak{1}", baseFilePath, num2), true);
         }
 
         //private void visualChannelLayoutToolStripMenuItem_Click(object sender, EventArgs e)

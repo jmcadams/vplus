@@ -253,11 +253,12 @@ namespace VixenPlus {
                 context.SynchronousEngineInstance.Stop();
                 if (_preferences.GetBoolean("SavePlugInDialogPositions")) {
                     foreach (OutputPlugInUIBase base2 in context.OutputPlugInForms) {
-                        if (base2.WindowState == FormWindowState.Normal) {
-                            XmlNode nodeAlways = Xml.GetNodeAlways(Xml.GetNodeAlways(base2.DataNode, "DialogPositions"), base2.Name);
-                            Xml.SetAttribute(nodeAlways, "x", base2.Location.X.ToString(CultureInfo.InvariantCulture));
-                            Xml.SetAttribute(nodeAlways, "y", base2.Location.Y.ToString(CultureInfo.InvariantCulture));
+                        if (base2.WindowState != FormWindowState.Normal) {
+                            continue;
                         }
+                        var nodeAlways = Xml.GetNodeAlways(Xml.GetNodeAlways(base2.DataNode, "DialogPositions"), base2.Name);
+                        Xml.SetAttribute(nodeAlways, "x", base2.Location.X.ToString(CultureInfo.InvariantCulture));
+                        Xml.SetAttribute(nodeAlways, "y", base2.Location.Y.ToString(CultureInfo.InvariantCulture));
                     }
                 }
                 context.OutputPlugInForms.Clear();
@@ -512,7 +513,7 @@ namespace VixenPlus {
             }
 
             try {
-                byte[][] mask = executableObject.Mask;
+                var mask = executableObject.Mask;
                 var plugInData = executableObject.PlugInData;
                 if (!context.LocalRequestor && !executableObject.TreatAsLocal) {
                     Profile profile;

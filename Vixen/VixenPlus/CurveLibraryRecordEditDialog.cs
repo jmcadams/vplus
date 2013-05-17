@@ -18,13 +18,13 @@ namespace VixenPlus
             _curveLibrary = new CurveLibrary();
             textBoxManufacturer.AutoCompleteCustomSource.AddRange(_curveLibrary.GetAllManufacturers());
             textBoxController.AutoCompleteCustomSource.AddRange(_curveLibrary.GetAllControllers());
-            if (LibraryRecord != null)
-            {
-                textBoxManufacturer.Text = LibraryRecord.Manufacturer;
-                textBoxLightCount.Text = LibraryRecord.LightCount;
-                buttonColor.BackColor = Color.FromArgb(LibraryRecord.Color);
-                textBoxController.Text = LibraryRecord.Controller;
+            if (LibraryRecord == null) {
+                return;
             }
+            textBoxManufacturer.Text = LibraryRecord.Manufacturer;
+            textBoxLightCount.Text = LibraryRecord.LightCount;
+            buttonColor.BackColor = Color.FromArgb(LibraryRecord.Color);
+            textBoxController.Text = LibraryRecord.Controller;
         }
 
 

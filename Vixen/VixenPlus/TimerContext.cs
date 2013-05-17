@@ -87,8 +87,8 @@ namespace VixenPlus
 
         public override string ToString()
         {
-            string str = _executionInterface.LoadedProgram(_executionContextHandle);
-            string str2 = _executionInterface.LoadedSequence(_executionContextHandle);
+            var str = _executionInterface.LoadedProgram(_executionContextHandle);
+            var str2 = _executionInterface.LoadedSequence(_executionContextHandle);
             return str.Length == 0 ? str2 : string.Format("{0}: {1}", str, str2);
         }
     }

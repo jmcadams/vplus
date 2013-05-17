@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -18,7 +17,7 @@ namespace VixenPlus
             lblName.Text = Vendor.ProductName;
             lblDescription.Text = Vendor.ProductDescription;
 
-            Version version = Assembly.GetExecutingAssembly().GetName().Version;
+            var version = Assembly.GetExecutingAssembly().GetName().Version;
             labelVersion.Text = string.Format(Resources.FormattedVersion, version);
 
             llblURL.Text = Vendor.ProductURL;

@@ -14,8 +14,8 @@ namespace VixenPlus
 
         public static void SetSortIcon(ListView listViewControl, int columnIndex, System.Windows.Forms.SortOrder order)
         {
-            IntPtr hWnd = SendMessage(listViewControl.Handle, 0x101f, IntPtr.Zero, IntPtr.Zero);
-            for (int i = 0; i <= (listViewControl.Columns.Count - 1); i++)
+            var hWnd = SendMessage(listViewControl.Handle, 0x101f, IntPtr.Zero, IntPtr.Zero);
+            for (var i = 0; i <= (listViewControl.Columns.Count - 1); i++)
             {
                 var wParam = new IntPtr(i);
                 var lPlvcolumn = new Lvcolumn {mask = 4};

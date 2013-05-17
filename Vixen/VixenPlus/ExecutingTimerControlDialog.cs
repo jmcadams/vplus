@@ -54,23 +54,24 @@ namespace VixenPlus {
                 executable = null;
             }
             Label_00FC:
-            if (executable != null) {
-                try {
-                    context.ExecutionInterface.SetSynchronousContext(context.ExecutionContextHandle, executable);
-                }
-                catch (Exception exception2) {
-                    exception = exception2;
-                    MessageBox.Show(exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
-                }
-                context.ExecutionChange += _onExecutionChangeHandler;
-                context.ExecutionEnd += _onExecutionEndHandler;
-                listBoxTimers.Items.Add(context);
-                if (listBoxTimers.Items.Count == 1) {
-                    Show();
-                }
-                ExecuteTimer(context);
+            if (executable == null) {
+                return;
             }
+            try {
+                context.ExecutionInterface.SetSynchronousContext(context.ExecutionContextHandle, executable);
+            }
+            catch (Exception exception2) {
+                exception = exception2;
+                MessageBox.Show(exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            context.ExecutionChange += _onExecutionChangeHandler;
+            context.ExecutionEnd += _onExecutionEndHandler;
+            listBoxTimers.Items.Add(context);
+            if (listBoxTimers.Items.Count == 1) {
+                Show();
+            }
+            ExecuteTimer(context);
         }
 
 
@@ -123,7 +124,7 @@ namespace VixenPlus {
         private bool CanExecute(TimerContext context) {
             if (Host.GetDebugValue("TimerTrace") != null) {
                 Host.LogTo(Paths.TimerTraceFilePath, "Can execute?");
-                Host.LogTo(Paths.TimerTraceFilePath, "  Stopping: " + context.Stopping.ToString());
+                Host.LogTo(Paths.TimerTraceFilePath, "  Stopping: " + context.Stopping);
                 Host.LogTo(Paths.TimerTraceFilePath,
                            string.Format("  Timer length / Object length: {0}/{1} ({2})", context.Timer.TimerLength, context.Timer.ObjectLength,
                                          context.Timer.TimerLength >= context.Timer.ObjectLength));
@@ -163,7 +164,7 @@ namespace VixenPlus {
                 BeginInvoke(_onExecutionChangeHandler, new object[] {context});
             }
             else {
-                int index = listBoxTimers.Items.IndexOf(context);
+                var index = listBoxTimers.Items.IndexOf(context);
                 listBoxTimers.BeginUpdate();
                 listBoxTimers.Items.Remove(context);
                 listBoxTimers.Items.Insert(index, context);
@@ -251,7 +252,7 @@ namespace VixenPlus {
             foreach (TimerContext context in listBoxTimers.Items) {
                 list.Add(context);
             }
-            foreach (TimerContext context in list) {
+            foreach (var context in list) {
                 StopExecutingTimer(context);
             }
         }
@@ -259,10 +260,11 @@ namespace VixenPlus {
 
         private void StopExecutingTimer(TimerContext context) {
             context.Stopping = true;
-            if (context.ExecutionInterface.EngineStatus(context.ExecutionContextHandle) != Utils.ExecutionStopped) {
-                context.ExecutionInterface.ExecuteStop(context.ExecutionContextHandle);
-                context.Timer.NotValidUntil = DateTime.Today + context.Timer.EndTime;
+            if (context.ExecutionInterface.EngineStatus(context.ExecutionContextHandle) == Utils.ExecutionStopped) {
+                return;
             }
+            context.ExecutionInterface.ExecuteStop(context.ExecutionContextHandle);
+            context.Timer.NotValidUntil = DateTime.Today + context.Timer.EndTime;
         }
 
 
@@ -276,7 +278,7 @@ namespace VixenPlus {
             foreach (TimerContext context in listBoxTimers.Items) {
                 list.Add(context);
             }
-            foreach (TimerContext context in list) {
+            foreach (var context in list) {
                 if (((Utils.IsNearlyEqual((float) context.Timer.ObjectLength.TotalMilliseconds, 0.0f) && !context.Stopping) &&
                      (context.ExecutionInterface.EngineStatus(context.ExecutionContextHandle) != Utils.ExecutionStopped)) &&
                     (DateTime.Now > context.EndDateTime)) {

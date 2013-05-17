@@ -119,10 +119,11 @@ namespace Launcher {
 
 
         private void textBoxPath_KeyDown(object sender, KeyEventArgs e) {
-            if (e.KeyCode == Keys.Return) {
-                SelectIndex(-1);
-                e.Handled = true;
+            if (e.KeyCode != Keys.Return) {
+                return;
             }
+            SelectIndex(-1);
+            e.Handled = true;
         }
 
 

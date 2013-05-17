@@ -22,13 +22,13 @@ namespace VixenPlus
             TickSource = tickSource ?? this;
             foreach (XmlNode node in PluginData.GetAllPluginData(SetupData.PluginType.Output, true))
             {
-                if (node.Attributes != null)
-                {
-                    var item = new MappedOutputPlugIn((IOutputPlugIn) OutputPlugins.FindPlugin(node.Attributes["name"].Value, true),
-                                                      Convert.ToInt32(node.Attributes["from"].Value),
-                                                      Convert.ToInt32(node.Attributes["to"].Value), true, node);
-                    OutputPluginList.Add(item);
+                if (node.Attributes == null) {
+                    continue;
                 }
+                var item = new MappedOutputPlugIn((IOutputPlugIn) OutputPlugins.FindPlugin(node.Attributes["name"].Value, true),
+                                                  Convert.ToInt32(node.Attributes["from"].Value),
+                                                  Convert.ToInt32(node.Attributes["to"].Value), true, node);
+                OutputPluginList.Add(item);
             }
         }
 
@@ -38,9 +38,9 @@ namespace VixenPlus
             set
             {
                 IsInitialized = value;
-                foreach (MappedOutputPlugIn @in in OutputPluginList)
+                foreach (var outputPlugIn in OutputPluginList)
                 {
-                    @in.ContextInitialized = value;
+                    outputPlugIn.ContextInitialized = value;
                 }
             }
         }

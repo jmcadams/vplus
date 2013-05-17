@@ -26,12 +26,12 @@ namespace VixenPlus
 
         public MusicPlayer()
         {
-            int integer = _preferences.GetInteger("SoundDevice");
+            var integer = _preferences.GetInteger("SoundDevice");
             _fmod = (integer > 0) ? fmod.GetInstance(integer) : fmod.GetInstance(-1);
             _playlist = new List<Audio>();
             _songTimer = new System.Timers.Timer();
             _songTimer.Elapsed += SongTimerElapsed;
-            string path = Path.Combine(Paths.AudioPath, "MusicPlayer.data");
+            var path = Path.Combine(Paths.AudioPath, "MusicPlayer.data");
             if (File.Exists(path))
             {
                 _xmlDocument = new XmlDocument();
@@ -41,7 +41,7 @@ namespace VixenPlus
             {
                 _xmlDocument = Xml.CreateXmlDocument("MusicPlayer");
                 Xml.SetAttribute(Xml.SetValue(_xmlDocument.DocumentElement, "Songs", string.Empty), "shuffle", false.ToString());
-                XmlNode node = Xml.SetValue(_xmlDocument.DocumentElement, "Narrative", string.Empty);
+                var node = Xml.SetValue(_xmlDocument.DocumentElement, "Narrative", string.Empty);
                 Xml.SetAttribute(node, "enabled", false.ToString());
                 Xml.SetAttribute(node, "filename", string.Empty);
                 Xml.SetAttribute(node, "interval", "2");
@@ -75,11 +75,11 @@ namespace VixenPlus
         public void GeneratePlaylist()
         {
             _playlist.Clear();
-            XmlNode songNode = _xmlDocument.SelectSingleNode("//MusicPlayer/Songs");
+            var songNode = _xmlDocument.SelectSingleNode("//MusicPlayer/Songs");
             if (songNode != null && songNode.Attributes != null && bool.Parse(songNode.Attributes["shuffle"].Value))
             {
                 var list = new List<XmlNode>();
-                XmlNodeList allSongsNode = _xmlDocument.SelectNodes("//MusicPlayer/Songs/*");
+                var allSongsNode = _xmlDocument.SelectNodes("//MusicPlayer/Songs/*");
                 if (allSongsNode != null)
                 {
                     foreach (XmlNode node in allSongsNode)
@@ -90,14 +90,14 @@ namespace VixenPlus
                 var random = new Random();
                 while (list.Count > 0)
                 {
-                    int index = random.Next(list.Count);
+                    var index = random.Next(list.Count);
                     _playlist.Add(new Audio(list[index]));
                     list.RemoveAt(index);
                 }
             }
             else
             {
-                XmlNodeList allSongsNode = _xmlDocument.SelectNodes("//MusicPlayer/Songs/*");
+                var allSongsNode = _xmlDocument.SelectNodes("//MusicPlayer/Songs/*");
                 if (allSongsNode != null)
                 {
                     foreach (XmlNode node2 in allSongsNode)
@@ -111,13 +111,13 @@ namespace VixenPlus
         private void LoadAudioData()
         {
             _songs.Clear();
-            XmlNodeList allSongsNode = _xmlDocument.SelectNodes("//MusicPlayer/Songs/*");
-            if (allSongsNode != null)
+            var allSongsNode = _xmlDocument.SelectNodes("//MusicPlayer/Songs/*");
+            if (allSongsNode == null) {
+                return;
+            }
+            foreach (XmlNode node in allSongsNode)
             {
-                foreach (XmlNode node in allSongsNode)
-                {
-                    _songs.Add(new Audio(node));
-                }
+                _songs.Add(new Audio(node));
             }
         }
 
@@ -167,16 +167,16 @@ namespace VixenPlus
 
         public DialogResult ShowDialog()
         {
-            XmlNode songNode = _xmlDocument.SelectSingleNode("//MusicPlayer/Songs");
+            var songNode = _xmlDocument.SelectSingleNode("//MusicPlayer/Songs");
             var dialog = new MusicPlayerDialog(_fmod)
                 {
                     Shuffle = songNode != null && songNode.Attributes != null && bool.Parse(songNode.Attributes["shuffle"].Value),
                     Songs = _songs.ToArray()
                 };
-            XmlNode node = _xmlDocument.SelectSingleNode("//MusicPlayer/Narrative");
+            var node = _xmlDocument.SelectSingleNode("//MusicPlayer/Narrative");
             if (node != null)
             {
-                XmlNode node2 = node.SelectSingleNode("*");
+                var node2 = node.SelectSingleNode("*");
                 if (node2 != null)
                 {
                     dialog.NarrativeSong = new Audio(node2);
@@ -195,19 +195,19 @@ namespace VixenPlus
             {
                 dialog.NarrativeSongInterval = Convert.ToInt32(node.Attributes["interval"].Value);
             }
-            DialogResult result = dialog.ShowDialog();
+            var result = dialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                XmlNode emptyNodeAlways = Xml.GetEmptyNodeAlways(_xmlDocument.DocumentElement, "Songs");
+                var emptyNodeAlways = Xml.GetEmptyNodeAlways(_xmlDocument.DocumentElement, "Songs");
                 Xml.SetAttribute(emptyNodeAlways, "shuffle", dialog.Shuffle.ToString());
-                foreach (Audio audio in dialog.Songs)
+                foreach (var audio in dialog.Songs)
                 {
                     emptyNodeAlways.AppendChild(audio.SaveToXml(_xmlDocument));
                 }
                 node = Xml.GetEmptyNodeAlways(_xmlDocument.DocumentElement, "Narrative");
                 Xml.SetAttribute(node, "enabled", dialog.NarrativeSongEnabled.ToString());
                 Xml.SetAttribute(node, "interval", dialog.NarrativeSongInterval.ToString(CultureInfo.InvariantCulture));
-                Audio narrativeSong = dialog.NarrativeSong;
+                var narrativeSong = dialog.NarrativeSong;
                 if (narrativeSong != null)
                 {
                     node.AppendChild(narrativeSong.SaveToXml(_xmlDocument));
@@ -221,41 +221,41 @@ namespace VixenPlus
 
         public void Start()
         {
-            if (_soundChannel == null)
-            {
-                _songCounter = 0;
-                _narrativeSong = null;
-                XmlNode node = _xmlDocument.SelectSingleNode("//MusicPlayer/Narrative");
-                if (node != null && node.Attributes != null)
-                {
-                    bool result;
-                    bool.TryParse(node.Attributes["enabled"].Value, out result);
-                    if (result)
-                    {
-                        _narrativeInterval = Convert.ToInt32(node.Attributes["interval"].Value);
-                        _narrativeSong = new Audio(node.SelectSingleNode("*"));
-                    }
-                }
-                NextSong();
+            if (_soundChannel != null) {
+                return;
             }
+            _songCounter = 0;
+            _narrativeSong = null;
+            var node = _xmlDocument.SelectSingleNode("//MusicPlayer/Narrative");
+            if (node != null && node.Attributes != null)
+            {
+                bool result;
+                bool.TryParse(node.Attributes["enabled"].Value, out result);
+                if (result)
+                {
+                    _narrativeInterval = Convert.ToInt32(node.Attributes["interval"].Value);
+                    _narrativeSong = new Audio(node.SelectSingleNode("*"));
+                }
+            }
+            NextSong();
         }
 
         public void Stop()
         {
-            if (_soundChannel != null)
-            {
-                if (_preferences.GetBoolean("EnableMusicFade"))
-                {
-                    _fmod.Stop(_soundChannel, _preferences.GetInteger("MusicFadeDuration"));
-                }
-                else
-                {
-                    _fmod.Stop(_soundChannel);
-                }
-                _fmod.ReleaseSound(_soundChannel);
-                _soundChannel = null;
-                _songTimer.Enabled = false;
+            if (_soundChannel == null) {
+                return;
             }
+            if (_preferences.GetBoolean("EnableMusicFade"))
+            {
+                _fmod.Stop(_soundChannel, _preferences.GetInteger("MusicFadeDuration"));
+            }
+            else
+            {
+                _fmod.Stop(_soundChannel);
+            }
+            _fmod.ReleaseSound(_soundChannel);
+            _soundChannel = null;
+            _songTimer.Enabled = false;
         }
     }
 }

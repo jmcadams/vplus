@@ -16,11 +16,11 @@ namespace VixenPlus.Dialogs
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             SetStyle(ControlStyles.UserPaint, true);
             SetStyle(ControlStyles.DoubleBuffer, true);
-            Graphics graphics = CreateGraphics();
+            var graphics = CreateGraphics();
             _helpText = helpText.Split(new[] {'\n'});
             _lineHeight = (int) graphics.MeasureString("Mg", Font).Height;
-            int num = 0;
-            foreach (string str in _helpText)
+            var num = 0;
+            foreach (var str in _helpText)
             {
                 num = Math.Max(num, (int) graphics.MeasureString(str, Font).Width);
             }
@@ -46,7 +46,7 @@ namespace VixenPlus.Dialogs
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            Rectangle clientRectangle = ClientRectangle;
+            var clientRectangle = ClientRectangle;
             clientRectangle.Width--;
             clientRectangle.Height--;
             e.Graphics.DrawRectangle(Pens.Navy, clientRectangle);
@@ -58,11 +58,11 @@ namespace VixenPlus.Dialogs
             e.Graphics.DrawRectangle(Pens.RoyalBlue, clientRectangle);
             e.Graphics.DrawRectangle(Pens.Navy, 50, 25, ClientRectangle.Width - 100, 35);
             e.Graphics.DrawString("Try this", _bigFont, Brushes.DarkBlue, 60f, 30f);
-            int num = 90;
-            for (int i = 0; i < _helpText.Length; i++)
+            var lineHeight = 90;
+            for (var i = 0; i < _helpText.Length; i++)
             {
-                e.Graphics.DrawString(_helpText[i], Font, Brushes.Black, 50f, num);
-                num += _lineHeight;
+                e.Graphics.DrawString(_helpText[i], Font, Brushes.Black, 50f, lineHeight);
+                lineHeight += _lineHeight;
             }
         }
     }

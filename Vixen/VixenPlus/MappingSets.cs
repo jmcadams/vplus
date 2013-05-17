@@ -98,21 +98,21 @@ namespace VixenPlus
 
         public MappingSet GetMappingSet(string mappingSetName, Input input)
         {
-            foreach (MappingSet set in _mappingSets)
+            foreach (var set in _mappingSets)
             {
-                if (string.Equals(set.Name, mappingSetName, StringComparison.OrdinalIgnoreCase))
-                {
-                    set.GetOutputChannelIdList(input);
-                    return set;
+                if (!string.Equals(set.Name, mappingSetName, StringComparison.OrdinalIgnoreCase)) {
+                    continue;
                 }
+                set.GetOutputChannelIdList(input);
+                return set;
             }
             return null;
         }
 
         public int GetMappingSetCountFor(Input input)
         {
-            int num = 0;
-            foreach (MappingSet set in _mappingSets)
+            var num = 0;
+            foreach (var set in _mappingSets)
             {
                 if (set.HasMappingFor(input))
                 {
@@ -134,7 +134,7 @@ namespace VixenPlus
 
         public void MoveMappingTo(int oldIndex, int newIndex)
         {
-            MappingSet item = _mappingSets[oldIndex];
+            var item = _mappingSets[oldIndex];
             _mappingSets.RemoveAt(oldIndex);
             _mappingSets.Insert(newIndex, item);
         }
@@ -142,13 +142,13 @@ namespace VixenPlus
         public void ReadData(XmlNode node)
         {
             _mappingSets.Clear();
-            XmlNodeList mappingSetNode = node.SelectNodes("MappingSet");
-            if (mappingSetNode != null)
+            var mappingSetNode = node.SelectNodes("MappingSet");
+            if (mappingSetNode == null) {
+                return;
+            }
+            foreach (XmlNode node2 in mappingSetNode)
             {
-                foreach (XmlNode node2 in mappingSetNode)
-                {
-                    _mappingSets.Add(new MappingSet(node2));
-                }
+                _mappingSets.Add(new MappingSet(node2));
             }
         }
 
@@ -160,7 +160,7 @@ namespace VixenPlus
 
         public void RenameMapping(ulong id, string name)
         {
-            MappingSet set = FindMappingSet(id);
+            var set = FindMappingSet(id);
             if (set != null)
             {
                 set.Name = name;
@@ -177,9 +177,9 @@ namespace VixenPlus
 
         public void WriteData(XmlNode node)
         {
-            foreach (MappingSet set in _mappingSets)
+            foreach (var set in _mappingSets)
             {
-                XmlNode dataNode = Xml.SetNewValue(node, "MappingSet", "");
+                var dataNode = Xml.SetNewValue(node, "MappingSet", "");
                 set.WriteData(dataNode);
             }
         }

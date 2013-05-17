@@ -91,7 +91,7 @@ namespace VixenPlus {
 
         public static string SequencePath {
             get {
-                string path = Host.Preferences.GetString("DefaultSequenceDirectory");
+                var path = Host.Preferences.GetString("DefaultSequenceDirectory");
                 if ((path.Length > 0) &&
                     Directory.Exists(path)) {
                     return path;

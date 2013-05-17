@@ -15,7 +15,6 @@ namespace VixenPlus
         public const string LightCount = "LightCount";
         public const string Manufacturer = "Manufacturer";
         public const string LibraryFile = "library.xml";
-        private readonly string _localFilePath;
         private Filter[] _colorFilters;
         private Filter[] _controllerFilters;
         private DataTable _dataTable;
@@ -23,7 +22,7 @@ namespace VixenPlus
         private Filter[] _lightCountFilters;
         private Filter[] _manufacturerFilters;
         private bool _modified;
-        private Sort _sort;
+
 
         public CurveLibrary() : this(Path.Combine(Paths.CurveLibraryPath, "library.xml"))
         {
@@ -36,10 +35,10 @@ namespace VixenPlus
             _lightCountFilters = null;
             _colorFilters = null;
             _controllerFilters = null;
-            _sort = null;
+            SortOrder = null;
             _modified = false;
             _delimiter = "\"";
-            _localFilePath = filePath;
+            FilePath = filePath;
         }
 
         public Filter[] ColorFilter
@@ -48,13 +47,13 @@ namespace VixenPlus
             set
             {
                 _colorFilters = value;
-                if (value != null)
+                if (value == null) {
+                    return;
+                }
+                foreach (var filter in value)
                 {
-                    foreach (Filter filter in value)
-                    {
-                        filter.ColumnName = "Color";
-                        filter.ColumnType = typeof (string);
-                    }
+                    filter.ColumnName = "Color";
+                    filter.ColumnType = typeof (string);
                 }
             }
         }
@@ -65,21 +64,18 @@ namespace VixenPlus
             set
             {
                 _controllerFilters = value;
-                if (value != null)
+                if (value == null) {
+                    return;
+                }
+                foreach (var filter in value)
                 {
-                    foreach (Filter filter in value)
-                    {
-                        filter.ColumnName = "Controller";
-                        filter.ColumnType = typeof (string);
-                    }
+                    filter.ColumnName = "Controller";
+                    filter.ColumnType = typeof (string);
                 }
             }
         }
 
-        public string FilePath
-        {
-            get { return _localFilePath; }
-        }
+        public string FilePath { get; private set; }
 
         public bool IsFiltered
         {
@@ -98,13 +94,13 @@ namespace VixenPlus
             set
             {
                 _lightCountFilters = value;
-                if (value != null)
+                if (value == null) {
+                    return;
+                }
+                foreach (var filter in value)
                 {
-                    foreach (Filter filter in value)
-                    {
-                        filter.ColumnName = "LightCount";
-                        filter.ColumnType = typeof (string);
-                    }
+                    filter.ColumnName = "LightCount";
+                    filter.ColumnType = typeof (string);
                 }
             }
         }
@@ -115,29 +111,26 @@ namespace VixenPlus
             set
             {
                 _manufacturerFilters = value;
-                if (value != null)
+                if (value == null) {
+                    return;
+                }
+                foreach (var filter in value)
                 {
-                    foreach (Filter filter in value)
-                    {
-                        filter.ColumnName = "Manufacturer";
-                        filter.ColumnType = typeof (string);
-                    }
+                    filter.ColumnName = "Manufacturer";
+                    filter.ColumnType = typeof (string);
                 }
             }
         }
 
-        public Sort SortOrder
-        {
-            get { return _sort; }
-            set { _sort = value; }
-        }
+        public Sort SortOrder { get; set; }
+
 
         public void Dispose()
         {
         }
 
         private string BuildSortClause() {
-            return _sort == null ? "" : string.Format("{0} {1}", _sort.ColumnName, _sort.SortDirection);
+            return SortOrder == null ? "" : string.Format("{0} {1}", SortOrder.ColumnName, SortOrder.SortDirection);
         }
 
 
@@ -150,12 +143,12 @@ namespace VixenPlus
             builder.Append(BuildWhereFragment(_controllerFilters));
             if (builder.Length > 0)
             {
-                string str = builder.ToString();
-                if (str.StartsWith(" " + Filter.Join.And.ToString()))
+                var str = builder.ToString();
+                if (str.StartsWith(" " + Filter.Join.And))
                 {
                     builder.Remove(0, 4);
                 }
-                else if (str.StartsWith(" " + Filter.Join.Or.ToString()))
+                else if (str.StartsWith(" " + Filter.Join.Or))
                 {
                     builder.Remove(0, 3);
                 }
@@ -185,12 +178,12 @@ namespace VixenPlus
             Load(false);
             if (_dataTable != null)
             {
-                DataRow[] rowArray = _dataTable.Select(GetSelectString(manufacturer, lightCount, color, controller));
+                var rowArray = _dataTable.Select(GetSelectString(manufacturer, lightCount, color, controller));
                 if (rowArray.Length == 0)
                 {
                     return null;
                 }
-                DataRow row = rowArray[0];
+                var row = rowArray[0];
                 return new CurveLibraryRecord(row["Manufacturer"].ToString(), row["LightCount"].ToString(), (int) row["Color"],
                                               row["Controller"].ToString(), row["CurveData"].ToString());
             }
@@ -199,7 +192,7 @@ namespace VixenPlus
 
         private string FormatValue(string value, Type valueType)
         {
-            string name = valueType.Name;
+            var name = valueType.Name;
             if (name == "String" || name != "Int32")
             {
                 return string.Format("{0}{1}{2}", _delimiter, value, _delimiter);
@@ -233,8 +226,8 @@ namespace VixenPlus
             Load(false);
             if (_dataTable != null)
             {
-                DataRow[] rowArray = _dataTable.Select(BuildWhereClause(), BuildSortClause());
-                foreach (DataRow row in rowArray)
+                var rowArray = _dataTable.Select(BuildWhereClause(), BuildSortClause());
+                foreach (var row in rowArray)
                 {
                     list.Add(row[columnName].ToString());
                 }
@@ -252,7 +245,7 @@ namespace VixenPlus
             return -1;
         }
 
-        private string GetSelectString(string manufacturer, string lightCount, int color, string controller)
+        private static string GetSelectString(string manufacturer, string lightCount, int color, string controller)
         {
             return string.Format("{0} = '{1}' and {2} = {3} and {4} = {5} and {6} = '{7}'",
                                  new object[]
@@ -270,30 +263,30 @@ namespace VixenPlus
         public void Import(CurveLibraryRecord clr, bool updateIfPresent)
         {
             Load(false);
-            if (_dataTable != null)
-            {
-                DataRow[] rowArray = _dataTable.Select(GetSelectString(clr.Manufacturer, clr.LightCount, clr.Color, clr.Controller));
-                if ((rowArray.Length == 0) || updateIfPresent)
-                {
-                    var curveDataStrings = new List<string>();
-                    Array.ForEach(clr.CurveData, b => curveDataStrings.Add(b.ToString(CultureInfo.InvariantCulture)));
-                    if (rowArray.Length == 0)
-                    {
-                        DataRow row = _dataTable.NewRow();
-                        row["Manufacturer"] = clr.Manufacturer;
-                        row["LightCount"] = clr.LightCount;
-                        row["Color"] = clr.Color;
-                        row["Controller"] = clr.Controller;
-                        row["CurveData"] = string.Join("|", curveDataStrings.ToArray());
-                        _dataTable.Rows.Add(row);
-                    }
-                    else
-                    {
-                        rowArray[0]["CurveData"] = string.Join("|", curveDataStrings.ToArray());
-                    }
-                    _modified = true;
-                }
+            if (_dataTable == null) {
+                return;
             }
+            var rowArray = _dataTable.Select(GetSelectString(clr.Manufacturer, clr.LightCount, clr.Color, clr.Controller));
+            if ((rowArray.Length != 0) && !updateIfPresent) {
+                return;
+            }
+            var curveDataStrings = new List<string>();
+            Array.ForEach(clr.CurveData, b => curveDataStrings.Add(b.ToString(CultureInfo.InvariantCulture)));
+            if (rowArray.Length == 0)
+            {
+                var row = _dataTable.NewRow();
+                row["Manufacturer"] = clr.Manufacturer;
+                row["LightCount"] = clr.LightCount;
+                row["Color"] = clr.Color;
+                row["Controller"] = clr.Controller;
+                row["CurveData"] = string.Join("|", curveDataStrings.ToArray());
+                _dataTable.Rows.Add(row);
+            }
+            else
+            {
+                rowArray[0]["CurveData"] = string.Join("|", curveDataStrings.ToArray());
+            }
+            _modified = true;
         }
 
         public void Load()
@@ -303,20 +296,20 @@ namespace VixenPlus
 
         public void Load(bool forcedLoad)
         {
-            if (forcedLoad || (_dataTable == null))
-            {
-                if (!File.Exists(_localFilePath))
-                {
-                    Save(true);
-                }
-                if (_dataTable != null)
-                {
-                    _dataTable.Dispose();
-                    _dataTable = null;
-                }
-                _dataTable = new DataTable();
-                _dataTable.ReadXml(_localFilePath);
+            if (!forcedLoad && (_dataTable != null)) {
+                return;
             }
+            if (!File.Exists(FilePath))
+            {
+                Save(true);
+            }
+            if (_dataTable != null)
+            {
+                _dataTable.Dispose();
+                _dataTable = null;
+            }
+            _dataTable = new DataTable();
+            _dataTable.ReadXml(FilePath);
         }
 
         private string OperatorString(Filter.Operator op)
@@ -368,24 +361,24 @@ namespace VixenPlus
 
         public void Save(bool force)
         {
-            if (force || _modified)
-            {
-                if (_dataTable != null)
-                {
-                    _dataTable.WriteXml(_localFilePath, XmlWriteMode.WriteSchema);
-                }
-                else
-                {
-                    _dataTable = new DataTable("CurveLibrary");
-                    _dataTable.Columns.Add("Manufacturer").AllowDBNull = false;
-                    _dataTable.Columns.Add("LightCount").AllowDBNull = false;
-                    _dataTable.Columns.Add("Color").AllowDBNull = false;
-                    _dataTable.Columns.Add("Controller").AllowDBNull = false;
-                    _dataTable.Columns.Add("CurveData").AllowDBNull = false;
-                    _dataTable.WriteXml(_localFilePath, XmlWriteMode.WriteSchema);
-                }
-                _modified = false;
+            if (!force && !_modified) {
+                return;
             }
+            if (_dataTable != null)
+            {
+                _dataTable.WriteXml(FilePath, XmlWriteMode.WriteSchema);
+            }
+            else
+            {
+                _dataTable = new DataTable("CurveLibrary");
+                _dataTable.Columns.Add("Manufacturer").AllowDBNull = false;
+                _dataTable.Columns.Add("LightCount").AllowDBNull = false;
+                _dataTable.Columns.Add("Color").AllowDBNull = false;
+                _dataTable.Columns.Add("Controller").AllowDBNull = false;
+                _dataTable.Columns.Add("CurveData").AllowDBNull = false;
+                _dataTable.WriteXml(FilePath, XmlWriteMode.WriteSchema);
+            }
+            _modified = false;
         }
 
         //public void SynchronizeWith(CurveLibrary library)

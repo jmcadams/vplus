@@ -259,12 +259,32 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error in file at line {0}:
+        ///{1}.
+        /// </summary>
+        internal static string ErrorInCurveFile {
+            get {
+                return ResourceManager.GetString("ErrorInCurveFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error loading audio:
         ///.
         /// </summary>
         internal static string ErrorLoadingAudio {
             get {
                 return ResourceManager.GetString("ErrorLoadingAudio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error occurred while loading the file:
+        ///.
+        /// </summary>
+        internal static string ErrorLoadingCurveFile {
+            get {
+                return ResourceManager.GetString("ErrorLoadingCurveFile", resourceCulture);
             }
         }
         

@@ -494,4 +494,12 @@ Error:
 
 The plugin's setup data may be invalid or inaccurate.</value>
   </data>
+	<data name="ErrorLoadingCurveFile" xml:space="preserve">
+    <value>Error occurred while loading the file:
+</value>
+  </data>
+	<data name="ErrorInCurveFile" xml:space="preserve">
+    <value>Error in file at line {0}:
+{1}</value>
+  </data>
 </root>
