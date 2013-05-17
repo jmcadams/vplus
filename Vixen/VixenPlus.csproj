@@ -271,15 +271,6 @@
     <Compile Include="VixenPlus\EngineContext.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenPlus\EngineDescriptor.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="VixenPlus\EngineErrorHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="VixenPlus\Engines.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="VixenPlus\EngineTimer.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -313,9 +304,6 @@
     <Compile Include="VixenPlus\VixenPlusForm.Designer.cs">
       <DependentUpon>VixenPlusForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="VixenPlus\GeneralConcreteClassProvider.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="VixenPlus\Group.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -331,16 +319,7 @@
     <Compile Include="VixenPlus\Host.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenPlus\IAddIn.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="VixenPlus\IBidirectionalPlugin.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="VixenPlus\IEngine.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="VixenPlus\IEngine2.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="VixenPlus\IEventDrivenOutputPlugIn.cs">
@@ -370,9 +349,6 @@
     <Compile Include="VixenPlus\IMaskable.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenPlus\IMedia.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="VixenPlus\Input.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -389,9 +365,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="VixenPlus\Interfaces.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="VixenPlus\IObjectQuery.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="VixenPlus\IOutputPlugIn.cs">
@@ -413,15 +386,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="VixenPlus\ITickSource.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="VixenPlus\ITrigger.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="VixenPlus\ITriggerImpl.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="VixenPlus\ITriggerPlugin.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="VixenPlus\IUIPlugIn.cs">
@@ -482,9 +446,6 @@
       <DependentUpon>OutputPlugInUIBase.cs</DependentUpon>
     </Compile>
     <Compile Include="VixenPlus\Paths.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="VixenPlus\PlugInMapping.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="VixenPlus\PlugInRouter.cs">
@@ -550,9 +511,6 @@
     <Compile Include="VixenPlus\ShutdownDialog.Designer.cs">
       <DependentUpon>ShutdownDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="VixenPlus\Sockets.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="VixenPlus\SortOrder.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -585,12 +543,6 @@
     </Compile>
     <Compile Include="VixenPlus\Timers.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="VixenPlus\TriggerResponseRegistrationsDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VixenPlus\TriggerResponseRegistrationsDialog.Designer.cs">
-      <DependentUpon>TriggerResponseRegistrationsDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="VixenPlus\UIBase.cs">
       <SubType>Form</SubType>
