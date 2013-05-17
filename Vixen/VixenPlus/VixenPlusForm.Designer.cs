@@ -50,7 +50,6 @@ namespace VixenPlus{
         private ToolStripStatusLabel toolStripStatusLabelMusic;
         private ToolStripMenuItem turnOnQueryServerToolStripMenuItem;
         private ToolStripMenuItem utilityToolStripMenuItem;
-        private ToolStripMenuItem visualChannelLayoutToolStripMenuItem;
         private ToolStripMenuItem windowsToolStripMenuItem;
 
         private void InitializeComponent()
@@ -77,7 +76,6 @@ namespace VixenPlus{
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.setSoundDeviceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.musicPlayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.visualChannelLayoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.diagnosticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.turnOnQueryServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
@@ -230,7 +228,6 @@ namespace VixenPlus{
             this.toolStripMenuItem4,
             this.setSoundDeviceToolStripMenuItem,
             this.musicPlayerToolStripMenuItem,
-            this.visualChannelLayoutToolStripMenuItem,
             this.diagnosticsToolStripMenuItem,
             this.turnOnQueryServerToolStripMenuItem,
             this.toolStripMenuItem1,
@@ -244,7 +241,6 @@ namespace VixenPlus{
             this.copyASequenceToolStripMenuItem.Name = "copyASequenceToolStripMenuItem";
             this.copyASequenceToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
             this.copyASequenceToolStripMenuItem.Text = "Copy sequence event data";
-            this.copyASequenceToolStripMenuItem.Visible = false;
             this.copyASequenceToolStripMenuItem.Click += new System.EventHandler(this.copyASequenceToolStripMenuItem_Click);
             // 
             // copyChannelColorsToolStripMenuItem
@@ -252,7 +248,6 @@ namespace VixenPlus{
             this.copyChannelColorsToolStripMenuItem.Name = "copyChannelColorsToolStripMenuItem";
             this.copyChannelColorsToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
             this.copyChannelColorsToolStripMenuItem.Text = "Copy channel colors";
-            this.copyChannelColorsToolStripMenuItem.Visible = false;
             this.copyChannelColorsToolStripMenuItem.Click += new System.EventHandler(this.copyChannelColorsToolStripMenuItem_Click);
             // 
             // copyPluginaddinDataToolStripMenuItem
@@ -260,7 +255,6 @@ namespace VixenPlus{
             this.copyPluginaddinDataToolStripMenuItem.Name = "copyPluginaddinDataToolStripMenuItem";
             this.copyPluginaddinDataToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
             this.copyPluginaddinDataToolStripMenuItem.Text = "Copy data";
-            this.copyPluginaddinDataToolStripMenuItem.Visible = false;
             this.copyPluginaddinDataToolStripMenuItem.Click += new System.EventHandler(this.copyPluginaddinDataToolStripMenuItem_Click);
             // 
             // toolStripMenuItem4
@@ -283,20 +277,11 @@ namespace VixenPlus{
             this.musicPlayerToolStripMenuItem.Text = "Music player";
             this.musicPlayerToolStripMenuItem.Click += new System.EventHandler(this.musicPlayerToolStripMenuItem_Click);
             // 
-            // visualChannelLayoutToolStripMenuItem
-            // 
-            this.visualChannelLayoutToolStripMenuItem.Name = "visualChannelLayoutToolStripMenuItem";
-            this.visualChannelLayoutToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
-            this.visualChannelLayoutToolStripMenuItem.Text = "Visual channel layout";
-            this.visualChannelLayoutToolStripMenuItem.Visible = false;
-            this.visualChannelLayoutToolStripMenuItem.Click += new System.EventHandler(this.visualChannelLayoutToolStripMenuItem_Click);
-            // 
             // diagnosticsToolStripMenuItem
             // 
             this.diagnosticsToolStripMenuItem.Name = "diagnosticsToolStripMenuItem";
             this.diagnosticsToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
             this.diagnosticsToolStripMenuItem.Text = "Diagnostics";
-            this.diagnosticsToolStripMenuItem.Visible = false;
             this.diagnosticsToolStripMenuItem.Click += new System.EventHandler(this.diagnosticsToolStripMenuItem_Click);
             // 
             // turnOnQueryServerToolStripMenuItem
@@ -304,7 +289,6 @@ namespace VixenPlus{
             this.turnOnQueryServerToolStripMenuItem.Name = "turnOnQueryServerToolStripMenuItem";
             this.turnOnQueryServerToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
             this.turnOnQueryServerToolStripMenuItem.Text = "Query server";
-            this.turnOnQueryServerToolStripMenuItem.Visible = false;
             // 
             // toolStripMenuItem1
             // 

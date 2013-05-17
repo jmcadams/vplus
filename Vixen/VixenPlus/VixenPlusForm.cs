@@ -1092,30 +1092,30 @@ namespace VixenPlus
             }
         }
 
-        private void visualChannelLayoutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            IExecutable executableObject;
-            var mdi = ActiveMdiChild as IVixenMDI;
-            if (/*ActiveMdiChild != null &&*/ mdi != null && mdi.Sequence != null)
-            {
-                executableObject = mdi.Sequence;
-            }
-            else
-            {
-                var str = _preferences.GetString("DefaultProfile");
-                executableObject = (str.Length == 0) ? null : (new Profile(Path.Combine(Paths.ProfilePath, str + "." +  Vendor.ProfilExtension)));
-            }
-            if (executableObject == null)
-            {
-                MessageBox.Show(Resources.VixenPlusForm_NoOpenSequence, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-            }
-            else
-            {
-                var dialog = new ChannelLayoutDialog();
-                dialog.ShowDialog();
-                dialog.Dispose();
-            }
-        }
+        //private void visualChannelLayoutToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    IExecutable executableObject;
+        //    var mdi = ActiveMdiChild as IVixenMDI;
+        //    if (/*ActiveMdiChild != null &&*/ mdi != null && mdi.Sequence != null)
+        //    {
+        //        executableObject = mdi.Sequence;
+        //    }
+        //    else
+        //    {
+        //        var str = _preferences.GetString("DefaultProfile");
+        //        executableObject = (str.Length == 0) ? null : (new Profile(Path.Combine(Paths.ProfilePath, str + "." +  Vendor.ProfilExtension)));
+        //    }
+        //    if (executableObject == null)
+        //    {
+        //        MessageBox.Show(Resources.VixenPlusForm_NoOpenSequence, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+        //    }
+        //    else
+        //    {
+        //        var dialog = new ChannelLayoutDialog();
+        //        dialog.ShowDialog();
+        //        dialog.Dispose();
+        //    }
+        //}
 
         private delegate Form InstantiateFormDelegate(ConstructorInfo constructorInfo, params object[] parameters);
     }
