@@ -115,45 +115,6 @@
     <Compile Include="Global.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CommonControls\Toolbox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CommonControls\ToolboxCategory.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CommonControls\ToolboxCategoryCollection.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CommonControls\ToolboxCategoryTypeConverter.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CommonControls\ToolboxItem.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CommonControls\ToolboxItemCollection.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CommonControls\ToolboxItemTypeConverter.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CommonControls\VectorImage.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CommonControls\VectorImageCollection.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CommonControls\VectorImageElement.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CommonControls\VectorImageStrip.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CommonControls\VectorListItem.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CommonControls\Xml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <EmbeddedResource Include="CommonControls\FadableLabel.resx">
       <DependentUpon>FadableLabel.cs</DependentUpon>
     </EmbeddedResource>

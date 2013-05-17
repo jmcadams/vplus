@@ -401,26 +401,6 @@ namespace VixenPlus
             CheckForUpdates();
         }
 
-        private void copyASequenceToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var dialog = new CopySequenceDialog();
-            dialog.ShowDialog();
-            dialog.Dispose();
-        }
-
-        private void copyChannelColorsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var dialog = new CopyChannelColorsDialog();
-            dialog.ShowDialog();
-            dialog.Dispose();
-        }
-
-        private void copyPluginaddinDataToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var dialog = new CopyDataDialog2();
-            dialog.ShowDialog();
-            dialog.Dispose();
-        }
 
         private void diagnosticsToolStripMenuItem_Click(object sender, EventArgs e)
         {

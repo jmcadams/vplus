@@ -24,20 +24,6 @@ namespace VixenPlus
             KeyInterceptor = null;
         }
 
-        public ExecutionContext(bool useSynchronous, bool useAsynchronous)
-        {
-            OutputPlugInForms = new List<Form>();
-            KeyInterceptor = null;
-            if (useSynchronous)
-            {
-                Engines.GetInstance();
-            }
-            if (useAsynchronous)
-            {
-                new Async();
-            }
-        }
-
         public Engine8 AsynchronousEngineInstance
         {
             get { return _asynchronousEngineInstance; }
