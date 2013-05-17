@@ -203,10 +203,10 @@ namespace VixenPlus.Dialogs
                 var tag = (OutputPort) e.Item.Tag;
                 if (tag.ReferencingPlugins.Count > 1)
                 {
-                    Image image = tag.IsExpanded ? pictureBoxMinus.Image : pictureBoxPlus.Image;
-                    var point = new Point(e.Bounds.Location.X, e.Bounds.Location.Y);
-                    point.Offset(tag.IsExpanded ? _expandedRelativeBounds.Location : _collapsedRelativeBounds.Location);
-                    e.Graphics.DrawImage(image, point);
+                    //Image image = tag.IsExpanded ? pictureBoxMinus.Image : pictureBoxPlus.Image;
+                    //var point = new Point(e.Bounds.Location.X, e.Bounds.Location.Y);
+                    //point.Offset(tag.IsExpanded ? _expandedRelativeBounds.Location : _collapsedRelativeBounds.Location);
+                    //e.Graphics.DrawImage(image, point);
                 }
             }
             else if (e.ColumnIndex != 0)
