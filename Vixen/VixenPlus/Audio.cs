@@ -2,64 +2,46 @@
 using System.Globalization;
 using System.Xml;
 
-namespace VixenPlus
-{
-    public class Audio
-    {
-        private int _duration;
-        private string _filename;
-        private string _name;
+namespace VixenPlus {
+    public class Audio {
+        public Audio() {}
 
-        public Audio()
-        {
-        }
 
-        public Audio(XmlNode node)
-        {
-            if (node.Attributes != null)
-            {
-                _name = node.Attributes["name"].Value;
-                _filename = node.InnerText;
-                _duration = Convert.ToInt32(node.Attributes["duration"].Value);
+        public Audio(XmlNode node) {
+            if (node.Attributes == null) {
+                return;
             }
+
+            Name = node.Attributes["name"].Value;
+            FileName = node.InnerText;
+            Duration = Convert.ToInt32(node.Attributes["duration"].Value);
         }
 
-        public Audio(string name, string filename, int duration)
-        {
-            _name = name;
-            _filename = filename;
-            _duration = duration;
+
+        public Audio(string name, string filename, int duration) {
+            Name = name;
+            FileName = filename;
+            Duration = duration;
         }
 
-        public int Duration
-        {
-            get { return _duration; }
-            set { _duration = value; }
-        }
 
-        public string FileName
-        {
-            get { return _filename; }
-            set { _filename = value; }
-        }
+        public int Duration { get; set; }
 
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
+        public string FileName { get; set; }
 
-        public XmlNode SaveToXml(XmlDocument doc)
-        {
+        public string Name { get; set; }
+
+
+        public XmlNode SaveToXml(XmlDocument doc) {
             XmlNode node = doc.CreateElement("Audio");
-            node.InnerText = _filename;
-            Xml.SetAttribute(node, "name", _name);
-            Xml.SetAttribute(node, "duration", _duration.ToString(CultureInfo.InvariantCulture));
+            node.InnerText = FileName;
+            Xml.SetAttribute(node, "name", Name);
+            Xml.SetAttribute(node, "duration", Duration.ToString(CultureInfo.InvariantCulture));
             return node;
         }
 
-        public override string ToString()
-        {
+
+        public override string ToString() {
             return Name;
         }
     }
