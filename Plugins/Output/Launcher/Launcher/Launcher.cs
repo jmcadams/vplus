@@ -49,7 +49,8 @@ namespace Launcher {
                     continue;
                 }
 
-                programs[num++] = new[] {node.InnerText, node.Attributes["params"].Value, node.Attributes["trigger"].Value};
+                programs[num++] = new[]
+                {node.InnerText, node.Attributes["params"].Value, node.Attributes["trigger"].Value};
             }
             var dialog = new SetupDialog(programs);
             if (dialog.ShowDialog() != DialogResult.OK) {

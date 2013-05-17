@@ -5,7 +5,7 @@ The next generation of Vixen 2 compatible lighting control sequencer
 
     <VPlus (V+) - Vixen 2 Compatible Lighting Control Software>
     Creative Commons Non-Commercial Share Alike (CC BY-NC-SA)
-	Based upon work originally done by: K.C. Oaks and others.
+    Based upon work originally done by: K.C. Oaks and others.
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,8 +21,8 @@ The next generation of Vixen 2 compatible lighting control sequencer
     along with this program. (license.txt)  If not, see 
     <http://www.gnu.org/licenses/>
 
-	Audio engine : FMOD Sound System by Firelight Technologies
-	Licensed under FMOD Non-Commercial License
+    Audio engine : FMOD Sound System by Firelight Technologies
+    Licensed under FMOD Non-Commercial License
     
 NOTES:
 ======

@@ -136,13 +136,6 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Vixen.Base\VixenPlusBase.csproj">
-      <Project>{E3EAE372-FCEB-43A2-988F-3998D6D51536}</Project>
-      <Name>VixenPlusBase</Name>
-      <Private>False</Private>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent />

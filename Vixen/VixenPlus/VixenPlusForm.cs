@@ -56,12 +56,12 @@ namespace VixenPlus
             SetDataPath();
             Ensure(Paths.DataPath);
             Ensure(Paths.SequencePath);
-            Ensure(Paths.ProgramPath);
-            Ensure(Paths.ImportExportPath);
+            //Ensure(Paths.ProgramPath);
+            //Ensure(Paths.ImportExportPath);
             Ensure(Paths.AudioPath);
             Ensure(Paths.ProfilePath);
             Ensure(Paths.RoutinePath);
-            Ensure(Paths.SourceFilePath);
+            //Ensure(Paths.SourceFilePath);
             Ensure(Paths.CurveLibraryPath);
             using (var splash = new Splash()) {
                 _preferences = Preference2.GetInstance();
