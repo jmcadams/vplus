@@ -2,6 +2,8 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
+using Properties;
+
 namespace VixenPlus
 {
     internal partial class CurveLibraryRecordEditDialog : Form
@@ -43,7 +45,7 @@ namespace VixenPlus
             if (((textBoxManufacturer.Text.Trim().Length == 0) || (textBoxLightCount.Text.Trim().Length == 0)) ||
                 (textBoxController.Text.Trim().Length == 0))
             {
-                MessageBox.Show("All fields are required.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                MessageBox.Show(Resources.AllFieldsRequired, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
             }
             else if (_curveLibraryRecord == null)
             {

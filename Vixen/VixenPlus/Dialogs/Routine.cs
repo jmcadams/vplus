@@ -2,87 +2,66 @@
 using System.Drawing;
 using System.IO;
 
-namespace VixenPlus.Dialogs
-{
-    internal class Routine : IDisposable
-    {
-        private readonly string _filePath;
-        private readonly string _name;
-        private readonly Rectangle _previewBounds;
-        private Bitmap _preview;
+namespace VixenPlus.Dialogs {
+    internal class Routine : IDisposable {
+        public Routine(string filePath) {
+            FilePath = filePath;
+            if (!File.Exists(filePath)) {
+                return;
+            }
 
-        public Routine(string filePath)
-        {
-            _filePath = filePath;
-            if (File.Exists(filePath))
-            {
-                string str;
-                _name = Path.GetFileNameWithoutExtension(filePath);
-                var stream = new FileStream(filePath, FileMode.Open);
-                var reader = new StreamReader(stream);
-                int width = reader.ReadLine().Split(new[] {' '}).Length - 1;
-                int height = 0;
-                height++;
-                while (reader.ReadLine() != null)
-                {
+            Name = Path.GetFileNameWithoutExtension(filePath);
+            using (var stream = new FileStream(filePath, FileMode.Open))
+            using (var reader = new StreamReader(stream)) {
+                var line = reader.ReadLine();
+                var width = 0;
+                if (line != null) {
+                    width = line.Split(new[] {' '}).Length - 1;
+                }
+                var height = 1;
+                while (reader.ReadLine() != null) {
                     height++;
                 }
                 stream.Seek(0L, SeekOrigin.Begin);
-                int y = 0;
-                _preview = new Bitmap(width, height);
-                while ((str = reader.ReadLine()) != null)
-                {
-                    int num4 = 0;
-                    foreach (string str2 in str.Split(new[] {' '}))
-                    {
-                        if (str2.Length > 0)
-                        {
-                            _preview.SetPixel(num4++, y, Color.FromArgb(Convert.ToByte(str2), Color.LightBlue));
+                var y = 0;
+                Preview = new Bitmap(width, height);
+                string row;
+                while ((row = reader.ReadLine()) != null) {
+                    var x = 0;
+                    foreach (var pixels in row.Split(new[] {' '})) {
+                        if (pixels.Length > 0) {
+                            //todo add the routine color to preferences.
+                            Preview.SetPixel(x++, y, Color.FromArgb(Convert.ToByte(pixels), Color.LightBlue));
                         }
                     }
                     y++;
                 }
-                reader.Close();
-                reader.Dispose();
-                stream.Dispose();
-                var world = GraphicsUnit.World;
-                RectangleF bounds = _preview.GetBounds(ref world);
-                _previewBounds = new Rectangle((int) bounds.X, (int) bounds.Y, (int) bounds.Width, (int) bounds.Height);
             }
+            var world = GraphicsUnit.World;
+            var bounds = Preview.GetBounds(ref world);
+            PreviewBounds = new Rectangle((int) bounds.X, (int) bounds.Y, (int) bounds.Width, (int) bounds.Height);
         }
 
-        public string FilePath
-        {
-            get { return _filePath; }
-        }
 
-        public string Name
-        {
-            get { return _name; }
-        }
+        public string FilePath { get; private set; }
 
-        public Bitmap Preview
-        {
-            get { return _preview; }
-        }
+        public string Name { get; private set; }
 
-        public Rectangle PreviewBounds
-        {
-            get { return _previewBounds; }
-        }
+        public Bitmap Preview { get; private set; }
 
-        public void Dispose()
-        {
-            if (_preview != null)
-            {
-                _preview.Dispose();
-                _preview = null;
+        public Rectangle PreviewBounds { get; private set; }
+
+
+        public void Dispose() {
+            if (Preview != null) {
+                Preview.Dispose();
+                Preview = null;
             }
             GC.SuppressFinalize(this);
         }
 
-        ~Routine()
-        {
+
+        ~Routine() {
             Dispose();
         }
     }

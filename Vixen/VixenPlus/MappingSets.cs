@@ -44,14 +44,18 @@ namespace VixenPlus
             get { return _mappingSets[index]; }
         }
 
-        public object Clone()
-        {
+
+        public object Clone() {
             var sets = new MappingSets {_currentMappingSetIndex = _currentMappingSetIndex};
             sets._mappingSets.Clear();
             sets._mappingSets.AddRange(_mappingSets);
+            //TODO Is this working as expected?
+            // ReSharper disable RedundantAssignment
             sets._mappingSets.ForEach(delegate(MappingSet m) { m = (MappingSet) m.Clone(); });
+            // ReSharper restore RedundantAssignment
             return sets;
         }
+
 
         public IEnumerator<MappingSet> GetEnumerator()
         {
@@ -78,14 +82,10 @@ namespace VixenPlus
             }
         }
 
-        public MappingSet FindMappingSet(ulong id)
-        {
-            if (id == 0L)
-            {
-                return null;
-            }
-            return _mappingSets.Find(m => m.Id == id);
+        public MappingSet FindMappingSet(ulong id) {
+            return id == 0L ? null : _mappingSets.Find(m => m.Id == id);
         }
+
 
         public int FindMappingSetIndex(MappingSet mappingSet)
         {

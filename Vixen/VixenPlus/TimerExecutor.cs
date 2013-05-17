@@ -17,11 +17,7 @@
         public int GetExecutingTimerExecutionContextHandle(int executingTimerIndex)
         {
             TimerContext contextOf = _controlDialog.GetContextOf(executingTimerIndex);
-            if (contextOf == null)
-            {
-                return 0;
-            }
-            return contextOf.ExecutionContextHandle;
+            return contextOf == null ? 0 : contextOf.ExecutionContextHandle;
         }
 
         public void SpawnExecutorFor(Timer timer)

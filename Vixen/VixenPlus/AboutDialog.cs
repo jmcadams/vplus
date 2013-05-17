@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Forms;
 
+using Properties;
+
 namespace VixenPlus
 {
     internal partial class AboutDialog : Form
@@ -11,13 +13,13 @@ namespace VixenPlus
         {
             InitializeComponent();
 
-            Text = "About " + Vendor.ProductName;
+            Text = Resources.About + Vendor.ProductName;
 
             lblName.Text = Vendor.ProductName;
             lblDescription.Text = Vendor.ProductDescription;
 
             Version version = Assembly.GetExecutingAssembly().GetName().Version;
-            labelVersion.Text = string.Format("Version {0}", version);
+            labelVersion.Text = string.Format(Resources.FormattedVersion, version);
 
             llblURL.Text = Vendor.ProductURL;
         }

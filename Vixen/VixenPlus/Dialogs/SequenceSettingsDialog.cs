@@ -2,14 +2,14 @@ using System;
 using System.Globalization;
 using System.Windows.Forms;
 
-namespace VixenPlus.Dialogs
-{
-    public partial class SequenceSettingsDialog : Form
-    {
+using Properties;
+
+namespace VixenPlus.Dialogs {
+    public partial class SequenceSettingsDialog : Form {
         private readonly EventSequence _eventSequence;
 
-        public SequenceSettingsDialog(EventSequence sequence)
-        {
+
+        public SequenceSettingsDialog(EventSequence sequence) {
             InitializeComponent();
             _eventSequence = sequence;
             numericUpDownMinimum.Value = sequence.MinimumLevel;
@@ -17,22 +17,18 @@ namespace VixenPlus.Dialogs
             textBoxEventPeriodLength.Text = sequence.EventPeriod.ToString(CultureInfo.InvariantCulture);
         }
 
-        private void buttonOK_Click(object sender, EventArgs e)
-        {
-            if (numericUpDownMinimum.Value >= numericUpDownMaximum.Value)
-            {
-                MessageBox.Show("Minimum must be less than the maximum.", Vendor.ProductName, MessageBoxButtons.OK,
-                                MessageBoxIcon.Hand);
+
+        private void buttonOK_Click(object sender, EventArgs e) {
+            if (numericUpDownMinimum.Value >= numericUpDownMaximum.Value) {
+                MessageBox.Show(Resources.MinLessThanMax, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 DialogResult = DialogResult.None;
             }
-            else
-            {
+            else {
                 _eventSequence.MinimumLevel = (byte) numericUpDownMinimum.Value;
                 _eventSequence.MaximumLevel = (byte) numericUpDownMaximum.Value;
                 Cursor = Cursors.WaitCursor;
                 int num;
-                if (int.TryParse(textBoxEventPeriodLength.Text, out num))
-                {
+                if (int.TryParse(textBoxEventPeriodLength.Text, out num)) {
                     _eventSequence.EventPeriod = num;
                 }
                 Cursor = Cursors.Default;

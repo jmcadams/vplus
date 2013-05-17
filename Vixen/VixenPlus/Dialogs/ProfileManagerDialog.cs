@@ -6,7 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
-using CommonUtils;
+using Properties;
 
 namespace VixenPlus.Dialogs {
     public partial class ProfileManagerDialog : Form {
@@ -23,10 +23,10 @@ namespace VixenPlus.Dialogs {
         public ProfileManagerDialog(object objectInContext) {
             InitializeComponent();
             foreach (var str in Directory.GetFiles(Paths.ProfilePath, "*.pro")) {
+                // ReSharper disable EmptyGeneralCatchClause
                 try {
                     listBoxProfiles.Items.Add(new Profile(str));
                 }
-                    // ReSharper disable EmptyGeneralCatchClause
                 catch (Exception) {
                     // Empty catch since we don't want to bomb on attempting to add a profile.
                 }
@@ -59,7 +59,7 @@ namespace VixenPlus.Dialogs {
 
         private void AddProfileChannel() {
             var channelNum = treeViewProfile.Nodes.Count + 1;
-            var channelObject = new Channel("Channel " + channelNum.ToString(CultureInfo.InvariantCulture), 0);
+            var channelObject = new Channel(Resources.ChannelSpace + channelNum.ToString(CultureInfo.InvariantCulture), 0);
             _contextProfile.AddChannelObject(channelObject);
             treeViewProfile.Nodes.Add(channelObject.Name).Tag = channelObject;
             _channelOrderMapping.Add(_channelOrderMapping.Count);
@@ -70,7 +70,7 @@ namespace VixenPlus.Dialogs {
             int channelsToAdd;
             if (!Int32.TryParse(textBoxProfileChannelCount.Text, out channelsToAdd)) {
                 MessageBox.Show(
-                    String.Format("{0} is not a valid numeric value for the number of channels to add.", textBoxProfileChannelCount.Text),
+                    String.Format(Resources.InvalidChannelsToAdd, textBoxProfileChannelCount.Text),
                     Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 return;
             }
@@ -119,7 +119,7 @@ namespace VixenPlus.Dialogs {
 
 
         private bool ChangeProfileName() {
-            using (var dialog = new TextQueryDialog("Profile Name", "What do you want to name this profile?", _contextProfile.Name)) {
+            using (var dialog = new TextQueryDialog(Resources.ProfileNamePrompt, Resources.NameThisProfile, _contextProfile.Name)) {
                 if (dialog.ShowDialog() == DialogResult.OK) {
                     _contextProfile.Name = dialog.Response;
                     return true;
@@ -138,7 +138,7 @@ namespace VixenPlus.Dialogs {
             //todo can the enable/selected index false/-1 go here?
             if (comboBoxChannelOrder.SelectedIndex == 0) {
                 if (channels.Count == 0) {
-                    MessageBox.Show("There are no channels to reorder.", Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                    MessageBox.Show(Resources.NoChannelsToReorder, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
                     return;
                 }
                 pictureBoxProfileDeleteChannelOrder.Enabled = false;
@@ -214,7 +214,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void pictureBoxAddProfile_Click(object sender, EventArgs e) {
-            using (var dialog = new TextQueryDialog("New Profile", "Name for the new profile", string.Empty)) {
+            using (var dialog = new TextQueryDialog(Resources.NewProfilePrompt, Resources.NameNewProfile, string.Empty)) {
                 if (dialog.ShowDialog() != DialogResult.OK) {
                     return;
                 }
@@ -288,7 +288,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void pictureBoxProfileChannelOutputs_Click(object sender, EventArgs e) {
-            using (var dialog = new ChannelOrderDialog(_contextProfile.OutputChannels, null, "Channel output mapping")) {
+            using (var dialog = new ChannelOrderDialog(_contextProfile.OutputChannels, null, Resources.ChannelCaption)) {
                 if (dialog.ShowDialog() == DialogResult.OK) {
                     _contextProfile.OutputChannels = dialog.ChannelMapping;
                 }
@@ -298,7 +298,7 @@ namespace VixenPlus.Dialogs {
 
         private void pictureBoxProfileDeleteChannelOrder_Click(object sender, EventArgs e) {
             if (
-                MessageBox.Show(string.Format("Delete channel order '{0}'?", comboBoxChannelOrder.Text), Vendor.ProductName, MessageBoxButtons.YesNo,
+                MessageBox.Show(string.Format(Resources.DeleteChannelOrder, comboBoxChannelOrder.Text), Vendor.ProductName, MessageBoxButtons.YesNo,
                                 MessageBoxIcon.Question) != DialogResult.Yes) {
                 return;
             }
@@ -310,7 +310,7 @@ namespace VixenPlus.Dialogs {
 
         private void pictureBoxProfileSaveChannelOrder_Click(object sender, EventArgs e) {
             SortOrder sortOrder = null;
-            using (var dialog = new TextQueryDialog("New order", "What name would you like to give to this ordering of the channels?", string.Empty)) {
+            using (var dialog = new TextQueryDialog(Resources.NewOrderPrompt, Resources.ChannelOrderingName, string.Empty)) {
                 var dialogResult = DialogResult.No;
                 while (dialogResult == DialogResult.No) {
                     if (dialog.ShowDialog() == DialogResult.Cancel) {
@@ -323,7 +323,7 @@ namespace VixenPlus.Dialogs {
                         }
                         if (
                             (dialogResult =
-                             MessageBox.Show("This name is already in use.\nDo you want to overwrite it?", Vendor.ProductName,
+                             MessageBox.Show(Resources.OrderNameOverwrite, Vendor.ProductName,
                                              MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)) == DialogResult.Cancel) {
                             return;
                         }
@@ -398,7 +398,7 @@ namespace VixenPlus.Dialogs {
 
         private void RemoveProfile(IExecutable profile) {
             if (
-                MessageBox.Show(string.Format("Remove profile {0}?\n\nThis will affect any sequences that use this profile.", profile.Name),
+                MessageBox.Show(string.Format(Resources.RemoveProfile, profile.Name),
                                 Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
                 return;
             }
@@ -412,7 +412,7 @@ namespace VixenPlus.Dialogs {
                 buttonRemoveProfileChannels.Enabled = false;
             }
             else if (
-                MessageBox.Show("Remove the selected item from this profile?", Vendor.ProductName, MessageBoxButtons.YesNo,
+                MessageBox.Show(Resources.RemoveProfileItem, Vendor.ProductName, MessageBoxButtons.YesNo,
                                 MessageBoxIcon.Question) == DialogResult.Yes) {
                 _channelOrderMapping.RemoveAt(_contextProfile.Channels.IndexOf((Channel) treeViewProfile.SelectedNode.Tag));
                 _contextProfile.RemoveChannel((Channel) treeViewProfile.SelectedNode.Tag);

@@ -5,6 +5,8 @@ using System.Globalization;
 using System.Windows.Forms;
 using System.Xml;
 
+using Properties;
+
 namespace VixenPlus.Dialogs
 {
     public sealed partial class PluginListDialog : Form
@@ -76,13 +78,15 @@ namespace VixenPlus.Dialogs
                 var list = new List<object[]>();
                 foreach (XmlNode node in _setupData.GetAllPluginData())
                 {
-                    list.Add(new object[]
+                    if (node.Attributes != null) {
+                        list.Add(new object[]
                         {
                             string.Format("{0} ({1}-{2})", node.Attributes["name"].Value, node.Attributes["from"].Value,
                                           node.Attributes["to"].Value),
                             bool.Parse(node.Attributes["enabled"].Value),
                             Convert.ToInt32(node.Attributes["id"].Value)
                         });
+                    }
                 }
                 return new object[] {list.ToArray()};
             }
@@ -124,12 +128,15 @@ namespace VixenPlus.Dialogs
 
         private void checkedListBoxSequencePlugins_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (e.Index != -1)
-            {
-                _setupData.GetPlugInData(e.Index.ToString(CultureInfo.InvariantCulture)).Attributes["enabled"].Value =
-                    (e.NewValue == CheckState.Checked).ToString();
-                UpdateDictionary();
+            if (e.Index == -1) {
+                return;
             }
+
+            var pluginData = _setupData.GetPlugInData(e.Index.ToString(CultureInfo.InvariantCulture)).Attributes;
+            if (pluginData != null) {
+                pluginData["enabled"].Value = (e.NewValue == CheckState.Checked).ToString();
+            }
+            UpdateDictionary();
         }
 
 
@@ -177,14 +184,16 @@ namespace VixenPlus.Dialogs
             {
                 UpdatePlugInNodeChannelRanges(_lastIndex.ToString(CultureInfo.InvariantCulture));
             }
-            int selectedIndex = checkedListBoxSequencePlugins.SelectedIndex;
+            var selectedIndex = checkedListBoxSequencePlugins.SelectedIndex;
             buttonPluginSetup.Enabled = selectedIndex != -1;
             buttonRemove.Enabled = selectedIndex != -1;
             if (selectedIndex != -1)
             {
-                XmlNode plugInData = _setupData.GetPlugInData(selectedIndex.ToString(CultureInfo.InvariantCulture));
-                textBoxChannelFrom.Text = plugInData.Attributes["from"].Value;
-                textBoxChannelTo.Text = plugInData.Attributes["to"].Value;
+                var plugInData = _setupData.GetPlugInData(selectedIndex.ToString(CultureInfo.InvariantCulture));
+                if (plugInData.Attributes != null) {
+                    textBoxChannelFrom.Text = plugInData.Attributes["from"].Value;
+                    textBoxChannelTo.Text = plugInData.Attributes["to"].Value;
+                }
             }
             buttonInput.Enabled = ((checkedListBoxSequencePlugins.SelectedIndex != -1) && (_executableObject is EventSequence)) &&
                                   (_sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex] is IInputPlugin);
@@ -267,26 +276,21 @@ namespace VixenPlus.Dialogs
             try
             {
                 _internalUpdate = true;
-                foreach (XmlNode node in _setupData.GetAllPluginData())
-                {
-                    IHardwarePlugin plugin;
-                    if ((node.Attributes["type"] != null) && (node.Attributes["type"].Value == SetupData.PluginType.Input.ToString()))
-                    {
-                        plugin = InputPlugins.FindPlugin(node.Attributes["name"].Value, true);
+                foreach (XmlNode node in _setupData.GetAllPluginData()) {
+                    if (node.Attributes != null && node.Attributes["type"] != null) {
+                        var plugin = (node.Attributes["type"].Value == SetupData.PluginType.Input.ToString())
+                                                     ? InputPlugins.FindPlugin(node.Attributes["name"].Value, true)
+                                                     : OutputPlugins.FindPlugin(node.Attributes["name"].Value, true);
+
+                        if (plugin != null) {
+                            InitializePlugin(plugin, node);
+                            checkedListBoxSequencePlugins.Items.Add(plugin.Name, bool.Parse(node.Attributes["enabled"].Value));
+                            _sequencePlugins.Add(plugin);
+                        }
                     }
-                    else
-                    {
-                        plugin = OutputPlugins.FindPlugin(node.Attributes["name"].Value, true);
-                    }
-                    if (plugin != null)
-                    {
-                        InitializePlugin(plugin, node);
-                        checkedListBoxSequencePlugins.Items.Add(plugin.Name, bool.Parse(node.Attributes["enabled"].Value));
-                        _sequencePlugins.Add(plugin);
-                    }
+                    _internalUpdate = false;
+                    UpdateDictionary();
                 }
-                _internalUpdate = false;
-                UpdateDictionary();
             }
             finally
             {
@@ -307,7 +311,7 @@ namespace VixenPlus.Dialogs
                 catch (Exception exception)
                 {
                     MessageBox.Show(
-                        "An exception occurred when trying to initialize the plugin for setup.\n\nError:\n" + exception.Message,
+                        Resources.PluginInitError + exception.Message,
                         Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
@@ -351,13 +355,13 @@ namespace VixenPlus.Dialogs
                     }
                     else if (port.IsExpanded)
                     {
-                        item = new ListViewItem(new[] {string.Empty, port.Index.ToString(port.StringFormat), string.Empty, "Multiple"},
+                        item = new ListViewItem(new[] {string.Empty, port.Index.ToString(port.StringFormat), string.Empty, Resources.Multiple},
                                                 group);
                         item.SubItems[3].ForeColor = port.Shared ? Color.LightSteelBlue : Color.Pink;
                     }
                     else
                     {
-                        item = new ListViewItem(new[] {string.Empty, port.Index.ToString(port.StringFormat), string.Empty, "Multiple"},
+                        item = new ListViewItem(new[] {string.Empty, port.Index.ToString(port.StringFormat), string.Empty, Resources.Multiple},
                                                 group);
                         item.SubItems[3].ForeColor = port.Shared ? Color.SteelBlue : Color.Red;
                     }
@@ -388,7 +392,8 @@ namespace VixenPlus.Dialogs
                 int num = 0;
                 foreach (IHardwarePlugin plugin in _sequencePlugins)
                 {
-                    if (bool.Parse(_setupData.GetPlugInData(num.ToString(CultureInfo.InvariantCulture)).Attributes["enabled"].Value))
+                    var pluginData = _setupData.GetPlugInData(num.ToString(CultureInfo.InvariantCulture)).Attributes;
+                    if (pluginData != null && bool.Parse(pluginData["enabled"].Value))
                     {
                         foreach (HardwareMap map in plugin.HardwareMap)
                         {
@@ -430,7 +435,9 @@ namespace VixenPlus.Dialogs
             {
                 count = 1;
             }
-            plugInData.Attributes["from"].Value = count.ToString(CultureInfo.InvariantCulture);
+            if (plugInData.Attributes != null) {
+                plugInData.Attributes["from"].Value = count.ToString(CultureInfo.InvariantCulture);
+            }
             try
             {
                 count = Convert.ToInt32(textBoxChannelTo.Text);
@@ -439,7 +446,9 @@ namespace VixenPlus.Dialogs
             {
                 count = _channels.Count;
             }
-            plugInData.Attributes["to"].Value = count.ToString(CultureInfo.InvariantCulture);
+            if (plugInData.Attributes != null) {
+                plugInData.Attributes["to"].Value = count.ToString(CultureInfo.InvariantCulture);
+            }
         }
 
         private void UsePlugin()
@@ -460,7 +469,7 @@ namespace VixenPlus.Dialogs
                 {
                     MessageBox.Show(
                         string.Format(
-                            "Error during plugin initialization:\n\n{0}\n\nThe plugin's setup data may be invalid or inaccurate.",
+                            Resources.PluginSetupErrorInvalidStatePossible,
                             exception.Message), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
                 finally

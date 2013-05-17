@@ -117,10 +117,7 @@ namespace VixenPlus {
 
         public bool GetBoolean(string name) {
             string str = GetString(name);
-            if (str == string.Empty) {
-                return false;
-            }
-            return Convert.ToBoolean(str);
+            return str != string.Empty && Convert.ToBoolean(str);
         }
 
 

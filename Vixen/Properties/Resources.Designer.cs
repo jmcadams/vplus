@@ -61,11 +61,148 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About .
+        /// </summary>
+        internal static string About {
+            get {
+                return ResourceManager.GetString("About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All fields are required..
+        /// </summary>
+        internal static string AllFieldsRequired {
+            get {
+                return ResourceManager.GetString("AllFieldsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All supported formats.
+        /// </summary>
+        internal static string AllSupportedFormats {
+            get {
+                return ResourceManager.GetString("AllSupportedFormats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This will cause all executing timers to stop.
+        ///
+        ///Do you wish to do this?.
+        /// </summary>
+        internal static string AllTimersWillStop {
+            get {
+                return ResourceManager.GetString("AllTimersWillStop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channel output mapping.
+        /// </summary>
+        internal static string ChannelCaption {
+            get {
+                return ResourceManager.GetString("ChannelCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There must be an equal number of channel names as there are channels.
+        /// </summary>
+        internal static string ChannelCountAndNameInequal {
+            get {
+                return ResourceManager.GetString("ChannelCountAndNameInequal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The channel count must be 1 or greater.
+        /// </summary>
+        internal static string ChannelCountMinimums {
+            get {
+                return ResourceManager.GetString("ChannelCountMinimums", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channel &quot;{0}&quot; cleared of new events..
+        /// </summary>
+        internal static string ChannelEventsClerared {
+            get {
+                return ResourceManager.GetString("ChannelEventsClerared", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channel names cannot be blank.
+        /// </summary>
+        internal static string ChannelNameCantBeBlank {
+            get {
+                return ResourceManager.GetString("ChannelNameCantBeBlank", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What would you like to name this channel ordering?.
+        /// </summary>
+        internal static string ChannelOrderingName {
+            get {
+                return ResourceManager.GetString("ChannelOrderingName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channel .
+        /// </summary>
+        internal static string ChannelSpace {
+            get {
+                return ResourceManager.GetString("ChannelSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Color already exists in the list..
         /// </summary>
         internal static string ColorAlreadyExists {
             get {
                 return ResourceManager.GetString("ColorAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you really want {0} channels?.
+        /// </summary>
+        internal static string ConfirmChannelCount {
+            get {
+                return ResourceManager.GetString("ConfirmChannelCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Countdown....
+        /// </summary>
+        internal static string Countdown {
+            get {
+                return ResourceManager.GetString("Countdown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete channel order &apos;{0}&apos;?.
+        /// </summary>
+        internal static string DeleteChannelOrder {
+            get {
+                return ResourceManager.GetString("DeleteChannelOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dump file written to .
+        /// </summary>
+        internal static string DumpFileWritten {
+            get {
+                return ResourceManager.GetString("DumpFileWritten", resourceCulture);
             }
         }
         
@@ -109,6 +246,86 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error trying to load a scheduled item:
+        ///{0}
+        ///
+        ///The error was:
+        ///{1}.
+        /// </summary>
+        internal static string ErrorExecutingTimer {
+            get {
+                return ResourceManager.GetString("ErrorExecutingTimer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error loading audio:
+        ///.
+        /// </summary>
+        internal static string ErrorLoadingAudio {
+            get {
+                return ResourceManager.GetString("ErrorLoadingAudio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There were errors when trying to add the following songs:
+        ///
+        ///.
+        /// </summary>
+        internal static string ErrorsLoadingSongs {
+            get {
+                return ResourceManager.GetString("ErrorsLoadingSongs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  is not a valid number for the event period length.
+        /// </summary>
+        internal static string EventPeriodInvalid {
+            get {
+                return ResourceManager.GetString("EventPeriodInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to While possible, event periods less than 25 ms are not supported..
+        /// </summary>
+        internal static string EventPeriodTooShort {
+            get {
+                return ResourceManager.GetString("EventPeriodTooShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error while exporting:
+        ///.
+        /// </summary>
+        internal static string ExportError {
+            get {
+                return ResourceManager.GetString("ExportError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify a file to export to.
+        /// </summary>
+        internal static string ExportFile {
+            get {
+                return ResourceManager.GetString("ExportFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export successful..
+        /// </summary>
+        internal static string ExportSuccess {
+            get {
+                return ResourceManager.GetString("ExportSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Engine assembly.
         /// </summary>
         internal static string Filter_EngineAssembly {
@@ -118,11 +335,569 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Version {0}.
+        /// </summary>
+        internal static string FormattedVersion {
+            get {
+                return ResourceManager.GetString("FormattedVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A background sequence has been specified, but it does not exist.
+        ///This message will show each time you start the application and this situation exists..
+        /// </summary>
+        internal static string Host_BackgroundSequenceName {
+            get {
+                return ResourceManager.GetString("Host_BackgroundSequenceName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  is running.
+        /// </summary>
+        internal static string Host_isRunning {
+            get {
+                return ResourceManager.GetString("Host_isRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Audio logging is enabled but no log file is specified.
+        ///
+        ///Audio logging has been turned off..
+        /// </summary>
+        internal static string Host_LogAudioFailed {
+            get {
+                return ResourceManager.GetString("Host_LogAudioFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was a problem starting the background sequence..
+        /// </summary>
+        internal static string Host_StartingBackgroundSequenceFailed {
+            get {
+                return ResourceManager.GetString("Host_StartingBackgroundSequenceFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a file to import from.
+        /// </summary>
+        internal static string ImportFile {
+            get {
+                return ResourceManager.GetString("ImportFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The sequence does not contain as many channels as the profile you are detaching from.
+        ///Do you want to increase the channel count to prevent any possible data loss?.
+        /// </summary>
+        internal static string IncreaseChannelCount {
+            get {
+                return ResourceManager.GetString("IncreaseChannelCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input is disabled.
+        /// </summary>
+        internal static string InputDisabled {
+            get {
+                return ResourceManager.GetString("InputDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input is enabled and is mapped to:.
+        /// </summary>
+        internal static string InputEnabled {
+            get {
+                return ResourceManager.GetString("InputEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The interval count is not a valid number.  Do you want to continue?
+        ///
+        ///If you choose Yes, the narrative will be disabled..
+        /// </summary>
+        internal static string IntervalInvalid {
+            get {
+                return ResourceManager.GetString("IntervalInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An interval count less than 2 is not usable.  Do you want to continue?
+        ///
+        ///If you choose Yes, the narrative will be disabled..
+        /// </summary>
+        internal static string IntervalTooSmall {
+            get {
+                return ResourceManager.GetString("IntervalTooSmall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  is not a valid number for the channel count.
+        /// </summary>
+        internal static string InvalidChannelCount {
+            get {
+                return ResourceManager.GetString("InvalidChannelCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is not a valid numeric value for the number of channels to add..
+        /// </summary>
+        internal static string InvalidChannelsToAdd {
+            get {
+                return ResourceManager.GetString("InvalidChannelsToAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attemped to save to non-existent file path:
+        ///.
+        /// </summary>
+        internal static string InvalidPath {
+            get {
+                return ResourceManager.GetString("InvalidPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot set the sequence length.
+        ///There is audio associated which would exceed that length..
+        /// </summary>
+        internal static string InvalidSequenceLength {
+            get {
+                return ResourceManager.GetString("InvalidSequenceLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not a valid time format.
+        ///Please use one of the following:
+        ///
+        ///Seconds
+        ///Minutes:Seconds
+        ///Seconds.Milliseconds
+        ///Minutes:Seconds.Milliseconds.
+        /// </summary>
+        internal static string InvalidTimeFormat {
+            get {
+                return ResourceManager.GetString("InvalidTimeFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Executing timer for {0} at {1}.
+        /// </summary>
+        internal static string LogExecutingTimer {
+            get {
+                return ResourceManager.GetString("LogExecutingTimer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum must be less than the maximum..
+        /// </summary>
+        internal static string MinLessThanMax {
+            get {
+                return ResourceManager.GetString("MinLessThanMax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Multiple.
+        /// </summary>
+        internal static string Multiple {
+            get {
+                return ResourceManager.GetString("Multiple", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name for the new profile.
+        /// </summary>
+        internal static string NameNewProfile {
+            get {
+                return ResourceManager.GetString("NameNewProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What do you want to name this profile?.
+        /// </summary>
+        internal static string NameThisProfile {
+            get {
+                return ResourceManager.GetString("NameThisProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New order.
+        /// </summary>
+        internal static string NewOrderPrompt {
+            get {
+                return ResourceManager.GetString("NewOrderPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Profile.
+        /// </summary>
+        internal static string NewProfilePrompt {
+            get {
+                return ResourceManager.GetString("NewProfilePrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This event sequence does not have audio assigned.
+        /// </summary>
+        internal static string NoAudioAssigned {
+            get {
+                return ResourceManager.GetString("NoAudioAssigned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are no channels to reorder..
+        /// </summary>
+        internal static string NoChannelsToReorder {
+            get {
+                return ResourceManager.GetString("NoChannelsToReorder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have selected to use a single input to iterate the mapping sets, but have not chosen an input..
+        /// </summary>
+        internal static string NoInputChosen {
+            get {
+                return ResourceManager.GetString("NoInputChosen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have selected to use a single input to iterate the mapping sets, but do not have any inputs sets to be iterators and therefore have not chosen an input to iterate with..
+        /// </summary>
+        internal static string NoInputSet {
+            get {
+                return ResourceManager.GetString("NoInputSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You enabled the narrative but didn&apos;t specify a narrative file.  Do you want to continue?
+        ///
+        ///If you choose Yes, the narrative will be disabled..
+        /// </summary>
+        internal static string NoNarrativeFile {
+            get {
+                return ResourceManager.GetString("NoNarrativeFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        internal static string None {
+            get {
+                return ResourceManager.GetString("None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This does not appear to be a valid sequence file..
+        /// </summary>
+        internal static string NotAValidSequence {
+            get {
+                return ResourceManager.GetString("NotAValidSequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The program has at least one sequence that has not been saved..
+        /// </summary>
+        internal static string OneOrMoreSequencesNotSaved {
+            get {
+                return ResourceManager.GetString("OneOrMoreSequencesNotSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This name is already in use.
+        ///Do you want to overwrite it?.
+        /// </summary>
+        internal static string OrderNameOverwrite {
+            get {
+                return ResourceManager.GetString("OrderNameOverwrite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugin error.
+        /// </summary>
+        internal static string PluginError {
+            get {
+                return ResourceManager.GetString("PluginError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An exception occurred when trying to initialize the plugin for setup.
+        ///
+        ///Error:
+        ///.
+        /// </summary>
+        internal static string PluginInitError {
+            get {
+                return ResourceManager.GetString("PluginInitError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error during plugin initialization:
+        ///
+        ///{0}
+        ///
+        ///The plugin&apos;s setup data may be invalid or inaccurate..
+        /// </summary>
+        internal static string PluginSetupErrorInvalidStatePossible {
+            get {
+                return ResourceManager.GetString("PluginSetupErrorInvalidStatePossible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile Name.
+        /// </summary>
+        internal static string ProfileNamePrompt {
+            get {
+                return ResourceManager.GetString("ProfileNamePrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///
+        ///Profile not found.
+        ///Will use sequence data instead..
+        /// </summary>
+        internal static string ProfileNotFound {
+            get {
+                return ResourceManager.GetString("ProfileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove profile {0}?
+        ///
+        ///This will affect any sequences that use this profile..
+        /// </summary>
+        internal static string RemoveProfile {
+            get {
+                return ResourceManager.GetString("RemoveProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove the selected item from this profile?.
+        /// </summary>
+        internal static string RemoveProfileItem {
+            get {
+                return ResourceManager.GetString("RemoveProfileItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Application must be restarted for this change to be effective..
+        /// </summary>
+        internal static string RestartForChange {
+            get {
+                return ResourceManager.GetString("RestartForChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (Router)
+        ///An output plugin caused the following exception: 
+        ///{0}
+        ///
+        ///Execution has been stopped.
+        ///
+        ///{1}.
+        /// </summary>
+        internal static string RouterError {
+            get {
+                return ResourceManager.GetString("RouterError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (Router - plugins)
+        ///An output plugin caused the following exception: 
+        ///{0}.
+        /// </summary>
+        internal static string RouterOutputError {
+            get {
+                return ResourceManager.GetString("RouterOutputError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (Router - Startup)
+        ///{0}.
+        /// </summary>
+        internal static string RouterStartupError {
+            get {
+                return ResourceManager.GetString("RouterStartupError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This sequence is not a scripted sequence.
+        ///Only a scripted sequence can be selected for background execution..
+        /// </summary>
+        internal static string ScripedSequenceOnly {
+            get {
+                return ResourceManager.GetString("ScripedSequenceOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Before a program can be saved, the contained sequences need to be saved..
+        /// </summary>
+        internal static string SequencesMustBeSavedBeforeSavingProgram {
+            get {
+                return ResourceManager.GetString("SequencesMustBeSavedBeforeSavingProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to * Baud rate has not been selected..
+        /// </summary>
+        internal static string Serial_BaudError {
+            get {
+                return ResourceManager.GetString("Serial_BaudError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to * Invalid numeric value for data bits..
+        /// </summary>
+        internal static string Serial_DataBitsError {
+            get {
+                return ResourceManager.GetString("Serial_DataBitsError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to * Parity has not been selected..
+        /// </summary>
+        internal static string Serial_ParityError {
+            get {
+                return ResourceManager.GetString("Serial_ParityError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to * Port name has not been selected..
+        /// </summary>
+        internal static string Serial_PortError {
+            get {
+                return ResourceManager.GetString("Serial_PortError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The following items need to be resolved:
+        ///
+        ///.
+        /// </summary>
+        internal static string Serial_Resolve {
+            get {
+                return ResourceManager.GetString("Serial_Resolve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to * Stop bits have not been selected..
+        /// </summary>
+        internal static string Serial_StopBitsError {
+            get {
+                return ResourceManager.GetString("Serial_StopBitsError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show actual levels.
+        /// </summary>
+        internal static string ShowActual {
+            get {
+                return ResourceManager.GetString("ShowActual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show % levels.
+        /// </summary>
+        internal static string ShowPercentage {
+            get {
+                return ResourceManager.GetString("ShowPercentage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A timer with an unknown object tried to execute..
+        /// </summary>
+        internal static string TimerUnknownError {
+            get {
+                return ResourceManager.GetString("TimerUnknownError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select an engine assembly.
         /// </summary>
         internal static string Title_SelectEngine {
             get {
                 return ResourceManager.GetString("Title_SelectEngine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to load the song..
+        /// </summary>
+        internal static string UnableToLoadSong {
+            get {
+                return ResourceManager.GetString("UnableToLoadSong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use application&apos;s default device.
+        /// </summary>
+        internal static string UseApplicationDefaultAudio {
+            get {
+                return ResourceManager.GetString("UseApplicationDefaultAudio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This will reset all values of the selected channel.
+        ///
+        ///Continue?.
+        /// </summary>
+        internal static string VerifyChannelValueReset {
+            get {
+                return ResourceManager.GetString("VerifyChannelValueReset", resourceCulture);
             }
         }
         

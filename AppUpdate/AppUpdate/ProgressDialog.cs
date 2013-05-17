@@ -4,13 +4,14 @@
     internal partial class ProgressDialog : Form {
 
         public ProgressDialog() {
-            this.InitializeComponent();
+            InitializeComponent();
         }
+
 
         public string Message {
             set {
-                this.lblMessage.Text = value;
-                this.lblMessage.Refresh();
+                lblMessage.Text = value;
+                lblMessage.Refresh();
             }
         }
     }

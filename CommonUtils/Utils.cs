@@ -64,5 +64,29 @@ namespace CommonUtils {
 
             return result;
         }
+
+
+        public static bool IsNearlyEqual(float a, float b) {
+            const float epsilon = 0.00001f;
+            var absA = Math.Abs(a);
+            var absB = Math.Abs(b);
+            var diff = Math.Abs(a - b);
+
+            // ReSharper disable CompareOfFloatsByEqualityOperator
+            
+            if (a == b) { // shortcut, handles infinities
+                return true;
+            }
+            
+            if (a == 0 || b == 0 || diff < float.MinValue) {
+                // a or b is zero or both are extremely close to it relative error is less meaningful here
+                return diff < (epsilon * float.MinValue);
+            } 
+            
+            // use relative error
+            return diff / (absA + absB) < epsilon;
+            
+            // ReSharper restore CompareOfFloatsByEqualityOperator
+        }
     }
 }

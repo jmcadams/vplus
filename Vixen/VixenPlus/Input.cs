@@ -78,14 +78,10 @@ namespace VixenPlus
 
         public abstract byte GetValue();
 
-        internal byte GetValueInternal()
-        {
-            if (_isMappingIterator)
-            {
-                return 0;
-            }
-            return GetValue();
+        internal byte GetValueInternal() {
+            return _isMappingIterator ? 0 : GetValue();
         }
+
 
         public void ReadData(XmlNode node)
         {

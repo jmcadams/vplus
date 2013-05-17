@@ -136,14 +136,10 @@ namespace VixenPlus
         {
         }
 
-        private string BuildSortClause()
-        {
-            if (_sort != null)
-            {
-                return string.Format("{0} {1}", _sort.ColumnName, _sort.SortDirection);
-            }
-            return "";
+        private string BuildSortClause() {
+            return _sort == null ? "" : string.Format("{0} {1}", _sort.ColumnName, _sort.SortDirection);
         }
+
 
         private string BuildWhereClause()
         {

@@ -87,14 +87,10 @@ namespace VixenPlus
             set { _isRecord = value; }
         }
 
-        private Input FindInput(ulong id)
-        {
-            if (id == 0L)
-            {
-                return null;
-            }
-            return Array.Find(Inputs, i => i.Id == id);
+        private Input FindInput(ulong id) {
+            return id == 0L ? null : Array.Find(Inputs, i => i.Id == id);
         }
+
 
         public Input[] GetIterators()
         {

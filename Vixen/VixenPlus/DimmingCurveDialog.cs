@@ -3,10 +3,12 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace VixenPlus
-{
-    internal partial class DimmingCurveDialog : Form
-    {
+using CommonUtils;
+
+using Properties;
+
+namespace VixenPlus {
+    internal partial class DimmingCurveDialog : Form {
         private readonly SolidBrush _curveBackBrush;
         private readonly float _curveColPointsPerMiniPixel;
         private readonly Color _curveGridColor;
@@ -39,8 +41,8 @@ namespace VixenPlus
         private int _startCurvePoint;
         private bool _usingActualLevels;
 
-        public DimmingCurveDialog(EventSequence sequence, Channel selectChannel)
-        {
+
+        public DimmingCurveDialog(EventSequence sequence, Channel selectChannel) {
             _miniBoxColor = Color.BlueViolet;
             _miniLineColor = Color.Blue;
             _curveGridColor = Color.LightGray;
@@ -57,37 +59,29 @@ namespace VixenPlus
             _availableValues = 256f;
             components = null;
             InitializeComponent();
-            if (sequence != null)
-            {
+            if (sequence != null) {
                 Action<Channel> action = c => comboBoxChannels.Items.Add(c.Clone());
                 sequence.Channels.ForEach(action);
                 _eventSequence = sequence;
             }
-            else
-            {
+            else {
                 labelSequenceChannels.Enabled = false;
                 comboBoxChannels.Enabled = false;
-                if (selectChannel != null)
-                {
+                if (selectChannel != null) {
                     _originalChannel = selectChannel;
                     comboBoxChannels.Items.Add(selectChannel = selectChannel.Clone());
                 }
             }
             _gridSpacing = _pointSize + _dotPitch;
-            _halfPointSize = (_pointSize)/2f;
-            _curveRowPointsPerMiniPixel = _availableValues/(pbMini.Width);
-            _curveColPointsPerMiniPixel = _availableValues/(pbMini.Height);
-            if (pictureBoxCurve != null)
-            {
-                _miniBoxBounds = new Rectangle(
-                    0,
-                    0,
-                    (int) (pictureBoxCurve.Width/_gridSpacing/_availableValues*pbMini.Width),
-                    (int) (pictureBoxCurve.Height/_gridSpacing/_availableValues*pbMini.Height));
+            _halfPointSize = (_pointSize) / 2f;
+            _curveRowPointsPerMiniPixel = _availableValues / (pbMini.Width);
+            _curveColPointsPerMiniPixel = _availableValues / (pbMini.Height);
+            if (pictureBoxCurve != null) {
+                _miniBoxBounds = new Rectangle(0, 0, (int) (pictureBoxCurve.Width / (float) _gridSpacing / _availableValues * pbMini.Width),
+                                               (int) (pictureBoxCurve.Height / (float) _gridSpacing / _availableValues * pbMini.Height));
             }
             _miniBackBrush = new SolidBrush(pbMini.BackColor);
-            if (pictureBoxCurve != null)
-            {
+            if (pictureBoxCurve != null) {
                 _curveBackBrush = new SolidBrush(pictureBoxCurve.BackColor);
             }
             _miniBoxPen = new Pen(_miniBoxColor);
@@ -95,8 +89,7 @@ namespace VixenPlus
             _curveGridPen = new Pen(_curveGridColor);
             _curveLinePen = new Pen(_curveLineColor);
             _curvePointBrush = new SolidBrush(_curvePointColor);
-            if (comboBoxChannels.Items.Count > 0)
-            {
+            if (comboBoxChannels.Items.Count > 0) {
                 comboBoxChannels.SelectedItem = selectChannel ?? comboBoxChannels.Items[0];
             }
             SwitchDisplay(Preference2.GetInstance().GetBoolean("ActualLevels"));
@@ -104,15 +97,12 @@ namespace VixenPlus
             comboBoxExport.SelectedIndex = 0;
         }
 
-        private void buttonExportToLibrary_Click(object sender, EventArgs e)
-        {
-            if (comboBoxExport.SelectedIndex == 0)
-            {
-                using (var library = new CurveLibrary())
-                {
+
+        private void buttonExportToLibrary_Click(object sender, EventArgs e) {
+            if (comboBoxExport.SelectedIndex == 0) {
+                using (var library = new CurveLibrary()) {
                     var dialog = new CurveLibraryRecordEditDialog(null);
-                    if (dialog.ShowDialog() == DialogResult.OK)
-                    {
+                    if (dialog.ShowDialog() == DialogResult.OK) {
                         CurveLibraryRecord libraryRecord = dialog.LibraryRecord;
                         libraryRecord.CurveData = _points;
                         library.Import(libraryRecord);
@@ -121,40 +111,32 @@ namespace VixenPlus
                     dialog.Dispose();
                 }
             }
-            else
-            {
+            else {
                 var dialog2 = new CurveFileImportExportDialog(CurveFileImportExportDialog.ImportExport.Export);
                 dialog2.ShowDialog();
                 dialog2.Dispose();
             }
         }
 
-        private void buttonImportFromLibrary_Click(object sender, EventArgs e)
-        {
-            if (comboBoxImport.SelectedIndex == 0)
-            {
+
+        private void buttonImportFromLibrary_Click(object sender, EventArgs e) {
+            if (comboBoxImport.SelectedIndex == 0) {
                 var dialog = new CurveLibraryDialog();
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    if (comboBoxChannels != null)
-                    {
+                if (dialog.ShowDialog() == DialogResult.OK) {
+                    if (comboBoxChannels != null) {
                         ((Channel) comboBoxChannels.SelectedItem).DimmingCurve = _points = dialog.SelectedCurve;
                     }
                     RedrawBoth();
                 }
                 dialog.Dispose();
             }
-            else
-            {
+            else {
                 var dialog2 = new CurveFileImportExportDialog(CurveFileImportExportDialog.ImportExport.Import);
-                if (dialog2.ShowDialog() == DialogResult.OK)
-                {
+                if (dialog2.ShowDialog() == DialogResult.OK) {
                     CurveLibraryRecord selectedCurve = dialog2.SelectedCurve;
-                    if (selectedCurve != null)
-                    {
+                    if (selectedCurve != null) {
                         var channel = comboBoxChannels.SelectedItem as Channel;
-                        if (channel != null)
-                        {
+                        if (channel != null) {
                             channel.DimmingCurve = _points = selectedCurve.CurveData;
                         }
                         RedrawBoth();
@@ -164,99 +146,87 @@ namespace VixenPlus
             }
         }
 
-        private void buttonOK_Click(object sender, EventArgs e)
-        {
-            if (_eventSequence != null)
-            {
-                for (int i = 0; i < comboBoxChannels.Items.Count; i++)
-                {
+
+        private void buttonOK_Click(object sender, EventArgs e) {
+            if (_eventSequence != null) {
+                for (int i = 0; i < comboBoxChannels.Items.Count; i++) {
                     var channel = comboBoxChannels.Items[i] as Channel;
-                    if (channel != null)
-                    {
+                    if (channel != null) {
                         _eventSequence.Channels[i].DimmingCurve = channel.DimmingCurve;
                     }
                 }
             }
-            else
-            {
+            else {
                 var channel = (Channel) comboBoxChannels.Items[0];
                 _originalChannel.DimmingCurve = channel.DimmingCurve;
             }
         }
 
-        private void buttonResetToLinear_Click(object sender, EventArgs e)
-        {
-            if (
-                MessageBox.Show("This will reset all values of the selected channel.\n\nContinue?", Vendor.ProductName,
-                                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
+
+        private void buttonResetToLinear_Click(object sender, EventArgs e) {
+            if (MessageBox.Show(Resources.VerifyChannelValueReset, Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
+                DialogResult.Yes) {
                 ResetCurrentToLinear();
             }
         }
 
-        private void buttonSwitchDisplay_Click(object sender, EventArgs e)
-        {
+
+        private void buttonSwitchDisplay_Click(object sender, EventArgs e) {
             SwitchDisplay(!_usingActualLevels);
         }
 
-        private void comboBoxChannels_SelectedIndexChanged(object sender, EventArgs e)
-        {
+
+        private void comboBoxChannels_SelectedIndexChanged(object sender, EventArgs e) {
             var selectedItem = (Channel) comboBoxChannels.SelectedItem;
-            if (selectedItem != null)
-            {
-                if (selectedItem.DimmingCurve == null)
-                {
+            if (selectedItem != null) {
+                if (selectedItem.DimmingCurve == null) {
                     selectedItem.DimmingCurve = new byte[256];
                     ResetToLinear(selectedItem.DimmingCurve);
                 }
                 ShowChannel(selectedItem);
                 buttonResetToLinear.Enabled = true;
             }
-            else
-            {
+            else {
                 buttonResetToLinear.Enabled = false;
             }
         }
 
-        private void CurveCalc()
-        {
-            var num = (int) (_miniBoxBounds.Left*_curveRowPointsPerMiniPixel);
+
+        private void CurveCalc() {
+            var num = (int) (_miniBoxBounds.Left * _curveRowPointsPerMiniPixel);
             num = Math.Max(0, num - 1);
-            var num2 = (int) (_miniBoxBounds.Right*_curveRowPointsPerMiniPixel);
+            var num2 = (int) (_miniBoxBounds.Right * _curveRowPointsPerMiniPixel);
             num2 = (int) Math.Min(_availableValues - 1f, (num2 + 2));
             int index = Math.Min(num, num2);
             int num4 = Math.Max(num, num2);
-            int num5 = pictureBoxCurve.Height - ((pictureBoxCurve.Height/_gridSpacing)*_gridSpacing);
-            var num6 = (int) (_availableValues - ((_miniBoxBounds.Bottom + 1)*_curveColPointsPerMiniPixel));
-            var num7 = (int) (_miniBoxBounds.Left*_curveRowPointsPerMiniPixel);
-            if ((_curvePoints == null) || (_curvePoints.GetLength(0) != ((num4 - index) + 1)))
-            {
+            int num5 = pictureBoxCurve.Height - ((pictureBoxCurve.Height / _gridSpacing) * _gridSpacing);
+            var num6 = (int) (_availableValues - ((_miniBoxBounds.Bottom + 1) * _curveColPointsPerMiniPixel));
+            var num7 = (int) (_miniBoxBounds.Left * _curveRowPointsPerMiniPixel);
+            if ((_curvePoints == null) || (_curvePoints.GetLength(0) != ((num4 - index) + 1))) {
                 _curvePoints = new int[(num4 - index) + 1,2];
             }
             _startCurvePoint = index;
             int num10 = -1;
             int num11 = -1;
             int num12 = 0;
-            while (index < num4)
-            {
-                int num8 = (index - num7)*_gridSpacing;
-                int num9 = (pictureBoxCurve.Height - num5) - ((_points[index] - num6)*_gridSpacing);
-                num10 = ((index + 1) - num7)*_gridSpacing;
-                num11 = (pictureBoxCurve.Height - num5) - ((_points[index + 1] - num6)*_gridSpacing);
+            while (index < num4) {
+                int num8 = (index - num7) * _gridSpacing;
+                int num9 = (pictureBoxCurve.Height - num5) - ((_points[index] - num6) * _gridSpacing);
+                num10 = ((index + 1) - num7) * _gridSpacing;
+                num11 = (pictureBoxCurve.Height - num5) - ((_points[index + 1] - num6) * _gridSpacing);
                 _curvePoints[num12, 0] = num8;
                 _curvePoints[num12, 1] = num9;
                 index++;
                 num12++;
             }
-            if (num10 != -1)
-            {
+            if (num10 != -1) {
                 _curvePoints[num12, 0] = num10;
                 _curvePoints[num12, 1] = num11;
             }
         }
 
-        private void DimmingCurveDialog_Paint(object sender, PaintEventArgs e)
-        {
+
+        private void DimmingCurveDialog_Paint(object sender, PaintEventArgs e) {
             e.Graphics.TranslateTransform(-label2.Location.X, -label2.Location.Y, MatrixOrder.Append);
             e.Graphics.RotateTransform(-90f, MatrixOrder.Append);
             e.Graphics.TranslateTransform(label2.Location.X, label2.Location.Y, MatrixOrder.Append);
@@ -265,210 +235,171 @@ namespace VixenPlus
         }
 
 
-        private int MaxOf(params int[] values)
-        {
+        private int MaxOf(params int[] values) {
             int num = values[0];
-            foreach (int num2 in values)
-            {
-                if (num2 > num)
-                {
+            foreach (int num2 in values) {
+                if (num2 > num) {
                     num = num2;
                 }
             }
             return num;
         }
 
-        private int MinOf(params int[] values)
-        {
+
+        private int MinOf(params int[] values) {
             int num = values[0];
-            foreach (int num2 in values)
-            {
-                if (num2 < num)
-                {
+            foreach (int num2 in values) {
+                if (num2 < num) {
                     num = num2;
                 }
             }
             return num;
         }
 
-        private void pictureBoxCurve_MouseLeave(object sender, EventArgs e)
-        {
+
+        private void pictureBoxCurve_MouseLeave(object sender, EventArgs e) {
             Cursor = Cursors.Default;
         }
 
-        private void pictureBoxCurve_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (_points != null)
-            {
-                if (((e.Button & MouseButtons.Left) != MouseButtons.None) && (_selectedPointRelative != -1))
-                {
+
+        private void pictureBoxCurve_MouseMove(object sender, MouseEventArgs e) {
+            if (_points != null) {
+                if (((e.Button & MouseButtons.Left) != MouseButtons.None) && (_selectedPointRelative != -1)) {
                     int num = Math.Max(0, Math.Min(pictureBoxCurve.Height - 1, e.Y));
-                    if (((_curvePoints[_selectedPointRelative, 1] - num)%_gridSpacing) == 0)
-                    {
+                    if (((_curvePoints[_selectedPointRelative, 1] - num) % _gridSpacing) == 0) {
                         int selectedPointRelative;
                         int num3;
                         var rc = new Rectangle();
-                        if (_selectedPointAbsolute == 0)
-                        {
+                        if (_selectedPointAbsolute == 0) {
                             rc.X = _curvePoints[_selectedPointRelative, 0] - ((int) _halfPointSize);
                             selectedPointRelative = _selectedPointRelative;
                         }
-                        else
-                        {
+                        else {
                             rc.X = _curvePoints[_selectedPointRelative - 1, 0] - ((int) _halfPointSize);
                             selectedPointRelative = _selectedPointRelative - 1;
                         }
-                        if (_selectedPointAbsolute == (_availableValues - 1f))
-                        {
+                        if (Utils.IsNearlyEqual(_selectedPointAbsolute, (_availableValues - 1f))) {
                             rc.Width = (_curvePoints[_selectedPointRelative, 0] + ((int) _halfPointSize)) - rc.X;
                             num3 = _selectedPointRelative;
                         }
-                        else
-                        {
+                        else {
                             rc.Width = (_curvePoints[_selectedPointRelative + 1, 0] + ((int) _halfPointSize)) - rc.X;
                             num3 = _selectedPointRelative + 1;
                         }
                         rc.Y =
-                            MinOf(new[]
-                                {
-                                    num, _curvePoints[_selectedPointRelative, 1], _curvePoints[selectedPointRelative, 1], _curvePoints[num3, 1]
-                                }) - _pointSize;
+                            MinOf(new[] {num, _curvePoints[_selectedPointRelative, 1], _curvePoints[selectedPointRelative, 1], _curvePoints[num3, 1]}) -
+                            _pointSize;
                         rc.Height =
                             ((MaxOf(new[]
-                                {
-                                    num, _curvePoints[_selectedPointRelative, 1], _curvePoints[selectedPointRelative, 1], _curvePoints[num3, 1]
-                                }) + _pointSize) - rc.Y) + _pointSize;
+                            {num, _curvePoints[_selectedPointRelative, 1], _curvePoints[selectedPointRelative, 1], _curvePoints[num3, 1]}) +
+                              _pointSize) - rc.Y) + _pointSize;
                         _points[_selectedPointAbsolute] =
-                            (byte)
-                            (_points[_selectedPointAbsolute] + ((byte) ((_curvePoints[_selectedPointRelative, 1] - num)/_gridSpacing)));
+                            (byte) (_points[_selectedPointAbsolute] + ((byte) ((_curvePoints[_selectedPointRelative, 1] - num) / _gridSpacing)));
                         _curvePoints[_selectedPointRelative, 1] = num;
                         pictureBoxCurve.Invalidate(rc);
-                        pbMini.Invalidate(new Rectangle(((int) ((_selectedPointAbsolute)/_curveRowPointsPerMiniPixel)) - 1, 0, 3,
-                                                        pbMini.Height));
+                        pbMini.Invalidate(new Rectangle(((int) ((_selectedPointAbsolute) / _curveRowPointsPerMiniPixel)) - 1, 0, 3, pbMini.Height));
                     }
                 }
-                else
-                {
+                else {
                     int num10;
                     int num11;
                     int length = _curvePoints.GetLength(0);
                     int num5 = length >> 1;
                     int x = e.X;
                     int y = e.Y;
-                    if (x < (pictureBoxCurve.Width >> 1))
-                    {
+                    if (x < (pictureBoxCurve.Width >> 1)) {
                         num10 = 0;
                         num11 = num5;
                     }
-                    else
-                    {
+                    else {
                         num10 = num5;
                         num11 = length;
                     }
                     int num12 = num10;
-                    while (num12 < num11)
-                    {
+                    while (num12 < num11) {
                         int num8 = _curvePoints[num12, 0];
                         int num9 = _curvePoints[num12, 1];
                         if ((((x >= (num8 - _halfPointSize)) && (x <= (num8 + _halfPointSize))) && (y >= (num9 - _halfPointSize))) &&
-                            (y <= (num9 + _halfPointSize)))
-                        {
+                            (y <= (num9 + _halfPointSize))) {
                             break;
                         }
                         num12++;
                     }
-                    if (num12 < num11)
-                    {
+                    if (num12 < num11) {
                         Cursor = Cursors.SizeNS;
                         _selectedPointRelative = num12;
                         _selectedPointAbsolute = _startCurvePoint + num12;
                     }
-                    else
-                    {
+                    else {
                         Cursor = Cursors.Default;
                         _selectedPointRelative = -1;
                         _selectedPointAbsolute = -1;
                     }
                 }
-                if (_selectedPointAbsolute == -1)
-                {
+                if (_selectedPointAbsolute == -1) {
                     labelChannelValue.Text = string.Empty;
                 }
-                else
-                {
+                else {
                     labelChannelValue.Text = string.Format("Channel value {0} ({2:P0}) will output at {1} ({3:P0})",
-                                                           new object[]
-                                                               {
-                                                                   _selectedPointAbsolute, _points[_selectedPointAbsolute],
-                                                                   (_selectedPointAbsolute)/255f, (_points[_selectedPointAbsolute])/255f
-                                                               });
+                                                           new object[] {
+                                                               _selectedPointAbsolute, _points[_selectedPointAbsolute], (_selectedPointAbsolute) / 255f,
+                                                               (_points[_selectedPointAbsolute]) / 255f
+                                                           });
                 }
             }
         }
 
-        private void pictureBoxCurve_MouseUp(object sender, MouseEventArgs e)
-        {
+
+        private void pictureBoxCurve_MouseUp(object sender, MouseEventArgs e) {
             _selectedPointAbsolute = -1;
             _selectedPointRelative = -1;
             Cursor = Cursors.Default;
         }
 
-        private void pictureBoxCurve_Paint(object sender, PaintEventArgs e)
-        {
-            if (_points != null)
-            {
+
+        private void pictureBoxCurve_Paint(object sender, PaintEventArgs e) {
+            if (_points != null) {
                 e.Graphics.FillRectangle(_curveBackBrush, e.ClipRectangle);
                 var num3 =
                     (int)
-                    Math.Min(((_miniBoxBounds.Left*_curveRowPointsPerMiniPixel) + ((pictureBoxCurve.Width/_gridSpacing) + 1)),
+                    Math.Min(((_miniBoxBounds.Left * _curveRowPointsPerMiniPixel) + ((pictureBoxCurve.Width / _gridSpacing) + 1)),
                              (_availableValues - 1f));
                 var num4 =
                     (int)
-                    Math.Min(((_miniBoxBounds.Top*_curveColPointsPerMiniPixel) + ((pictureBoxCurve.Height/_gridSpacing) + 1)),
+                    Math.Min(((_miniBoxBounds.Top * _curveColPointsPerMiniPixel) + ((pictureBoxCurve.Height / _gridSpacing) + 1)),
                              (_availableValues - 1f));
-                num3 -= (int) (_miniBoxBounds.Left*_curveRowPointsPerMiniPixel);
-                num4 -= (int) (_miniBoxBounds.Top*_curveColPointsPerMiniPixel);
+                num3 -= (int) (_miniBoxBounds.Left * _curveRowPointsPerMiniPixel);
+                num4 -= (int) (_miniBoxBounds.Top * _curveColPointsPerMiniPixel);
                 num3 *= _gridSpacing;
                 num4 *= _gridSpacing;
-                for (int i = (e.ClipRectangle.Top/_gridSpacing)*_gridSpacing; i <= num3; i += _gridSpacing)
-                {
+                for (int i = (e.ClipRectangle.Top / _gridSpacing) * _gridSpacing; i <= num3; i += _gridSpacing) {
                     e.Graphics.DrawLine(_curveGridPen, 0, i, num3, i);
                 }
-                for (int j = (e.ClipRectangle.Left/_gridSpacing)*_gridSpacing; j <= num4; j += _gridSpacing)
-                {
+                for (int j = (e.ClipRectangle.Left / _gridSpacing) * _gridSpacing; j <= num4; j += _gridSpacing) {
                     e.Graphics.DrawLine(_curveGridPen, j, 0, j, num4);
                 }
-                int num5 = Math.Max((e.ClipRectangle.Left/_gridSpacing) - 1, 0);
-                int num6 = Math.Min((e.ClipRectangle.Right/_gridSpacing) + 3, _curvePoints.GetLength(0));
-                for (int k = num5; k < num6; k++)
-                {
+                int num5 = Math.Max((e.ClipRectangle.Left / _gridSpacing) - 1, 0);
+                int num6 = Math.Min((e.ClipRectangle.Right / _gridSpacing) + 3, _curvePoints.GetLength(0));
+                for (int k = num5; k < num6; k++) {
                     float num7 = _curvePoints[k, 0];
                     float num8 = _curvePoints[k, 1];
-                    if (k < (num6 - 1))
-                    {
+                    if (k < (num6 - 1)) {
                         float num9 = _curvePoints[k + 1, 0];
                         float num10 = _curvePoints[k + 1, 1];
                         e.Graphics.DrawLine(_curveLinePen, num7, num8, num9, num10);
                     }
-                    e.Graphics.FillRectangle(_curvePointBrush, num7 - _halfPointSize, num8 - _halfPointSize, _pointSize,
-                                             _pointSize);
+                    e.Graphics.FillRectangle(_curvePointBrush, num7 - _halfPointSize, num8 - _halfPointSize, _pointSize, _pointSize);
                 }
             }
         }
 
-        private void pictureBoxMini_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (_points != null)
-            {
-                if (!_miniBoxBounds.Contains(e.Location))
-                {
+
+        private void pictureBoxMini_MouseDown(object sender, MouseEventArgs e) {
+            if (_points != null) {
+                if (!_miniBoxBounds.Contains(e.Location)) {
                     Rectangle miniBoxBounds = _miniBoxBounds;
-                    _miniBoxBounds.X = Math.Max(0,
-                                                Math.Min(((pbMini.Width - _miniBoxBounds.Width) - 1),
-                                                         (e.X - (_miniBoxBounds.Width/2))));
-                    _miniBoxBounds.Y = Math.Max(0,
-                                                Math.Min(((pbMini.Height - _miniBoxBounds.Height) - 1),
-                                                         (e.Y - (_miniBoxBounds.Height/2))));
+                    _miniBoxBounds.X = Math.Max(0, Math.Min(((pbMini.Width - _miniBoxBounds.Width) - 1), (e.X - (_miniBoxBounds.Width / 2))));
+                    _miniBoxBounds.Y = Math.Max(0, Math.Min(((pbMini.Height - _miniBoxBounds.Height) - 1), (e.Y - (_miniBoxBounds.Height / 2))));
                     RedrawMiniBox(miniBoxBounds);
                     RedrawCurve();
                 }
@@ -480,14 +411,12 @@ namespace VixenPlus
             }
         }
 
-        private void pictureBoxMini_MouseMove(object sender, MouseEventArgs e)
-        {
-            if ((_points != null) && ((e.Button & MouseButtons.Left) != MouseButtons.None))
-            {
+
+        private void pictureBoxMini_MouseMove(object sender, MouseEventArgs e) {
+            if ((_points != null) && ((e.Button & MouseButtons.Left) != MouseButtons.None)) {
                 int num = Math.Max(Math.Min(e.X, _miniMouseMaxLocation.X), _miniMouseMinLocation.X);
                 int num2 = Math.Max(Math.Min(e.Y, _miniMouseMaxLocation.Y), _miniMouseMinLocation.Y);
-                if ((num != _miniMouseDownLast.X) || (num2 != _miniMouseDownLast.Y))
-                {
+                if ((num != _miniMouseDownLast.X) || (num2 != _miniMouseDownLast.Y)) {
                     Rectangle miniBoxBounds = _miniBoxBounds;
                     _miniBoxBounds.X += num - _miniMouseDownLast.X;
                     _miniMouseDownLast.X = num;
@@ -499,90 +428,82 @@ namespace VixenPlus
             }
         }
 
-        private void pictureBoxMini_Paint(object sender, PaintEventArgs e)
-        {
-            if (_points != null)
-            {
+
+        private void pictureBoxMini_Paint(object sender, PaintEventArgs e) {
+            if (_points != null) {
                 e.Graphics.FillRectangle(_miniBackBrush, e.ClipRectangle);
-                var num = (int) (e.ClipRectangle.Left*_curveRowPointsPerMiniPixel);
+                var num = (int) (e.ClipRectangle.Left * _curveRowPointsPerMiniPixel);
                 num = Math.Max(0, num - 1);
-                var num2 = (int) (e.ClipRectangle.Right*_curveRowPointsPerMiniPixel);
+                var num2 = (int) (e.ClipRectangle.Right * _curveRowPointsPerMiniPixel);
                 num2 = (int) Math.Min(_availableValues - 1f, (num2 + 1));
                 int num3 = Math.Min(num, num2);
                 int num4 = Math.Max(num, num2);
-                for (int i = num3; i < num4; i++)
-                {
-                    e.Graphics.DrawLine(_miniLinePen, ((i)/_curveRowPointsPerMiniPixel),
-                                        (pbMini.Height - ((_points[i])/_curveColPointsPerMiniPixel)),
-                                        (((i + 1))/_curveRowPointsPerMiniPixel),
-                                        (pbMini.Height - ((_points[i + 1])/_curveColPointsPerMiniPixel)));
+                for (int i = num3; i < num4; i++) {
+                    e.Graphics.DrawLine(_miniLinePen, ((i) / _curveRowPointsPerMiniPixel),
+                                        (pbMini.Height - ((_points[i]) / _curveColPointsPerMiniPixel)), (((i + 1)) / _curveRowPointsPerMiniPixel),
+                                        (pbMini.Height - ((_points[i + 1]) / _curveColPointsPerMiniPixel)));
                 }
-                if (e.ClipRectangle.IntersectsWith(_miniBoxBounds))
-                {
+                if (e.ClipRectangle.IntersectsWith(_miniBoxBounds)) {
                     e.Graphics.DrawRectangle(_miniBoxPen, _miniBoxBounds);
                 }
             }
         }
 
-        private void RedrawBoth()
-        {
+
+        private void RedrawBoth() {
             CurveCalc();
             pbMini.Refresh();
             pictureBoxCurve.Refresh();
         }
 
-        private void RedrawCurve()
-        {
+
+        private void RedrawCurve() {
             CurveCalc();
             pictureBoxCurve.Refresh();
         }
 
-        private void RedrawMiniBox(Rectangle oldBounds)
-        {
+
+        private void RedrawMiniBox(Rectangle oldBounds) {
             Rectangle rc = Rectangle.Union(_miniBoxBounds, oldBounds);
             rc.Inflate(1, 1);
             pbMini.Invalidate(rc);
         }
 
-        private void ResetCurrentToLinear()
-        {
+
+        private void ResetCurrentToLinear() {
             ResetToLinear(_points);
             CurveCalc();
             pbMini.Refresh();
             pictureBoxCurve.Refresh();
         }
 
-        private void ResetToLinear(byte[] values)
-        {
-            for (int i = 0; i < values.Length; i++)
-            {
+
+        private void ResetToLinear(byte[] values) {
+            for (int i = 0; i < values.Length; i++) {
                 values[i] = (byte) i;
             }
         }
 
-        private void ShowChannel(Channel channel)
-        {
+
+        private void ShowChannel(Channel channel) {
             _points = channel.DimmingCurve;
             RedrawBoth();
         }
 
-        private void SwitchDisplay(bool useActualLevels)
-        {
-            useActualLevels = true; //TODO: Why is this overwritten here?
+
+        private void SwitchDisplay(bool useActualLevels) {
             _usingActualLevels = useActualLevels;
-            if (_usingActualLevels)
-            {
+            if (_usingActualLevels) {
                 _availableValues = 256f;
                 pbMini.Size = new Size(256, 256);
             }
-            else
-            {
+            else {
                 _availableValues = 101f;
                 pbMini.Size = new Size(100, 100);
             }
             pbMini.Refresh();
             RedrawCurve();
-            buttonSwitchDisplay.Text = useActualLevels ? "Show % levels" : "Show actual levels";
+            buttonSwitchDisplay.Text = useActualLevels ? Resources.ShowPercentage : Resources.ShowActual;
         }
     }
 }

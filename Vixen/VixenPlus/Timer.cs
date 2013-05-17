@@ -194,13 +194,8 @@ namespace VixenPlus
 
         public DateTime RecurrenceEnd
         {
-            get
-            {
-                if (_recurrence == RecurrenceType.None)
-                {
-                    return EndDateTime;
-                }
-                return _recurrenceEnd;
+            get {
+                return _recurrence == RecurrenceType.None ? EndDateTime : _recurrenceEnd;
             }
             set { _recurrenceEnd = value; }
         }
@@ -231,13 +226,8 @@ namespace VixenPlus
 
         public DateTime RecurrenceStart
         {
-            get
-            {
-                if (_recurrence == RecurrenceType.None)
-                {
-                    return _startDateTime;
-                }
-                return _recurrenceStart;
+            get {
+                return _recurrence == RecurrenceType.None ? _startDateTime : _recurrenceStart;
             }
             set { _recurrenceStart = value; }
         }
@@ -352,14 +342,18 @@ namespace VixenPlus
             }
         }
 
-        private void SetObjectPath()
-        {
-            if (!string.IsNullOrEmpty(_objectFileName))
-            {
-                string str = (_objectType == ObjectType.Program) ? Paths.ProgramPath : Paths.SequencePath;
-                _objectFileName = Path.Combine(str, Path.GetFileName(_objectFileName));
+
+        private void SetObjectPath() {
+            if (string.IsNullOrEmpty(_objectFileName)) {
+                return;
             }
+
+            var path = (_objectType == ObjectType.Program) ? Paths.ProgramPath : Paths.SequencePath;
+            // ReSharper disable AssignNullToNotNullAttribute
+            _objectFileName = Path.Combine(path, Path.GetFileName(_objectFileName));
+            // ReSharper restore AssignNullToNotNullAttribute
         }
+
 
         public override string ToString()
         {

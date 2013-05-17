@@ -2,6 +2,8 @@ using System;
 using System.Windows.Forms;
 using FMOD;
 
+using Properties;
+
 namespace VixenPlus {
     internal partial class SoundDeviceDialog : Form {
         private readonly Preference2 _preferences;
@@ -19,8 +21,7 @@ namespace VixenPlus {
             _preferences.SetInteger("SoundDevice", comboBoxDevice.SelectedIndex, 0);
             _preferences.SaveSettings();
             buttonSet.Enabled = false;
-            MessageBox.Show("Please restart the application for this change to take effect", Vendor.ProductName, MessageBoxButtons.OK,
-                            MessageBoxIcon.Asterisk);
+            MessageBox.Show(Resources.RestartForChange, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
 

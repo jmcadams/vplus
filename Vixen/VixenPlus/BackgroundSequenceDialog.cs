@@ -2,6 +2,8 @@
 using System.IO;
 using System.Windows.Forms;
 
+using Properties;
+
 namespace VixenPlus
 {
     internal partial class BackgroundSequenceDialog : Form
@@ -16,7 +18,7 @@ namespace VixenPlus
             _sequenceFileName = sequenceFileName;
             _sequencesPath = sequencePath;
             labelSequenceName.Text = (sequenceFileName == string.Empty)
-                                         ? "None"
+                                         ? Resources.None
                                          : Path.GetFileNameWithoutExtension(sequenceFileName);
         }
 
@@ -27,7 +29,7 @@ namespace VixenPlus
 
         private void buttonClear_Click(object sender, EventArgs e)
         {
-            labelSequenceName.Text = "None";
+            labelSequenceName.Text = Resources.None;
             _sequenceFileName = string.Empty;
         }
 
@@ -43,14 +45,14 @@ namespace VixenPlus
                 }
                 catch
                 {
-                    MessageBox.Show("This does not appear to be a valid sequence file.", Vendor.ProductName, MessageBoxButtons.OK,
+                    MessageBox.Show(Resources.NotAValidSequence, Vendor.ProductName, MessageBoxButtons.OK,
                                     MessageBoxIcon.Hand);
                     return;
                 }
                 if (sequence.EngineType != EngineType.Procedural)
                 {
                     MessageBox.Show(
-                        "This sequence is not a scripted sequence.\nOnly a scripted sequence can be selected for background execution.",
+                        Resources.ScripedSequenceOnly,
                         Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 }
                 else

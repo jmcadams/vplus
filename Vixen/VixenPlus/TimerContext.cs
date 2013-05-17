@@ -89,11 +89,7 @@ namespace VixenPlus
         {
             string str = _executionInterface.LoadedProgram(_executionContextHandle);
             string str2 = _executionInterface.LoadedSequence(_executionContextHandle);
-            if (str.Length == 0)
-            {
-                return str2;
-            }
-            return string.Format("{0}: {1}", str, str2);
+            return str.Length == 0 ? str2 : string.Format("{0}: {1}", str, str2);
         }
     }
 }

@@ -302,19 +302,13 @@ namespace VixenPlus {
             if (!_registeredContexts.TryGetValue(contextHandle, out context)) {
                 return 0;
             }
-            if (context.SynchronousEngineInstance == null) {
-                return 0;
-            }
-            return context.SynchronousEngineInstance.Position;
+            return context.SynchronousEngineInstance == null ? 0 : context.SynchronousEngineInstance.Position;
         }
 
 
         public IExecutable GetObjectInContext(int contextHandle) {
             ExecutionContext context;
-            if (!_registeredContexts.TryGetValue(contextHandle, out context)) {
-                return null;
-            }
-            return context.Object;
+            return !_registeredContexts.TryGetValue(contextHandle, out context) ? null : context.Object;
         }
 
 
@@ -323,10 +317,7 @@ namespace VixenPlus {
             if (!_registeredContexts.TryGetValue(contextHandle, out context)) {
                 return 0;
             }
-            if (context.SynchronousEngineInstance == null) {
-                return 0;
-            }
-            return context.SynchronousEngineInstance.ObjectPosition;
+            return context.SynchronousEngineInstance == null ? 0 : context.SynchronousEngineInstance.ObjectPosition;
         }
 
 
@@ -335,10 +326,7 @@ namespace VixenPlus {
             if (!_registeredContexts.TryGetValue(contextHandle, out context)) {
                 return string.Empty;
             }
-            if (context.SynchronousEngineInstance == null) {
-                return string.Empty;
-            }
-            return context.SynchronousEngineInstance.LoadedProgram;
+            return context.SynchronousEngineInstance == null ? string.Empty : context.SynchronousEngineInstance.LoadedProgram;
         }
 
 

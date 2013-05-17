@@ -4,21 +4,17 @@
 
     internal class Migration
     {
-        private string[] m_flags;
-        private Version m_keyFileVersion;
-        private string m_versionCatalogFile;
-
         public Migration(string migrationLine)
         {
-            string[] strArray = migrationLine.Split(new char[] { '|' });
-            this.m_keyFileVersion = new Version(strArray[0].Trim());
-            this.m_versionCatalogFile = strArray[1].Trim();
-            this.m_flags = strArray[2].Trim().Split(new char[] { ',' });
+            var strArray = migrationLine.Split(new[] { '|' });
+            KeyFileVersion = new Version(strArray[0].Trim());
+            VersionCatalogFile = strArray[1].Trim();
+            Flags = strArray[2].Trim().Split(new[] { ',' });
         }
 
         public bool HasFlag(string flag)
         {
-            foreach (string str in this.m_flags)
+            foreach (var str in Flags)
             {
                 if (flag == str)
                 {
@@ -28,29 +24,12 @@
             return false;
         }
 
-        public string[] Flags
-        {
-            get
-            {
-                return this.m_flags;
-            }
-        }
 
-        public Version KeyFileVersion
-        {
-            get
-            {
-                return this.m_keyFileVersion;
-            }
-        }
+        public string[] Flags { get; private set; }
 
-        public string VersionCatalogFile
-        {
-            get
-            {
-                return this.m_versionCatalogFile;
-            }
-        }
+        public Version KeyFileVersion { get; private set; }
+
+        public string VersionCatalogFile { get; private set; }
     }
 }
 

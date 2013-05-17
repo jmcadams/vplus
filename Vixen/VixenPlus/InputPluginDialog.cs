@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Forms;
 
+using Properties;
+
 namespace VixenPlus
 {
     internal partial class InputPluginDialog : Form
@@ -122,14 +124,14 @@ namespace VixenPlus
                 if (_inputPlugin.GetIterators().Length > 0)
                 {
                     MessageBox.Show(
-                        "You have selected to use a single input to iterate the mapping sets, but have not chosen an input.",
+                        Resources.NoInputChosen,
                         Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
                     tabControlPlugin.SelectedTab = tabPageMappingIteration;
                 }
                 else
                 {
                     MessageBox.Show(
-                        "You have selected to use a single input to iterate the mapping sets, but do not have any inputs sets to be iterators and therefore have not chosen an input to iterate with.",
+                        Resources.NoInputSet,
                         Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 }
                 DialogResult = DialogResult.None;
@@ -177,7 +179,7 @@ namespace VixenPlus
 
         private void checkBoxEnabled_CheckedChanged(object sender, EventArgs e)
         {
-            checkBoxEnabled.Text = checkBoxEnabled.Checked ? "Input is enabled and is mapped to:" : "Input is disabled";
+            checkBoxEnabled.Text = checkBoxEnabled.Checked ? Resources.InputEnabled : Resources.InputDisabled;
             listBoxChannels.Enabled = checkBoxEnabled.Checked;
         }
 

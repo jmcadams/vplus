@@ -10,6 +10,8 @@ using CommonUtils;
 
 using FMOD;
 
+using Properties;
+
 namespace VixenPlus.Dialogs {
     public partial class AudioDialog : Form {
         private readonly EventSequence _eventSequence;
@@ -81,7 +83,7 @@ namespace VixenPlus.Dialogs {
             channel8ToolStripMenuItem.SelectedIndex = Math.Min(7, _eventSequence.ChannelCount - 1);
             channel9ToolStripMenuItem.SelectedIndex = Math.Min(8, _eventSequence.ChannelCount - 1);
             channel0ToolStripMenuItem.SelectedIndex = Math.Min(9, _eventSequence.ChannelCount - 1);
-            comboBoxAudioDevice.Items.Add("Use application's default device");
+            comboBoxAudioDevice.Items.Add(Resources.UseApplicationDefaultAudio);
             comboBoxAudioDevice.Items.AddRange(fmod.GetSoundDeviceList());
             comboBoxAudioDevice.SelectedIndex = _eventSequence.AudioDeviceIndex + 1;
         }
@@ -113,26 +115,32 @@ namespace VixenPlus.Dialogs {
             for (var i = 0; i < _newEventValues.GetLength(1); i++) {
                 _newEventValues[listBoxChannels.SelectedIndex, i] = 0;
             }
-            MessageBox.Show(string.Format("Channel \"{0}\" cleared of new events.", ((Channel) listBoxChannels.SelectedItem).Name), Vendor.ProductName,
+            MessageBox.Show(string.Format(Resources.ChannelEventsClerared, ((Channel) listBoxChannels.SelectedItem).Name), Vendor.ProductName,
                             MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
 
         private void buttonLoad_Click(object sender, EventArgs e) {
             openFileDialog1.InitialDirectory = Paths.AudioPath;
-            openFileDialog1.DefaultExt = "wma";
-            openFileDialog1.Filter = "All supported formats | *.aiff;*.asf;*.flac;*.mp2;*.mp3;*.ogg;*.wav;*.wma;*.mid";
+            openFileDialog1.DefaultExt = @"mp3";
+            openFileDialog1.Filter = Resources.AllSupportedFormats + @" | *.aiff;*.asf;*.flac;*.mp2;*.mp3;*.ogg;*.wav;*.wma;*.mid";
             openFileDialog1.FileName = string.Empty;
-            if (openFileDialog1.ShowDialog() == DialogResult.OK) {
-                string path = Path.Combine(Paths.AudioPath, Path.GetFileName(openFileDialog1.FileName));
-                if (!File.Exists(path)) {
-                    Cursor = Cursors.WaitCursor;
-                    File.Copy(openFileDialog1.FileName, path);
-                    Cursor = Cursors.Default;
-                }
-                _eventSequence.Audio = LoadAudio(openFileDialog1.FileName);
-                UpdateRecordableLength();
+            openFileDialog1.CheckFileExists = true;
+            if (openFileDialog1.ShowDialog() != DialogResult.OK) {
+                return;
             }
+
+            // ReSharper disable AssignNullToNotNullAttribute
+            // Since the dialog checks that the file exists, it cannot be null :)
+            var path = Path.Combine(Paths.AudioPath, Path.GetFileName(openFileDialog1.FileName));
+            // ReSharper restore AssignNullToNotNullAttribute
+            if (!File.Exists(path)) {
+                Cursor = Cursors.WaitCursor;
+                File.Copy(openFileDialog1.FileName, path);
+                Cursor = Cursors.Default;
+            }
+            _eventSequence.Audio = LoadAudio(openFileDialog1.FileName);
+            UpdateRecordableLength();
         }
 
 
@@ -161,7 +169,7 @@ namespace VixenPlus.Dialogs {
                 progressBarCountdown.Value = 100;
                 progressBarCountdown.Visible = true;
                 _playing = true;
-                labelTime.Text = "Countdown...";
+                labelTime.Text = Resources.Countdown;
                 labelTotalTime.Text = string.Empty;
                 trackBarPosition.Enabled = false;
                 _timer.Start();
@@ -198,7 +206,7 @@ namespace VixenPlus.Dialogs {
 
         private void ClearAudio() {
             _eventSequence.Audio = null;
-            labelAudioFileName.Text = "This event sequence does not have audio assigned";
+            labelAudioFileName.Text = Resources.NoAudioAssigned;
             labelAudioLength.Text = string.Empty;
             labelAudioName.Text = string.Empty;
             _soundChannel = null;
@@ -247,7 +255,7 @@ namespace VixenPlus.Dialogs {
                 _soundChannel = _fmod.LoadSound(Path.Combine(Paths.AudioPath, fileName), _soundChannel);
             }
             catch (Exception exception) {
-                MessageBox.Show("Error loading audio:\n" + exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(Resources.ErrorLoadingAudio + exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return null;
             }
             if (_soundChannel == null) {

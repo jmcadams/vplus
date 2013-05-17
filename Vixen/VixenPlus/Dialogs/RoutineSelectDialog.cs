@@ -20,13 +20,8 @@ namespace VixenPlus.Dialogs
 
         public string SelectedRoutine
         {
-            get
-            {
-                if (listBoxRoutines.SelectedItem == null)
-                {
-                    return null;
-                }
-                return ((Routine) listBoxRoutines.SelectedItem).FilePath;
+            get {
+                return listBoxRoutines.SelectedItem == null ? null : ((Routine) listBoxRoutines.SelectedItem).FilePath;
             }
         }
 
