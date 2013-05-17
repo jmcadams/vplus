@@ -55,7 +55,7 @@ namespace GenericSerial {
 
 
         public void Setup() {
-            using (var dialog = new SetupDialog(_setupNode)) {
+            using (var dialog = new DialogSerialSetup(_setupNode)) {
                 if (dialog.ShowDialog() == DialogResult.OK) {
                     SetPort();
                 }

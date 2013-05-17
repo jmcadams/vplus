@@ -3,111 +3,111 @@ namespace GenericSerial {
     using System.Drawing;
     using System.Windows.Forms;
 
-    internal partial class SetupDialog {
+    internal partial class DialogSerialSetup {
         private System.ComponentModel.IContainer components = null;
 
         #region Windows Form Designer generated code
-        private Button buttonCancel;
-        private Button buttonOK;
-        private CheckBox checkBoxFooter;
-        private CheckBox checkBoxHeader;
-        private ComboBox comboBoxBaud;
-        private GroupBox groupBox1;
-        private GroupBox groupBox2;
+        private Button btnCancel;
+        private Button btnOK;
+        private CheckBox cbFooter;
+        private CheckBox cbHeader;
+        private ComboBox cbBaud;
+        private GroupBox gbSerialPort;
+        private GroupBox gbPacketData;
         private Label label1;
         private Label label2;
-        private TextBox textBoxFooter;
-        private TextBox textBoxHeader;
+        private TextBox tbFooter;
+        private TextBox tbHeader;
 
         private void InitializeComponent() {
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.comboBoxPort = new System.Windows.Forms.ComboBox();
-            this.comboBoxData = new System.Windows.Forms.ComboBox();
-            this.comboBoxStop = new System.Windows.Forms.ComboBox();
-            this.comboBoxParity = new System.Windows.Forms.ComboBox();
+            this.gbSerialPort = new System.Windows.Forms.GroupBox();
+            this.cbPort = new System.Windows.Forms.ComboBox();
+            this.cdDataBits = new System.Windows.Forms.ComboBox();
+            this.cbStopBits = new System.Windows.Forms.ComboBox();
+            this.cbParity = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.comboBoxBaud = new System.Windows.Forms.ComboBox();
+            this.cbBaud = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.buttonOK = new System.Windows.Forms.Button();
-            this.buttonCancel = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textBoxFooter = new System.Windows.Forms.TextBox();
-            this.checkBoxFooter = new System.Windows.Forms.CheckBox();
-            this.textBoxHeader = new System.Windows.Forms.TextBox();
-            this.checkBoxHeader = new System.Windows.Forms.CheckBox();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.btnOK = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.gbPacketData = new System.Windows.Forms.GroupBox();
+            this.tbFooter = new System.Windows.Forms.TextBox();
+            this.cbFooter = new System.Windows.Forms.CheckBox();
+            this.tbHeader = new System.Windows.Forms.TextBox();
+            this.cbHeader = new System.Windows.Forms.CheckBox();
+            this.gbSerialPort.SuspendLayout();
+            this.gbPacketData.SuspendLayout();
             this.SuspendLayout();
             // 
-            // groupBox1
+            // gbSerialPort
             // 
-            this.groupBox1.Controls.Add(this.comboBoxPort);
-            this.groupBox1.Controls.Add(this.comboBoxData);
-            this.groupBox1.Controls.Add(this.comboBoxStop);
-            this.groupBox1.Controls.Add(this.comboBoxParity);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.comboBoxBaud);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(288, 115);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Serial Port";
+            this.gbSerialPort.Controls.Add(this.cbPort);
+            this.gbSerialPort.Controls.Add(this.cdDataBits);
+            this.gbSerialPort.Controls.Add(this.cbStopBits);
+            this.gbSerialPort.Controls.Add(this.cbParity);
+            this.gbSerialPort.Controls.Add(this.label5);
+            this.gbSerialPort.Controls.Add(this.label3);
+            this.gbSerialPort.Controls.Add(this.label4);
+            this.gbSerialPort.Controls.Add(this.cbBaud);
+            this.gbSerialPort.Controls.Add(this.label2);
+            this.gbSerialPort.Controls.Add(this.label1);
+            this.gbSerialPort.Location = new System.Drawing.Point(12, 12);
+            this.gbSerialPort.Name = "gbSerialPort";
+            this.gbSerialPort.Size = new System.Drawing.Size(288, 115);
+            this.gbSerialPort.TabIndex = 0;
+            this.gbSerialPort.TabStop = false;
+            this.gbSerialPort.Text = "Serial Port";
             // 
-            // comboBoxPort
+            // cbPort
             // 
-            this.comboBoxPort.FormattingEnabled = true;
-            this.comboBoxPort.Location = new System.Drawing.Point(52, 22);
-            this.comboBoxPort.Name = "comboBoxPort";
-            this.comboBoxPort.Size = new System.Drawing.Size(79, 21);
-            this.comboBoxPort.TabIndex = 16;
+            this.cbPort.FormattingEnabled = true;
+            this.cbPort.Location = new System.Drawing.Point(52, 22);
+            this.cbPort.Name = "cbPort";
+            this.cbPort.Size = new System.Drawing.Size(79, 21);
+            this.cbPort.TabIndex = 16;
             // 
-            // comboBoxData
+            // cdDataBits
             // 
-            this.comboBoxData.FormattingEnabled = true;
-            this.comboBoxData.Items.AddRange(new object[] {
+            this.cdDataBits.FormattingEnabled = true;
+            this.cdDataBits.Items.AddRange(new object[] {
             "5",
             "6",
             "7",
             "8"});
-            this.comboBoxData.Location = new System.Drawing.Point(192, 49);
-            this.comboBoxData.Name = "comboBoxData";
-            this.comboBoxData.Size = new System.Drawing.Size(79, 21);
-            this.comboBoxData.TabIndex = 15;
+            this.cdDataBits.Location = new System.Drawing.Point(192, 49);
+            this.cdDataBits.Name = "cdDataBits";
+            this.cdDataBits.Size = new System.Drawing.Size(79, 21);
+            this.cdDataBits.TabIndex = 15;
             // 
-            // comboBoxStop
+            // cbStopBits
             // 
-            this.comboBoxStop.FormattingEnabled = true;
-            this.comboBoxStop.Items.AddRange(new object[] {
+            this.cbStopBits.FormattingEnabled = true;
+            this.cbStopBits.Items.AddRange(new object[] {
             "None",
             "One",
             "Two",
             "OnePointFive"});
-            this.comboBoxStop.Location = new System.Drawing.Point(192, 76);
-            this.comboBoxStop.Name = "comboBoxStop";
-            this.comboBoxStop.Size = new System.Drawing.Size(79, 21);
-            this.comboBoxStop.TabIndex = 14;
+            this.cbStopBits.Location = new System.Drawing.Point(192, 76);
+            this.cbStopBits.Name = "cbStopBits";
+            this.cbStopBits.Size = new System.Drawing.Size(79, 21);
+            this.cbStopBits.TabIndex = 14;
             // 
-            // comboBoxParity
+            // cbParity
             // 
-            this.comboBoxParity.FormattingEnabled = true;
-            this.comboBoxParity.Items.AddRange(new object[] {
+            this.cbParity.FormattingEnabled = true;
+            this.cbParity.Items.AddRange(new object[] {
             "None",
             "Odd",
             "Even",
             "Mark",
             "Space"});
-            this.comboBoxParity.Location = new System.Drawing.Point(52, 76);
-            this.comboBoxParity.Name = "comboBoxParity";
-            this.comboBoxParity.Size = new System.Drawing.Size(79, 21);
-            this.comboBoxParity.TabIndex = 10;
+            this.cbParity.Location = new System.Drawing.Point(52, 76);
+            this.cbParity.Name = "cbParity";
+            this.cbParity.Size = new System.Drawing.Size(79, 21);
+            this.cbParity.TabIndex = 10;
             // 
             // label5
             // 
@@ -139,10 +139,10 @@ namespace GenericSerial {
             this.label4.Text = "Stop bits";
             this.label4.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // comboBoxBaud
+            // cbBaud
             // 
-            this.comboBoxBaud.FormattingEnabled = true;
-            this.comboBoxBaud.Items.AddRange(new object[] {
+            this.cbBaud.FormattingEnabled = true;
+            this.cbBaud.Items.AddRange(new object[] {
             "300",
             "600",
             "1200",
@@ -152,10 +152,10 @@ namespace GenericSerial {
             "38400",
             "57600",
             "119200"});
-            this.comboBoxBaud.Location = new System.Drawing.Point(52, 49);
-            this.comboBoxBaud.Name = "comboBoxBaud";
-            this.comboBoxBaud.Size = new System.Drawing.Size(79, 21);
-            this.comboBoxBaud.TabIndex = 3;
+            this.cbBaud.Location = new System.Drawing.Point(52, 49);
+            this.cbBaud.Name = "cbBaud";
+            this.cbBaud.Size = new System.Drawing.Size(79, 21);
+            this.cbBaud.TabIndex = 3;
             // 
             // label2
             // 
@@ -177,93 +177,95 @@ namespace GenericSerial {
             this.label1.Text = "Port";
             this.label1.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // buttonOK
+            // btnOK
             // 
-            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(144, 268);
-            this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(75, 23);
-            this.buttonOK.TabIndex = 1;
-            this.buttonOK.Text = "OK";
-            this.buttonOK.UseVisualStyleBackColor = true;
-            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnOK.Location = new System.Drawing.Point(144, 268);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(75, 23);
+            this.btnOK.TabIndex = 1;
+            this.btnOK.Text = "OK";
+            this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
-            // buttonCancel
+            // btnCancel
             // 
-            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(225, 268);
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-            this.buttonCancel.TabIndex = 2;
-            this.buttonCancel.Text = "Cancel";
-            this.buttonCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Location = new System.Drawing.Point(225, 268);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 2;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
+            // gbPacketData
             // 
-            this.groupBox2.Controls.Add(this.textBoxFooter);
-            this.groupBox2.Controls.Add(this.checkBoxFooter);
-            this.groupBox2.Controls.Add(this.textBoxHeader);
-            this.groupBox2.Controls.Add(this.checkBoxHeader);
-            this.groupBox2.Location = new System.Drawing.Point(12, 133);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(288, 129);
-            this.groupBox2.TabIndex = 3;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Packet Data";
+            this.gbPacketData.Controls.Add(this.tbFooter);
+            this.gbPacketData.Controls.Add(this.cbFooter);
+            this.gbPacketData.Controls.Add(this.tbHeader);
+            this.gbPacketData.Controls.Add(this.cbHeader);
+            this.gbPacketData.Location = new System.Drawing.Point(12, 133);
+            this.gbPacketData.Name = "gbPacketData";
+            this.gbPacketData.Size = new System.Drawing.Size(288, 129);
+            this.gbPacketData.TabIndex = 3;
+            this.gbPacketData.TabStop = false;
+            this.gbPacketData.Text = "Packet Data";
             // 
-            // textBoxFooter
+            // tbFooter
             // 
-            this.textBoxFooter.Location = new System.Drawing.Point(32, 98);
-            this.textBoxFooter.Name = "textBoxFooter";
-            this.textBoxFooter.Size = new System.Drawing.Size(204, 20);
-            this.textBoxFooter.TabIndex = 3;
+            this.tbFooter.Location = new System.Drawing.Point(32, 98);
+            this.tbFooter.Name = "tbFooter";
+            this.tbFooter.Size = new System.Drawing.Size(204, 20);
+            this.tbFooter.TabIndex = 3;
             // 
-            // checkBoxFooter
+            // cbFooter
             // 
-            this.checkBoxFooter.AutoSize = true;
-            this.checkBoxFooter.Location = new System.Drawing.Point(13, 75);
-            this.checkBoxFooter.Name = "checkBoxFooter";
-            this.checkBoxFooter.Size = new System.Drawing.Size(110, 17);
-            this.checkBoxFooter.TabIndex = 2;
-            this.checkBoxFooter.Text = "Send a text footer";
-            this.checkBoxFooter.UseVisualStyleBackColor = true;
+            this.cbFooter.AutoSize = true;
+            this.cbFooter.Location = new System.Drawing.Point(13, 75);
+            this.cbFooter.Name = "cbFooter";
+            this.cbFooter.Size = new System.Drawing.Size(176, 17);
+            this.cbFooter.TabIndex = 2;
+            this.cbFooter.Text = "Each packet sends this footer...";
+            this.cbFooter.UseVisualStyleBackColor = true;
             // 
-            // textBoxHeader
+            // tbHeader
             // 
-            this.textBoxHeader.Location = new System.Drawing.Point(32, 49);
-            this.textBoxHeader.Name = "textBoxHeader";
-            this.textBoxHeader.Size = new System.Drawing.Size(204, 20);
-            this.textBoxHeader.TabIndex = 1;
+            this.tbHeader.Location = new System.Drawing.Point(32, 49);
+            this.tbHeader.Name = "tbHeader";
+            this.tbHeader.Size = new System.Drawing.Size(204, 20);
+            this.tbHeader.TabIndex = 1;
             // 
-            // checkBoxHeader
+            // cbHeader
             // 
-            this.checkBoxHeader.AutoSize = true;
-            this.checkBoxHeader.Location = new System.Drawing.Point(13, 26);
-            this.checkBoxHeader.Name = "checkBoxHeader";
-            this.checkBoxHeader.Size = new System.Drawing.Size(116, 17);
-            this.checkBoxHeader.TabIndex = 0;
-            this.checkBoxHeader.Text = "Send a text header";
-            this.checkBoxHeader.UseVisualStyleBackColor = true;
+            this.cbHeader.AutoSize = true;
+            this.cbHeader.Location = new System.Drawing.Point(13, 26);
+            this.cbHeader.Name = "cbHeader";
+            this.cbHeader.Size = new System.Drawing.Size(182, 17);
+            this.cbHeader.TabIndex = 0;
+            this.cbHeader.Text = "Each packet sends this header...";
+            this.cbHeader.UseVisualStyleBackColor = true;
             // 
-            // SetupDialog
+            // DialogSerialSetup
             // 
-            this.AcceptButton = this.buttonOK;
+            this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.buttonCancel;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(311, 299);
             this.ControlBox = false;
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.buttonCancel);
-            this.Controls.Add(this.buttonOK);
-            this.Controls.Add(this.groupBox1);
-            this.Name = "SetupDialog";
+            this.Controls.Add(this.gbPacketData);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnOK);
+            this.Controls.Add(this.gbSerialPort);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Name = "DialogSerialSetup";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Setup";
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.Text = "Serial Port Settings & Setup";
+            this.gbSerialPort.ResumeLayout(false);
+            this.gbSerialPort.PerformLayout();
+            this.gbPacketData.ResumeLayout(false);
+            this.gbPacketData.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -276,12 +278,12 @@ namespace GenericSerial {
             base.Dispose(disposing);
         }
 
-        private ComboBox comboBoxData;
-        private ComboBox comboBoxStop;
-        private ComboBox comboBoxParity;
+        private ComboBox cdDataBits;
+        private ComboBox cbStopBits;
+        private ComboBox cbParity;
         private Label label5;
         private Label label3;
         private Label label4;
-        private ComboBox comboBoxPort;
+        private ComboBox cbPort;
     }
 }

@@ -706,6 +706,9 @@
     <EmbeddedResource Include="VixenPlus\Dialogs\ChannelOutputMaskDialog.resx">
       <DependentUpon>ChannelOutputMaskDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\Dialogs\PluginListDialog.resx">
+      <DependentUpon>PluginListDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VixenPlus\Dialogs\ProfileManagerDialog.resx">
       <DependentUpon>ProfileManagerDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
