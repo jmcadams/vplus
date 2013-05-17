@@ -39,15 +39,15 @@ namespace VixenPlus {
 
         public RouterContext CreateContext(byte[] engineBuffer, SetupData pluginData, IExecutable executableObject, ITickSource tickSource) {
             var item = new RouterContext(engineBuffer, pluginData, executableObject, tickSource);
-            int newSize = Math.Max((_data == null) ? 0 : _data.Length, item.EngineBuffer.Length);
+            var newSize = Math.Max((_data == null) ? 0 : _data.Length, item.EngineBuffer.Length);
             if (_data == null) {
                 _data = new byte[newSize];
             }
             else if (_data.Length < newSize) {
                 Array.Resize(ref _data, newSize);
             }
-            foreach (MappedOutputPlugIn @in in item.OutputPluginList) {
-                _outputPlugins.Add(@in);
+            foreach (var outputPlugIn in item.OutputPluginList) {
+                _outputPlugins.Add(outputPlugIn);
             }
             _instances.Add(item);
             return item;
@@ -69,14 +69,14 @@ namespace VixenPlus {
                     //_updateLock = false;
                 }
                 else if (--_refCount == 0) {
-                    int index = 0;
+                    var index = 0;
                     while (index < _data.Length) {
                         _data[index] = 0;
                         index++;
                     }
                     try {
-                        foreach (RouterContext context in _instances) {
-                            byte[] engineBuffer = context.EngineBuffer;
+                        foreach (var context in _instances) {
+                            var engineBuffer = context.EngineBuffer;
                             for (index = 0; index < engineBuffer.Length; index++) {
                                 _data[index] = Math.Max(_data[index], engineBuffer[index]);
                             }
@@ -86,21 +86,20 @@ namespace VixenPlus {
                         //_updateLock = false;
                         throw new Exception(string.Format("(Router - Update)\n{0}", exception.Message), exception);
                     }
-                    bool flag = Host.GetDebugValue("EventAverages") != null;
+                    var flag = Host.GetDebugValue("EventAverages") != null;
                     Stopwatch stopwatch = null;
                     if (flag) {
                         stopwatch = new Stopwatch();
-                        Host.SetDebugValue("TotalEvents",
-                                           (int.Parse(Host.GetDebugValue("TotalEvents")) + 1).ToString(CultureInfo.InvariantCulture));
+                        Host.SetDebugValue("TotalEvents", (int.Parse(Host.GetDebugValue("TotalEvents")) + 1).ToString(CultureInfo.InvariantCulture));
                     }
                     try {
                         lock (_outputPlugins) {
-                            foreach (MappedOutputPlugIn @in in _outputPlugins) {
-                                if (!((@in.From != 0) && @in.ContextInitialized)) {
+                            foreach (var outputPlugIn in _outputPlugins) {
+                                if (!((outputPlugIn.From != 0) && outputPlugIn.ContextInitialized)) {
                                     continue;
                                 }
-                                Array.Copy(_data, @in.From - 1, @in.Buffer, 0, (@in.To - @in.From) + 1);
-                                var eventDrivenOutputPlugIn = @in.PlugIn as IEventDrivenOutputPlugIn;
+                                Array.Copy(_data, outputPlugIn.From - 1, outputPlugIn.Buffer, 0, (outputPlugIn.To - outputPlugIn.From) + 1);
+                                var eventDrivenOutputPlugIn = outputPlugIn.PlugIn as IEventDrivenOutputPlugIn;
                                 if (eventDrivenOutputPlugIn == null) {
                                     continue;
                                 }
@@ -108,14 +107,14 @@ namespace VixenPlus {
                                     stopwatch.Reset();
                                     stopwatch.Start();
                                 }
-                                eventDrivenOutputPlugIn.Event(@in.Buffer);
+                                eventDrivenOutputPlugIn.Event(outputPlugIn.Buffer);
                                 if (!flag) {
                                     continue;
                                 }
                                 stopwatch.Stop();
-                                var userData = (long) @in.UserData;
+                                var userData = (long) outputPlugIn.UserData;
                                 userData += stopwatch.ElapsedMilliseconds;
-                                @in.UserData = userData;
+                                outputPlugIn.UserData = userData;
                             }
                         }
                     }
@@ -140,25 +139,25 @@ namespace VixenPlus {
 
 
         public bool GetSequenceInputs(IExecutable executableObject, byte[] eventBuffer, bool forLiveUpdate, bool forRecord) {
-            bool flag = false;
-            foreach (InputPlugin plugin in _sequenceInputPlugins[executableObject]) {
+            var flag = false;
+            foreach (var plugin in _sequenceInputPlugins[executableObject]) {
                 if (((forLiveUpdate != plugin.LiveUpdate) || !forLiveUpdate) && ((forRecord != plugin.Record) || !forRecord)) {
                     continue;
                 }
                 Predicate<Channel> match = null;
-                foreach (Input input in plugin.Inputs) {
+                foreach (var input in plugin.Inputs) {
                     if (!input.Enabled || !input.GetChangedInternal()) {
                         continue;
                     }
                     flag = true;
-                    byte valueInternal = input.GetValueInternal();
-                    foreach (string str in plugin.MappingSets.CurrentMappingSet.GetOutputChannelIdList(input)) {
-                        ulong ulChannelId = ulong.Parse(str);
+                    var valueInternal = input.GetValueInternal();
+                    foreach (var str in plugin.MappingSets.CurrentMappingSet.GetOutputChannelIdList(input)) {
+                        var ulChannelId = ulong.Parse(str);
                         if (match == null) {
-                            ulong id = ulChannelId;
+                            var id = ulChannelId;
                             match = c => c.Id == id;
                         }
-                        int outputChannel = executableObject.Channels.Find(match).OutputChannel;
+                        var outputChannel = executableObject.Channels.Find(match).OutputChannel;
                         eventBuffer[outputChannel] = valueInternal;
                     }
                 }
@@ -183,30 +182,32 @@ namespace VixenPlus {
                     Array.Clear(routerContext.EngineBuffer, 0, routerContext.EngineBuffer.Length);
                     EndUpdate();
                 }
-                bool flag2 = Host.GetDebugValue("EventAverages") != null;
-                int num = 0;
-                int num2 = 0;
+                var flag2 = Host.GetDebugValue("EventAverages") != null;
+                var num = 0;
+                var num2 = 0;
                 if (flag2) {
                     num = int.Parse(Host.GetDebugValue("TotalEvents"));
                 }
                 lock (_outputPlugins) {
-                    foreach (MappedOutputPlugIn @in in routerContext.OutputPluginList) {
-                        @in.PlugIn.Shutdown();
+                    foreach (var outputPlugIn in routerContext.OutputPluginList) {
+                        outputPlugIn.PlugIn.Shutdown();
                         if (flag2) {
                             Host.SetDebugValue(string.Format("event_average_{0}", num2++),
                                                string.Format("{0}|{1}|{2}|{3}",
-                                                             new object[]
-                                                             {@in.PlugIn.Name, @in.From, @in.To, (((long) @in.UserData)) / ((float) num)}));
+                                                             new object[] {
+                                                                 outputPlugIn.PlugIn.Name, outputPlugIn.From, outputPlugIn.To,
+                                                                 (((long) outputPlugIn.UserData)) / ((float) num)
+                                                             }));
                         }
-                        _outputPlugins.Remove(@in);
+                        _outputPlugins.Remove(outputPlugIn);
                     }
                 }
                 if (_sequenceInputPlugins.ContainsKey(routerContext.ExecutableObject)) {
                     lock (_sequenceInputPlugins) {
-                        foreach (InputPlugin plugin in _sequenceInputPlugins[routerContext.ExecutableObject]) {
+                        foreach (var plugin in _sequenceInputPlugins[routerContext.ExecutableObject]) {
                             plugin.ShutdownInternal();
                         }
-                        //TODO This causes a bug is another window is open that uses this xObject since the xObject gets removed.
+                        //TODO This causes a bug when another window is open that uses this xObject since the xObject gets removed.
                         _sequenceInputPlugins.Remove(routerContext.ExecutableObject);
                     }
                 }
@@ -231,22 +232,22 @@ namespace VixenPlus {
 
 
         public void Startup(RouterContext routerContext) {
-            int num = 0;
-            string name = string.Empty;
+            var num = 0;
+            var name = string.Empty;
             if (routerContext.Initialized) {
                 Shutdown(routerContext);
             }
             try {
                 List<InputPlugin> list;
                 routerContext.Initialized = false;
-                foreach (MappedOutputPlugIn @in in routerContext.OutputPluginList) {
-                    var eventDrivenOutputPlugIn = @in.PlugIn as IEventDrivenOutputPlugIn;
+                foreach (var outputPlugIn in routerContext.OutputPluginList) {
+                    var eventDrivenOutputPlugIn = outputPlugIn.PlugIn as IEventDrivenOutputPlugIn;
                     if (eventDrivenOutputPlugIn != null) {
-                        eventDrivenOutputPlugIn.Initialize(routerContext.ExecutableObject, routerContext.PluginData, @in.SetupDataNode);
+                        eventDrivenOutputPlugIn.Initialize(routerContext.ExecutableObject, routerContext.PluginData, outputPlugIn.SetupDataNode);
                     }
                     else {
-                        ((IEventlessOutputPlugIn) @in.PlugIn).Initialize(routerContext.ExecutableObject, routerContext.PluginData, @in.SetupDataNode,
-                                                                         routerContext.TickSource);
+                        ((IEventlessOutputPlugIn) outputPlugIn.PlugIn).Initialize(routerContext.ExecutableObject, routerContext.PluginData,
+                                                                                  outputPlugIn.SetupDataNode, routerContext.TickSource);
                     }
                 }
                 _sequenceInputPlugins[routerContext.ExecutableObject] = list = new List<InputPlugin>();
@@ -260,24 +261,24 @@ namespace VixenPlus {
                     list.Add(item);
                 }
                 var executable = (IExecutable) Host.Communication["CurrentObject"];
-                string str2 = string.Empty;
+                var str2 = string.Empty;
                 if (executable != null) {
                     str2 = executable.Key.ToString(CultureInfo.InvariantCulture);
                 }
                 try {
-                    foreach (InputPlugin plugin2 in _sequenceInputPlugins[routerContext.ExecutableObject]) {
-                        name = plugin2.Name;
-                        plugin2.StartupInternal();
+                    foreach (var inputPlugin in _sequenceInputPlugins[routerContext.ExecutableObject]) {
+                        name = inputPlugin.Name;
+                        inputPlugin.StartupInternal();
                     }
-                    foreach (MappedOutputPlugIn @in in routerContext.OutputPluginList) {
-                        name = @in.PlugIn.Name;
-                        XmlNode plugInData = routerContext.PluginData.GetPlugInData(num.ToString(CultureInfo.InvariantCulture));
+                    foreach (var outputPlugIn in routerContext.OutputPluginList) {
+                        name = outputPlugIn.PlugIn.Name;
+                        var plugInData = routerContext.PluginData.GetPlugInData(num.ToString(CultureInfo.InvariantCulture));
                         if (executable != null) {
                             Host.Communication["SetupNode_" + str2] = plugInData;
                         }
-                        @in.PlugIn.Startup();
+                        outputPlugIn.PlugIn.Startup();
                         if (Host.GetDebugValue("EventAverages") != null) {
-                            @in.UserData = 0L;
+                            outputPlugIn.UserData = 0L;
                             Host.SetDebugValue("TotalEvents", "0");
                         }
                         Host.Communication.Remove("SetupNode_" + str2);
