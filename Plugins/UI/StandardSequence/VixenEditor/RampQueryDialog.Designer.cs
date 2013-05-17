@@ -6,7 +6,7 @@ namespace VixenEditor {
     using System.Collections;
 
     internal partial class RampQueryDialog {
-        private IContainer components;
+        private IContainer components = null;
 
         #region Windows Form Designer generated code
         private Button buttonCancel;
