@@ -51,19 +51,18 @@ namespace VixenPlus
             Input[] iterators = _inputPlugin.GetIterators();
             comboBoxSingleIteratorInput.Items.AddRange(iterators);
             listBoxIteratorInputs.Items.AddRange(iterators);
-            if (_inputPlugin.MappingIteratorType == InputPlugin.MappingIterator.SingleInput)
-            {
-                radioButtonSingleIterator.Checked = true;
-                comboBoxSingleIteratorInput.SelectedItem = _inputPlugin.SingleIterator;
-            }
-            else if (_inputPlugin.MappingIteratorType == InputPlugin.MappingIterator.MultiInput)
-            {
-                radioButtonMultipleIterators.Checked = true;
-                tabControlIterators.SelectedTab = tabPageMultipleIterators;
-            }
-            else
-            {
-                radioButtonNoIterator.Checked = true;
+            switch (_inputPlugin.MappingIteratorType) {
+                case InputPlugin.MappingIterator.SingleInput:
+                    radioButtonSingleIterator.Checked = true;
+                    comboBoxSingleIteratorInput.SelectedItem = _inputPlugin.SingleIterator;
+                    break;
+                case InputPlugin.MappingIterator.MultiInput:
+                    radioButtonMultipleIterators.Checked = true;
+                    tabControlIterators.SelectedTab = tabPageMultipleIterators;
+                    break;
+                default:
+                    radioButtonNoIterator.Checked = true;
+                    break;
             }
         }
 

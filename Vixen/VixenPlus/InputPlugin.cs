@@ -194,35 +194,37 @@ namespace VixenPlus
             _singleIterator = null;
             if (node4 != null)
             {
-                if (MappingIteratorType == MappingIterator.SingleInput)
-                {
-                    XmlNode node5 = node4["Input"];
-                    if (node5 != null)
-                    {
-                        if (node5.Attributes != null)
-                        {
-                            _singleIterator = FindInput(ulong.Parse(node5.Attributes["id"].Value));
-                        }
-                    }
-                }
-                else if (MappingIteratorType == MappingIterator.MultiInput)
-                {
-                    XmlNodeList inputNodes = node4.SelectNodes("Input");
-                    if (inputNodes != null)
-                    {
-                        foreach (XmlNode node5 in inputNodes)
+                switch (MappingIteratorType) {
+                    case MappingIterator.SingleInput: {
+                        XmlNode node5 = node4["Input"];
+                        if (node5 != null)
                         {
                             if (node5.Attributes != null)
                             {
-                                Input input2 = FindInput(ulong.Parse(node5.Attributes["id"].Value));
-                                MappingSet set = _mappingSets.FindMappingSet(ulong.Parse(node5.Attributes["mappingId"].Value));
-                                if (input2 != null)
+                                _singleIterator = FindInput(ulong.Parse(node5.Attributes["id"].Value));
+                            }
+                        }
+                    }
+                        break;
+                    case MappingIterator.MultiInput: {
+                        XmlNodeList inputNodes = node4.SelectNodes("Input");
+                        if (inputNodes != null)
+                        {
+                            foreach (XmlNode node5 in inputNodes)
+                            {
+                                if (node5.Attributes != null)
                                 {
-                                    input2.AssignedMappingSet = set;
+                                    Input input2 = FindInput(ulong.Parse(node5.Attributes["id"].Value));
+                                    MappingSet set = _mappingSets.FindMappingSet(ulong.Parse(node5.Attributes["mappingId"].Value));
+                                    if (input2 != null)
+                                    {
+                                        input2.AssignedMappingSet = set;
+                                    }
                                 }
                             }
                         }
                     }
+                        break;
                 }
             }
             if (_setupNode.Attributes != null && _setupNode.Attributes["liveUpdate"] != null)
