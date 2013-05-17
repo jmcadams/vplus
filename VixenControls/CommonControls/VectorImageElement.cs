@@ -1,19 +1,16 @@
-﻿namespace VixenControls
-{
-    using System;
-    using System.Drawing;
-    using System.Xml;
+﻿using System.Xml;
 
-    public abstract class VectorImageElement
-    {
+namespace CommonControls {
+    public abstract class VectorImageElement {
         public System.Drawing.Color Color;
         public VectorImage.PrimitiveType Type;
 
-        public VectorImageElement(VectorImage.PrimitiveType type, System.Drawing.Color color)
-        {
-            this.Type = type;
-            this.Color = color;
+
+        protected VectorImageElement(VectorImage.PrimitiveType type, System.Drawing.Color color) {
+            Type = type;
+            Color = color;
         }
+
 
         public abstract void SaveToXml(XmlNode contextNode);
         public abstract void ScaleTo(float scale);

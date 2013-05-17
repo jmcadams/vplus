@@ -1,34 +1,37 @@
-namespace VixenPlus.Dialogs{
+using CommonControls;
+
+namespace VixenPlus.Dialogs {
     using System;
     using System.Windows.Forms;
     using System.Drawing;
     using System.Collections;
 
-    internal partial class ChannelLayoutDialog{
+    internal partial class ChannelLayoutDialog {
         private System.ComponentModel.IContainer components = null;
 
         #region Windows Form Designer generated code
-        private ListBox listBoxChannels;
-private ListBox listBoxPlugins;
-private Panel panel1;
-private Panel panel2;
-private Panel panel3;
-private PictureBox pictureBoxMiniMap;
-private VixenControls.Toolbox toolbox1;
-private VixenControls.VectorImageStrip vectorImageStrip1;
 
-        private void InitializeComponent()
-        {
+        private ListBox listBoxChannels;
+        private ListBox listBoxPlugins;
+        private Panel panel1;
+        private Panel panel2;
+        private Panel panel3;
+        private PictureBox pictureBoxMiniMap;
+        private Toolbox toolbox1;
+        private VectorImageStrip vectorImageStrip1;
+
+
+        private void InitializeComponent() {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.vectorImageStrip1 = new VixenControls.VectorImageStrip();
+            this.vectorImageStrip1 = new VectorImageStrip();
             this.listBoxPlugins = new System.Windows.Forms.ListBox();
-            this.toolbox1 = new VixenControls.Toolbox();
+            this.toolbox1 = new Toolbox();
             this.listBoxChannels = new System.Windows.Forms.ListBox();
             this.pictureBoxMiniMap = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMiniMap)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.pictureBoxMiniMap)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
@@ -47,9 +50,10 @@ private VixenControls.VectorImageStrip vectorImageStrip1;
             // vectorImageStrip1
             // 
             this.vectorImageStrip1.AllowDrop = true;
-            this.vectorImageStrip1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.vectorImageStrip1.Anchor =
+                ((System.Windows.Forms.AnchorStyles)
+                 ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) |
+                   System.Windows.Forms.AnchorStyles.Right)));
             this.vectorImageStrip1.Location = new System.Drawing.Point(160, 10);
             this.vectorImageStrip1.Name = "vectorImageStrip1";
             this.vectorImageStrip1.Size = new System.Drawing.Size(620, 103);
@@ -109,9 +113,10 @@ private VixenControls.VectorImageStrip vectorImageStrip1;
             // 
             // panel3
             // 
-            this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel3.Anchor =
+                ((System.Windows.Forms.AnchorStyles)
+                 ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) |
+                   System.Windows.Forms.AnchorStyles.Right)));
             this.panel3.Controls.Add(this.listBoxChannels);
             this.panel3.Location = new System.Drawing.Point(10, 129);
             this.panel3.Name = "panel3";
@@ -130,18 +135,17 @@ private VixenControls.VectorImageStrip vectorImageStrip1;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Channel Layout";
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMiniMap)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.pictureBoxMiniMap)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
+
         #endregion
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (this.components != null))
-            {
+        protected override void Dispose(bool disposing) {
+            if (disposing && (this.components != null)) {
                 this.components.Dispose();
             }
             base.Dispose(disposing);

@@ -492,12 +492,7 @@ namespace VixenPlus {
                                                  : ((IsLooping || (CurrentObject.EventSequences.Count > (sequenceIndex + 1)))
                                                         ? (executableObject.Time - (CurrentObject.CrossFadeLength * 1000)) : 0);
                 context.StartOffset = 0;
-                if (executableObject.Audio != null) {
-                    context.SoundChannel = _fmod.LoadSound(Path.Combine(Paths.AudioPath, executableObject.Audio.FileName), context.SoundChannel);
-                }
-                else {
-                    context.SoundChannel = _fmod.LoadSound(null);
-                }
+                context.SoundChannel = executableObject.Audio != null ? _fmod.LoadSound(Path.Combine(Paths.AudioPath, executableObject.Audio.FileName), context.SoundChannel) : _fmod.LoadSound(null);
                 if ((CurrentObject.CrossFadeLength != 0) && (context.SoundChannel != null)) {
                     if (IsLooping || (sequenceIndex > 0)) {
                         context.SoundChannel.SetEntryFade(CurrentObject.CrossFadeLength);

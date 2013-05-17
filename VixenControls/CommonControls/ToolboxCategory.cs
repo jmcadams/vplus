@@ -1,124 +1,79 @@
-﻿namespace VixenControls
-{
-    using System;
-    using System.ComponentModel;
-    using System.Drawing;
-    using System.Reflection;
-    using System.Runtime.CompilerServices;
+﻿using System.ComponentModel;
+using System.Drawing;
 
-    [TypeConverter(typeof(ToolboxCategoryTypeConverter))]
-    public class ToolboxCategory
-    {
-        internal System.Drawing.Rectangle Bounds;
-        internal System.Drawing.Rectangle ButtonBounds;
-        private string m_description;
-        private bool m_expanded;
-        private ToolboxItemCollection m_items;
-        private string m_name;
+namespace CommonControls {
+    [TypeConverter(typeof (ToolboxCategoryTypeConverter))]
+    public class ToolboxCategory {
+        internal Rectangle Bounds;
+        internal Rectangle ButtonBounds;
+        private string _name;
 
         public event OnCategoryChange CategoryChange;
 
-        public ToolboxCategory()
-        {
-            this.m_expanded = false;
-            this.m_items = new ToolboxItemCollection();
-            this.m_name = "ToolboxCategory";
+
+        public ToolboxCategory() {
+            Expanded = false;
+            Items = new ToolboxItemCollection();
+            _name = "ToolboxCategory";
         }
 
-        public ToolboxCategory(string name, string description)
-        {
-            this.m_expanded = false;
-            this.m_items = new ToolboxItemCollection();
-            this.m_name = name;
-            this.m_description = description;
+
+        public ToolboxCategory(string name, string description) {
+            Expanded = false;
+            Items = new ToolboxItemCollection();
+            _name = name;
+            Description = description;
         }
 
-        public void Collapse()
-        {
-            if (this.m_expanded)
-            {
-                this.m_expanded = false;
-                this.FireCategoryChange();
+
+        public void Collapse() {
+            if (!Expanded) {
+                return;
+            }
+            Expanded = false;
+            FireCategoryChange();
+        }
+
+
+        public void Expand() {
+            if (Expanded || (Items.Count <= 0)) {
+                return;
+            }
+            Expanded = true;
+            FireCategoryChange();
+        }
+
+
+        private void FireCategoryChange() {
+            if (CategoryChange != null) {
+                CategoryChange();
             }
         }
 
-        public void Expand()
-        {
-            if (!(this.m_expanded || (this.m_items.Count <= 0)))
-            {
-                this.m_expanded = true;
-                this.FireCategoryChange();
-            }
-        }
 
-        private void FireCategoryChange()
-        {
-            if (this.CategoryChange != null)
-            {
-                this.CategoryChange();
-            }
-        }
-
-        public string Description
-        {
-            get
-            {
-                return this.m_description;
-            }
-            set
-            {
-                this.m_description = value;
-            }
-        }
+        public string Description { get; set; }
 
         [Browsable(false)]
-        public bool Expanded
-        {
-            get
-            {
-                return this.m_expanded;
-            }
+        public bool Expanded { get; private set; }
+
+
+        public ToolboxItem this[int index] {
+            get { return Items[index]; }
+            set { Items[index] = value; }
         }
 
-        public ToolboxItem this[int index]
-        {
-            get
-            {
-                return this.m_items[index];
-            }
-            set
-            {
-                this.m_items[index] = value;
-            }
-        }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public ToolboxItemCollection Items
-        {
-            get
-            {
-                return this.m_items;
-            }
-            set
-            {
-                this.m_items = value;
-            }
-        }
+        public ToolboxItemCollection Items { get; set; }
 
-        public string Name
-        {
-            get
-            {
-                return this.m_name;
-            }
-            set
-            {
-                this.m_name = value;
-                this.FireCategoryChange();
+        public string Name {
+            get { return _name; }
+            set {
+                _name = value;
+                FireCategoryChange();
             }
         }
 
         public delegate void OnCategoryChange();
     }
 }
-

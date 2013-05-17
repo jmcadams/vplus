@@ -1,11 +1,8 @@
-using System.Drawing;
-
-using CommonUtils;
-
 namespace VixenEditor {
     using System;
     using System.Collections.Generic;
     using System.Windows.Forms;
+
     using VixenPlus;
 
     internal partial class ChannelCopyDialog : Form {
@@ -14,6 +11,7 @@ namespace VixenEditor {
         private readonly List<int> _sortOrder;
         private readonly byte[,] _sequenceData;
         private readonly Channel[] _channels;
+
 
         public ChannelCopyDialog(AffectGridDelegate affectGridDelegate, EventSequence sequence, List<int> sortOrder) {
             InitializeComponent();
@@ -33,9 +31,10 @@ namespace VixenEditor {
             }
             _eventSequence = sequence;
             _sortOrder = sortOrder;
-            _sequenceData = new byte[1, sequence.TotalEventPeriods];
+            _sequenceData = new byte[1,sequence.TotalEventPeriods];
             _affectGridDelegate = affectGridDelegate;
         }
+
 
         private void buttonCopy_Click(object sender, EventArgs e) {
             var channel = _sortOrder[comboBoxSourceChannel.SelectedIndex];
@@ -44,6 +43,7 @@ namespace VixenEditor {
             }
             _affectGridDelegate(comboBoxDestinationChannel.SelectedIndex, 0, _sequenceData);
         }
+
 
         private void buttonDone_Click(object sender, EventArgs e) {
             Close();

@@ -1,101 +1,101 @@
-﻿namespace VixenControls
-{
-    using System;
-    using System.ComponentModel;
-    using System.Drawing;
-    using System.Drawing.Drawing2D;
-    using System.Windows.Forms;
+﻿using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 
-    public class VectorImageStrip : UserControl
-    {
-        private IContainer components = null;
-        private int m_depth;
-        private const int m_imageBorderPad = 6;
-        private System.Drawing.Rectangle m_imageListRect;
-        private const int m_imagePad = 5;
-        private VectorImageCollection m_images;
-        private int m_imagesShown;
-        private System.Drawing.Rectangle m_lessButtonBounds;
-        private Point[] m_lessButtonPoints;
-        private bool m_lessButtonVisible = false;
-        private System.Drawing.Rectangle m_moreButtonBounds;
-        private Point[] m_moreButtonPoints;
-        private bool m_moreButtonVisible = false;
-        private const int m_navButtonSize = 10;
-        private int m_startIndex;
-        private VectorImageCollection.OnItemsChange m_vectorImageCollectionChange;
+namespace CommonControls {
+    public class VectorImageStrip : UserControl {
+        private IContainer components;
+        private int _depth;
+        private Rectangle _imageListRect;
+        private int _imagesShown;
+        private Rectangle _lessButtonBounds;
+        private Point[] _lessButtonPoints;
+        private bool _lessButtonVisible;
+        private Rectangle _moreButtonBounds;
+        private Point[] _moreButtonPoints;
+        private bool _moreButtonVisible;
+        private int _startIndex;
+        private readonly VectorImageCollection.OnItemsChange _vectorImageCollectionChange;
 
-        public VectorImageStrip()
-        {
-            this.InitializeComponent();
-            this.BackColor = Color.Transparent;
-            base.SetStyle(ControlStyles.DoubleBuffer, true);
-            base.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            base.SetStyle(ControlStyles.UserPaint, true);
-            this.m_images = new VectorImageCollection();
-            this.m_vectorImageCollectionChange = new VectorImageCollection.OnItemsChange(this.VectorImageChange);
-            this.m_images.ItemsChange += this.m_vectorImageCollectionChange;
-            this.m_startIndex = 0;
-            this.m_imagesShown = 0;
-            this.m_depth = 1;
+
+        public VectorImageStrip() {
+            InitializeComponent();
+            BackColor = Color.Transparent;
+            SetStyle(ControlStyles.DoubleBuffer, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            SetStyle(ControlStyles.UserPaint, true);
+            Images = new VectorImageCollection();
+            _vectorImageCollectionChange = VectorImageChange;
+            Images.ItemsChange += _vectorImageCollectionChange;
+            _startIndex = 0;
+            _imagesShown = 0;
+            _depth = 1;
         }
 
-        private void CalcImageContainerRect()
-        {
+
+        private void CalcImageContainerRect() {
             int num;
             Point[] pointArray;
-            int num2 = 5;
-            if (base.Width > base.Height)
-            {
-                num = this.m_lessButtonBounds.Height >> 1;
-                this.m_imageListRect = new System.Drawing.Rectangle(20, 0, base.ClientRectangle.Width - 40, base.ClientRectangle.Height);
-                this.m_lessButtonBounds = new System.Drawing.Rectangle(0, 0, 10, base.ClientRectangle.Height - 1);
-                pointArray = new Point[] { new Point(this.m_lessButtonBounds.Left + 2, num), new Point(this.m_lessButtonBounds.Right - 1, num - num2), new Point(this.m_lessButtonBounds.Right - 1, num + num2) };
-                this.m_lessButtonPoints = pointArray;
-                this.m_moreButtonBounds = new System.Drawing.Rectangle((base.ClientRectangle.Right - 10) - 1, 0, 10, base.ClientRectangle.Height - 1);
-                pointArray = new Point[] { new Point(this.m_moreButtonBounds.Right - 2, num), new Point(this.m_moreButtonBounds.Left + 2, num - num2), new Point(this.m_moreButtonBounds.Left + 2, num + num2) };
-                this.m_moreButtonPoints = pointArray;
+            const int num2 = 5;
+            if (Width > Height) {
+                num = _lessButtonBounds.Height >> 1;
+                _imageListRect = new Rectangle(20, 0, ClientRectangle.Width - 40, ClientRectangle.Height);
+                _lessButtonBounds = new Rectangle(0, 0, 10, ClientRectangle.Height - 1);
+                pointArray = new[] {
+                    new Point(_lessButtonBounds.Left + 2, num), new Point(_lessButtonBounds.Right - 1, num - num2),
+                    new Point(_lessButtonBounds.Right - 1, num + num2)
+                };
+                _lessButtonPoints = pointArray;
+                _moreButtonBounds = new Rectangle((ClientRectangle.Right - 10) - 1, 0, 10, ClientRectangle.Height - 1);
+                pointArray = new[] {
+                    new Point(_moreButtonBounds.Right - 2, num), new Point(_moreButtonBounds.Left + 2, num - num2),
+                    new Point(_moreButtonBounds.Left + 2, num + num2)
+                };
+                _moreButtonPoints = pointArray;
             }
-            else
-            {
-                num = this.m_lessButtonBounds.Width >> 1;
-                this.m_imageListRect = new System.Drawing.Rectangle(0, 20, base.ClientRectangle.Width, base.ClientRectangle.Height - 40);
-                this.m_lessButtonBounds = new System.Drawing.Rectangle(0, 0, base.ClientRectangle.Width - 1, 10);
-                pointArray = new Point[] { new Point(num, this.m_lessButtonBounds.Top + 2), new Point(num - num2, this.m_lessButtonBounds.Bottom - 1), new Point(num + num2, this.m_lessButtonBounds.Bottom - 1) };
-                this.m_lessButtonPoints = pointArray;
-                this.m_moreButtonBounds = new System.Drawing.Rectangle(0, (base.ClientRectangle.Bottom - 10) - 1, base.ClientRectangle.Width - 1, 10);
-                pointArray = new Point[] { new Point(num, this.m_moreButtonBounds.Bottom - 2), new Point(num - num2, this.m_moreButtonBounds.Top + 2), new Point(num + num2, this.m_moreButtonBounds.Top + 2) };
-                this.m_moreButtonPoints = pointArray;
+            else {
+                num = _lessButtonBounds.Width >> 1;
+                _imageListRect = new Rectangle(0, 20, ClientRectangle.Width, ClientRectangle.Height - 40);
+                _lessButtonBounds = new Rectangle(0, 0, ClientRectangle.Width - 1, 10);
+                pointArray = new[] {
+                    new Point(num, _lessButtonBounds.Top + 2), new Point(num - num2, _lessButtonBounds.Bottom - 1),
+                    new Point(num + num2, _lessButtonBounds.Bottom - 1)
+                };
+                _lessButtonPoints = pointArray;
+                _moreButtonBounds = new Rectangle(0, (ClientRectangle.Bottom - 10) - 1, ClientRectangle.Width - 1, 10);
+                pointArray = new[] {
+                    new Point(num, _moreButtonBounds.Bottom - 2), new Point(num - num2, _moreButtonBounds.Top + 2),
+                    new Point(num + num2, _moreButtonBounds.Top + 2)
+                };
+                _moreButtonPoints = pointArray;
             }
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (this.components != null))
-            {
-                this.components.Dispose();
+
+        protected override void Dispose(bool disposing) {
+            if (disposing && (components != null)) {
+                components.Dispose();
             }
             base.Dispose(disposing);
         }
 
-        private void DrawVectorImage(Graphics g, VectorListItem listItem)
-        {
-            Pen pen = new Pen(Color.Black);
-            SolidBrush brush = new SolidBrush(Color.Black);
-            VectorImage.Image image = listItem.Image;
-            Point location = image.Location;
+
+        private static void DrawVectorImage(Graphics g, VectorListItem listItem) {
+            var pen = new Pen(Color.Black);
+            var brush = new SolidBrush(Color.Black);
+            var image = listItem.Image;
+            var location = image.Location;
             g.FillPath(Brushes.White, listItem.BorderPath);
             g.DrawPath(Pens.DarkSlateBlue, listItem.BorderPath);
-            foreach (VectorImageElement element in image.Elements)
-            {
+            foreach (var element in image.Elements) {
                 VectorImage.Rectangle rectangle;
                 brush.Color = pen.Color = element.Color;
-                switch (element.Type)
-                {
-                    case VectorImage.PrimitiveType.Line:
-                    {
-                        VectorImage.Line line = (VectorImage.Line) element;
-                        g.DrawLine(pen, (int) (location.X + line.X), (int) (location.Y + line.Y), (int) (location.X + line.X2), (int) (location.Y + line.Y2));
+                switch (element.Type) {
+                    case VectorImage.PrimitiveType.Line: {
+                        var line = (VectorImage.Line) element;
+                        g.DrawLine(pen, location.X + line.X, location.Y + line.Y, location.X + line.X2, location.Y + line.Y2);
                         break;
                     }
                     case VectorImage.PrimitiveType.Rectangle:
@@ -121,176 +121,156 @@
             }
         }
 
-        private void InitializeComponent()
-        {
-            this.components = new Container();
-            base.AutoScaleMode = AutoScaleMode.Font;
+
+        private void InitializeComponent() {
+            components = new Container();
+            AutoScaleMode = AutoScaleMode.Font;
         }
 
-        protected override void OnMouseDown(MouseEventArgs e)
-        {
-            if (this.m_lessButtonVisible && this.m_lessButtonBounds.Contains(e.Location))
-            {
-                this.m_startIndex--;
-                this.Recalc();
+
+        protected override void OnMouseDown(MouseEventArgs e) {
+            if (_lessButtonVisible && _lessButtonBounds.Contains(e.Location)) {
+                _startIndex--;
+                Recalc();
             }
-            else if (this.m_moreButtonVisible && this.m_moreButtonBounds.Contains(e.Location))
-            {
-                this.m_startIndex++;
-                this.Recalc();
+            else if (_moreButtonVisible && _moreButtonBounds.Contains(e.Location)) {
+                _startIndex++;
+                Recalc();
             }
         }
 
-        protected override void OnMouseLeave(EventArgs e)
-        {
-        }
 
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            if ((e.Button & MouseButtons.Left) != MouseButtons.None)
-            {
-            }
-        }
+        protected override void OnMouseLeave(EventArgs e) {}
 
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            Graphics g = e.Graphics;
-            RectangleF clipBounds = g.ClipBounds;
-            g.SetClip(this.m_imageListRect, CombineMode.Intersect);
-            for (int i = 0; i < this.m_imagesShown; i++)
-            {
-                this.DrawVectorImage(g, this.m_images[this.m_startIndex + i]);
+        protected override void OnMouseMove(MouseEventArgs e) {}
+
+
+        protected override void OnPaint(PaintEventArgs e) {
+            var g = e.Graphics;
+            var clipBounds = g.ClipBounds;
+            g.SetClip(_imageListRect, CombineMode.Intersect);
+            for (var i = 0; i < _imagesShown; i++) {
+                DrawVectorImage(g, Images[_startIndex + i]);
             }
             g.SetClip(clipBounds);
-            if (this.m_lessButtonVisible)
-            {
-                g.FillRectangle(Brushes.White, this.m_lessButtonBounds);
-                g.DrawRectangle(Pens.Black, this.m_lessButtonBounds);
-                g.FillPolygon(Brushes.Gray, this.m_lessButtonPoints);
+            if (_lessButtonVisible) {
+                g.FillRectangle(Brushes.White, _lessButtonBounds);
+                g.DrawRectangle(Pens.Black, _lessButtonBounds);
+                g.FillPolygon(Brushes.Gray, _lessButtonPoints);
             }
-            if (this.m_moreButtonVisible)
-            {
-                g.FillRectangle(Brushes.White, this.m_moreButtonBounds);
-                g.DrawRectangle(Pens.Black, this.m_moreButtonBounds);
-                g.FillPolygon(Brushes.Gray, this.m_moreButtonPoints);
+            if (!_moreButtonVisible) {
+                return;
             }
+
+            g.FillRectangle(Brushes.White, _moreButtonBounds);
+            g.DrawRectangle(Pens.Black, _moreButtonBounds);
+            g.FillPolygon(Brushes.Gray, _moreButtonPoints);
         }
 
-        protected override void OnResize(EventArgs e)
-        {
-            this.Recalc();
+
+        protected override void OnResize(EventArgs e) {
+            Recalc();
             base.OnResize(e);
         }
 
-        private void Recalc()
-        {
-            if (this.m_images.Count != 0)
-            {
-                float num;
-                int left;
-                int top;
-                int startIndex;
-                VectorListItem item;
-                VectorImage.Image image;
-                Size size;
-                Size originalSize;
-                int num8;
-                this.CalcImageContainerRect();
-                int num5 = 0;
-                int num6 = 0;
-                int count = this.m_images.Count;
-                if (base.Width > base.Height)
-                {
-                    num8 = this.m_imageListRect.Height / this.m_depth;
-                    left = this.m_imageListRect.Left;
-                    startIndex = this.m_startIndex;
-                    while ((left < this.m_imageListRect.Right) && (startIndex < count))
-                    {
-                        num5 = 0;
-                        top = 0;
-                        while ((top < this.m_imageListRect.Height) && (startIndex < count))
-                        {
-                            item = this.m_images[startIndex];
-                            image = item.Image;
-                            originalSize = image.OriginalSize;
-                            num = Math.Min((float) (num8 / (originalSize.Height + 6)), ((float) this.m_imageListRect.Width) / ((float) (originalSize.Width + 6)));
-                            if (num < 1f)
-                            {
-                                image.ScaleTo(num);
-                            }
-                            size = image.Size;
-                            item.ListItemBounds.X = left;
-                            item.ListItemBounds.Y = top;
-                            item.ListItemBounds.Width = size.Width + 6;
-                            item.ListItemBounds.Height = num8 - 1;
-                            image.Location.X = left + ((item.ListItemBounds.Width - size.Width) / 2);
-                            image.Location.Y = top + ((item.ListItemBounds.Height - size.Height) / 2);
-                            if (item.BorderPath != null)
-                            {
-                                item.BorderPath.Dispose();
-                            }
-                            item.BorderPath = this.RoundedRectPath(left, top, item.ListItemBounds.Width, item.ListItemBounds.Height, 4);
-                            num5 = Math.Max(num5, size.Width + 6);
-                            top += num8;
-                            startIndex++;
-                        }
-                        left += num5 + 5;
-                    }
-                    this.m_moreButtonVisible = (this.m_images[startIndex - 1].ListItemBounds.Right > this.m_imageListRect.Right) || (startIndex < this.m_images.Count);
-                }
-                else
-                {
-                    num8 = this.m_imageListRect.Width / this.m_depth;
-                    top = this.m_imageListRect.Top;
-                    startIndex = this.m_startIndex;
-                    while ((top < this.m_imageListRect.Bottom) && (startIndex < count))
-                    {
-                        num6 = 0;
-                        left = this.m_imageListRect.Left;
-                        while ((left < this.m_imageListRect.Right) && (startIndex < count))
-                        {
-                            item = this.m_images[startIndex];
-                            image = item.Image;
-                            originalSize = image.OriginalSize;
-                            num = Math.Min(((float) this.m_imageListRect.Height) / ((float) (originalSize.Height + 6)), (float) (num8 / (originalSize.Width + 6)));
-                            if (num < 1f)
-                            {
-                                image.ScaleTo(num);
-                            }
-                            size = image.Size;
-                            item.ListItemBounds.X = left;
-                            item.ListItemBounds.Y = top;
-                            item.ListItemBounds.Width = num8 - 1;
-                            item.ListItemBounds.Height = size.Height + 6;
-                            image.Location.X = left + ((item.ListItemBounds.Width - size.Width) / 2);
-                            image.Location.Y = top + ((item.ListItemBounds.Height - size.Height) / 2);
-                            if (item.BorderPath != null)
-                            {
-                                item.BorderPath.Dispose();
-                            }
-                            item.BorderPath = this.RoundedRectPath(left, top, item.ListItemBounds.Width, item.ListItemBounds.Height, 4);
-                            num6 = Math.Max(num6, size.Height + 6);
-                            left += num8;
-                            startIndex++;
-                        }
-                        top += num6 + 5;
-                    }
-                    this.m_moreButtonVisible = (this.m_images[startIndex - 1].ListItemBounds.Bottom > this.m_imageListRect.Bottom) || (startIndex < this.m_images.Count);
-                }
-                this.m_lessButtonVisible = this.m_startIndex > 0;
-                this.m_imagesShown = startIndex - this.m_startIndex;
-                this.Refresh();
+
+        private void Recalc() {
+            if (Images.Count == 0) {
+                return;
             }
+
+            float num;
+            int left;
+            int top;
+            int startIndex;
+            VectorListItem item;
+            VectorImage.Image image;
+            Size size;
+            Size originalSize;
+            int num8;
+            CalcImageContainerRect();
+            var count = Images.Count;
+            if (Width > Height) {
+                num8 = _imageListRect.Height / _depth;
+                left = _imageListRect.Left;
+                startIndex = _startIndex;
+                while ((left < _imageListRect.Right) && (startIndex < count)) {
+                    var num5 = 0;
+                    top = 0;
+                    while ((top < _imageListRect.Height) && (startIndex < count)) {
+                        item = Images[startIndex];
+                        image = item.Image;
+                        originalSize = image.OriginalSize;
+                        num = Math.Min(num8 / (originalSize.Height + 6f), _imageListRect.Width / (originalSize.Width + 6f));
+                        if (num < 1f) {
+                            image.ScaleTo(num);
+                        }
+                        size = image.Size;
+                        item.ListItemBounds.X = left;
+                        item.ListItemBounds.Y = top;
+                        item.ListItemBounds.Width = size.Width + 6;
+                        item.ListItemBounds.Height = num8 - 1;
+                        image.Location.X = left + ((item.ListItemBounds.Width - size.Width) / 2);
+                        image.Location.Y = top + ((item.ListItemBounds.Height - size.Height) / 2);
+                        if (item.BorderPath != null) {
+                            item.BorderPath.Dispose();
+                        }
+                        item.BorderPath = RoundedRectPath(left, top, item.ListItemBounds.Width, item.ListItemBounds.Height, 4);
+                        num5 = Math.Max(num5, size.Width + 6);
+                        top += num8;
+                        startIndex++;
+                    }
+                    left += num5 + 5;
+                }
+                _moreButtonVisible = (Images[startIndex - 1].ListItemBounds.Right > _imageListRect.Right) || (startIndex < Images.Count);
+            }
+            else {
+                num8 = _imageListRect.Width / _depth;
+                top = _imageListRect.Top;
+                startIndex = _startIndex;
+                while ((top < _imageListRect.Bottom) && (startIndex < count)) {
+                    var num6 = 0;
+                    left = _imageListRect.Left;
+                    while ((left < _imageListRect.Right) && (startIndex < count)) {
+                        item = Images[startIndex];
+                        image = item.Image;
+                        originalSize = image.OriginalSize;
+                        num = Math.Min(_imageListRect.Height / (originalSize.Height + 6f), num8 / (originalSize.Width + 6f));
+                        if (num < 1f) {
+                            image.ScaleTo(num);
+                        }
+                        size = image.Size;
+                        item.ListItemBounds.X = left;
+                        item.ListItemBounds.Y = top;
+                        item.ListItemBounds.Width = num8 - 1;
+                        item.ListItemBounds.Height = size.Height + 6;
+                        image.Location.X = left + ((item.ListItemBounds.Width - size.Width) / 2);
+                        image.Location.Y = top + ((item.ListItemBounds.Height - size.Height) / 2);
+                        if (item.BorderPath != null) {
+                            item.BorderPath.Dispose();
+                        }
+                        item.BorderPath = RoundedRectPath(left, top, item.ListItemBounds.Width, item.ListItemBounds.Height, 4);
+                        num6 = Math.Max(num6, size.Height + 6);
+                        left += num8;
+                        startIndex++;
+                    }
+                    top += num6 + 5;
+                }
+                _moreButtonVisible = (Images[startIndex - 1].ListItemBounds.Bottom > _imageListRect.Bottom) || (startIndex < Images.Count);
+            }
+            _lessButtonVisible = _startIndex > 0;
+            _imagesShown = startIndex - _startIndex;
+            Refresh();
         }
 
-        private GraphicsPath RoundedRectPath(int x, int y, int width, int height, int radius)
-        {
-            GraphicsPath path = new GraphicsPath();
+
+        private GraphicsPath RoundedRectPath(int x, int y, int width, int height, int radius) {
+            var path = new GraphicsPath();
             path.AddLine(x + radius, y, (x + width) - (radius * 2), y);
             path.AddArc((x + width) - (radius * 2), y, radius * 2, radius * 2, 270f, 90f);
-            path.AddLine((int) (x + width), (int) (y + radius), (int) (x + width), (int) ((y + height) - (radius * 2)));
-            path.AddArc((int) ((x + width) - (radius * 2)), (int) ((y + height) - (radius * 2)), (int) (radius * 2), (int) (radius * 2), 0f, 90f);
-            path.AddLine((int) ((x + width) - (radius * 2)), (int) (y + height), (int) (x + radius), (int) (y + height));
+            path.AddLine(x + width, y + radius, x + width, (y + height) - (radius * 2));
+            path.AddArc((x + width) - (radius * 2), (y + height) - (radius * 2), radius * 2, radius * 2, 0f, 90f);
+            path.AddLine((x + width) - (radius * 2), y + height, x + radius, y + height);
             path.AddArc(x, (y + height) - (radius * 2), radius * 2, radius * 2, 90f, 90f);
             path.AddLine(x, (y + height) - (radius * 2), x, y + radius);
             path.AddArc(x, y, radius * 2, radius * 2, 180f, 90f);
@@ -298,50 +278,29 @@
             return path;
         }
 
-        private void VectorImageChange()
-        {
-            this.Recalc();
+
+        private void VectorImageChange() {
+            Recalc();
         }
 
-        [DefaultValue(typeof(Color), "Transparent")]
-        public override Color BackColor
-        {
-            get
-            {
-                return base.BackColor;
-            }
-            set
-            {
-                base.BackColor = value;
-            }
+
+        [DefaultValue(typeof (Color), "Transparent")]
+        public override sealed Color BackColor {
+            get { return base.BackColor; }
+            set { base.BackColor = value; }
         }
 
         [DefaultValue(1)]
-        public int Depth
-        {
-            get
-            {
-                return this.m_depth;
-            }
-            set
-            {
-                this.m_depth = value;
-                this.Recalc();
+        public int Depth {
+            get { return _depth; }
+            set {
+                _depth = value;
+                Recalc();
             }
         }
 
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content), Browsable(false)]
-        public VectorImageCollection Images
-        {
-            get
-            {
-                return this.m_images;
-            }
-            set
-            {
-                this.m_images = value;
-            }
-        }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        [Browsable(false)]
+        public VectorImageCollection Images { get; set; }
     }
 }
-

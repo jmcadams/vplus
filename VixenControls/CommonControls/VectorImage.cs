@@ -1,103 +1,96 @@
-﻿namespace VixenControls
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.IO;
-    using System.Reflection;
-    using System.Xml;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
+using System.IO;
+using System.Xml;
 
-    public class VectorImage
-    {
-        public class Ellipse : VectorImage.Rectangle
-        {
-            public Ellipse(Color color, int x, int y, int width, int height) : base(color, x, y, width, height)
-            {
-                base.Type = VectorImage.PrimitiveType.Ellipse;
+namespace CommonControls {
+    public class VectorImage {
+        public class Ellipse : Rectangle {
+            public Ellipse(Color color, int x, int y, int width, int height) : base(color, x, y, width, height) {
+                Type = PrimitiveType.Ellipse;
             }
 
-            public static VectorImageElement LoadEllipseFromXml(XmlNode contextNode)
-            {
-                string[] strArray = contextNode.SelectSingleNode("Location").InnerText.Split(new char[] { ',' });
-                return new VectorImage.Ellipse(Color.Black, int.Parse(strArray[0]), int.Parse(strArray[1]), int.Parse(contextNode.SelectSingleNode("Width").InnerText), int.Parse(contextNode.SelectSingleNode("Height").InnerText));
+
+            public static VectorImageElement LoadEllipseFromXml(XmlNode contextNode) {
+                var strArray = contextNode.SelectSingleNode("Location").InnerText.Split(new[] {','});
+                return new Ellipse(Color.Black, int.Parse(strArray[0]), int.Parse(strArray[1]),
+                                   int.Parse(contextNode.SelectSingleNode("Width").InnerText),
+                                   int.Parse(contextNode.SelectSingleNode("Height").InnerText));
             }
         }
 
-        public class FilledEllipse : VectorImage.Rectangle
-        {
-            public FilledEllipse(Color color, int x, int y, int width, int height) : base(color, x, y, width, height)
-            {
-                base.Type = VectorImage.PrimitiveType.FilledEllipse;
+        public class FilledEllipse : Rectangle {
+            public FilledEllipse(Color color, int x, int y, int width, int height) : base(color, x, y, width, height) {
+                Type = PrimitiveType.FilledEllipse;
             }
 
-            public static VectorImageElement LoadFilledEllipseFromXml(XmlNode contextNode)
-            {
-                string[] strArray = contextNode.SelectSingleNode("Location").InnerText.Split(new char[] { ',' });
-                return new VectorImage.FilledEllipse(Color.Black, int.Parse(strArray[0]), int.Parse(strArray[1]), int.Parse(contextNode.SelectSingleNode("Width").InnerText), int.Parse(contextNode.SelectSingleNode("Height").InnerText));
-            }
-        }
 
-        public class FilledRectangle : VectorImage.Rectangle
-        {
-            public FilledRectangle(Color color, int x, int y, int width, int height) : base(color, x, y, width, height)
-            {
-                base.Type = VectorImage.PrimitiveType.FilledRectangle;
-            }
-
-            public static VectorImageElement LoadRectangleFromXml(XmlNode contextNode)
-            {
-                string[] strArray = contextNode.SelectSingleNode("Location").InnerText.Split(new char[] { ',' });
-                return new VectorImage.FilledRectangle(Color.Black, int.Parse(strArray[0]), int.Parse(strArray[1]), int.Parse(contextNode.SelectSingleNode("Width").InnerText), int.Parse(contextNode.SelectSingleNode("Height").InnerText));
+            public static VectorImageElement LoadFilledEllipseFromXml(XmlNode contextNode) {
+                var strArray = contextNode.SelectSingleNode("Location").InnerText.Split(new[] {','});
+                return new FilledEllipse(Color.Black, int.Parse(strArray[0]), int.Parse(strArray[1]),
+                                         int.Parse(contextNode.SelectSingleNode("Width").InnerText),
+                                         int.Parse(contextNode.SelectSingleNode("Height").InnerText));
             }
         }
 
-        public class Image
-        {
+        public class FilledRectangle : Rectangle {
+            public FilledRectangle(Color color, int x, int y, int width, int height) : base(color, x, y, width, height) {
+                Type = PrimitiveType.FilledRectangle;
+            }
+
+
+            public static VectorImageElement LoadRectangleFromXml(XmlNode contextNode) {
+                var strArray = contextNode.SelectSingleNode("Location").InnerText.Split(new[] {','});
+                return new FilledRectangle(Color.Black, int.Parse(strArray[0]), int.Parse(strArray[1]),
+                                           int.Parse(contextNode.SelectSingleNode("Width").InnerText),
+                                           int.Parse(contextNode.SelectSingleNode("Height").InnerText));
+            }
+        }
+
+        public class Image {
             internal Point Location;
-            private List<VectorImageElement> m_elements = new List<VectorImageElement>();
-            private System.Drawing.Size m_originalSize;
-            private System.Drawing.Size m_size;
+            private Size _size;
 
-            public Image(int width, int height)
-            {
-                this.m_originalSize = new System.Drawing.Size(width, height);
-                this.m_size = new System.Drawing.Size(width, height);
-                this.Location = new Point();
+
+            public Image(int width, int height) {
+                Elements = new List<VectorImageElement>();
+                OriginalSize = new Size(width, height);
+                _size = new Size(width, height);
+                Location = new Point();
             }
 
-            public static VectorImage.Image FromFile(string filePath)
-            {
-                if (!File.Exists(filePath))
-                {
+
+            public static Image FromFile(string filePath) {
+                if (!File.Exists(filePath)) {
                     return null;
                 }
-                XmlDocument document = new XmlDocument();
+                var document = new XmlDocument();
                 document.Load(filePath);
-                XmlNode node = document.SelectSingleNode("Image");
-                VectorImage.Image image = new VectorImage.Image(int.Parse(node.Attributes["width"].Value), int.Parse(node.Attributes["height"].Value));
+                var node = document.SelectSingleNode("Image");
+                var image = new Image(int.Parse(node.Attributes["width"].Value), int.Parse(node.Attributes["height"].Value));
                 VectorImageElement item = null;
-                foreach (XmlNode node2 in node.SelectNodes("Elements/Element"))
-                {
-                    switch (((VectorImage.PrimitiveType) Enum.Parse(typeof(VectorImage.PrimitiveType), node2.Attributes["type"].Value)))
-                    {
-                        case VectorImage.PrimitiveType.Line:
-                            item = VectorImage.Line.LoadFromXml(node2);
+                foreach (XmlNode node2 in node.SelectNodes("Elements/Element")) {
+                    switch (((PrimitiveType) Enum.Parse(typeof (PrimitiveType), node2.Attributes["type"].Value))) {
+                        case PrimitiveType.Line:
+                            item = Line.LoadFromXml(node2);
                             break;
 
-                        case VectorImage.PrimitiveType.Rectangle:
-                            item = VectorImage.Rectangle.LoadFromXml(node2);
+                        case PrimitiveType.Rectangle:
+                            item = Rectangle.LoadFromXml(node2);
                             break;
 
-                        case VectorImage.PrimitiveType.FilledRectangle:
-                            item = VectorImage.FilledRectangle.LoadRectangleFromXml(node2);
+                        case PrimitiveType.FilledRectangle:
+                            item = FilledRectangle.LoadRectangleFromXml(node2);
                             break;
 
-                        case VectorImage.PrimitiveType.Ellipse:
-                            item = VectorImage.Ellipse.LoadEllipseFromXml(node2);
+                        case PrimitiveType.Ellipse:
+                            item = Ellipse.LoadEllipseFromXml(node2);
                             break;
 
-                        case VectorImage.PrimitiveType.FilledEllipse:
-                            item = VectorImage.FilledEllipse.LoadFilledEllipseFromXml(node2);
+                        case PrimitiveType.FilledEllipse:
+                            item = FilledEllipse.LoadFilledEllipseFromXml(node2);
                             break;
                     }
                     item.Color = Color.FromArgb(int.Parse(node2.Attributes["color"].Value));
@@ -106,128 +99,90 @@
                 return image;
             }
 
-            public void ScaleTo(float scale)
-            {
-                this.m_size.Width = (int) (scale * this.m_originalSize.Width);
-                this.m_size.Height = (int) (scale * this.m_originalSize.Height);
-                foreach (VectorImageElement element in this.m_elements)
-                {
+
+            public void ScaleTo(float scale) {
+                _size.Width = (int) (scale * OriginalSize.Width);
+                _size.Height = (int) (scale * OriginalSize.Height);
+                foreach (var element in Elements) {
                     element.ScaleTo(scale);
                 }
             }
 
-            public List<VectorImageElement> Elements
-            {
-                get
-                {
-                    return this.m_elements;
-                }
+
+            public List<VectorImageElement> Elements { get; private set; }
+
+
+            public VectorImageElement this[int index] {
+                get { return Elements[index]; }
+                set { Elements[index] = value; }
             }
 
-            public VectorImageElement this[int index]
-            {
-                get
-                {
-                    return this.m_elements[index];
-                }
-                set
-                {
-                    this.m_elements[index] = value;
-                }
-            }
 
-            public System.Drawing.Size OriginalSize
-            {
-                get
-                {
-                    return this.m_originalSize;
-                }
-            }
+            public Size OriginalSize { get; private set; }
 
-            public System.Drawing.Size Size
-            {
-                get
-                {
-                    return this.m_size;
-                }
+            public Size Size {
+                get { return _size; }
             }
         }
 
-        public class Line : VectorImageElement
-        {
-            private int m_originalX;
-            private int m_originalX2;
-            private int m_originalY;
-            private int m_originalY2;
+        public class Line : VectorImageElement {
+            private readonly int _originalX;
+            private readonly int _originalX2;
+            private readonly int _originalY;
+            private readonly int _originalY2;
             public int X;
             public int X2;
             public int Y;
             public int Y2;
 
-            public Line(Color color, int x, int y, int x2, int y2) : base(VectorImage.PrimitiveType.Line, color)
-            {
-                this.m_originalX = this.X = x;
-                this.m_originalY = this.Y = y;
-                this.m_originalX2 = this.X2 = x2;
-                this.m_originalY2 = this.Y2 = y2;
+
+            public Line(Color color, int x, int y, int x2, int y2) : base(PrimitiveType.Line, color) {
+                _originalX = X = x;
+                _originalY = Y = y;
+                _originalX2 = X2 = x2;
+                _originalY2 = Y2 = y2;
             }
 
-            public static VectorImageElement LoadFromXml(XmlNode contextNode)
-            {
-                string[] strArray = contextNode.SelectSingleNode("Point1").InnerText.Split(new char[] { ',' });
-                string[] strArray2 = contextNode.SelectSingleNode("Point2").InnerText.Split(new char[] { ',' });
-                return new VectorImage.Line(Color.Black, int.Parse(strArray[0]), int.Parse(strArray[1]), int.Parse(strArray2[0]), int.Parse(strArray2[1]));
+
+            public static VectorImageElement LoadFromXml(XmlNode contextNode) {
+                var strArray = contextNode.SelectSingleNode("Point1").InnerText.Split(new[] {','});
+                var strArray2 = contextNode.SelectSingleNode("Point2").InnerText.Split(new[] {','});
+                return new Line(Color.Black, int.Parse(strArray[0]), int.Parse(strArray[1]), int.Parse(strArray2[0]), int.Parse(strArray2[1]));
             }
 
-            public override void SaveToXml(XmlNode contextNode)
-            {
-                Xml.SetValue(contextNode, "Point1", string.Format("{0},{1}", this.m_originalX, this.m_originalY));
-                Xml.SetValue(contextNode, "Point2", string.Format("{0},{1}", this.m_originalX2, this.m_originalY2));
+
+            public override void SaveToXml(XmlNode contextNode) {
+                Xml.SetValue(contextNode, "Point1", string.Format("{0},{1}", _originalX, _originalY));
+                Xml.SetValue(contextNode, "Point2", string.Format("{0},{1}", _originalX2, _originalY2));
             }
 
-            public override void ScaleTo(float scale)
-            {
-                this.X = (int) (this.m_originalX * scale);
-                this.Y = (int) (this.m_originalY * scale);
-                this.X2 = (int) (this.m_originalX2 * scale);
-                this.Y2 = (int) (this.m_originalY2 * scale);
+
+            public override void ScaleTo(float scale) {
+                X = (int) (_originalX * scale);
+                Y = (int) (_originalY * scale);
+                X2 = (int) (_originalX2 * scale);
+                Y2 = (int) (_originalY2 * scale);
             }
 
-            public override int Height
-            {
-                get
-                {
-                    return this.Y2;
-                }
+
+            public override int Height {
+                get { return Y2; }
             }
 
-            public override int OriginalHeight
-            {
-                get
-                {
-                    return this.m_originalY2;
-                }
+            public override int OriginalHeight {
+                get { return _originalY2; }
             }
 
-            public override int OriginalWidth
-            {
-                get
-                {
-                    return this.m_originalX2;
-                }
+            public override int OriginalWidth {
+                get { return _originalX2; }
             }
 
-            public override int Width
-            {
-                get
-                {
-                    return this.X2;
-                }
+            public override int Width {
+                get { return X2; }
             }
         }
 
-        public enum PrimitiveType
-        {
+        public enum PrimitiveType {
             Line,
             Rectangle,
             FilledRectangle,
@@ -235,78 +190,63 @@
             FilledEllipse
         }
 
-        public class Rectangle : VectorImageElement
-        {
-            public int _Height;
-            public int _Width;
-            private int m_originalHeight;
-            private int m_originalWidth;
-            private int m_originalX;
-            private int m_originalY;
+        public class Rectangle : VectorImageElement {
+            private int _height;
+            private int _width;
+            private readonly int _originalHeight;
+            private readonly int _originalWidth;
+            private readonly int _originalX;
+            private readonly int _originalY;
             public int X;
             public int Y;
 
-            public Rectangle(Color color, int x, int y, int width, int height) : base(VectorImage.PrimitiveType.Rectangle, color)
-            {
-                this.m_originalX = this.X = x;
-                this.m_originalY = this.Y = y;
-                this.m_originalWidth = this._Width = width;
-                this.m_originalHeight = this._Height = height;
+
+            public Rectangle(Color color, int x, int y, int width, int height) : base(PrimitiveType.Rectangle, color) {
+                _originalX = X = x;
+                _originalY = Y = y;
+                _originalWidth = _width = width;
+                _originalHeight = _height = height;
             }
 
-            public static VectorImageElement LoadFromXml(XmlNode contextNode)
-            {
-                string[] strArray = contextNode.SelectSingleNode("Location").InnerText.Split(new char[] { ',' });
-                return new VectorImage.Rectangle(Color.Black, int.Parse(strArray[0]), int.Parse(strArray[1]), int.Parse(contextNode.SelectSingleNode("Width").InnerText), int.Parse(contextNode.SelectSingleNode("Height").InnerText));
+
+            public static VectorImageElement LoadFromXml(XmlNode contextNode) {
+                var strArray = contextNode.SelectSingleNode("Location").InnerText.Split(new[] {','});
+                return new Rectangle(Color.Black, int.Parse(strArray[0]), int.Parse(strArray[1]),
+                                     int.Parse(contextNode.SelectSingleNode("Width").InnerText),
+                                     int.Parse(contextNode.SelectSingleNode("Height").InnerText));
             }
 
-            public override void SaveToXml(XmlNode contextNode)
-            {
-                Xml.SetValue(contextNode, "Location", string.Format("{0},{1}", this.m_originalX, this.m_originalY));
-                Xml.SetValue(contextNode, "Width", this.m_originalWidth.ToString());
-                Xml.SetValue(contextNode, "Height", this.m_originalHeight.ToString());
+
+            public override void SaveToXml(XmlNode contextNode) {
+                Xml.SetValue(contextNode, "Location", string.Format("{0},{1}", _originalX, _originalY));
+                Xml.SetValue(contextNode, "Width", _originalWidth.ToString(CultureInfo.InvariantCulture));
+                Xml.SetValue(contextNode, "Height", _originalHeight.ToString(CultureInfo.InvariantCulture));
             }
 
-            public override void ScaleTo(float scale)
-            {
-                this.X = (int) (this.m_originalX * scale);
-                this.Y = (int) (this.m_originalY * scale);
-                this._Width = (int) (this.m_originalWidth * scale);
-                this._Height = (int) (this.m_originalHeight * scale);
+
+            public override void ScaleTo(float scale) {
+                X = (int) (_originalX * scale);
+                Y = (int) (_originalY * scale);
+                _width = (int) (_originalWidth * scale);
+                _height = (int) (_originalHeight * scale);
             }
 
-            public override int Height
-            {
-                get
-                {
-                    return this._Height;
-                }
+
+            public override int Height {
+                get { return _height; }
             }
 
-            public override int OriginalHeight
-            {
-                get
-                {
-                    return this.m_originalHeight;
-                }
+            public override int OriginalHeight {
+                get { return _originalHeight; }
             }
 
-            public override int OriginalWidth
-            {
-                get
-                {
-                    return this.m_originalWidth;
-                }
+            public override int OriginalWidth {
+                get { return _originalWidth; }
             }
 
-            public override int Width
-            {
-                get
-                {
-                    return this._Width;
-                }
+            public override int Width {
+                get { return _width; }
             }
         }
     }
 }
-
