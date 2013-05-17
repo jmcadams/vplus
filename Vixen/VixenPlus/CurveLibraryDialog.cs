@@ -9,7 +9,6 @@ namespace VixenPlus
     internal partial class CurveLibraryDialog : Form
     {
         private readonly CurveLibrary _curveLibrary;
-        private byte[] _curve;
         private bool _isInternal;
 
         public CurveLibraryDialog()
@@ -32,10 +31,9 @@ namespace VixenPlus
                                           System.Windows.Forms.SortOrder.Ascending);
         }
 
-        public byte[] SelectedCurve
-        {
-            get { return _curve; }
-        }
+
+        public byte[] SelectedCurve { get; private set; }
+
 
         private void buttonChangeRemoteLocation_Click(object sender, EventArgs e)
         {
@@ -269,7 +267,7 @@ namespace VixenPlus
             {
                 _curveLibrary.Import(clr);
             }
-            _curve = clr.CurveData;
+            SelectedCurve = clr.CurveData;
         }
 
         private string StringFromColor(string colorString)

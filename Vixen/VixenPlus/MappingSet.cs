@@ -9,14 +9,14 @@ namespace VixenPlus
     {
         private readonly Dictionary<ulong, List<string>> _inputMappings;
         private readonly Dictionary<ulong, List<int>> _inputOutputMappings;
-        private ulong _id;
+
 
         public MappingSet(string name)
         {
             Name = name;
             _inputMappings = new Dictionary<ulong, List<string>>();
             _inputOutputMappings = new Dictionary<ulong, List<int>>();
-            _id = Host.GetUniqueKey();
+            Id = Host.GetUniqueKey();
         }
 
         public MappingSet(XmlNode dataNode)
@@ -26,16 +26,14 @@ namespace VixenPlus
             ReadData(dataNode);
         }
 
-        public ulong Id
-        {
-            get { return _id; }
-        }
+
+        public ulong Id { get; private set; }
 
         public string Name { get; set; }
 
         public object Clone()
         {
-            var set = new MappingSet(Name) {_id = _id};
+            var set = new MappingSet(Name) {Id = Id};
             foreach (ulong num in _inputMappings.Keys)
             {
                 List<string> list;
@@ -75,7 +73,7 @@ namespace VixenPlus
             if (dataNode.Attributes != null)
             {
                 Name = dataNode.Attributes["name"].Value;
-                _id = ulong.Parse(dataNode.Attributes["id"].Value);
+                Id = ulong.Parse(dataNode.Attributes["id"].Value);
             }
             XmlNode node = dataNode["Inputs"];
             if (node != null)

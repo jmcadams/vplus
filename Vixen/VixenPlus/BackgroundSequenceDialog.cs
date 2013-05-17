@@ -9,28 +9,26 @@ namespace VixenPlus
     internal partial class BackgroundSequenceDialog : Form
     {
         private readonly string _sequencesPath;
-        private string _sequenceFileName;
 
 
         public BackgroundSequenceDialog(string sequenceFileName, string sequencePath)
         {
             InitializeComponent();
-            _sequenceFileName = sequenceFileName;
+            BackgroundSequenceFileName = sequenceFileName;
             _sequencesPath = sequencePath;
             labelSequenceName.Text = (sequenceFileName == string.Empty)
                                          ? Resources.None
                                          : Path.GetFileNameWithoutExtension(sequenceFileName);
         }
 
-        public string BackgroundSequenceFileName
-        {
-            get { return _sequenceFileName; }
-        }
+
+        public string BackgroundSequenceFileName { get; private set; }
+
 
         private void buttonClear_Click(object sender, EventArgs e)
         {
             labelSequenceName.Text = Resources.None;
-            _sequenceFileName = string.Empty;
+            BackgroundSequenceFileName = string.Empty;
         }
 
         private void buttonSelect_Click(object sender, EventArgs e)
@@ -58,7 +56,7 @@ namespace VixenPlus
                 else
                 {
                     labelSequenceName.Text = sequence.Name;
-                    _sequenceFileName = openFileDialog.FileName;
+                    BackgroundSequenceFileName = openFileDialog.FileName;
                     sequence.Dispose();
                 }
             }

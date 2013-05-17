@@ -6,21 +6,18 @@ namespace VixenPlus
 {
     public abstract class Input : ICloneable
     {
-        private readonly InputPlugin _owner;
-        private ulong _id;
         private bool _isEnabled;
         private bool _isMappingIterator;
-        private string _name;
         private bool _wasChanged;
 
         protected Input(InputPlugin owner, string name, bool isIterator)
         {
-            _owner = owner;
-            _name = name;
+            Owner = owner;
+            Name = name;
             _isEnabled = true;
             _isMappingIterator = isIterator;
-            _owner.MappingSets.GetMappingSet("Mapping set 1", this);
-            _id = Host.GetUniqueKey();
+            Owner.MappingSets.GetMappingSet("Mapping set 1", this);
+            Id = Host.GetUniqueKey();
         }
 
         public MappingSet AssignedMappingSet { get; set; }
@@ -33,10 +30,7 @@ namespace VixenPlus
             set { _isEnabled = value; }
         }
 
-        public ulong Id
-        {
-            get { return _id; }
-        }
+        public ulong Id { get; private set; }
 
         public bool IsMappingIterator
         {
@@ -44,20 +38,15 @@ namespace VixenPlus
             set { _isMappingIterator = value; }
         }
 
-        public string Name
-        {
-            get { return _name; }
-        }
+        public string Name { get; private set; }
 
-        internal InputPlugin Owner
-        {
-            get { return _owner; }
-        }
+        internal InputPlugin Owner { get; private set; }
+
 
         public object Clone()
         {
             var input = (Input) MemberwiseClone();
-            input._id = _id;
+            input.Id = Id;
             return input;
         }
 
@@ -68,7 +57,7 @@ namespace VixenPlus
                 bool changed = Changed;
                 if (!(_wasChanged || !changed))
                 {
-                    _owner.IteratorTriggered(this);
+                    Owner.IteratorTriggered(this);
                 }
                 _wasChanged = changed;
                 return false;
@@ -87,9 +76,9 @@ namespace VixenPlus
         {
             if (node.Attributes != null)
             {
-                _name = node.Attributes["name"].Value;
+                Name = node.Attributes["name"].Value;
                 _isEnabled = bool.Parse(node.Attributes["enabled"].Value);
-                _id = ulong.Parse(node.Attributes["id"].Value);
+                Id = ulong.Parse(node.Attributes["id"].Value);
                 _isMappingIterator = bool.Parse(node.Attributes["isIterator"].Value);
             }
         }

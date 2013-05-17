@@ -16,7 +16,6 @@ namespace VixenPlus {
 
         private readonly ImportExport _importExport;
         private string _fileName = "";
-        private CurveLibraryRecord _selectedCurve;
 
 
         public CurveFileImportExportDialog(ImportExport importExport) {
@@ -33,9 +32,7 @@ namespace VixenPlus {
             set { _fileName = value; }
         }
 
-        public CurveLibraryRecord SelectedCurve {
-            get { return _selectedCurve; }
-        }
+        public CurveLibraryRecord SelectedCurve { get; private set; }
 
 
         private void buttonFile_Click(object sender, EventArgs e) {
@@ -68,7 +65,7 @@ namespace VixenPlus {
 
         private void buttonOK_Click(object sender, EventArgs e) {
             if (_importExport == ImportExport.Import) {
-                _selectedCurve = comboBoxSelectedCurve.SelectedItem as CurveLibraryRecord;
+                SelectedCurve = comboBoxSelectedCurve.SelectedItem as CurveLibraryRecord;
             }
             else {
                 Cursor = Cursors.WaitCursor;
@@ -182,7 +179,7 @@ namespace VixenPlus {
         private void listViewCurvesImport_MouseDoubleClick(object sender, MouseEventArgs e) {
             if (listViewCurvesImport.SelectedItems.Count == 1) {
                 var tag = (CurveLibraryRecord) listViewCurvesImport.SelectedItems[0].Tag;
-                _selectedCurve = tag;
+                SelectedCurve = tag;
                 DialogResult = DialogResult.OK;
             }
         }

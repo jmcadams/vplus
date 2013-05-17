@@ -9,28 +9,27 @@ namespace VixenPlus
     internal partial class CurveLibraryRecordEditDialog : Form
     {
         private readonly CurveLibrary _curveLibrary;
-        private CurveLibraryRecord _curveLibraryRecord;
+
 
         public CurveLibraryRecordEditDialog(CurveLibraryRecord clr)
         {
             InitializeComponent();
-            _curveLibraryRecord = clr;
+            LibraryRecord = clr;
             _curveLibrary = new CurveLibrary();
             textBoxManufacturer.AutoCompleteCustomSource.AddRange(_curveLibrary.GetAllManufacturers());
             textBoxController.AutoCompleteCustomSource.AddRange(_curveLibrary.GetAllControllers());
-            if (_curveLibraryRecord != null)
+            if (LibraryRecord != null)
             {
-                textBoxManufacturer.Text = _curveLibraryRecord.Manufacturer;
-                textBoxLightCount.Text = _curveLibraryRecord.LightCount;
-                buttonColor.BackColor = Color.FromArgb(_curveLibraryRecord.Color);
-                textBoxController.Text = _curveLibraryRecord.Controller;
+                textBoxManufacturer.Text = LibraryRecord.Manufacturer;
+                textBoxLightCount.Text = LibraryRecord.LightCount;
+                buttonColor.BackColor = Color.FromArgb(LibraryRecord.Color);
+                textBoxController.Text = LibraryRecord.Controller;
             }
         }
 
-        public CurveLibraryRecord LibraryRecord
-        {
-            get { return _curveLibraryRecord; }
-        }
+
+        public CurveLibraryRecord LibraryRecord { get; private set; }
+
 
         private void buttonColor_Click(object sender, EventArgs e)
         {
@@ -47,18 +46,18 @@ namespace VixenPlus
             {
                 MessageBox.Show(Resources.AllFieldsRequired, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
             }
-            else if (_curveLibraryRecord == null)
+            else if (LibraryRecord == null)
             {
-                _curveLibraryRecord = new CurveLibraryRecord(textBoxManufacturer.Text, textBoxLightCount.Text,
+                LibraryRecord = new CurveLibraryRecord(textBoxManufacturer.Text, textBoxLightCount.Text,
                                                              buttonColor.BackColor.ToArgb(),
                                                              textBoxController.Text);
             }
             else
             {
-                _curveLibraryRecord.Manufacturer = textBoxManufacturer.Text;
-                _curveLibraryRecord.LightCount = textBoxLightCount.Text;
-                _curveLibraryRecord.Color = buttonColor.BackColor.ToArgb();
-                _curveLibraryRecord.Controller = textBoxController.Text;
+                LibraryRecord.Manufacturer = textBoxManufacturer.Text;
+                LibraryRecord.LightCount = textBoxLightCount.Text;
+                LibraryRecord.Color = buttonColor.BackColor.ToArgb();
+                LibraryRecord.Controller = textBoxController.Text;
             }
         }
 

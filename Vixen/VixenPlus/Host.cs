@@ -15,7 +15,6 @@ namespace VixenPlus {
         private static ulong _lastKey;
         private static readonly Preference2 Preference2 = Preference2.GetInstance();
         private static readonly Dictionary<string, string> Properties = new Dictionary<string, string>();
-        private static PlugInRouter _singletonRouter;
         private readonly System.Timers.Timer _backgroundMusicDelayTimer;
         private readonly ToolStripLabel _backgroundMusicLabel;
         private readonly ToolStripProgressBar _backgroundProgressBar;
@@ -29,7 +28,7 @@ namespace VixenPlus {
 
         public Host(Form hostForm) {
             _hostForm = hostForm;
-            _singletonRouter = PlugInRouter.GetInstance();
+            Router = PlugInRouter.GetInstance();
             _backgroundSequenceDelayTimer = new System.Timers.Timer();
             _backgroundSequenceDelayTimer.Elapsed += BackgroundSequenceDelayTimerElapsed;
             _backgroundMusicDelayTimer = new System.Timers.Timer();
@@ -77,9 +76,7 @@ namespace VixenPlus {
             get { return Preference2; }
         }
 
-        public static PlugInRouter Router {
-            get { return _singletonRouter; }
-        }
+        public static PlugInRouter Router { get; private set; }
 
 
         public string QueryInstance(int index) {
