@@ -1683,6 +1683,9 @@ namespace VixenEditor {
             int channelOffset;
 
             var height = pictureBoxTime.Height + splitContainer2.SplitterWidth;
+            cbGroups.Width = pictureBoxChannels.Width;
+            cbGroups.Location = new Point(0, height - cbGroups.Height - splitContainer2.SplitterWidth);
+
             var selectedZoom = toolStripComboBoxRowZoom.SelectedIndex;
             var heightAddition = (selectedZoom <= 4) ? 0 : (selectedZoom >= 8) ? 3 : 1;
             var showNaturalChannelNumbers = _preferences.GetBoolean("ShowNaturalChannelNumber");
