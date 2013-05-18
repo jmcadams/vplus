@@ -177,7 +177,8 @@ namespace VixenPlus {
                 if (!_instances.Contains(routerContext)) {
                     return;
                 }
-                if (((ISystem) Interfaces.Available["ISystem"]).UserPreferences.GetBoolean("ClearAtEndOfSequence")) {
+                var clearAtEnd = ((ISystem) Interfaces.Available["ISystem"]).UserPreferences.GetBoolean("ClearAtEndOfSequence");
+                if (clearAtEnd) {
                     BeginUpdate();
                     Array.Clear(routerContext.EngineBuffer, 0, routerContext.EngineBuffer.Length);
                     EndUpdate();
@@ -190,6 +191,13 @@ namespace VixenPlus {
                 }
                 lock (_outputPlugins) {
                     foreach (var outputPlugIn in routerContext.OutputPluginList) {
+                        if (clearAtEnd) {
+                            var eventDrivenOutputPlugIn = outputPlugIn.PlugIn as IEventDrivenOutputPlugIn;
+                            if (eventDrivenOutputPlugIn != null) {
+                                Array.Clear(outputPlugIn.Buffer, 0, outputPlugIn.Buffer.Length);
+                                eventDrivenOutputPlugIn.Event(outputPlugIn.Buffer);
+                            }
+                        }
                         outputPlugIn.PlugIn.Shutdown();
                         if (flag2) {
                             Host.SetDebugValue(string.Format("event_average_{0}", num2++),
