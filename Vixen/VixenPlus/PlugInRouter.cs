@@ -18,7 +18,6 @@ namespace VixenPlus {
 
         private byte[] _data;
         private int _refCount;
-        //private bool _updateLock;
 
         private PlugInRouter() {
             _methodInvoker = EndUpdate;
@@ -58,15 +57,11 @@ namespace VixenPlus {
             if (_data == null) {
                 return;
             }
-            //_updateLock = true;
             if (Host.InvokeRequired) {
                 Host.Invoke(_methodInvoker, new object[0]);
             }
             else {
-                //try
-                //{
                 if (_refCount == 0) {
-                    //_updateLock = false;
                 }
                 else if (--_refCount == 0) {
                     var index = 0;
@@ -83,7 +78,6 @@ namespace VixenPlus {
                         }
                     }
                     catch (Exception exception) {
-                        //_updateLock = false;
                         throw new Exception(string.Format("(Router - Update)\n{0}", exception.Message), exception);
                     }
                     var flag = Host.GetDebugValue("EventAverages") != null;
@@ -119,16 +113,9 @@ namespace VixenPlus {
                         }
                     }
                     catch (Exception exception2) {
-                        //_updateLock = false;
                         throw new Exception(string.Format(Resources.RouterOutputError, exception2.Message), exception2);
                     }
-                    //_updateLock = false;
                 }
-                //}
-                //finally
-                //{
-                //    //_updateLock = false;
-                //}
             }
         }
 
@@ -191,13 +178,13 @@ namespace VixenPlus {
                 }
                 lock (_outputPlugins) {
                     foreach (var outputPlugIn in routerContext.OutputPluginList) {
-                        if (clearAtEnd) {
-                            var eventDrivenOutputPlugIn = outputPlugIn.PlugIn as IEventDrivenOutputPlugIn;
-                            if (eventDrivenOutputPlugIn != null) {
-                                Array.Clear(outputPlugIn.Buffer, 0, outputPlugIn.Buffer.Length);
-                                eventDrivenOutputPlugIn.Event(outputPlugIn.Buffer);
-                            }
-                        }
+                        //if (clearAtEnd) {
+                        //    var eventDrivenOutputPlugIn = outputPlugIn.PlugIn as IEventDrivenOutputPlugIn;
+                        //    if (eventDrivenOutputPlugIn != null) {
+                        //        Array.Clear(outputPlugIn.Buffer, 0, outputPlugIn.Buffer.Length);
+                        //        eventDrivenOutputPlugIn.Event(outputPlugIn.Buffer);
+                        //    }
+                        //}
                         outputPlugIn.PlugIn.Shutdown();
                         if (flag2) {
                             Host.SetDebugValue(string.Format("event_average_{0}", num2++),
