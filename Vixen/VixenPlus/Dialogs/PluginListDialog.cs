@@ -241,21 +241,21 @@ namespace VixenPlus.Dialogs {
             Cursor = Cursors.WaitCursor;
             try {
                 _internalUpdate = true;
+                // ReSharper disable PossibleNullReferenceException
                 foreach (XmlNode node in _setupData.GetAllPluginData()) {
-                    if (node.Attributes != null && node.Attributes["type"] != null) {
-                        var plugin = (node.Attributes["type"].Value == SetupData.PluginType.Input.ToString())
-                                         ? InputPlugins.FindPlugin(node.Attributes["name"].Value, true)
-                                         : OutputPlugins.FindPlugin(node.Attributes["name"].Value, true);
+                    var plugin = (node.Attributes["type"] != null && node.Attributes["type"].Value == SetupData.PluginType.Input.ToString())
+                                     ? InputPlugins.FindPlugin(node.Attributes["name"].Value, true)
+                                     : OutputPlugins.FindPlugin(node.Attributes["name"].Value, true);
 
-                        if (plugin != null) {
-                            InitializePlugin(plugin, node);
-                            checkedListBoxSequencePlugins.Items.Add(plugin.Name, bool.Parse(node.Attributes["enabled"].Value));
-                            _sequencePlugins.Add(plugin);
-                        }
+                    if (plugin != null) {
+                        InitializePlugin(plugin, node);
+                        checkedListBoxSequencePlugins.Items.Add(plugin.Name, bool.Parse(node.Attributes["enabled"].Value));
+                        _sequencePlugins.Add(plugin);
                     }
                     _internalUpdate = false;
                     UpdateDictionary();
                 }
+                // ReSharper restore PossibleNullReferenceException
             }
             finally {
                 Cursor = Cursors.Default;
