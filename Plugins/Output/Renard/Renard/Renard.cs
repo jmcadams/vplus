@@ -202,7 +202,7 @@ namespace Renard {
         }
 
         public string Name {
-            get { return "Renard Dimmer"; }
+            get { return "Renard Dimmer (modified)"; }
         }
 
         private RunState State {
