@@ -21,6 +21,7 @@ using VixenPlus.Dialogs;
 namespace VixenEditor {
     public partial class StandardSequence : UIBase {
         private bool _actualLevels;
+        //private readonly List<int> _activeChannels = new List<int>();
         private AffectGridDelegate _affectGridDelegate;
         private bool _autoScrolling;
         private readonly int[] _bookmarks;
@@ -1697,34 +1698,7 @@ namespace VixenEditor {
                 for (channelOffset = vScrollBar1.Value; (channelOffset >= 0) && (channelOffset < _sequence.ChannelCount); channelOffset++) {
 
                     mappedChannel = _channelOrderMapping[channelOffset];
-                    channel = _sequence.Channels[mappedChannel];
-                    var isChannelSelected = (channel == SelectedChannel);
-
-                    e.Graphics.FillRectangle(isChannelSelected ? SystemBrushes.Highlight : channel.Brush ?? _channelBackBrush, 0, height,
-                                             pictureBoxChannels.Width, _gridRowHeight);
-
-                    var textBrush = isChannelSelected
-                                        ? SystemBrushes.HighlightText
-                                        : Utils.GetTextColor(channel.Brush != null ? channel.Brush.Color : _channelBackBrush.Color);
-
-                    if (showNaturalChannelNumbers) {
-                        e.Graphics.DrawString(string.Format("{0}:", mappedChannel + 1), _channelNameFont, textBrush, 10f, height + heightAddition);
-                    }
-
-                    e.Graphics.DrawString(channel.Name, channel.Enabled ? _channelNameFont : _channelStrikeoutFont, textBrush, x,
-                                          height + heightAddition);
-
-                    height += _gridRowHeight;
-                }
-            }
-                #endregion
-                #region Showing Outputs
-
-            else {
-                using (var brush = new SolidBrush(Color.FromArgb(192, Color.Gray))) {
-                    for (channelOffset = vScrollBar1.Value; (channelOffset >= 0) && (channelOffset < _sequence.ChannelCount); channelOffset++) {
-
-                        mappedChannel = _channelOrderMapping[channelOffset];
+                    if (_sequence.ActiveChannels.Contains(mappedChannel)) {
                         channel = _sequence.Channels[mappedChannel];
                         var isChannelSelected = (channel == SelectedChannel);
 
@@ -1738,23 +1712,56 @@ namespace VixenEditor {
                         if (showNaturalChannelNumbers) {
                             e.Graphics.DrawString(string.Format("{0}:", mappedChannel + 1), _channelNameFont, textBrush, 10f, height + heightAddition);
                         }
-                        else {
-                            x = 10;
-                        }
 
-                        e.Graphics.FillRectangle(brush, x, height + 1, 40, _gridRowHeight - 2);
-
-                        if (toolStripComboBoxRowZoom.SelectedIndex > 4) {
-                            e.Graphics.DrawRectangle(Pens.Black, x, height + 1, 40, _gridRowHeight - 2);
-                        }
-
-                        e.Graphics.DrawString(String.Format("{0}", channel.OutputChannel + 1),
-                                              channel.Enabled ? _channelNameFont : _channelStrikeoutFont, textBrush, x + 16, height + heightAddition);
-
-                        e.Graphics.DrawString(channel.Name, channel.Enabled ? _channelNameFont : _channelStrikeoutFont, textBrush, x + 44,
+                        e.Graphics.DrawString(channel.Name, channel.Enabled ? _channelNameFont : _channelStrikeoutFont, textBrush, x,
                                               height + heightAddition);
 
                         height += _gridRowHeight;
+                    }
+                }
+            }
+                #endregion
+                #region Showing Outputs
+
+            else {
+                using (var brush = new SolidBrush(Color.FromArgb(192, Color.Gray))) {
+                    for (channelOffset = vScrollBar1.Value; (channelOffset >= 0) && (channelOffset < _sequence.ChannelCount); channelOffset++) {
+
+                        mappedChannel = _channelOrderMapping[channelOffset];
+                        if (_sequence.ActiveChannels.Contains(mappedChannel)) {
+                            channel = _sequence.Channels[mappedChannel];
+                            var isChannelSelected = (channel == SelectedChannel);
+
+                            e.Graphics.FillRectangle(isChannelSelected ? SystemBrushes.Highlight : channel.Brush ?? _channelBackBrush, 0, height,
+                                                     pictureBoxChannels.Width, _gridRowHeight);
+
+                            var textBrush = isChannelSelected
+                                                ? SystemBrushes.HighlightText
+                                                : Utils.GetTextColor(channel.Brush != null ? channel.Brush.Color : _channelBackBrush.Color);
+
+                            if (showNaturalChannelNumbers) {
+                                e.Graphics.DrawString(string.Format("{0}:", mappedChannel + 1), _channelNameFont, textBrush, 10f,
+                                                      height + heightAddition);
+                            }
+                            else {
+                                x = 10;
+                            }
+
+                            e.Graphics.FillRectangle(brush, x, height + 1, 40, _gridRowHeight - 2);
+
+                            if (toolStripComboBoxRowZoom.SelectedIndex > 4) {
+                                e.Graphics.DrawRectangle(Pens.Black, x, height + 1, 40, _gridRowHeight - 2);
+                            }
+
+                            e.Graphics.DrawString(String.Format("{0}", channel.OutputChannel + 1),
+                                                  channel.Enabled ? _channelNameFont : _channelStrikeoutFont, textBrush, x + 16,
+                                                  height + heightAddition);
+
+                            e.Graphics.DrawString(channel.Name, channel.Enabled ? _channelNameFont : _channelStrikeoutFont, textBrush, x + 44,
+                                                  height + heightAddition);
+
+                            height += _gridRowHeight;
+                        }
                     }
 
                     #endregion
@@ -1861,6 +1868,7 @@ namespace VixenEditor {
             toolStripLabelCurrentCell.Text = string.Empty;
         }
 
+
         private void pictureBoxGrid_MouseMove(object sender, MouseEventArgs e) {
             var cellX = Math.Min((Math.Max(e.X / _gridColWidth, 0) + hScrollBar1.Value), _sequence.TotalEventPeriods - 1);
             var cellY = Math.Min((Math.Max(e.Y / _gridRowHeight, 0) + vScrollBar1.Value), _sequence.ChannelCount - 1);
@@ -1873,7 +1881,8 @@ namespace VixenEditor {
 
             toolStripLabelCellIntensity.Text = string.Empty;
             toolStripLabelCurrentCell.Text = string.Empty;
-            if ((e.Button == MouseButtons.Left) && _mouseDownInGrid && _executionInterface.EngineStatus(_executionContextHandle) != Utils.ExecutionRunning) {
+            if ((e.Button == MouseButtons.Left) && _mouseDownInGrid &&
+                _executionInterface.EngineStatus(_executionContextHandle) != Utils.ExecutionRunning) {
                 if (_lineRect.Left == -1) {
                     DrawSelectionBox(e.X, e.Y, cellX, cellY);
                 }
@@ -2099,17 +2108,22 @@ namespace VixenEditor {
 
         private void pictureBoxGrid_Paint(object sender, PaintEventArgs e) {
             e.Graphics.FillRectangle(_gridBackBrush, e.ClipRectangle);
-            if (_sequence.ChannelCount == 0) {
+            var activeChannelCount = _sequence.ActiveChannelCount;
+            //var activeChannelCount = _sequence.ChannelCount;
+
+            if (activeChannelCount == 0) {
                 return;
             }
 
             var startPoint = new Point();
             var endPoint = new Point();
+            
+
 
             var cellCount = e.ClipRectangle.Left / _gridColWidth;
 
             startPoint.Y = e.ClipRectangle.Top;
-            endPoint.Y = Math.Min(e.ClipRectangle.Bottom, (_sequence.ChannelCount - vScrollBar1.Value) * _gridRowHeight);
+            endPoint.Y = Math.Min(e.ClipRectangle.Bottom, (activeChannelCount - vScrollBar1.Value) * _gridRowHeight);
 
             var pixelLimit = Math.Min(e.ClipRectangle.Right, (_sequence.TotalEventPeriods - hScrollBar1.Value) * _gridColWidth);
             var startPixelX = 0;
@@ -2123,7 +2137,7 @@ namespace VixenEditor {
             cellCount = e.ClipRectangle.Top / _gridRowHeight;
             startPoint.X = e.ClipRectangle.Left;
             endPoint.X = Math.Min(e.ClipRectangle.Right, (_sequence.TotalEventPeriods - hScrollBar1.Value) * _gridColWidth);
-            pixelLimit = Math.Min(e.ClipRectangle.Bottom, (_sequence.ChannelCount - vScrollBar1.Value) * _gridRowHeight);
+            pixelLimit = Math.Min(e.ClipRectangle.Bottom, (activeChannelCount - vScrollBar1.Value) * _gridRowHeight);
             var startPixelY = 0;
             while (startPixelY < pixelLimit) {
                 startPixelY = _gridRowHeight * cellCount;
@@ -2134,7 +2148,7 @@ namespace VixenEditor {
             }
             UpdateGrid(e.Graphics, e.ClipRectangle);
             if (m_positionTimer.Enabled) {
-                startPixelY = Math.Min(e.ClipRectangle.Bottom, (_sequence.ChannelCount - vScrollBar1.Value) * _gridRowHeight);
+                startPixelY = Math.Min(e.ClipRectangle.Bottom, (activeChannelCount - vScrollBar1.Value) * _gridRowHeight);
                 if ((_previousPosition != -1) && (_previousPosition >= hScrollBar1.Value)) {
                     startPixelX = (_previousPosition - hScrollBar1.Value) * _gridColWidth;
                     e.Graphics.DrawLine(Pens.Gray, startPixelX, 0, startPixelX, startPixelY);
@@ -2223,7 +2237,7 @@ namespace VixenEditor {
                 var endMills = Math.Min((hScrollBar1.Value + (e.ClipRectangle.Right / _gridColWidth)) * eventPeriod, _sequence.Time);
                 var eventCount = (float) _sequence.EventsPerSecond;
 
-                var currentMills = (!0f.Equals(startMills % Utils.MillsPerSecond)) ? (int)startMills / 1000 * 1000 : (int)startMills;
+                var currentMills = (!0f.Equals(startMills % Utils.MillsPerSecond)) ? (int) startMills / 1000 * 1000 : (int) startMills;
 
                 while ((x < e.ClipRectangle.Right) && (currentMills <= endMills)) {
                     if (currentMills != 0) {
@@ -2269,7 +2283,7 @@ namespace VixenEditor {
             drawingRect.Width = pictureBoxTime.Width;
             drawingRect.Y = WaveformOffset;
             drawingRect.Height = pictureBoxTime.Height;
-            
+
             //Draw the waveform
             if (toolStripButtonWaveform.Checked && e.ClipRectangle.IntersectsWith(drawingRect)) {
                 DrawWaveform(e);
@@ -3313,7 +3327,7 @@ namespace VixenEditor {
 
                 case Keys.F5:
                     if (tsbPlay.Enabled) {
-                        e.Handled = true; 
+                        e.Handled = true;
                         if (e.Alt) {
                             using (var dialog = new DelayedStartDialog()) {
                                 if (dialog.ShowDialog() != DialogResult.OK) {
@@ -3329,7 +3343,8 @@ namespace VixenEditor {
                     if (e.Alt && tsbPlayRange.Enabled) {
                         toolStripButtonPlayRange_Click(null, null);
                         e.Handled = true;
-                    }else if (tsbPlayPoint.Enabled) {
+                    }
+                    else if (tsbPlayPoint.Enabled) {
                         toolStripButtonPlayPoint_Click(null, null);
                         e.Handled = true;
                     }
@@ -3427,6 +3442,25 @@ namespace VixenEditor {
             }
             UpdateToolbarMenu();
             UpdateLevelDisplay();
+            UpdateGroups();
+        }
+
+
+        private void UpdateGroups() {
+            if (_sequence.Groups != null) {
+                cbGroups.Visible = true;
+                cbGroups.Items.Clear();
+                cbGroups.Items.Add("All Channels");
+                foreach (var g in _sequence.Groups) {
+                    cbGroups.Items.Add(g.Key);
+                }
+                cbGroups.SelectedIndex = 0;
+                //cbGroups.Items.Add("New Channel Group");
+            }
+            else {
+                cbGroups.SelectedIndex = 0;
+                cbGroups.Visible = false;
+            }
         }
 
 
@@ -3513,8 +3547,9 @@ namespace VixenEditor {
         private void toolStripButtonFindAndReplace_Click(object sender, EventArgs e) {
             var entireSequence = (_selectedCells.Width == 0) || (_selectedCells.Height == 0);
 
-            using (var dialog = new FindAndReplaceDialog(_sequence.MinimumLevel, _sequence.MaximumLevel, _actualLevels,
-                                                         entireSequence ? "entire sequence" : "selected cells")) {
+            using (
+                var dialog = new FindAndReplaceDialog(_sequence.MinimumLevel, _sequence.MaximumLevel, _actualLevels,
+                                                      entireSequence ? "entire sequence" : "selected cells")) {
                 if (dialog.ShowDialog() != DialogResult.OK) {
                     return;
                 }
@@ -3752,15 +3787,15 @@ namespace VixenEditor {
         private void toolStripButtonPlay_Click(object sender, EventArgs e) {
             int sequencePosition;
             var executionStatus = _executionInterface.EngineStatus(_executionContextHandle, out sequencePosition);
-            
+
             if (executionStatus == Utils.ExecutionRunning) {
                 return;
             }
-            
+
             if (executionStatus != Utils.ExecutionPaused) {
                 Reset();
             }
-            
+
             if (!_executionInterface.ExecutePlay(_executionContextHandle, sequencePosition, 0)) {
                 return;
             }
@@ -3852,7 +3887,7 @@ namespace VixenEditor {
                 SetSelectedCellValue(_sequence.MinimumLevel);
 
                 var events = dialog.GetEventValues(_selectedCells.Height, _selectedCells.Width);
-                for (var row = _selectedCells.Top; row < _selectedCells.Bottom; row ++) {
+                for (var row = _selectedCells.Top; row < _selectedCells.Bottom; row++) {
                     var channel = _channelOrderMapping[row];
                     for (var col = _selectedCells.Left; col < _selectedCells.Right; col++) {
                         _sequence.EventValues[channel, col] = events[row - _selectedCells.Top, col - _selectedCells.Left];
@@ -4306,27 +4341,29 @@ namespace VixenEditor {
                 var y = (clipRect.Y / _gridRowHeight * _gridRowHeight) + 1;
                 while ((y < clipRect.Bottom) && (channelIndex < _sequence.ChannelCount)) {
                     var currentChannel = _channelOrderMapping[channelIndex];
-                    var channel = _sequence.Channels[currentChannel];
-                    var x = initialX;
+                    if (_sequence.ActiveChannels.Contains(currentChannel)) {
+                        var channel = _sequence.Channels[currentChannel];
+                        var x = initialX;
 
-                    for (var @event = startEvent; (x < clipRect.Right) && (@event < _sequence.TotalEventPeriods); @event++) {
-                        if (_showingGradient) {
-                            brush.Color = GetGradientColor(_gridBackBrush.Color, channel.Color, _sequence.EventValues[currentChannel, @event]);
-                            g.FillRectangle(brush, x, y, _gridColWidth - 1, _gridRowHeight - 1);
-                        }
-                        else {
-                            var height = ((_gridRowHeight - 1) * _sequence.EventValues[currentChannel, @event]) / 255;
-                            g.FillRectangle(channel.Brush ?? _channelBackBrush, x, ((y + _gridRowHeight) - 1) - height, _gridColWidth - 1, height);
-                        }
+                        for (var @event = startEvent; (x < clipRect.Right) && (@event < _sequence.TotalEventPeriods); @event++) {
+                            if (_showingGradient) {
+                                brush.Color = GetGradientColor(_gridBackBrush.Color, channel.Color, _sequence.EventValues[currentChannel, @event]);
+                                g.FillRectangle(brush, x, y, _gridColWidth - 1, _gridRowHeight - 1);
+                            }
+                            else {
+                                var height = ((_gridRowHeight - 1) * _sequence.EventValues[currentChannel, @event]) / 255;
+                                g.FillRectangle(channel.Brush ?? _channelBackBrush, x, ((y + _gridRowHeight) - 1) - height, _gridColWidth - 1, height);
+                            }
 
-                        string cellIntensity;
-                        if (_showCellText && (GetCellIntensity(@event, channelIndex, out cellIntensity) > 0)) {
-                            g.DrawString(cellIntensity, font, Brushes.Black, new RectangleF(x, y, (_gridColWidth - 1), (_gridRowHeight - 1)));
+                            string cellIntensity;
+                            if (_showCellText && (GetCellIntensity(@event, channelIndex, out cellIntensity) > 0)) {
+                                g.DrawString(cellIntensity, font, Brushes.Black, new RectangleF(x, y, (_gridColWidth - 1), (_gridRowHeight - 1)));
+                            }
+                            x += _gridColWidth;
                         }
-                        x += _gridColWidth;
+                        y += _gridRowHeight;
                     }
-                    y += _gridRowHeight;
-                    channelIndex++;
+                        channelIndex++;
                 }
             }
         }
@@ -4641,9 +4678,11 @@ namespace VixenEditor {
             SendKeys.Send("^o");
         }
 
+
         private void tsbSaveAs_Click(object sender, EventArgs e) {
             SendKeys.Send("^a");
         }
+
 
         private void profileToolStripLabel_Click(object sender, EventArgs e) {
             if (_sequence.Profile == null) {
@@ -4662,14 +4701,68 @@ namespace VixenEditor {
             }
         }
 
+
         private void newSeqTsb_Click(object sender, EventArgs e) {
             var tsi = new ToolStripMenuItem {Tag = new StandardSequence()};
             _systemInterface.InvokeNew(tsi);
         }
 
+
         private void selectNoneToolStripMenuItem_Click(object sender, EventArgs e) {
             _selectedCells.Width = _selectedCells.Height = 0;
             pictureBoxGrid.Refresh();
+        }
+
+
+        private void cbGroups_SelectedIndexChanged(object sender, EventArgs e) {
+            //_activeChannels.Clear();
+            _sequence.ActiveChannels.Clear();
+            if (cbGroups.SelectedIndex == 0) {
+                for (var i = 0; i < _sequence.ChannelCount; i++) {
+                    _sequence.ActiveChannels.Add(i);
+                }
+            }
+            else {
+                var itemKey = cbGroups.SelectedItem.ToString();
+                if (_sequence.Groups.ContainsKey(itemKey)) {
+                    AddNode(itemKey);
+                }
+                else {
+                    AddChannels(itemKey);
+                }
+            }
+            pictureBoxChannels.Refresh();
+            pictureBoxGrid.Invalidate(pictureBoxGrid.ClientRectangle);
+            pictureBoxGrid.Refresh();
+            System.Diagnostics.Debug.Print("Size of activeChannels: {0}", _sequence.ActiveChannelCount);
+        }
+
+
+        private void AddNode(string nodeData) {
+            var node = _sequence.Groups[nodeData];
+            if (node.Contains(":")) {
+                var nodes = node.Split(new[] {':'});
+                foreach (var recursiveNode in nodes[0].Split(new[] {','})) {
+                    AddNode(recursiveNode);
+                }
+                if (nodes[1] != string.Empty) {
+                    AddChannels(node);
+                }
+            }
+            else {
+                AddChannels(node);
+            }
+        }
+
+
+        private void AddChannels(string nodeData) {
+            if (nodeData.Contains(":")) {
+                nodeData = nodeData.Split(new[] {':'})[1];
+            }
+            var node = nodeData.Split(new[] {','});
+            foreach (var channelNumber in node) {
+                _sequence.ActiveChannels.Add(Int32.Parse(channelNumber));
+            }
         }
     }
 }

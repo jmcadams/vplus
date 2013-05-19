@@ -14,6 +14,10 @@ namespace VixenPlus {
         private Profile _profile;
         private SortOrders _sortOrders;
 
+        public List<int> ActiveChannels { get; set; }
+
+        public Dictionary<string, string> Groups { get; private set; }
+
 
         public EventSequence(string fileName) {
             EventValues = null;
@@ -82,6 +86,10 @@ namespace VixenPlus {
 
 
         public Audio Audio { get; set; }
+
+        public int ActiveChannelCount {
+            get { return ActiveChannels.Count == 0 ? ChannelCount : ActiveChannels.Count; }
+        }
 
         public int ChannelCount {
             get { return _profile == null ? _channels.Count : _profile.Channels.Count; }
@@ -261,6 +269,10 @@ namespace VixenPlus {
             var path = Path.Combine(Paths.ProfilePath, profileName + ".pro");
             if (File.Exists(path)) {
                 AttachToProfile(new Profile(path));
+                var groupFile = Path.Combine(Paths.ProfilePath, Path.GetFileNameWithoutExtension(_profile.FileName) + ".vgr");
+                if (File.Exists(groupFile)) {
+                    Groups = Group.LoadGroups(groupFile);
+                }
             }
             else {
                 LoadEmbeddedData(FileName);
@@ -403,12 +415,14 @@ namespace VixenPlus {
         private void LoadFromProfile() {
             PlugInData = _profile.PlugInData;
             UpdateEventValueArray();
+
         }
 
 
         private void LoadFromXml(XmlNode contextNode) {
             var requiredNode = Xml.GetRequiredNode(contextNode, "Program");
             _channels = new List<Channel>();
+            ActiveChannels = new List<int>();
             PlugInData = new SetupData();
             LoadableData = new LoadableData();
             Extensions = new SequenceExtensions();

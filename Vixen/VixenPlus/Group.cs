@@ -1,48 +1,32 @@
 ﻿using System.Collections.Generic;
+using System.Xml;
 
-namespace VixenPlus
-{
-    internal class Group
-    {
-        private readonly List<Channel> _mirrorChannels;
-
-        public Group(Channel primaryChannel)
-        {
-            PrimaryChannel = null;
-            _mirrorChannels = null;
-            PrimaryChannel = primaryChannel;
-            _mirrorChannels = new List<Channel>();
-        }
-
-        public Group(string primaryChannelName, IEnumerable<string> mirrorChannelNames, List<Channel> channels)
-        {
-            PrimaryChannel = null;
-            _mirrorChannels = null;
-            PrimaryChannel = FindChannel(primaryChannelName, channels);
-            _mirrorChannels = new List<Channel>();
-            foreach (var str in mirrorChannelNames)
-            {
-                _mirrorChannels.Add(FindChannel(str, channels));
-            }
-        }
-
-        public List<Channel> MirrorChannels
-        {
-            get { return _mirrorChannels; }
-        }
-
-        public Channel PrimaryChannel { get; set; }
-
-        private Channel FindChannel(string channelName, IEnumerable<Channel> channels)
-        {
-            foreach (var channel in channels)
-            {
-                if (channelName == channel.Name)
-                {
-                    return channel;
+namespace VixenPlus {
+    public class Group {
+        public static Dictionary<string, string> LoadGroups(string groupFile) {
+            Dictionary<string, string> groups = null;
+            var doc = Xml.LoadDocument(groupFile).DocumentElement;
+            if (doc != null && doc.ParentNode != null) {
+                XmlNode nodes = doc.ParentNode["Groups"];
+                if (nodes != null) {
+                    groups = new Dictionary<string, string>();
+                    foreach (XmlNode node in nodes) {
+                        if (node == null || node.Attributes == null) {
+                            continue;
+                        }
+                        var name = node.Attributes["Name"] != null ? node.Attributes["Name"].Value : null;
+                        var contains = node.Attributes["Contains"] != null ? node.Attributes["Contains"].Value : null;
+                        var text = node.InnerText != "" ? node.InnerText : string.Empty;
+                        if (contains != null) {
+                            groups.Add(name, contains + ":" + text);
+                        }
+                        else {
+                            groups.Add(name, text);
+                        }
+                    }
                 }
             }
-            return null;
+            return groups;
         }
     }
 }
