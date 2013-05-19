@@ -77,6 +77,7 @@ namespace VixenPlus{
             this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.iLikeLutefiskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.scheduleTimer = new System.Windows.Forms.Timer(this.components);
             this.helpProvider = new System.Windows.Forms.HelpProvider();
@@ -266,14 +267,14 @@ namespace VixenPlus{
             // tileToolStripMenuItem
             // 
             this.tileToolStripMenuItem.Name = "tileToolStripMenuItem";
-            this.tileToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.tileToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.tileToolStripMenuItem.Text = "Tile";
             this.tileToolStripMenuItem.Click += new System.EventHandler(this.tileToolStripMenuItem_Click);
             // 
             // cascadeToolStripMenuItem
             // 
             this.cascadeToolStripMenuItem.Name = "cascadeToolStripMenuItem";
-            this.cascadeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cascadeToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.cascadeToolStripMenuItem.Text = "Cascade";
             this.cascadeToolStripMenuItem.Click += new System.EventHandler(this.cascadeToolStripMenuItem_Click);
             // 
@@ -283,7 +284,8 @@ namespace VixenPlus{
             this.onlineSupportForumToolStripMenuItem,
             this.checkForUpdatesToolStripMenuItem,
             this.toolStripMenuItem3,
-            this.aboutToolStripMenuItem1});
+            this.aboutToolStripMenuItem1,
+            this.iLikeLutefiskToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
@@ -314,6 +316,13 @@ namespace VixenPlus{
             this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(189, 22);
             this.aboutToolStripMenuItem1.Text = "About";
             this.aboutToolStripMenuItem1.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // iLikeLutefiskToolStripMenuItem
+            // 
+            this.iLikeLutefiskToolStripMenuItem.Name = "iLikeLutefiskToolStripMenuItem";
+            this.iLikeLutefiskToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.iLikeLutefiskToolStripMenuItem.Text = "I Love Lutefisk!";
+            this.iLikeLutefiskToolStripMenuItem.Click += new System.EventHandler(this.iLikeLutefiskToolStripMenuItem_Click);
             // 
             // openFileDialog1
             // 
@@ -400,5 +409,7 @@ namespace VixenPlus{
             }
             base.Dispose(disposing);
         }
+
+        private ToolStripMenuItem iLikeLutefiskToolStripMenuItem;
     }
 }

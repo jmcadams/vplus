@@ -211,6 +211,12 @@
     <Compile Include="VixenPlus\Dialogs\HelpDialog.Designer.cs">
       <DependentUpon>HelpDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="VixenPlus\Dialogs\Lutefisk.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VixenPlus\Dialogs\Lutefisk.Designer.cs">
+      <DependentUpon>Lutefisk.cs</DependentUpon>
+    </Compile>
     <Compile Include="VixenPlus\Dialogs\NewSequenceWizardDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -579,6 +585,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VixenPlus\Dialogs\ChannelOutputMaskDialog.resx">
       <DependentUpon>ChannelOutputMaskDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\Dialogs\Lutefisk.resx">
+      <DependentUpon>Lutefisk.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenPlus\Dialogs\PluginListDialog.resx">
       <DependentUpon>PluginListDialog.cs</DependentUpon>

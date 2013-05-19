@@ -1097,5 +1097,11 @@ namespace VixenPlus
         //}
 
         private delegate Form InstantiateFormDelegate(ConstructorInfo constructorInfo, params object[] parameters);
+
+        private void iLikeLutefiskToolStripMenuItem_Click(object sender, EventArgs e) {
+            using (var lutefisk = new Lutefisk()) {
+                lutefisk.ShowDialog();
+            }
+        }
     }
 }
