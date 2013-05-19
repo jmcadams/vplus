@@ -171,7 +171,7 @@ You have no channels to layout.</value>
   <data name="VixenPlusForm_Save" xml:space="preserve">
     <value>Save</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="VixenPlusSplash" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\VixenPlusSplash.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -190,209 +190,209 @@ Execution has been stopped.</value>
   <data name="EngineMissingOrInvalid" xml:space="preserve">
     <value> is missing or does not contain a valid engine</value>
   </data>
-    <data name="Filter_EngineAssembly" xml:space="preserve">
+  <data name="Filter_EngineAssembly" xml:space="preserve">
     <value>Engine assembly</value>
   </data>
-    <data name="Title_SelectEngine" xml:space="preserve">
+  <data name="Title_SelectEngine" xml:space="preserve">
     <value>Select an engine assembly</value>
   </data>
   <data name="ColorAlreadyExists" xml:space="preserve">
     <value>Color already exists in the list.</value>
   </data>
-	<data name="None" xml:space="preserve">
+  <data name="None" xml:space="preserve">
     <value>None</value>
   </data>
-	<data name="ScripedSequenceOnly" xml:space="preserve">
+  <data name="ScripedSequenceOnly" xml:space="preserve">
     <value>This sequence is not a scripted sequence.
 Only a scripted sequence can be selected for background execution.</value>
   </data>
-	<data name="NotAValidSequence" xml:space="preserve">
+  <data name="NotAValidSequence" xml:space="preserve">
     <value>This does not appear to be a valid sequence file.</value>
   </data>
-	<data name="About" xml:space="preserve">
+  <data name="About" xml:space="preserve">
     <value>About </value>
   </data>
-	<data name="FormattedVersion" xml:space="preserve">
+  <data name="FormattedVersion" xml:space="preserve">
     <value>Version {0}</value>
   </data>
-	<data name="RestartForChange" xml:space="preserve">
+  <data name="RestartForChange" xml:space="preserve">
     <value>Application must be restarted for this change to be effective.</value>
   </data>
-	<data name="MinLessThanMax" xml:space="preserve">
+  <data name="MinLessThanMax" xml:space="preserve">
     <value>Minimum must be less than the maximum.</value>
   </data>
-	<data name="ImportFile" xml:space="preserve">
+  <data name="ImportFile" xml:space="preserve">
     <value>Select a file to import from</value>
   </data>
-	<data name="ExportFile" xml:space="preserve">
+  <data name="ExportFile" xml:space="preserve">
     <value>Specify a file to export to</value>
   </data>
-	<data name="ExportSuccess" xml:space="preserve">
+  <data name="ExportSuccess" xml:space="preserve">
     <value>Export successful.</value>
   </data>
-	<data name="ExportError" xml:space="preserve">
+  <data name="ExportError" xml:space="preserve">
     <value>Error while exporting:
 </value>
   </data>
-	<data name="LogExecutingTimer" xml:space="preserve">
+  <data name="LogExecutingTimer" xml:space="preserve">
     <value>Executing timer for {0} at {1}</value>
   </data>
-	<data name="TimerUnknownError" xml:space="preserve">
+  <data name="TimerUnknownError" xml:space="preserve">
     <value>A timer with an unknown object tried to execute.</value>
   </data>
-	<data name="ErrorExecutingTimer" xml:space="preserve">
+  <data name="ErrorExecutingTimer" xml:space="preserve">
     <value>There was an error trying to load a scheduled item:
 {0}
 
 The error was:
 {1}</value>
   </data>
-	<data name="AllTimersWillStop" xml:space="preserve">
+  <data name="AllTimersWillStop" xml:space="preserve">
     <value>This will cause all executing timers to stop.
 
 Do you wish to do this?</value>
   </data>
-	<data name="Serial_PortError" xml:space="preserve">
+  <data name="Serial_PortError" xml:space="preserve">
     <value>* Port name has not been selected.</value>
   </data>
-	<data name="Serial_BaudError" xml:space="preserve">
+  <data name="Serial_BaudError" xml:space="preserve">
     <value>* Baud rate has not been selected.</value>
   </data>
-	<data name="Serial_ParityError" xml:space="preserve">
+  <data name="Serial_ParityError" xml:space="preserve">
     <value>* Parity has not been selected.</value>
   </data>
-	<data name="Serial_DataBitsError" xml:space="preserve">
+  <data name="Serial_DataBitsError" xml:space="preserve">
     <value>* Invalid numeric value for data bits.</value>
   </data>
-	<data name="Serial_StopBitsError" xml:space="preserve">
+  <data name="Serial_StopBitsError" xml:space="preserve">
     <value>* Stop bits have not been selected.</value>
   </data>
-	<data name="Serial_Resolve" xml:space="preserve">
+  <data name="Serial_Resolve" xml:space="preserve">
     <value>The following items need to be resolved:
 
 </value>
   </data>
-	<data name="DumpFileWritten" xml:space="preserve">
+  <data name="DumpFileWritten" xml:space="preserve">
     <value>Dump file written to </value>
   </data>
-	<data name="Host_BackgroundSequenceName" xml:space="preserve">
+  <data name="Host_BackgroundSequenceName" xml:space="preserve">
     <value>A background sequence has been specified, but it does not exist.
 This message will show each time you start the application and this situation exists.</value>
   </data>
-	<data name="Host_StartingBackgroundSequenceFailed" xml:space="preserve">
+  <data name="Host_StartingBackgroundSequenceFailed" xml:space="preserve">
     <value>There was a problem starting the background sequence.</value>
   </data>
-	<data name="Host_LogAudioFailed" xml:space="preserve">
+  <data name="Host_LogAudioFailed" xml:space="preserve">
     <value>Audio logging is enabled but no log file is specified.
 
 Audio logging has been turned off.</value>
   </data>
-	<data name="Host_isRunning" xml:space="preserve">
+  <data name="Host_isRunning" xml:space="preserve">
     <value> is running</value>
   </data>
-	<data name="AllFieldsRequired" xml:space="preserve">
+  <data name="AllFieldsRequired" xml:space="preserve">
     <value>All fields are required.</value>
   </data>
-	<data name="ErrorsLoadingSongs" xml:space="preserve">
+  <data name="ErrorsLoadingSongs" xml:space="preserve">
     <value>There were errors when trying to add the following songs:
 
 </value>
   </data>
-	<data name="NoNarrativeFile" xml:space="preserve">
+  <data name="NoNarrativeFile" xml:space="preserve">
     <value>You enabled the narrative but didn't specify a narrative file.  Do you want to continue?
 
 If you choose Yes, the narrative will be disabled.</value>
   </data>
-	<data name="IntervalTooSmall" xml:space="preserve">
+  <data name="IntervalTooSmall" xml:space="preserve">
     <value>An interval count less than 2 is not usable.  Do you want to continue?
 
 If you choose Yes, the narrative will be disabled.</value>
   </data>
-	<data name="IntervalInvalid" xml:space="preserve">
+  <data name="IntervalInvalid" xml:space="preserve">
     <value>The interval count is not a valid number.  Do you want to continue?
 
 If you choose Yes, the narrative will be disabled.</value>
   </data>
-	<data name="UnableToLoadSong" xml:space="preserve">
+  <data name="UnableToLoadSong" xml:space="preserve">
     <value>Unable to load the song.</value>
   </data>
-	<data name="NoInputChosen" xml:space="preserve">
+  <data name="NoInputChosen" xml:space="preserve">
     <value>You have selected to use a single input to iterate the mapping sets, but have not chosen an input.</value>
   </data>
-	<data name="NoInputSet" xml:space="preserve">
+  <data name="NoInputSet" xml:space="preserve">
     <value>You have selected to use a single input to iterate the mapping sets, but do not have any inputs sets to be iterators and therefore have not chosen an input to iterate with.</value>
   </data>
-	<data name="InputEnabled" xml:space="preserve">
+  <data name="InputEnabled" xml:space="preserve">
     <value>Input is enabled and is mapped to:</value>
   </data>
-	<data name="InputDisabled" xml:space="preserve">
+  <data name="InputDisabled" xml:space="preserve">
     <value>Input is disabled</value>
   </data>
-	<data name="NoChannelsToReorder" xml:space="preserve">
+  <data name="NoChannelsToReorder" xml:space="preserve">
     <value>There are no channels to reorder.</value>
   </data>
-	<data name="NameThisProfile" xml:space="preserve">
+  <data name="NameThisProfile" xml:space="preserve">
     <value>What do you want to name this profile?</value>
   </data>
-	<data name="ProfileNamePrompt" xml:space="preserve">
+  <data name="ProfileNamePrompt" xml:space="preserve">
     <value>Profile Name</value>
   </data>
-	<data name="ChannelSpace" xml:space="preserve">
+  <data name="ChannelSpace" xml:space="preserve">
     <value>Channel </value>
   </data>
-	<data name="InvalidChannelsToAdd" xml:space="preserve">
+  <data name="InvalidChannelsToAdd" xml:space="preserve">
     <value>{0} is not a valid numeric value for the number of channels to add.</value>
   </data>
-	<data name="NewProfilePrompt" xml:space="preserve">
+  <data name="NewProfilePrompt" xml:space="preserve">
     <value>New Profile</value>
   </data>
-	<data name="NameNewProfile" xml:space="preserve">
+  <data name="NameNewProfile" xml:space="preserve">
     <value>Name for the new profile</value>
   </data>
-	<data name="ChannelCaption" xml:space="preserve">
+  <data name="ChannelCaption" xml:space="preserve">
     <value>Channel output mapping</value>
   </data>
-	<data name="DeleteChannelOrder" xml:space="preserve">
+  <data name="DeleteChannelOrder" xml:space="preserve">
     <value>Delete channel order '{0}'?</value>
   </data>
-	<data name="NewOrderPrompt" xml:space="preserve">
+  <data name="NewOrderPrompt" xml:space="preserve">
     <value>New order</value>
   </data>
-	<data name="ChannelOrderingName" xml:space="preserve">
+  <data name="ChannelOrderingName" xml:space="preserve">
     <value>What would you like to name this channel ordering?</value>
   </data>
-	<data name="OrderNameOverwrite" xml:space="preserve">
+  <data name="OrderNameOverwrite" xml:space="preserve">
     <value>This name is already in use.
 Do you want to overwrite it?</value>
   </data>
-	<data name="RemoveProfile" xml:space="preserve">
+  <data name="RemoveProfile" xml:space="preserve">
     <value>Remove profile {0}?
 
 This will affect any sequences that use this profile.</value>
   </data>
-	<data name="RemoveProfileItem" xml:space="preserve">
+  <data name="RemoveProfileItem" xml:space="preserve">
     <value>Remove the selected item from this profile?</value>
   </data>
-	<data name="UseApplicationDefaultAudio" xml:space="preserve">
+  <data name="UseApplicationDefaultAudio" xml:space="preserve">
     <value>Use application's default device</value>
   </data>
-	<data name="ChannelEventsClerared" xml:space="preserve">
+  <data name="ChannelEventsClerared" xml:space="preserve">
     <value>Channel "{0}" cleared of new events.</value>
   </data>
-	<data name="AllSupportedFormats" xml:space="preserve">
+  <data name="AllSupportedFormats" xml:space="preserve">
     <value>All supported formats</value>
   </data>
-	<data name="Countdown" xml:space="preserve">
+  <data name="Countdown" xml:space="preserve">
     <value>Countdown...</value>
   </data>
-	<data name="NoAudioAssigned" xml:space="preserve">
+  <data name="NoAudioAssigned" xml:space="preserve">
     <value>This event sequence does not have audio assigned</value>
   </data>
-	<data name="ErrorLoadingAudio" xml:space="preserve">
+  <data name="ErrorLoadingAudio" xml:space="preserve">
     <value>Error loading audio:
 </value>
   </data>
-	<data name="InvalidTimeFormat" xml:space="preserve">
+  <data name="InvalidTimeFormat" xml:space="preserve">
     <value>Not a valid time format.
 Please use one of the following:
 
@@ -401,51 +401,51 @@ Minutes:Seconds
 Seconds.Milliseconds
 Minutes:Seconds.Milliseconds</value>
   </data>
-	<data name="EventPeriodTooShort" xml:space="preserve">
+  <data name="EventPeriodTooShort" xml:space="preserve">
     <value>While possible, event periods less than 25 ms are not supported.</value>
   </data>
-	<data name="EventPeriodInvalid" xml:space="preserve">
+  <data name="EventPeriodInvalid" xml:space="preserve">
     <value> is not a valid number for the event period length</value>
   </data>
-	<data name="ChannelCountMinimums" xml:space="preserve">
+  <data name="ChannelCountMinimums" xml:space="preserve">
     <value>The channel count must be 1 or greater</value>
   </data>
-	<data name="InvalidChannelCount" xml:space="preserve">
+  <data name="InvalidChannelCount" xml:space="preserve">
     <value> is not a valid number for the channel count</value>
   </data>
-	<data name="ConfirmChannelCount" xml:space="preserve">
+  <data name="ConfirmChannelCount" xml:space="preserve">
     <value>Are you sure you really want {0} channels?</value>
   </data>
-	<data name="ChannelNameCantBeBlank" xml:space="preserve">
+  <data name="ChannelNameCantBeBlank" xml:space="preserve">
     <value>Channel names cannot be blank</value>
   </data>
-	<data name="ChannelCountAndNameInequal" xml:space="preserve">
+  <data name="ChannelCountAndNameInequal" xml:space="preserve">
     <value>There must be an equal number of channel names as there are channels</value>
   </data>
-	<data name="ProfileNotFound" xml:space="preserve">
+  <data name="ProfileNotFound" xml:space="preserve">
     <value>
 
 Profile not found.
 Will use sequence data instead.</value>
   </data>
-	<data name="OneOrMoreSequencesNotSaved" xml:space="preserve">
+  <data name="OneOrMoreSequencesNotSaved" xml:space="preserve">
     <value>The program has at least one sequence that has not been saved.</value>
   </data>
-	<data name="SequencesMustBeSavedBeforeSavingProgram" xml:space="preserve">
+  <data name="SequencesMustBeSavedBeforeSavingProgram" xml:space="preserve">
     <value>Before a program can be saved, the contained sequences need to be saved.</value>
   </data>
-	<data name="VerifyChannelValueReset" xml:space="preserve">
+  <data name="VerifyChannelValueReset" xml:space="preserve">
     <value>This will reset all values of the selected channel.
 
 Continue?</value>
   </data>
-	<data name="ShowPercentage" xml:space="preserve">
+  <data name="ShowPercentage" xml:space="preserve">
     <value>Show % levels</value>
   </data>
-	<data name="ShowActual" xml:space="preserve">
+  <data name="ShowActual" xml:space="preserve">
     <value>Show actual levels</value>
   </data>
-	<data name="RouterError" xml:space="preserve">
+  <data name="RouterError" xml:space="preserve">
     <value>(Router)
 An output plugin caused the following exception: 
 {0}
@@ -454,73 +454,73 @@ Execution has been stopped.
 
 {1}</value>
   </data>
-	<data name="PluginError" xml:space="preserve">
+  <data name="PluginError" xml:space="preserve">
     <value>Plugin error</value>
   </data>
-	<data name="RouterStartupError" xml:space="preserve">
+  <data name="RouterStartupError" xml:space="preserve">
     <value>(Router - Startup)
 {0}</value>
   </data>
-	<data name="RouterOutputError" xml:space="preserve">
+  <data name="RouterOutputError" xml:space="preserve">
     <value>(Router - plugins)
 An output plugin caused the following exception: 
 {0}</value>
   </data>
-	<data name="IncreaseChannelCount" xml:space="preserve">
+  <data name="IncreaseChannelCount" xml:space="preserve">
     <value>The sequence does not contain as many channels as the profile you are detaching from.
 Do you want to increase the channel count to prevent any possible data loss?</value>
   </data>
-	<data name="InvalidPath" xml:space="preserve">
+  <data name="InvalidPath" xml:space="preserve">
     <value>Attemped to save to non-existent file path:
 </value>
   </data>
-	<data name="InvalidSequenceLength" xml:space="preserve">
+  <data name="InvalidSequenceLength" xml:space="preserve">
     <value>Cannot set the sequence length.
 There is audio associated which would exceed that length.</value>
   </data>
-	<data name="PluginInitError" xml:space="preserve">
+  <data name="PluginInitError" xml:space="preserve">
     <value>An exception occurred when trying to initialize the plugin for setup.
 
 Error:
 </value>
   </data>
-	<data name="Multiple" xml:space="preserve">
+  <data name="Multiple" xml:space="preserve">
     <value>Multiple</value>
   </data>
-	<data name="PluginSetupErrorInvalidStatePossible" xml:space="preserve">
+  <data name="PluginSetupErrorInvalidStatePossible" xml:space="preserve">
     <value>Error during plugin initialization:
 
 {0}
 
 The plugin's setup data may be invalid or inaccurate.</value>
   </data>
-	<data name="ErrorLoadingCurveFile" xml:space="preserve">
+  <data name="ErrorLoadingCurveFile" xml:space="preserve">
     <value>Error occurred while loading the file:
 </value>
   </data>
-	<data name="ErrorInCurveFile" xml:space="preserve">
+  <data name="ErrorInCurveFile" xml:space="preserve">
     <value>Error in file at line {0}:
 {1}</value>
   </data>
-	<data name="InspiredBy" xml:space="preserve">
+  <data name="InspiredBy" xml:space="preserve">
     <value>Inspired By:</value>
   </data>
-	<data name="WrittenBy" xml:space="preserve">
+  <data name="WrittenBy" xml:space="preserve">
     <value>Written By:</value>
   </data>
-	<data name="TestedBy" xml:space="preserve">
+  <data name="TestedBy" xml:space="preserve">
     <value>Beta Tested By:</value>
   </data>
-	<data name="DedicatedTo" xml:space="preserve">
+  <data name="DedicatedTo" xml:space="preserve">
     <value>Dedicated To:</value>
   </data>
-	<data name="MyFriends" xml:space="preserve">
+  <data name="MyFriends" xml:space="preserve">
     <value>My friends at DIYChristmas.org</value>
   </data>
-	<data name="ThankYou" xml:space="preserve">
+  <data name="ThankYou" xml:space="preserve">
     <value>Thank you everyone!</value>
   </data>
-	<data name="Lutefisk" xml:space="preserve">
+  <data name="Lutefisk" xml:space="preserve">
     <value>
 
 
@@ -531,7 +531,11 @@ The plugin's setup data may be invalid or inaccurate.</value>
 
 Lutefisk for all!</value>
   </data>
-	<data name="ProductDescription" xml:space="preserve">
+  <data name="ProductDescription" xml:space="preserve">
     <value>Lighting Control Software</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="VixenPlus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\VixenPlus.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -648,6 +648,9 @@
   <ItemGroup>
     <None Include="Resources\VixenPlusSplash.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\VixenPlus.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent />

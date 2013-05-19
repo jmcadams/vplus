@@ -992,6 +992,13 @@ namespace Properties {
             }
         }
         
+        public static System.Drawing.Icon VixenPlus {
+            get {
+                object obj = ResourceManager.GetObject("VixenPlus", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Add-in error:
         ///
