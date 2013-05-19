@@ -17,7 +17,7 @@ namespace VixenPlus
         public const string RoutineExtension = "vir";
         public const string SequenceExtension = "vix";
 
-        public const string SupportURL = "http://diychristmas.org/phpbb/viewforum.php?f=34";
+        public const string SupportURL = "http://www.diychristmas.org/vb1/forumdisplay.php?19-VixenPlus";
 
         public const string UpdateURL = "http://www.vixenplus.com/updates/";
         public const string UpdateFile = "/ver.xml";
