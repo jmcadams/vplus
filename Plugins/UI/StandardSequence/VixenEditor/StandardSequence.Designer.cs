@@ -1267,6 +1267,7 @@ namespace VixenEditor{
             // 
             // cbGroups
             // 
+            this.cbGroups.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbGroups.FormattingEnabled = true;
             this.cbGroups.Items.AddRange(new object[] {
             "Group1",
