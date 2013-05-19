@@ -1833,8 +1833,8 @@ namespace VixenEditor {
                 if (rect.Height < 0) {
                     rect.Height--;
                 }
-                if (rect.Bottom > _sequence.ChannelCount) {
-                    rect.Height = _sequence.ChannelCount - rect.Y;
+                if (rect.Bottom > _sequence.ActiveChannelCount) {
+                    rect.Height = _sequence.ActiveChannelCount - rect.Y;
                 }
                 if (rect.Right > _sequence.TotalEventPeriods) {
                     rect.Width = _sequence.TotalEventPeriods - rect.X;
@@ -1842,7 +1842,7 @@ namespace VixenEditor {
                 _selectedCells = NormalizeRect(rect);
                 DrawSelectedRange();
             }
-            else if ((e.Y / _gridRowHeight) + vScrollBar1.Value < _sequence.ChannelCount &&
+            else if ((e.Y / _gridRowHeight) + vScrollBar1.Value < _sequence.ActiveChannelCount &&
                      (e.X / _gridColWidth) + hScrollBar1.Value < _sequence.TotalEventPeriods) {
                 _selectedLineIndex = (e.Y / _gridRowHeight) + vScrollBar1.Value;
                 _editingChannelSortedIndex = _channelOrderMapping[_selectedLineIndex];
@@ -4509,7 +4509,7 @@ namespace VixenEditor {
 
         private void VScrollCheck() {
             _visibleRowCount = pictureBoxGrid.Height / _gridRowHeight;
-            vScrollBar1.Maximum = _sequence.ChannelCount - 1;
+            vScrollBar1.Maximum = _sequence.ActiveChannelCount - 1;
             vScrollBar1.LargeChange = _visibleRowCount;
             vScrollBar1.Enabled = _visibleRowCount < _sequence.ChannelCount;
             if (!vScrollBar1.Enabled) {
@@ -4715,7 +4715,7 @@ namespace VixenEditor {
 
 
         private void cbGroups_SelectedIndexChanged(object sender, EventArgs e) {
-            //_activeChannels.Clear();
+            pictureBoxGrid.Focus();
             _sequence.ActiveChannels.Clear();
             if (cbGroups.SelectedIndex == 0) {
                 for (var i = 0; i < _sequence.ChannelCount; i++) {
@@ -4731,6 +4731,7 @@ namespace VixenEditor {
                     AddChannels(itemKey);
                 }
             }
+            VScrollCheck();
             pictureBoxChannels.Refresh();
             pictureBoxGrid.Invalidate(pictureBoxGrid.ClientRectangle);
             pictureBoxGrid.Refresh();
@@ -4761,7 +4762,10 @@ namespace VixenEditor {
             }
             var node = nodeData.Split(new[] {','});
             foreach (var channelNumber in node) {
-                _sequence.ActiveChannels.Add(Int32.Parse(channelNumber));
+                int channel;
+                if (Int32.TryParse(channelNumber, out channel) && !_sequence.ActiveChannels.Contains(channel)) {
+                    _sequence.ActiveChannels.Add(channel);
+                }
             }
         }
     }
