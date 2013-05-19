@@ -14,21 +14,22 @@ namespace VixenPlus
         private System.Windows.Forms.Button btnOkay;
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.Label lblDescription;
-        private System.Windows.Forms.Label labelVersion;
+        private System.Windows.Forms.Label lblVersion;
 
         private void InitializeComponent()
         {
             this.btnOkay = new System.Windows.Forms.Button();
             this.lblName = new System.Windows.Forms.Label();
             this.lblDescription = new System.Windows.Forms.Label();
-            this.labelVersion = new System.Windows.Forms.Label();
+            this.lblVersion = new System.Windows.Forms.Label();
             this.llblURL = new System.Windows.Forms.LinkLabel();
+            this.lblCredits = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnOkay
             // 
             this.btnOkay.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOkay.Location = new System.Drawing.Point(260, 135);
+            this.btnOkay.Location = new System.Drawing.Point(329, 135);
             this.btnOkay.Name = "btnOkay";
             this.btnOkay.Size = new System.Drawing.Size(75, 23);
             this.btnOkay.TabIndex = 0;
@@ -39,33 +40,34 @@ namespace VixenPlus
             // 
             this.lblName.Font = new System.Drawing.Font("Arial", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblName.ForeColor = System.Drawing.Color.Red;
-            this.lblName.Location = new System.Drawing.Point(12, 9);
+            this.lblName.Location = new System.Drawing.Point(108, 9);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(323, 45);
+            this.lblName.Size = new System.Drawing.Size(201, 45);
             this.lblName.TabIndex = 1;
             this.lblName.Text = "ProductName";
             this.lblName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblName.Click += new System.EventHandler(this.AboutDialog_MouseClick);
             // 
             // lblDescription
             // 
             this.lblDescription.Font = new System.Drawing.Font("Arial Narrow", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDescription.Location = new System.Drawing.Point(12, 54);
             this.lblDescription.Name = "lblDescription";
-            this.lblDescription.Size = new System.Drawing.Size(323, 25);
+            this.lblDescription.Size = new System.Drawing.Size(392, 25);
             this.lblDescription.TabIndex = 2;
             this.lblDescription.Text = "PreoductDescripton";
             this.lblDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // labelVersion
+            // lblVersion
             // 
-            this.labelVersion.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelVersion.ForeColor = System.Drawing.Color.Green;
-            this.labelVersion.Location = new System.Drawing.Point(12, 79);
-            this.labelVersion.Name = "labelVersion";
-            this.labelVersion.Size = new System.Drawing.Size(323, 25);
-            this.labelVersion.TabIndex = 6;
-            this.labelVersion.Text = "ProductVersion";
-            this.labelVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblVersion.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVersion.ForeColor = System.Drawing.Color.Green;
+            this.lblVersion.Location = new System.Drawing.Point(47, 79);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(323, 25);
+            this.lblVersion.TabIndex = 6;
+            this.lblVersion.Text = "ProductVersion";
+            this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // llblURL
             // 
@@ -79,6 +81,18 @@ namespace VixenPlus
             this.llblURL.Text = "ProductURL";
             this.llblURL.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llblURL_LinkClicked);
             // 
+            // lblCredits
+            // 
+            this.lblCredits.BackColor = System.Drawing.Color.Transparent;
+            this.lblCredits.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCredits.Location = new System.Drawing.Point(12, 0);
+            this.lblCredits.Name = "lblCredits";
+            this.lblCredits.Size = new System.Drawing.Size(392, 17);
+            this.lblCredits.TabIndex = 8;
+            this.lblCredits.Text = "label1";
+            this.lblCredits.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lblCredits.Visible = false;
+            // 
             // AboutDialog
             // 
             this.AcceptButton = this.btnOkay;
@@ -86,10 +100,11 @@ namespace VixenPlus
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gainsboro;
             this.CancelButton = this.btnOkay;
-            this.ClientSize = new System.Drawing.Size(347, 168);
+            this.ClientSize = new System.Drawing.Size(416, 168);
             this.ControlBox = false;
+            this.Controls.Add(this.lblCredits);
             this.Controls.Add(this.llblURL);
-            this.Controls.Add(this.labelVersion);
+            this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.lblDescription);
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.btnOkay);
@@ -100,6 +115,7 @@ namespace VixenPlus
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "About";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AboutDialog_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -116,5 +132,6 @@ namespace VixenPlus
         }
 
         private LinkLabel llblURL;
+        private Label lblCredits;
     }
 }
