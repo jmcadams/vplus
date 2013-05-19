@@ -502,4 +502,36 @@ The plugin's setup data may be invalid or inaccurate.</value>
     <value>Error in file at line {0}:
 {1}</value>
   </data>
+	<data name="InspiredBy" xml:space="preserve">
+    <value>Inspired By:</value>
+  </data>
+	<data name="WrittenBy" xml:space="preserve">
+    <value>Written By:</value>
+  </data>
+	<data name="TestedBy" xml:space="preserve">
+    <value>Beta Tested By:</value>
+  </data>
+	<data name="DedicatedTo" xml:space="preserve">
+    <value>Dedicated To:</value>
+  </data>
+	<data name="MyFriends" xml:space="preserve">
+    <value>My friends at DIYChristmas.org</value>
+  </data>
+	<data name="ThankYou" xml:space="preserve">
+    <value>Thank you everyone!</value>
+  </data>
+	<data name="Lutefisk" xml:space="preserve">
+    <value>
+
+
+
+
+
+
+
+Lutefisk for all!</value>
+  </data>
+	<data name="ProductDescription" xml:space="preserve">
+    <value>Lighting Control Software</value>
+  </data>
 </root>

@@ -1,8 +1,9 @@
+using Properties;
+
 namespace VixenPlus
 {
-    public static class Vendor
-    {
-        public const string ProductDescription = "Lighting Control Software";
+    public static class Vendor {
+        public static string ProductDescription = Resources.ProductDescription;
         public const string ProductName = "Vixen Plus";
         public const string ProductURL = "http://www.vixenplus.com/";
 

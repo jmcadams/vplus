@@ -9,13 +9,20 @@ using Properties;
 
 namespace VixenPlus {
     internal partial class AboutDialog : Form {
-        private readonly System.Windows.Forms.Timer _timer = new System.Windows.Forms.Timer { Interval = 50 };
+        private readonly System.Windows.Forms.Timer _timer = new System.Windows.Forms.Timer {Interval = 25};
         private int _creditsTop;
+        private const int CreditsMargin = 5;
+        private const int CreditScollSize = 1;
+
 
         public AboutDialog() {
             InitializeComponent();
-            
+
+            // Make sure the okay button is always on top since it may get covered by the credits.
+            Controls.SetChildIndex(btnOkay, 0);
+
             _creditsTop = Height;
+            _timer.Tick += TimerTick;
 
             Text = Resources.About + Vendor.ProductName;
 
@@ -42,43 +49,57 @@ namespace VixenPlus {
 
 
         private void AboutDialog_MouseClick(object sender, EventArgs e) {
-            Controls.SetChildIndex(btnOkay, 0);
             var credits = new StringBuilder();
-            credits.AppendLine("Inspired By:").AppendLine("K.C. Oaks and Vixen 2.x\n");
-            credits.AppendLine("Written By:").AppendLine("John McAdams\nAKA Macebobo\nPronounced Mac E Bo Bo\n\n");
-            credits.AppendLine("Beta Tested By:").AppendLine("Falcon\nPhoenix\nEagle\nOregonLights\nDirknerkle\n");
-            credits.AppendLine("Supported By:").AppendLine("DIYChristmas.org").AppendLine("Thanks Guys && Gals!");
-            credits.AppendLine("\n\n\n\n\n\nLutefisk for all!");
-            _timer.Tick += TimerTick;
-            _timer.Start();
+            credits.AppendLine(Resources.InspiredBy).AppendLine("K.C. Oaks and Vixen 2.x\n");
+            credits.AppendLine(Resources.WrittenBy).AppendLine("John McAdams\nAKA Macebobo\nPronounced Mac E Bo Bo\n\n");
+            credits.AppendLine(Resources.TestedBy).AppendLine("Falcon\nPhoenix\nEagle\nOregonLights\nDirknerkle\n");
+            credits.AppendLine(Resources.DedicatedTo).AppendLine(Resources.MyFriends).AppendLine(Resources.ThankYou);
+            credits.AppendLine(Resources.Lutefisk);
+
+            // This is how we get the correct height of the credits regardless of how 
+            // long they get, used this instead of Graphics.measureString to be lightweight.
             lblCredits.AutoSize = true;
             lblCredits.Text = credits.ToString();
             var size = lblCredits.Size;
             lblCredits.AutoSize = false;
-            size.Width = Width - 10;
+            size.Width = Width - CreditsMargin * 2;
             lblCredits.Size = size;
-            lblCredits.Visible = true;
-            lblCredits.Location = new Point(5, _creditsTop);
-            lblDescription.Visible = false;
-            lblName.Visible = false;
-            lblVersion.Visible = false;
-            llblURL.Visible = false;
+
+            UpdateVisibility(false);
+            lblCredits.Location = new Point(CreditsMargin, _creditsTop);
+
+            _timer.Start();
         }
-
-
 
 
         private void TimerTick(object sender, EventArgs e) {
-            _creditsTop -= 2;
+            _creditsTop -= CreditScollSize;
             if (_creditsTop + lblCredits.Height < 0) {
                 _creditsTop = Height;
             }
-            lblCredits.Location = new Point(5, _creditsTop);
+            lblCredits.Location = new Point(CreditsMargin, _creditsTop);
         }
+
 
         private void AboutDialog_FormClosing(object sender, FormClosingEventArgs e) {
             _timer.Stop();
+            _timer.Tick -= TimerTick;
             _timer.Dispose();
+        }
+
+
+        private void lblCredits_Click(object sender, EventArgs e) {
+            _timer.Stop();
+            UpdateVisibility(true);
+        }
+
+
+        private void UpdateVisibility(bool isNormal) {
+            lblCredits.Visible = !isNormal;
+            lblDescription.Visible = isNormal;
+            lblName.Visible = isNormal;
+            lblVersion.Visible = isNormal;
+            llblURL.Visible = isNormal;
         }
     }
 }

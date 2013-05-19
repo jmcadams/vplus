@@ -22,7 +22,7 @@ namespace Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to About .
         /// </summary>
-        internal static string About {
+        public static string About {
             get {
                 return ResourceManager.GetString("About", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to All fields are required..
         /// </summary>
-        internal static string AllFieldsRequired {
+        public static string AllFieldsRequired {
             get {
                 return ResourceManager.GetString("AllFieldsRequired", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to All supported formats.
         /// </summary>
-        internal static string AllSupportedFormats {
+        public static string AllSupportedFormats {
             get {
                 return ResourceManager.GetString("AllSupportedFormats", resourceCulture);
             }
@@ -92,7 +92,7 @@ namespace Properties {
         ///
         ///Do you wish to do this?.
         /// </summary>
-        internal static string AllTimersWillStop {
+        public static string AllTimersWillStop {
             get {
                 return ResourceManager.GetString("AllTimersWillStop", resourceCulture);
             }
@@ -101,7 +101,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Channel output mapping.
         /// </summary>
-        internal static string ChannelCaption {
+        public static string ChannelCaption {
             get {
                 return ResourceManager.GetString("ChannelCaption", resourceCulture);
             }
@@ -110,7 +110,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to There must be an equal number of channel names as there are channels.
         /// </summary>
-        internal static string ChannelCountAndNameInequal {
+        public static string ChannelCountAndNameInequal {
             get {
                 return ResourceManager.GetString("ChannelCountAndNameInequal", resourceCulture);
             }
@@ -119,7 +119,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to The channel count must be 1 or greater.
         /// </summary>
-        internal static string ChannelCountMinimums {
+        public static string ChannelCountMinimums {
             get {
                 return ResourceManager.GetString("ChannelCountMinimums", resourceCulture);
             }
@@ -128,7 +128,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Channel &quot;{0}&quot; cleared of new events..
         /// </summary>
-        internal static string ChannelEventsClerared {
+        public static string ChannelEventsClerared {
             get {
                 return ResourceManager.GetString("ChannelEventsClerared", resourceCulture);
             }
@@ -137,7 +137,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Channel names cannot be blank.
         /// </summary>
-        internal static string ChannelNameCantBeBlank {
+        public static string ChannelNameCantBeBlank {
             get {
                 return ResourceManager.GetString("ChannelNameCantBeBlank", resourceCulture);
             }
@@ -146,7 +146,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to What would you like to name this channel ordering?.
         /// </summary>
-        internal static string ChannelOrderingName {
+        public static string ChannelOrderingName {
             get {
                 return ResourceManager.GetString("ChannelOrderingName", resourceCulture);
             }
@@ -155,7 +155,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Channel .
         /// </summary>
-        internal static string ChannelSpace {
+        public static string ChannelSpace {
             get {
                 return ResourceManager.GetString("ChannelSpace", resourceCulture);
             }
@@ -164,7 +164,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Color already exists in the list..
         /// </summary>
-        internal static string ColorAlreadyExists {
+        public static string ColorAlreadyExists {
             get {
                 return ResourceManager.GetString("ColorAlreadyExists", resourceCulture);
             }
@@ -173,7 +173,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Are you sure you really want {0} channels?.
         /// </summary>
-        internal static string ConfirmChannelCount {
+        public static string ConfirmChannelCount {
             get {
                 return ResourceManager.GetString("ConfirmChannelCount", resourceCulture);
             }
@@ -182,16 +182,25 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Countdown....
         /// </summary>
-        internal static string Countdown {
+        public static string Countdown {
             get {
                 return ResourceManager.GetString("Countdown", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dedicated To:.
+        /// </summary>
+        public static string DedicatedTo {
+            get {
+                return ResourceManager.GetString("DedicatedTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete channel order &apos;{0}&apos;?.
         /// </summary>
-        internal static string DeleteChannelOrder {
+        public static string DeleteChannelOrder {
             get {
                 return ResourceManager.GetString("DeleteChannelOrder", resourceCulture);
             }
@@ -200,7 +209,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Dump file written to .
         /// </summary>
-        internal static string DumpFileWritten {
+        public static string DumpFileWritten {
             get {
                 return ResourceManager.GetString("DumpFileWritten", resourceCulture);
             }
@@ -209,7 +218,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to  is missing or does not contain a valid engine.
         /// </summary>
-        internal static string EngineMissingOrInvalid {
+        public static string EngineMissingOrInvalid {
             get {
                 return ResourceManager.GetString("EngineMissingOrInvalid", resourceCulture);
             }
@@ -219,7 +228,7 @@ namespace Properties {
         ///   Looks up a localized string similar to Error when shutting down the plugin:
         ///.
         /// </summary>
-        internal static string engineShutDownError {
+        public static string engineShutDownError {
             get {
                 return ResourceManager.GetString("engineShutDownError", resourceCulture);
             }
@@ -230,7 +239,7 @@ namespace Properties {
         ///
         ///Execution has been stopped..
         /// </summary>
-        internal static string EngineStoppedError {
+        public static string EngineStoppedError {
             get {
                 return ResourceManager.GetString("EngineStoppedError", resourceCulture);
             }
@@ -239,7 +248,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Plugin error.
         /// </summary>
-        internal static string EngineStoppedHeading {
+        public static string EngineStoppedHeading {
             get {
                 return ResourceManager.GetString("EngineStoppedHeading", resourceCulture);
             }
@@ -252,7 +261,7 @@ namespace Properties {
         ///The error was:
         ///{1}.
         /// </summary>
-        internal static string ErrorExecutingTimer {
+        public static string ErrorExecutingTimer {
             get {
                 return ResourceManager.GetString("ErrorExecutingTimer", resourceCulture);
             }
@@ -262,7 +271,7 @@ namespace Properties {
         ///   Looks up a localized string similar to Error in file at line {0}:
         ///{1}.
         /// </summary>
-        internal static string ErrorInCurveFile {
+        public static string ErrorInCurveFile {
             get {
                 return ResourceManager.GetString("ErrorInCurveFile", resourceCulture);
             }
@@ -272,7 +281,7 @@ namespace Properties {
         ///   Looks up a localized string similar to Error loading audio:
         ///.
         /// </summary>
-        internal static string ErrorLoadingAudio {
+        public static string ErrorLoadingAudio {
             get {
                 return ResourceManager.GetString("ErrorLoadingAudio", resourceCulture);
             }
@@ -282,7 +291,7 @@ namespace Properties {
         ///   Looks up a localized string similar to Error occurred while loading the file:
         ///.
         /// </summary>
-        internal static string ErrorLoadingCurveFile {
+        public static string ErrorLoadingCurveFile {
             get {
                 return ResourceManager.GetString("ErrorLoadingCurveFile", resourceCulture);
             }
@@ -293,7 +302,7 @@ namespace Properties {
         ///
         ///.
         /// </summary>
-        internal static string ErrorsLoadingSongs {
+        public static string ErrorsLoadingSongs {
             get {
                 return ResourceManager.GetString("ErrorsLoadingSongs", resourceCulture);
             }
@@ -302,7 +311,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to  is not a valid number for the event period length.
         /// </summary>
-        internal static string EventPeriodInvalid {
+        public static string EventPeriodInvalid {
             get {
                 return ResourceManager.GetString("EventPeriodInvalid", resourceCulture);
             }
@@ -311,7 +320,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to While possible, event periods less than 25 ms are not supported..
         /// </summary>
-        internal static string EventPeriodTooShort {
+        public static string EventPeriodTooShort {
             get {
                 return ResourceManager.GetString("EventPeriodTooShort", resourceCulture);
             }
@@ -321,7 +330,7 @@ namespace Properties {
         ///   Looks up a localized string similar to Error while exporting:
         ///.
         /// </summary>
-        internal static string ExportError {
+        public static string ExportError {
             get {
                 return ResourceManager.GetString("ExportError", resourceCulture);
             }
@@ -330,7 +339,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Specify a file to export to.
         /// </summary>
-        internal static string ExportFile {
+        public static string ExportFile {
             get {
                 return ResourceManager.GetString("ExportFile", resourceCulture);
             }
@@ -339,7 +348,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Export successful..
         /// </summary>
-        internal static string ExportSuccess {
+        public static string ExportSuccess {
             get {
                 return ResourceManager.GetString("ExportSuccess", resourceCulture);
             }
@@ -348,7 +357,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Engine assembly.
         /// </summary>
-        internal static string Filter_EngineAssembly {
+        public static string Filter_EngineAssembly {
             get {
                 return ResourceManager.GetString("Filter_EngineAssembly", resourceCulture);
             }
@@ -357,7 +366,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Version {0}.
         /// </summary>
-        internal static string FormattedVersion {
+        public static string FormattedVersion {
             get {
                 return ResourceManager.GetString("FormattedVersion", resourceCulture);
             }
@@ -367,7 +376,7 @@ namespace Properties {
         ///   Looks up a localized string similar to A background sequence has been specified, but it does not exist.
         ///This message will show each time you start the application and this situation exists..
         /// </summary>
-        internal static string Host_BackgroundSequenceName {
+        public static string Host_BackgroundSequenceName {
             get {
                 return ResourceManager.GetString("Host_BackgroundSequenceName", resourceCulture);
             }
@@ -376,7 +385,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to  is running.
         /// </summary>
-        internal static string Host_isRunning {
+        public static string Host_isRunning {
             get {
                 return ResourceManager.GetString("Host_isRunning", resourceCulture);
             }
@@ -387,7 +396,7 @@ namespace Properties {
         ///
         ///Audio logging has been turned off..
         /// </summary>
-        internal static string Host_LogAudioFailed {
+        public static string Host_LogAudioFailed {
             get {
                 return ResourceManager.GetString("Host_LogAudioFailed", resourceCulture);
             }
@@ -396,7 +405,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to There was a problem starting the background sequence..
         /// </summary>
-        internal static string Host_StartingBackgroundSequenceFailed {
+        public static string Host_StartingBackgroundSequenceFailed {
             get {
                 return ResourceManager.GetString("Host_StartingBackgroundSequenceFailed", resourceCulture);
             }
@@ -405,7 +414,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Select a file to import from.
         /// </summary>
-        internal static string ImportFile {
+        public static string ImportFile {
             get {
                 return ResourceManager.GetString("ImportFile", resourceCulture);
             }
@@ -415,7 +424,7 @@ namespace Properties {
         ///   Looks up a localized string similar to The sequence does not contain as many channels as the profile you are detaching from.
         ///Do you want to increase the channel count to prevent any possible data loss?.
         /// </summary>
-        internal static string IncreaseChannelCount {
+        public static string IncreaseChannelCount {
             get {
                 return ResourceManager.GetString("IncreaseChannelCount", resourceCulture);
             }
@@ -424,7 +433,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Input is disabled.
         /// </summary>
-        internal static string InputDisabled {
+        public static string InputDisabled {
             get {
                 return ResourceManager.GetString("InputDisabled", resourceCulture);
             }
@@ -433,9 +442,18 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Input is enabled and is mapped to:.
         /// </summary>
-        internal static string InputEnabled {
+        public static string InputEnabled {
             get {
                 return ResourceManager.GetString("InputEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inspired By:.
+        /// </summary>
+        public static string InspiredBy {
+            get {
+                return ResourceManager.GetString("InspiredBy", resourceCulture);
             }
         }
         
@@ -444,7 +462,7 @@ namespace Properties {
         ///
         ///If you choose Yes, the narrative will be disabled..
         /// </summary>
-        internal static string IntervalInvalid {
+        public static string IntervalInvalid {
             get {
                 return ResourceManager.GetString("IntervalInvalid", resourceCulture);
             }
@@ -455,7 +473,7 @@ namespace Properties {
         ///
         ///If you choose Yes, the narrative will be disabled..
         /// </summary>
-        internal static string IntervalTooSmall {
+        public static string IntervalTooSmall {
             get {
                 return ResourceManager.GetString("IntervalTooSmall", resourceCulture);
             }
@@ -464,7 +482,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to  is not a valid number for the channel count.
         /// </summary>
-        internal static string InvalidChannelCount {
+        public static string InvalidChannelCount {
             get {
                 return ResourceManager.GetString("InvalidChannelCount", resourceCulture);
             }
@@ -473,7 +491,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to {0} is not a valid numeric value for the number of channels to add..
         /// </summary>
-        internal static string InvalidChannelsToAdd {
+        public static string InvalidChannelsToAdd {
             get {
                 return ResourceManager.GetString("InvalidChannelsToAdd", resourceCulture);
             }
@@ -483,7 +501,7 @@ namespace Properties {
         ///   Looks up a localized string similar to Attemped to save to non-existent file path:
         ///.
         /// </summary>
-        internal static string InvalidPath {
+        public static string InvalidPath {
             get {
                 return ResourceManager.GetString("InvalidPath", resourceCulture);
             }
@@ -493,7 +511,7 @@ namespace Properties {
         ///   Looks up a localized string similar to Cannot set the sequence length.
         ///There is audio associated which would exceed that length..
         /// </summary>
-        internal static string InvalidSequenceLength {
+        public static string InvalidSequenceLength {
             get {
                 return ResourceManager.GetString("InvalidSequenceLength", resourceCulture);
             }
@@ -508,7 +526,7 @@ namespace Properties {
         ///Seconds.Milliseconds
         ///Minutes:Seconds.Milliseconds.
         /// </summary>
-        internal static string InvalidTimeFormat {
+        public static string InvalidTimeFormat {
             get {
                 return ResourceManager.GetString("InvalidTimeFormat", resourceCulture);
             }
@@ -517,16 +535,33 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Executing timer for {0} at {1}.
         /// </summary>
-        internal static string LogExecutingTimer {
+        public static string LogExecutingTimer {
             get {
                 return ResourceManager.GetString("LogExecutingTimer", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 
+        ///
+        ///
+        ///
+        ///
+        ///
+        ///
+        ///
+        ///Lutefisk for all!.
+        /// </summary>
+        public static string Lutefisk {
+            get {
+                return ResourceManager.GetString("Lutefisk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Minimum must be less than the maximum..
         /// </summary>
-        internal static string MinLessThanMax {
+        public static string MinLessThanMax {
             get {
                 return ResourceManager.GetString("MinLessThanMax", resourceCulture);
             }
@@ -535,16 +570,25 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Multiple.
         /// </summary>
-        internal static string Multiple {
+        public static string Multiple {
             get {
                 return ResourceManager.GetString("Multiple", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to My friends at DIYChristmas.org.
+        /// </summary>
+        public static string MyFriends {
+            get {
+                return ResourceManager.GetString("MyFriends", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name for the new profile.
         /// </summary>
-        internal static string NameNewProfile {
+        public static string NameNewProfile {
             get {
                 return ResourceManager.GetString("NameNewProfile", resourceCulture);
             }
@@ -553,7 +597,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to What do you want to name this profile?.
         /// </summary>
-        internal static string NameThisProfile {
+        public static string NameThisProfile {
             get {
                 return ResourceManager.GetString("NameThisProfile", resourceCulture);
             }
@@ -562,7 +606,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to New order.
         /// </summary>
-        internal static string NewOrderPrompt {
+        public static string NewOrderPrompt {
             get {
                 return ResourceManager.GetString("NewOrderPrompt", resourceCulture);
             }
@@ -571,7 +615,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to New Profile.
         /// </summary>
-        internal static string NewProfilePrompt {
+        public static string NewProfilePrompt {
             get {
                 return ResourceManager.GetString("NewProfilePrompt", resourceCulture);
             }
@@ -580,7 +624,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to This event sequence does not have audio assigned.
         /// </summary>
-        internal static string NoAudioAssigned {
+        public static string NoAudioAssigned {
             get {
                 return ResourceManager.GetString("NoAudioAssigned", resourceCulture);
             }
@@ -589,7 +633,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to There are no channels to reorder..
         /// </summary>
-        internal static string NoChannelsToReorder {
+        public static string NoChannelsToReorder {
             get {
                 return ResourceManager.GetString("NoChannelsToReorder", resourceCulture);
             }
@@ -598,7 +642,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to You have selected to use a single input to iterate the mapping sets, but have not chosen an input..
         /// </summary>
-        internal static string NoInputChosen {
+        public static string NoInputChosen {
             get {
                 return ResourceManager.GetString("NoInputChosen", resourceCulture);
             }
@@ -607,7 +651,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to You have selected to use a single input to iterate the mapping sets, but do not have any inputs sets to be iterators and therefore have not chosen an input to iterate with..
         /// </summary>
-        internal static string NoInputSet {
+        public static string NoInputSet {
             get {
                 return ResourceManager.GetString("NoInputSet", resourceCulture);
             }
@@ -618,7 +662,7 @@ namespace Properties {
         ///
         ///If you choose Yes, the narrative will be disabled..
         /// </summary>
-        internal static string NoNarrativeFile {
+        public static string NoNarrativeFile {
             get {
                 return ResourceManager.GetString("NoNarrativeFile", resourceCulture);
             }
@@ -627,7 +671,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to None.
         /// </summary>
-        internal static string None {
+        public static string None {
             get {
                 return ResourceManager.GetString("None", resourceCulture);
             }
@@ -636,7 +680,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to This does not appear to be a valid sequence file..
         /// </summary>
-        internal static string NotAValidSequence {
+        public static string NotAValidSequence {
             get {
                 return ResourceManager.GetString("NotAValidSequence", resourceCulture);
             }
@@ -645,7 +689,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to The program has at least one sequence that has not been saved..
         /// </summary>
-        internal static string OneOrMoreSequencesNotSaved {
+        public static string OneOrMoreSequencesNotSaved {
             get {
                 return ResourceManager.GetString("OneOrMoreSequencesNotSaved", resourceCulture);
             }
@@ -655,7 +699,7 @@ namespace Properties {
         ///   Looks up a localized string similar to This name is already in use.
         ///Do you want to overwrite it?.
         /// </summary>
-        internal static string OrderNameOverwrite {
+        public static string OrderNameOverwrite {
             get {
                 return ResourceManager.GetString("OrderNameOverwrite", resourceCulture);
             }
@@ -664,7 +708,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Plugin error.
         /// </summary>
-        internal static string PluginError {
+        public static string PluginError {
             get {
                 return ResourceManager.GetString("PluginError", resourceCulture);
             }
@@ -676,7 +720,7 @@ namespace Properties {
         ///Error:
         ///.
         /// </summary>
-        internal static string PluginInitError {
+        public static string PluginInitError {
             get {
                 return ResourceManager.GetString("PluginInitError", resourceCulture);
             }
@@ -689,16 +733,25 @@ namespace Properties {
         ///
         ///The plugin&apos;s setup data may be invalid or inaccurate..
         /// </summary>
-        internal static string PluginSetupErrorInvalidStatePossible {
+        public static string PluginSetupErrorInvalidStatePossible {
             get {
                 return ResourceManager.GetString("PluginSetupErrorInvalidStatePossible", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lighting Control Software.
+        /// </summary>
+        public static string ProductDescription {
+            get {
+                return ResourceManager.GetString("ProductDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile Name.
         /// </summary>
-        internal static string ProfileNamePrompt {
+        public static string ProfileNamePrompt {
             get {
                 return ResourceManager.GetString("ProfileNamePrompt", resourceCulture);
             }
@@ -710,7 +763,7 @@ namespace Properties {
         ///Profile not found.
         ///Will use sequence data instead..
         /// </summary>
-        internal static string ProfileNotFound {
+        public static string ProfileNotFound {
             get {
                 return ResourceManager.GetString("ProfileNotFound", resourceCulture);
             }
@@ -721,7 +774,7 @@ namespace Properties {
         ///
         ///This will affect any sequences that use this profile..
         /// </summary>
-        internal static string RemoveProfile {
+        public static string RemoveProfile {
             get {
                 return ResourceManager.GetString("RemoveProfile", resourceCulture);
             }
@@ -730,7 +783,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Remove the selected item from this profile?.
         /// </summary>
-        internal static string RemoveProfileItem {
+        public static string RemoveProfileItem {
             get {
                 return ResourceManager.GetString("RemoveProfileItem", resourceCulture);
             }
@@ -739,7 +792,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Application must be restarted for this change to be effective..
         /// </summary>
-        internal static string RestartForChange {
+        public static string RestartForChange {
             get {
                 return ResourceManager.GetString("RestartForChange", resourceCulture);
             }
@@ -754,7 +807,7 @@ namespace Properties {
         ///
         ///{1}.
         /// </summary>
-        internal static string RouterError {
+        public static string RouterError {
             get {
                 return ResourceManager.GetString("RouterError", resourceCulture);
             }
@@ -765,7 +818,7 @@ namespace Properties {
         ///An output plugin caused the following exception: 
         ///{0}.
         /// </summary>
-        internal static string RouterOutputError {
+        public static string RouterOutputError {
             get {
                 return ResourceManager.GetString("RouterOutputError", resourceCulture);
             }
@@ -775,7 +828,7 @@ namespace Properties {
         ///   Looks up a localized string similar to (Router - Startup)
         ///{0}.
         /// </summary>
-        internal static string RouterStartupError {
+        public static string RouterStartupError {
             get {
                 return ResourceManager.GetString("RouterStartupError", resourceCulture);
             }
@@ -785,7 +838,7 @@ namespace Properties {
         ///   Looks up a localized string similar to This sequence is not a scripted sequence.
         ///Only a scripted sequence can be selected for background execution..
         /// </summary>
-        internal static string ScripedSequenceOnly {
+        public static string ScripedSequenceOnly {
             get {
                 return ResourceManager.GetString("ScripedSequenceOnly", resourceCulture);
             }
@@ -794,7 +847,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Before a program can be saved, the contained sequences need to be saved..
         /// </summary>
-        internal static string SequencesMustBeSavedBeforeSavingProgram {
+        public static string SequencesMustBeSavedBeforeSavingProgram {
             get {
                 return ResourceManager.GetString("SequencesMustBeSavedBeforeSavingProgram", resourceCulture);
             }
@@ -803,7 +856,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to * Baud rate has not been selected..
         /// </summary>
-        internal static string Serial_BaudError {
+        public static string Serial_BaudError {
             get {
                 return ResourceManager.GetString("Serial_BaudError", resourceCulture);
             }
@@ -812,7 +865,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to * Invalid numeric value for data bits..
         /// </summary>
-        internal static string Serial_DataBitsError {
+        public static string Serial_DataBitsError {
             get {
                 return ResourceManager.GetString("Serial_DataBitsError", resourceCulture);
             }
@@ -821,7 +874,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to * Parity has not been selected..
         /// </summary>
-        internal static string Serial_ParityError {
+        public static string Serial_ParityError {
             get {
                 return ResourceManager.GetString("Serial_ParityError", resourceCulture);
             }
@@ -830,7 +883,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to * Port name has not been selected..
         /// </summary>
-        internal static string Serial_PortError {
+        public static string Serial_PortError {
             get {
                 return ResourceManager.GetString("Serial_PortError", resourceCulture);
             }
@@ -841,7 +894,7 @@ namespace Properties {
         ///
         ///.
         /// </summary>
-        internal static string Serial_Resolve {
+        public static string Serial_Resolve {
             get {
                 return ResourceManager.GetString("Serial_Resolve", resourceCulture);
             }
@@ -850,7 +903,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to * Stop bits have not been selected..
         /// </summary>
-        internal static string Serial_StopBitsError {
+        public static string Serial_StopBitsError {
             get {
                 return ResourceManager.GetString("Serial_StopBitsError", resourceCulture);
             }
@@ -859,7 +912,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Show actual levels.
         /// </summary>
-        internal static string ShowActual {
+        public static string ShowActual {
             get {
                 return ResourceManager.GetString("ShowActual", resourceCulture);
             }
@@ -868,16 +921,34 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Show % levels.
         /// </summary>
-        internal static string ShowPercentage {
+        public static string ShowPercentage {
             get {
                 return ResourceManager.GetString("ShowPercentage", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Beta Tested By:.
+        /// </summary>
+        public static string TestedBy {
+            get {
+                return ResourceManager.GetString("TestedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thank you everyone!.
+        /// </summary>
+        public static string ThankYou {
+            get {
+                return ResourceManager.GetString("ThankYou", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A timer with an unknown object tried to execute..
         /// </summary>
-        internal static string TimerUnknownError {
+        public static string TimerUnknownError {
             get {
                 return ResourceManager.GetString("TimerUnknownError", resourceCulture);
             }
@@ -886,7 +957,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Select an engine assembly.
         /// </summary>
-        internal static string Title_SelectEngine {
+        public static string Title_SelectEngine {
             get {
                 return ResourceManager.GetString("Title_SelectEngine", resourceCulture);
             }
@@ -895,7 +966,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Unable to load the song..
         /// </summary>
-        internal static string UnableToLoadSong {
+        public static string UnableToLoadSong {
             get {
                 return ResourceManager.GetString("UnableToLoadSong", resourceCulture);
             }
@@ -904,7 +975,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Use application&apos;s default device.
         /// </summary>
-        internal static string UseApplicationDefaultAudio {
+        public static string UseApplicationDefaultAudio {
             get {
                 return ResourceManager.GetString("UseApplicationDefaultAudio", resourceCulture);
             }
@@ -915,7 +986,7 @@ namespace Properties {
         ///
         ///Continue?.
         /// </summary>
-        internal static string VerifyChannelValueReset {
+        public static string VerifyChannelValueReset {
             get {
                 return ResourceManager.GetString("VerifyChannelValueReset", resourceCulture);
             }
@@ -926,7 +997,7 @@ namespace Properties {
         ///
         ///.
         /// </summary>
-        internal static string VixenPlusForm_AddInError {
+        public static string VixenPlusForm_AddInError {
             get {
                 return ResourceManager.GetString("VixenPlusForm_AddInError", resourceCulture);
             }
@@ -936,7 +1007,7 @@ namespace Properties {
         ///   Looks up a localized string similar to Delay cannot be less than 1 second.
         ///Resetting to 1 second.
         /// </summary>
-        internal static string VixenPlusForm_DelayPeriodMin {
+        public static string VixenPlusForm_DelayPeriodMin {
             get {
                 return ResourceManager.GetString("VixenPlusForm_DelayPeriodMin", resourceCulture);
             }
@@ -946,7 +1017,7 @@ namespace Properties {
         ///   Looks up a localized string similar to The event period length cannot be less than 25 milliseconds.
         ///The length has been reset to 25 milliseconds..
         /// </summary>
-        internal static string VixenPlusForm_EventPeriodMin {
+        public static string VixenPlusForm_EventPeriodMin {
             get {
                 return ResourceManager.GetString("VixenPlusForm_EventPeriodMin", resourceCulture);
             }
@@ -956,7 +1027,7 @@ namespace Properties {
         ///   Looks up a localized string similar to File does not exist.
         ///Item has been removed from the history..
         /// </summary>
-        internal static string VixenPlusForm_HistoryRemovalMsg {
+        public static string VixenPlusForm_HistoryRemovalMsg {
             get {
                 return ResourceManager.GetString("VixenPlusForm_HistoryRemovalMsg", resourceCulture);
             }
@@ -965,7 +1036,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to There is no known editor for that file type..
         /// </summary>
-        internal static string VixenPlusForm_NoKnowEditor {
+        public static string VixenPlusForm_NoKnowEditor {
             get {
                 return ResourceManager.GetString("VixenPlusForm_NoKnowEditor", resourceCulture);
             }
@@ -975,7 +1046,7 @@ namespace Properties {
         ///   Looks up a localized string similar to There is no sequence open, nor is there a default profile set.
         ///You have no channels to layout..
         /// </summary>
-        internal static string VixenPlusForm_NoOpenSequence {
+        public static string VixenPlusForm_NoOpenSequence {
             get {
                 return ResourceManager.GetString("VixenPlusForm_NoOpenSequence", resourceCulture);
             }
@@ -984,7 +1055,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to There is nothing scheduled to execute at this time..
         /// </summary>
-        internal static string VixenPlusForm_NothingToDoMsg {
+        public static string VixenPlusForm_NothingToDoMsg {
             get {
                 return ResourceManager.GetString("VixenPlusForm_NothingToDoMsg", resourceCulture);
             }
@@ -995,7 +1066,7 @@ namespace Properties {
         ///
         ///A blank sequence will be created for you..
         /// </summary>
-        internal static string VixenPlusForm_NoWizardMsg {
+        public static string VixenPlusForm_NoWizardMsg {
             get {
                 return ResourceManager.GetString("VixenPlusForm_NoWizardMsg", resourceCulture);
             }
@@ -1004,7 +1075,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
-        internal static string VixenPlusForm_Save {
+        public static string VixenPlusForm_Save {
             get {
                 return ResourceManager.GetString("VixenPlusForm_Save", resourceCulture);
             }
@@ -1013,7 +1084,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Schedule is currently disabled..
         /// </summary>
-        internal static string VixenPlusForm_ScheduleDisabledMsg {
+        public static string VixenPlusForm_ScheduleDisabledMsg {
             get {
                 return ResourceManager.GetString("VixenPlusForm_ScheduleDisabledMsg", resourceCulture);
             }
@@ -1022,7 +1093,7 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Sequence saved.
         /// </summary>
-        internal static string VixenPlusForm_SequenceSaved {
+        public static string VixenPlusForm_SequenceSaved {
             get {
                 return ResourceManager.GetString("VixenPlusForm_SequenceSaved", resourceCulture);
             }
@@ -1033,7 +1104,7 @@ namespace Properties {
         ///
         ///The scheduled items may be longer than their remaining time or there may have been an error..
         /// </summary>
-        internal static string VixenPlusForm_TimersNotStarted_TooLong_OrError {
+        public static string VixenPlusForm_TimersNotStarted_TooLong_OrError {
             get {
                 return ResourceManager.GetString("VixenPlusForm_TimersNotStarted_TooLong_OrError", resourceCulture);
             }
@@ -1044,7 +1115,7 @@ namespace Properties {
         ///
         ///.
         /// </summary>
-        internal static string VixenPlusForm_TriggeError {
+        public static string VixenPlusForm_TriggeError {
             get {
                 return ResourceManager.GetString("VixenPlusForm_TriggeError", resourceCulture);
             }
@@ -1053,16 +1124,25 @@ namespace Properties {
         /// <summary>
         ///   Looks up a localized string similar to Trigger plug in could not be found or started..
         /// </summary>
-        internal static string VixenPlusForm_TriggerNotFoundOrStarted {
+        public static string VixenPlusForm_TriggerNotFoundOrStarted {
             get {
                 return ResourceManager.GetString("VixenPlusForm_TriggerNotFoundOrStarted", resourceCulture);
             }
         }
         
-        internal static System.Drawing.Bitmap VixenPlusSplash {
+        public static System.Drawing.Bitmap VixenPlusSplash {
             get {
                 object obj = ResourceManager.GetObject("VixenPlusSplash", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Written By:.
+        /// </summary>
+        public static string WrittenBy {
+            get {
+                return ResourceManager.GetString("WrittenBy", resourceCulture);
             }
         }
     }

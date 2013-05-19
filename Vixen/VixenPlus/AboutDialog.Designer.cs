@@ -92,6 +92,7 @@ namespace VixenPlus
             this.lblCredits.Text = "label1";
             this.lblCredits.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.lblCredits.Visible = false;
+            this.lblCredits.Click += new System.EventHandler(this.lblCredits_Click);
             // 
             // AboutDialog
             // 
