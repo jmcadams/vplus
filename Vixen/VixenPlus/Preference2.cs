@@ -40,10 +40,9 @@ namespace VixenPlus {
 
             // Screen & Colors
             isDirty |= CreateIfMissing("PrimaryDisplay", Screen.AllScreens[0].DeviceName);
-            isDirty |= CreateIfMissing("Colors", true);
-            isDirty |= CreateIfMissing("Colors", "Waveform", Color.White.ToString());
-            isDirty |= CreateIfMissing("Colors", "WaveformBackground", Color.Black.ToString());
-            isDirty |= CreateIfMissing("Colors", "WaveformZeroLine", Color.Red.ToString());
+            isDirty |= CreateIfMissing("Waveform", Color.White.ToArgb().ToString(CultureInfo.InvariantCulture));
+            isDirty |= CreateIfMissing("WaveformBackground", Color.Black.ToArgb().ToString(CultureInfo.InvariantCulture));
+            isDirty |= CreateIfMissing("WaveformZeroLine", Color.Red.ToArgb().ToString(CultureInfo.InvariantCulture));
 
             //New Sequence Settings
             isDirty |= CreateIfMissing("EventPeriod", 100);

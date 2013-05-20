@@ -3024,16 +3024,18 @@ namespace VixenEditor{
             {
                 this._gridBackBrush.Dispose();
             }
+            if (_waveformZeroLineBrush != null) {
+                _waveformZeroLineBrush.Dispose();
+            }
+            if (_waveformBrush != null) {
+                _waveformBrush.Dispose();
+            }
             this._channelNameFont.Dispose();
             this._channelStrikeoutFont.Dispose();
             this._timeFont.Dispose();
             this._selectionBrush.Dispose();
             this._positionBrush.Dispose();
             this._channelCaretBrush.Dispose();
-            //if (this._arrowBitmap != null)
-            //{
-            //    this._arrowBitmap.Dispose();
-            //}
             if (this._gridGraphics != null)
             {
                 this._gridGraphics.Dispose();

@@ -239,6 +239,9 @@ namespace VixenPlus {
             this.label28 = new System.Windows.Forms.Label();
             this.screenTab = new System.Windows.Forms.TabPage();
             this.gbColors = new System.Windows.Forms.GroupBox();
+            this.lblClickToUpdate = new System.Windows.Forms.Label();
+            this.lblCurrentColor = new System.Windows.Forms.Label();
+            this.pbColor = new System.Windows.Forms.PictureBox();
             this.lbColorizableItems = new System.Windows.Forms.ListBox();
             this.lblPrimaryScreen = new System.Windows.Forms.Label();
             this.cbScreens = new System.Windows.Forms.ComboBox();
@@ -250,6 +253,7 @@ namespace VixenPlus {
             this.sequenceEditingTab = new System.Windows.Forms.TabPage();
             this.groupBox14 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.cbWavefromZeroLine = new System.Windows.Forms.CheckBox();
             this.label34 = new System.Windows.Forms.Label();
             this.sequenceExecutionTab = new System.Windows.Forms.TabPage();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
@@ -272,7 +276,7 @@ namespace VixenPlus {
             this.buttonEngine = new System.Windows.Forms.Button();
             this.textBoxEngine = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.cbWavefromZeroLine = new System.Windows.Forms.CheckBox();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumLevel)).BeginInit();
@@ -283,6 +287,7 @@ namespace VixenPlus {
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHistoryImages)).BeginInit();
             this.screenTab.SuspendLayout();
             this.gbColors.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbColor)).BeginInit();
             this.newSequenceSettingsTab.SuspendLayout();
             this.groupBox12.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -1315,21 +1320,54 @@ namespace VixenPlus {
             // 
             // gbColors
             // 
+            this.gbColors.Controls.Add(this.lblClickToUpdate);
+            this.gbColors.Controls.Add(this.lblCurrentColor);
+            this.gbColors.Controls.Add(this.pbColor);
             this.gbColors.Controls.Add(this.lbColorizableItems);
             this.gbColors.Location = new System.Drawing.Point(6, 32);
             this.gbColors.Name = "gbColors";
-            this.gbColors.Size = new System.Drawing.Size(437, 211);
+            this.gbColors.Size = new System.Drawing.Size(437, 109);
             this.gbColors.TabIndex = 3;
             this.gbColors.TabStop = false;
             this.gbColors.Text = "Customizable Colors";
+            // 
+            // lblClickToUpdate
+            // 
+            this.lblClickToUpdate.AutoSize = true;
+            this.lblClickToUpdate.Location = new System.Drawing.Point(281, 88);
+            this.lblClickToUpdate.Name = "lblClickToUpdate";
+            this.lblClickToUpdate.Size = new System.Drawing.Size(104, 13);
+            this.lblClickToUpdate.TabIndex = 5;
+            this.lblClickToUpdate.Text = "Click color to update";
+            // 
+            // lblCurrentColor
+            // 
+            this.lblCurrentColor.AutoSize = true;
+            this.lblCurrentColor.Location = new System.Drawing.Point(281, 19);
+            this.lblCurrentColor.Name = "lblCurrentColor";
+            this.lblCurrentColor.Size = new System.Drawing.Size(71, 13);
+            this.lblCurrentColor.TabIndex = 4;
+            this.lblCurrentColor.Text = "Current Color:";
+            // 
+            // pbColor
+            // 
+            this.pbColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbColor.Location = new System.Drawing.Point(281, 35);
+            this.pbColor.Name = "pbColor";
+            this.pbColor.Size = new System.Drawing.Size(100, 50);
+            this.pbColor.TabIndex = 3;
+            this.pbColor.TabStop = false;
+            this.pbColor.Click += new System.EventHandler(this.pbColor_Click);
             // 
             // lbColorizableItems
             // 
             this.lbColorizableItems.FormattingEnabled = true;
             this.lbColorizableItems.Location = new System.Drawing.Point(6, 19);
             this.lbColorizableItems.Name = "lbColorizableItems";
-            this.lbColorizableItems.Size = new System.Drawing.Size(140, 186);
+            this.lbColorizableItems.Size = new System.Drawing.Size(269, 82);
             this.lbColorizableItems.TabIndex = 2;
+            this.lbColorizableItems.SelectedIndexChanged += new System.EventHandler(this.lbColorizableItems_SelectedIndexChanged);
+            this.lbColorizableItems.DoubleClick += new System.EventHandler(this.pbColor_Click);
             // 
             // lblPrimaryScreen
             // 
@@ -1475,6 +1513,16 @@ namespace VixenPlus {
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Sequence Editing";
+            // 
+            // cbWavefromZeroLine
+            // 
+            this.cbWavefromZeroLine.AutoSize = true;
+            this.cbWavefromZeroLine.Location = new System.Drawing.Point(215, 112);
+            this.cbWavefromZeroLine.Name = "cbWavefromZeroLine";
+            this.cbWavefromZeroLine.Size = new System.Drawing.Size(147, 17);
+            this.cbWavefromZeroLine.TabIndex = 13;
+            this.cbWavefromZeroLine.Text = "Show Wavform Zero Line";
+            this.cbWavefromZeroLine.UseVisualStyleBackColor = true;
             // 
             // label34
             // 
@@ -1705,16 +1753,6 @@ namespace VixenPlus {
             this.textBoxEngine.Size = new System.Drawing.Size(365, 20);
             this.textBoxEngine.TabIndex = 0;
             // 
-            // cbWavefromZeroLine
-            // 
-            this.cbWavefromZeroLine.AutoSize = true;
-            this.cbWavefromZeroLine.Location = new System.Drawing.Point(215, 112);
-            this.cbWavefromZeroLine.Name = "cbWavefromZeroLine";
-            this.cbWavefromZeroLine.Size = new System.Drawing.Size(147, 17);
-            this.cbWavefromZeroLine.TabIndex = 13;
-            this.cbWavefromZeroLine.Text = "Show Wavform Zero Line";
-            this.cbWavefromZeroLine.UseVisualStyleBackColor = true;
-            // 
             // PreferencesDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1746,6 +1784,8 @@ namespace VixenPlus {
             this.screenTab.ResumeLayout(false);
             this.screenTab.PerformLayout();
             this.gbColors.ResumeLayout(false);
+            this.gbColors.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbColor)).EndInit();
             this.newSequenceSettingsTab.ResumeLayout(false);
             this.newSequenceSettingsTab.PerformLayout();
             this.groupBox12.ResumeLayout(false);
@@ -1795,5 +1835,9 @@ namespace VixenPlus {
         private ListBox lbColorizableItems;
         private Label lblPrimaryScreen;
         private CheckBox cbWavefromZeroLine;
+        private Label lblClickToUpdate;
+        private Label lblCurrentColor;
+        private PictureBox pbColor;
+        private ColorDialog colorDialog1;
     }
 }

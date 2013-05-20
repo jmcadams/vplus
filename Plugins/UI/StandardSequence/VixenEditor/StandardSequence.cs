@@ -84,6 +84,8 @@ namespace VixenEditor {
         private readonly int _waveformCenterLine;
         private uint[] _waveformPcmData;
         private uint[] _waveformPixelData;
+        private SolidBrush _waveformBrush;
+        private SolidBrush _waveformZeroLineBrush;
         private PrintDocument _printDocument;
 
         private const float AudioFull = 1f;
@@ -1114,7 +1116,10 @@ namespace VixenEditor {
             _showWaveformZeroLine = _preferences.GetBoolean("ShowWaveformZeroLine");
 
             _channelBackBrush = new SolidBrush(Color.White);
-            _timeBackBrush = new SolidBrush(Color.FromArgb(16, 16, 16));
+            _timeBackBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("WaveformBackground"))));
+            _waveformBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("Waveform")))); 
+            _waveformZeroLineBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("WaveformZeroLine"))));
+
             _gridBackBrush = new SolidBrush(Color.Silver);
 
             _gridGraphics = pictureBoxGrid.CreateGraphics();
@@ -1387,6 +1392,20 @@ namespace VixenEditor {
                     _mouseWheelHorizontalDelta = _preferences.GetInteger("MouseWheelHorizontalDelta");
                     _intensityLargeDelta = _preferences.GetInteger("IntensityLargeDelta");
                     _showWaveformZeroLine = _preferences.GetBoolean("ShowWaveformZeroLine");
+                    if (_timeBackBrush != null) {
+                        _timeBackBrush.Dispose();
+                    }
+                    _timeBackBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("WaveformBackground"))));
+                    if (_waveformZeroLineBrush != null) {
+                        _waveformZeroLineBrush.Dispose();
+                    }
+                    _waveformZeroLineBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("WaveformZeroLine"))));
+
+                    if (_waveformBrush != null) {
+                        _waveformBrush.Dispose();
+                    }
+                    _waveformBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("Waveform")))); 
+
                     RefreshAll();
                     break;
 
@@ -2308,11 +2327,11 @@ namespace VixenEditor {
 
                 var y1 = zeroLine - (short) (pix >> 16) * (scaleFactor);
                 var y2 = zeroLine - (short) (pix & 0xffff) * (scaleFactor);
-                e.Graphics.DrawLine(Pens.White, x, y1, x, y2);
+                e.Graphics.DrawLine(new Pen(_waveformBrush), x, y1, x, y2);
                 x++;
             }
             if (_showWaveformZeroLine) {
-                e.Graphics.DrawLine(Pens.Red, 0, zeroLine, x - 1, zeroLine);
+                e.Graphics.DrawLine(new Pen(_waveformZeroLineBrush), 0, zeroLine, x - 1, zeroLine);
             }
         }
 
