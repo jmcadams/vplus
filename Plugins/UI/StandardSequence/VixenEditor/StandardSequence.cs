@@ -1111,7 +1111,7 @@ namespace VixenEditor {
             _autoScrolling = _preferences.GetBoolean("AutoScrolling");
             _intensityLargeDelta = _preferences.GetInteger("IntensityLargeDelta");
             _showingGradient = !_preferences.GetBoolean("BarLevels");
-            _showWaveformZeroLine = _preferences.GetBoolean("WaveformZeroLine");
+            _showWaveformZeroLine = _preferences.GetBoolean("ShowWaveformZeroLine");
 
             _channelBackBrush = new SolidBrush(Color.White);
             _timeBackBrush = new SolidBrush(Color.FromArgb(16, 16, 16));
@@ -1386,7 +1386,7 @@ namespace VixenEditor {
                     _mouseWheelVerticalDelta = _preferences.GetInteger("MouseWheelVerticalDelta");
                     _mouseWheelHorizontalDelta = _preferences.GetInteger("MouseWheelHorizontalDelta");
                     _intensityLargeDelta = _preferences.GetInteger("IntensityLargeDelta");
-                    _showWaveformZeroLine = _preferences.GetBoolean("WaveformZeroLine");
+                    _showWaveformZeroLine = _preferences.GetBoolean("ShowWaveformZeroLine");
                     RefreshAll();
                     break;
 
