@@ -727,9 +727,6 @@
     <None Include="Resources\audio note.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\audio.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Ball_Green.png" />
   </ItemGroup>
   <ItemGroup>
@@ -764,9 +761,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\level Number.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\level Number2.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\level Percent.png" />
@@ -829,9 +823,6 @@
     <None Include="Resources\play.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\qtr speed.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\quarter note.png" />
   </ItemGroup>
   <ItemGroup>
@@ -854,9 +845,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\search.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\search1.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\setLevel.png" />
