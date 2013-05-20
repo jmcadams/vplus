@@ -137,13 +137,6 @@ namespace Properties {
             }
         }
         
-        public static System.Drawing.Bitmap Ball_Red {
-            get {
-                object obj = ResourceManager.GetObject("Ball_Red", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         /// <summary>
         ///   Looks up a localized string similar to Can&apos;t import channel names when a sequence is attached to a profile..
         /// </summary>
