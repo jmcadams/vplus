@@ -69,6 +69,13 @@ namespace Properties {
             }
         }
         
+        public static System.Drawing.Bitmap add {
+            get {
+                object obj = ResourceManager.GetObject("add", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to All fields are required..
         /// </summary>
@@ -95,6 +102,63 @@ namespace Properties {
         public static string AllTimersWillStop {
             get {
                 return ResourceManager.GetString("AllTimersWillStop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to attach this sequence to the new profile?.
+        /// </summary>
+        public static string AttachToNewProfile {
+            get {
+                return ResourceManager.GetString("AttachToNewProfile", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Bitmap audio_note {
+            get {
+                object obj = ResourceManager.GetObject("audio_note", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Audio.
+        /// </summary>
+        public static string AudioButtonAddText {
+            get {
+                return ResourceManager.GetString("AudioButtonAddText", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Bitmap Ball_Green {
+            get {
+                object obj = ResourceManager.GetObject("Ball_Green", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap Ball_Red {
+            get {
+                object obj = ResourceManager.GetObject("Ball_Red", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can&apos;t import channel names when a sequence is attached to a profile..
+        /// </summary>
+        public static string CantImportChannels {
+            get {
+                return ResourceManager.GetString("CantImportChannels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channel.
+        /// </summary>
+        public static string Channel {
+            get {
+                return ResourceManager.GetString("Channel", resourceCulture);
             }
         }
         
@@ -126,6 +190,15 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Channel count has been updated..
+        /// </summary>
+        public static string ChannelCountUpdated {
+            get {
+                return ResourceManager.GetString("ChannelCountUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Channel &quot;{0}&quot; cleared of new events..
         /// </summary>
         public static string ChannelEventsClerared {
@@ -144,6 +217,33 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Channel name import done..
+        /// </summary>
+        public static string ChannelNameImport {
+            get {
+                return ResourceManager.GetString("ChannelNameImport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channel name list exported to.
+        /// </summary>
+        public static string ChannelNameListExported {
+            get {
+                return ResourceManager.GetString("ChannelNameListExported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channel Output Mapping.
+        /// </summary>
+        public static string ChannelOrderDialogText {
+            get {
+                return ResourceManager.GetString("ChannelOrderDialogText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to What would you like to name this channel ordering?.
         /// </summary>
         public static string ChannelOrderingName {
@@ -153,11 +253,36 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Channels.
+        /// </summary>
+        public static string Channels {
+            get {
+                return ResourceManager.GetString("Channels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Channel .
         /// </summary>
         public static string ChannelSpace {
             get {
                 return ResourceManager.GetString("ChannelSpace", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Bitmap choose_speed {
+            get {
+                object obj = ResourceManager.GetObject("choose_speed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear all events in the sequence?.
+        /// </summary>
+        public static string ClearAllEventsInSequencePrompt {
+            get {
+                return ResourceManager.GetString("ClearAllEventsInSequencePrompt", resourceCulture);
             }
         }
         
@@ -171,11 +296,36 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Computing waveform, one moment, please..
+        /// </summary>
+        public static string ComputingWaveform {
+            get {
+                return ResourceManager.GetString("ComputingWaveform", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you really want {0} channels?.
         /// </summary>
         public static string ConfirmChannelCount {
             get {
                 return ResourceManager.GetString("ConfirmChannelCount", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Bitmap copy {
+            get {
+                object obj = ResourceManager.GetObject("copy", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy.
+        /// </summary>
+        public static string CopyText {
+            get {
+                return ResourceManager.GetString("CopyText", resourceCulture);
             }
         }
         
@@ -189,6 +339,38 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stop ({0}).
+        /// </summary>
+        public static string CountdownStop {
+            get {
+                return ResourceManager.GetString("CountdownStop", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Bitmap crosshairs {
+            get {
+                object obj = ResourceManager.GetObject("crosshairs", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap cut {
+            get {
+                object obj = ResourceManager.GetObject("cut", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cut.
+        /// </summary>
+        public static string CutText {
+            get {
+                return ResourceManager.GetString("CutText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dedicated To:.
         /// </summary>
         public static string DedicatedTo {
@@ -198,11 +380,29 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirm Delete.
+        /// </summary>
+        public static string DeleteChannelConfirmation {
+            get {
+                return ResourceManager.GetString("DeleteChannelConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete channel order &apos;{0}&apos;?.
         /// </summary>
         public static string DeleteChannelOrder {
             get {
                 return ResourceManager.GetString("DeleteChannelOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you wish to detach this sequence from its profile?\n\nThis will not cause anything to be deleted.\nVixen Plus will attempt to reload channel and plugin data from the sequence..
+        /// </summary>
+        public static string DetachSequenceFromProfile {
+            get {
+                return ResourceManager.GetString("DetachSequenceFromProfile", resourceCulture);
             }
         }
         
@@ -354,6 +554,13 @@ namespace Properties {
             }
         }
         
+        public static System.Drawing.Bitmap fade {
+            get {
+                object obj = ResourceManager.GetObject("fade", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Engine assembly.
         /// </summary>
@@ -364,11 +571,52 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Find and Replace.
+        /// </summary>
+        public static string FindAndReplace {
+            get {
+                return ResourceManager.GetString("FindAndReplace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This will detach the sequence from the profile and bring the profile data into the sequence.\nIs this what you want to do?.
+        /// </summary>
+        public static string FlattendProfileIntoSequence {
+            get {
+                return ResourceManager.GetString("FlattendProfileIntoSequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Version {0}.
         /// </summary>
         public static string FormattedVersion {
             get {
                 return ResourceManager.GetString("FormattedVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frequency.
+        /// </summary>
+        public static string Frequency {
+            get {
+                return ResourceManager.GetString("Frequency", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Bitmap gradient_or_ramp {
+            get {
+                object obj = ResourceManager.GetObject("gradient_or_ramp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap half_note {
+            get {
+                object obj = ResourceManager.GetObject("half_note", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -457,6 +705,31 @@ namespace Properties {
             }
         }
         
+        public static System.Drawing.Bitmap intensity {
+            get {
+                object obj = ResourceManager.GetObject("intensity", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What intensity level (0-255)?.
+        /// </summary>
+        public static string IntensityLevelPrompt {
+            get {
+                return ResourceManager.GetString("IntensityLevelPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What % intensity (0-100)?.
+        /// </summary>
+        public static string IntensityPercentPrompt {
+            get {
+                return ResourceManager.GetString("IntensityPercentPrompt", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to The interval count is not a valid number.  Do you want to continue?
         ///
@@ -498,12 +771,31 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not a valid number..
+        /// </summary>
+        public static string InvalidNumber {
+            get {
+                return ResourceManager.GetString("InvalidNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Attemped to save to non-existent file path:
         ///.
         /// </summary>
         public static string InvalidPath {
             get {
                 return ResourceManager.GetString("InvalidPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not a valid value.
+        ///Please select a value between 0 and 100..
+        /// </summary>
+        public static string InvalidPercentage {
+            get {
+                return ResourceManager.GetString("InvalidPercentage", resourceCulture);
             }
         }
         
@@ -533,11 +825,58 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not a valid value.
+        ///Please select a value between 0 and 255..
+        /// </summary>
+        public static string InvalidValue {
+            get {
+                return ResourceManager.GetString("InvalidValue", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Bitmap invert {
+            get {
+                object obj = ResourceManager.GetObject("invert", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap level_Number {
+            get {
+                object obj = ResourceManager.GetObject("level_Number", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap level_Percent {
+            get {
+                object obj = ResourceManager.GetObject("level_Percent", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load Routine.
+        /// </summary>
+        public static string LoadRoutine {
+            get {
+                return ResourceManager.GetString("LoadRoutine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Executing timer for {0} at {1}.
         /// </summary>
         public static string LogExecutingTimer {
             get {
                 return ResourceManager.GetString("LogExecutingTimer", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Bitmap loop {
+            get {
+                object obj = ResourceManager.GetObject("loop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -558,12 +897,33 @@ namespace Properties {
             }
         }
         
+        public static System.Drawing.Bitmap mask {
+            get {
+                object obj = ResourceManager.GetObject("mask", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Minimum must be less than the maximum..
         /// </summary>
         public static string MinLessThanMax {
             get {
                 return ResourceManager.GetString("MinLessThanMax", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Bitmap mirror_horz {
+            get {
+                object obj = ResourceManager.GetObject("mirror_horz", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap mirror_vert {
+            get {
+                object obj = ResourceManager.GetObject("mirror_vert", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -604,6 +964,15 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to With the new channel count, some channels would refer to outputs that no longer exist.\nTo keep the sequence valid, channel outputs would have to be reset.\n\nDo you want to keep the new channel count?.
+        /// </summary>
+        public static string NewChannelCountPrompt {
+            get {
+                return ResourceManager.GetString("NewChannelCountPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New order.
         /// </summary>
         public static string NewOrderPrompt {
@@ -618,6 +987,13 @@ namespace Properties {
         public static string NewProfilePrompt {
             get {
                 return ResourceManager.GetString("NewProfilePrompt", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Bitmap newSequence {
+            get {
+                object obj = ResourceManager.GetObject("newSequence", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -678,11 +1054,50 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please select cells to search..
+        /// </summary>
+        public static string NoSelectionToSearch {
+            get {
+                return ResourceManager.GetString("NoSelectionToSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This does not appear to be a valid sequence file..
         /// </summary>
         public static string NotAValidSequence {
             get {
                 return ResourceManager.GetString("NotAValidSequence", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Bitmap number {
+            get {
+                object obj = ResourceManager.GetObject("number", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap off {
+            get {
+                object obj = ResourceManager.GetObject("off", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Off.
+        /// </summary>
+        public static string OffText {
+            get {
+                return ResourceManager.GetString("OffText", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Bitmap on {
+            get {
+                object obj = ResourceManager.GetObject("on", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -696,12 +1111,157 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to On.
+        /// </summary>
+        public static string OnText {
+            get {
+                return ResourceManager.GetString("OnText", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Bitmap open {
+            get {
+                object obj = ResourceManager.GetObject("open", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This name is already in use.
         ///Do you want to overwrite it?.
         /// </summary>
         public static string OrderNameOverwrite {
             get {
                 return ResourceManager.GetString("OrderNameOverwrite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File already exists.  Overwrite?.
+        /// </summary>
+        public static string OverwriteFilePrompt {
+            get {
+                return ResourceManager.GetString("OverwriteFilePrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This name is already in use.\nDo you want to overwrite it?.
+        /// </summary>
+        public static string OverwriteNamePrompt {
+            get {
+                return ResourceManager.GetString("OverwriteNamePrompt", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Bitmap partial_fade {
+            get {
+                object obj = ResourceManager.GetObject("partial_fade", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap partial_ramp {
+            get {
+                object obj = ResourceManager.GetObject("partial_ramp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap paste {
+            get {
+                object obj = ResourceManager.GetObject("paste", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap paste_bool {
+            get {
+                object obj = ResourceManager.GetObject("paste_bool", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap paste_ins {
+            get {
+                object obj = ResourceManager.GetObject("paste_ins", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap paste_math {
+            get {
+                object obj = ResourceManager.GetObject("paste_math", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap paste_trans {
+            get {
+                object obj = ResourceManager.GetObject("paste_trans", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paste.
+        /// </summary>
+        public static string PasteText {
+            get {
+                return ResourceManager.GetString("PasteText", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Bitmap pause {
+            get {
+                object obj = ResourceManager.GetObject("pause", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap Percent {
+            get {
+                object obj = ResourceManager.GetObject("Percent", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap play {
+            get {
+                object obj = ResourceManager.GetObject("play", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap play_from {
+            get {
+                object obj = ResourceManager.GetObject("play_from", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap play_range {
+            get {
+                object obj = ResourceManager.GetObject("play_range", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play this sequence starting at the selection startPoint (F6).
+        /// </summary>
+        public static string PlayFromStartPoint {
+            get {
+                return ResourceManager.GetString("PlayFromStartPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play the selected range of this sequence (F6).
+        /// </summary>
+        public static string PlayRange {
+            get {
+                return ResourceManager.GetString("PlayRange", resourceCulture);
             }
         }
         
@@ -749,6 +1309,15 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Profile.
+        /// </summary>
+        public static string Profile {
+            get {
+                return ResourceManager.GetString("Profile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile Name.
         /// </summary>
         public static string ProfileNamePrompt {
@@ -769,6 +1338,59 @@ namespace Properties {
             }
         }
         
+        public static System.Drawing.Bitmap quarter_note {
+            get {
+                object obj = ResourceManager.GetObject("quarter_note", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap ramp {
+            get {
+                object obj = ResourceManager.GetObject("ramp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap random {
+            get {
+                object obj = ResourceManager.GetObject("random", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap redo {
+            get {
+                object obj = ResourceManager.GetObject("redo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Redo.
+        /// </summary>
+        public static string RedoText {
+            get {
+                return ResourceManager.GetString("RedoText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nothing to Redo.
+        /// </summary>
+        public static string RedoTextEmpty {
+            get {
+                return ResourceManager.GetString("RedoTextEmpty", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Bitmap remove {
+            get {
+                object obj = ResourceManager.GetObject("remove", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Remove profile {0}?
         ///
@@ -786,6 +1408,33 @@ namespace Properties {
         public static string RemoveProfileItem {
             get {
                 return ResourceManager.GetString("RemoveProfileItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Order.
+        /// </summary>
+        public static string ReorderNameHeading {
+            get {
+                return ResourceManager.GetString("ReorderNameHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What name would you like to give to this ordering of the channels?.
+        /// </summary>
+        public static string ReorderNamePrompt {
+            get {
+                return ResourceManager.GetString("ReorderNamePrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace specified values in the .
+        /// </summary>
+        public static string Replace_selected_values_in_the_ {
+            get {
+                return ResourceManager.GetString("Replace_selected_values_in_the_", resourceCulture);
             }
         }
         
@@ -835,12 +1484,60 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name of the routine.
+        /// </summary>
+        public static string RoutineNamePrompt {
+            get {
+                return ResourceManager.GetString("RoutineNamePrompt", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Bitmap save {
+            get {
+                object obj = ResourceManager.GetObject("save", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap save_as {
+            get {
+                object obj = ResourceManager.GetObject("save_as", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to this unnamed sequence.
+        /// </summary>
+        public static string SaveChanges_Unnamed {
+            get {
+                return ResourceManager.GetString("SaveChanges_Unnamed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This sequence is not a scripted sequence.
         ///Only a scripted sequence can be selected for background execution..
         /// </summary>
         public static string ScripedSequenceOnly {
             get {
                 return ResourceManager.GetString("ScripedSequenceOnly", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Bitmap search {
+            get {
+                object obj = ResourceManager.GetObject("search", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select All.
+        /// </summary>
+        public static string SelectAll {
+            get {
+                return ResourceManager.GetString("SelectAll", resourceCulture);
             }
         }
         
@@ -909,6 +1606,39 @@ namespace Properties {
             }
         }
         
+        public static System.Drawing.Bitmap setLevel {
+            get {
+                object obj = ResourceManager.GetObject("setLevel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot set the sequence length.
+        ///There is audio associated which would exceed that length..
+        /// </summary>
+        public static string SetProgramTimeError {
+            get {
+                return ResourceManager.GetString("SetProgramTimeError", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Bitmap shimmer {
+            get {
+                object obj = ResourceManager.GetObject("shimmer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shimmer (dimming).
+        /// </summary>
+        public static string ShimmerPrompt {
+            get {
+                return ResourceManager.GetString("ShimmerPrompt", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Show actual levels.
         /// </summary>
@@ -927,6 +1657,104 @@ namespace Properties {
             }
         }
         
+        public static System.Drawing.Bitmap sliders {
+            get {
+                object obj = ResourceManager.GetObject("sliders", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap sparkle {
+            get {
+                object obj = ResourceManager.GetObject("sparkle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        public static string Start {
+            get {
+                return ResourceManager.GetString("Start", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Bitmap stop {
+            get {
+                object obj = ResourceManager.GetObject("stop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete channel {0}?.
+        /// </summary>
+        public static string StringFormat_DeleteChannel {
+            get {
+                return ResourceManager.GetString("StringFormat_DeleteChannel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete channel order &apos;{0}&apos;?.
+        /// </summary>
+        public static string StringFormat_DeleteChannelOrder {
+            get {
+                return ResourceManager.GetString("StringFormat_DeleteChannelOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drawing level adjusted to {0}.\nIt was {1} which was above the sequence maximum..
+        /// </summary>
+        public static string StringFormat_DrawingLevelAbove {
+            get {
+                return ResourceManager.GetString("StringFormat_DrawingLevelAbove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drawing level adjusted to {0}.\nIt was {1} which was below the sequence minimum..
+        /// </summary>
+        public static string StringFormat_DrawingLevelBelow {
+            get {
+                return ResourceManager.GetString("StringFormat_DrawingLevelBelow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Routine \&quot;{0}\&quot; has been saved.
+        /// </summary>
+        public static string StringFormat_RoutineSaved {
+            get {
+                return ResourceManager.GetString("StringFormat_RoutineSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save changes to {0}?.
+        /// </summary>
+        public static string StringFormat_SaveChanges {
+            get {
+                return ResourceManager.GetString("StringFormat_SaveChanges", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Bitmap subtract {
+            get {
+                object obj = ResourceManager.GetObject("subtract", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap test_channels {
+            get {
+                object obj = ResourceManager.GetObject("test_channels", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Beta Tested By:.
         /// </summary>
@@ -937,11 +1765,27 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Text file.
+        /// </summary>
+        public static string TextFile {
+            get {
+                return ResourceManager.GetString("TextFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Thank you everyone!.
         /// </summary>
         public static string ThankYou {
             get {
                 return ResourceManager.GetString("ThankYou", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Bitmap three_quarter_note {
+            get {
+                object obj = ResourceManager.GetObject("three_quarter_note", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -964,6 +1808,33 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toolbar Settings Saved..
+        /// </summary>
+        public static string ToolbarSettingsSaved {
+            get {
+                return ResourceManager.GetString("ToolbarSettingsSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show actual intensity levels (0-255).
+        /// </summary>
+        public static string ToolTip_IntensityLevel {
+            get {
+                return ResourceManager.GetString("ToolTip_IntensityLevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show intensity levels as percent (0-100%).
+        /// </summary>
+        public static string ToolTip_IntensityPercent {
+            get {
+                return ResourceManager.GetString("ToolTip_IntensityPercent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to load the song..
         /// </summary>
         public static string UnableToLoadSong {
@@ -973,11 +1844,279 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  -- unassigned -- .
+        /// </summary>
+        public static string Unassigned {
+            get {
+                return ResourceManager.GetString("Unassigned", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Bitmap undo {
+            get {
+                object obj = ResourceManager.GetObject("undo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Undo.
+        /// </summary>
+        public static string UndoText {
+            get {
+                return ResourceManager.GetString("UndoText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adjust Intensity.
+        /// </summary>
+        public static string UndoText_AdjustIntensity {
+            get {
+                return ResourceManager.GetString("UndoText_AdjustIntensity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arithmetic Paste.
+        /// </summary>
+        public static string UndoText_ArithmeticPaste {
+            get {
+                return ResourceManager.GetString("UndoText_ArithmeticPaste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boolean Paste.
+        /// </summary>
+        public static string UndoText_BooleanPaste {
+            get {
+                return ResourceManager.GetString("UndoText_BooleanPaste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chase Lines.
+        /// </summary>
+        public static string UndoText_ChaseLines {
+            get {
+                return ResourceManager.GetString("UndoText_ChaseLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear All Events.
+        /// </summary>
+        public static string UndoText_ClearAllEvents {
+            get {
+                return ResourceManager.GetString("UndoText_ClearAllEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear Channel.
+        /// </summary>
+        public static string UndoText_ClearChannel {
+            get {
+                return ResourceManager.GetString("UndoText_ClearChannel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear Values.
+        /// </summary>
+        public static string UndoText_ClearValues {
+            get {
+                return ResourceManager.GetString("UndoText_ClearValues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Channel Data.
+        /// </summary>
+        public static string UndoText_CopyChannelData {
+            get {
+                return ResourceManager.GetString("UndoText_CopyChannelData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Double Click.
+        /// </summary>
+        public static string UndoText_DoubleClick {
+            get {
+                return ResourceManager.GetString("UndoText_DoubleClick", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Event On.
+        /// </summary>
+        public static string UndoText_EventOn {
+            get {
+                return ResourceManager.GetString("UndoText_EventOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fade.
+        /// </summary>
+        public static string UndoText_Fade {
+            get {
+                return ResourceManager.GetString("UndoText_Fade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fill.
+        /// </summary>
+        public static string UndoText_Fill {
+            get {
+                return ResourceManager.GetString("UndoText_Fill", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insert Paste.
+        /// </summary>
+        public static string UndoText_InsertPaste {
+            get {
+                return ResourceManager.GetString("UndoText_InsertPaste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Intensity.
+        /// </summary>
+        public static string UndoText_Intensity {
+            get {
+                return ResourceManager.GetString("UndoText_Intensity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invert.
+        /// </summary>
+        public static string UndoText_Invert {
+            get {
+                return ResourceManager.GetString("UndoText_Invert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OpaquePaste.
+        /// </summary>
+        public static string UndoText_OpaquePaste {
+            get {
+                return ResourceManager.GetString("UndoText_OpaquePaste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partial.
+        /// </summary>
+        public static string UndoText_Partial {
+            get {
+                return ResourceManager.GetString("UndoText_Partial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ramp.
+        /// </summary>
+        public static string UndoText_Ramp {
+            get {
+                return ResourceManager.GetString("UndoText_Ramp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random.
+        /// </summary>
+        public static string UndoText_Random {
+            get {
+                return ResourceManager.GetString("UndoText_Random", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Cells.
+        /// </summary>
+        public static string UndoText_RemoveCells {
+            get {
+                return ResourceManager.GetString("UndoText_RemoveCells", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shimmer.
+        /// </summary>
+        public static string UndoText_Shimmer {
+            get {
+                return ResourceManager.GetString("UndoText_Shimmer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sparkle.
+        /// </summary>
+        public static string UndoText_Sparkle {
+            get {
+                return ResourceManager.GetString("UndoText_Sparkle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transparent Paste.
+        /// </summary>
+        public static string UndoText_TransparentPaste {
+            get {
+                return ResourceManager.GetString("UndoText_TransparentPaste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nothing to Undo.
+        /// </summary>
+        public static string UndoTextEmpty {
+            get {
+                return ResourceManager.GetString("UndoTextEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unnamed Sequence.
+        /// </summary>
+        public static string UnnamedSequence {
+            get {
+                return ResourceManager.GetString("UnnamedSequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unselect All.
+        /// </summary>
+        public static string UnselectAll {
+            get {
+                return ResourceManager.GetString("UnselectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use application&apos;s default device.
         /// </summary>
         public static string UseApplicationDefaultAudio {
             get {
                 return ResourceManager.GetString("UseApplicationDefaultAudio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This sequence is attached to a profile.\nEdit the profile to make changes to the channel information..
+        /// </summary>
+        public static string UseProfileToEditChannels {
+            get {
+                return ResourceManager.GetString("UseProfileToEditChannels", resourceCulture);
             }
         }
         
@@ -1140,6 +2279,20 @@ namespace Properties {
         public static System.Drawing.Bitmap VixenPlusSplash {
             get {
                 object obj = ResourceManager.GetObject("VixenPlusSplash", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap wave {
+            get {
+                object obj = ResourceManager.GetObject("wave", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap whole_note {
+            get {
+                object obj = ResourceManager.GetObject("whole_note", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

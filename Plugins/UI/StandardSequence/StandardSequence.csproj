@@ -106,11 +106,6 @@
     <Compile Include="Global.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="VixenEditor\AffectGridDelegate.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -224,11 +219,6 @@
     </Compile>
     <Compile Include="VixenPlus\UndoItem.cs" />
     <Compile Include="VixenPlus\UndoOriginalBehavior.cs" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor.Properties.Resources.resources" />
     <EmbeddedResource Include="VixenEditor\AudioSpeedDialog.resx">
       <DependentUpon>AudioSpeedDialog.cs</DependentUpon>
@@ -315,172 +305,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\audio.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Save.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\SaveAs.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\audio note.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\sliders.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\loop.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\qtr speed.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\search1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\cut.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\copy.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\paste trans.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\paste ins.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\paste math.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\redo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\undo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\whole note.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\search.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\choose speed.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\half note.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\three-quarter note.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\quarter note.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\gradient or ramp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\remove.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\off.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\on.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\fade.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ramp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\partial ramp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\partial fade.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\mirror-horz.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\mirror-vert.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\intensity.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\invert.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Ball_Red.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\pause.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\play from.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\play.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Ball_Green.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\stop.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\random.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\sparkle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\mask.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\shimmer.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\subtract.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\add.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\wave.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\number.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\setLevel.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Percent.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\level Number.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\level Number2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\new.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\open.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\level Percent.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\crosshairs.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\play range.png" />
+    <Folder Include="Properties\" />
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
