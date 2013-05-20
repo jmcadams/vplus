@@ -55,6 +55,7 @@ namespace VixenPlus {
             credits.AppendLine(Resources.WrittenBy).AppendLine("John McAdams\nAKA Macebobo\nPronounced Mac E Bo Bo\n\n");
             credits.AppendLine(Resources.TestedBy).AppendLine("Falcon\nPhoenix\nEagle\nOregonLights\nDirknerkle\n");
             credits.AppendLine(Resources.DedicatedTo).AppendLine(Resources.MyFriends).AppendLine(Resources.ThankYou);
+            credits.AppendLine(Resources.OpenSource).AppendLine("FMOD Sound System by\nFirelight Technologies");
             credits.AppendLine(Resources.Lutefisk);
 
             // This is how we get the correct height of the credits regardless of how 

@@ -1120,6 +1120,16 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Free or open source
+        ///project used:.
+        /// </summary>
+        public static string OpenSource {
+            get {
+                return ResourceManager.GetString("OpenSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This name is already in use.
         ///Do you want to overwrite it?.
         /// </summary>
@@ -1767,7 +1777,8 @@ namespace Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thank you everyone!.
+        ///   Looks up a localized string similar to Thank you everyone!
+        ///    .
         /// </summary>
         public static string ThankYou {
             get {

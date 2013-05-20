@@ -518,7 +518,8 @@ The plugin's setup data may be invalid or inaccurate.</value>
     <value>My friends at DIYChristmas.org</value>
   </data>
   <data name="ThankYou" xml:space="preserve">
-    <value>Thank you everyone!</value>
+    <value>Thank you everyone!
+    </value>
   </data>
   <data name="Lutefisk" xml:space="preserve">
     <value>
@@ -958,5 +959,8 @@ Please select a value between 0 and 100.</value>
   <data name="Replace_selected_values_in_the_" xml:space="preserve">
     <value>Replace specified values in the </value>
   </data>
-
+	<data name="OpenSource" xml:space="preserve">
+    <value>Free or open source
+project used:</value>
+  </data>
 </root>
