@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
@@ -37,8 +38,13 @@ namespace VixenPlus {
             isDirty |= CreateIfMissing("ShutdownTime", string.Empty);
             isDirty |= CreateIfMissing("HistoryImages", 0);
 
-            // Screen - missing PrimaryDisplay
+            // Screen & Colors
             isDirty |= CreateIfMissing("PrimaryDisplay", Screen.AllScreens[0].DeviceName);
+            isDirty |= CreateIfMissing("Colors", true);
+            isDirty |= CreateIfMissing("Colors", "Waveform", Color.White.ToString());
+            isDirty |= CreateIfMissing("Colors", "WaveformBackground", Color.Black.ToString());
+            isDirty |= CreateIfMissing("Colors", "WaveformZeroLine", Color.Red.ToString());
+
             //New Sequence Settings
             isDirty |= CreateIfMissing("EventPeriod", 100);
             isDirty |= CreateIfMissing("MinimumLevel", 0);
@@ -62,7 +68,7 @@ namespace VixenPlus {
             isDirty |= CreateIfMissing("RemoteLibraryHTTPURL", "");
             isDirty |= CreateIfMissing("RemoteLibraryFileName", "");
             isDirty |= CreateIfMissing("DefaultSequenceDirectory", "");
-            isDirty |= CreateIfMissing("WaveformZeroLine", true);
+            isDirty |= CreateIfMissing("ShowWaveformZeroLine", true);
 
             //Sequence Execution
             isDirty |= CreateIfMissing("ShowPositionMarker", true);
