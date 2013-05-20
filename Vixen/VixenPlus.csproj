@@ -730,9 +730,6 @@
     <None Include="Resources\Ball_Green.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Ball_Red.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\choose speed.png" />
   </ItemGroup>
   <ItemGroup>
