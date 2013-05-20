@@ -18,7 +18,6 @@ namespace VixenPlus
 
         private void InitializeComponent()
         {
-
             this.btnOkay = new System.Windows.Forms.Button();
             this.lblName = new System.Windows.Forms.Label();
             this.lblDescription = new System.Windows.Forms.Label();
@@ -53,7 +52,7 @@ namespace VixenPlus
             // 
             // lblDescription
             // 
-            this.lblDescription.Font = new System.Drawing.Font("Arial Narrow", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDescription.Location = new System.Drawing.Point(16, 54);
             this.lblDescription.Name = "lblDescription";
             this.lblDescription.Size = new System.Drawing.Size(466, 25);
@@ -63,7 +62,7 @@ namespace VixenPlus
             // 
             // lblVersion
             // 
-            this.lblVersion.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblVersion.ForeColor = System.Drawing.Color.Green;
             this.lblVersion.Location = new System.Drawing.Point(12, 79);
             this.lblVersion.Name = "lblVersion";
@@ -75,10 +74,10 @@ namespace VixenPlus
             // llblURL
             // 
             this.llblURL.AutoSize = true;
-            this.llblURL.Font = new System.Drawing.Font("Arial Narrow", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.llblURL.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.llblURL.Location = new System.Drawing.Point(12, 132);
             this.llblURL.Name = "llblURL";
-            this.llblURL.Size = new System.Drawing.Size(102, 23);
+            this.llblURL.Size = new System.Drawing.Size(121, 24);
             this.llblURL.TabIndex = 7;
             this.llblURL.TabStop = true;
             this.llblURL.Text = "ProductURL";
@@ -101,7 +100,7 @@ namespace VixenPlus
             // 
             this.pbIcon.Location = new System.Drawing.Point(13, 13);
             this.pbIcon.Name = "pbIcon";
-            this.pbIcon.Size = new System.Drawing.Size(64,64);
+            this.pbIcon.Size = new System.Drawing.Size(64, 64);
             this.pbIcon.TabIndex = 9;
             this.pbIcon.TabStop = false;
             // 

@@ -70,6 +70,7 @@ namespace VixenEditor {
         private bool _showingGradient;
         private bool _showingOutputs;
         private bool _showPositionMarker;
+        private bool _showWaveformZeroLine;
         private FrequencyEffectGenerator _sparkleGenerator;
         private readonly ISystem _systemInterface;
         private SolidBrush _timeBackBrush;
@@ -153,6 +154,7 @@ namespace VixenEditor {
             _selectedLineIndex = 0;
             _bookmarks = new[] {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
             _showingGradient = true;
+            _showWaveformZeroLine = true;
             _actualLevels = false;
             _showCellText = false;
             m_lastSelectableControl = null;
@@ -1109,6 +1111,7 @@ namespace VixenEditor {
             _autoScrolling = _preferences.GetBoolean("AutoScrolling");
             _intensityLargeDelta = _preferences.GetInteger("IntensityLargeDelta");
             _showingGradient = !_preferences.GetBoolean("BarLevels");
+            _showWaveformZeroLine = _preferences.GetBoolean("WaveformZeroLine");
 
             _channelBackBrush = new SolidBrush(Color.White);
             _timeBackBrush = new SolidBrush(Color.FromArgb(16, 16, 16));
@@ -1383,6 +1386,7 @@ namespace VixenEditor {
                     _mouseWheelVerticalDelta = _preferences.GetInteger("MouseWheelVerticalDelta");
                     _mouseWheelHorizontalDelta = _preferences.GetInteger("MouseWheelHorizontalDelta");
                     _intensityLargeDelta = _preferences.GetInteger("IntensityLargeDelta");
+                    _showWaveformZeroLine = _preferences.GetBoolean("WaveformZeroLine");
                     RefreshAll();
                     break;
 
@@ -2297,17 +2301,19 @@ namespace VixenEditor {
             // 49f = 6px caret + 35px tick mark + 8px timeFont
             // 71f = 120px size when initially maximized - 49f from above.
             var scaleFactor = ((splitContainer2.SplitterDistance - 49f) / 71f);
-            var centerLine = (int) (_waveformCenterLine * (scaleFactor)) + WaveformOffset;
+            var zeroLine = (int) (_waveformCenterLine * (scaleFactor)) + WaveformOffset;
             var x = 0;
             for (; startPosition < endPosition; startPosition++) {
                 var pix = _waveformPixelData[startPosition];
 
-                var y1 = centerLine - (short) (pix >> 16) * (scaleFactor);
-                var y2 = centerLine - (short) (pix & 0xffff) * (scaleFactor);
+                var y1 = zeroLine - (short) (pix >> 16) * (scaleFactor);
+                var y2 = zeroLine - (short) (pix & 0xffff) * (scaleFactor);
                 e.Graphics.DrawLine(Pens.White, x, y1, x, y2);
                 x++;
             }
-            e.Graphics.DrawLine(Pens.Red, 0, centerLine, x - 1, centerLine);
+            if (_showWaveformZeroLine) {
+                e.Graphics.DrawLine(Pens.Red, 0, zeroLine, x - 1, zeroLine);
+            }
         }
 
 

@@ -238,6 +238,9 @@ namespace VixenPlus {
             this.numericUpDownHistoryImages = new System.Windows.Forms.NumericUpDown();
             this.label28 = new System.Windows.Forms.Label();
             this.screenTab = new System.Windows.Forms.TabPage();
+            this.gbColors = new System.Windows.Forms.GroupBox();
+            this.lbColorizableItems = new System.Windows.Forms.ListBox();
+            this.lblPrimaryScreen = new System.Windows.Forms.Label();
             this.cbScreens = new System.Windows.Forms.ComboBox();
             this.newSequenceSettingsTab = new System.Windows.Forms.TabPage();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
@@ -269,9 +272,7 @@ namespace VixenPlus {
             this.buttonEngine = new System.Windows.Forms.Button();
             this.textBoxEngine = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.lblPrimaryScreen = new System.Windows.Forms.Label();
-            this.lbColorizableItems = new System.Windows.Forms.ListBox();
-            this.gbColors = new System.Windows.Forms.GroupBox();
+            this.cbWavefromZeroLine = new System.Windows.Forms.CheckBox();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumLevel)).BeginInit();
@@ -281,6 +282,7 @@ namespace VixenPlus {
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHistoryImages)).BeginInit();
             this.screenTab.SuspendLayout();
+            this.gbColors.SuspendLayout();
             this.newSequenceSettingsTab.SuspendLayout();
             this.groupBox12.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -298,13 +300,12 @@ namespace VixenPlus {
             this.groupBox9.SuspendLayout();
             this.engineTab.SuspendLayout();
             this.groupBox11.SuspendLayout();
-            this.gbColors.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeView
             // 
-            this.treeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.treeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.treeView.Location = new System.Drawing.Point(12, 12);
             this.treeView.Name = "treeView";
             treeNode1.Name = "nodeGeneral";
@@ -369,7 +370,7 @@ namespace VixenPlus {
             this.dateTimePickerAutoShutdownTime.Size = new System.Drawing.Size(92, 20);
             this.dateTimePickerAutoShutdownTime.TabIndex = 71;
             this.toolTip.SetToolTip(this.dateTimePickerAutoShutdownTime, "If the application is running, it can shut down your computer at a time you speci" +
-                    "fy");
+        "fy");
             this.dateTimePickerAutoShutdownTime.Value = new System.DateTime(2007, 4, 20, 12, 0, 0, 0);
             // 
             // labelAutoShutdownTime
@@ -381,7 +382,7 @@ namespace VixenPlus {
             this.labelAutoShutdownTime.TabIndex = 69;
             this.labelAutoShutdownTime.Text = "Auto shutdown";
             this.toolTip.SetToolTip(this.labelAutoShutdownTime, "If the application is running, it can shut down your computer at a time you speci" +
-                    "fy");
+        "fy");
             // 
             // comboBoxSequenceType
             // 
@@ -412,7 +413,7 @@ namespace VixenPlus {
             this.checkBoxResetAtStartup.Size = new System.Drawing.Size(15, 14);
             this.checkBoxResetAtStartup.TabIndex = 68;
             this.toolTip.SetToolTip(this.checkBoxResetAtStartup, "Sends a blank event to the plugins in the default plugin setup.\r\nUseful for paral" +
-                    "lel port-based controllers.  Does not affect every\r\ncontroller type.");
+        "lel port-based controllers.  Does not affect every\r\ncontroller type.");
             this.checkBoxResetAtStartup.UseVisualStyleBackColor = true;
             this.checkBoxResetAtStartup.Visible = false;
             // 
@@ -425,9 +426,9 @@ namespace VixenPlus {
             this.label16.Size = new System.Drawing.Size(134, 39);
             this.label16.TabIndex = 7;
             this.label16.Text = "Reset controller at startup\r\n(Requires default profiles in\r\nNew Sequence Settings" +
-                ")";
+    ")";
             this.toolTip.SetToolTip(this.label16, "Sends a blank event to the plugins in the default plugin setup.\r\nUseful for paral" +
-                    "lel port-based controllers.  Does not affect every\r\ncontroller type.");
+        "lel port-based controllers.  Does not affect every\r\ncontroller type.");
             this.label16.Visible = false;
             // 
             // textBoxClientName
@@ -572,7 +573,7 @@ namespace VixenPlus {
             this.textBoxDefaultChannelCount.Size = new System.Drawing.Size(50, 20);
             this.textBoxDefaultChannelCount.TabIndex = 11;
             this.toolTip.SetToolTip(this.textBoxDefaultChannelCount, "The number of channels for new sequences or the number of channels to assume for " +
-                    "circumstances with no sequence available");
+        "circumstances with no sequence available");
             this.textBoxDefaultChannelCount.Visible = false;
             // 
             // comboBoxDefaultProfile
@@ -616,7 +617,7 @@ namespace VixenPlus {
             this.label18.TabIndex = 10;
             this.label18.Text = "Default channel count";
             this.toolTip.SetToolTip(this.label18, "The number of channels for new sequences or for circumstances with no sequence av" +
-                    "ailable");
+        "ailable");
             this.label18.Visible = false;
             // 
             // buttonCreateProfile
@@ -702,7 +703,7 @@ namespace VixenPlus {
             this.checkBoxWizardForNewSequences.TabIndex = 2;
             this.checkBoxWizardForNewSequences.Text = "Use the sequence wizard for new sequences, when available";
             this.toolTip.SetToolTip(this.checkBoxWizardForNewSequences, "Use the sequence wizard for new sequences, when the editor allows for a wizard to" +
-                    " be used");
+        " be used");
             this.checkBoxWizardForNewSequences.UseVisualStyleBackColor = true;
             // 
             // checkBoxShowNaturalChannelNumber
@@ -812,7 +813,7 @@ namespace VixenPlus {
             this.checkBoxClearAtEndOfSequence.TabIndex = 3;
             this.checkBoxClearAtEndOfSequence.Text = "Reset controller at end of sequences";
             this.toolTip.SetToolTip(this.checkBoxClearAtEndOfSequence, "Sends a blank event to the plugins at the end of a sequence.\r\nUseful for parallel" +
-                    " port-based controllers.  Does not affect every\r\ncontroller type.");
+        " port-based controllers.  Does not affect every\r\ncontroller type.");
             this.checkBoxClearAtEndOfSequence.UseVisualStyleBackColor = true;
             // 
             // checkBoxShowPositionMarker
@@ -835,7 +836,7 @@ namespace VixenPlus {
             this.checkBoxSavePlugInDialogPositions.TabIndex = 2;
             this.checkBoxSavePlugInDialogPositions.Text = "Save plugin dialog positions";
             this.toolTip.SetToolTip(this.checkBoxSavePlugInDialogPositions, "Save the positions of any windows created and displayed by plugins during executi" +
-                    "on");
+        "on");
             this.checkBoxSavePlugInDialogPositions.UseVisualStyleBackColor = true;
             // 
             // checkBoxAutoScrolling
@@ -847,7 +848,7 @@ namespace VixenPlus {
             this.checkBoxAutoScrolling.TabIndex = 1;
             this.checkBoxAutoScrolling.Text = "Auto scrolling";
             this.toolTip.SetToolTip(this.checkBoxAutoScrolling, "Automatically scroll the editing display during execution so that the current poi" +
-                    "nt of execution is always visible");
+        "nt of execution is always visible");
             this.checkBoxAutoScrolling.UseVisualStyleBackColor = true;
             // 
             // textBoxMusicFadeDuration
@@ -886,7 +887,7 @@ namespace VixenPlus {
             this.textBoxBackgroundMusicDelay.Size = new System.Drawing.Size(50, 20);
             this.textBoxBackgroundMusicDelay.TabIndex = 6;
             this.toolTip.SetToolTip(this.textBoxBackgroundMusicDelay, "How long (in seconds) the background sequence will wait before starting after seq" +
-                    "uence or program execution stops");
+        "uence or program execution stops");
             // 
             // label11
             // 
@@ -897,7 +898,7 @@ namespace VixenPlus {
             this.label11.TabIndex = 5;
             this.label11.Text = "Background music delay";
             this.toolTip.SetToolTip(this.label11, "How long (in seconds) the background music will wait before starting after sequen" +
-                    "ce or program execution stops");
+        "ce or program execution stops");
             // 
             // checkBoxEnableBackgroundMusic
             // 
@@ -908,7 +909,7 @@ namespace VixenPlus {
             this.checkBoxEnableBackgroundMusic.TabIndex = 4;
             this.checkBoxEnableBackgroundMusic.Text = "Enable background music";
             this.toolTip.SetToolTip(this.checkBoxEnableBackgroundMusic, "Enable the playing of background music while no sequences or programs are playing" +
-                    "");
+        "");
             this.checkBoxEnableBackgroundMusic.UseVisualStyleBackColor = true;
             // 
             // textBoxBackgroundSequenceDelay
@@ -918,7 +919,7 @@ namespace VixenPlus {
             this.textBoxBackgroundSequenceDelay.Size = new System.Drawing.Size(50, 20);
             this.textBoxBackgroundSequenceDelay.TabIndex = 2;
             this.toolTip.SetToolTip(this.textBoxBackgroundSequenceDelay, "How long (in seconds) the background sequence will wait before starting after seq" +
-                    "uence or program execution stops");
+        "uence or program execution stops");
             // 
             // label8
             // 
@@ -929,7 +930,7 @@ namespace VixenPlus {
             this.label8.TabIndex = 1;
             this.label8.Text = "Background sequence delay";
             this.toolTip.SetToolTip(this.label8, "How long (in seconds) the background sequence will wait before starting after seq" +
-                    "uence or program execution stops");
+        "uence or program execution stops");
             // 
             // checkBoxEnableBackgroundSequence
             // 
@@ -940,7 +941,7 @@ namespace VixenPlus {
             this.checkBoxEnableBackgroundSequence.TabIndex = 0;
             this.checkBoxEnableBackgroundSequence.Text = "Enable background sequence";
             this.toolTip.SetToolTip(this.checkBoxEnableBackgroundSequence, "Enable the playing of a scripted background sequence while no sequences or progra" +
-                    "ms are playing");
+        "ms are playing");
             this.checkBoxEnableBackgroundSequence.UseVisualStyleBackColor = true;
             // 
             // radioButtonAsyncSyncObject
@@ -953,7 +954,7 @@ namespace VixenPlus {
             this.radioButtonAsyncSyncObject.TabStop = true;
             this.radioButtonAsyncSyncObject.Text = "Use the sequence loaded for execution, if any";
             this.toolTip.SetToolTip(this.radioButtonAsyncSyncObject, "The sequence will use channel masking and plugin setup data from\r\nthe default pro" +
-                    "file.");
+        "file.");
             this.radioButtonAsyncSyncObject.UseVisualStyleBackColor = true;
             this.radioButtonAsyncSyncObject.CheckedChanged += new System.EventHandler(this.radioButtonAsyncProfileData_CheckedChanged);
             // 
@@ -967,7 +968,7 @@ namespace VixenPlus {
             this.radioButtonAsyncDefaultProfileData.TabStop = true;
             this.radioButtonAsyncDefaultProfileData.Text = "Use the default profile";
             this.toolTip.SetToolTip(this.radioButtonAsyncDefaultProfileData, "The sequence will use channel masking and plugin setup data from\r\nthe default pro" +
-                    "file.");
+        "file.");
             this.radioButtonAsyncDefaultProfileData.UseVisualStyleBackColor = true;
             this.radioButtonAsyncDefaultProfileData.CheckedChanged += new System.EventHandler(this.radioButtonAsyncProfileData_CheckedChanged);
             // 
@@ -981,7 +982,7 @@ namespace VixenPlus {
             this.radioButtonAsyncProfileData.TabStop = true;
             this.radioButtonAsyncProfileData.Text = "Use a specific profile";
             this.toolTip.SetToolTip(this.radioButtonAsyncProfileData, "The sequence will use channel masking and plugin setup data from\r\na specified pro" +
-                    "file.");
+        "file.");
             this.radioButtonAsyncProfileData.UseVisualStyleBackColor = true;
             this.radioButtonAsyncProfileData.CheckedChanged += new System.EventHandler(this.radioButtonAsyncProfileData_CheckedChanged);
             // 
@@ -995,7 +996,7 @@ namespace VixenPlus {
             this.radioButtonSyncDefaultProfileData.TabStop = true;
             this.radioButtonSyncDefaultProfileData.Text = "Use the default profile";
             this.toolTip.SetToolTip(this.radioButtonSyncDefaultProfileData, "The sequence will use channel masking and plugin setup data from\r\nthe default pro" +
-                    "file.");
+        "file.");
             this.radioButtonSyncDefaultProfileData.UseVisualStyleBackColor = true;
             this.radioButtonSyncDefaultProfileData.CheckedChanged += new System.EventHandler(this.radioButtonSyncProfileData_CheckedChanged);
             // 
@@ -1009,7 +1010,7 @@ namespace VixenPlus {
             this.radioButtonSyncProfileData.TabStop = true;
             this.radioButtonSyncProfileData.Text = "Use a specific profile";
             this.toolTip.SetToolTip(this.radioButtonSyncProfileData, "The sequence will use channel masking and plugin setup data from\r\na specified pro" +
-                    "file.");
+        "file.");
             this.radioButtonSyncProfileData.UseVisualStyleBackColor = true;
             this.radioButtonSyncProfileData.CheckedChanged += new System.EventHandler(this.radioButtonSyncProfileData_CheckedChanged);
             // 
@@ -1023,7 +1024,7 @@ namespace VixenPlus {
             this.radioButtonSyncEmbeddedData.TabStop = true;
             this.radioButtonSyncEmbeddedData.Text = "Use their own data";
             this.toolTip.SetToolTip(this.radioButtonSyncEmbeddedData, "The sequence will determine its own channel masking and use\r\nits own plugin setup" +
-                    ".");
+        ".");
             this.radioButtonSyncEmbeddedData.UseVisualStyleBackColor = true;
             this.radioButtonSyncEmbeddedData.CheckedChanged += new System.EventHandler(this.radioButtonSyncProfileData_CheckedChanged);
             // 
@@ -1088,7 +1089,7 @@ namespace VixenPlus {
             this.checkBoxFlipMouseScroll.TabIndex = 10;
             this.checkBoxFlipMouseScroll.Text = "Flip mouse scroll + Shift behavior";
             this.toolTip.SetToolTip(this.checkBoxFlipMouseScroll, "The default behavior scrolls horizontally when Shift is down.\r\nSelect this to mak" +
-                    "e it scroll vertically when Shift is down.");
+        "e it scroll vertically when Shift is down.");
             this.checkBoxFlipMouseScroll.UseVisualStyleBackColor = true;
             // 
             // label29
@@ -1116,7 +1117,7 @@ namespace VixenPlus {
             this.textBoxCurveLibraryFtpUrl.Size = new System.Drawing.Size(310, 20);
             this.textBoxCurveLibraryFtpUrl.TabIndex = 3;
             this.toolTip.SetToolTip(this.textBoxCurveLibraryFtpUrl, "FTP location of the remote curve library.  May possibly be the same as the HTTP l" +
-                    "ocation.");
+        "ocation.");
             // 
             // label30
             // 
@@ -1127,7 +1128,7 @@ namespace VixenPlus {
             this.label30.TabIndex = 2;
             this.label30.Text = "FTP URL";
             this.toolTip.SetToolTip(this.label30, "FTP location of the remote curve library.  May possibly be the same as the HTTP l" +
-                    "ocation.");
+        "ocation.");
             // 
             // textBoxCurveLibraryFileName
             // 
@@ -1156,7 +1157,7 @@ namespace VixenPlus {
             this.label32.TabIndex = 6;
             this.label32.Text = "FTP user name";
             this.toolTip.SetToolTip(this.label32, "FTP user name for the FTP server on which the remote curve library is located.  M" +
-                    "ay possibly be blank.");
+        "ay possibly be blank.");
             this.label32.Visible = false;
             // 
             // textBoxCurveLibraryFtpUserName
@@ -1166,7 +1167,7 @@ namespace VixenPlus {
             this.textBoxCurveLibraryFtpUserName.Size = new System.Drawing.Size(100, 20);
             this.textBoxCurveLibraryFtpUserName.TabIndex = 7;
             this.toolTip.SetToolTip(this.textBoxCurveLibraryFtpUserName, "FTP user name for the FTP server on which the remote curve library is located.  M" +
-                    "ay possibly be blank.");
+        "ay possibly be blank.");
             this.textBoxCurveLibraryFtpUserName.Visible = false;
             // 
             // label33
@@ -1178,7 +1179,7 @@ namespace VixenPlus {
             this.label33.TabIndex = 8;
             this.label33.Text = "FTP password";
             this.toolTip.SetToolTip(this.label33, "FTP password for the FTP server on which the remote curve library is located.  Ma" +
-                    "y possibly be blank.");
+        "y possibly be blank.");
             this.label33.Visible = false;
             // 
             // textBoxCurveLibraryFtpPassword
@@ -1188,7 +1189,7 @@ namespace VixenPlus {
             this.textBoxCurveLibraryFtpPassword.Size = new System.Drawing.Size(111, 20);
             this.textBoxCurveLibraryFtpPassword.TabIndex = 9;
             this.toolTip.SetToolTip(this.textBoxCurveLibraryFtpPassword, "FTP password for the FTP server on which the remote curve library is located.  Ma" +
-                    "y possibly be blank.");
+        "y possibly be blank.");
             this.textBoxCurveLibraryFtpPassword.Visible = false;
             // 
             // textBoxDefaultSequenceSaveDirectory
@@ -1228,9 +1229,9 @@ namespace VixenPlus {
             // 
             // tabControl
             // 
-            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl.Controls.Add(this.generalTab);
             this.tabControl.Controls.Add(this.screenTab);
             this.tabControl.Controls.Add(this.newSequenceSettingsTab);
@@ -1311,6 +1312,33 @@ namespace VixenPlus {
             this.screenTab.TabIndex = 7;
             this.screenTab.Text = "screenTab";
             this.screenTab.UseVisualStyleBackColor = true;
+            // 
+            // gbColors
+            // 
+            this.gbColors.Controls.Add(this.lbColorizableItems);
+            this.gbColors.Location = new System.Drawing.Point(6, 32);
+            this.gbColors.Name = "gbColors";
+            this.gbColors.Size = new System.Drawing.Size(437, 211);
+            this.gbColors.TabIndex = 3;
+            this.gbColors.TabStop = false;
+            this.gbColors.Text = "Customizable Colors";
+            // 
+            // lbColorizableItems
+            // 
+            this.lbColorizableItems.FormattingEnabled = true;
+            this.lbColorizableItems.Location = new System.Drawing.Point(6, 19);
+            this.lbColorizableItems.Name = "lbColorizableItems";
+            this.lbColorizableItems.Size = new System.Drawing.Size(140, 186);
+            this.lbColorizableItems.TabIndex = 2;
+            // 
+            // lblPrimaryScreen
+            // 
+            this.lblPrimaryScreen.AutoSize = true;
+            this.lblPrimaryScreen.Location = new System.Drawing.Point(3, 6);
+            this.lblPrimaryScreen.Name = "lblPrimaryScreen";
+            this.lblPrimaryScreen.Size = new System.Drawing.Size(81, 13);
+            this.lblPrimaryScreen.TabIndex = 1;
+            this.lblPrimaryScreen.Text = "Primary Screen:";
             // 
             // cbScreens
             // 
@@ -1403,8 +1431,8 @@ namespace VixenPlus {
             // 
             // groupBox14
             // 
-            this.groupBox14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox14.Controls.Add(this.textBoxCurveLibraryFtpPassword);
             this.groupBox14.Controls.Add(this.label33);
             this.groupBox14.Controls.Add(this.textBoxCurveLibraryFtpUserName);
@@ -1425,8 +1453,9 @@ namespace VixenPlus {
             // 
             // groupBox5
             // 
-            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox5.Controls.Add(this.cbWavefromZeroLine);
             this.groupBox5.Controls.Add(this.textBoxDefaultSequenceSaveDirectory);
             this.groupBox5.Controls.Add(this.label34);
             this.groupBox5.Controls.Add(this.checkBoxFlipMouseScroll);
@@ -1635,8 +1664,8 @@ namespace VixenPlus {
             this.label24.Size = new System.Drawing.Size(383, 46);
             this.label24.TabIndex = 0;
             this.label24.Text = "When a sequence is executed remotely, would you like it to use its own data (for " +
-                "plugins and channel masking) or would you prefer to have all sequences use the s" +
-                "ame profile?";
+    "plugins and channel masking) or would you prefer to have all sequences use the s" +
+    "ame profile?";
             // 
             // engineTab
             // 
@@ -1676,32 +1705,15 @@ namespace VixenPlus {
             this.textBoxEngine.Size = new System.Drawing.Size(365, 20);
             this.textBoxEngine.TabIndex = 0;
             // 
-            // lblPrimaryScreen
+            // cbWavefromZeroLine
             // 
-            this.lblPrimaryScreen.AutoSize = true;
-            this.lblPrimaryScreen.Location = new System.Drawing.Point(3, 6);
-            this.lblPrimaryScreen.Name = "lblPrimaryScreen";
-            this.lblPrimaryScreen.Size = new System.Drawing.Size(81, 13);
-            this.lblPrimaryScreen.TabIndex = 1;
-            this.lblPrimaryScreen.Text = "Primary Screen:";
-            // 
-            // lbColorizableItems
-            // 
-            this.lbColorizableItems.FormattingEnabled = true;
-            this.lbColorizableItems.Location = new System.Drawing.Point(6, 19);
-            this.lbColorizableItems.Name = "lbColorizableItems";
-            this.lbColorizableItems.Size = new System.Drawing.Size(140, 186);
-            this.lbColorizableItems.TabIndex = 2;
-            // 
-            // gbColors
-            // 
-            this.gbColors.Controls.Add(this.lbColorizableItems);
-            this.gbColors.Location = new System.Drawing.Point(6, 32);
-            this.gbColors.Name = "gbColors";
-            this.gbColors.Size = new System.Drawing.Size(437, 211);
-            this.gbColors.TabIndex = 3;
-            this.gbColors.TabStop = false;
-            this.gbColors.Text = "Customizable Colors";
+            this.cbWavefromZeroLine.AutoSize = true;
+            this.cbWavefromZeroLine.Location = new System.Drawing.Point(215, 112);
+            this.cbWavefromZeroLine.Name = "cbWavefromZeroLine";
+            this.cbWavefromZeroLine.Size = new System.Drawing.Size(147, 17);
+            this.cbWavefromZeroLine.TabIndex = 13;
+            this.cbWavefromZeroLine.Text = "Show Wavform Zero Line";
+            this.cbWavefromZeroLine.UseVisualStyleBackColor = true;
             // 
             // PreferencesDialog
             // 
@@ -1733,6 +1745,7 @@ namespace VixenPlus {
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHistoryImages)).EndInit();
             this.screenTab.ResumeLayout(false);
             this.screenTab.PerformLayout();
+            this.gbColors.ResumeLayout(false);
             this.newSequenceSettingsTab.ResumeLayout(false);
             this.newSequenceSettingsTab.PerformLayout();
             this.groupBox12.ResumeLayout(false);
@@ -1762,7 +1775,6 @@ namespace VixenPlus {
             this.engineTab.ResumeLayout(false);
             this.groupBox11.ResumeLayout(false);
             this.groupBox11.PerformLayout();
-            this.gbColors.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1782,5 +1794,6 @@ namespace VixenPlus {
         private GroupBox gbColors;
         private ListBox lbColorizableItems;
         private Label lblPrimaryScreen;
+        private CheckBox cbWavefromZeroLine;
     }
 }

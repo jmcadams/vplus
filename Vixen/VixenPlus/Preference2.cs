@@ -62,6 +62,7 @@ namespace VixenPlus {
             isDirty |= CreateIfMissing("RemoteLibraryHTTPURL", "");
             isDirty |= CreateIfMissing("RemoteLibraryFileName", "");
             isDirty |= CreateIfMissing("DefaultSequenceDirectory", "");
+            isDirty |= CreateIfMissing("WaveformZeroLine", true);
 
             //Sequence Execution
             isDirty |= CreateIfMissing("ShowPositionMarker", true);

@@ -152,6 +152,7 @@ namespace VixenPlus {
                     _preferences.SetString("RemoteLibraryFTPURL", textBoxCurveLibraryFtpUrl.Text);
                     _preferences.SetString("RemoteLibraryFileName", textBoxCurveLibraryFileName.Text);
                     _preferences.SetString("DefaultSequenceDirectory", textBoxDefaultSequenceSaveDirectory.Text);
+                    _preferences.SetBoolean("WaveformZeroLine", cbWavefromZeroLine.Checked);
                     return;
                 }
                 case (int) RootNodes.SequenceExecution:
@@ -299,6 +300,7 @@ namespace VixenPlus {
                     textBoxCurveLibraryFtpUrl.Text = _preferences.GetString("RemoteLibraryFTPURL");
                     textBoxCurveLibraryFileName.Text = _preferences.GetString("RemoteLibraryFileName");
                     textBoxDefaultSequenceSaveDirectory.Text = _preferences.GetString("DefaultSequenceDirectory");
+                    cbWavefromZeroLine.Checked = _preferences.GetBoolean("WaveformZeroLine");
                     return;
 
                 case (int) RootNodes.SequenceExecution:
