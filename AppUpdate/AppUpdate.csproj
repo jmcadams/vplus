@@ -138,10 +138,24 @@
     <Compile Include="Global.cs">
       <SubType>Code</SubType>
     </Compile>
-    <EmbeddedResource Include="AppUpdate.ProgressDialog.resources" />
-    <EmbeddedResource Include="AppUpdate.Properties.Resources.resources" />
-    <EmbeddedResource Include="AppUpdate.ShutdownDialog.resources" />
-    <EmbeddedResource Include="AppUpdate.UpdateNotificationDialog.resources" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AppUpdate\ProgressDialog.resx">
+      <DependentUpon>ProgressDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AppUpdate\ShutdownDialog.resx">
+      <DependentUpon>ShutdownDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AppUpdate\UpdateNotificationDialog.resx">
+      <DependentUpon>UpdateNotificationDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -159,6 +173,9 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\VixenPlus.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

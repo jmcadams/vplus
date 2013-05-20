@@ -60,13 +60,6 @@ namespace Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap _new {
-            get {
-                object obj = ResourceManager.GetObject("new", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap add {
             get {
                 object obj = ResourceManager.GetObject("add", resourceCulture);
@@ -433,6 +426,13 @@ namespace Properties {
         internal static string NewChannelCountPrompt {
             get {
                 return ResourceManager.GetString("NewChannelCountPrompt", resourceCulture);
+            }
+        }
+        
+        internal static System.Drawing.Bitmap newSequence {
+            get {
+                object obj = ResourceManager.GetObject("newSequence", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

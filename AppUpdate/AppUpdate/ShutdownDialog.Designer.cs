@@ -9,83 +9,112 @@ namespace AppUpdate {
         private System.ComponentModel.IContainer components = null;
 
         #region Windows Form Designer generated code
+
         private Button buttonAbort;
         private Button buttonKill;
         private Button buttonRetry;
         private Label label1;
         private Label labelMessage;
-        private PictureBox pictureBox1;
+        private PictureBox pbWarning;
+
 
         private void InitializeComponent() {
-            this.pictureBox1 = new PictureBox();
-            this.labelMessage = new Label();
-            this.label1 = new Label();
-            this.buttonRetry = new Button();
-            this.buttonAbort = new Button();
-            this.buttonKill = new Button();
-            ((ISupportInitialize)this.pictureBox1).BeginInit();
-            base.SuspendLayout();
-            this.pictureBox1.Location = new Point(13, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new Size(0x23, 0x2a);
-            this.pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
-            this.pictureBox1.TabIndex = 3;
-            this.pictureBox1.TabStop = false;
+            this.pbWarning = new System.Windows.Forms.PictureBox();
+            this.labelMessage = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.buttonRetry = new System.Windows.Forms.Button();
+            this.buttonAbort = new System.Windows.Forms.Button();
+            this.buttonKill = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.pbWarning)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // pbWarning
+            // 
+            this.pbWarning.Location = new System.Drawing.Point(13, 12);
+            this.pbWarning.Name = "pbWarning";
+            this.pbWarning.Size = new System.Drawing.Size(35, 42);
+            this.pbWarning.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbWarning.TabIndex = 3;
+            this.pbWarning.TabStop = false;
+            // 
+            // labelMessage
+            // 
             this.labelMessage.AutoSize = true;
-            this.labelMessage.Location = new Point(0x41, 15);
+            this.labelMessage.Location = new System.Drawing.Point(65, 15);
             this.labelMessage.Name = "labelMessage";
-            this.labelMessage.Size = new Size(0x148, 0x4e);
+            this.labelMessage.Size = new System.Drawing.Size(0, 13);
             this.labelMessage.TabIndex = 0;
+            // 
+            // label1
+            // 
             this.label1.AutoSize = true;
-            this.label1.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            this.label1.Location = new Point(0x41, 110);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(65, 110);
             this.label1.Name = "label1";
-            this.label1.Size = new Size(0x142, 13);
+            this.label1.Size = new System.Drawing.Size(322, 13);
             this.label1.TabIndex = 1;
             this.label1.Text = "Aborting may leave the application in an impaired state.";
-            this.buttonRetry.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
+            // 
+            // buttonRetry
+            // 
+            this.buttonRetry.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonRetry.DialogResult = System.Windows.Forms.DialogResult.Retry;
-            this.buttonRetry.Location = new Point(0x61, 0x9a);
+            this.buttonRetry.Location = new System.Drawing.Point(97, 154);
             this.buttonRetry.Name = "buttonRetry";
-            this.buttonRetry.Size = new Size(0x4b, 0x17);
+            this.buttonRetry.Size = new System.Drawing.Size(75, 23);
             this.buttonRetry.TabIndex = 2;
             this.buttonRetry.Text = "Retry";
             this.buttonRetry.UseVisualStyleBackColor = true;
-            this.buttonAbort.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
+            // 
+            // buttonAbort
+            // 
+            this.buttonAbort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonAbort.DialogResult = System.Windows.Forms.DialogResult.Abort;
-            this.buttonAbort.Location = new Point(0x10f, 0x9a);
+            this.buttonAbort.Location = new System.Drawing.Point(271, 154);
             this.buttonAbort.Name = "buttonAbort";
-            this.buttonAbort.Size = new Size(0x4b, 0x17);
+            this.buttonAbort.Size = new System.Drawing.Size(75, 23);
             this.buttonAbort.TabIndex = 4;
             this.buttonAbort.Text = "Abort";
             this.buttonAbort.UseVisualStyleBackColor = true;
-            this.buttonKill.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
+            // 
+            // buttonKill
+            // 
+            this.buttonKill.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonKill.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonKill.Location = new Point(0xb8, 0x9a);
+            this.buttonKill.Location = new System.Drawing.Point(184, 154);
             this.buttonKill.Name = "buttonKill";
-            this.buttonKill.Size = new Size(0x4b, 0x17);
+            this.buttonKill.Size = new System.Drawing.Size(75, 23);
             this.buttonKill.TabIndex = 3;
             this.buttonKill.Text = "Kill";
             this.buttonKill.UseVisualStyleBackColor = true;
-            base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            base.ClientSize = new Size(0x1ba, 0xc6);
-            base.ControlBox = false;
-            base.Controls.Add(this.buttonKill);
-            base.Controls.Add(this.buttonAbort);
-            base.Controls.Add(this.buttonRetry);
-            base.Controls.Add(this.label1);
-            base.Controls.Add(this.pictureBox1);
-            base.Controls.Add(this.labelMessage);
-            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            base.Name = "ShutdownDialog";
-            base.StartPosition = FormStartPosition.CenterScreen;
+            // 
+            // ShutdownDialog
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(442, 198);
+            this.Controls.Add(this.buttonKill);
+            this.Controls.Add(this.buttonAbort);
+            this.Controls.Add(this.buttonRetry);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.pbWarning);
+            this.Controls.Add(this.labelMessage);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = global::Properties.Resources.VixenPlus;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "ShutdownDialog";
+            this.ShowInTaskbar = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Application Shutdown";
-            base.TopMost = true;
-            ((ISupportInitialize)this.pictureBox1).EndInit();
-            base.ResumeLayout(false);
-            base.PerformLayout();
+            this.TopMost = true;
+            ((System.ComponentModel.ISupportInitialize)(this.pbWarning)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
+
         #endregion
 
         protected override void Dispose(bool disposing) {

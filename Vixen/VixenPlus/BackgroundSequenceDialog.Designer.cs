@@ -37,20 +37,20 @@ namespace VixenPlus
             // 
             // lblMessage
             // 
-            this.lblMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.lblMessage.Location = new System.Drawing.Point(12, 13);
             this.lblMessage.Name = "lblMessage";
             this.lblMessage.Size = new System.Drawing.Size(280, 72);
             this.lblMessage.TabIndex = 0;
             this.lblMessage.Text = "You can have a scripted sequence run in the background if there are no other sequ" +
-    "ences or programs executing.  This sequence will be interrupted by any other exe" +
-    "cuting item.";
+                "ences or programs executing.  This sequence will be interrupted by any other exe" +
+                "cuting item.";
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.buttonClear);
             this.groupBox1.Controls.Add(this.buttonSelect);
             this.groupBox1.Controls.Add(this.labelSequenceName);
@@ -137,6 +137,7 @@ namespace VixenPlus
             this.Controls.Add(this.lblMessage);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "BackgroundSequenceDialog";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Background Sequence";
             this.groupBox1.ResumeLayout(false);

@@ -7,6 +7,7 @@ namespace Launcher {
         private System.ComponentModel.IContainer components = null;
 
         #region Windows Form Designer generated code
+
         private Button buttonAdd;
         private Button buttonCancel;
         private Button buttonFileDialog;
@@ -22,24 +23,30 @@ namespace Launcher {
         private TextBox textBoxPath;
         private TextBox textBoxTriggerValue;
 
+
         private void InitializeComponent() {
-            this.groupBox1 = new GroupBox();
-            this.textBoxPath = new TextBox();
-            this.textBoxTriggerValue = new TextBox();
-            this.textBoxParameters = new TextBox();
-            this.buttonRemove = new Button();
-            this.buttonAdd = new Button();
-            this.buttonFileDialog = new Button();
-            this.listViewPrograms = new ListView();
-            this.columnHeader1 = new ColumnHeader();
-            this.columnHeader2 = new ColumnHeader();
-            this.columnHeader3 = new ColumnHeader();
-            this.buttonOK = new Button();
-            this.buttonCancel = new Button();
-            this.openFileDialog = new OpenFileDialog();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SetupDialog));
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBoxPath = new System.Windows.Forms.TextBox();
+            this.textBoxTriggerValue = new System.Windows.Forms.TextBox();
+            this.textBoxParameters = new System.Windows.Forms.TextBox();
+            this.buttonRemove = new System.Windows.Forms.Button();
+            this.buttonAdd = new System.Windows.Forms.Button();
+            this.buttonFileDialog = new System.Windows.Forms.Button();
+            this.listViewPrograms = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.buttonOK = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.groupBox1.SuspendLayout();
-            base.SuspendLayout();
-            this.groupBox1.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
+            this.SuspendLayout();
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.textBoxPath);
             this.groupBox1.Controls.Add(this.textBoxTriggerValue);
             this.groupBox1.Controls.Add(this.textBoxParameters);
@@ -47,116 +54,165 @@ namespace Launcher {
             this.groupBox1.Controls.Add(this.buttonAdd);
             this.groupBox1.Controls.Add(this.buttonFileDialog);
             this.groupBox1.Controls.Add(this.listViewPrograms);
-            this.groupBox1.Location = new Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new Size(0x287, 0xb0);
+            this.groupBox1.Size = new System.Drawing.Size(647, 176);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Programs to launch";
-            this.textBoxPath.BorderStyle = BorderStyle.None;
-            this.textBoxPath.Location = new Point(0x80, 0x7e);
+            // 
+            // textBoxPath
+            // 
+            this.textBoxPath.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxPath.Location = new System.Drawing.Point(128, 126);
             this.textBoxPath.Name = "textBoxPath";
-            this.textBoxPath.Size = new Size(100, 13);
+            this.textBoxPath.Size = new System.Drawing.Size(100, 13);
             this.textBoxPath.TabIndex = 6;
             this.textBoxPath.Visible = false;
-            this.textBoxPath.Leave += new EventHandler(this.textBoxPath_Leave);
-            this.textBoxPath.KeyDown += new KeyEventHandler(this.textBoxPath_KeyDown);
-            this.textBoxTriggerValue.BorderStyle = BorderStyle.None;
-            this.textBoxTriggerValue.Location = new Point(0x1b7, 0x7e);
+            this.textBoxPath.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxPath_KeyDown);
+            this.textBoxPath.Leave += new System.EventHandler(this.textBoxPath_Leave);
+            // 
+            // textBoxTriggerValue
+            // 
+            this.textBoxTriggerValue.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxTriggerValue.Location = new System.Drawing.Point(439, 126);
             this.textBoxTriggerValue.Name = "textBoxTriggerValue";
-            this.textBoxTriggerValue.Size = new Size(100, 13);
+            this.textBoxTriggerValue.Size = new System.Drawing.Size(100, 13);
             this.textBoxTriggerValue.TabIndex = 8;
             this.textBoxTriggerValue.Visible = false;
-            this.textBoxTriggerValue.Leave += new EventHandler(this.textBoxPath_Leave);
-            this.textBoxTriggerValue.KeyDown += new KeyEventHandler(this.textBoxPath_KeyDown);
-            this.textBoxParameters.BorderStyle = BorderStyle.None;
-            this.textBoxParameters.Location = new Point(290, 0x33);
+            this.textBoxTriggerValue.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxPath_KeyDown);
+            this.textBoxTriggerValue.Leave += new System.EventHandler(this.textBoxPath_Leave);
+            // 
+            // textBoxParameters
+            // 
+            this.textBoxParameters.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxParameters.Location = new System.Drawing.Point(290, 51);
             this.textBoxParameters.Name = "textBoxParameters";
-            this.textBoxParameters.Size = new Size(0x91, 13);
+            this.textBoxParameters.Size = new System.Drawing.Size(145, 13);
             this.textBoxParameters.TabIndex = 7;
             this.textBoxParameters.Visible = false;
-            this.textBoxParameters.Leave += new EventHandler(this.textBoxPath_Leave);
-            this.textBoxParameters.KeyDown += new KeyEventHandler(this.textBoxPath_KeyDown);
+            this.textBoxParameters.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxPath_KeyDown);
+            this.textBoxParameters.Leave += new System.EventHandler(this.textBoxPath_Leave);
+            // 
+            // buttonRemove
+            // 
             this.buttonRemove.Enabled = false;
-            this.buttonRemove.Location = new Point(0x22d, 0x33);
+            this.buttonRemove.Location = new System.Drawing.Point(557, 51);
             this.buttonRemove.Name = "buttonRemove";
-            this.buttonRemove.Size = new Size(0x4b, 23);
+            this.buttonRemove.Size = new System.Drawing.Size(75, 23);
             this.buttonRemove.TabIndex = 5;
             this.buttonRemove.Text = "Remove";
             this.buttonRemove.UseVisualStyleBackColor = true;
-            this.buttonRemove.Click += new EventHandler(this.buttonRemove_Click);
-            this.buttonAdd.Location = new Point(0x22d, 22);
+            this.buttonRemove.Click += new System.EventHandler(this.buttonRemove_Click);
+            // 
+            // buttonAdd
+            // 
+            this.buttonAdd.Location = new System.Drawing.Point(557, 22);
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new Size(0x4b, 23);
+            this.buttonAdd.Size = new System.Drawing.Size(75, 23);
             this.buttonAdd.TabIndex = 4;
             this.buttonAdd.Text = "Add New";
             this.buttonAdd.UseVisualStyleBackColor = true;
-            this.buttonAdd.Click += new EventHandler(this.buttonAdd_Click);
-            this.buttonFileDialog.Font = new Font("Arial", 7f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            this.buttonFileDialog.Location = new Point(15, 0x81);
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
+            // 
+            // buttonFileDialog
+            // 
+            this.buttonFileDialog.Font = new System.Drawing.Font("Arial", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonFileDialog.Location = new System.Drawing.Point(15, 129);
             this.buttonFileDialog.Name = "buttonFileDialog";
-            this.buttonFileDialog.Size = new Size(24, 0x12);
+            this.buttonFileDialog.Size = new System.Drawing.Size(24, 18);
             this.buttonFileDialog.TabIndex = 3;
             this.buttonFileDialog.Text = "...";
             this.buttonFileDialog.UseVisualStyleBackColor = true;
             this.buttonFileDialog.Visible = false;
-            this.buttonFileDialog.Click += new EventHandler(this.buttonFileDialog_Click);
-            this.listViewPrograms.Columns.AddRange(new ColumnHeader[] { this.columnHeader1, this.columnHeader2, this.columnHeader3 });
-            this.listViewPrograms.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            this.buttonFileDialog.Click += new System.EventHandler(this.buttonFileDialog_Click);
+            // 
+            // listViewPrograms
+            // 
+            this.listViewPrograms.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3});
+            this.listViewPrograms.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.listViewPrograms.LabelWrap = false;
-            this.listViewPrograms.Location = new Point(13, 22);
+            this.listViewPrograms.Location = new System.Drawing.Point(13, 22);
             this.listViewPrograms.MultiSelect = false;
             this.listViewPrograms.Name = "listViewPrograms";
             this.listViewPrograms.OwnerDraw = true;
-            this.listViewPrograms.Size = new Size(0x20f, 0x8b);
+            this.listViewPrograms.Size = new System.Drawing.Size(527, 139);
             this.listViewPrograms.TabIndex = 0;
             this.listViewPrograms.UseCompatibleStateImageBehavior = false;
-            this.listViewPrograms.View = View.Details;
-            this.listViewPrograms.DrawItem += new DrawListViewItemEventHandler(this.listViewPrograms_DrawItem);
-            this.listViewPrograms.SelectedIndexChanged += new EventHandler(this.listViewPrograms_SelectedIndexChanged);
-            this.listViewPrograms.DrawColumnHeader += new DrawListViewColumnHeaderEventHandler(this.listViewPrograms_DrawColumnHeader);
-            this.listViewPrograms.ColumnWidthChanging += new ColumnWidthChangingEventHandler(this.listViewPrograms_ColumnWidthChanging);
-            this.listViewPrograms.MouseDown += new MouseEventHandler(this.listViewPrograms_MouseDown);
+            this.listViewPrograms.View = System.Windows.Forms.View.Details;
+            this.listViewPrograms.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.listViewPrograms_ColumnWidthChanging);
+            this.listViewPrograms.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.listViewPrograms_DrawColumnHeader);
+            this.listViewPrograms.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.listViewPrograms_DrawItem);
+            this.listViewPrograms.SelectedIndexChanged += new System.EventHandler(this.listViewPrograms_SelectedIndexChanged);
+            this.listViewPrograms.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listViewPrograms_MouseDown);
+            // 
+            // columnHeader1
+            // 
             this.columnHeader1.Text = "Program executable path";
-            this.columnHeader1.Width = 0x113;
+            this.columnHeader1.Width = 275;
+            // 
+            // columnHeader2
+            // 
             this.columnHeader2.Text = "Parameters";
-            this.columnHeader2.Width = 0x91;
+            this.columnHeader2.Width = 145;
+            // 
+            // columnHeader3
+            // 
             this.columnHeader3.Text = "Trigger level (%)";
             this.columnHeader3.Width = 90;
-            this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            // 
+            // buttonOK
+            // 
+            this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new Point(0x1f7, 0xcb);
+            this.buttonOK.Location = new System.Drawing.Point(503, 203);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new Size(0x4b, 23);
+            this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 1;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
-            this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            // 
+            // buttonCancel
+            // 
+            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new Point(0x248, 0xcb);
+            this.buttonCancel.Location = new System.Drawing.Point(584, 203);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new Size(0x4b, 23);
+            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 2;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
+            // 
+            // openFileDialog
+            // 
             this.openFileDialog.DefaultExt = "exe";
             this.openFileDialog.Filter = "Executable files | *.exe";
             this.openFileDialog.Title = "Select Program To Launch";
-            base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            base.CancelButton = this.buttonCancel;
-            base.ClientSize = new Size(0x29f, 0xee);
-            base.Controls.Add(this.buttonCancel);
-            base.Controls.Add(this.buttonOK);
-            base.Controls.Add(this.groupBox1);
-            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            base.Name = "SetupDialog";
-            base.StartPosition = FormStartPosition.CenterScreen;
+            // 
+            // SetupDialog
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.buttonCancel;
+            this.ClientSize = new System.Drawing.Size(671, 238);
+            this.Controls.Add(this.buttonCancel);
+            this.Controls.Add(this.buttonOK);
+            this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "SetupDialog";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Setup";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            base.ResumeLayout(false);
+            this.ResumeLayout(false);
+
         }
+
         #endregion
 
         protected override void Dispose(bool disposing) {

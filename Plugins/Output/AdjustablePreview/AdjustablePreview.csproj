@@ -139,6 +139,7 @@
     <EmbeddedResource Include="AdjustablePreview\Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Preview\PreviewDialog.resx">
       <DependentUpon>PreviewDialog.cs</DependentUpon>

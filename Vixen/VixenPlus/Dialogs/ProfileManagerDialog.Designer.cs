@@ -10,38 +10,38 @@ namespace VixenPlus.Dialogs{
 
         #region Windows Form Designer generated code
         private Button buttonAddMultipleProfileChannels;
-private Button buttonAddProfileChannel;
-private Button buttonCancel;
-private Button buttonChangeProfileName;
-private Button buttonDone;
-private Button buttonPlugins;
-private Button buttonRemoveProfileChannels;
-private ComboBox comboBoxChannelOrder;
-private Label label1;
-private Label label4;
-private Label label7;
-private Label label8;
-private Label label9;
-private Label labelProfileName;
-private ListBox listBoxProfiles;
-private PictureBox m_hoveredButton = null;
-private OpenFileDialog openFileDialog;
-private Panel panel1;
-private PictureBox pictureBoxAddProfile;
-private PictureBox pictureBoxEditProfile;
-private PictureBox pictureBoxProfileChannelColors;
-private PictureBox pictureBoxProfileChannelOutputMask;
-private PictureBox pictureBoxProfileChannelOutputs;
-private PictureBox pictureBoxProfileDeleteChannelOrder;
-private PictureBox pictureBoxProfileSaveChannelOrder;
-private PictureBox pictureBoxRemoveProfile;
-private PictureBox pictureBoxReturnFromProfileEdit;
-private VixenPlus.TabControl tabControl;
-private TabPage tabEditProfile;
-private TabPage tabProfiles;
-private TextBox textBoxProfileChannelCount;
-private ToolTip toolTip;
-private TreeView treeViewProfile;
+        private Button buttonAddProfileChannel;
+        private Button buttonCancel;
+        private Button buttonChangeProfileName;
+        private Button buttonDone;
+        private Button buttonPlugins;
+        private Button buttonRemoveProfileChannels;
+        private ComboBox comboBoxChannelOrder;
+        private Label label1;
+        private Label label4;
+        private Label label7;
+        private Label label8;
+        private Label label9;
+        private Label labelProfileName;
+        private ListBox listBoxProfiles;
+        private PictureBox m_hoveredButton = null;
+        private OpenFileDialog openFileDialog;
+        private Panel panel1;
+        private PictureBox pictureBoxAddProfile;
+        private PictureBox pictureBoxEditProfile;
+        private PictureBox pictureBoxProfileChannelColors;
+        private PictureBox pictureBoxProfileChannelOutputMask;
+        private PictureBox pictureBoxProfileChannelOutputs;
+        private PictureBox pictureBoxProfileDeleteChannelOrder;
+        private PictureBox pictureBoxProfileSaveChannelOrder;
+        private PictureBox pictureBoxRemoveProfile;
+        private PictureBox pictureBoxReturnFromProfileEdit;
+        private VixenPlus.TabControl tabControl;
+        private TabPage tabEditProfile;
+        private TabPage tabProfiles;
+        private TextBox textBoxProfileChannelCount;
+        private ToolTip toolTip;
+        private TreeView treeViewProfile;
 
         private void InitializeComponent()
         {
@@ -358,9 +358,9 @@ private TreeView treeViewProfile;
             // 
             // treeViewProfile
             // 
-            this.treeViewProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.treeViewProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.treeViewProfile.DrawMode = System.Windows.Forms.TreeViewDrawMode.OwnerDrawText;
             this.treeViewProfile.Location = new System.Drawing.Point(109, 53);
             this.treeViewProfile.Name = "treeViewProfile";
@@ -474,7 +474,9 @@ private TreeView treeViewProfile;
             this.ClientSize = new System.Drawing.Size(598, 464);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.panel1);
+            this.Icon = global::Properties.Resources.VixenPlus;
             this.Name = "ProfileManagerDialog";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Profiles and Channel Groups";
             this.panel1.ResumeLayout(false);

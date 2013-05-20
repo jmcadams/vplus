@@ -12,32 +12,40 @@ namespace VixenPlus.Dialogs{
 
         private void InitializeComponent()
         {
-            this.linkLabelClose = new LinkLabel();
-            base.SuspendLayout();
-            this.linkLabelClose.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            this.linkLabelClose = new System.Windows.Forms.LinkLabel();
+            this.SuspendLayout();
+            // 
+            // linkLabelClose
+            // 
+            this.linkLabelClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.linkLabelClose.AutoSize = true;
-            this.linkLabelClose.LinkBehavior = LinkBehavior.NeverUnderline;
-            this.linkLabelClose.Location = new Point(448, 230);
+            this.linkLabelClose.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.linkLabelClose.Location = new System.Drawing.Point(448, 230);
             this.linkLabelClose.Name = "linkLabelClose";
-            this.linkLabelClose.Size = new Size(33, 13);
+            this.linkLabelClose.Size = new System.Drawing.Size(33, 13);
             this.linkLabelClose.TabIndex = 0;
             this.linkLabelClose.TabStop = true;
             this.linkLabelClose.Text = "Close";
-            this.linkLabelClose.LinkClicked += new LinkLabelLinkClickedEventHandler(this.linkLabelClose_LinkClicked);
-            base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = Color.White;
-            base.ClientSize = new Size(493, 252);
-            base.ControlBox = false;
-            base.Controls.Add(this.linkLabelClose);
-            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            base.KeyPreview = true;
-            base.Name = "HelpDialog";
-            base.StartPosition = FormStartPosition.CenterScreen;
+            this.linkLabelClose.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelClose_LinkClicked);
+            // 
+            // HelpDialog
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(493, 252);
+            this.ControlBox = false;
+            this.Controls.Add(this.linkLabelClose);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
+            this.Name = "HelpDialog";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "HelpDialog";
-            base.KeyPress += new KeyPressEventHandler(this.HelpDialog_KeyPress);
-            base.ResumeLayout(false);
-            base.PerformLayout();
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.HelpDialog_KeyPress);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
         #endregion
 

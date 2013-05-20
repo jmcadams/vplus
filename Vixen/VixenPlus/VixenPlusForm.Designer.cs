@@ -1,14 +1,15 @@
-namespace VixenPlus{
+namespace VixenPlus {
     using System;
     using System.Windows.Forms;
     using System.Drawing;
     using System.ComponentModel;
     using System.Collections;
 
-    internal sealed partial class VixenPlusForm{
+    internal sealed partial class VixenPlusForm {
         private IContainer components;
 
         #region Windows Form Designer generated code
+
         private ToolStripMenuItem aboutToolStripMenuItem1;
         private ToolStripMenuItem cascadeToolStripMenuItem;
         private ToolStripMenuItem channelDimmingCurvesToolStripMenuItem;
@@ -45,9 +46,10 @@ namespace VixenPlus{
         private ToolStripStatusLabel toolStripStatusLabelMusic;
         private ToolStripMenuItem utilityToolStripMenuItem;
         private ToolStripMenuItem windowsToolStripMenuItem;
+        private ToolStripMenuItem iLikeLutefiskToolStripMenuItem;
 
-        private void InitializeComponent()
-        {
+
+        private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.programToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -93,11 +95,9 @@ namespace VixenPlus{
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.programToolStripMenuItem,
-            this.viewToolStripMenuItem,
-            this.utilityToolStripMenuItem,
-            this.windowsToolStripMenuItem,
-            this.helpToolStripMenuItem});
+                this.programToolStripMenuItem, this.viewToolStripMenuItem, this.utilityToolStripMenuItem, this.windowsToolStripMenuItem,
+                this.helpToolStripMenuItem
+            });
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.MdiWindowListItem = this.windowsToolStripMenuItem;
             this.menuStrip1.Name = "menuStrip1";
@@ -108,16 +108,10 @@ namespace VixenPlus{
             // programToolStripMenuItem
             // 
             this.programToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newLightingProgramToolStripMenuItem,
-            this.openALightingProgramToolStripMenuItem,
-            this.toolStripMenuItem2,
-            this.saveToolStripMenuItem,
-            this.saveAsToolStripMenuItem,
-            this.toolStripMenuItem8,
-            this.setBackgroundSequenceToolStripMenuItem,
-            this.channelDimmingCurvesToolStripMenuItem,
-            this.toolStripMenuItem6,
-            this.recentToolStripMenuItem});
+                this.newLightingProgramToolStripMenuItem, this.openALightingProgramToolStripMenuItem, this.toolStripMenuItem2, this.saveToolStripMenuItem
+                , this.saveAsToolStripMenuItem, this.toolStripMenuItem8, this.setBackgroundSequenceToolStripMenuItem,
+                this.channelDimmingCurvesToolStripMenuItem, this.toolStripMenuItem6, this.recentToolStripMenuItem
+            });
             this.programToolStripMenuItem.Name = "programToolStripMenuItem";
             this.programToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.programToolStripMenuItem.Text = "File";
@@ -132,7 +126,8 @@ namespace VixenPlus{
             // openALightingProgramToolStripMenuItem
             // 
             this.openALightingProgramToolStripMenuItem.Name = "openALightingProgramToolStripMenuItem";
-            this.openALightingProgramToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openALightingProgramToolStripMenuItem.ShortcutKeys =
+                ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.openALightingProgramToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
             this.openALightingProgramToolStripMenuItem.Text = "&Open a sequence";
             this.openALightingProgramToolStripMenuItem.Click += new System.EventHandler(this.openALightingProgramToolStripMenuItem_Click);
@@ -145,7 +140,8 @@ namespace VixenPlus{
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveToolStripMenuItem.ShortcutKeys =
+                ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
             this.saveToolStripMenuItem.Text = "&Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
@@ -154,7 +150,8 @@ namespace VixenPlus{
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
             this.saveAsToolStripMenuItem.ShortcutKeyDisplayString = "";
-            this.saveAsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.saveAsToolStripMenuItem.ShortcutKeys =
+                ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
             this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
             this.saveAsToolStripMenuItem.Text = "Save &As";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
@@ -194,8 +191,7 @@ namespace VixenPlus{
             // 
             // viewToolStripMenuItem
             // 
-            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.manageToolStripMenuItem});
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.manageToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "View";
@@ -203,7 +199,8 @@ namespace VixenPlus{
             // manageToolStripMenuItem
             // 
             this.manageToolStripMenuItem.Name = "manageToolStripMenuItem";
-            this.manageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
+            this.manageToolStripMenuItem.ShortcutKeys =
+                ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
             this.manageToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.manageToolStripMenuItem.Text = "&Manage";
             this.manageToolStripMenuItem.Click += new System.EventHandler(this.manageToolStripMenuItem_Click);
@@ -211,11 +208,9 @@ namespace VixenPlus{
             // utilityToolStripMenuItem
             // 
             this.utilityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.setSoundDeviceToolStripMenuItem,
-            this.musicPlayerToolStripMenuItem,
-            this.diagnosticsToolStripMenuItem,
-            this.toolStripMenuItem1,
-            this.preferencesToolStripMenuItem});
+                this.setSoundDeviceToolStripMenuItem, this.musicPlayerToolStripMenuItem, this.diagnosticsToolStripMenuItem, this.toolStripMenuItem1,
+                this.preferencesToolStripMenuItem
+            });
             this.utilityToolStripMenuItem.Name = "utilityToolStripMenuItem";
             this.utilityToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.utilityToolStripMenuItem.Text = "Tools";
@@ -257,9 +252,8 @@ namespace VixenPlus{
             // 
             // windowsToolStripMenuItem
             // 
-            this.windowsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tileToolStripMenuItem,
-            this.cascadeToolStripMenuItem});
+            this.windowsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[]
+            {this.tileToolStripMenuItem, this.cascadeToolStripMenuItem});
             this.windowsToolStripMenuItem.Name = "windowsToolStripMenuItem";
             this.windowsToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
             this.windowsToolStripMenuItem.Text = "Windows";
@@ -281,11 +275,9 @@ namespace VixenPlus{
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.onlineSupportForumToolStripMenuItem,
-            this.checkForUpdatesToolStripMenuItem,
-            this.toolStripMenuItem3,
-            this.aboutToolStripMenuItem1,
-            this.iLikeLutefiskToolStripMenuItem});
+                this.onlineSupportForumToolStripMenuItem, this.checkForUpdatesToolStripMenuItem, this.toolStripMenuItem3, this.aboutToolStripMenuItem1,
+                this.iLikeLutefiskToolStripMenuItem
+            });
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
@@ -337,9 +329,8 @@ namespace VixenPlus{
             // 
             // statusStrip
             // 
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripProgressBarBackgroundSequenceRunning,
-            this.toolStripStatusLabelMusic});
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[]
+            {this.toolStripProgressBarBackgroundSequenceRunning, this.toolStripStatusLabelMusic});
             this.statusStrip.Location = new System.Drawing.Point(0, 467);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.ShowItemToolTips = true;
@@ -380,6 +371,7 @@ namespace VixenPlus{
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip1);
             this.helpProvider.SetHelpNavigator(this, System.Windows.Forms.HelpNavigator.TableOfContents);
+            this.Icon = global::Properties.Resources.VixenPlus;
             this.IsMdiContainer = true;
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
@@ -399,17 +391,16 @@ namespace VixenPlus{
             this.PerformLayout();
 
         }
+
         #endregion
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (this.components != null))
-            {
+        protected override void Dispose(bool disposing) {
+            if (disposing && (this.components != null)) {
                 this.components.Dispose();
             }
             base.Dispose(disposing);
         }
 
-        private ToolStripMenuItem iLikeLutefiskToolStripMenuItem;
+
     }
 }

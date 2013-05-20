@@ -18,12 +18,15 @@ namespace VixenPlus
 
         private void InitializeComponent()
         {
+
             this.btnOkay = new System.Windows.Forms.Button();
             this.lblName = new System.Windows.Forms.Label();
             this.lblDescription = new System.Windows.Forms.Label();
             this.lblVersion = new System.Windows.Forms.Label();
             this.llblURL = new System.Windows.Forms.LinkLabel();
             this.lblCredits = new System.Windows.Forms.Label();
+            this.pbIcon = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pbIcon)).BeginInit();
             this.SuspendLayout();
             // 
             // btnOkay
@@ -94,6 +97,14 @@ namespace VixenPlus
             this.lblCredits.Visible = false;
             this.lblCredits.Click += new System.EventHandler(this.lblCredits_Click);
             // 
+            // pbIcon
+            // 
+            this.pbIcon.Location = new System.Drawing.Point(13, 13);
+            this.pbIcon.Name = "pbIcon";
+            this.pbIcon.Size = new System.Drawing.Size(64,64);
+            this.pbIcon.TabIndex = 9;
+            this.pbIcon.TabStop = false;
+            // 
             // AboutDialog
             // 
             this.AcceptButton = this.btnOkay;
@@ -103,6 +114,7 @@ namespace VixenPlus
             this.CancelButton = this.btnOkay;
             this.ClientSize = new System.Drawing.Size(494, 168);
             this.ControlBox = false;
+            this.Controls.Add(this.pbIcon);
             this.Controls.Add(this.lblCredits);
             this.Controls.Add(this.llblURL);
             this.Controls.Add(this.lblVersion);
@@ -117,6 +129,7 @@ namespace VixenPlus
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "About";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AboutDialog_FormClosing);
+            ((System.ComponentModel.ISupportInitialize)(this.pbIcon)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -134,5 +147,6 @@ namespace VixenPlus
 
         private LinkLabel llblURL;
         private Label lblCredits;
+        private PictureBox pbIcon;
     }
 }

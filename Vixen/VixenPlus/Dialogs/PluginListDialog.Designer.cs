@@ -1,42 +1,45 @@
-namespace VixenPlus.Dialogs{
+namespace VixenPlus.Dialogs {
     using System;
     using System.Windows.Forms;
     using System.Drawing;
     using System.Collections;
     using System.ComponentModel;
 
-    public sealed partial class PluginListDialog{
+    public sealed partial class PluginListDialog {
         private System.ComponentModel.IContainer components = null;
 
         #region Windows Form Designer generated code
-        private Button buttonCancel;
-private Button buttonInput;
-private Button buttonOK;
-private Button buttonPluginSetup;
-private Button buttonRemove;
-private Button buttonUse;
-private CheckedListBox checkedListBoxSequencePlugins;
-private ColumnHeader columnHeaderExpandButton;
-private ColumnHeader columnHeaderPluginName;
-private ColumnHeader columnHeaderPortTypeIndex;
-private ColumnHeader columnHeaderPortTypeName;
-private GroupBox groupBox1;
-private Label label1;
-private Label label2;
-private Label label3;
-private Label label4;
-private ListView listViewOutputPorts;
-private ListView listViewPlugins;
-private PictureBox pictureBoxMinus;
-private PictureBox pictureBoxPlus;
-private ColumnHeader pluginName;
-private TextBox textBoxChannelFrom;
-private TextBox textBoxChannelTo;
 
-        private void InitializeComponent()
-        {
-            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Output", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Input", System.Windows.Forms.HorizontalAlignment.Left);
+        private Button buttonCancel;
+        private Button buttonInput;
+        private Button buttonOK;
+        private Button buttonPluginSetup;
+        private Button buttonRemove;
+        private Button buttonUse;
+        private CheckedListBox checkedListBoxSequencePlugins;
+        private ColumnHeader columnHeaderExpandButton;
+        private ColumnHeader columnHeaderPluginName;
+        private ColumnHeader columnHeaderPortTypeIndex;
+        private ColumnHeader columnHeaderPortTypeName;
+        private GroupBox groupBox1;
+        private Label label1;
+        private Label label2;
+        private Label label3;
+        private Label label4;
+        private ListView listViewOutputPorts;
+        private ListView listViewPlugins;
+        private PictureBox pictureBoxMinus;
+        private PictureBox pictureBoxPlus;
+        private ColumnHeader pluginName;
+        private TextBox textBoxChannelFrom;
+        private TextBox textBoxChannelTo;
+
+
+        private void InitializeComponent() {
+            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Output",
+                                                                                                       System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Input",
+                                                                                                       System.Windows.Forms.HorizontalAlignment.Left);
             this.buttonUse = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxChannelFrom = new System.Windows.Forms.TextBox();
@@ -48,10 +51,10 @@ private TextBox textBoxChannelTo;
             this.checkedListBoxSequencePlugins = new System.Windows.Forms.CheckedListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.listViewOutputPorts = new System.Windows.Forms.ListView();
-            this.columnHeaderPortTypeName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderPortTypeIndex = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderExpandButton = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderPluginName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderPortTypeName = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderPortTypeIndex = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderExpandButton = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderPluginName = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
             this.buttonRemove = new System.Windows.Forms.Button();
             this.pictureBoxPlus = new System.Windows.Forms.PictureBox();
             this.pictureBoxMinus = new System.Windows.Forms.PictureBox();
@@ -59,10 +62,10 @@ private TextBox textBoxChannelTo;
             this.label4 = new System.Windows.Forms.Label();
             this.buttonInput = new System.Windows.Forms.Button();
             this.listViewPlugins = new System.Windows.Forms.ListView();
-            this.pluginName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.pluginName = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlus)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMinus)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.pictureBoxPlus)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.pictureBoxMinus)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonUse
@@ -78,7 +81,8 @@ private TextBox textBoxChannelTo;
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(513, 32);
             this.label1.Name = "label1";
@@ -88,7 +92,8 @@ private TextBox textBoxChannelTo;
             // 
             // textBoxChannelFrom
             // 
-            this.textBoxChannelFrom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxChannelFrom.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxChannelFrom.Location = new System.Drawing.Point(490, 58);
             this.textBoxChannelFrom.MaxLength = 4;
             this.textBoxChannelFrom.Name = "textBoxChannelFrom";
@@ -97,7 +102,8 @@ private TextBox textBoxChannelTo;
             // 
             // label2
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(530, 61);
             this.label2.Name = "label2";
@@ -107,7 +113,8 @@ private TextBox textBoxChannelTo;
             // 
             // textBoxChannelTo
             // 
-            this.textBoxChannelTo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxChannelTo.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxChannelTo.Location = new System.Drawing.Point(552, 58);
             this.textBoxChannelTo.MaxLength = 4;
             this.textBoxChannelTo.Name = "textBoxChannelTo";
@@ -116,7 +123,8 @@ private TextBox textBoxChannelTo;
             // 
             // buttonPluginSetup
             // 
-            this.buttonPluginSetup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonPluginSetup.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonPluginSetup.Enabled = false;
             this.buttonPluginSetup.Location = new System.Drawing.Point(502, 84);
             this.buttonPluginSetup.Name = "buttonPluginSetup";
@@ -128,7 +136,8 @@ private TextBox textBoxChannelTo;
             // 
             // buttonOK
             // 
-            this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonOK.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new System.Drawing.Point(507, 273);
             this.buttonOK.Name = "buttonOK";
@@ -139,7 +148,8 @@ private TextBox textBoxChannelTo;
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCancel.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new System.Drawing.Point(507, 244);
             this.buttonCancel.Name = "buttonCancel";
@@ -156,7 +166,8 @@ private TextBox textBoxChannelTo;
             this.checkedListBoxSequencePlugins.Name = "checkedListBoxSequencePlugins";
             this.checkedListBoxSequencePlugins.Size = new System.Drawing.Size(171, 139);
             this.checkedListBoxSequencePlugins.TabIndex = 5;
-            this.checkedListBoxSequencePlugins.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxSequencePlugins_ItemCheck);
+            this.checkedListBoxSequencePlugins.ItemCheck +=
+                new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxSequencePlugins_ItemCheck);
             this.checkedListBoxSequencePlugins.SelectedIndexChanged += new System.EventHandler(this.listBoxSequencePlugins_SelectedIndexChanged);
             this.checkedListBoxSequencePlugins.DoubleClick += new System.EventHandler(this.checkedListBoxSequencePlugins_DoubleClick);
             this.checkedListBoxSequencePlugins.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBoxSequencePlugins_KeyDown);
@@ -173,11 +184,8 @@ private TextBox textBoxChannelTo;
             // 
             // listViewOutputPorts
             // 
-            this.listViewOutputPorts.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeaderPortTypeName,
-            this.columnHeaderPortTypeIndex,
-            this.columnHeaderExpandButton,
-            this.columnHeaderPluginName});
+            this.listViewOutputPorts.Columns.AddRange(new System.Windows.Forms.ColumnHeader[]
+            {this.columnHeaderPortTypeName, this.columnHeaderPortTypeIndex, this.columnHeaderExpandButton, this.columnHeaderPluginName});
             this.listViewOutputPorts.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.listViewOutputPorts.Location = new System.Drawing.Point(6, 19);
             this.listViewOutputPorts.Name = "listViewOutputPorts";
@@ -223,7 +231,8 @@ private TextBox textBoxChannelTo;
             // 
             // pictureBoxPlus
             // 
-            this.pictureBoxPlus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBoxPlus.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxPlus.BackColor = System.Drawing.Color.White;
             this.pictureBoxPlus.Location = new System.Drawing.Point(498, 125);
             this.pictureBoxPlus.Name = "pictureBoxPlus";
@@ -235,7 +244,8 @@ private TextBox textBoxChannelTo;
             // 
             // pictureBoxMinus
             // 
-            this.pictureBoxMinus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBoxMinus.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxMinus.BackColor = System.Drawing.Color.Black;
             this.pictureBoxMinus.Location = new System.Drawing.Point(513, 125);
             this.pictureBoxMinus.Name = "pictureBoxMinus";
@@ -265,7 +275,8 @@ private TextBox textBoxChannelTo;
             // 
             // buttonInput
             // 
-            this.buttonInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonInput.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonInput.Enabled = false;
             this.buttonInput.Location = new System.Drawing.Point(502, 149);
             this.buttonInput.Name = "buttonInput";
@@ -277,15 +288,12 @@ private TextBox textBoxChannelTo;
             // 
             // listViewPlugins
             // 
-            this.listViewPlugins.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.pluginName});
+            this.listViewPlugins.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {this.pluginName});
             listViewGroup3.Header = "Output";
             listViewGroup3.Name = "listViewGroupOutput";
             listViewGroup4.Header = "Input";
             listViewGroup4.Name = "listViewGroupInput";
-            this.listViewPlugins.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup3,
-            listViewGroup4});
+            this.listViewPlugins.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {listViewGroup3, listViewGroup4});
             this.listViewPlugins.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.listViewPlugins.HideSelection = false;
             this.listViewPlugins.Location = new System.Drawing.Point(12, 32);
@@ -321,6 +329,7 @@ private TextBox textBoxChannelTo;
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonUse);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = global::Properties.Resources.VixenPlus;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "PluginListDialog";
@@ -330,18 +339,17 @@ private TextBox textBoxChannelTo;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PluginListDialog_FormClosing);
             this.Load += new System.EventHandler(this.PluginListDialog_Load);
             this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlus)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMinus)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.pictureBoxPlus)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.pictureBoxMinus)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
+
         #endregion
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (this.components != null))
-            {
+        protected override void Dispose(bool disposing) {
+            if (disposing && (this.components != null)) {
                 this.components.Dispose();
             }
             base.Dispose(disposing);

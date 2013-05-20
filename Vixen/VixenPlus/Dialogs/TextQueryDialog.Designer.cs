@@ -9,58 +9,76 @@ namespace VixenPlus.Dialogs{
 
         #region Windows Form Designer generated code
         private Button buttonCancel;
-private Button buttonOK;
-private Label labelQuery;
-private TextBox textBoxResponse;
+        private Button buttonOK;
+        private Label labelQuery;
+        private TextBox textBoxResponse;
 
         private void InitializeComponent()
         {
-            this.labelQuery = new Label();
-            this.textBoxResponse = new TextBox();
-            this.buttonOK = new Button();
-            this.buttonCancel = new Button();
-            base.SuspendLayout();
+            this.labelQuery = new System.Windows.Forms.Label();
+            this.textBoxResponse = new System.Windows.Forms.TextBox();
+            this.buttonOK = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            // 
+            // labelQuery
+            // 
             this.labelQuery.AutoSize = true;
-            this.labelQuery.Location = new Point(11, 12);
+            this.labelQuery.Location = new System.Drawing.Point(11, 12);
             this.labelQuery.Name = "labelQuery";
-            this.labelQuery.Size = new Size(35, 13);
+            this.labelQuery.Size = new System.Drawing.Size(35, 13);
             this.labelQuery.TabIndex = 0;
             this.labelQuery.Text = "label1";
-            this.textBoxResponse.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
-            this.textBoxResponse.Location = new Point(10, 33);
+            // 
+            // textBoxResponse
+            // 
+            this.textBoxResponse.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxResponse.Location = new System.Drawing.Point(10, 33);
             this.textBoxResponse.Name = "textBoxResponse";
-            this.textBoxResponse.Size = new Size(396, 20);
+            this.textBoxResponse.Size = new System.Drawing.Size(396, 20);
             this.textBoxResponse.TabIndex = 1;
-            this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            // 
+            // buttonOK
+            // 
+            this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new Point(246, 68);
+            this.buttonOK.Location = new System.Drawing.Point(246, 68);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new Size(75, 23);
+            this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 2;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
-            this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            // 
+            // buttonCancel
+            // 
+            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new Point(327, 68);
+            this.buttonCancel.Location = new System.Drawing.Point(327, 68);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new Size(75, 23);
+            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 3;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
-            base.AcceptButton = this.buttonOK;
-            base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            base.CancelButton = this.buttonCancel;
-            base.ClientSize = new Size(414, 99);
-            base.Controls.Add(this.buttonCancel);
-            base.Controls.Add(this.buttonOK);
-            base.Controls.Add(this.textBoxResponse);
-            base.Controls.Add(this.labelQuery);
-            base.Name = "TextQueryDialog";
-            base.ShowInTaskbar = false;
-            base.StartPosition = FormStartPosition.CenterScreen;
-            base.ResumeLayout(false);
-            base.PerformLayout();
+            // 
+            // TextQueryDialog
+            // 
+            this.AcceptButton = this.buttonOK;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.buttonCancel;
+            this.ClientSize = new System.Drawing.Size(414, 99);
+            this.Controls.Add(this.buttonCancel);
+            this.Controls.Add(this.buttonOK);
+            this.Controls.Add(this.textBoxResponse);
+            this.Controls.Add(this.labelQuery);
+            this.Icon = global::Properties.Resources.VixenPlus;
+            this.Name = "TextQueryDialog";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
         #endregion
 

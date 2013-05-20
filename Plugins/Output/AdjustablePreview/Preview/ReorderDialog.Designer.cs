@@ -154,9 +154,11 @@ namespace Preview {
             this.Controls.Add(this.comboBoxTo);
             this.Controls.Add(this.label3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = global::Properties.Resources.VixenPlus;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ReorderDialog";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Copy";
             this.ResumeLayout(false);

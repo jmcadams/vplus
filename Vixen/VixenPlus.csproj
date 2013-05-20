@@ -89,6 +89,9 @@
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\VixenPlus.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
@@ -580,14 +583,41 @@
     <EmbeddedResource Include="VixenPlus\BackgroundSequenceDialog.resx">
       <DependentUpon>BackgroundSequenceDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\CurveFileImportExportDialog.resx">
+      <DependentUpon>CurveFileImportExportDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VixenPlus\CurveLibraryDialog.resx">
       <DependentUpon>CurveLibraryDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\CurveLibraryRecordEditDialog.resx">
+      <DependentUpon>CurveLibraryRecordEditDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\DiagnosticsDialog.resx">
+      <DependentUpon>DiagnosticsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\Dialogs\AllChannelsColorDialog.resx">
+      <DependentUpon>AllChannelsColorDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\Dialogs\AudioDialog.resx">
+      <DependentUpon>AudioDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\Dialogs\ChannelOrderDialog.resx">
+      <DependentUpon>ChannelOrderDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenPlus\Dialogs\ChannelOutputMaskDialog.resx">
       <DependentUpon>ChannelOutputMaskDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\Dialogs\ChannelPropertyDialog.resx">
+      <DependentUpon>ChannelPropertyDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\Dialogs\HelpDialog.resx">
+      <DependentUpon>HelpDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VixenPlus\Dialogs\Lutefisk.resx">
       <DependentUpon>Lutefisk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\Dialogs\NewSequenceWizardDialog.resx">
+      <DependentUpon>NewSequenceWizardDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenPlus\Dialogs\PluginListDialog.resx">
       <DependentUpon>PluginListDialog.cs</DependentUpon>
@@ -596,11 +626,47 @@
       <DependentUpon>ProfileManagerDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\Dialogs\RoutineSelectDialog.resx">
+      <DependentUpon>RoutineSelectDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\Dialogs\SequenceSettingsDialog.resx">
+      <DependentUpon>SequenceSettingsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\Dialogs\SerialSetupDialog.resx">
+      <DependentUpon>SerialSetupDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\Dialogs\TextQueryDialog.resx">
+      <DependentUpon>TextQueryDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\DimmingCurveDialog.resx">
+      <DependentUpon>DimmingCurveDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\EventAverageDialog.resx">
+      <DependentUpon>EventAverageDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\ExecutingTimerControlDialog.resx">
+      <DependentUpon>ExecutingTimerControlDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VixenPlus\InputPluginDialog.resx">
       <DependentUpon>InputPluginDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\MusicPlayerDialog.resx">
+      <DependentUpon>MusicPlayerDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\OutputPlugInUIBase.resx">
+      <DependentUpon>OutputPlugInUIBase.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VixenPlus\PreferencesDialog.resx">
       <DependentUpon>PreferencesDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\ProgressDialog.resx">
+      <DependentUpon>ProgressDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\ShutdownDialog.resx">
+      <DependentUpon>ShutdownDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\SoundDeviceDialog.resx">
+      <DependentUpon>SoundDeviceDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenPlus\VixenPlusForm.resx">
       <DependentUpon>VixenPlusForm.cs</DependentUpon>

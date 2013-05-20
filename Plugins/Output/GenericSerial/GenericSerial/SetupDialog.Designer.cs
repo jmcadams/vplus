@@ -7,6 +7,7 @@ namespace GenericSerial {
         private System.ComponentModel.IContainer components = null;
 
         #region Windows Form Designer generated code
+
         private Button btnCancel;
         private Button btnOK;
         private CheckBox cbFooter;
@@ -18,6 +19,7 @@ namespace GenericSerial {
         private Label label2;
         private TextBox tbFooter;
         private TextBox tbHeader;
+
 
         private void InitializeComponent() {
             this.gbSerialPort = new System.Windows.Forms.GroupBox();
@@ -72,11 +74,7 @@ namespace GenericSerial {
             // cdDataBits
             // 
             this.cdDataBits.FormattingEnabled = true;
-            this.cdDataBits.Items.AddRange(new object[] {
-            "5",
-            "6",
-            "7",
-            "8"});
+            this.cdDataBits.Items.AddRange(new object[] {"5", "6", "7", "8"});
             this.cdDataBits.Location = new System.Drawing.Point(192, 49);
             this.cdDataBits.Name = "cdDataBits";
             this.cdDataBits.Size = new System.Drawing.Size(79, 21);
@@ -85,11 +83,7 @@ namespace GenericSerial {
             // cbStopBits
             // 
             this.cbStopBits.FormattingEnabled = true;
-            this.cbStopBits.Items.AddRange(new object[] {
-            "None",
-            "One",
-            "Two",
-            "OnePointFive"});
+            this.cbStopBits.Items.AddRange(new object[] {"None", "One", "Two", "OnePointFive"});
             this.cbStopBits.Location = new System.Drawing.Point(192, 76);
             this.cbStopBits.Name = "cbStopBits";
             this.cbStopBits.Size = new System.Drawing.Size(79, 21);
@@ -98,12 +92,7 @@ namespace GenericSerial {
             // cbParity
             // 
             this.cbParity.FormattingEnabled = true;
-            this.cbParity.Items.AddRange(new object[] {
-            "None",
-            "Odd",
-            "Even",
-            "Mark",
-            "Space"});
+            this.cbParity.Items.AddRange(new object[] {"None", "Odd", "Even", "Mark", "Space"});
             this.cbParity.Location = new System.Drawing.Point(52, 76);
             this.cbParity.Name = "cbParity";
             this.cbParity.Size = new System.Drawing.Size(79, 21);
@@ -142,16 +131,7 @@ namespace GenericSerial {
             // cbBaud
             // 
             this.cbBaud.FormattingEnabled = true;
-            this.cbBaud.Items.AddRange(new object[] {
-            "300",
-            "600",
-            "1200",
-            "2400",
-            "9600",
-            "19200",
-            "38400",
-            "57600",
-            "119200"});
+            this.cbBaud.Items.AddRange(new object[] {"300", "600", "1200", "2400", "9600", "19200", "38400", "57600", "119200"});
             this.cbBaud.Location = new System.Drawing.Point(52, 49);
             this.cbBaud.Name = "cbBaud";
             this.cbBaud.Size = new System.Drawing.Size(79, 21);
@@ -258,6 +238,7 @@ namespace GenericSerial {
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.gbSerialPort);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = global::Properties.Resources.VixenPlus;
             this.Name = "DialogSerialSetup";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -269,6 +250,7 @@ namespace GenericSerial {
             this.ResumeLayout(false);
 
         }
+
         #endregion
 
         protected override void Dispose(bool disposing) {
@@ -277,6 +259,7 @@ namespace GenericSerial {
             }
             base.Dispose(disposing);
         }
+
 
         private ComboBox cdDataBits;
         private ComboBox cbStopBits;

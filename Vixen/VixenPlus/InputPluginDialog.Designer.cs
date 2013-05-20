@@ -4,13 +4,12 @@ using System.Drawing;
 using System.ComponentModel;
 using System.Collections;
 
-namespace VixenPlus
-{
-    internal partial class InputPluginDialog
-    {
+namespace VixenPlus {
+    internal partial class InputPluginDialog {
         private IContainer components = null;
 
         #region Windows Form Designer generated code
+
         private Button buttonAddMappingSet;
         private Button buttonCancel;
         private Button buttonClearInputChannels;
@@ -53,8 +52,8 @@ namespace VixenPlus
         private TabPage tabPageSetDefinitions;
         private TabPage tabPageSingleIterator;
 
-        private void InitializeComponent()
-        {
+
+        private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             this.groupBoxIOMapping = new System.Windows.Forms.GroupBox();
             this.listBoxInputs = new System.Windows.Forms.ListBox();
@@ -79,7 +78,7 @@ namespace VixenPlus
             this.buttonRemoveMappingSet = new System.Windows.Forms.Button();
             this.buttonAddMappingSet = new System.Windows.Forms.Button();
             this.listViewMappingSets = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
             this.tabPageInputOutputMapping = new System.Windows.Forms.TabPage();
             this.comboBoxMappingSet = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -136,8 +135,9 @@ namespace VixenPlus
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Anchor =
+                ((System.Windows.Forms.AnchorStyles)
+                 (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.listBoxMappedChannels);
             this.groupBox2.Location = new System.Drawing.Point(184, 19);
             this.groupBox2.Name = "groupBox2";
@@ -148,9 +148,10 @@ namespace VixenPlus
             // 
             // listBoxMappedChannels
             // 
-            this.listBoxMappedChannels.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listBoxMappedChannels.Anchor =
+                ((System.Windows.Forms.AnchorStyles)
+                 ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) |
+                   System.Windows.Forms.AnchorStyles.Right)));
             this.listBoxMappedChannels.BackColor = System.Drawing.SystemColors.Control;
             this.listBoxMappedChannels.FormattingEnabled = true;
             this.listBoxMappedChannels.Location = new System.Drawing.Point(6, 19);
@@ -183,7 +184,8 @@ namespace VixenPlus
             // 
             // buttonClearInputChannels
             // 
-            this.buttonClearInputChannels.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonClearInputChannels.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonClearInputChannels.Location = new System.Drawing.Point(250, 142);
             this.buttonClearInputChannels.Name = "buttonClearInputChannels";
             this.buttonClearInputChannels.Size = new System.Drawing.Size(75, 23);
@@ -194,9 +196,10 @@ namespace VixenPlus
             // 
             // listBoxChannels
             // 
-            this.listBoxChannels.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listBoxChannels.Anchor =
+                ((System.Windows.Forms.AnchorStyles)
+                 ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) |
+                   System.Windows.Forms.AnchorStyles.Right)));
             this.listBoxChannels.Enabled = false;
             this.listBoxChannels.FormattingEnabled = true;
             this.listBoxChannels.Location = new System.Drawing.Point(13, 41);
@@ -208,7 +211,8 @@ namespace VixenPlus
             // 
             // buttonOK
             // 
-            this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonOK.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new System.Drawing.Point(273, 533);
             this.buttonOK.Name = "buttonOK";
@@ -220,7 +224,8 @@ namespace VixenPlus
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCancel.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new System.Drawing.Point(354, 533);
             this.buttonCancel.Name = "buttonCancel";
@@ -231,7 +236,8 @@ namespace VixenPlus
             // 
             // checkBoxLiveUpdate
             // 
-            this.checkBoxLiveUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkBoxLiveUpdate.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxLiveUpdate.AutoSize = true;
             this.checkBoxLiveUpdate.Location = new System.Drawing.Point(12, 510);
             this.checkBoxLiveUpdate.Name = "checkBoxLiveUpdate";
@@ -242,7 +248,8 @@ namespace VixenPlus
             // 
             // checkBoxRecord
             // 
-            this.checkBoxRecord.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkBoxRecord.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxRecord.AutoSize = true;
             this.checkBoxRecord.Location = new System.Drawing.Point(12, 533);
             this.checkBoxRecord.Name = "checkBoxRecord";
@@ -253,9 +260,10 @@ namespace VixenPlus
             // 
             // tabControlPlugin
             // 
-            this.tabControlPlugin.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControlPlugin.Anchor =
+                ((System.Windows.Forms.AnchorStyles)
+                 ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) |
+                   System.Windows.Forms.AnchorStyles.Right)));
             this.tabControlPlugin.Controls.Add(this.tabPageMappingSets);
             this.tabControlPlugin.Controls.Add(this.tabPageMappingIteration);
             this.tabControlPlugin.Location = new System.Drawing.Point(12, 12);
@@ -278,9 +286,10 @@ namespace VixenPlus
             // 
             // tabControlMappingSets
             // 
-            this.tabControlMappingSets.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControlMappingSets.Anchor =
+                ((System.Windows.Forms.AnchorStyles)
+                 ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) |
+                   System.Windows.Forms.AnchorStyles.Right)));
             this.tabControlMappingSets.Controls.Add(this.tabPageSetDefinitions);
             this.tabControlMappingSets.Controls.Add(this.tabPageInputOutputMapping);
             this.tabControlMappingSets.Location = new System.Drawing.Point(10, 12);
@@ -369,8 +378,7 @@ namespace VixenPlus
             // 
             // listViewMappingSets
             // 
-            this.listViewMappingSets.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1});
+            this.listViewMappingSets.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {this.columnHeader1});
             this.listViewMappingSets.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.listViewMappingSets.HideSelection = false;
             this.listViewMappingSets.LabelEdit = true;
@@ -529,8 +537,7 @@ namespace VixenPlus
             // listBoxMappingSets
             // 
             this.listBoxMappingSets.FormattingEnabled = true;
-            this.listBoxMappingSets.Items.AddRange(new object[] {
-            "(none)"});
+            this.listBoxMappingSets.Items.AddRange(new object[] {"(none)"});
             this.listBoxMappingSets.Location = new System.Drawing.Point(193, 30);
             this.listBoxMappingSets.Name = "listBoxMappingSets";
             this.listBoxMappingSets.Size = new System.Drawing.Size(120, 173);
@@ -579,9 +586,11 @@ namespace VixenPlus
             this.Controls.Add(this.checkBoxLiveUpdate);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
+            this.Icon = global::Properties.Resources.VixenPlus;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "InputPluginDialog";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Input Plugin";
             this.groupBoxIOMapping.ResumeLayout(false);
@@ -606,12 +615,11 @@ namespace VixenPlus
             this.PerformLayout();
 
         }
+
         #endregion
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (this.components != null))
-            {
+        protected override void Dispose(bool disposing) {
+            if (disposing && (this.components != null)) {
                 this.components.Dispose();
             }
             base.Dispose(disposing);

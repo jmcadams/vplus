@@ -9,6 +9,7 @@ namespace Preview {
         private IContainer components = null;
 
         #region Windows Form Designer generated code
+
         private ToolStripMenuItem allChannelsToolStripMenuItem;
         private Button buttonCancel;
         private Button buttonOK;
@@ -43,7 +44,9 @@ namespace Preview {
         private ToolStripTextBox toolStripTextBoxResolutionY;
         private TrackBar trackBarBrightness;
 
+
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SetupDialog));
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.labelChannel = new System.Windows.Forms.Label();
@@ -396,6 +399,7 @@ namespace Preview {
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.toolStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(20, 73);
             this.Name = "SetupDialog";
@@ -422,6 +426,7 @@ namespace Preview {
             this.PerformLayout();
 
         }
+
         #endregion
 
         protected override void Dispose(bool disposing) {

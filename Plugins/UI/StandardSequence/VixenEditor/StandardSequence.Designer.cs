@@ -1894,7 +1894,7 @@ namespace VixenEditor{
             // newSeqTsb
             // 
             this.newSeqTsb.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.newSeqTsb.Image = global::Properties.Resources._new;
+            this.newSeqTsb.Image = global::Properties.Resources.newSequence;
             this.newSeqTsb.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.newSeqTsb.Name = "newSeqTsb";
             this.newSeqTsb.Size = new System.Drawing.Size(52, 52);

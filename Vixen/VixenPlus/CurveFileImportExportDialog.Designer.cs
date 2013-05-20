@@ -4,216 +4,303 @@ using System.Drawing;
 using System.ComponentModel;
 using System.Collections;
 
-namespace VixenPlus
-{
-    internal partial class CurveFileImportExportDialog
-    {
+namespace VixenPlus {
+    internal partial class CurveFileImportExportDialog {
         private IContainer components = null;
 
         #region Windows Form Designer generated code
-        private Button buttonCancel;
-private Button btnFile;
-private Button buttonOK;
-private ColumnHeader columnHeader1;
-private ColumnHeader columnHeader2;
-private ColumnHeader columnHeader3;
-private ColumnHeader columnHeader4;
-private ColumnHeader columnHeader5;
-private ColumnHeader columnHeader6;
-private ColumnHeader columnHeader7;
-private ColumnHeader columnHeader8;
-private ComboBox comboBoxSelectedCurve;
-private GroupBox groupBoxExport;
-private GroupBox groupBoxImport;
-private Label label1;
-private Label label2;
-private Label label3;
-private Label labelFile;
-private ListView listViewCurvesExport;
-private ListView listViewCurvesImport;
-private OpenFileDialog openFileDialog;
 
-        private void InitializeComponent()
-        {
-            this.btnFile = new Button();
-            this.labelFile = new Label();
-            this.groupBoxImport = new GroupBox();
-            this.label3 = new Label();
-            this.comboBoxSelectedCurve = new ComboBox();
-            this.label1 = new Label();
-            this.listViewCurvesImport = new ListView();
-            this.columnHeader1 = new ColumnHeader();
-            this.columnHeader2 = new ColumnHeader();
-            this.columnHeader7 = new ColumnHeader();
-            this.columnHeader3 = new ColumnHeader();
-            this.groupBoxExport = new GroupBox();
-            this.label2 = new Label();
-            this.listViewCurvesExport = new ListView();
-            this.columnHeader4 = new ColumnHeader();
-            this.columnHeader5 = new ColumnHeader();
-            this.columnHeader8 = new ColumnHeader();
-            this.columnHeader6 = new ColumnHeader();
-            this.buttonOK = new Button();
-            this.buttonCancel = new Button();
-            this.openFileDialog = new OpenFileDialog();
+        private Button buttonCancel;
+        private Button btnFile;
+        private Button buttonOK;
+        private ColumnHeader columnHeader1;
+        private ColumnHeader columnHeader2;
+        private ColumnHeader columnHeader3;
+        private ColumnHeader columnHeader4;
+        private ColumnHeader columnHeader5;
+        private ColumnHeader columnHeader6;
+        private ColumnHeader columnHeader7;
+        private ColumnHeader columnHeader8;
+        private ComboBox comboBoxSelectedCurve;
+        private GroupBox groupBoxExport;
+        private GroupBox groupBoxImport;
+        private Label label1;
+        private Label label2;
+        private Label label3;
+        private Label labelFile;
+        private ListView listViewCurvesExport;
+        private ListView listViewCurvesImport;
+        private OpenFileDialog openFileDialog;
+
+
+        private void InitializeComponent() {
+            this.btnFile = new System.Windows.Forms.Button();
+            this.labelFile = new System.Windows.Forms.Label();
+            this.groupBoxImport = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.comboBoxSelectedCurve = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.listViewCurvesImport = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.groupBoxExport = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.listViewCurvesExport = new System.Windows.Forms.ListView();
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.buttonOK = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.groupBoxImport.SuspendLayout();
             this.groupBoxExport.SuspendLayout();
-            base.SuspendLayout();
-            this.btnFile.Location = new Point(15, 19);
-            this.btnFile.Name = "buttonFile";
-            this.btnFile.Size = new Size(49, 23);
+            this.SuspendLayout();
+            // 
+            // btnFile
+            // 
+            this.btnFile.Location = new System.Drawing.Point(15, 19);
+            this.btnFile.Name = "btnFile";
+            this.btnFile.Size = new System.Drawing.Size(49, 23);
             this.btnFile.TabIndex = 0;
             this.btnFile.Text = "File:";
             this.btnFile.UseVisualStyleBackColor = true;
-            this.btnFile.Click += new EventHandler(this.buttonFile_Click);
+            this.btnFile.Click += new System.EventHandler(this.buttonFile_Click);
+            // 
+            // labelFile
+            // 
             this.labelFile.AutoSize = true;
-            this.labelFile.Location = new Point(76, 25);
+            this.labelFile.Location = new System.Drawing.Point(76, 25);
             this.labelFile.Name = "labelFile";
-            this.labelFile.Size = new Size(37, 13);
+            this.labelFile.Size = new System.Drawing.Size(37, 13);
             this.labelFile.TabIndex = 1;
             this.labelFile.Text = "(none)";
-            this.groupBoxImport.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top;
+            // 
+            // groupBoxImport
+            // 
+            this.groupBoxImport.Anchor =
+                ((System.Windows.Forms.AnchorStyles)
+                 ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) |
+                   System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxImport.Controls.Add(this.label3);
             this.groupBoxImport.Controls.Add(this.comboBoxSelectedCurve);
             this.groupBoxImport.Controls.Add(this.label1);
             this.groupBoxImport.Controls.Add(this.listViewCurvesImport);
             this.groupBoxImport.Enabled = false;
-            this.groupBoxImport.Location = new Point(15, 53);
+            this.groupBoxImport.Location = new System.Drawing.Point(15, 53);
             this.groupBoxImport.Name = "groupBoxImport";
-            this.groupBoxImport.Size = new Size(464, 263);
+            this.groupBoxImport.Size = new System.Drawing.Size(464, 263);
             this.groupBoxImport.TabIndex = 2;
             this.groupBoxImport.TabStop = false;
             this.groupBoxImport.Text = "Import Dimming Curves";
-            this.label3.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
+            // 
+            // label3
+            // 
+            this.label3.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.Location = new Point(19, 225);
+            this.label3.Location = new System.Drawing.Point(19, 225);
             this.label3.Name = "label3";
-            this.label3.Size = new Size(208, 13);
+            this.label3.Size = new System.Drawing.Size(208, 13);
             this.label3.TabIndex = 4;
             this.label3.Text = "From those, use this curve for the channel:";
-            this.comboBoxSelectedCurve.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
-            this.comboBoxSelectedCurve.DrawMode = DrawMode.OwnerDrawFixed;
-            this.comboBoxSelectedCurve.DropDownStyle = ComboBoxStyle.DropDownList;
+            // 
+            // comboBoxSelectedCurve
+            // 
+            this.comboBoxSelectedCurve.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.comboBoxSelectedCurve.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.comboBoxSelectedCurve.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSelectedCurve.FormattingEnabled = true;
-            this.comboBoxSelectedCurve.Location = new Point(233, 222);
+            this.comboBoxSelectedCurve.Location = new System.Drawing.Point(233, 222);
             this.comboBoxSelectedCurve.Name = "comboBoxSelectedCurve";
-            this.comboBoxSelectedCurve.Size = new Size(212, 21);
+            this.comboBoxSelectedCurve.Size = new System.Drawing.Size(212, 21);
             this.comboBoxSelectedCurve.TabIndex = 3;
-            this.comboBoxSelectedCurve.DrawItem += new DrawItemEventHandler(this.comboBoxSelectedCurve_DrawItem);
+            this.comboBoxSelectedCurve.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.comboBoxSelectedCurve_DrawItem);
+            // 
+            // label1
+            // 
             this.label1.AutoSize = true;
-            this.label1.Location = new Point(15, 16);
+            this.label1.Location = new System.Drawing.Point(15, 16);
             this.label1.Name = "label1";
-            this.label1.Size = new Size(302, 13);
+            this.label1.Size = new System.Drawing.Size(302, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "Select one or more curves to import from the file into the library.";
-            this.listViewCurvesImport.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top;
-            this.listViewCurvesImport.Columns.AddRange(new ColumnHeader[] { this.columnHeader1, this.columnHeader2, this.columnHeader7, this.columnHeader3 });
+            // 
+            // listViewCurvesImport
+            // 
+            this.listViewCurvesImport.Anchor =
+                ((System.Windows.Forms.AnchorStyles)
+                 ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) |
+                   System.Windows.Forms.AnchorStyles.Right)));
+            this.listViewCurvesImport.Columns.AddRange(new System.Windows.Forms.ColumnHeader[]
+            {this.columnHeader1, this.columnHeader2, this.columnHeader7, this.columnHeader3});
             this.listViewCurvesImport.FullRowSelect = true;
-            this.listViewCurvesImport.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            this.listViewCurvesImport.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.listViewCurvesImport.HideSelection = false;
-            this.listViewCurvesImport.Location = new Point(18, 43);
+            this.listViewCurvesImport.Location = new System.Drawing.Point(18, 43);
             this.listViewCurvesImport.Name = "listViewCurvesImport";
             this.listViewCurvesImport.OwnerDraw = true;
-            this.listViewCurvesImport.Size = new Size(427, 161);
+            this.listViewCurvesImport.Size = new System.Drawing.Size(427, 161);
             this.listViewCurvesImport.TabIndex = 0;
             this.listViewCurvesImport.UseCompatibleStateImageBehavior = false;
-            this.listViewCurvesImport.View = View.Details;
-            this.listViewCurvesImport.MouseDoubleClick += new MouseEventHandler(this.listViewCurvesImport_MouseDoubleClick);
-            this.listViewCurvesImport.DrawColumnHeader += new DrawListViewColumnHeaderEventHandler(this.listViewCurvesImport_DrawColumnHeader);
-            this.listViewCurvesImport.SelectedIndexChanged += new EventHandler(this.listViewCurvesImport_SelectedIndexChanged);
-            this.listViewCurvesImport.Leave += new EventHandler(this.listViewCurvesImport_Leave);
-            this.listViewCurvesImport.DrawSubItem += new DrawListViewSubItemEventHandler(this.listViewCurvesImport_DrawSubItem);
+            this.listViewCurvesImport.View = System.Windows.Forms.View.Details;
+            this.listViewCurvesImport.DrawColumnHeader +=
+                new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.listViewCurvesImport_DrawColumnHeader);
+            this.listViewCurvesImport.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.listViewCurvesImport_DrawSubItem);
+            this.listViewCurvesImport.SelectedIndexChanged += new System.EventHandler(this.listViewCurvesImport_SelectedIndexChanged);
+            this.listViewCurvesImport.Leave += new System.EventHandler(this.listViewCurvesImport_Leave);
+            this.listViewCurvesImport.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listViewCurvesImport_MouseDoubleClick);
+            // 
+            // columnHeader1
+            // 
             this.columnHeader1.Text = "Manufacturer";
             this.columnHeader1.Width = 150;
+            // 
+            // columnHeader2
+            // 
             this.columnHeader2.Text = "Count";
+            // 
+            // columnHeader7
+            // 
             this.columnHeader7.Text = "Color";
+            // 
+            // columnHeader3
+            // 
             this.columnHeader3.Text = "Controller";
             this.columnHeader3.Width = 110;
-            this.groupBoxExport.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top;
+            // 
+            // groupBoxExport
+            // 
+            this.groupBoxExport.Anchor =
+                ((System.Windows.Forms.AnchorStyles)
+                 ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) |
+                   System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxExport.Controls.Add(this.label2);
             this.groupBoxExport.Controls.Add(this.listViewCurvesExport);
             this.groupBoxExport.Enabled = false;
-            this.groupBoxExport.Location = new Point(15, 53);
+            this.groupBoxExport.Location = new System.Drawing.Point(15, 53);
             this.groupBoxExport.Name = "groupBoxExport";
-            this.groupBoxExport.Size = new Size(464, 263);
+            this.groupBoxExport.Size = new System.Drawing.Size(464, 263);
             this.groupBoxExport.TabIndex = 3;
             this.groupBoxExport.TabStop = false;
             this.groupBoxExport.Text = "Export Dimming Curves";
             this.groupBoxExport.Visible = false;
+            // 
+            // label2
+            // 
             this.label2.AutoSize = true;
-            this.label2.Location = new Point(15, 16);
+            this.label2.Location = new System.Drawing.Point(15, 16);
             this.label2.Name = "label2";
-            this.label2.Size = new Size(295, 13);
+            this.label2.Size = new System.Drawing.Size(295, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Select one or more curves to export to the file from the library.";
-            this.listViewCurvesExport.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top;
-            this.listViewCurvesExport.Columns.AddRange(new ColumnHeader[] { this.columnHeader4, this.columnHeader5, this.columnHeader8, this.columnHeader6 });
+            // 
+            // listViewCurvesExport
+            // 
+            this.listViewCurvesExport.Anchor =
+                ((System.Windows.Forms.AnchorStyles)
+                 ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) |
+                   System.Windows.Forms.AnchorStyles.Right)));
+            this.listViewCurvesExport.Columns.AddRange(new System.Windows.Forms.ColumnHeader[]
+            {this.columnHeader4, this.columnHeader5, this.columnHeader8, this.columnHeader6});
             this.listViewCurvesExport.FullRowSelect = true;
-            this.listViewCurvesExport.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            this.listViewCurvesExport.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.listViewCurvesExport.HideSelection = false;
-            this.listViewCurvesExport.Location = new Point(18, 43);
+            this.listViewCurvesExport.Location = new System.Drawing.Point(18, 43);
             this.listViewCurvesExport.Name = "listViewCurvesExport";
             this.listViewCurvesExport.OwnerDraw = true;
-            this.listViewCurvesExport.Size = new Size(427, 195);
+            this.listViewCurvesExport.Size = new System.Drawing.Size(427, 195);
             this.listViewCurvesExport.TabIndex = 0;
             this.listViewCurvesExport.UseCompatibleStateImageBehavior = false;
-            this.listViewCurvesExport.View = View.Details;
-            this.listViewCurvesExport.MouseDoubleClick += new MouseEventHandler(this.listViewCurvesExport_MouseDoubleClick);
-            this.listViewCurvesExport.DrawColumnHeader += new DrawListViewColumnHeaderEventHandler(this.listViewCurvesImport_DrawColumnHeader);
-            this.listViewCurvesExport.DrawSubItem += new DrawListViewSubItemEventHandler(this.listViewCurvesImport_DrawSubItem);
+            this.listViewCurvesExport.View = System.Windows.Forms.View.Details;
+            this.listViewCurvesExport.DrawColumnHeader +=
+                new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.listViewCurvesImport_DrawColumnHeader);
+            this.listViewCurvesExport.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.listViewCurvesImport_DrawSubItem);
+            this.listViewCurvesExport.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listViewCurvesExport_MouseDoubleClick);
+            // 
+            // columnHeader4
+            // 
             this.columnHeader4.Text = "Manufacturer";
             this.columnHeader4.Width = 150;
+            // 
+            // columnHeader5
+            // 
             this.columnHeader5.Text = "Count";
+            // 
+            // columnHeader8
+            // 
             this.columnHeader8.Text = "Color";
+            // 
+            // columnHeader6
+            // 
             this.columnHeader6.Text = "Controller";
             this.columnHeader6.Width = 110;
-            this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            // 
+            // buttonOK
+            // 
+            this.buttonOK.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new Point(323, 322);
+            this.buttonOK.Location = new System.Drawing.Point(323, 322);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new Size(75, 23);
+            this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 4;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
-            this.buttonOK.Click += new EventHandler(this.buttonOK_Click);
-            this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
+            // 
+            // buttonCancel
+            // 
+            this.buttonCancel.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new Point(0x194, 0x142);
+            this.buttonCancel.Location = new System.Drawing.Point(404, 322);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new Size(75, 23);
+            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 5;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
+            // 
+            // openFileDialog
+            // 
             this.openFileDialog.SupportMultiDottedExtensions = true;
-            base.AcceptButton = this.buttonOK;
-            base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            base.CancelButton = this.buttonCancel;
-            base.ClientSize = new Size(491, 357);
-            base.Controls.Add(this.groupBoxImport);
-            base.Controls.Add(this.buttonCancel);
-            base.Controls.Add(this.buttonOK);
-            base.Controls.Add(this.groupBoxExport);
-            base.Controls.Add(this.labelFile);
-            base.Controls.Add(this.btnFile);
-            base.MinimizeBox = false;
-            base.Name = "CurveFileImportExportDialog";
-            base.StartPosition = FormStartPosition.CenterParent;
+            // 
+            // CurveFileImportExportDialog
+            // 
+            this.AcceptButton = this.buttonOK;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.buttonCancel;
+            this.ClientSize = new System.Drawing.Size(491, 357);
+            this.Controls.Add(this.groupBoxImport);
+            this.Controls.Add(this.buttonCancel);
+            this.Controls.Add(this.buttonOK);
+            this.Controls.Add(this.groupBoxExport);
+            this.Controls.Add(this.labelFile);
+            this.Controls.Add(this.btnFile);
+            this.Icon = global::Properties.Resources.VixenPlus;
+            this.MinimizeBox = false;
+            this.Name = "CurveFileImportExportDialog";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Dimming Curve File Import/Export";
-            base.Load += new EventHandler(this.CurveFileImportExportDialog_Load);
+            this.Load += new System.EventHandler(this.CurveFileImportExportDialog_Load);
             this.groupBoxImport.ResumeLayout(false);
             this.groupBoxImport.PerformLayout();
             this.groupBoxExport.ResumeLayout(false);
             this.groupBoxExport.PerformLayout();
-            base.ResumeLayout(false);
-            base.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
+
         #endregion
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (this.components != null))
-            {
+        protected override void Dispose(bool disposing) {
+            if (disposing && (this.components != null)) {
                 this.components.Dispose();
             }
             base.Dispose(disposing);

@@ -1,47 +1,54 @@
-namespace VixenPlus.Dialogs{
+namespace VixenPlus.Dialogs {
     using System;
     using System.Windows.Forms;
     using System.Drawing;
     using System.Collections;
 
-    public partial class ChannelPropertyDialog{
+    public partial class ChannelPropertyDialog {
         private System.ComponentModel.IContainer components = null;
 
         #region Windows Form Designer generated code
-        private Button buttonClose;
-private Button buttonColor;
-private Button buttonDimmingCurve;
-private Button buttonNext;
-private Button buttonPrev;
-private CheckBox checkBoxEnabled;
-private ColorDialog colorDialog;
-private ComboBox comboBoxChannels;
-private GroupBox groupBox1;
-private Label label1;
-private Label label2;
-private Label label3;
-private Label labelOutputChannel;
-private TextBox textBoxName;
 
-        private void InitializeComponent()
-        {
-            this.groupBox1 = new GroupBox();
-            this.checkBoxEnabled = new CheckBox();
-            this.labelOutputChannel = new Label();
-            this.label3 = new Label();
-            this.buttonColor = new Button();
-            this.label2 = new Label();
-            this.textBoxName = new TextBox();
-            this.label1 = new Label();
-            this.buttonClose = new Button();
-            this.buttonPrev = new Button();
-            this.buttonNext = new Button();
-            this.comboBoxChannels = new ComboBox();
-            this.colorDialog = new ColorDialog();
-            this.buttonDimmingCurve = new Button();
+        private Button buttonClose;
+        private Button buttonColor;
+        private Button buttonDimmingCurve;
+        private Button buttonNext;
+        private Button buttonPrev;
+        private CheckBox checkBoxEnabled;
+        private ColorDialog colorDialog;
+        private ComboBox comboBoxChannels;
+        private GroupBox groupBox1;
+        private Label label1;
+        private Label label2;
+        private Label label3;
+        private Label labelOutputChannel;
+        private TextBox textBoxName;
+
+
+        private void InitializeComponent() {
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.buttonDimmingCurve = new System.Windows.Forms.Button();
+            this.checkBoxEnabled = new System.Windows.Forms.CheckBox();
+            this.labelOutputChannel = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.buttonColor = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBoxName = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.buttonClose = new System.Windows.Forms.Button();
+            this.buttonPrev = new System.Windows.Forms.Button();
+            this.buttonNext = new System.Windows.Forms.Button();
+            this.comboBoxChannels = new System.Windows.Forms.ComboBox();
+            this.colorDialog = new System.Windows.Forms.ColorDialog();
             this.groupBox1.SuspendLayout();
-            base.SuspendLayout();
-            this.groupBox1.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top;
+            this.SuspendLayout();
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor =
+                ((System.Windows.Forms.AnchorStyles)
+                 ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) |
+                   System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.buttonDimmingCurve);
             this.groupBox1.Controls.Add(this.checkBoxEnabled);
             this.groupBox1.Controls.Add(this.labelOutputChannel);
@@ -50,118 +57,163 @@ private TextBox textBoxName;
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.textBoxName);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new Point(12, 41);
+            this.groupBox1.Location = new System.Drawing.Point(12, 41);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new Size(268, 192);
+            this.groupBox1.Size = new System.Drawing.Size(268, 192);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Channel";
-            this.checkBoxEnabled.AutoSize = true;
-            this.checkBoxEnabled.Location = new Point(112, 105);
-            this.checkBoxEnabled.Name = "checkBoxEnabled";
-            this.checkBoxEnabled.Size = new Size(65, 17);
-            this.checkBoxEnabled.TabIndex = 6;
-            this.checkBoxEnabled.Text = "Enabled";
-            this.checkBoxEnabled.UseVisualStyleBackColor = true;
-            this.labelOutputChannel.AutoSize = true;
-            this.labelOutputChannel.Location = new Point(109, 83);
-            this.labelOutputChannel.Name = "labelOutputChannel";
-            this.labelOutputChannel.Size = new Size(100, 13);
-            this.labelOutputChannel.TabIndex = 5;
-            this.labelOutputChannel.Text = "labelOutputChannel";
-            this.label3.AutoSize = true;
-            this.label3.Location = new Point(14, 83);
-            this.label3.Name = "label3";
-            this.label3.Size = new Size(83, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Output channel:";
-            this.buttonColor.Location = new Point(112, 51);
-            this.buttonColor.Name = "buttonColor";
-            this.buttonColor.Size = new Size(75, 23);
-            this.buttonColor.TabIndex = 3;
-            this.buttonColor.UseVisualStyleBackColor = true;
-            this.buttonColor.Click += new EventHandler(this.buttonColor_Click);
-            this.label2.AutoSize = true;
-            this.label2.Location = new Point(14, 56);
-            this.label2.Name = "label2";
-            this.label2.Size = new Size(34, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Color:";
-            this.textBoxName.Location = new Point(112, 25);
-            this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new Size(150, 20);
-            this.textBoxName.TabIndex = 1;
-            this.label1.AutoSize = true;
-            this.label1.Location = new Point(14, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new Size(38, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Name:";
-            this.buttonClose.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.buttonClose.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonClose.Location = new Point(205, 239);
-            this.buttonClose.Name = "buttonClose";
-            this.buttonClose.Size = new Size(75, 23);
-            this.buttonClose.TabIndex = 1;
-            this.buttonClose.Text = "Close";
-            this.buttonClose.UseVisualStyleBackColor = true;
-            this.buttonClose.Click += new EventHandler(this.buttonClose_Click);
-            this.buttonPrev.Location = new Point(12, 12);
-            this.buttonPrev.Name = "buttonPrev";
-            this.buttonPrev.Size = new Size(23, 23);
-            this.buttonPrev.TabIndex = 0;
-            this.buttonPrev.Text = "<";
-            this.buttonPrev.UseVisualStyleBackColor = true;
-            this.buttonPrev.Click += new EventHandler(this.buttonPrev_Click);
-            this.buttonNext.Location = new Point(41, 12);
-            this.buttonNext.Name = "buttonNext";
-            this.buttonNext.Size = new Size(23, 23);
-            this.buttonNext.TabIndex = 1;
-            this.buttonNext.Text = ">";
-            this.buttonNext.UseVisualStyleBackColor = true;
-            this.buttonNext.Click += new EventHandler(this.buttonNext_Click);
-            this.comboBoxChannels.DropDownStyle = ComboBoxStyle.DropDownList;
-            this.comboBoxChannels.FormattingEnabled = true;
-            this.comboBoxChannels.Location = new Point(70, 14);
-            this.comboBoxChannels.Name = "comboBoxChannels";
-            this.comboBoxChannels.Size = new Size(198, 21);
-            this.comboBoxChannels.TabIndex = 2;
-            this.comboBoxChannels.SelectedIndexChanged += new EventHandler(this.comboBoxChannels_SelectedIndexChanged);
-            this.colorDialog.AnyColor = true;
-            this.colorDialog.FullOpen = true;
-            this.buttonDimmingCurve.Location = new Point(17, 149);
+            // 
+            // buttonDimmingCurve
+            // 
+            this.buttonDimmingCurve.Location = new System.Drawing.Point(17, 149);
             this.buttonDimmingCurve.Name = "buttonDimmingCurve";
-            this.buttonDimmingCurve.Size = new Size(106, 23);
+            this.buttonDimmingCurve.Size = new System.Drawing.Size(106, 23);
             this.buttonDimmingCurve.TabIndex = 7;
             this.buttonDimmingCurve.Text = "Dimming Curve";
             this.buttonDimmingCurve.UseVisualStyleBackColor = true;
-            this.buttonDimmingCurve.Click += new EventHandler(this.buttonDimmingCurve_Click);
-            base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            base.CancelButton = this.buttonClose;
-            base.ClientSize = new Size(292, 274);
-            base.Controls.Add(this.comboBoxChannels);
-            base.Controls.Add(this.buttonNext);
-            base.Controls.Add(this.buttonClose);
-            base.Controls.Add(this.buttonPrev);
-            base.Controls.Add(this.groupBox1);
-            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            base.KeyPreview = true;
-            base.Name = "ChannelPropertyDialog";
-            base.StartPosition = FormStartPosition.CenterScreen;
+            this.buttonDimmingCurve.Click += new System.EventHandler(this.buttonDimmingCurve_Click);
+            // 
+            // checkBoxEnabled
+            // 
+            this.checkBoxEnabled.AutoSize = true;
+            this.checkBoxEnabled.Location = new System.Drawing.Point(112, 105);
+            this.checkBoxEnabled.Name = "checkBoxEnabled";
+            this.checkBoxEnabled.Size = new System.Drawing.Size(65, 17);
+            this.checkBoxEnabled.TabIndex = 6;
+            this.checkBoxEnabled.Text = "Enabled";
+            this.checkBoxEnabled.UseVisualStyleBackColor = true;
+            // 
+            // labelOutputChannel
+            // 
+            this.labelOutputChannel.AutoSize = true;
+            this.labelOutputChannel.Location = new System.Drawing.Point(109, 83);
+            this.labelOutputChannel.Name = "labelOutputChannel";
+            this.labelOutputChannel.Size = new System.Drawing.Size(100, 13);
+            this.labelOutputChannel.TabIndex = 5;
+            this.labelOutputChannel.Text = "labelOutputChannel";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(14, 83);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(83, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Output channel:";
+            // 
+            // buttonColor
+            // 
+            this.buttonColor.Location = new System.Drawing.Point(112, 51);
+            this.buttonColor.Name = "buttonColor";
+            this.buttonColor.Size = new System.Drawing.Size(75, 23);
+            this.buttonColor.TabIndex = 3;
+            this.buttonColor.UseVisualStyleBackColor = true;
+            this.buttonColor.Click += new System.EventHandler(this.buttonColor_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(14, 56);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(34, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Color:";
+            // 
+            // textBoxName
+            // 
+            this.textBoxName.Location = new System.Drawing.Point(112, 25);
+            this.textBoxName.Name = "textBoxName";
+            this.textBoxName.Size = new System.Drawing.Size(150, 20);
+            this.textBoxName.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(14, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Name:";
+            // 
+            // buttonClose
+            // 
+            this.buttonClose.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonClose.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.buttonClose.Location = new System.Drawing.Point(205, 239);
+            this.buttonClose.Name = "buttonClose";
+            this.buttonClose.Size = new System.Drawing.Size(75, 23);
+            this.buttonClose.TabIndex = 1;
+            this.buttonClose.Text = "Close";
+            this.buttonClose.UseVisualStyleBackColor = true;
+            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
+            // 
+            // buttonPrev
+            // 
+            this.buttonPrev.Location = new System.Drawing.Point(12, 12);
+            this.buttonPrev.Name = "buttonPrev";
+            this.buttonPrev.Size = new System.Drawing.Size(23, 23);
+            this.buttonPrev.TabIndex = 0;
+            this.buttonPrev.Text = "<";
+            this.buttonPrev.UseVisualStyleBackColor = true;
+            this.buttonPrev.Click += new System.EventHandler(this.buttonPrev_Click);
+            // 
+            // buttonNext
+            // 
+            this.buttonNext.Location = new System.Drawing.Point(41, 12);
+            this.buttonNext.Name = "buttonNext";
+            this.buttonNext.Size = new System.Drawing.Size(23, 23);
+            this.buttonNext.TabIndex = 1;
+            this.buttonNext.Text = ">";
+            this.buttonNext.UseVisualStyleBackColor = true;
+            this.buttonNext.Click += new System.EventHandler(this.buttonNext_Click);
+            // 
+            // comboBoxChannels
+            // 
+            this.comboBoxChannels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxChannels.FormattingEnabled = true;
+            this.comboBoxChannels.Location = new System.Drawing.Point(70, 14);
+            this.comboBoxChannels.Name = "comboBoxChannels";
+            this.comboBoxChannels.Size = new System.Drawing.Size(198, 21);
+            this.comboBoxChannels.TabIndex = 2;
+            this.comboBoxChannels.SelectedIndexChanged += new System.EventHandler(this.comboBoxChannels_SelectedIndexChanged);
+            // 
+            // colorDialog
+            // 
+            this.colorDialog.AnyColor = true;
+            this.colorDialog.FullOpen = true;
+            // 
+            // ChannelPropertyDialog
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.buttonClose;
+            this.ClientSize = new System.Drawing.Size(292, 274);
+            this.Controls.Add(this.comboBoxChannels);
+            this.Controls.Add(this.buttonNext);
+            this.Controls.Add(this.buttonClose);
+            this.Controls.Add(this.buttonPrev);
+            this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = global::Properties.Resources.VixenPlus;
+            this.KeyPreview = true;
+            this.Name = "ChannelPropertyDialog";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Channel Properties";
-            base.Load += new EventHandler(this.ChannelPropertyDialog_Load);
-            base.KeyPress += new KeyPressEventHandler(this.ChannelPropertyDialog_KeyPress);
+            this.Load += new System.EventHandler(this.ChannelPropertyDialog_Load);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ChannelPropertyDialog_KeyPress);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            base.ResumeLayout(false);
+            this.ResumeLayout(false);
+
         }
+
         #endregion
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (this.components != null))
-            {
+        protected override void Dispose(bool disposing) {
+            if (disposing && (this.components != null)) {
                 this.components.Dispose();
             }
             base.Dispose(disposing);

@@ -17,6 +17,7 @@ namespace VixenPlus {
 
         public AboutDialog() {
             InitializeComponent();
+            pbIcon.Image = new Icon(Resources.VixenPlus, new Size(64,64)).ToBitmap();
 
             // Make sure the okay button is always on top since it may get covered by the credits.
             Controls.SetChildIndex(btnOkay, 0);

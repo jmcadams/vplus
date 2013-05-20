@@ -113,7 +113,9 @@
     <Compile Include="Renard\SetupDialog.Designer.cs">
       <DependentUpon>SetupDialog.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Renard.SetupDialog.resources" />
+    <EmbeddedResource Include="Renard\SetupDialog.resx">
+      <DependentUpon>SetupDialog.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

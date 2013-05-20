@@ -18,6 +18,15 @@
             set { base.Text = value; }
         }
 
+        private const int ClassStyleNoClose = 0x200;
+
+        protected override CreateParams CreateParams {
+            get {
+                var createParams = base.CreateParams;
+                createParams.ClassStyle |= ClassStyleNoClose;
+                return createParams;
+            }
+        }
         //ComponentResourceManager manager = new ComponentResourceManager(typeof(UpdateNotificationDialog));
         //this.pictureBox1.Image = (Image) manager.GetObject("pictureBox1.Image");
     }

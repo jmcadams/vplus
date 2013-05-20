@@ -4,214 +4,273 @@ using System.Drawing;
 using System.ComponentModel;
 using System.Collections;
 
-namespace VixenPlus
-{
-    internal partial class DimmingCurveDialog
-    {
+namespace VixenPlus {
+    internal partial class DimmingCurveDialog {
         private IContainer components;
 
         #region Windows Form Designer generated code
-        private Button buttonCancel;
-private Button buttonExportToLibrary;
-private Button buttonImportFromLibrary;
-private Button buttonOK;
-private Button buttonResetToLinear;
-private Button buttonSwitchDisplay;
-private ComboBox comboBoxChannels;
-private ComboBox comboBoxExport;
-private ComboBox comboBoxImport;
-private Label label1;
-private Label label2;
-private Label labelChannelValue;
-private Label labelMessage;
-private Label labelSequenceChannels;
-private Panel panel1;
-private PictureBox pictureBoxCurve;
-private PictureBox pbMini;
 
-        private void InitializeComponent()
-        {
-            this.pbMini = new PictureBox();
-            this.pictureBoxCurve = new PictureBox();
-            this.labelChannelValue = new Label();
-            this.buttonResetToLinear = new Button();
-            this.buttonOK = new Button();
-            this.buttonCancel = new Button();
-            this.comboBoxChannels = new ComboBox();
-            this.labelSequenceChannels = new Label();
-            this.buttonSwitchDisplay = new Button();
-            this.label1 = new Label();
-            this.label2 = new Label();
-            this.buttonImportFromLibrary = new Button();
-            this.buttonExportToLibrary = new Button();
-            this.labelMessage = new Label();
-            this.panel1 = new Panel();
-            this.comboBoxImport = new ComboBox();
-            this.comboBoxExport = new ComboBox();
-            ((ISupportInitialize) this.pbMini).BeginInit();
-            ((ISupportInitialize) this.pictureBoxCurve).BeginInit();
+        private Button buttonCancel;
+        private Button buttonExportToLibrary;
+        private Button buttonImportFromLibrary;
+        private Button buttonOK;
+        private Button buttonResetToLinear;
+        private Button buttonSwitchDisplay;
+        private ComboBox comboBoxChannels;
+        private ComboBox comboBoxExport;
+        private ComboBox comboBoxImport;
+        private Label label1;
+        private Label label2;
+        private Label labelChannelValue;
+        private Label labelMessage;
+        private Label labelSequenceChannels;
+        private Panel panel1;
+        private PictureBox pictureBoxCurve;
+        private PictureBox pbMini;
+
+
+        private void InitializeComponent() {
+            this.pbMini = new System.Windows.Forms.PictureBox();
+            this.pictureBoxCurve = new System.Windows.Forms.PictureBox();
+            this.labelChannelValue = new System.Windows.Forms.Label();
+            this.buttonResetToLinear = new System.Windows.Forms.Button();
+            this.buttonOK = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
+            this.comboBoxChannels = new System.Windows.Forms.ComboBox();
+            this.labelSequenceChannels = new System.Windows.Forms.Label();
+            this.buttonSwitchDisplay = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.buttonImportFromLibrary = new System.Windows.Forms.Button();
+            this.buttonExportToLibrary = new System.Windows.Forms.Button();
+            this.labelMessage = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.comboBoxImport = new System.Windows.Forms.ComboBox();
+            this.comboBoxExport = new System.Windows.Forms.ComboBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMini)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCurve)).BeginInit();
             this.panel1.SuspendLayout();
-            base.SuspendLayout();
-            this.pbMini.BackColor = Color.White;
-            this.pbMini.Location = new Point(0, 0);
-            this.pbMini.Name = "pictureBoxMini";
-            this.pbMini.Size = new Size(256, 256);
+            this.SuspendLayout();
+            // 
+            // pbMini
+            // 
+            this.pbMini.BackColor = System.Drawing.Color.White;
+            this.pbMini.Location = new System.Drawing.Point(0, 0);
+            this.pbMini.Name = "pbMini";
+            this.pbMini.Size = new System.Drawing.Size(256, 256);
             this.pbMini.TabIndex = 0;
             this.pbMini.TabStop = false;
-            this.pbMini.MouseMove += new MouseEventHandler(this.pictureBoxMini_MouseMove);
-            this.pbMini.MouseDown += new MouseEventHandler(this.pictureBoxMini_MouseDown);
-            this.pbMini.Paint += new PaintEventHandler(this.pictureBoxMini_Paint);
-            this.pictureBoxCurve.BackColor = Color.FloralWhite;
-            this.pictureBoxCurve.Location = new Point(274, 31);
+            this.pbMini.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxMini_Paint);
+            this.pbMini.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxMini_MouseDown);
+            this.pbMini.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxMini_MouseMove);
+            // 
+            // pictureBoxCurve
+            // 
+            this.pictureBoxCurve.BackColor = System.Drawing.Color.FloralWhite;
+            this.pictureBoxCurve.Location = new System.Drawing.Point(274, 31);
             this.pictureBoxCurve.Name = "pictureBoxCurve";
-            this.pictureBoxCurve.Size = new Size(449, 449);
+            this.pictureBoxCurve.Size = new System.Drawing.Size(449, 449);
             this.pictureBoxCurve.TabIndex = 1;
             this.pictureBoxCurve.TabStop = false;
-            this.pictureBoxCurve.MouseLeave += new EventHandler(this.pictureBoxCurve_MouseLeave);
-            this.pictureBoxCurve.MouseMove += new MouseEventHandler(this.pictureBoxCurve_MouseMove);
-            this.pictureBoxCurve.Paint += new PaintEventHandler(this.pictureBoxCurve_Paint);
-            this.pictureBoxCurve.MouseUp += new MouseEventHandler(this.pictureBoxCurve_MouseUp);
+            this.pictureBoxCurve.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxCurve_Paint);
+            this.pictureBoxCurve.MouseLeave += new System.EventHandler(this.pictureBoxCurve_MouseLeave);
+            this.pictureBoxCurve.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCurve_MouseMove);
+            this.pictureBoxCurve.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCurve_MouseUp);
+            // 
+            // labelChannelValue
+            // 
             this.labelChannelValue.AutoSize = true;
-            this.labelChannelValue.Location = new Point(277, 13);
+            this.labelChannelValue.Location = new System.Drawing.Point(277, 13);
             this.labelChannelValue.Name = "labelChannelValue";
-            this.labelChannelValue.Size = new Size(0, 13);
+            this.labelChannelValue.Size = new System.Drawing.Size(0, 13);
             this.labelChannelValue.TabIndex = 13;
+            // 
+            // buttonResetToLinear
+            // 
             this.buttonResetToLinear.Enabled = false;
-            this.buttonResetToLinear.Location = new Point(12, 293);
+            this.buttonResetToLinear.Location = new System.Drawing.Point(12, 293);
             this.buttonResetToLinear.Name = "buttonResetToLinear";
-            this.buttonResetToLinear.Size = new Size(99, 23);
+            this.buttonResetToLinear.Size = new System.Drawing.Size(99, 23);
             this.buttonResetToLinear.TabIndex = 6;
             this.buttonResetToLinear.Text = "Reset to linear";
             this.buttonResetToLinear.UseVisualStyleBackColor = true;
-            this.buttonResetToLinear.Click += new EventHandler(this.buttonResetToLinear_Click);
-            this.buttonOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            this.buttonResetToLinear.Click += new System.EventHandler(this.buttonResetToLinear_Click);
+            // 
+            // buttonOK
+            // 
+            this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new Point(568, 491);
+            this.buttonOK.Location = new System.Drawing.Point(568, 491);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new Size(75, 23);
+            this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 7;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
-            this.buttonOK.Click += new EventHandler(this.buttonOK_Click);
-            this.buttonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
+            // 
+            // buttonCancel
+            // 
+            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new Point(649, 491);
+            this.buttonCancel.Location = new System.Drawing.Point(649, 491);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new Size(75, 23);
+            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 8;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
-            this.comboBoxChannels.DropDownStyle = ComboBoxStyle.DropDownList;
+            // 
+            // comboBoxChannels
+            // 
+            this.comboBoxChannels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxChannels.FormattingEnabled = true;
-            this.comboBoxChannels.Location = new Point(15, 353);
+            this.comboBoxChannels.Location = new System.Drawing.Point(15, 353);
             this.comboBoxChannels.Name = "comboBoxChannels";
-            this.comboBoxChannels.Size = new Size(253, 21);
+            this.comboBoxChannels.Size = new System.Drawing.Size(253, 21);
             this.comboBoxChannels.TabIndex = 1;
-            this.comboBoxChannels.SelectedIndexChanged += new EventHandler(this.comboBoxChannels_SelectedIndexChanged);
+            this.comboBoxChannels.SelectedIndexChanged += new System.EventHandler(this.comboBoxChannels_SelectedIndexChanged);
+            // 
+            // labelSequenceChannels
+            // 
             this.labelSequenceChannels.AutoSize = true;
-            this.labelSequenceChannels.Location = new Point(12, 337);
+            this.labelSequenceChannels.Location = new System.Drawing.Point(12, 337);
             this.labelSequenceChannels.Name = "labelSequenceChannels";
-            this.labelSequenceChannels.Size = new Size(102, 13);
+            this.labelSequenceChannels.Size = new System.Drawing.Size(102, 13);
             this.labelSequenceChannels.TabIndex = 0;
             this.labelSequenceChannels.Text = "Sequence channels";
-            this.buttonSwitchDisplay.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
-            this.buttonSwitchDisplay.Location = new Point(356, 501);
+            // 
+            // buttonSwitchDisplay
+            // 
+            this.buttonSwitchDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonSwitchDisplay.Location = new System.Drawing.Point(356, 501);
             this.buttonSwitchDisplay.Name = "buttonSwitchDisplay";
-            this.buttonSwitchDisplay.Size = new Size(120, 23);
+            this.buttonSwitchDisplay.Size = new System.Drawing.Size(120, 23);
             this.buttonSwitchDisplay.TabIndex = 14;
             this.buttonSwitchDisplay.Text = "Show";
             this.buttonSwitchDisplay.UseVisualStyleBackColor = true;
             this.buttonSwitchDisplay.Visible = false;
-            this.buttonSwitchDisplay.Click += new EventHandler(this.buttonSwitchDisplay_Click);
+            this.buttonSwitchDisplay.Click += new System.EventHandler(this.buttonSwitchDisplay_Click);
+            // 
+            // label1
+            // 
             this.label1.AutoSize = true;
-            this.label1.Location = new Point(277, 483);
+            this.label1.Location = new System.Drawing.Point(277, 483);
             this.label1.Name = "label1";
-            this.label1.Size = new Size(40, 13);
+            this.label1.Size = new System.Drawing.Size(40, 13);
             this.label1.TabIndex = 10;
             this.label1.Text = "Input >";
+            // 
+            // label2
+            // 
             this.label2.AutoSize = true;
-            this.label2.Location = new Point(258, 479);
+            this.label2.Location = new System.Drawing.Point(258, 479);
             this.label2.Name = "label2";
-            this.label2.Size = new Size(0, 13);
+            this.label2.Size = new System.Drawing.Size(0, 13);
             this.label2.TabIndex = 9;
-            this.buttonImportFromLibrary.Location = new Point(15, 396);
+            // 
+            // buttonImportFromLibrary
+            // 
+            this.buttonImportFromLibrary.Location = new System.Drawing.Point(15, 396);
             this.buttonImportFromLibrary.Name = "buttonImportFromLibrary";
-            this.buttonImportFromLibrary.Size = new Size(75, 23);
+            this.buttonImportFromLibrary.Size = new System.Drawing.Size(75, 23);
             this.buttonImportFromLibrary.TabIndex = 2;
             this.buttonImportFromLibrary.Text = "Import";
             this.buttonImportFromLibrary.UseVisualStyleBackColor = true;
-            this.buttonImportFromLibrary.Click += new EventHandler(this.buttonImportFromLibrary_Click);
-            this.buttonExportToLibrary.Location = new Point(15, 425);
+            this.buttonImportFromLibrary.Click += new System.EventHandler(this.buttonImportFromLibrary_Click);
+            // 
+            // buttonExportToLibrary
+            // 
+            this.buttonExportToLibrary.Location = new System.Drawing.Point(15, 425);
             this.buttonExportToLibrary.Name = "buttonExportToLibrary";
-            this.buttonExportToLibrary.Size = new Size(75, 23);
+            this.buttonExportToLibrary.Size = new System.Drawing.Size(75, 23);
             this.buttonExportToLibrary.TabIndex = 4;
             this.buttonExportToLibrary.Text = "Export";
             this.buttonExportToLibrary.UseVisualStyleBackColor = true;
-            this.buttonExportToLibrary.Click += new EventHandler(this.buttonExportToLibrary_Click);
+            this.buttonExportToLibrary.Click += new System.EventHandler(this.buttonExportToLibrary_Click);
+            // 
+            // labelMessage
+            // 
             this.labelMessage.AutoSize = true;
-            this.labelMessage.Location = new Point(12, 496);
+            this.labelMessage.Location = new System.Drawing.Point(12, 496);
             this.labelMessage.Name = "labelMessage";
-            this.labelMessage.Size = new Size(0, 13);
+            this.labelMessage.Size = new System.Drawing.Size(0, 13);
             this.labelMessage.TabIndex = 12;
-            this.panel1.BorderStyle = BorderStyle.FixedSingle;
+            // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.pbMini);
-            this.panel1.Location = new Point(12, 31);
+            this.panel1.Location = new System.Drawing.Point(12, 31);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new Size(258, 258);
+            this.panel1.Size = new System.Drawing.Size(258, 258);
             this.panel1.TabIndex = 11;
-            this.comboBoxImport.DropDownStyle = ComboBoxStyle.DropDownList;
+            // 
+            // comboBoxImport
+            // 
+            this.comboBoxImport.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxImport.FormattingEnabled = true;
-            this.comboBoxImport.Items.AddRange(new object[] { "curve from the library", "curves from a file" });
-            this.comboBoxImport.Location = new Point(96, 398);
+            this.comboBoxImport.Items.AddRange(new object[] {
+            "curve from the library",
+            "curves from a file"});
+            this.comboBoxImport.Location = new System.Drawing.Point(96, 398);
             this.comboBoxImport.Name = "comboBoxImport";
-            this.comboBoxImport.Size = new Size(133, 21);
+            this.comboBoxImport.Size = new System.Drawing.Size(133, 21);
             this.comboBoxImport.TabIndex = 3;
-            this.comboBoxExport.DropDownStyle = ComboBoxStyle.DropDownList;
+            // 
+            // comboBoxExport
+            // 
+            this.comboBoxExport.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxExport.FormattingEnabled = true;
-            this.comboBoxExport.Items.AddRange(new object[] { "curve to the library", "curves to a file" });
-            this.comboBoxExport.Location = new Point(96, 427);
+            this.comboBoxExport.Items.AddRange(new object[] {
+            "curve to the library",
+            "curves to a file"});
+            this.comboBoxExport.Location = new System.Drawing.Point(96, 427);
             this.comboBoxExport.Name = "comboBoxExport";
-            this.comboBoxExport.Size = new Size(133, 21);
+            this.comboBoxExport.Size = new System.Drawing.Size(133, 21);
             this.comboBoxExport.TabIndex = 5;
-            base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            base.CancelButton = this.buttonCancel;
-            base.ClientSize = new Size(736, 526);
-            base.Controls.Add(this.comboBoxExport);
-            base.Controls.Add(this.comboBoxImport);
-            base.Controls.Add(this.panel1);
-            base.Controls.Add(this.labelMessage);
-            base.Controls.Add(this.buttonExportToLibrary);
-            base.Controls.Add(this.buttonImportFromLibrary);
-            base.Controls.Add(this.label2);
-            base.Controls.Add(this.label1);
-            base.Controls.Add(this.buttonSwitchDisplay);
-            base.Controls.Add(this.labelSequenceChannels);
-            base.Controls.Add(this.comboBoxChannels);
-            base.Controls.Add(this.buttonCancel);
-            base.Controls.Add(this.buttonOK);
-            base.Controls.Add(this.buttonResetToLinear);
-            base.Controls.Add(this.labelChannelValue);
-            base.Controls.Add(this.pictureBoxCurve);
-            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            base.MaximizeBox = false;
-            base.MinimizeBox = false;
-            base.Name = "DimmingCurveDialog";
-            base.StartPosition = FormStartPosition.CenterScreen;
+            // 
+            // DimmingCurveDialog
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.buttonCancel;
+            this.ClientSize = new System.Drawing.Size(736, 526);
+            this.Controls.Add(this.comboBoxExport);
+            this.Controls.Add(this.comboBoxImport);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.labelMessage);
+            this.Controls.Add(this.buttonExportToLibrary);
+            this.Controls.Add(this.buttonImportFromLibrary);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.buttonSwitchDisplay);
+            this.Controls.Add(this.labelSequenceChannels);
+            this.Controls.Add(this.comboBoxChannels);
+            this.Controls.Add(this.buttonCancel);
+            this.Controls.Add(this.buttonOK);
+            this.Controls.Add(this.buttonResetToLinear);
+            this.Controls.Add(this.labelChannelValue);
+            this.Controls.Add(this.pictureBoxCurve);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = global::Properties.Resources.VixenPlus;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "DimmingCurveDialog";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Dimming Curve";
-            base.Paint += new PaintEventHandler(this.DimmingCurveDialog_Paint);
-            ((ISupportInitialize) this.pbMini).EndInit();
-            ((ISupportInitialize) this.pictureBoxCurve).EndInit();
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.DimmingCurveDialog_Paint);
+            ((System.ComponentModel.ISupportInitialize)(this.pbMini)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCurve)).EndInit();
             this.panel1.ResumeLayout(false);
-            base.ResumeLayout(false);
-            base.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
+
         #endregion
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (this.components != null))
-            {
+        protected override void Dispose(bool disposing) {
+            if (disposing && (this.components != null)) {
                 this.components.Dispose();
             }
             this._miniBackBrush.Dispose();

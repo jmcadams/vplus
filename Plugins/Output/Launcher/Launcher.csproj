@@ -116,7 +116,9 @@
     <Compile Include="Launcher\SetupDialog.Designer.cs">
       <DependentUpon>SetupDialog.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Launcher.SetupDialog.resources" />
+    <EmbeddedResource Include="Launcher\SetupDialog.resx">
+      <DependentUpon>SetupDialog.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
