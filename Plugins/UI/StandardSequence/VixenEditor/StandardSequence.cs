@@ -21,7 +21,6 @@ using VixenPlus.Dialogs;
 namespace VixenEditor {
     public partial class StandardSequence : UIBase {
         private bool _actualLevels;
-        //private readonly List<int> _activeChannels = new List<int>();
         private AffectGridDelegate _affectGridDelegate;
         private bool _autoScrolling;
         private readonly int[] _bookmarks;
@@ -1754,40 +1753,42 @@ namespace VixenEditor {
                     for (channelOffset = vScrollBar1.Value; (channelOffset >= 0) && (channelOffset < _sequence.ChannelCount); channelOffset++) {
 
                         mappedChannel = _channelOrderMapping[channelOffset];
-                        if (_sequence.ActiveChannels.Contains(mappedChannel)) {
-                            channel = _sequence.Channels[mappedChannel];
-                            var isChannelSelected = (channel == SelectedChannel);
-
-                            e.Graphics.FillRectangle(isChannelSelected ? SystemBrushes.Highlight : channel.Brush ?? _channelBackBrush, 0, height,
-                                                     pictureBoxChannels.Width, _gridRowHeight);
-
-                            var textBrush = isChannelSelected
-                                                ? SystemBrushes.HighlightText
-                                                : Utils.GetTextColor(channel.Brush != null ? channel.Brush.Color : _channelBackBrush.Color);
-
-                            if (showNaturalChannelNumbers) {
-                                e.Graphics.DrawString(string.Format("{0}:", mappedChannel + 1), _channelNameFont, textBrush, 10f,
-                                                      height + heightAddition);
-                            }
-                            else {
-                                x = 10;
-                            }
-
-                            e.Graphics.FillRectangle(brush, x, height + 1, 40, _gridRowHeight - 2);
-
-                            if (toolStripComboBoxRowZoom.SelectedIndex > 4) {
-                                e.Graphics.DrawRectangle(Pens.Black, x, height + 1, 40, _gridRowHeight - 2);
-                            }
-
-                            e.Graphics.DrawString(String.Format("{0}", channel.OutputChannel + 1),
-                                                  channel.Enabled ? _channelNameFont : _channelStrikeoutFont, textBrush, x + 16,
-                                                  height + heightAddition);
-
-                            e.Graphics.DrawString(channel.Name, channel.Enabled ? _channelNameFont : _channelStrikeoutFont, textBrush, x + 44,
-                                                  height + heightAddition);
-
-                            height += _gridRowHeight;
+                        if (!_sequence.ActiveChannels.Contains(mappedChannel)) {
+                            continue;
                         }
+
+                        channel = _sequence.Channels[mappedChannel];
+                        var isChannelSelected = (channel == SelectedChannel);
+
+                        e.Graphics.FillRectangle(isChannelSelected ? SystemBrushes.Highlight : channel.Brush ?? _channelBackBrush, 0, height,
+                                                 pictureBoxChannels.Width, _gridRowHeight);
+
+                        var textBrush = isChannelSelected
+                                            ? SystemBrushes.HighlightText
+                                            : Utils.GetTextColor(channel.Brush != null ? channel.Brush.Color : _channelBackBrush.Color);
+
+                        if (showNaturalChannelNumbers) {
+                            e.Graphics.DrawString(string.Format("{0}:", mappedChannel + 1), _channelNameFont, textBrush, 10f,
+                                                  height + heightAddition);
+                        }
+                        else {
+                            x = 10;
+                        }
+
+                        e.Graphics.FillRectangle(brush, x, height + 1, 40, _gridRowHeight - 2);
+
+                        if (toolStripComboBoxRowZoom.SelectedIndex > 4) {
+                            e.Graphics.DrawRectangle(Pens.Black, x, height + 1, 40, _gridRowHeight - 2);
+                        }
+
+                        e.Graphics.DrawString(String.Format("{0}", channel.OutputChannel + 1),
+                                              channel.Enabled ? _channelNameFont : _channelStrikeoutFont, textBrush, x + 16,
+                                              height + heightAddition);
+
+                        e.Graphics.DrawString(channel.Name, channel.Enabled ? _channelNameFont : _channelStrikeoutFont, textBrush, x + 44,
+                                              height + heightAddition);
+
+                        height += _gridRowHeight;
                     }
 
                     #endregion
