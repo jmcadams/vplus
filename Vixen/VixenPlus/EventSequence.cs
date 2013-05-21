@@ -14,6 +14,7 @@ namespace VixenPlus {
         private Profile _profile;
         private SortOrders _sortOrders;
 
+        //TODO: Investigate a HashSet if this has performance issues later.
         public List<int> ActiveChannels { get; set; }
 
         public Dictionary<string, string> Groups { get; private set; }
