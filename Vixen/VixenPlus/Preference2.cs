@@ -40,14 +40,14 @@ namespace VixenPlus {
 
             // Screen & Colors
             isDirty |= CreateIfMissing("PrimaryDisplay", Screen.AllScreens[0].DeviceName);
-            isDirty |= CreateIfMissing("ChannelBackground", Color.White.ToArgb().ToString(CultureInfo.InvariantCulture));
-            isDirty |= CreateIfMissing("Crosshair", Color.Yellow.ToArgb().ToString(CultureInfo.InvariantCulture));
-            isDirty |= CreateIfMissing("GridBackground", Color.Silver.ToArgb().ToString(CultureInfo.InvariantCulture));
-            isDirty |= CreateIfMissing("GridLines", Color.Gray.ToArgb().ToString(CultureInfo.InvariantCulture));
-            isDirty |= CreateIfMissing("MouseCaret", Color.Gray.ToArgb().ToString(CultureInfo.InvariantCulture));
-            isDirty |= CreateIfMissing("Waveform", Color.White.ToArgb().ToString(CultureInfo.InvariantCulture));
-            isDirty |= CreateIfMissing("WaveformBackground", Color.Black.ToArgb().ToString(CultureInfo.InvariantCulture));
-            isDirty |= CreateIfMissing("WaveformZeroLine", Color.Red.ToArgb().ToString(CultureInfo.InvariantCulture));
+            isDirty |= CreateIfMissing("ChannelBackground", "-1");
+            isDirty |= CreateIfMissing("Crosshair", "-256");
+            isDirty |= CreateIfMissing("GridBackground", "-11513776");
+            isDirty |= CreateIfMissing("GridLines", "-16777216");
+            isDirty |= CreateIfMissing("MouseCaret", "-65536");
+            isDirty |= CreateIfMissing("Waveform", "-1");
+            isDirty |= CreateIfMissing("WaveformBackground", "-16777216");
+            isDirty |= CreateIfMissing("WaveformZeroLine", "-65536");
 
             //New Sequence Settings
             isDirty |= CreateIfMissing("EventPeriod", 100);
