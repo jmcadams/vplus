@@ -1898,7 +1898,7 @@ namespace VixenEditor {
 
         private void pictureBoxGrid_MouseMove(object sender, MouseEventArgs e) {
             var cellX = Math.Min((Math.Max(e.X / _gridColWidth, 0) + hScrollBar1.Value), _sequence.TotalEventPeriods - 1);
-            var cellY = Math.Min((Math.Max(e.Y / _gridRowHeight, 0) + vScrollBar1.Value), _sequence.ChannelCount - 1);
+            var cellY = Math.Min((Math.Max(e.Y / _gridRowHeight, 0) + vScrollBar1.Value), _sequence.ActiveChannelCount - 1);
             tsbPlayPoint.Enabled = _selectedCells.Width > 0;
             tsbPlayRange.Enabled = _selectedCells.Width > 1;
 
@@ -2136,7 +2136,6 @@ namespace VixenEditor {
         private void pictureBoxGrid_Paint(object sender, PaintEventArgs e) {
             e.Graphics.FillRectangle(_gridBackBrush, e.ClipRectangle);
             var activeChannelCount = _sequence.ActiveChannelCount;
-            //var activeChannelCount = _sequence.ChannelCount;
 
             if (activeChannelCount == 0) {
                 return;
@@ -4369,6 +4368,7 @@ namespace VixenEditor {
                 var y = (clipRect.Y / _gridRowHeight * _gridRowHeight) + 1;
                 while ((y < clipRect.Bottom) && (channelIndex < _sequence.ChannelCount)) {
                     var currentChannel = _channelOrderMapping[channelIndex];
+                    // TODO: Error below when drawing a non contiguous range.
                     if (_sequence.ActiveChannels.Contains(currentChannel)) {
                         var channel = _sequence.Channels[currentChannel];
                         var x = initialX;
@@ -4377,8 +4377,7 @@ namespace VixenEditor {
                             if (_showingGradient) {
                                 brush.Color = GetGradientColor(_gridBackBrush.Color, channel.Color, _sequence.EventValues[currentChannel, @event]);
                                 g.FillRectangle(brush, x, y, _gridColWidth - 1, _gridRowHeight - 1);
-                            }
-                            else {
+                            } else {
                                 var height = ((_gridRowHeight - 1) * _sequence.EventValues[currentChannel, @event]) / 255;
                                 g.FillRectangle(channel.Brush ?? _channelBackBrush, x, ((y + _gridRowHeight) - 1) - height, _gridColWidth - 1, height);
                             }
@@ -4391,7 +4390,7 @@ namespace VixenEditor {
                         }
                         y += _gridRowHeight;
                     }
-                        channelIndex++;
+                    channelIndex++;
                 }
             }
         }
@@ -4450,7 +4449,7 @@ namespace VixenEditor {
             position.Offset(_gridColWidth - lblFollowMouse.Width, _gridRowHeight);
 
             var tl = (new Point(pictureBoxGrid.ClientRectangle.Left, pictureBoxGrid.ClientRectangle.Top));
-            var br = (new Point(pictureBoxGrid.ClientRectangle.Right, pictureBoxGrid.ClientRectangle.Bottom));
+            var br = (new Point(pictureBoxGrid.ClientRectangle.Right, Math.Min(pictureBoxGrid.ClientRectangle.Bottom, _sequence.ActiveChannelCount * _gridRowHeight)));
             if (position.Y + lblFollowMouse.Height > br.Y) {
                 position.Y = br.Y - lblFollowMouse.Height;
             }
