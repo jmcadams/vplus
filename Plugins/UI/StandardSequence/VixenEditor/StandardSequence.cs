@@ -20,83 +20,115 @@ using VixenPlus.Dialogs;
 
 namespace VixenEditor {
     public partial class StandardSequence : UIBase {
-        private bool _actualLevels;
+
         private AffectGridDelegate _affectGridDelegate;
+
+        private bool _actualLevels;
         private bool _autoScrolling;
-        private readonly int[] _bookmarks;
-        private SolidBrush _channelBackBrush;
-        private SolidBrush _channelCaretBrush;
+        private bool _initializing;
+        private bool _mouseDownInGrid;
+        private bool _showCellText;
+        private bool _showPositionMarker;
+        private bool _showWaveformZeroLine;
+        private bool _showingGradient;
+        private bool _showingOutputs;
+        private byte _drawingLevel;
+        
+        private Control _lastSelectableControl;
+        
+        private readonly Dictionary<string, ToolStrip> _toolStrips;
+
+        private EventHandler _pluginCheckHandler;
+        private readonly EventHandler _toolStripCheckStateChangeHandler;
+        
+        private EventSequence _sequence;
+        
         private Font _channelNameFont;
         private Font _channelStrikeoutFont;
-        private SolidBrush _crosshairBrush;
-        private List<int> _channelOrderMapping;
-        private VixenPlus.Channel _currentlyEditingChannel;
+        private readonly Font _timeFont;
+        
         private FrequencyEffectGenerator _dimmingShimmerGenerator;
-        private byte _drawingLevel;
+        private FrequencyEffectGenerator _sparkleGenerator;
+        
+        private Graphics _gridGraphics;
+        
+        private readonly IExecution _executionInterface;
+        
         private int _editingChannelSortedIndex;
         private int _executionContextHandle;
-        private readonly IExecution _executionInterface;
-        private SolidBrush _gridBackBrush;
-        private Graphics _gridGraphics;
+        private int _gridColWidth;
         private int _gridRowHeight;
-        private bool _initializing;
         private int _intensityLargeDelta;
         private int _lastCellX;
         private int _lastCellY;
-        private Rectangle _lineRect;
         private int _mouseChannelCaret;
-        private Point _mouseDownAtInChannels;
-        private Point _mouseDownAtInGrid;
-        private bool _mouseDownInGrid;
         private int _mouseTimeCaret;
         private int _mouseWheelHorizontalDelta;
         private int _mouseWheelVerticalDelta;
-        private Rectangle _selectedCells;
-        private int _gridColWidth;
-        private EventHandler _pluginCheckHandler;
         private int _position;
-        private readonly SolidBrush _positionBrush;
-        private Preference2 _preferences;
         private int _previousPosition;
-        private readonly Stack _redoStack;
-        private VixenPlus.Channel _selectedChannel;
         private int _selectedEventIndex;
         private int _selectedLineIndex;
-        private Rectangle _selectedRange;
-        private readonly SolidBrush _selectionBrush;
-        private Rectangle _selectionRectangle;
-        private EventSequence _sequence;
-        private bool _showCellText;
-        private bool _showingGradient;
-        private bool _showingOutputs;
-        private bool _showPositionMarker;
-        private bool _showWaveformZeroLine;
-        private FrequencyEffectGenerator _sparkleGenerator;
-        private readonly ISystem _systemInterface;
-        private SolidBrush _timeBackBrush;
-        private readonly Font _timeFont;
-        private readonly EventHandler _toolStripCheckStateChangeHandler;
-        private readonly Dictionary<string, ToolStrip> _toolStrips;
-        private readonly Stack _undoStack;
         private int _visibleEventPeriods;
         private int _visibleRowCount;
         private int _waveformMaxAmplitude;
         private readonly int _waveformCenterLine;
-        private uint[] _waveformPcmData;
-        private uint[] _waveformPixelData;
+        private readonly int[] _bookmarks;
+        
+        private IntensityAdjustDialog _intensityAdjustDialog;
+        
+        private readonly ISystem _systemInterface;
+        
+        private List<int> _channelOrderMapping;
+
+        private Pen _gridLinePen;
+        private Pen _crosshairPen;
+        private Pen _waveformPen;
+        private Pen _waveformZeroLinePen;
+
+        private Point _mouseDownAtInChannels;
+        private Point _mouseDownAtInGrid;
+        
+        private Preference2 _preferences;
+        
+        private PrintDocument _printDocument;
+        
+        private Rectangle _lineRect;
+        private Rectangle _selectedCells;
+        private Rectangle _selectedRange;
+        private Rectangle _selectionRectangle;
+        
+        private SolidBrush _channelBackBrush;
+        private SolidBrush _mouseCaretBrush;
+        private SolidBrush _crosshairBrush;
+        private SolidBrush _gridBackBrush;
+        private SolidBrush _gridLineBrush;
+        private readonly SolidBrush _positionBrush;
+        private readonly SolidBrush _selectionBrush;
+        private SolidBrush _waveformBackBrush;
         private SolidBrush _waveformBrush;
         private SolidBrush _waveformZeroLineBrush;
-        private PrintDocument _printDocument;
+        
+        private readonly Stack _redoStack;
+        private readonly Stack _undoStack;
+        
+        private uint[] _waveformPcmData;
+        private uint[] _waveformPixelData;
+        
+        private VixenPlus.Channel _currentlyEditingChannel;
+        private VixenPlus.Channel _selectedChannel;
 
         private const float AudioFull = 1f;
         private const float AudioThreeQtr = 0.75f;
         private const float AudioHalf = 0.5f;
         private const float AudioOneQtr = 0.25f;
-        private const int DragDropMargin = 3;
-        private const int ToolbarInsertPosition = 4;
         private const int CaretSize = 5;
-        private const int WaveformOffset = 6;
+        private const int DragDropMargin = 3;
         private const int NaturalOrderTextMargin = 50;
+        private const int ToolbarInsertPosition = 4;
+        private const int WaveformOffset = 6;
+        private const int WaveformHiddenSize = 60;
+        private const int WaveformShownSize = 120;
 
         [Flags]
         private enum PlayControl {
@@ -107,9 +139,6 @@ namespace VixenEditor {
             Pause = 0x8
         }
 
-        private const int WaveformShownSize = 120;
-        private const int WaveformHiddenSize = 60;
-
 
         public StandardSequence() {
             object obj2;
@@ -119,7 +148,7 @@ namespace VixenEditor {
             _visibleRowCount = 0;
             _visibleEventPeriods = 0;
             _channelBackBrush = null;
-            _timeBackBrush = null;
+            _waveformBackBrush = null;
             _gridBackBrush = null;
             _channelNameFont = new Font("Arial", 8f);
             _channelStrikeoutFont = new Font("Arial", 8f, FontStyle.Strikeout);
@@ -158,7 +187,7 @@ namespace VixenEditor {
             _showWaveformZeroLine = true;
             _actualLevels = false;
             _showCellText = false;
-            m_lastSelectableControl = null;
+            _lastSelectableControl = null;
             if (Interfaces.Available.TryGetValue("IExecution", out obj2)) {
                 _executionInterface = (IExecution) obj2;
             }
@@ -1114,20 +1143,27 @@ namespace VixenEditor {
             _showingGradient = !_preferences.GetBoolean("BarLevels");
             _showWaveformZeroLine = _preferences.GetBoolean("ShowWaveformZeroLine");
 
-            _channelCaretBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("MouseCaret"))));
-            _channelBackBrush = new SolidBrush(Color.White);
+            var channelBackgroundColor = Color.FromArgb(Int32.Parse(_preferences.GetString("ChannelBackground")));
+            _channelBackBrush = new SolidBrush(channelBackgroundColor);
+            labelPosition.BackColor = channelBackgroundColor;
+            labelPosition.ForeColor = Utils.GetForeColor(channelBackgroundColor);
             _crosshairBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("Crosshair"))));
-            _timeBackBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("WaveformBackground"))));
+            _crosshairPen = new Pen(_crosshairBrush.Color);
+            _gridBackBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("GridBackground"))));
+            _gridLineBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("GridLines"))));
+            _gridLinePen = new Pen(_gridLineBrush.Color);
+            _mouseCaretBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("MouseCaret"))));
+            _waveformBackBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("WaveformBackground"))));
             _waveformBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("Waveform")))); 
+            _waveformPen = new Pen(_waveformBrush.Color);
             _waveformZeroLineBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("WaveformZeroLine"))));
-
-            _gridBackBrush = new SolidBrush(Color.Silver);
+            _waveformZeroLinePen = new Pen(_waveformZeroLineBrush);
 
             _gridGraphics = pictureBoxGrid.CreateGraphics();
             _dimmingShimmerGenerator = DimmingShimmerGenerator;
             _sparkleGenerator = SparkleGenerator;
-            m_intensityAdjustDialog = new IntensityAdjustDialog(_actualLevels);
-            m_intensityAdjustDialog.VisibleChanged += m_intensityAdjustDialog_VisibleChanged;
+            _intensityAdjustDialog = new IntensityAdjustDialog(_actualLevels);
+            _intensityAdjustDialog.VisibleChanged += IntensityAdjustDialogVisibleChanged;
             _affectGridDelegate = AffectGrid;
             _pluginCheckHandler = plugInItem_CheckedChanged;
             _channelOrderMapping = new List<int>();
@@ -1183,11 +1219,11 @@ namespace VixenEditor {
 
 
         private void IntensityAdjustDialogCheck() {
-            if (m_intensityAdjustDialog.Visible) {
+            if (_intensityAdjustDialog.Visible) {
                 return;
             }
 
-            m_intensityAdjustDialog.Show();
+            _intensityAdjustDialog.Show();
             BringToFront();
         }
 
@@ -1273,10 +1309,10 @@ namespace VixenEditor {
         }
 
 
-        private void m_intensityAdjustDialog_VisibleChanged(object sender, EventArgs e) {
-            if (!m_intensityAdjustDialog.Visible) {
+        private void IntensityAdjustDialogVisibleChanged(object sender, EventArgs e) {
+            if (!_intensityAdjustDialog.Visible) {
                 AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, Resources.UndoText_AdjustIntensity);
-                var delta = m_intensityAdjustDialog.Delta;
+                var delta = _intensityAdjustDialog.Delta;
                 for (var top = _selectedCells.Top; top < _selectedCells.Bottom; top++) {
                     var channel = _channelOrderMapping[top];
                     if (!_sequence.Channels[channel].Enabled) {
@@ -1294,7 +1330,7 @@ namespace VixenEditor {
                 pictureBoxGrid.Refresh();
             }
             else {
-                m_intensityAdjustDialog.LargeDelta = _intensityLargeDelta;
+                _intensityAdjustDialog.LargeDelta = _intensityLargeDelta;
             }
         }
 
@@ -1394,11 +1430,21 @@ namespace VixenEditor {
                     _intensityLargeDelta = _preferences.GetInteger("IntensityLargeDelta");
                     _showWaveformZeroLine = _preferences.GetBoolean("ShowWaveformZeroLine");
 
-                    _timeBackBrush = BrushHandler(_timeBackBrush, "WaveformBackground");
-                    _waveformZeroLineBrush = BrushHandler(_waveformZeroLineBrush, "WaveformZeroLine");
-                    _waveformBrush = BrushHandler(_waveformBrush, "Waveform");
+                    _channelBackBrush = BrushHandler(_channelBackBrush, "ChannelBackground");
+                    var holdColor = _channelBackBrush.Color;
+                    labelPosition.BackColor = holdColor;
+                    labelPosition.ForeColor = Utils.GetForeColor(holdColor);
                     _crosshairBrush = BrushHandler(_crosshairBrush, "Crosshair");
-                    _channelCaretBrush = BrushHandler(_channelCaretBrush, "MouseCaret");
+                    _crosshairPen = PenHandler(_crosshairPen, _crosshairBrush);
+                    _gridBackBrush = BrushHandler(_gridBackBrush, "GridBackground");
+                    _gridLineBrush = BrushHandler(_gridLineBrush, "GridLines");
+                    _gridLinePen = PenHandler(_gridLinePen, _gridLineBrush);
+                    _mouseCaretBrush = BrushHandler(_mouseCaretBrush, "MouseCaret");
+                    _waveformBackBrush = BrushHandler(_waveformBackBrush, "WaveformBackground");
+                    _waveformBrush = BrushHandler(_waveformBrush, "Waveform");
+                    _waveformPen = PenHandler(_waveformPen, _waveformBrush);
+                    _waveformZeroLineBrush = BrushHandler(_waveformZeroLineBrush, "WaveformZeroLine");
+                    _waveformZeroLinePen = PenHandler(_waveformPen, _waveformZeroLineBrush);
 
                     RefreshAll();
                     break;
@@ -1431,6 +1477,12 @@ namespace VixenEditor {
             return new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString(preference))));
         }
 
+        private static Pen PenHandler(IDisposable pen, SolidBrush fromBrush) {
+            if (pen != null) {
+                pen.Dispose();
+            }
+            return new Pen(fromBrush.Color);
+        }
 
         public override void OnDirtyChanged(EventArgs e) {
             base.OnDirtyChanged(e);
@@ -1796,7 +1848,7 @@ namespace VixenEditor {
             }
             e.Graphics.FillRectangle(Brushes.White, 0, 0, CaretSize, pictureBoxChannels.Height);
             if (_mouseChannelCaret != -1) {
-                e.Graphics.FillRectangle(_channelCaretBrush, 0,
+                e.Graphics.FillRectangle(_mouseCaretBrush, 0,
                                          ((_mouseChannelCaret - vScrollBar1.Value) * _gridRowHeight) + pictureBoxTime.Height +
                                          splitContainer2.SplitterWidth, CaretSize, _gridRowHeight);
             }
@@ -2155,7 +2207,7 @@ namespace VixenEditor {
                 startPixelX = _gridColWidth * cellCount;
                 startPoint.X = startPixelX;
                 endPoint.X = startPixelX;
-                e.Graphics.DrawLine(Pens.Gray, startPoint, endPoint);
+                e.Graphics.DrawLine(_gridLinePen, startPoint, endPoint);
                 cellCount++;
             }
             cellCount = e.ClipRectangle.Top / _gridRowHeight;
@@ -2167,15 +2219,15 @@ namespace VixenEditor {
                 startPixelY = _gridRowHeight * cellCount;
                 startPoint.Y = startPixelY;
                 endPoint.Y = startPixelY;
-                e.Graphics.DrawLine(Pens.Gray, startPoint, endPoint);
+                e.Graphics.DrawLine(_gridLinePen, startPoint, endPoint);
                 cellCount++;
             }
             UpdateGrid(e.Graphics, e.ClipRectangle);
-            if (m_positionTimer.Enabled) {
+            if (positionTimer.Enabled) {
                 startPixelY = Math.Min(e.ClipRectangle.Bottom, (activeChannelCount - vScrollBar1.Value) * _gridRowHeight);
                 if ((_previousPosition != -1) && (_previousPosition >= hScrollBar1.Value)) {
                     startPixelX = (_previousPosition - hScrollBar1.Value) * _gridColWidth;
-                    e.Graphics.DrawLine(Pens.Gray, startPixelX, 0, startPixelX, startPixelY);
+                    e.Graphics.DrawLine(_gridLinePen, startPixelX, 0, startPixelX, startPixelY);
                 }
                 startPixelX = (_position - hScrollBar1.Value) * _gridColWidth;
                 e.Graphics.DrawLine(Pens.Yellow, startPixelX, 0, startPixelX, startPixelY);
@@ -2204,8 +2256,8 @@ namespace VixenEditor {
                     var x = ((_mouseTimeCaret - hScrollBar1.Value) * _gridColWidth) + ((int) (_gridColWidth * 0.5f));
                     var y = ((_mouseChannelCaret - vScrollBar1.Value) * _gridRowHeight) + ((int) (_gridRowHeight * 0.5f));
                     if (((x > e.ClipRectangle.Left) && (x < e.ClipRectangle.Right)) || ((y > e.ClipRectangle.Top) && (y < e.ClipRectangle.Bottom))) {
-                        e.Graphics.DrawLine(new Pen(_crosshairBrush), x, 0, x, Height);
-                        e.Graphics.DrawLine(new Pen(_crosshairBrush), 0, y, Width, y);
+                        e.Graphics.DrawLine(_crosshairPen, x, 0, x, Height);
+                        e.Graphics.DrawLine(_crosshairPen, 0, y, Width, y);
                     }
                 }
             }
@@ -2226,7 +2278,7 @@ namespace VixenEditor {
         //TODO This has got a bug when you don't use an event period that divides in 1000 evenly.
         //TODO Remove magic numbers
         private void pictureBoxTime_Paint(object sender, PaintEventArgs e) {
-            e.Graphics.FillRectangle(_timeBackBrush, e.ClipRectangle);
+            e.Graphics.FillRectangle(_waveformBackBrush, e.ClipRectangle);
 
             var topLeftPt = new Point(0, pictureBoxTime.Height - 20);
             var bottomRightPt = new Point(0, pictureBoxTime.Height - 5);
@@ -2300,7 +2352,7 @@ namespace VixenEditor {
 
             //Draw the column caret
             if (_mouseTimeCaret != -1) {
-                e.Graphics.FillRectangle(_channelCaretBrush, (_mouseTimeCaret - hScrollBar1.Value) * _gridColWidth, 0, _gridColWidth, CaretSize);
+                e.Graphics.FillRectangle(_mouseCaretBrush, (_mouseTimeCaret - hScrollBar1.Value) * _gridColWidth, 0, _gridColWidth, CaretSize);
             }
 
             drawingRect.X = 0;
@@ -2328,11 +2380,11 @@ namespace VixenEditor {
 
                 var y1 = zeroLine - (short) (pix >> 16) * (scaleFactor);
                 var y2 = zeroLine - (short) (pix & 0xffff) * (scaleFactor);
-                e.Graphics.DrawLine(new Pen(_waveformBrush), x, y1, x, y2);
+                e.Graphics.DrawLine(_waveformPen, x, y1, x, y2);
                 x++;
             }
             if (_showWaveformZeroLine) {
-                e.Graphics.DrawLine(new Pen(_waveformZeroLineBrush), 0, zeroLine, x - 1, zeroLine);
+                e.Graphics.DrawLine(_waveformZeroLinePen, 0, zeroLine, x - 1, zeroLine);
             }
         }
 
@@ -2381,7 +2433,7 @@ namespace VixenEditor {
 
 
         private void ProgramEnded() {
-            m_positionTimer.Stop();
+            positionTimer.Stop();
             SetEditingState(true);
             UpdatePlayButtons(PlayControl.Nothing);
             pictureBoxGrid.Refresh();
@@ -2455,6 +2507,7 @@ namespace VixenEditor {
             pictureBoxChannels.Refresh();
             pictureBoxGrid.Refresh();
             LoadSequenceSorts();
+            //TODO: See if the event assignment in the following method are left to leak.
             LoadSequencePlugins();
         }
 
@@ -3018,15 +3071,16 @@ namespace VixenEditor {
 
 
         private void StandardSequence_Activated(object sender, EventArgs e) {
-            ActiveControl = m_lastSelectableControl;
+            ActiveControl = _lastSelectableControl;
         }
 
 
         private void StandardSequence_Deactivate(object sender, EventArgs e) {
-            m_lastSelectableControl = GetTerminalSelectableControl();
+            _lastSelectableControl = GetTerminalSelectableControl();
         }
 
 
+        // TODO: May want to unsubscribe to the known event handlers here...
         private void StandardSequence_FormClosing(object sender, FormClosingEventArgs e) {
             if ((e.CloseReason == CloseReason.UserClosing) && (CheckDirty() == DialogResult.Cancel)) {
                 e.Cancel = true;
@@ -3302,7 +3356,7 @@ namespace VixenEditor {
 
             IntensityAdjustDialogCheck();
             var change = e.Alt ? 1 : _intensityLargeDelta;
-            m_intensityAdjustDialog.Delta = (e.KeyCode == Keys.Up) ? change : -change;
+            _intensityAdjustDialog.Delta = (e.KeyCode == Keys.Up) ? change : -change;
             e.Handled = true;
         }
 
@@ -3792,7 +3846,7 @@ namespace VixenEditor {
             }
 
             UpdatePlayButtons(PlayControl.Pause);
-            m_positionTimer.Stop();
+            positionTimer.Stop();
             _executionInterface.ExecutePause(_executionContextHandle);
             SetEditingState(true);
         }
@@ -3803,7 +3857,7 @@ namespace VixenEditor {
                 return;
             }
             UpdatePlayButtons(PlayControl.Nothing);
-            m_positionTimer.Stop();
+            positionTimer.Stop();
             ProgramEnded();
             _executionInterface.ExecuteStop(_executionContextHandle);
             SetEditingState(true);
@@ -3827,7 +3881,7 @@ namespace VixenEditor {
             }
 
             UpdatePlayButtons(PlayControl.Play);
-            m_positionTimer.Start();
+            positionTimer.Start();
             SetEditingState(false);
         }
 
@@ -3841,7 +3895,7 @@ namespace VixenEditor {
             _executionInterface.ExecutePlay(_executionContextHandle, _selectedCells.Left * _sequence.EventPeriod,
                                             _sequence.TotalEventPeriods * _sequence.EventPeriod);
             UpdatePlayButtons(PlayControl.PlayPoint);
-            m_positionTimer.Start();
+            positionTimer.Start();
         }
 
 
@@ -3863,7 +3917,7 @@ namespace VixenEditor {
             _executionInterface.ExecutePlay(_executionContextHandle, _selectedCells.Left * _sequence.EventPeriod,
                                             _selectedCells.Right * _sequence.EventPeriod);
             UpdatePlayButtons(PlayControl.PlayRange);
-            m_positionTimer.Start();
+            positionTimer.Start();
         }
 
 
@@ -4406,7 +4460,7 @@ namespace VixenEditor {
                 toolStripButtonToggleLevels.Image = Resources.number;
                 toolStripButtonToggleLevels.ToolTipText = Resources.ToolTip_IntensityLevel;
             }
-            m_intensityAdjustDialog.ActualLevels = _actualLevels;
+            _intensityAdjustDialog.ActualLevels = _actualLevels;
         }
 
 

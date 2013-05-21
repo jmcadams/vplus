@@ -5,14 +5,99 @@ namespace VixenEditor{
 
     public partial class StandardSequence{
         private IContainer components;
+        private ToolStripButton toolStripButtonWaveform;
+        private ToolStripButton newSeqTsb;
+        private ToolStripButton openSequenceTsb;
+        private ToolStripSeparator toolStripSeparator9;
+        private ToolStripLabel toolStripLabel1;
+        private ToolStripTextBox textBoxChannelCount;
+        private ToolStripSeparator toolStripSeparator12;
+        private ToolStripLabel toolStripLabel2;
+        private ToolStripTextBox textBoxProgramLength;
+        private SplitContainer splitContainer2;
+        private PictureBox pictureBoxTime;
+        private SelectablePictureBox pictureBoxGrid;
+        private VScrollBar vScrollBar1;
+        private HScrollBar hScrollBar1;
+        private ToolStripMenuItem toolbarsToolStripMenuItem;
+        private ToolStripMenuItem lockToolbarToolStripMenuItem;
+        private ToolStripMenuItem toolbarIconSizeToolStripMenuItem;
+        private ToolStripMenuItem smallToolStripMenuItem;
+        private ToolStripMenuItem mediumToolStripMenuItem;
+        private ToolStripMenuItem largeToolStripMenuItem;
+        private ToolStripMenuItem saveToolbarPositionsToolStripMenuItem;
+        private ToolStripSeparator toolStripMenuItem15;
+        private ToolStripSeparator toolStripSeparator7;
+        private ToolStripMenuItem resetAllToolbarsToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator19;
+        private ToolStripLabel profileToolStripLabel;
+        private Label lblFollowMouse;
+        private ToolStripButton tsbPlayRange;
+        private ToolStripButton tsbPlayPoint;
+        private ToolStripMenuItem selectNoneToolStripMenuItem;
+        private ComboBox cbGroups;
+
+        protected override void Dispose(bool disposing) {
+            if (_gridLinePen != null) {
+                _gridLinePen.Dispose();
+            }
+            if (_crosshairPen != null) {
+                _crosshairPen.Dispose();
+            }
+            if (_waveformPen != null) {
+                _waveformPen.Dispose();
+            }
+            if (_waveformZeroLinePen != null) {
+                _waveformZeroLinePen.Dispose();
+            }
+
+            if (_channelBackBrush != null) {
+                _channelBackBrush.Dispose();
+            }
+            if (_waveformBackBrush != null) {
+                _waveformBackBrush.Dispose();
+            }
+            if (_gridBackBrush != null) {
+                _gridBackBrush.Dispose();
+            }
+            if (_gridLineBrush != null) {
+                _gridLineBrush.Dispose();
+            }
+            if (_waveformZeroLineBrush != null) {
+                _waveformZeroLineBrush.Dispose();
+            }
+            if (_waveformBrush != null) {
+                _waveformBrush.Dispose();
+            }
+            if (_crosshairBrush != null) {
+                _crosshairBrush.Dispose();
+            }
+            if (_mouseCaretBrush != null) {
+                _mouseCaretBrush.Dispose();
+            }
+            if (_selectionBrush != null) {
+                _selectionBrush.Dispose();
+            }
+            if (_positionBrush != null) {
+                _positionBrush.Dispose();
+            }
+
+            if (_gridGraphics != null) {
+                _gridGraphics.Dispose();
+            }
+
+            _channelNameFont.Dispose();
+            _channelStrikeoutFont.Dispose();
+            _timeFont.Dispose();
+
+            base.Dispose(disposing);
+        }
 
         #region Windows Form Designer generated code
         private ColorDialog colorDialog1;
         private ContextMenuStrip contextMenuChannels;
         private ContextMenuStrip contextMenuGrid;
         private ContextMenuStrip contextMenuTime;
-        private Control m_lastSelectableControl;
-        private IntensityAdjustDialog m_intensityAdjustDialog;
         private Label labelPosition;
         private MenuStrip menuStrip;
         private OpenFileDialog openFileDialog1;
@@ -21,7 +106,7 @@ namespace VixenEditor{
         private SaveFileDialog saveFileDialog;
         private SelectablePictureBox pictureBoxChannels;
         private SplitContainer splitContainer1;
-        private System.Windows.Forms.Timer m_positionTimer;
+        private System.Windows.Forms.Timer positionTimer;
         private ToolStrip toolStripDisplaySettings;
         private ToolStrip toolStripEditing;
         private ToolStrip toolStripEffect;
@@ -513,7 +598,7 @@ namespace VixenEditor{
             this._printDocument = new System.Drawing.Printing.PrintDocument();
             this.printDialog = new System.Windows.Forms.PrintDialog();
             this.printPreviewDialog = new System.Windows.Forms.PrintPreviewDialog();
-            this.m_positionTimer = new System.Windows.Forms.Timer(this.components);
+            this.positionTimer = new System.Windows.Forms.Timer(this.components);
             this.menuStrip.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -818,8 +903,8 @@ namespace VixenEditor{
             // insertPasteToolStripMenuItem
             // 
             this.insertPasteToolStripMenuItem.Name = "insertPasteToolStripMenuItem";
-            this.insertPasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.V)));
+            this.insertPasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.V)));
             this.insertPasteToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.insertPasteToolStripMenuItem.Text = "Insert paste";
             this.insertPasteToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonInsertPaste_Click);
@@ -834,8 +919,8 @@ namespace VixenEditor{
             // clearAllToolStripMenuItem
             // 
             this.clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
-            this.clearAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.A)));
+            this.clearAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.A)));
             this.clearAllToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.clearAllToolStripMenuItem.Text = "Clear all";
             this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearAllToolStripMenuItem_Click);
@@ -1284,9 +1369,9 @@ namespace VixenEditor{
             // 
             // labelPosition
             // 
-            this.labelPosition.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelPosition.BackColor = System.Drawing.Color.White;
+            this.labelPosition.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelPosition.BackColor = System.Drawing.Color.Transparent;
             this.labelPosition.Location = new System.Drawing.Point(12, 9);
             this.labelPosition.Name = "labelPosition";
             this.labelPosition.Size = new System.Drawing.Size(132, 31);
@@ -2685,7 +2770,7 @@ namespace VixenEditor{
             this.toolStripButtonDeleteOrder});
             this.toolStripDisplaySettings.Location = new System.Drawing.Point(3, 220);
             this.toolStripDisplaySettings.Name = "toolStripDisplaySettings";
-            this.toolStripDisplaySettings.Size = new System.Drawing.Size(637, 51);
+            this.toolStripDisplaySettings.Size = new System.Drawing.Size(606, 51);
             this.toolStripDisplaySettings.TabIndex = 5;
             this.toolStripDisplaySettings.Text = "Display settings";
             // 
@@ -2954,10 +3039,10 @@ namespace VixenEditor{
             this.printPreviewDialog.Name = "printPreviewDialog";
             this.printPreviewDialog.Visible = false;
             // 
-            // m_positionTimer
+            // positionTimer
             // 
-            this.m_positionTimer.Interval = 1;
-            this.m_positionTimer.Tick += new System.EventHandler(this.m_positionTimer_Tick);
+            this.positionTimer.Interval = 1;
+            this.positionTimer.Tick += new System.EventHandler(this.m_positionTimer_Tick);
             // 
             // StandardSequence
             // 
@@ -3011,74 +3096,5 @@ namespace VixenEditor{
         }
         #endregion
 
-        protected override void Dispose(bool disposing) {
-            if (_channelBackBrush != null) {
-                _channelBackBrush.Dispose();
-            }
-            if (_timeBackBrush != null) {
-                _timeBackBrush.Dispose();
-            }
-            if (_gridBackBrush != null) {
-                _gridBackBrush.Dispose();
-            }
-            if (_waveformZeroLineBrush != null) {
-                _waveformZeroLineBrush.Dispose();
-            }
-            if (_waveformBrush != null) {
-                _waveformBrush.Dispose();
-            }
-            if (_crosshairBrush != null) {
-                _crosshairBrush.Dispose();
-            }
-            if (_channelCaretBrush != null) {
-                _channelCaretBrush.Dispose();
-            }
-            _channelNameFont.Dispose();
-            _channelStrikeoutFont.Dispose();
-            _timeFont.Dispose();
-            _selectionBrush.Dispose();
-            _positionBrush.Dispose();
-            if (_gridGraphics != null) {
-                _gridGraphics.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-
-        private ToolStripButton toolStripButtonWaveform;
-        private ToolStripButton newSeqTsb;
-        private ToolStripButton openSequenceTsb;
-        private ToolStripSeparator toolStripSeparator9;
-        private ToolStripLabel toolStripLabel1;
-        private ToolStripTextBox textBoxChannelCount;
-        private ToolStripSeparator toolStripSeparator12;
-        private ToolStripLabel toolStripLabel2;
-        private ToolStripTextBox textBoxProgramLength;
-        private SplitContainer splitContainer2;
-        private PictureBox pictureBoxTime;
-        private SelectablePictureBox pictureBoxGrid;
-        private VScrollBar vScrollBar1;
-        private HScrollBar hScrollBar1;
-        private ToolStripMenuItem toolbarsToolStripMenuItem;
-        private ToolStripMenuItem lockToolbarToolStripMenuItem;
-        private ToolStripMenuItem toolbarIconSizeToolStripMenuItem;
-        private ToolStripMenuItem smallToolStripMenuItem;
-        private ToolStripMenuItem mediumToolStripMenuItem;
-        private ToolStripMenuItem largeToolStripMenuItem;
-        private ToolStripMenuItem saveToolbarPositionsToolStripMenuItem;
-        private ToolStripSeparator toolStripMenuItem15;
-        private ToolStripSeparator toolStripSeparator7;
-        private ToolStripMenuItem resetAllToolbarsToolStripMenuItem;
-        private ToolStripSeparator toolStripSeparator19;
-        private ToolStripLabel profileToolStripLabel;
-        private Label lblFollowMouse;
-        private ToolStripButton tsbPlayRange;
-        private ToolStripButton tsbPlayPoint;
-        private ToolStripMenuItem selectNoneToolStripMenuItem;
-        private ComboBox cbGroups;
-
-
     }
 }
-
-//this.pictureBoxChannels.QueryContinueDrag += new System.Windows.Forms.QueryContinueDragEventHandler(this.pictureBoxChannels_QueryContinueDrag);

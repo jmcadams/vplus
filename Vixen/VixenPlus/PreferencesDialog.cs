@@ -108,7 +108,7 @@ namespace VixenPlus {
                     return;
                 }
                 case (int) RootNodes.ScreenAndColor:
-                    WriteScreenAndColorNodes();
+                    WirteScreenNodes();
                     return;
 
                 case (int) RootNodes.NewSequence:
@@ -162,7 +162,7 @@ namespace VixenPlus {
         }
 
 
-        private void WriteScreenAndColorNodes() {
+        private void WirteScreenNodes() {
             _preferences.SetString("PrimaryDisplay", cbScreens.SelectedItem.ToString());
         }
 
@@ -283,7 +283,10 @@ namespace VixenPlus {
 
 
         private void PopulateColors() {
+            lbColorizableItems.Items.Add("Channel Background");
             lbColorizableItems.Items.Add("Crosshair");
+            lbColorizableItems.Items.Add("Grid Background");
+            lbColorizableItems.Items.Add("Grid Lines");
             lbColorizableItems.Items.Add("Mouse Caret");
             lbColorizableItems.Items.Add("Waveform");
             lbColorizableItems.Items.Add("Waveform Background");

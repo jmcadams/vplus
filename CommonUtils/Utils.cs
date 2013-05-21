@@ -20,6 +20,11 @@ namespace CommonUtils {
         }
 
 
+        public static Color GetForeColor(Color backgroundColor) {
+            return ((backgroundColor.R * 299) + (backgroundColor.G * 587) + (backgroundColor.B * 114)) / 1000 >= 128 ? Color.Black : Color.White;
+        }
+
+
         public static string TimeFormatMillsOnly(int mills) {
             return String.Format(":{0:d2}", mills / MillsPerSecond);
         }

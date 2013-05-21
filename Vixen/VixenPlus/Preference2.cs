@@ -40,11 +40,14 @@ namespace VixenPlus {
 
             // Screen & Colors
             isDirty |= CreateIfMissing("PrimaryDisplay", Screen.AllScreens[0].DeviceName);
+            isDirty |= CreateIfMissing("ChannelBackground", Color.White.ToArgb().ToString(CultureInfo.InvariantCulture));
+            isDirty |= CreateIfMissing("Crosshair", Color.Yellow.ToArgb().ToString(CultureInfo.InvariantCulture));
+            isDirty |= CreateIfMissing("GridBackground", Color.Silver.ToArgb().ToString(CultureInfo.InvariantCulture));
+            isDirty |= CreateIfMissing("GridLines", Color.Gray.ToArgb().ToString(CultureInfo.InvariantCulture));
+            isDirty |= CreateIfMissing("MouseCaret", Color.Gray.ToArgb().ToString(CultureInfo.InvariantCulture));
             isDirty |= CreateIfMissing("Waveform", Color.White.ToArgb().ToString(CultureInfo.InvariantCulture));
             isDirty |= CreateIfMissing("WaveformBackground", Color.Black.ToArgb().ToString(CultureInfo.InvariantCulture));
             isDirty |= CreateIfMissing("WaveformZeroLine", Color.Red.ToArgb().ToString(CultureInfo.InvariantCulture));
-            isDirty |= CreateIfMissing("Crosshair", Color.Yellow.ToArgb().ToString(CultureInfo.InvariantCulture));
-            isDirty |= CreateIfMissing("MouseCaret", Color.Gray.ToArgb().ToString(CultureInfo.InvariantCulture));
 
             //New Sequence Settings
             isDirty |= CreateIfMissing("EventPeriod", 100);
