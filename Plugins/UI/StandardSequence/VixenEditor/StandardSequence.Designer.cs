@@ -3011,19 +3011,15 @@ namespace VixenEditor{
         }
         #endregion
 
-        protected override void Dispose(bool disposing)
-        {
-            if (this._channelBackBrush != null)
-            {
-                this._channelBackBrush.Dispose();
+        protected override void Dispose(bool disposing) {
+            if (_channelBackBrush != null) {
+                _channelBackBrush.Dispose();
             }
-            if (this._timeBackBrush != null)
-            {
-                this._timeBackBrush.Dispose();
+            if (_timeBackBrush != null) {
+                _timeBackBrush.Dispose();
             }
-            if (this._gridBackBrush != null)
-            {
-                this._gridBackBrush.Dispose();
+            if (_gridBackBrush != null) {
+                _gridBackBrush.Dispose();
             }
             if (_waveformZeroLineBrush != null) {
                 _waveformZeroLineBrush.Dispose();
@@ -3031,18 +3027,23 @@ namespace VixenEditor{
             if (_waveformBrush != null) {
                 _waveformBrush.Dispose();
             }
-            this._channelNameFont.Dispose();
-            this._channelStrikeoutFont.Dispose();
-            this._timeFont.Dispose();
-            this._selectionBrush.Dispose();
-            this._positionBrush.Dispose();
-            this._channelCaretBrush.Dispose();
-            if (this._gridGraphics != null)
-            {
-                this._gridGraphics.Dispose();
+            if (_crosshairBrush != null) {
+                _crosshairBrush.Dispose();
+            }
+            if (_channelCaretBrush != null) {
+                _channelCaretBrush.Dispose();
+            }
+            _channelNameFont.Dispose();
+            _channelStrikeoutFont.Dispose();
+            _timeFont.Dispose();
+            _selectionBrush.Dispose();
+            _positionBrush.Dispose();
+            if (_gridGraphics != null) {
+                _gridGraphics.Dispose();
             }
             base.Dispose(disposing);
         }
+
 
         private ToolStripButton toolStripButtonWaveform;
         private ToolStripButton newSeqTsb;

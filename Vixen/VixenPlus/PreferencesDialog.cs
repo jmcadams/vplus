@@ -164,9 +164,6 @@ namespace VixenPlus {
 
         private void WriteScreenAndColorNodes() {
             _preferences.SetString("PrimaryDisplay", cbScreens.SelectedItem.ToString());
-            //_preferences.SetString("Waveform", Color.White.ToArgb().ToString(CultureInfo.InvariantCulture));
-            //_preferences.SetString("WaveformBackground", Color.Black.ToArgb().ToString(CultureInfo.InvariantCulture));
-            //_preferences.SetString("WaveformZeroLine", Color.Red.ToArgb().ToString(CultureInfo.InvariantCulture));
         }
 
 
@@ -286,6 +283,8 @@ namespace VixenPlus {
 
 
         private void PopulateColors() {
+            lbColorizableItems.Items.Add("Crosshair");
+            lbColorizableItems.Items.Add("Mouse Caret");
             lbColorizableItems.Items.Add("Waveform");
             lbColorizableItems.Items.Add("Waveform Background");
             lbColorizableItems.Items.Add("Waveform Zero Line");
@@ -501,7 +500,7 @@ namespace VixenPlus {
 
 
         private void pbColor_Click(object sender, EventArgs e) {
-            using (var colorDialog = new ColorDialog()) {
+            using (var colorDialog = new ColorDialog {AnyColor = true, Color = pbColor.BackColor, FullOpen = true}) {
                 var result = colorDialog.ShowDialog();
                 if (result != DialogResult.OK) {
                     return;

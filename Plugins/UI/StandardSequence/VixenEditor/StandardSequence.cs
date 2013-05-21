@@ -26,9 +26,10 @@ namespace VixenEditor {
         private bool _autoScrolling;
         private readonly int[] _bookmarks;
         private SolidBrush _channelBackBrush;
-        private readonly SolidBrush _channelCaretBrush;
+        private SolidBrush _channelCaretBrush;
         private Font _channelNameFont;
         private Font _channelStrikeoutFont;
+        private SolidBrush _crosshairBrush;
         private List<int> _channelOrderMapping;
         private VixenPlus.Channel _currentlyEditingChannel;
         private FrequencyEffectGenerator _dimmingShimmerGenerator;
@@ -138,7 +139,6 @@ namespace VixenEditor {
             _previousPosition = -1;
             _mouseChannelCaret = -1;
             _mouseTimeCaret = -1;
-            _channelCaretBrush = new SolidBrush(Color.Gray);
             _undoStack = new Stack();
             _redoStack = new Stack();
             _lineRect = new Rectangle(-1, -1, -1, -1);
@@ -1115,7 +1115,9 @@ namespace VixenEditor {
             _showingGradient = !_preferences.GetBoolean("BarLevels");
             _showWaveformZeroLine = _preferences.GetBoolean("ShowWaveformZeroLine");
 
+            _channelCaretBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("MouseCaret"))));
             _channelBackBrush = new SolidBrush(Color.White);
+            _crosshairBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("Crosshair"))));
             _timeBackBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("WaveformBackground"))));
             _waveformBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("Waveform")))); 
             _waveformZeroLineBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("WaveformZeroLine"))));
@@ -1392,19 +1394,12 @@ namespace VixenEditor {
                     _mouseWheelHorizontalDelta = _preferences.GetInteger("MouseWheelHorizontalDelta");
                     _intensityLargeDelta = _preferences.GetInteger("IntensityLargeDelta");
                     _showWaveformZeroLine = _preferences.GetBoolean("ShowWaveformZeroLine");
-                    if (_timeBackBrush != null) {
-                        _timeBackBrush.Dispose();
-                    }
-                    _timeBackBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("WaveformBackground"))));
-                    if (_waveformZeroLineBrush != null) {
-                        _waveformZeroLineBrush.Dispose();
-                    }
-                    _waveformZeroLineBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("WaveformZeroLine"))));
 
-                    if (_waveformBrush != null) {
-                        _waveformBrush.Dispose();
-                    }
-                    _waveformBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("Waveform")))); 
+                    _timeBackBrush = BrushHandler(_timeBackBrush, "WaveformBackground");
+                    _waveformZeroLineBrush = BrushHandler(_waveformZeroLineBrush, "WaveformZeroLine");
+                    _waveformBrush = BrushHandler(_waveformBrush, "Waveform");
+                    _crosshairBrush = BrushHandler(_crosshairBrush, "Crosshair");
+                    _channelCaretBrush = BrushHandler(_channelCaretBrush, "MouseCaret");
 
                     RefreshAll();
                     break;
@@ -1427,6 +1422,14 @@ namespace VixenEditor {
                     break;
                 }
             }
+        }
+
+
+        private SolidBrush BrushHandler(IDisposable brush, string preference) {
+            if (brush != null) {
+                brush.Dispose();
+            }
+            return new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString(preference))));
         }
 
 
@@ -2201,8 +2204,8 @@ namespace VixenEditor {
                     var x = ((_mouseTimeCaret - hScrollBar1.Value) * _gridColWidth) + ((int) (_gridColWidth * 0.5f));
                     var y = ((_mouseChannelCaret - vScrollBar1.Value) * _gridRowHeight) + ((int) (_gridRowHeight * 0.5f));
                     if (((x > e.ClipRectangle.Left) && (x < e.ClipRectangle.Right)) || ((y > e.ClipRectangle.Top) && (y < e.ClipRectangle.Bottom))) {
-                        e.Graphics.DrawLine(Pens.Yellow, x, 0, x, Height);
-                        e.Graphics.DrawLine(Pens.Yellow, 0, y, Width, y);
+                        e.Graphics.DrawLine(new Pen(_crosshairBrush), x, 0, x, Height);
+                        e.Graphics.DrawLine(new Pen(_crosshairBrush), 0, y, Width, y);
                     }
                 }
             }

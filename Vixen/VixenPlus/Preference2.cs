@@ -43,6 +43,8 @@ namespace VixenPlus {
             isDirty |= CreateIfMissing("Waveform", Color.White.ToArgb().ToString(CultureInfo.InvariantCulture));
             isDirty |= CreateIfMissing("WaveformBackground", Color.Black.ToArgb().ToString(CultureInfo.InvariantCulture));
             isDirty |= CreateIfMissing("WaveformZeroLine", Color.Red.ToArgb().ToString(CultureInfo.InvariantCulture));
+            isDirty |= CreateIfMissing("Crosshair", Color.Yellow.ToArgb().ToString(CultureInfo.InvariantCulture));
+            isDirty |= CreateIfMissing("MouseCaret", Color.Gray.ToArgb().ToString(CultureInfo.InvariantCulture));
 
             //New Sequence Settings
             isDirty |= CreateIfMissing("EventPeriod", 100);
