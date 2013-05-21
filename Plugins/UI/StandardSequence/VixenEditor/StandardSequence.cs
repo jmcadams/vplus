@@ -2140,8 +2140,6 @@ namespace VixenEditor {
 
             var startPoint = new Point();
             var endPoint = new Point();
-            
-
 
             var cellCount = e.ClipRectangle.Left / _gridColWidth;
 
@@ -4199,6 +4197,7 @@ namespace VixenEditor {
                 }
                 pictureBoxChannels.Refresh();
                 pictureBoxGrid.Refresh();
+                pictureBoxGrid.Focus();
             }
         }
 
@@ -4533,17 +4532,18 @@ namespace VixenEditor {
 
 
         private void VScrollCheck() {
+            var channelCount = _sequence.ActiveChannelCount;
+
             _visibleRowCount = pictureBoxGrid.Height / _gridRowHeight;
-            vScrollBar1.Maximum = _sequence.ActiveChannelCount - 1;
+            vScrollBar1.Maximum = channelCount - 1;
             vScrollBar1.LargeChange = _visibleRowCount;
-            vScrollBar1.Enabled = _visibleRowCount < _sequence.ChannelCount;
+            vScrollBar1.Enabled = _visibleRowCount < channelCount;
             if (!vScrollBar1.Enabled) {
                 vScrollBar1.Value = vScrollBar1.Minimum;
-            }
-            else if ((vScrollBar1.Value + _visibleRowCount) > _sequence.ChannelCount) {
-                _selectedRange.Y += _visibleRowCount - _sequence.ChannelCount;
-                _selectedCells.Y += _visibleRowCount - _sequence.ChannelCount;
-                vScrollBar1.Value = _sequence.ChannelCount - _visibleRowCount;
+            } else if ((vScrollBar1.Value + _visibleRowCount) > channelCount) {
+                _selectedRange.Y += _visibleRowCount - channelCount;
+                _selectedCells.Y += _visibleRowCount - channelCount;
+                vScrollBar1.Value = channelCount - _visibleRowCount;
             }
             if (vScrollBar1.Maximum < 0) {
                 return;

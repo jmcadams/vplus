@@ -818,8 +818,8 @@ namespace VixenEditor{
             // insertPasteToolStripMenuItem
             // 
             this.insertPasteToolStripMenuItem.Name = "insertPasteToolStripMenuItem";
-            this.insertPasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
-                        | System.Windows.Forms.Keys.V)));
+            this.insertPasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.V)));
             this.insertPasteToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.insertPasteToolStripMenuItem.Text = "Insert paste";
             this.insertPasteToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonInsertPaste_Click);
@@ -834,8 +834,8 @@ namespace VixenEditor{
             // clearAllToolStripMenuItem
             // 
             this.clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
-            this.clearAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
-                        | System.Windows.Forms.Keys.A)));
+            this.clearAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.A)));
             this.clearAllToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.clearAllToolStripMenuItem.Text = "Clear all";
             this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearAllToolStripMenuItem_Click);
@@ -1284,8 +1284,8 @@ namespace VixenEditor{
             // 
             // labelPosition
             // 
-            this.labelPosition.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelPosition.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labelPosition.BackColor = System.Drawing.Color.White;
             this.labelPosition.Location = new System.Drawing.Point(12, 9);
             this.labelPosition.Name = "labelPosition";
@@ -1894,7 +1894,7 @@ namespace VixenEditor{
             // newSeqTsb
             // 
             this.newSeqTsb.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.newSeqTsb.Image = global::Properties.Resources.newSequence;
+            this.newSeqTsb.Image = ((System.Drawing.Image)(resources.GetObject("newSeqTsb.Image")));
             this.newSeqTsb.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.newSeqTsb.Name = "newSeqTsb";
             this.newSeqTsb.Size = new System.Drawing.Size(52, 52);
@@ -1904,7 +1904,7 @@ namespace VixenEditor{
             // openSequenceTsb
             // 
             this.openSequenceTsb.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.openSequenceTsb.Image = global::Properties.Resources.open;
+            this.openSequenceTsb.Image = ((System.Drawing.Image)(resources.GetObject("openSequenceTsb.Image")));
             this.openSequenceTsb.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.openSequenceTsb.Name = "openSequenceTsb";
             this.openSequenceTsb.Size = new System.Drawing.Size(52, 52);
@@ -1915,7 +1915,7 @@ namespace VixenEditor{
             // 
             this.tbsSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tbsSave.Enabled = false;
-            this.tbsSave.Image = global::Properties.Resources.save;
+            this.tbsSave.Image = ((System.Drawing.Image)(resources.GetObject("tbsSave.Image")));
             this.tbsSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbsSave.Name = "tbsSave";
             this.tbsSave.Size = new System.Drawing.Size(52, 52);
@@ -1925,7 +1925,7 @@ namespace VixenEditor{
             // tsbSaveAs
             // 
             this.tsbSaveAs.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbSaveAs.Image = global::Properties.Resources.save_as;
+            this.tsbSaveAs.Image = ((System.Drawing.Image)(resources.GetObject("tsbSaveAs.Image")));
             this.tsbSaveAs.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbSaveAs.Name = "tsbSaveAs";
             this.tsbSaveAs.Size = new System.Drawing.Size(52, 52);
@@ -1940,7 +1940,7 @@ namespace VixenEditor{
             // tbsTestChannels
             // 
             this.tbsTestChannels.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbsTestChannels.Image = global::Properties.Resources.test_channels;
+            this.tbsTestChannels.Image = ((System.Drawing.Image)(resources.GetObject("tbsTestChannels.Image")));
             this.tbsTestChannels.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbsTestChannels.Name = "tbsTestChannels";
             this.tbsTestChannels.Size = new System.Drawing.Size(52, 52);
@@ -1951,7 +1951,7 @@ namespace VixenEditor{
             // tbsTestConsole
             // 
             this.tbsTestConsole.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbsTestConsole.Image = global::Properties.Resources.sliders;
+            this.tbsTestConsole.Image = ((System.Drawing.Image)(resources.GetObject("tbsTestConsole.Image")));
             this.tbsTestConsole.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbsTestConsole.Name = "tbsTestConsole";
             this.tbsTestConsole.Size = new System.Drawing.Size(52, 52);
@@ -1967,7 +1967,7 @@ namespace VixenEditor{
             // 
             this.tsbAudio.BackColor = System.Drawing.SystemColors.Control;
             this.tsbAudio.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbAudio.Image = global::Properties.Resources.audio_note;
+            this.tsbAudio.Image = ((System.Drawing.Image)(resources.GetObject("tsbAudio.Image")));
             this.tsbAudio.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.tsbAudio.Name = "tsbAudio";
             this.tsbAudio.Size = new System.Drawing.Size(52, 52);
@@ -1979,7 +1979,7 @@ namespace VixenEditor{
             this.toolStripButtonWaveform.CheckOnClick = true;
             this.toolStripButtonWaveform.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButtonWaveform.Enabled = false;
-            this.toolStripButtonWaveform.Image = global::Properties.Resources.wave;
+            this.toolStripButtonWaveform.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonWaveform.Image")));
             this.toolStripButtonWaveform.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripButtonWaveform.Name = "toolStripButtonWaveform";
             this.toolStripButtonWaveform.Size = new System.Drawing.Size(52, 52);
@@ -1994,7 +1994,7 @@ namespace VixenEditor{
             // toolStripButtonChannelOutputMask
             // 
             this.toolStripButtonChannelOutputMask.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonChannelOutputMask.Image = global::Properties.Resources.mask;
+            this.toolStripButtonChannelOutputMask.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonChannelOutputMask.Image")));
             this.toolStripButtonChannelOutputMask.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonChannelOutputMask.Name = "toolStripButtonChannelOutputMask";
             this.toolStripButtonChannelOutputMask.Size = new System.Drawing.Size(52, 52);
@@ -2062,7 +2062,7 @@ namespace VixenEditor{
             // 
             this.tsbPlay.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.tsbPlay.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbPlay.Image = global::Properties.Resources.play;
+            this.tsbPlay.Image = ((System.Drawing.Image)(resources.GetObject("tsbPlay.Image")));
             this.tsbPlay.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbPlay.Name = "tsbPlay";
             this.tsbPlay.Size = new System.Drawing.Size(52, 52);
@@ -2074,7 +2074,7 @@ namespace VixenEditor{
             this.tsbPlayPoint.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.tsbPlayPoint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tsbPlayPoint.Enabled = false;
-            this.tsbPlayPoint.Image = global::Properties.Resources.play_from;
+            this.tsbPlayPoint.Image = ((System.Drawing.Image)(resources.GetObject("tsbPlayPoint.Image")));
             this.tsbPlayPoint.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbPlayPoint.Name = "tsbPlayPoint";
             this.tsbPlayPoint.Size = new System.Drawing.Size(52, 52);
@@ -2086,7 +2086,7 @@ namespace VixenEditor{
             this.tsbPlayRange.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.tsbPlayRange.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tsbPlayRange.Enabled = false;
-            this.tsbPlayRange.Image = global::Properties.Resources.play_range;
+            this.tsbPlayRange.Image = ((System.Drawing.Image)(resources.GetObject("tsbPlayRange.Image")));
             this.tsbPlayRange.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbPlayRange.Name = "tsbPlayRange";
             this.tsbPlayRange.Size = new System.Drawing.Size(52, 52);
@@ -2098,7 +2098,7 @@ namespace VixenEditor{
             this.tsbPause.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.tsbPause.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tsbPause.Enabled = false;
-            this.tsbPause.Image = global::Properties.Resources.pause;
+            this.tsbPause.Image = ((System.Drawing.Image)(resources.GetObject("tsbPause.Image")));
             this.tsbPause.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbPause.Name = "tsbPause";
             this.tsbPause.Size = new System.Drawing.Size(52, 52);
@@ -2110,7 +2110,7 @@ namespace VixenEditor{
             this.tsbStop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.tsbStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tsbStop.Enabled = false;
-            this.tsbStop.Image = global::Properties.Resources.stop;
+            this.tsbStop.Image = ((System.Drawing.Image)(resources.GetObject("tsbStop.Image")));
             this.tsbStop.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbStop.Name = "tsbStop";
             this.tsbStop.Size = new System.Drawing.Size(52, 52);
@@ -2134,7 +2134,7 @@ namespace VixenEditor{
             this.tsbLoop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.tsbLoop.CheckOnClick = true;
             this.tsbLoop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbLoop.Image = global::Properties.Resources.loop;
+            this.tsbLoop.Image = ((System.Drawing.Image)(resources.GetObject("tsbLoop.Image")));
             this.tsbLoop.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.tsbLoop.Name = "tsbLoop";
             this.tsbLoop.Size = new System.Drawing.Size(52, 52);
@@ -2181,7 +2181,7 @@ namespace VixenEditor{
             // 
             // SpeedNormalTsb
             // 
-            this.SpeedNormalTsb.BackgroundImage = global::Properties.Resources.Ball_Green;
+            this.SpeedNormalTsb.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("SpeedNormalTsb.BackgroundImage")));
             this.SpeedNormalTsb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.SpeedNormalTsb.Checked = true;
             this.SpeedNormalTsb.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -2244,7 +2244,7 @@ namespace VixenEditor{
             // toolStripButtonOn
             // 
             this.toolStripButtonOn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonOn.Image = global::Properties.Resources.on;
+            this.toolStripButtonOn.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonOn.Image")));
             this.toolStripButtonOn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonOn.Name = "toolStripButtonOn";
             this.toolStripButtonOn.Size = new System.Drawing.Size(52, 52);
@@ -2254,7 +2254,7 @@ namespace VixenEditor{
             // toolStripButtonOff
             // 
             this.toolStripButtonOff.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonOff.Image = global::Properties.Resources.off;
+            this.toolStripButtonOff.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonOff.Image")));
             this.toolStripButtonOff.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonOff.Name = "toolStripButtonOff";
             this.toolStripButtonOff.Size = new System.Drawing.Size(52, 52);
@@ -2264,7 +2264,7 @@ namespace VixenEditor{
             // toolStripButtonRampOn
             // 
             this.toolStripButtonRampOn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonRampOn.Image = global::Properties.Resources.ramp;
+            this.toolStripButtonRampOn.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRampOn.Image")));
             this.toolStripButtonRampOn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonRampOn.Name = "toolStripButtonRampOn";
             this.toolStripButtonRampOn.Size = new System.Drawing.Size(52, 52);
@@ -2274,7 +2274,7 @@ namespace VixenEditor{
             // toolStripButtonRampOff
             // 
             this.toolStripButtonRampOff.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonRampOff.Image = global::Properties.Resources.fade;
+            this.toolStripButtonRampOff.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRampOff.Image")));
             this.toolStripButtonRampOff.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonRampOff.Name = "toolStripButtonRampOff";
             this.toolStripButtonRampOff.Size = new System.Drawing.Size(52, 52);
@@ -2284,7 +2284,7 @@ namespace VixenEditor{
             // toolStripButtonPartialRampOn
             // 
             this.toolStripButtonPartialRampOn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonPartialRampOn.Image = global::Properties.Resources.partial_ramp;
+            this.toolStripButtonPartialRampOn.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonPartialRampOn.Image")));
             this.toolStripButtonPartialRampOn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonPartialRampOn.Name = "toolStripButtonPartialRampOn";
             this.toolStripButtonPartialRampOn.Size = new System.Drawing.Size(52, 52);
@@ -2294,7 +2294,7 @@ namespace VixenEditor{
             // toolStripButtonPartialRampOff
             // 
             this.toolStripButtonPartialRampOff.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonPartialRampOff.Image = global::Properties.Resources.partial_fade;
+            this.toolStripButtonPartialRampOff.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonPartialRampOff.Image")));
             this.toolStripButtonPartialRampOff.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonPartialRampOff.Name = "toolStripButtonPartialRampOff";
             this.toolStripButtonPartialRampOff.Size = new System.Drawing.Size(52, 52);
@@ -2304,7 +2304,7 @@ namespace VixenEditor{
             // toolStripButtonToggleRamps
             // 
             this.toolStripButtonToggleRamps.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonToggleRamps.Image = global::Properties.Resources.gradient_or_ramp;
+            this.toolStripButtonToggleRamps.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonToggleRamps.Image")));
             this.toolStripButtonToggleRamps.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonToggleRamps.Name = "toolStripButtonToggleRamps";
             this.toolStripButtonToggleRamps.Size = new System.Drawing.Size(52, 52);
@@ -2314,7 +2314,7 @@ namespace VixenEditor{
             // toolStripButtonIntensity
             // 
             this.toolStripButtonIntensity.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonIntensity.Image = global::Properties.Resources.intensity;
+            this.toolStripButtonIntensity.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonIntensity.Image")));
             this.toolStripButtonIntensity.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonIntensity.Name = "toolStripButtonIntensity";
             this.toolStripButtonIntensity.Size = new System.Drawing.Size(52, 52);
@@ -2324,7 +2324,7 @@ namespace VixenEditor{
             // toolStripButtonMirrorVertical
             // 
             this.toolStripButtonMirrorVertical.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonMirrorVertical.Image = global::Properties.Resources.mirror_vert;
+            this.toolStripButtonMirrorVertical.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonMirrorVertical.Image")));
             this.toolStripButtonMirrorVertical.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonMirrorVertical.Name = "toolStripButtonMirrorVertical";
             this.toolStripButtonMirrorVertical.Size = new System.Drawing.Size(52, 52);
@@ -2334,7 +2334,7 @@ namespace VixenEditor{
             // toolStripButtonMirrorHorizontal
             // 
             this.toolStripButtonMirrorHorizontal.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonMirrorHorizontal.Image = global::Properties.Resources.mirror_horz;
+            this.toolStripButtonMirrorHorizontal.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonMirrorHorizontal.Image")));
             this.toolStripButtonMirrorHorizontal.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonMirrorHorizontal.Name = "toolStripButtonMirrorHorizontal";
             this.toolStripButtonMirrorHorizontal.Size = new System.Drawing.Size(52, 52);
@@ -2344,7 +2344,7 @@ namespace VixenEditor{
             // toolStripButtonInvert
             // 
             this.toolStripButtonInvert.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonInvert.Image = global::Properties.Resources.invert;
+            this.toolStripButtonInvert.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonInvert.Image")));
             this.toolStripButtonInvert.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonInvert.Name = "toolStripButtonInvert";
             this.toolStripButtonInvert.Size = new System.Drawing.Size(52, 52);
@@ -2354,7 +2354,7 @@ namespace VixenEditor{
             // toolStripButtonRandom
             // 
             this.toolStripButtonRandom.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonRandom.Image = global::Properties.Resources.random;
+            this.toolStripButtonRandom.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRandom.Image")));
             this.toolStripButtonRandom.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonRandom.Name = "toolStripButtonRandom";
             this.toolStripButtonRandom.Size = new System.Drawing.Size(52, 52);
@@ -2364,7 +2364,7 @@ namespace VixenEditor{
             // toolStripButtonSparkle
             // 
             this.toolStripButtonSparkle.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonSparkle.Image = global::Properties.Resources.sparkle;
+            this.toolStripButtonSparkle.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSparkle.Image")));
             this.toolStripButtonSparkle.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSparkle.Name = "toolStripButtonSparkle";
             this.toolStripButtonSparkle.Size = new System.Drawing.Size(52, 52);
@@ -2374,7 +2374,7 @@ namespace VixenEditor{
             // toolStripButtonShimmerDimming
             // 
             this.toolStripButtonShimmerDimming.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonShimmerDimming.Image = global::Properties.Resources.shimmer;
+            this.toolStripButtonShimmerDimming.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonShimmerDimming.Image")));
             this.toolStripButtonShimmerDimming.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonShimmerDimming.Name = "toolStripButtonShimmerDimming";
             this.toolStripButtonShimmerDimming.Size = new System.Drawing.Size(52, 52);
@@ -2389,7 +2389,7 @@ namespace VixenEditor{
             // toolStripButtonToggleLevels
             // 
             this.toolStripButtonToggleLevels.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonToggleLevels.Image = global::Properties.Resources.Percent;
+            this.toolStripButtonToggleLevels.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonToggleLevels.Image")));
             this.toolStripButtonToggleLevels.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonToggleLevels.Name = "toolStripButtonToggleLevels";
             this.toolStripButtonToggleLevels.Size = new System.Drawing.Size(52, 52);
@@ -2400,7 +2400,7 @@ namespace VixenEditor{
             this.toolStripButtonToggleCellText.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.toolStripButtonToggleCellText.CheckOnClick = true;
             this.toolStripButtonToggleCellText.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonToggleCellText.Image = global::Properties.Resources.level_Number;
+            this.toolStripButtonToggleCellText.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonToggleCellText.Image")));
             this.toolStripButtonToggleCellText.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.toolStripButtonToggleCellText.Name = "toolStripButtonToggleCellText";
             this.toolStripButtonToggleCellText.Size = new System.Drawing.Size(52, 52);
@@ -2409,7 +2409,7 @@ namespace VixenEditor{
             // toolStripButtonChangeIntensity
             // 
             this.toolStripButtonChangeIntensity.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonChangeIntensity.Image = global::Properties.Resources.setLevel;
+            this.toolStripButtonChangeIntensity.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonChangeIntensity.Image")));
             this.toolStripButtonChangeIntensity.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonChangeIntensity.Name = "toolStripButtonChangeIntensity";
             this.toolStripButtonChangeIntensity.Size = new System.Drawing.Size(52, 52);
@@ -2442,7 +2442,7 @@ namespace VixenEditor{
             // toolStripButtonCut
             // 
             this.toolStripButtonCut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonCut.Image = global::Properties.Resources.cut;
+            this.toolStripButtonCut.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonCut.Image")));
             this.toolStripButtonCut.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripButtonCut.Name = "toolStripButtonCut";
             this.toolStripButtonCut.Size = new System.Drawing.Size(52, 52);
@@ -2452,7 +2452,7 @@ namespace VixenEditor{
             // toolStripButtonCopy
             // 
             this.toolStripButtonCopy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonCopy.Image = global::Properties.Resources.copy;
+            this.toolStripButtonCopy.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonCopy.Image")));
             this.toolStripButtonCopy.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripButtonCopy.Name = "toolStripButtonCopy";
             this.toolStripButtonCopy.Size = new System.Drawing.Size(52, 52);
@@ -2462,7 +2462,7 @@ namespace VixenEditor{
             // toolStripButtonOpaquePaste
             // 
             this.toolStripButtonOpaquePaste.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonOpaquePaste.Image = global::Properties.Resources.paste;
+            this.toolStripButtonOpaquePaste.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonOpaquePaste.Image")));
             this.toolStripButtonOpaquePaste.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripButtonOpaquePaste.Name = "toolStripButtonOpaquePaste";
             this.toolStripButtonOpaquePaste.Size = new System.Drawing.Size(52, 52);
@@ -2472,7 +2472,7 @@ namespace VixenEditor{
             // toolStripButtonTransparentPaste
             // 
             this.toolStripButtonTransparentPaste.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonTransparentPaste.Image = global::Properties.Resources.paste_trans;
+            this.toolStripButtonTransparentPaste.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonTransparentPaste.Image")));
             this.toolStripButtonTransparentPaste.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripButtonTransparentPaste.Name = "toolStripButtonTransparentPaste";
             this.toolStripButtonTransparentPaste.Size = new System.Drawing.Size(52, 52);
@@ -2490,7 +2490,7 @@ namespace VixenEditor{
             this.toolStripMenuItemPasteNor,
             this.toolStripMenuItemPasteNand,
             this.toolStripMenuItemPasteXnor});
-            this.toolStripSplitButtonBooleanPaste.Image = global::Properties.Resources.paste_bool;
+            this.toolStripSplitButtonBooleanPaste.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButtonBooleanPaste.Image")));
             this.toolStripSplitButtonBooleanPaste.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripSplitButtonBooleanPaste.Name = "toolStripSplitButtonBooleanPaste";
             this.toolStripSplitButtonBooleanPaste.Size = new System.Drawing.Size(64, 52);
@@ -2558,7 +2558,7 @@ namespace VixenEditor{
             this.scaleToolStripMenuItem,
             this.minToolStripMenuItem,
             this.maxToolStripMenuItem});
-            this.toolStripSplitButtonArithmeticPaste.Image = global::Properties.Resources.paste_math;
+            this.toolStripSplitButtonArithmeticPaste.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButtonArithmeticPaste.Image")));
             this.toolStripSplitButtonArithmeticPaste.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripSplitButtonArithmeticPaste.Name = "toolStripSplitButtonArithmeticPaste";
             this.toolStripSplitButtonArithmeticPaste.Size = new System.Drawing.Size(64, 52);
@@ -2607,7 +2607,7 @@ namespace VixenEditor{
             // toolStripButtonInsertPaste
             // 
             this.toolStripButtonInsertPaste.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonInsertPaste.Image = global::Properties.Resources.paste_ins;
+            this.toolStripButtonInsertPaste.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonInsertPaste.Image")));
             this.toolStripButtonInsertPaste.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripButtonInsertPaste.Name = "toolStripButtonInsertPaste";
             this.toolStripButtonInsertPaste.Size = new System.Drawing.Size(52, 52);
@@ -2617,7 +2617,7 @@ namespace VixenEditor{
             // toolStripButtonRemoveCells
             // 
             this.toolStripButtonRemoveCells.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonRemoveCells.Image = global::Properties.Resources.remove;
+            this.toolStripButtonRemoveCells.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRemoveCells.Image")));
             this.toolStripButtonRemoveCells.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripButtonRemoveCells.Name = "toolStripButtonRemoveCells";
             this.toolStripButtonRemoveCells.Size = new System.Drawing.Size(52, 52);
@@ -2648,7 +2648,7 @@ namespace VixenEditor{
             // 
             this.toolStripButtonUndo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButtonUndo.Enabled = false;
-            this.toolStripButtonUndo.Image = global::Properties.Resources.undo;
+            this.toolStripButtonUndo.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonUndo.Image")));
             this.toolStripButtonUndo.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripButtonUndo.Name = "toolStripButtonUndo";
             this.toolStripButtonUndo.Size = new System.Drawing.Size(52, 52);
@@ -2660,7 +2660,7 @@ namespace VixenEditor{
             // 
             this.toolStripButtonRedo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButtonRedo.Enabled = false;
-            this.toolStripButtonRedo.Image = global::Properties.Resources.redo;
+            this.toolStripButtonRedo.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRedo.Image")));
             this.toolStripButtonRedo.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripButtonRedo.Name = "toolStripButtonRedo";
             this.toolStripButtonRedo.Size = new System.Drawing.Size(52, 52);
@@ -2685,7 +2685,7 @@ namespace VixenEditor{
             this.toolStripButtonDeleteOrder});
             this.toolStripDisplaySettings.Location = new System.Drawing.Point(3, 220);
             this.toolStripDisplaySettings.Name = "toolStripDisplaySettings";
-            this.toolStripDisplaySettings.Size = new System.Drawing.Size(606, 51);
+            this.toolStripDisplaySettings.Size = new System.Drawing.Size(637, 51);
             this.toolStripDisplaySettings.TabIndex = 5;
             this.toolStripDisplaySettings.Text = "Display settings";
             // 
@@ -2770,6 +2770,7 @@ namespace VixenEditor{
             // 
             this.toolStripComboBoxChannelOrder.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.toolStripComboBoxChannelOrder.DropDownWidth = 120;
+            this.toolStripComboBoxChannelOrder.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.toolStripComboBoxChannelOrder.Items.AddRange(new object[] {
             "Define new order...",
             "Restore natural order..."});
@@ -2781,7 +2782,7 @@ namespace VixenEditor{
             // 
             this.toolStripButtonSaveOrder.AutoSize = false;
             this.toolStripButtonSaveOrder.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonSaveOrder.Image = global::Properties.Resources.add;
+            this.toolStripButtonSaveOrder.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSaveOrder.Image")));
             this.toolStripButtonSaveOrder.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSaveOrder.Name = "toolStripButtonSaveOrder";
             this.toolStripButtonSaveOrder.Size = new System.Drawing.Size(48, 48);
@@ -2794,7 +2795,7 @@ namespace VixenEditor{
             this.toolStripButtonDeleteOrder.AutoSize = false;
             this.toolStripButtonDeleteOrder.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButtonDeleteOrder.Enabled = false;
-            this.toolStripButtonDeleteOrder.Image = global::Properties.Resources.subtract;
+            this.toolStripButtonDeleteOrder.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDeleteOrder.Image")));
             this.toolStripButtonDeleteOrder.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonDeleteOrder.Name = "toolStripButtonDeleteOrder";
             this.toolStripButtonDeleteOrder.Size = new System.Drawing.Size(48, 48);
