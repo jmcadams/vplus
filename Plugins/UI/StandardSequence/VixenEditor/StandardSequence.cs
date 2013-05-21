@@ -1143,21 +1143,7 @@ namespace VixenEditor {
             _showingGradient = !_preferences.GetBoolean("BarLevels");
             _showWaveformZeroLine = _preferences.GetBoolean("ShowWaveformZeroLine");
 
-            var channelBackgroundColor = Color.FromArgb(Int32.Parse(_preferences.GetString("ChannelBackground")));
-            _channelBackBrush = new SolidBrush(channelBackgroundColor);
-            labelPosition.BackColor = channelBackgroundColor;
-            labelPosition.ForeColor = Utils.GetForeColor(channelBackgroundColor);
-            _crosshairBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("Crosshair"))));
-            _crosshairPen = new Pen(_crosshairBrush.Color);
-            _gridBackBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("GridBackground"))));
-            _gridLineBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("GridLines"))));
-            _gridLinePen = new Pen(_gridLineBrush.Color);
-            _mouseCaretBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("MouseCaret"))));
-            _waveformBackBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("WaveformBackground"))));
-            _waveformBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("Waveform")))); 
-            _waveformPen = new Pen(_waveformBrush.Color);
-            _waveformZeroLineBrush = new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString("WaveformZeroLine"))));
-            _waveformZeroLinePen = new Pen(_waveformZeroLineBrush);
+            SetColorPreferences();
 
             _gridGraphics = pictureBoxGrid.CreateGraphics();
             _dimmingShimmerGenerator = DimmingShimmerGenerator;
@@ -1206,6 +1192,7 @@ namespace VixenEditor {
             pictureBoxChannels.AllowDrop = true;
             WindowState = FormWindowState.Maximized;
         }
+
 
 
         private void InsertChannelIntoSort(int naturalIndex, int sortedIndex) {
@@ -1430,21 +1417,7 @@ namespace VixenEditor {
                     _intensityLargeDelta = _preferences.GetInteger("IntensityLargeDelta");
                     _showWaveformZeroLine = _preferences.GetBoolean("ShowWaveformZeroLine");
 
-                    _channelBackBrush = BrushHandler(_channelBackBrush, "ChannelBackground");
-                    var holdColor = _channelBackBrush.Color;
-                    labelPosition.BackColor = holdColor;
-                    labelPosition.ForeColor = Utils.GetForeColor(holdColor);
-                    _crosshairBrush = BrushHandler(_crosshairBrush, "Crosshair");
-                    _crosshairPen = PenHandler(_crosshairPen, _crosshairBrush);
-                    _gridBackBrush = BrushHandler(_gridBackBrush, "GridBackground");
-                    _gridLineBrush = BrushHandler(_gridLineBrush, "GridLines");
-                    _gridLinePen = PenHandler(_gridLinePen, _gridLineBrush);
-                    _mouseCaretBrush = BrushHandler(_mouseCaretBrush, "MouseCaret");
-                    _waveformBackBrush = BrushHandler(_waveformBackBrush, "WaveformBackground");
-                    _waveformBrush = BrushHandler(_waveformBrush, "Waveform");
-                    _waveformPen = PenHandler(_waveformPen, _waveformBrush);
-                    _waveformZeroLineBrush = BrushHandler(_waveformZeroLineBrush, "WaveformZeroLine");
-                    _waveformZeroLinePen = PenHandler(_waveformPen, _waveformZeroLineBrush);
+                    SetColorPreferences();
 
                     RefreshAll();
                     break;
@@ -1470,19 +1443,47 @@ namespace VixenEditor {
         }
 
 
-        private SolidBrush BrushHandler(IDisposable brush, string preference) {
+        private void SetColorPreferences() {
+            var positionLabelBack = GetPreferenceColor("ChannelBackground");
+            labelPosition.BackColor = positionLabelBack;
+            labelPosition.ForeColor = Utils.GetForeColor(positionLabelBack);
+
+            _channelBackBrush = BrushHandler(_channelBackBrush, "ChannelBackground");
+            _crosshairBrush = BrushHandler(_crosshairBrush, "Crosshair");
+            _gridBackBrush = BrushHandler(_gridBackBrush, "GridBackground");
+            _gridLineBrush = BrushHandler(_gridLineBrush, "GridLines");
+            _mouseCaretBrush = BrushHandler(_mouseCaretBrush, "MouseCaret");
+            _waveformBackBrush = BrushHandler(_waveformBackBrush, "WaveformBackground");
+            _waveformBrush = BrushHandler(_waveformBrush, "Waveform");
+            _waveformZeroLineBrush = BrushHandler(_waveformZeroLineBrush, "WaveformZeroLine");
+
+            _crosshairPen = PenHandler(_crosshairPen, "Crosshair");
+            _gridLinePen = PenHandler(_gridLinePen, "GridLines");
+            _waveformPen = PenHandler(_waveformPen, "Waveform");
+            _waveformZeroLinePen = PenHandler(_waveformZeroLinePen, "WaveformZeroLine");
+        }
+
+
+        private SolidBrush BrushHandler(SolidBrush brush, string preference) {
             if (brush != null) {
                 brush.Dispose();
             }
-            return new SolidBrush(Color.FromArgb(Int32.Parse(_preferences.GetString(preference))));
+            return new SolidBrush(GetPreferenceColor(preference));
         }
 
-        private static Pen PenHandler(IDisposable pen, SolidBrush fromBrush) {
+
+        private Pen PenHandler(Pen pen, string preference) {
             if (pen != null) {
                 pen.Dispose();
             }
-            return new Pen(fromBrush.Color);
+            return new Pen(GetPreferenceColor(preference));
         }
+
+
+        private Color GetPreferenceColor(string preference) {
+            return Color.FromArgb(Int32.Parse(_preferences.GetString(preference)));
+        }
+
 
         public override void OnDirtyChanged(EventArgs e) {
             base.OnDirtyChanged(e);
@@ -4812,6 +4813,9 @@ namespace VixenEditor {
                 else {
                     AddChannels(itemKey);
                 }
+            }
+            if (_selectedCells.Height > _sequence.ActiveChannelCount) {
+                _selectedCells.Height = _sequence.ActiveChannelCount;
             }
             VScrollCheck();
             pictureBoxChannels.Refresh();
