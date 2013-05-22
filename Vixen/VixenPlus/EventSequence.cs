@@ -1,15 +1,20 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 
+using CommonUtils;
+
 using Properties;
 
+//TODO Can add a getter for ROWS and COLUMNS
 namespace VixenPlus {
     public class EventSequence : IScheduledObject {
         private List<Channel> _channels;
+        private List<Channel> _normalizedChannels;
         private int _eventPeriod;
         private Profile _profile;
         private SortOrders _sortOrders;
@@ -59,6 +64,7 @@ namespace VixenPlus {
             UserData = null;
             Key = Host.GetUniqueKey();
             _channels = new List<Channel>();
+            _normalizedChannels = new List<Channel>();
             PlugInData = new SetupData();
             LoadableData = new LoadableData();
             _sortOrders = new SortOrders();
@@ -99,7 +105,7 @@ namespace VixenPlus {
                     _channels.RemoveAt(value);
                 }
                 for (var i = _channels.Count + 1; _channels.Count < value; i++) {
-                    _channels.Add(new Channel("Channel " + i.ToString(CultureInfo.InvariantCulture), i - 1, true));
+                    _channels.Add(new Channel(Resources.Channel + @" " + i.ToString(CultureInfo.InvariantCulture), i - 1, true));
                 }
                 UpdateEventValueArray();
                 _sortOrders.UpdateChannelCounts(value);
@@ -119,7 +125,7 @@ namespace VixenPlus {
         }
 
         public double EventsPerSecond {
-            get { return (_eventPeriod != 0) ? 1000 / _eventPeriod : 0; }
+            get { return (_eventPeriod != 0) ? Utils.MillsPerSecond / _eventPeriod : 0; }
         }
 
         public byte[,] EventValues { get; set; }
@@ -190,6 +196,11 @@ namespace VixenPlus {
             set { AssignChannelArray(value); }
         }
 
+        public List<Channel> NormalizedChannels {
+            get { return _profile == null ? _normalizedChannels : _profile.Channels; }
+            set { AssignChannelArray(value); }
+        } 
+
         public string FileName { get; set; }
 
         public ulong Key { get; private set; }
@@ -220,7 +231,7 @@ namespace VixenPlus {
         public string Name {
             get { return Path.GetFileNameWithoutExtension(FileName); }
             set {
-                var extension = ".vix";
+                var extension = Vendor.SequenceExtension;
                 if (!string.IsNullOrEmpty(FileName)) {
                     extension = Path.GetExtension(FileName);
                 }
@@ -259,7 +270,7 @@ namespace VixenPlus {
 
         private void AssignChannelArray(List<Channel> channels) {
             _channels = channels;
-            if (_channels.Count != EventValues.GetLength(0)) {
+            if (_channels.Count != EventValues.GetLength(Utils.IndexRowsOrHeight)) {
                 UpdateEventValueArray(true);
             }
             _sortOrders.UpdateChannelCounts(_channels.Count);
@@ -267,10 +278,10 @@ namespace VixenPlus {
 
 
         private void AttachToProfile(string profileName) {
-            var path = Path.Combine(Paths.ProfilePath, profileName + ".pro");
+            var path = Path.Combine(Paths.ProfilePath, profileName + Vendor.ProfilExtension);
             if (File.Exists(path)) {
                 AttachToProfile(new Profile(path));
-                var groupFile = Path.Combine(Paths.ProfilePath, Path.GetFileNameWithoutExtension(_profile.FileName) + ".vgr");
+                var groupFile = Path.Combine(Paths.ProfilePath, Path.GetFileNameWithoutExtension(_profile.FileName) + Vendor.GroupExtension);
                 if (File.Exists(groupFile)) {
                     Groups = Group.LoadGroups(groupFile);
                 }
@@ -343,9 +354,11 @@ namespace VixenPlus {
 
 
         private bool HasData() {
-            for (var i = 0; i < EventValues.GetLength(0); i++) {
-                for (var j = 0; j < EventValues.GetLength(1); j++) {
-                    if (EventValues[i, j] != 0) {
+            var rows = EventValues.GetLength(Utils.IndexRowsOrHeight);
+            var columns = EventValues.GetLength(Utils.IndexColsOrWidth);
+            for (var row = 0; row < rows; row++) {
+                for (var column = 0; column < columns; column++) {
+                    if (EventValues[row, column] != 0) {
                         return true;
                     }
                 }
@@ -368,16 +381,16 @@ namespace VixenPlus {
                     channel.OutputChannel++;
                 }
             }
-            var num7 = sortedIndex + 1;
-            _channels.Insert(count, new Channel("Channel " + num7.ToString(CultureInfo.InvariantCulture), outputChannel, true));
-            var buffer = new byte[_channels.Count,TotalEventPeriods];
-            for (var i = 0; i < EventValues.GetLength(0); i++) {
-                var num4 = (i >= count) ? (i + 1) : i;
-                for (var j = 0; j < TotalEventPeriods; j++) {
-                    buffer[num4, j] = EventValues[i, j];
+            _channels.Insert(count, new Channel(Resources.Channel + " " + sortedIndex + 1, outputChannel, true));
+            var newEventValues = new byte[_channels.Count,TotalEventPeriods];
+            var rows = EventValues.GetLength(Utils.IndexRowsOrHeight);
+            for (var row = 0; row < rows; row++) {
+                var rowOffset = (row >= count) ? (row + 1) : row;
+                for (var column = 0; column < TotalEventPeriods; column++) {
+                    newEventValues[rowOffset, column] = EventValues[row, column];
                 }
             }
-            EventValues = buffer;
+            EventValues = newEventValues;
             _sortOrders.InsertChannel(count, sortedIndex);
             return count;
         }
@@ -466,10 +479,10 @@ namespace VixenPlus {
             var node4 = requiredNode.SelectSingleNode("EventValues");
             if (node4 != null) {
                 var buffer = Convert.FromBase64String(node4.InnerText);
-                var num3 = 0;
-                for (var i = 0; (i < count) && (num3 < buffer.Length); i++) {
-                    for (var j = 0; (j < TotalEventPeriods) && (num3 < buffer.Length); j++) {
-                        EventValues[i, j] = buffer[num3++];
+                var index = 0;
+                for (var row = 0; (row < count) && (index < buffer.Length); row++) {
+                    for (var column = 0; (column < TotalEventPeriods) && (index < buffer.Length); column++) {
+                        EventValues[row, column] = buffer[index++];
                     }
                 }
             }
@@ -610,64 +623,74 @@ namespace VixenPlus {
 
 
         private void UpdateEventValueArray(bool dataExtrapolation = false) {
-            var length = 0;
-            var list = (_profile == null) ? _channels : _profile.Channels;
+            var height = 0;
+            var channels = (_profile == null) ? _channels : _profile.Channels;
             if (EventValues != null) {
-                length = EventValues.GetLength(0);
+                height = EventValues.GetLength(Utils.IndexRowsOrHeight);
             }
             if (!dataExtrapolation) {
-                var eventValues = EventValues;
-                EventValues = new byte[list.Count,(int) Math.Ceiling(((Length) / ((float) _eventPeriod)))];
-                if (eventValues != null) {
-                    var num2 = Math.Min(eventValues.GetLength(1), EventValues.GetLength(1));
-                    var num3 = Math.Min(eventValues.GetLength(0), EventValues.GetLength(0));
-                    for (var i = 0; i < num3; i++) {
-                        for (var j = 0; j < num2; j++) {
-                            EventValues[i, j] = eventValues[i, j];
+                var originalEvents = EventValues;
+                EventValues = new byte[channels.Count,(int) Math.Ceiling(((Length) / ((float) _eventPeriod)))];
+                if (originalEvents != null) {
+                    var columns = Math.Min(originalEvents.GetLength(Utils.IndexColsOrWidth), EventValues.GetLength(Utils.IndexColsOrWidth));
+                    var rows = Math.Min(originalEvents.GetLength(Utils.IndexRowsOrHeight), EventValues.GetLength(Utils.IndexRowsOrHeight));
+                    for (var row = 0; row < rows; row++) {
+                        for (var column = 0; column < columns; column++) {
+                            EventValues[row, column] = originalEvents[row, column];
                         }
                     }
                 }
             }
             else {
-                var buffer2 = new byte[list.Count,(int) Math.Ceiling(((Length) / ((float) _eventPeriod)))];
-                if (((EventValues != null) && (EventValues.GetLength(0) != 0)) && (EventValues.GetLength(1) != 0)) {
-                    var num6 = (buffer2.GetLength(1)) / ((double) EventValues.GetLength(1));
-                    var num7 = (float) (1000.0 / (_eventPeriod * num6));
-                    var num8 = 1000f / (_eventPeriod);
-                    var num9 = buffer2.Length / list.Count;
-                    var num10 = EventValues.Length / list.Count;
-                    var num12 = Math.Min(num7, num8);
-                    var num13 = num7 / num12;
-                    var num14 = num8 / num12;
-                    var num15 = (int) Math.Min(((num10) / num13), ((num9) / num14));
-                    var num19 = Math.Min(list.Count, EventValues.GetLength(0));
-                    for (var k = 0; k < num19; k++) {
-                        for (var m = 0f; m < num15; m++) {
-                            byte num18 = 0;
-                            for (var n = 0f; n < num13; n++) {
-                                num18 = Math.Max(num18, EventValues[k, (int) ((m * num13) + n)]);
+                var newEventValues = new byte[channels.Count,(int) Math.Ceiling(((Length) / ((float) _eventPeriod)))];
+                if (((EventValues != null) && (EventValues.GetLength(Utils.IndexRowsOrHeight) != 0)) && (EventValues.GetLength(Utils.IndexColsOrWidth) != 0)) {
+                    var eventCountRatio = (newEventValues.GetLength(Utils.IndexColsOrWidth)) / ((double)EventValues.GetLength(Utils.IndexColsOrWidth));
+                    
+                    var oldEventsPerSecond = (float)(Utils.MillsPerSecond / (_eventPeriod * eventCountRatio));
+                    var newEventsPerSecond = (float) Utils.MillsPerSecond / (_eventPeriod);
+                    var eventPerSecond = Math.Min(oldEventsPerSecond, newEventsPerSecond);
+
+                    var oldEventCount = EventValues.Length / channels.Count;
+                    var newEventCount = newEventValues.Length / channels.Count;
+
+                    var oldColumns = oldEventsPerSecond / eventPerSecond;
+                    var newColumns = newEventsPerSecond / eventPerSecond;
+                    
+                    var columns = (int) Math.Min(((oldEventCount) / oldColumns), ((newEventCount) / newColumns));
+                    var rows = Math.Min(channels.Count, EventValues.GetLength(Utils.IndexRowsOrHeight));
+                    for (var row = 0; row < rows; row++) {
+                        for (var column = 0f; column < columns; column++) {
+                            byte newValue = 0;
+                            for (var oldColumn = 0f; oldColumn < oldColumns; oldColumn++) {
+                                newValue = Math.Max(newValue, EventValues[row, (int) ((column * oldColumns) + oldColumn)]);
                             }
-                            for (var num17 = 0f; num17 < num14; num17++) {
-                                buffer2[k, (int) ((m * num14) + num17)] = num18;
+                            for (var newColumn = 0f; newColumn < newColumns; newColumn++) {
+                                newEventValues[row, (int) ((column * newColumns) + newColumn)] = newValue;
                             }
                         }
                     }
                 }
-                EventValues = buffer2;
+                EventValues = newEventValues;
             }
-            TotalEventPeriods = EventValues.GetLength(1);
-            var allPlugIns = PlugInData.GetAllPluginData(SetupData.PluginType.Output);
 
-            foreach (XmlNode node in allPlugIns) {
-                if (node.Attributes != null && int.Parse(node.Attributes["from"].Value) > list.Count) {
-                    node.Attributes["from"].Value = list.Count.ToString(CultureInfo.InvariantCulture);
+            TotalEventPeriods = EventValues.GetLength(Utils.IndexColsOrWidth);
+            ResetOutputPlugins(channels, height);
+        }
+
+
+        private void ResetOutputPlugins(ICollection channels, int height) {
+            var outputPlugins = PlugInData.GetAllPluginData(SetupData.PluginType.Output);
+
+            foreach (XmlNode node in outputPlugins) {
+                if (node.Attributes != null && int.Parse(node.Attributes["from"].Value) > channels.Count) {
+                    node.Attributes["from"].Value = channels.Count.ToString(CultureInfo.InvariantCulture);
                 }
                 if (node.Attributes == null) {
                     continue;
                 }
-                var num21 = int.Parse(node.Attributes["to"].Value);
-                if ((num21 == length) || (num21 > list.Count)) {
-                    node.Attributes["to"].Value = list.Count.ToString(CultureInfo.InvariantCulture);
+                var lastChannel = int.Parse(node.Attributes["to"].Value);
+                if ((lastChannel == height) || (lastChannel > channels.Count)) {
+                    node.Attributes["to"].Value = channels.Count.ToString(CultureInfo.InvariantCulture);
                 }
             }
         }
