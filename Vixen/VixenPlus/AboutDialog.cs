@@ -52,8 +52,9 @@ namespace VixenPlus {
         private void AboutDialog_MouseClick(object sender, EventArgs e) {
             var credits = new StringBuilder();
             credits.AppendLine(Resources.InspiredBy).AppendLine("K.C. Oaks and Vixen 2.x\n");
-            credits.AppendLine(Resources.WrittenBy).AppendLine("John McAdams\nAKA Macebobo\nPronounced Mac E Bo Bo\n\n");
-            credits.AppendLine(Resources.TestedBy).AppendLine("Falcon\nPhoenix\nEagle\nOregonLights\nDirknerkle\n");
+            credits.AppendLine(Resources.WrittenBy).AppendLine("John McAdams\nAKA Mac E Bo Bo\n\n");
+            credits.AppendLine(Resources.TestedBy).AppendLine(Resources.BetaTesters);
+            credits.AppendLine(Resources.TranslatedBy).AppendLine(Resources.Translators);
             credits.AppendLine(Resources.DedicatedTo).AppendLine(Resources.MyFriends).AppendLine(Resources.ThankYou);
             credits.AppendLine(Resources.OpenSource).AppendLine("FMOD Sound System by\nFirelight Technologies");
             credits.AppendLine(Resources.Lutefisk);

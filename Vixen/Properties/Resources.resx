@@ -530,6 +530,8 @@ The plugin's setup data may be invalid or inaccurate.</value>
 
 
 
+
+
 Lutefisk for all!</value>
   </data>
   <data name="ProductDescription" xml:space="preserve">
@@ -959,8 +961,24 @@ Please select a value between 0 and 100.</value>
   <data name="Replace_selected_values_in_the_" xml:space="preserve">
     <value>Replace specified values in the </value>
   </data>
-	<data name="OpenSource" xml:space="preserve">
+  <data name="OpenSource" xml:space="preserve">
     <value>Free or open source
 project used:</value>
+  </data>
+  <data name="BetaTesters" xml:space="preserve">
+    <value>Eagle
+Falcon
+Keith Tarply
+Materdaddy
+Phoenix
+teberle
+</value>
+  </data>
+  <data name="TranslatedBy" xml:space="preserve">
+    <value>Translated By:</value>
+  </data>
+  <data name="Translators" xml:space="preserve">
+    <value>No One Yet!
+</value>
   </data>
 </root>
