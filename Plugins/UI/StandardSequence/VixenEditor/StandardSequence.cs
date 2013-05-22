@@ -1464,7 +1464,7 @@ namespace VixenEditor {
         }
 
 
-        private SolidBrush BrushHandler(SolidBrush brush, string preference) {
+        private SolidBrush BrushHandler(IDisposable brush, string preference) {
             if (brush != null) {
                 brush.Dispose();
             }
@@ -1472,7 +1472,7 @@ namespace VixenEditor {
         }
 
 
-        private Pen PenHandler(Pen pen, string preference) {
+        private Pen PenHandler(IDisposable pen, string preference) {
             if (pen != null) {
                 pen.Dispose();
             }
@@ -1762,8 +1762,8 @@ namespace VixenEditor {
             int channelOffset;
 
             var height = pictureBoxTime.Height + splitContainer2.SplitterWidth;
-            cbGroups.Width = pictureBoxChannels.Width;
-            cbGroups.Location = new Point(0, height - cbGroups.Height - splitContainer2.SplitterWidth);
+            cbGroups.Width = pictureBoxChannels.Width - CaretSize;
+            cbGroups.Location = new Point(CaretSize, height - cbGroups.Height - splitContainer2.SplitterWidth);
 
             var selectedZoom = toolStripComboBoxRowZoom.SelectedIndex;
             var heightAddition = (selectedZoom <= 4) ? 0 : (selectedZoom >= 8) ? 3 : 1;
@@ -4421,6 +4421,8 @@ namespace VixenEditor {
                 var channelIndex = (clipRect.Y / _gridRowHeight) + vScrollBar1.Value;
 
                 var y = (clipRect.Y / _gridRowHeight * _gridRowHeight) + 1;
+                System.Diagnostics.Debug.Print("******* X: {0} Y: {1} W: {2} H: {3}", clipRect.X, clipRect.Y,
+                                               clipRect.Width, clipRect.Height);
                 while ((y < clipRect.Bottom) && (channelIndex < _sequence.ChannelCount)) {
                     var currentChannel = _channelOrderMapping[channelIndex];
                     // TODO: Error below when drawing a non contiguous range.
@@ -4428,17 +4430,20 @@ namespace VixenEditor {
                         var channel = _sequence.Channels[currentChannel];
                         var x = initialX;
 
-                        for (var @event = startEvent; (x < clipRect.Right) && (@event < _sequence.TotalEventPeriods); @event++) {
+                        for (var cell = startEvent; (x < clipRect.Right) && (cell < _sequence.TotalEventPeriods); cell++) {
                             if (_showingGradient) {
-                                brush.Color = GetGradientColor(_gridBackBrush.Color, channel.Color, _sequence.EventValues[currentChannel, @event]);
+                                brush.Color = GetGradientColor(_gridBackBrush.Color, channel.Color, _sequence.EventValues[currentChannel, cell]);
+                                System.Diagnostics.Debug.Print("C: {4} X: {0} Y: {1} W: {2} H: {3}", x, y, _gridColWidth - 1,
+                                                               _gridRowHeight - 1, channelIndex);
+
                                 g.FillRectangle(brush, x, y, _gridColWidth - 1, _gridRowHeight - 1);
                             } else {
-                                var height = ((_gridRowHeight - 1) * _sequence.EventValues[currentChannel, @event]) / 255;
+                                var height = ((_gridRowHeight - 1) * _sequence.EventValues[currentChannel, cell]) / 255;
                                 g.FillRectangle(channel.Brush ?? _channelBackBrush, x, ((y + _gridRowHeight) - 1) - height, _gridColWidth - 1, height);
                             }
 
                             string cellIntensity;
-                            if (_showCellText && (GetCellIntensity(@event, channelIndex, out cellIntensity) > 0)) {
+                            if (_showCellText && (GetCellIntensity(cell, channelIndex, out cellIntensity) > 0)) {
                                 g.DrawString(cellIntensity, font, Brushes.Black, new RectangleF(x, y, (_gridColWidth - 1), (_gridRowHeight - 1)));
                             }
                             x += _gridColWidth;
