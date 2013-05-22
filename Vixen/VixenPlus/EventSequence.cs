@@ -297,9 +297,7 @@ namespace VixenPlus {
         }
 
 
-        //TODO This is not working either.
-        public void DeleteChannel(ulong channelId) {
-            var index = Channels.IndexOf(FindChannel(channelId));
+        public void DeleteChannel(int index) {
             Channels.RemoveAt(index);
             var buffer = new byte[ChannelCount,TotalEventPeriods];
             var num3 = 0;
@@ -356,7 +354,6 @@ namespace VixenPlus {
         }
 
 
-        //todo this is broken since there are not any channels showing up here...
         public int InsertChannel(int sortedIndex) {
             var count = LastSort >= 0 ? _channels.Count : sortedIndex;
             if (count > _channels.Count) {

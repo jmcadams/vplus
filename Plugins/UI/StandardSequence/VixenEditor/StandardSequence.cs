@@ -212,12 +212,18 @@ namespace VixenEditor {
 
             var affectedBlockData = GetAffectedBlockData(blockAffected);
             _undoStack.Push(new UndoItem(blockAffected.Location, affectedBlockData, behavior, _sequence, _channelOrderMapping, originalAction));
-            toolStripButtonUndo.Enabled = undoToolStripMenuItem.Enabled = true;
-            UpdateUndoText();
-            toolStripButtonRedo.Enabled = redoToolStripMenuItem.Enabled = false;
-            _redoStack.Clear();
-            UpdateRedoText();
+            SetUndoRedo(true, false);
             IsDirty = true;
+        }
+
+
+        private void SetUndoRedo(bool setUndo, bool setRedo) {
+            toolStripButtonUndo.Enabled = undoToolStripMenuItem.Enabled = setUndo;
+            if (!setUndo) _undoStack.Clear();
+            UpdateUndoText();
+            toolStripButtonRedo.Enabled = redoToolStripMenuItem.Enabled = setRedo;
+            if (!setRedo) _redoStack.Clear();
+            UpdateRedoText();
         }
 
 
@@ -462,6 +468,7 @@ namespace VixenEditor {
         private void ChannelCountChanged() {
             IsDirty = true;
             textBoxChannelCount.Text = _sequence.ChannelCount.ToString(CultureInfo.InvariantCulture);
+            cbGroups_SelectedIndexChanged(null, null);
             pictureBoxChannels.Refresh();
             pictureBoxGrid.Refresh();
         }
@@ -3438,7 +3445,6 @@ namespace VixenEditor {
         }
 
 
-        //TODO Need to test the insert and delete channel code
         //TODO Move each key to its own method?
         private void HandleChannelKeyPress(KeyEventArgs e) {
             var selectedChannelIndex = GetChannelSortedIndex(SelectedChannel);
@@ -3450,10 +3456,13 @@ namespace VixenEditor {
                     if (e.Shift) {
                         FillChannel(selectedChannelIndex);
                     }
-                    else if (_sequence.Profile == null && _sequence.ChannelCount > 0) {
+                    else if (_sequence.Profile == null && _sequence.ChannelCount > 0 &&
+                             (MessageBox.Show(Resources.InsertChannel, Resources.InsertChannelConfirmation, MessageBoxButtons.YesNo,
+                                              MessageBoxIcon.Warning) == DialogResult.Yes)) {
                         var naturalIndex = _sequence.InsertChannel(selectedChannelIndex);
                         InsertChannelIntoSort(naturalIndex, selectedChannelIndex);
                         ChannelCountChanged();
+                        SetUndoRedo(false, false);
                     }
                     else {
                         e.Handled = false;
@@ -3466,11 +3475,12 @@ namespace VixenEditor {
                     }
                     else if (_sequence.Profile == null && _sequence.ChannelCount > 0 &&
                              (MessageBox.Show(string.Format(Resources.StringFormat_DeleteChannel, SelectedChannel.Name),
-                                              Resources.DeleteChannelConfirmation, MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
+                                              Resources.DeleteChannelConfirmation, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) ==
                               DialogResult.Yes)) {
-                        _sequence.DeleteChannel(SelectedChannel.Id);
+                        _sequence.DeleteChannel(selectedChannelIndex);
                         DeleteChannelFromSort(selectedChannelIndex);
                         ChannelCountChanged();
+                        SetUndoRedo(false, false);
                     }
                     e.Handled = true;
                     break;

@@ -864,7 +864,9 @@ There is audio associated which would exceed that length.</value>
     <value>On</value>
   </data>
   <data name="StringFormat_DeleteChannel" xml:space="preserve">
-    <value>Delete channel {0}?</value>
+    <value>Delete channel '{0}'?
+    
+This cannot be undone and your undo history will be cleared.</value>
   </data>
   <data name="StringFormat_DeleteChannelOrder" xml:space="preserve">
     <value>Delete channel order '{0}'?</value>
@@ -980,5 +982,12 @@ teberle
   <data name="Translators" xml:space="preserve">
     <value>No One Yet!
 </value>
+  </data>
+	<data name="InsertChannel" xml:space="preserve">
+    <value>Inserting a new channel cannot be undone
+and will cause your undo history to be deleted.  Proceed?</value>
+  </data>
+	<data name="InsertChannelConfirmation" xml:space="preserve">
+    <value>Insert Channel?</value>
   </data>
 </root>

@@ -705,6 +705,25 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inserting a new channel cannot be undone
+        ///and will cause your undo history to be deleted.  Proceed?.
+        /// </summary>
+        public static string InsertChannel {
+            get {
+                return ResourceManager.GetString("InsertChannel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insert Channel?.
+        /// </summary>
+        public static string InsertChannelConfirmation {
+            get {
+                return ResourceManager.GetString("InsertChannelConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inspired By:.
         /// </summary>
         public static string InspiredBy {
@@ -1708,7 +1727,9 @@ namespace Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete channel {0}?.
+        ///   Looks up a localized string similar to Delete channel &apos;{0}&apos;?
+        ///    
+        ///This cannot be undone and your undo history will be cleared..
         /// </summary>
         public static string StringFormat_DeleteChannel {
             get {
