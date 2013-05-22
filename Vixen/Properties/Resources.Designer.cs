@@ -138,6 +138,21 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Eagle
+        ///Falcon
+        ///Keith Tarply
+        ///Materdaddy
+        ///Phoenix
+        ///teberle
+        ///.
+        /// </summary>
+        public static string BetaTesters {
+            get {
+                return ResourceManager.GetString("BetaTesters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Can&apos;t import channel names when a sequence is attached to a profile..
         /// </summary>
         public static string CantImportChannels {
@@ -875,6 +890,8 @@ namespace Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to 
+        ///
+        ///
         ///
         ///
         ///
@@ -1835,6 +1852,25 @@ namespace Properties {
         public static string ToolTip_IntensityPercent {
             get {
                 return ResourceManager.GetString("ToolTip_IntensityPercent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Translated By:.
+        /// </summary>
+        public static string TranslatedBy {
+            get {
+                return ResourceManager.GetString("TranslatedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No One Yet!
+        ///.
+        /// </summary>
+        public static string Translators {
+            get {
+                return ResourceManager.GetString("Translators", resourceCulture);
             }
         }
         
