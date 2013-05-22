@@ -983,11 +983,11 @@ teberle
     <value>No One Yet!
 </value>
   </data>
-	<data name="InsertChannel" xml:space="preserve">
+  <data name="InsertChannel" xml:space="preserve">
     <value>Inserting a new channel cannot be undone
 and will cause your undo history to be deleted.  Proceed?</value>
   </data>
-	<data name="InsertChannelConfirmation" xml:space="preserve">
+  <data name="InsertChannelConfirmation" xml:space="preserve">
     <value>Insert Channel?</value>
   </data>
 </root>
