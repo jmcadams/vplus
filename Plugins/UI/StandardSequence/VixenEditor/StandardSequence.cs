@@ -26,6 +26,7 @@ namespace VixenEditor {
         private bool _actualLevels;
         private bool _autoScrolling;
         private bool _initializing;
+        private bool _isGroupActive;
         private bool _mouseDownInGrid;
         private bool _showCellText;
         private bool _showPositionMarker;
@@ -978,15 +979,6 @@ namespace VixenEditor {
         }
 
 
-        private static Color GetGradientColor(Color startColor, Color endColor, int level) {
-            var num = level / (float) Utils.Cell8BitMax;
-            var r = (int) (((endColor.R - startColor.R) * num) + startColor.R);
-            var g = (int) (((endColor.G - startColor.G) * num) + startColor.G);
-            var b = (int) (((endColor.B - startColor.B) * num) + startColor.B);
-            return Color.FromArgb(r, g, b);
-        }
-
-
         private int GetLineIndexAt(Point point) {
             return (point.Y - (pictureBoxTime.Height + splitContainer2.SplitterWidth)) / _gridRowHeight + vScrollBar1.Value;
         }
@@ -1776,7 +1768,7 @@ namespace VixenEditor {
                 for (channelOffset = vScrollBar1.Value; (channelOffset >= 0) && (channelOffset < _sequence.ChannelCount); channelOffset++) {
 
                     mappedChannel = _channelOrderMapping[channelOffset];
-                    if (_sequence.ActiveChannels.Contains(mappedChannel)) {
+                    if (_sequence.ActiveChannels[mappedChannel]) {
                         channel = _sequence.Channels[mappedChannel];
                         var isChannelSelected = (channel == SelectedChannel);
 
@@ -1806,7 +1798,7 @@ namespace VixenEditor {
                     for (channelOffset = vScrollBar1.Value; (channelOffset >= 0) && (channelOffset < _sequence.ChannelCount); channelOffset++) {
 
                         mappedChannel = _channelOrderMapping[channelOffset];
-                        if (!_sequence.ActiveChannels.Contains(mappedChannel)) {
+                        if (!_sequence.ActiveChannels[mappedChannel]) {
                             continue;
                         }
 
@@ -2508,7 +2500,6 @@ namespace VixenEditor {
             pictureBoxChannels.Refresh();
             pictureBoxGrid.Refresh();
             LoadSequenceSorts();
-            //TODO: See if the event assignment in the following method are left to leak.
             LoadSequencePlugins();
         }
 
@@ -3081,7 +3072,6 @@ namespace VixenEditor {
         }
 
 
-        // TODO: May want to unsubscribe to the known event handlers here...
         private void StandardSequence_FormClosing(object sender, FormClosingEventArgs e) {
             if ((e.CloseReason == CloseReason.UserClosing) && (CheckDirty() == DialogResult.Cancel)) {
                 e.Cancel = true;
@@ -4413,29 +4403,37 @@ namespace VixenEditor {
                 return;
             }
 
+            if (clipRect.Y > _sequence.ActiveChannelCount * _gridRowHeight) {
+                g.FillRectangle(_gridBackBrush, clipRect);
+                return;
+            }
+
             var fontSize = (_gridColWidth <= 20) ? 5 : ((_gridColWidth <= 25) ? 6 : ((_gridColWidth < 50) ? 8 : 10));
             using (var font = new Font(Font.FontFamily, fontSize))
             using (var brush = new SolidBrush(Color.White)) {
                 var initialX = (clipRect.X / _gridColWidth * _gridColWidth) + 1;
                 var startEvent = (clipRect.X / _gridColWidth) + hScrollBar1.Value;
                 var channelIndex = (clipRect.Y / _gridRowHeight) + vScrollBar1.Value;
-
+                if (_isGroupActive) {
+                    var actualChannelIndex = 0;
+                    var actualIndex = 0;
+                    while (actualChannelIndex < channelIndex) {
+                        if (_sequence.ActiveChannels[actualIndex]) actualChannelIndex++;
+                        actualIndex++;
+                    }
+                    channelIndex = actualIndex;
+                }
                 var y = (clipRect.Y / _gridRowHeight * _gridRowHeight) + 1;
-                System.Diagnostics.Debug.Print("******* X: {0} Y: {1} W: {2} H: {3}", clipRect.X, clipRect.Y,
-                                               clipRect.Width, clipRect.Height);
+
                 while ((y < clipRect.Bottom) && (channelIndex < _sequence.ChannelCount)) {
                     var currentChannel = _channelOrderMapping[channelIndex];
-                    // TODO: Error below when drawing a non contiguous range.
-                    if (_sequence.ActiveChannels.Contains(currentChannel)) {
+                    if (_sequence.ActiveChannels[currentChannel]) {
                         var channel = _sequence.Channels[currentChannel];
                         var x = initialX;
 
                         for (var cell = startEvent; (x < clipRect.Right) && (cell < _sequence.TotalEventPeriods); cell++) {
                             if (_showingGradient) {
-                                brush.Color = GetGradientColor(_gridBackBrush.Color, channel.Color, _sequence.EventValues[currentChannel, cell]);
-                                System.Diagnostics.Debug.Print("C: {4} X: {0} Y: {1} W: {2} H: {3}", x, y, _gridColWidth - 1,
-                                                               _gridRowHeight - 1, channelIndex);
-
+                                brush.Color = Color.FromArgb(_sequence.EventValues[currentChannel, cell], channel.Color);
                                 g.FillRectangle(brush, x, y, _gridColWidth - 1, _gridRowHeight - 1);
                             } else {
                                 var height = ((_gridRowHeight - 1) * _sequence.EventValues[currentChannel, cell]) / 255;
@@ -4804,11 +4802,13 @@ namespace VixenEditor {
 
         private void cbGroups_SelectedIndexChanged(object sender, EventArgs e) {
             pictureBoxGrid.Focus();
-            _sequence.ActiveChannels.Clear();
-            if (cbGroups.SelectedIndex == 0) {
+            Array.Clear(_sequence.ActiveChannels, 0, _sequence.ActiveChannels.Length);
+            _isGroupActive = cbGroups.SelectedIndex != 0;
+            if (!_isGroupActive) {
                 for (var i = 0; i < _sequence.ChannelCount; i++) {
-                    _sequence.ActiveChannels.Add(i);
+                    _sequence.ActiveChannels[i] = true;
                 }
+                _sequence.ActiveChannelCount = _sequence.ChannelCount;
             }
             else {
                 var itemKey = cbGroups.SelectedItem.ToString();
@@ -4818,9 +4818,14 @@ namespace VixenEditor {
                 else {
                     AddChannels(itemKey);
                 }
+                var count = 0;
+                foreach (var item in _sequence.ActiveChannels) {
+                    if (item) count++;
+                }
+                _sequence.ActiveChannelCount = count;
             }
-            if (_selectedCells.Height > _sequence.ActiveChannelCount) {
-                _selectedCells.Height = _sequence.ActiveChannelCount;
+            if (_selectedCells.Top + _selectedCells.Height > _sequence.ActiveChannelCount) {
+                _selectedCells.Height = _sequence.ActiveChannelCount - _selectedCells.Top;
             }
             VScrollCheck();
             pictureBoxChannels.Refresh();
@@ -4854,8 +4859,8 @@ namespace VixenEditor {
             var node = nodeData.Split(new[] {','});
             foreach (var channelNumber in node) {
                 int channel;
-                if (Int32.TryParse(channelNumber, out channel) && !_sequence.ActiveChannels.Contains(channel)) {
-                    _sequence.ActiveChannels.Add(channel);
+                if (Int32.TryParse(channelNumber, out channel)) {
+                    _sequence.ActiveChannels[channel] = true;
                 }
             }
         }

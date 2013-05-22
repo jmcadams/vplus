@@ -13,12 +13,9 @@ namespace VixenPlus {
         private int _eventPeriod;
         private Profile _profile;
         private SortOrders _sortOrders;
-
-        //TODO: Investigate a HashSet if this has performance issues later.
-        public List<int> ActiveChannels { get; set; }
-
+        
+        public bool[] ActiveChannels { get; set; }
         public Dictionary<string, string> Groups { get; private set; }
-
 
         public EventSequence(string fileName) {
             EventValues = null;
@@ -88,8 +85,11 @@ namespace VixenPlus {
 
         public Audio Audio { get; set; }
 
+
+        private int _activeChannelCount;
         public int ActiveChannelCount {
-            get { return ActiveChannels.Count == 0 ? ChannelCount : ActiveChannels.Count; }
+            get { return _activeChannelCount == 0 ? ChannelCount : _activeChannelCount; }
+            set { _activeChannelCount = value; }
         }
 
         public int ChannelCount {
@@ -423,7 +423,6 @@ namespace VixenPlus {
         private void LoadFromXml(XmlNode contextNode) {
             var requiredNode = Xml.GetRequiredNode(contextNode, "Program");
             _channels = new List<Channel>();
-            ActiveChannels = new List<int>();
             PlugInData = new SetupData();
             LoadableData = new LoadableData();
             Extensions = new SequenceExtensions();
@@ -465,6 +464,8 @@ namespace VixenPlus {
                 }
             }
             var count = Channels.Count;
+            ActiveChannels = new bool[count];
+
             var node4 = requiredNode.SelectSingleNode("EventValues");
             if (node4 != null) {
                 var buffer = Convert.FromBase64String(node4.InnerText);
