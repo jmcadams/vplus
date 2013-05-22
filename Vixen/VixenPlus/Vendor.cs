@@ -12,11 +12,12 @@ namespace VixenPlus
         public const string ModuleManager = "Roadie";
         public const string ModuleScheduler = "Conductor";
 
-        public const string DataExtension = "vda";
-        public const string ProfilExtension = "pro";
-        public const string ProgramExtension = "vpr";
-        public const string RoutineExtension = "vir";
-        public const string SequenceExtension = "vix";
+        public const string DataExtension = ".vda";
+        public const string GroupExtension = ".vgr";
+        public const string ProfilExtension = ".pro";
+        public const string ProgramExtension = ".vpr";
+        public const string RoutineExtension = ".vir";
+        public const string SequenceExtension = ".vix";
 
         public const string SupportURL = "http://www.diychristmas.org/vb1/forumdisplay.php?19-VixenPlus";
 

@@ -310,8 +310,8 @@ namespace VixenEditor {
 
 
         private void attachSequenceToToolStripMenuItem_Click(object sender, EventArgs e) {
-            openFileDialog1.Filter = Resources.Profile + @" | *." + Vendor.ProfilExtension;
-            openFileDialog1.DefaultExt = Vendor.ProfilExtension;
+            openFileDialog1.Filter = Resources.Profile + @" | *" + Vendor.ProfilExtension;
+            openFileDialog1.DefaultExt = Vendor.ProfilExtension.Replace(".","");
             openFileDialog1.InitialDirectory = Paths.ProfilePath;
             openFileDialog1.FileName = string.Empty;
             if (openFileDialog1.ShowDialog() == DialogResult.OK) {
@@ -4642,7 +4642,7 @@ namespace VixenEditor {
         }
 
         public override string FileExtension {
-            get { return @"." + Vendor.SequenceExtension; }
+            get { return Vendor.SequenceExtension; }
         }
 
         public override string FileTypeDescription {
