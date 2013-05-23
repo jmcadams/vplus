@@ -116,7 +116,7 @@ namespace VixenPlus {
 
             var attribute = node.Attributes["lastSort"];
             if (attribute != null) {
-                LastSort = Convert.ToInt32(attribute.Value);
+                LastSort = Convert.ToInt32(attribute.Value) - 1;
             }
         }
 
