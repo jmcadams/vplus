@@ -11,16 +11,18 @@ using CommonUtils;
 using Properties;
 
 //TODO Can add a getter for ROWS and COLUMNS
+
 namespace VixenPlus {
     public class EventSequence : IScheduledObject {
         private List<Channel> _channels;
-        private List<Channel> _normalizedChannels;
         private int _eventPeriod;
         private Profile _profile;
         private SortOrders _sortOrders;
-        
-        public bool[] ActiveChannels { get; set; }
+        private string _currentGroup = "";
+
         public Dictionary<string, string> Groups { get; private set; }
+
+        #region Constructors
 
         public EventSequence(string fileName) {
             EventValues = null;
@@ -64,7 +66,6 @@ namespace VixenPlus {
             UserData = null;
             Key = Host.GetUniqueKey();
             _channels = new List<Channel>();
-            _normalizedChannels = new List<Channel>();
             PlugInData = new SetupData();
             LoadableData = new LoadableData();
             _sortOrders = new SortOrders();
@@ -88,32 +89,22 @@ namespace VixenPlus {
             Time = 60000;
         }
 
+        #endregion
 
-        public Audio Audio { get; set; }
 
+        #region nonChannelStuff
 
-        private int _activeChannelCount;
-        public int ActiveChannelCount {
-            get { return _activeChannelCount == 0 ? ChannelCount : _activeChannelCount; }
-            set { _activeChannelCount = value; }
-        }
-
-        public int ChannelCount {
-            get { return _profile == null ? _channels.Count : _profile.Channels.Count; }
-            set {
-                while (_channels.Count > value) {
-                    _channels.RemoveAt(value);
-                }
-                for (var i = _channels.Count + 1; _channels.Count < value; i++) {
-                    _channels.Add(new Channel(Resources.Channel + @" " + i.ToString(CultureInfo.InvariantCulture), i - 1, true));
-                }
-                UpdateEventValueArray();
-                _sortOrders.UpdateChannelCounts(value);
+        private int ExtentOfAudio() {
+            if (Audio != null) {
+                return Audio.Duration;
             }
+            return -2147483648;
         }
+
+
 
         public int ChannelWidth { get; set; }
-
+        public Audio Audio { get; set; }
         public EngineType EngineType { get; set; }
 
         public int EventPeriod {
@@ -131,40 +122,11 @@ namespace VixenPlus {
         public byte[,] EventValues { get; set; }
 
         public SequenceExtensions Extensions { get; private set; }
-
-        public int LastSort {
-            get { return _profile == null ? _sortOrders.LastSort : _profile.Sorts.LastSort; }
-            set {
-                if (_profile == null) {
-                    _sortOrders.LastSort = value;
-                }
-                else {
-                    _profile.Sorts.LastSort = value;
-                }
-            }
-        }
-
         public LoadableData LoadableData { get; private set; }
 
         public byte MaximumLevel { get; set; }
 
         public byte MinimumLevel { get; set; }
-
-        public Profile Profile {
-            get { return _profile; }
-            set {
-                if ((value == null) && (_profile != null)) {
-                    DetachFromProfile();
-                }
-                else if (_profile != value) {
-                    AttachToProfile(value);
-                }
-            }
-        }
-
-        public SortOrders Sorts {
-            get { return _profile == null ? _sortOrders : _profile.Sorts; }
-        }
 
         public int Time {
             get { return Length; }
@@ -190,16 +152,6 @@ namespace VixenPlus {
         public bool CanBePlayed {
             get { return true; }
         }
-
-        public List<Channel> Channels {
-            get { return _profile == null ? _channels : _profile.Channels; }
-            set { AssignChannelArray(value); }
-        }
-
-        public List<Channel> NormalizedChannels {
-            get { return _profile == null ? _normalizedChannels : _profile.Channels; }
-            set { AssignChannelArray(value); }
-        } 
 
         public string FileName { get; set; }
 
@@ -251,106 +203,11 @@ namespace VixenPlus {
             }
         }
 
-        public List<Channel> OutputChannels {
-            get {
-                var list = new List<Channel>(_channels);
-                foreach (var channel in _channels) {
-                    list[channel.OutputChannel] = channel;
-                }
-                return list;
-            }
-        }
-
         public SetupData PlugInData { get; set; }
 
         public bool TreatAsLocal { get; set; }
 
         public object UserData { get; set; }
-
-
-        private void AssignChannelArray(List<Channel> channels) {
-            _channels = channels;
-            if (_channels.Count != EventValues.GetLength(Utils.IndexRowsOrHeight)) {
-                UpdateEventValueArray(true);
-            }
-            _sortOrders.UpdateChannelCounts(_channels.Count);
-        }
-
-
-        private void AttachToProfile(string profileName) {
-            var path = Path.Combine(Paths.ProfilePath, profileName + Vendor.ProfilExtension);
-            if (File.Exists(path)) {
-                AttachToProfile(new Profile(path));
-                var groupFile = Path.Combine(Paths.ProfilePath, Path.GetFileNameWithoutExtension(_profile.FileName) + Vendor.GroupExtension);
-                if (File.Exists(groupFile)) {
-                    Groups = Group.LoadGroups(groupFile);
-                }
-            }
-            else {
-                LoadEmbeddedData(FileName);
-            }
-        }
-
-
-        private void AttachToProfile(Profile profile) {
-            _profile = profile;
-            _profile.Freeze();
-            LoadFromProfile();
-        }
-
-
-        public void CopyChannel(Channel source, Channel dest) {
-            var index = _channels.IndexOf(source);
-            var num2 = _channels.IndexOf(dest);
-            for (var i = 0; i < TotalEventPeriods; i++) {
-                EventValues[num2, i] = EventValues[index, i];
-            }
-        }
-
-
-        public void DeleteChannel(int index) {
-            Channels.RemoveAt(index);
-            var buffer = new byte[ChannelCount,TotalEventPeriods];
-            var num3 = 0;
-            for (var i = 0; i < EventValues.GetLength(0); i++) {
-                if (i == index) {
-                    continue;
-                }
-                for (var j = 0; j < TotalEventPeriods; j++) {
-                    buffer[num3, j] = EventValues[i, j];
-                }
-                num3++;
-            }
-            EventValues = buffer;
-            _sortOrders.DeleteChannel(index);
-        }
-
-
-        private void DetachFromProfile() {
-            LoadEmbeddedData(FileName);
-            if (((_profile.Channels.Count > _channels.Count) && HasData()) &&
-                (MessageBox.Show(Resources.IncreaseChannelCount, Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
-                 DialogResult.Yes)) {
-                while (_channels.Count < _profile.Channels.Count) {
-                    _channels.Add(_profile.Channels[_channels.Count]);
-                }
-            }
-            _profile = null;
-            UpdateEventValueArray();
-        }
-
-
-        private int ExtentOfAudio() {
-            if (Audio != null) {
-                return Audio.Duration;
-            }
-            return -2147483648;
-        }
-
-
-        public Channel FindChannel(ulong id) {
-            return Channels.Find(c => c.Id == id);
-        }
 
 
         private bool HasData() {
@@ -408,20 +265,6 @@ namespace VixenPlus {
         }
 
 
-        private void LoadEmbeddedData(XmlNode contextNode) {
-            _channels.Clear();
-            var xmlNodeList = contextNode.SelectNodes("Channels/Channel");
-            if (xmlNodeList != null) {
-                foreach (XmlNode node in xmlNodeList) {
-                    _channels.Add(new Channel(node));
-                }
-            }
-            PlugInData = new SetupData();
-            PlugInData.LoadFromXml(contextNode);
-            _sortOrders = new SortOrders();
-            _sortOrders.LoadFromXml(contextNode);
-        }
-
 
         private void LoadFromProfile() {
             PlugInData = _profile.PlugInData;
@@ -430,100 +273,6 @@ namespace VixenPlus {
         }
 
 
-        private void LoadFromXml(XmlNode contextNode) {
-            var requiredNode = Xml.GetRequiredNode(contextNode, "Program");
-            _channels = new List<Channel>();
-            PlugInData = new SetupData();
-            LoadableData = new LoadableData();
-            Extensions = new SequenceExtensions();
-            _sortOrders = new SortOrders();
-            var timeNode = requiredNode.SelectSingleNode("Time");
-            if (timeNode != null) {
-                Time = Convert.ToInt32(timeNode.InnerText);
-            }
-            var eventPeriodNode = requiredNode.SelectSingleNode("EventPeriodInMilliseconds");
-            if (eventPeriodNode != null) {
-                _eventPeriod = Convert.ToInt32(eventPeriodNode.InnerText);
-            }
-            var minLevelNode = requiredNode.SelectSingleNode("MinimumLevel");
-            if (minLevelNode != null) {
-                MinimumLevel = (byte) Convert.ToInt32(minLevelNode.InnerText);
-            }
-            var mnaxLevelNode = requiredNode.SelectSingleNode("MaximumLevel");
-            if (mnaxLevelNode != null) {
-                MaximumLevel = (byte) Convert.ToInt32(mnaxLevelNode.InnerText);
-            }
-            var audioDeviceNode = requiredNode.SelectSingleNode("AudioDevice");
-            if (audioDeviceNode != null) {
-                AudioDeviceIndex = int.Parse(audioDeviceNode.InnerText);
-            }
-            AudioDeviceVolume = int.Parse(Xml.GetNodeAlways(requiredNode, "AudioVolume", "100").InnerText);
-            var node2 = requiredNode.SelectSingleNode("Profile");
-            if (node2 == null) {
-                LoadEmbeddedData(requiredNode);
-            }
-            else {
-                AttachToProfile(node2.InnerText);
-            }
-            UpdateEventValueArray();
-            var audioFileNode = requiredNode.SelectSingleNode("Audio");
-            if (audioFileNode != null) {
-                if (audioFileNode.Attributes != null) {
-                    Audio = new Audio(audioFileNode.InnerText, audioFileNode.Attributes["filename"].Value,
-                                      Convert.ToInt32(audioFileNode.Attributes["duration"].Value));
-                }
-            }
-            var count = Channels.Count;
-            ActiveChannels = new bool[count];
-
-            var node4 = requiredNode.SelectSingleNode("EventValues");
-            if (node4 != null) {
-                var buffer = Convert.FromBase64String(node4.InnerText);
-                var index = 0;
-                for (var row = 0; (row < count) && (index < buffer.Length); row++) {
-                    for (var column = 0; (column < TotalEventPeriods) && (index < buffer.Length); column++) {
-                        EventValues[row, column] = buffer[index++];
-                    }
-                }
-            }
-            var node5 = requiredNode.SelectSingleNode("WindowSize");
-            if (node5 != null) {
-                var strArray = node5.InnerText.Split(new[] {','});
-                try {
-                    WindowWidth = Convert.ToInt32(strArray[0]);
-                }
-                catch {
-                    WindowWidth = 0;
-                }
-                try {
-                    WindowHeight = Convert.ToInt32(strArray[1]);
-                }
-                catch {
-                    WindowHeight = 0;
-                }
-            }
-            node5 = requiredNode.SelectSingleNode("ChannelWidth");
-            if (node5 != null) {
-                try {
-                    ChannelWidth = Convert.ToInt32(node5.InnerText);
-                }
-                catch {
-                    ChannelWidth = 0;
-                }
-            }
-            var node6 = requiredNode.SelectSingleNode("EngineType");
-            if (node6 != null) {
-                try {
-                    EngineType = (EngineType) Enum.Parse(typeof (EngineType), node6.InnerText);
-                }
-                    // ReSharper disable EmptyGeneralCatchClause
-                catch
-                    // ReSharper restore EmptyGeneralCatchClause
-                {}
-            }
-            LoadableData.LoadFromXml(requiredNode);
-            Extensions.LoadFromXml(requiredNode);
-        }
 
 
         public void ReloadProfile() {
@@ -643,10 +392,12 @@ namespace VixenPlus {
             }
             else {
                 var newEventValues = new byte[channels.Count,(int) Math.Ceiling(((Length) / ((float) _eventPeriod)))];
-                if (((EventValues != null) && (EventValues.GetLength(Utils.IndexRowsOrHeight) != 0)) && (EventValues.GetLength(Utils.IndexColsOrWidth) != 0)) {
-                    var eventCountRatio = (newEventValues.GetLength(Utils.IndexColsOrWidth)) / ((double)EventValues.GetLength(Utils.IndexColsOrWidth));
-                    
-                    var oldEventsPerSecond = (float)(Utils.MillsPerSecond / (_eventPeriod * eventCountRatio));
+                if (((EventValues != null) && (EventValues.GetLength(Utils.IndexRowsOrHeight) != 0)) &&
+                    (EventValues.GetLength(Utils.IndexColsOrWidth) != 0)) {
+                    var eventCountRatio = (newEventValues.GetLength(Utils.IndexColsOrWidth)) /
+                                          ((double) EventValues.GetLength(Utils.IndexColsOrWidth));
+
+                    var oldEventsPerSecond = (float) (Utils.MillsPerSecond / (_eventPeriod * eventCountRatio));
                     var newEventsPerSecond = (float) Utils.MillsPerSecond / (_eventPeriod);
                     var eventPerSecond = Math.Min(oldEventsPerSecond, newEventsPerSecond);
 
@@ -655,7 +406,7 @@ namespace VixenPlus {
 
                     var oldColumns = oldEventsPerSecond / eventPerSecond;
                     var newColumns = newEventsPerSecond / eventPerSecond;
-                    
+
                     var columns = (int) Math.Min(((oldEventCount) / oldColumns), ((newEventCount) / newColumns));
                     var rows = Math.Min(channels.Count, EventValues.GetLength(Utils.IndexRowsOrHeight));
                     for (var row = 0; row < rows; row++) {
@@ -706,6 +457,275 @@ namespace VixenPlus {
             Xml.SetValue(contextNode, "WindowSize", string.Format("{0},{1}", windowWidth, windowHeight));
             Xml.SetValue(contextNode, "ChannelWidth", channelWidth.ToString(CultureInfo.InvariantCulture));
             document.Save(FileName);
+        }
+
+        #endregion
+
+        private void LoadFromXml(XmlNode contextNode) {
+            var requiredNode = Xml.GetRequiredNode(contextNode, "Program");
+            _channels = new List<Channel>();
+            PlugInData = new SetupData();
+            LoadableData = new LoadableData();
+            Extensions = new SequenceExtensions();
+            _sortOrders = new SortOrders();
+            var timeNode = requiredNode.SelectSingleNode("Time");
+            if (timeNode != null) {
+                Time = Convert.ToInt32(timeNode.InnerText);
+            }
+            var eventPeriodNode = requiredNode.SelectSingleNode("EventPeriodInMilliseconds");
+            if (eventPeriodNode != null) {
+                _eventPeriod = Convert.ToInt32(eventPeriodNode.InnerText);
+            }
+            var minLevelNode = requiredNode.SelectSingleNode("MinimumLevel");
+            if (minLevelNode != null) {
+                MinimumLevel = (byte)Convert.ToInt32(minLevelNode.InnerText);
+            }
+            var mnaxLevelNode = requiredNode.SelectSingleNode("MaximumLevel");
+            if (mnaxLevelNode != null) {
+                MaximumLevel = (byte)Convert.ToInt32(mnaxLevelNode.InnerText);
+            }
+            var audioDeviceNode = requiredNode.SelectSingleNode("AudioDevice");
+            if (audioDeviceNode != null) {
+                AudioDeviceIndex = int.Parse(audioDeviceNode.InnerText);
+            }
+            AudioDeviceVolume = int.Parse(Xml.GetNodeAlways(requiredNode, "AudioVolume", "100").InnerText);
+            var node2 = requiredNode.SelectSingleNode("Profile");
+            if (node2 == null) {
+                LoadEmbeddedData(requiredNode);
+            }
+            else {
+                AttachToProfile(node2.InnerText);
+            }
+
+            UpdateEventValueArray();
+            var audioFileNode = requiredNode.SelectSingleNode("Audio");
+            if (audioFileNode != null) {
+                if (audioFileNode.Attributes != null) {
+                    Audio = new Audio(audioFileNode.InnerText, audioFileNode.Attributes["filename"].Value,
+                                      Convert.ToInt32(audioFileNode.Attributes["duration"].Value));
+                }
+            }
+            var count = Channels.Count;
+
+            var node4 = requiredNode.SelectSingleNode("EventValues");
+            if (node4 != null) {
+                var buffer = Convert.FromBase64String(node4.InnerText);
+                var index = 0;
+                for (var row = 0; (row < count) && (index < buffer.Length); row++) {
+                    for (var column = 0; (column < TotalEventPeriods) && (index < buffer.Length); column++) {
+                        EventValues[row, column] = buffer[index++];
+                    }
+                }
+            }
+            var node5 = requiredNode.SelectSingleNode("WindowSize");
+            if (node5 != null) {
+                var strArray = node5.InnerText.Split(new[] { ',' });
+                try {
+                    WindowWidth = Convert.ToInt32(strArray[0]);
+                }
+                catch {
+                    WindowWidth = 0;
+                }
+                try {
+                    WindowHeight = Convert.ToInt32(strArray[1]);
+                }
+                catch {
+                    WindowHeight = 0;
+                }
+            }
+            node5 = requiredNode.SelectSingleNode("ChannelWidth");
+            if (node5 != null) {
+                try {
+                    ChannelWidth = Convert.ToInt32(node5.InnerText);
+                }
+                catch {
+                    ChannelWidth = 0;
+                }
+            }
+            var node6 = requiredNode.SelectSingleNode("EngineType");
+            if (node6 != null) {
+                try {
+                    EngineType = (EngineType)Enum.Parse(typeof(EngineType), node6.InnerText);
+                }
+                // ReSharper disable EmptyGeneralCatchClause
+                catch
+                    // ReSharper restore EmptyGeneralCatchClause
+                { }
+            }
+            LoadableData.LoadFromXml(requiredNode);
+            Extensions.LoadFromXml(requiredNode);
+
+            ApplyGroupAndSort();
+        }
+
+        private void LoadEmbeddedData(XmlNode contextNode) {
+            _channels.Clear();
+            var xmlNodeList = contextNode.SelectNodes("Channels/Channel");
+            if (xmlNodeList != null) {
+                foreach (XmlNode node in xmlNodeList) {
+                    _channels.Add(new Channel(node));
+                }
+            }
+            PlugInData = new SetupData();
+            PlugInData.LoadFromXml(contextNode);
+            _sortOrders = new SortOrders();
+            _sortOrders.LoadFromXml(contextNode);
+        }
+
+        public void ApplyGroupAndSort() {
+
+            System.Diagnostics.Debug.Print("Group: {0}, SortOrder: {1}", _currentGroup, LastSort);
+        }
+
+
+        public int ChannelCount {
+            get { return _profile == null ? _channels.Count : _profile.Channels.Count; }
+            set {
+                while (_channels.Count > value) {
+                    _channels.RemoveAt(value);
+                }
+                for (var i = _channels.Count + 1; _channels.Count < value; i++) {
+                    _channels.Add(new Channel(Resources.Channel + @" " + i.ToString(CultureInfo.InvariantCulture), i - 1, true));
+                }
+                UpdateEventValueArray();
+                _sortOrders.UpdateChannelCounts(value);
+            }
+        }
+
+
+        public int LastSort {
+            get { return _profile == null ? _sortOrders.LastSort : _profile.Sorts.LastSort; }
+            set {
+                if (_profile == null) {
+                    _sortOrders.LastSort = value;
+                }
+                else {
+                    _profile.Sorts.LastSort = value;
+                }
+                ApplyGroupAndSort();
+            }
+        }
+
+
+        public Profile Profile {
+            get { return _profile; }
+            set {
+                if ((value == null) && (_profile != null)) {
+                    DetachFromProfile();
+                }
+                else if (_profile != value) {
+                    AttachToProfile(value);
+                }
+            }
+        }
+
+
+        public SortOrders Sorts {
+            get { return _profile == null ? _sortOrders : _profile.Sorts; }
+        }
+
+
+        public string CurrentGroup {
+            get { return _currentGroup; }
+            set {
+                if (_currentGroup == value) return;
+                _currentGroup = value;
+                ApplyGroupAndSort();
+            }
+        }
+
+
+        public List<Channel> Channels {
+            get { return _profile == null ? _channels : _profile.Channels; }
+            set { AssignChannelArray(value); }
+        }
+
+
+        public List<Channel> OutputChannels {
+            get {
+                var list = new List<Channel>(_channels);
+                foreach (var channel in _channels) {
+                    list[channel.OutputChannel] = channel;
+                }
+                return list;
+            }
+        }
+
+
+        private void AssignChannelArray(List<Channel> channels) {
+            _channels = channels;
+            if (_channels.Count != EventValues.GetLength(Utils.IndexRowsOrHeight)) {
+                UpdateEventValueArray(true);
+            }
+            _sortOrders.UpdateChannelCounts(_channels.Count);
+        }
+
+
+        private void AttachToProfile(string profileName) {
+            var path = Path.Combine(Paths.ProfilePath, profileName + Vendor.ProfilExtension);
+            if (File.Exists(path)) {
+                AttachToProfile(new Profile(path));
+                var groupFile = Path.Combine(Paths.ProfilePath, Path.GetFileNameWithoutExtension(_profile.FileName) + Vendor.GroupExtension);
+                if (File.Exists(groupFile)) {
+                    Groups = Group.LoadGroups(groupFile);
+                }
+            }
+            else {
+                LoadEmbeddedData(FileName);
+            }
+        }
+
+
+        private void AttachToProfile(Profile profile) {
+            _profile = profile;
+            _profile.Freeze();
+            LoadFromProfile();
+        }
+
+
+        public void CopyChannel(Channel source, Channel dest) {
+            var index = _channels.IndexOf(source);
+            var num2 = _channels.IndexOf(dest);
+            for (var i = 0; i < TotalEventPeriods; i++) {
+                EventValues[num2, i] = EventValues[index, i];
+            }
+        }
+
+
+        public void DeleteChannel(int index) {
+            Channels.RemoveAt(index);
+            var buffer = new byte[ChannelCount,TotalEventPeriods];
+            var num3 = 0;
+            for (var i = 0; i < EventValues.GetLength(0); i++) {
+                if (i == index) {
+                    continue;
+                }
+                for (var j = 0; j < TotalEventPeriods; j++) {
+                    buffer[num3, j] = EventValues[i, j];
+                }
+                num3++;
+            }
+            EventValues = buffer;
+            _sortOrders.DeleteChannel(index);
+        }
+
+
+        private void DetachFromProfile() {
+            LoadEmbeddedData(FileName);
+            if (((_profile.Channels.Count > _channels.Count) && HasData()) &&
+                (MessageBox.Show(Resources.IncreaseChannelCount, Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
+                 DialogResult.Yes)) {
+                while (_channels.Count < _profile.Channels.Count) {
+                    _channels.Add(_profile.Channels[_channels.Count]);
+                }
+            }
+            _profile = null;
+            UpdateEventValueArray();
+        }
+
+
+        public Channel FindChannel(ulong id) {
+            return Channels.Find(c => c.Id == id);
         }
     }
 }
