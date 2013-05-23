@@ -1773,8 +1773,8 @@ namespace VixenEditor {
             if (!_showingOutputs) {
                 for (channelOffset = vScrollBar1.Value; (channelOffset >= 0) && (channelOffset < _sequence.ChannelCount); channelOffset++) {
 
-                    mappedChannel = _channelOrderMapping[channelOffset];
-                    channel = _sequence.Channels[mappedChannel];
+                    channel = _sequence.Channels[channelOffset];
+                    mappedChannel = channel.OutputChannel;
                     var isChannelSelected = (channel == SelectedChannel);
 
                     e.Graphics.FillRectangle(isChannelSelected ? SystemBrushes.Highlight : channel.Brush ?? _channelBackBrush, 0, height,
@@ -1801,8 +1801,8 @@ namespace VixenEditor {
                 using (var brush = new SolidBrush(Color.FromArgb(192, Color.Gray))) {
                     for (channelOffset = vScrollBar1.Value; (channelOffset >= 0) && (channelOffset < _sequence.ChannelCount); channelOffset++) {
 
-                        mappedChannel = _channelOrderMapping[channelOffset];
-                        channel = _sequence.Channels[mappedChannel];
+                        channel = _sequence.Channels[channelOffset];
+                        mappedChannel = channel.OutputChannel;
                         var isChannelSelected = (channel == SelectedChannel);
 
                         e.Graphics.FillRectangle(isChannelSelected ? SystemBrushes.Highlight : channel.Brush ?? _channelBackBrush, 0, height,
@@ -3521,7 +3521,7 @@ namespace VixenEditor {
             if (_sequence.Groups != null) {
                 cbGroups.Visible = true;
                 cbGroups.Items.Clear();
-                cbGroups.Items.Add("All Channels");
+                cbGroups.Items.Add(EventSequence.AllChannels);
                 foreach (var g in _sequence.Groups) {
                     cbGroups.Items.Add(g.Key);
                 }
@@ -4417,8 +4417,9 @@ namespace VixenEditor {
                 var y = (clipRect.Y / _gridRowHeight * _gridRowHeight) + 1;
 
                 while ((y < clipRect.Bottom) && (channelIndex < _sequence.ChannelCount)) {
-                    var currentChannel = _channelOrderMapping[channelIndex];
-                    var channel = _sequence.Channels[currentChannel];
+                    var channel = _sequence.Channels[channelIndex];
+                    var currentChannel = channel.OutputChannel;
+
                     var x = initialX;
 
                     for (var cell = startEvent; (x < clipRect.Right) && (cell < _sequence.TotalEventPeriods); cell++) {
@@ -4793,12 +4794,12 @@ namespace VixenEditor {
         private void cbGroups_SelectedIndexChanged(object sender, EventArgs e) {
             pictureBoxGrid.Focus();
             _sequence.CurrentGroup = cbGroups.SelectedItem.ToString();
-            //if (_selectedCells.Top + _selectedCells.Height > _sequence.ActiveChannelCount) {
-            //    _selectedCells.Height = _sequence.ActiveChannelCount - _selectedCells.Top;
-            //}
+            if (_selectedCells.Top + _selectedCells.Height > _sequence.ChannelCount) {
+                _selectedCells.Height = _sequence.ChannelCount - _selectedCells.Top;
+            }
             VScrollCheck();
             pictureBoxChannels.Refresh();
-            pictureBoxGrid.Invalidate(pictureBoxGrid.ClientRectangle);
+            //pictureBoxGrid.Invalidate(pictureBoxGrid.ClientRectangle);
             pictureBoxGrid.Refresh();
         }
     }
