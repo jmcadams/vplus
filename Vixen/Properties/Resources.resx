@@ -990,4 +990,16 @@ and will cause your undo history to be deleted.  Proceed?</value>
   <data name="InsertChannelConfirmation" xml:space="preserve">
     <value>Insert Channel?</value>
   </data>
+  <data name="ErrorLogCreated" xml:space="preserve">
+    <value>Error Log Created</value>
+  </data>
+  <data name="CriticalErrorOccurred" xml:space="preserve">
+    <value> has had a critical error and is closing.
+
+This issue was written to {0}, please e-mail this log, your sequence and profile (if applicable) with any support request.
+
+{1}
+
+{2}</value>
+  </data>
 </root>

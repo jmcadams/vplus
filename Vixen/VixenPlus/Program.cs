@@ -1,25 +1,29 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 
-namespace VixenPlus
-{
-    internal static class Program
-    {
+using Properties;
+
+namespace VixenPlus {
+    internal static class Program {
         [STAThread]
-        private static void Main(string[] args)
-        {
-            try
-            {
+        private static void Main(string[] args) {
+            try {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new VixenPlusForm(args));
             }
-            catch (Exception exception)
-            {
-                MessageBox.Show(
-                    string.Format(
-                        "I'm sorry, but the application is about to die.  Please take a screenshot of this message.\n\n{0}\n\n{1}",
-                        exception.Message, exception.StackTrace));
+            catch (Exception exception) {
+                // ReSharper disable AssignNullToNotNullAttribute
+                var log = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "crash.log");
+                // ReSharper restore AssignNullToNotNullAttribute
+                using (var crash = new StreamWriter(log, true)) {
+                    crash.WriteLine(DateTime.Now);
+                    crash.WriteLine(exception.Message);
+                    crash.WriteLine(exception.StackTrace);
+                }
+                MessageBox.Show(string.Format(Vendor.ProductName + Resources.CriticalErrorOccurred, log, exception.Message, exception.StackTrace),
+                                Resources.ErrorLogCreated, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

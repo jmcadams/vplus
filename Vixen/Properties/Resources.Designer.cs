@@ -355,6 +355,21 @@ namespace Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to  has had a critical error and is closing.
+        ///
+        ///This issue was written to {0}, please e-mail this log, your sequence and profile (if applicable) with any support request.
+        ///
+        ///{1}
+        ///
+        ///{2}.
+        /// </summary>
+        public static string CriticalErrorOccurred {
+            get {
+                return ResourceManager.GetString("CriticalErrorOccurred", resourceCulture);
+            }
+        }
+        
         public static System.Drawing.Bitmap crosshairs {
             get {
                 object obj = ResourceManager.GetObject("crosshairs", resourceCulture);
@@ -502,6 +517,15 @@ namespace Properties {
         public static string ErrorLoadingCurveFile {
             get {
                 return ResourceManager.GetString("ErrorLoadingCurveFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error Log Created.
+        /// </summary>
+        public static string ErrorLogCreated {
+            get {
+                return ResourceManager.GetString("ErrorLogCreated", resourceCulture);
             }
         }
         
