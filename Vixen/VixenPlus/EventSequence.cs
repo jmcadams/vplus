@@ -469,6 +469,7 @@ namespace VixenPlus {
         private void LoadFromXml(XmlNode contextNode) {
             var requiredNode = Xml.GetRequiredNode(contextNode, "Program");
             _fullChannels = new List<Channel>();
+            _groupedAndSortedChannels = new List<Channel>();
             PlugInData = new SetupData();
             LoadableData = new LoadableData();
             Extensions = new SequenceExtensions();
@@ -572,6 +573,10 @@ namespace VixenPlus {
                     _fullChannels.Add(new Channel(node));
                 }
             }
+            //var eventIndex = 0;
+            //foreach (var c in _fullChannels) {
+            //    c.EventIndex = eventIndex++;
+            //}
             PlugInData = new SetupData();
             PlugInData.LoadFromXml(contextNode);
             _sortOrders = new SortOrders();
@@ -809,8 +814,8 @@ namespace VixenPlus {
         }
 
 
-        public Channel FindChannel(ulong id) {
-            return Channels.Find(c => c.Id == id);
-        }
+        //public Channel FindChannel(ulong id) {
+        //    return Channels.Find(c => c.Id == id);
+        //}
     }
 }

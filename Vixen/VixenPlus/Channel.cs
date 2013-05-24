@@ -114,6 +114,7 @@ namespace VixenPlus {
 
         public int OutputChannel { get; set; }
 
+        //public int EventIndex { get; set; }
 
         public int CompareTo(Channel other) {
             return Id.CompareTo(other.Id);
