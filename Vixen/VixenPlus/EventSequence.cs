@@ -303,6 +303,7 @@ namespace VixenPlus {
         }
 
 
+        //TODO Need to ask if this is a 2.1 or 2.5 format before saving.
         public void SaveTo(string fileName, bool setSequenceFileName) {
             var contextNode = Xml.CreateXmlDocument();
             SaveToXml(contextNode);
