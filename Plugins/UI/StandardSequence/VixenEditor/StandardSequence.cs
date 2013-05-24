@@ -626,7 +626,8 @@ namespace VixenEditor {
             }
         }
 
-
+        
+        //TODO: Not changes to new paradigm
         private void SetSelectedCellValue(byte value, bool mapChannel = true) {
             var rows = _selectedCells.Bottom;
             var columns = _selectedCells.Right;
@@ -834,17 +835,17 @@ namespace VixenEditor {
 
 
         private void EditSequenceChannelMask() {
-            using (var dialog = new ChannelOutputMaskDialog(_sequence.Channels)) {
+            using (var dialog = new ChannelOutputMaskDialog(_sequence.FullChannels)) {
                 if (dialog.ShowDialog() != DialogResult.OK) {
                     return;
                 }
 
-                foreach (var channel in _sequence.Channels) {
+                foreach (var channel in _sequence.FullChannels) {
                     channel.Enabled = true;
                 }
 
                 foreach (var num in dialog.DisabledChannels) {
-                    _sequence.Channels[num].Enabled = false;
+                    _sequence.FullChannels[num].Enabled = false;
                 }
             }
             IsDirty = true;
@@ -879,7 +880,7 @@ namespace VixenEditor {
         private void exportChannelNamesListToolStripMenuItem_Click(object sender, EventArgs e) {
             var path = Path.Combine(Paths.ImportExportPath, _sequence.Name + "_" + Resources.Channels + @".txt");
             using (var sw = new StreamWriter(path, false)) {
-                foreach (var channel in _sequence.Channels) {
+                foreach (var channel in _sequence.FullChannels) {
                     sw.WriteLine(channel.Name);
                 }
             }
@@ -905,7 +906,7 @@ namespace VixenEditor {
             _sequence.Profile = null;
             var list = new List<VixenPlus.Channel>();
             list.AddRange(flattenedProfile.Channels);
-            _sequence.Channels = list;
+            _sequence.FullChannels = list;
             _sequence.Sorts.LoadFrom(flattenedProfile.Sorts);
             _sequence.PlugInData.LoadFromXml(flattenedProfile.PlugInData.RootNode.ParentNode);
             IsDirty = true;
@@ -3530,10 +3531,10 @@ namespace VixenEditor {
                 cbGroups.SelectedIndex = 0;
                 //cbGroups.Items.Add("New Channel Group");
             }
-            else {
-                cbGroups.SelectedIndex = 0;
-                cbGroups.Visible = false;
-            }
+            //else {
+            //    cbGroups.SelectedIndex = 0;
+            //    cbGroups.Visible = false;
+            //}
         }
 
 
