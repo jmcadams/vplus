@@ -1121,7 +1121,7 @@ namespace VixenEditor {
                         }
                         SetChannelCount(list.Count);
                         for (var i = 0; i < list.Count; i++) {
-                            _sequence.Channels[i].Name = list[i];
+                            _sequence.FullChannels[i].Name = list[i];
                         }
                         pictureBoxChannels.Refresh();
                         MessageBox.Show(Resources.ChannelNameImport, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
