@@ -424,10 +424,10 @@ namespace VixenEditor {
 
         private byte[,] CellsToArray() {
             var buffer = new byte[_selectedCells.Height,_selectedCells.Width];
-            for (var i = 0; i < _selectedCells.Height; i++) {
-                var num2 = _channelOrderMapping[_selectedCells.Top + i];
-                for (var j = 0; j < _selectedCells.Width; j++) {
-                    buffer[i, j] = _sequence.EventValues[num2, _selectedCells.Left + j];
+            for (var rowOffset = 0; rowOffset < _selectedCells.Height; rowOffset++) {
+                var row = _sequence.Channels[_selectedCells.Top + rowOffset].OutputChannel;
+                for (var col = 0; col < _selectedCells.Width; col++) {
+                    buffer[rowOffset, col] = _sequence.EventValues[row, _selectedCells.Left + col];
                 }
             }
             return buffer;
