@@ -1354,13 +1354,6 @@ namespace VixenEditor{
             // 
             this.cbGroups.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbGroups.FormattingEnabled = true;
-            this.cbGroups.Items.AddRange(new object[] {
-            "Group1",
-            "Group2",
-            "Mega Tree",
-            "Mini Trees",
-            "--Mini Tree1",
-            "--Mini Tree2"});
             this.cbGroups.Location = new System.Drawing.Point(0, 39);
             this.cbGroups.Name = "cbGroups";
             this.cbGroups.Size = new System.Drawing.Size(172, 21);
