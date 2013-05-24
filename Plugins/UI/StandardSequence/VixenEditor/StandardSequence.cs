@@ -333,7 +333,7 @@ namespace VixenEditor {
             AddUndoItem(new Rectangle(left, top, width, height), UndoOriginalBehavior.Overwrite, Resources.UndoText_BooleanPaste);
 
             for (var row = 0; row < height && top + row < _sequence.ChannelCount; row++) {
-                var currentRow = _channelOrderMapping[top + row];
+                var currentRow = _sequence.Channels[top + row].OutputChannel;
                 for (var col = 0; col < width && left + col < _sequence.TotalEventPeriods; col++) {
                     var currentCol = left + col;
                     var currentValue = _sequence.EventValues[currentRow, currentCol];
