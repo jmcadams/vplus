@@ -421,7 +421,10 @@ namespace Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do you wish to detach this sequence from its profile?\n\nThis will not cause anything to be deleted.\nVixen Plus will attempt to reload channel and plugin data from the sequence..
+        ///   Looks up a localized string similar to Do you wish to detach this sequence from its profile?
+        ///
+        ///This will not cause anything to be deleted.
+        ///Vixen Plus will attempt to reload channel and plugin data from the sequence..
         /// </summary>
         public static string DetachSequenceFromProfile {
             get {
@@ -612,7 +615,8 @@ namespace Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This will detach the sequence from the profile and bring the profile data into the sequence.\nIs this what you want to do?.
+        ///   Looks up a localized string similar to This will detach the sequence from the profile and bring the profile data into the sequence.
+        ///Is this what you want to do?.
         /// </summary>
         public static string FlattendProfileIntoSequence {
             get {
@@ -1017,7 +1021,10 @@ namespace Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to With the new channel count, some channels would refer to outputs that no longer exist.\nTo keep the sequence valid, channel outputs would have to be reset.\n\nDo you want to keep the new channel count?.
+        ///   Looks up a localized string similar to With the new channel count, some channels would refer to outputs that no longer exist.
+        ///To keep the sequence valid, channel outputs would have to be reset.
+        ///
+        ///Do you want to keep the new channel count?.
         /// </summary>
         public static string NewChannelCountPrompt {
             get {
@@ -1209,7 +1216,8 @@ namespace Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This name is already in use.\nDo you want to overwrite it?.
+        ///   Looks up a localized string similar to This name is already in use.
+        ///Do you want to overwrite it?.
         /// </summary>
         public static string OverwriteNamePrompt {
             get {
@@ -1771,7 +1779,8 @@ namespace Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Drawing level adjusted to {0}.\nIt was {1} which was above the sequence maximum..
+        ///   Looks up a localized string similar to Drawing level adjusted to {0}.
+        ///It was {1} which was above the sequence maximum..
         /// </summary>
         public static string StringFormat_DrawingLevelAbove {
             get {
@@ -1780,7 +1789,8 @@ namespace Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Drawing level adjusted to {0}.\nIt was {1} which was below the sequence minimum..
+        ///   Looks up a localized string similar to Drawing level adjusted to {0}.
+        ///It was {1} which was below the sequence minimum..
         /// </summary>
         public static string StringFormat_DrawingLevelBelow {
             get {
@@ -1789,7 +1799,7 @@ namespace Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Routine \&quot;{0}\&quot; has been saved.
+        ///   Looks up a localized string similar to Routine &quot;{0}&quot; has been saved.
         /// </summary>
         public static string StringFormat_RoutineSaved {
             get {
@@ -2197,7 +2207,8 @@ namespace Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This sequence is attached to a profile.\nEdit the profile to make changes to the channel information..
+        ///   Looks up a localized string similar to This sequence is attached to a profile.
+        ///Edit the profile to make changes to the channel information..
         /// </summary>
         public static string UseProfileToEditChannels {
             get {

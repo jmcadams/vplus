@@ -728,10 +728,14 @@ Lutefisk for all!</value>
     <value>Cut</value>
   </data>
   <data name="DetachSequenceFromProfile" xml:space="preserve">
-    <value>Do you wish to detach this sequence from its profile?\n\nThis will not cause anything to be deleted.\nVixen Plus will attempt to reload channel and plugin data from the sequence.</value>
+    <value>Do you wish to detach this sequence from its profile?
+
+This will not cause anything to be deleted.
+Vixen Plus will attempt to reload channel and plugin data from the sequence.</value>
   </data>
   <data name="FlattendProfileIntoSequence" xml:space="preserve">
-    <value>This will detach the sequence from the profile and bring the profile data into the sequence.\nIs this what you want to do?</value>
+    <value>This will detach the sequence from the profile and bring the profile data into the sequence.
+Is this what you want to do?</value>
   </data>
   <data name="LoadRoutine" xml:space="preserve">
     <value>Load Routine</value>
@@ -752,7 +756,8 @@ Lutefisk for all!</value>
     <value>Profile</value>
   </data>
   <data name="UseProfileToEditChannels" xml:space="preserve">
-    <value>This sequence is attached to a profile.\nEdit the profile to make changes to the channel information.</value>
+    <value>This sequence is attached to a profile.
+Edit the profile to make changes to the channel information.</value>
   </data>
   <data name="RoutineNamePrompt" xml:space="preserve">
     <value>Name of the routine</value>
@@ -764,13 +769,15 @@ Lutefisk for all!</value>
     <value>Select All</value>
   </data>
   <data name="StringFormat_DrawingLevelAbove" xml:space="preserve">
-    <value>Drawing level adjusted to {0}.\nIt was {1} which was above the sequence maximum.</value>
+    <value>Drawing level adjusted to {0}.
+It was {1} which was above the sequence maximum.</value>
   </data>
   <data name="StringFormat_DrawingLevelBelow" xml:space="preserve">
-    <value>Drawing level adjusted to {0}.\nIt was {1} which was below the sequence minimum.</value>
+    <value>Drawing level adjusted to {0}.
+It was {1} which was below the sequence minimum.</value>
   </data>
   <data name="StringFormat_RoutineSaved" xml:space="preserve">
-    <value>Routine \"{0}\" has been saved</value>
+    <value>Routine "{0}" has been saved</value>
   </data>
   <data name="StringFormat_SaveChanges" xml:space="preserve">
     <value>Save changes to {0}?</value>
@@ -833,7 +840,10 @@ Lutefisk for all!</value>
     <value>Channel count has been updated.</value>
   </data>
   <data name="NewChannelCountPrompt" xml:space="preserve">
-    <value>With the new channel count, some channels would refer to outputs that no longer exist.\nTo keep the sequence valid, channel outputs would have to be reset.\n\nDo you want to keep the new channel count?</value>
+    <value>With the new channel count, some channels would refer to outputs that no longer exist.
+To keep the sequence valid, channel outputs would have to be reset.
+
+Do you want to keep the new channel count?</value>
   </data>
   <data name="SetProgramTimeError" xml:space="preserve">
     <value>Cannot set the sequence length.
@@ -886,7 +896,8 @@ Please select a value between 0 and 255.</value>
 Please select a value between 0 and 100.</value>
   </data>
   <data name="OverwriteNamePrompt" xml:space="preserve">
-    <value>This name is already in use.\nDo you want to overwrite it?</value>
+    <value>This name is already in use.
+Do you want to overwrite it?</value>
   </data>
   <data name="ReorderNameHeading" xml:space="preserve">
     <value>New Order</value>
