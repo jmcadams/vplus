@@ -451,7 +451,8 @@ namespace VixenEditor {
             if (mouseY > pictureBoxTime.Height + splitContainer2.SplitterWidth) {
                 _selectedLineIndex = vScrollBar1.Value + (mouseY - (pictureBoxTime.Height + splitContainer2.SplitterWidth)) / _gridRowHeight;
                 if (_selectedLineIndex < _sequence.ChannelCount) {
-                    _editingChannelSortedIndex = _channelOrderMapping[_selectedLineIndex];
+                    //todo can one of these be eliminated now that we don't abstract sorting?
+                    _editingChannelSortedIndex = _selectedLineIndex;
                     isValid = (_editingChannelSortedIndex >= 0) && (_editingChannelSortedIndex < _sequence.ChannelCount);
                 }
             }
@@ -981,7 +982,8 @@ namespace VixenEditor {
 
 
         private int GetChannelSortedIndex(VixenPlus.Channel channel) {
-            return _channelOrderMapping.IndexOf(_sequence.Channels.IndexOf(channel));
+            return _sequence.Channels.IndexOf(channel);
+            //return _channelOrderMapping.IndexOf(_sequence.Channels.IndexOf(channel));
         }
 
 
@@ -1750,7 +1752,7 @@ namespace VixenEditor {
         }
 
 
-        //todo when drawing channels, limit to the visible channels only
+        //todo when drawing channels, limit to the visible channels only, redraws the whole damn thing when moving the mouse in the grid!
         //TODO Remove magic numbers
         private void pictureBoxChannels_Paint(object sender, PaintEventArgs e) {
             e.Graphics.FillRectangle(_channelBackBrush, e.Graphics.VisibleClipBounds);
@@ -1775,7 +1777,7 @@ namespace VixenEditor {
 
                     channel = _sequence.Channels[channelOffset];
                     mappedChannel = channel.OutputChannel;
-                    var isChannelSelected = (channel == SelectedChannel);
+                    bool isChannelSelected = channel == SelectedChannel;
 
                     e.Graphics.FillRectangle(isChannelSelected ? SystemBrushes.Highlight : channel.Brush ?? _channelBackBrush, 0, height,
                                              pictureBoxChannels.Width, _gridRowHeight);
