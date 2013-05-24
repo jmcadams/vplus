@@ -727,7 +727,10 @@ namespace VixenPlus {
 
         public List<Channel> FullChannels {
             get { return _profile == null ? _fullChannels : _profile.Channels; }
-            set { AssignChannelArray(value); }
+            set {
+                AssignChannelArray(value);
+                ApplyGroupAndSort();
+            }
         }
 
 
