@@ -400,7 +400,7 @@ namespace VixenEditor {
             for (var i = 0; i < iterations; i++) {
                 var columns = Math.Min(column + cellValues.Count, _sequence.TotalEventPeriods) - column;
                 for (var j = 0; j < columns; j++) {
-                    _sequence.EventValues[_channelOrderMapping[channel], column + j] = cellValues[j];
+                    _sequence.EventValues[_sequence.Channels[channel].OutputChannel, column + j] = cellValues[j];
                 }
                 if (diff < 0) {
                     diff += negDiffIncr;
