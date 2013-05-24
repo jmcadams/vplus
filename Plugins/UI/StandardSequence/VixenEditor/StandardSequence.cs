@@ -607,7 +607,7 @@ namespace VixenEditor {
             var columns = data.GetLength(Utils.IndexColsOrWidth);
 
             for (var row = 0; row < rows && startRow + row < _sequence.ChannelCount; row++) {
-                var channel = _channelOrderMapping[startRow + row];
+                var channel = _sequence.Channels[startRow + row].OutputChannel;
                 for (var col = 0; col < columns && startCol + col < _sequence.TotalEventPeriods; col++) {
                     _sequence.EventValues[channel, startCol + col] = data[row, col];
                 }
