@@ -621,7 +621,7 @@ namespace VixenEditor {
 
             for (var row = startRow; row < endRow; row++) {
                 for (var col = startCol; col < endCol; col++) {
-                    _sequence.EventValues[row, col] = value;
+                    _sequence.EventValues[_sequence.Channels[row].OutputChannel, col] = value;
                 }
             }
         }
