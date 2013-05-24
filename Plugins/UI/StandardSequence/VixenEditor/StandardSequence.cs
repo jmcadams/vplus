@@ -889,8 +889,9 @@ namespace VixenEditor {
 
 
         private void FillChannel(int lineIndex) {
+            var actualChannel = _sequence.Channels[_editingChannelSortedIndex].OutputChannel;
             AddUndoItem(new Rectangle(0, lineIndex, _sequence.TotalEventPeriods, 1), UndoOriginalBehavior.Overwrite, Resources.UndoText_Fill);
-            CopyToEventValues(0, _editingChannelSortedIndex, _sequence.TotalEventPeriods, 1, _drawingLevel);
+            CopyToEventValues(0, actualChannel, _sequence.TotalEventPeriods, 1, _drawingLevel);
             pictureBoxGrid.Refresh();
             IsDirty = true;
         }
