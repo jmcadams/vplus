@@ -503,7 +503,7 @@ namespace VixenEditor {
             var dirtyFlag = false;
 
             for (var row = 0; row < _sequence.ChannelCount; row++) {
-                var channel = _channelOrderMapping[row];
+                var channel = _sequence.Channels[row].OutputChannel;
                 for (var col = 0; col < _sequence.TotalEventPeriods; col++) {
                     var currentValue = _sequence.EventValues[channel, col];
                     if (currentValue == 0 || currentValue <= _sequence.MaximumLevel) {
@@ -524,7 +524,7 @@ namespace VixenEditor {
             var dirtyFlag = false;
 
             for (var row = 0; row < _sequence.ChannelCount; row++) {
-                var channel = _channelOrderMapping[row];
+                var channel = _sequence.Channels[row].OutputChannel;
                 for (var col = 0; col < _sequence.TotalEventPeriods; col++) {
                     var currentValue = _sequence.EventValues[channel, col];
                     if (currentValue >= _sequence.MinimumLevel) {
@@ -627,13 +627,12 @@ namespace VixenEditor {
         }
 
         
-        //TODO: Not changes to new paradigm
-        private void SetSelectedCellValue(byte value, bool mapChannel = true) {
+        private void SetSelectedCellValue(byte value) {
             var rows = _selectedCells.Bottom;
             var columns = _selectedCells.Right;
             for (var row = _selectedCells.Top; row < rows; row++) {
-                var channel = mapChannel ? _channelOrderMapping[row] : row;
-                if (!_sequence.Channels[channel].Enabled) {
+                var channel = _sequence.Channels[row].OutputChannel;
+                if (!_sequence.Channels[row].Enabled) {
                     continue;
                 }
 
