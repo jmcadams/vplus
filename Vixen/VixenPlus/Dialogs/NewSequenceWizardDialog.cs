@@ -91,14 +91,14 @@ namespace VixenPlus.Dialogs {
                 return;
             }
             var sequence = new EventSequence(openFileDialog.FileName);
-            textBoxChannelCount.Text = sequence.ChannelCount.ToString(CultureInfo.InvariantCulture);
+            textBoxChannelCount.Text = sequence.FullChannelCount.ToString(CultureInfo.InvariantCulture);
             var builder = new StringBuilder();
-            foreach (var channel in sequence.Channels) {
+            foreach (var channel in sequence.FullChannels) {
                 builder.AppendLine(channel.Name);
             }
             textBoxChannelNames.Text = builder.ToString();
-            _eventSequence.Channels.Clear();
-            _eventSequence.Channels.AddRange(sequence.Channels);
+            _eventSequence.FullChannels.Clear();
+            _eventSequence.FullChannels.AddRange(sequence.FullChannels);
         }
 
 
@@ -297,7 +297,7 @@ namespace VixenPlus.Dialogs {
                     else {
                         Cursor = Cursors.WaitCursor;
                         try {
-                            _eventSequence.ChannelCount = num2;
+                            _eventSequence.FullChannelCount = num2;
                         }
                         finally {
                             Cursor = Cursors.Default;
@@ -336,8 +336,8 @@ namespace VixenPlus.Dialogs {
             }
             Cursor = Cursors.WaitCursor;
             try {
-                for (var i = 0; i < _eventSequence.ChannelCount; i++) {
-                    _eventSequence.Channels[i].Name = textBoxChannelNames.Lines[i];
+                for (var i = 0; i < _eventSequence.FullChannelCount; i++) {
+                    _eventSequence.FullChannels[i].Name = textBoxChannelNames.Lines[i];
                 }
             }
             finally {

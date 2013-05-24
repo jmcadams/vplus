@@ -69,6 +69,7 @@ namespace VixenPlus {
             UserData = null;
             Key = Host.GetUniqueKey();
             _fullChannels = new List<Channel>();
+            _groupedAndSortedChannels = new List<Channel>();
             PlugInData = new SetupData();
             LoadableData = new LoadableData();
             _sortOrders = new SortOrders();
@@ -337,7 +338,7 @@ namespace VixenPlus {
                 Xml.SetAttribute(node, "filename", Audio.FileName);
                 Xml.SetAttribute(node, "duration", Audio.Duration.ToString(CultureInfo.InvariantCulture));
             }
-            var count = Channels.Count;
+            var count = FullChannels.Count;
             var totalEventPeriods = TotalEventPeriods;
             var inArray = new byte[count * totalEventPeriods];
             var num4 = 0;
@@ -580,11 +581,11 @@ namespace VixenPlus {
         public int ChannelCount {
             get { return _groupedAndSortedChannels.Count; }
             set {
-                while (_fullChannels.Count > value) {
-                    _fullChannels.RemoveAt(value);
+                while (_groupedAndSortedChannels.Count > value) {
+                    _groupedAndSortedChannels.RemoveAt(value);
                 }
-                for (var i = _fullChannels.Count + 1; _fullChannels.Count < value; i++) {
-                    _fullChannels.Add(new Channel(Resources.Channel + @" " + i.ToString(CultureInfo.InvariantCulture), i - 1, true));
+                for (var i = _groupedAndSortedChannels.Count + 1; _groupedAndSortedChannels.Count < value; i++) {
+                    _groupedAndSortedChannels.Add(new Channel(Resources.Channel + @" " + i.ToString(CultureInfo.InvariantCulture), i - 1, true));
                 }
                 UpdateEventValueArray();
                 _sortOrders.UpdateChannelCounts(value);
