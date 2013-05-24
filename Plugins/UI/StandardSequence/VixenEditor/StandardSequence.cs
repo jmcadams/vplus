@@ -269,7 +269,7 @@ namespace VixenEditor {
             var rowOffset = _selectedCells.Top;
             var colOffset = _selectedCells.Left;
             for (var row = 0; (row < height) && ((rowOffset + row) < _sequence.ChannelCount); row++) {
-                var channel = _channelOrderMapping[rowOffset + row];
+                var channel = _sequence.Channels[rowOffset + row].OutputChannel;
                 for (var col = 0; (col < width) && ((colOffset + col) < _sequence.TotalEventPeriods); col++) {
                     var currentValue = _sequence.EventValues[channel, colOffset + col];
                     var clipValue = clipboard[row, col];
