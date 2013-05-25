@@ -960,9 +960,9 @@ namespace VixenEditor {
         }
 
 
-        private VixenPlus.Channel GetChannelAt(Point point) {
-            return GetChannelAtSortedIndex(GetLineIndexAt(point));
-        }
+        //private VixenPlus.Channel GetChannelAt(Point point) {
+        //    return GetChannelAtSortedIndex(GetLineIndexAt(point));
+        //}
 
 
         private VixenPlus.Channel GetChannelAtSortedIndex(int index) {
@@ -978,9 +978,9 @@ namespace VixenEditor {
         }
 
 
-        private int GetChannelNaturalIndex(VixenPlus.Channel channel) {
-            return _sequence.Channels.IndexOf(channel);
-        }
+        //private int GetChannelNaturalIndex(VixenPlus.Channel channel) {
+        //    return _sequence.Channels.IndexOf(channel);
+        //}
 
 
         private int GetChannelSortedIndex(VixenPlus.Channel channel) {
@@ -1663,10 +1663,12 @@ namespace VixenEditor {
             }
 
             //TODO Implement!
+// ReSharper disable LocalizableElement
             MessageBox.Show("Drag and Drop disabled until Groups are fully implemented.  Sorry");
+// ReSharper restore LocalizableElement
 
-            var data = (VixenPlus.Channel) e.Data.GetData(typeof (VixenPlus.Channel));
-            var channelAt = GetChannelAt(pictureBoxChannels.PointToClient(new Point(e.X, e.Y)));
+            //var data = (VixenPlus.Channel) e.Data.GetData(typeof (VixenPlus.Channel));
+            //var channelAt = GetChannelAt(pictureBoxChannels.PointToClient(new Point(e.X, e.Y)));
 
             //if (data == channelAt) {
             //    return;
