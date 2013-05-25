@@ -965,9 +965,9 @@ namespace VixenEditor {
         //}
 
 
-        private VixenPlus.Channel GetChannelAtSortedIndex(int index) {
-            return index < _sequence.Channels.Count ? _sequence.Channels[index] : null;
-        }
+        //private VixenPlus.Channel GetChannelAtSortedIndex(int index) {
+        //    return index < _sequence.Channels.Count ? _sequence.Channels[index] : null;
+        //}
 
 
         private Rectangle GetChannelNameRect(VixenPlus.Channel channel) {
