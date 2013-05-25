@@ -3772,7 +3772,7 @@ namespace VixenEditor {
         private void toolStripButtonMirrorHorizontal_Click(object sender, EventArgs e) {
             var buffer = new byte[_selectedCells.Height,_selectedCells.Width];
             for (var row = 0; row < _selectedCells.Height; row++) {
-                var channel = _channelOrderMapping[_selectedCells.Top + row];
+                var channel = _sequence.Channels[_selectedCells.Top + row].OutputChannel;
                 var column = 0;
                 for (var count = _selectedCells.Width - 1; count >= 0; count--) {
                     buffer[row, column++] = _sequence.EventValues[channel, _selectedCells.Left + count];
@@ -3787,7 +3787,7 @@ namespace VixenEditor {
             var row = 0;
 
             for (var count = _selectedCells.Height - 1; count >= 0; count--) {
-                var channel = _channelOrderMapping[_selectedCells.Top + count];
+                var channel = _sequence.Channels[_selectedCells.Top + count].OutputChannel;
                 for (var column = 0; column < _selectedCells.Width; column++) {
                     buffer[row, column] = _sequence.EventValues[channel, _selectedCells.Left + column];
                 }
