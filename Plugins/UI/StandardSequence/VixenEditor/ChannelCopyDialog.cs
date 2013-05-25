@@ -1,6 +1,5 @@
 namespace VixenEditor {
     using System;
-    using System.Collections.Generic;
     using System.Windows.Forms;
 
     using VixenPlus;
@@ -8,16 +7,15 @@ namespace VixenEditor {
     internal partial class ChannelCopyDialog : Form {
         private readonly AffectGridDelegate _affectGridDelegate;
         private readonly EventSequence _eventSequence;
-        private readonly List<int> _sortOrder;
         private readonly byte[,] _sequenceData;
         private readonly Channel[] _channels;
 
 
-        public ChannelCopyDialog(AffectGridDelegate affectGridDelegate, EventSequence sequence, List<int> sortOrder) {
+        public ChannelCopyDialog(AffectGridDelegate affectGridDelegate, EventSequence sequence) {
             InitializeComponent();
             _channels = new Channel[sequence.ChannelCount];
-            for (var channel = 0; channel < sortOrder.Count; channel++) {
-                _channels[channel] = sequence.Channels[sortOrder[channel]];
+            for (var channel = 0; channel < sequence.ChannelCount; channel++) {
+                _channels[channel] = sequence.Channels[channel];
             }
             // ReSharper disable CoVariantArrayConversion
             comboBoxSourceChannel.Items.AddRange(_channels);
@@ -30,18 +28,18 @@ namespace VixenEditor {
                 comboBoxDestinationChannel.SelectedIndex = 0;
             }
             _eventSequence = sequence;
-            _sortOrder = sortOrder;
             _sequenceData = new byte[1,sequence.TotalEventPeriods];
             _affectGridDelegate = affectGridDelegate;
         }
 
 
         private void buttonCopy_Click(object sender, EventArgs e) {
-            var channel = _sortOrder[comboBoxSourceChannel.SelectedIndex];
+            var sourceChannel = _eventSequence.Channels[comboBoxSourceChannel.SelectedIndex].OutputChannel;
+            var destinationChannel = _eventSequence.Channels[comboBoxDestinationChannel.SelectedIndex].OutputChannel;
             for (var column = 0; column < _eventSequence.TotalEventPeriods; column++) {
-                _sequenceData[0, column] = _eventSequence.EventValues[channel, column];
+                _sequenceData[0, column] = _eventSequence.EventValues[sourceChannel, column];
             }
-            _affectGridDelegate(comboBoxDestinationChannel.SelectedIndex, 0, _sequenceData);
+            _affectGridDelegate(destinationChannel, 0, _sequenceData);
         }
 
 

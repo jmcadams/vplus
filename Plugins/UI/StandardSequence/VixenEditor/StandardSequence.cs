@@ -227,6 +227,7 @@ namespace VixenEditor {
 
 
         private void AffectGrid(int startRow, int startCol, byte[,] values) {
+            startRow = _sequence.Channels.IndexOf(_sequence.FullChannels[startRow]);
             AddUndoItem(new Rectangle(startCol, startRow, values.GetLength(Utils.IndexColsOrWidth), values.GetLength(Utils.IndexRowsOrHeight)),
                         UndoOriginalBehavior.Overwrite, Resources.UndoText_CopyChannelData);
             CopyToEventValues(startCol, startRow, values);
@@ -652,7 +653,7 @@ namespace VixenEditor {
 
 
         private void copyChannelToolStripMenuItem_Click(object sender, EventArgs e) {
-            new ChannelCopyDialog(_affectGridDelegate, _sequence, _channelOrderMapping).Show();
+            new ChannelCopyDialog(_affectGridDelegate, _sequence).Show();
         }
 
 
@@ -935,7 +936,7 @@ namespace VixenEditor {
 
             var buffer = new byte[blockAffected.Height,blockAffected.Width];
             for (var row = 0; row < blockAffected.Height; row++) {
-                var channel = _channelOrderMapping[blockAffected.Y + row];
+                var channel = _sequence.Channels[blockAffected.Y + row].OutputChannel;
                 for (var col = 0; col < blockAffected.Width; col++) {
                     buffer[row, col] = _sequence.EventValues[channel, blockAffected.X + col];
                 }
