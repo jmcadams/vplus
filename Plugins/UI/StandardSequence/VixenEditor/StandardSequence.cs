@@ -3689,7 +3689,7 @@ namespace VixenEditor {
                 isValid = true;
                 if (_actualLevels) {
                     var initialValue = isSingleCell
-                                           ? _sequence.EventValues[_channelOrderMapping[top], left].ToString(CultureInfo.InvariantCulture) : @"255";
+                                           ? _sequence.EventValues[_sequence.Channels[top].OutputChannel, left].ToString(CultureInfo.InvariantCulture) : @"255";
 
                     using (var dialog = new TextQueryDialog(Vendor.ProductName, Resources.IntensityLevelPrompt, initialValue)) {
                         if (dialog.ShowDialog() != DialogResult.OK) {
@@ -3707,7 +3707,7 @@ namespace VixenEditor {
                 }
                 else {
                     var initialValue = isSingleCell
-                                           ? Utils.ToPercentage(_sequence.EventValues[_channelOrderMapping[top], left]).ToString(
+                                           ? Utils.ToPercentage(_sequence.EventValues[_sequence.Channels[top].OutputChannel, left]).ToString(
                                                CultureInfo.InvariantCulture) : @"100";
 
                     using (var dialog = new TextQueryDialog(Vendor.ProductName, Resources.IntensityPercentPrompt, initialValue)) {
@@ -3731,8 +3731,8 @@ namespace VixenEditor {
             AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, Resources.UndoText_Intensity);
 
             for (var row = top; row < _selectedCells.Bottom; row++) {
-                var channel = _channelOrderMapping[row];
-                if (!_sequence.Channels[channel].Enabled) {
+                var channel = _sequence.Channels[row].OutputChannel;
+                if (!_sequence.Channels[row].Enabled) {
                     continue;
                 }
                 for (var col = _selectedCells.Left; col < _selectedCells.Right; col++) {
@@ -3750,8 +3750,8 @@ namespace VixenEditor {
             var bottom = _selectedCells.Bottom;
             var right = _selectedCells.Right;
             for (var row = _selectedCells.Top; row < bottom; row++) {
-                var channel = _channelOrderMapping[row];
-                if (!_sequence.Channels[channel].Enabled) {
+                var channel = _sequence.Channels[row].OutputChannel;
+                if (!_sequence.Channels[row].Enabled) {
                     continue;
                 }
                 for (var col = _selectedCells.Left; col < right; col++) {
