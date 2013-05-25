@@ -1,27 +1,28 @@
-namespace VixenEditor{
+namespace VixenEditor {
     using System;
     using System.Windows.Forms;
     using System.Drawing;
     using System.ComponentModel;
     using System.Collections;
 
-    internal partial class TestConsoleDialog{
+    internal partial class TestConsoleDialog {
 
         #region Windows Form Designer generated code
-        private Button buttonDone;
-private ConsoleTrackBar consoleTrackBar1;
-private ConsoleTrackBar consoleTrackBar2;
-private ConsoleTrackBar consoleTrackBar3;
-private ConsoleTrackBar consoleTrackBar4;
-private ConsoleTrackBar consoleTrackBar5;
-private ConsoleTrackBar consoleTrackBar6;
-private ConsoleTrackBar consoleTrackBar7;
-private ConsoleTrackBar consoleTrackBarMaster;
-private GroupBox groupBox1;
-private GroupBox groupBox2;
 
-        private void InitializeComponent()
-        {
+        private Button buttonDone;
+        private ConsoleTrackBar consoleTrackBar1;
+        private ConsoleTrackBar consoleTrackBar2;
+        private ConsoleTrackBar consoleTrackBar3;
+        private ConsoleTrackBar consoleTrackBar4;
+        private ConsoleTrackBar consoleTrackBar5;
+        private ConsoleTrackBar consoleTrackBar6;
+        private ConsoleTrackBar consoleTrackBar7;
+        private ConsoleTrackBar consoleTrackBarMaster;
+        private GroupBox groupBox1;
+        private GroupBox groupBox2;
+
+
+        private void InitializeComponent() {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.consoleTrackBarMaster = new VixenEditor.ConsoleTrackBar();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -62,8 +63,9 @@ private GroupBox groupBox2;
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Anchor =
+                ((System.Windows.Forms.AnchorStyles)
+                 (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.consoleTrackBar7);
             this.groupBox2.Controls.Add(this.consoleTrackBar5);
             this.groupBox2.Controls.Add(this.consoleTrackBar6);
@@ -171,7 +173,8 @@ private GroupBox groupBox2;
             // 
             // buttonDone
             // 
-            this.buttonDone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonDone.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonDone.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonDone.Location = new System.Drawing.Point(737, 334);
             this.buttonDone.Name = "buttonDone";
@@ -191,9 +194,11 @@ private GroupBox groupBox2;
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = global::Properties.Resources.VixenPlus;
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.Name = "TestConsoleDialog";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Test Console";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TestConsoleDialog_FormClosing);
@@ -202,10 +207,10 @@ private GroupBox groupBox2;
             this.ResumeLayout(false);
 
         }
+
         #endregion
 
-        protected override void Dispose(bool disposing)
-        {
+        protected override void Dispose(bool disposing) {
             base.Dispose(disposing);
         }
     }

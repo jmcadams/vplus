@@ -16,6 +16,7 @@ namespace VixenEditor {
         private TrackBar trackBar;
 
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TestChannelsDialog));
             this.buttonDone = new System.Windows.Forms.Button();
             this.listBoxChannels = new System.Windows.Forms.ListBox();
             this.labelLevel = new System.Windows.Forms.Label();
@@ -104,7 +105,9 @@ namespace VixenEditor {
             this.Controls.Add(this.buttonUnselectAll);
             this.Controls.Add(this.buttonSelectAll);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TestChannelsDialog";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Test Channels";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TestChannelsDialog_FormClosing);

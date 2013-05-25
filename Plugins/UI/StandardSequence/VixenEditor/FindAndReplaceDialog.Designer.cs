@@ -104,6 +104,7 @@ namespace VixenEditor {
             this.Controls.Add(this.lblFind);
             this.Controls.Add(this.lblHeading);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = global::Properties.Resources.VixenPlus;
             this.Name = "FindAndReplaceDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Find and Replace";

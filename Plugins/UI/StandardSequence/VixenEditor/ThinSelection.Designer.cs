@@ -14,14 +14,14 @@ namespace VixenEditor {
             this.listBox = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
-            // listBox1
+            // listBox
             // 
             this.listBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.listBox.FormattingEnabled = true;
             this.listBox.ItemHeight = 17;
             this.listBox.Location = new System.Drawing.Point(0, 0);
-            this.listBox.Name = "listBox1";
+            this.listBox.Name = "listBox";
             this.listBox.Size = new System.Drawing.Size(168, 260);
             this.listBox.TabIndex = 0;
             this.listBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox_DrawItem);
@@ -40,6 +40,7 @@ namespace VixenEditor {
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ThinSelection";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ThinSelection_KeyDown);
             this.ResumeLayout(false);
