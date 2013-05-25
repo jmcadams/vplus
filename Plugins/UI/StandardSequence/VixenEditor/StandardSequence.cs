@@ -4156,7 +4156,7 @@ namespace VixenEditor {
             var rows = clipboard.GetLength(Utils.IndexRowsOrHeight);
             var columns = clipboard.GetLength(Utils.IndexColsOrWidth);
             for (var row = 0; (row < rows) && (_selectedCells.Top + row < _sequence.ChannelCount); row++) {
-                var channel = _channelOrderMapping[_selectedCells.Top + row];
+                var channel = _sequence.Channels[_selectedCells.Top + row].OutputChannel;
                 for (var col = 0; (col < columns) && (_selectedCells.Left + col < _sequence.TotalEventPeriods); col++) {
                     var newValue = clipboard[row, col];
                     if (newValue > _sequence.MinimumLevel) {
@@ -4221,11 +4221,11 @@ namespace VixenEditor {
                     }
                     toolStripButtonDeleteOrder.Enabled = false;
                     toolStripComboBoxChannelOrder.SelectedIndex = -1;
-                    using (var dialog = new ChannelOrderDialog(_sequence.Channels, _channelOrderMapping)) {
+                    using (var dialog = new ChannelOrderDialog(_sequence.FullChannels, _channelOrderMapping)) {
                         if (dialog.ShowDialog() == DialogResult.OK) {
                             _channelOrderMapping.Clear();
                             foreach (var channel in dialog.ChannelMapping) {
-                                _channelOrderMapping.Add(_sequence.Channels.IndexOf(channel));
+                                _channelOrderMapping.Add(_sequence.FullChannels.IndexOf(channel));
                             }
                             IsDirty = true;
                         }
@@ -4808,7 +4808,6 @@ namespace VixenEditor {
             }
             VScrollCheck();
             pictureBoxChannels.Refresh();
-            //pictureBoxGrid.Invalidate(pictureBoxGrid.ClientRectangle);
             pictureBoxGrid.Refresh();
         }
     }
