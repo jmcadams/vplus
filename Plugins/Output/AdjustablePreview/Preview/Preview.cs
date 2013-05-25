@@ -31,7 +31,7 @@ namespace Preview {
 
         public void Initialize(IExecutable executableObject, SetupData setupData, XmlNode setupNode) {
             _channels.Clear();
-            _channels.AddRange(executableObject.Channels);
+            _channels.AddRange(executableObject.FullChannels);
             _setupData = setupData;
             _setupNode = setupNode;
             if (_setupNode.Attributes != null) {

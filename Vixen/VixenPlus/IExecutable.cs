@@ -13,6 +13,8 @@ namespace VixenPlus
 
         List<Channel> Channels { get; }
 
+        List<Channel> FullChannels { get; } 
+
         string FileName { get; }
 
         ulong Key { get; }

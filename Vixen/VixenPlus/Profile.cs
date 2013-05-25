@@ -71,6 +71,10 @@ namespace VixenPlus {
             }
         }
 
+        public List<Channel> FullChannels {
+            get { return Channels; }
+        } 
+
         public string FileName { get; set; }
 
         public ulong Key { get; private set; }

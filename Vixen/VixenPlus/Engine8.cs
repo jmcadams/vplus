@@ -377,7 +377,7 @@ namespace VixenPlus {
                 return;
             }
 
-            for (var i = 0; i < context.CurrentSequence.Channels.Count; i++) {
+            for (var i = 0; i < context.CurrentSequence.FullChannels.Count; i++) {
                 context.RouterContext.EngineBuffer[i] = context.Data[i, index];
             }
             HardwareUpdate(context.RouterContext.EngineBuffer, index);
@@ -443,7 +443,7 @@ namespace VixenPlus {
                 }
 
                 engineBuffer = new byte[engineBuffer.Length];
-                var num3 = context.CurrentSequence.Channels.Count;
+                var num3 = context.CurrentSequence.FullChannels.Count;
                 var eventValues = context.CurrentSequence.EventValues;
                 if (!_plugInRouter.GetSequenceInputs(context.RouterContext.ExecutableObject, engineBuffer, false, true)) {
                     return;
@@ -470,7 +470,7 @@ namespace VixenPlus {
             else {
                 var executableObject = CurrentObject.EventSequences[sequenceIndex].Sequence;
                 if (context.RouterContext == null) {
-                    context.RouterContext = _plugInRouter.CreateContext(new byte[executableObject.ChannelCount],
+                    context.RouterContext = _plugInRouter.CreateContext(new byte[executableObject.FullChannelCount],
                                                                         _useSequencePluginData ? executableObject.PlugInData : CurrentObject.SetupData,
                                                                         executableObject, _surfacedTimer);
                 }
@@ -503,7 +503,7 @@ namespace VixenPlus {
                 }
                 context.CurrentSequence = executableObject;
                 context.MaxEvent = context.CurrentSequence.TotalEventPeriods;
-                context.LastPeriod = new byte[context.CurrentSequence.Channels.Count];
+                context.LastPeriod = new byte[context.CurrentSequence.FullChannels.Count];
                 for (var i = 0; i < context.LastPeriod.Length; i++) {
                     context.LastPeriod[i] = (byte) i;
                 }
@@ -803,11 +803,11 @@ namespace VixenPlus {
 
         private static byte[,] ReconfigureSourceData(EventSequence sequence) {
             var list = new List<int>();
-            var buffer = new byte[sequence.ChannelCount,sequence.TotalEventPeriods];
-            foreach (var channel in sequence.Channels) {
+            var buffer = new byte[sequence.FullChannelCount,sequence.TotalEventPeriods];
+            foreach (var channel in sequence.FullChannels) {
                 list.Add(channel.OutputChannel);
             }
-            for (var i = 0; i < sequence.ChannelCount; i++) {
+            for (var i = 0; i < sequence.FullChannelCount; i++) {
                 var row = list[i];
                 for (var column = 0; column < sequence.TotalEventPeriods; column++) {
                     buffer[row, column] = sequence.EventValues[i, column];
