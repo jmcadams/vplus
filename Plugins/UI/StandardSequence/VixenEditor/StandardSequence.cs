@@ -209,8 +209,13 @@ namespace VixenEditor {
                 return;
             }
 
-            var affectedBlockData = GetAffectedBlockData(blockAffected);
-            _undoStack.Push(new UndoItem(blockAffected.Location, affectedBlockData, behavior, _sequence, _channelOrderMapping, originalAction));
+            var affectedChannels = new List<int>();
+            for (var i = blockAffected.Top; i < blockAffected.Height; i++) {
+                affectedChannels.Add(_sequence.Channels[i].OutputChannel);
+            }
+
+            var affectedChannelData = GetAffectedChannelData(affectedChannels, blockAffected.Left, blockAffected.Width);
+            _undoStack.Push(new UndoItem(blockAffected.Location.X, affectedChannelData, behavior, _sequence, affectedChannels, originalAction));
             SetUndoRedo(true, false);
             IsDirty = true;
         }
@@ -915,31 +920,15 @@ namespace VixenEditor {
         }
 
 
-        private byte[,] GetAffectedBlockData(Rectangle blockAffected) {
-            if (blockAffected.Width < 0) {
-                blockAffected.X += blockAffected.Width;
-                blockAffected.Width = -blockAffected.Width;
-            }
-
-            if (blockAffected.Height < 0) {
-                blockAffected.Y += blockAffected.Height;
-                blockAffected.Height = -blockAffected.Height;
-            }
-
-            if (blockAffected.Right > _sequence.TotalEventPeriods) {
-                blockAffected.Width = _sequence.TotalEventPeriods - blockAffected.Left;
-            }
-
-            if (blockAffected.Bottom > _sequence.ChannelCount) {
-                blockAffected.Height = _sequence.ChannelCount - blockAffected.Top;
-            }
-
-            var buffer = new byte[blockAffected.Height,blockAffected.Width];
-            for (var row = 0; row < blockAffected.Height; row++) {
-                var channel = _sequence.Channels[blockAffected.Y + row].OutputChannel;
-                for (var col = 0; col < blockAffected.Width; col++) {
-                    buffer[row, col] = _sequence.EventValues[channel, blockAffected.X + col];
+        private byte[,] GetAffectedChannelData(ICollection<int> affectedChannels, int startEvent, int numberOfEvents) {
+            var buffer = new byte[affectedChannels.Count, numberOfEvents];
+            var row = 0;
+            foreach (var i in affectedChannels) {
+                var channel = _sequence.FullChannels[i].OutputChannel;
+                for (var col = 0; col < numberOfEvents; col++) {
+                    buffer[row, col] = _sequence.EventValues[channel, startEvent + col];
                 }
+                row++;
             }
 
             return buffer;
@@ -2534,25 +2523,26 @@ namespace VixenEditor {
             toolStripButtonRedo.Enabled = redoToolStripMenuItem.Enabled = _redoStack.Count > 0;
             IsDirty = true;
 
-            var redo = new UndoItem(undo.Location, GetAffectedBlockData(new Rectangle(undo.Location.X, undo.Location.Y, width, height)), undo.Behavior,
-                                    _sequence, _channelOrderMapping, undo.OriginalAction);
+            var redo = new UndoItem(undo.ColumnOffset, GetAffectedChannelData(undo.ReferencedChannels, undo.ColumnOffset, width), undo.Behavior,
+                                    _sequence, undo.ReferencedChannels, undo.OriginalAction);
 
             switch (undo.Behavior) {
                 case UndoOriginalBehavior.Overwrite:
-                    DisjointedOverwrite(undo.Location.X, undo.Data, undo.ReferencedChannels);
-                    pictureBoxGrid.Invalidate(new Rectangle((undo.Location.X - hScrollBar1.Value) * _gridColWidth,
-                                                            (undo.Location.Y - vScrollBar1.Value) * _gridRowHeight, width * _gridColWidth,
-                                                            height * _gridRowHeight));
+                    DisjointedOverwrite(undo.ColumnOffset, undo.Data, undo.ReferencedChannels);
+                    pictureBoxGrid.Refresh();
+                        //Invalidate(new Rectangle((undo.Location.X - hScrollBar1.Value) * _gridColWidth,
+                        //                                    (undo.Location.Y - vScrollBar1.Value) * _gridRowHeight, width * _gridColWidth,
+                        //                                    height * _gridRowHeight));
                     break;
 
                 case UndoOriginalBehavior.Removal:
-                    DisjointedRemove(undo.Location.X, width, height, undo.ReferencedChannels);
+                    DisjointedRemove(undo.ColumnOffset, width, height, undo.ReferencedChannels);
                     pictureBoxGrid.Refresh();
                     break;
 
                 case UndoOriginalBehavior.Insertion:
-                    DisjointedInsert(undo.Location.X, width, height, undo.ReferencedChannels);
-                    DisjointedOverwrite(undo.Location.X, undo.Data, undo.ReferencedChannels);
+                    DisjointedInsert(undo.ColumnOffset, width, height, undo.ReferencedChannels);
+                    DisjointedOverwrite(undo.ColumnOffset, undo.Data, undo.ReferencedChannels);
                     pictureBoxGrid.Refresh();
                     break;
             }
@@ -4358,23 +4348,23 @@ namespace VixenEditor {
 
             var width = undo.Data.GetLength(Utils.IndexColsOrWidth);
             var height = undo.Data.GetLength(Utils.IndexRowsOrHeight);
-            var redo = new UndoItem(undo.Location, GetAffectedBlockData(new Rectangle(undo.Location.X, undo.Location.Y, width, height)), undo.Behavior,
-                                    _sequence, _channelOrderMapping, undo.OriginalAction);
+            var redo = new UndoItem(undo.ColumnOffset, GetAffectedChannelData(undo.ReferencedChannels, undo.ColumnOffset, width), undo.Behavior,
+                                    _sequence, undo.ReferencedChannels, undo.OriginalAction);
 
             switch (undo.Behavior) {
                 case UndoOriginalBehavior.Overwrite:
-                    DisjointedOverwrite(undo.Location.X, undo.Data, undo.ReferencedChannels);
+                    DisjointedOverwrite(undo.ColumnOffset, undo.Data, undo.ReferencedChannels);
                     pictureBoxGrid.Refresh();
                     break;
 
                 case UndoOriginalBehavior.Removal:
-                    DisjointedInsert(undo.Location.X, width, height, undo.ReferencedChannels);
-                    DisjointedOverwrite(undo.Location.X, undo.Data, undo.ReferencedChannels);
+                    DisjointedInsert(undo.ColumnOffset, width, height, undo.ReferencedChannels);
+                    DisjointedOverwrite(undo.ColumnOffset, undo.Data, undo.ReferencedChannels);
                     pictureBoxGrid.Refresh();
                     break;
 
                 case UndoOriginalBehavior.Insertion:
-                    DisjointedRemove(undo.Location.X, width, height, undo.ReferencedChannels);
+                    DisjointedRemove(undo.ColumnOffset, width, height, undo.ReferencedChannels);
                     pictureBoxGrid.Refresh();
                     break;
             }

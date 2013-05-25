@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Drawing;
 using CommonUtils;
 
 namespace VixenPlus {
@@ -7,22 +6,22 @@ namespace VixenPlus {
         private readonly EventSequence _sequence;
 
 
-        public UndoItem(Point location, byte[,] data, UndoOriginalBehavior undoBehavior, EventSequence sequence, IList<int> currentOrder,
+        public UndoItem(int columnOffset, byte[,] data, UndoOriginalBehavior undoBehavior, EventSequence sequence, IList<int> currentOrder,
                         string originalAction) {
-            Location = location;
+            ColumnOffset = columnOffset;
             Data = data;
             Behavior = undoBehavior;
             OriginalAction = originalAction;
             _sequence = sequence;
-            ReferencedChannels = new int[data.GetLength(0)];
+            ReferencedChannels = new int[data.GetLength(Utils.IndexRowsOrHeight)];
             for (var i = 0; i < ReferencedChannels.Length; i++) {
-                ReferencedChannels[i] = currentOrder[location.Y + i];
+                ReferencedChannels[i] = _sequence.FullChannels[currentOrder[i]].OutputChannel;
             }
         }
 
 
         public override string ToString() {
-            var formattedTime = Utils.TimeFormatWithMills(Location.X * _sequence.EventPeriod);
+            var formattedTime = Utils.TimeFormatWithMills(ColumnOffset * _sequence.EventPeriod);
             var columns = Data.GetLength(Utils.IndexColsOrWidth);
             var rows = Data.GetLength(Utils.IndexRowsOrHeight);
 
@@ -36,7 +35,7 @@ namespace VixenPlus {
 
         public byte[,] Data { get; private set; }
 
-        public Point Location { get; private set; }
+        public int ColumnOffset { get; private set; }
 
         public int[] ReferencedChannels { get; private set; }
 
