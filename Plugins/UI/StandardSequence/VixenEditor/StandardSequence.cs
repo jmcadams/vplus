@@ -3640,7 +3640,7 @@ namespace VixenEditor {
                 var findValue = dialog.FindValue;
                 var replaceWithValue = _actualLevels ? dialog.ReplaceWithValue : (byte) Utils.ToValue(dialog.ReplaceWithValue);
                 for (var row = replaceSelection.Top; row < replaceSelection.Bottom; row++) {
-                    var channel = _channelOrderMapping[row];
+                    var channel = _sequence.Channels[row].OutputChannel;
                     for (var left = replaceSelection.Left; left < replaceSelection.Right; left++) {
                         var currentValue = _actualLevels
                                                ? _sequence.EventValues[channel, left] : Utils.ToPercentage(_sequence.EventValues[channel, left]);
