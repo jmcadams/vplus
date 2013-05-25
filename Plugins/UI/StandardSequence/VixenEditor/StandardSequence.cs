@@ -1928,7 +1928,6 @@ namespace VixenEditor {
                 _selectedLineIndex = (e.Y / _gridRowHeight) + vScrollBar1.Value;
                 _editingChannelSortedIndex = _sequence.Channels[_selectedLineIndex].OutputChannel;
                 _currentlyEditingChannel = _sequence.FullChannels[_editingChannelSortedIndex];
-                System.Diagnostics.Debug.Print("Editing: {0} Channel: {1}", _editingChannelSortedIndex, _currentlyEditingChannel.Name);
                 _selectedRange.X = hScrollBar1.Value + ((int) Math.Floor(e.X / ((float) _gridColWidth)));
                 _selectedRange.Y = _selectedLineIndex;
                 _selectedRange.Width = 1;
@@ -3154,7 +3153,7 @@ namespace VixenEditor {
                         var nonZeroCellCount = 0;
 
                         for (var top = _selectedCells.Top; top < _selectedCells.Bottom; top++) {
-                            var channel = _channelOrderMapping[top];
+                            var channel = _sequence.Channels[top].OutputChannel;
                             for (var left = _selectedCells.Left; left < _selectedCells.Right; left++) {
                                 if (_sequence.EventValues[channel, left] > _sequence.MinimumLevel) {
                                     nonZeroCellCount++;
@@ -3173,7 +3172,7 @@ namespace VixenEditor {
                         AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, originalAction);
 
                         for (var top = _selectedCells.Top; top < _selectedCells.Bottom; top++) {
-                            var channel = _channelOrderMapping[top];
+                            var channel = _sequence.Channels[top].OutputChannel;
                             for (var left = _selectedCells.Left; left < _selectedCells.Right; left++) {
                                 _sequence.EventValues[channel, left] = level;
                             }
@@ -3185,12 +3184,13 @@ namespace VixenEditor {
                         e.Handled = true;
                         break;
                     }
+                    //TODO: Test this while playing. 
                     var currentEvent = currentPosition / _sequence.EventPeriod;
                     AddUndoItem(new Rectangle(currentEvent, _selectedCells.Top, 1, _selectedCells.Height), UndoOriginalBehavior.Overwrite,
                                 Resources.OnText);
 
                     for (var i = _selectedCells.Top; i < _selectedCells.Bottom; i++) {
-                        var channel = _channelOrderMapping[i];
+                        var channel = _sequence.Channels[i].OutputChannel;
                         _sequence.EventValues[channel, currentEvent] = _drawingLevel;
                     }
                     pictureBoxGrid.Invalidate(new Rectangle((currentEvent - hScrollBar1.Value) * _gridColWidth,
