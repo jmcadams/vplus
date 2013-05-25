@@ -3667,7 +3667,7 @@ namespace VixenEditor {
             var maxPeriods = Math.Min(_sequence.TotalEventPeriods - newColumnOffset, _sequence.TotalEventPeriods - oldColumnOffset);
 
             for (var row = 0; (row < rows) && ((_selectedCells.Top + row) < _sequence.ChannelCount); row++) {
-                var channel = _channelOrderMapping[_selectedCells.Top + row];
+                var channel = _sequence.Channels[_selectedCells.Top + row].OutputChannel;
                 for (var col = maxPeriods - 1; col >= 0; col--) {
                     _sequence.EventValues[channel, newColumnOffset + col] = _sequence.EventValues[channel, oldColumnOffset + col];
                 }
