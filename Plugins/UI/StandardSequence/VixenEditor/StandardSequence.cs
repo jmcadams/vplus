@@ -2459,8 +2459,8 @@ namespace VixenEditor {
             var right = _selectedCells.Right;
             var left = _selectedCells.Left;
             for (var top = _selectedCells.Top; top < bottom; top++) {
-                var channelOrder = _channelOrderMapping[top];
-                if (!_sequence.Channels[channelOrder].Enabled) {
+                var channelOrder = _sequence.Channels[top].OutputChannel;
+                if (!_sequence.Channels[top].Enabled) {
                     continue;
                 }
 
