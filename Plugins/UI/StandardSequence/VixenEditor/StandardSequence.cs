@@ -2993,8 +2993,10 @@ namespace VixenEditor {
         }
 
 
+        //TODO: If you don't make any changes, don't set IsDirty
         private void ShowChannelProperties() {
-            using (var dialog = new ChannelPropertyDialog(_sequence.Channels, SelectedChannel, true)) {
+            var channelsToShow = (ModifierKeys & Keys.Shift) == Keys.Shift ? _sequence.Channels : _sequence.FullChannels;
+            using (var dialog = new ChannelPropertyDialog(channelsToShow, SelectedChannel, true)) {
                 dialog.ShowDialog();
             }
             pictureBoxChannels.Refresh();
@@ -4082,7 +4084,7 @@ namespace VixenEditor {
 
         private void toolStripButtonTestChannels_Click(object sender, EventArgs e) {
             try {
-                new TestChannelsDialog(_sequence, _executionInterface, ModifierKeys == Keys.Shift).Show();
+                new TestChannelsDialog(_sequence, _executionInterface, (ModifierKeys & Keys.Shift) == Keys.Shift).Show();
             }
             catch (Exception exception) {
                 MessageBox.Show(exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -4092,7 +4094,7 @@ namespace VixenEditor {
 
         private void toolStripButtonTestConsole_Click(object sender, EventArgs e) {
             try {
-                new TestConsoleDialog(_sequence, _executionInterface).Show();
+                new TestConsoleDialog(_sequence, _executionInterface, (ModifierKeys & Keys.Shift) == Keys.Shift).Show();
             }
             catch (Exception exception) {
                 MessageBox.Show(exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -4741,7 +4743,7 @@ namespace VixenEditor {
 
 
         private void pictureBoxTime_DoubleClick(object sender, EventArgs e) {
-            if (_executionInterface.EngineStatus(_executionContextHandle) != Utils.ExecutionStopped) {
+            if (_executionInterface.EngineStatus(_executionContextHandle) == Utils.ExecutionRunning) {
                 return;
             }
 
