@@ -951,7 +951,7 @@ namespace VixenEditor {
             intensityText = "";
 
             if (column >= 0 && row >= 0) {
-                var value = _sequence.EventValues[_channelOrderMapping[row], column];
+                var value = _sequence.EventValues[_sequence.Channels[row].OutputChannel, column];
                 intensity = _actualLevels ? value : Utils.ToPercentage(value);
                 intensityText = string.Format(_actualLevels ? "{0}" : "{0}%", intensity);
             }
