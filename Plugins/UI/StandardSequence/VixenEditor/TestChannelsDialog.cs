@@ -17,11 +17,11 @@ namespace VixenEditor {
         private readonly bool _actualLevels;
 
 
-        public TestChannelsDialog(EventSequence sequence, IExecution executionInterface, bool showAll) {
+        public TestChannelsDialog(EventSequence sequence, IExecution executionInterface, bool constrainToGroup) {
             InitializeComponent();
             _executionInterface = executionInterface;
             _sequence = sequence;
-            _channels = showAll ? _sequence.FullChannels : sequence.Channels;
+            _channels = constrainToGroup ? _sequence.Channels : sequence.FullChannels;
             if (_channels != null) {
                 // ReSharper disable CoVariantArrayConversion
                 listBoxChannels.Items.AddRange(_channels.ToArray());

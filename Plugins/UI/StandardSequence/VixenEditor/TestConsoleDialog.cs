@@ -15,19 +15,21 @@ namespace VixenEditor {
         private readonly Channel[] _channels;
         private readonly int _executionContextHandle;
         private readonly IExecution _executionInterface;
+        private readonly EventSequence _sequence;
 
 
-        public TestConsoleDialog(EventSequence sequence, IExecution executionInterface) {
+        public TestConsoleDialog(EventSequence sequence, IExecution executionInterface, bool constrainToGroup) {
             InitializeComponent();
+            _sequence = sequence;
             _executionInterface = executionInterface;
             _executionContextHandle = _executionInterface.RequestContext(false, true, null);
             _executionInterface.SetAsynchronousContext(_executionContextHandle, sequence);
-            _channelLevels = new byte[sequence.ChannelCount];
-            _channels = new Channel[sequence.ChannelCount + 1];
+            _channelLevels = new byte[_sequence.FullChannelCount];
+            _channels = new Channel[constrainToGroup ? _sequence.ChannelCount + 1 : _sequence.FullChannelCount + 1];
             _channels[0] = new Channel(Resources.Unassigned, Color.Gainsboro, 0);
 
-            for (var channel = 1; channel <= sequence.ChannelCount; channel++) {
-                _channels[channel] = sequence.Channels[channel - 1];
+            for (var channel = 1; channel <= _channels.Length - 1; channel++) {
+                _channels[channel] = constrainToGroup ? _sequence.Channels[channel - 1] : _sequence.FullChannels[channel - 1];
             }
 
             foreach (var control in groupBox2.Controls) {
@@ -79,7 +81,7 @@ namespace VixenEditor {
 
 
         private void UpdateChannelValue(int channelNaturalIndex, byte value) {
-            _channelLevels[_channels[channelNaturalIndex].OutputChannel] = value;
+            _channelLevels[_sequence.Channels[channelNaturalIndex].OutputChannel] = value;
         }
 
 
