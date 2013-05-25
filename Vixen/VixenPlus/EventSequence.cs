@@ -657,8 +657,6 @@ namespace VixenPlus {
 
 
         public void ApplyGroupAndSort() {
-            System.Diagnostics.Debug.Print("Group: {0}, SortOrder: {1}", _currentGroup, LastSort);
-
             _groupedAndSortedChannels = new List<Channel>();
 
             if (_currentGroup != AllChannels) {
