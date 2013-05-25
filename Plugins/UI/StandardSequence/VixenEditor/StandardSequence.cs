@@ -2146,7 +2146,7 @@ namespace VixenEditor {
             GetCellIntensity(cellX, cellY, out intensity);
             toolStripLabelCellIntensity.Text = intensity;
             toolStripLabelCurrentCell.Text = string.Format("{0} , {1}", Utils.TimeFormatWithMills(cellX * _sequence.EventPeriod),
-                                                           _sequence.Channels[_channelOrderMapping[cellY]].Name);
+                                                           _sequence.Channels[cellY].Name);
         }
 
 
@@ -3002,12 +3002,7 @@ namespace VixenEditor {
 
 
         private void ShowChannelProperties() {
-            var channels = new List<VixenPlus.Channel>();
-            channels.AddRange(_sequence.Channels);
-            for (var i = 0; i < channels.Count; i++) {
-                channels[i] = _sequence.Channels[_channelOrderMapping[i]];
-            }
-            using (var dialog = new ChannelPropertyDialog(channels, SelectedChannel, true)) {
+            using (var dialog = new ChannelPropertyDialog(_sequence.Channels, SelectedChannel, true)) {
                 dialog.ShowDialog();
             }
             pictureBoxChannels.Refresh();
