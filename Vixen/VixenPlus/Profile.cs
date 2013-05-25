@@ -158,9 +158,9 @@ namespace VixenPlus {
 
 
         public void InheritChannelsFrom(EventSequence sequence) {
-            _channelObjects = sequence.Channels;
+            _channelObjects = sequence.FullChannels;
             _channelOutputs.Clear();
-            foreach (var channel in sequence.Channels) {
+            foreach (var channel in sequence.FullChannels) {
                 _channelOutputs.Add(channel.OutputChannel);
             }
             Sorts.UpdateChannelCounts(Channels.Count);

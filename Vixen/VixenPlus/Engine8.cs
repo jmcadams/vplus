@@ -578,7 +578,7 @@ namespace VixenPlus {
 
 
         private void InitializeForAsynchronous(IExecutable executableObject) {
-            var channels = executableObject.Channels;
+            var channels = executableObject.FullChannels;
             if (channels.Count == 0) {
                 throw new Exception("Trying to setup for asynchronous operation with no channels?");
             }

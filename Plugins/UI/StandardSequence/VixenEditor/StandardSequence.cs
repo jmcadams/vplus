@@ -4082,7 +4082,7 @@ namespace VixenEditor {
 
         private void toolStripButtonTestChannels_Click(object sender, EventArgs e) {
             try {
-                new TestChannelsDialog(_sequence, _executionInterface).Show();
+                new TestChannelsDialog(_sequence, _executionInterface, ModifierKeys == Keys.Shift).Show();
             }
             catch (Exception exception) {
                 MessageBox.Show(exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);

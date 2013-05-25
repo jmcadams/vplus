@@ -17,11 +17,11 @@ namespace VixenEditor {
         private readonly bool _actualLevels;
 
 
-        public TestChannelsDialog(EventSequence sequence, IExecution executionInterface) {
+        public TestChannelsDialog(EventSequence sequence, IExecution executionInterface, bool showAll) {
             InitializeComponent();
             _executionInterface = executionInterface;
             _sequence = sequence;
-            _channels = sequence.Channels;
+            _channels = showAll ? _sequence.FullChannels : sequence.Channels;
             if (_channels != null) {
                 // ReSharper disable CoVariantArrayConversion
                 listBoxChannels.Items.AddRange(_channels.ToArray());
@@ -29,7 +29,7 @@ namespace VixenEditor {
             }
             _actualLevels = ((ISystem) Interfaces.Available["ISystem"]).UserPreferences.GetBoolean("ActualLevels");
             trackBar.Maximum = _actualLevels ? 255 : 100; //todo should these come from preferences?
-            _channelLevels = new byte[sequence.ChannelCount];
+            _channelLevels = new byte[sequence.FullChannelCount];
             _executionContextHandle = _executionInterface.RequestContext(false, true, null);
             _executionInterface.SetAsynchronousContext(_executionContextHandle, _sequence);
             BringToFront();
@@ -76,7 +76,11 @@ namespace VixenEditor {
             }
 
             for (var channel = 0; channel < _channelLevels.Length; channel++) {
-                _channelLevels[_channels[channel].OutputChannel] = listBoxChannels.GetSelected(channel) ? LevelFromTrackBar() : ((byte) 0);
+                _channelLevels[channel] = 0;
+            }
+
+            for(var i = 0; i < listBoxChannels.Items.Count; i++) {
+                _channelLevels[_channels[i].OutputChannel] = listBoxChannels.GetSelected(i) ? LevelFromTrackBar() : ((byte) 0);
             }
             UpdateOutput();
         }
