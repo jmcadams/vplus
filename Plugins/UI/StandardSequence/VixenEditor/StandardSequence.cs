@@ -1303,8 +1303,8 @@ namespace VixenEditor {
                 AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, Resources.UndoText_AdjustIntensity);
                 var delta = _intensityAdjustDialog.Delta;
                 for (var top = _selectedCells.Top; top < _selectedCells.Bottom; top++) {
-                    var channel = _channelOrderMapping[top];
-                    if (!_sequence.Channels[channel].Enabled) {
+                    var channel = _sequence.Channels[top].OutputChannel;
+                    if (!_sequence.Channels[top].Enabled) {
                         continue;
                     }
 
