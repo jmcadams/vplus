@@ -3968,7 +3968,7 @@ namespace VixenEditor {
 
                 var events = dialog.GetEventValues(_selectedCells.Height, _selectedCells.Width);
                 for (var row = _selectedCells.Top; row < _selectedCells.Bottom; row++) {
-                    var channel = _channelOrderMapping[row];
+                    var channel = _sequence.Channels[row].OutputChannel;
                     for (var col = _selectedCells.Left; col < _selectedCells.Right; col++) {
                         _sequence.EventValues[channel, col] = events[row - _selectedCells.Top, col - _selectedCells.Left];
                     }
@@ -3995,7 +3995,7 @@ namespace VixenEditor {
             AddUndoItem(new Rectangle(_selectedCells.Left, _selectedCells.Top, _selectedCells.Width, _selectedCells.Height),
                         UndoOriginalBehavior.Removal, Resources.UndoText_RemoveCells);
             for (var row = 0; row < _selectedCells.Height; row++) {
-                var channel = _channelOrderMapping[_selectedCells.Top + row];
+                var channel = _sequence.Channels[_selectedCells.Top + row].OutputChannel;
                 for (var column = 0; column < shiftingColumnPoint; column++) {
                     _sequence.EventValues[channel, right + column - _selectedCells.Width] = _sequence.EventValues[channel, right + column];
                 }
