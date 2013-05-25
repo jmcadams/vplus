@@ -1893,8 +1893,8 @@ namespace VixenEditor {
 
             if ((ModifierKeys & Keys.Control) != Keys.None) {
                 _selectedLineIndex = (e.Y / _gridRowHeight) + vScrollBar1.Value;
-                _editingChannelSortedIndex = _channelOrderMapping[_selectedLineIndex];
-                _currentlyEditingChannel = _sequence.Channels[_editingChannelSortedIndex];
+                _editingChannelSortedIndex = _sequence.Channels[_selectedLineIndex].OutputChannel;
+                _currentlyEditingChannel = _sequence.FullChannels[_editingChannelSortedIndex];
                 _lineRect.X = _mouseDownAtInGrid.X;
                 _lineRect.Y = _mouseDownAtInGrid.Y;
                 _lineRect.Width = 0;
@@ -1926,8 +1926,9 @@ namespace VixenEditor {
             else if ((e.Y / _gridRowHeight) + vScrollBar1.Value < _sequence.ChannelCount &&
                      (e.X / _gridColWidth) + hScrollBar1.Value < _sequence.TotalEventPeriods) {
                 _selectedLineIndex = (e.Y / _gridRowHeight) + vScrollBar1.Value;
-                _editingChannelSortedIndex = _channelOrderMapping[_selectedLineIndex];
-                _currentlyEditingChannel = _sequence.Channels[_editingChannelSortedIndex];
+                _editingChannelSortedIndex = _sequence.Channels[_selectedLineIndex].OutputChannel;
+                _currentlyEditingChannel = _sequence.FullChannels[_editingChannelSortedIndex];
+                System.Diagnostics.Debug.Print("Editing: {0} Channel: {1}", _editingChannelSortedIndex, _currentlyEditingChannel.Name);
                 _selectedRange.X = hScrollBar1.Value + ((int) Math.Floor(e.X / ((float) _gridColWidth)));
                 _selectedRange.Y = _selectedLineIndex;
                 _selectedRange.Width = 1;
