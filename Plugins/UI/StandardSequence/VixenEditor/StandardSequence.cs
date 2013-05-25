@@ -966,7 +966,7 @@ namespace VixenEditor {
 
 
         private VixenPlus.Channel GetChannelAtSortedIndex(int index) {
-            return index < _channelOrderMapping.Count ? _sequence.Channels[_channelOrderMapping[index]] : null;
+            return index < _sequence.Channels.Count ? _sequence.Channels[index] : null;
         }
 
 
@@ -1662,28 +1662,31 @@ namespace VixenEditor {
                 return;
             }
 
+            //TODO Implement!
+            MessageBox.Show("Drag and Drop disabled until Groups are fully implemented.  Sorry");
+
             var data = (VixenPlus.Channel) e.Data.GetData(typeof (VixenPlus.Channel));
             var channelAt = GetChannelAt(pictureBoxChannels.PointToClient(new Point(e.X, e.Y)));
 
-            if (data == channelAt) {
-                return;
-            }
+            //if (data == channelAt) {
+            //    return;
+            //}
 
-            switch (e.Effect) {
-                case DragDropEffects.Copy:
-                    _sequence.CopyChannel(data, channelAt);
-                    RefreshAll();
-                    IsDirty = true;
-                    break;
-                case DragDropEffects.Move:
-                    var channelNaturalIndex = GetChannelNaturalIndex(data);
-                    _channelOrderMapping.Remove(channelNaturalIndex);
-                    var channelSortedIndex = channelAt != null ? GetChannelSortedIndex(channelAt) : _channelOrderMapping.Count;
-                    _channelOrderMapping.Insert(channelSortedIndex, channelNaturalIndex);
-                    RefreshAll();
-                    IsDirty = true;
-                    break;
-            }
+            //switch (e.Effect) {
+            //    case DragDropEffects.Copy:
+            //        _sequence.CopyChannel(data, channelAt);
+            //        RefreshAll();
+            //        IsDirty = true;
+            //        break;
+            //    case DragDropEffects.Move:
+            //        var channelNaturalIndex = GetChannelNaturalIndex(data);
+            //        _channelOrderMapping.Remove(channelNaturalIndex);
+            //        var channelSortedIndex = channelAt != null ? GetChannelSortedIndex(channelAt) : _channelOrderMapping.Count;
+            //        _channelOrderMapping.Insert(channelSortedIndex, channelNaturalIndex);
+            //        RefreshAll();
+            //        IsDirty = true;
+            //        break;
+            //}
         }
 
 
@@ -2562,6 +2565,10 @@ namespace VixenEditor {
             SetOrderArraySize(_sequence.ChannelCount);
             textBoxChannelCount.Text = _sequence.ChannelCount.ToString(CultureInfo.InvariantCulture);
             textBoxProgramLength.Text = Utils.TimeFormatWithMills(_sequence.Time);
+            //TODO I don't know if this is needed or not.
+            //if (cbGroups.Visible) {
+            //    cbGroups_SelectedIndexChanged(null, null);
+            //}
             pictureBoxGrid.Refresh();
             pictureBoxChannels.Refresh();
             pictureBoxTime.Refresh();
