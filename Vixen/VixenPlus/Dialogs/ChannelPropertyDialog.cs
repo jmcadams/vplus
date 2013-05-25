@@ -10,10 +10,13 @@ namespace VixenPlus.Dialogs
         private readonly Preference2 _preferences;
         private Channel _currentChannel;
         private bool _internalChange;
+        private List<Channel> _channels;
+
 
         public ChannelPropertyDialog(List<Channel> channels, Channel currentChannel, bool showOutputChannel)
         {
             InitializeComponent();
+            _channels = channels;
             _internalChange = true;
             comboBoxChannels.Items.AddRange(channels.ToArray());
             _internalChange = false;
@@ -47,6 +50,8 @@ namespace VixenPlus.Dialogs
                 strArray[i] = colorDialog.CustomColors[i].ToString(CultureInfo.InvariantCulture);
             }
             _preferences.SetString("CustomColors", string.Join(",", strArray));
+            ToChannel();
+            comboBoxChannels.Refresh();
         }
 
         private void buttonDimmingCurve_Click(object sender, EventArgs e)
@@ -142,6 +147,10 @@ namespace VixenPlus.Dialogs
             }
             _currentChannel.Color = buttonColor.BackColor;
             _currentChannel.Enabled = checkBoxEnabled.Checked;
+        }
+
+        private void comboBoxChannels_DrawItem(object sender, DrawItemEventArgs e) {
+            Channel.DrawItem(e, _channels[e.Index]);
         }
     }
 }

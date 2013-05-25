@@ -45,10 +45,9 @@ namespace VixenPlus.Dialogs {
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor =
-                ((System.Windows.Forms.AnchorStyles)
-                 ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) |
-                   System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.buttonDimmingCurve);
             this.groupBox1.Controls.Add(this.checkBoxEnabled);
             this.groupBox1.Controls.Add(this.labelOutputChannel);
@@ -138,8 +137,7 @@ namespace VixenPlus.Dialogs {
             // 
             // buttonClose
             // 
-            this.buttonClose.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonClose.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonClose.Location = new System.Drawing.Point(205, 239);
             this.buttonClose.Name = "buttonClose";
@@ -171,12 +169,14 @@ namespace VixenPlus.Dialogs {
             // 
             // comboBoxChannels
             // 
+            this.comboBoxChannels.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.comboBoxChannels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxChannels.FormattingEnabled = true;
             this.comboBoxChannels.Location = new System.Drawing.Point(70, 14);
             this.comboBoxChannels.Name = "comboBoxChannels";
             this.comboBoxChannels.Size = new System.Drawing.Size(198, 21);
             this.comboBoxChannels.TabIndex = 2;
+            this.comboBoxChannels.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.comboBoxChannels_DrawItem);
             this.comboBoxChannels.SelectedIndexChanged += new System.EventHandler(this.comboBoxChannels_SelectedIndexChanged);
             // 
             // colorDialog
