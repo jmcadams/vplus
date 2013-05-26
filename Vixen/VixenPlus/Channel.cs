@@ -174,17 +174,20 @@ namespace VixenPlus {
         }
 
         // For ComboBoxes
-        public static void DrawItem(DrawItemEventArgs e, Channel channels) {
+        public static void DrawItem(DrawItemEventArgs e, string name, Color color, bool drawFocus = true) {
             e.DrawBackground();
 
-            using (var backgroundBrush = new SolidBrush(channels.Color))
-            using (var g = e.Graphics) {
-                g.FillRectangle(backgroundBrush, e.Bounds);
+            using (var backgroundBrush = new SolidBrush(color)) {
+                e.Graphics.FillRectangle(backgroundBrush, e.Bounds);
                 var contrastingBrush = Utils.GetTextColor(backgroundBrush.Color);
-                g.DrawString(channels.Name, e.Font, contrastingBrush, new RectangleF(e.Bounds.Location, e.Bounds.Size));
+                e.Graphics.DrawString(name, e.Font, contrastingBrush, new RectangleF(e.Bounds.Location, e.Bounds.Size));
             }
 
             e.DrawFocusRectangle();
+        }
+
+        public static void DrawItem(DrawItemEventArgs e, Channel c) {
+            DrawItem(e, c.Name, c.Color);
         }
 
 
@@ -192,20 +195,17 @@ namespace VixenPlus {
         public static void DrawItem(ListBox lb, DrawItemEventArgs e, Channel channels, bool drawFocus = true) {
             e.DrawBackground();
 
-            using (var backgroundBrush = new SolidBrush(channels.Color))
-            using (var g = e.Graphics) {
-                g.FillRectangle(backgroundBrush, e.Bounds);
+            using (var backgroundBrush = new SolidBrush(channels.Color)) {
+                e.Graphics.FillRectangle(backgroundBrush, e.Bounds);
 
                 var contrastingBrush = Utils.GetTextColor(backgroundBrush.Color);
-                g.DrawString(channels.Name, e.Font, contrastingBrush, lb.GetItemRectangle(e.Index).Location);
+                e.Graphics.DrawString(channels.Name, e.Font, contrastingBrush, lb.GetItemRectangle(e.Index).Location);
                 if ((e.State & DrawItemState.Selected) == DrawItemState.Selected) {
-                    g.DrawString("\u2714", e.Font, contrastingBrush, e.Bounds.Width - e.Bounds.Height, e.Bounds.Y);
+                    e.Graphics.DrawString("\u2714", e.Font, contrastingBrush, e.Bounds.Width - e.Bounds.Height, e.Bounds.Y);
                 }
             }
 
-            if (drawFocus) {
-                e.DrawFocusRectangle();
-            }
+            e.DrawFocusRectangle();
         }
 
 
