@@ -1352,12 +1352,14 @@ namespace VixenEditor{
             // 
             // cbGroups
             // 
+            this.cbGroups.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbGroups.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbGroups.FormattingEnabled = true;
             this.cbGroups.Location = new System.Drawing.Point(0, 39);
             this.cbGroups.Name = "cbGroups";
             this.cbGroups.Size = new System.Drawing.Size(172, 21);
             this.cbGroups.TabIndex = 13;
+            this.cbGroups.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbGroups_DrawItem);
             this.cbGroups.SelectedIndexChanged += new System.EventHandler(this.cbGroups_SelectedIndexChanged);
             // 
             // labelPosition
