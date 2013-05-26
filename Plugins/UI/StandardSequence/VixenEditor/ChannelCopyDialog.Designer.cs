@@ -100,9 +100,11 @@ namespace VixenEditor {
             this.Controls.Add(this.comboBoxSourceChannel);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = global::Properties.Resources.VixenPlus;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ChannelCopyDialog";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Tag = "";
             this.Text = "Channel Copy";
