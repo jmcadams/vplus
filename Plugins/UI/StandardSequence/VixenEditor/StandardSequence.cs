@@ -3529,10 +3529,10 @@ namespace VixenEditor {
                 cbGroups.SelectedIndex = 0;
                 //cbGroups.Items.Add("New Channel Group");
             }
-            //else {
+            else {
             //    cbGroups.SelectedIndex = 0;
-            //    cbGroups.Visible = false;
-            //}
+                cbGroups.Visible = false;
+            }
         }
 
 
