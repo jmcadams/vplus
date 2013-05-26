@@ -1867,7 +1867,7 @@ namespace VixenEditor {
 
 
         private void pictureBoxGrid_MouseDown(object sender, MouseEventArgs e) {
-            if (e.Button != MouseButtons.Left) {
+            if (e.Button != MouseButtons.Left || _sequence.ChannelCount == 0 ) {
                 return;
             }
 
@@ -4801,6 +4801,16 @@ namespace VixenEditor {
             VScrollCheck();
             pictureBoxChannels.Refresh();
             pictureBoxGrid.Refresh();
+        }
+
+        private void cbGroups_DrawItem(object sender, DrawItemEventArgs e) {
+            if (e.Index > 0) {
+                var indexItem = _sequence.Groups[cbGroups.Items[e.Index].ToString()];
+                VixenPlus.Channel.DrawItem(e, indexItem.Name, indexItem.GroupColor, false);
+            }
+            else {
+                VixenPlus.Channel.DrawItem(e, EventSequence.AllChannels, Color.White, false);
+            }
         }
     }
 }
