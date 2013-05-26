@@ -503,7 +503,13 @@ namespace VixenPlus {
 
 
         private void pbColor_Click(object sender, EventArgs e) {
+            var loadCustomColors = _preferences.GetString("CustomColors").Split(new[] { ',' });
+            var numArray = new int[loadCustomColors.Length];
+            for (var i = 0; i < loadCustomColors.Length; i++) {
+                numArray[i] = int.Parse(loadCustomColors[i]);
+            }
             using (var colorDialog = new ColorDialog {AnyColor = true, Color = pbColor.BackColor, FullOpen = true}) {
+                colorDialog.CustomColors = numArray;
                 var result = colorDialog.ShowDialog();
                 if (result != DialogResult.OK) {
                     return;
@@ -511,6 +517,12 @@ namespace VixenPlus {
                 pbColor.BackColor = colorDialog.Color;
                 var item = lbColorizableItems.SelectedItem.ToString().Replace(" ", "");
                 _preferences.SetString(item, colorDialog.Color.ToArgb().ToString(CultureInfo.InvariantCulture));
+
+                var saveCustomColors = new string[colorDialog.CustomColors.Length];
+                for (var i = 0; i < saveCustomColors.Length; i++) {
+                    saveCustomColors[i] = colorDialog.CustomColors[i].ToString(CultureInfo.InvariantCulture);
+                }
+                _preferences.SetString("CustomColors", string.Join(",", saveCustomColors));
             }
         }
     }
