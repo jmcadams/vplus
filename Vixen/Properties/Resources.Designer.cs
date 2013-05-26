@@ -524,6 +524,17 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error occured processing the group file {0}. As a result, one or more groups may not be available. You should check {0} for proper formatting or recreate your groups.
+        ///
+        ///Press OK to continue or Cancel to quit {1} and log this error to the crash.log..
+        /// </summary>
+        public static string ErrorLoadingGroup {
+            get {
+                return ResourceManager.GetString("ErrorLoadingGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error Log Created.
         /// </summary>
         public static string ErrorLogCreated {
@@ -646,6 +657,15 @@ namespace Properties {
             get {
                 object obj = ResourceManager.GetObject("gradient_or_ramp", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group Loading Error.
+        /// </summary>
+        public static string GroupLoadingError {
+            get {
+                return ResourceManager.GetString("GroupLoadingError", resourceCulture);
             }
         }
         
@@ -981,6 +1001,15 @@ namespace Properties {
             get {
                 object obj = ResourceManager.GetObject("mirror_vert", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name Attribute corrupt or missing in {0} at node {1}.
+        /// </summary>
+        public static string MissingNameAttribute {
+            get {
+                return ResourceManager.GetString("MissingNameAttribute", resourceCulture);
             }
         }
         

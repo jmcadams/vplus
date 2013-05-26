@@ -23,7 +23,7 @@ namespace VixenPlus {
         private SortOrders _sortOrders;
         private string _currentGroup = AllChannels;
 
-        public Dictionary<string, string> Groups { get; private set; }
+        public Dictionary<string, GroupData> Groups { get; private set; }
 
         #region Constructors
 
@@ -684,18 +684,23 @@ namespace VixenPlus {
 
 
         private void AddNode(string nodeData) {
-            var node = Groups[nodeData];
-            if (node.Contains(":")) {
-                var nodes = node.Split(new[] {':'});
-                foreach (var recursiveNode in nodes[0].Split(new[] {','})) {
-                    AddNode(recursiveNode);
+            try {
+                var groupChannels = Groups[nodeData].GroupChannels;
+                if (groupChannels.Contains(":")) {
+                    var nodes = groupChannels.Split(new[] {':'});
+                    foreach (var recursiveNode in nodes[0].Split(new[] {','})) {
+                        AddNode(recursiveNode);
+                    }
+                    if (nodes[1] != string.Empty) {
+                        AddChannels(groupChannels);
+                    }
                 }
-                if (nodes[1] != string.Empty) {
-                    AddChannels(node);
+                else {
+                    AddChannels(groupChannels);
                 }
             }
-            else {
-                AddChannels(node);
+            catch (KeyNotFoundException) {
+                // we just build the group anyhow since it may have channels missing because of an improper formatted group file.
             }
         }
 
@@ -813,10 +818,5 @@ namespace VixenPlus {
             _profile = null;
             UpdateEventValueArray();
         }
-
-
-        //public Channel FindChannel(ulong id) {
-        //    return Channels.Find(c => c.Id == id);
-        //}
     }
 }

@@ -1013,4 +1013,15 @@ This issue was written to {0}, please e-mail this log, your sequence and profile
 
 {2}</value>
   </data>
+	<data name="ErrorLoadingGroup" xml:space="preserve">
+    <value>An error occured processing the group file {0}. As a result, one or more groups may not be available. You should check {0} for proper formatting or recreate your groups.
+
+Press OK to continue or Cancel to quit {1} and log this error to the crash.log.</value>
+  </data>
+	<data name="GroupLoadingError" xml:space="preserve">
+    <value>Group Loading Error</value>
+  </data>
+	<data name="MissingNameAttribute" xml:space="preserve">
+    <value>Name Attribute corrupt or missing in {0} at node {1}</value>
+  </data>
 </root>
