@@ -1078,7 +1078,7 @@ namespace VixenEditor{
             this.lockToolbarToolStripMenuItem.CheckOnClick = true;
             this.lockToolbarToolStripMenuItem.Name = "lockToolbarToolStripMenuItem";
             this.lockToolbarToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.lockToolbarToolStripMenuItem.Text = "Lock Toolbar";
+            this.lockToolbarToolStripMenuItem.Text = "Lock Position";
             this.lockToolbarToolStripMenuItem.Click += new System.EventHandler(this.lockToolbarToolStripMenuItem_Click);
             // 
             // toolbarIconSizeToolStripMenuItem
