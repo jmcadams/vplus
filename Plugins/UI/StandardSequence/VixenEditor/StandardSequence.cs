@@ -1124,6 +1124,7 @@ namespace VixenEditor {
         private void Init() {
             _initializing = true;
             InitializeComponent();
+
             _initializing = false;
 
             _gridRowHeight = _preferences.GetInteger("MaxRowHeight");
@@ -1151,6 +1152,14 @@ namespace VixenEditor {
             _executionContextHandle = _executionInterface.RequestContext(true, false, this);
             toolStripComboBoxColumnZoom.SelectedIndex = toolStripComboBoxColumnZoom.Items.Count - 1;
             toolStripComboBoxRowZoom.SelectedIndex = toolStripComboBoxRowZoom.Items.Count - 1;
+            
+            // ReSharper disable PossibleNullReferenceException
+            toolStripComboBoxColumnZoom.ComboBox.MouseWheel += comboBox_MouseWheel;
+            toolStripComboBoxRowZoom.ComboBox.MouseWheel += comboBox_MouseWheel;
+            toolStripComboBoxChannelOrder.ComboBox.MouseWheel += comboBox_MouseWheel;
+            cbGroups.MouseWheel += comboBox_MouseWheel;
+            // ReSharper restore PossibleNullReferenceException
+
             SyncAudioButton();
             _mouseWheelVerticalDelta = _preferences.GetInteger("MouseWheelVerticalDelta");
             _mouseWheelHorizontalDelta = _preferences.GetInteger("MouseWheelHorizontalDelta");
@@ -3088,6 +3097,12 @@ namespace VixenEditor {
                 _sequence.UpdateMetrics(Width, Height, splitContainer1.SplitterDistance);
                 _executionInterface.ReleaseContext(_executionContextHandle);
             }
+            // ReSharper disable PossibleNullReferenceException
+            toolStripComboBoxColumnZoom.ComboBox.MouseWheel -= comboBox_MouseWheel;
+            toolStripComboBoxRowZoom.ComboBox.MouseWheel -= comboBox_MouseWheel;
+            toolStripComboBoxChannelOrder.ComboBox.MouseWheel -= comboBox_MouseWheel;
+            // ReSharper restore PossibleNullReferenceException
+            cbGroups.MouseWheel -= comboBox_MouseWheel;
         }
 
 
@@ -4793,7 +4808,6 @@ namespace VixenEditor {
 
 
         private void cbGroups_SelectedIndexChanged(object sender, EventArgs e) {
-            pictureBoxGrid.Focus();
             _sequence.CurrentGroup = cbGroups.SelectedItem.ToString();
             if (_selectedCells.Top + _selectedCells.Height > _sequence.ChannelCount) {
                 _selectedCells.Height = _sequence.ChannelCount - _selectedCells.Top;
@@ -4811,6 +4825,10 @@ namespace VixenEditor {
             else {
                 VixenPlus.Channel.DrawItem(e, EventSequence.AllChannels, Color.White, false);
             }
+        }
+
+        private static void comboBox_MouseWheel(object sender, MouseEventArgs e) {
+            ((HandledMouseEventArgs) e).Handled = !((ComboBox)sender).DroppedDown;
         }
     }
 }
