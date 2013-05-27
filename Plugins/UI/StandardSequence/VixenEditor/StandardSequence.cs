@@ -920,7 +920,7 @@ namespace VixenEditor {
             var row = 0;
             foreach (var i in affectedChannels) {
                 var channel = _sequence.FullChannels[i].OutputChannel;
-                for (var col = 0; col < numberOfEvents; col++) {
+                for (var col = 0; col < numberOfEvents && col + startEvent < _sequence.TotalEventPeriods; col++) {
                     buffer[row, col] = _sequence.EventValues[channel, startEvent + col];
                 }
                 row++;

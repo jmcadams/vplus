@@ -1,0 +1,50 @@
+Preferences
+-- Select what screen to start on
+-- Can choose colors for basic screen elements
+-- Can choose to have the zero line in the waveform show or not
+
+Toolbars
+-- Can be resized
+-- Can be locked
+-- Has green dot behind selected active buttons
+-- New Sequence and Open Sequence right on toolbar
+-- Has play from point and play range buttons
+-- Playback speed slider shows standard speeds when selected
+-- Show selected profile or embedded profile by clicking next to the mask
+-- Undo/Redo shows better information that just "Undo Overwrite at..."
+-- Undo/Redo tooltip text updates when clickedfr
+
+Editing Grid area
+-- Shows selection information while selecting and is semi transparent
+-- Undo/redo applies regardless of what group is selected
+-- Grid backgroup, grid lines and cross hair colors can be customized
+-- New key, X to show/hide crosshairs
+-- Find and replace is smart.  If a selection is made, then find and replace only applies to that selection, other wise it applies to the entire screen
+-- Random effect provides a preview which shows in ramps or gradient as it is in your sequence
+-- Sparkle and shimmer show what the slider values are
+-- Sequences open full size all the time instead of almost full size
+
+Channel Name area
+-- Text shows with a contrasting color
+-- Disabled channels are shown with a strikethrough
+-- Background color can be customized
+-- GROUPS!
+
+Groups
+-- Arbitrary ordering
+-- Can be colored
+-- Can contain other groups and/or channel numbers
+-- Remembers the zoom for each group
+-- Can be applied to most dialog boxes that have channels by holding shift while selecting the dialog (all but profile)
+-- Sort orders applied to groups too
+-- Unlimited number of groups, but practical limits apply
+-- Can be changed during playback
+
+Waveform
+-- Can double click to hide or show
+-- Can drag to resize
+-- Waveform, background and zero line colors can be customized
+-- Zero line can be on or off
+
+Help
+-- Has a lutefisk help cartoon :D

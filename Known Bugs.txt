@@ -1,0 +1,8 @@
+Default preference shows toolbars as medium
+Select None does not reset play point/play range button
+Add Shortcut key text to play point/play range
+Sort order is not applying to the real order
+Make the Group Drop Down max to the size of the channel picture box
+No color when opening a existing sequence on a new machine
+Save and restore random numbers settings
+More than one AP cause failure
