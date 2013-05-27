@@ -454,7 +454,6 @@ namespace VixenEditor {
             if (mouseY > pictureBoxTime.Height + splitContainer2.SplitterWidth) {
                 _selectedLineIndex = vScrollBar1.Value + (mouseY - (pictureBoxTime.Height + splitContainer2.SplitterWidth)) / _gridRowHeight;
                 if (_selectedLineIndex < _sequence.ChannelCount) {
-                    //todo can one of these be eliminated now that we don't abstract sorting?
                     _editingChannelSortedIndex = _selectedLineIndex;
                     isValid = (_editingChannelSortedIndex >= 0) && (_editingChannelSortedIndex < _sequence.ChannelCount);
                 }
@@ -3159,7 +3158,6 @@ namespace VixenEditor {
                         e.Handled = true;
                         break;
                     }
-                    //TODO: Test this while playing. 
                     var currentEvent = currentPosition / _sequence.EventPeriod;
                     AddUndoItem(new Rectangle(currentEvent, _selectedCells.Top, 1, _selectedCells.Height), UndoOriginalBehavior.Overwrite,
                                 Resources.OnText);
