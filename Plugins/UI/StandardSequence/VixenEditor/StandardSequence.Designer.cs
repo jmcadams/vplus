@@ -1036,7 +1036,7 @@ namespace VixenEditor{
             this.flattenProfileIntoSequenceToolStripMenuItem});
             this.tsmProfiles.MergeAction = System.Windows.Forms.MergeAction.MatchOnly;
             this.tsmProfiles.Name = "tsmProfiles";
-            this.tsmProfiles.Size = new System.Drawing.Size(152, 22);
+            this.tsmProfiles.Size = new System.Drawing.Size(120, 22);
             this.tsmProfiles.Text = "Profiles";
             // 
             // createFromSequenceToolStripMenuItem
@@ -1081,7 +1081,7 @@ namespace VixenEditor{
             this.toolbarsToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert;
             this.toolbarsToolStripMenuItem.MergeIndex = 6;
             this.toolbarsToolStripMenuItem.Name = "toolbarsToolStripMenuItem";
-            this.toolbarsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.toolbarsToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
             this.toolbarsToolStripMenuItem.Text = "Toolbars";
             // 
             // lockToolbarToolStripMenuItem
@@ -1322,11 +1322,11 @@ namespace VixenEditor{
             // toolStripContainer1.ContentPanel
             // 
             this.toolStripContainer1.ContentPanel.Controls.Add(this.splitContainer1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(976, 219);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(976, 243);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStripContainer1.Location = new System.Drawing.Point(0, 24);
+            this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(976, 515);
+            this.toolStripContainer1.Size = new System.Drawing.Size(976, 539);
             this.toolStripContainer1.TabIndex = 1;
             this.toolStripContainer1.Text = "toolStripContainer1";
             // 
@@ -1355,7 +1355,7 @@ namespace VixenEditor{
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(976, 219);
+            this.splitContainer1.Size = new System.Drawing.Size(976, 243);
             this.splitContainer1.SplitterDistance = 175;
             this.splitContainer1.TabIndex = 20;
             this.splitContainer1.SplitterMoving += new System.Windows.Forms.SplitterCancelEventHandler(this.splitContainer1_SplitterMoving);
@@ -1391,7 +1391,7 @@ namespace VixenEditor{
             this.pictureBoxChannels.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxChannels.Location = new System.Drawing.Point(0, 0);
             this.pictureBoxChannels.Name = "pictureBoxChannels";
-            this.pictureBoxChannels.Size = new System.Drawing.Size(175, 219);
+            this.pictureBoxChannels.Size = new System.Drawing.Size(175, 243);
             this.pictureBoxChannels.TabIndex = 11;
             this.pictureBoxChannels.TabStop = false;
             this.pictureBoxChannels.DragDrop += new System.Windows.Forms.DragEventHandler(this.pictureBoxChannels_DragDrop);
@@ -1519,7 +1519,7 @@ namespace VixenEditor{
             this.splitContainer2.Panel2.Controls.Add(this.pictureBoxGrid);
             this.splitContainer2.Panel2.Controls.Add(this.vScrollBar1);
             this.splitContainer2.Panel2.Controls.Add(this.hScrollBar1);
-            this.splitContainer2.Size = new System.Drawing.Size(797, 219);
+            this.splitContainer2.Size = new System.Drawing.Size(797, 243);
             this.splitContainer2.SplitterDistance = 60;
             this.splitContainer2.TabIndex = 5;
             this.splitContainer2.TabStop = false;
@@ -1565,8 +1565,6 @@ namespace VixenEditor{
             // lblFollowMouse
             // 
             this.lblFollowMouse.AutoSize = true;
-            this.lblFollowMouse.BackColor = System.Drawing.Color.White;
-            this.lblFollowMouse.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblFollowMouse.Location = new System.Drawing.Point(3, 0);
             this.lblFollowMouse.Name = "lblFollowMouse";
             this.lblFollowMouse.Size = new System.Drawing.Size(97, 15);
@@ -1582,7 +1580,7 @@ namespace VixenEditor{
             this.pictureBoxGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxGrid.Location = new System.Drawing.Point(0, 0);
             this.pictureBoxGrid.Name = "pictureBoxGrid";
-            this.pictureBoxGrid.Size = new System.Drawing.Size(780, 138);
+            this.pictureBoxGrid.Size = new System.Drawing.Size(780, 162);
             this.pictureBoxGrid.TabIndex = 5;
             this.pictureBoxGrid.TabStop = false;
             this.pictureBoxGrid.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxGrid_Paint);
@@ -1944,14 +1942,14 @@ namespace VixenEditor{
             this.vScrollBar1.Dock = System.Windows.Forms.DockStyle.Right;
             this.vScrollBar1.Location = new System.Drawing.Point(780, 0);
             this.vScrollBar1.Name = "vScrollBar1";
-            this.vScrollBar1.Size = new System.Drawing.Size(17, 138);
+            this.vScrollBar1.Size = new System.Drawing.Size(17, 162);
             this.vScrollBar1.TabIndex = 4;
             this.vScrollBar1.ValueChanged += new System.EventHandler(this.vScrollBar1_ValueChanged);
             // 
             // hScrollBar1
             // 
             this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.hScrollBar1.Location = new System.Drawing.Point(0, 138);
+            this.hScrollBar1.Location = new System.Drawing.Point(0, 162);
             this.hScrollBar1.Name = "hScrollBar1";
             this.hScrollBar1.Size = new System.Drawing.Size(797, 17);
             this.hScrollBar1.TabIndex = 3;
@@ -2805,8 +2803,26 @@ namespace VixenEditor{
             this.toolStripComboBoxColumnZoom.AutoSize = false;
             this.toolStripComboBoxColumnZoom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.toolStripComboBoxColumnZoom.DropDownWidth = 55;
-            this.toolStripComboBoxColumnZoom.Items.AddRange(new object[]
-            {"10%", "15%", "20%", "25%", "30%", "35%", "40%", "45%", "50%", "55%", "60%", "65%", "70%", "75%", "80%", "85%", "90%", "95%", "100%"}); 
+            this.toolStripComboBoxColumnZoom.Items.AddRange(new object[] {
+            "10%",
+            "15%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "50%",
+            "55%",
+            "60%",
+            "65%",
+            "70%",
+            "75%",
+            "80%",
+            "85%",
+            "90%",
+            "95%",
+            "100%"});
             this.toolStripComboBoxColumnZoom.Name = "toolStripComboBoxColumnZoom";
             this.toolStripComboBoxColumnZoom.Size = new System.Drawing.Size(55, 23);
             this.toolStripComboBoxColumnZoom.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxColumnZoom_SelectedIndexChanged);
@@ -2822,8 +2838,26 @@ namespace VixenEditor{
             this.toolStripComboBoxRowZoom.AutoSize = false;
             this.toolStripComboBoxRowZoom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.toolStripComboBoxRowZoom.DropDownWidth = 55;
-            this.toolStripComboBoxRowZoom.Items.AddRange(new object[]
-            {"10%", "15%", "20%", "25%", "30%", "35%", "40%", "45%", "50%", "55%", "60%", "65%", "70%", "75%", "80%", "85%", "90%", "95%", "100%"});
+            this.toolStripComboBoxRowZoom.Items.AddRange(new object[] {
+            "10%",
+            "15%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "50%",
+            "55%",
+            "60%",
+            "65%",
+            "70%",
+            "75%",
+            "80%",
+            "85%",
+            "90%",
+            "95%",
+            "100%"});
             this.toolStripComboBoxRowZoom.Name = "toolStripComboBoxRowZoom";
             this.toolStripComboBoxRowZoom.Size = new System.Drawing.Size(55, 23);
             this.toolStripComboBoxRowZoom.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxRowZoom_SelectedIndexChanged);
