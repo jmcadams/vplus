@@ -21,7 +21,7 @@ namespace VixenPlus
 #if debug
         private const int ExpectationDelay = 0;
 #else
-        private const int ExpectationDelay = 2500;
+        private const int ExpectationDelay = 1500;
 #endif
 
         private const int HistoryMax = 7;
