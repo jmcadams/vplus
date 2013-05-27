@@ -241,6 +241,7 @@ namespace VixenEditor {
         }
 
 
+        //TODO This is broken!
         private void AffectGrid(int startRow, int startCol, byte[,] values) {
             startRow = _sequence.Channels.IndexOf(_sequence.FullChannels[startRow]);
             AddUndoItem(new Rectangle(startCol, startRow, values.GetLength(Utils.IndexColsOrWidth), values.GetLength(Utils.IndexRowsOrHeight)),
@@ -668,7 +669,7 @@ namespace VixenEditor {
 
 
         private void copyChannelToolStripMenuItem_Click(object sender, EventArgs e) {
-            new ChannelCopyDialog(_affectGridDelegate, _sequence).Show();
+            new ChannelCopyDialog(_affectGridDelegate, _sequence, (ModifierKeys & Keys.Shift) == Keys.Shift).Show();
         }
 
 

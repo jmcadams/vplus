@@ -11,11 +11,11 @@ namespace VixenEditor {
         private readonly Channel[] _channels;
 
 
-        public ChannelCopyDialog(AffectGridDelegate affectGridDelegate, EventSequence sequence) {
+        public ChannelCopyDialog(AffectGridDelegate affectGridDelegate, EventSequence sequence, bool constrainToGroup) {
             InitializeComponent();
-            _channels = new Channel[sequence.ChannelCount];
-            for (var channel = 0; channel < sequence.ChannelCount; channel++) {
-                _channels[channel] = sequence.Channels[channel];
+            _channels = new Channel[constrainToGroup ? sequence.ChannelCount : sequence.FullChannelCount];
+            for (var channel = 0; channel < _channels.Length; channel++) {
+                _channels[channel] = constrainToGroup ? sequence.Channels[channel] : sequence.FullChannels[channel];
             }
             // ReSharper disable CoVariantArrayConversion
             comboBoxSourceChannel.Items.AddRange(_channels);
