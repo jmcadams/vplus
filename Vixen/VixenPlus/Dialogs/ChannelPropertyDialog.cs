@@ -137,11 +137,11 @@ namespace VixenPlus.Dialogs
                 comboBoxChannels.BeginUpdate();
                 comboBoxChannels.Items.RemoveAt(index);
                 comboBoxChannels.Items.Insert(index, _currentChannel);
-                ////TODO Why do we check before assigning?
-                //if (selectedIndex != comboBoxChannels.SelectedIndex)
-                //{
+                // ReSharper disable RedundantCheckBeforeAssignment
+                if (selectedIndex != comboBoxChannels.SelectedIndex) {
                     comboBoxChannels.SelectedIndex = selectedIndex;
-                //}
+                }
+                // ReSharper restore RedundantCheckBeforeAssignment
                 comboBoxChannels.EndUpdate();
                 _internalChange = false;
             }

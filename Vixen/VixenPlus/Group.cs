@@ -28,8 +28,11 @@ namespace VixenPlus {
                             }
                             var contains = node.Attributes["Contains"] == null ? null : node.Attributes["Contains"].Value;
                             var color = node.Attributes["Color"] == null ? Color.White : Color.FromArgb(int.Parse(node.Attributes["Color"].Value));
+                            var zoom = node.Attributes["Zoom"] == null ? "100%" : node.Attributes["Zoom"].Value;
                             var text = node.InnerText != "" ? node.InnerText : string.Empty;
-                            groups.Add(name, new GroupData {Name = name, GroupColor = color, GroupChannels = (contains == null ? "" : contains + ":") + text});
+                            groups.Add(name,
+                                       new GroupData
+                                       {Name = name, GroupColor = color, GroupChannels = (contains == null ? "" : contains + ":") + text, Zoom = zoom});
                         }
                     }
                 }
@@ -48,5 +51,6 @@ namespace VixenPlus {
         public string Name { get; set; }
         public Color GroupColor { get; set; }
         public string GroupChannels { get; set; }
+        public string Zoom { get; set; }
     }
 }

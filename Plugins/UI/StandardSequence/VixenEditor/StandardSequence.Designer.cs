@@ -2805,17 +2805,8 @@ namespace VixenEditor{
             this.toolStripComboBoxColumnZoom.AutoSize = false;
             this.toolStripComboBoxColumnZoom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.toolStripComboBoxColumnZoom.DropDownWidth = 55;
-            this.toolStripComboBoxColumnZoom.Items.AddRange(new object[] {
-            "10%",
-            "20%",
-            "30%",
-            "40%",
-            "50%",
-            "60%",
-            "70%",
-            "80%",
-            "90%",
-            "100%"});
+            this.toolStripComboBoxColumnZoom.Items.AddRange(new object[]
+            {"10%", "15%", "20%", "25%", "30%", "35%", "40%", "45%", "50%", "55%", "60%", "65%", "70%", "75%", "80%", "85%", "90%", "95%", "100%"}); 
             this.toolStripComboBoxColumnZoom.Name = "toolStripComboBoxColumnZoom";
             this.toolStripComboBoxColumnZoom.Size = new System.Drawing.Size(55, 23);
             this.toolStripComboBoxColumnZoom.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxColumnZoom_SelectedIndexChanged);
@@ -2831,17 +2822,8 @@ namespace VixenEditor{
             this.toolStripComboBoxRowZoom.AutoSize = false;
             this.toolStripComboBoxRowZoom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.toolStripComboBoxRowZoom.DropDownWidth = 55;
-            this.toolStripComboBoxRowZoom.Items.AddRange(new object[] {
-            "10%",
-            "20%",
-            "30%",
-            "40%",
-            "50%",
-            "60%",
-            "70%",
-            "80%",
-            "90%",
-            "100%"});
+            this.toolStripComboBoxRowZoom.Items.AddRange(new object[]
+            {"10%", "15%", "20%", "25%", "30%", "35%", "40%", "45%", "50%", "55%", "60%", "65%", "70%", "75%", "80%", "85%", "90%", "95%", "100%"});
             this.toolStripComboBoxRowZoom.Name = "toolStripComboBoxRowZoom";
             this.toolStripComboBoxRowZoom.Size = new System.Drawing.Size(55, 23);
             this.toolStripComboBoxRowZoom.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxRowZoom_SelectedIndexChanged);

@@ -32,6 +32,8 @@ namespace VixenEditor {
         private bool _showWaveformZeroLine;
         private bool _showingGradient;
         private bool _showingOutputs;
+        private bool _zoomChangedByGroup;
+
         private byte _drawingLevel;
         
         private Control _lastSelectableControl;
@@ -122,9 +124,17 @@ namespace VixenEditor {
         private const float AudioThreeQtr = 0.75f;
         private const float AudioHalf = 0.5f;
         private const float AudioOneQtr = 0.25f;
+        private const float FontSizeLarge = 8f;
+        private const float FontSizeMedium = 7f;
+        private const float FontSizeSmall = 5f;
+
         private const int CaretSize = 5;
         private const int DragDropMargin = 3;
         private const int NaturalOrderTextMargin = 50;
+        private const int RowFontIndexSmall = 6;
+        private const int RowFontIndexLarge = 12;
+        private const int RowHeightIndexSmall = 8;
+        private const int RowHeightIndexLarge = 16;
         private const int ToolbarInsertPosition = 4;
         private const int WaveformOffset = 6;
         private const int WaveformHiddenSize = 60;
@@ -1771,7 +1781,7 @@ namespace VixenEditor {
             cbGroups.Location = new Point(CaretSize, height - cbGroups.Height - splitContainer2.SplitterWidth);
 
             var selectedZoom = toolStripComboBoxRowZoom.SelectedIndex;
-            var heightAddition = (selectedZoom <= 4) ? 0 : (selectedZoom >= 8) ? 3 : 1;
+            var heightAddition = (selectedZoom <= RowHeightIndexSmall) ? 0 : (selectedZoom >= RowHeightIndexLarge) ? 3 : 1;
             var showNaturalChannelNumbers = _preferences.GetBoolean("ShowNaturalChannelNumber");
             var x = showNaturalChannelNumbers ? (_sequence.ChannelCount.ToString(CultureInfo.InvariantCulture).Length + 1) * 6 + 10 : 10;
 
@@ -1782,7 +1792,7 @@ namespace VixenEditor {
 
                     channel = _sequence.Channels[channelOffset];
                     mappedChannel = channel.OutputChannel;
-                    bool isChannelSelected = channel == SelectedChannel;
+                    var isChannelSelected = channel == SelectedChannel;
 
                     e.Graphics.FillRectangle(isChannelSelected ? SystemBrushes.Highlight : channel.Brush ?? _channelBackBrush, 0, height,
                                              pictureBoxChannels.Width, _gridRowHeight);
@@ -1829,7 +1839,7 @@ namespace VixenEditor {
 
                         e.Graphics.FillRectangle(brush, x, height + 1, 40, _gridRowHeight - 2);
 
-                        if (toolStripComboBoxRowZoom.SelectedIndex > 4) {
+                        if (toolStripComboBoxRowZoom.SelectedIndex > RowHeightIndexSmall) {
                             e.Graphics.DrawRectangle(Pens.Black, x, height + 1, 40, _gridRowHeight - 2);
                         }
 
@@ -3090,7 +3100,9 @@ namespace VixenEditor {
                     toolStripButtonStop_Click(null, null);
                 }
                 if (_preferences.GetBoolean("SaveZoomLevels")) {
-                    _preferences.SetChildString("SaveZoomLevels", "row", toolStripComboBoxRowZoom.SelectedItem.ToString());
+                    if (!_zoomChangedByGroup) {
+                        _preferences.SetChildString("SaveZoomLevels", "row", toolStripComboBoxRowZoom.SelectedItem.ToString());
+                    }
                     _preferences.SetChildString("SaveZoomLevels", "column", toolStripComboBoxColumnZoom.SelectedItem.ToString());
                     _preferences.SaveSettings();
                 }
@@ -4274,8 +4286,14 @@ namespace VixenEditor {
 
 
         private void toolStripComboBoxRowZoom_SelectedIndexChanged(object sender, EventArgs e) {
-            if (toolStripComboBoxRowZoom.SelectedIndex != -1) {
-                UpdateRowHeight();
+            if (toolStripComboBoxRowZoom.SelectedIndex == -1) {
+                return;
+            }
+
+            UpdateRowHeight();
+            _zoomChangedByGroup = _sequence.CurrentGroup != EventSequence.AllChannels;
+            if (_zoomChangedByGroup && cbGroups.Visible) {
+                _sequence.Groups[_sequence.CurrentGroup].Zoom = toolStripComboBoxRowZoom.SelectedItem.ToString();
             }
         }
 
@@ -4404,7 +4422,7 @@ namespace VixenEditor {
 
 
         private void UpdateColumnWidth() {
-            var num = (toolStripComboBoxColumnZoom.SelectedIndex + 1) * 0.1;
+            var num = (toolStripComboBoxColumnZoom.SelectedIndex + 1) * 0.05;
             _gridColWidth = (int) (_preferences.GetInteger("MaxColumnWidth") * num);
             HScrollCheck();
             ParseAudioWaveform();
@@ -4552,26 +4570,17 @@ namespace VixenEditor {
 
 
         private void UpdateRowHeight() {
-            var fontSize = 0f;
+            var fontSize = toolStripComboBoxRowZoom.SelectedIndex >= RowFontIndexLarge ? FontSizeLarge : 
+                toolStripComboBoxRowZoom.SelectedIndex <= RowFontIndexSmall ? FontSizeSmall : FontSizeMedium;
 
-            if (toolStripComboBoxRowZoom.SelectedIndex >= 6 && !(Equals(_channelNameFont.Size, 8f))) {
-                fontSize = 8f;
-            }
-            else if (toolStripComboBoxRowZoom.SelectedIndex <= 3 && !(Equals(_channelNameFont.Size, 5f))) {
-                fontSize = 5f;
-            }
-            else if (!(Equals(_channelNameFont.Size, 7f))) {
-                fontSize = 7f;
-            }
-
-            if (fontSize > 0f) {
+            if (!Equals(_channelNameFont.Size, fontSize)) {
                 _channelNameFont.Dispose();
                 _channelNameFont = new Font("Arial", fontSize);
                 _channelStrikeoutFont.Dispose();
                 _channelStrikeoutFont = new Font("Arial", fontSize, FontStyle.Strikeout);
             }
 
-            var num = (toolStripComboBoxRowZoom.SelectedIndex + 1) * 0.1;
+            var num = (toolStripComboBoxRowZoom.SelectedIndex + 1) * 0.05;
             _gridRowHeight = (int) (_preferences.GetInteger("MaxRowHeight") * num);
             VScrollCheck();
             pictureBoxGrid.Refresh();
@@ -4813,9 +4822,20 @@ namespace VixenEditor {
                 _selectedCells.Height = _sequence.ChannelCount - _selectedCells.Top;
             }
             VScrollCheck();
+            pictureBoxChannels.SuspendLayout();
+            pictureBoxGrid.SuspendLayout();
+            var index = toolStripComboBoxRowZoom.Items.IndexOf(_sequence.CurrentGroup == EventSequence.AllChannels
+                                                               ? _preferences.GetChildString("SaveZoomLevels", "row")
+                                                               : _sequence.Groups[_sequence.CurrentGroup].Zoom);
+            if (index != -1 && toolStripComboBoxRowZoom.SelectedIndex != index) {
+                toolStripComboBoxRowZoom.SelectedIndex = index;
+            }
             pictureBoxChannels.Refresh();
             pictureBoxGrid.Refresh();
+            pictureBoxGrid.ResumeLayout();
+            pictureBoxChannels.ResumeLayout();
         }
+
 
         private void cbGroups_DrawItem(object sender, DrawItemEventArgs e) {
             if (e.Index > 0) {
