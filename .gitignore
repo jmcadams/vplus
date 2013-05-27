@@ -111,3 +111,5 @@ build
 /build.zip
 /build.7z
 _ReleaseBuilds
+
+/Release32
