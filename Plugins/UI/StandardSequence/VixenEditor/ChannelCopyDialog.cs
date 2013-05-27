@@ -34,8 +34,8 @@ namespace VixenEditor {
 
 
         private void buttonCopy_Click(object sender, EventArgs e) {
-            var sourceChannel = _eventSequence.Channels[comboBoxSourceChannel.SelectedIndex].OutputChannel;
-            var destinationChannel = _eventSequence.Channels[comboBoxDestinationChannel.SelectedIndex].OutputChannel;
+            var sourceChannel = ((Channel)comboBoxSourceChannel.SelectedItem).OutputChannel;
+            var destinationChannel = ((Channel)comboBoxDestinationChannel.SelectedItem).OutputChannel;
             for (var column = 0; column < _eventSequence.TotalEventPeriods; column++) {
                 _sequenceData[0, column] = _eventSequence.EventValues[sourceChannel, column];
             }
