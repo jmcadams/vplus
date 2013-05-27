@@ -220,7 +220,7 @@ namespace VixenEditor {
             }
 
             var affectedChannels = new List<int>();
-            for (var i = blockAffected.Top; i < blockAffected.Height; i++) {
+            for (var i = blockAffected.Top; i < blockAffected.Bottom; i++) {
                 affectedChannels.Add(_sequence.Channels[i].OutputChannel);
             }
 
@@ -1772,10 +1772,6 @@ namespace VixenEditor {
         private void pictureBoxChannels_Paint(object sender, PaintEventArgs e) {
             e.Graphics.FillRectangle(_channelBackBrush, e.Graphics.VisibleClipBounds);
 
-            VixenPlus.Channel channel;
-            int mappedChannel;
-            int channelOffset;
-
             var height = pictureBoxTime.Height + splitContainer2.SplitterWidth;
             cbGroups.Width = pictureBoxChannels.Width - CaretSize;
             cbGroups.Location = new Point(CaretSize, height - cbGroups.Height - splitContainer2.SplitterWidth);
@@ -1783,15 +1779,11 @@ namespace VixenEditor {
             var selectedZoom = toolStripComboBoxRowZoom.SelectedIndex;
             var heightAddition = (selectedZoom <= RowHeightIndexSmall) ? 0 : (selectedZoom >= RowHeightIndexLarge) ? 3 : 1;
             var showNaturalChannelNumbers = _preferences.GetBoolean("ShowNaturalChannelNumber");
-            var x = showNaturalChannelNumbers ? (_sequence.ChannelCount.ToString(CultureInfo.InvariantCulture).Length + 1) * 6 + 10 : 10;
+            var x = showNaturalChannelNumbers ? (_sequence.FullChannelCount.ToString(CultureInfo.InvariantCulture).Length + 1) * 6 + 10 : 10;
+            using (var brush = new SolidBrush(Color.FromArgb(192, Color.Gray))) {
+                for (var channelOffset = vScrollBar1.Value; (channelOffset >= 0) && (channelOffset < _sequence.ChannelCount); channelOffset++) {
 
-            #region Not Showing Outputs
-
-            if (!_showingOutputs) {
-                for (channelOffset = vScrollBar1.Value; (channelOffset >= 0) && (channelOffset < _sequence.ChannelCount); channelOffset++) {
-
-                    channel = _sequence.Channels[channelOffset];
-                    mappedChannel = channel.OutputChannel;
+                    var channel = _sequence.Channels[channelOffset];
                     var isChannelSelected = channel == SelectedChannel;
 
                     e.Graphics.FillRectangle(isChannelSelected ? SystemBrushes.Highlight : channel.Brush ?? _channelBackBrush, 0, height,
@@ -1801,59 +1793,25 @@ namespace VixenEditor {
                                         ? SystemBrushes.HighlightText
                                         : Utils.GetTextColor(channel.Brush != null ? channel.Brush.Color : _channelBackBrush.Color);
 
+                    var channelNumber = String.Format("{0}", channel.OutputChannel + 1);
                     if (showNaturalChannelNumbers) {
-                        e.Graphics.DrawString(string.Format("{0}:", mappedChannel + 1), _channelNameFont, textBrush, 10f, height + heightAddition);
+                        e.Graphics.DrawString(string.Format("{0}:", channelNumber), _channelNameFont, textBrush, 10f, height + heightAddition);
                     }
 
-                    e.Graphics.DrawString(channel.Name, channel.Enabled ? _channelNameFont : _channelStrikeoutFont, textBrush, x,
-                                          height + heightAddition);
-
-                    height += _gridRowHeight;
-                }
-            }
-                #endregion
-                #region Showing Outputs
-
-            else {
-                using (var brush = new SolidBrush(Color.FromArgb(192, Color.Gray))) {
-                    for (channelOffset = vScrollBar1.Value; (channelOffset >= 0) && (channelOffset < _sequence.ChannelCount); channelOffset++) {
-
-                        channel = _sequence.Channels[channelOffset];
-                        mappedChannel = channel.OutputChannel;
-                        var isChannelSelected = (channel == SelectedChannel);
-
-                        e.Graphics.FillRectangle(isChannelSelected ? SystemBrushes.Highlight : channel.Brush ?? _channelBackBrush, 0, height,
-                                                 pictureBoxChannels.Width, _gridRowHeight);
-
-                        var textBrush = isChannelSelected
-                                            ? SystemBrushes.HighlightText
-                                            : Utils.GetTextColor(channel.Brush != null ? channel.Brush.Color : _channelBackBrush.Color);
-
-                        if (showNaturalChannelNumbers) {
-                            e.Graphics.DrawString(string.Format("{0}:", mappedChannel + 1), _channelNameFont, textBrush, 10f,
-                                                  height + heightAddition);
-                        }
-                        else {
-                            x = 10;
-                        }
-
-                        e.Graphics.FillRectangle(brush, x, height + 1, 40, _gridRowHeight - 2);
+                    if (_showingOutputs) {
+                        var rightX = pictureBoxChannels.Width - 40;
+                        e.Graphics.FillRectangle(brush, rightX, height + 1, 40, _gridRowHeight - 2);
 
                         if (toolStripComboBoxRowZoom.SelectedIndex > RowHeightIndexSmall) {
-                            e.Graphics.DrawRectangle(Pens.Black, x, height + 1, 40, _gridRowHeight - 2);
+                            e.Graphics.DrawRectangle(Pens.Black, rightX, height + 1, 40, _gridRowHeight - 2);
                         }
 
-                        e.Graphics.DrawString(String.Format("{0}", channel.OutputChannel + 1),
-                                              channel.Enabled ? _channelNameFont : _channelStrikeoutFont, textBrush, x + 16,
-                                              height + heightAddition);
-
-                        e.Graphics.DrawString(channel.Name, channel.Enabled ? _channelNameFont : _channelStrikeoutFont, textBrush, x + 44,
-                                              height + heightAddition);
-
-                        height += _gridRowHeight;
+                        e.Graphics.DrawString(channelNumber, channel.Enabled ? _channelNameFont : _channelStrikeoutFont, textBrush,
+                                              rightX + 40 - e.Graphics.MeasureString(channelNumber, _channelNameFont).Width - 2, height + heightAddition);
                     }
-
-                    #endregion
+                    e.Graphics.DrawString(channel.Name, channel.Enabled ? _channelNameFont : _channelStrikeoutFont, textBrush, x,
+                                          height + heightAddition);
+                    height += _gridRowHeight;
                 }
             }
             e.Graphics.FillRectangle(Brushes.White, 0, 0, CaretSize, pictureBoxChannels.Height);
@@ -3541,6 +3499,7 @@ namespace VixenEditor {
             }
             UpdateToolbarMenu();
             UpdateLevelDisplay();
+            _sequence.CurrentGroup = Group.AllChannels;
             UpdateGroups();
         }
 
@@ -3549,7 +3508,7 @@ namespace VixenEditor {
             if (_sequence.Groups != null) {
                 cbGroups.Visible = true;
                 cbGroups.Items.Clear();
-                cbGroups.Items.Add(EventSequence.AllChannels);
+                cbGroups.Items.Add(Group.AllChannels);
                 foreach (var g in _sequence.Groups) {
                     cbGroups.Items.Add(g.Key);
                 }
@@ -4291,7 +4250,7 @@ namespace VixenEditor {
             }
 
             UpdateRowHeight();
-            _zoomChangedByGroup = _sequence.CurrentGroup != EventSequence.AllChannels;
+            _zoomChangedByGroup = _sequence.CurrentGroup != Group.AllChannels;
             if (_zoomChangedByGroup && cbGroups.Visible) {
                 _sequence.Groups[_sequence.CurrentGroup].Zoom = toolStripComboBoxRowZoom.SelectedItem.ToString();
             }
@@ -4824,7 +4783,7 @@ namespace VixenEditor {
             VScrollCheck();
             pictureBoxChannels.SuspendLayout();
             pictureBoxGrid.SuspendLayout();
-            var index = toolStripComboBoxRowZoom.Items.IndexOf(_sequence.CurrentGroup == EventSequence.AllChannels
+            var index = toolStripComboBoxRowZoom.Items.IndexOf(_sequence.CurrentGroup == Group.AllChannels
                                                                ? _preferences.GetChildString("SaveZoomLevels", "row")
                                                                : _sequence.Groups[_sequence.CurrentGroup].Zoom);
             if (index != -1 && toolStripComboBoxRowZoom.SelectedIndex != index) {
@@ -4843,7 +4802,7 @@ namespace VixenEditor {
                 VixenPlus.Channel.DrawItem(e, indexItem.Name, indexItem.GroupColor, false);
             }
             else {
-                VixenPlus.Channel.DrawItem(e, EventSequence.AllChannels, Color.White, false);
+                VixenPlus.Channel.DrawItem(e, Group.AllChannels, Color.White, false);
             }
         }
 

@@ -1024,4 +1024,7 @@ Press OK to continue or Cancel to quit {1} and log this error to the crash.log.<
 	<data name="MissingNameAttribute" xml:space="preserve">
     <value>Name Attribute corrupt or missing in {0} at node {1}</value>
   </data>
+	<data name="AllChannels" xml:space="preserve">
+    <value>All Channels</value>
+  </data>
 </root>

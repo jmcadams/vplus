@@ -77,6 +77,15 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Channels.
+        /// </summary>
+        public static string AllChannels {
+            get {
+                return ResourceManager.GetString("AllChannels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All fields are required..
         /// </summary>
         public static string AllFieldsRequired {

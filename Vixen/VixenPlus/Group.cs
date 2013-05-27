@@ -10,6 +10,9 @@ using Properties;
 
 namespace VixenPlus {
     public class Group {
+        public const char GroupTextDivider = '~';
+        public static string AllChannels = Resources.AllChannels;
+
         public static Dictionary<string, GroupData> LoadGroups(string groupFile) {
             Dictionary<string, GroupData> groups = null;
             try {
@@ -27,12 +30,12 @@ namespace VixenPlus {
                                 throw new XmlSyntaxException(String.Format(Resources.MissingNameAttribute, Path.GetFileName(groupFile), node));
                             }
                             var contains = node.Attributes["Contains"] == null ? null : node.Attributes["Contains"].Value;
-                            var color = node.Attributes["Color"] == null ? Color.White : Color.FromArgb(int.Parse(node.Attributes["Color"].Value));
+                            if (String.IsNullOrEmpty(contains)) contains = null;
+                            var color = node.Attributes["Color"] == null ? Color.White : Color.FromArgb(Int32.Parse(node.Attributes["Color"].Value));
                             var zoom = node.Attributes["Zoom"] == null ? "100%" : node.Attributes["Zoom"].Value;
-                            var text = node.InnerText != "" ? node.InnerText : string.Empty;
+                            var text = node.InnerText != "" ? node.InnerText : String.Empty;
                             groups.Add(name,
-                                       new GroupData
-                                       {Name = name, GroupColor = color, GroupChannels = (contains == null ? "" : contains + ":") + text, Zoom = zoom});
+                                       new GroupData { Name = name, GroupColor = color, GroupChannels = (contains == null ? "" : contains + GroupTextDivider) + text, Zoom = zoom });
                         }
                     }
                 }
@@ -45,6 +48,8 @@ namespace VixenPlus {
             }
             return groups;
         }
+
+
     }
 
     public class GroupData {
