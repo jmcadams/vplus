@@ -241,7 +241,6 @@ namespace VixenEditor {
         }
 
 
-        //TODO This is broken!
         private void AffectGrid(int startRow, int startCol, byte[,] values) {
             startRow = _sequence.Channels.IndexOf(_sequence.FullChannels[startRow]);
             AddUndoItem(new Rectangle(startCol, startRow, values.GetLength(Utils.IndexColsOrWidth), values.GetLength(Utils.IndexRowsOrHeight)),
