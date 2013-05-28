@@ -2,6 +2,7 @@ Preferences
 -- Select what screen to start on
 -- Can choose colors for basic screen elements
 -- Can choose to have the zero line in the waveform show or not
+-- redirect.data in the same folder as VixenPlus.exe will read the first line in that file and if it is a valid directory, it will use that directory to store/load your vixen plus data.
 
 Toolbars
 -- Can be resized
@@ -47,4 +48,4 @@ Waveform
 -- Zero line can be on or off
 
 Help
--- Has a lutefisk help cartoon :D
+-- Has a lutefisk help option, for those suffering from seasonal lutefisk disorder :D
