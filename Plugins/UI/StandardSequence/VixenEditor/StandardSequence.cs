@@ -3391,14 +3391,14 @@ namespace VixenEditor {
                     break;
 
                 case Keys.F6:
-                    if (e.Alt && tsbPlayRange.Enabled) {
-                        toolStripButtonPlayRange_Click(null, null);
-                        e.Handled = true;
-                    }
-                    else if (tsbPlayPoint.Enabled) {
+                    if ((ModifierKeys & Keys.Alt) == Keys.Alt) {
+                        if (tsbPlayRange.Enabled) {
+                            toolStripButtonPlayRange_Click(null, null);
+                        }
+                    } else if (tsbPlayPoint.Enabled) {
                         toolStripButtonPlayPoint_Click(null, null);
-                        e.Handled = true;
                     }
+                    e.Handled = true;
                     break;
 
                 case Keys.F7:
@@ -4772,6 +4772,8 @@ namespace VixenEditor {
 
         private void selectNoneToolStripMenuItem_Click(object sender, EventArgs e) {
             _selectedCells.Width = _selectedCells.Height = 0;
+            tsbPlayPoint.Enabled = false;
+            tsbPlayRange.Enabled = false;
             pictureBoxGrid.Refresh();
         }
 

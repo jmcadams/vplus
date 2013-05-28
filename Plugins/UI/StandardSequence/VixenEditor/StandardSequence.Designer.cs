@@ -173,8 +173,6 @@ namespace VixenEditor{
         private ToolStripLabel toolStripLabelCurrentCell;
         private ToolStripLabel toolStripLabelCurrentDrawingIntensity;
         private ToolStripLabel toolStripLabelExecutionPoint;
-        private ToolStripLabel toolStripLabelIntensity;
-        private ToolStripLabel toolStripLabelProgess;
         private ToolStripMenuItem aNDToolStripMenuItem1;
         private ToolStripMenuItem aNDToolStripMenuItem;
         private ToolStripMenuItem additionToolStripMenuItem1;
@@ -324,7 +322,6 @@ namespace VixenEditor{
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripSeparator toolStripSeparator4;
-        private ToolStripSeparator toolStripSeparator5;
         private ToolStripSeparator toolStripSeparator6;
         private ToolStripSeparator toolStripSeparator8;
         private ToolStripSplitButton toolStripSplitButtonArithmeticPaste;
@@ -511,8 +508,6 @@ namespace VixenEditor{
             this.tsbPlayRange = new System.Windows.Forms.ToolStripButton();
             this.tsbPause = new System.Windows.Forms.ToolStripButton();
             this.tsbStop = new System.Windows.Forms.ToolStripButton();
-            this.toolStripLabelProgess = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbLoop = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.SpeedQtrTsb = new System.Windows.Forms.ToolStripButton();
@@ -520,7 +515,6 @@ namespace VixenEditor{
             this.SpeedThreeQtrTsb = new System.Windows.Forms.ToolStripButton();
             this.SpeedNormalTsb = new System.Windows.Forms.ToolStripButton();
             this.SpeedVariableTsb = new System.Windows.Forms.ToolStripButton();
-            this.toolStripLabelIntensity = new System.Windows.Forms.ToolStripLabel();
             this.toolStripEffect = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonOn = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonOff = new System.Windows.Forms.ToolStripButton();
@@ -905,8 +899,8 @@ namespace VixenEditor{
             // insertPasteToolStripMenuItem
             // 
             this.insertPasteToolStripMenuItem.Name = "insertPasteToolStripMenuItem";
-            this.insertPasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
-                        | System.Windows.Forms.Keys.V)));
+            this.insertPasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.V)));
             this.insertPasteToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.insertPasteToolStripMenuItem.Text = "Insert paste";
             this.insertPasteToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonInsertPaste_Click);
@@ -921,8 +915,8 @@ namespace VixenEditor{
             // clearAllToolStripMenuItem
             // 
             this.clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
-            this.clearAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
-                        | System.Windows.Forms.Keys.A)));
+            this.clearAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.A)));
             this.clearAllToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.clearAllToolStripMenuItem.Text = "Clear all";
             this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearAllToolStripMenuItem_Click);
@@ -1375,8 +1369,8 @@ namespace VixenEditor{
             // 
             // labelPosition
             // 
-            this.labelPosition.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelPosition.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labelPosition.BackColor = System.Drawing.Color.Transparent;
             this.labelPosition.Location = new System.Drawing.Point(12, 9);
             this.labelPosition.Name = "labelPosition";
@@ -1567,7 +1561,7 @@ namespace VixenEditor{
             this.lblFollowMouse.AutoSize = true;
             this.lblFollowMouse.Location = new System.Drawing.Point(3, 0);
             this.lblFollowMouse.Name = "lblFollowMouse";
-            this.lblFollowMouse.Size = new System.Drawing.Size(97, 15);
+            this.lblFollowMouse.Size = new System.Drawing.Size(95, 13);
             this.lblFollowMouse.TabIndex = 8;
             this.lblFollowMouse.Text = "FollowMouseLabel";
             this.lblFollowMouse.TextAlign = System.Drawing.ContentAlignment.BottomRight;
@@ -1997,7 +1991,7 @@ namespace VixenEditor{
             this.openSequenceTsb.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.openSequenceTsb.Name = "openSequenceTsb";
             this.openSequenceTsb.Size = new System.Drawing.Size(52, 52);
-            this.openSequenceTsb.Text = "Open Sequence";
+            this.openSequenceTsb.ToolTipText = "Open Sequence";
             this.openSequenceTsb.Click += new System.EventHandler(this.openSequenceTsb_Click);
             // 
             // tbsSave
@@ -2033,7 +2027,6 @@ namespace VixenEditor{
             this.tbsTestChannels.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbsTestChannels.Name = "tbsTestChannels";
             this.tbsTestChannels.Size = new System.Drawing.Size(52, 52);
-            this.tbsTestChannels.Text = "toolStripButton1";
             this.tbsTestChannels.ToolTipText = "Test channels";
             this.tbsTestChannels.Click += new System.EventHandler(this.toolStripButtonTestChannels_Click);
             // 
@@ -2044,7 +2037,7 @@ namespace VixenEditor{
             this.tbsTestConsole.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbsTestConsole.Name = "tbsTestConsole";
             this.tbsTestConsole.Size = new System.Drawing.Size(52, 52);
-            this.tbsTestConsole.Text = "Test console";
+            this.tbsTestConsole.ToolTipText = "Test console";
             this.tbsTestConsole.Click += new System.EventHandler(this.toolStripButtonTestConsole_Click);
             // 
             // toolStripSeparator1
@@ -2060,7 +2053,7 @@ namespace VixenEditor{
             this.tsbAudio.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.tsbAudio.Name = "tsbAudio";
             this.tsbAudio.Size = new System.Drawing.Size(52, 52);
-            this.tsbAudio.Text = "Add or change audio...";
+            this.tsbAudio.ToolTipText = "Add or change audio...";
             this.tsbAudio.Click += new System.EventHandler(this.toolStripButtonAudio_Click);
             // 
             // toolStripButtonWaveform
@@ -2072,7 +2065,7 @@ namespace VixenEditor{
             this.toolStripButtonWaveform.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripButtonWaveform.Name = "toolStripButtonWaveform";
             this.toolStripButtonWaveform.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonWaveform.Text = "Audio visualizer";
+            this.toolStripButtonWaveform.ToolTipText = "Show Audio Waveform";
             this.toolStripButtonWaveform.Click += new System.EventHandler(this.toolStripButtonWaveform_Click);
             // 
             // toolStripSeparator13
@@ -2087,7 +2080,6 @@ namespace VixenEditor{
             this.toolStripButtonChannelOutputMask.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonChannelOutputMask.Name = "toolStripButtonChannelOutputMask";
             this.toolStripButtonChannelOutputMask.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonChannelOutputMask.Text = "Channel Output Mask";
             this.toolStripButtonChannelOutputMask.ToolTipText = "Enable/disable channels for this sequence";
             this.toolStripButtonChannelOutputMask.Click += new System.EventHandler(this.toolStripButtonChannelOutputMask_Click);
             // 
@@ -2101,7 +2093,7 @@ namespace VixenEditor{
             this.profileToolStripLabel.AutoSize = false;
             this.profileToolStripLabel.Name = "profileToolStripLabel";
             this.profileToolStripLabel.Size = new System.Drawing.Size(80, 52);
-            this.profileToolStripLabel.Text = "profile";
+            this.profileToolStripLabel.Text = "Profile";
             this.profileToolStripLabel.ToolTipText = "Click to Edit Profile";
             this.profileToolStripLabel.Click += new System.EventHandler(this.profileToolStripLabel_Click);
             // 
@@ -2117,19 +2109,16 @@ namespace VixenEditor{
             this.tsbPlayRange,
             this.tsbPause,
             this.tsbStop,
-            this.toolStripLabelProgess,
-            this.toolStripSeparator5,
             this.tsbLoop,
             this.toolStripSeparator10,
             this.SpeedQtrTsb,
             this.SpeedHalfTsb,
             this.SpeedThreeQtrTsb,
             this.SpeedNormalTsb,
-            this.SpeedVariableTsb,
-            this.toolStripLabelIntensity});
+            this.SpeedVariableTsb});
             this.toolStripExecutionControl.Location = new System.Drawing.Point(3, 55);
             this.toolStripExecutionControl.Name = "toolStripExecutionControl";
-            this.toolStripExecutionControl.Size = new System.Drawing.Size(712, 55);
+            this.toolStripExecutionControl.Size = new System.Drawing.Size(706, 55);
             this.toolStripExecutionControl.TabIndex = 2;
             this.toolStripExecutionControl.Text = "Execution control";
             // 
@@ -2155,7 +2144,7 @@ namespace VixenEditor{
             this.tsbPlay.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbPlay.Name = "tsbPlay";
             this.tsbPlay.Size = new System.Drawing.Size(52, 52);
-            this.tsbPlay.Text = "Play this sequence (F5)";
+            this.tsbPlay.ToolTipText = "Play this sequence (F5)";
             this.tsbPlay.Click += new System.EventHandler(this.toolStripButtonPlay_Click);
             // 
             // tsbPlayPoint
@@ -2167,7 +2156,7 @@ namespace VixenEditor{
             this.tsbPlayPoint.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbPlayPoint.Name = "tsbPlayPoint";
             this.tsbPlayPoint.Size = new System.Drawing.Size(52, 52);
-            this.tsbPlayPoint.ToolTipText = "Play from point";
+            this.tsbPlayPoint.ToolTipText = "Play from point (F6)";
             this.tsbPlayPoint.Click += new System.EventHandler(this.toolStripButtonPlayPoint_Click);
             // 
             // tsbPlayRange
@@ -2179,7 +2168,7 @@ namespace VixenEditor{
             this.tsbPlayRange.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbPlayRange.Name = "tsbPlayRange";
             this.tsbPlayRange.Size = new System.Drawing.Size(52, 52);
-            this.tsbPlayRange.ToolTipText = "Play Range";
+            this.tsbPlayRange.ToolTipText = "Play Range (Alt-F6)";
             this.tsbPlayRange.Click += new System.EventHandler(this.toolStripButtonPlayRange_Click);
             // 
             // tsbPause
@@ -2191,7 +2180,7 @@ namespace VixenEditor{
             this.tsbPause.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbPause.Name = "tsbPause";
             this.tsbPause.Size = new System.Drawing.Size(52, 52);
-            this.tsbPause.Text = "Pause (F7)";
+            this.tsbPause.ToolTipText = "Pause (F7)";
             this.tsbPause.Click += new System.EventHandler(this.toolStripButtonPause_Click);
             // 
             // tsbStop
@@ -2203,20 +2192,8 @@ namespace VixenEditor{
             this.tsbStop.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbStop.Name = "tsbStop";
             this.tsbStop.Size = new System.Drawing.Size(52, 52);
-            this.tsbStop.Text = "Stop playing (F8)";
+            this.tsbStop.ToolTipText = "Stop playing (F8)";
             this.tsbStop.Click += new System.EventHandler(this.toolStripButtonStop_Click);
-            // 
-            // toolStripLabelProgess
-            // 
-            this.toolStripLabelProgess.Name = "toolStripLabelProgess";
-            this.toolStripLabelProgess.Size = new System.Drawing.Size(34, 52);
-            this.toolStripLabelProgess.Text = "00:00";
-            this.toolStripLabelProgess.Visible = false;
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 55);
             // 
             // tsbLoop
             // 
@@ -2227,7 +2204,7 @@ namespace VixenEditor{
             this.tsbLoop.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.tsbLoop.Name = "tsbLoop";
             this.tsbLoop.Size = new System.Drawing.Size(52, 52);
-            this.tsbLoop.Text = "Loop this sequence";
+            this.tsbLoop.ToolTipText = "Loop this sequence";
             this.tsbLoop.CheckedChanged += new System.EventHandler(this.toolStripButtonLoop_CheckedChanged);
             // 
             // toolStripSeparator10
@@ -2243,7 +2220,7 @@ namespace VixenEditor{
             this.SpeedQtrTsb.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.SpeedQtrTsb.Name = "SpeedQtrTsb";
             this.SpeedQtrTsb.Size = new System.Drawing.Size(52, 52);
-            this.SpeedQtrTsb.Text = "Play at 1/4 of normal speed";
+            this.SpeedQtrTsb.ToolTipText = "Play at 1/4 of normal speed";
             this.SpeedQtrTsb.Click += new System.EventHandler(this.toolStripButtonPlaySpeedQuarter_Click);
             // 
             // SpeedHalfTsb
@@ -2254,7 +2231,7 @@ namespace VixenEditor{
             this.SpeedHalfTsb.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.SpeedHalfTsb.Name = "SpeedHalfTsb";
             this.SpeedHalfTsb.Size = new System.Drawing.Size(52, 52);
-            this.SpeedHalfTsb.Text = "Play at 1/2 of normal speed";
+            this.SpeedHalfTsb.ToolTipText = "Play at 1/2 of normal speed";
             this.SpeedHalfTsb.Click += new System.EventHandler(this.toolStripButtonPlaySpeedHalf_Click);
             // 
             // SpeedThreeQtrTsb
@@ -2265,7 +2242,7 @@ namespace VixenEditor{
             this.SpeedThreeQtrTsb.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.SpeedThreeQtrTsb.Name = "SpeedThreeQtrTsb";
             this.SpeedThreeQtrTsb.Size = new System.Drawing.Size(52, 52);
-            this.SpeedThreeQtrTsb.Text = "Play at 3/4 of normal speed";
+            this.SpeedThreeQtrTsb.ToolTipText = "Play at 3/4 of normal speed";
             this.SpeedThreeQtrTsb.Click += new System.EventHandler(this.toolStripButtonPlaySpeedThreeQuarters_Click);
             // 
             // SpeedNormalTsb
@@ -2279,7 +2256,7 @@ namespace VixenEditor{
             this.SpeedNormalTsb.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.SpeedNormalTsb.Name = "SpeedNormalTsb";
             this.SpeedNormalTsb.Size = new System.Drawing.Size(52, 52);
-            this.SpeedNormalTsb.Text = "Play at normal speed";
+            this.SpeedNormalTsb.ToolTipText = "Play at normal speed";
             this.SpeedNormalTsb.Click += new System.EventHandler(this.toolStripButtonPlaySpeedNormal_Click);
             // 
             // SpeedVariableTsb
@@ -2290,15 +2267,8 @@ namespace VixenEditor{
             this.SpeedVariableTsb.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.SpeedVariableTsb.Name = "SpeedVariableTsb";
             this.SpeedVariableTsb.Size = new System.Drawing.Size(52, 52);
-            this.SpeedVariableTsb.Text = "Use a trackbar to adjust the playback speed";
+            this.SpeedVariableTsb.ToolTipText = "Variable playback speed";
             this.SpeedVariableTsb.Click += new System.EventHandler(this.toolStripButtonPlaySpeedVariable_Click);
-            // 
-            // toolStripLabelIntensity
-            // 
-            this.toolStripLabelIntensity.AutoSize = false;
-            this.toolStripLabelIntensity.Name = "toolStripLabelIntensity";
-            this.toolStripLabelIntensity.Size = new System.Drawing.Size(75, 22);
-            this.toolStripLabelIntensity.Visible = false;
             // 
             // toolStripEffect
             // 
@@ -2337,7 +2307,7 @@ namespace VixenEditor{
             this.toolStripButtonOn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonOn.Name = "toolStripButtonOn";
             this.toolStripButtonOn.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonOn.Text = "On";
+            this.toolStripButtonOn.ToolTipText = "On";
             this.toolStripButtonOn.Click += new System.EventHandler(this.toolStripButtonOn_Click);
             // 
             // toolStripButtonOff
@@ -2347,7 +2317,7 @@ namespace VixenEditor{
             this.toolStripButtonOff.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonOff.Name = "toolStripButtonOff";
             this.toolStripButtonOff.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonOff.Text = "Off";
+            this.toolStripButtonOff.ToolTipText = "Off";
             this.toolStripButtonOff.Click += new System.EventHandler(this.toolStripButtonOff_Click);
             // 
             // toolStripButtonRampOn
@@ -2357,7 +2327,7 @@ namespace VixenEditor{
             this.toolStripButtonRampOn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonRampOn.Name = "toolStripButtonRampOn";
             this.toolStripButtonRampOn.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonRampOn.Text = "Ramp on (R)";
+            this.toolStripButtonRampOn.ToolTipText = "Ramp on (R)";
             this.toolStripButtonRampOn.Click += new System.EventHandler(this.toolStripButtonRampOn_Click);
             // 
             // toolStripButtonRampOff
@@ -2367,7 +2337,7 @@ namespace VixenEditor{
             this.toolStripButtonRampOff.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonRampOff.Name = "toolStripButtonRampOff";
             this.toolStripButtonRampOff.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonRampOff.Text = "Ramp off (F)";
+            this.toolStripButtonRampOff.ToolTipText = "Ramp off (F)";
             this.toolStripButtonRampOff.Click += new System.EventHandler(this.toolStripButtonRampOff_Click);
             // 
             // toolStripButtonPartialRampOn
@@ -2377,7 +2347,7 @@ namespace VixenEditor{
             this.toolStripButtonPartialRampOn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonPartialRampOn.Name = "toolStripButtonPartialRampOn";
             this.toolStripButtonPartialRampOn.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonPartialRampOn.Text = "Partial ramp on (Shift-R)";
+            this.toolStripButtonPartialRampOn.ToolTipText = "Partial ramp on (Shift-R)";
             this.toolStripButtonPartialRampOn.Click += new System.EventHandler(this.toolStripButtonPartialRampOn_Click);
             // 
             // toolStripButtonPartialRampOff
@@ -2387,7 +2357,7 @@ namespace VixenEditor{
             this.toolStripButtonPartialRampOff.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonPartialRampOff.Name = "toolStripButtonPartialRampOff";
             this.toolStripButtonPartialRampOff.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonPartialRampOff.Text = "Partial ramp off (Shift-F)";
+            this.toolStripButtonPartialRampOff.ToolTipText = "Partial ramp off (Shift-F)";
             this.toolStripButtonPartialRampOff.Click += new System.EventHandler(this.toolStripButtonPartialRampOff_Click);
             // 
             // toolStripButtonToggleRamps
@@ -2397,7 +2367,7 @@ namespace VixenEditor{
             this.toolStripButtonToggleRamps.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonToggleRamps.Name = "toolStripButtonToggleRamps";
             this.toolStripButtonToggleRamps.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonToggleRamps.Text = "Toggle between gradient and bar ramps";
+            this.toolStripButtonToggleRamps.ToolTipText = "Toggle between gradient and bar ramps";
             this.toolStripButtonToggleRamps.Click += new System.EventHandler(this.toolStripButtonToggleRamps_Click);
             // 
             // toolStripButtonIntensity
@@ -2407,7 +2377,7 @@ namespace VixenEditor{
             this.toolStripButtonIntensity.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonIntensity.Name = "toolStripButtonIntensity";
             this.toolStripButtonIntensity.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonIntensity.Text = "Intensity (I)";
+            this.toolStripButtonIntensity.ToolTipText = "Intensity (I)";
             this.toolStripButtonIntensity.Click += new System.EventHandler(this.toolStripButtonIntensity_Click);
             // 
             // toolStripButtonMirrorVertical
@@ -2417,7 +2387,7 @@ namespace VixenEditor{
             this.toolStripButtonMirrorVertical.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonMirrorVertical.Name = "toolStripButtonMirrorVertical";
             this.toolStripButtonMirrorVertical.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonMirrorVertical.Text = "Mirror vertically (V)";
+            this.toolStripButtonMirrorVertical.ToolTipText = "Mirror vertically (V)";
             this.toolStripButtonMirrorVertical.Click += new System.EventHandler(this.toolStripButtonMirrorVertical_Click);
             // 
             // toolStripButtonMirrorHorizontal
@@ -2427,7 +2397,7 @@ namespace VixenEditor{
             this.toolStripButtonMirrorHorizontal.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonMirrorHorizontal.Name = "toolStripButtonMirrorHorizontal";
             this.toolStripButtonMirrorHorizontal.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonMirrorHorizontal.Text = "Mirror horizontally (H)";
+            this.toolStripButtonMirrorHorizontal.ToolTipText = "Mirror horizontally (H)";
             this.toolStripButtonMirrorHorizontal.Click += new System.EventHandler(this.toolStripButtonMirrorHorizontal_Click);
             // 
             // toolStripButtonInvert
@@ -2437,7 +2407,7 @@ namespace VixenEditor{
             this.toolStripButtonInvert.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonInvert.Name = "toolStripButtonInvert";
             this.toolStripButtonInvert.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonInvert.Text = "Invert (T)";
+            this.toolStripButtonInvert.ToolTipText = "Invert (T)";
             this.toolStripButtonInvert.Click += new System.EventHandler(this.toolStripButtonInvert_Click);
             // 
             // toolStripButtonRandom
@@ -2447,7 +2417,7 @@ namespace VixenEditor{
             this.toolStripButtonRandom.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonRandom.Name = "toolStripButtonRandom";
             this.toolStripButtonRandom.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonRandom.Text = "Random (A)";
+            this.toolStripButtonRandom.ToolTipText = "Random (A)";
             this.toolStripButtonRandom.Click += new System.EventHandler(this.toolStripButtonRandom_Click);
             // 
             // toolStripButtonSparkle
@@ -2457,7 +2427,7 @@ namespace VixenEditor{
             this.toolStripButtonSparkle.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSparkle.Name = "toolStripButtonSparkle";
             this.toolStripButtonSparkle.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonSparkle.Text = "Sparkle (S)";
+            this.toolStripButtonSparkle.ToolTipText = "Sparkle (S)";
             this.toolStripButtonSparkle.Click += new System.EventHandler(this.toolStripButtonSparkle_Click);
             // 
             // toolStripButtonShimmerDimming
@@ -2467,7 +2437,7 @@ namespace VixenEditor{
             this.toolStripButtonShimmerDimming.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonShimmerDimming.Name = "toolStripButtonShimmerDimming";
             this.toolStripButtonShimmerDimming.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonShimmerDimming.Text = "Shimmer (E)";
+            this.toolStripButtonShimmerDimming.ToolTipText = "Shimmer (E)";
             this.toolStripButtonShimmerDimming.Click += new System.EventHandler(this.toolStripButtonShimmerDimming_Click);
             // 
             // toolStripSeparator16
@@ -2482,6 +2452,7 @@ namespace VixenEditor{
             this.toolStripButtonToggleLevels.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonToggleLevels.Name = "toolStripButtonToggleLevels";
             this.toolStripButtonToggleLevels.Size = new System.Drawing.Size(52, 52);
+            this.toolStripButtonToggleLevels.ToolTipText = "Toggle Between Percent and Actual Levels Text";
             this.toolStripButtonToggleLevels.Click += new System.EventHandler(this.toolStripButtonToggleLevels_Click);
             // 
             // toolStripButtonToggleCellText
@@ -2493,6 +2464,7 @@ namespace VixenEditor{
             this.toolStripButtonToggleCellText.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.toolStripButtonToggleCellText.Name = "toolStripButtonToggleCellText";
             this.toolStripButtonToggleCellText.Size = new System.Drawing.Size(52, 52);
+            this.toolStripButtonToggleCellText.ToolTipText = "Show Levels Text";
             this.toolStripButtonToggleCellText.Click += new System.EventHandler(this.toolStripButtonToggleCellText_Click);
             // 
             // toolStripButtonChangeIntensity
@@ -2502,6 +2474,7 @@ namespace VixenEditor{
             this.toolStripButtonChangeIntensity.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonChangeIntensity.Name = "toolStripButtonChangeIntensity";
             this.toolStripButtonChangeIntensity.Size = new System.Drawing.Size(52, 52);
+            this.toolStripButtonChangeIntensity.ToolTipText = "Change Drawing Intesity";
             this.toolStripButtonChangeIntensity.Click += new System.EventHandler(this.toolStripButtonChangeIntensity_Click);
             // 
             // toolStripEditing
@@ -2535,7 +2508,7 @@ namespace VixenEditor{
             this.toolStripButtonCut.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripButtonCut.Name = "toolStripButtonCut";
             this.toolStripButtonCut.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonCut.Text = "Cut";
+            this.toolStripButtonCut.ToolTipText = "Cut (Ctrl-X)";
             this.toolStripButtonCut.Click += new System.EventHandler(this.toolStripButtonCut_Click);
             // 
             // toolStripButtonCopy
@@ -2545,7 +2518,7 @@ namespace VixenEditor{
             this.toolStripButtonCopy.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripButtonCopy.Name = "toolStripButtonCopy";
             this.toolStripButtonCopy.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonCopy.Text = "Copy";
+            this.toolStripButtonCopy.ToolTipText = "Copy (Ctrl-C)";
             this.toolStripButtonCopy.Click += new System.EventHandler(this.toolStripButtonCopy_Click);
             // 
             // toolStripButtonOpaquePaste
@@ -2555,7 +2528,7 @@ namespace VixenEditor{
             this.toolStripButtonOpaquePaste.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripButtonOpaquePaste.Name = "toolStripButtonOpaquePaste";
             this.toolStripButtonOpaquePaste.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonOpaquePaste.Text = "Opaque paste";
+            this.toolStripButtonOpaquePaste.ToolTipText = "Paste (Ctrl-V)";
             this.toolStripButtonOpaquePaste.Click += new System.EventHandler(this.toolStripButtonOpaquePaste_Click);
             // 
             // toolStripButtonTransparentPaste
@@ -2565,7 +2538,7 @@ namespace VixenEditor{
             this.toolStripButtonTransparentPaste.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripButtonTransparentPaste.Name = "toolStripButtonTransparentPaste";
             this.toolStripButtonTransparentPaste.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonTransparentPaste.Text = "Transparent paste";
+            this.toolStripButtonTransparentPaste.ToolTipText = "Transparent paste";
             this.toolStripButtonTransparentPaste.Click += new System.EventHandler(this.toolStripButtonTransparentPaste_Click);
             // 
             // toolStripSplitButtonBooleanPaste
@@ -2583,7 +2556,7 @@ namespace VixenEditor{
             this.toolStripSplitButtonBooleanPaste.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripSplitButtonBooleanPaste.Name = "toolStripSplitButtonBooleanPaste";
             this.toolStripSplitButtonBooleanPaste.Size = new System.Drawing.Size(64, 52);
-            this.toolStripSplitButtonBooleanPaste.Text = "Boolean paste";
+            this.toolStripSplitButtonBooleanPaste.ToolTipText = "Boolean paste";
             // 
             // toolStripMenuItemPasteOr
             // 
@@ -2651,7 +2624,7 @@ namespace VixenEditor{
             this.toolStripSplitButtonArithmeticPaste.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripSplitButtonArithmeticPaste.Name = "toolStripSplitButtonArithmeticPaste";
             this.toolStripSplitButtonArithmeticPaste.Size = new System.Drawing.Size(64, 52);
-            this.toolStripSplitButtonArithmeticPaste.Text = "Arithmetic paste";
+            this.toolStripSplitButtonArithmeticPaste.ToolTipText = "Arithmetic paste";
             // 
             // additionToolStripMenuItem
             // 
@@ -2700,7 +2673,7 @@ namespace VixenEditor{
             this.toolStripButtonInsertPaste.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripButtonInsertPaste.Name = "toolStripButtonInsertPaste";
             this.toolStripButtonInsertPaste.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonInsertPaste.Text = "Insert paste";
+            this.toolStripButtonInsertPaste.ToolTipText = "Insert paste";
             this.toolStripButtonInsertPaste.Click += new System.EventHandler(this.toolStripButtonInsertPaste_Click);
             // 
             // toolStripButtonRemoveCells
@@ -2710,7 +2683,7 @@ namespace VixenEditor{
             this.toolStripButtonRemoveCells.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripButtonRemoveCells.Name = "toolStripButtonRemoveCells";
             this.toolStripButtonRemoveCells.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonRemoveCells.Text = "Remove cells";
+            this.toolStripButtonRemoveCells.ToolTipText = "Remove cells";
             this.toolStripButtonRemoveCells.Click += new System.EventHandler(this.toolStripButtonRemoveCells_Click);
             // 
             // toolStripSeparator2
@@ -2725,7 +2698,7 @@ namespace VixenEditor{
             this.toolStripButtonFindAndReplace.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripButtonFindAndReplace.Name = "toolStripButtonFindAndReplace";
             this.toolStripButtonFindAndReplace.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonFindAndReplace.Text = "Find and replace";
+            this.toolStripButtonFindAndReplace.ToolTipText = "Find and replace";
             this.toolStripButtonFindAndReplace.Click += new System.EventHandler(this.toolStripButtonFindAndReplace_Click);
             // 
             // toolStripSeparator15
@@ -2741,7 +2714,6 @@ namespace VixenEditor{
             this.toolStripButtonUndo.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripButtonUndo.Name = "toolStripButtonUndo";
             this.toolStripButtonUndo.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonUndo.Text = "Undo";
             this.toolStripButtonUndo.ToolTipText = "Nothing to Undo";
             this.toolStripButtonUndo.Click += new System.EventHandler(this.toolStripButtonUndo_Click);
             // 
@@ -2753,7 +2725,6 @@ namespace VixenEditor{
             this.toolStripButtonRedo.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripButtonRedo.Name = "toolStripButtonRedo";
             this.toolStripButtonRedo.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonRedo.Text = "Redo";
             this.toolStripButtonRedo.ToolTipText = "Nothing to Redo";
             this.toolStripButtonRedo.Click += new System.EventHandler(this.toolStripButtonRedo_Click);
             // 
@@ -2789,7 +2760,7 @@ namespace VixenEditor{
             this.toolStripButtonToggleCrossHairs.MergeIndex = 0;
             this.toolStripButtonToggleCrossHairs.Name = "toolStripButtonToggleCrossHairs";
             this.toolStripButtonToggleCrossHairs.Size = new System.Drawing.Size(48, 48);
-            this.toolStripButtonToggleCrossHairs.Text = "Toggle cross-hairs";
+            this.toolStripButtonToggleCrossHairs.ToolTipText = "Toggle cross-hairs (X)";
             this.toolStripButtonToggleCrossHairs.Click += new System.EventHandler(this.toolStripButtonToggleCrossHairs_Click);
             // 
             // toolStripLabel4
@@ -2825,6 +2796,7 @@ namespace VixenEditor{
             "100%"});
             this.toolStripComboBoxColumnZoom.Name = "toolStripComboBoxColumnZoom";
             this.toolStripComboBoxColumnZoom.Size = new System.Drawing.Size(55, 23);
+            this.toolStripComboBoxColumnZoom.ToolTipText = "Change column size";
             this.toolStripComboBoxColumnZoom.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxColumnZoom_SelectedIndexChanged);
             // 
             // toolStripLabel5
@@ -2860,6 +2832,7 @@ namespace VixenEditor{
             "100%"});
             this.toolStripComboBoxRowZoom.Name = "toolStripComboBoxRowZoom";
             this.toolStripComboBoxRowZoom.Size = new System.Drawing.Size(55, 23);
+            this.toolStripComboBoxRowZoom.ToolTipText = "Change row size";
             this.toolStripComboBoxRowZoom.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxRowZoom_SelectedIndexChanged);
             // 
             // toolStripSeparator6
@@ -2883,6 +2856,7 @@ namespace VixenEditor{
             "Restore natural order..."});
             this.toolStripComboBoxChannelOrder.Name = "toolStripComboBoxChannelOrder";
             this.toolStripComboBoxChannelOrder.Size = new System.Drawing.Size(100, 51);
+            this.toolStripComboBoxChannelOrder.ToolTipText = "Change channel order";
             this.toolStripComboBoxChannelOrder.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxChannelOrder_SelectedIndexChanged);
             // 
             // toolStripButtonSaveOrder
@@ -2893,7 +2867,6 @@ namespace VixenEditor{
             this.toolStripButtonSaveOrder.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSaveOrder.Name = "toolStripButtonSaveOrder";
             this.toolStripButtonSaveOrder.Size = new System.Drawing.Size(48, 48);
-            this.toolStripButtonSaveOrder.Text = "Save the current channel order";
             this.toolStripButtonSaveOrder.ToolTipText = "Save the current channel order";
             this.toolStripButtonSaveOrder.Click += new System.EventHandler(this.toolStripButtonSaveOrder_Click);
             // 
@@ -2906,7 +2879,7 @@ namespace VixenEditor{
             this.toolStripButtonDeleteOrder.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonDeleteOrder.Name = "toolStripButtonDeleteOrder";
             this.toolStripButtonDeleteOrder.Size = new System.Drawing.Size(48, 48);
-            this.toolStripButtonDeleteOrder.Text = "Delete the current channel order";
+            this.toolStripButtonDeleteOrder.ToolTipText = "Delete the current channel order";
             this.toolStripButtonDeleteOrder.Click += new System.EventHandler(this.toolStripButtonDeleteOrder_Click);
             // 
             // toolStripText
@@ -2931,7 +2904,7 @@ namespace VixenEditor{
             this.textBoxProgramLength});
             this.toolStripText.Location = new System.Drawing.Point(3, 271);
             this.toolStripText.Name = "toolStripText";
-            this.toolStripText.Size = new System.Drawing.Size(942, 25);
+            this.toolStripText.Size = new System.Drawing.Size(973, 25);
             this.toolStripText.TabIndex = 7;
             this.toolStripText.Text = "Text";
             // 
