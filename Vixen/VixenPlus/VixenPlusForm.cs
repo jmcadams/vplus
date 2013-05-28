@@ -56,8 +56,8 @@ namespace VixenPlus
             SetDataPath();
             Ensure(Paths.DataPath);
             Ensure(Paths.SequencePath);
-            //Ensure(Paths.ProgramPath);
-            //Ensure(Paths.ImportExportPath);
+            Ensure(Paths.ProgramPath);
+            Ensure(Paths.ImportExportPath);
             Ensure(Paths.AudioPath);
             Ensure(Paths.ProfilePath);
             Ensure(Paths.RoutinePath);
@@ -962,8 +962,18 @@ namespace VixenPlus
         //todo move to preferences
         private static void SetDataPath()
         {
-            if (File.Exists("redirect.data"))
-            {
+            if (!File.Exists("redirect.data")) {
+                return;
+            }
+
+            var path = "";
+            using (var data = new StreamReader("redirect.data")) {
+                path = data.ReadLine();
+            }
+            if (!String.IsNullOrEmpty(path) && Directory.Exists(path)) {
+                Paths.DataPath = path;
+            }
+            else {
                 Paths.DataPath = Path.Combine(Paths.BinaryPath, "Data");
             }
         }
