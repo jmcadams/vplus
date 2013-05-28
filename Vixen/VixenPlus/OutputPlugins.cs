@@ -34,6 +34,7 @@ namespace VixenPlus {
                 return;
             }
             var builder = new StringBuilder();
+            var plugins = new StringBuilder();
             foreach (XmlNode node in allPluginData) {
                 if (node.Attributes == null) {
                     continue;
@@ -55,17 +56,20 @@ namespace VixenPlus {
                         });
                     targetDoc.Save(Path.Combine(Paths.ImportExportPath, str));
                     builder.Append(str + "\n");
+                    plugins.Append(pluginName + "\n");
                 }
                 _object.PlugInData.RemovePlugInData(node.Attributes["id"].Value);
             }
             if (builder.Length == 0) {
                 return;
             }
-            var str3 = (_object is EventSequence) ? "sequence" : "program";
-            MessageBox.Show(
-                string.Format(
-                    "Output plugins used by this {1} were missing.\nThe following exports were created containing the data for those missing plugins:\n\n{0}\n\nThe data has been removed from the {1}, but the {1} has not been saved.",
-                    builder, str3), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            var msg =
+                string.Format("Output plugins used by this {1} were missing or have not been implemented by {2}.\n\n" +
+                              "The following exports were created containing the data for those missing plugins:\n\n" +
+                              "{0}\nThe data has been removed from the {1}, but it has not been saved.\n\n" +
+                              "NOTE: You may need to edit your profile(s) and remove the\n\n{3}\nplugin(s) so that you don't continue to see this message",
+                              builder,(_object is EventSequence) ? "sequence" : "program", Vendor.ProductName, plugins);
+            MessageBox.Show(msg, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
     }
 }
