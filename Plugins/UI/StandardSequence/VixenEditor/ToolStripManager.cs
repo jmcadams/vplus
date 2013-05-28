@@ -48,6 +48,8 @@ namespace VixenEditor {
 
         public static void LoadSettings(Form form, XmlNode parentNode) {
             LoadSettings(form, parentNode, form.GetType().ToString());
+            ResizeToolStrips(form);
+            ResizeBackgroundImages();
         }
 
 
