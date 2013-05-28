@@ -671,12 +671,11 @@ namespace VixenPlus {
             var channelIndexes = Sorts.CurrentOrder;
 
             var sortedChannels = new List<Channel>();
-            for (var i = 0; i < FullChannelCount; i++) {
+            for (var i = 0; i < channelIndexes.ChannelIndexes.Count; i++) {
                 if (!_groupedAndSortedChannels.Contains(FullChannels[i])) {
                     continue;
                 }
-                System.Diagnostics.Debug.Print("I: {0} Full: {1} Index: {2}", i, FullChannels[i], FullChannels[channelIndexes.ChannelIndexes[i]]);
-                sortedChannels.Add(FullChannels[channelIndexes.ChannelIndexes[i]]);
+                sortedChannels.Add(FullChannels[i]);
             }
             _groupedAndSortedChannels = sortedChannels;
         }
