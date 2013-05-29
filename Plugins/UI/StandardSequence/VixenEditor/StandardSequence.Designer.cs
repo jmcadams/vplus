@@ -162,7 +162,6 @@ namespace VixenEditor{
         private ToolStripComboBox toolStripComboBoxColumnZoom;
         private ToolStripComboBox toolStripComboBoxRowZoom;
         private ToolStripContainer toolStripContainer1;
-        private ToolStripDropDownButton toolStripDropDownButtonPlugins;
         private ToolStripLabel toolStripLabel10;
         private ToolStripLabel toolStripLabel3;
         private ToolStripLabel toolStripLabel4;
@@ -321,7 +320,6 @@ namespace VixenEditor{
         private ToolStripSeparator toolStripSeparator18;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripSeparator toolStripSeparator2;
-        private ToolStripSeparator toolStripSeparator4;
         private ToolStripSeparator toolStripSeparator6;
         private ToolStripSeparator toolStripSeparator8;
         private ToolStripSplitButton toolStripSplitButtonArithmeticPaste;
@@ -501,8 +499,6 @@ namespace VixenEditor{
             this.toolStripSeparator19 = new System.Windows.Forms.ToolStripSeparator();
             this.profileToolStripLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStripExecutionControl = new System.Windows.Forms.ToolStrip();
-            this.toolStripDropDownButtonPlugins = new System.Windows.Forms.ToolStripDropDownButton();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbPlay = new System.Windows.Forms.ToolStripButton();
             this.tsbPlayPoint = new System.Windows.Forms.ToolStripButton();
             this.tsbPlayRange = new System.Windows.Forms.ToolStripButton();
@@ -595,6 +591,7 @@ namespace VixenEditor{
             this.printDialog = new System.Windows.Forms.PrintDialog();
             this.printPreviewDialog = new System.Windows.Forms.PrintPreviewDialog();
             this.positionTimer = new System.Windows.Forms.Timer(this.components);
+            this.toolStripDropDownButtonPlugins = new System.Windows.Forms.ToolStripDropDownButton();
             this.menuStrip.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -824,14 +821,14 @@ namespace VixenEditor{
             // 
             this.opaquePasteToolStripMenuItem.Name = "opaquePasteToolStripMenuItem";
             this.opaquePasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.opaquePasteToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.opaquePasteToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.opaquePasteToolStripMenuItem.Text = "Opaque paste";
             this.opaquePasteToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonOpaquePaste_Click);
             // 
             // transparentPasteToolStripMenuItem
             // 
             this.transparentPasteToolStripMenuItem.Name = "transparentPasteToolStripMenuItem";
-            this.transparentPasteToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.transparentPasteToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.transparentPasteToolStripMenuItem.Text = "Transparent paste";
             this.transparentPasteToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonTransparentPaste_Click);
             // 
@@ -846,7 +843,7 @@ namespace VixenEditor{
             this.nANDToolStripMenuItem,
             this.xNORToolStripMenuItem});
             this.booleanPasteToolStripMenuItem.Name = "booleanPasteToolStripMenuItem";
-            this.booleanPasteToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.booleanPasteToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.booleanPasteToolStripMenuItem.Text = "Boolean paste";
             // 
             // oRToolStripMenuItem
@@ -901,8 +898,8 @@ namespace VixenEditor{
             this.insertPasteToolStripMenuItem.Name = "insertPasteToolStripMenuItem";
             this.insertPasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.V)));
-            this.insertPasteToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
-            this.insertPasteToolStripMenuItem.Text = "Insert paste";
+            this.insertPasteToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.insertPasteToolStripMenuItem.ToolTipText = "Insert paste (Ctrl-Shift-V)";
             this.insertPasteToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonInsertPaste_Click);
             // 
             // removeCellsToolStripMenuItem1
@@ -1967,10 +1964,11 @@ namespace VixenEditor{
             this.toolStripSeparator13,
             this.toolStripButtonChannelOutputMask,
             this.toolStripSeparator19,
+            this.toolStripDropDownButtonPlugins,
             this.profileToolStripLabel});
             this.toolStripSequenceSettings.Location = new System.Drawing.Point(3, 0);
             this.toolStripSequenceSettings.Name = "toolStripSequenceSettings";
-            this.toolStripSequenceSettings.Size = new System.Drawing.Size(584, 55);
+            this.toolStripSequenceSettings.Size = new System.Drawing.Size(725, 55);
             this.toolStripSequenceSettings.TabIndex = 1;
             this.toolStripSequenceSettings.Text = "Sequence settings";
             // 
@@ -2102,8 +2100,6 @@ namespace VixenEditor{
             this.toolStripExecutionControl.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStripExecutionControl.ImageScalingSize = new System.Drawing.Size(48, 48);
             this.toolStripExecutionControl.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripDropDownButtonPlugins,
-            this.toolStripSeparator4,
             this.tsbPlay,
             this.tsbPlayPoint,
             this.tsbPlayRange,
@@ -2118,23 +2114,9 @@ namespace VixenEditor{
             this.SpeedVariableTsb});
             this.toolStripExecutionControl.Location = new System.Drawing.Point(3, 55);
             this.toolStripExecutionControl.Name = "toolStripExecutionControl";
-            this.toolStripExecutionControl.Size = new System.Drawing.Size(706, 55);
+            this.toolStripExecutionControl.Size = new System.Drawing.Size(590, 55);
             this.toolStripExecutionControl.TabIndex = 2;
             this.toolStripExecutionControl.Text = "Execution control";
-            // 
-            // toolStripDropDownButtonPlugins
-            // 
-            this.toolStripDropDownButtonPlugins.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripDropDownButtonPlugins.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButtonPlugins.Name = "toolStripDropDownButtonPlugins";
-            this.toolStripDropDownButtonPlugins.Size = new System.Drawing.Size(110, 52);
-            this.toolStripDropDownButtonPlugins.Text = "Attached Plugins";
-            this.toolStripDropDownButtonPlugins.Click += new System.EventHandler(this.toolStripDropDownButtonPlugins_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 55);
             // 
             // tsbPlay
             // 
@@ -2698,7 +2680,7 @@ namespace VixenEditor{
             this.toolStripButtonFindAndReplace.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripButtonFindAndReplace.Name = "toolStripButtonFindAndReplace";
             this.toolStripButtonFindAndReplace.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonFindAndReplace.ToolTipText = "Find and replace";
+            this.toolStripButtonFindAndReplace.ToolTipText = "Find and replace (Ctrl-F)";
             this.toolStripButtonFindAndReplace.Click += new System.EventHandler(this.toolStripButtonFindAndReplace_Click);
             // 
             // toolStripSeparator15
@@ -2904,7 +2886,7 @@ namespace VixenEditor{
             this.textBoxProgramLength});
             this.toolStripText.Location = new System.Drawing.Point(3, 271);
             this.toolStripText.Name = "toolStripText";
-            this.toolStripText.Size = new System.Drawing.Size(973, 25);
+            this.toolStripText.Size = new System.Drawing.Size(942, 25);
             this.toolStripText.TabIndex = 7;
             this.toolStripText.Text = "Text";
             // 
@@ -3039,6 +3021,15 @@ namespace VixenEditor{
             this.positionTimer.Interval = 1;
             this.positionTimer.Tick += new System.EventHandler(this.m_positionTimer_Tick);
             // 
+            // toolStripDropDownButtonPlugins
+            // 
+            this.toolStripDropDownButtonPlugins.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripDropDownButtonPlugins.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButtonPlugins.Name = "toolStripDropDownButtonPlugins";
+            this.toolStripDropDownButtonPlugins.Size = new System.Drawing.Size(110, 52);
+            this.toolStripDropDownButtonPlugins.Text = "Attached Plugins";
+            this.toolStripDropDownButtonPlugins.Click += new System.EventHandler(this.toolStripDropDownButtonPlugins_Click);
+            // 
             // StandardSequence
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3090,6 +3081,8 @@ namespace VixenEditor{
 
         }
         #endregion
+
+        private ToolStripDropDownButton toolStripDropDownButtonPlugins;
 
     }
 }

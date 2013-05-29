@@ -2464,11 +2464,13 @@ namespace VixenEditor {
 
 
         private void ReactToProfileAssignment() {
-            var flag = _sequence.Profile != null;
-            profileToolStripLabel.Text = flag ? _sequence.Profile.Name : "Embedded";
-            flattenProfileIntoSequenceToolStripMenuItem.Enabled = flag;
-            detachSequenceFromItsProfileToolStripMenuItem.Enabled = flag;
-            channelOutputMaskToolStripMenuItem.Enabled = !flag;
+            var isProfile = _sequence.Profile != null;
+            profileToolStripLabel.Text = isProfile ? _sequence.Profile.Name : "Embedded";
+            profileToolStripLabel.Visible = isProfile;
+            toolStripDropDownButtonPlugins.Visible = !isProfile;
+            flattenProfileIntoSequenceToolStripMenuItem.Enabled = isProfile;
+            detachSequenceFromItsProfileToolStripMenuItem.Enabled = isProfile;
+            channelOutputMaskToolStripMenuItem.Enabled = !isProfile;
             ReactEditingStateToProfileAssignment();
             SetOrderArraySize(_sequence.ChannelCount);
             textBoxChannelCount.Text = _sequence.ChannelCount.ToString(CultureInfo.InvariantCulture);
@@ -4261,9 +4263,14 @@ namespace VixenEditor {
 
                 toolStripDropDownButtonPlugins.DropDownItems.Clear();
                 var tagValue = 0;
-                foreach (object[] objArray in dialog.MappedPluginList) {
-                    var item = new ToolStripMenuItem((string) objArray[0])
-                    {Checked = (bool) objArray[1], CheckOnClick = true, Tag = tagValue.ToString(CultureInfo.InvariantCulture)};
+                var allPlugins = dialog.MappedPluginList;
+                foreach (object[] objArray in allPlugins) { 
+                //for (var i = 0; i < allPlugins.GetLength(0); i++) {
+                    var item = new ToolStripMenuItem((string) objArray[0]) {
+                        Checked = (bool) objArray[1],
+                        CheckOnClick = true,
+                        Tag = tagValue.ToString(CultureInfo.InvariantCulture)
+                    };
                     item.CheckedChanged += plugInItem_CheckedChanged;
                     tagValue++;
                     toolStripDropDownButtonPlugins.DropDownItems.Add(item);

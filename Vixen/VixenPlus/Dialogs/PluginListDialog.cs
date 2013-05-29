@@ -73,7 +73,7 @@ namespace VixenPlus.Dialogs {
                         });
                     }
                 }
-                return new object[] {list.ToArray()};
+                return list.ToArray();
             }
         }
 
