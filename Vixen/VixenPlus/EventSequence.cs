@@ -668,14 +668,21 @@ namespace VixenPlus {
                 return;
             }
 
+            if (FullChannelCount != Sorts.CurrentOrder.ChannelIndexes.Count) {
+                MessageBox.Show(
+                    "The selected channel order channel count does not match the sequence channel count and cannot be used.\nYour sequence channels will not be sorted using this channel order.",
+                    Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             var channelIndexes = Sorts.CurrentOrder;
 
             var sortedChannels = new List<Channel>();
             for (var i = 0; i < channelIndexes.ChannelIndexes.Count; i++) {
-                if (!_groupedAndSortedChannels.Contains(FullChannels[i])) {
+                if (!_groupedAndSortedChannels.Contains(FullChannels[channelIndexes.ChannelIndexes[i]])) {
                     continue;
                 }
-                sortedChannels.Add(FullChannels[i]);
+                sortedChannels.Add(FullChannels[channelIndexes.ChannelIndexes[i]]);
             }
             _groupedAndSortedChannels = sortedChannels;
         }

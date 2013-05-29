@@ -15,11 +15,11 @@ namespace VixenPlus {
 
 
         public SortOrder CurrentOrder {
-            get { return LastSort == -1 ? null : _sortOrders[LastSort - 1]; }
+            get { return LastSort == -1 ? null : _sortOrders[LastSort]; }
             set {
                 for (var i = 0; i < _sortOrders.Count; i++) {
                     if (_sortOrders[i].Name == value.Name) {
-                        LastSort = i + 1;
+                        LastSort = i;
                     }
                 }
             }
