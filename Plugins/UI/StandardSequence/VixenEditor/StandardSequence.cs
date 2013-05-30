@@ -1767,10 +1767,9 @@ namespace VixenEditor {
             const int mediumAddition = 1;
             const int largeAddtion = 3;
 
-            var t = e.Graphics.VisibleClipBounds;
-            e.Graphics.FillRectangle(_channelBackBrush, t);
-            if ((int)t.X != 0 || (int)t.Width != CaretSize) {
-                System.Diagnostics.Debug.Print("X: {0}, Y: {1} W: {2} H: {3}", t.X, t.Y, t.Width, t.Height);
+            var clipBounds = e.Graphics.ClipBounds;
+            e.Graphics.FillRectangle(_channelBackBrush, clipBounds);
+            if ((int)clipBounds.X != 0 || (int)clipBounds.Width != CaretSize) {
                 var height = pictureBoxTime.Height + splitContainer2.SplitterWidth;
                 cbGroups.Width = pictureBoxChannels.Width - CaretSize;
                 cbGroups.Location = new Point(CaretSize, height - cbGroups.Height - splitContainer2.SplitterWidth);
@@ -1782,17 +1781,14 @@ namespace VixenEditor {
                             ? (_sequence.FullChannelCount.ToString(CultureInfo.InvariantCulture).Length + 1) * digitSize + naturalChannelOffset
                             : naturalChannelOffset;
                 using (var brush = new SolidBrush(Color.FromArgb(SemiTransparent, Color.Gray))) {
-                    for (var channelOffset = vScrollBar1.Value; (channelOffset >= 0) && (channelOffset < _sequence.ChannelCount); channelOffset++) {
-
+                    for (var channelOffset = vScrollBar1.Value; (channelOffset >= 0) && (channelOffset < _sequence.ChannelCount) && height < clipBounds.Bottom; channelOffset++) {
                         var channel = _sequence.Channels[channelOffset];
                         var isChannelSelected = channel == SelectedChannel;
 
-                        e.Graphics.FillRectangle(isChannelSelected ? SystemBrushes.Highlight : channel.Brush ?? _channelBackBrush, 0, height,
-                                                 pictureBoxChannels.Width, _gridRowHeight);
+                        brush.Color = isChannelSelected ? ((SolidBrush)SystemBrushes.Highlight).Color : channel.Color;
+                        var textBrush = isChannelSelected ? SystemBrushes.HighlightText : Utils.GetTextColor(channel.Color);
 
-                        var textBrush = isChannelSelected
-                                            ? SystemBrushes.HighlightText
-                                            : Utils.GetTextColor(channel.Brush != null ? channel.Brush.Color : _channelBackBrush.Color);
+                        e.Graphics.FillRectangle(brush, 0, height, pictureBoxChannels.Width, _gridRowHeight);
 
                         var channelNumber = String.Format("{0}", channel.OutputChannel + 1);
                         if (showNaturalChannelNumbers) {
@@ -1804,6 +1800,7 @@ namespace VixenEditor {
                             const int outputWidth = 40;
                             const int outputBorder = 2;
                             var rightX = pictureBoxChannels.Width - outputWidth;
+                            brush.Color = Color.FromArgb(SemiTransparent, Color.Gray);
                             e.Graphics.FillRectangle(brush, rightX, height + 1, outputWidth, _gridRowHeight - outputBorder);
 
                             if (toolStripComboBoxRowZoom.SelectedIndex > smallRow) {
@@ -4425,7 +4422,8 @@ namespace VixenEditor {
                         }
                         else {
                             var height = ((_gridRowHeight - 1) * _sequence.EventValues[currentChannel, cell]) / 255;
-                            g.FillRectangle(channel.Brush ?? _channelBackBrush, x, ((y + _gridRowHeight) - 1) - height, _gridColWidth - 1, height);
+                            brush.Color = Color.FromArgb(255, channel.Color);
+                            g.FillRectangle(brush, x, ((y + _gridRowHeight) - 1) - height, _gridColWidth - 1, height);
                         }
 
                         string cellIntensity;

@@ -121,7 +121,7 @@ namespace Preview {
                         continue;
                     }
 
-                    brush.Color = Color.FromArgb(0x80, _channels[num4].Color);
+                    brush.Color = Color.FromArgb(128, _channels[num4].Color);
                     foreach (var num5 in _channelDictionary[num4]) {
                         num = (int) ((num5 >> 0x10) * (_cellSize + 1));
                         num2 = (int) ((num5 & 0xffff) * (_cellSize + 1));
@@ -140,7 +140,8 @@ namespace Preview {
                     num = (int) ((num5 >> 0x10) * (_cellSize + 1));
                     num2 = (int) ((num5 & 0xffff) * (_cellSize + 1));
                     if (e.ClipRectangle.Contains(num, num2)) {
-                        e.Graphics.FillRectangle(channel.Brush, num, num2, _cellSize, _cellSize);
+                        brush.Color = channel.Color;
+                        e.Graphics.FillRectangle(brush, num, num2, _cellSize, _cellSize);
                     }
                 }
             }

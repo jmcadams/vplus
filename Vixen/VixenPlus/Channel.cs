@@ -13,7 +13,6 @@ namespace VixenPlus {
 
 
         public Channel(XmlNode channelNode) {
-            Brush = null;
             OutputChannel = 0;
             Enabled = true;
             DimmingCurve = null;
@@ -53,7 +52,6 @@ namespace VixenPlus {
             Name = name;
             OutputChannel = outputChannel;
 
-            Brush = null;
             Enabled = true;
             DimmingCurve = null;
             Color = Color.FromArgb(-1);
@@ -85,8 +83,6 @@ namespace VixenPlus {
         }
 
 
-        public SolidBrush Brush { get; private set; }
-
         public Color Color {
             get { return _color; }
             set {
@@ -95,10 +91,6 @@ namespace VixenPlus {
                 }
 
                 _color = value;
-                if (Brush != null) {
-                    Brush.Dispose();
-                }
-                Brush = new SolidBrush(value);
             }
         }
 
@@ -114,25 +106,18 @@ namespace VixenPlus {
 
         public int OutputChannel { get; set; }
 
-        //public int EventIndex { get; set; }
-
         public int CompareTo(Channel other) {
             return Id.CompareTo(other.Id);
         }
 
 
         public void Dispose() {
-            if (Brush != null) {
-                Brush.Dispose();
-                Brush = null;
-            }
             GC.SuppressFinalize(this);
         }
 
 
         public Channel Clone() {
             var channel = (Channel) MemberwiseClone();
-            channel.Brush = new SolidBrush(Brush.Color);
             if (DimmingCurve != null) {
                 channel.DimmingCurve = new byte[DimmingCurve.Length];
                 DimmingCurve.CopyTo(channel.DimmingCurve, 0);
