@@ -1792,7 +1792,7 @@ namespace VixenEditor {
 
                         var channelNumber = String.Format("{0}", channel.OutputChannel + 1);
                         if (showNaturalChannelNumbers) {
-                            e.Graphics.DrawString(string.Format("{0}:", channelNumber), _channelNameFont, textBrush, naturalChannelOffset,
+                            e.Graphics.DrawString(string.Format("{0}:", _sequence.FullChannels.IndexOf(channel) + 1), _channelNameFont, textBrush, naturalChannelOffset,
                                                   height + heightAddition);
                         }
 
