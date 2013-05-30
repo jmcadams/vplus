@@ -668,10 +668,13 @@ namespace VixenPlus {
                 return;
             }
 
-            if (FullChannelCount != Sorts.CurrentOrder.ChannelIndexes.Count) {
-                MessageBox.Show(
-                    "The selected channel order channel count does not match the sequence channel count and cannot be used.\nYour sequence channels will not be sorted using this channel order.",
-                    Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (Sorts.CurrentOrder == null || FullChannelCount != Sorts.CurrentOrder.ChannelIndexes.Count) {
+                var msg = Sorts.CurrentOrder == null
+                              ? "The sort order referenced does not exist.\n" +
+                                "Please edit your sequnce or profile to make sure you have the correct number of sort orders defined."
+                              : "The selected channel order channel count does not match the sequence channel count and cannot be used.\n" +
+                                "Your sequence channels will not be sorted using this channel order.";
+                MessageBox.Show(msg, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

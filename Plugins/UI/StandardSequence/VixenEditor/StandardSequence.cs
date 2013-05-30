@@ -1287,7 +1287,7 @@ namespace VixenEditor {
             }
             toolStripComboBoxChannelOrder.Items.Add(restoreNaturalOrder);
             if (_sequence.LastSort != -1) {
-                toolStripComboBoxChannelOrder.SelectedIndex = _sequence.LastSort + 1;
+                toolStripComboBoxChannelOrder.SelectedIndex = _sequence.LastSort;
             }
             toolStripComboBoxChannelOrder.EndUpdate();
         }
@@ -4219,7 +4219,7 @@ namespace VixenEditor {
                 else {
                     _channelOrderMapping.Clear();
                     _channelOrderMapping.AddRange(((VixenPlus.SortOrder) toolStripComboBoxChannelOrder.SelectedItem).ChannelIndexes);
-                    _sequence.LastSort = toolStripComboBoxChannelOrder.SelectedIndex - 1;
+                    _sequence.LastSort = toolStripComboBoxChannelOrder.SelectedIndex;
                     toolStripButtonDeleteOrder.Enabled = true;
                     if (_sequence.Profile == null) {
                         IsDirty = true;
