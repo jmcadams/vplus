@@ -1528,7 +1528,7 @@ namespace VixenEditor{
             this.pictureBoxTime.TabStop = false;
             this.pictureBoxTime.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxTime_Paint);
             this.pictureBoxTime.DoubleClick += new System.EventHandler(this.pictureBoxTime_DoubleClick);
-            this.pictureBoxTime.Resize +=new System.EventHandler(pictureBoxTime_Resize);
+            this.pictureBoxTime.Resize += new System.EventHandler(this.pictureBoxChannels_Resize);
             // 
             // contextMenuTime
             // 
