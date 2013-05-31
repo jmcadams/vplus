@@ -1,3 +1,1 @@
-Sort order is not applying to the real order
-Make the Group Drop Down max to the size of the channel picture box
 A few of the effects don't have key press shortcuts, need to be implemented.

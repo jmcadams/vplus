@@ -1771,8 +1771,6 @@ namespace VixenEditor {
             e.Graphics.FillRectangle(_channelBackBrush, clipBounds);
             if ((int)clipBounds.X != 0 || (int)clipBounds.Width != CaretSize) {
                 var height = pictureBoxTime.Height + splitContainer2.SplitterWidth;
-                cbGroups.Width = pictureBoxChannels.Width - CaretSize;
-                cbGroups.Location = new Point(CaretSize, height - cbGroups.Height - splitContainer2.SplitterWidth);
 
                 var selectedZoom = toolStripComboBoxRowZoom.SelectedIndex;
                 var heightAddition = (selectedZoom <= smallRow) ? smallAddition : (selectedZoom >= largeRow) ? largeAddtion : mediumAddition;
@@ -1827,6 +1825,9 @@ namespace VixenEditor {
 
 
         private void pictureBoxChannels_Resize(object sender, EventArgs e) {
+            cbGroups.Width = pictureBoxChannels.Width - CaretSize;
+            cbGroups.Location = new Point(CaretSize, pictureBoxTime.Height - cbGroups.Height);
+            cbGroups.DropDownHeight = Math.Max(cbGroups.ItemHeight, (pictureBoxChannels.Height - cbGroups.Location.Y - cbGroups.Height));
             pictureBoxChannels.Refresh();
         }
 
@@ -4807,10 +4808,10 @@ namespace VixenEditor {
         private void cbGroups_DrawItem(object sender, DrawItemEventArgs e) {
             if (e.Index > 0) {
                 var indexItem = _sequence.Groups[cbGroups.Items[e.Index].ToString()];
-                VixenPlus.Channel.DrawItem(e, indexItem.Name, indexItem.GroupColor, false);
+                VixenPlus.Channel.DrawItem(e, indexItem.Name, indexItem.GroupColor);
             }
             else {
-                VixenPlus.Channel.DrawItem(e, Group.AllChannels, Color.White, false);
+                VixenPlus.Channel.DrawItem(e, Group.AllChannels, Color.White);
             }
         }
 

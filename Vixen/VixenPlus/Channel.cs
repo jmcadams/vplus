@@ -161,10 +161,11 @@ namespace VixenPlus {
         // For ComboBoxes
         public static void DrawItem(DrawItemEventArgs e, string name, Color color, bool drawFocus = true) {
             e.DrawBackground();
+            var selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
 
             using (var backgroundBrush = new SolidBrush(color)) {
-                e.Graphics.FillRectangle(backgroundBrush, e.Bounds);
-                var contrastingBrush = Utils.GetTextColor(backgroundBrush.Color);
+                e.Graphics.FillRectangle(selected ? SystemBrushes.Highlight : backgroundBrush, e.Bounds);
+                var contrastingBrush = selected ? SystemBrushes.HighlightText : Utils.GetTextColor(backgroundBrush.Color);
                 e.Graphics.DrawString(name, e.Font, contrastingBrush, new RectangleF(e.Bounds.Location, e.Bounds.Size));
             }
 
