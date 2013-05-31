@@ -1841,9 +1841,11 @@ namespace VixenEditor {
             _sequence.EventValues[_editingChannelSortedIndex, _selectedCells.X] =
                 (_sequence.EventValues[_editingChannelSortedIndex, _selectedCells.X] > _sequence.MinimumLevel)
                     ? _sequence.MinimumLevel : _drawingLevel;
-            UpdateGrid(_gridGraphics,
-                       new Rectangle((_selectedCells.X - hScrollBar1.Value) * _gridColWidth,
-                                     (_editingChannelSortedIndex - vScrollBar1.Value) * _gridRowHeight, _gridColWidth, _gridRowHeight));
+            var rc = new Rectangle((_selectedCells.X - hScrollBar1.Value) * _gridColWidth,
+                                   (_editingChannelSortedIndex - vScrollBar1.Value) * _gridRowHeight, _gridColWidth, _gridRowHeight);
+            UpdateGrid(_gridGraphics, rc);
+            pictureBoxGrid.Invalidate(rc);
+            pictureBoxGrid.Refresh();
         }
 
 
