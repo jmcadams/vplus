@@ -2241,9 +2241,6 @@ namespace VixenEditor {
             pictureBoxGrid.Refresh();
         }
 
-        private void pictureBoxTime_Resize(object sender, EventArgs e) {
-            pictureBoxChannels_Resize(sender, e);
-        }
 
         //TODO This has got a bug when you don't use an event period that divides in 1000 evenly.
         //TODO Remove magic numbers
