@@ -429,6 +429,10 @@ namespace Preview {
                 SetBackground(null);
             }
 
+            if (setupDataNode == null) {
+                return;
+            }
+
             trackBarBrightness.Value = _setupData.GetInteger(setupDataNode, "Brightness", 10);
             trackBarBrightness_ValueChanged(null, null);
         }
