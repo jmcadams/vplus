@@ -19,7 +19,7 @@ namespace VixenPlus {
         private int _eventPeriod;
         private Profile _profile;
         private SortOrders _sortOrders;
-        private string _currentGroup = ""; // = Group.AllChannels;
+        private string _currentGroup = "";
 
         public Dictionary<string, GroupData> Groups { get; private set; }
 
@@ -658,7 +658,7 @@ namespace VixenPlus {
             _groupedAndSortedChannels = new List<Channel>();
 
             if (_currentGroup != Group.AllChannels && _currentGroup != "") {
-                AddNode(_currentGroup);
+                _groupedAndSortedChannels = new Group().AddNodes(_currentGroup, Groups, FullChannels);
             }
             else {
                 _groupedAndSortedChannels = FullChannels;
@@ -691,43 +691,7 @@ namespace VixenPlus {
         }
 
 
-        private void AddNode(string nodeData) {
-            try {
-                var groupChannels = Groups[nodeData].GroupChannels;
-                if (groupChannels.Contains(Group.GroupTextDivider.ToString(CultureInfo.InvariantCulture))) {
-                    var nodes = groupChannels.Split(new[] { Group.GroupTextDivider });
-                    foreach (var recursiveNode in nodes[0].Split(new[] {','})) {
-                        AddNode(recursiveNode);
-                    }
-                    if (nodes[1] != string.Empty) {
-                        AddChannels(groupChannels);
-                    }
-                }
-                else {
-                    AddChannels(groupChannels);
-                }
-            }
-            catch (KeyNotFoundException) {
-                // we just build the group anyhow since it may have channels missing because of an improper formatted group file.
-            }
-        }
 
-
-        private void AddChannels(string nodeData) {
-            if (nodeData.Contains(Group.GroupTextDivider.ToString(CultureInfo.InvariantCulture))) {
-                nodeData = nodeData.Split(new[] { Group.GroupTextDivider })[1];
-            }
-            var node = nodeData.Split(new[] {','});
-            foreach (var channelNumber in node) {
-                int channel;
-                if (!Int32.TryParse(channelNumber, out channel)) {
-                    continue;
-                }
-                if (!_groupedAndSortedChannels.Contains(FullChannels[channel])) {
-                    _groupedAndSortedChannels.Add(FullChannels[channel]);
-                }
-            }
-        }
 
 
         public List<Channel> Channels {

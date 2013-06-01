@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Security;
 using System.Windows.Forms;
@@ -12,6 +13,9 @@ namespace VixenPlus {
     public class Group {
         public const char GroupTextDivider = '~';
         public static string AllChannels = Resources.AllChannels;
+        public static string ManageGroups = "Manage Groups";
+        private readonly List<Channel> _currentList = new List<Channel>();
+
 
         public static Dictionary<string, GroupData> LoadGroups(string groupFile) {
             Dictionary<string, GroupData> groups = null;
@@ -35,7 +39,10 @@ namespace VixenPlus {
                             var zoom = node.Attributes["Zoom"] == null ? "100%" : node.Attributes["Zoom"].Value;
                             var text = node.InnerText != "" ? node.InnerText : String.Empty;
                             groups.Add(name,
-                                       new GroupData { Name = name, GroupColor = color, GroupChannels = (contains == null ? "" : contains + GroupTextDivider) + text, Zoom = zoom });
+                                       new GroupData {
+                                           Name = name, GroupColor = color, GroupChannels = (contains == null ? "" : contains + GroupTextDivider) + text,
+                                           Zoom = zoom
+                                       });
                         }
                     }
                 }
@@ -50,12 +57,44 @@ namespace VixenPlus {
         }
 
 
-    }
+        public List<Channel> AddNodes(string nodeData, Dictionary<string, GroupData> groups, List<Channel> fullChannelList, bool isFirstPass = true) {
+            if (isFirstPass) _currentList.Clear();
+            try {
+                var groupChannels = groups[nodeData].GroupChannels;
+                if (groupChannels.Contains(GroupTextDivider.ToString(CultureInfo.InvariantCulture))) {
+                    var nodes = groupChannels.Split(new[] {GroupTextDivider});
+                    foreach (var recursiveNode in nodes[0].Split(new[] {','})) {
+                        AddNodes(recursiveNode, groups, fullChannelList, false);
+                    }
+                    if (nodes[1] != string.Empty) {
+                        AddChannels(groupChannels, fullChannelList);
+                    }
+                }
+                else {
+                    AddChannels(groupChannels, fullChannelList);
+                }
+            }
+            catch (KeyNotFoundException) {
+                // we just build the group anyhow since it may have channels missing because of an improper formatted group file.
+            }
+            return _currentList;
+        }
 
-    public class GroupData {
-        public string Name { get; set; }
-        public Color GroupColor { get; set; }
-        public string GroupChannels { get; set; }
-        public string Zoom { get; set; }
+
+        private void AddChannels(string nodeData, IList<Channel> fullChannelList) {
+            if (nodeData.Contains(GroupTextDivider.ToString(CultureInfo.InvariantCulture))) {
+                nodeData = nodeData.Split(new[] {GroupTextDivider})[1];
+            }
+            var node = nodeData.Split(new[] {','});
+            foreach (var channelNumber in node) {
+                int channel;
+                if (!Int32.TryParse(channelNumber, out channel)) {
+                    continue;
+                }
+                if (!_currentList.Contains(fullChannelList[channel])) {
+                    _currentList.Add(fullChannelList[channel]);
+                }
+            }
+        }
     }
 }

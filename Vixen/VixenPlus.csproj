@@ -296,6 +296,7 @@
     <Compile Include="VixenPlus\ExecutionContext.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="VixenPlus\GroupData.cs" />
     <Compile Include="VixenPlus\VixenPlusForm.cs">
       <SubType>Form</SubType>
     </Compile>
