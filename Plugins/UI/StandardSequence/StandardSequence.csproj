@@ -84,6 +84,7 @@
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing">
       <Name>System.Drawing</Name>
     </Reference>
@@ -100,6 +101,12 @@
     </Compile>
     <Compile Include="Global.cs">
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="VixenEditor\GroupDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VixenEditor\GroupDialog.Designer.cs">
+      <DependentUpon>GroupDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="VixenEditor\AffectGridDelegate.cs">
       <SubType>Code</SubType>
@@ -235,6 +242,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\FindAndReplaceDialog.resx">
       <DependentUpon>FindAndReplaceDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenEditor\GroupDialog.resx">
+      <DependentUpon>GroupDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\IntensityAdjustDialog.resx">
       <DependentUpon>IntensityAdjustDialog.cs</DependentUpon>
