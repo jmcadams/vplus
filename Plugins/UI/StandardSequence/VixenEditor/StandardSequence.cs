@@ -123,7 +123,7 @@ namespace VixenEditor {
         private const float AudioOneQtr = 0.25f;
 
         private const int CaretSize = 5;
-        private const int SemiTransparent = 192;
+        private const int SemiTransparent = 154;
         private const int WaveformOffset = 6;
         private const int WaveformHiddenSize = 60;
         private const int WaveformShownSize = 120;
