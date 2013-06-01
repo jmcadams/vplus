@@ -57,6 +57,7 @@ namespace VixenEditor {
         private int _intensityLargeDelta;
         private int _lastCellX;
         private int _lastCellY;
+        private int _lastGroupIndex;
         private int _mouseChannelCaret;
         private int _mouseTimeCaret;
         private int _mouseWheelHorizontalDelta;
@@ -169,6 +170,7 @@ namespace VixenEditor {
             _lineRect = new Rectangle(-1, -1, -1, -1);
             _lastCellX = -1;
             _lastCellY = -1;
+            _lastGroupIndex = 0;
             _initializing = false;
             _selectedEventIndex = -1;
             _selectedCells = new Rectangle();
@@ -3503,20 +3505,16 @@ namespace VixenEditor {
 
 
         private void UpdateGroups() {
+            cbGroups.Visible = true;
+            cbGroups.Items.Clear();
+            cbGroups.Items.Add(Group.AllChannels);
             if (_sequence.Groups != null) {
-                cbGroups.Visible = true;
-                cbGroups.Items.Clear();
-                cbGroups.Items.Add(Group.AllChannels);
                 foreach (var g in _sequence.Groups) {
                     cbGroups.Items.Add(g.Key);
                 }
-                cbGroups.SelectedIndex = 0;
-                //cbGroups.Items.Add("New Channel Group");
             }
-            else {
-            //    cbGroups.SelectedIndex = 0;
-                cbGroups.Visible = false;
-            }
+            cbGroups.SelectedIndex = 0;
+            cbGroups.Items.Add(Group.ManageGroups);
         }
 
 
@@ -4787,6 +4785,14 @@ namespace VixenEditor {
 
 
         private void cbGroups_SelectedIndexChanged(object sender, EventArgs e) {
+            if (cbGroups.Items.Count > 1 && cbGroups.SelectedIndex == cbGroups.Items.Count - 1) {
+                cbGroups.SelectedIndex = _lastGroupIndex;
+                using (var groupDialog = new GroupDialog(_sequence, false)) {
+                   groupDialog.ShowDialog();
+                }
+                return;
+            }
+            _lastGroupIndex = cbGroups.SelectedIndex;
             _sequence.CurrentGroup = cbGroups.SelectedItem.ToString();
             if (_selectedCells.Top + _selectedCells.Height > _sequence.ChannelCount) {
                 _selectedCells.Height = _sequence.ChannelCount - _selectedCells.Top;
@@ -4808,14 +4814,18 @@ namespace VixenEditor {
 
 
         private void cbGroups_DrawItem(object sender, DrawItemEventArgs e) {
-            if (e.Index > 0) {
-                var indexItem = _sequence.Groups[cbGroups.Items[e.Index].ToString()];
-                VixenPlus.Channel.DrawItem(e, indexItem.Name, indexItem.GroupColor);
-            }
-            else {
+            if (e.Index == 0) {
                 VixenPlus.Channel.DrawItem(e, Group.AllChannels, Color.White);
+                return;
             }
+            if (e.Index == cbGroups.Items.Count - 1) {
+                VixenPlus.Channel.DrawItem(e, Group.ManageGroups, Color.White);
+                return;
+            }
+            var indexItem = _sequence.Groups[cbGroups.Items[e.Index].ToString()];
+            VixenPlus.Channel.DrawItem(e, indexItem.Name, indexItem.GroupColor);
         }
+
 
         private static void comboBox_MouseWheel(object sender, MouseEventArgs e) {
             ((HandledMouseEventArgs) e).Handled = !((ComboBox)sender).DroppedDown;
