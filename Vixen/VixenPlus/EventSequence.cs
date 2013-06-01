@@ -658,7 +658,7 @@ namespace VixenPlus {
             _groupedAndSortedChannels = new List<Channel>();
 
             if (_currentGroup != Group.AllChannels && _currentGroup != "") {
-                _groupedAndSortedChannels = new Group().AddNodes(_currentGroup, Groups, FullChannels);
+                _groupedAndSortedChannels = new Group().GetGroupChannels(_currentGroup, Groups, FullChannels);
             }
             else {
                 _groupedAndSortedChannels = FullChannels;

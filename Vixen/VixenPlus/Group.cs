@@ -57,14 +57,13 @@ namespace VixenPlus {
         }
 
 
-        public List<Channel> AddNodes(string nodeData, Dictionary<string, GroupData> groups, List<Channel> fullChannelList, bool isFirstPass = true) {
-            if (isFirstPass) _currentList.Clear();
+        public List<Channel> GetGroupChannels(string nodeData, Dictionary<string, GroupData> groups, List<Channel> fullChannelList) {
             try {
                 var groupChannels = groups[nodeData].GroupChannels;
                 if (groupChannels.Contains(GroupTextDivider.ToString(CultureInfo.InvariantCulture))) {
                     var nodes = groupChannels.Split(new[] {GroupTextDivider});
                     foreach (var recursiveNode in nodes[0].Split(new[] {','})) {
-                        AddNodes(recursiveNode, groups, fullChannelList, false);
+                        GetGroupChannels(recursiveNode, groups, fullChannelList);
                     }
                     if (nodes[1] != string.Empty) {
                         AddChannels(groupChannels, fullChannelList);
