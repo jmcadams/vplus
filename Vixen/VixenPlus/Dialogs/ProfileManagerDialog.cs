@@ -493,7 +493,7 @@ namespace VixenPlus.Dialogs {
                 return;
             }
 
-            Channel.DrawItem(treeView, e, _contextProfile.Channels[e.Node.Index].Color);
+            Channel.DrawItem(treeView, e, _contextProfile.Channels[_contextProfile.FullChannels.IndexOf((Channel)e.Node.Tag)].Color);
         }
     }
 }
