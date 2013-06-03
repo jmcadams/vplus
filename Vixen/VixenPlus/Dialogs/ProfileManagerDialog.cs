@@ -488,11 +488,6 @@ namespace VixenPlus.Dialogs {
 
         private void treeViewProfile_DrawNode(object sender, DrawTreeNodeEventArgs e) {
             var treeView = sender as TreeView;
-            if ((e.State & TreeNodeStates.Selected) != 0 && treeView != null) {
-                e.DrawDefault = true;
-                return;
-            }
-
             Channel.DrawItem(treeView, e, _contextProfile.Channels[_contextProfile.FullChannels.IndexOf((Channel)e.Node.Tag)].Color);
         }
     }

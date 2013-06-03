@@ -11,13 +11,13 @@ using Properties;
 
 namespace VixenPlus {
     public class Group {
-        public const char GroupTextDivider = '~';
         public static string AllChannels = Resources.AllChannels;
         public static string ManageGroups = "Manage Groups";
+        public const char GroupTextDivider = '~';
+
         private readonly List<Channel> _currentList = new List<Channel>();
 
-
-        public static Dictionary<string, GroupData> LoadGroups(string groupFile) {
+        internal static Dictionary<string, GroupData> LoadGroups(string groupFile) {
             Dictionary<string, GroupData> groups = null;
             try {
                 var doc = Xml.LoadDocument(groupFile).DocumentElement;
@@ -57,7 +57,7 @@ namespace VixenPlus {
         }
 
 
-        public List<Channel> GetGroupChannels(string nodeData, Dictionary<string, GroupData> groups, List<Channel> fullChannelList) {
+        internal List<Channel> GetGroupChannels(string nodeData, Dictionary<string, GroupData> groups, List<Channel> fullChannelList) {
             try {
                 var groupChannels = groups[nodeData].GroupChannels;
                 if (groupChannels.Contains(GroupTextDivider.ToString(CultureInfo.InvariantCulture))) {

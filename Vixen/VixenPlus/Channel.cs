@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.Windows.Forms;
 using System.Xml;
@@ -10,7 +11,7 @@ using CommonUtils;
 namespace VixenPlus {
     public class Channel : IDisposable, IComparable<Channel> {
         private Color _color;
-
+        //private static readonly Pen FocusPen = new Pen(Color.Black);
 
         public Channel(XmlNode channelNode) {
             OutputChannel = 0;
@@ -112,6 +113,9 @@ namespace VixenPlus {
 
 
         public void Dispose() {
+            //if (FocusPen != null) {
+            //    FocusPen.Dispose();
+            //}
             GC.SuppressFinalize(this);
         }
 
@@ -197,8 +201,23 @@ namespace VixenPlus {
 
         // For TreeViews
         public static void DrawItem(TreeView treeView, DrawTreeNodeEventArgs e, Color channelColor) {
-            e.Graphics.FillRectangle(new SolidBrush(channelColor), e.Node.Bounds);
-            e.Graphics.DrawString(e.Node.Text, e.Node.NodeFont ?? treeView.Font, Utils.GetTextColor(channelColor), Rectangle.Inflate(e.Bounds, 2, 0));
+            e.DrawDefault = true;
+            return;
+            if (treeView == null) {
+                e.DrawDefault = true;
+                return;
+            }
+            var selected = (e.State & TreeNodeStates.Selected) != 0;
+            var fillRect = new Rectangle(e.Node.Bounds.X, e.Node.Bounds.Y, treeView.Width - e.Node.Bounds.Left, e.Node.Bounds.Height);
+            e.Graphics.FillRectangle(new SolidBrush(selected ? SystemColors.Highlight : channelColor), fillRect);
+            e.Graphics.DrawString(e.Node.Text, e.Node.NodeFont ?? treeView.Font, selected ? new SolidBrush(SystemColors.HighlightText) : Utils.GetTextColor(channelColor), e.Bounds.Left, e.Bounds.Top);
+            if (!selected) {
+                return;
+            }
+            //FocusPen.Brush = Utils.GetTextColor(channelColor);
+            //FocusPen.DashStyle = DashStyle.Dot;
+            //fillRect.Size = new Size(fillRect.Width - 1, fillRect.Height - 1);
+            //e.Graphics.DrawRectangle(FocusPen, fillRect);
         }
     }
 }
