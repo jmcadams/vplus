@@ -32,7 +32,6 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.lbChannels = new System.Windows.Forms.ListBox();
-            this.tvGroups = new System.Windows.Forms.TreeView();
             this.btnAddGroup = new System.Windows.Forms.Button();
             this.btnRemoveGroup = new System.Windows.Forms.Button();
             this.btnUp = new System.Windows.Forms.Button();
@@ -42,6 +41,7 @@
             this.btnCopyChannels = new System.Windows.Forms.Button();
             this.btnRename = new System.Windows.Forms.Button();
             this.btnRemoveChannels = new System.Windows.Forms.Button();
+            this.tvGroups = new CommonControls.MultiSelectTreeview();
             this.SuspendLayout();
             // 
             // btnOK
@@ -79,19 +79,6 @@
             this.lbChannels.Leave += new System.EventHandler(this.lbChannels_Leave);
             this.lbChannels.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbChannels_MouseDown);
             this.lbChannels.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lbChannels_MouseUp);
-            // 
-            // tvGroups
-            // 
-            this.tvGroups.AllowDrop = true;
-            this.tvGroups.DrawMode = System.Windows.Forms.TreeViewDrawMode.OwnerDrawText;
-            this.tvGroups.Location = new System.Drawing.Point(361, 12);
-            this.tvGroups.Name = "tvGroups";
-            this.tvGroups.Size = new System.Drawing.Size(336, 433);
-            this.tvGroups.TabIndex = 7;
-            this.tvGroups.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.tvGroups_DrawNode);
-            this.tvGroups.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvGroups_AfterSelect);
-            this.tvGroups.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvGroups_NodeMouseClick);
-            this.tvGroups.Leave += new System.EventHandler(this.tvGroups_Leave);
             // 
             // btnAddGroup
             // 
@@ -175,6 +162,20 @@
             this.btnRemoveChannels.Text = "Remove Channels From Group";
             this.btnRemoveChannels.UseVisualStyleBackColor = true;
             // 
+            // tvGroups
+            // 
+            this.tvGroups.AllowDrop = true;
+            this.tvGroups.DrawMode = System.Windows.Forms.TreeViewDrawMode.OwnerDrawText;
+            this.tvGroups.Location = new System.Drawing.Point(361, 12);
+            this.tvGroups.Name = "tvGroups";
+            //this.tvGroups.SelectedNodes = ((System.Collections.Generic.List<System.Windows.Forms.TreeNode>)(resources.GetObject("tvGroups.SelectedNodes")));
+            this.tvGroups.Size = new System.Drawing.Size(336, 433);
+            this.tvGroups.TabIndex = 7;
+            this.tvGroups.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.tvGroups_DrawNode);
+            this.tvGroups.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvGroups_AfterSelect);
+            this.tvGroups.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvGroups_NodeMouseClick);
+            this.tvGroups.Leave += new System.EventHandler(this.tvGroups_Leave);
+            // 
             // GroupDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -193,7 +194,7 @@
             this.Controls.Add(this.lbChannels);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = global::Properties.Resources.VixenPlus;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "GroupDialog";
@@ -208,7 +209,7 @@
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.ListBox lbChannels;
-        private System.Windows.Forms.TreeView tvGroups;
+        //private System.Windows.Forms.TreeView tvGroups;
         private System.Windows.Forms.Button btnAddGroup;
         private System.Windows.Forms.Button btnRemoveGroup;
         private System.Windows.Forms.Button btnUp;
@@ -218,5 +219,6 @@
         private System.Windows.Forms.Button btnCopyChannels;
         private System.Windows.Forms.Button btnRename;
         private System.Windows.Forms.Button btnRemoveChannels;
+        private CommonControls.MultiSelectTreeview tvGroups;
     }
 }

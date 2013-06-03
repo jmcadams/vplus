@@ -6,6 +6,8 @@ using System.Globalization;
 using System.Windows.Forms;
 using System.Xml;
 
+using CommonControls;
+
 using CommonUtils;
 
 namespace VixenPlus {
@@ -201,13 +203,20 @@ namespace VixenPlus {
 
         // For TreeViews
         public static void DrawItem(TreeView treeView, DrawTreeNodeEventArgs e, Color channelColor) {
-            e.DrawDefault = true;
-            return;
+            //e.DrawDefault = true;
+            //return;
             if (treeView == null) {
                 e.DrawDefault = true;
                 return;
             }
-            var selected = (e.State & TreeNodeStates.Selected) != 0;
+            bool selected;
+            var view = treeView as MultiSelectTreeview;
+            if (view != null) {
+                selected = view.SelectedNodes.Contains(e.Node);
+            }
+            else {
+                selected = (e.State & TreeNodeStates.Selected) != 0;
+            }
             var fillRect = new Rectangle(e.Node.Bounds.X, e.Node.Bounds.Y, treeView.Width - e.Node.Bounds.Left, e.Node.Bounds.Height);
             e.Graphics.FillRectangle(new SolidBrush(selected ? SystemColors.Highlight : channelColor), fillRect);
             e.Graphics.DrawString(e.Node.Text, e.Node.NodeFont ?? treeView.Font, selected ? new SolidBrush(SystemColors.HighlightText) : Utils.GetTextColor(channelColor), e.Bounds.Left, e.Bounds.Top);

@@ -94,6 +94,9 @@
     <Reference Include="System.Xml">
       <Name>System.Xml</Name>
     </Reference>
+    <Reference Include="VixenControls">
+      <HintPath>..\..\..\VixenControls\obj\Debug\VixenControls.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs">
@@ -242,9 +245,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\FindAndReplaceDialog.resx">
       <DependentUpon>FindAndReplaceDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VixenEditor\GroupDialog.resx">
-      <DependentUpon>GroupDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\IntensityAdjustDialog.resx">
       <DependentUpon>IntensityAdjustDialog.cs</DependentUpon>

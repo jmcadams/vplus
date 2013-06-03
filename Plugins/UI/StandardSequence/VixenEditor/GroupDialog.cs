@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 
+using CommonControls;
+
 using VixenPlus;
 
 namespace VixenEditor {
@@ -75,7 +77,7 @@ namespace VixenEditor {
 
 
         private void tvGroups_DrawNode(object sender, DrawTreeNodeEventArgs e) {
-            var treeView = sender as TreeView;
+            var treeView = sender as MultiSelectTreeview;
             Channel.DrawItem(treeView, e, (Color) e.Node.Tag);
         }
 
