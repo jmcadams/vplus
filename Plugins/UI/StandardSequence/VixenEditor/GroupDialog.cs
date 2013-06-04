@@ -8,12 +8,13 @@ using CommonControls;
 using VixenPlus;
 
 namespace VixenEditor {
-    public partial class GroupDialog : Form {
+    public sealed partial class GroupDialog : Form {
         private readonly EventSequence _seq;
 
 
         public GroupDialog(EventSequence sequence, bool constrainToGroup) {
             InitializeComponent();
+            MinimumSize = Size;
             SetButtons();
             _seq = sequence;
             foreach (var c in constrainToGroup ? _seq.Channels : _seq.FullChannels) {
@@ -32,21 +33,21 @@ namespace VixenEditor {
 
 
         private void SetButtons() {
+            //System.Diagnostics.Debug.Print( SystemInformation.MenuAccessKeysUnderlined.ToString());
             var channelSelected = lbChannels.SelectedItems.Count > 0;
             var groupSelected = tvGroups.SelectedNode != null;
             var groupIsRoot = groupSelected && tvGroups.SelectedNode.Parent == null;
             var topNode = groupSelected && tvGroups.SelectedNode == tvGroups.Nodes[0];
             var bottomNode = groupSelected && tvGroups.SelectedNode == tvGroups.Nodes[tvGroups.Nodes.Count - 1];
 
-            btnAddGroup.Enabled = true;
-            btnRemoveGroup.Enabled = groupIsRoot;
+            btnAddRoot.Enabled = true;
+            btnRemove.Enabled = groupIsRoot;
             btnRename.Enabled = groupSelected;
-            btnGroupColor.Enabled = groupSelected;
+            btnColor.Enabled = groupSelected;
 
             btnUp.Enabled = groupSelected && !topNode;
             btnDown.Enabled = groupSelected && !bottomNode;
 
-            btnNewFromChannels.Enabled = channelSelected;
             btnCopyChannels.Enabled = channelSelected;
             btnRemoveChannels.Enabled = channelSelected;
         }
@@ -119,13 +120,15 @@ namespace VixenEditor {
         }
 
         private void GroupDialog_SizeChanged(object sender, EventArgs e) {
-            const int heightOffset = 92;
-            lbChannels.Height = Height - heightOffset;
-            tvGroups.Height = Height - heightOffset;
+            //const int heightOffset = 92;
+            //lbChannels.Height = Height - heightOffset;
+            //tvGroups.Height = Height - heightOffset;
 
-            const int widthOffset = 25;
-            lbChannels.Width = btnUp.Location.X - widthOffset;
-            tvGroups.Location = new Point(btnUp.Location.X + btnUp.Width + widthOffset, tvGroups.Location.Y);
+            //const int widthOffset = 26;
+            //const int margin = 13;
+            //lbChannels.Width = btnUp.Location.X - widthOffset;
+            //tvGroups.Location = new Point(btnUp.Location.X + btnUp.Width + margin, tvGroups.Location.Y);
+            //tvGroups.Width = Width - (btnUp.Location.X + btnUp.Width) - widthOffset - margin;
         }
 
 
@@ -138,6 +141,10 @@ namespace VixenEditor {
         private void GroupDialog_ResizeEnd(object sender, EventArgs e) {
             lbChannels.EndUpdate();
             tvGroups.EndUpdate();
+        }
+
+        private void btnAddGroup_Click(object sender, EventArgs e) {
+
         }
     }
 }
