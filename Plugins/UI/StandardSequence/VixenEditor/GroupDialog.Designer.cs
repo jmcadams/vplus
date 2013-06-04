@@ -46,8 +46,9 @@
             // 
             // btnOK
             // 
+            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(622, 451);
+            this.btnOK.Location = new System.Drawing.Point(606, 454);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 2;
@@ -56,8 +57,9 @@
             // 
             // btnCancel
             // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(541, 451);
+            this.btnCancel.Location = new System.Drawing.Point(525, 454);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 3;
@@ -82,7 +84,8 @@
             // 
             // btnAddGroup
             // 
-            this.btnAddGroup.Location = new System.Drawing.Point(228, 32);
+            this.btnAddGroup.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnAddGroup.Location = new System.Drawing.Point(220, 12);
             this.btnAddGroup.Name = "btnAddGroup";
             this.btnAddGroup.Size = new System.Drawing.Size(112, 23);
             this.btnAddGroup.TabIndex = 8;
@@ -91,7 +94,8 @@
             // 
             // btnRemoveGroup
             // 
-            this.btnRemoveGroup.Location = new System.Drawing.Point(228, 62);
+            this.btnRemoveGroup.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnRemoveGroup.Location = new System.Drawing.Point(220, 42);
             this.btnRemoveGroup.Name = "btnRemoveGroup";
             this.btnRemoveGroup.Size = new System.Drawing.Size(112, 23);
             this.btnRemoveGroup.TabIndex = 9;
@@ -100,7 +104,8 @@
             // 
             // btnUp
             // 
-            this.btnUp.Location = new System.Drawing.Point(228, 179);
+            this.btnUp.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnUp.Location = new System.Drawing.Point(220, 180);
             this.btnUp.Name = "btnUp";
             this.btnUp.Size = new System.Drawing.Size(112, 23);
             this.btnUp.TabIndex = 10;
@@ -109,7 +114,8 @@
             // 
             // btnDown
             // 
-            this.btnDown.Location = new System.Drawing.Point(228, 208);
+            this.btnDown.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnDown.Location = new System.Drawing.Point(220, 209);
             this.btnDown.Name = "btnDown";
             this.btnDown.Size = new System.Drawing.Size(112, 23);
             this.btnDown.TabIndex = 11;
@@ -118,7 +124,8 @@
             // 
             // btnGroupColor
             // 
-            this.btnGroupColor.Location = new System.Drawing.Point(228, 120);
+            this.btnGroupColor.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnGroupColor.Location = new System.Drawing.Point(220, 100);
             this.btnGroupColor.Name = "btnGroupColor";
             this.btnGroupColor.Size = new System.Drawing.Size(112, 23);
             this.btnGroupColor.TabIndex = 12;
@@ -128,7 +135,8 @@
             // 
             // btnNewFromChannels
             // 
-            this.btnNewFromChannels.Location = new System.Drawing.Point(228, 266);
+            this.btnNewFromChannels.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnNewFromChannels.Location = new System.Drawing.Point(220, 294);
             this.btnNewFromChannels.Name = "btnNewFromChannels";
             this.btnNewFromChannels.Size = new System.Drawing.Size(112, 46);
             this.btnNewFromChannels.TabIndex = 13;
@@ -137,7 +145,8 @@
             // 
             // btnCopyChannels
             // 
-            this.btnCopyChannels.Location = new System.Drawing.Point(228, 318);
+            this.btnCopyChannels.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnCopyChannels.Location = new System.Drawing.Point(220, 346);
             this.btnCopyChannels.Name = "btnCopyChannels";
             this.btnCopyChannels.Size = new System.Drawing.Size(112, 46);
             this.btnCopyChannels.TabIndex = 14;
@@ -146,7 +155,8 @@
             // 
             // btnRename
             // 
-            this.btnRename.Location = new System.Drawing.Point(228, 91);
+            this.btnRename.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnRename.Location = new System.Drawing.Point(220, 71);
             this.btnRename.Name = "btnRename";
             this.btnRename.Size = new System.Drawing.Size(112, 23);
             this.btnRename.TabIndex = 15;
@@ -155,7 +165,8 @@
             // 
             // btnRemoveChannels
             // 
-            this.btnRemoveChannels.Location = new System.Drawing.Point(228, 371);
+            this.btnRemoveChannels.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnRemoveChannels.Location = new System.Drawing.Point(220, 399);
             this.btnRemoveChannels.Name = "btnRemoveChannels";
             this.btnRemoveChannels.Size = new System.Drawing.Size(112, 46);
             this.btnRemoveChannels.TabIndex = 16;
@@ -165,22 +176,21 @@
             // tvGroups
             // 
             this.tvGroups.AllowDrop = true;
+            this.tvGroups.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tvGroups.DrawMode = System.Windows.Forms.TreeViewDrawMode.OwnerDrawText;
-            this.tvGroups.Location = new System.Drawing.Point(361, 12);
+            this.tvGroups.Location = new System.Drawing.Point(345, 12);
             this.tvGroups.Name = "tvGroups";
-            //this.tvGroups.SelectedNodes = ((System.Collections.Generic.List<System.Windows.Forms.TreeNode>)(resources.GetObject("tvGroups.SelectedNodes")));
             this.tvGroups.Size = new System.Drawing.Size(336, 433);
             this.tvGroups.TabIndex = 7;
             this.tvGroups.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.tvGroups_DrawNode);
             this.tvGroups.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvGroups_AfterSelect);
-            this.tvGroups.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvGroups_NodeMouseClick);
             this.tvGroups.Leave += new System.EventHandler(this.tvGroups_Leave);
             // 
             // GroupDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(709, 484);
+            this.ClientSize = new System.Drawing.Size(693, 487);
             this.Controls.Add(this.btnRemoveChannels);
             this.Controls.Add(this.btnRename);
             this.Controls.Add(this.btnCopyChannels);
@@ -194,12 +204,16 @@
             this.Controls.Add(this.lbChannels);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
-            this.Icon = global::Properties.Resources.VixenPlus;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(709, 525);
             this.Name = "GroupDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "GroupDialog";
+            this.ResizeBegin +=new System.EventHandler(GroupDialog_ResizeBegin);
+            this.ResizeEnd +=new System.EventHandler(GroupDialog_ResizeEnd);
+            this.SizeChanged += new System.EventHandler(this.GroupDialog_SizeChanged);
             this.ResumeLayout(false);
 
         }
@@ -209,7 +223,6 @@
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.ListBox lbChannels;
-        //private System.Windows.Forms.TreeView tvGroups;
         private System.Windows.Forms.Button btnAddGroup;
         private System.Windows.Forms.Button btnRemoveGroup;
         private System.Windows.Forms.Button btnUp;

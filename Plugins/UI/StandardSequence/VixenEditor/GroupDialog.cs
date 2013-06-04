@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
@@ -27,6 +27,7 @@ namespace VixenEditor {
                 AddSubNodes(g.Value.GroupChannels, thisNode);
                 thisNode.Tag = g.Value.GroupColor;
             }
+            tvGroups.ExpandAll();
         }
 
 
@@ -82,14 +83,6 @@ namespace VixenEditor {
         }
 
 
-        private void tvGroups_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e) {
-            // ReSharper disable RedundantCheckBeforeAssignment
-            if (tvGroups.SelectedNode != e.Node)
-                // ReSharper restore RedundantCheckBeforeAssignment
-                tvGroups.SelectedNode = e.Node;
-        }
-
-
         private void lbChannels_MouseUp(object sender, MouseEventArgs e) {
             Cursor.Current = Cursors.Default;
         }
@@ -103,7 +96,7 @@ namespace VixenEditor {
         }
 
 
-        private void btnGroupColor_Click(object sender, System.EventArgs e) {
+        private void btnGroupColor_Click(object sender, EventArgs e) {
             using (var color = new ColorDialog()) {
                 if (color.ShowDialog() == DialogResult.OK) {}
             }
@@ -113,18 +106,38 @@ namespace VixenEditor {
             SetButtons();
         }
 
-        private void lbChannels_SelectedIndexChanged(object sender, System.EventArgs e) {
+        private void lbChannels_SelectedIndexChanged(object sender, EventArgs e) {
             SetButtons();
         }
 
-        private void lbChannels_Leave(object sender, System.EventArgs e) {
+        private void lbChannels_Leave(object sender, EventArgs e) {
             SetButtons();
         }
 
-        private void tvGroups_Leave(object sender, System.EventArgs e) {
+        private void tvGroups_Leave(object sender, EventArgs e) {
             SetButtons();
         }
 
+        private void GroupDialog_SizeChanged(object sender, EventArgs e) {
+            const int heightOffset = 92;
+            lbChannels.Height = Height - heightOffset;
+            tvGroups.Height = Height - heightOffset;
 
+            const int widthOffset = 25;
+            lbChannels.Width = btnUp.Location.X - widthOffset;
+            tvGroups.Location = new Point(btnUp.Location.X + btnUp.Width + widthOffset, tvGroups.Location.Y);
+        }
+
+
+        private void GroupDialog_ResizeBegin(object sender, EventArgs e) {
+            lbChannels.BeginUpdate();
+            tvGroups.BeginUpdate();
+        }
+
+
+        private void GroupDialog_ResizeEnd(object sender, EventArgs e) {
+            lbChannels.EndUpdate();
+            tvGroups.EndUpdate();
+        }
     }
 }

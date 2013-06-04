@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-//using System.Drawing;
 using System.Drawing;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 namespace CommonControls {
@@ -15,7 +15,7 @@ namespace CommonControls {
 
         public List<TreeNode> SelectedNodes {
             get { return _selectedNodes; }
-            set {
+            private set {
                 ClearSelectedNodes();
                 if (value == null) {
                     return;
@@ -71,7 +71,7 @@ namespace CommonControls {
 
                 var node = GetNodeAt(e.Location);
                 if (node != null) {
-                    if (ModifierKeys == Keys.None && (_selectedNodes.Contains(node))) {
+                    if ((ModifierKeys == Keys.None)  && (_selectedNodes.Contains(node))) {
                         // Potential Drag Operation
                         // Let Mouse Up do select
                     }
@@ -97,12 +97,12 @@ namespace CommonControls {
                 // Check to see if a node was clicked on 
                 var node = GetNodeAt(e.Location);
                 if (node != null) {
-                    if (ModifierKeys == Keys.None && _selectedNodes.Contains(node)) {
+                    if ((ModifierKeys == Keys.None)  && _selectedNodes.Contains(node)) {
                         SelectNode(node);
                     }
                 }
-                
-                //base.OnMouseUp(e);
+
+                base.OnMouseUp(e);
             }
             catch (Exception ex) {
                 HandleException(ex);
@@ -169,7 +169,7 @@ namespace CommonControls {
                 return;
             }
 
-            var bShift = (ModifierKeys == Keys.Shift);
+            var bShift = (ModifierKeys & Keys.Shift) == Keys.Shift;
 
             try {
                 // Nothing is selected in the tree, this isn't a good state
@@ -306,13 +306,14 @@ namespace CommonControls {
         }
 
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private void SelectNode(TreeNode node) {
-            if (_selectedNode == null || ModifierKeys == Keys.Control) {
+            if (_selectedNode == null || (ModifierKeys & Keys.Control) == Keys.Control) {
                 // Ctrl+Click selects an unselected node, or unselects a selected node.
                 var isSelected = _selectedNodes.Contains(node);
                 ToggleNode(node, !isSelected);
             }
-            else if (ModifierKeys == Keys.Shift) {
+            else if ((ModifierKeys & Keys.Shift) == Keys.Shift) {
                 // Shift+Click selects nodes between the selected node and here.
                 var ndStart = _selectedNode;
                 var ndEnd = node;
@@ -465,6 +466,8 @@ namespace CommonControls {
             Invalidate(_nodeRect);            
         }
 
+
+        //TODO: Remove this when fully implemented.
         private void HandleException(Exception ex) {
             // Perform some error handling here.
             // We don't want to bubble errors to the CLR. 
