@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.Windows.Forms;
 using System.Xml;
@@ -13,7 +12,8 @@ using CommonUtils;
 namespace VixenPlus {
     public class Channel : IDisposable, IComparable<Channel> {
         private Color _color;
-        //private static readonly Pen FocusPen = new Pen(Color.Black);
+        private static readonly SolidBrush GenericBrush = new SolidBrush(Color.Black);
+        private const string Checkmark = "\u2714";
 
         public Channel(XmlNode channelNode) {
             OutputChannel = 0;
@@ -115,9 +115,9 @@ namespace VixenPlus {
 
 
         public void Dispose() {
-            //if (FocusPen != null) {
-            //    FocusPen.Dispose();
-            //}
+            if (GenericBrush != null) {
+                GenericBrush.Dispose();
+            }
             GC.SuppressFinalize(this);
         }
 
@@ -165,36 +165,36 @@ namespace VixenPlus {
         }
 
         // For ComboBoxes
-        public static void DrawItem(DrawItemEventArgs e, string name, Color color, bool drawFocus = true) {
+        public static void DrawItem(DrawItemEventArgs e, string name, Color color, bool useCheckmark = false) {
             e.DrawBackground();
+
             var selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
-
-            using (var backgroundBrush = new SolidBrush(color)) {
-                e.Graphics.FillRectangle(selected ? SystemBrushes.Highlight : backgroundBrush, e.Bounds);
-                var contrastingBrush = selected ? SystemBrushes.HighlightText : Utils.GetTextColor(backgroundBrush.Color);
-                e.Graphics.DrawString(name, e.Font, contrastingBrush, new RectangleF(e.Bounds.Location, e.Bounds.Size));
+            GenericBrush.Color = color;
+            e.Graphics.FillRectangle(selected && !useCheckmark ? SystemBrushes.Highlight : GenericBrush, e.Bounds);
+            var contrastingBrush = selected && !useCheckmark ? SystemBrushes.HighlightText : Utils.GetTextColor(color);
+            e.Graphics.DrawString(name, e.Font, contrastingBrush, new RectangleF(e.Bounds.Location, e.Bounds.Size));
+            if (selected && useCheckmark) {
+                e.Graphics.DrawString(Checkmark, e.Font, contrastingBrush, e.Bounds.Width - e.Bounds.Height, e.Bounds.Y);
             }
-
             e.DrawFocusRectangle();
         }
 
-        public static void DrawItem(DrawItemEventArgs e, Channel c) {
-            DrawItem(e, c.Name, c.Color);
+
+        public static void DrawItem(DrawItemEventArgs e, Channel c, bool useCheckmark = false) {
+            DrawItem(e, c.Name, c.Color, useCheckmark);
         }
 
 
         // For List Boxes
-        public static void DrawItem(ListBox lb, DrawItemEventArgs e, Channel channels, bool drawFocus = true) {
+        public static void DrawItem(ListBox lb, DrawItemEventArgs e, Channel channel) {
             e.DrawBackground();
 
-            using (var backgroundBrush = new SolidBrush(channels.Color)) {
-                e.Graphics.FillRectangle(backgroundBrush, e.Bounds);
-
-                var contrastingBrush = Utils.GetTextColor(backgroundBrush.Color);
-                e.Graphics.DrawString(channels.Name, e.Font, contrastingBrush, lb.GetItemRectangle(e.Index).Location);
-                if ((e.State & DrawItemState.Selected) == DrawItemState.Selected) {
-                    e.Graphics.DrawString("\u2714", e.Font, contrastingBrush, e.Bounds.Width - e.Bounds.Height, e.Bounds.Y);
-                }
+            GenericBrush.Color = channel.Color;
+            e.Graphics.FillRectangle(GenericBrush, e.Bounds);
+            var contrastingBrush = Utils.GetTextColor(channel.Color);
+            e.Graphics.DrawString(channel.Name, e.Font, contrastingBrush, lb.GetItemRectangle(e.Index).Location);
+            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected) {
+                e.Graphics.DrawString(Checkmark, e.Font, contrastingBrush, e.Bounds.Width - e.Bounds.Height, e.Bounds.Y);
             }
 
             e.DrawFocusRectangle();
@@ -203,12 +203,16 @@ namespace VixenPlus {
 
         // For TreeViews
         public static void DrawItem(TreeView treeView, DrawTreeNodeEventArgs e, Color channelColor) {
-            //e.DrawDefault = true;
-            //return;
             if (treeView == null) {
                 e.DrawDefault = true;
                 return;
             }
+
+            var fillRect = new Rectangle(e.Node.Bounds.X, e.Node.Bounds.Y, treeView.Width - e.Node.Bounds.Left, e.Node.Bounds.Height);
+            GenericBrush.Color = channelColor;
+            e.Graphics.FillRectangle(GenericBrush, fillRect);
+            e.Graphics.DrawString(e.Node.Text, treeView.Font,  Utils.GetTextColor(channelColor), e.Bounds.Left, e.Bounds.Top);
+
             bool selected;
             var view = treeView as MultiSelectTreeview;
             if (view != null) {
@@ -216,17 +220,10 @@ namespace VixenPlus {
             }
             else {
                 selected = (e.State & TreeNodeStates.Selected) != 0;
+            } 
+            if (selected) {
+                e.Graphics.DrawString(Checkmark, treeView.Font, Utils.GetTextColor(channelColor), fillRect.Right - 40, e.Bounds.Top);
             }
-            var fillRect = new Rectangle(e.Node.Bounds.X, e.Node.Bounds.Y, treeView.Width - e.Node.Bounds.Left, e.Node.Bounds.Height);
-            e.Graphics.FillRectangle(new SolidBrush(selected ? SystemColors.Highlight : channelColor), fillRect);
-            e.Graphics.DrawString(e.Node.Text, e.Node.NodeFont ?? treeView.Font, selected ? new SolidBrush(SystemColors.HighlightText) : Utils.GetTextColor(channelColor), e.Bounds.Left, e.Bounds.Top);
-            if (!selected) {
-                return;
-            }
-            //FocusPen.Brush = Utils.GetTextColor(channelColor);
-            //FocusPen.DashStyle = DashStyle.Dot;
-            //fillRect.Size = new Size(fillRect.Width - 1, fillRect.Height - 1);
-            //e.Graphics.DrawRectangle(FocusPen, fillRect);
         }
     }
 }
