@@ -70,7 +70,7 @@ namespace VixenEditor {
             var activeNode = tvGroups.SelectedNode;
             var isAnyGroupNodeSelected = activeNode != null;
             var isRootNode = isAnyGroupNodeSelected && activeNode.Parent == null;
-            var isLeafNode = isAnyGroupNodeSelected && activeNode.Nodes.Count == 0 && !((GroupTreeData)activeNode.Tag).IsChannel;
+            var isLeafNode = isAnyGroupNodeSelected && !((GroupTreeData)activeNode.Tag).IsChannel;
 
             // These two will need to be more complex since we can only move up or down so far, basically to the top
             // or bottom of the parent.
@@ -92,7 +92,7 @@ namespace VixenEditor {
 
 
         private void lbChannels_DrawItem(object sender, DrawItemEventArgs e) {
-            Channel.DrawItem(e, _seq.FullChannels[e.Index]);
+            Channel.DrawItem(e, _seq.FullChannels[e.Index], true);
         }
 
 
