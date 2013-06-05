@@ -28,29 +28,8 @@ namespace VixenEditor {
                 AddSubNodes(g.Value.GroupChannels, thisNode);
                 thisNode.Tag = g.Value.GroupColor;
             }
-            tvGroups.ExpandAll();
         }
 
-
-        private void SetButtons() {
-            //System.Diagnostics.Debug.Print( SystemInformation.MenuAccessKeysUnderlined.ToString());
-            var channelSelected = lbChannels.SelectedItems.Count > 0;
-            var groupSelected = tvGroups.SelectedNode != null;
-            var groupIsRoot = groupSelected && tvGroups.SelectedNode.Parent == null;
-            var topNode = groupSelected && tvGroups.SelectedNode == tvGroups.Nodes[0];
-            var bottomNode = groupSelected && tvGroups.SelectedNode == tvGroups.Nodes[tvGroups.Nodes.Count - 1];
-
-            btnAddRoot.Enabled = true;
-            btnRemove.Enabled = groupIsRoot;
-            btnRename.Enabled = groupSelected;
-            btnColor.Enabled = groupSelected;
-
-            btnUp.Enabled = groupSelected && !topNode;
-            btnDown.Enabled = groupSelected && !bottomNode;
-
-            btnCopyChannels.Enabled = channelSelected;
-            btnRemoveChannels.Enabled = channelSelected;
-        }
 
         private void AddSubNodes(string nodeData, TreeNode parentNode) {
             if (nodeData.Contains(Group.GroupTextDivider.ToString(CultureInfo.InvariantCulture))) {
@@ -60,21 +39,53 @@ namespace VixenEditor {
                     thisNode.Tag = _seq.Groups[group].GroupColor;
                     AddSubNodes(_seq.Groups[group].GroupChannels, thisNode);
                 }
+                AddChannelNodes(groupData[1], parentNode);
             }
             else {
-                if (nodeData == "") {
-                    return;
-                }
-                foreach (var channel in nodeData.Split(new[] {','})) {
-                    var thisNode = parentNode.Nodes.Add(_seq.FullChannels[int.Parse(channel)].Name);
-                    thisNode.Tag = _seq.FullChannels[int.Parse(channel)].Color;
-                }
+                AddChannelNodes(nodeData, parentNode);
+
             }
         }
 
 
+        private void AddChannelNodes(string nodeData, TreeNode parentNode) {
+            if (nodeData == "") {
+                return;
+            }
+            foreach (var channel in nodeData.Split(new[] { ',' })) {
+                var thisNode = parentNode.Nodes.Add(_seq.FullChannels[int.Parse(channel)].Name);
+                thisNode.Tag = _seq.FullChannels[int.Parse(channel)].Color;
+            }   
+        }
+
+
+        private void SetButtons() {
+            var isChannelSelected = lbChannels.SelectedItems.Count > 0;
+            var isAnyGroupNodeSelected = tvGroups.SelectedNode != null;
+            var isRootNode = isAnyGroupNodeSelected && tvGroups.SelectedNode.Parent == null;
+            var isLeafNode = isAnyGroupNodeSelected && tvGroups.SelectedNode.Nodes.Count == 0;
+
+            // These two will need to be more complex since we can only move up or down so far, basically to the top
+            // or bottom of the parent.
+            var topNode = isAnyGroupNodeSelected && tvGroups.SelectedNode == tvGroups.Nodes[0];
+            var bottomNode = isAnyGroupNodeSelected && tvGroups.SelectedNode == tvGroups.Nodes[tvGroups.Nodes.Count - 1];
+
+            //Group side buttons
+            btnAddRoot.Enabled = true;
+            btnAddChild.Enabled = true;
+            btnRemoveGroup.Enabled = !isLeafNode;
+            btnRenameGroup.Enabled = isAnyGroupNodeSelected;
+            btnColorGroup.Enabled = isRootNode;
+            btnUp.Enabled = isAnyGroupNodeSelected && !topNode;
+            btnDown.Enabled = isAnyGroupNodeSelected && !bottomNode;
+
+            btnAddChannels.Enabled = isChannelSelected;
+            btnRemoveChannels.Enabled = isLeafNode;
+        }
+
+
         private void lbChannels_DrawItem(object sender, DrawItemEventArgs e) {
-            Channel.DrawItem(e, _seq.Channels[e.Index]);
+            Channel.DrawItem(e, _seq.FullChannels[e.Index]);
         }
 
 
@@ -99,9 +110,38 @@ namespace VixenEditor {
 
         private void btnGroupColor_Click(object sender, EventArgs e) {
             using (var color = new ColorDialog()) {
-                if (color.ShowDialog() == DialogResult.OK) {}
+                if (color.ShowDialog() != DialogResult.OK) {
+                    return;
+                }
+
+                var affectedNodeText = tvGroups.SelectedNode.Text;
+                tvGroups.BeginUpdate();
+                foreach (TreeNode treeNode in tvGroups.Nodes) {
+                    SetColorByName(treeNode, color.Color, affectedNodeText);
+                }
+                tvGroups.EndUpdate();
             }
         }
+
+
+        private void SetColorByName(TreeNode treeNode, Color color, String name) {
+            if (treeNode.Text == name && treeNode.Nodes.Count != 0) {
+                SetNodeColor(treeNode, color);
+            }
+
+            foreach (TreeNode node in treeNode.Nodes) {
+                if (node.Text == name && node.Nodes.Count != 0) {
+                    SetNodeColor(node, color);
+                }
+                SetColorByName(node, color, name);
+            }
+        }
+
+        private void SetNodeColor(TreeNode node, Color color) {
+            node.Tag = color;
+            tvGroups.InvalidateNode(node);
+        }
+
 
         private void tvGroups_AfterSelect(object sender, TreeViewEventArgs e) {
             SetButtons();
@@ -120,31 +160,46 @@ namespace VixenEditor {
         }
 
         private void GroupDialog_SizeChanged(object sender, EventArgs e) {
-            //const int heightOffset = 92;
-            //lbChannels.Height = Height - heightOffset;
-            //tvGroups.Height = Height - heightOffset;
 
-            //const int widthOffset = 26;
-            //const int margin = 13;
-            //lbChannels.Width = btnUp.Location.X - widthOffset;
-            //tvGroups.Location = new Point(btnUp.Location.X + btnUp.Width + margin, tvGroups.Location.Y);
-            //tvGroups.Width = Width - (btnUp.Location.X + btnUp.Width) - widthOffset - margin;
+            const int heightOffset = 75;
+            lbChannels.Height = Height - heightOffset;
+
+            const int allButtonAndMarginWidths = 208;
+            const double channelPct = 0.4;
+            var availableArea = Size.Width - allButtonAndMarginWidths;
+            lbChannels.Width = (int)(availableArea * channelPct);
+
+            const int channelButtonMargin = 6;
+            var channelButtonX = lbChannels.Location.X + lbChannels.Width + channelButtonMargin;
+            btnAddChannels.Location = new Point(channelButtonX, btnAddChannels.Location.Y);
+            btnRemoveChannels.Location = new Point(channelButtonX, btnRemoveChannels.Location.Y);
+
+            const double groupPct = 0.6;
+            tvGroups.Location = new Point(btnAddChannels.Location.X + btnAddChannels.Width + channelButtonMargin, tvGroups.Location.Y);
+            tvGroups.Height = Height - heightOffset;
+            tvGroups.Width = (int) (availableArea * groupPct);
+
+            const int labelOffset = 3;
+            lblGroups.Location = new Point(tvGroups.Location.X - labelOffset, lblGroups.Location.Y);
         }
 
-
-        private void GroupDialog_ResizeBegin(object sender, EventArgs e) {
-            lbChannels.BeginUpdate();
-            tvGroups.BeginUpdate();
-        }
-
-
-        private void GroupDialog_ResizeEnd(object sender, EventArgs e) {
-            lbChannels.EndUpdate();
-            tvGroups.EndUpdate();
-        }
-
+        
         private void btnAddGroup_Click(object sender, EventArgs e) {
 
+        }
+
+        private void btnExpand_Click(object sender, EventArgs e) {
+            tvGroups.ExpandAll();
+        }
+
+        private void btnCollapse_Click(object sender, EventArgs e) {
+            tvGroups.CollapseAll();
+
+            if (tvGroups.SelectedNodes == null) {
+                return;
+            }
+
+            foreach (var node in tvGroups.SelectedNodes) node.EnsureVisible();
         }
     }
 }

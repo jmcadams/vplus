@@ -459,7 +459,7 @@ namespace CommonControls {
         }
 
 
-        private void InvalidateNode(TreeNode node) {
+        public void InvalidateNode(TreeNode node) {
             _nodeRect.Location = node.Bounds.Location;
             _nodeRect.Width = Width;
             _nodeRect.Height = ItemHeight;
