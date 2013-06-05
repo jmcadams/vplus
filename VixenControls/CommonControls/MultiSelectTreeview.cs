@@ -450,6 +450,7 @@ namespace CommonControls {
                 _selectedNode = node;
                 if (!_selectedNodes.Contains(node)) {
                     _selectedNodes.Add(node);
+                    node.EnsureVisible();
                 }
             }
             else {
