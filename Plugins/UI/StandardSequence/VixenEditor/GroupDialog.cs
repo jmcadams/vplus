@@ -9,6 +9,12 @@ using VixenPlus;
 
 namespace VixenEditor {
     public sealed partial class GroupDialog : Form {
+
+        private class GroupTreeData {
+            public Color NodeColor { get; set; }
+            public bool IsChannel { get; set; }
+        }
+
         private readonly EventSequence _seq;
 
 
@@ -26,7 +32,7 @@ namespace VixenEditor {
             foreach (var g in sequence.Groups) {
                 var thisNode = tvGroups.Nodes.Add(g.Key);
                 AddSubNodes(g.Value.GroupChannels, thisNode);
-                thisNode.Tag = g.Value.GroupColor;
+                thisNode.Tag = new GroupTreeData {NodeColor = g.Value.GroupColor, IsChannel = false};
             }
         }
 
@@ -36,7 +42,7 @@ namespace VixenEditor {
                 var groupData = nodeData.Split(Group.GroupTextDivider);
                 foreach (var group in groupData[0].Split(new[] {','})) {
                     var thisNode = parentNode.Nodes.Add(group);
-                    thisNode.Tag = _seq.Groups[group].GroupColor;
+                    thisNode.Tag = new GroupTreeData { NodeColor = _seq.Groups[group].GroupColor, IsChannel = false };
                     AddSubNodes(_seq.Groups[group].GroupChannels, thisNode);
                 }
                 AddChannelNodes(groupData[1], parentNode);
@@ -54,16 +60,17 @@ namespace VixenEditor {
             }
             foreach (var channel in nodeData.Split(new[] { ',' })) {
                 var thisNode = parentNode.Nodes.Add(_seq.FullChannels[int.Parse(channel)].Name);
-                thisNode.Tag = _seq.FullChannels[int.Parse(channel)].Color;
+                thisNode.Tag = new GroupTreeData {NodeColor = _seq.FullChannels[int.Parse(channel)].Color, IsChannel = true};
             }   
         }
 
 
         private void SetButtons() {
             var isChannelSelected = lbChannels.SelectedItems.Count > 0;
-            var isAnyGroupNodeSelected = tvGroups.SelectedNode != null;
-            var isRootNode = isAnyGroupNodeSelected && tvGroups.SelectedNode.Parent == null;
-            var isLeafNode = isAnyGroupNodeSelected && tvGroups.SelectedNode.Nodes.Count == 0;
+            var activeNode = tvGroups.SelectedNode;
+            var isAnyGroupNodeSelected = activeNode != null;
+            var isRootNode = isAnyGroupNodeSelected && activeNode.Parent == null;
+            var isLeafNode = isAnyGroupNodeSelected && activeNode.Nodes.Count == 0 && !((GroupTreeData)activeNode.Tag).IsChannel;
 
             // These two will need to be more complex since we can only move up or down so far, basically to the top
             // or bottom of the parent.
@@ -72,9 +79,9 @@ namespace VixenEditor {
 
             //Group side buttons
             btnAddRoot.Enabled = true;
-            btnAddChild.Enabled = true;
+            btnAddChild.Enabled = isAnyGroupNodeSelected && !isLeafNode;
             btnRemoveGroup.Enabled = !isLeafNode;
-            btnRenameGroup.Enabled = isAnyGroupNodeSelected;
+            btnRenameGroup.Enabled = isAnyGroupNodeSelected && !isLeafNode;
             btnColorGroup.Enabled = isRootNode;
             btnUp.Enabled = isAnyGroupNodeSelected && !topNode;
             btnDown.Enabled = isAnyGroupNodeSelected && !bottomNode;
@@ -91,7 +98,7 @@ namespace VixenEditor {
 
         private void tvGroups_DrawNode(object sender, DrawTreeNodeEventArgs e) {
             var treeView = sender as MultiSelectTreeview;
-            Channel.DrawItem(treeView, e, (Color) e.Node.Tag);
+            Channel.DrawItem(treeView, e, ((GroupTreeData)e.Node.Tag).NodeColor);
         }
 
 
@@ -138,7 +145,7 @@ namespace VixenEditor {
         }
 
         private void SetNodeColor(TreeNode node, Color color) {
-            node.Tag = color;
+            ((GroupTreeData)node.Tag).NodeColor = color;
             tvGroups.InvalidateNode(node);
         }
 
@@ -183,7 +190,6 @@ namespace VixenEditor {
             lblGroups.Location = new Point(tvGroups.Location.X - labelOffset, lblGroups.Location.Y);
         }
 
-        
         private void btnAddGroup_Click(object sender, EventArgs e) {
 
         }
