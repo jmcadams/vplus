@@ -39,7 +39,7 @@ namespace VixenPlus {
             isDirty |= CreateIfMissing("HistoryImages", 0);
 
             // Screen & Colors
-            isDirty |= CreateIfMissing("PrimaryDisplay", Screen.AllScreens[0].DeviceName);
+            isDirty |= CreateIfMissing("PrimaryDisplay", FixDeviceName(Screen.AllScreens[0].DeviceName));
             isDirty |= CreateIfMissing("ChannelBackground", "-1");
             isDirty |= CreateIfMissing("Crosshair", "-256");
             isDirty |= CreateIfMissing("GridBackground", "-11513776");
@@ -299,7 +299,7 @@ namespace VixenPlus {
             var value = Screen.AllScreens[0];
 
             foreach (var s in Screen.AllScreens) {
-                if (!s.DeviceName.Equals(displayName)) {
+                if (!FixDeviceName(s.DeviceName).Equals(displayName)) {
                     continue;
                 }
                 value = s;
@@ -307,6 +307,13 @@ namespace VixenPlus {
             }
 
             return value;
+        }
+
+
+        public static string FixDeviceName(string deviceName)
+        {
+            var garbageStart = deviceName.IndexOf("\0");
+            return garbageStart < 0 ? deviceName : deviceName.Substring(0, garbageStart);
         }
     }
 }

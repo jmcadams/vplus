@@ -276,7 +276,7 @@ namespace VixenPlus {
 
         private void PopulateScreens() {
             foreach (var screen in Screen.AllScreens) {
-                cbScreens.Items.Add(screen.DeviceName);
+                cbScreens.Items.Add(Preference2.FixDeviceName(screen.DeviceName));
             }
             cbScreens.SelectedIndex = 0;
         }
