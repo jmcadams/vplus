@@ -115,9 +115,6 @@ namespace VixenPlus {
 
 
         public void Dispose() {
-            if (GenericBrush != null) {
-                GenericBrush.Dispose();
-            }
             GC.SuppressFinalize(this);
         }
 
