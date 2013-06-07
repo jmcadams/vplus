@@ -157,6 +157,7 @@
             this.btnRenameGroup.TabIndex = 4;
             this.btnRenameGroup.Text = "Re&name";
             this.btnRenameGroup.UseVisualStyleBackColor = true;
+            this.btnRenameGroup.Click += new System.EventHandler(this.btnRenameGroup_Click);
             // 
             // btnRemoveChannels
             // 
@@ -195,6 +196,7 @@
             this.btnAddChild.TabIndex = 15;
             this.btnAddChild.Text = "Add &Child";
             this.btnAddChild.UseVisualStyleBackColor = true;
+            this.btnAddChild.Click += new System.EventHandler(this.btnAddChild_Click);
             // 
             // btnExpand
             // 
