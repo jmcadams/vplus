@@ -140,6 +140,12 @@ namespace CommonUtils {
                 return;
             }
 
+            if (e.Bounds.Left < 0 || e.Bounds.Top < 0) {
+                return;
+            }
+
+            //System.Diagnostics.Debug.Print("Text: {0}, Left: {1}, Top: {2}", e.Node.Text, e.Bounds.Left, e.Bounds.Top);
+
             var fillRect = new Rectangle(e.Node.Bounds.X, e.Node.Bounds.Y, treeView.Width - e.Node.Bounds.Left, e.Node.Bounds.Height);
             GenericBrush.Color = channelColor;
             e.Graphics.FillRectangle(GenericBrush, fillRect);
