@@ -5,15 +5,13 @@ using System.Globalization;
 using System.Windows.Forms;
 using System.Xml;
 
-using CommonControls;
 
 using CommonUtils;
 
 namespace VixenPlus {
     public class Channel : IDisposable, IComparable<Channel> {
         private Color _color;
-        private static readonly SolidBrush GenericBrush = new SolidBrush(Color.Black);
-        private const string Checkmark = "\u2714";
+
 
         public Channel(XmlNode channelNode) {
             OutputChannel = 0;
@@ -161,66 +159,14 @@ namespace VixenPlus {
             return Name;
         }
 
-        // For ComboBoxes
-        public static void DrawItem(DrawItemEventArgs e, string name, Color color, bool useCheckmark = false) {
-            e.DrawBackground();
 
-            var selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
-            GenericBrush.Color = color;
-            e.Graphics.FillRectangle(selected && !useCheckmark ? SystemBrushes.Highlight : GenericBrush, e.Bounds);
-            var contrastingBrush = selected && !useCheckmark ? SystemBrushes.HighlightText : Utils.GetTextColor(color);
-            e.Graphics.DrawString(name, e.Font, contrastingBrush, new RectangleF(e.Bounds.Location, e.Bounds.Size));
-            if (selected && useCheckmark) {
-                e.Graphics.DrawString(Checkmark, e.Font, contrastingBrush, e.Bounds.Width - e.Bounds.Height, e.Bounds.Y);
-            }
-            e.DrawFocusRectangle();
+        public static void DrawItem(ListBox lb, DrawItemEventArgs e, Channel channel) {
+            Utils.DrawItem(lb, e, channel.Name, channel.Color);
         }
 
 
         public static void DrawItem(DrawItemEventArgs e, Channel c, bool useCheckmark = false) {
-            DrawItem(e, c.Name, c.Color, useCheckmark);
-        }
-
-
-        // For List Boxes
-        public static void DrawItem(ListBox lb, DrawItemEventArgs e, Channel channel) {
-            e.DrawBackground();
-
-            GenericBrush.Color = channel.Color;
-            e.Graphics.FillRectangle(GenericBrush, e.Bounds);
-            var contrastingBrush = Utils.GetTextColor(channel.Color);
-            e.Graphics.DrawString(channel.Name, e.Font, contrastingBrush, lb.GetItemRectangle(e.Index).Location);
-            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected) {
-                e.Graphics.DrawString(Checkmark, e.Font, contrastingBrush, e.Bounds.Width - e.Bounds.Height, e.Bounds.Y);
-            }
-
-            e.DrawFocusRectangle();
-        }
-
-
-        // For TreeViews
-        public static void DrawItem(TreeView treeView, DrawTreeNodeEventArgs e, Color channelColor) {
-            if (treeView == null) {
-                e.DrawDefault = true;
-                return;
-            }
-
-            var fillRect = new Rectangle(e.Node.Bounds.X, e.Node.Bounds.Y, treeView.Width - e.Node.Bounds.Left, e.Node.Bounds.Height);
-            GenericBrush.Color = channelColor;
-            e.Graphics.FillRectangle(GenericBrush, fillRect);
-            e.Graphics.DrawString(e.Node.Text, treeView.Font,  Utils.GetTextColor(channelColor), e.Bounds.Left, e.Bounds.Top);
-
-            bool selected;
-            var view = treeView as MultiSelectTreeview;
-            if (view != null) {
-                selected = view.SelectedNodes.Contains(e.Node);
-            }
-            else {
-                selected = (e.State & TreeNodeStates.Selected) != 0;
-            } 
-            if (selected) {
-                e.Graphics.DrawString(Checkmark, treeView.Font, Utils.GetTextColor(channelColor), fillRect.Right - 40, e.Bounds.Top);
-            }
+            Utils.DrawItem(e, c.Name, c.Color, useCheckmark);
         }
     }
 }

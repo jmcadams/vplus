@@ -4815,15 +4815,15 @@ namespace VixenEditor {
 
         private void cbGroups_DrawItem(object sender, DrawItemEventArgs e) {
             if (e.Index == 0) {
-                VixenPlus.Channel.DrawItem(e, Group.AllChannels, Color.White);
+                Utils.DrawItem(e, Group.AllChannels, Color.White);
                 return;
             }
             if (e.Index == cbGroups.Items.Count - 1) {
-                VixenPlus.Channel.DrawItem(e, Group.ManageGroups, Color.White);
+                Utils.DrawItem(e, Group.ManageGroups, Color.White);
                 return;
             }
             var indexItem = _sequence.Groups[cbGroups.Items[e.Index].ToString()];
-            VixenPlus.Channel.DrawItem(e, indexItem.Name, indexItem.GroupColor);
+            Utils.DrawItem(e, indexItem.Name, indexItem.GroupColor);
         }
 
 

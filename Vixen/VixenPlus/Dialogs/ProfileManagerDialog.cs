@@ -6,6 +6,8 @@ using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
+using CommonUtils;
+
 using Properties;
 
 namespace VixenPlus.Dialogs {
@@ -488,7 +490,7 @@ namespace VixenPlus.Dialogs {
 
         private void treeViewProfile_DrawNode(object sender, DrawTreeNodeEventArgs e) {
             var treeView = sender as TreeView;
-            Channel.DrawItem(treeView, e, _contextProfile.Channels[_contextProfile.FullChannels.IndexOf((Channel)e.Node.Tag)].Color);
+            Utils.DrawItem(treeView, e, _contextProfile.Channels[_contextProfile.FullChannels.IndexOf((Channel)e.Node.Tag)].Color);
         }
     }
 }
