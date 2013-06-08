@@ -5,7 +5,6 @@ using System.Globalization;
 using System.Windows.Forms;
 using System.Xml;
 
-
 using CommonUtils;
 
 namespace VixenPlus {
