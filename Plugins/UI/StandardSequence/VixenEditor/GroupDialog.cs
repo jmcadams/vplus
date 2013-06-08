@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 
 using CommonControls;
+
+using CommonUtils;
 
 using VixenPlus;
 using VixenPlus.Dialogs;
@@ -96,7 +99,7 @@ namespace VixenEditor {
             btnAddChild.Enabled = isRootNode && isSingleNode;
 
             // Removed group available to any non leaf node/nodes - cascade to lower level non leaf node if root node removed
-            btnRemoveGroup.Enabled = isNodeActive && !isLeafNode;
+            btnRemoveGroup.Enabled = isNodeActive && !isLeafNode; // TODO: Can't remove subNodes of Root Nodes either - UGH!
 
             // Rename group at root node - cascade to other lowel level non leaf nodes
             btnRenameGroup.Enabled = isRootNode && isSingleNode;
@@ -125,7 +128,7 @@ namespace VixenEditor {
 
         private void tvGroups_DrawNode(object sender, DrawTreeNodeEventArgs e) {
             var treeView = sender as MultiSelectTreeview;
-            Channel.DrawItem(treeView, e, ((GroupTagData)e.Node.Tag).NodeColor);
+            Utils.DrawItem(treeView, e, ((GroupTagData)e.Node.Tag).NodeColor);
         }
 
 
@@ -316,7 +319,59 @@ namespace VixenEditor {
 
 
         private void btnAddChild_Click(object sender, EventArgs e) {
+            var existingNodes = GetAllNodesFor(tvGroups.SelectedNode);
+            var childNodes = new List<TreeNode>();
+            foreach (TreeNode n in tvGroups.Nodes) {
+                if (!existingNodes.Contains(n.Name)) {
+                    childNodes.Add(n);
+                }
+            }
 
+            using (var child = new GroupPickerDialog(childNodes)) {
+                child.ShowDialog();
+                if (child.DialogResult != DialogResult.OK) {
+                    return;
+                }
+                var items = child.SelectedItems;
+                var excludedItems = new List<string>();
+                foreach (var item in items) {
+                    var abc = tvGroups.Nodes.Find(item, false)[0];
+                        var exclude = GetAllNodesFor(abc);
+                        foreach (var x in exclude) {
+                            if (item != x && items.Contains(x)) {
+                                excludedItems.Add(x);
+                            }
+                        }
+                }
+                var rootNode = tvGroups.Nodes.Find(tvGroups.SelectedNode.Name, false)[0];
+                foreach (var item in items) {
+                    if (excludedItems.Contains(item)) {
+                        continue;
+                    }
+                    var node = tvGroups.Nodes.Find(item, false)[0];
+                    rootNode.Nodes.Insert(rootNode.GetNodeCount(false), (TreeNode)node.Clone());
+                }
+            }
+            tvGroups.Invalidate();
+        }
+
+
+        private static List<string> GetAllNodesFor(TreeNode name) {
+            var result = new List<string> {name.Name};
+            foreach (TreeNode n in name.Nodes) {
+                AddChildren(result, n);
+            }
+            return result;
+        }
+
+        private static void AddChildren(ICollection<string> nodeList, TreeNode node) {
+            if (!((GroupTagData) node.Tag).IsLeafNode) {
+                nodeList.Add(node.Name);
+            }
+            foreach (TreeNode n in node.Nodes)
+            {
+                AddChildren(nodeList, n);
+            }
         }
     }
 }

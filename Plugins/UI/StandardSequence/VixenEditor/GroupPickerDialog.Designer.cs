@@ -30,11 +30,14 @@
             // 
             // lbGroups
             // 
+            this.lbGroups.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.lbGroups.FormattingEnabled = true;
             this.lbGroups.Location = new System.Drawing.Point(13, 13);
             this.lbGroups.Name = "lbGroups";
+            this.lbGroups.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lbGroups.Size = new System.Drawing.Size(259, 186);
             this.lbGroups.TabIndex = 0;
+            this.lbGroups.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lbGroups_DrawItem);
             // 
             // btnCancel
             // 
@@ -69,6 +72,8 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "GroupPickerDialog";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Select a Group";
             this.ResumeLayout(false);
 

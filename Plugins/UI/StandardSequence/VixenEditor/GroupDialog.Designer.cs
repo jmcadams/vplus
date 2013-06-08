@@ -254,7 +254,7 @@
             this.Controls.Add(this.lbChannels);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = global::Properties.Resources.VixenPlus;
             this.KeyPreview = true;
             this.MinimizeBox = false;
             this.Name = "GroupDialog";
