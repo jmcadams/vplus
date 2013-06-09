@@ -80,6 +80,9 @@
     <ErrorReport>prompt</ErrorReport>
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>VixenEditor</RootNamespace>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System">
       <Name>System</Name>
@@ -107,6 +110,12 @@
     </Compile>
     <Compile Include="NutcrackerControlDialog.Designer.cs">
       <DependentUpon>NutcrackerControlDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NutcrackerEffectControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="NutcrackerEffectControl.Designer.cs">
+      <DependentUpon>NutcrackerEffectControl.cs</DependentUpon>
     </Compile>
     <Compile Include="VixenEditor\GroupDialog.cs">
       <SubType>Form</SubType>
@@ -237,6 +246,9 @@
     <EmbeddedResource Include="NutcrackerControlDialog.resx">
       <DependentUpon>NutcrackerControlDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="NutcrackerEffectControl.resx">
+      <DependentUpon>NutcrackerEffectControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor.Properties.Resources.resources" />
     <EmbeddedResource Include="VixenEditor\AudioSpeedDialog.resx">
       <DependentUpon>AudioSpeedDialog.cs</DependentUpon>
@@ -331,6 +343,10 @@
       <Project>{FA99E3F3-4783-485F-A37E-0E24F823E5AE}</Project>
       <Name>VixenPlus</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NutcrackerEffects\NutcrackerEffects.csproj">
+      <Project>{CBC7A278-69F8-49B3-B0E4-6C30B5A6A2B2}</Project>
+      <Name>NutcrackerEffects</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
