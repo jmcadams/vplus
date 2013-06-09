@@ -1,5 +1,7 @@
 ﻿using System.Windows.Forms;
 
+using VixenPlus;
+
 namespace NutcrackerEffects {
     public partial class Bars : UserControl, INutcrackerEffect {
         public Bars() {

@@ -1,4 +1,4 @@
-﻿namespace VixenEditor
+namespace VixenEditor
 {
     partial class NutcrackerEffectControl
     {
@@ -37,7 +37,7 @@
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cbEffects = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
@@ -117,7 +117,6 @@
             this.checkBox3.TabIndex = 6;
             this.checkBox3.Text = "4";
             this.checkBox3.UseVisualStyleBackColor = false;
-            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
             // 
             // checkBox4
             // 
@@ -143,13 +142,13 @@
             this.checkBox5.Text = "6";
             this.checkBox5.UseVisualStyleBackColor = false;
             // 
-            // comboBox1
+            // cbEffects
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(3, 3);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(233, 21);
-            this.comboBox1.TabIndex = 9;
+            this.cbEffects.FormattingEnabled = true;
+            this.cbEffects.Location = new System.Drawing.Point(3, 3);
+            this.cbEffects.Name = "cbEffects";
+            this.cbEffects.Size = new System.Drawing.Size(233, 21);
+            this.cbEffects.TabIndex = 9;
             // 
             // panel1
             // 
@@ -163,7 +162,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cbEffects);
             this.Controls.Add(this.checkBox5);
             this.Controls.Add(this.checkBox4);
             this.Controls.Add(this.checkBox3);
@@ -192,7 +191,7 @@
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.CheckBox checkBox4;
         private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cbEffects;
         private System.Windows.Forms.Panel panel1;
     }
 }

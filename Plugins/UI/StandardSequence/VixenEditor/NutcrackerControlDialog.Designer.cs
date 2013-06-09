@@ -1,4 +1,4 @@
-﻿namespace VixenEditor
+namespace VixenEditor
 {
     partial class NutcrackerControlDialog
     {
@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.neControl2 = new VixenEditor.NutcrackerEffectControl();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.neControl1 = new VixenEditor.NutcrackerEffectControl();
             this.pbPreview = new System.Windows.Forms.PictureBox();
+            this.nutcrackerEffectControl1 = new VixenEditor.NutcrackerEffectControl();
+            this.nutcrackerEffectControl2 = new VixenEditor.NutcrackerEffectControl();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
@@ -40,7 +40,7 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.neControl2);
+            this.groupBox2.Controls.Add(this.nutcrackerEffectControl2);
             this.groupBox2.Location = new System.Drawing.Point(788, 352);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(384, 198);
@@ -48,16 +48,9 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Effect 2";
             // 
-            // neControl2
-            // 
-            this.neControl2.Location = new System.Drawing.Point(7, 20);
-            this.neControl2.Name = "neControl2";
-            this.neControl2.Size = new System.Drawing.Size(371, 173);
-            this.neControl2.TabIndex = 0;
-            // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.neControl1);
+            this.groupBox1.Controls.Add(this.nutcrackerEffectControl1);
             this.groupBox1.Location = new System.Drawing.Point(398, 352);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(384, 198);
@@ -65,20 +58,28 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Effect 1";
             // 
-            // neControl1
-            // 
-            this.neControl1.Location = new System.Drawing.Point(7, 20);
-            this.neControl1.Name = "neControl1";
-            this.neControl1.Size = new System.Drawing.Size(371, 173);
-            this.neControl1.TabIndex = 0;
-            // 
             // pbPreview
             // 
+            this.pbPreview.BackColor = System.Drawing.Color.Black;
             this.pbPreview.Location = new System.Drawing.Point(12, 12);
             this.pbPreview.Name = "pbPreview";
             this.pbPreview.Size = new System.Drawing.Size(380, 538);
             this.pbPreview.TabIndex = 2;
             this.pbPreview.TabStop = false;
+            // 
+            // nutcrackerEffectControl1
+            // 
+            this.nutcrackerEffectControl1.Location = new System.Drawing.Point(7, 20);
+            this.nutcrackerEffectControl1.Name = "nutcrackerEffectControl1";
+            this.nutcrackerEffectControl1.Size = new System.Drawing.Size(371, 173);
+            this.nutcrackerEffectControl1.TabIndex = 0;
+            // 
+            // nutcrackerEffectControl2
+            // 
+            this.nutcrackerEffectControl2.Location = new System.Drawing.Point(7, 20);
+            this.nutcrackerEffectControl2.Name = "nutcrackerEffectControl2";
+            this.nutcrackerEffectControl2.Size = new System.Drawing.Size(371, 173);
+            this.nutcrackerEffectControl2.TabIndex = 0;
             // 
             // NutcrackerControlDialog
             // 
@@ -102,7 +103,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.PictureBox pbPreview;
-        private NutcrackerEffectControl neControl2;
-        private NutcrackerEffectControl neControl1;
+        private NutcrackerEffectControl nutcrackerEffectControl1;
+        private NutcrackerEffectControl nutcrackerEffectControl2;
     }
 }

@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{CBC7A278-69F8-49B3-B0E4-6C30B5A6A2B2}</ProjectGuid>
+    <ProjectGuid>{14B1B92D-0807-46DB-A0CE-5BE096DA0A14}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NutcrackerEffects</RootNamespace>
-    <AssemblyName>NutcrackerEffects</AssemblyName>
+    <RootNamespace>Butterfly</RootNamespace>
+    <AssemblyName>Butterfly</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publish\</PublishUrl>
@@ -32,7 +32,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Build\Plugins\Nutcracker\</OutputPath>
+    <OutputPath>..\..\..\Build\Plugins\Nutcracker\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -53,19 +53,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bars.cs">
+    <Compile Include="Butterfly.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Bars.Designer.cs">
-      <DependentUpon>Bars.cs</DependentUpon>
+    <Compile Include="Butterfly.Designer.cs">
+      <DependentUpon>Butterfly.cs</DependentUpon>
     </Compile>
-    <Compile Include="INutcrackerEffect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Bars.resx">
-      <DependentUpon>Bars.cs</DependentUpon>
+    <ProjectReference Include="..\..\..\Vixen\VixenPlus.csproj">
+      <Project>{FA99E3F3-4783-485F-A37E-0E24F823E5AE}</Project>
+      <Name>VixenPlus</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Butterfly.resx">
+      <DependentUpon>Butterfly.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
