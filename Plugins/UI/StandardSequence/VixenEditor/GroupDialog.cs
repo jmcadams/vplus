@@ -86,6 +86,7 @@ namespace VixenEditor {
 
             var isOnlyLeafNodes = true;
             var isParentAtRoot = true;
+            var isCopyOfRootNode = true;
             foreach (var n in tvGroups.SelectedNodes) {
                 isOnlyLeafNodes &= ((GroupTagData) n.Tag).IsLeafNode;
                 isParentAtRoot &= (n.Parent == null || !n.Parent.FullPath.Contains("\\"));
@@ -99,7 +100,7 @@ namespace VixenEditor {
             btnAddChild.Enabled = isRootNode && isSingleNode;
 
             // Removed group available to any non leaf node/nodes - cascade to lower level non leaf node if root node removed
-            btnRemoveGroup.Enabled = isNodeActive && !isLeafNode; // TODO: Can't remove subNodes of Root Nodes either - UGH!
+            btnRemoveGroup.Enabled = isNodeActive && !isLeafNode && isCopyOfRootNode; // TODO: Can't remove subNodes of Root Nodes either - UGH!
 
             // Rename group at root node - cascade to other lowel level non leaf nodes
             btnRenameGroup.Enabled = isRootNode && isSingleNode;
@@ -335,11 +336,11 @@ namespace VixenEditor {
                 var items = child.SelectedItems;
                 var excludedItems = new List<string>();
                 foreach (var item in items) {
-                    var abc = tvGroups.Nodes.Find(item, false)[0];
-                        var exclude = GetAllNodesFor(abc);
-                        foreach (var x in exclude) {
-                            if (item != x && items.Contains(x)) {
-                                excludedItems.Add(x);
+                    var node = tvGroups.Nodes.Find(item, false)[0];
+                        var excluded = GetAllNodesFor(node);
+                        foreach (var exclude in excluded) {
+                            if (item != exclude && items.Contains(exclude)) {
+                                excludedItems.Add(exclude);
                             }
                         }
                 }
@@ -372,6 +373,32 @@ namespace VixenEditor {
             {
                 AddChildren(nodeList, n);
             }
+        }
+
+        private void btnRemoveGroup_Click(object sender, EventArgs e) {
+            //tvGroups.BeginUpdate();
+            //foreach (var n in tvGroups.SelectedNodes) {
+            //    n.Remove();
+            //    var affectedNodeText = n.Text;
+            //    foreach (TreeNode treeNode in tvGroups.Nodes) {
+            //        SetColorByName(treeNode, color.Color, affectedNodeText);
+            //    }
+            //}
+            //tvGroups.EndUpdate();
+            //tvGroups.Refresh();
+        }
+
+        private void RemoveNode(TreeNode treeNode, String name) {
+            //if (treeNode.Text == name && !((GroupTagData)treeNode.Tag).IsLeafNode) {
+            //    SetNodeColor(treeNode, color);
+            //}
+
+            //foreach (TreeNode node in treeNode.Nodes) {
+            //    if (node.Text == name && !((GroupTagData)treeNode.Tag).IsLeafNode) {
+            //        SetNodeColor(node, color);
+            //    }
+            //    SetColorByName(node, color, name);
+            //}
         }
     }
 }

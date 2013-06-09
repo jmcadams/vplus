@@ -106,6 +106,7 @@
             this.btnRemoveGroup.TabIndex = 3;
             this.btnRemoveGroup.Text = "Re&move Group";
             this.btnRemoveGroup.UseVisualStyleBackColor = true;
+            this.btnRemoveGroup.Click += new System.EventHandler(this.btnRemoveGroup_Click);
             // 
             // btnUp
             // 
@@ -254,7 +255,7 @@
             this.Controls.Add(this.lbChannels);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
-            this.Icon = global::Properties.Resources.VixenPlus;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MinimizeBox = false;
             this.Name = "GroupDialog";
