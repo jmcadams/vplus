@@ -102,6 +102,12 @@
     <Compile Include="Global.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="NutcrackerControlDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NutcrackerControlDialog.Designer.cs">
+      <DependentUpon>NutcrackerControlDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="VixenEditor\GroupDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -228,6 +234,9 @@
     </Compile>
     <Compile Include="VixenPlus\UndoItem.cs" />
     <Compile Include="VixenPlus\UndoOriginalBehavior.cs" />
+    <EmbeddedResource Include="NutcrackerControlDialog.resx">
+      <DependentUpon>NutcrackerControlDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor.Properties.Resources.resources" />
     <EmbeddedResource Include="VixenEditor\AudioSpeedDialog.resx">
       <DependentUpon>AudioSpeedDialog.cs</DependentUpon>
