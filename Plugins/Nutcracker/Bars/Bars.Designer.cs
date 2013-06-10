@@ -35,7 +35,7 @@
             // lblPaletteRep
             // 
             this.lblPaletteRep.AutoSize = true;
-            this.lblPaletteRep.Location = new System.Drawing.Point(5, 14);
+            this.lblPaletteRep.Location = new System.Drawing.Point(2, 8);
             this.lblPaletteRep.Name = "lblPaletteRep";
             this.lblPaletteRep.Size = new System.Drawing.Size(78, 13);
             this.lblPaletteRep.TabIndex = 0;
@@ -45,17 +45,18 @@
             // 
             this.trackBar1.AutoSize = false;
             this.trackBar1.LargeChange = 2;
-            this.trackBar1.Location = new System.Drawing.Point(82, 4);
+            this.trackBar1.Location = new System.Drawing.Point(79, 2);
             this.trackBar1.Maximum = 4;
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(150, 32);
+            this.trackBar1.Size = new System.Drawing.Size(150, 25);
             this.trackBar1.TabIndex = 1;
             this.trackBar1.TabStop = false;
+            this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.None;
             // 
             // lblDirection
             // 
             this.lblDirection.AutoSize = true;
-            this.lblDirection.Location = new System.Drawing.Point(34, 45);
+            this.lblDirection.Location = new System.Drawing.Point(31, 39);
             this.lblDirection.Name = "lblDirection";
             this.lblDirection.Size = new System.Drawing.Size(49, 13);
             this.lblDirection.TabIndex = 2;
@@ -69,7 +70,7 @@
             "Down",
             "Expand",
             "Compress"});
-            this.comboBox1.Location = new System.Drawing.Point(89, 42);
+            this.comboBox1.Location = new System.Drawing.Point(86, 36);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(140, 21);
             this.comboBox1.TabIndex = 3;
@@ -77,7 +78,7 @@
             // cbHighlight
             // 
             this.cbHighlight.AutoSize = true;
-            this.cbHighlight.Location = new System.Drawing.Point(8, 70);
+            this.cbHighlight.Location = new System.Drawing.Point(13, 66);
             this.cbHighlight.Name = "cbHighlight";
             this.cbHighlight.Size = new System.Drawing.Size(67, 17);
             this.cbHighlight.TabIndex = 4;
@@ -87,7 +88,7 @@
             // cb3D
             // 
             this.cb3D.AutoSize = true;
-            this.cb3D.Location = new System.Drawing.Point(82, 70);
+            this.cb3D.Location = new System.Drawing.Point(13, 89);
             this.cb3D.Name = "cb3D";
             this.cb3D.Size = new System.Drawing.Size(40, 17);
             this.cb3D.TabIndex = 5;

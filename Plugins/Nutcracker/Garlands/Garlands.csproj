@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C1B38609-BCB6-4CA0-B60F-E4654E33DED5}</ProjectGuid>
+    <ProjectGuid>{4C4382BF-E92E-4A99-8E2F-E698C4F90348}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bars</RootNamespace>
-    <AssemblyName>Bars</AssemblyName>
+    <RootNamespace>Garlands</RootNamespace>
+    <AssemblyName>Garlands</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publish\</PublishUrl>
@@ -80,11 +80,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bars.cs">
+    <Compile Include="Garlands.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Bars.Designer.cs">
-      <DependentUpon>Bars.cs</DependentUpon>
+    <Compile Include="Garlands.Designer.cs">
+      <DependentUpon>Garlands.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
@@ -97,8 +97,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Bars.resx">
-      <DependentUpon>Bars.cs</DependentUpon>
+    <EmbeddedResource Include="Garlands.resx">
+      <DependentUpon>Garlands.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

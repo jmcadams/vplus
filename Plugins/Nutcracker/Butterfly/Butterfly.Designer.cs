@@ -78,7 +78,7 @@
             this.tbSkip.Location = new System.Drawing.Point(112, 87);
             this.tbSkip.Maximum = 9;
             this.tbSkip.Name = "tbSkip";
-            this.tbSkip.Size = new System.Drawing.Size(104, 25);
+            this.tbSkip.Size = new System.Drawing.Size(117, 25);
             this.tbSkip.TabIndex = 4;
             this.tbSkip.TickStyle = System.Windows.Forms.TickStyle.None;
             // 
@@ -88,7 +88,7 @@
             this.tbChunks.Location = new System.Drawing.Point(112, 56);
             this.tbChunks.Maximum = 9;
             this.tbChunks.Name = "tbChunks";
-            this.tbChunks.Size = new System.Drawing.Size(104, 25);
+            this.tbChunks.Size = new System.Drawing.Size(117, 25);
             this.tbChunks.TabIndex = 5;
             this.tbChunks.TickStyle = System.Windows.Forms.TickStyle.None;
             // 
@@ -98,7 +98,7 @@
             this.tbStyle.Location = new System.Drawing.Point(112, 25);
             this.tbStyle.Maximum = 3;
             this.tbStyle.Name = "tbStyle";
-            this.tbStyle.Size = new System.Drawing.Size(104, 25);
+            this.tbStyle.Size = new System.Drawing.Size(117, 25);
             this.tbStyle.TabIndex = 6;
             this.tbStyle.TickStyle = System.Windows.Forms.TickStyle.None;
             // 
@@ -110,7 +110,7 @@
             "Palette"});
             this.cbColors.Location = new System.Drawing.Point(112, 0);
             this.cbColors.Name = "cbColors";
-            this.cbColors.Size = new System.Drawing.Size(104, 21);
+            this.cbColors.Size = new System.Drawing.Size(117, 21);
             this.cbColors.TabIndex = 7;
             // 
             // Butterfly

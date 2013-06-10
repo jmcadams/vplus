@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C1B38609-BCB6-4CA0-B60F-E4654E33DED5}</ProjectGuid>
+    <ProjectGuid>{FE428357-FBB6-4640-AD86-11523963D3B5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bars</RootNamespace>
-    <AssemblyName>Bars</AssemblyName>
+    <RootNamespace>Pictures</RootNamespace>
+    <AssemblyName>Pictures</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publish\</PublishUrl>
@@ -80,25 +80,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bars.cs">
+    <Compile Include="Picture.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Bars.Designer.cs">
-      <DependentUpon>Bars.cs</DependentUpon>
+    <Compile Include="Picture.Designer.cs">
+      <DependentUpon>Picture.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Vixen\VixenPlus.csproj">
-      <Project>{FA99E3F3-4783-485F-A37E-0E24F823E5AE}</Project>
-      <Name>VixenPlus</Name>
-      <Private>False</Private>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Bars.resx">
-      <DependentUpon>Bars.cs</DependentUpon>
+    <EmbeddedResource Include="Picture.resx">
+      <DependentUpon>Picture.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

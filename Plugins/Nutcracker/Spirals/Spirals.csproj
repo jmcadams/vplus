@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C1B38609-BCB6-4CA0-B60F-E4654E33DED5}</ProjectGuid>
+    <ProjectGuid>{DF1DC772-5C56-4046-B14A-1EEF11689CF9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bars</RootNamespace>
-    <AssemblyName>Bars</AssemblyName>
+    <RootNamespace>Spirals</RootNamespace>
+    <AssemblyName>Spirals</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publish\</PublishUrl>
@@ -80,11 +80,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bars.cs">
+    <Compile Include="Spirals.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Bars.Designer.cs">
-      <DependentUpon>Bars.cs</DependentUpon>
+    <Compile Include="Spirals.Designer.cs">
+      <DependentUpon>Spirals.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
@@ -97,8 +97,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Bars.resx">
-      <DependentUpon>Bars.cs</DependentUpon>
+    <EmbeddedResource Include="Spirals.resx">
+      <DependentUpon>Spirals.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

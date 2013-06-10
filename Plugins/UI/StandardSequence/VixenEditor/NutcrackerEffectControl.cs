@@ -42,9 +42,11 @@ namespace VixenEditor
 
 
         private void PopulateEffects() {
+            cbEffects.Items.Add("None");
             foreach (var nutcrackerEffect in EffectCache) {
                 cbEffects.Items.Add(nutcrackerEffect.Value.EffectName);
             }
+            cbEffects.SelectedIndex = 0;
         }
 
 
@@ -53,7 +55,7 @@ namespace VixenEditor
                 panel1.Controls.Remove(control);
             }
 
-            if (cbEffects.SelectedIndex == -1) {
+            if (cbEffects.SelectedIndex <= 0) {
                 return;
             }
 

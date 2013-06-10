@@ -1,3 +1,5 @@
+using System.Windows.Forms;
+
 namespace VixenEditor
 {
     partial class NutcrackerControlDialog
@@ -29,13 +31,17 @@ namespace VixenEditor
         private void InitializeComponent()
         {
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.pbPreview = new System.Windows.Forms.PictureBox();
-            this.nutcrackerEffectControl1 = new VixenEditor.NutcrackerEffectControl();
             this.nutcrackerEffectControl2 = new VixenEditor.NutcrackerEffectControl();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.nutcrackerEffectControl1 = new VixenEditor.NutcrackerEffectControl();
+            this.pbPreview = new System.Windows.Forms.PictureBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnOK = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox2
@@ -48,6 +54,13 @@ namespace VixenEditor
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Effect 2";
             // 
+            // nutcrackerEffectControl2
+            // 
+            this.nutcrackerEffectControl2.Location = new System.Drawing.Point(7, 20);
+            this.nutcrackerEffectControl2.Name = "nutcrackerEffectControl2";
+            this.nutcrackerEffectControl2.Size = new System.Drawing.Size(371, 173);
+            this.nutcrackerEffectControl2.TabIndex = 0;
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.nutcrackerEffectControl1);
@@ -58,6 +71,13 @@ namespace VixenEditor
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Effect 1";
             // 
+            // nutcrackerEffectControl1
+            // 
+            this.nutcrackerEffectControl1.Location = new System.Drawing.Point(7, 20);
+            this.nutcrackerEffectControl1.Name = "nutcrackerEffectControl1";
+            this.nutcrackerEffectControl1.Size = new System.Drawing.Size(371, 173);
+            this.nutcrackerEffectControl1.TabIndex = 0;
+            // 
             // pbPreview
             // 
             this.pbPreview.BackColor = System.Drawing.Color.Black;
@@ -67,33 +87,56 @@ namespace VixenEditor
             this.pbPreview.TabIndex = 2;
             this.pbPreview.TabStop = false;
             // 
-            // nutcrackerEffectControl1
+            // groupBox3
             // 
-            this.nutcrackerEffectControl1.Location = new System.Drawing.Point(7, 20);
-            this.nutcrackerEffectControl1.Name = "nutcrackerEffectControl1";
-            this.nutcrackerEffectControl1.Size = new System.Drawing.Size(371, 173);
-            this.nutcrackerEffectControl1.TabIndex = 0;
+            this.groupBox3.Controls.Add(this.btnOK);
+            this.groupBox3.Controls.Add(this.btnCancel);
+            this.groupBox3.Location = new System.Drawing.Point(398, 12);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(774, 334);
+            this.groupBox3.TabIndex = 3;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Nutcracker Options";
             // 
-            // nutcrackerEffectControl2
+            // btnCancel
             // 
-            this.nutcrackerEffectControl2.Location = new System.Drawing.Point(7, 20);
-            this.nutcrackerEffectControl2.Name = "nutcrackerEffectControl2";
-            this.nutcrackerEffectControl2.Size = new System.Drawing.Size(371, 173);
-            this.nutcrackerEffectControl2.TabIndex = 0;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Location = new System.Drawing.Point(693, 305);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 0;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            // 
+            // btnOK
+            // 
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnOK.Location = new System.Drawing.Point(612, 305);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(75, 23);
+            this.btnOK.TabIndex = 1;
+            this.btnOK.Text = "OK";
+            this.btnOK.UseVisualStyleBackColor = true;
             // 
             // NutcrackerControlDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1184, 562);
+            this.ControlBox = false;
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.pbPreview);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "NutcrackerControlDialog";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Generate Nutcracker Effect";
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();
+            this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -105,5 +148,8 @@ namespace VixenEditor
         private System.Windows.Forms.PictureBox pbPreview;
         private NutcrackerEffectControl nutcrackerEffectControl1;
         private NutcrackerEffectControl nutcrackerEffectControl2;
+        private GroupBox groupBox3;
+        private Button btnOK;
+        private Button btnCancel;
     }
 }
