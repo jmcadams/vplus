@@ -84,7 +84,6 @@
     <RootNamespace>VixenEditor</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="StandardSequence, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -277,6 +276,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\NutcrackerControlDialog.resx">
       <DependentUpon>NutcrackerControlDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenEditor\NutcrackerEffectControl.resx">
+      <DependentUpon>NutcrackerEffectControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\ProgressDialog.resx">
       <DependentUpon>ProgressDialog.cs</DependentUpon>

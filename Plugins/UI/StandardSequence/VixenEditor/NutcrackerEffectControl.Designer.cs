@@ -149,6 +149,7 @@ namespace VixenEditor
             this.cbEffects.Name = "cbEffects";
             this.cbEffects.Size = new System.Drawing.Size(233, 21);
             this.cbEffects.TabIndex = 9;
+            this.cbEffects.SelectedIndexChanged += new System.EventHandler(this.cbEffects_SelectedIndexChanged);
             // 
             // panel1
             // 
