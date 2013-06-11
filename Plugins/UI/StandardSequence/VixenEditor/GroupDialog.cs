@@ -86,10 +86,12 @@ namespace VixenEditor {
 
             var isOnlyLeafNodes = true;
             var isParentAtRoot = true;
-            var isCopyOfRootNode = true;
+            var isRemovable = true;
             foreach (var n in tvGroups.SelectedNodes) {
                 isOnlyLeafNodes &= ((GroupTagData) n.Tag).IsLeafNode;
                 isParentAtRoot &= (n.Parent == null || !n.Parent.FullPath.Contains("\\"));
+                n.FirstNode
+                isRemovable &= n.FullPath.Split(new[] {'\\'}).Length - 1 < 2;
             }
 
 
@@ -100,7 +102,7 @@ namespace VixenEditor {
             btnAddChild.Enabled = isRootNode && isSingleNode;
 
             // Removed group available to any non leaf node/nodes - cascade to lower level non leaf node if root node removed
-            btnRemoveGroup.Enabled = isNodeActive && !isLeafNode && isCopyOfRootNode; // TODO: Can't remove subNodes of Root Nodes either - UGH!
+            btnRemoveGroup.Enabled = isNodeActive && !isLeafNode && isRemovable; 
 
             // Rename group at root node - cascade to other lowel level non leaf nodes
             btnRenameGroup.Enabled = isRootNode && isSingleNode;
