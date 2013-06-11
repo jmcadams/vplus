@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Security;
 using System.Windows.Forms;
@@ -13,7 +12,7 @@ namespace VixenPlus {
     public class Group {
         public static string AllChannels = Resources.AllChannels;
         public static string ManageGroups = "Manage Groups";
-        public const char GroupTextDivider = '~';
+        public const string GroupTextDivider = "~";
 
         private readonly List<Channel> _currentList = new List<Channel>();
 
@@ -33,16 +32,27 @@ namespace VixenPlus {
                             if (name == null) {
                                 throw new XmlSyntaxException(String.Format(Resources.MissingNameAttribute, Path.GetFileName(groupFile), node));
                             }
-                            var contains = node.Attributes["Contains"] == null ? null : node.Attributes["Contains"].Value;
-                            if (String.IsNullOrEmpty(contains)) contains = null;
+                            //var contains = node.Attributes["Contains"] == null ? null : node.Attributes["Contains"].Value;
+                            //if (String.IsNullOrEmpty(contains)) contains = null;
                             var color = node.Attributes["Color"] == null ? Color.White : Color.FromArgb(Int32.Parse(node.Attributes["Color"].Value));
                             var zoom = node.Attributes["Zoom"] == null ? "100%" : node.Attributes["Zoom"].Value;
-                            var text = node.InnerText != "" ? node.InnerText : String.Empty;
-                            groups.Add(name,
-                                       new GroupData {
-                                           Name = name, GroupColor = color, GroupChannels = (contains == null ? "" : contains + GroupTextDivider) + text,
-                                           Zoom = zoom
-                                       });
+                            var text = String.Empty;
+                            foreach (XmlNode child in node.ChildNodes) {
+                                if (child.InnerText == "") {
+                                    continue;
+                                }
+                                switch (child.Name) {
+                                    case "Channels":
+                                        text += child.InnerText + ",";
+                                        break;
+                                    case "Contains":
+                                        foreach (var group in child.InnerText.Split(new[] {','})) {
+                                            text += GroupTextDivider + @group + ",";
+                                        }
+                                        break;      
+                                }
+                            }
+                            groups.Add(name, new GroupData {Name = name, GroupColor = color, GroupChannels = text.TrimEnd(new[] {','}), Zoom = zoom});
                         }
                     }
                 }
@@ -60,40 +70,22 @@ namespace VixenPlus {
         internal List<Channel> GetGroupChannels(string nodeData, Dictionary<string, GroupData> groups, List<Channel> fullChannelList) {
             try {
                 var groupChannels = groups[nodeData].GroupChannels;
-                if (groupChannels.Contains(GroupTextDivider.ToString(CultureInfo.InvariantCulture))) {
-                    var nodes = groupChannels.Split(new[] {GroupTextDivider});
-                    foreach (var recursiveNode in nodes[0].Split(new[] {','})) {
-                        GetGroupChannels(recursiveNode, groups, fullChannelList);
+                foreach (var node in groupChannels.Split(new[] {','})) {
+                    if (node.StartsWith(GroupTextDivider)) {
+                        GetGroupChannels(node.TrimStart(GroupTextDivider.ToCharArray()), groups, fullChannelList);
                     }
-                    if (nodes[1] != string.Empty) {
-                        AddChannels(groupChannels, fullChannelList);
+                    else {
+                        int channel;
+                        if (Int32.TryParse(node, out channel) && !_currentList.Contains(fullChannelList[channel])) {
+                            _currentList.Add(fullChannelList[channel]);
+                        }
                     }
-                }
-                else {
-                    AddChannels(groupChannels, fullChannelList);
                 }
             }
             catch (KeyNotFoundException) {
                 // we just build the group anyhow since it may have channels missing because of an improper formatted group file.
             }
             return _currentList;
-        }
-
-
-        private void AddChannels(string nodeData, IList<Channel> fullChannelList) {
-            if (nodeData.Contains(GroupTextDivider.ToString(CultureInfo.InvariantCulture))) {
-                nodeData = nodeData.Split(new[] {GroupTextDivider})[1];
-            }
-            var node = nodeData.Split(new[] {','});
-            foreach (var channelNumber in node) {
-                int channel;
-                if (!Int32.TryParse(channelNumber, out channel)) {
-                    continue;
-                }
-                if (!_currentList.Contains(fullChannelList[channel])) {
-                    _currentList.Add(fullChannelList[channel]);
-                }
-            }
         }
     }
 }

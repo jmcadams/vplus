@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
 using System.Windows.Forms;
 
 using CommonControls;
@@ -41,33 +40,21 @@ namespace VixenEditor {
 
 
         private void AddSubNodes(string nodeData, TreeNode parentNode) {
-            if (nodeData.Contains(Group.GroupTextDivider.ToString(CultureInfo.InvariantCulture))) {
-                var groupData = nodeData.Split(Group.GroupTextDivider);
-                foreach (var group in groupData[0].Split(new[] {','})) {
-                    var thisNode = parentNode.Nodes.Add(group);
-                    thisNode.Name = group;
-                    thisNode.Tag = new GroupTagData { NodeColor = _seq.Groups[group].GroupColor, IsLeafNode = false };
-                    AddSubNodes(_seq.Groups[group].GroupChannels, thisNode);
+            foreach (var node in nodeData.Split(new[] {','})) {
+                if (node.StartsWith(Group.GroupTextDivider)) {
+                    var groupNode = node.TrimStart(Group.GroupTextDivider.ToCharArray());
+                    var thisNode = parentNode.Nodes.Add(groupNode);
+                    thisNode.Name = groupNode;
+                    thisNode.Tag = new GroupTagData { NodeColor = _seq.Groups[groupNode].GroupColor, IsLeafNode = false };
+                    AddSubNodes(_seq.Groups[groupNode].GroupChannels, thisNode);
                 }
-                AddChannelNodes(groupData[1], parentNode);
+                else {
+                    var channel = _seq.FullChannels[int.Parse(node)];
+                    var thisNode = parentNode.Nodes.Add(channel.Name);
+                    thisNode.Name = channel.Name;
+                    thisNode.Tag = new GroupTagData { NodeColor = channel.Color, IsLeafNode = true };
+                }
             }
-            else {
-                AddChannelNodes(nodeData, parentNode);
-
-            }
-        }
-
-
-        private void AddChannelNodes(string nodeData, TreeNode parentNode) {
-            if (nodeData == "") {
-                return;
-            }
-            foreach (var channelNum in nodeData.Split(new[] { ',' })) {
-                var channel = _seq.FullChannels[int.Parse(channelNum)];
-                var thisNode = parentNode.Nodes.Add(channel.Name);
-                thisNode.Name = channel.Name;
-                thisNode.Tag = new GroupTagData {NodeColor = channel.Color, IsLeafNode = true};
-            }   
         }
 
 
@@ -90,7 +77,6 @@ namespace VixenEditor {
             foreach (var n in tvGroups.SelectedNodes) {
                 isOnlyLeafNodes &= ((GroupTagData) n.Tag).IsLeafNode;
                 isParentAtRoot &= (n.Parent == null || !n.Parent.FullPath.Contains("\\"));
-                n.FirstNode
                 isRemovable &= n.FullPath.Split(new[] {'\\'}).Length - 1 < 2;
             }
 
@@ -248,11 +234,14 @@ namespace VixenEditor {
 
 
         private void btnExpand_Click(object sender, EventArgs e) {
+            tvGroups.BeginUpdate();
             tvGroups.ExpandAll();
+            tvGroups.EndUpdate();
         }
 
 
         private void btnCollapse_Click(object sender, EventArgs e) {
+            tvGroups.BeginUpdate();
             tvGroups.CollapseAll();
 
             if (tvGroups.SelectedNodes == null) {
@@ -260,6 +249,7 @@ namespace VixenEditor {
             }
 
             foreach (var node in tvGroups.SelectedNodes) node.EnsureVisible();
+            tvGroups.EndUpdate();
         }
 
 
@@ -328,6 +318,11 @@ namespace VixenEditor {
                 if (!existingNodes.Contains(n.Name)) {
                     childNodes.Add(n);
                 }
+            }
+
+            if (childNodes.Count == 0) {
+                MessageBox.Show("All possible child nodes have been added", "No more nodes", MessageBoxButtons.OK);
+                return;
             }
 
             using (var child = new GroupPickerDialog(childNodes)) {
