@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Windows.Forms;
@@ -214,12 +215,13 @@ namespace AppUpdate {
         private static bool RunningModule(MigrationCatalogItem catalogItem) {
             var comparer = new CaseInsensitiveComparer();
             var fileName = Path.GetFileName(catalogItem.DestPath);
-            foreach (ProcessModule module in Process.GetCurrentProcess().Modules) {
-                if (comparer.Compare(Path.GetFileName(module.FileName), fileName) == 0) {
-                    return true;
-                }
-            }
-            return false;
+            //foreach (ProcessModule module in Process.GetCurrentProcess().Modules) {
+            //    if (comparer.Compare(Path.GetFileName(module.FileName), fileName) == 0) {
+            //        return true;
+            //    }
+            //}
+            //return false; 
+            return Process.GetCurrentProcess().Modules.Cast<ProcessModule>().Any(module => comparer.Compare(Path.GetFileName(module.FileName), fileName) == 0);
         }
 
 

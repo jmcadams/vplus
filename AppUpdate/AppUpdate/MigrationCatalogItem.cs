@@ -1,4 +1,6 @@
-﻿namespace AppUpdate {
+﻿using System.Linq;
+
+namespace AppUpdate {
     using System;
 
     internal class MigrationCatalogItem {
@@ -14,12 +16,7 @@
 
 
         public bool HasFlag(string flag) {
-            foreach (var str in _flags) {
-                if (flag == str) {
-                    return true;
-                }
-            }
-            return false;
+            return _flags.Any(str => flag == str);
         }
 
 

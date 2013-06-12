@@ -12,7 +12,9 @@ namespace Butterfly {
             get { return "Butterfly"; }
         }
 
-        public byte[] EffectData { get; private set; }
+        public byte[] EffectData {
+            get { throw new System.NotImplementedException(); }
+        }
 
 
         public void Startup() {

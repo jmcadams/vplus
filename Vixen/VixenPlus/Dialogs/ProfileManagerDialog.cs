@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 using CommonUtils;
@@ -40,14 +41,7 @@ namespace VixenPlus.Dialogs {
             _channelOrderMapping = new List<int>();
             var profile = objectInContext as Profile;
             if (profile != null) {
-                var profileListed = false;
-                foreach (var item in listBoxProfiles.Items) {
-                    if (((Profile) item).Name != profile.Name) {
-                        continue;
-                    }
-                    profileListed = true;
-                    break;
-                }
+                var profileListed = listBoxProfiles.Items.Cast<object>().Any(item => ((Profile) item).Name == profile.Name);
                 if (!profileListed) {
                     listBoxProfiles.Items.Add(profile);
                 }
@@ -436,10 +430,8 @@ namespace VixenPlus.Dialogs {
             }
 
             var tag = (Channel) treeViewProfile.SelectedNode.Tag;
-            var channels = new List<Channel>();
-            foreach (TreeNode node in treeViewProfile.Nodes) {
-                channels.Add((Channel) node.Tag);
-            }
+            var channels = (from TreeNode node in treeViewProfile.Nodes
+                            select (Channel) node.Tag).ToList();
             using (var dialog = new ChannelPropertyDialog(channels, tag, false)) {
                 dialog.ShowDialog();
                 ReloadProfileChannelObjects();
@@ -453,12 +445,14 @@ namespace VixenPlus.Dialogs {
             }
         }
 
-
+        
+        //todo what the hell is this doing?
         private void UpdateProfiles() {
-            var profiles = new List<Profile>();
-            foreach (Profile profile in listBoxProfiles.Items) {
-                profiles.Add(profile);
-            }
+            //var profiles = new List<Profile>();
+            //foreach (Profile profile in listBoxProfiles.Items) {
+            //    profiles.Add(profile);
+            //} 
+            var profiles = listBoxProfiles.Items.Cast<Profile>().ToList();
             listBoxProfiles.SelectedIndex = -1;
             listBoxProfiles.BeginUpdate();
             listBoxProfiles.Items.Clear();

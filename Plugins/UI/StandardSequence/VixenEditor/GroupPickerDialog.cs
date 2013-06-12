@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 using CommonUtils;
@@ -11,11 +12,7 @@ namespace VixenEditor {
 
         public List<string> SelectedItems {
             get {
-                var result = new List<string>();
-                foreach (string item in lbGroups.SelectedItems) {
-                    result.Add(item);
-                }
-                return result;
+                return lbGroups.SelectedItems.Cast<string>().ToList();
             }
         }
 

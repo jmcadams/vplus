@@ -1,5 +1,5 @@
-using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace VixenPlus.Dialogs
@@ -19,11 +19,7 @@ namespace VixenPlus.Dialogs
             var graphics = CreateGraphics();
             _helpText = helpText.Split(new[] {'\n'});
             _lineHeight = (int) graphics.MeasureString("Mg", Font).Height;
-            var num = 0;
-            foreach (var str in _helpText)
-            {
-                num = Math.Max(num, (int) graphics.MeasureString(str, Font).Width);
-            }
+            var num = _helpText.Select(str => (int) graphics.MeasureString(str, Font).Width).Concat(new[] {0}).Max();
             Size = new Size((50 + num) + 50, (90 + (_helpText.Length*_lineHeight)) + 50);
             graphics.Dispose();
             _bigFont = new Font("Arial", 16f, FontStyle.Bold);
@@ -59,9 +55,8 @@ namespace VixenPlus.Dialogs
             e.Graphics.DrawRectangle(Pens.Navy, 50, 25, ClientRectangle.Width - 100, 35);
             e.Graphics.DrawString("Try this", _bigFont, Brushes.DarkBlue, 60f, 30f);
             var lineHeight = 90;
-            for (var i = 0; i < _helpText.Length; i++)
-            {
-                e.Graphics.DrawString(_helpText[i], Font, Brushes.Black, 50f, lineHeight);
+            foreach (var t in _helpText) {
+                e.Graphics.DrawString(t, Font, Brushes.Black, 50f, lineHeight);
                 lineHeight += _lineHeight;
             }
         }

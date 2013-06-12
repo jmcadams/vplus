@@ -2,7 +2,7 @@
 
 using VixenPlus;
 
-namespace NutcrackerEffects {
+namespace Bars {
     public partial class Bars : UserControl, INutcrackerEffect {
         public Bars() {
             InitializeComponent();
@@ -13,7 +13,9 @@ namespace NutcrackerEffects {
             get { return "Bars"; }
         }
 
-        public byte[] EffectData { get; private set; }
+        public byte[] EffectData {
+            get { throw new System.NotImplementedException(); }
+        }
 
 
         public void Startup() {

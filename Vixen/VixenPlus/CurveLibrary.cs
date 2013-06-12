@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace VixenPlus
@@ -224,13 +225,9 @@ namespace VixenPlus
         {
             var list = new List<string>();
             Load(false);
-            if (_dataTable != null)
-            {
+            if (_dataTable != null) {
                 var rowArray = _dataTable.Select(BuildWhereClause(), BuildSortClause());
-                foreach (var row in rowArray)
-                {
-                    list.Add(row[columnName].ToString());
-                }
+                list.AddRange(rowArray.Select(row => row[columnName].ToString()));
             }
             return list.ToArray();
         }

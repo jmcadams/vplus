@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 using CommonControls;
@@ -287,12 +288,8 @@ namespace VixenEditor {
                         msg = "A group must have a unique name and cannot be blank.";
                     }
                     else {
-                        foreach (TreeNode n in tvGroups.Nodes) {
-                            if (n.Text != newName) {
-                                continue;
-                            }
+                        if (tvGroups.Nodes.Cast<TreeNode>().Any(n => n.Text == newName)) {
                             msg = String.Format("A node with the name {0} already exists and group names must be unique.", newName);
-                            break;
                         }
                     }
 
@@ -313,12 +310,7 @@ namespace VixenEditor {
 
         private void btnAddChild_Click(object sender, EventArgs e) {
             var existingNodes = GetAllNodesFor(tvGroups.SelectedNode);
-            var childNodes = new List<TreeNode>();
-            foreach (TreeNode n in tvGroups.Nodes) {
-                if (!existingNodes.Contains(n.Name)) {
-                    childNodes.Add(n);
-                }
-            }
+            var childNodes = tvGroups.Nodes.Cast<TreeNode>().Where(n => !existingNodes.Contains(n.Name)).ToList();
 
             if (childNodes.Count == 0) {
                 MessageBox.Show("All possible child nodes have been added", "No more nodes", MessageBoxButtons.OK);
@@ -331,22 +323,31 @@ namespace VixenEditor {
                     return;
                 }
                 var items = child.SelectedItems;
-                var excludedItems = new List<string>();
-                foreach (var item in items) {
-                    var node = tvGroups.Nodes.Find(item, false)[0];
-                        var excluded = GetAllNodesFor(node);
-                        foreach (var exclude in excluded) {
-                            if (item != exclude && items.Contains(exclude)) {
-                                excludedItems.Add(exclude);
-                            }
-                        }
-                }
+                //var excludedItems = new List<string>();
+                //foreach (var item in items) {
+                //    var node = tvGroups.Nodes.Find(item, false)[0];
+                //    var excluded = GetAllNodesFor(node);
+                //    foreach (var exclude in excluded) {
+                //        if (item != exclude && items.Contains(exclude)) {
+                //            excludedItems.Add(exclude);
+                //        }
+                //    }
+                //}
+                //var rootNode = tvGroups.Nodes.Find(tvGroups.SelectedNode.Name, false)[0];
+                //foreach (var item in items) {
+                //    if (excludedItems.Contains(item)) {
+                //        continue;
+                //    }
+                var excludedItems = (from item in items
+                                     let node = tvGroups.Nodes.Find(item, false)[0]
+                                     let excluded = GetAllNodesFor(node)
+                                     from exclude in excluded
+                                     where item != exclude && items.Contains(exclude)
+                                     select exclude).ToList();
                 var rootNode = tvGroups.Nodes.Find(tvGroups.SelectedNode.Name, false)[0];
-                foreach (var item in items) {
-                    if (excludedItems.Contains(item)) {
-                        continue;
-                    }
-                    var node = tvGroups.Nodes.Find(item, false)[0];
+                foreach (var node in from item in items
+                                     where !excludedItems.Contains(item)
+                                     select tvGroups.Nodes.Find(item, false)[0]) {
                     rootNode.Nodes.Insert(rootNode.GetNodeCount(false), (TreeNode)node.Clone());
                 }
             }

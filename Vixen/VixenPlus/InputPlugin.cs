@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Xml;
 
 namespace VixenPlus {
@@ -68,13 +68,7 @@ namespace VixenPlus {
 
 
         public Input[] GetIterators() {
-            var list = new List<Input>();
-            foreach (var input in Inputs) {
-                if (input.IsMappingIterator) {
-                    list.Add(input);
-                }
-            }
-            return list.ToArray();
+            return Inputs.Where(input => input.IsMappingIterator).ToArray();
         }
 
 

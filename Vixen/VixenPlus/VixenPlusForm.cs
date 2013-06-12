@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading;
@@ -49,7 +50,7 @@ namespace VixenPlus
         private readonly Timers _timers;
         private readonly string _timersPath;
 
-        public VixenPlusForm(string[] args)
+        public VixenPlusForm(IEnumerable<string> args)
         {
             var list = new List<string>();
             list.AddRange(args);
@@ -198,13 +199,9 @@ namespace VixenPlus
             var list = new List<ILoadable>();
             if (_loadables.ContainsKey(interfaceName))
             {
-                foreach (var obj2 in _loadables[interfaceName])
-                {
-                    if (obj2.Instance != null)
-                    {
-                        list.Add(obj2.Instance);
-                    }
-                }
+                list.AddRange(from obj2 in _loadables[interfaceName]
+                              where obj2.Instance != null
+                              select obj2.Instance);
             }
             return list;
         }
@@ -427,11 +424,7 @@ namespace VixenPlus
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            foreach (var form in MdiChildren)
-            {
-                if ((!(form is IUIPlugIn)) || (CheckDirty((IUIPlugIn) form) != DialogResult.Cancel)) {
-                    continue;
-                }
+            if (MdiChildren.Any(form => (form is IUIPlugIn) && (CheckDirty((IUIPlugIn) form) == DialogResult.Cancel))) {
                 e.Cancel = true;
                 return;
             }
@@ -474,17 +467,10 @@ namespace VixenPlus
             }
         }
 
-        private static bool FormContainsChild(Form parent, Form child)
-        {
-            foreach (var form in parent.MdiChildren)
-            {
-                if (form == child)
-                {
-                    return true;
-                }
-            }
-            return false;
+        private static bool FormContainsChild(Form parent, Form child) {
+            return parent.MdiChildren.Any(form => form == child);
         }
+
 
         private bool GetNewName(IUIPlugIn pluginInstance)
         {
@@ -966,7 +952,7 @@ namespace VixenPlus
                 return;
             }
 
-            var path = "";
+            string path;
             using (var data = new StreamReader("redirect.data")) {
                 path = data.ReadLine();
             }

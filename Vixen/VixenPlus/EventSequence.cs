@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -680,13 +681,9 @@ namespace VixenPlus {
 
             var channelIndexes = Sorts.CurrentOrder;
 
-            var sortedChannels = new List<Channel>();
-            for (var i = 0; i < channelIndexes.ChannelIndexes.Count; i++) {
-                if (!_groupedAndSortedChannels.Contains(FullChannels[channelIndexes.ChannelIndexes[i]])) {
-                    continue;
-                }
-                sortedChannels.Add(FullChannels[channelIndexes.ChannelIndexes[i]]);
-            }
+            var sortedChannels = (from t in channelIndexes.ChannelIndexes
+                                  where _groupedAndSortedChannels.Contains(FullChannels[t])
+                                  select FullChannels[t]).ToList();
             _groupedAndSortedChannels = sortedChannels;
         }
 

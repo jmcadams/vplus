@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -64,16 +65,10 @@ namespace VixenPlus.Dialogs {
 
         public object[] MappedPluginList {
             get {
-                var list = new List<object[]>();
-                foreach (XmlNode node in _setupData.GetAllPluginData()) {
-                    if (node.Attributes != null) {
-                        list.Add(new object[] {
-                            string.Format("{0} ({1}-{2})", node.Attributes["name"].Value, node.Attributes["from"].Value, node.Attributes["to"].Value),
-                            bool.Parse(node.Attributes["enabled"].Value), Convert.ToInt32(node.Attributes["id"].Value)
-                        });
-                    }
-                }
-                return list.ToArray();
+                return (from XmlNode node in _setupData.GetAllPluginData()
+                        let attributes = node.Attributes
+                        where attributes != null
+                        select new object[] {string.Format("{0} ({1}-{2})", attributes["name"].Value, attributes["from"].Value, attributes["to"].Value), bool.Parse(attributes["enabled"].Value), Convert.ToInt32(attributes["id"].Value)}).ToArray();
             }
         }
 

@@ -1,16 +1,16 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
+using System.Linq;
+using System.Windows.Forms;
+using System.Xml;
 
 using Properties;
 
+using VixenPlus;
+
 namespace VixenEditor {
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Windows.Forms;
-    using System.Xml;
-
-    using VixenPlus;
-
     internal static class ToolStripManager {
 
         internal const int IconSizeSmall = 24;
@@ -77,19 +77,10 @@ namespace VixenEditor {
                 if (toolStripContainer == null) {
                     continue;
                 }
-                var toolStrips = new List<ToolStrip>();
-                foreach (ToolStrip strip in toolStripContainer.TopToolStripPanel.Controls) {
-                    toolStrips.Add(strip);
-                }
-                foreach (ToolStrip strip in toolStripContainer.LeftToolStripPanel.Controls) {
-                    toolStrips.Add(strip);
-                }
-                foreach (ToolStrip strip in toolStripContainer.RightToolStripPanel.Controls) {
-                    toolStrips.Add(strip);
-                }
-                foreach (ToolStrip strip in toolStripContainer.BottomToolStripPanel.Controls) {
-                    toolStrips.Add(strip);
-                }
+                var toolStrips = toolStripContainer.TopToolStripPanel.Controls.Cast<ToolStrip>().ToList();
+                toolStrips.AddRange(toolStripContainer.LeftToolStripPanel.Controls.Cast<ToolStrip>());
+                toolStrips.AddRange(toolStripContainer.RightToolStripPanel.Controls.Cast<ToolStrip>());
+                toolStrips.AddRange(toolStripContainer.BottomToolStripPanel.Controls.Cast<ToolStrip>());
                 toolStripContainer.TopToolStripPanel.Controls.Clear();
                 toolStripContainer.LeftToolStripPanel.Controls.Clear();
                 toolStripContainer.RightToolStripPanel.Controls.Clear();
@@ -182,9 +173,7 @@ namespace VixenEditor {
                     }
                     return 1;
                 });
-                foreach (ToolStrip strip in list2) {
-                    list.Add(strip);
-                }
+                list.AddRange(list2.Cast<ToolStrip>());
             }
             foreach (var control in list) {
                 var node2 = Xml.SetNewValue(node, "Strip", string.Empty);

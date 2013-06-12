@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -308,12 +309,8 @@ namespace VixenPlus.Dialogs {
                 }
                 case 4:
                     if (textBoxChannelNames.Lines.Length == Convert.ToInt32(textBoxChannelCount.Text)) {
-                        foreach (var str2 in textBoxChannelNames.Lines) {
-                            if (str2.Trim() != string.Empty) {
-                                continue;
-                            }
+                        if (textBoxChannelNames.Lines.Any(str2 => str2.Trim() == string.Empty)) {
                             text = Resources.ChannelNameCantBeBlank;
-                            break;
                         }
                         break;
                     }

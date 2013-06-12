@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Timers;
 using System.Windows.Forms;
 using System.Xml;
@@ -82,10 +83,7 @@ namespace VixenPlus
                 var allSongsNode = _xmlDocument.SelectNodes("//MusicPlayer/Songs/*");
                 if (allSongsNode != null)
                 {
-                    foreach (XmlNode node in allSongsNode)
-                    {
-                        list.Add(node);
-                    }
+                    list.AddRange(allSongsNode.Cast<XmlNode>());
                 }
                 var random = new Random();
                 while (list.Count > 0)

@@ -139,10 +139,11 @@ namespace Preview {
                 foreach (var num5 in _channelDictionary[selectedIndex]) {
                     num = (int) ((num5 >> 0x10) * (_cellSize + 1));
                     num2 = (int) ((num5 & 0xffff) * (_cellSize + 1));
-                    if (e.ClipRectangle.Contains(num, num2)) {
-                        brush.Color = channel.Color;
-                        e.Graphics.FillRectangle(brush, num, num2, _cellSize, _cellSize);
+                    if (!e.ClipRectangle.Contains(num, num2)) {
+                        continue;
                     }
+                    brush.Color = channel.Color;
+                    e.Graphics.FillRectangle(brush, num, num2, _cellSize, _cellSize);
                 }
             }
         }

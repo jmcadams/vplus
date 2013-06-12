@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading;
@@ -353,22 +354,12 @@ namespace VixenPlus {
 
 
         private bool FindEventSequence(object uniqueReference) {
-            foreach (var stub in CurrentObject.EventSequences) {
-                if (stub.Sequence == uniqueReference) {
-                    return true;
-                }
-            }
-            return false;
+            return CurrentObject.EventSequences.Any(stub => stub.Sequence == uniqueReference);
         }
 
 
         private bool FindOutputPlugIn(object uniqueReference) {
-            foreach (var outputPlugIn in _engineContexts[_primaryContext].RouterContext.OutputPluginList) {
-                if (outputPlugIn.PlugIn == uniqueReference) {
-                    return true;
-                }
-            }
-            return false;
+            return _engineContexts[_primaryContext].RouterContext.OutputPluginList.Any(outputPlugIn => outputPlugIn.PlugIn == uniqueReference);
         }
 
 
@@ -608,13 +599,8 @@ namespace VixenPlus {
             try {
                 var assembly = Assembly.LoadFile(enginePath);
                 foreach (var type in assembly.GetExportedTypes()) {
-                    foreach (var type2 in type.GetInterfaces()) {
-                        if (type2.Name != "IEngine") {
-                            continue;
-                        }
-
+                    if (type.GetInterfaces().Any(type2 => type2.Name == "IEngine")) {
                         engine = (IEngine) Activator.CreateInstance(type);
-                        break;
                     }
                     if (engine != null) {
                         goto Label_00EB; // TODO: can break; go here?
@@ -802,11 +788,8 @@ namespace VixenPlus {
 
 
         private static byte[,] ReconfigureSourceData(EventSequence sequence) {
-            var list = new List<int>();
             var buffer = new byte[sequence.FullChannelCount,sequence.TotalEventPeriods];
-            foreach (var channel in sequence.FullChannels) {
-                list.Add(channel.OutputChannel);
-            }
+            var list = sequence.FullChannels.Select(channel => channel.OutputChannel).ToList();
             for (var i = 0; i < sequence.FullChannelCount; i++) {
                 var row = list[i];
                 for (var column = 0; column < sequence.TotalEventPeriods; column++) {
@@ -844,14 +827,7 @@ namespace VixenPlus {
 
 
         private void RestartBackgroundObjects() {
-            Engine8 engine = null;
-            foreach (var engine2 in InstanceList) {
-                if (!engine2.IsRunning) {
-                    continue;
-                }
-                engine = engine2;
-                break;
-            }
+            var engine = InstanceList.FirstOrDefault(engine2 => engine2.IsRunning);
             if (engine == null) {
                 _host.StartBackgroundObjects();
             }

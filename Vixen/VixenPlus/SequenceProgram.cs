@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -69,11 +70,7 @@ namespace VixenPlus {
 
         public List<string> EventSequenceFileNames {
             get {
-                var list = new List<string>();
-                foreach (var stub in EventSequences) {
-                    list.Add(Path.GetFileName(stub.FileName));
-                }
-                return list;
+                return EventSequences.Select(stub => Path.GetFileName(stub.FileName)).ToList();
             }
         }
 
@@ -133,11 +130,7 @@ namespace VixenPlus {
 
         public int Length {
             get {
-                var num = 0;
-                foreach (var stub in EventSequences) {
-                    num += stub.Length;
-                }
-                return num;
+                return EventSequences.Sum(stub => stub.Length);
             }
         }
 
@@ -158,8 +151,8 @@ namespace VixenPlus {
                 if (_profile != null) {
                     return;
                 }
-                for (var i = 0; i < EventSequences.Count; i++) {
-                    EventSequences[i].Mask[0] = value[0];
+                foreach (var t in EventSequences) {
+                    t.Mask[0] = value[0];
                 }
             }
         }

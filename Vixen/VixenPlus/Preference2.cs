@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
@@ -312,7 +311,7 @@ namespace VixenPlus {
 
         public static string FixDeviceName(string deviceName)
         {
-            var garbageStart = deviceName.IndexOf("\0");
+            var garbageStart = deviceName.IndexOf("\0", StringComparison.Ordinal);
             return garbageStart < 0 ? deviceName : deviceName.Substring(0, garbageStart);
         }
     }

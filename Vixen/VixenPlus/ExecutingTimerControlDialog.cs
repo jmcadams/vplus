@@ -1,6 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Forms;
 using CommonUtils;
 
@@ -98,10 +98,7 @@ namespace VixenPlus {
 
 
         private void buttonResumeAll_Click(object sender, EventArgs e) {
-            var list = new List<TimerContext>();
-            foreach (TimerContext context in listBoxTimers.Items) {
-                list.Add(context);
-            }
+            var list = listBoxTimers.Items.Cast<TimerContext>().ToList();
             foreach (var context in list) {
                 int sequencePosition;
                 if (context.ExecutionInterface.EngineStatus(context.ExecutionContextHandle, out sequencePosition) == Utils.ExecutionPaused) {
@@ -248,17 +245,14 @@ namespace VixenPlus {
 
 
         private void StopAll() {
-            var list = new List<TimerContext>();
-            foreach (TimerContext context in listBoxTimers.Items) {
-                list.Add(context);
-            }
+            var list = listBoxTimers.Items.Cast<TimerContext>().ToList();
             foreach (var context in list) {
                 StopExecutingTimer(context);
             }
         }
 
 
-        private void StopExecutingTimer(TimerContext context) {
+        private static void StopExecutingTimer(TimerContext context) {
             context.Stopping = true;
             if (context.ExecutionInterface.EngineStatus(context.ExecutionContextHandle) == Utils.ExecutionStopped) {
                 return;
@@ -274,16 +268,11 @@ namespace VixenPlus {
 
 
         private void timerWatchdog_Tick(object sender, EventArgs e) {
-            var list = new List<TimerContext>();
-            foreach (TimerContext context in listBoxTimers.Items) {
-                list.Add(context);
-            }
-            foreach (var context in list) {
-                if (((Utils.IsNearlyEqual((float) context.Timer.ObjectLength.TotalMilliseconds, 0.0f) && !context.Stopping) &&
-                     (context.ExecutionInterface.EngineStatus(context.ExecutionContextHandle) != Utils.ExecutionStopped)) &&
-                    (DateTime.Now > context.EndDateTime)) {
-                    StopExecutingTimer(context);
-                }
+            var list = listBoxTimers.Items.Cast<TimerContext>().ToList();
+            foreach (var context in list.Where(context => ((Utils.IsNearlyEqual((float) context.Timer.ObjectLength.TotalMilliseconds, 0.0f) && !context.Stopping) &&
+                                                           (context.ExecutionInterface.EngineStatus(context.ExecutionContextHandle) != Utils.ExecutionStopped)) &&
+                                                          (DateTime.Now > context.EndDateTime))) {
+                StopExecutingTimer(context);
             }
         }
     }

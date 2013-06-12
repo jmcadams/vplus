@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Forms;
 
 using Properties;
@@ -42,11 +43,8 @@ namespace VixenPlus.Dialogs {
 
         public List<Color> ChannelColors {
             get {
-                var list = new List<Color>();
-                foreach (Channel channel in listBoxChannels.Items) {
-                    list.Add(channel.Color);
-                }
-                return list;
+                return (from Channel channel in listBoxChannels.Items
+                        select channel.Color).ToList();
             }
         }
 

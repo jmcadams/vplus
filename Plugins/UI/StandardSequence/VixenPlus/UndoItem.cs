@@ -1,7 +1,10 @@
 using System.Collections.Generic;
+
 using CommonUtils;
 
-namespace VixenPlus {
+using VixenPlus;
+
+namespace VixenEditor.VixenPlus {
     internal class UndoItem {
         private readonly EventSequence _sequence;
 

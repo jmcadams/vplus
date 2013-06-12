@@ -15,15 +15,6 @@ namespace CommonControls {
 
         public List<TreeNode> SelectedNodes {
             get { return _selectedNodes; }
-            private set {
-                ClearSelectedNodes();
-                if (value == null) {
-                    return;
-                }
-                foreach (var node in value) {
-                    ToggleNode(node, true);
-                }
-            }
         }
 
         // Note we use the new keyword to Hide the native treeview's SelectedNode property.

@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 
 using CommonUtils;
@@ -236,28 +237,6 @@ namespace VixenPlus {
         }
 
 
-        private static int MaxOf(params int[] values) {
-            var num = values[0];
-            foreach (var num2 in values) {
-                if (num2 > num) {
-                    num = num2;
-                }
-            }
-            return num;
-        }
-
-
-        private static int MinOf(params int[] values) {
-            var num = values[0];
-            foreach (var num2 in values) {
-                if (num2 < num) {
-                    num = num2;
-                }
-            }
-            return num;
-        }
-
-
         private void pictureBoxCurve_MouseLeave(object sender, EventArgs e) {
             Cursor = Cursors.Default;
         }
@@ -290,10 +269,10 @@ namespace VixenPlus {
                         num3 = _selectedPointRelative + 1;
                     }
                     rc.Y =
-                        MinOf(new[] {num, _curvePoints[_selectedPointRelative, 1], _curvePoints[selectedPointRelative, 1], _curvePoints[num3, 1]}) -
+                        (new[] {num, _curvePoints[_selectedPointRelative, 1], _curvePoints[selectedPointRelative, 1], _curvePoints[num3, 1]}).Min() -
                         _pointSize;
                     rc.Height =
-                        ((MaxOf(new[] {num, _curvePoints[_selectedPointRelative, 1], _curvePoints[selectedPointRelative, 1], _curvePoints[num3, 1]}) +
+                        ((((new[] {num, _curvePoints[_selectedPointRelative, 1], _curvePoints[selectedPointRelative, 1], _curvePoints[num3, 1]}).Max()) +
                           _pointSize) - rc.Y) + _pointSize;
                     _points[_selectedPointAbsolute] =
                         (byte) (_points[_selectedPointAbsolute] + ((byte) ((_curvePoints[_selectedPointRelative, 1] - num) / _gridSpacing)));

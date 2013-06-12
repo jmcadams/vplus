@@ -1,4 +1,4 @@
-namespace VixenPlus {
+namespace VixenEditor.VixenPlus {
 
     internal enum UndoOriginalBehavior
     {

@@ -1,4 +1,4 @@
-﻿namespace NutcrackerEffects {
+﻿namespace Bars {
     partial class Bars {
         /// <summary>
         /// Required designer variable.

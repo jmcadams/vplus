@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Forms;
 
 using Properties;
@@ -205,17 +206,9 @@ namespace VixenPlus
             if (_isInternal) {
                 return;
             }
-            var list = new List<Channel>();
-            foreach (Channel channel in listBoxMappedChannels.Items)
-            {
-                list.Add(channel);
-            }
-            foreach (Channel channel in listBoxMappedChannels.Items)
-            {
-                if (!listBoxChannels.SelectedItems.Contains(channel))
-                {
-                    list.Remove(channel);
-                }
+            var list = listBoxMappedChannels.Items.Cast<Channel>().ToList();
+            foreach (var channel in listBoxMappedChannels.Items.Cast<Channel>().Where(channel => !listBoxChannels.SelectedItems.Contains(channel))) {
+                list.Remove(channel);
             }
             foreach (Channel channel in listBoxChannels.SelectedItems)
             {
@@ -228,10 +221,7 @@ namespace VixenPlus
             {
                 var outputChannelIdList = _editingMappingSets.GetOutputChannelIdList((Input) listBoxInputs.SelectedItem);
                 outputChannelIdList.Clear();
-                foreach (var channel in list)
-                {
-                    outputChannelIdList.Add(channel.Id.ToString(CultureInfo.InvariantCulture));
-                }
+                outputChannelIdList.AddRange(list.Select(channel => channel.Id.ToString(CultureInfo.InvariantCulture)));
             }
             listBoxMappedChannels.BeginUpdate();
             listBoxMappedChannels.Items.Clear();

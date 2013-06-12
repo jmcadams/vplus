@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 using Properties;
@@ -71,11 +72,8 @@ namespace VixenPlus {
             else {
                 Cursor = Cursors.WaitCursor;
                 try {
-                    var list = new List<CurveLibraryRecord>();
-                    foreach (ListViewItem item in listViewCurvesExport.SelectedItems) {
-                        list.Add(item.Tag as CurveLibraryRecord);
-                    }
-                    ExportRecordsToFile(list.ToArray(), FilePath);
+                    ExportRecordsToFile((from ListViewItem item in listViewCurvesExport.SelectedItems
+                                         select item.Tag as CurveLibraryRecord).ToArray(), FilePath);
                     MessageBox.Show(Resources.ExportSuccess, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 }
                 catch (Exception exception) {

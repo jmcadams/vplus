@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Xml;
 
@@ -212,14 +213,7 @@ namespace VixenPlus
                 var timerNode = node.SelectNodes("Timer");
                 if (timerNode != null)
                 {
-                    foreach (XmlNode node2 in timerNode)
-                    {
-                        var item = new Timer(node2);
-                        if (item.RecurrenceEnd >= DateTime.Today)
-                        {
-                            list.Add(item);
-                        }
-                    }
+                    list.AddRange(timerNode.Cast<XmlNode>().Select(node2 => new Timer(node2)).Where(item => item.RecurrenceEnd >= DateTime.Today));
                 }
             }
             _timers = list.ToArray();

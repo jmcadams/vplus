@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
@@ -628,12 +629,7 @@ namespace VixenPlus {
 
 
         private int FindExecutableObject(object uniqueReference) {
-            foreach (var num in _registeredContexts.Keys) {
-                if (_registeredContexts[num].Object == uniqueReference) {
-                    return num;
-                }
-            }
-            return 0;
+            return _registeredContexts.Keys.FirstOrDefault(num => _registeredContexts[num].Object == uniqueReference);
         }
 
 
@@ -652,14 +648,10 @@ namespace VixenPlus {
 
 
         private int FindOutputPlugInUI(object uniqueReference) {
-            foreach (var num in _registeredContexts.Keys) {
-                foreach (var form in _registeredContexts[num].OutputPlugInForms) {
-                    if (form == uniqueReference) {
-                        return num;
-                    }
-                }
-            }
-            return 0;
+            return (from num in _registeredContexts.Keys
+                    from form in _registeredContexts[num].OutputPlugInForms
+                    where form == uniqueReference
+                    select num).FirstOrDefault();
         }
 
 

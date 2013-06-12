@@ -10,7 +10,7 @@ namespace VixenPlus.Dialogs
         private readonly Preference2 _preferences;
         private Channel _currentChannel;
         private bool _internalChange;
-        private List<Channel> _channels;
+        private readonly List<Channel> _channels;
 
 
         public ChannelPropertyDialog(List<Channel> channels, Channel currentChannel, bool showOutputChannel)

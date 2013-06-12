@@ -1,10 +1,9 @@
+using System;
+using System.Windows.Forms;
+using CommonUtils;
+using VixenPlus;
+    
 namespace VixenEditor {
-    using System;
-    using System.Windows.Forms;
-
-    using VixenPlus;
-    using CommonUtils;
-
     internal partial class DrawingIntensityDialog : Form {
 
         private readonly bool _actualLevels;

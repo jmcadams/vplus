@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
 
 namespace VixenPlus
@@ -109,18 +110,10 @@ namespace VixenPlus
             return null;
         }
 
-        public int GetMappingSetCountFor(Input input)
-        {
-            var num = 0;
-            foreach (var set in _mappingSets)
-            {
-                if (set.HasMappingFor(input))
-                {
-                    num++;
-                }
-            }
-            return num;
+        public int GetMappingSetCountFor(Input input) {
+            return _mappingSets.Count(set => set.HasMappingFor(input));
         }
+
 
         internal List<string> GetOutputChannelIdList(Input input)
         {

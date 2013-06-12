@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Security;
 using System.Windows.Forms;
 using System.Xml;
@@ -46,9 +47,7 @@ namespace VixenPlus {
                                         text += child.InnerText + ",";
                                         break;
                                     case "Contains":
-                                        foreach (var group in child.InnerText.Split(new[] {','})) {
-                                            text += GroupTextDivider + @group + ",";
-                                        }
+                                        text = child.InnerText.Split(new[] {','}).Aggregate(text, (current, @group) => current + (GroupTextDivider + @group + ","));
                                         break;      
                                 }
                             }

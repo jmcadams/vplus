@@ -15,8 +15,13 @@ using CommonUtils;
 
 using Properties;
 
+using VixenEditor.VixenPlus;
+
 using VixenPlus;
 using VixenPlus.Dialogs;
+
+using Channel = VixenPlus.Channel;
+using SortOrder = VixenPlus.SortOrder;
 
 namespace VixenEditor {
     public partial class StandardSequence : UIBase {
@@ -112,8 +117,8 @@ namespace VixenEditor {
         private uint[] _waveformPcmData;
         private uint[] _waveformPixelData;
         
-        private VixenPlus.Channel _currentlyEditingChannel;
-        private VixenPlus.Channel _selectedChannel;
+        private Channel _currentlyEditingChannel;
+        private Channel _selectedChannel;
 
         private const double ZoomStep = 0.05;
 
@@ -907,7 +912,7 @@ namespace VixenEditor {
 
             var flattenedProfile = _sequence.Profile;
             _sequence.Profile = null;
-            var list = new List<VixenPlus.Channel>();
+            var list = new List<Channel>();
             list.AddRange(flattenedProfile.Channels);
             _sequence.FullChannels = list;
             _sequence.Sorts.LoadFrom(flattenedProfile.Sorts);
@@ -956,7 +961,7 @@ namespace VixenEditor {
         //}
 
 
-        private Rectangle GetChannelNameRect(VixenPlus.Channel channel) {
+        private Rectangle GetChannelNameRect(Channel channel) {
             return channel != null
                        ? new Rectangle(0,
                                        (GetChannelSortedIndex(channel) - vScrollBar1.Value) * _gridRowHeight + pictureBoxTime.Height +
@@ -969,7 +974,7 @@ namespace VixenEditor {
         //}
 
 
-        private int GetChannelSortedIndex(VixenPlus.Channel channel) {
+        private int GetChannelSortedIndex(Channel channel) {
             return _sequence.Channels.IndexOf(channel);
             //return _channelOrderMapping.IndexOf(_sequence.Channels.IndexOf(channel));
         }
@@ -1655,7 +1660,7 @@ namespace VixenEditor {
 
         private void pictureBoxChannels_DragDrop(object sender, DragEventArgs e) {
 
-            if (!e.Data.GetDataPresent(typeof (VixenPlus.Channel))) {
+            if (!e.Data.GetDataPresent(typeof (Channel))) {
                 return;
             }
 
@@ -1691,7 +1696,7 @@ namespace VixenEditor {
 
         private void pictureBoxChannels_DragOver(object sender, DragEventArgs e) {
             const int delay = 20;
-            if (!e.Data.GetDataPresent(typeof (VixenPlus.Channel))) {
+            if (!e.Data.GetDataPresent(typeof (Channel))) {
                 return;
             }
 
@@ -3595,7 +3600,7 @@ namespace VixenEditor {
                 return;
             }
 
-            _sequence.Sorts.Remove((VixenPlus.SortOrder) toolStripComboBoxChannelOrder.SelectedItem);
+            _sequence.Sorts.Remove((SortOrder) toolStripComboBoxChannelOrder.SelectedItem);
             toolStripComboBoxChannelOrder.Items.RemoveAt(toolStripComboBoxChannelOrder.SelectedIndex);
             toolStripButtonDeleteOrder.Enabled = false;
             IsDirty = true;
@@ -3991,7 +3996,7 @@ namespace VixenEditor {
 
 
         private void toolStripButtonSaveOrder_Click(object sender, EventArgs e) {
-            VixenPlus.SortOrder newSortOrder = null;
+            SortOrder newSortOrder = null;
             using (var dialog = new TextQueryDialog(Resources.ReorderNameHeading, Resources.ReorderNamePrompt, string.Empty)) {
                 var dialogResult = DialogResult.No;
                 while (dialogResult == DialogResult.No) {
@@ -4021,7 +4026,7 @@ namespace VixenEditor {
                     toolStripComboBoxChannelOrder.SelectedItem = newSortOrder;
                 }
                 else {
-                    _sequence.Sorts.Add(newSortOrder = new VixenPlus.SortOrder(dialog.Response, _channelOrderMapping));
+                    _sequence.Sorts.Add(newSortOrder = new SortOrder(dialog.Response, _channelOrderMapping));
                     toolStripComboBoxChannelOrder.Items.Insert(toolStripComboBoxChannelOrder.Items.Count - 1, newSortOrder);
                     toolStripComboBoxChannelOrder.SelectedIndex = toolStripComboBoxChannelOrder.Items.Count - 2;
                 }
@@ -4223,7 +4228,7 @@ namespace VixenEditor {
                 }
                 else {
                     _channelOrderMapping.Clear();
-                    _channelOrderMapping.AddRange(((VixenPlus.SortOrder) toolStripComboBoxChannelOrder.SelectedItem).ChannelIndexes);
+                    _channelOrderMapping.AddRange(((SortOrder) toolStripComboBoxChannelOrder.SelectedItem).ChannelIndexes);
                     _sequence.LastSort = toolStripComboBoxChannelOrder.SelectedIndex;
                     toolStripButtonDeleteOrder.Enabled = true;
                     if (_sequence.Profile == null) {
@@ -4626,7 +4631,7 @@ namespace VixenEditor {
             get { return "Vixen/Vixen+ sequence"; }
         }
 
-        private VixenPlus.Channel SelectedChannel {
+        private Channel SelectedChannel {
             get { return _selectedChannel; }
             set {
                 if (_selectedChannel == value) {

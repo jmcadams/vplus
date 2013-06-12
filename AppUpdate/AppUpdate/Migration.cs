@@ -1,4 +1,6 @@
-﻿namespace AppUpdate
+﻿using System.Linq;
+
+namespace AppUpdate
 {
     using System;
 
@@ -12,16 +14,16 @@
             Flags = strArray[2].Trim().Split(new[] { ',' });
         }
 
-        public bool HasFlag(string flag)
-        {
-            foreach (var str in Flags)
-            {
-                if (flag == str)
-                {
-                    return true;
-                }
-            }
-            return false;
+        public bool HasFlag(string flag) {
+            //foreach (var str in Flags)
+            //{
+            //    if (flag == str)
+            //    {
+            //        return true;
+            //    }
+            //}
+            //return false;
+            return Flags.Any(str => flag == str);
         }
 
 

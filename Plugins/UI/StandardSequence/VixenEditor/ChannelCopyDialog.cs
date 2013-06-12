@@ -1,9 +1,9 @@
+using System;
+using System.Windows.Forms;
+
+using VixenPlus;
+
 namespace VixenEditor {
-    using System;
-    using System.Windows.Forms;
-
-    using VixenPlus;
-
     internal partial class ChannelCopyDialog : Form {
         private readonly AffectGridDelegate _affectGridDelegate;
         private readonly EventSequence _eventSequence;

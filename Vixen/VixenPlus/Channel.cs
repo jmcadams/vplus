@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -144,11 +144,7 @@ namespace VixenPlus {
             Xml.SetAttribute(node, "id", Id.ToString(CultureInfo.InvariantCulture));
             Xml.SetAttribute(node, "enabled", Enabled.ToString());
             if (DimmingCurve != null) {
-                var list = new List<string>();
-                foreach (var num in DimmingCurve) {
-                    list.Add(num.ToString(CultureInfo.InvariantCulture));
-                }
-                Xml.SetValue(node, "Curve", string.Join(",", list.ToArray()));
+                Xml.SetValue(node, "Curve", string.Join(",", DimmingCurve.Select(num => num.ToString(CultureInfo.InvariantCulture)).ToArray()));
             }
             return node;
         }

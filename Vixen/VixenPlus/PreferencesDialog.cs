@@ -1,8 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using FMOD;
 using Properties;
@@ -254,17 +254,11 @@ namespace VixenPlus {
 
         private void PopulateProfileLists() {
             var boxArray = new[] {comboBoxDefaultProfile, comboBoxSyncProfile, comboBoxAsyncProfile};
-            var list = new List<string>();
-            foreach (var str in Directory.GetFiles(Paths.ProfilePath, "*.pro")) {
-                list.Add(Path.GetFileNameWithoutExtension(str));
-            }
             foreach (var box in boxArray) {
                 var selectedIndex = box.SelectedIndex;
                 box.BeginUpdate();
                 box.Items.Clear();
-                // ReSharper disable CoVariantArrayConversion
-                box.Items.AddRange(list.ToArray());
-                // ReSharper restore CoVariantArrayConversion
+                box.Items.AddRange(Directory.GetFiles(Paths.ProfilePath, "*.pro").Select(Path.GetFileNameWithoutExtension).ToArray());
                 if (selectedIndex < box.Items.Count) {
                     box.SelectedIndex = selectedIndex;
                 }

@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Xml;
 
 namespace VixenPlus {
@@ -76,26 +76,18 @@ namespace VixenPlus {
 
         public int GetHighestChannel(bool enabledOnly) {
             var list = enabledOnly ? GetAllPluginData(PluginType.Output, true) : GetAllPluginData();
-            var num = 0;
-            foreach (XmlNode node in list) {
-                if (node.Attributes != null) {
-                    num = Math.Max(num, Convert.ToInt32(node.Attributes["to"].Value));
-                }
-            }
-            return num;
+            return (from XmlNode node in list
+                    let attributes = node.Attributes
+                    where attributes != null
+                    select Convert.ToInt32(attributes["to"].Value)).Concat(new[] {0}).Max();
         }
 
 
         public OutputPlugin[] GetOutputPlugins() {
-            var list = new List<OutputPlugin>();
-            foreach (XmlNode node in GetAllPluginData()) {
-                if (node.Attributes != null) {
-                    list.Add(new OutputPlugin(node.Attributes["name"].Value, int.Parse(node.Attributes["id"].Value),
-                                              bool.Parse(node.Attributes["enabled"].Value), int.Parse(node.Attributes["from"].Value),
-                                              int.Parse(node.Attributes["to"].Value)));
-                }
-            }
-            return list.ToArray();
+            return (from XmlNode node in GetAllPluginData()
+                    let attributes = node.Attributes
+                    where attributes != null
+                    select new OutputPlugin(attributes["name"].Value, int.Parse(attributes["id"].Value), bool.Parse(attributes["enabled"].Value), int.Parse(attributes["from"].Value), int.Parse(attributes["to"].Value))).ToArray();
         }
 
 
