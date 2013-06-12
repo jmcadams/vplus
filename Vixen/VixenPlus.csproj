@@ -300,6 +300,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="VixenPlus\GroupData.cs" />
+    <Compile Include="VixenPlus\INutcrackerEffect.cs" />
     <Compile Include="VixenPlus\VixenPlusForm.cs">
       <SubType>Form</SubType>
     </Compile>

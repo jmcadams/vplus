@@ -81,6 +81,9 @@
     <ErrorReport>prompt</ErrorReport>
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>VixenEditor</RootNamespace>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System">
       <Name>System</Name>
@@ -102,12 +105,6 @@
     </Compile>
     <Compile Include="Global.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="NutcrackerControlDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="NutcrackerControlDialog.Designer.cs">
-      <DependentUpon>NutcrackerControlDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="VixenEditor\GroupDialog.cs">
       <SubType>Form</SubType>
@@ -176,6 +173,18 @@
     <Compile Include="VixenEditor\IntensityAdjustDialog.Designer.cs">
       <DependentUpon>IntensityAdjustDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="VixenEditor\NutcrackerControlDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VixenEditor\NutcrackerControlDialog.Designer.cs">
+      <DependentUpon>NutcrackerControlDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VixenEditor\NutcrackerEffectControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="VixenEditor\NutcrackerEffectControl.Designer.cs">
+      <DependentUpon>NutcrackerEffectControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="VixenEditor\ProgressDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -235,9 +244,6 @@
     </Compile>
     <Compile Include="VixenPlus\UndoItem.cs" />
     <Compile Include="VixenPlus\UndoOriginalBehavior.cs" />
-    <EmbeddedResource Include="NutcrackerControlDialog.resx">
-      <DependentUpon>NutcrackerControlDialog.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor.Properties.Resources.resources" />
     <EmbeddedResource Include="VixenEditor\AudioSpeedDialog.resx">
       <DependentUpon>AudioSpeedDialog.cs</DependentUpon>
@@ -268,6 +274,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\IntensityAdjustDialog.resx">
       <DependentUpon>IntensityAdjustDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenEditor\NutcrackerControlDialog.resx">
+      <DependentUpon>NutcrackerControlDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenEditor\NutcrackerEffectControl.resx">
+      <DependentUpon>NutcrackerEffectControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\ProgressDialog.resx">
       <DependentUpon>ProgressDialog.cs</DependentUpon>

@@ -3292,6 +3292,10 @@ namespace VixenEditor {
                     keyEvent.Handled = true;
                     break;
 
+                case Keys.N:
+                    tsbNutcracker_Click(null, null);
+                    break;
+
                 case Keys.R:
                     if (keyEvent.Shift) {
                         toolStripButtonPartialRampOn_Click(null, null);
@@ -4829,6 +4833,16 @@ namespace VixenEditor {
 
         private static void comboBox_MouseWheel(object sender, MouseEventArgs e) {
             ((HandledMouseEventArgs) e).Handled = !((ComboBox)sender).DroppedDown;
+        }
+
+        private void tsbNutcracker_Click(object sender, EventArgs e) {
+            if (!tsbNutcracker.Enabled) {
+                return;
+            }
+
+            using (var nce = new NutcrackerControlDialog()) {
+                nce.ShowDialog();
+            }
         }
     }
 }
