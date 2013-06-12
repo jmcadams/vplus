@@ -90,7 +90,6 @@ namespace VixenEditor {
             foreach (var n in tvGroups.SelectedNodes) {
                 isOnlyLeafNodes &= ((GroupTagData) n.Tag).IsLeafNode;
                 isParentAtRoot &= (n.Parent == null || !n.Parent.FullPath.Contains("\\"));
-                n.FirstNode
                 isRemovable &= n.FullPath.Split(new[] {'\\'}).Length - 1 < 2;
             }
 
