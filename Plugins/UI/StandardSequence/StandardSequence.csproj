@@ -166,7 +166,6 @@
     <Compile Include="VixenEditor\GroupPickerDialog.Designer.cs">
       <DependentUpon>GroupPickerDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="VixenEditor\GroupTagData.cs" />
     <Compile Include="VixenEditor\IntensityAdjustDialog.cs">
       <SubType>Form</SubType>
     </Compile>

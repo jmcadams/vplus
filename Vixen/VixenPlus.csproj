@@ -103,6 +103,7 @@
     <Reference Include="System.Xml">
       <Name>System.Xml</Name>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs">
@@ -300,6 +301,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="VixenPlus\GroupData.cs" />
+    <Compile Include="VixenPlus\GroupTagData.cs" />
     <Compile Include="VixenPlus\INutcrackerEffect.cs" />
     <Compile Include="VixenPlus\VixenPlusForm.cs">
       <SubType>Form</SubType>
