@@ -71,7 +71,7 @@ namespace VixenEditor {
             var isChannelSelected = lbChannels.SelectedItems.Count > 0;
 
             // These two will need to be more complex since we can only move up or down so far, basically to the top
-            // or bottom of the top? parent.
+            // or bottom of the child's parent.
             var topNode = isNodeActive && tvGroups.SelectedNode == tvGroups.Nodes[0];
             var bottomNode = isNodeActive && tvGroups.SelectedNode == tvGroups.Nodes[tvGroups.Nodes.Count - 1];
 
@@ -362,29 +362,30 @@ namespace VixenEditor {
         }
 
         private void btnRemoveGroup_Click(object sender, EventArgs e) {
-            //tvGroups.BeginUpdate();
-            //foreach (var n in tvGroups.SelectedNodes) {
-            //    n.Remove();
-            //    var affectedNodeText = n.Text;
-            //    foreach (TreeNode treeNode in tvGroups.Nodes) {
-            //        SetColorByName(treeNode, color.Color, affectedNodeText);
-            //    }
-            //}
-            //tvGroups.EndUpdate();
-            //tvGroups.Refresh();
+            tvGroups.BeginUpdate();
+            foreach (var n in tvGroups.SelectedNodes) {
+                n.Remove();
+                var affectedNodeText = n.Text;
+                if (n.Parent != null) {
+                    continue;
+                }
+                foreach (TreeNode treeNode in tvGroups.Nodes) {
+                    RemoveNode(treeNode, affectedNodeText);
+                }
+            }
+            tvGroups.EndUpdate();
+            tvGroups.Refresh();
         }
 
-        private void RemoveNode(TreeNode treeNode, String name) {
-            //if (treeNode.Text == name && !((GroupTagData)treeNode.Tag).IsLeafNode) {
-            //    SetNodeColor(treeNode, color);
-            //}
-
-            //foreach (TreeNode node in treeNode.Nodes) {
-            //    if (node.Text == name && !((GroupTagData)treeNode.Tag).IsLeafNode) {
-            //        SetNodeColor(node, color);
-            //    }
-            //    SetColorByName(node, color, name);
-            //}
+        private static void RemoveNode(TreeNode treeNode, String name) {
+            foreach (TreeNode node in treeNode.Nodes) {
+                if (node.GetNodeCount(false) > 0) {
+                    RemoveNode(node, name);
+                }
+                if (node.Text == name) {
+                    node.Remove();
+                }
+            }
         }
     }
 }
