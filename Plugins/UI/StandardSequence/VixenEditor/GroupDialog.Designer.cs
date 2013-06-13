@@ -148,6 +148,7 @@
             this.btnAddChannels.TabIndex = 9;
             this.btnAddChannels.Text = "&Add ->";
             this.btnAddChannels.UseVisualStyleBackColor = true;
+            this.btnAddChannels.Click += new System.EventHandler(this.btnAddChannels_Click);
             // 
             // btnRenameGroup
             // 
@@ -169,6 +170,7 @@
             this.btnRemoveChannels.TabIndex = 10;
             this.btnRemoveChannels.Text = "<- &Remove";
             this.btnRemoveChannels.UseVisualStyleBackColor = true;
+            this.btnRemoveChannels.Click += new System.EventHandler(this.btnRemoveChannels_Click);
             // 
             // lblChannels
             // 

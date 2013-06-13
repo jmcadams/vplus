@@ -4798,18 +4798,27 @@ namespace VixenEditor {
         private void cbGroups_SelectedIndexChanged(object sender, EventArgs e) {
             if (cbGroups.Items.Count > 1 && cbGroups.SelectedIndex == cbGroups.Items.Count - 1) {
                 cbGroups.SelectedIndex = _lastGroupIndex;
+                var currentGroup = cbGroups.Items[_lastGroupIndex].ToString();
                 using (var groupDialog = new GroupDialog(_sequence, false)) {
                     if (groupDialog.ShowDialog() != DialogResult.OK) {
                         return;
                     }
-                    var results = groupDialog.GetResults;
-                    var xmlSerializer = new XmlSerializer(results.GetType());
-                    var textWriter = new StringWriter();
-
-                    xmlSerializer.Serialize(textWriter, results);
-                    File.WriteAllText(@"D:\xml.xml", textWriter.ToString());
+                    _sequence.Groups =
+                        Group.LoadGroups(Group.SaveGroups(groupDialog.GetResults,
+                                                          _sequence.Profile != null
+                                                              ? _sequence.Profile.FileName
+                                                              : _sequence.FileName));
+                    cbGroups.SuspendLayout();
+                    UpdateGroups();
+                    
+                    var oldGroup = cbGroups.Items.IndexOf(currentGroup);
+                    if (oldGroup == -1) {
+                        oldGroup = 0;
+                    }
+                    cbGroups.SelectedIndex = oldGroup;
+                    _sequence.CurrentGroup = oldGroup > 0 ? currentGroup : Group.AllChannels;
+                    cbGroups.ResumeLayout();
                 }
-                return;
             }
             _lastGroupIndex = cbGroups.SelectedIndex;
             _sequence.CurrentGroup = cbGroups.SelectedItem.ToString();
@@ -4833,6 +4842,8 @@ namespace VixenEditor {
 
 
         private void cbGroups_DrawItem(object sender, DrawItemEventArgs e) {
+            if (e.Index < 0) return;
+
             if (e.Index == 0) {
                 Utils.DrawItem(e, Group.AllChannels, Color.White);
                 return;

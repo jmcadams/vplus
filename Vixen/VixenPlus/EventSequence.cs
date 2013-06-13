@@ -22,7 +22,7 @@ namespace VixenPlus {
         private SortOrders _sortOrders;
         private string _currentGroup = "";
 
-        public Dictionary<string, GroupData> Groups { get; private set; }
+        public Dictionary<string, GroupData> Groups { get; set; }
 
         #region Constructors
 
@@ -572,14 +572,14 @@ namespace VixenPlus {
                     _fullChannels.Add(new Channel(node));
                 }
             }
-            //var eventIndex = 0;
-            //foreach (var c in _fullChannels) {
-            //    c.EventIndex = eventIndex++;
-            //}
             PlugInData = new SetupData();
             PlugInData.LoadFromXml(contextNode);
             _sortOrders = new SortOrders();
             _sortOrders.LoadFromXml(contextNode);
+            var groupFile = Path.Combine(Paths.SequencePath, Path.GetFileNameWithoutExtension(FileName) + Vendor.GroupExtension);
+            if (File.Exists(groupFile)) {
+                Groups = Group.LoadGroups(groupFile);
+            }
         }
 
 
@@ -730,7 +730,8 @@ namespace VixenPlus {
             var path = Path.Combine(Paths.ProfilePath, profileName + Vendor.ProfilExtension);
             if (File.Exists(path)) {
                 AttachToProfile(new Profile(path));
-                var groupFile = Path.Combine(Paths.ProfilePath, Path.GetFileNameWithoutExtension(_profile.FileName) + Vendor.GroupExtension);
+                var groupFile = Path.Combine(Paths.ProfilePath,
+                                                Path.GetFileNameWithoutExtension(_profile.FileName) + Vendor.GroupExtension);
                 if (File.Exists(groupFile)) {
                     Groups = Group.LoadGroups(groupFile);
                 }

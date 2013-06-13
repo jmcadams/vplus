@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -15,7 +16,6 @@ namespace VixenEditor {
     public sealed partial class GroupDialog : Form {
 
         private readonly EventSequence _seq;
-
 
         public TreeView GetResults { get { return tvGroups; } }
 
@@ -35,7 +35,7 @@ namespace VixenEditor {
                 var thisNode = tvGroups.Nodes.Add(g.Key);
                 AddSubNodes(g.Value.GroupChannels, thisNode);
                 thisNode.Name = g.Key;
-                thisNode.Tag = new GroupTagData {NodeColor = g.Value.GroupColor, IsLeafNode = false};
+                thisNode.Tag = new GroupTagData {NodeColor = g.Value.GroupColor, IsLeafNode = false, Zoom = g.Value.Zoom};
             }
         }
 
@@ -48,7 +48,8 @@ namespace VixenEditor {
                     thisNode.Name = groupNode;
                     thisNode.Tag = new GroupTagData {
                         NodeColor = _seq.Groups[groupNode].GroupColor,
-                        IsLeafNode = false
+                        IsLeafNode = false,
+                        Zoom = "100%"
                     };
                     AddSubNodes(_seq.Groups[groupNode].GroupChannels, thisNode);
                 }
@@ -56,7 +57,7 @@ namespace VixenEditor {
                     var channel = _seq.FullChannels[int.Parse(node)];
                     var thisNode = parentNode.Nodes.Add(channel.Name);
                     thisNode.Name = channel.Name;
-                    thisNode.Tag = new GroupTagData {NodeColor = channel.Color, IsLeafNode = true};
+                    thisNode.Tag = new GroupTagData { NodeColor = channel.Color, IsLeafNode = true, UnderlyingChannel = node };
                 }
             }
         }
@@ -77,11 +78,11 @@ namespace VixenEditor {
 
             var isOnlyLeafNodes = true;
             var isParentAtRoot = true;
-            var isRemovable = true;
+            var isEditable = true;
             foreach (var n in tvGroups.SelectedNodes) {
                 isOnlyLeafNodes &= ((GroupTagData) n.Tag).IsLeafNode;
                 isParentAtRoot &= (n.Parent == null || !n.Parent.FullPath.Contains("\\"));
-                isRemovable &= n.FullPath.Split(new[] {'\\'}).Length - 1 < 2;
+                isEditable &= n.FullPath.Split(new[] {'\\'}).Length - 1 < 2;
             }
 
 
@@ -92,7 +93,7 @@ namespace VixenEditor {
             btnAddChild.Enabled = isRootNode && isSingleNode;
 
             // Removed group available to any non leaf node/nodes - cascade to lower level non leaf node if root node removed
-            btnRemoveGroup.Enabled = isNodeActive && !isLeafNode && isRemovable; 
+            btnRemoveGroup.Enabled = isNodeActive && !isLeafNode && isEditable; 
 
             // Rename group at root node - cascade to other lowel level non leaf nodes
             btnRenameGroup.Enabled = isRootNode && isSingleNode;
@@ -107,10 +108,10 @@ namespace VixenEditor {
             btnDown.Enabled = isNodeActive && !bottomNode && isParentAtRoot;
 
             // If a channel/channels are selected
-            btnAddChannels.Enabled = isChannelSelected;
+            btnAddChannels.Enabled = isChannelSelected && isEditable;
 
             // If only channels are selected and parent is a root node
-            btnRemoveChannels.Enabled = isOnlyLeafNodes && isParentAtRoot;
+            btnRemoveChannels.Enabled = isOnlyLeafNodes && isEditable;
         }
 
 
@@ -229,7 +230,8 @@ namespace VixenEditor {
             var thisNode = tvGroups.Nodes.Add(groupName);
             thisNode.Tag = new GroupTagData {
                 IsLeafNode = false,
-                NodeColor = Color.White
+                NodeColor = Color.White,
+                Zoom = "100%"
             };
             thisNode.Name = groupName;
             thisNode.EnsureVisible();
@@ -387,6 +389,60 @@ namespace VixenEditor {
                 if (node.Text == name) {
                     node.Remove();
                 }
+            }
+        }
+
+        private void btnAddChannels_Click(object sender, EventArgs e) {
+            tvGroups.BeginUpdate();
+            foreach (int index in lbChannels.SelectedIndices) {
+                var channel = _seq.FullChannels[index];
+                foreach (var newNode in tvGroups.SelectedNodes.Select(node => node.Nodes.Add(channel.Name))) {
+                    newNode.Tag = new GroupTagData {
+                        IsLeafNode = true,
+                        NodeColor = channel.Color,
+                        UnderlyingChannel = channel.OutputChannel.ToString(CultureInfo.InvariantCulture)
+                    };
+                    AddReferencedNode(newNode);
+                }
+            }
+            tvGroups.EndUpdate();
+            tvGroups.Refresh();
+        }
+
+
+        private void AddReferencedNode(TreeNode newNode) {
+            foreach (var node in tvGroups.Nodes.Find(newNode.Parent.Name, true)
+                                         .Where(
+                                             node =>
+                                             node.Parent != null && node.Name == newNode.Parent.Name &&
+                                             node.Parent != newNode.Parent).Where(node => node.Nodes.Find(newNode.Name, false).Length == 0)) {
+                node.Nodes.Add((TreeNode) newNode.Clone());
+            }
+        }
+
+
+        private void btnRemoveChannels_Click(object sender, EventArgs e) {
+            tvGroups.BeginUpdate();
+            //get the select node
+            //find its parent
+            //remove the node from the parent
+            //find any reference to the node elsewhere via the parent name
+            //remove the node there too.
+
+            foreach (var node in tvGroups.SelectedNodes) {
+                var parent = node.Parent;
+                node.Remove();
+                RemoveReferencedNodes(parent, node);
+            }
+            tvGroups.SelectedNode = null;
+            tvGroups.EndUpdate();
+            tvGroups.Refresh();
+        }
+
+
+        private void RemoveReferencedNodes(TreeNode parent, TreeNode nodeToRemove) {
+            foreach (var node in tvGroups.Nodes.Find(nodeToRemove.Name, true).Where(node => node.Parent != null && node.Parent.Name == parent.Name)) {
+                node.Remove();
             }
         }
     }

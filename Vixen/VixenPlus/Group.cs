@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security;
 using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Linq;
 
 using Properties;
 
@@ -17,7 +18,7 @@ namespace VixenPlus {
 
         private readonly List<Channel> _currentList = new List<Channel>();
 
-        internal static Dictionary<string, GroupData> LoadGroups(string groupFile) {
+        public static Dictionary<string, GroupData> LoadGroups(string groupFile) {
             Dictionary<string, GroupData> groups = null;
             try {
                 var doc = Xml.LoadDocument(groupFile).DocumentElement;
@@ -63,6 +64,41 @@ namespace VixenPlus {
                 }
             }
             return groups;
+        }
+
+        public static string SaveGroups(TreeView groupTree, String filename) {
+            var doc = new XElement("Groups");
+            foreach (TreeNode node in groupTree.Nodes) {
+                var nodeData = ((GroupTagData) node.Tag);
+                var thisNode = new XElement("Group");
+                thisNode.Add(new XAttribute("Name", node.Name), new XAttribute("Zoom", nodeData.Zoom), new XAttribute("Color", nodeData.NodeColor.ToArgb()));
+                var previousType = String.Empty;
+                var treeData = String.Empty;
+                foreach (TreeNode child in node.Nodes) {
+                    var tag = ((GroupTagData) child.Tag);
+                    var currentType = tag.IsLeafNode ? "Channels" : "Contains";
+                    if (string.IsNullOrEmpty(previousType)) {
+                        previousType = currentType;
+                    }
+                    if (currentType != previousType) {
+                        thisNode.Add(new XElement(previousType, treeData.TrimEnd(new[] {','})));
+                        treeData = (tag.IsLeafNode ? tag.UnderlyingChannel : child.Name) + ",";
+                        previousType = currentType;
+                    }
+                    else {
+                        treeData += (tag.IsLeafNode ? tag.UnderlyingChannel : child.Name) + ",";
+                    }
+                }
+                if (!String.IsNullOrEmpty(treeData)) {
+                    thisNode.Add(new XElement(previousType, treeData.TrimEnd(new[] { ',' })));
+                }
+                doc.Add(thisNode);
+            }
+            var groupFilename = (Path.Combine(Path.GetDirectoryName(filename),
+                              Path.GetFileNameWithoutExtension(filename) + Vendor.GroupExtension));
+            doc.Save(groupFilename);
+
+            return groupFilename;
         }
 
 
