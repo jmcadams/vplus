@@ -10,6 +10,8 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Serialization;
+
 using FMOD;
 using CommonUtils;
 
@@ -4797,7 +4799,15 @@ namespace VixenEditor {
             if (cbGroups.Items.Count > 1 && cbGroups.SelectedIndex == cbGroups.Items.Count - 1) {
                 cbGroups.SelectedIndex = _lastGroupIndex;
                 using (var groupDialog = new GroupDialog(_sequence, false)) {
-                   groupDialog.ShowDialog();
+                    if (groupDialog.ShowDialog() != DialogResult.OK) {
+                        return;
+                    }
+                    var results = groupDialog.GetResults;
+                    var xmlSerializer = new XmlSerializer(results.GetType());
+                    var textWriter = new StringWriter();
+
+                    xmlSerializer.Serialize(textWriter, results);
+                    File.WriteAllText(@"D:\xml.xml", textWriter.ToString());
                 }
                 return;
             }

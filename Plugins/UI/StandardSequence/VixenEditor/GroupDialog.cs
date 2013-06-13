@@ -41,19 +41,22 @@ namespace VixenEditor {
 
 
         private void AddSubNodes(string nodeData, TreeNode parentNode) {
-            foreach (var node in nodeData.Split(new[] {','})) {
+            foreach (var node in nodeData.Split(new[] {','}).Where(node => node != "")) {
                 if (node.StartsWith(Group.GroupTextDivider)) {
                     var groupNode = node.TrimStart(Group.GroupTextDivider.ToCharArray());
                     var thisNode = parentNode.Nodes.Add(groupNode);
                     thisNode.Name = groupNode;
-                    thisNode.Tag = new GroupTagData { NodeColor = _seq.Groups[groupNode].GroupColor, IsLeafNode = false };
+                    thisNode.Tag = new GroupTagData {
+                        NodeColor = _seq.Groups[groupNode].GroupColor,
+                        IsLeafNode = false
+                    };
                     AddSubNodes(_seq.Groups[groupNode].GroupChannels, thisNode);
                 }
                 else {
                     var channel = _seq.FullChannels[int.Parse(node)];
                     var thisNode = parentNode.Nodes.Add(channel.Name);
                     thisNode.Name = channel.Name;
-                    thisNode.Tag = new GroupTagData { NodeColor = channel.Color, IsLeafNode = true };
+                    thisNode.Tag = new GroupTagData {NodeColor = channel.Color, IsLeafNode = true};
                 }
             }
         }
@@ -323,21 +326,6 @@ namespace VixenEditor {
                     return;
                 }
                 var items = child.SelectedItems;
-                //var excludedItems = new List<string>();
-                //foreach (var item in items) {
-                //    var node = tvGroups.Nodes.Find(item, false)[0];
-                //    var excluded = GetAllNodesFor(node);
-                //    foreach (var exclude in excluded) {
-                //        if (item != exclude && items.Contains(exclude)) {
-                //            excludedItems.Add(exclude);
-                //        }
-                //    }
-                //}
-                //var rootNode = tvGroups.Nodes.Find(tvGroups.SelectedNode.Name, false)[0];
-                //foreach (var item in items) {
-                //    if (excludedItems.Contains(item)) {
-                //        continue;
-                //    }
                 var excludedItems = (from item in items
                                      let node = tvGroups.Nodes.Find(item, false)[0]
                                      let excluded = GetAllNodesFor(node)
