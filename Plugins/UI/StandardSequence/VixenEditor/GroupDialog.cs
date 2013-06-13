@@ -221,17 +221,17 @@ namespace VixenEditor {
 
 
         private void btnAddGroup_Click(object sender, EventArgs e) {
-            var result = GetName("Group Name", "What do you want to name your new group?", "");
-            if (string.IsNullOrEmpty(result)) {
+            var groupName = GetName("Group Name", "What do you want to name your new group?", "");
+            if (string.IsNullOrEmpty(groupName)) {
                 return;
             }
 
-            var thisNode = tvGroups.Nodes.Add(result);
+            var thisNode = tvGroups.Nodes.Add(groupName);
             thisNode.Tag = new GroupTagData {
                 IsLeafNode = false,
                 NodeColor = Color.White
             };
-            thisNode.Name = result;
+            thisNode.Name = groupName;
             thisNode.EnsureVisible();
             tvGroups.Refresh();
         }
@@ -276,33 +276,35 @@ namespace VixenEditor {
         private string GetName(string heading, string prompt, string value) {
             var result = string.Empty;
 
-            using (var name = new TextQueryDialog(heading, prompt, value)) {
-                var done = false;
-                while (!done) {
-                    name.ShowDialog();
-                    done = true;
-                    if (name.DialogResult != DialogResult.OK) {
+            using (var groupNameDialog = new TextQueryDialog(heading, prompt, value)) {
+                var validName = false;
+                while (!validName) {
+                    groupNameDialog.ShowDialog();
+                    validName = true;
+                    if (groupNameDialog.DialogResult != DialogResult.OK) {
                         continue;
                     }
 
-                    var newName = name.Response;
+                    var response = groupNameDialog.Response;
                     var msg = string.Empty;
-                    if (string.IsNullOrEmpty(newName)) {
+                    if (string.IsNullOrEmpty(response)) {
                         msg = "A group must have a unique name and cannot be blank.";
-                    }
-                    else {
-                        if (tvGroups.Nodes.Cast<TreeNode>().Any(n => n.Text == newName)) {
-                            msg = String.Format("A node with the name {0} already exists and group names must be unique.", newName);
-                        }
+                    } else if (tvGroups.Nodes.Cast<TreeNode>().Any(n => n.Text == response)) {
+                        msg = String.Format("A group with the name {0} already exists and group names must be unique.",
+                                            response);
+                    } else if (response.Contains(Group.GroupTextDivider) || response.Contains(",")) {
+                        msg = string.Format("A group name can not contain a {0} or a ,",
+                                            Group.GroupTextDivider);
                     }
 
                     if (msg != String.Empty) {
-                        MessageBox.Show(msg, "Group Naming Error", MessageBoxButtons.OK);
-                        name.Response = value;
-                        done = false;
+                        if (MessageBox.Show(msg + "\nClick OK to try again.", "Group Naming Error", MessageBoxButtons.OKCancel) == DialogResult.OK) {
+                            groupNameDialog.Response = value;
+                            validName = false;
+                        } 
                     }
                     else {
-                        result = newName;
+                        result = response;
                     }
                 }
             }
