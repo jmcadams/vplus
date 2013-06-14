@@ -34,8 +34,6 @@ namespace VixenPlus {
                             if (name == null) {
                                 throw new XmlSyntaxException(String.Format(Resources.MissingNameAttribute, Path.GetFileName(groupFile), node));
                             }
-                            //var contains = node.Attributes["Contains"] == null ? null : node.Attributes["Contains"].Value;
-                            //if (String.IsNullOrEmpty(contains)) contains = null;
                             var color = node.Attributes["Color"] == null ? Color.White : Color.FromArgb(Int32.Parse(node.Attributes["Color"].Value));
                             var zoom = node.Attributes["Zoom"] == null ? "100%" : node.Attributes["Zoom"].Value;
                             var text = String.Empty;
@@ -65,6 +63,7 @@ namespace VixenPlus {
             }
             return groups;
         }
+
 
         public static string SaveGroups(TreeView groupTree, String filename) {
             var doc = new XElement("Groups");
