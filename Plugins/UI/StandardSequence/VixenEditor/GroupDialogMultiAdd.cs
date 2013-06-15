@@ -15,6 +15,8 @@ namespace VixenEditor {
         public int GroupCount { get { return (int)nudCount.Value; } }
 
         private void GroupDialogMultiAdd_FormClosing(object sender, FormClosingEventArgs e) {
+            if (DialogResult == DialogResult.Cancel) return;
+
             var msg = String.Empty;
 
             if (GroupName.Contains(Group.GroupTextDivider) || GroupName.Contains(",")) {
