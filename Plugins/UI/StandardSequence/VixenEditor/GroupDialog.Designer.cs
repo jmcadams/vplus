@@ -46,6 +46,9 @@
             this.btnExpand = new System.Windows.Forms.Button();
             this.btnCollapse = new System.Windows.Forms.Button();
             this.tvGroups = new CommonControls.MultiSelectTreeview();
+            this.cbSort = new System.Windows.Forms.ComboBox();
+            this.btnAddMutli = new System.Windows.Forms.Button();
+            this.lblStats = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnOK
@@ -72,66 +75,68 @@
             // 
             // lbChannels
             // 
+            this.lbChannels.AllowDrop = true;
             this.lbChannels.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.lbChannels.FormattingEnabled = true;
             this.lbChannels.IntegralHeight = false;
-            this.lbChannels.Location = new System.Drawing.Point(12, 25);
+            this.lbChannels.Location = new System.Drawing.Point(12, 33);
             this.lbChannels.Name = "lbChannels";
             this.lbChannels.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbChannels.Size = new System.Drawing.Size(200, 433);
+            this.lbChannels.Size = new System.Drawing.Size(200, 425);
             this.lbChannels.TabIndex = 0;
             this.lbChannels.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lbChannels_DrawItem);
             this.lbChannels.SelectedIndexChanged += new System.EventHandler(this.lbChannels_SelectedIndexChanged);
             this.lbChannels.Leave += new System.EventHandler(this.lbChannels_Leave);
             this.lbChannels.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbChannels_MouseDown);
-            this.lbChannels.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lbChannels_MouseUp);
             // 
             // btnAddRoot
             // 
             this.btnAddRoot.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddRoot.Location = new System.Drawing.Point(605, 25);
+            this.btnAddRoot.Location = new System.Drawing.Point(605, 33);
             this.btnAddRoot.Name = "btnAddRoot";
             this.btnAddRoot.Size = new System.Drawing.Size(75, 23);
             this.btnAddRoot.TabIndex = 2;
-            this.btnAddRoot.Text = "Add &Parent";
+            this.btnAddRoot.Text = "Add &Group";
             this.btnAddRoot.UseVisualStyleBackColor = true;
             this.btnAddRoot.Click += new System.EventHandler(this.btnAddGroup_Click);
             // 
             // btnRemoveGroup
             // 
             this.btnRemoveGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRemoveGroup.Location = new System.Drawing.Point(605, 83);
+            this.btnRemoveGroup.Location = new System.Drawing.Point(606, 120);
             this.btnRemoveGroup.Name = "btnRemoveGroup";
             this.btnRemoveGroup.Size = new System.Drawing.Size(75, 23);
             this.btnRemoveGroup.TabIndex = 3;
-            this.btnRemoveGroup.Text = "Re&move Group";
+            this.btnRemoveGroup.Text = "Dele&te";
             this.btnRemoveGroup.UseVisualStyleBackColor = true;
             this.btnRemoveGroup.Click += new System.EventHandler(this.btnRemoveGroup_Click);
             // 
             // btnUp
             // 
             this.btnUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnUp.Location = new System.Drawing.Point(605, 199);
+            this.btnUp.Location = new System.Drawing.Point(605, 236);
             this.btnUp.Name = "btnUp";
             this.btnUp.Size = new System.Drawing.Size(75, 23);
             this.btnUp.TabIndex = 6;
             this.btnUp.Text = "Move &Up";
             this.btnUp.UseVisualStyleBackColor = true;
+            this.btnUp.Click += new System.EventHandler(this.btnUp_Click);
             // 
             // btnDown
             // 
             this.btnDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDown.Location = new System.Drawing.Point(605, 228);
+            this.btnDown.Location = new System.Drawing.Point(605, 265);
             this.btnDown.Name = "btnDown";
             this.btnDown.Size = new System.Drawing.Size(75, 23);
             this.btnDown.TabIndex = 7;
             this.btnDown.Text = "Move &Down";
             this.btnDown.UseVisualStyleBackColor = true;
+            this.btnDown.Click += new System.EventHandler(this.btnDown_Click);
             // 
             // btnColorGroup
             // 
             this.btnColorGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnColorGroup.Location = new System.Drawing.Point(605, 141);
+            this.btnColorGroup.Location = new System.Drawing.Point(606, 178);
             this.btnColorGroup.Name = "btnColorGroup";
             this.btnColorGroup.Size = new System.Drawing.Size(75, 23);
             this.btnColorGroup.TabIndex = 5;
@@ -142,7 +147,7 @@
             // btnAddChannels
             // 
             this.btnAddChannels.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnAddChannels.Location = new System.Drawing.Point(218, 199);
+            this.btnAddChannels.Location = new System.Drawing.Point(218, 236);
             this.btnAddChannels.Name = "btnAddChannels";
             this.btnAddChannels.Size = new System.Drawing.Size(75, 23);
             this.btnAddChannels.TabIndex = 9;
@@ -153,7 +158,7 @@
             // btnRenameGroup
             // 
             this.btnRenameGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRenameGroup.Location = new System.Drawing.Point(605, 112);
+            this.btnRenameGroup.Location = new System.Drawing.Point(606, 149);
             this.btnRenameGroup.Name = "btnRenameGroup";
             this.btnRenameGroup.Size = new System.Drawing.Size(75, 23);
             this.btnRenameGroup.TabIndex = 4;
@@ -164,7 +169,7 @@
             // btnRemoveChannels
             // 
             this.btnRemoveChannels.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnRemoveChannels.Location = new System.Drawing.Point(218, 228);
+            this.btnRemoveChannels.Location = new System.Drawing.Point(218, 265);
             this.btnRemoveChannels.Name = "btnRemoveChannels";
             this.btnRemoveChannels.Size = new System.Drawing.Size(75, 23);
             this.btnRemoveChannels.TabIndex = 10;
@@ -184,7 +189,7 @@
             // lblGroups
             // 
             this.lblGroups.AutoSize = true;
-            this.lblGroups.Location = new System.Drawing.Point(297, 9);
+            this.lblGroups.Location = new System.Drawing.Point(296, 9);
             this.lblGroups.Name = "lblGroups";
             this.lblGroups.Size = new System.Drawing.Size(81, 13);
             this.lblGroups.TabIndex = 14;
@@ -193,18 +198,18 @@
             // btnAddChild
             // 
             this.btnAddChild.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddChild.Location = new System.Drawing.Point(605, 54);
+            this.btnAddChild.Location = new System.Drawing.Point(606, 91);
             this.btnAddChild.Name = "btnAddChild";
             this.btnAddChild.Size = new System.Drawing.Size(75, 23);
             this.btnAddChild.TabIndex = 15;
-            this.btnAddChild.Text = "Add &Child";
+            this.btnAddChild.Text = "&Copy Group";
             this.btnAddChild.UseVisualStyleBackColor = true;
             this.btnAddChild.Click += new System.EventHandler(this.btnAddChild_Click);
             // 
             // btnExpand
             // 
             this.btnExpand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExpand.Location = new System.Drawing.Point(605, 286);
+            this.btnExpand.Location = new System.Drawing.Point(605, 323);
             this.btnExpand.Name = "btnExpand";
             this.btnExpand.Size = new System.Drawing.Size(75, 23);
             this.btnExpand.TabIndex = 16;
@@ -215,7 +220,7 @@
             // btnCollapse
             // 
             this.btnCollapse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCollapse.Location = new System.Drawing.Point(605, 315);
+            this.btnCollapse.Location = new System.Drawing.Point(605, 352);
             this.btnCollapse.Name = "btnCollapse";
             this.btnCollapse.Size = new System.Drawing.Size(75, 23);
             this.btnCollapse.TabIndex = 17;
@@ -227,19 +232,60 @@
             // 
             this.tvGroups.AllowDrop = true;
             this.tvGroups.DrawMode = System.Windows.Forms.TreeViewDrawMode.OwnerDrawText;
-            this.tvGroups.Location = new System.Drawing.Point(299, 25);
+            this.tvGroups.Location = new System.Drawing.Point(299, 33);
             this.tvGroups.Name = "tvGroups";
-            this.tvGroups.Size = new System.Drawing.Size(300, 433);
+            this.tvGroups.Size = new System.Drawing.Size(300, 425);
             this.tvGroups.TabIndex = 1;
             this.tvGroups.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.tvGroups_DrawNode);
             this.tvGroups.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvGroups_AfterSelect);
+            this.tvGroups.DragDrop += new System.Windows.Forms.DragEventHandler(this.tvGroups_DragDrop);
+            this.tvGroups.DragEnter += new System.Windows.Forms.DragEventHandler(this.tvGroups_DragEnter);
+            this.tvGroups.DragOver += new System.Windows.Forms.DragEventHandler(this.tvGroups_DragOver);
             this.tvGroups.Leave += new System.EventHandler(this.tvGroups_Leave);
+            // 
+            // cbSort
+            // 
+            this.cbSort.FormattingEnabled = true;
+            this.cbSort.Items.AddRange(new object[] {
+            "Natural Order",
+            "By Color",
+            "By Name",
+            "By Color Then Name",
+            "By Name Then Color"});
+            this.cbSort.Location = new System.Drawing.Point(106, 6);
+            this.cbSort.Name = "cbSort";
+            this.cbSort.Size = new System.Drawing.Size(106, 21);
+            this.cbSort.TabIndex = 18;
+            this.cbSort.SelectedIndexChanged += new System.EventHandler(this.cbSort_SelectedIndexChanged);
+            // 
+            // btnAddMutli
+            // 
+            this.btnAddMutli.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddMutli.Location = new System.Drawing.Point(605, 62);
+            this.btnAddMutli.Name = "btnAddMutli";
+            this.btnAddMutli.Size = new System.Drawing.Size(76, 23);
+            this.btnAddMutli.TabIndex = 19;
+            this.btnAddMutli.Text = "Add &Multi";
+            this.btnAddMutli.UseVisualStyleBackColor = true;
+            this.btnAddMutli.Click += new System.EventHandler(this.btnAddMutli_Click);
+            // 
+            // lblStats
+            // 
+            this.lblStats.AutoSize = true;
+            this.lblStats.Location = new System.Drawing.Point(383, 9);
+            this.lblStats.Name = "lblStats";
+            this.lblStats.Size = new System.Drawing.Size(187, 13);
+            this.lblStats.TabIndex = 20;
+            this.lblStats.Text = "0 groups && 0 channels in those groups";
             // 
             // GroupDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(692, 470);
+            this.Controls.Add(this.lblStats);
+            this.Controls.Add(this.btnAddMutli);
+            this.Controls.Add(this.cbSort);
             this.Controls.Add(this.btnCollapse);
             this.Controls.Add(this.btnExpand);
             this.Controls.Add(this.btnAddChild);
@@ -264,6 +310,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "GroupDialog";
+            this.ResizeEnd += new System.EventHandler(this.GroupDialog_ResizeEnd);
             this.SizeChanged += new System.EventHandler(this.GroupDialog_SizeChanged);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -289,5 +336,8 @@
         private System.Windows.Forms.Button btnAddChild;
         private System.Windows.Forms.Button btnExpand;
         private System.Windows.Forms.Button btnCollapse;
+        private System.Windows.Forms.ComboBox cbSort;
+        private System.Windows.Forms.Button btnAddMutli;
+        private System.Windows.Forms.Label lblStats;
     }
 }

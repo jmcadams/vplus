@@ -19,6 +19,7 @@
     <OldToolsVersion>0.0</OldToolsVersion>
     <UpgradeBackupLocation />
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -33,7 +34,6 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>..\..\..\Build\Plugins\UI\</OutputPath>
@@ -105,6 +105,12 @@
     </Compile>
     <Compile Include="Global.cs">
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="VixenEditor\GroupDialogMultiAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VixenEditor\GroupDialogMultiAdd.Designer.cs">
+      <DependentUpon>GroupDialogMultiAdd.cs</DependentUpon>
     </Compile>
     <Compile Include="VixenEditor\GroupDialog.cs">
       <SubType>Form</SubType>
@@ -267,6 +273,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\GroupDialog.resx">
       <DependentUpon>GroupDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenEditor\GroupDialogMultiAdd.resx">
+      <DependentUpon>GroupDialogMultiAdd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\GroupPickerDialog.resx">
       <DependentUpon>GroupPickerDialog.cs</DependentUpon>

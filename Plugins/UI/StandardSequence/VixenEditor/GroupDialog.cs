@@ -16,18 +16,27 @@ namespace VixenEditor {
     public sealed partial class GroupDialog : Form {
 
         private readonly EventSequence _seq;
-
+        private List<Channel> _channels = new List<Channel>();
         public TreeView GetResults { get { return tvGroups; } }
 
+        private enum Sorts {
+            Natural,
+            ChannelColor,
+            ChannelName,
+            ChannelColorThenName,
+            ChannelNameThenColor
+        }
 
         public GroupDialog(EventSequence sequence, bool constrainToGroup) {
             InitializeComponent();
             MinimumSize = Size;
-            SetButtons();
             _seq = sequence;
             foreach (var c in constrainToGroup ? _seq.Channels : _seq.FullChannels) {
                 lbChannels.Items.Add(c.Name);
+                _channels.Add(c);
             }
+            cbSort.SelectedItem = cbSort.Items[0];
+            SetButtons();
             if (sequence.Groups == null) {
                 return;
             }
@@ -37,6 +46,7 @@ namespace VixenEditor {
                 thisNode.Name = g.Key;
                 thisNode.Tag = new GroupTagData {NodeColor = g.Value.GroupColor, IsLeafNode = false, Zoom = g.Value.Zoom};
             }
+            UpdateStats();
         }
 
 
@@ -71,52 +81,45 @@ namespace VixenEditor {
             var isLeafNode = isNodeActive && ((GroupTagData)activeNode.Tag).IsLeafNode;
             var isChannelSelected = lbChannels.SelectedItems.Count > 0;
 
-            // These two will need to be more complex since we can only move up or down so far, basically to the top
-            // or bottom of the child's parent.
-            var topNode = isNodeActive && tvGroups.SelectedNode == tvGroups.Nodes[0];
-            var bottomNode = isNodeActive && tvGroups.SelectedNode == tvGroups.Nodes[tvGroups.Nodes.Count - 1];
+            var topNode = isNodeActive && tvGroups.SelectedNode.Index == 0;
+            var bottomNode = isNodeActive && tvGroups.SelectedNode.Index == (isRootNode ? tvGroups.GetNodeCount(false) : tvGroups.SelectedNode.Parent.GetNodeCount(false)) - 1;
 
             var isOnlyLeafNodes = true;
+            var isOnlyNonLeafNodes = true;
             var isParentAtRoot = true;
             var isEditable = true;
             foreach (var n in tvGroups.SelectedNodes) {
                 isOnlyLeafNodes &= ((GroupTagData) n.Tag).IsLeafNode;
+                isOnlyNonLeafNodes &= !((GroupTagData) n.Tag).IsLeafNode;
                 isParentAtRoot &= (n.Parent == null || !n.Parent.FullPath.Contains("\\"));
                 isEditable &= n.FullPath.Split(new[] {'\\'}).Length - 1 < 2;
             }
 
 
-            // Add Root is always available
-            btnAddRoot.Enabled = true;
-
-            // Add child is only availabe to a root node
             btnAddChild.Enabled = isRootNode && isSingleNode;
-
-            // Removed group available to any non leaf node/nodes - cascade to lower level non leaf node if root node removed
             btnRemoveGroup.Enabled = isNodeActive && !isLeafNode && isEditable; 
-
-            // Rename group at root node - cascade to other lowel level non leaf nodes
             btnRenameGroup.Enabled = isRootNode && isSingleNode;
-
-            // Color group at root node/nodes
             btnColorGroup.Enabled = isRootNode;
+            btnUp.Enabled = isNodeActive && !topNode && isSingleNode && isParentAtRoot;
+            btnDown.Enabled = isNodeActive && !bottomNode && isSingleNode && isParentAtRoot;
+            btnAddChannels.Enabled = isChannelSelected && isOnlyNonLeafNodes && isRootNode;
+            btnRemoveChannels.Enabled = isNodeActive && isOnlyLeafNodes && isEditable;
+        }
 
-            // For any node/nodes if not at the top of its hierarchy and are all part of the same (top parent?)
-            btnUp.Enabled = isNodeActive && !topNode && isParentAtRoot;
 
-            // For any node/nodes if not at the bottom of its hierarchy and are all part of the same (top parent?)
-            btnDown.Enabled = isNodeActive && !bottomNode && isParentAtRoot;
-
-            // If a channel/channels are selected
-            btnAddChannels.Enabled = isChannelSelected && isEditable;
-
-            // If only channels are selected and parent is a root node
-            btnRemoveChannels.Enabled = isOnlyLeafNodes && isEditable;
+        private void UpdateStats() {
+            var groupCount = tvGroups.GetNodeCount(false);
+            var subNodeCount = tvGroups.GetNodeCount(true) - groupCount;
+            var groupSuffix = groupCount != 1 ? "s" : "";
+            var subNodeSuffix = subNodeCount != 1 ? "s" : "";
+            var groupPrefix = groupCount != 1 ? "those" : "that";
+            lblStats.Text = String.Format("{0} group{1} && {2} channel{3}/sub-group{3} in {4} group{1}", groupCount, groupSuffix, subNodeCount, subNodeSuffix,
+                                          groupPrefix);
         }
 
 
         private void lbChannels_DrawItem(object sender, DrawItemEventArgs e) {
-            Channel.DrawItem(e, _seq.FullChannels[e.Index], true);
+            Channel.DrawItem(e, _channels[e.Index], true);
         }
 
 
@@ -126,17 +129,7 @@ namespace VixenEditor {
         }
 
 
-        private void lbChannels_MouseUp(object sender, MouseEventArgs e) {
-            Cursor.Current = Cursors.Default;
-        }
 
-
-        private void lbChannels_MouseDown(object sender, MouseEventArgs e) {
-            if (e.Button != MouseButtons.Right)
-                return;
-
-            Cursor.Current = Cursors.Hand;
-        }
 
 
         private void btnGroupColor_Click(object sender, EventArgs e) {
@@ -206,18 +199,19 @@ namespace VixenEditor {
             var availableArea = Size.Width - allButtonAndMarginWidths;
             lbChannels.Width = (int)(availableArea * channelPct);
 
-            const int channelButtonMargin = 6;
-            var channelButtonX = lbChannels.Location.X + lbChannels.Width + channelButtonMargin;
+            const int defaultMargin = 6;
+            var channelButtonX = lbChannels.Location.X + lbChannels.Width + defaultMargin;
             btnAddChannels.Location = new Point(channelButtonX, btnAddChannels.Location.Y);
             btnRemoveChannels.Location = new Point(channelButtonX, btnRemoveChannels.Location.Y);
 
             const double groupPct = 0.6;
-            tvGroups.Location = new Point(btnAddChannels.Location.X + btnAddChannels.Width + channelButtonMargin, tvGroups.Location.Y);
+            tvGroups.Location = new Point(btnAddChannels.Location.X + btnAddChannels.Width + defaultMargin, tvGroups.Location.Y);
             tvGroups.Height = Height - heightOffset;
             tvGroups.Width = (int) (availableArea * groupPct);
 
             const int labelOffset = 3;
             lblGroups.Location = new Point(tvGroups.Location.X - labelOffset, lblGroups.Location.Y);
+            lblStats.Location = new Point(lblGroups.Location.X + lblGroups.Width + defaultMargin, lblStats.Location.Y);
         }
 
 
@@ -227,15 +221,17 @@ namespace VixenEditor {
                 return;
             }
 
+            CreateGroup(groupName);
+            UpdateStats();
+            tvGroups.Refresh();
+        }
+
+
+        private void CreateGroup(string groupName) {
             var thisNode = tvGroups.Nodes.Add(groupName);
-            thisNode.Tag = new GroupTagData {
-                IsLeafNode = false,
-                NodeColor = Color.White,
-                Zoom = "100%"
-            };
+            thisNode.Tag = new GroupTagData {IsLeafNode = false, NodeColor = Color.White, Zoom = "100%"};
             thisNode.Name = groupName;
             thisNode.EnsureVisible();
-            tvGroups.Refresh();
         }
 
 
@@ -343,6 +339,7 @@ namespace VixenEditor {
                     rootNode.Nodes.Insert(rootNode.GetNodeCount(false), (TreeNode)node.Clone());
                 }
             }
+            UpdateStats();
             tvGroups.Invalidate();
         }
 
@@ -377,6 +374,8 @@ namespace VixenEditor {
                     RemoveNode(treeNode, affectedNodeText);
                 }
             }
+            tvGroups.SelectedNode = null;
+            UpdateStats();
             tvGroups.EndUpdate();
             tvGroups.Refresh();
         }
@@ -392,19 +391,21 @@ namespace VixenEditor {
             }
         }
 
+
         private void btnAddChannels_Click(object sender, EventArgs e) {
             tvGroups.BeginUpdate();
             foreach (int index in lbChannels.SelectedIndices) {
-                var channel = _seq.FullChannels[index];
-                foreach (var newNode in tvGroups.SelectedNodes.Select(node => node.Nodes.Add(channel.Name))) {
+                var channel = _channels[index];
+                foreach (var newNode in tvGroups.SelectedNodes.Select(node => node.Nodes.Add(channel.Name)).Where(newNode => newNode.Nodes.Find(channel.Name, false).Length == 0)) {
                     newNode.Tag = new GroupTagData {
-                        IsLeafNode = true,
-                        NodeColor = channel.Color,
+                        IsLeafNode = true, NodeColor = channel.Color,
                         UnderlyingChannel = channel.OutputChannel.ToString(CultureInfo.InvariantCulture)
                     };
+                    newNode.Name = channel.Name;
                     AddReferencedNode(newNode);
                 }
             }
+            UpdateStats();
             tvGroups.EndUpdate();
             tvGroups.Refresh();
         }
@@ -423,27 +424,122 @@ namespace VixenEditor {
 
         private void btnRemoveChannels_Click(object sender, EventArgs e) {
             tvGroups.BeginUpdate();
-            //get the select node
-            //find its parent
-            //remove the node from the parent
-            //find any reference to the node elsewhere via the parent name
-            //remove the node there too.
-
             foreach (var node in tvGroups.SelectedNodes) {
                 var parent = node.Parent;
                 node.Remove();
                 RemoveReferencedNodes(parent, node);
             }
             tvGroups.SelectedNode = null;
+            UpdateStats();
             tvGroups.EndUpdate();
             tvGroups.Refresh();
         }
 
 
         private void RemoveReferencedNodes(TreeNode parent, TreeNode nodeToRemove) {
-            foreach (var node in tvGroups.Nodes.Find(nodeToRemove.Name, true).Where(node => node.Parent != null && node.Parent.Name == parent.Name)) {
-                node.Remove();
+            foreach (var node in tvGroups.Nodes
+                .Find(nodeToRemove.Name, true)
+                .Where(node => node.Parent != null && node.Parent.Name == parent.Name)) {
+                    node.Remove();
             }
+        }
+
+
+        private void GroupDialog_ResizeEnd(object sender, EventArgs e) {
+            lbChannels.Refresh();
+            tvGroups.Refresh();
+        }
+
+        private void btnUp_Click(object sender, EventArgs e) {
+            SwapNodes(-1);
+        }
+
+        private void btnDown_Click(object sender, EventArgs e) {
+            SwapNodes(1);
+        }
+
+        private void SwapNodes(int direction) {
+            var root = tvGroups.SelectedNode.Parent == null ? tvGroups.Nodes : tvGroups.SelectedNode.Parent.Nodes;
+            var currentPos = root.IndexOf(tvGroups.SelectedNode);
+            var currentNode = root[currentPos];
+            currentNode.Remove();
+            root.Insert(currentPos + direction, currentNode);
+            currentNode.EnsureVisible();
+            tvGroups.Refresh();
+            SetButtons();
+        }
+
+        private void cbSort_SelectedIndexChanged(object sender, EventArgs e) {
+            // reset to natural order first otherwise the other sorts don't seem
+            // to work right, since it sorts on the last sort result
+            var result = _channels.OrderBy(x => x.OutputChannel);
+            _channels = result.ToList();
+
+            switch ((Sorts)cbSort.SelectedIndex) {
+                case Sorts.ChannelColor:
+                    result = _channels.OrderBy(x => x.Color.ToArgb());
+                    break;                
+                case Sorts.ChannelName:
+                    result = _channels.OrderBy(x => x.Name);
+                    break;
+                case Sorts.ChannelColorThenName:
+                    result = _channels.OrderBy(x => x.Color.ToArgb()).ThenBy(x => x.Name);
+                    break;
+                case Sorts.ChannelNameThenColor:
+                    result = _channels.OrderBy(x => x.Name).ThenBy(x => x.Color.ToArgb());
+                    break;
+            }
+
+            lbChannels.Items.Clear();
+            if ((Sorts)cbSort.SelectedIndex != Sorts.Natural ) _channels = result.ToList();
+            foreach (var c in _channels) {
+                lbChannels.Items.Add(c.Name);
+            }
+        }
+
+
+        private void btnAddMutli_Click(object sender, EventArgs e) {
+            using (var dialog = new GroupDialogMultiAdd()) {
+                if (dialog.ShowDialog() != DialogResult.OK) {
+                    return;
+                }
+                var name = dialog.GroupName;
+                var count = dialog.GroupCount;
+                var added = 1;
+                var skipped = 0;
+                while (added < count + 1) {
+                    var groupName = name + (added + skipped);
+                    if (tvGroups.Nodes.Find(groupName, false).Length != 0) {
+                        skipped++;
+                        continue;
+                    }
+                    CreateGroup(groupName);
+                    added++;
+                }
+            }
+            tvGroups.Refresh();
+            UpdateStats();
+        }
+        
+
+        private void lbChannels_MouseDown(object sender, MouseEventArgs e) {
+            if (e.Button != MouseButtons.Right || !btnAddChannels.Enabled)
+                return;
+
+            lbChannels.DoDragDrop(lbChannels.SelectedItems, DragDropEffects.Copy);
+        }
+
+
+        private void tvGroups_DragDrop(object sender, DragEventArgs e) {
+            btnAddChannels_Click(null, null);
+        }
+
+        private void tvGroups_DragOver(object sender, DragEventArgs e) {
+            e.Effect = DragDropEffects.Copy;
+        }
+
+        private void tvGroups_DragEnter(object sender, DragEventArgs e) {
+            e.Effect = DragDropEffects.Copy;
         }
     }
 }
