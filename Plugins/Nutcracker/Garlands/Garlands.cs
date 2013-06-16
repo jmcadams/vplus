@@ -10,21 +10,11 @@ namespace Garlands {
             InitializeComponent();
         }
 
-
         public event EventHandler OnControlChanged;
 
         public string EffectName {
             get { return "Garlands"; }
         }
-
-        public byte[] EffectData {
-            get { throw new NotImplementedException(); }
-        }
-
-        public void Startup() {
-            throw new NotImplementedException();
-        }
-
 
         public Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender) {
             throw new NotImplementedException();

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -13,22 +12,11 @@ namespace Bars {
             InitializeComponent();
         }
 
-
         public event EventHandler OnControlChanged;
 
         public string EffectName {
             get { return "Bars"; }
         }
-
-        public byte[] EffectData {
-            get { throw new NotImplementedException(); }
-        }
-
-
-        public void Startup() {
-            throw new NotImplementedException();
-        }
-
 
         public Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender) {
             var barCount = tbRepeat.Value * palette.Length;
