@@ -55,6 +55,7 @@ namespace Fireworks {
             this.tbExplosionCount.Size = new System.Drawing.Size(139, 25);
             this.tbExplosionCount.TabIndex = 1;
             this.tbExplosionCount.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbExplosionCount.ValueChanged += new System.EventHandler(this.Fireworks_ControlChanged);
             // 
             // tbExplosionParticles
             // 
@@ -65,6 +66,7 @@ namespace Fireworks {
             this.tbExplosionParticles.Size = new System.Drawing.Size(139, 25);
             this.tbExplosionParticles.TabIndex = 3;
             this.tbExplosionParticles.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbExplosionParticles.ValueChanged += new System.EventHandler(this.Fireworks_ControlChanged);
             // 
             // lblExplosionParticles
             // 
@@ -83,6 +85,7 @@ namespace Fireworks {
             this.tbParticleVelocity.Size = new System.Drawing.Size(139, 25);
             this.tbParticleVelocity.TabIndex = 5;
             this.tbParticleVelocity.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbParticleVelocity.ValueChanged += new System.EventHandler(this.Fireworks_ControlChanged);
             // 
             // lblParticleVelocity
             // 
@@ -102,6 +105,7 @@ namespace Fireworks {
             this.tbParticleFade.Size = new System.Drawing.Size(139, 25);
             this.tbParticleFade.TabIndex = 7;
             this.tbParticleFade.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbParticleFade.ValueChanged += new System.EventHandler(this.Fireworks_ControlChanged);
             // 
             // lblParticleFade
             // 

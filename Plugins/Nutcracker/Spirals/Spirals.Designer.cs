@@ -48,6 +48,7 @@ namespace Spirals {
             this.tbRotations.Size = new System.Drawing.Size(139, 25);
             this.tbRotations.TabIndex = 21;
             this.tbRotations.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbRotations.ValueChanged += new System.EventHandler(this.Spirals_ControlChanged);
             // 
             // lblRotations
             // 
@@ -67,6 +68,7 @@ namespace Spirals {
             this.tbPaletteRepeat.Size = new System.Drawing.Size(139, 25);
             this.tbPaletteRepeat.TabIndex = 19;
             this.tbPaletteRepeat.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbPaletteRepeat.ValueChanged += new System.EventHandler(this.Spirals_ControlChanged);
             // 
             // lblPaletteRepeat
             // 
@@ -86,6 +88,7 @@ namespace Spirals {
             this.tbDirection.Size = new System.Drawing.Size(139, 25);
             this.tbDirection.TabIndex = 25;
             this.tbDirection.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbDirection.ValueChanged += new System.EventHandler(this.Spirals_ControlChanged);
             // 
             // lblDirection
             // 
@@ -105,6 +108,7 @@ namespace Spirals {
             this.tbThickness.Size = new System.Drawing.Size(139, 25);
             this.tbThickness.TabIndex = 23;
             this.tbThickness.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbThickness.ValueChanged += new System.EventHandler(this.Spirals_ControlChanged);
             // 
             // lblThickness
             // 
@@ -124,6 +128,7 @@ namespace Spirals {
             this.chkBoxBlend.TabIndex = 26;
             this.chkBoxBlend.Text = "Blend";
             this.chkBoxBlend.UseVisualStyleBackColor = true;
+            this.chkBoxBlend.CheckedChanged += new System.EventHandler(this.Spirals_ControlChanged);
             // 
             // chkBox3D
             // 
@@ -134,6 +139,7 @@ namespace Spirals {
             this.chkBox3D.TabIndex = 27;
             this.chkBox3D.Text = "3D";
             this.chkBox3D.UseVisualStyleBackColor = true;
+            this.chkBox3D.CheckedChanged += new System.EventHandler(this.Spirals_ControlChanged);
             // 
             // Spirals
             // 

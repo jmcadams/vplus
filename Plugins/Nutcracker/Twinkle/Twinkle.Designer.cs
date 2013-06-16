@@ -37,6 +37,7 @@ namespace Twinkle {
             this.tbLightCount.Size = new System.Drawing.Size(139, 25);
             this.tbLightCount.TabIndex = 23;
             this.tbLightCount.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbLightCount.ValueChanged += new System.EventHandler(this.Twinkle_ControlChanged);
             // 
             // lblLightCount
             // 

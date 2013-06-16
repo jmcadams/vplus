@@ -42,6 +42,7 @@ namespace Text {
             this.txtBoxLine1.Name = "txtBoxLine1";
             this.txtBoxLine1.Size = new System.Drawing.Size(186, 20);
             this.txtBoxLine1.TabIndex = 0;
+            this.txtBoxLine1.TextChanged += new System.EventHandler(this.Text_ControlChanged);
             // 
             // lblLine1
             // 
@@ -67,6 +68,7 @@ namespace Text {
             this.txtBoxLine2.Name = "txtBoxLine2";
             this.txtBoxLine2.Size = new System.Drawing.Size(186, 20);
             this.txtBoxLine2.TabIndex = 2;
+            this.txtBoxLine2.TextChanged += new System.EventHandler(this.Text_ControlChanged);
             // 
             // tbThickness
             // 
@@ -77,6 +79,7 @@ namespace Text {
             this.tbThickness.Size = new System.Drawing.Size(186, 25);
             this.tbThickness.TabIndex = 31;
             this.tbThickness.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbThickness.ValueChanged += new System.EventHandler(this.Text_ControlChanged);
             // 
             // lblTop
             // 
@@ -103,6 +106,7 @@ namespace Text {
             this.label1.Size = new System.Drawing.Size(144, 18);
             this.label1.TabIndex = 33;
             this.label1.Text = "label1";
+            this.label1.TextChanged += new System.EventHandler(this.Text_ControlChanged);
             // 
             // cbDirection
             // 
@@ -117,6 +121,7 @@ namespace Text {
             this.cbDirection.Name = "cbDirection";
             this.cbDirection.Size = new System.Drawing.Size(139, 21);
             this.cbDirection.TabIndex = 35;
+            this.cbDirection.SelectedIndexChanged += new System.EventHandler(this.Text_ControlChanged);
             // 
             // label2
             // 

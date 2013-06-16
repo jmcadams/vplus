@@ -36,12 +36,23 @@ namespace VixenEditor
             this.nutcrackerEffectControl1 = new VixenEditor.NutcrackerEffectControl();
             this.pbPreview = new System.Windows.Forms.PictureBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.lblFrames = new System.Windows.Forms.Label();
+            this.nudFrames = new System.Windows.Forms.NumericUpDown();
+            this.cbRender = new System.Windows.Forms.CheckBox();
+            this.lblColumns = new System.Windows.Forms.Label();
+            this.lblRows = new System.Windows.Forms.Label();
+            this.nudColumns = new System.Windows.Forms.NumericUpDown();
+            this.nudRows = new System.Windows.Forms.NumericUpDown();
+            this.tbInfo = new System.Windows.Forms.TextBox();
             this.btnOK = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudFrames)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudColumns)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRows)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox2
@@ -89,6 +100,14 @@ namespace VixenEditor
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.lblFrames);
+            this.groupBox3.Controls.Add(this.nudFrames);
+            this.groupBox3.Controls.Add(this.cbRender);
+            this.groupBox3.Controls.Add(this.lblColumns);
+            this.groupBox3.Controls.Add(this.lblRows);
+            this.groupBox3.Controls.Add(this.nudColumns);
+            this.groupBox3.Controls.Add(this.nudRows);
+            this.groupBox3.Controls.Add(this.tbInfo);
             this.groupBox3.Controls.Add(this.btnOK);
             this.groupBox3.Controls.Add(this.btnCancel);
             this.groupBox3.Location = new System.Drawing.Point(398, 12);
@@ -98,15 +117,76 @@ namespace VixenEditor
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Nutcracker Options";
             // 
-            // btnCancel
+            // lblFrames
             // 
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(693, 305);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 0;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
+            this.lblFrames.AutoSize = true;
+            this.lblFrames.Location = new System.Drawing.Point(516, 75);
+            this.lblFrames.Name = "lblFrames";
+            this.lblFrames.Size = new System.Drawing.Size(41, 13);
+            this.lblFrames.TabIndex = 9;
+            this.lblFrames.Text = "Frames";
+            // 
+            // nudFrames
+            // 
+            this.nudFrames.Location = new System.Drawing.Point(391, 73);
+            this.nudFrames.Name = "nudFrames";
+            this.nudFrames.Size = new System.Drawing.Size(120, 20);
+            this.nudFrames.TabIndex = 8;
+            this.nudFrames.ValueChanged += new System.EventHandler(this.nudFrames_ValueChanged);
+            // 
+            // cbRender
+            // 
+            this.cbRender.AutoSize = true;
+            this.cbRender.Enabled = false;
+            this.cbRender.Location = new System.Drawing.Point(390, 99);
+            this.cbRender.Name = "cbRender";
+            this.cbRender.Size = new System.Drawing.Size(61, 17);
+            this.cbRender.TabIndex = 7;
+            this.cbRender.Text = "Render";
+            this.cbRender.UseVisualStyleBackColor = true;
+            this.cbRender.CheckedChanged += new System.EventHandler(this.cbRender_CheckedChanged);
+            // 
+            // lblColumns
+            // 
+            this.lblColumns.AutoSize = true;
+            this.lblColumns.Location = new System.Drawing.Point(516, 48);
+            this.lblColumns.Name = "lblColumns";
+            this.lblColumns.Size = new System.Drawing.Size(47, 13);
+            this.lblColumns.TabIndex = 6;
+            this.lblColumns.Text = "Columns";
+            // 
+            // lblRows
+            // 
+            this.lblRows.AutoSize = true;
+            this.lblRows.Location = new System.Drawing.Point(517, 22);
+            this.lblRows.Name = "lblRows";
+            this.lblRows.Size = new System.Drawing.Size(34, 13);
+            this.lblRows.TabIndex = 5;
+            this.lblRows.Text = "Rows";
+            // 
+            // nudColumns
+            // 
+            this.nudColumns.Location = new System.Drawing.Point(390, 46);
+            this.nudColumns.Name = "nudColumns";
+            this.nudColumns.Size = new System.Drawing.Size(120, 20);
+            this.nudColumns.TabIndex = 4;
+            this.nudColumns.ValueChanged += new System.EventHandler(this.nudColumns_ValueChanged);
+            // 
+            // nudRows
+            // 
+            this.nudRows.Location = new System.Drawing.Point(391, 20);
+            this.nudRows.Name = "nudRows";
+            this.nudRows.Size = new System.Drawing.Size(120, 20);
+            this.nudRows.TabIndex = 3;
+            this.nudRows.ValueChanged += new System.EventHandler(this.nudRows_ValueChanged);
+            // 
+            // tbInfo
+            // 
+            this.tbInfo.Location = new System.Drawing.Point(7, 20);
+            this.tbInfo.Multiline = true;
+            this.tbInfo.Name = "tbInfo";
+            this.tbInfo.Size = new System.Drawing.Size(377, 308);
+            this.tbInfo.TabIndex = 2;
             // 
             // btnOK
             // 
@@ -117,6 +197,16 @@ namespace VixenEditor
             this.btnOK.TabIndex = 1;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Location = new System.Drawing.Point(693, 305);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 0;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
             // 
             // NutcrackerControlDialog
             // 
@@ -137,6 +227,10 @@ namespace VixenEditor
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();
             this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudFrames)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudColumns)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRows)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -151,5 +245,13 @@ namespace VixenEditor
         private GroupBox groupBox3;
         private Button btnOK;
         private Button btnCancel;
+        private CheckBox cbRender;
+        private Label lblColumns;
+        private Label lblRows;
+        private NumericUpDown nudColumns;
+        private NumericUpDown nudRows;
+        private TextBox tbInfo;
+        private Label lblFrames;
+        private NumericUpDown nudFrames;
     }
 }

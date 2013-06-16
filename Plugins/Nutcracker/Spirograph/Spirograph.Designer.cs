@@ -45,6 +45,7 @@ namespace Spirograph {
             this.tbThickness.Size = new System.Drawing.Size(139, 25);
             this.tbThickness.TabIndex = 29;
             this.tbThickness.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbThickness.ValueChanged += new System.EventHandler(this.Spirograph_ControlChanged);
             // 
             // lblDistance
             // 
@@ -64,6 +65,7 @@ namespace Spirograph {
             this.tbRotations.Size = new System.Drawing.Size(139, 25);
             this.tbRotations.TabIndex = 27;
             this.tbRotations.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbRotations.ValueChanged += new System.EventHandler(this.Spirograph_ControlChanged);
             // 
             // lblInnerRadius
             // 
@@ -83,6 +85,7 @@ namespace Spirograph {
             this.tbPaletteRepeat.Size = new System.Drawing.Size(139, 25);
             this.tbPaletteRepeat.TabIndex = 25;
             this.tbPaletteRepeat.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbPaletteRepeat.ValueChanged += new System.EventHandler(this.Spirograph_ControlChanged);
             // 
             // lblOuterRadius
             // 
@@ -102,6 +105,7 @@ namespace Spirograph {
             this.chkBoxAnimate.TabIndex = 30;
             this.chkBoxAnimate.Text = "Animate Distance";
             this.chkBoxAnimate.UseVisualStyleBackColor = true;
+            this.chkBoxAnimate.CheckedChanged += new System.EventHandler(this.Spirograph_ControlChanged);
             // 
             // lblNote
             // 

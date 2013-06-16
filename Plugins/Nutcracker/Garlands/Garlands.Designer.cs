@@ -40,6 +40,7 @@ namespace Garlands {
             this.tbGarlandType.Size = new System.Drawing.Size(139, 25);
             this.tbGarlandType.TabIndex = 3;
             this.tbGarlandType.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbGarlandType.ValueChanged += new System.EventHandler(this.Garlands_ControlChanged);
             // 
             // lblGarlandType
             // 
@@ -59,6 +60,7 @@ namespace Garlands {
             this.tbSpacing.Size = new System.Drawing.Size(139, 25);
             this.tbSpacing.TabIndex = 5;
             this.tbSpacing.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbSpacing.ValueChanged += new System.EventHandler(this.Garlands_ControlChanged);
             // 
             // lblSpacing
             // 

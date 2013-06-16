@@ -81,6 +81,7 @@
             this.tbSkip.Size = new System.Drawing.Size(117, 25);
             this.tbSkip.TabIndex = 4;
             this.tbSkip.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbSkip.ValueChanged += new System.EventHandler(this.Butterfly_ControlChanged);
             // 
             // tbChunks
             // 
@@ -91,6 +92,7 @@
             this.tbChunks.Size = new System.Drawing.Size(117, 25);
             this.tbChunks.TabIndex = 5;
             this.tbChunks.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbChunks.ValueChanged += new System.EventHandler(this.Butterfly_ControlChanged);
             // 
             // tbStyle
             // 
@@ -101,6 +103,7 @@
             this.tbStyle.Size = new System.Drawing.Size(117, 25);
             this.tbStyle.TabIndex = 6;
             this.tbStyle.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbStyle.ValueChanged += new System.EventHandler(this.Butterfly_ControlChanged);
             // 
             // cbColors
             // 
@@ -112,6 +115,7 @@
             this.cbColors.Name = "cbColors";
             this.cbColors.Size = new System.Drawing.Size(117, 21);
             this.cbColors.TabIndex = 7;
+            this.cbColors.SelectedIndexChanged += new System.EventHandler(this.Butterfly_ControlChanged);
             // 
             // Butterfly
             // 

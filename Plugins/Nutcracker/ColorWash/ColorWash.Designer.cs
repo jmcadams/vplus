@@ -38,6 +38,7 @@ namespace ColorWash {
             this.trackBar1.Size = new System.Drawing.Size(104, 25);
             this.trackBar1.TabIndex = 0;
             this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trackBar1.ValueChanged += new System.EventHandler(this.ColorWash_ControlChanged);
             // 
             // lblCount
             // 
@@ -58,6 +59,7 @@ namespace ColorWash {
             this.chkBoxHFade.TabIndex = 2;
             this.chkBoxHFade.Text = "Horizontal Fade";
             this.chkBoxHFade.UseVisualStyleBackColor = true;
+            this.chkBoxHFade.CheckedChanged += new System.EventHandler(this.ColorWash_ControlChanged);
             // 
             // chkBoxVFade
             // 
@@ -69,6 +71,7 @@ namespace ColorWash {
             this.chkBoxVFade.TabIndex = 3;
             this.chkBoxVFade.Text = "Vertical Fade";
             this.chkBoxVFade.UseVisualStyleBackColor = true;
+            this.chkBoxVFade.CheckedChanged += new System.EventHandler(this.ColorWash_ControlChanged);
             // 
             // ColorWash
             // 

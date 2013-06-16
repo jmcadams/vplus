@@ -24,12 +24,12 @@
         /// </summary>
         private void InitializeComponent() {
             this.lblPaletteRep = new System.Windows.Forms.Label();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.tbRepeat = new System.Windows.Forms.TrackBar();
             this.lblDirection = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cbDirection = new System.Windows.Forms.ComboBox();
             this.cbHighlight = new System.Windows.Forms.CheckBox();
             this.cb3D = new System.Windows.Forms.CheckBox();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbRepeat)).BeginInit();
             this.SuspendLayout();
             // 
             // lblPaletteRep
@@ -41,17 +41,20 @@
             this.lblPaletteRep.TabIndex = 0;
             this.lblPaletteRep.Text = "Palette Repeat";
             // 
-            // trackBar1
+            // tbRepeat
             // 
-            this.trackBar1.AutoSize = false;
-            this.trackBar1.LargeChange = 2;
-            this.trackBar1.Location = new System.Drawing.Point(79, 2);
-            this.trackBar1.Maximum = 4;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(150, 25);
-            this.trackBar1.TabIndex = 1;
-            this.trackBar1.TabStop = false;
-            this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbRepeat.AutoSize = false;
+            this.tbRepeat.LargeChange = 2;
+            this.tbRepeat.Location = new System.Drawing.Point(79, 2);
+            this.tbRepeat.Maximum = 5;
+            this.tbRepeat.Minimum = 1;
+            this.tbRepeat.Name = "tbRepeat";
+            this.tbRepeat.Size = new System.Drawing.Size(150, 25);
+            this.tbRepeat.TabIndex = 1;
+            this.tbRepeat.TabStop = false;
+            this.tbRepeat.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbRepeat.Value = 1;
+            this.tbRepeat.ValueChanged += new System.EventHandler(this.Bars_ControlChanged);
             // 
             // lblDirection
             // 
@@ -62,18 +65,19 @@
             this.lblDirection.TabIndex = 2;
             this.lblDirection.Text = "Direction";
             // 
-            // comboBox1
+            // cbDirection
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.cbDirection.FormattingEnabled = true;
+            this.cbDirection.Items.AddRange(new object[] {
             "Up",
             "Down",
             "Expand",
             "Compress"});
-            this.comboBox1.Location = new System.Drawing.Point(86, 36);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(140, 21);
-            this.comboBox1.TabIndex = 3;
+            this.cbDirection.Location = new System.Drawing.Point(86, 36);
+            this.cbDirection.Name = "cbDirection";
+            this.cbDirection.Size = new System.Drawing.Size(140, 21);
+            this.cbDirection.TabIndex = 3;
+            this.cbDirection.SelectedIndexChanged += new System.EventHandler(this.Bars_ControlChanged);
             // 
             // cbHighlight
             // 
@@ -84,6 +88,7 @@
             this.cbHighlight.TabIndex = 4;
             this.cbHighlight.Text = "Highlight";
             this.cbHighlight.UseVisualStyleBackColor = true;
+            this.cbHighlight.CheckedChanged += new System.EventHandler(this.Bars_ControlChanged);
             // 
             // cb3D
             // 
@@ -94,6 +99,7 @@
             this.cb3D.TabIndex = 5;
             this.cb3D.Text = "3D";
             this.cb3D.UseVisualStyleBackColor = true;
+            this.cb3D.CheckedChanged += new System.EventHandler(this.Bars_ControlChanged);
             // 
             // Bars
             // 
@@ -101,13 +107,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.cb3D);
             this.Controls.Add(this.cbHighlight);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cbDirection);
             this.Controls.Add(this.lblDirection);
-            this.Controls.Add(this.trackBar1);
+            this.Controls.Add(this.tbRepeat);
             this.Controls.Add(this.lblPaletteRep);
             this.Name = "Bars";
             this.Size = new System.Drawing.Size(232, 134);
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbRepeat)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -116,9 +122,9 @@
         #endregion
 
         private System.Windows.Forms.Label lblPaletteRep;
-        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.TrackBar tbRepeat;
         private System.Windows.Forms.Label lblDirection;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cbDirection;
         private System.Windows.Forms.CheckBox cbHighlight;
         private System.Windows.Forms.CheckBox cb3D;
     }

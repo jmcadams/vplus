@@ -40,6 +40,7 @@ namespace Snowflakes {
             this.tbSpacing.Size = new System.Drawing.Size(139, 25);
             this.tbSpacing.TabIndex = 13;
             this.tbSpacing.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbSpacing.ValueChanged += new System.EventHandler(this.Snowflakes_ControlChanged);
             // 
             // lblType
             // 
@@ -59,6 +60,7 @@ namespace Snowflakes {
             this.tbGarlandType.Size = new System.Drawing.Size(139, 25);
             this.tbGarlandType.TabIndex = 11;
             this.tbGarlandType.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbGarlandType.ValueChanged += new System.EventHandler(this.Snowflakes_ControlChanged);
             // 
             // lblMaxFlakes
             // 

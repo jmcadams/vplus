@@ -42,6 +42,7 @@ namespace Meteors {
             this.tbSpacing.Size = new System.Drawing.Size(139, 25);
             this.tbSpacing.TabIndex = 9;
             this.tbSpacing.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbSpacing.ValueChanged += new System.EventHandler(this.Meteors_ControlChanged);
             // 
             // lblTrailLength
             // 
@@ -61,6 +62,7 @@ namespace Meteors {
             this.tbGarlandType.Size = new System.Drawing.Size(139, 25);
             this.tbGarlandType.TabIndex = 7;
             this.tbGarlandType.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbGarlandType.ValueChanged += new System.EventHandler(this.Meteors_ControlChanged);
             // 
             // lblCount
             // 
@@ -91,6 +93,7 @@ namespace Meteors {
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(139, 21);
             this.comboBox1.TabIndex = 11;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.Meteors_ControlChanged);
             // 
             // Meteors
             // 

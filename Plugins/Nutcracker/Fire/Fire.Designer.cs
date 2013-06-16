@@ -46,6 +46,7 @@ namespace Fire {
             this.trackBar1.Size = new System.Drawing.Size(183, 25);
             this.trackBar1.TabIndex = 1;
             this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trackBar1.ValueChanged += new System.EventHandler(this.Fire_ControlChanged);
             // 
             // Fire
             // 

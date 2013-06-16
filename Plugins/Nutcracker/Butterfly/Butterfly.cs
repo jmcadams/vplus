@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
 using VixenPlus;
 
 namespace Butterfly {
@@ -8,22 +10,28 @@ namespace Butterfly {
         }
 
 
+        public event EventHandler OnControlChanged;
+
         public string EffectName {
             get { return "Butterfly"; }
         }
 
         public byte[] EffectData {
-            get { throw new System.NotImplementedException(); }
+            get { throw new NotImplementedException(); }
         }
 
 
         public void Startup() {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
 
-        public void ShutDown() {
-            throw new System.NotImplementedException();
+        public Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender) {
+            throw new NotImplementedException();
+        }
+
+        private void Butterfly_ControlChanged(object sender, EventArgs e) {
+            OnControlChanged(this, e);
         }
     }
 }

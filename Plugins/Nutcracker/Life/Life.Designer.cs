@@ -40,6 +40,7 @@ namespace Life {
             this.tbType.Size = new System.Drawing.Size(139, 25);
             this.tbType.TabIndex = 9;
             this.tbType.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbType.ValueChanged += new System.EventHandler(this.Life_ControlChanged);
             // 
             // lblType
             // 
@@ -59,6 +60,7 @@ namespace Life {
             this.tbCellsToStart.Size = new System.Drawing.Size(139, 25);
             this.tbCellsToStart.TabIndex = 7;
             this.tbCellsToStart.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbCellsToStart.ValueChanged += new System.EventHandler(this.Life_ControlChanged);
             // 
             // lblCellsToStart
             // 

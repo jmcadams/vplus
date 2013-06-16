@@ -41,6 +41,7 @@ namespace Pictures {
             this.tbGifSpeed.Size = new System.Drawing.Size(139, 25);
             this.tbGifSpeed.TabIndex = 11;
             this.tbGifSpeed.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbGifSpeed.ValueChanged += new System.EventHandler(this.Pictures_ControlChanged);
             // 
             // lblGifSpeed
             // 
@@ -67,6 +68,7 @@ namespace Pictures {
             this.txtBoxFile.Name = "txtBoxFile";
             this.txtBoxFile.Size = new System.Drawing.Size(232, 20);
             this.txtBoxFile.TabIndex = 13;
+            this.txtBoxFile.TextChanged += new System.EventHandler(this.Pictures_ControlChanged);
             // 
             // label1
             // 
@@ -90,6 +92,7 @@ namespace Pictures {
             this.cbDirection.Name = "cbDirection";
             this.cbDirection.Size = new System.Drawing.Size(139, 21);
             this.cbDirection.TabIndex = 15;
+            this.cbDirection.SelectedIndexChanged += new System.EventHandler(this.Pictures_ControlChanged);
             // 
             // Picture
             // 
