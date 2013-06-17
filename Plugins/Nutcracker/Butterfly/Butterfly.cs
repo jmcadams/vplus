@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using VixenPlus;
-
 using CommonUtils;
+using VixenPlus;
 
 namespace Butterfly {
     public partial class Butterfly : UserControl, INutcrackerEffect {
