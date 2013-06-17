@@ -62,7 +62,7 @@ namespace VixenEditor
                 result[count] = label6.BackColor;
             }
 
-            return result;
+            return count > 0 ? result : new[] {Color.White};
 
         }
 
