@@ -23,22 +23,25 @@ namespace ColorWash {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.tbCount = new System.Windows.Forms.TrackBar();
             this.lblCount = new System.Windows.Forms.Label();
             this.chkBoxHFade = new System.Windows.Forms.CheckBox();
             this.chkBoxVFade = new System.Windows.Forms.CheckBox();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbCount)).BeginInit();
             this.SuspendLayout();
             // 
-            // trackBar1
+            // tbCount
             // 
-            this.trackBar1.AutoSize = false;
-            this.trackBar1.Location = new System.Drawing.Point(125, 3);
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(104, 25);
-            this.trackBar1.TabIndex = 0;
-            this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.trackBar1.ValueChanged += new System.EventHandler(this.ColorWash_ControlChanged);
+            this.tbCount.AutoSize = false;
+            this.tbCount.Location = new System.Drawing.Point(125, 3);
+            this.tbCount.Maximum = 11;
+            this.tbCount.Minimum = 1;
+            this.tbCount.Name = "tbCount";
+            this.tbCount.Size = new System.Drawing.Size(104, 25);
+            this.tbCount.TabIndex = 0;
+            this.tbCount.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbCount.Value = 1;
+            this.tbCount.ValueChanged += new System.EventHandler(this.ColorWash_ControlChanged);
             // 
             // lblCount
             // 
@@ -80,10 +83,10 @@ namespace ColorWash {
             this.Controls.Add(this.chkBoxVFade);
             this.Controls.Add(this.chkBoxHFade);
             this.Controls.Add(this.lblCount);
-            this.Controls.Add(this.trackBar1);
+            this.Controls.Add(this.tbCount);
             this.Name = "ColorWash";
             this.Size = new System.Drawing.Size(232, 134);
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbCount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -91,7 +94,7 @@ namespace ColorWash {
 
         #endregion
 
-        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.TrackBar tbCount;
         private System.Windows.Forms.Label lblCount;
         private System.Windows.Forms.CheckBox chkBoxHFade;
         private System.Windows.Forms.CheckBox chkBoxVFade;
