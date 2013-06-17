@@ -76,22 +76,24 @@
             // 
             this.tbSkip.AutoSize = false;
             this.tbSkip.Location = new System.Drawing.Point(112, 87);
-            this.tbSkip.Maximum = 9;
+            this.tbSkip.Minimum = 1;
             this.tbSkip.Name = "tbSkip";
             this.tbSkip.Size = new System.Drawing.Size(117, 25);
             this.tbSkip.TabIndex = 4;
             this.tbSkip.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbSkip.Value = 1;
             this.tbSkip.ValueChanged += new System.EventHandler(this.Butterfly_ControlChanged);
             // 
             // tbChunks
             // 
             this.tbChunks.AutoSize = false;
             this.tbChunks.Location = new System.Drawing.Point(112, 56);
-            this.tbChunks.Maximum = 9;
+            this.tbChunks.Minimum = 1;
             this.tbChunks.Name = "tbChunks";
             this.tbChunks.Size = new System.Drawing.Size(117, 25);
             this.tbChunks.TabIndex = 5;
             this.tbChunks.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbChunks.Value = 1;
             this.tbChunks.ValueChanged += new System.EventHandler(this.Butterfly_ControlChanged);
             // 
             // tbStyle
@@ -99,10 +101,12 @@
             this.tbStyle.AutoSize = false;
             this.tbStyle.Location = new System.Drawing.Point(112, 25);
             this.tbStyle.Maximum = 3;
+            this.tbStyle.Minimum = 1;
             this.tbStyle.Name = "tbStyle";
             this.tbStyle.Size = new System.Drawing.Size(117, 25);
             this.tbStyle.TabIndex = 6;
             this.tbStyle.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbStyle.Value = 1;
             this.tbStyle.ValueChanged += new System.EventHandler(this.Butterfly_ControlChanged);
             // 
             // cbColors
