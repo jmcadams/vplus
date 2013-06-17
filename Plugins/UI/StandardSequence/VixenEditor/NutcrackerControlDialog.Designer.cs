@@ -138,7 +138,6 @@ namespace VixenEditor
             // cbRender
             // 
             this.cbRender.AutoSize = true;
-            this.cbRender.Enabled = false;
             this.cbRender.Location = new System.Drawing.Point(390, 99);
             this.cbRender.Name = "cbRender";
             this.cbRender.Size = new System.Drawing.Size(61, 17);
