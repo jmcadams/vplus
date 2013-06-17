@@ -130,6 +130,7 @@ namespace VixenEditor
             // 
             this.nudFrames.Location = new System.Drawing.Point(391, 73);
             this.nudFrames.Name = "nudFrames";
+            this.nudFrames.Maximum = 200;
             this.nudFrames.Size = new System.Drawing.Size(120, 20);
             this.nudFrames.TabIndex = 8;
             this.nudFrames.ValueChanged += new System.EventHandler(this.nudFrames_ValueChanged);
@@ -167,6 +168,7 @@ namespace VixenEditor
             // nudColumns
             // 
             this.nudColumns.Location = new System.Drawing.Point(390, 46);
+            this.nudColumns.Maximum = 300;
             this.nudColumns.Name = "nudColumns";
             this.nudColumns.Size = new System.Drawing.Size(120, 20);
             this.nudColumns.TabIndex = 4;

@@ -96,6 +96,28 @@ namespace CommonUtils {
             return newHsv;
         }
 
+        public static Color GetMultiColorBlend(double n, bool circular, Color[] palette) {
+            var colorCount = palette.Length;
+            if (colorCount <= 1) {
+                return palette[0];
+            }
+
+            n = n >= 1.0 ? 0.99999 : n < 0.0 ? 0.0 : n;
+            var index = n * (circular ? colorCount : colorCount - 1);
+            var firstColor = (int)Math.Floor(index);
+            var secondColor = (firstColor + 1) % colorCount;
+            var ratio = index - firstColor;
+
+            return Get2ColorBlend(palette[firstColor], palette[secondColor], ratio);
+        }
+
+        private static int ChannelBlend(int firstColor, int secondColor, double ratio) {
+            return firstColor + (int)Math.Floor(ratio * (secondColor - firstColor) + 0.5);
+        }
+
+        public static Color Get2ColorBlend(Color c1, Color c2, double ratio) {
+            return Color.FromArgb(ChannelBlend(c1.R, c2.R, ratio), ChannelBlend(c1.G, c2.G, ratio), ChannelBlend(c1.B, c2.B, ratio)); ;
+        }
     }
 
 }

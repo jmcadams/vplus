@@ -48,7 +48,7 @@ namespace VixenEditor
         }
 
         public Control GetCurrentEffectControl() {
-            return panel1.Controls[0];
+            return cbEffects.SelectedIndex == 0 ? null : panel1.Controls[0];
         }
 
         private event EventHandler OnPaletteChange;

@@ -44,6 +44,7 @@ namespace Spirals {
             this.tbRotations.AutoSize = false;
             this.tbRotations.Location = new System.Drawing.Point(93, 28);
             this.tbRotations.Maximum = 100;
+            this.tbRotations.Minimum = -100;
             this.tbRotations.Name = "tbRotations";
             this.tbRotations.Size = new System.Drawing.Size(139, 25);
             this.tbRotations.TabIndex = 21;
@@ -63,11 +64,13 @@ namespace Spirals {
             // 
             this.tbPaletteRepeat.AutoSize = false;
             this.tbPaletteRepeat.Location = new System.Drawing.Point(93, 0);
-            this.tbPaletteRepeat.Maximum = 4;
+            this.tbPaletteRepeat.Maximum = 5;
+            this.tbPaletteRepeat.Minimum = 1;
             this.tbPaletteRepeat.Name = "tbPaletteRepeat";
             this.tbPaletteRepeat.Size = new System.Drawing.Size(139, 25);
             this.tbPaletteRepeat.TabIndex = 19;
             this.tbPaletteRepeat.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbPaletteRepeat.Value = 1;
             this.tbPaletteRepeat.ValueChanged += new System.EventHandler(this.Spirals_ControlChanged);
             // 
             // lblPaletteRepeat
@@ -83,7 +86,8 @@ namespace Spirals {
             // 
             this.tbDirection.AutoSize = false;
             this.tbDirection.Location = new System.Drawing.Point(93, 84);
-            this.tbDirection.Maximum = 2;
+            this.tbDirection.Maximum = 1;
+            this.tbDirection.Minimum = -1;
             this.tbDirection.Name = "tbDirection";
             this.tbDirection.Size = new System.Drawing.Size(139, 25);
             this.tbDirection.TabIndex = 25;
@@ -104,10 +108,12 @@ namespace Spirals {
             this.tbThickness.AutoSize = false;
             this.tbThickness.Location = new System.Drawing.Point(93, 56);
             this.tbThickness.Maximum = 100;
+            this.tbThickness.Minimum = 1;
             this.tbThickness.Name = "tbThickness";
             this.tbThickness.Size = new System.Drawing.Size(139, 25);
             this.tbThickness.TabIndex = 23;
             this.tbThickness.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbThickness.Value = 1;
             this.tbThickness.ValueChanged += new System.EventHandler(this.Spirals_ControlChanged);
             // 
             // lblThickness
