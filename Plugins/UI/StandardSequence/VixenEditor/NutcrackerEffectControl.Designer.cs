@@ -29,7 +29,7 @@ namespace VixenEditor
         private void InitializeComponent()
         {
             this.lblSpeed = new System.Windows.Forms.Label();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.tbSpeed = new System.Windows.Forms.TrackBar();
             this.btnPalette = new System.Windows.Forms.Button();
             this.cbEffects = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -45,7 +45,7 @@ namespace VixenEditor
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbSpeed)).BeginInit();
             this.SuspendLayout();
             // 
             // lblSpeed
@@ -57,15 +57,15 @@ namespace VixenEditor
             this.lblSpeed.TabIndex = 0;
             this.lblSpeed.Text = "Speed";
             // 
-            // trackBar1
+            // tbSpeed
             // 
-            this.trackBar1.Location = new System.Drawing.Point(323, 22);
-            this.trackBar1.Maximum = 20;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackBar1.Size = new System.Drawing.Size(45, 147);
-            this.trackBar1.TabIndex = 1;
-            this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.tbSpeed.Location = new System.Drawing.Point(323, 22);
+            this.tbSpeed.Maximum = 20;
+            this.tbSpeed.Name = "tbSpeed";
+            this.tbSpeed.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.tbSpeed.Size = new System.Drawing.Size(45, 147);
+            this.tbSpeed.TabIndex = 1;
+            this.tbSpeed.TickStyle = System.Windows.Forms.TickStyle.Both;
             // 
             // btnPalette
             // 
@@ -236,11 +236,11 @@ namespace VixenEditor
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.cbEffects);
             this.Controls.Add(this.btnPalette);
-            this.Controls.Add(this.trackBar1);
+            this.Controls.Add(this.tbSpeed);
             this.Controls.Add(this.lblSpeed);
             this.Name = "NutcrackerEffectControl";
             this.Size = new System.Drawing.Size(371, 173);
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbSpeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -249,7 +249,7 @@ namespace VixenEditor
         #endregion
 
         private System.Windows.Forms.Label lblSpeed;
-        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.TrackBar tbSpeed;
         private System.Windows.Forms.Button btnPalette;
         private System.Windows.Forms.ComboBox cbEffects;
         private System.Windows.Forms.Panel panel1;

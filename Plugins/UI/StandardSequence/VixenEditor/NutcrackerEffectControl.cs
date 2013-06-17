@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
@@ -19,6 +20,51 @@ namespace VixenEditor
             PopulateEffects();
         }
 
+
+        public int GetSpeed() {
+            return tbSpeed.Value;
+        }
+
+        public Color[] GetPalette() {
+            var count = 0;
+            if (chkBoxPalette1.Checked) count++;
+            if (chkBoxPalette2.Checked) count++;
+            if (chkBoxPalette3.Checked) count++;
+            if (chkBoxPalette4.Checked) count++;
+            if (chkBoxPalette5.Checked) count++;
+            if (chkBoxPalette6.Checked) count++;
+
+            var result = new Color[count];
+            count = 0;
+
+            if (chkBoxPalette1.Checked) {
+                result[count] = label1.BackColor;
+                count++;
+            }
+
+            if (chkBoxPalette2.Checked) {
+                result[count] = label2.BackColor;
+                count++;
+            }
+            if (chkBoxPalette3.Checked) {
+                result[count] = label3.BackColor;
+                count++;
+            }
+            if (chkBoxPalette4.Checked) {
+                result[count] = label4.BackColor;
+                count++;
+            }
+            if (chkBoxPalette5.Checked) {
+                result[count] = label5.BackColor;
+                count++;
+            }
+            if (chkBoxPalette6.Checked) {
+                result[count] = label6.BackColor;
+            }
+
+            return result;
+
+        }
 
         private void LoadEffects() {
             foreach (var str in Directory.GetFiles(Paths.NutcrackerPath, "*.dll")) {
