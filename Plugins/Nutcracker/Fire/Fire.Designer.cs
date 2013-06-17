@@ -24,8 +24,8 @@ namespace Fire {
         /// </summary>
         private void InitializeComponent() {
             this.lblHeight = new System.Windows.Forms.Label();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            this.tbHeight = new System.Windows.Forms.TrackBar();
+            ((System.ComponentModel.ISupportInitialize)(this.tbHeight)).BeginInit();
             this.SuspendLayout();
             // 
             // lblHeight
@@ -37,26 +37,28 @@ namespace Fire {
             this.lblHeight.TabIndex = 0;
             this.lblHeight.Text = "Height";
             // 
-            // trackBar1
+            // tbHeight
             // 
-            this.trackBar1.AutoSize = false;
-            this.trackBar1.Location = new System.Drawing.Point(46, 0);
-            this.trackBar1.Maximum = 100;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(183, 25);
-            this.trackBar1.TabIndex = 1;
-            this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.trackBar1.ValueChanged += new System.EventHandler(this.Fire_ControlChanged);
+            this.tbHeight.AutoSize = false;
+            this.tbHeight.Location = new System.Drawing.Point(46, 0);
+            this.tbHeight.Maximum = 100;
+            this.tbHeight.Minimum = 1;
+            this.tbHeight.Name = "tbHeight";
+            this.tbHeight.Size = new System.Drawing.Size(183, 25);
+            this.tbHeight.TabIndex = 1;
+            this.tbHeight.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbHeight.Value = 1;
+            this.tbHeight.ValueChanged += new System.EventHandler(this.Fire_ControlChanged);
             // 
             // Fire
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.trackBar1);
+            this.Controls.Add(this.tbHeight);
             this.Controls.Add(this.lblHeight);
             this.Name = "Fire";
             this.Size = new System.Drawing.Size(232, 134);
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbHeight)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -65,6 +67,6 @@ namespace Fire {
         #endregion
 
         private System.Windows.Forms.Label lblHeight;
-        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.TrackBar tbHeight;
     }
 }
