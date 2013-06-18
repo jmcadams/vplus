@@ -35,11 +35,13 @@ namespace Garlands {
             // 
             this.tbGarlandType.AutoSize = false;
             this.tbGarlandType.Location = new System.Drawing.Point(90, 3);
-            this.tbGarlandType.Maximum = 100;
+            this.tbGarlandType.Maximum = 4;
+            this.tbGarlandType.Minimum = 1;
             this.tbGarlandType.Name = "tbGarlandType";
             this.tbGarlandType.Size = new System.Drawing.Size(139, 25);
             this.tbGarlandType.TabIndex = 3;
             this.tbGarlandType.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbGarlandType.Value = 1;
             this.tbGarlandType.ValueChanged += new System.EventHandler(this.Garlands_ControlChanged);
             // 
             // lblGarlandType
