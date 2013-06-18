@@ -18,6 +18,8 @@ namespace VixenEditor
         public NutcrackerControlDialog()
         {
             InitializeComponent();
+            nudRows.Value = 100;
+            nudColumns.Value = 200;
         }
 
 

@@ -61,11 +61,13 @@ namespace VixenEditor
             // 
             this.tbSpeed.Location = new System.Drawing.Point(323, 22);
             this.tbSpeed.Maximum = 20;
+            this.tbSpeed.Minimum = 1;
             this.tbSpeed.Name = "tbSpeed";
             this.tbSpeed.Orientation = System.Windows.Forms.Orientation.Vertical;
             this.tbSpeed.Size = new System.Drawing.Size(45, 147);
             this.tbSpeed.TabIndex = 1;
             this.tbSpeed.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.tbSpeed.Value = 1;
             // 
             // btnPalette
             // 
