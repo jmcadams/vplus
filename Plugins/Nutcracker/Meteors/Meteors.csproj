@@ -91,6 +91,11 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\CommonUtils\CommonUtils.csproj">
+      <Project>{43B2665C-A5AB-4908-8E6D-C08975513E12}</Project>
+      <Name>CommonUtils</Name>
+      <Private>True</Private>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Vixen\VixenPlus.csproj">
       <Project>{FA99E3F3-4783-485F-A37E-0E24F823E5AE}</Project>
       <Name>VixenPlus</Name>

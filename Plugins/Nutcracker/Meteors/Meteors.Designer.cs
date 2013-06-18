@@ -23,26 +23,28 @@ namespace Meteors {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.tbSpacing = new System.Windows.Forms.TrackBar();
+            this.tbTrailLength = new System.Windows.Forms.TrackBar();
             this.lblTrailLength = new System.Windows.Forms.Label();
-            this.tbGarlandType = new System.Windows.Forms.TrackBar();
+            this.tbCount = new System.Windows.Forms.TrackBar();
             this.lblCount = new System.Windows.Forms.Label();
             this.lblType = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSpacing)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbGarlandType)).BeginInit();
+            this.cbType = new System.Windows.Forms.ComboBox();
+            ((System.ComponentModel.ISupportInitialize)(this.tbTrailLength)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbCount)).BeginInit();
             this.SuspendLayout();
             // 
-            // tbSpacing
+            // tbTrailLength
             // 
-            this.tbSpacing.AutoSize = false;
-            this.tbSpacing.Location = new System.Drawing.Point(90, 70);
-            this.tbSpacing.Maximum = 100;
-            this.tbSpacing.Name = "tbSpacing";
-            this.tbSpacing.Size = new System.Drawing.Size(139, 25);
-            this.tbSpacing.TabIndex = 9;
-            this.tbSpacing.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbSpacing.ValueChanged += new System.EventHandler(this.Meteors_ControlChanged);
+            this.tbTrailLength.AutoSize = false;
+            this.tbTrailLength.Location = new System.Drawing.Point(90, 70);
+            this.tbTrailLength.Maximum = 100;
+            this.tbTrailLength.Minimum = 1;
+            this.tbTrailLength.Name = "tbTrailLength";
+            this.tbTrailLength.Size = new System.Drawing.Size(139, 25);
+            this.tbTrailLength.TabIndex = 9;
+            this.tbTrailLength.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbTrailLength.Value = 1;
+            this.tbTrailLength.ValueChanged += new System.EventHandler(this.Meteors_ControlChanged);
             // 
             // lblTrailLength
             // 
@@ -53,16 +55,18 @@ namespace Meteors {
             this.lblTrailLength.TabIndex = 8;
             this.lblTrailLength.Text = "Trail Length";
             // 
-            // tbGarlandType
+            // tbCount
             // 
-            this.tbGarlandType.AutoSize = false;
-            this.tbGarlandType.Location = new System.Drawing.Point(90, 39);
-            this.tbGarlandType.Maximum = 100;
-            this.tbGarlandType.Name = "tbGarlandType";
-            this.tbGarlandType.Size = new System.Drawing.Size(139, 25);
-            this.tbGarlandType.TabIndex = 7;
-            this.tbGarlandType.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbGarlandType.ValueChanged += new System.EventHandler(this.Meteors_ControlChanged);
+            this.tbCount.AutoSize = false;
+            this.tbCount.Location = new System.Drawing.Point(90, 39);
+            this.tbCount.Maximum = 100;
+            this.tbCount.Minimum = 1;
+            this.tbCount.Name = "tbCount";
+            this.tbCount.Size = new System.Drawing.Size(139, 25);
+            this.tbCount.TabIndex = 7;
+            this.tbCount.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbCount.Value = 1;
+            this.tbCount.ValueChanged += new System.EventHandler(this.Meteors_ControlChanged);
             // 
             // lblCount
             // 
@@ -82,33 +86,33 @@ namespace Meteors {
             this.lblType.TabIndex = 10;
             this.lblType.Text = "Type";
             // 
-            // comboBox1
+            // cbType
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.cbType.FormattingEnabled = true;
+            this.cbType.Items.AddRange(new object[] {
             "Rainbow",
             "Range",
             "Palette"});
-            this.comboBox1.Location = new System.Drawing.Point(90, 12);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(139, 21);
-            this.comboBox1.TabIndex = 11;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.Meteors_ControlChanged);
+            this.cbType.Location = new System.Drawing.Point(90, 12);
+            this.cbType.Name = "cbType";
+            this.cbType.Size = new System.Drawing.Size(139, 21);
+            this.cbType.TabIndex = 11;
+            this.cbType.SelectedIndexChanged += new System.EventHandler(this.Meteors_ControlChanged);
             // 
             // Meteors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cbType);
             this.Controls.Add(this.lblType);
-            this.Controls.Add(this.tbSpacing);
+            this.Controls.Add(this.tbTrailLength);
             this.Controls.Add(this.lblTrailLength);
-            this.Controls.Add(this.tbGarlandType);
+            this.Controls.Add(this.tbCount);
             this.Controls.Add(this.lblCount);
             this.Name = "Meteors";
             this.Size = new System.Drawing.Size(232, 134);
-            ((System.ComponentModel.ISupportInitialize)(this.tbSpacing)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbGarlandType)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbTrailLength)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbCount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -116,11 +120,11 @@ namespace Meteors {
 
         #endregion
 
-        private System.Windows.Forms.TrackBar tbSpacing;
+        private System.Windows.Forms.TrackBar tbTrailLength;
         private System.Windows.Forms.Label lblTrailLength;
-        private System.Windows.Forms.TrackBar tbGarlandType;
+        private System.Windows.Forms.TrackBar tbCount;
         private System.Windows.Forms.Label lblCount;
         private System.Windows.Forms.Label lblType;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cbType;
     }
 }

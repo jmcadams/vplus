@@ -34,6 +34,7 @@ namespace Fireworks {
 
         static private readonly Random Random = new Random();
 
+        //TODO not working at all.
         public Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender) {
             var bufferWidth = buffer.GetLength(Utils.IndexColsOrWidth);
             var bufferHeight = buffer.GetLength(Utils.IndexRowsOrHeight);
