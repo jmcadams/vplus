@@ -23,24 +23,24 @@ namespace Snowflakes {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.tbSpacing = new System.Windows.Forms.TrackBar();
+            this.tbType = new System.Windows.Forms.TrackBar();
             this.lblType = new System.Windows.Forms.Label();
-            this.tbGarlandType = new System.Windows.Forms.TrackBar();
+            this.tbMaxFlakes = new System.Windows.Forms.TrackBar();
             this.lblMaxFlakes = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSpacing)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbGarlandType)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbType)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMaxFlakes)).BeginInit();
             this.SuspendLayout();
             // 
-            // tbSpacing
+            // tbType
             // 
-            this.tbSpacing.AutoSize = false;
-            this.tbSpacing.Location = new System.Drawing.Point(90, 34);
-            this.tbSpacing.Maximum = 5;
-            this.tbSpacing.Name = "tbSpacing";
-            this.tbSpacing.Size = new System.Drawing.Size(139, 25);
-            this.tbSpacing.TabIndex = 13;
-            this.tbSpacing.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbSpacing.ValueChanged += new System.EventHandler(this.Snowflakes_ControlChanged);
+            this.tbType.AutoSize = false;
+            this.tbType.Location = new System.Drawing.Point(90, 34);
+            this.tbType.Maximum = 4;
+            this.tbType.Name = "tbType";
+            this.tbType.Size = new System.Drawing.Size(139, 25);
+            this.tbType.TabIndex = 13;
+            this.tbType.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbType.ValueChanged += new System.EventHandler(this.Snowflakes_ControlChanged);
             // 
             // lblType
             // 
@@ -51,16 +51,18 @@ namespace Snowflakes {
             this.lblType.TabIndex = 12;
             this.lblType.Text = "Type";
             // 
-            // tbGarlandType
+            // tbMaxFlakes
             // 
-            this.tbGarlandType.AutoSize = false;
-            this.tbGarlandType.Location = new System.Drawing.Point(90, 3);
-            this.tbGarlandType.Maximum = 19;
-            this.tbGarlandType.Name = "tbGarlandType";
-            this.tbGarlandType.Size = new System.Drawing.Size(139, 25);
-            this.tbGarlandType.TabIndex = 11;
-            this.tbGarlandType.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbGarlandType.ValueChanged += new System.EventHandler(this.Snowflakes_ControlChanged);
+            this.tbMaxFlakes.AutoSize = false;
+            this.tbMaxFlakes.Location = new System.Drawing.Point(90, 3);
+            this.tbMaxFlakes.Maximum = 20;
+            this.tbMaxFlakes.Minimum = 1;
+            this.tbMaxFlakes.Name = "tbMaxFlakes";
+            this.tbMaxFlakes.Size = new System.Drawing.Size(139, 25);
+            this.tbMaxFlakes.TabIndex = 11;
+            this.tbMaxFlakes.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbMaxFlakes.Value = 1;
+            this.tbMaxFlakes.ValueChanged += new System.EventHandler(this.Snowflakes_ControlChanged);
             // 
             // lblMaxFlakes
             // 
@@ -75,14 +77,14 @@ namespace Snowflakes {
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.tbSpacing);
+            this.Controls.Add(this.tbType);
             this.Controls.Add(this.lblType);
-            this.Controls.Add(this.tbGarlandType);
+            this.Controls.Add(this.tbMaxFlakes);
             this.Controls.Add(this.lblMaxFlakes);
             this.Name = "Snowflakes";
             this.Size = new System.Drawing.Size(232, 134);
-            ((System.ComponentModel.ISupportInitialize)(this.tbSpacing)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbGarlandType)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbType)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMaxFlakes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -90,9 +92,9 @@ namespace Snowflakes {
 
         #endregion
 
-        private System.Windows.Forms.TrackBar tbSpacing;
+        private System.Windows.Forms.TrackBar tbType;
         private System.Windows.Forms.Label lblType;
-        private System.Windows.Forms.TrackBar tbGarlandType;
+        private System.Windows.Forms.TrackBar tbMaxFlakes;
         private System.Windows.Forms.Label lblMaxFlakes;
     }
 }
