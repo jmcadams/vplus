@@ -23,24 +23,24 @@ namespace Snowstorm {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.tbSpacing = new System.Windows.Forms.TrackBar();
+            this.tbTailLength = new System.Windows.Forms.TrackBar();
             this.lblTrailLength = new System.Windows.Forms.Label();
-            this.tbGarlandType = new System.Windows.Forms.TrackBar();
+            this.tbMaxFlakes = new System.Windows.Forms.TrackBar();
             this.lblMaxFlakes = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSpacing)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbGarlandType)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbTailLength)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMaxFlakes)).BeginInit();
             this.SuspendLayout();
             // 
-            // tbSpacing
+            // tbTailLength
             // 
-            this.tbSpacing.AutoSize = false;
-            this.tbSpacing.Location = new System.Drawing.Point(90, 34);
-            this.tbSpacing.Maximum = 100;
-            this.tbSpacing.Name = "tbSpacing";
-            this.tbSpacing.Size = new System.Drawing.Size(139, 25);
-            this.tbSpacing.TabIndex = 17;
-            this.tbSpacing.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbSpacing.ValueChanged += new System.EventHandler(this.SnowStorm_ControlChanged);
+            this.tbTailLength.AutoSize = false;
+            this.tbTailLength.Location = new System.Drawing.Point(90, 34);
+            this.tbTailLength.Maximum = 100;
+            this.tbTailLength.Name = "tbTailLength";
+            this.tbTailLength.Size = new System.Drawing.Size(139, 25);
+            this.tbTailLength.TabIndex = 17;
+            this.tbTailLength.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbTailLength.ValueChanged += new System.EventHandler(this.SnowStorm_ControlChanged);
             // 
             // lblTrailLength
             // 
@@ -51,16 +51,16 @@ namespace Snowstorm {
             this.lblTrailLength.TabIndex = 16;
             this.lblTrailLength.Text = "Trail Length";
             // 
-            // tbGarlandType
+            // tbMaxFlakes
             // 
-            this.tbGarlandType.AutoSize = false;
-            this.tbGarlandType.Location = new System.Drawing.Point(90, 3);
-            this.tbGarlandType.Maximum = 100;
-            this.tbGarlandType.Name = "tbGarlandType";
-            this.tbGarlandType.Size = new System.Drawing.Size(139, 25);
-            this.tbGarlandType.TabIndex = 15;
-            this.tbGarlandType.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbGarlandType.ValueChanged += new System.EventHandler(this.SnowStorm_ControlChanged);
+            this.tbMaxFlakes.AutoSize = false;
+            this.tbMaxFlakes.Location = new System.Drawing.Point(90, 3);
+            this.tbMaxFlakes.Maximum = 100;
+            this.tbMaxFlakes.Name = "tbMaxFlakes";
+            this.tbMaxFlakes.Size = new System.Drawing.Size(139, 25);
+            this.tbMaxFlakes.TabIndex = 15;
+            this.tbMaxFlakes.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbMaxFlakes.ValueChanged += new System.EventHandler(this.SnowStorm_ControlChanged);
             // 
             // lblMaxFlakes
             // 
@@ -75,14 +75,14 @@ namespace Snowstorm {
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.tbSpacing);
+            this.Controls.Add(this.tbTailLength);
             this.Controls.Add(this.lblTrailLength);
-            this.Controls.Add(this.tbGarlandType);
+            this.Controls.Add(this.tbMaxFlakes);
             this.Controls.Add(this.lblMaxFlakes);
             this.Name = "Snowstorm";
             this.Size = new System.Drawing.Size(232, 134);
-            ((System.ComponentModel.ISupportInitialize)(this.tbSpacing)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbGarlandType)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbTailLength)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMaxFlakes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -90,9 +90,9 @@ namespace Snowstorm {
 
         #endregion
 
-        private System.Windows.Forms.TrackBar tbSpacing;
+        private System.Windows.Forms.TrackBar tbTailLength;
         private System.Windows.Forms.Label lblTrailLength;
-        private System.Windows.Forms.TrackBar tbGarlandType;
+        private System.Windows.Forms.TrackBar tbMaxFlakes;
         private System.Windows.Forms.Label lblMaxFlakes;
     }
 }
