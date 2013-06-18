@@ -60,6 +60,7 @@ namespace Pictures {
             this.btnFile.TabIndex = 12;
             this.btnFile.Text = "Choose File";
             this.btnFile.UseVisualStyleBackColor = true;
+            this.btnFile.Click += new System.EventHandler(this.btnFile_Click);
             // 
             // txtBoxFile
             // 
