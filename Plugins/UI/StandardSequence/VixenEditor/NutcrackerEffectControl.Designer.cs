@@ -95,6 +95,8 @@ namespace VixenEditor
             // chkBoxPalette1
             // 
             this.chkBoxPalette1.AutoSize = true;
+            this.chkBoxPalette1.Checked = true;
+            this.chkBoxPalette1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkBoxPalette1.Location = new System.Drawing.Point(255, 31);
             this.chkBoxPalette1.Name = "chkBoxPalette1";
             this.chkBoxPalette1.Size = new System.Drawing.Size(15, 14);
@@ -104,6 +106,8 @@ namespace VixenEditor
             // chkBoxPalette2
             // 
             this.chkBoxPalette2.AutoSize = true;
+            this.chkBoxPalette2.Checked = true;
+            this.chkBoxPalette2.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkBoxPalette2.Location = new System.Drawing.Point(255, 55);
             this.chkBoxPalette2.Name = "chkBoxPalette2";
             this.chkBoxPalette2.Size = new System.Drawing.Size(15, 14);
