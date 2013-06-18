@@ -23,29 +23,31 @@ namespace Spirograph {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.tbThickness = new System.Windows.Forms.TrackBar();
+            this.tbDistance = new System.Windows.Forms.TrackBar();
             this.lblDistance = new System.Windows.Forms.Label();
-            this.tbRotations = new System.Windows.Forms.TrackBar();
+            this.tbInnerR = new System.Windows.Forms.TrackBar();
             this.lblInnerRadius = new System.Windows.Forms.Label();
-            this.tbPaletteRepeat = new System.Windows.Forms.TrackBar();
+            this.tbOuterR = new System.Windows.Forms.TrackBar();
             this.lblOuterRadius = new System.Windows.Forms.Label();
             this.chkBoxAnimate = new System.Windows.Forms.CheckBox();
             this.lblNote = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.tbThickness)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbRotations)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbPaletteRepeat)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbDistance)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbInnerR)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbOuterR)).BeginInit();
             this.SuspendLayout();
             // 
-            // tbThickness
+            // tbDistance
             // 
-            this.tbThickness.AutoSize = false;
-            this.tbThickness.Location = new System.Drawing.Point(93, 56);
-            this.tbThickness.Maximum = 100;
-            this.tbThickness.Name = "tbThickness";
-            this.tbThickness.Size = new System.Drawing.Size(139, 25);
-            this.tbThickness.TabIndex = 29;
-            this.tbThickness.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbThickness.ValueChanged += new System.EventHandler(this.Spirograph_ControlChanged);
+            this.tbDistance.AutoSize = false;
+            this.tbDistance.Location = new System.Drawing.Point(93, 56);
+            this.tbDistance.Maximum = 100;
+            this.tbDistance.Minimum = 1;
+            this.tbDistance.Name = "tbDistance";
+            this.tbDistance.Size = new System.Drawing.Size(139, 25);
+            this.tbDistance.TabIndex = 29;
+            this.tbDistance.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbDistance.Value = 1;
+            this.tbDistance.ValueChanged += new System.EventHandler(this.Spirograph_ControlChanged);
             // 
             // lblDistance
             // 
@@ -56,16 +58,18 @@ namespace Spirograph {
             this.lblDistance.TabIndex = 28;
             this.lblDistance.Text = "Distance";
             // 
-            // tbRotations
+            // tbInnerR
             // 
-            this.tbRotations.AutoSize = false;
-            this.tbRotations.Location = new System.Drawing.Point(93, 28);
-            this.tbRotations.Maximum = 100;
-            this.tbRotations.Name = "tbRotations";
-            this.tbRotations.Size = new System.Drawing.Size(139, 25);
-            this.tbRotations.TabIndex = 27;
-            this.tbRotations.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbRotations.ValueChanged += new System.EventHandler(this.Spirograph_ControlChanged);
+            this.tbInnerR.AutoSize = false;
+            this.tbInnerR.Location = new System.Drawing.Point(93, 28);
+            this.tbInnerR.Maximum = 100;
+            this.tbInnerR.Minimum = 1;
+            this.tbInnerR.Name = "tbInnerR";
+            this.tbInnerR.Size = new System.Drawing.Size(139, 25);
+            this.tbInnerR.TabIndex = 27;
+            this.tbInnerR.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbInnerR.Value = 1;
+            this.tbInnerR.ValueChanged += new System.EventHandler(this.Spirograph_ControlChanged);
             // 
             // lblInnerRadius
             // 
@@ -76,16 +80,18 @@ namespace Spirograph {
             this.lblInnerRadius.TabIndex = 26;
             this.lblInnerRadius.Text = "Inner Radius";
             // 
-            // tbPaletteRepeat
+            // tbOuterR
             // 
-            this.tbPaletteRepeat.AutoSize = false;
-            this.tbPaletteRepeat.Location = new System.Drawing.Point(93, 0);
-            this.tbPaletteRepeat.Maximum = 4;
-            this.tbPaletteRepeat.Name = "tbPaletteRepeat";
-            this.tbPaletteRepeat.Size = new System.Drawing.Size(139, 25);
-            this.tbPaletteRepeat.TabIndex = 25;
-            this.tbPaletteRepeat.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbPaletteRepeat.ValueChanged += new System.EventHandler(this.Spirograph_ControlChanged);
+            this.tbOuterR.AutoSize = false;
+            this.tbOuterR.Location = new System.Drawing.Point(93, 0);
+            this.tbOuterR.Maximum = 100;
+            this.tbOuterR.Minimum = 1;
+            this.tbOuterR.Name = "tbOuterR";
+            this.tbOuterR.Size = new System.Drawing.Size(139, 25);
+            this.tbOuterR.TabIndex = 25;
+            this.tbOuterR.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbOuterR.Value = 1;
+            this.tbOuterR.ValueChanged += new System.EventHandler(this.Spirograph_ControlChanged);
             // 
             // lblOuterRadius
             // 
@@ -122,17 +128,17 @@ namespace Spirograph {
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.lblNote);
             this.Controls.Add(this.chkBoxAnimate);
-            this.Controls.Add(this.tbThickness);
+            this.Controls.Add(this.tbDistance);
             this.Controls.Add(this.lblDistance);
-            this.Controls.Add(this.tbRotations);
+            this.Controls.Add(this.tbInnerR);
             this.Controls.Add(this.lblInnerRadius);
-            this.Controls.Add(this.tbPaletteRepeat);
+            this.Controls.Add(this.tbOuterR);
             this.Controls.Add(this.lblOuterRadius);
             this.Name = "Spirograph";
             this.Size = new System.Drawing.Size(232, 134);
-            ((System.ComponentModel.ISupportInitialize)(this.tbThickness)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbRotations)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbPaletteRepeat)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbDistance)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbInnerR)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbOuterR)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -140,11 +146,11 @@ namespace Spirograph {
 
         #endregion
 
-        private System.Windows.Forms.TrackBar tbThickness;
+        private System.Windows.Forms.TrackBar tbDistance;
         private System.Windows.Forms.Label lblDistance;
-        private System.Windows.Forms.TrackBar tbRotations;
+        private System.Windows.Forms.TrackBar tbInnerR;
         private System.Windows.Forms.Label lblInnerRadius;
-        private System.Windows.Forms.TrackBar tbPaletteRepeat;
+        private System.Windows.Forms.TrackBar tbOuterR;
         private System.Windows.Forms.Label lblOuterRadius;
         private System.Windows.Forms.CheckBox chkBoxAnimate;
         private System.Windows.Forms.Label lblNote;
