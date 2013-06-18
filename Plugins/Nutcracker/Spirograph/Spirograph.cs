@@ -30,7 +30,7 @@ namespace Spirograph {
             if (innerR > outterR) innerR = outterR;
             var distance = (float) (halfWidth * (tbDistance.Value / 100.0));
 
-            var mod1440 = Convert.ToInt32(eventToRender % 1440);
+            var mod1440 = eventToRender % 1440;
             var originalDistance = distance;
             for (var i = 1; i <= 360; i++) {
                 if (chkBoxAnimate.Checked) distance = (int) (originalDistance + eventToRender / 2.0) % 100;
@@ -40,10 +40,9 @@ namespace Spirograph {
                 var x2 = Math.Pow((x - halfWidth), 2);
                 var y2 = Math.Pow((y - halfHeight), 2);
                 var hyp = (Math.Sqrt(x2 + y2) / bufferWidth) * 100.0;
-                var colorIdx = (int) (hyp / (colorcnt > 0 ? bufferWidth / colorcnt : 1)) % colorcnt;
 
                 if (x >= 0 && x < bufferWidth && y >= 0 && y < bufferHeight) {
-                    buffer[y, x] = palette[colorIdx];
+                    buffer[y, x] = palette[(int)(hyp / (colorcnt > 0 ? bufferWidth / colorcnt : 1)) % colorcnt];
                 }
             }
             return buffer;
