@@ -13,7 +13,7 @@ namespace VixenEditor
 {
     public partial class NutcrackerControlDialog: Form
     {
-        private Stopwatch _sw = new Stopwatch();
+        private readonly Stopwatch _sw = new Stopwatch();
 
         public NutcrackerControlDialog()
         {
@@ -41,7 +41,7 @@ namespace VixenEditor
                 }
                 Render(control.RenderEffect(buffer, nutcrackerEffectControl1.GetPalette(), i));
                 tbInfo.Text = _sw.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture);
-                Thread.Sleep(50 - (int)(_sw.ElapsedMilliseconds % 50));
+                if (_sw.ElapsedMilliseconds < 50) Thread.Sleep(50 - (int)(_sw.ElapsedMilliseconds % 50));
                 _sw.Reset();
                 Application.DoEvents();
                 i += nutcrackerEffectControl1.GetSpeed();
