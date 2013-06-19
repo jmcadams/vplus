@@ -34,7 +34,7 @@ namespace Fireworks {
 
         static private readonly Random Random = new Random();
 
-        //TODO not working at all.
+
         public Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender) {
             var bufferWidth = buffer.GetLength(Utils.IndexColsOrWidth);
             var bufferHeight = buffer.GetLength(Utils.IndexRowsOrHeight);
@@ -44,106 +44,75 @@ namespace Fireworks {
             var numberExplosions = tbExplosionCount.Value;
 
 
-            // This does not work with 1 string, so use a try/catch block to prevent errors
-            try {
-                if (eventToRender == 0) {
-                    for (var i = 0; i < maxFlakes; i++) {
-                        _fireworkBursts[i].IsActive = false;
-                    }
+            if (eventToRender == 0) {
+                for (var i = 0; i < maxFlakes; i++) {
+                    _fireworkBursts[i].IsActive = false;
                 }
+            }
 
-                var mod100 = eventToRender%(101 - numberExplosions)*10;
-                if (mod100 == 0) {
+            if (eventToRender % (101 - numberExplosions) * 10 == 0) {
+                var startX = (int)(bufferWidth * 0.25 + (Random.Next() % (bufferWidth * 0.75 - bufferWidth * 0.25)));
+                var startY = (int)(bufferHeight * 0.25 + (Random.Next() % (bufferHeight * 0.75 - bufferHeight * 0.25)));
+                var shellColor = palette[Random.Next() % palette.Length];
+                for (var i = 0; i < tbExplosionParticles.Value; i++) {
+                    do {
+                        idxFlakes = (idxFlakes + 1) % maxFlakes;
+                    } while (_fireworkBursts[idxFlakes].IsActive);
 
-                    var x25 = (int) (bufferWidth*0.25);
-                    var x75 = (int) (bufferWidth*0.75);
-                    var y25 = (int) (bufferHeight*0.25);
-                    var y75 = (int) (bufferHeight*0.75);
-                    var startX = x25 + (Random.Next() % (x75 - x25));
-                    var startY = y25 + (Random.Next() % (y75 - y25));
-                    // turn off all bursts
-
-                    // Create new bursts
-                    for (var i = 0; i < tbExplosionParticles.Value; i++) {
-                        do {
-                            idxFlakes = (idxFlakes + 1)%maxFlakes;
-                        } while (_fireworkBursts[idxFlakes].IsActive);
-
-                        _fireworkBursts[idxFlakes].Reset(startX, startY, true, tbParticleVelocity.Value);
-                    }
+                    _fireworkBursts[idxFlakes].Reset(startX, startY, true, tbParticleVelocity.Value);
+                    _fireworkBursts[idxFlakes].FireworkColor = shellColor;
                 }
-                else {
-                    for (var i = 0; i < maxFlakes; i++) {
-                        if (_fireworkBursts[i].IsActive) {
-                            _fireworkBursts[i].X += _fireworkBursts[i].Dx;
-                            _fireworkBursts[i].Y +=
-                                (float)
-                                (-_fireworkBursts[i].Dy - _fireworkBursts[i].Cycles*_fireworkBursts[i].Cycles/10000000.0);
-                            _fireworkBursts[i].Cycles += 20;
-                            if (10000 == _fireworkBursts[i].Cycles)
-                            {
-                                _fireworkBursts[i].IsActive = false;
-                                continue;
-                            }
-                            if (_fireworkBursts[i].Y >= bufferHeight) {
-                                _fireworkBursts[i].IsActive = false;
-                                continue;
-                            }
-                            if (_fireworkBursts[i].X >= 0.0 && _fireworkBursts[i].X < bufferWidth) {
-                                if (_fireworkBursts[i].Y >= 0.0) {
-                                    // sean we need to set color here
-                                }
-                            }
-                            else {
-                                _fireworkBursts[i].IsActive = false;
-                            }
-                        }
-                    }
-                }
-
-                Color rgbcolor;
-                switch (mod100) {
-                    case 0:
-                        rgbcolor = Color.Cyan;
-                        break;
-                    case 1:
-                        rgbcolor = Color.Red;
-                        break;
-                    case 2:
-                        rgbcolor = Color.FromArgb(0, 255, 0);
-                        break;
-                    case 3:
-                        rgbcolor = Color.Blue;
-                        break;
-                    case 4:
-                        rgbcolor = Color.Yellow;
-                        break;
-                    case 5:
-                        rgbcolor = Color.FromArgb(0, 255, 0);
-                        break;
-                    default:
-                        rgbcolor = Color.White;
-                        break;
-                }
-                var hsv = HSVUtils.ColorToHSV(rgbcolor);
-
-                for (var i = 0; i < 1000; i++) {
+            }
+            else {
+                for (var i = 0; i < maxFlakes; i++) {
                     if (!_fireworkBursts[i].IsActive) {
                         continue;
                     }
 
-                    var v = (float)(((tbParticleFade.Value * 10.0) - _fireworkBursts[i].Cycles) / (tbParticleFade.Value * 10.0));
-                    if (v < 0) v = 0.0f;
-
-                    hsv.Value = v;
-                    buffer[(int)_fireworkBursts[i].X, (int)_fireworkBursts[i].Y] = HSVUtils.HSVtoColor(hsv);
+                    _fireworkBursts[i].X += _fireworkBursts[i].Dx;
+                    _fireworkBursts[i].Y += (float) (-_fireworkBursts[i].Dy - _fireworkBursts[i].Cycles * _fireworkBursts[i].Cycles / 10000000.0);
+                    _fireworkBursts[i].Cycles += 20;
+                    
+                    if (10000 == _fireworkBursts[i].Cycles) {
+                        _fireworkBursts[i].IsActive = false;
+                        continue;
+                    }
+                    
+                    if (_fireworkBursts[i].Y >= bufferHeight) {
+                        _fireworkBursts[i].IsActive = false;
+                        continue;
+                    }
+                    
+                    if (_fireworkBursts[i].X >= 0.0 && _fireworkBursts[i].X < bufferWidth) {
+                        if (_fireworkBursts[i].Y >= 0.0 && cbMutliColor.Checked) {
+                            _fireworkBursts[i].FireworkColor = palette[Random.Next() % palette.Length];
+                        }
+                    }
+                    else {
+                        _fireworkBursts[i].IsActive = false;
+                    }
                 }
             }
-                // ReSharper disable EmptyGeneralCatchClause
-            catch
-                // ReSharper restore EmptyGeneralCatchClause
-            {}
 
+
+            for (var i = 0; i < 1000; i++) {
+                if (!_fireworkBursts[i].IsActive) {
+                    continue;
+                }
+                var hsv = HSVUtils.ColorToHSV(_fireworkBursts[i].FireworkColor);
+
+                var v = (float) (((tbParticleFade.Value * 10.0) - _fireworkBursts[i].Cycles) / (tbParticleFade.Value * 10.0));
+                if (v < 0) {
+                    v = 0.0f;
+                }
+
+                hsv.Value = v;
+                var x = (int) _fireworkBursts[i].X;
+                var y = (int) _fireworkBursts[i].Y;
+                if (x >= 0 && x < bufferWidth && y >= 0 && y < bufferHeight) {
+                    buffer[y, x] = HSVUtils.HSVtoColor(hsv);
+                }
+            }
             return buffer;
         }
 
@@ -160,6 +129,7 @@ namespace Fireworks {
             public float Angle;
             public bool IsActive;
             public int Cycles;
+            public Color FireworkColor;
 
             public void Reset(int x, int y, bool active, float velocity)
             {
@@ -171,6 +141,7 @@ namespace Fireworks {
                 Dy = (float)(Vel * Math.Sin(Angle));
                 IsActive = active;
                 Cycles = 0;
+                FireworkColor = Color.White;
             }
         }
 
