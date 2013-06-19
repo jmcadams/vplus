@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using CommonUtils;
 using VixenPlus;
 
+//TODO: Add steps and strobe effects from NC 3.0.14
 namespace Twinkle {
     public partial class Twinkle : UserControl, INutcrackerEffect {
         public Twinkle() {

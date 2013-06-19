@@ -5,6 +5,10 @@ using System.Windows.Forms;
 using CommonUtils;
 using VixenPlus;
 
+//TODO: Add support for:
+// Line1 and Line2 now individually controlled and can be rotated independently and colored independently
+//TODO: Fix calculating
+
 namespace Text {
     public partial class Text : UserControl, INutcrackerEffect {
         public Text() {
@@ -89,6 +93,7 @@ namespace Text {
 
         private void btnFont_Click(object sender, EventArgs e) {
             using (var dialog = new FontDialog()) {
+                dialog.ShowColor = true;
                 if (dialog.ShowDialog() != DialogResult.OK) {
                     return;
                 }

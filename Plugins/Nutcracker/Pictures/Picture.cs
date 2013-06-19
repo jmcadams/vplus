@@ -5,6 +5,7 @@ using System.Windows.Forms;
 
 using VixenPlus;
 
+//TODO: Add support for movies
 namespace Pictures {
     public partial class Picture : UserControl, INutcrackerEffect {
         public Picture() {
