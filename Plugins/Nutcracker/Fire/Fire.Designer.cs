@@ -25,6 +25,8 @@ namespace Fire {
         private void InitializeComponent() {
             this.lblHeight = new System.Windows.Forms.Label();
             this.tbHeight = new System.Windows.Forms.TrackBar();
+            this.chkBoxUsePalette = new System.Windows.Forms.CheckBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.tbHeight)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,10 +52,34 @@ namespace Fire {
             this.tbHeight.Value = 1;
             this.tbHeight.ValueChanged += new System.EventHandler(this.Fire_ControlChanged);
             // 
+            // chkBoxUsePalette
+            // 
+            this.chkBoxUsePalette.AutoSize = true;
+            this.chkBoxUsePalette.Location = new System.Drawing.Point(7, 31);
+            this.chkBoxUsePalette.Name = "chkBoxUsePalette";
+            this.chkBoxUsePalette.Size = new System.Drawing.Size(81, 17);
+            this.chkBoxUsePalette.TabIndex = 2;
+            this.chkBoxUsePalette.Text = "Use Palette";
+            this.chkBoxUsePalette.UseVisualStyleBackColor = true;
+            this.chkBoxUsePalette.CheckedChanged += new System.EventHandler(this.Fire_ControlChanged);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Enabled = false;
+            this.textBox1.Location = new System.Drawing.Point(4, 55);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(225, 76);
+            this.textBox1.TabIndex = 3;
+            this.textBox1.Text = "NOTE: Nutcracker uses HSV color and may not have the intended effect when you use" +
+                " the palette.\r\n\r\ne.g. Black and white will render red/yellow.";
+            // 
             // Fire
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.chkBoxUsePalette);
             this.Controls.Add(this.tbHeight);
             this.Controls.Add(this.lblHeight);
             this.Name = "Fire";
@@ -68,5 +94,7 @@ namespace Fire {
 
         private System.Windows.Forms.Label lblHeight;
         private System.Windows.Forms.TrackBar tbHeight;
+        private System.Windows.Forms.CheckBox chkBoxUsePalette;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

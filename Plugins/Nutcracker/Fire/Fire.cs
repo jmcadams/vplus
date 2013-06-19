@@ -8,7 +8,6 @@ namespace Fire {
     public partial class Fire : UserControl, INutcrackerEffect {
         public Fire() {
             InitializeComponent();
-            InitFirePalette();
         }
         
         public event EventHandler OnControlChanged;
@@ -18,11 +17,11 @@ namespace Fire {
         }
 
         public string Notes {
-            get { return "Does not use palette or speed."; }
+            get { return "Does not use speed control."; }
         }
 
         public bool UsesPalette {
-            get { return false; }
+            get { return true; }
         }
 
         public bool UsesSpeed {
@@ -31,21 +30,18 @@ namespace Fire {
 
         private readonly Color[] _firePalette = new Color[200];
 
-        private void InitFirePalette() {
-            var hsv = new HSVUtils();
+        private void InitFirePalette(float hue) {
+            var hsv = new HSVUtils {Hue = hue, Saturation = 1.0f};
 
-            int i;
-            hsv.Hue = 0.0f;
-            hsv.Saturation = 1.0f;
-            for (i = 0; i < 100; i++) {
+            for (var i = 0; i < 100; i++) {
                 hsv.Value = i / 100.0f;
                 _firePalette[i] = HSVUtils.HSVtoColor(hsv); 
             }
 
             hsv.Value = 1.0f;
-            for (i = 0; i < 100; i++) {
+            for (var i = 0; i < 100; i++) {
                 _firePalette[i + 100] = HSVUtils.HSVtoColor(hsv);
-                hsv.Hue += 0.00166666f;
+                hsv.Hue = (hsv.Hue + 0.00166666f) % 1f;
             }
         }
 
@@ -53,12 +49,15 @@ namespace Fire {
         private readonly Random _random = new Random();
         private int _width;
         private int _height;
+        private Color[] _palette;
 
         public Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender) {
             var bufferHeight = buffer.GetLength(Utils.IndexRowsOrHeight);
             var bufferWidth = buffer.GetLength(Utils.IndexColsOrWidth);
+            _palette = palette;
 
             if (eventToRender == 0) {
+                InitFirePalette(chkBoxUsePalette.Checked ? _palette[0].GetHue() / 360f : 0.0f);
                 _fireBuffer = new int[bufferHeight * bufferWidth];
                 _width = bufferWidth;
                 _height = bufferHeight;
@@ -118,6 +117,9 @@ namespace Fire {
 
 
         private void Fire_ControlChanged(object sender, EventArgs e) {
+            if (_palette != null) {
+                InitFirePalette(chkBoxUsePalette.Checked ? _palette[0].GetHue() / 360f : 0.0f);
+            }
             OnControlChanged(this, new EventArgs());
         }
     }
