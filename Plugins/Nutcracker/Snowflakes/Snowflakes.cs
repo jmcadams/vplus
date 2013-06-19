@@ -19,7 +19,7 @@ namespace Snowflakes {
         }
 
         public string Notes {
-            get { throw new NotImplementedException(); }
+            get { return "Broken :("; }
         }
 
         private readonly Random _random = new Random();

@@ -21,7 +21,7 @@ namespace Meteors {
         }
 
         public string Notes {
-            get { throw new NotImplementedException(); }
+            get { return String.Empty;  }
         }
 
         private readonly List<MeteorClass> _meteors = new List<MeteorClass>();

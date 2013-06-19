@@ -19,7 +19,7 @@ namespace Pictures {
         }
 
         public string Notes {
-            get { throw new NotImplementedException(); }
+            get { return "Movies coming soon!"; }
         }
 
         private string _pictureName = "";

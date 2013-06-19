@@ -85,6 +85,7 @@
     <RootNamespace>VixenEditor</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="StandardSequence, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System">
       <Name>System</Name>
     </Reference>

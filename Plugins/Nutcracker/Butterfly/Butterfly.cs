@@ -17,7 +17,7 @@ namespace Butterfly {
         }
 
         public string Notes {
-            get { throw new NotImplementedException(); }
+            get { return String.Empty; }
         }
 
         private const double Pi2 = Math.PI * 2;

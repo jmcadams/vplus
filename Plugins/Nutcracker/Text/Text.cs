@@ -22,7 +22,7 @@ namespace Text {
         }
 
         public string Notes {
-            get { throw new NotImplementedException(); }
+            get { return "Not working right"; }
         }
 
 

@@ -19,7 +19,7 @@ namespace Life {
         }
 
         public string Notes {
-            get { throw new NotImplementedException(); }
+            get { return "Does not use speed."; }
         }
 
         private readonly Random _random = new Random();

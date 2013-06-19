@@ -18,7 +18,7 @@ namespace Spirograph {
         }
 
         public string Notes {
-            get { throw new NotImplementedException(); }
+            get { return String.Empty; }
         }
 
 

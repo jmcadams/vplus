@@ -18,7 +18,7 @@ namespace Fire {
         }
 
         public string Notes {
-            get { throw new NotImplementedException(); }
+            get { return "Does not use palette or speed."; }
         }
 
         private readonly Color[] _firePalette = new Color[200];

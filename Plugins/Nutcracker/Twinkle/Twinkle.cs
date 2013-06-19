@@ -18,7 +18,7 @@ namespace Twinkle {
         }
 
         public string Notes {
-            get { throw new NotImplementedException(); }
+            get { return String.Empty; }
         }
 
         private readonly Random _random = new Random(2271965);
