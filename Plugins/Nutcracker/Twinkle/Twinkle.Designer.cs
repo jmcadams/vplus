@@ -25,7 +25,11 @@ namespace Twinkle {
         private void InitializeComponent() {
             this.tbLightCount = new System.Windows.Forms.TrackBar();
             this.lblLightCount = new System.Windows.Forms.Label();
+            this.tbSteps = new System.Windows.Forms.TrackBar();
+            this.lblSteps = new System.Windows.Forms.Label();
+            this.chkBoxStrobe = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.tbLightCount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbSteps)).BeginInit();
             this.SuspendLayout();
             // 
             // tbLightCount
@@ -50,15 +54,50 @@ namespace Twinkle {
             this.lblLightCount.TabIndex = 22;
             this.lblLightCount.Text = "# of Lights";
             // 
+            // tbSteps
+            // 
+            this.tbSteps.AutoSize = false;
+            this.tbSteps.Location = new System.Drawing.Point(93, 31);
+            this.tbSteps.Maximum = 200;
+            this.tbSteps.Minimum = 1;
+            this.tbSteps.Name = "tbSteps";
+            this.tbSteps.Size = new System.Drawing.Size(139, 25);
+            this.tbSteps.TabIndex = 25;
+            this.tbSteps.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbSteps.Value = 1;
+            // 
+            // lblSteps
+            // 
+            this.lblSteps.AutoSize = true;
+            this.lblSteps.Location = new System.Drawing.Point(26, 36);
+            this.lblSteps.Name = "lblSteps";
+            this.lblSteps.Size = new System.Drawing.Size(74, 13);
+            this.lblSteps.TabIndex = 24;
+            this.lblSteps.Text = "Twinkle Steps";
+            // 
+            // chkBoxStrobe
+            // 
+            this.chkBoxStrobe.AutoSize = true;
+            this.chkBoxStrobe.Location = new System.Drawing.Point(29, 67);
+            this.chkBoxStrobe.Name = "chkBoxStrobe";
+            this.chkBoxStrobe.Size = new System.Drawing.Size(57, 17);
+            this.chkBoxStrobe.TabIndex = 26;
+            this.chkBoxStrobe.Text = "Strobe";
+            this.chkBoxStrobe.UseVisualStyleBackColor = true;
+            // 
             // Twinkle
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.chkBoxStrobe);
+            this.Controls.Add(this.tbSteps);
+            this.Controls.Add(this.lblSteps);
             this.Controls.Add(this.tbLightCount);
             this.Controls.Add(this.lblLightCount);
             this.Name = "Twinkle";
             this.Size = new System.Drawing.Size(232, 134);
             ((System.ComponentModel.ISupportInitialize)(this.tbLightCount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbSteps)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -68,5 +107,8 @@ namespace Twinkle {
 
         private System.Windows.Forms.TrackBar tbLightCount;
         private System.Windows.Forms.Label lblLightCount;
+        private System.Windows.Forms.TrackBar tbSteps;
+        private System.Windows.Forms.Label lblSteps;
+        private System.Windows.Forms.CheckBox chkBoxStrobe;
     }
 }
