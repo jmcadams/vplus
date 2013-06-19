@@ -4,8 +4,6 @@ using System.Windows.Forms;
 
 using VixenPlus;
 
-//TODO: Fix
-
 namespace Snowflakes {
     public partial class Snowflakes : UserControl, INutcrackerEffect {
         public Snowflakes() {
@@ -19,7 +17,7 @@ namespace Snowflakes {
         }
 
         public string Notes {
-            get { return "Broken :("; }
+            get { return String.Empty; }
         }
 
         public bool UsesPalette {
@@ -31,7 +29,7 @@ namespace Snowflakes {
         }
 
         private readonly Random _random = new Random();
-        private Color[,] _buffer;
+        private Color[,] _tempBuf;
         private Color[] _palette;
         private int _bufferHeight;
         private int _bufferWidth;
@@ -42,7 +40,7 @@ namespace Snowflakes {
             var x = 0;
             var y = 0;
             var color1 = _palette[0];
-            var color2 = _palette[1];
+            var color2 = _palette.Length > 1 ? _palette[1] : _palette[0];
             ClearTempBuf();
             for (var n = 0; n < tbMaxFlakes.Value; n++) {
                var deltaY = _bufferHeight / 4;
@@ -122,7 +120,6 @@ namespace Snowflakes {
 
 
         public Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender) {
-            _buffer = buffer;
             _palette = palette;
             _bufferHeight = buffer.GetLength(0);
             _bufferWidth = buffer.GetLength(1);
@@ -154,17 +151,18 @@ namespace Snowflakes {
 
 
         private void SetTempPixel(int x, int y, Color color) {
-            _buffer[y, x] = color;
+            _tempBuf[y, x] = color;
         }
 
         private Color GetTempPixel(int x, int y) {
-            return _buffer[y, x];
+            return _tempBuf[y, x];
         }
 
         private void ClearTempBuf() {
+            _tempBuf = new Color[_bufferHeight,_bufferWidth];
             for (var col = 0; col < _bufferWidth; col++) {
                 for (var row = 0; row < _bufferHeight; row++) {
-                    _buffer[row,col] = Color.Black;
+                    _tempBuf[row,col] = Color.Black;
                 }
             }
         }
