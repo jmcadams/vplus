@@ -29,7 +29,7 @@ namespace Text {
                 var line1 = txtBoxLine1.Text;
                 var line2 = txtBoxLine2.Text;
                 var textRotation = 0; // TODO add this as an option
-                var font = (Font) lblFont.Tag;
+                var font = lblFont.Tag != null ? (Font)lblFont.Tag : new Font(FontFamily.GenericSansSerif, 12.0f);
                 var msg = line1;
 
                 if (line2.Length > 0) {
