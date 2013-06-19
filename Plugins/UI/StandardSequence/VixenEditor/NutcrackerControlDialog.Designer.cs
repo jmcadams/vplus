@@ -32,12 +32,24 @@ namespace VixenEditor
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.nutcrackerEffectControl2 = new NutcrackerEffectsControl.NutcrackerEffectControl();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.nutcrackerEffectControl1 = new NutcrackerEffectsControl.NutcrackerEffectControl();
             this.pbPreview = new System.Windows.Forms.PictureBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.lblFrames = new System.Windows.Forms.Label();
-            this.nudFrames = new System.Windows.Forms.NumericUpDown();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btnLoad = new System.Windows.Forms.Button();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.rbAverage = new System.Windows.Forms.RadioButton();
+            this.rbLayer = new System.Windows.Forms.RadioButton();
+            this.rbUnmask2 = new System.Windows.Forms.RadioButton();
+            this.rbUnmask1 = new System.Windows.Forms.RadioButton();
+            this.rbMask2 = new System.Windows.Forms.RadioButton();
+            this.rbMask1 = new System.Windows.Forms.RadioButton();
+            this.rbEffect2 = new System.Windows.Forms.RadioButton();
+            this.rbEffect1 = new System.Windows.Forms.RadioButton();
             this.cbRender = new System.Windows.Forms.CheckBox();
             this.lblColumns = new System.Windows.Forms.Label();
             this.lblRows = new System.Windows.Forms.Label();
@@ -46,13 +58,12 @@ namespace VixenEditor
             this.tbInfo = new System.Windows.Forms.TextBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.nutcrackerEffectControl1 = new NutcrackerEffectsControl.NutcrackerEffectControl();
-            this.nutcrackerEffectControl2 = new NutcrackerEffectsControl.NutcrackerEffectControl();
+            this.timerRender = new System.Windows.Forms.Timer(this.components);
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudFrames)).BeginInit();
+            this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudColumns)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRows)).BeginInit();
             this.SuspendLayout();
@@ -67,6 +78,13 @@ namespace VixenEditor
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Effect 2";
             // 
+            // nutcrackerEffectControl2
+            // 
+            this.nutcrackerEffectControl2.Location = new System.Drawing.Point(7, 20);
+            this.nutcrackerEffectControl2.Name = "nutcrackerEffectControl2";
+            this.nutcrackerEffectControl2.Size = new System.Drawing.Size(371, 225);
+            this.nutcrackerEffectControl2.TabIndex = 0;
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.nutcrackerEffectControl1);
@@ -76,6 +94,13 @@ namespace VixenEditor
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Effect 1";
+            // 
+            // nutcrackerEffectControl1
+            // 
+            this.nutcrackerEffectControl1.Location = new System.Drawing.Point(7, 20);
+            this.nutcrackerEffectControl1.Name = "nutcrackerEffectControl1";
+            this.nutcrackerEffectControl1.Size = new System.Drawing.Size(371, 225);
+            this.nutcrackerEffectControl1.TabIndex = 0;
             // 
             // pbPreview
             // 
@@ -88,8 +113,9 @@ namespace VixenEditor
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.lblFrames);
-            this.groupBox3.Controls.Add(this.nudFrames);
+            this.groupBox3.Controls.Add(this.button1);
+            this.groupBox3.Controls.Add(this.btnLoad);
+            this.groupBox3.Controls.Add(this.groupBox4);
             this.groupBox3.Controls.Add(this.cbRender);
             this.groupBox3.Controls.Add(this.lblColumns);
             this.groupBox3.Controls.Add(this.lblRows);
@@ -105,32 +131,127 @@ namespace VixenEditor
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Nutcracker Options";
             // 
-            // lblFrames
+            // button1
             // 
-            this.lblFrames.AutoSize = true;
-            this.lblFrames.Location = new System.Drawing.Point(516, 75);
-            this.lblFrames.Name = "lblFrames";
-            this.lblFrames.Size = new System.Drawing.Size(41, 13);
-            this.lblFrames.TabIndex = 9;
-            this.lblFrames.Text = "Frames";
+            this.button1.Location = new System.Drawing.Point(92, 257);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(79, 23);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "Save Effects";
+            this.button1.UseVisualStyleBackColor = true;
             // 
-            // nudFrames
+            // btnLoad
             // 
-            this.nudFrames.Location = new System.Drawing.Point(391, 73);
-            this.nudFrames.Maximum = new decimal(new int[] {
-            200,
-            0,
-            0,
-            0});
-            this.nudFrames.Name = "nudFrames";
-            this.nudFrames.Size = new System.Drawing.Size(120, 20);
-            this.nudFrames.TabIndex = 8;
-            this.nudFrames.ValueChanged += new System.EventHandler(this.nudFrames_ValueChanged);
+            this.btnLoad.Location = new System.Drawing.Point(7, 257);
+            this.btnLoad.Name = "btnLoad";
+            this.btnLoad.Size = new System.Drawing.Size(79, 23);
+            this.btnLoad.TabIndex = 9;
+            this.btnLoad.Text = "Load Effects";
+            this.btnLoad.UseVisualStyleBackColor = true;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.rbAverage);
+            this.groupBox4.Controls.Add(this.rbLayer);
+            this.groupBox4.Controls.Add(this.rbUnmask2);
+            this.groupBox4.Controls.Add(this.rbUnmask1);
+            this.groupBox4.Controls.Add(this.rbMask2);
+            this.groupBox4.Controls.Add(this.rbMask1);
+            this.groupBox4.Controls.Add(this.rbEffect2);
+            this.groupBox4.Controls.Add(this.rbEffect1);
+            this.groupBox4.Location = new System.Drawing.Point(612, 19);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(156, 204);
+            this.groupBox4.TabIndex = 8;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Layer Method";
+            // 
+            // rbAverage
+            // 
+            this.rbAverage.AutoSize = true;
+            this.rbAverage.Location = new System.Drawing.Point(6, 178);
+            this.rbAverage.Name = "rbAverage";
+            this.rbAverage.Size = new System.Drawing.Size(123, 17);
+            this.rbAverage.TabIndex = 7;
+            this.rbAverage.Text = "Average Effect 1 && 2";
+            this.rbAverage.UseVisualStyleBackColor = true;
+            // 
+            // rbLayer
+            // 
+            this.rbLayer.AutoSize = true;
+            this.rbLayer.Location = new System.Drawing.Point(6, 155);
+            this.rbLayer.Name = "rbLayer";
+            this.rbLayer.Size = new System.Drawing.Size(109, 17);
+            this.rbLayer.TabIndex = 6;
+            this.rbLayer.Text = "Layer Effect 1 && 2";
+            this.rbLayer.UseVisualStyleBackColor = true;
+            // 
+            // rbUnmask2
+            // 
+            this.rbUnmask2.AutoSize = true;
+            this.rbUnmask2.Location = new System.Drawing.Point(6, 132);
+            this.rbUnmask2.Name = "rbUnmask2";
+            this.rbUnmask2.Size = new System.Drawing.Size(114, 17);
+            this.rbUnmask2.TabIndex = 5;
+            this.rbUnmask2.Text = "Effect 2 is Unmask";
+            this.rbUnmask2.UseVisualStyleBackColor = true;
+            // 
+            // rbUnmask1
+            // 
+            this.rbUnmask1.AutoSize = true;
+            this.rbUnmask1.Location = new System.Drawing.Point(6, 109);
+            this.rbUnmask1.Name = "rbUnmask1";
+            this.rbUnmask1.Size = new System.Drawing.Size(114, 17);
+            this.rbUnmask1.TabIndex = 4;
+            this.rbUnmask1.Text = "Effect 1 is Unmask";
+            this.rbUnmask1.UseVisualStyleBackColor = true;
+            // 
+            // rbMask2
+            // 
+            this.rbMask2.AutoSize = true;
+            this.rbMask2.Location = new System.Drawing.Point(6, 86);
+            this.rbMask2.Name = "rbMask2";
+            this.rbMask2.Size = new System.Drawing.Size(101, 17);
+            this.rbMask2.TabIndex = 3;
+            this.rbMask2.Text = "Effect 2 is Mask";
+            this.rbMask2.UseVisualStyleBackColor = true;
+            // 
+            // rbMask1
+            // 
+            this.rbMask1.AutoSize = true;
+            this.rbMask1.Location = new System.Drawing.Point(6, 65);
+            this.rbMask1.Name = "rbMask1";
+            this.rbMask1.Size = new System.Drawing.Size(101, 17);
+            this.rbMask1.TabIndex = 2;
+            this.rbMask1.Text = "Effect 1 is Mask";
+            this.rbMask1.UseVisualStyleBackColor = true;
+            // 
+            // rbEffect2
+            // 
+            this.rbEffect2.AutoSize = true;
+            this.rbEffect2.Location = new System.Drawing.Point(6, 42);
+            this.rbEffect2.Name = "rbEffect2";
+            this.rbEffect2.Size = new System.Drawing.Size(62, 17);
+            this.rbEffect2.TabIndex = 1;
+            this.rbEffect2.Text = "Effect 2";
+            this.rbEffect2.UseVisualStyleBackColor = true;
+            // 
+            // rbEffect1
+            // 
+            this.rbEffect1.AutoSize = true;
+            this.rbEffect1.Checked = true;
+            this.rbEffect1.Location = new System.Drawing.Point(6, 19);
+            this.rbEffect1.Name = "rbEffect1";
+            this.rbEffect1.Size = new System.Drawing.Size(62, 17);
+            this.rbEffect1.TabIndex = 0;
+            this.rbEffect1.TabStop = true;
+            this.rbEffect1.Text = "Effect 1";
+            this.rbEffect1.UseVisualStyleBackColor = true;
             // 
             // cbRender
             // 
             this.cbRender.AutoSize = true;
-            this.cbRender.Location = new System.Drawing.Point(390, 99);
+            this.cbRender.Location = new System.Drawing.Point(177, 72);
             this.cbRender.Name = "cbRender";
             this.cbRender.Size = new System.Drawing.Size(61, 17);
             this.cbRender.TabIndex = 7;
@@ -141,7 +262,7 @@ namespace VixenEditor
             // lblColumns
             // 
             this.lblColumns.AutoSize = true;
-            this.lblColumns.Location = new System.Drawing.Point(516, 48);
+            this.lblColumns.Location = new System.Drawing.Point(302, 48);
             this.lblColumns.Name = "lblColumns";
             this.lblColumns.Size = new System.Drawing.Size(47, 13);
             this.lblColumns.TabIndex = 6;
@@ -150,7 +271,7 @@ namespace VixenEditor
             // lblRows
             // 
             this.lblRows.AutoSize = true;
-            this.lblRows.Location = new System.Drawing.Point(517, 22);
+            this.lblRows.Location = new System.Drawing.Point(303, 22);
             this.lblRows.Name = "lblRows";
             this.lblRows.Size = new System.Drawing.Size(34, 13);
             this.lblRows.TabIndex = 5;
@@ -158,7 +279,7 @@ namespace VixenEditor
             // 
             // nudColumns
             // 
-            this.nudColumns.Location = new System.Drawing.Point(390, 46);
+            this.nudColumns.Location = new System.Drawing.Point(176, 46);
             this.nudColumns.Maximum = new decimal(new int[] {
             300,
             0,
@@ -167,22 +288,30 @@ namespace VixenEditor
             this.nudColumns.Name = "nudColumns";
             this.nudColumns.Size = new System.Drawing.Size(120, 20);
             this.nudColumns.TabIndex = 4;
-            this.nudColumns.ValueChanged += new System.EventHandler(this.nudColumns_ValueChanged);
+            this.nudColumns.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
             // 
             // nudRows
             // 
-            this.nudRows.Location = new System.Drawing.Point(391, 20);
+            this.nudRows.Location = new System.Drawing.Point(177, 20);
             this.nudRows.Name = "nudRows";
             this.nudRows.Size = new System.Drawing.Size(120, 20);
             this.nudRows.TabIndex = 3;
-            this.nudRows.ValueChanged += new System.EventHandler(this.nudRows_ValueChanged);
+            this.nudRows.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
             // 
             // tbInfo
             // 
             this.tbInfo.Location = new System.Drawing.Point(7, 20);
             this.tbInfo.Multiline = true;
             this.tbInfo.Name = "tbInfo";
-            this.tbInfo.Size = new System.Drawing.Size(377, 260);
+            this.tbInfo.Size = new System.Drawing.Size(164, 73);
             this.tbInfo.TabIndex = 2;
             // 
             // btnOK
@@ -205,19 +334,10 @@ namespace VixenEditor
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
-            // nutcrackerEffectControl1
+            // timerRender
             // 
-            this.nutcrackerEffectControl1.Location = new System.Drawing.Point(7, 20);
-            this.nutcrackerEffectControl1.Name = "nutcrackerEffectControl1";
-            this.nutcrackerEffectControl1.Size = new System.Drawing.Size(371, 225);
-            this.nutcrackerEffectControl1.TabIndex = 0;
-            // 
-            // nutcrackerEffectControl2
-            // 
-            this.nutcrackerEffectControl2.Location = new System.Drawing.Point(7, 20);
-            this.nutcrackerEffectControl2.Name = "nutcrackerEffectControl2";
-            this.nutcrackerEffectControl2.Size = new System.Drawing.Size(371, 225);
-            this.nutcrackerEffectControl2.TabIndex = 0;
+            this.timerRender.Interval = 50;
+            this.timerRender.Tick += new System.EventHandler(this.timerRender_Tick);
             // 
             // NutcrackerControlDialog
             // 
@@ -234,12 +354,14 @@ namespace VixenEditor
             this.Name = "NutcrackerControlDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Generate Nutcracker Effect";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.NutcrackerControlDialog_FormClosing);
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudFrames)).EndInit();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudColumns)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRows)).EndInit();
             this.ResumeLayout(false);
@@ -260,9 +382,19 @@ namespace VixenEditor
         private NumericUpDown nudColumns;
         private NumericUpDown nudRows;
         private TextBox tbInfo;
-        private Label lblFrames;
-        private NumericUpDown nudFrames;
         private NutcrackerEffectControl nutcrackerEffectControl2;
         private NutcrackerEffectControl nutcrackerEffectControl1;
+        private GroupBox groupBox4;
+        private RadioButton rbAverage;
+        private RadioButton rbLayer;
+        private RadioButton rbUnmask2;
+        private RadioButton rbUnmask1;
+        private RadioButton rbMask2;
+        private RadioButton rbMask1;
+        private RadioButton rbEffect2;
+        private RadioButton rbEffect1;
+        private Button button1;
+        private Button btnLoad;
+        private Timer timerRender;
     }
 }
