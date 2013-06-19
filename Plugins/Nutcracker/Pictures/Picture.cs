@@ -148,7 +148,7 @@ namespace Pictures {
                     int b = _rgbValues[index];
                     int g = _rgbValues[index + 1];
                     int r = _rgbValues[index + 2];
-                    int a = _rgbValues[index + 3];
+                    int a = 255;// _rgbValues[index + 3];
                     return Color.FromArgb(a, r, g, b);
                 }
                 else {
