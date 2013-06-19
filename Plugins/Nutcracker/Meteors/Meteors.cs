@@ -24,6 +24,14 @@ namespace Meteors {
             get { return String.Empty;  }
         }
 
+        public bool UsesPalette {
+            get { return true; }
+        }
+
+        public bool UsesSpeed {
+            get { return true; }
+        }
+
         private readonly List<MeteorClass> _meteors = new List<MeteorClass>();
 
         // for meteor effect

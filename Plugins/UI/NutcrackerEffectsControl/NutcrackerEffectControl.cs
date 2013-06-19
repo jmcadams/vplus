@@ -13,10 +13,8 @@ namespace NutcrackerEffectsControl {
 
         public NutcrackerEffectControl() {
             InitializeComponent();
-            //if (!DesignMode) {
-                LoadEffects();
-                PopulateEffects();
-            //}
+            LoadEffects();
+            PopulateEffects();
         }
 
 
@@ -38,28 +36,28 @@ namespace NutcrackerEffectsControl {
             count = 0;
 
             if (chkBoxPalette1.Checked) {
-                result[count] = label1.BackColor;
+                result[count] = palette1.BackColor;
                 count++;
             }
 
             if (chkBoxPalette2.Checked) {
-                result[count] = label2.BackColor;
+                result[count] = palette2.BackColor;
                 count++;
             }
             if (chkBoxPalette3.Checked) {
-                result[count] = label3.BackColor;
+                result[count] = palette3.BackColor;
                 count++;
             }
             if (chkBoxPalette4.Checked) {
-                result[count] = label4.BackColor;
+                result[count] = palette4.BackColor;
                 count++;
             }
             if (chkBoxPalette5.Checked) {
-                result[count] = label5.BackColor;
+                result[count] = palette5.BackColor;
                 count++;
             }
             if (chkBoxPalette6.Checked) {
-                result[count] = label6.BackColor;
+                result[count] = palette6.BackColor;
             }
 
             return count > 0 ? result : new[] {Color.White};
@@ -68,34 +66,30 @@ namespace NutcrackerEffectsControl {
 
 
         private void LoadEffects() {
-            //if (!DesignMode) {
-                foreach (var str in Directory.GetFiles(Paths.NutcrackerPath, "*.dll")) {
-                    var assembly = Assembly.LoadFile(str);
-                    foreach (var type in assembly.GetExportedTypes()) {
-                        foreach (var type2 in type.GetInterfaces()) {
-                            if (type2.Name != "INutcrackerEffect") {
-                                continue;
-                            }
-                            var plugin = (INutcrackerEffect) Activator.CreateInstance(type);
-                            var key = plugin.EffectName;
-                            if (!_effectCache.ContainsKey(key)) {
-                                _effectCache[key] = plugin;
-                            }
+            foreach (var str in Directory.GetFiles(Paths.NutcrackerPath, "*.dll")) {
+                var assembly = Assembly.LoadFile(str);
+                foreach (var type in assembly.GetExportedTypes()) {
+                    foreach (var type2 in type.GetInterfaces()) {
+                        if (type2.Name != "INutcrackerEffect") {
+                            continue;
+                        }
+                        var plugin = (INutcrackerEffect) Activator.CreateInstance(type);
+                        var key = plugin.EffectName;
+                        if (!_effectCache.ContainsKey(key)) {
+                            _effectCache[key] = plugin;
                         }
                     }
                 }
-            //}
+            }
         }
 
 
         private void PopulateEffects() {
-            //if (!DesignMode) {
-                cbEffects.Items.Add("None");
-                foreach (var nutcrackerEffect in _effectCache) {
-                    cbEffects.Items.Add(nutcrackerEffect.Value.EffectName);
-                }
-                cbEffects.SelectedIndex = 0;
-            //}
+            cbEffects.Items.Add("None");
+            foreach (var nutcrackerEffect in _effectCache) {
+                cbEffects.Items.Add(nutcrackerEffect.Value.EffectName);
+            }
+            cbEffects.SelectedIndex = 0;
         }
 
 
@@ -120,13 +114,36 @@ namespace NutcrackerEffectsControl {
                 return;
             }
 
-            panel1.Controls.Add((UserControl) _effectCache[cbEffects.SelectedItem.ToString()]);
+            var newControl = _effectCache[cbEffects.SelectedItem.ToString()];
+            panel1.Controls.Add((UserControl) newControl);
+            tbNotes.Text = newControl.Notes;
+            UpdatePalette(newControl.UsesPalette);
+            UpdateSpeed(newControl.UsesSpeed);
             _effectCache[cbEffects.SelectedItem.ToString()].OnControlChanged += NutcrackerEffect_ControlChanged;
         }
 
+        private void UpdatePalette(bool isEnabled) {
+            btnPalette.Enabled = isEnabled;
+            chkBoxPalette1.Enabled = isEnabled;
+            chkBoxPalette2.Enabled = isEnabled;
+            chkBoxPalette3.Enabled = isEnabled;
+            chkBoxPalette4.Enabled = isEnabled;
+            chkBoxPalette5.Enabled = isEnabled;
+            chkBoxPalette5.Enabled = isEnabled;
+            palette1.Enabled = isEnabled;
+            palette2.Enabled = isEnabled;
+            palette3.Enabled = isEnabled;
+            palette4.Enabled = isEnabled;
+            palette5.Enabled = isEnabled;
+            palette6.Enabled = isEnabled;
+        }
+
+        private void UpdateSpeed(bool isEnabled) {
+            lblSpeed.Enabled = isEnabled;
+            tbSpeed.Enabled = isEnabled;
+        }
 
         private void NutcrackerEffect_ControlChanged(object sender, EventArgs e) {
-            lblSpeed.Text = ((INutcrackerEffect) sender).EffectName;
             //OnEffectChanged(sender, e);
         }
     }

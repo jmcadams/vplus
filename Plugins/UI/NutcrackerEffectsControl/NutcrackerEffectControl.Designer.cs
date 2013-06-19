@@ -39,12 +39,12 @@ namespace NutcrackerEffectsControl
             this.chkBoxPalette4 = new System.Windows.Forms.CheckBox();
             this.chkBoxPalette5 = new System.Windows.Forms.CheckBox();
             this.chkBoxPalette6 = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.palette1 = new System.Windows.Forms.Label();
+            this.palette2 = new System.Windows.Forms.Label();
+            this.palette3 = new System.Windows.Forms.Label();
+            this.palette5 = new System.Windows.Forms.Label();
+            this.palette4 = new System.Windows.Forms.Label();
+            this.palette6 = new System.Windows.Forms.Label();
             this.tbNotes = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.tbSpeed)).BeginInit();
             this.SuspendLayout();
@@ -154,76 +154,76 @@ namespace NutcrackerEffectsControl
             this.chkBoxPalette6.TabIndex = 16;
             this.chkBoxPalette6.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // palette1
             // 
-            this.label1.BackColor = System.Drawing.Color.Red;
-            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label1.Location = new System.Drawing.Point(277, 31);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(28, 14);
-            this.label1.TabIndex = 17;
-            this.label1.Text = "1";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.palette1.BackColor = System.Drawing.Color.Red;
+            this.palette1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.palette1.Location = new System.Drawing.Point(277, 31);
+            this.palette1.Name = "palette1";
+            this.palette1.Size = new System.Drawing.Size(28, 14);
+            this.palette1.TabIndex = 17;
+            this.palette1.Text = "1";
+            this.palette1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // label2
+            // palette2
             // 
-            this.label2.BackColor = System.Drawing.Color.Green;
-            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(277, 55);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(28, 14);
-            this.label2.TabIndex = 18;
-            this.label2.Text = "2";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.palette2.BackColor = System.Drawing.Color.Green;
+            this.palette2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.palette2.ForeColor = System.Drawing.Color.White;
+            this.palette2.Location = new System.Drawing.Point(277, 55);
+            this.palette2.Name = "palette2";
+            this.palette2.Size = new System.Drawing.Size(28, 14);
+            this.palette2.TabIndex = 18;
+            this.palette2.Text = "2";
+            this.palette2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // label3
+            // palette3
             // 
-            this.label3.BackColor = System.Drawing.Color.Blue;
-            this.label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(277, 79);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(28, 14);
-            this.label3.TabIndex = 19;
-            this.label3.Text = "3";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.palette3.BackColor = System.Drawing.Color.Blue;
+            this.palette3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.palette3.ForeColor = System.Drawing.Color.White;
+            this.palette3.Location = new System.Drawing.Point(277, 79);
+            this.palette3.Name = "palette3";
+            this.palette3.Size = new System.Drawing.Size(28, 14);
+            this.palette3.TabIndex = 19;
+            this.palette3.Text = "3";
+            this.palette3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // label5
+            // palette5
             // 
-            this.label5.BackColor = System.Drawing.Color.White;
-            this.label5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(277, 127);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(28, 14);
-            this.label5.TabIndex = 21;
-            this.label5.Text = "5";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.palette5.BackColor = System.Drawing.Color.White;
+            this.palette5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.palette5.ForeColor = System.Drawing.Color.Black;
+            this.palette5.Location = new System.Drawing.Point(277, 127);
+            this.palette5.Name = "palette5";
+            this.palette5.Size = new System.Drawing.Size(28, 14);
+            this.palette5.TabIndex = 21;
+            this.palette5.Text = "5";
+            this.palette5.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // label4
+            // palette4
             // 
-            this.label4.BackColor = System.Drawing.Color.Yellow;
-            this.label4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(277, 103);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(28, 14);
-            this.label4.TabIndex = 22;
-            this.label4.Text = "4";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.palette4.BackColor = System.Drawing.Color.Yellow;
+            this.palette4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.palette4.ForeColor = System.Drawing.Color.Black;
+            this.palette4.Location = new System.Drawing.Point(277, 103);
+            this.palette4.Name = "palette4";
+            this.palette4.Size = new System.Drawing.Size(28, 14);
+            this.palette4.TabIndex = 22;
+            this.palette4.Text = "4";
+            this.palette4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // label6
+            // palette6
             // 
-            this.label6.BackColor = System.Drawing.Color.Black;
-            this.label6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(277, 151);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(28, 14);
-            this.label6.TabIndex = 23;
-            this.label6.Text = "6";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.palette6.BackColor = System.Drawing.Color.Black;
+            this.palette6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.palette6.ForeColor = System.Drawing.Color.White;
+            this.palette6.Location = new System.Drawing.Point(277, 151);
+            this.palette6.Name = "palette6";
+            this.palette6.Size = new System.Drawing.Size(28, 14);
+            this.palette6.TabIndex = 23;
+            this.palette6.Text = "6";
+            this.palette6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // tbNotes
             // 
@@ -238,12 +238,12 @@ namespace NutcrackerEffectsControl
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tbNotes);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.palette6);
+            this.Controls.Add(this.palette4);
+            this.Controls.Add(this.palette5);
+            this.Controls.Add(this.palette3);
+            this.Controls.Add(this.palette2);
+            this.Controls.Add(this.palette1);
             this.Controls.Add(this.chkBoxPalette6);
             this.Controls.Add(this.chkBoxPalette5);
             this.Controls.Add(this.chkBoxPalette4);
@@ -276,12 +276,12 @@ namespace NutcrackerEffectsControl
         private System.Windows.Forms.CheckBox chkBoxPalette4;
         private System.Windows.Forms.CheckBox chkBoxPalette5;
         private System.Windows.Forms.CheckBox chkBoxPalette6;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label palette1;
+        private System.Windows.Forms.Label palette2;
+        private System.Windows.Forms.Label palette3;
+        private System.Windows.Forms.Label palette5;
+        private System.Windows.Forms.Label palette4;
+        private System.Windows.Forms.Label palette6;
         private System.Windows.Forms.TextBox tbNotes;
     }
 }

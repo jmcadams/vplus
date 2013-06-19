@@ -23,6 +23,14 @@ namespace Snowstorm {
             get { return String.Empty; }
         }
 
+        public bool UsesPalette {
+            get { return true; }
+        }
+
+        public bool UsesSpeed {
+            get { return true; }
+        }
+
         private class SnowstormClass {
             public readonly List<Point> Points = new List<Point>();
             public HSVUtils HSV;

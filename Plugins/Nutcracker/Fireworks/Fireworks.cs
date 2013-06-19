@@ -21,6 +21,14 @@ namespace Fireworks {
             get { return String.Empty; }
         }
 
+        public bool UsesPalette {
+            get { return true; }
+        }
+
+        public bool UsesSpeed {
+            get { return true; }
+        }
+
         private RgbFireworks[] _fireworkBursts; 
 
         private void InitFireworksBuffer()

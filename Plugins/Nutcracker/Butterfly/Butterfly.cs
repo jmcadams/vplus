@@ -20,6 +20,14 @@ namespace Butterfly {
             get { return String.Empty; }
         }
 
+        public bool UsesPalette {
+            get { return true; }
+        }
+
+        public bool UsesSpeed {
+            get { return true; }
+        }
+
         private const double Pi2 = Math.PI * 2;
 
 

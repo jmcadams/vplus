@@ -22,6 +22,14 @@ namespace Life {
             get { return "Does not use speed."; }
         }
 
+        public bool UsesPalette {
+            get { return true; }
+        }
+
+        public bool UsesSpeed {
+            get { return false; }
+        }
+
         private readonly Random _random = new Random();
         private int _bufferHeight;
         private int _bufferWidth;

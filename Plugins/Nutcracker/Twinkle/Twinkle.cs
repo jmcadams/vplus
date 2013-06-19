@@ -21,6 +21,14 @@ namespace Twinkle {
             get { return String.Empty; }
         }
 
+        public bool UsesPalette {
+            get { return true; }
+        }
+
+        public bool UsesSpeed {
+            get { return true; }
+        }
+
         private readonly Random _random = new Random(2271965);
 
 

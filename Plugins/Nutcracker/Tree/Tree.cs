@@ -22,6 +22,14 @@ namespace Tree {
             get { return String.Empty; }
         }
 
+        public bool UsesPalette {
+            get { return true; }
+        }
+
+        public bool UsesSpeed {
+            get { return true; }
+        }
+
 
         public Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender) {
             var bufferHeight = buffer.GetLength(Utils.IndexRowsOrHeight);

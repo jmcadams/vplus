@@ -22,6 +22,14 @@ namespace Snowflakes {
             get { return "Broken :("; }
         }
 
+        public bool UsesPalette {
+            get { return true; }
+        }
+
+        public bool UsesSpeed {
+            get { return true; }
+        }
+
         private readonly Random _random = new Random();
         private Color[,] _buffer;
         private Color[] _palette;

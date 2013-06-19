@@ -21,6 +21,14 @@ namespace Fire {
             get { return "Does not use palette or speed."; }
         }
 
+        public bool UsesPalette {
+            get { return false; }
+        }
+
+        public bool UsesSpeed {
+            get { return false; }
+        }
+
         private readonly Color[] _firePalette = new Color[200];
 
         private void InitFirePalette() {

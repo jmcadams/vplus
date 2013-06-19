@@ -19,7 +19,15 @@ namespace Pictures {
         }
 
         public string Notes {
-            get { return "Movies coming soon!"; }
+            get { return "Movies coming soon! Does not use palette."; }
+        }
+
+        public bool UsesPalette {
+            get { return false; }
+        }
+
+        public bool UsesSpeed {
+            get { return true; }
         }
 
         private string _pictureName = "";

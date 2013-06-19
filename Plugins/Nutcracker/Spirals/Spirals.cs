@@ -22,6 +22,14 @@ namespace Spirals {
             get { return String.Empty; }
         }
 
+        public bool UsesPalette {
+            get { return true; }
+        }
+
+        public bool UsesSpeed {
+            get { return true; }
+        }
+
 
         public Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender) {
             var colorCount = palette.Length;
