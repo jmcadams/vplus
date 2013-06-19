@@ -45,6 +45,7 @@ namespace VixenEditor
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.tbNotes = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.tbSpeed)).BeginInit();
             this.SuspendLayout();
             // 
@@ -80,6 +81,7 @@ namespace VixenEditor
             // 
             // cbEffects
             // 
+            this.cbEffects.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbEffects.FormattingEnabled = true;
             this.cbEffects.Location = new System.Drawing.Point(3, 3);
             this.cbEffects.Name = "cbEffects";
@@ -91,7 +93,7 @@ namespace VixenEditor
             // 
             this.panel1.Location = new System.Drawing.Point(4, 31);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(232, 134);
+            this.panel1.Size = new System.Drawing.Size(232, 191);
             this.panel1.TabIndex = 10;
             // 
             // chkBoxPalette1
@@ -223,10 +225,19 @@ namespace VixenEditor
             this.label6.Text = "6";
             this.label6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
+            // tbNotes
+            // 
+            this.tbNotes.Location = new System.Drawing.Point(243, 172);
+            this.tbNotes.Multiline = true;
+            this.tbNotes.Name = "tbNotes";
+            this.tbNotes.Size = new System.Drawing.Size(121, 50);
+            this.tbNotes.TabIndex = 24;
+            // 
             // NutcrackerEffectControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.tbNotes);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label5);
@@ -245,7 +256,7 @@ namespace VixenEditor
             this.Controls.Add(this.tbSpeed);
             this.Controls.Add(this.lblSpeed);
             this.Name = "NutcrackerEffectControl";
-            this.Size = new System.Drawing.Size(371, 173);
+            this.Size = new System.Drawing.Size(371, 225);
             ((System.ComponentModel.ISupportInitialize)(this.tbSpeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -271,5 +282,6 @@ namespace VixenEditor
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox tbNotes;
     }
 }

@@ -17,6 +17,10 @@ namespace Twinkle {
             get { return "Twinkle"; }
         }
 
+        public string Notes {
+            get { throw new NotImplementedException(); }
+        }
+
         private readonly Random _random = new Random(2271965);
 
 

@@ -17,6 +17,10 @@ namespace Spirograph {
             get { return "Spirograph"; }
         }
 
+        public string Notes {
+            get { throw new NotImplementedException(); }
+        }
+
 
         public Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender) {
             var bufferHeight = buffer.GetLength(Utils.IndexRowsOrHeight);

@@ -18,6 +18,10 @@ namespace Pictures {
             get { return "Picture"; }
         }
 
+        public string Notes {
+            get { throw new NotImplementedException(); }
+        }
+
         private string _pictureName = "";
         private FastPixel _fp;
         private Color[,] _buffer;

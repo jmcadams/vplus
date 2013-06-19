@@ -16,6 +16,10 @@ namespace Garlands {
             get { return "Garlands"; }
         }
 
+        public string Notes {
+            get { throw new NotImplementedException(); }
+        }
+
 
         public Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender) {
             var rows = buffer.GetLength(Utils.IndexRowsOrHeight);

@@ -18,6 +18,10 @@ namespace Tree {
             get { return "Tree"; }
         }
 
+        public string Notes {
+            get { throw new NotImplementedException(); }
+        }
+
 
         public Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender) {
             var bufferHeight = buffer.GetLength(Utils.IndexRowsOrHeight);

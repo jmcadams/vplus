@@ -18,6 +18,10 @@ namespace Life {
             get { return "Life"; }
         }
 
+        public string Notes {
+            get { throw new NotImplementedException(); }
+        }
+
         private readonly Random _random = new Random();
         private int _bufferHeight;
         private int _bufferWidth;

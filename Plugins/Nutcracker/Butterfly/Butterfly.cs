@@ -16,6 +16,10 @@ namespace Butterfly {
             get { return "Butterfly"; }
         }
 
+        public string Notes {
+            get { throw new NotImplementedException(); }
+        }
+
         private const double Pi2 = Math.PI * 2;
 
 

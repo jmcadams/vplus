@@ -18,6 +18,11 @@ namespace Spirals {
             get { return "Spirals"; }
         }
 
+        public string Notes {
+            get { throw new NotImplementedException(); }
+        }
+
+
         public Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender) {
             var colorCount = palette.Length;
             var spiralCount = colorCount * tbPaletteRepeat.Value;

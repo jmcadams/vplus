@@ -19,6 +19,10 @@ namespace Snowstorm {
             get { return "Snow Storm"; }
         }
 
+        public string Notes {
+            get { throw new NotImplementedException(); }
+        }
+
         private class SnowstormClass {
             public readonly List<Point> Points = new List<Point>();
             public HSVUtils HSV;

@@ -18,6 +18,10 @@ namespace Snowflakes {
             get { return "Snowflakes"; }
         }
 
+        public string Notes {
+            get { throw new NotImplementedException(); }
+        }
+
         private readonly Random _random = new Random();
         private Color[,] _buffer;
         private Color[] _palette;

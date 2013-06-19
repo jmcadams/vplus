@@ -18,7 +18,11 @@ namespace Meteors {
 
         public string EffectName {
             get { return "Meteors"; }
-        } 
+        }
+
+        public string Notes {
+            get { throw new NotImplementedException(); }
+        }
 
         private readonly List<MeteorClass> _meteors = new List<MeteorClass>();
 

@@ -17,6 +17,10 @@ namespace Fire {
             get { return "Fire"; }
         }
 
+        public string Notes {
+            get { throw new NotImplementedException(); }
+        }
+
         private readonly Color[] _firePalette = new Color[200];
 
         private void InitFirePalette() {

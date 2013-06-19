@@ -16,6 +16,11 @@ namespace ColorWash {
             get { return "Color Wash"; }
         }
 
+        public string Notes {
+            get { throw new NotImplementedException(); }
+        }
+
+
         public Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender) {
             const int speedFactor = 200;
             var bufferHeight = buffer.GetLength(Utils.IndexRowsOrHeight);

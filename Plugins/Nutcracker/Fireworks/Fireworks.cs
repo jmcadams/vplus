@@ -17,6 +17,10 @@ namespace Fireworks {
             get { return "Fireworks"; }
         }
 
+        public string Notes {
+            get { throw new NotImplementedException(); }
+        }
+
         private RgbFireworks[] _fireworkBursts; 
 
         private void InitFireworksBuffer()

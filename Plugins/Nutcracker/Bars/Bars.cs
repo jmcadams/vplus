@@ -18,6 +18,11 @@ namespace Bars {
             get { return "Bars"; }
         }
 
+        public string Notes {
+            get { throw new NotImplementedException(); }
+        }
+
+
         public Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender) {
             var barCount = tbRepeat.Value * palette.Length;
             var bufferHeight = buffer.GetLength(Utils.IndexRowsOrHeight);
