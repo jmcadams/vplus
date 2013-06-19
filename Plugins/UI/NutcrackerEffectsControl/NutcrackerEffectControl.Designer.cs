@@ -1,4 +1,4 @@
-namespace VixenEditor
+namespace NutcrackerEffectsControl
 {
     partial class NutcrackerEffectControl
     {

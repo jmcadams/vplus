@@ -85,7 +85,6 @@
     <RootNamespace>VixenEditor</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="StandardSequence, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -185,12 +184,6 @@
     <Compile Include="VixenEditor\NutcrackerControlDialog.Designer.cs">
       <DependentUpon>NutcrackerControlDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="VixenEditor\NutcrackerEffectControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="VixenEditor\NutcrackerEffectControl.Designer.cs">
-      <DependentUpon>NutcrackerEffectControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="VixenEditor\ProgressDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -287,9 +280,6 @@
     <EmbeddedResource Include="VixenEditor\NutcrackerControlDialog.resx">
       <DependentUpon>NutcrackerControlDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VixenEditor\NutcrackerEffectControl.resx">
-      <DependentUpon>NutcrackerEffectControl.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\ProgressDialog.resx">
       <DependentUpon>ProgressDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -353,6 +343,10 @@
       <Project>{FA99E3F3-4783-485F-A37E-0E24F823E5AE}</Project>
       <Name>VixenPlus</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\NutcrackerEffectsControl\NutcrackerEffectsControl.csproj">
+      <Project>{C792440D-580E-4313-A48F-F2EEE85BE98C}</Project>
+      <Name>NutcrackerEffectsControl</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

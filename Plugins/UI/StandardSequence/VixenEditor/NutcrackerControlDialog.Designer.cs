@@ -1,5 +1,7 @@
 using System.Windows.Forms;
 
+using NutcrackerEffectsControl;
+
 namespace VixenEditor
 {
     partial class NutcrackerControlDialog
@@ -44,6 +46,10 @@ namespace VixenEditor
             this.tbInfo = new System.Windows.Forms.TextBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.nutcrackerEffectControl1 = new NutcrackerEffectsControl.NutcrackerEffectControl();
+            this.nutcrackerEffectControl2 = new NutcrackerEffectsControl.NutcrackerEffectControl();
+            this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudFrames)).BeginInit();
@@ -53,6 +59,7 @@ namespace VixenEditor
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.nutcrackerEffectControl2);
             this.groupBox2.Location = new System.Drawing.Point(788, 304);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(384, 250);
@@ -62,6 +69,7 @@ namespace VixenEditor
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.nutcrackerEffectControl1);
             this.groupBox1.Location = new System.Drawing.Point(398, 304);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(384, 250);
@@ -197,6 +205,20 @@ namespace VixenEditor
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
+            // nutcrackerEffectControl1
+            // 
+            this.nutcrackerEffectControl1.Location = new System.Drawing.Point(7, 20);
+            this.nutcrackerEffectControl1.Name = "nutcrackerEffectControl1";
+            this.nutcrackerEffectControl1.Size = new System.Drawing.Size(371, 225);
+            this.nutcrackerEffectControl1.TabIndex = 0;
+            // 
+            // nutcrackerEffectControl2
+            // 
+            this.nutcrackerEffectControl2.Location = new System.Drawing.Point(7, 20);
+            this.nutcrackerEffectControl2.Name = "nutcrackerEffectControl2";
+            this.nutcrackerEffectControl2.Size = new System.Drawing.Size(371, 225);
+            this.nutcrackerEffectControl2.TabIndex = 0;
+            // 
             // NutcrackerControlDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -212,6 +234,8 @@ namespace VixenEditor
             this.Name = "NutcrackerControlDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Generate Nutcracker Effect";
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
@@ -227,8 +251,6 @@ namespace VixenEditor
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.PictureBox pbPreview;
-        private NutcrackerEffectControl nutcrackerEffectControl1;
-        private NutcrackerEffectControl nutcrackerEffectControl2;
         private GroupBox groupBox3;
         private Button btnOK;
         private Button btnCancel;
@@ -240,5 +262,7 @@ namespace VixenEditor
         private TextBox tbInfo;
         private Label lblFrames;
         private NumericUpDown nudFrames;
+        private NutcrackerEffectControl nutcrackerEffectControl2;
+        private NutcrackerEffectControl nutcrackerEffectControl1;
     }
 }
