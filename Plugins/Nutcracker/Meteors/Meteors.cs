@@ -35,6 +35,7 @@ namespace Meteors {
         }
 
         private readonly Random _random = new Random();
+        private int _lastRenderedEvent = -1;
 
         //todo not working quite right.
         public Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender) {
@@ -43,12 +44,13 @@ namespace Meteors {
 
             var bufferHeight = buffer.GetLength(Utils.IndexRowsOrHeight);
             var bufferWidth = buffer.GetLength(Utils.IndexColsOrWidth);
-            var mspeed = 20;
+            var mspeed = eventToRender - _lastRenderedEvent;
+            _lastRenderedEvent = eventToRender;
 
             // create new meteors
             var hsv = new HSVUtils();
             var hsv0 = HSVUtils.ColorToHSV(palette[0]);
-            var hsv1 = HSVUtils.ColorToHSV(palette[1]);
+            var hsv1 = palette.Length > 1 ? HSVUtils.ColorToHSV(palette[1]) : HSVUtils.ColorToHSV(palette[0]);
             var colorcnt = palette.Length;
             var count = bufferWidth * tbCount.Value / 100;
             var tailLength = (bufferHeight < 10) ? tbTrailLength.Value / 10 : bufferHeight * tbTrailLength.Value / 100;
