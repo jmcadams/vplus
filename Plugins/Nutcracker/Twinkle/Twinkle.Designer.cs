@@ -48,7 +48,7 @@ namespace Twinkle {
             // lblLightCount
             // 
             this.lblLightCount.AutoSize = true;
-            this.lblLightCount.Location = new System.Drawing.Point(26, 5);
+            this.lblLightCount.Location = new System.Drawing.Point(29, 3);
             this.lblLightCount.Name = "lblLightCount";
             this.lblLightCount.Size = new System.Drawing.Size(57, 13);
             this.lblLightCount.TabIndex = 22;
@@ -65,11 +65,12 @@ namespace Twinkle {
             this.tbSteps.TabIndex = 25;
             this.tbSteps.TickStyle = System.Windows.Forms.TickStyle.None;
             this.tbSteps.Value = 1;
+            this.tbSteps.ValueChanged += new System.EventHandler(this.Twinkle_ControlChanged);
             // 
             // lblSteps
             // 
             this.lblSteps.AutoSize = true;
-            this.lblSteps.Location = new System.Drawing.Point(26, 36);
+            this.lblSteps.Location = new System.Drawing.Point(12, 34);
             this.lblSteps.Name = "lblSteps";
             this.lblSteps.Size = new System.Drawing.Size(74, 13);
             this.lblSteps.TabIndex = 24;
@@ -78,12 +79,13 @@ namespace Twinkle {
             // chkBoxStrobe
             // 
             this.chkBoxStrobe.AutoSize = true;
-            this.chkBoxStrobe.Location = new System.Drawing.Point(29, 67);
+            this.chkBoxStrobe.Location = new System.Drawing.Point(29, 62);
             this.chkBoxStrobe.Name = "chkBoxStrobe";
             this.chkBoxStrobe.Size = new System.Drawing.Size(57, 17);
             this.chkBoxStrobe.TabIndex = 26;
             this.chkBoxStrobe.Text = "Strobe";
             this.chkBoxStrobe.UseVisualStyleBackColor = true;
+            this.chkBoxStrobe.CheckedChanged += new System.EventHandler(this.Twinkle_ControlChanged);
             // 
             // Twinkle
             // 
