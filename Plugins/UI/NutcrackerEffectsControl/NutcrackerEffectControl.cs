@@ -94,7 +94,7 @@ namespace NutcrackerEffectsControl {
 
 
         public Control GetCurrentEffectControl() {
-            return cbEffects.SelectedIndex == 0 ? null : panel1.Controls[0];
+            return cbEffects.SelectedIndex == 0 || panel1.Controls.Count < 1 ? null : panel1.Controls[0];
         }
 
 
