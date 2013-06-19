@@ -28,7 +28,7 @@ namespace Text {
 
                 var line1 = txtBoxLine1.Text;
                 var line2 = txtBoxLine2.Text;
-                var textRotation = 0; // TODO add this as an option
+                var textRotation = tbRotation.Value;
                 var font = lblFont.Tag != null ? (Font)lblFont.Tag : new Font(FontFamily.GenericSansSerif, 12.0f);
                 var msg = line1;
 
@@ -40,7 +40,7 @@ namespace Text {
                 var sz2 = g.MeasureString(line2, font);
                 var maxwidth = (int)Math.Max(sz1.Width, sz2.Width);
                 var maxht = (int)Math.Max(sz1.Height, sz2.Height);
-                if (textRotation == 1) {
+                if ((textRotation > 45 && textRotation < 135) || (textRotation > 225 && textRotation < 315) ) {
                     var itmp = maxwidth;
                     maxwidth = maxht;
                     maxht = itmp;
@@ -49,7 +49,6 @@ namespace Text {
                 var xlimit = (bufferWidth + maxwidth) * 8 + 1;
                 var ylimit = (bufferHeight + maxht) * 8 + 1;
                 var xcentered = (bufferWidth - maxwidth) / 2;
-                textRotation *= 90;
                 if (textRotation > 0) {
                     g.RotateTransform(textRotation);
                 }
