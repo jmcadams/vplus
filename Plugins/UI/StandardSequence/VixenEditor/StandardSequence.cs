@@ -10,18 +10,12 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
-using System.Xml.Serialization;
-
-using FMOD;
 using CommonUtils;
-
+using FMOD;
 using Properties;
-
 using VixenEditor.VixenPlus;
-
 using VixenPlus;
 using VixenPlus.Dialogs;
-
 using Channel = VixenPlus.Channel;
 using SortOrder = VixenPlus.SortOrder;
 
@@ -4791,6 +4785,7 @@ namespace VixenEditor {
             _selectedCells.Width = _selectedCells.Height = 0;
             tsbPlayPoint.Enabled = false;
             tsbPlayRange.Enabled = false;
+            EraseSelectedRange();
             pictureBoxGrid.Refresh();
         }
 
@@ -4866,7 +4861,7 @@ namespace VixenEditor {
                 return;
             }
 
-            using (var nce = new NutcrackerControlDialog()) {
+            using (var nce = new NutcrackerControlDialog(_sequence, _selectedRange)) {
                 nce.ShowDialog();
             }
         }
