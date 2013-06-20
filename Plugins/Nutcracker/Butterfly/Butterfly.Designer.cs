@@ -76,12 +76,12 @@
             // 
             this.tbSkip.AutoSize = false;
             this.tbSkip.Location = new System.Drawing.Point(112, 87);
-            this.tbSkip.Minimum = 1;
+            this.tbSkip.Minimum = 2;
             this.tbSkip.Name = "tbSkip";
             this.tbSkip.Size = new System.Drawing.Size(117, 25);
             this.tbSkip.TabIndex = 4;
             this.tbSkip.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbSkip.Value = 1;
+            this.tbSkip.Value = 2;
             this.tbSkip.ValueChanged += new System.EventHandler(this.Butterfly_ControlChanged);
             // 
             // tbChunks
@@ -111,6 +111,7 @@
             // 
             // cbColors
             // 
+            this.cbColors.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbColors.FormattingEnabled = true;
             this.cbColors.Items.AddRange(new object[] {
             "Rainbow",

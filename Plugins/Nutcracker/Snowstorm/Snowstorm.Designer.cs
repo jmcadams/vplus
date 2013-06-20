@@ -40,6 +40,7 @@ namespace Snowstorm {
             this.tbTailLength.Size = new System.Drawing.Size(139, 25);
             this.tbTailLength.TabIndex = 17;
             this.tbTailLength.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbTailLength.Value = 50;
             this.tbTailLength.ValueChanged += new System.EventHandler(this.SnowStorm_ControlChanged);
             // 
             // lblTrailLength
@@ -60,6 +61,7 @@ namespace Snowstorm {
             this.tbMaxFlakes.Size = new System.Drawing.Size(139, 25);
             this.tbMaxFlakes.TabIndex = 15;
             this.tbMaxFlakes.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbMaxFlakes.Value = 50;
             this.tbMaxFlakes.ValueChanged += new System.EventHandler(this.SnowStorm_ControlChanged);
             // 
             // lblMaxFlakes

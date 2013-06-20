@@ -43,12 +43,13 @@ namespace Spirals {
             // 
             this.tbRotations.AutoSize = false;
             this.tbRotations.Location = new System.Drawing.Point(93, 28);
-            this.tbRotations.Maximum = 100;
-            this.tbRotations.Minimum = -100;
+            this.tbRotations.Maximum = 50;
+            this.tbRotations.Minimum = -50;
             this.tbRotations.Name = "tbRotations";
             this.tbRotations.Size = new System.Drawing.Size(139, 25);
             this.tbRotations.TabIndex = 21;
             this.tbRotations.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbRotations.Value = 20;
             this.tbRotations.ValueChanged += new System.EventHandler(this.Spirals_ControlChanged);
             // 
             // lblRotations
@@ -92,6 +93,7 @@ namespace Spirals {
             this.tbDirection.Size = new System.Drawing.Size(139, 25);
             this.tbDirection.TabIndex = 25;
             this.tbDirection.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbDirection.Value = 1;
             this.tbDirection.ValueChanged += new System.EventHandler(this.Spirals_ControlChanged);
             // 
             // lblDirection
@@ -113,7 +115,7 @@ namespace Spirals {
             this.tbThickness.Size = new System.Drawing.Size(139, 25);
             this.tbThickness.TabIndex = 23;
             this.tbThickness.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbThickness.Value = 1;
+            this.tbThickness.Value = 50;
             this.tbThickness.ValueChanged += new System.EventHandler(this.Spirals_ControlChanged);
             // 
             // lblThickness
@@ -139,7 +141,7 @@ namespace Spirals {
             // chkBox3D
             // 
             this.chkBox3D.AutoSize = true;
-            this.chkBox3D.Location = new System.Drawing.Point(93, 112);
+            this.chkBox3D.Location = new System.Drawing.Point(93, 114);
             this.chkBox3D.Name = "chkBox3D";
             this.chkBox3D.Size = new System.Drawing.Size(40, 17);
             this.chkBox3D.TabIndex = 27;

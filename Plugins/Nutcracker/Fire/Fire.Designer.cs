@@ -44,12 +44,12 @@ namespace Fire {
             this.tbHeight.AutoSize = false;
             this.tbHeight.Location = new System.Drawing.Point(46, 0);
             this.tbHeight.Maximum = 100;
-            this.tbHeight.Minimum = 1;
+            this.tbHeight.Minimum = 10;
             this.tbHeight.Name = "tbHeight";
             this.tbHeight.Size = new System.Drawing.Size(183, 25);
             this.tbHeight.TabIndex = 1;
             this.tbHeight.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbHeight.Value = 1;
+            this.tbHeight.Value = 50;
             this.tbHeight.ValueChanged += new System.EventHandler(this.Fire_ControlChanged);
             // 
             // chkBoxUsePalette

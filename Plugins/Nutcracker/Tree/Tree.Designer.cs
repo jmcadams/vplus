@@ -40,7 +40,7 @@ namespace Tree {
             this.tbBranchCount.Size = new System.Drawing.Size(139, 25);
             this.tbBranchCount.TabIndex = 21;
             this.tbBranchCount.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbBranchCount.Value = 1;
+            this.tbBranchCount.Value = 3;
             this.tbBranchCount.ValueChanged += new System.EventHandler(this.Tree_ControlChanged);
             // 
             // lblBranchCount

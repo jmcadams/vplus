@@ -43,7 +43,7 @@ namespace Meteors {
             this.tbTrailLength.Size = new System.Drawing.Size(139, 25);
             this.tbTrailLength.TabIndex = 9;
             this.tbTrailLength.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbTrailLength.Value = 1;
+            this.tbTrailLength.Value = 25;
             this.tbTrailLength.ValueChanged += new System.EventHandler(this.Meteors_ControlChanged);
             // 
             // lblTrailLength
@@ -59,13 +59,13 @@ namespace Meteors {
             // 
             this.tbCount.AutoSize = false;
             this.tbCount.Location = new System.Drawing.Point(90, 39);
-            this.tbCount.Maximum = 50;
+            this.tbCount.Maximum = 100;
             this.tbCount.Minimum = 1;
             this.tbCount.Name = "tbCount";
             this.tbCount.Size = new System.Drawing.Size(139, 25);
             this.tbCount.TabIndex = 7;
             this.tbCount.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbCount.Value = 1;
+            this.tbCount.Value = 10;
             this.tbCount.ValueChanged += new System.EventHandler(this.Meteors_ControlChanged);
             // 
             // lblCount
@@ -88,6 +88,7 @@ namespace Meteors {
             // 
             // cbType
             // 
+            this.cbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbType.FormattingEnabled = true;
             this.cbType.Items.AddRange(new object[] {
             "Rainbow",

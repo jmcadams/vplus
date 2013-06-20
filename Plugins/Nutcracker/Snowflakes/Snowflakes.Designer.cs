@@ -61,7 +61,7 @@ namespace Snowflakes {
             this.tbMaxFlakes.Size = new System.Drawing.Size(139, 25);
             this.tbMaxFlakes.TabIndex = 11;
             this.tbMaxFlakes.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbMaxFlakes.Value = 1;
+            this.tbMaxFlakes.Value = 5;
             this.tbMaxFlakes.ValueChanged += new System.EventHandler(this.Snowflakes_ControlChanged);
             // 
             // lblMaxFlakes

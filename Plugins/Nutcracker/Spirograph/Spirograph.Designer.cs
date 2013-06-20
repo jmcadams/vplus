@@ -46,7 +46,7 @@ namespace Spirograph {
             this.tbDistance.Size = new System.Drawing.Size(139, 25);
             this.tbDistance.TabIndex = 29;
             this.tbDistance.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbDistance.Value = 1;
+            this.tbDistance.Value = 30;
             this.tbDistance.ValueChanged += new System.EventHandler(this.Spirograph_ControlChanged);
             // 
             // lblDistance
@@ -68,7 +68,7 @@ namespace Spirograph {
             this.tbInnerR.Size = new System.Drawing.Size(139, 25);
             this.tbInnerR.TabIndex = 27;
             this.tbInnerR.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbInnerR.Value = 1;
+            this.tbInnerR.Value = 10;
             this.tbInnerR.ValueChanged += new System.EventHandler(this.Spirograph_ControlChanged);
             // 
             // lblInnerRadius
@@ -90,7 +90,7 @@ namespace Spirograph {
             this.tbOuterR.Size = new System.Drawing.Size(139, 25);
             this.tbOuterR.TabIndex = 25;
             this.tbOuterR.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbOuterR.Value = 1;
+            this.tbOuterR.Value = 20;
             this.tbOuterR.ValueChanged += new System.EventHandler(this.Spirograph_ControlChanged);
             // 
             // lblOuterRadius

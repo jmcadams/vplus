@@ -9,8 +9,13 @@ using VixenPlus;
 
 namespace Bars {
     public partial class Bars : UserControl, INutcrackerEffect {
+
+        private readonly bool _initializing = true;
+
         public Bars() {
             InitializeComponent();
+            cbDirection.SelectedIndex = 0;
+            _initializing = false;
         }
 
         public event EventHandler OnControlChanged;
@@ -32,8 +37,16 @@ namespace Bars {
         }
 
         public XmlElement Settings {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get { return GetCurrentSettings(); }
+            set { Setup(value); }
+        }
+
+        private static XmlElement GetCurrentSettings() {
+            return Xml.CreateXmlDocument().DocumentElement;
+        }
+
+        private static void Setup(XmlElement settings) {
+            System.Diagnostics.Debug.Print(settings.ToString());
         }
 
 
@@ -76,6 +89,7 @@ namespace Bars {
 
 
         private void Bars_ControlChanged(object sender, EventArgs e) {
+            if (_initializing) return;
             OnControlChanged(this, new EventArgs());
         }
     }

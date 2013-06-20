@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Globalization;
 using System.Windows.Forms;
 
 using NutcrackerEffectsControl;
@@ -16,7 +15,7 @@ namespace VixenEditor
         private readonly Stopwatch _sw = new Stopwatch();
         private int[] _eventToRender = new[] {0, 0};
         private bool[] _isRendering = new[] {false, false};
-        private readonly NutcrackerEffectControl[] _effectControls;
+        private NutcrackerEffectControl[] _effectControls;
         private int _rows;
         private int _cols;
         private Color[][,] _buffers;
@@ -28,7 +27,16 @@ namespace VixenEditor
         public NutcrackerControlDialog()
         {   
             InitializeComponent();
-            _effectControls = new[] {nutcrackerEffectControl1, nutcrackerEffectControl2};
+            InitializeControls();
+        }
+
+        private void InitializeControls() {
+            _rows = (int)nudRows.Value;
+            _cols = (int)nudColumns.Value;
+            _buffers = new[] { new Color[_rows, _cols], new Color[_rows, _cols] };
+            _effectControls = new[] { nutcrackerEffectControl1, nutcrackerEffectControl2 };
+            InitializeBuffer(0);
+            InitializeBuffer(1);
         }
 
 
@@ -91,7 +99,9 @@ namespace VixenEditor
                 Render();
             } 
             
-            tbInfo.Text = _sw.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture);
+            var mills = _sw.ElapsedMilliseconds;
+            var fps = mills > 0 ? CommonUtils.Utils.MillsPerSecond / (float)mills : 0f;
+            lblInfo.Text = string.Format("{0:D3} ms to render, {1:F2} FPS", mills, fps);
             _sw.Reset();
         }
 
@@ -210,6 +220,10 @@ namespace VixenEditor
             if (rbUnmask2.Checked) _effectLayer = Layers.Unmask2;
             if (rbLayer.Checked) _effectLayer = Layers.Layered;
             if (rbAverage.Checked) _effectLayer = Layers.Average;
+        }
+
+        private void RowOrCol_ValueChanged(object sender, EventArgs e) {
+            InitializeControls();
         }
 
     }

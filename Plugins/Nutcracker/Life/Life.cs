@@ -33,8 +33,16 @@ namespace Life {
         }
 
         public XmlElement Settings {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get { return GetCurrentSettings(); }
+            set { Setup(value); }
+        }
+
+        private static XmlElement GetCurrentSettings() {
+            return Xml.CreateXmlDocument().DocumentElement;
+        }
+
+        private static void Setup(XmlElement settings) {
+            System.Diagnostics.Debug.Print(settings.ToString());
         }
 
         private readonly Random _random = new Random();

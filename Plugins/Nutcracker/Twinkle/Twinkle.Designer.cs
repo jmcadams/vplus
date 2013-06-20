@@ -42,7 +42,7 @@ namespace Twinkle {
             this.tbLightCount.Size = new System.Drawing.Size(139, 25);
             this.tbLightCount.TabIndex = 23;
             this.tbLightCount.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbLightCount.Value = 1;
+            this.tbLightCount.Value = 20;
             this.tbLightCount.ValueChanged += new System.EventHandler(this.Twinkle_ControlChanged);
             // 
             // lblLightCount
@@ -64,7 +64,7 @@ namespace Twinkle {
             this.tbSteps.Size = new System.Drawing.Size(139, 25);
             this.tbSteps.TabIndex = 25;
             this.tbSteps.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbSteps.Value = 1;
+            this.tbSteps.Value = 3;
             this.tbSteps.ValueChanged += new System.EventHandler(this.Twinkle_ControlChanged);
             // 
             // lblSteps

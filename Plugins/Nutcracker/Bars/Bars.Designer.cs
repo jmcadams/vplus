@@ -67,6 +67,7 @@
             // 
             // cbDirection
             // 
+            this.cbDirection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDirection.FormattingEnabled = true;
             this.cbDirection.Items.AddRange(new object[] {
             "Up",

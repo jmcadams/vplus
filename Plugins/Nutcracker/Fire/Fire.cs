@@ -31,8 +31,16 @@ namespace Fire {
         }
 
         public XmlElement Settings {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get { return GetCurrentSettings(); }
+            set { Setup(value); }
+        }
+
+        private static XmlElement GetCurrentSettings() {
+            return Xml.CreateXmlDocument().DocumentElement;
+        }
+
+        private static void Setup(XmlElement settings) {
+            System.Diagnostics.Debug.Print(settings.ToString());
         }
 
         private readonly Color[] _firePalette = new Color[200];
@@ -63,7 +71,7 @@ namespace Fire {
             var bufferWidth = buffer.GetLength(Utils.IndexColsOrWidth);
             _palette = palette;
 
-            if (eventToRender == 0) {
+            if (eventToRender == 0 || _fireBuffer.Length == 1) {
                 InitFirePalette(chkBoxUsePalette.Checked ? _palette[0].GetHue() / 360f : 0.0f);
                 _fireBuffer = new int[bufferHeight * bufferWidth];
                 _width = bufferWidth;
@@ -74,7 +82,7 @@ namespace Fire {
             }
             for (var col = 0; col < bufferWidth; col++) {
                 var r = col % 2 == 0 ? 190 + (_random.Next() % 10) : 100 + (_random.Next() % 50);
-                _fireBuffer[col] = r;
+                SetFireBuffer(col, r);
             }
             var step = 255 * 100 / bufferHeight / tbHeight.Value;
             for (var row = 1; row < bufferHeight; row++) {
@@ -107,19 +115,26 @@ namespace Fire {
                         if (newIndex < 0) newIndex = 0;
                         if (newIndex >= _firePalette.Length) newIndex = _firePalette.Length - 1;
                     }
-                    _fireBuffer[row * bufferWidth + col] = newIndex;
+                    SetFireBuffer(row * bufferWidth + col, newIndex);
                 }
             }
             for (var row = 0; row < bufferHeight; row++) {
                 for (var col = 0; col < bufferWidth; col++) {
-                    buffer[row, col] = _firePalette[_fireBuffer[row*bufferWidth + col]];
+                    buffer[row, col] = _firePalette[GetFireBuffer(col, row*bufferWidth)];
                 }
             }
             return buffer;
         }
 
+        private void SetFireBuffer(int cell, int value) {
+            if (cell >= 0 && cell < _fireBuffer.Length) {
+                _fireBuffer[cell] = value;
+            }
+        }
+
         private int GetFireBuffer(int x, int y) {
-            return x >= 0 && x < _width && y >= 0 && y < _height ? _fireBuffer[y*_width + x] : -1;
+            var cell = y * _width + x;
+            return x >= 0 && x < _width && y >= 0 && y < _height && cell < _fireBuffer.Length ? _fireBuffer[cell] : -1;
         }
 
 

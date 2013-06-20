@@ -82,6 +82,7 @@ namespace Text {
             this.tbTop.Size = new System.Drawing.Size(186, 25);
             this.tbTop.TabIndex = 31;
             this.tbTop.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbTop.Value = 50;
             this.tbTop.ValueChanged += new System.EventHandler(this.Text_ControlChanged);
             // 
             // lblTop
@@ -114,6 +115,7 @@ namespace Text {
             // 
             // cbDirection
             // 
+            this.cbDirection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDirection.FormattingEnabled = true;
             this.cbDirection.Items.AddRange(new object[] {
             "Left",

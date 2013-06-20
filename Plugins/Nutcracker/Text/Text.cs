@@ -13,8 +13,13 @@ using VixenPlus;
 
 namespace Text {
     public partial class Text : UserControl, INutcrackerEffect {
+
+        private readonly bool _initializing = true;
+
         public Text() {
             InitializeComponent();
+            cbDirection.SelectedIndex = 0;
+            _initializing = false;
         }
 
         public event EventHandler OnControlChanged;
@@ -36,8 +41,16 @@ namespace Text {
         }
 
         public XmlElement Settings {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get { return GetCurrentSettings(); }
+            set { Setup(value); }
+        }
+
+        private static XmlElement GetCurrentSettings() {
+            return Xml.CreateXmlDocument().DocumentElement;
+        }
+
+        private static void Setup(XmlElement settings) {
+            System.Diagnostics.Debug.Print(settings.ToString());
         }
 
 
@@ -108,6 +121,7 @@ namespace Text {
         }
 
         private void Text_ControlChanged(object sender, EventArgs e) {
+            if (_initializing) return;
             OnControlChanged(this, new EventArgs());
         }
 

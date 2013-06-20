@@ -8,8 +8,13 @@ using VixenPlus;
 
 namespace Butterfly {
     public partial class Butterfly : UserControl, INutcrackerEffect {
+
+        private readonly bool _initializing = true;
+
         public Butterfly() {
             InitializeComponent();
+            cbColors.SelectedIndex = 1;
+            _initializing = false;
         }
         
         public event EventHandler OnControlChanged;
@@ -31,8 +36,16 @@ namespace Butterfly {
         }
 
         public XmlElement Settings {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get { return GetCurrentSettings(); }
+            set { Setup(value); }
+        }
+
+        private static XmlElement GetCurrentSettings() {
+            return Xml.CreateXmlDocument().DocumentElement;
+        }
+
+        private static void Setup(XmlElement settings) {
+            System.Diagnostics.Debug.Print(settings.ToString());
         }
 
         private const double Pi2 = Math.PI * 2;
@@ -98,6 +111,7 @@ namespace Butterfly {
 
 
         private void Butterfly_ControlChanged(object sender, EventArgs e) {
+            if (_initializing) return;
             OnControlChanged(this, e);
         }
     }

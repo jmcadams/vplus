@@ -36,11 +36,13 @@ namespace Pictures {
             // 
             this.tbGifSpeed.AutoSize = false;
             this.tbGifSpeed.Location = new System.Drawing.Point(93, 86);
-            this.tbGifSpeed.Maximum = 100;
+            this.tbGifSpeed.Maximum = 20;
+            this.tbGifSpeed.Minimum = 1;
             this.tbGifSpeed.Name = "tbGifSpeed";
             this.tbGifSpeed.Size = new System.Drawing.Size(139, 25);
             this.tbGifSpeed.TabIndex = 11;
             this.tbGifSpeed.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbGifSpeed.Value = 20;
             this.tbGifSpeed.ValueChanged += new System.EventHandler(this.Pictures_ControlChanged);
             // 
             // lblGifSpeed
@@ -82,6 +84,7 @@ namespace Pictures {
             // 
             // cbDirection
             // 
+            this.cbDirection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDirection.FormattingEnabled = true;
             this.cbDirection.Items.AddRange(new object[] {
             "Left",

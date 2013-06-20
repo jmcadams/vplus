@@ -34,7 +34,6 @@ namespace ColorWash {
             // 
             this.tbCount.AutoSize = false;
             this.tbCount.Location = new System.Drawing.Point(125, 3);
-            this.tbCount.Maximum = 11;
             this.tbCount.Minimum = 1;
             this.tbCount.Name = "tbCount";
             this.tbCount.Size = new System.Drawing.Size(104, 25);

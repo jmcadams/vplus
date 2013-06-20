@@ -61,7 +61,7 @@ namespace Life {
             this.tbCellsToStart.Size = new System.Drawing.Size(139, 25);
             this.tbCellsToStart.TabIndex = 7;
             this.tbCellsToStart.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbCellsToStart.Value = 1;
+            this.tbCellsToStart.Value = 50;
             this.tbCellsToStart.ValueChanged += new System.EventHandler(this.Life_ControlChanged);
             // 
             // lblCellsToStart

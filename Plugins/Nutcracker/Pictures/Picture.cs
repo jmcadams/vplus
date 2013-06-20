@@ -9,8 +9,13 @@ using VixenPlus;
 //TODO: Add support for movies
 namespace Pictures {
     public partial class Picture : UserControl, INutcrackerEffect {
+
+        private readonly bool _initializing = true;
+
         public Picture() {
             InitializeComponent();
+            cbDirection.SelectedIndex = 0;
+            _initializing = false;
         }
 
         public event EventHandler OnControlChanged;
@@ -32,8 +37,16 @@ namespace Pictures {
         }
 
         public XmlElement Settings {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get { return GetCurrentSettings(); }
+            set { Setup(value); }
+        }
+
+        private static XmlElement GetCurrentSettings() {
+            return Xml.CreateXmlDocument().DocumentElement;
+        }
+
+        private static void Setup(XmlElement settings) {
+            System.Diagnostics.Debug.Print(settings.ToString());
         }
 
         private string _pictureName = "";
@@ -167,8 +180,7 @@ namespace Pictures {
                     int b = _rgbValues[index];
                     int g = _rgbValues[index + 1];
                     int r = _rgbValues[index + 2];
-                    int a = 255;// _rgbValues[index + 3];
-                    return Color.FromArgb(a, r, g, b);
+                    return Color.FromArgb(255, r, g, b);
                 }
                 else {
                     var index = ((y * _width + x) * 3);
@@ -182,6 +194,7 @@ namespace Pictures {
 
 
         private void Pictures_ControlChanged(object sender, EventArgs e) {
+            if (_initializing) return;
             OnControlChanged(this, new EventArgs());
         }
 
