@@ -20,7 +20,7 @@ namespace VixenEditor
         private int _rows;
         private int _cols;
         private Color[][,] _buffers;
-
+        private Layers _effectLayer = Layers.Effect1;
         private const int MaxEffects = 2;
 
         private enum Layers { Effect1, Effect2, Mask1, Mask2, Unmask1, Unmask2, Layered, Average }
@@ -32,30 +32,36 @@ namespace VixenEditor
         }
 
 
-        private void cbRender_CheckedChanged(object sender, EventArgs e) {
-            if (cbRender.Checked) {
+        // TODO: Move to resource strings.
+        private void btnPlayStop_Click(object sender, EventArgs e) {
+            if (btnPlayStop.Text == @"Play") {
                 _rows = (int)nudRows.Value;
                 _cols = (int)nudColumns.Value;
                 if (_rows > 0 && _cols > 0) {
+                    ResetPreview();
+                    btnPlayStop.Text = @"Stop";
                     nudRows.Enabled = false;
                     nudColumns.Enabled = false;
-                    _buffers = new[] {new Color[_rows,_cols], new Color[_rows,_cols]};
-                    _eventToRender = new[] {0,0};
-                    _isRendering = new[] {false, false};
+                    _buffers = new[] { new Color[_rows, _cols], new Color[_rows, _cols] };
+                    _eventToRender = new[] { 0, 0 };
+                    _isRendering = new[] { false, false };
                     timerRender.Start();
-                }
-                else {
-                    cbRender.Checked = false;
                 }
             }
             else {
+                btnPlayStop.Text = @"Play";
                 nudRows.Enabled = true;
                 nudColumns.Enabled = true;
                 timerRender.Stop();
             }
-
         }
 
+
+        private void ResetPreview() {
+            using (var g = pbRawPreview.CreateGraphics()) {
+                g.Clear(pbRawPreview.BackColor);
+            }
+        }
 
         private void timerRender_Tick(object sender, EventArgs e) {
             _sw.Start();
@@ -112,7 +118,9 @@ namespace VixenEditor
         }
 
         private void Render() {
-            using (var g = pbPreview.CreateGraphics()) {
+            if (!chkBoxEnableRawPreview.Checked) return;
+
+            using (var g = pbRawPreview.CreateGraphics()) {
                 // Bitmap is width (col) then height (row), we pass data like Vixen+, hight (row) then width (col)
                 var bitmap = new Bitmap(_cols, _rows, g);
                 for (var row = 0; row < _rows; row++) {
@@ -121,7 +129,7 @@ namespace VixenEditor
                         bitmap.SetPixel(column, _rows - 1 - row, color == Color.Transparent ? Color.Black : color);
                     }
                 }
-                g.DrawImage(bitmap, new Point(10, 10));
+                g.DrawImage(bitmap, new Point((pbRawPreview.Width - _cols)/2, (pbRawPreview.Height - _rows) / 2));
             }
         }
 
@@ -132,7 +140,7 @@ namespace VixenEditor
             var effect1 = _buffers[0][row, column];
             var effect2 = _buffers[1][row, column];
 
-            switch (GetEffectLayer()) {
+            switch (_effectLayer) {
                 case Layers.Effect1:
                     returnValue = effect1;
                     break;
@@ -164,19 +172,6 @@ namespace VixenEditor
         }
 
 
-        private Layers GetEffectLayer() {
-            var effectLayer = Layers.Average;
-            if (rbEffect1.Checked) effectLayer = Layers.Effect1;
-            if (rbEffect2.Checked) effectLayer = Layers.Effect2;
-            if (rbMask1.Checked) effectLayer = Layers.Mask1;
-            if (rbMask2.Checked) effectLayer = Layers.Mask2;
-            if (rbUnmask1.Checked) effectLayer = Layers.Unmask1;
-            if (rbUnmask2.Checked) effectLayer = Layers.Unmask2;
-            if (rbLayer.Checked) effectLayer = Layers.Layered;
-
-            return effectLayer;
-        }
-
         /// <summary>
         /// Determine if a color is Black, regardless of transparency, or Transparent, regardless of RGB
         /// </summary>
@@ -199,5 +194,23 @@ namespace VixenEditor
             timerRender.Stop();
             timerRender.Dispose();
         }
+
+        private void EffectLayerChanged(object sender, EventArgs e) {
+            var rb = sender as RadioButton;
+            if (rb != null && rb.Checked) SetEffectLayer();
+        }
+
+
+        private void SetEffectLayer() {
+            if (rbEffect1.Checked) _effectLayer = Layers.Effect1;
+            if (rbEffect2.Checked) _effectLayer = Layers.Effect2;
+            if (rbMask1.Checked) _effectLayer = Layers.Mask1;
+            if (rbMask2.Checked) _effectLayer = Layers.Mask2;
+            if (rbUnmask1.Checked) _effectLayer = Layers.Unmask1;
+            if (rbUnmask2.Checked) _effectLayer = Layers.Unmask2;
+            if (rbLayer.Checked) _effectLayer = Layers.Layered;
+            if (rbAverage.Checked) _effectLayer = Layers.Average;
+        }
+
     }
 }
