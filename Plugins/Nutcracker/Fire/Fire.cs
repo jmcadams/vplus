@@ -43,9 +43,10 @@ namespace Fire {
             System.Diagnostics.Debug.Print(settings.ToString());
         }
 
-        private readonly Color[] _firePalette = new Color[200];
+        private Color[] _firePalette;
 
         private void InitFirePalette(float hue) {
+            _firePalette = new Color[200];
             var hsv = new HSVUtils {Hue = hue, Saturation = 1.0f};
 
             for (var i = 0; i < 100; i++) {
@@ -71,7 +72,7 @@ namespace Fire {
             var bufferWidth = buffer.GetLength(Utils.IndexColsOrWidth);
             _palette = palette;
 
-            if (eventToRender == 0 || _fireBuffer.Length == 1) {
+            if (eventToRender == 0 || _fireBuffer.Length == 1 || _firePalette == null) {
                 InitFirePalette(chkBoxUsePalette.Checked ? _palette[0].GetHue() / 360f : 0.0f);
                 _fireBuffer = new int[bufferHeight * bufferWidth];
                 _width = bufferWidth;
@@ -120,7 +121,7 @@ namespace Fire {
             }
             for (var row = 0; row < bufferHeight; row++) {
                 for (var col = 0; col < bufferWidth; col++) {
-                    buffer[row, col] = _firePalette[GetFireBuffer(col, row*bufferWidth)];
+                    buffer[row, col] = _firePalette[GetFireBuffer(col, row)];
                 }
             }
             return buffer;

@@ -165,7 +165,7 @@ namespace VixenEditor
             // lblInfo
             // 
             this.lblInfo.AutoSize = true;
-            this.lblInfo.Location = new System.Drawing.Point(7, 120);
+            this.lblInfo.Location = new System.Drawing.Point(342, 262);
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Size = new System.Drawing.Size(109, 13);
             this.lblInfo.TabIndex = 18;
@@ -175,7 +175,7 @@ namespace VixenEditor
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(7, 107);
+            this.label3.Location = new System.Drawing.Point(211, 262);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(125, 13);
             this.label3.TabIndex = 17;
@@ -210,7 +210,6 @@ namespace VixenEditor
             this.lblStartEventTime.Size = new System.Drawing.Size(55, 13);
             this.lblStartEventTime.TabIndex = 11;
             this.lblStartEventTime.Text = "00:00.000";
-            this.lblStartEventTime.Visible = false;
             // 
             // numericUpDown2
             // 
@@ -218,7 +217,6 @@ namespace VixenEditor
             this.numericUpDown2.Name = "numericUpDown2";
             this.numericUpDown2.Size = new System.Drawing.Size(51, 20);
             this.numericUpDown2.TabIndex = 10;
-            this.numericUpDown2.Visible = false;
             // 
             // lblStartEvent
             // 
@@ -228,7 +226,6 @@ namespace VixenEditor
             this.lblStartEvent.Size = new System.Drawing.Size(60, 13);
             this.lblStartEvent.TabIndex = 9;
             this.lblStartEvent.Text = "Start Event";
-            this.lblStartEvent.Visible = false;
             // 
             // lblNumEventsTime
             // 
@@ -238,7 +235,6 @@ namespace VixenEditor
             this.lblNumEventsTime.Size = new System.Drawing.Size(55, 13);
             this.lblNumEventsTime.TabIndex = 8;
             this.lblNumEventsTime.Text = "00:00.000";
-            this.lblNumEventsTime.Visible = false;
             // 
             // numericUpDown1
             // 
@@ -246,7 +242,6 @@ namespace VixenEditor
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(51, 20);
             this.numericUpDown1.TabIndex = 7;
-            this.numericUpDown1.Visible = false;
             // 
             // lblNumberOfEvents
             // 
@@ -256,7 +251,6 @@ namespace VixenEditor
             this.lblNumberOfEvents.Size = new System.Drawing.Size(92, 13);
             this.lblNumberOfEvents.TabIndex = 6;
             this.lblNumberOfEvents.Text = "Number of Events";
-            this.lblNumberOfEvents.Visible = false;
             // 
             // cbGroups
             // 
@@ -378,7 +372,6 @@ namespace VixenEditor
             this.btnLightsOff.TabIndex = 10;
             this.btnLightsOff.Text = "Lights Off";
             this.btnLightsOff.UseVisualStyleBackColor = true;
-            this.btnLightsOff.Visible = false;
             // 
             // btnManagePresets
             // 
@@ -506,7 +499,6 @@ namespace VixenEditor
             this.cbRender.TabIndex = 7;
             this.cbRender.Text = "Output to Lights";
             this.cbRender.UseVisualStyleBackColor = true;
-            this.cbRender.Visible = false;
             // 
             // lblColumns
             // 
@@ -516,6 +508,7 @@ namespace VixenEditor
             this.lblColumns.Size = new System.Drawing.Size(47, 13);
             this.lblColumns.TabIndex = 6;
             this.lblColumns.Text = "Columns";
+            this.lblColumns.Visible = false;
             // 
             // lblRows
             // 
@@ -525,6 +518,7 @@ namespace VixenEditor
             this.lblRows.Size = new System.Drawing.Size(34, 13);
             this.lblRows.TabIndex = 5;
             this.lblRows.Text = "Rows";
+            this.lblRows.Visible = false;
             // 
             // nudColumns
             // 
@@ -542,6 +536,7 @@ namespace VixenEditor
             0,
             0,
             0});
+            this.nudColumns.Visible = false;
             this.nudColumns.ValueChanged += new System.EventHandler(this.RowOrCol_ValueChanged);
             // 
             // nudRows
@@ -555,6 +550,7 @@ namespace VixenEditor
             0,
             0,
             0});
+            this.nudRows.Visible = false;
             this.nudRows.ValueChanged += new System.EventHandler(this.RowOrCol_ValueChanged);
             // 
             // btnOK
