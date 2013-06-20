@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
+using CommonUtils;
+
 using NutcrackerEffectsControl;
 
 using VixenPlus;
@@ -23,11 +25,12 @@ namespace VixenEditor
         private int _cols;
         private Color[][,] _buffers;
         private readonly EventSequence _sequence;
+        private readonly Rectangle _selectedRange;
 
         private const int MaxEffects = 2;
 
         private enum Layers { Effect1, Effect2, Mask1, Mask2, Unmask1, Unmask2, Layered, Average }
-        public enum RenderTo { Routine, CurrentPoint, SpecificPoint, Clipboard }
+        public enum RenderTo { Routine, CurrentSelection, SpecificPoint, Clipboard }
 
         private Layers EffectLayer { get; set; }
 
@@ -38,13 +41,15 @@ namespace VixenEditor
 
         #region initialization
 
-        public NutcrackerControlDialog(EventSequence sequence) {
+        public NutcrackerControlDialog(EventSequence sequence, Rectangle selectedRange) {
             _sequence = sequence;
+            _selectedRange = selectedRange;
             InitializeComponent();
             InitializeControls();
         }
 
         private void InitializeControls() {
+            cbColorLayout.SelectedIndex = 0;
             _rows = (int)nudRows.Value;
             _cols = (int)nudColumns.Value;
             _buffers = new[] { new Color[_rows, _cols], new Color[_rows, _cols] };
@@ -68,8 +73,18 @@ namespace VixenEditor
 
         private void InitializeFromSequence() {
             nudStartEvent.Maximum = _sequence.TotalEventPeriods;
+            nudStartEvent.Value = _selectedRange.Left;
             nudEventCount.Maximum = _sequence.TotalEventPeriods - nudStartEvent.Value;
-            _isPointSelected = false;
+            if (_selectedRange.Width > 0) {
+                nudEventCount.Value = _selectedRange.Width;
+                rbCurrentSelection.Checked = true;
+            }
+            else {
+                rbCurrentSelection.Enabled = false;
+            }
+            
+            UpdateRenderToControls();
+            UpdateEventTimes();
         }
 
 
@@ -126,7 +141,7 @@ namespace VixenEditor
             _sw.Stop();
 
             var mills = _sw.ElapsedMilliseconds;
-            var fps = mills > 0 ? CommonUtils.Utils.MillsPerSecond / (float)mills : 0f;
+            var fps = mills > 0 ? Utils.MillsPerSecond / (float)mills : 0f;
             lblInfo.Text = string.Format("{0:D3} ms to render, {1:F2} FPS", mills, fps);
             _sw.Reset();
         }
@@ -157,6 +172,17 @@ namespace VixenEditor
 
         private void btnOK_Click(object sender, EventArgs e) {
             RenderFinalResults();
+        }
+
+
+        private void nudEventCount_ValueChanged(object sender, EventArgs e) {
+            UpdateEventTimes();
+        }
+
+
+        private void nudStartEvent_ValueChanged(object sender, EventArgs e) {
+            nudEventCount.Maximum = _sequence.TotalEventPeriods - nudStartEvent.Value + 1;
+            UpdateEventTimes();
         }
 
         #endregion
@@ -308,7 +334,7 @@ namespace VixenEditor
 
         private void SetRenderToChanged() {
             if (rbRoutine.Checked) RenderType = RenderTo.Routine;
-            if (rbCurrentPointOrRange.Checked) RenderType = RenderTo.CurrentPoint;
+            if (rbCurrentSelection.Checked) RenderType = RenderTo.CurrentSelection;
             if (rbSpecificPoint.Checked) RenderType = RenderTo.SpecificPoint;
             if (rbClipboard.Checked) RenderType = RenderTo.Clipboard;
 
@@ -319,19 +345,20 @@ namespace VixenEditor
         private void UpdateRenderToControls() {
             var startEventVisible = false;
             var eventCountVisible = false;
-            
+
             switch (RenderType) {
                 case RenderTo.Routine:
+                    nudStartEvent.Value = 0;
                     eventCountVisible = true;
                     break;
-                case RenderTo.CurrentPoint:
-                    eventCountVisible = !_isPointSelected;
+                case RenderTo.CurrentSelection:
                     break;
                 case RenderTo.SpecificPoint:
                     startEventVisible = true;
                     eventCountVisible = true;
                     break;
                 case RenderTo.Clipboard:
+                    nudStartEvent.Value = 0;
                     eventCountVisible = true;
                     break;
             }
@@ -345,7 +372,21 @@ namespace VixenEditor
             nudEventCount.Visible = eventCountVisible;
         }
 
+
+        private void UpdateEventTimes() {
+            var eventPeriod = _sequence.EventPeriod;
+            var startTime = Utils.TimeFormatWithMills((int)(nudStartEvent.Value * eventPeriod));
+            var elapsedTime = Utils.TimeFormatWithMills((int)(nudEventCount.Value * eventPeriod));
+            var endTime = Utils.TimeFormatWithMills((int)(nudStartEvent.Value + nudEventCount.Value - 1) * eventPeriod);
+
+            lblStartEventTime.Text = startTime;
+            lblEventCountTime.Text = elapsedTime;
+            lblTimeSpan.Text = String.Format("Render from {0} thru {1}", startTime, endTime);
+        }
+
         #endregion
+
+
 
     }
 }

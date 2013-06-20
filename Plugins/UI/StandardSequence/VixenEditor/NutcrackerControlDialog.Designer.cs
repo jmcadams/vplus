@@ -40,23 +40,27 @@ namespace VixenEditor
             this.nutcrackerEffectControl1 = new NutcrackerEffectsControl.NutcrackerEffectControl();
             this.pbPreview = new System.Windows.Forms.PictureBox();
             this.gbSettings = new System.Windows.Forms.GroupBox();
+            this.cbColorLayout = new System.Windows.Forms.ComboBox();
+            this.lblColorLayout = new System.Windows.Forms.Label();
+            this.chkBoxUseGroup = new System.Windows.Forms.CheckBox();
             this.lblInfo = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.gbRenderTo = new System.Windows.Forms.GroupBox();
+            this.lblTimeSpan = new System.Windows.Forms.Label();
             this.lblStartEventTime = new System.Windows.Forms.Label();
             this.nudStartEvent = new System.Windows.Forms.NumericUpDown();
             this.lblStartEvent = new System.Windows.Forms.Label();
             this.lblEventCountTime = new System.Windows.Forms.Label();
             this.nudEventCount = new System.Windows.Forms.NumericUpDown();
             this.lblEventCount = new System.Windows.Forms.Label();
-            this.cbGroups = new System.Windows.Forms.ComboBox();
             this.rbSpecificPoint = new System.Windows.Forms.RadioButton();
-            this.rbCurrentPointOrRange = new System.Windows.Forms.RadioButton();
+            this.rbCurrentSelection = new System.Windows.Forms.RadioButton();
             this.rbRoutine = new System.Windows.Forms.RadioButton();
             this.rbClipboard = new System.Windows.Forms.RadioButton();
             this.cbModels = new System.Windows.Forms.ComboBox();
             this.btnPlayStop = new System.Windows.Forms.Button();
             this.btnModels = new System.Windows.Forms.Button();
+            this.cbGroups = new System.Windows.Forms.ComboBox();
             this.chkBoxEnableRawPreview = new System.Windows.Forms.CheckBox();
             this.pbRawPreview = new System.Windows.Forms.PictureBox();
             this.btnLightsOff = new System.Windows.Forms.Button();
@@ -78,10 +82,6 @@ namespace VixenEditor
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.timerRender = new System.Windows.Forms.Timer(this.components);
-            this.chkBoxUseGroup = new System.Windows.Forms.CheckBox();
-            this.lblColorLayout = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.lblRenderSpan = new System.Windows.Forms.Label();
             this.gbEffect2.SuspendLayout();
             this.gbEffect1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
@@ -140,7 +140,7 @@ namespace VixenEditor
             // 
             // gbSettings
             // 
-            this.gbSettings.Controls.Add(this.comboBox1);
+            this.gbSettings.Controls.Add(this.cbColorLayout);
             this.gbSettings.Controls.Add(this.lblColorLayout);
             this.gbSettings.Controls.Add(this.chkBoxUseGroup);
             this.gbSettings.Controls.Add(this.lblInfo);
@@ -169,6 +169,44 @@ namespace VixenEditor
             this.gbSettings.TabStop = false;
             this.gbSettings.Text = "Nutcracker Settings  -  Original Concept by: Sean Meighan and Matt Brown";
             // 
+            // cbColorLayout
+            // 
+            this.cbColorLayout.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbColorLayout.FormattingEnabled = true;
+            this.cbColorLayout.Items.AddRange(new object[] {
+            "RGB",
+            "RBG",
+            "GRB",
+            "GBR",
+            "BRG",
+            "BGR",
+            "Static - Use Red Channel",
+            "Static - Use Green Channel",
+            "Static - Use Blue Channel"});
+            this.cbColorLayout.Location = new System.Drawing.Point(87, 73);
+            this.cbColorLayout.Name = "cbColorLayout";
+            this.cbColorLayout.Size = new System.Drawing.Size(120, 21);
+            this.cbColorLayout.TabIndex = 21;
+            // 
+            // lblColorLayout
+            // 
+            this.lblColorLayout.AutoSize = true;
+            this.lblColorLayout.Location = new System.Drawing.Point(15, 76);
+            this.lblColorLayout.Name = "lblColorLayout";
+            this.lblColorLayout.Size = new System.Drawing.Size(66, 13);
+            this.lblColorLayout.TabIndex = 20;
+            this.lblColorLayout.Text = "Color Layout";
+            // 
+            // chkBoxUseGroup
+            // 
+            this.chkBoxUseGroup.AutoSize = true;
+            this.chkBoxUseGroup.Location = new System.Drawing.Point(8, 48);
+            this.chkBoxUseGroup.Name = "chkBoxUseGroup";
+            this.chkBoxUseGroup.Size = new System.Drawing.Size(77, 17);
+            this.chkBoxUseGroup.TabIndex = 19;
+            this.chkBoxUseGroup.Text = "Use Group";
+            this.chkBoxUseGroup.UseVisualStyleBackColor = true;
+            // 
             // lblInfo
             // 
             this.lblInfo.AutoSize = true;
@@ -190,7 +228,7 @@ namespace VixenEditor
             // 
             // gbRenderTo
             // 
-            this.gbRenderTo.Controls.Add(this.lblRenderSpan);
+            this.gbRenderTo.Controls.Add(this.lblTimeSpan);
             this.gbRenderTo.Controls.Add(this.lblStartEventTime);
             this.gbRenderTo.Controls.Add(this.nudStartEvent);
             this.gbRenderTo.Controls.Add(this.lblStartEvent);
@@ -198,7 +236,7 @@ namespace VixenEditor
             this.gbRenderTo.Controls.Add(this.nudEventCount);
             this.gbRenderTo.Controls.Add(this.lblEventCount);
             this.gbRenderTo.Controls.Add(this.rbSpecificPoint);
-            this.gbRenderTo.Controls.Add(this.rbCurrentPointOrRange);
+            this.gbRenderTo.Controls.Add(this.rbCurrentSelection);
             this.gbRenderTo.Controls.Add(this.rbRoutine);
             this.gbRenderTo.Controls.Add(this.rbClipboard);
             this.gbRenderTo.Location = new System.Drawing.Point(214, 19);
@@ -207,6 +245,15 @@ namespace VixenEditor
             this.gbRenderTo.TabIndex = 16;
             this.gbRenderTo.TabStop = false;
             this.gbRenderTo.Text = "Render Effects To:";
+            // 
+            // lblTimeSpan
+            // 
+            this.lblTimeSpan.AutoSize = true;
+            this.lblTimeSpan.Location = new System.Drawing.Point(6, 180);
+            this.lblTimeSpan.Name = "lblTimeSpan";
+            this.lblTimeSpan.Size = new System.Drawing.Size(188, 13);
+            this.lblTimeSpan.TabIndex = 12;
+            this.lblTimeSpan.Text = "Render from 00:00.000 thru 00:00.000";
             // 
             // lblStartEventTime
             // 
@@ -225,6 +272,7 @@ namespace VixenEditor
             this.nudStartEvent.Size = new System.Drawing.Size(51, 20);
             this.nudStartEvent.TabIndex = 10;
             this.nudStartEvent.Visible = false;
+            this.nudStartEvent.ValueChanged += new System.EventHandler(this.nudStartEvent_ValueChanged);
             // 
             // lblStartEvent
             // 
@@ -249,10 +297,21 @@ namespace VixenEditor
             // nudEventCount
             // 
             this.nudEventCount.Location = new System.Drawing.Point(104, 155);
+            this.nudEventCount.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.nudEventCount.Name = "nudEventCount";
             this.nudEventCount.Size = new System.Drawing.Size(51, 20);
             this.nudEventCount.TabIndex = 7;
+            this.nudEventCount.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.nudEventCount.Visible = false;
+            this.nudEventCount.ValueChanged += new System.EventHandler(this.nudEventCount_ValueChanged);
             // 
             // lblEventCount
             // 
@@ -263,16 +322,6 @@ namespace VixenEditor
             this.lblEventCount.TabIndex = 6;
             this.lblEventCount.Text = "Number of Events";
             this.lblEventCount.Visible = false;
-            // 
-            // cbGroups
-            // 
-            this.cbGroups.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbGroups.FormattingEnabled = true;
-            this.cbGroups.Location = new System.Drawing.Point(87, 46);
-            this.cbGroups.Name = "cbGroups";
-            this.cbGroups.Size = new System.Drawing.Size(120, 21);
-            this.cbGroups.TabIndex = 5;
-            this.cbGroups.Visible = false;
             // 
             // rbSpecificPoint
             // 
@@ -287,14 +336,14 @@ namespace VixenEditor
             // 
             // rbCurrentPointOrRange
             // 
-            this.rbCurrentPointOrRange.AutoSize = true;
-            this.rbCurrentPointOrRange.Location = new System.Drawing.Point(6, 42);
-            this.rbCurrentPointOrRange.Name = "rbCurrentPointOrRange";
-            this.rbCurrentPointOrRange.Size = new System.Drawing.Size(158, 17);
-            this.rbCurrentPointOrRange.TabIndex = 2;
-            this.rbCurrentPointOrRange.Text = "Current Sequence Selection";
-            this.rbCurrentPointOrRange.UseVisualStyleBackColor = true;
-            this.rbCurrentPointOrRange.CheckedChanged += new System.EventHandler(this.RenderToChanged);
+            this.rbCurrentSelection.AutoSize = true;
+            this.rbCurrentSelection.Location = new System.Drawing.Point(6, 42);
+            this.rbCurrentSelection.Name = "rbCurrentSelection";
+            this.rbCurrentSelection.Size = new System.Drawing.Size(158, 17);
+            this.rbCurrentSelection.TabIndex = 2;
+            this.rbCurrentSelection.Text = "Current Sequence Selection";
+            this.rbCurrentSelection.UseVisualStyleBackColor = true;
+            this.rbCurrentSelection.CheckedChanged += new System.EventHandler(this.RenderToChanged);
             // 
             // rbRoutine
             // 
@@ -347,6 +396,16 @@ namespace VixenEditor
             this.btnModels.TabIndex = 13;
             this.btnModels.Text = "Models";
             this.btnModels.UseVisualStyleBackColor = true;
+            // 
+            // cbGroups
+            // 
+            this.cbGroups.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbGroups.FormattingEnabled = true;
+            this.cbGroups.Location = new System.Drawing.Point(87, 46);
+            this.cbGroups.Name = "cbGroups";
+            this.cbGroups.Size = new System.Drawing.Size(120, 21);
+            this.cbGroups.TabIndex = 5;
+            this.cbGroups.Visible = false;
             // 
             // chkBoxEnableRawPreview
             // 
@@ -581,53 +640,6 @@ namespace VixenEditor
             this.timerRender.Interval = 50;
             this.timerRender.Tick += new System.EventHandler(this.timerRender_Tick);
             // 
-            // chkBoxUseGroup
-            // 
-            this.chkBoxUseGroup.AutoSize = true;
-            this.chkBoxUseGroup.Location = new System.Drawing.Point(8, 48);
-            this.chkBoxUseGroup.Name = "chkBoxUseGroup";
-            this.chkBoxUseGroup.Size = new System.Drawing.Size(77, 17);
-            this.chkBoxUseGroup.TabIndex = 19;
-            this.chkBoxUseGroup.Text = "Use Group";
-            this.chkBoxUseGroup.UseVisualStyleBackColor = true;
-            // 
-            // lblColorLayout
-            // 
-            this.lblColorLayout.AutoSize = true;
-            this.lblColorLayout.Location = new System.Drawing.Point(15, 76);
-            this.lblColorLayout.Name = "lblColorLayout";
-            this.lblColorLayout.Size = new System.Drawing.Size(66, 13);
-            this.lblColorLayout.TabIndex = 20;
-            this.lblColorLayout.Text = "Color Layout";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "RGB",
-            "RBG",
-            "GRB",
-            "GBR",
-            "BRG",
-            "BGR",
-            "Static - Use Red Channel",
-            "Static - Use Green Channel",
-            "Static - Use Blue Channel"});
-            this.comboBox1.Location = new System.Drawing.Point(87, 73);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(120, 21);
-            this.comboBox1.TabIndex = 21;
-            // 
-            // lblRenderSpan
-            // 
-            this.lblRenderSpan.AutoSize = true;
-            this.lblRenderSpan.Location = new System.Drawing.Point(6, 180);
-            this.lblRenderSpan.Name = "lblRenderSpan";
-            this.lblRenderSpan.Size = new System.Drawing.Size(179, 13);
-            this.lblRenderSpan.TabIndex = 12;
-            this.lblRenderSpan.Text = "Render from 00:00.000 to 00:00.000";
-            // 
             // NutcrackerControlDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -703,15 +715,15 @@ namespace VixenEditor
         private Label lblEventCount;
         private ComboBox cbGroups;
         private RadioButton rbSpecificPoint;
-        private RadioButton rbCurrentPointOrRange;
+        private RadioButton rbCurrentSelection;
         private RadioButton rbRoutine;
         private RadioButton rbClipboard;
         private Label lblStartEventTime;
         private NumericUpDown nudStartEvent;
         private Label lblStartEvent;
-        private ComboBox comboBox1;
+        private ComboBox cbColorLayout;
         private Label lblColorLayout;
         private CheckBox chkBoxUseGroup;
-        private Label lblRenderSpan;
+        private Label lblTimeSpan;
     }
 }
