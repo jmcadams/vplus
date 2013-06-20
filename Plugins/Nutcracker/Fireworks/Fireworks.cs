@@ -71,7 +71,7 @@ namespace Fireworks {
             var numberExplosions = tbExplosionCount.Value;
 
 
-            if (eventToRender == 0) {
+            if (eventToRender == 0 || _fireworkBursts == null) {
                 for (var i = 0; i < maxFlakes; i++) {
                     _fireworkBursts[i].IsActive = false;
                 }

@@ -109,7 +109,7 @@ namespace Snowstorm {
             lastRenderedEvent = eventToRender;
             var tailLength = _bufferWidth * _bufferHeight * tbTailLength.Value / 2000 + 2;
             var xy = new Point();
-            if (eventToRender == 0) {
+            if (eventToRender == 0 || _snowstormItems.Count == 0) {
                 InitializeSnowstorm();
             }
 

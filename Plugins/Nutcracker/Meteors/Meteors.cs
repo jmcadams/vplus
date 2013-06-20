@@ -70,8 +70,7 @@ namespace Meteors {
 
         //todo not working quite right.
         public Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender) {
-            if (eventToRender == 0)
-                _meteors.Clear();
+            if (eventToRender == 0) _meteors.Clear();
 
             var bufferHeight = buffer.GetLength(Utils.IndexRowsOrHeight);
             var bufferWidth = buffer.GetLength(Utils.IndexColsOrWidth);

@@ -74,7 +74,7 @@ namespace Life {
         public Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender) {
             _palette = palette;
 
-            if (eventToRender == 0) {
+            if (eventToRender == 0 || _buffer == null) {
                 _bufferWidth = buffer.GetLength(Utils.IndexColsOrWidth);
                 _bufferHeight = buffer.GetLength(Utils.IndexRowsOrHeight);
                 _buffer = buffer;

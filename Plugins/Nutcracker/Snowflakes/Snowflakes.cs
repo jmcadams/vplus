@@ -139,7 +139,7 @@ namespace Snowflakes {
             _bufferWidth = buffer.GetLength(1);
 
 
-            if (eventToRender == 0) {
+            if (eventToRender == 0 || _tempBuf == null) {
                 InitializeSnowflakes();
             }
 
