@@ -19,10 +19,11 @@ namespace VixenEditor
         private readonly Stopwatch _sw = new Stopwatch();
         private int[] _eventToRender = new[] {0, 0};
         private bool[] _isRendering = new[] {false, false};
-        private bool _isPointSelected;
         private NutcrackerEffectControl[] _effectControls;
         private int _rows;
         private int _cols;
+        private int _lastGroupSelected;
+        private int _lastChannelSelected;
         private Color[][,] _buffers;
         private readonly EventSequence _sequence;
         private readonly Rectangle _selectedRange;
@@ -85,6 +86,7 @@ namespace VixenEditor
             
             UpdateRenderToControls();
             UpdateEventTimes();
+            LoadGroups();
         }
 
 
@@ -183,6 +185,40 @@ namespace VixenEditor
         private void nudStartEvent_ValueChanged(object sender, EventArgs e) {
             nudEventCount.Maximum = _sequence.TotalEventPeriods - nudStartEvent.Value + 1;
             UpdateEventTimes();
+        }
+
+
+        private void chkBoxUseGroup_CheckedChanged(object sender, EventArgs e) {
+            if (chkBoxUseGroup.Checked) {
+                LoadGroups();
+            }
+            else {
+                LoadChannels();
+            }
+        }
+
+
+        private void cbGroups_SelectedIndexChanged(object sender, EventArgs e) {
+            if (chkBoxUseGroup.Checked) {
+                _lastGroupSelected = cbGroups.SelectedIndex;
+            }
+            else {
+                _lastChannelSelected = cbGroups.SelectedIndex;
+            }
+        }
+
+
+        private void cbGroups_DrawItem(object sender, DrawItemEventArgs e) {
+            if (e.Index < 0) return;
+
+            if (chkBoxUseGroup.Checked) {
+                var indexedItem = _sequence.Groups[cbGroups.Items[e.Index].ToString()];
+                Utils.DrawItem(e, indexedItem.Name, indexedItem.GroupColor, true);
+            }
+            else {
+                var indexedItem = _sequence.FullChannels[e.Index];
+                Utils.DrawItem(e, indexedItem.Name, indexedItem.Color, true);
+            }
         }
 
         #endregion
@@ -384,9 +420,25 @@ namespace VixenEditor
             lblTimeSpan.Text = String.Format("Render from {0} thru {1}", startTime, endTime);
         }
 
+
+        private void LoadGroups() {
+            cbGroups.Items.Clear();
+            foreach (var g in _sequence.Groups) {
+                cbGroups.Items.Add(g.Key);
+            }
+            cbGroups.SelectedIndex = _lastGroupSelected;
+        }
+
+
+        private void LoadChannels() {
+            cbGroups.Items.Clear();
+            foreach (var c in _sequence.FullChannels) {
+                cbGroups.Items.Add(c);
+            }
+            cbGroups.SelectedIndex = _lastChannelSelected;
+        }
+
         #endregion
-
-
 
     }
 }
