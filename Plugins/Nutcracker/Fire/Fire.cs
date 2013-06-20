@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml;
+
 using CommonUtils;
 using VixenPlus;
 
@@ -26,6 +28,11 @@ namespace Fire {
 
         public bool UsesSpeed {
             get { return false; }
+        }
+
+        public XmlElement Settings {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
         }
 
         private readonly Color[] _firePalette = new Color[200];

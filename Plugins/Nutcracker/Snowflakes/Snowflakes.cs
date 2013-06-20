@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml;
 
 using VixenPlus;
 
@@ -26,6 +27,11 @@ namespace Snowflakes {
 
         public bool UsesSpeed {
             get { return true; }
+        }
+
+        public XmlElement Settings {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
         }
 
         private readonly Random _random = new Random();

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml;
+
 using CommonUtils;
 using VixenPlus;
 
@@ -28,6 +30,11 @@ namespace Life {
 
         public bool UsesSpeed {
             get { return false; }
+        }
+
+        public XmlElement Settings {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
         }
 
         private readonly Random _random = new Random();

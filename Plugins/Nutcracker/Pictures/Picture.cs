@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
+using System.Xml;
 
 using VixenPlus;
 
@@ -28,6 +29,11 @@ namespace Pictures {
 
         public bool UsesSpeed {
             get { return true; }
+        }
+
+        public XmlElement Settings {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
         }
 
         private string _pictureName = "";

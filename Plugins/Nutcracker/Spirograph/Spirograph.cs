@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml;
+
 using CommonUtils;
 using VixenPlus;
 
@@ -27,6 +29,11 @@ namespace Spirograph {
 
         public bool UsesSpeed {
             get { return true; }
+        }
+
+        public XmlElement Settings {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
         }
 
 

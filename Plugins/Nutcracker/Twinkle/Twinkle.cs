@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml;
+
 using CommonUtils;
 using VixenPlus;
 
@@ -28,6 +30,10 @@ namespace Twinkle {
             get { return false; }
         }
 
+        public XmlElement Settings {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
 
 
         public Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender) {
