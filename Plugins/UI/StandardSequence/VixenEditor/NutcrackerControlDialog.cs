@@ -15,25 +15,30 @@ namespace VixenEditor
     public partial class NutcrackerControlDialog: Form {
 
         #region Class Members and Accessors
-        
-        private readonly Stopwatch _sw = new Stopwatch();
-        private int[] _eventToRender = new[] {0, 0};
+
+        private enum Layers { Effect1, Effect2, Mask1, Mask2, Unmask1, Unmask2, Layered, Average }
+
         private bool[] _isRendering = new[] {false, false};
+        private Color[][,] _buffers;
+        private int[] _eventToRender = new[] { 0, 0 };
         private NutcrackerEffectControl[] _effectControls;
+
         private int _rows;
         private int _cols;
         private int _lastGroupSelected;
         private int _lastChannelSelected;
-        private Color[][,] _buffers;
+        private string _playText;
+        private const string StopText = "Stop";
+
+        private readonly Stopwatch _sw = new Stopwatch();
         private readonly EventSequence _sequence;
         private readonly Rectangle _selectedRange;
 
         private const int MaxEffects = 2;
 
-        private enum Layers { Effect1, Effect2, Mask1, Mask2, Unmask1, Unmask2, Layered, Average }
-        public enum RenderTo { Routine, CurrentSelection, SpecificPoint, Clipboard }
-
         private Layers EffectLayer { get; set; }
+
+        public enum RenderTo { Routine, CurrentSelection, SpecificPoint, Clipboard }
 
         public RenderTo RenderType { get; private set; } 
         public byte[,] RenderData { get; private set; }
@@ -50,6 +55,7 @@ namespace VixenEditor
         }
 
         private void InitializeControls() {
+            _playText = btnPlayStop.Text;
             cbColorLayout.SelectedIndex = 0;
             _rows = (int)nudRows.Value;
             _cols = (int)nudColumns.Value;
@@ -85,7 +91,7 @@ namespace VixenEditor
             }
             
             UpdateRenderToControls();
-            UpdateEventTimes();
+            UpdateSummary();
             LoadGroups();
         }
 
@@ -126,12 +132,12 @@ namespace VixenEditor
 
         // TODO: Move to resource strings.
         private void btnPlayStop_Click(object sender, EventArgs e) {
-            if (btnPlayStop.Text == @"Play") {
-                btnPlayStop.Text = @"Stop";
+            if (btnPlayStop.Text == _playText) {
+                btnPlayStop.Text = StopText;
                 SetupForPlaying();
             }
             else {
-                btnPlayStop.Text = @"Play";
+                btnPlayStop.Text = _playText;
                 TearDownPlaying();
             }
         }
@@ -143,8 +149,8 @@ namespace VixenEditor
             _sw.Stop();
 
             var mills = _sw.ElapsedMilliseconds;
-            var fps = mills > 0 ? Utils.MillsPerSecond / (float)mills : 0f;
-            lblInfo.Text = string.Format("{0:D3} ms to render, {1:F2} FPS", mills, fps);
+            lblStatsMs.Text = String.Format("{0} ms", mills);
+            lblStatsFps.Text = string.Format(@"{0:F2} FPS", mills > 0 ? Utils.MillsPerSecond / (float)mills : 0f);
             _sw.Reset();
         }
 
@@ -178,13 +184,13 @@ namespace VixenEditor
 
 
         private void nudEventCount_ValueChanged(object sender, EventArgs e) {
-            UpdateEventTimes();
+            UpdateSummary();
         }
 
 
         private void nudStartEvent_ValueChanged(object sender, EventArgs e) {
             nudEventCount.Maximum = _sequence.TotalEventPeriods - nudStartEvent.Value + 1;
-            UpdateEventTimes();
+            UpdateSummary();
         }
 
 
@@ -381,6 +387,7 @@ namespace VixenEditor
         private void UpdateRenderToControls() {
             var startEventVisible = false;
             var eventCountVisible = false;
+            var groupsAndChannelsVisbile = false;
 
             switch (RenderType) {
                 case RenderTo.Routine:
@@ -392,6 +399,7 @@ namespace VixenEditor
                 case RenderTo.SpecificPoint:
                     startEventVisible = true;
                     eventCountVisible = true;
+                    groupsAndChannelsVisbile = true;
                     break;
                 case RenderTo.Clipboard:
                     nudStartEvent.Value = 0;
@@ -406,10 +414,13 @@ namespace VixenEditor
             lblEventCount.Visible = eventCountVisible;
             lblEventCountTime.Visible = eventCountVisible;
             nudEventCount.Visible = eventCountVisible;
+
+            chkBoxUseGroup.Visible = groupsAndChannelsVisbile;
+            cbGroups.Visible = groupsAndChannelsVisbile;
         }
 
 
-        private void UpdateEventTimes() {
+        private void UpdateSummary() {
             var eventPeriod = _sequence.EventPeriod;
             var startTime = Utils.TimeFormatWithMills((int)(nudStartEvent.Value * eventPeriod));
             var elapsedTime = Utils.TimeFormatWithMills((int)(nudEventCount.Value * eventPeriod));
@@ -417,7 +428,8 @@ namespace VixenEditor
 
             lblStartEventTime.Text = startTime;
             lblEventCountTime.Text = elapsedTime;
-            lblTimeSpan.Text = String.Format("Render from {0} thru {1}", startTime, endTime);
+
+            tbSummary.Text = String.Format("From {0} thru {1} on {2}", startTime, endTime, String.Empty);
         }
 
 

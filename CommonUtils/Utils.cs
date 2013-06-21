@@ -105,7 +105,7 @@ namespace CommonUtils {
         public static void DrawItem(DrawItemEventArgs e, string name, Color color, bool useCheckmark = false) {
             e.DrawBackground();
 
-            var selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
+            var selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected || (e.State & DrawItemState.ComboBoxEdit) == DrawItemState.ComboBoxEdit;
             GenericBrush.Color = color;
             e.Graphics.FillRectangle(selected && !useCheckmark ? SystemBrushes.Highlight : GenericBrush, e.Bounds);
             var contrastingBrush = selected && !useCheckmark ? SystemBrushes.HighlightText : GetTextColor(color);

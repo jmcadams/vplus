@@ -35,17 +35,13 @@ namespace VixenEditor
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NutcrackerControlDialog));
             this.gbEffect2 = new System.Windows.Forms.GroupBox();
-            this.nutcrackerEffectControl2 = new NutcrackerEffectsControl.NutcrackerEffectControl();
             this.gbEffect1 = new System.Windows.Forms.GroupBox();
-            this.nutcrackerEffectControl1 = new NutcrackerEffectsControl.NutcrackerEffectControl();
             this.pbPreview = new System.Windows.Forms.PictureBox();
             this.gbSettings = new System.Windows.Forms.GroupBox();
             this.cbColorLayout = new System.Windows.Forms.ComboBox();
             this.lblColorLayout = new System.Windows.Forms.Label();
-            this.lblInfo = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblStatsFps = new System.Windows.Forms.Label();
             this.gbRenderTo = new System.Windows.Forms.GroupBox();
-            this.lblTimeSpan = new System.Windows.Forms.Label();
             this.lblStartEventTime = new System.Windows.Forms.Label();
             this.chkBoxUseGroup = new System.Windows.Forms.CheckBox();
             this.nudStartEvent = new System.Windows.Forms.NumericUpDown();
@@ -60,7 +56,6 @@ namespace VixenEditor
             this.rbClipboard = new System.Windows.Forms.RadioButton();
             this.cbModels = new System.Windows.Forms.ComboBox();
             this.btnPlayStop = new System.Windows.Forms.Button();
-            this.btnModels = new System.Windows.Forms.Button();
             this.chkBoxEnableRawPreview = new System.Windows.Forms.CheckBox();
             this.pbRawPreview = new System.Windows.Forms.PictureBox();
             this.btnLightsOff = new System.Windows.Forms.Button();
@@ -82,6 +77,11 @@ namespace VixenEditor
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.timerRender = new System.Windows.Forms.Timer(this.components);
+            this.nutcrackerEffectControl1 = new NutcrackerEffectsControl.NutcrackerEffectControl();
+            this.nutcrackerEffectControl2 = new NutcrackerEffectsControl.NutcrackerEffectControl();
+            this.lblModels = new System.Windows.Forms.Label();
+            this.tbSummary = new System.Windows.Forms.TextBox();
+            this.lblStatsMs = new System.Windows.Forms.Label();
             this.gbEffect2.SuspendLayout();
             this.gbEffect1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
@@ -105,13 +105,6 @@ namespace VixenEditor
             this.gbEffect2.TabStop = false;
             this.gbEffect2.Text = "Effect 2";
             // 
-            // nutcrackerEffectControl2
-            // 
-            this.nutcrackerEffectControl2.Location = new System.Drawing.Point(7, 20);
-            this.nutcrackerEffectControl2.Name = "nutcrackerEffectControl2";
-            this.nutcrackerEffectControl2.Size = new System.Drawing.Size(371, 225);
-            this.nutcrackerEffectControl2.TabIndex = 0;
-            // 
             // gbEffect1
             // 
             this.gbEffect1.Controls.Add(this.nutcrackerEffectControl1);
@@ -121,13 +114,6 @@ namespace VixenEditor
             this.gbEffect1.TabIndex = 1;
             this.gbEffect1.TabStop = false;
             this.gbEffect1.Text = "Effect 1";
-            // 
-            // nutcrackerEffectControl1
-            // 
-            this.nutcrackerEffectControl1.Location = new System.Drawing.Point(7, 20);
-            this.nutcrackerEffectControl1.Name = "nutcrackerEffectControl1";
-            this.nutcrackerEffectControl1.Size = new System.Drawing.Size(371, 225);
-            this.nutcrackerEffectControl1.TabIndex = 0;
             // 
             // pbPreview
             // 
@@ -140,25 +126,26 @@ namespace VixenEditor
             // 
             // gbSettings
             // 
+            this.gbSettings.Controls.Add(this.lblStatsMs);
+            this.gbSettings.Controls.Add(this.gbLayer);
+            this.gbSettings.Controls.Add(this.tbSummary);
+            this.gbSettings.Controls.Add(this.btnOK);
+            this.gbSettings.Controls.Add(this.lblModels);
+            this.gbSettings.Controls.Add(this.btnPlayStop);
             this.gbSettings.Controls.Add(this.cbColorLayout);
             this.gbSettings.Controls.Add(this.lblColorLayout);
-            this.gbSettings.Controls.Add(this.lblInfo);
-            this.gbSettings.Controls.Add(this.label3);
+            this.gbSettings.Controls.Add(this.lblStatsFps);
             this.gbSettings.Controls.Add(this.gbRenderTo);
             this.gbSettings.Controls.Add(this.cbModels);
-            this.gbSettings.Controls.Add(this.btnPlayStop);
-            this.gbSettings.Controls.Add(this.btnModels);
             this.gbSettings.Controls.Add(this.chkBoxEnableRawPreview);
             this.gbSettings.Controls.Add(this.pbRawPreview);
             this.gbSettings.Controls.Add(this.btnLightsOff);
             this.gbSettings.Controls.Add(this.btnManagePresets);
-            this.gbSettings.Controls.Add(this.gbLayer);
             this.gbSettings.Controls.Add(this.cbRender);
             this.gbSettings.Controls.Add(this.lblColumns);
             this.gbSettings.Controls.Add(this.lblRows);
             this.gbSettings.Controls.Add(this.nudColumns);
             this.gbSettings.Controls.Add(this.nudRows);
-            this.gbSettings.Controls.Add(this.btnOK);
             this.gbSettings.Controls.Add(this.btnCancel);
             this.gbSettings.Location = new System.Drawing.Point(398, 12);
             this.gbSettings.Name = "gbSettings";
@@ -178,45 +165,34 @@ namespace VixenEditor
             "GBR",
             "BRG",
             "BGR",
-            "Static - Use Red Channel",
-            "Static - Use Green Channel",
-            "Static - Use Blue Channel"});
-            this.cbColorLayout.Location = new System.Drawing.Point(87, 73);
+            "Static - Red Values",
+            "Static - Green Values",
+            "Static - Blue Values"});
+            this.cbColorLayout.Location = new System.Drawing.Point(87, 46);
             this.cbColorLayout.Name = "cbColorLayout";
-            this.cbColorLayout.Size = new System.Drawing.Size(120, 21);
+            this.cbColorLayout.Size = new System.Drawing.Size(121, 21);
             this.cbColorLayout.TabIndex = 21;
             // 
             // lblColorLayout
             // 
             this.lblColorLayout.AutoSize = true;
-            this.lblColorLayout.Location = new System.Drawing.Point(15, 76);
+            this.lblColorLayout.Location = new System.Drawing.Point(15, 49);
             this.lblColorLayout.Name = "lblColorLayout";
             this.lblColorLayout.Size = new System.Drawing.Size(66, 13);
             this.lblColorLayout.TabIndex = 20;
             this.lblColorLayout.Text = "Color Layout";
             // 
-            // lblInfo
+            // lblStatsFps
             // 
-            this.lblInfo.AutoSize = true;
-            this.lblInfo.Location = new System.Drawing.Point(486, 199);
-            this.lblInfo.Name = "lblInfo";
-            this.lblInfo.Size = new System.Drawing.Size(109, 13);
-            this.lblInfo.TabIndex = 18;
-            this.lblInfo.Text = "0 ms to render, 0 FPS";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(486, 181);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(70, 13);
-            this.label3.TabIndex = 17;
-            this.label3.Text = "Performance:";
+            this.lblStatsFps.Location = new System.Drawing.Point(693, 176);
+            this.lblStatsFps.Name = "lblStatsFps";
+            this.lblStatsFps.Size = new System.Drawing.Size(75, 13);
+            this.lblStatsFps.TabIndex = 18;
+            this.lblStatsFps.Text = "0.00 FPS";
+            this.lblStatsFps.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // gbRenderTo
             // 
-            this.gbRenderTo.Controls.Add(this.lblTimeSpan);
             this.gbRenderTo.Controls.Add(this.lblStartEventTime);
             this.gbRenderTo.Controls.Add(this.chkBoxUseGroup);
             this.gbRenderTo.Controls.Add(this.nudStartEvent);
@@ -235,15 +211,6 @@ namespace VixenEditor
             this.gbRenderTo.TabIndex = 16;
             this.gbRenderTo.TabStop = false;
             this.gbRenderTo.Text = "Render Effects To:";
-            // 
-            // lblTimeSpan
-            // 
-            this.lblTimeSpan.AutoSize = true;
-            this.lblTimeSpan.Location = new System.Drawing.Point(6, 216);
-            this.lblTimeSpan.Name = "lblTimeSpan";
-            this.lblTimeSpan.Size = new System.Drawing.Size(188, 13);
-            this.lblTimeSpan.TabIndex = 12;
-            this.lblTimeSpan.Text = "Render from 00:00.000 thru 00:00.000";
             // 
             // lblStartEventTime
             // 
@@ -390,32 +357,25 @@ namespace VixenEditor
             this.cbModels.FormattingEnabled = true;
             this.cbModels.Location = new System.Drawing.Point(87, 19);
             this.cbModels.Name = "cbModels";
-            this.cbModels.Size = new System.Drawing.Size(120, 21);
+            this.cbModels.Size = new System.Drawing.Size(121, 21);
             this.cbModels.TabIndex = 15;
             // 
             // btnPlayStop
             // 
-            this.btnPlayStop.Location = new System.Drawing.Point(511, 257);
+            this.btnPlayStop.Location = new System.Drawing.Point(294, 257);
             this.btnPlayStop.Name = "btnPlayStop";
-            this.btnPlayStop.Size = new System.Drawing.Size(75, 23);
+            this.btnPlayStop.Size = new System.Drawing.Size(90, 23);
             this.btnPlayStop.TabIndex = 14;
-            this.btnPlayStop.Text = "Play";
+            this.btnPlayStop.Text = "Play Effects";
             this.btnPlayStop.UseVisualStyleBackColor = true;
             this.btnPlayStop.Click += new System.EventHandler(this.btnPlayStop_Click);
-            // 
-            // btnModels
-            // 
-            this.btnModels.Location = new System.Drawing.Point(6, 19);
-            this.btnModels.Name = "btnModels";
-            this.btnModels.Size = new System.Drawing.Size(75, 23);
-            this.btnModels.TabIndex = 13;
-            this.btnModels.Text = "Models";
-            this.btnModels.UseVisualStyleBackColor = true;
             // 
             // chkBoxEnableRawPreview
             // 
             this.chkBoxEnableRawPreview.AutoSize = true;
-            this.chkBoxEnableRawPreview.Location = new System.Drawing.Point(486, 152);
+            this.chkBoxEnableRawPreview.Checked = true;
+            this.chkBoxEnableRawPreview.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkBoxEnableRawPreview.Location = new System.Drawing.Point(648, 152);
             this.chkBoxEnableRawPreview.Name = "chkBoxEnableRawPreview";
             this.chkBoxEnableRawPreview.Size = new System.Drawing.Size(125, 17);
             this.chkBoxEnableRawPreview.TabIndex = 12;
@@ -425,7 +385,7 @@ namespace VixenEditor
             // pbRawPreview
             // 
             this.pbRawPreview.BackColor = System.Drawing.Color.Black;
-            this.pbRawPreview.Location = new System.Drawing.Point(486, 25);
+            this.pbRawPreview.Location = new System.Drawing.Point(648, 25);
             this.pbRawPreview.Name = "pbRawPreview";
             this.pbRawPreview.Size = new System.Drawing.Size(120, 120);
             this.pbRawPreview.TabIndex = 11;
@@ -444,9 +404,9 @@ namespace VixenEditor
             // 
             // btnManagePresets
             // 
-            this.btnManagePresets.Location = new System.Drawing.Point(340, 257);
+            this.btnManagePresets.Location = new System.Drawing.Point(390, 257);
             this.btnManagePresets.Name = "btnManagePresets";
-            this.btnManagePresets.Size = new System.Drawing.Size(100, 23);
+            this.btnManagePresets.Size = new System.Drawing.Size(90, 23);
             this.btnManagePresets.TabIndex = 9;
             this.btnManagePresets.Text = "Effect Presets";
             this.btnManagePresets.UseVisualStyleBackColor = true;
@@ -461,9 +421,9 @@ namespace VixenEditor
             this.gbLayer.Controls.Add(this.rbMask1);
             this.gbLayer.Controls.Add(this.rbEffect2);
             this.gbLayer.Controls.Add(this.rbEffect1);
-            this.gbLayer.Location = new System.Drawing.Point(612, 19);
+            this.gbLayer.Location = new System.Drawing.Point(486, 19);
             this.gbLayer.Name = "gbLayer";
-            this.gbLayer.Size = new System.Drawing.Size(156, 204);
+            this.gbLayer.Size = new System.Drawing.Size(141, 232);
             this.gbLayer.TabIndex = 8;
             this.gbLayer.TabStop = false;
             this.gbLayer.Text = "Layer Method";
@@ -573,7 +533,7 @@ namespace VixenEditor
             // lblColumns
             // 
             this.lblColumns.AutoSize = true;
-            this.lblColumns.Location = new System.Drawing.Point(133, 199);
+            this.lblColumns.Location = new System.Drawing.Point(149, 86);
             this.lblColumns.Name = "lblColumns";
             this.lblColumns.Size = new System.Drawing.Size(47, 13);
             this.lblColumns.TabIndex = 6;
@@ -582,7 +542,7 @@ namespace VixenEditor
             // lblRows
             // 
             this.lblRows.AutoSize = true;
-            this.lblRows.Location = new System.Drawing.Point(134, 173);
+            this.lblRows.Location = new System.Drawing.Point(57, 86);
             this.lblRows.Name = "lblRows";
             this.lblRows.Size = new System.Drawing.Size(34, 13);
             this.lblRows.TabIndex = 5;
@@ -590,14 +550,14 @@ namespace VixenEditor
             // 
             // nudColumns
             // 
-            this.nudColumns.Location = new System.Drawing.Point(7, 197);
+            this.nudColumns.Location = new System.Drawing.Point(97, 84);
             this.nudColumns.Maximum = new decimal(new int[] {
             300,
             0,
             0,
             0});
             this.nudColumns.Name = "nudColumns";
-            this.nudColumns.Size = new System.Drawing.Size(120, 20);
+            this.nudColumns.Size = new System.Drawing.Size(46, 20);
             this.nudColumns.TabIndex = 4;
             this.nudColumns.Value = new decimal(new int[] {
             100,
@@ -608,9 +568,9 @@ namespace VixenEditor
             // 
             // nudRows
             // 
-            this.nudRows.Location = new System.Drawing.Point(8, 171);
+            this.nudRows.Location = new System.Drawing.Point(6, 84);
             this.nudRows.Name = "nudRows";
-            this.nudRows.Size = new System.Drawing.Size(120, 20);
+            this.nudRows.Size = new System.Drawing.Size(45, 20);
             this.nudRows.TabIndex = 3;
             this.nudRows.Value = new decimal(new int[] {
             100,
@@ -626,7 +586,7 @@ namespace VixenEditor
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 1;
-            this.btnOK.Text = "OK";
+            this.btnOK.Text = "Okay";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
@@ -644,6 +604,46 @@ namespace VixenEditor
             // 
             this.timerRender.Interval = 50;
             this.timerRender.Tick += new System.EventHandler(this.timerRender_Tick);
+            // 
+            // nutcrackerEffectControl1
+            // 
+            this.nutcrackerEffectControl1.Location = new System.Drawing.Point(7, 20);
+            this.nutcrackerEffectControl1.Name = "nutcrackerEffectControl1";
+            this.nutcrackerEffectControl1.Size = new System.Drawing.Size(371, 225);
+            this.nutcrackerEffectControl1.TabIndex = 0;
+            // 
+            // nutcrackerEffectControl2
+            // 
+            this.nutcrackerEffectControl2.Location = new System.Drawing.Point(7, 20);
+            this.nutcrackerEffectControl2.Name = "nutcrackerEffectControl2";
+            this.nutcrackerEffectControl2.Size = new System.Drawing.Size(371, 225);
+            this.nutcrackerEffectControl2.TabIndex = 0;
+            // 
+            // lblModels
+            // 
+            this.lblModels.AutoSize = true;
+            this.lblModels.Location = new System.Drawing.Point(40, 22);
+            this.lblModels.Name = "lblModels";
+            this.lblModels.Size = new System.Drawing.Size(41, 13);
+            this.lblModels.TabIndex = 22;
+            this.lblModels.Text = "Models";
+            // 
+            // tbSummary
+            // 
+            this.tbSummary.Location = new System.Drawing.Point(6, 173);
+            this.tbSummary.Multiline = true;
+            this.tbSummary.Name = "tbSummary";
+            this.tbSummary.Size = new System.Drawing.Size(202, 78);
+            this.tbSummary.TabIndex = 13;
+            // 
+            // lblStatsMs
+            // 
+            this.lblStatsMs.AutoSize = true;
+            this.lblStatsMs.Location = new System.Drawing.Point(645, 176);
+            this.lblStatsMs.Name = "lblStatsMs";
+            this.lblStatsMs.Size = new System.Drawing.Size(29, 13);
+            this.lblStatsMs.TabIndex = 23;
+            this.lblStatsMs.Text = "0 ms";
             // 
             // NutcrackerControlDialog
             // 
@@ -709,11 +709,9 @@ namespace VixenEditor
         private Timer timerRender;
         private ComboBox cbModels;
         private Button btnPlayStop;
-        private Button btnModels;
         private CheckBox chkBoxEnableRawPreview;
         private PictureBox pbRawPreview;
-        private Label lblInfo;
-        private Label label3;
+        private Label lblStatsFps;
         private GroupBox gbRenderTo;
         private Label lblEventCountTime;
         private NumericUpDown nudEventCount;
@@ -729,6 +727,8 @@ namespace VixenEditor
         private ComboBox cbColorLayout;
         private Label lblColorLayout;
         private CheckBox chkBoxUseGroup;
-        private Label lblTimeSpan;
+        private Label lblModels;
+        private TextBox tbSummary;
+        private Label lblStatsMs;
     }
 }
