@@ -616,7 +616,7 @@ namespace VixenEditor
             this.nudColumns.Size = new System.Drawing.Size(46, 20);
             this.nudColumns.TabIndex = 4;
             this.nudColumns.Value = new decimal(new int[] {
-            100,
+            32,
             0,
             0,
             0});
@@ -629,7 +629,7 @@ namespace VixenEditor
             this.nudRows.Size = new System.Drawing.Size(45, 20);
             this.nudRows.TabIndex = 3;
             this.nudRows.Value = new decimal(new int[] {
-            100,
+            50,
             0,
             0,
             0});
