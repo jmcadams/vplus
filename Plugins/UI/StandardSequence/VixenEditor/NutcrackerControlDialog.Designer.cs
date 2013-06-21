@@ -35,9 +35,25 @@ namespace VixenEditor
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NutcrackerControlDialog));
             this.gbEffect2 = new System.Windows.Forms.GroupBox();
+            this.nutcrackerEffectControl2 = new NutcrackerEffectsControl.NutcrackerEffectControl();
             this.gbEffect1 = new System.Windows.Forms.GroupBox();
+            this.nutcrackerEffectControl1 = new NutcrackerEffectsControl.NutcrackerEffectControl();
             this.pbPreview = new System.Windows.Forms.PictureBox();
             this.gbSettings = new System.Windows.Forms.GroupBox();
+            this.lblStatsMs = new System.Windows.Forms.Label();
+            this.gbLayer = new System.Windows.Forms.GroupBox();
+            this.rbAverage = new System.Windows.Forms.RadioButton();
+            this.rbLayer = new System.Windows.Forms.RadioButton();
+            this.rbUnmask2 = new System.Windows.Forms.RadioButton();
+            this.rbUnmask1 = new System.Windows.Forms.RadioButton();
+            this.rbMask2 = new System.Windows.Forms.RadioButton();
+            this.rbMask1 = new System.Windows.Forms.RadioButton();
+            this.rbEffect2 = new System.Windows.Forms.RadioButton();
+            this.rbEffect1 = new System.Windows.Forms.RadioButton();
+            this.tbSummary = new System.Windows.Forms.TextBox();
+            this.btnOK = new System.Windows.Forms.Button();
+            this.lblModels = new System.Windows.Forms.Label();
+            this.btnPlayStop = new System.Windows.Forms.Button();
             this.cbColorLayout = new System.Windows.Forms.ComboBox();
             this.lblColorLayout = new System.Windows.Forms.Label();
             this.lblStatsFps = new System.Windows.Forms.Label();
@@ -55,44 +71,31 @@ namespace VixenEditor
             this.rbRoutine = new System.Windows.Forms.RadioButton();
             this.rbClipboard = new System.Windows.Forms.RadioButton();
             this.cbModels = new System.Windows.Forms.ComboBox();
-            this.btnPlayStop = new System.Windows.Forms.Button();
             this.chkBoxEnableRawPreview = new System.Windows.Forms.CheckBox();
             this.pbRawPreview = new System.Windows.Forms.PictureBox();
             this.btnLightsOff = new System.Windows.Forms.Button();
             this.btnManagePresets = new System.Windows.Forms.Button();
-            this.gbLayer = new System.Windows.Forms.GroupBox();
-            this.rbAverage = new System.Windows.Forms.RadioButton();
-            this.rbLayer = new System.Windows.Forms.RadioButton();
-            this.rbUnmask2 = new System.Windows.Forms.RadioButton();
-            this.rbUnmask1 = new System.Windows.Forms.RadioButton();
-            this.rbMask2 = new System.Windows.Forms.RadioButton();
-            this.rbMask1 = new System.Windows.Forms.RadioButton();
-            this.rbEffect2 = new System.Windows.Forms.RadioButton();
-            this.rbEffect1 = new System.Windows.Forms.RadioButton();
             this.cbRender = new System.Windows.Forms.CheckBox();
             this.lblColumns = new System.Windows.Forms.Label();
             this.lblRows = new System.Windows.Forms.Label();
             this.nudColumns = new System.Windows.Forms.NumericUpDown();
             this.nudRows = new System.Windows.Forms.NumericUpDown();
-            this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.timerRender = new System.Windows.Forms.Timer(this.components);
-            this.nutcrackerEffectControl1 = new NutcrackerEffectsControl.NutcrackerEffectControl();
-            this.nutcrackerEffectControl2 = new NutcrackerEffectsControl.NutcrackerEffectControl();
-            this.lblModels = new System.Windows.Forms.Label();
-            this.tbSummary = new System.Windows.Forms.TextBox();
-            this.lblStatsMs = new System.Windows.Forms.Label();
+            this.lblSparkles = new System.Windows.Forms.Label();
+            this.tbSparkles = new System.Windows.Forms.TrackBar();
             this.gbEffect2.SuspendLayout();
             this.gbEffect1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
             this.gbSettings.SuspendLayout();
+            this.gbLayer.SuspendLayout();
             this.gbRenderTo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudStartEvent)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudEventCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbRawPreview)).BeginInit();
-            this.gbLayer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudColumns)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRows)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbSparkles)).BeginInit();
             this.SuspendLayout();
             // 
             // gbEffect2
@@ -105,6 +108,13 @@ namespace VixenEditor
             this.gbEffect2.TabStop = false;
             this.gbEffect2.Text = "Effect 2";
             // 
+            // nutcrackerEffectControl2
+            // 
+            this.nutcrackerEffectControl2.Location = new System.Drawing.Point(7, 20);
+            this.nutcrackerEffectControl2.Name = "nutcrackerEffectControl2";
+            this.nutcrackerEffectControl2.Size = new System.Drawing.Size(371, 225);
+            this.nutcrackerEffectControl2.TabIndex = 0;
+            // 
             // gbEffect1
             // 
             this.gbEffect1.Controls.Add(this.nutcrackerEffectControl1);
@@ -114,6 +124,13 @@ namespace VixenEditor
             this.gbEffect1.TabIndex = 1;
             this.gbEffect1.TabStop = false;
             this.gbEffect1.Text = "Effect 1";
+            // 
+            // nutcrackerEffectControl1
+            // 
+            this.nutcrackerEffectControl1.Location = new System.Drawing.Point(7, 20);
+            this.nutcrackerEffectControl1.Name = "nutcrackerEffectControl1";
+            this.nutcrackerEffectControl1.Size = new System.Drawing.Size(371, 225);
+            this.nutcrackerEffectControl1.TabIndex = 0;
             // 
             // pbPreview
             // 
@@ -126,6 +143,8 @@ namespace VixenEditor
             // 
             // gbSettings
             // 
+            this.gbSettings.Controls.Add(this.tbSparkles);
+            this.gbSettings.Controls.Add(this.lblSparkles);
             this.gbSettings.Controls.Add(this.lblStatsMs);
             this.gbSettings.Controls.Add(this.gbLayer);
             this.gbSettings.Controls.Add(this.tbSummary);
@@ -153,6 +172,160 @@ namespace VixenEditor
             this.gbSettings.TabIndex = 3;
             this.gbSettings.TabStop = false;
             this.gbSettings.Text = "Nutcracker Settings  -  Original Concept by: Sean Meighan and Matt Brown";
+            // 
+            // lblStatsMs
+            // 
+            this.lblStatsMs.AutoSize = true;
+            this.lblStatsMs.Location = new System.Drawing.Point(645, 176);
+            this.lblStatsMs.Name = "lblStatsMs";
+            this.lblStatsMs.Size = new System.Drawing.Size(29, 13);
+            this.lblStatsMs.TabIndex = 23;
+            this.lblStatsMs.Text = "0 ms";
+            // 
+            // gbLayer
+            // 
+            this.gbLayer.Controls.Add(this.rbAverage);
+            this.gbLayer.Controls.Add(this.rbLayer);
+            this.gbLayer.Controls.Add(this.rbUnmask2);
+            this.gbLayer.Controls.Add(this.rbUnmask1);
+            this.gbLayer.Controls.Add(this.rbMask2);
+            this.gbLayer.Controls.Add(this.rbMask1);
+            this.gbLayer.Controls.Add(this.rbEffect2);
+            this.gbLayer.Controls.Add(this.rbEffect1);
+            this.gbLayer.Location = new System.Drawing.Point(486, 19);
+            this.gbLayer.Name = "gbLayer";
+            this.gbLayer.Size = new System.Drawing.Size(141, 232);
+            this.gbLayer.TabIndex = 8;
+            this.gbLayer.TabStop = false;
+            this.gbLayer.Text = "Layer Method";
+            // 
+            // rbAverage
+            // 
+            this.rbAverage.AutoSize = true;
+            this.rbAverage.Location = new System.Drawing.Point(6, 178);
+            this.rbAverage.Name = "rbAverage";
+            this.rbAverage.Size = new System.Drawing.Size(123, 17);
+            this.rbAverage.TabIndex = 7;
+            this.rbAverage.Text = "Average Effect 1 && 2";
+            this.rbAverage.UseVisualStyleBackColor = true;
+            this.rbAverage.CheckedChanged += new System.EventHandler(this.EffectLayerChanged);
+            // 
+            // rbLayer
+            // 
+            this.rbLayer.AutoSize = true;
+            this.rbLayer.Location = new System.Drawing.Point(6, 155);
+            this.rbLayer.Name = "rbLayer";
+            this.rbLayer.Size = new System.Drawing.Size(109, 17);
+            this.rbLayer.TabIndex = 6;
+            this.rbLayer.Text = "Layer Effect 1 && 2";
+            this.rbLayer.UseVisualStyleBackColor = true;
+            this.rbLayer.CheckedChanged += new System.EventHandler(this.EffectLayerChanged);
+            // 
+            // rbUnmask2
+            // 
+            this.rbUnmask2.AutoSize = true;
+            this.rbUnmask2.Location = new System.Drawing.Point(6, 132);
+            this.rbUnmask2.Name = "rbUnmask2";
+            this.rbUnmask2.Size = new System.Drawing.Size(114, 17);
+            this.rbUnmask2.TabIndex = 5;
+            this.rbUnmask2.Text = "Effect 2 is Unmask";
+            this.rbUnmask2.UseVisualStyleBackColor = true;
+            this.rbUnmask2.CheckedChanged += new System.EventHandler(this.EffectLayerChanged);
+            // 
+            // rbUnmask1
+            // 
+            this.rbUnmask1.AutoSize = true;
+            this.rbUnmask1.Location = new System.Drawing.Point(6, 109);
+            this.rbUnmask1.Name = "rbUnmask1";
+            this.rbUnmask1.Size = new System.Drawing.Size(114, 17);
+            this.rbUnmask1.TabIndex = 4;
+            this.rbUnmask1.Text = "Effect 1 is Unmask";
+            this.rbUnmask1.UseVisualStyleBackColor = true;
+            this.rbUnmask1.CheckedChanged += new System.EventHandler(this.EffectLayerChanged);
+            // 
+            // rbMask2
+            // 
+            this.rbMask2.AutoSize = true;
+            this.rbMask2.Location = new System.Drawing.Point(6, 86);
+            this.rbMask2.Name = "rbMask2";
+            this.rbMask2.Size = new System.Drawing.Size(101, 17);
+            this.rbMask2.TabIndex = 3;
+            this.rbMask2.Text = "Effect 2 is Mask";
+            this.rbMask2.UseVisualStyleBackColor = true;
+            this.rbMask2.CheckedChanged += new System.EventHandler(this.EffectLayerChanged);
+            // 
+            // rbMask1
+            // 
+            this.rbMask1.AutoSize = true;
+            this.rbMask1.Location = new System.Drawing.Point(6, 65);
+            this.rbMask1.Name = "rbMask1";
+            this.rbMask1.Size = new System.Drawing.Size(101, 17);
+            this.rbMask1.TabIndex = 2;
+            this.rbMask1.Text = "Effect 1 is Mask";
+            this.rbMask1.UseVisualStyleBackColor = true;
+            this.rbMask1.CheckedChanged += new System.EventHandler(this.EffectLayerChanged);
+            // 
+            // rbEffect2
+            // 
+            this.rbEffect2.AutoSize = true;
+            this.rbEffect2.Location = new System.Drawing.Point(6, 42);
+            this.rbEffect2.Name = "rbEffect2";
+            this.rbEffect2.Size = new System.Drawing.Size(62, 17);
+            this.rbEffect2.TabIndex = 1;
+            this.rbEffect2.Text = "Effect 2";
+            this.rbEffect2.UseVisualStyleBackColor = true;
+            this.rbEffect2.CheckedChanged += new System.EventHandler(this.EffectLayerChanged);
+            // 
+            // rbEffect1
+            // 
+            this.rbEffect1.AutoSize = true;
+            this.rbEffect1.Checked = true;
+            this.rbEffect1.Location = new System.Drawing.Point(6, 19);
+            this.rbEffect1.Name = "rbEffect1";
+            this.rbEffect1.Size = new System.Drawing.Size(62, 17);
+            this.rbEffect1.TabIndex = 0;
+            this.rbEffect1.TabStop = true;
+            this.rbEffect1.Text = "Effect 1";
+            this.rbEffect1.UseVisualStyleBackColor = true;
+            this.rbEffect1.CheckedChanged += new System.EventHandler(this.EffectLayerChanged);
+            // 
+            // tbSummary
+            // 
+            this.tbSummary.Location = new System.Drawing.Point(6, 173);
+            this.tbSummary.Multiline = true;
+            this.tbSummary.Name = "tbSummary";
+            this.tbSummary.Size = new System.Drawing.Size(202, 78);
+            this.tbSummary.TabIndex = 13;
+            // 
+            // btnOK
+            // 
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnOK.Location = new System.Drawing.Point(612, 257);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(75, 23);
+            this.btnOK.TabIndex = 1;
+            this.btnOK.Text = "Okay";
+            this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            // 
+            // lblModels
+            // 
+            this.lblModels.AutoSize = true;
+            this.lblModels.Location = new System.Drawing.Point(40, 22);
+            this.lblModels.Name = "lblModels";
+            this.lblModels.Size = new System.Drawing.Size(41, 13);
+            this.lblModels.TabIndex = 22;
+            this.lblModels.Text = "Models";
+            // 
+            // btnPlayStop
+            // 
+            this.btnPlayStop.Location = new System.Drawing.Point(294, 257);
+            this.btnPlayStop.Name = "btnPlayStop";
+            this.btnPlayStop.Size = new System.Drawing.Size(90, 23);
+            this.btnPlayStop.TabIndex = 14;
+            this.btnPlayStop.Text = "Play Effects";
+            this.btnPlayStop.UseVisualStyleBackColor = true;
+            this.btnPlayStop.Click += new System.EventHandler(this.btnPlayStop_Click);
             // 
             // cbColorLayout
             // 
@@ -360,16 +533,6 @@ namespace VixenEditor
             this.cbModels.Size = new System.Drawing.Size(121, 21);
             this.cbModels.TabIndex = 15;
             // 
-            // btnPlayStop
-            // 
-            this.btnPlayStop.Location = new System.Drawing.Point(294, 257);
-            this.btnPlayStop.Name = "btnPlayStop";
-            this.btnPlayStop.Size = new System.Drawing.Size(90, 23);
-            this.btnPlayStop.TabIndex = 14;
-            this.btnPlayStop.Text = "Play Effects";
-            this.btnPlayStop.UseVisualStyleBackColor = true;
-            this.btnPlayStop.Click += new System.EventHandler(this.btnPlayStop_Click);
-            // 
             // chkBoxEnableRawPreview
             // 
             this.chkBoxEnableRawPreview.AutoSize = true;
@@ -394,7 +557,7 @@ namespace VixenEditor
             // btnLightsOff
             // 
             this.btnLightsOff.Enabled = false;
-            this.btnLightsOff.Location = new System.Drawing.Point(6, 257);
+            this.btnLightsOff.Location = new System.Drawing.Point(648, 205);
             this.btnLightsOff.Name = "btnLightsOff";
             this.btnLightsOff.Size = new System.Drawing.Size(75, 23);
             this.btnLightsOff.TabIndex = 10;
@@ -411,118 +574,11 @@ namespace VixenEditor
             this.btnManagePresets.Text = "Effect Presets";
             this.btnManagePresets.UseVisualStyleBackColor = true;
             // 
-            // gbLayer
-            // 
-            this.gbLayer.Controls.Add(this.rbAverage);
-            this.gbLayer.Controls.Add(this.rbLayer);
-            this.gbLayer.Controls.Add(this.rbUnmask2);
-            this.gbLayer.Controls.Add(this.rbUnmask1);
-            this.gbLayer.Controls.Add(this.rbMask2);
-            this.gbLayer.Controls.Add(this.rbMask1);
-            this.gbLayer.Controls.Add(this.rbEffect2);
-            this.gbLayer.Controls.Add(this.rbEffect1);
-            this.gbLayer.Location = new System.Drawing.Point(486, 19);
-            this.gbLayer.Name = "gbLayer";
-            this.gbLayer.Size = new System.Drawing.Size(141, 232);
-            this.gbLayer.TabIndex = 8;
-            this.gbLayer.TabStop = false;
-            this.gbLayer.Text = "Layer Method";
-            // 
-            // rbAverage
-            // 
-            this.rbAverage.AutoSize = true;
-            this.rbAverage.Location = new System.Drawing.Point(6, 178);
-            this.rbAverage.Name = "rbAverage";
-            this.rbAverage.Size = new System.Drawing.Size(123, 17);
-            this.rbAverage.TabIndex = 7;
-            this.rbAverage.Text = "Average Effect 1 && 2";
-            this.rbAverage.UseVisualStyleBackColor = true;
-            this.rbAverage.CheckedChanged += new System.EventHandler(this.EffectLayerChanged);
-            // 
-            // rbLayer
-            // 
-            this.rbLayer.AutoSize = true;
-            this.rbLayer.Location = new System.Drawing.Point(6, 155);
-            this.rbLayer.Name = "rbLayer";
-            this.rbLayer.Size = new System.Drawing.Size(109, 17);
-            this.rbLayer.TabIndex = 6;
-            this.rbLayer.Text = "Layer Effect 1 && 2";
-            this.rbLayer.UseVisualStyleBackColor = true;
-            this.rbLayer.CheckedChanged += new System.EventHandler(this.EffectLayerChanged);
-            // 
-            // rbUnmask2
-            // 
-            this.rbUnmask2.AutoSize = true;
-            this.rbUnmask2.Location = new System.Drawing.Point(6, 132);
-            this.rbUnmask2.Name = "rbUnmask2";
-            this.rbUnmask2.Size = new System.Drawing.Size(114, 17);
-            this.rbUnmask2.TabIndex = 5;
-            this.rbUnmask2.Text = "Effect 2 is Unmask";
-            this.rbUnmask2.UseVisualStyleBackColor = true;
-            this.rbUnmask2.CheckedChanged += new System.EventHandler(this.EffectLayerChanged);
-            // 
-            // rbUnmask1
-            // 
-            this.rbUnmask1.AutoSize = true;
-            this.rbUnmask1.Location = new System.Drawing.Point(6, 109);
-            this.rbUnmask1.Name = "rbUnmask1";
-            this.rbUnmask1.Size = new System.Drawing.Size(114, 17);
-            this.rbUnmask1.TabIndex = 4;
-            this.rbUnmask1.Text = "Effect 1 is Unmask";
-            this.rbUnmask1.UseVisualStyleBackColor = true;
-            this.rbUnmask1.CheckedChanged += new System.EventHandler(this.EffectLayerChanged);
-            // 
-            // rbMask2
-            // 
-            this.rbMask2.AutoSize = true;
-            this.rbMask2.Location = new System.Drawing.Point(6, 86);
-            this.rbMask2.Name = "rbMask2";
-            this.rbMask2.Size = new System.Drawing.Size(101, 17);
-            this.rbMask2.TabIndex = 3;
-            this.rbMask2.Text = "Effect 2 is Mask";
-            this.rbMask2.UseVisualStyleBackColor = true;
-            this.rbMask2.CheckedChanged += new System.EventHandler(this.EffectLayerChanged);
-            // 
-            // rbMask1
-            // 
-            this.rbMask1.AutoSize = true;
-            this.rbMask1.Location = new System.Drawing.Point(6, 65);
-            this.rbMask1.Name = "rbMask1";
-            this.rbMask1.Size = new System.Drawing.Size(101, 17);
-            this.rbMask1.TabIndex = 2;
-            this.rbMask1.Text = "Effect 1 is Mask";
-            this.rbMask1.UseVisualStyleBackColor = true;
-            this.rbMask1.CheckedChanged += new System.EventHandler(this.EffectLayerChanged);
-            // 
-            // rbEffect2
-            // 
-            this.rbEffect2.AutoSize = true;
-            this.rbEffect2.Location = new System.Drawing.Point(6, 42);
-            this.rbEffect2.Name = "rbEffect2";
-            this.rbEffect2.Size = new System.Drawing.Size(62, 17);
-            this.rbEffect2.TabIndex = 1;
-            this.rbEffect2.Text = "Effect 2";
-            this.rbEffect2.UseVisualStyleBackColor = true;
-            this.rbEffect2.CheckedChanged += new System.EventHandler(this.EffectLayerChanged);
-            // 
-            // rbEffect1
-            // 
-            this.rbEffect1.AutoSize = true;
-            this.rbEffect1.Checked = true;
-            this.rbEffect1.Location = new System.Drawing.Point(6, 19);
-            this.rbEffect1.Name = "rbEffect1";
-            this.rbEffect1.Size = new System.Drawing.Size(62, 17);
-            this.rbEffect1.TabIndex = 0;
-            this.rbEffect1.TabStop = true;
-            this.rbEffect1.Text = "Effect 1";
-            this.rbEffect1.UseVisualStyleBackColor = true;
-            this.rbEffect1.CheckedChanged += new System.EventHandler(this.EffectLayerChanged);
-            // 
             // cbRender
             // 
             this.cbRender.AutoSize = true;
             this.cbRender.Enabled = false;
-            this.cbRender.Location = new System.Drawing.Point(87, 261);
+            this.cbRender.Location = new System.Drawing.Point(648, 234);
             this.cbRender.Name = "cbRender";
             this.cbRender.Size = new System.Drawing.Size(101, 17);
             this.cbRender.TabIndex = 7;
@@ -579,17 +635,6 @@ namespace VixenEditor
             0});
             this.nudRows.ValueChanged += new System.EventHandler(this.RowOrCol_ValueChanged);
             // 
-            // btnOK
-            // 
-            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(612, 257);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 1;
-            this.btnOK.Text = "Okay";
-            this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            // 
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -605,45 +650,25 @@ namespace VixenEditor
             this.timerRender.Interval = 50;
             this.timerRender.Tick += new System.EventHandler(this.timerRender_Tick);
             // 
-            // nutcrackerEffectControl1
+            // lblSparkles
             // 
-            this.nutcrackerEffectControl1.Location = new System.Drawing.Point(7, 20);
-            this.nutcrackerEffectControl1.Name = "nutcrackerEffectControl1";
-            this.nutcrackerEffectControl1.Size = new System.Drawing.Size(371, 225);
-            this.nutcrackerEffectControl1.TabIndex = 0;
+            this.lblSparkles.AutoSize = true;
+            this.lblSparkles.Location = new System.Drawing.Point(6, 262);
+            this.lblSparkles.Name = "lblSparkles";
+            this.lblSparkles.Size = new System.Drawing.Size(48, 13);
+            this.lblSparkles.TabIndex = 24;
+            this.lblSparkles.Text = "Sparkles";
             // 
-            // nutcrackerEffectControl2
+            // tbSparkles
             // 
-            this.nutcrackerEffectControl2.Location = new System.Drawing.Point(7, 20);
-            this.nutcrackerEffectControl2.Name = "nutcrackerEffectControl2";
-            this.nutcrackerEffectControl2.Size = new System.Drawing.Size(371, 225);
-            this.nutcrackerEffectControl2.TabIndex = 0;
-            // 
-            // lblModels
-            // 
-            this.lblModels.AutoSize = true;
-            this.lblModels.Location = new System.Drawing.Point(40, 22);
-            this.lblModels.Name = "lblModels";
-            this.lblModels.Size = new System.Drawing.Size(41, 13);
-            this.lblModels.TabIndex = 22;
-            this.lblModels.Text = "Models";
-            // 
-            // tbSummary
-            // 
-            this.tbSummary.Location = new System.Drawing.Point(6, 173);
-            this.tbSummary.Multiline = true;
-            this.tbSummary.Name = "tbSummary";
-            this.tbSummary.Size = new System.Drawing.Size(202, 78);
-            this.tbSummary.TabIndex = 13;
-            // 
-            // lblStatsMs
-            // 
-            this.lblStatsMs.AutoSize = true;
-            this.lblStatsMs.Location = new System.Drawing.Point(645, 176);
-            this.lblStatsMs.Name = "lblStatsMs";
-            this.lblStatsMs.Size = new System.Drawing.Size(29, 13);
-            this.lblStatsMs.TabIndex = 23;
-            this.lblStatsMs.Text = "0 ms";
+            this.tbSparkles.AutoSize = false;
+            this.tbSparkles.Location = new System.Drawing.Point(60, 257);
+            this.tbSparkles.Maximum = 100;
+            this.tbSparkles.Name = "tbSparkles";
+            this.tbSparkles.Size = new System.Drawing.Size(148, 23);
+            this.tbSparkles.TabIndex = 25;
+            this.tbSparkles.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbSparkles.Value = 19;
             // 
             // NutcrackerControlDialog
             // 
@@ -667,15 +692,16 @@ namespace VixenEditor
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();
             this.gbSettings.ResumeLayout(false);
             this.gbSettings.PerformLayout();
+            this.gbLayer.ResumeLayout(false);
+            this.gbLayer.PerformLayout();
             this.gbRenderTo.ResumeLayout(false);
             this.gbRenderTo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudStartEvent)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudEventCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbRawPreview)).EndInit();
-            this.gbLayer.ResumeLayout(false);
-            this.gbLayer.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudColumns)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRows)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbSparkles)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -730,5 +756,7 @@ namespace VixenEditor
         private Label lblModels;
         private TextBox tbSummary;
         private Label lblStatsMs;
+        private TrackBar tbSparkles;
+        private Label lblSparkles;
     }
 }

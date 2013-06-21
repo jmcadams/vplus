@@ -19,6 +19,7 @@ namespace VixenEditor
         private enum Layers { Effect1, Effect2, Mask1, Mask2, Unmask1, Unmask2, Layered, Average }
 
         private bool[] _isRendering = new[] {false, false};
+        private int[,] _sparkle;
         private Color[][,] _buffers;
         private int[] _eventToRender = new[] { 0, 0 };
         private NutcrackerEffectControl[] _effectControls;
@@ -30,9 +31,10 @@ namespace VixenEditor
         private string _playText;
         private const string StopText = "Stop";
 
-        private readonly Stopwatch _sw = new Stopwatch();
-        private readonly EventSequence _sequence;
+        private readonly Random _random = new Random();
         private readonly Rectangle _selectedRange;
+        private readonly EventSequence _sequence;
+        private readonly Stopwatch _sw = new Stopwatch();
 
         private const int MaxEffects = 2;
 
@@ -63,6 +65,7 @@ namespace VixenEditor
             _effectControls = new[] { nutcrackerEffectControl1, nutcrackerEffectControl2 };
             InitializeBuffer(0);
             InitializeBuffer(1);
+            InitializeSparkle();
             InitializeFromSequence();
             SetEffectLayer();
         }
@@ -78,6 +81,16 @@ namespace VixenEditor
         }
 
 
+        private void InitializeSparkle() {
+            _sparkle = new int[_rows, _cols];
+            for (var row = 0; row < _rows; row++) {
+                for (var col = 0; col < _cols; col++) {
+                    _sparkle[row, col] = _random.Next() % 5000;
+                }
+            } 
+        }
+
+        
         private void InitializeFromSequence() {
             nudStartEvent.Maximum = _sequence.TotalEventPeriods;
             nudStartEvent.Value = _selectedRange.Left;
@@ -324,6 +337,23 @@ namespace VixenEditor
                     returnValue = (IsBlackOrTransparent(effect1))
                                       ? effect2 : (IsBlackOrTransparent(effect2)) ? effect1 : GetAverageColor(effect1, effect2);
                     break;
+            }
+
+            if (tbSparkles.Value > 0 && !IsBlackOrTransparent(returnValue)) {
+                switch (_sparkle[row,column]++ % (tbSparkles.Maximum - tbSparkles.Value + 20))
+                {
+                    case 2:
+                    case 6:
+                        returnValue = Color.FromArgb(136,136,136);
+                        break;
+                    case 3:
+                    case 5:
+                        returnValue = Color.FromArgb(187,187,187);
+                        break;
+                    case 4:
+                        returnValue = Color.White;
+                        break;
+                }
             }
 
             return returnValue;
