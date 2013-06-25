@@ -41,15 +41,15 @@ namespace VixenPlus.Dialogs {
             this.textBoxData = new System.Windows.Forms.TextBox();
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.lblWarn = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDownPort)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor =
-                ((System.Windows.Forms.AnchorStyles)
-                 (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox1.Controls.Add(this.comboBoxPortName);
             this.groupBox1.Controls.Add(this.comboBoxBaudRate);
             this.groupBox1.Controls.Add(this.numericUpDownPort);
@@ -63,7 +63,7 @@ namespace VixenPlus.Dialogs {
             this.groupBox1.Controls.Add(this.textBoxData);
             this.groupBox1.Location = new System.Drawing.Point(9, 13);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(305, 125);
+            this.groupBox1.Size = new System.Drawing.Size(305, 120);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Serial Port";
@@ -81,21 +81,44 @@ namespace VixenPlus.Dialogs {
             // 
             this.comboBoxBaudRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxBaudRate.FormattingEnabled = true;
-            this.comboBoxBaudRate.Items.AddRange(new object[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"});
+            this.comboBoxBaudRate.Items.AddRange(new object[] {
+            "2400",
+            "4800",
+            "9600",
+            "19200",
+            "38400",
+            "57600",
+            "115200",
+            "230400",
+            "460800",
+            "921600"});
             this.comboBoxBaudRate.Location = new System.Drawing.Point(65, 63);
             this.comboBoxBaudRate.Name = "comboBoxBaudRate";
             this.comboBoxBaudRate.Size = new System.Drawing.Size(75, 21);
             this.comboBoxBaudRate.TabIndex = 2;
+            this.comboBoxBaudRate.SelectedIndexChanged += new System.EventHandler(this.comboBoxBaudRate_SelectedIndexChanged);
             // 
             // numericUpDownPort
             // 
             this.numericUpDownPort.Location = new System.Drawing.Point(45, 14);
-            this.numericUpDownPort.Maximum = new decimal(new int[] {99, 0, 0, 0});
-            this.numericUpDownPort.Minimum = new decimal(new int[] {1, 0, 0, 0});
+            this.numericUpDownPort.Maximum = new decimal(new int[] {
+            99,
+            0,
+            0,
+            0});
+            this.numericUpDownPort.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericUpDownPort.Name = "numericUpDownPort";
             this.numericUpDownPort.Size = new System.Drawing.Size(39, 20);
             this.numericUpDownPort.TabIndex = 10;
-            this.numericUpDownPort.Value = new decimal(new int[] {1, 0, 0, 0});
+            this.numericUpDownPort.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericUpDownPort.Visible = false;
             // 
             // comboBoxStop
@@ -172,10 +195,9 @@ namespace VixenPlus.Dialogs {
             // 
             // buttonOK
             // 
-            this.buttonOK.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(158, 144);
+            this.buttonOK.Location = new System.Drawing.Point(158, 153);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 1;
@@ -185,15 +207,21 @@ namespace VixenPlus.Dialogs {
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(239, 144);
+            this.buttonCancel.Location = new System.Drawing.Point(239, 153);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 2;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
+            // 
+            // lblWarn
+            // 
+            this.lblWarn.Location = new System.Drawing.Point(12, 136);
+            this.lblWarn.Name = "lblWarn";
+            this.lblWarn.Size = new System.Drawing.Size(140, 43);
+            this.lblWarn.TabIndex = 3;
             // 
             // SerialSetupDialog
             // 
@@ -201,7 +229,8 @@ namespace VixenPlus.Dialogs {
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(326, 179);
+            this.ClientSize = new System.Drawing.Size(326, 188);
+            this.Controls.Add(this.lblWarn);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.groupBox1);
@@ -213,7 +242,7 @@ namespace VixenPlus.Dialogs {
             this.Text = "Setup";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDownPort)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -226,5 +255,7 @@ namespace VixenPlus.Dialogs {
             }
             base.Dispose(disposing);
         }
+
+        private Label lblWarn;
     }
 }

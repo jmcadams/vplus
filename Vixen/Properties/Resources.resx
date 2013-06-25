@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -1029,5 +1029,8 @@ Press OK to continue or Cancel to quit {1} and log this error to the crash.log.<
   </data>
 	<data name="AllChannels" xml:space="preserve">
     <value>All Channels</value>
+  </data>
+  <data name="HighBaudRateSupport" xml:space="preserve">
+    <value>Selected baud rate might not be supported by your hardware.</value>
   </data>
 </root>

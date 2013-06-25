@@ -8,6 +8,9 @@ using Properties;
 
 namespace VixenPlus.Dialogs {
     public partial class SerialSetupDialog : Form {
+
+        private const int BaudRate115200 = 6;
+
         public SerialSetupDialog(SerialPort serialPort) {
             components = null;
             InitializeComponent();
@@ -84,6 +87,11 @@ namespace VixenPlus.Dialogs {
             comboBoxParity.SelectedItem = serialPort.Parity;
             textBoxData.Text = serialPort.DataBits.ToString(CultureInfo.InvariantCulture);
             comboBoxStop.SelectedItem = serialPort.StopBits;
+        }
+
+        private void comboBoxBaudRate_SelectedIndexChanged(object sender, EventArgs e) {
+            // If baud rate is faster than 115200, warn that it may not work.
+            lblWarn.Text = comboBoxBaudRate.SelectedIndex > BaudRate115200 ? Resources.HighBaudRateSupport : "";
         }
     }
 }

@@ -22,6 +22,7 @@ namespace GenericSerial {
 
 
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DialogSerialSetup));
             this.gbSerialPort = new System.Windows.Forms.GroupBox();
             this.cbPort = new System.Windows.Forms.ComboBox();
             this.cdDataBits = new System.Windows.Forms.ComboBox();
@@ -40,12 +41,14 @@ namespace GenericSerial {
             this.cbFooter = new System.Windows.Forms.CheckBox();
             this.tbHeader = new System.Windows.Forms.TextBox();
             this.cbHeader = new System.Windows.Forms.CheckBox();
+            this.lblWarn = new System.Windows.Forms.Label();
             this.gbSerialPort.SuspendLayout();
             this.gbPacketData.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbSerialPort
             // 
+            this.gbSerialPort.Controls.Add(this.lblWarn);
             this.gbSerialPort.Controls.Add(this.cbPort);
             this.gbSerialPort.Controls.Add(this.cdDataBits);
             this.gbSerialPort.Controls.Add(this.cbStopBits);
@@ -66,7 +69,7 @@ namespace GenericSerial {
             // cbPort
             // 
             this.cbPort.FormattingEnabled = true;
-            this.cbPort.Location = new System.Drawing.Point(52, 22);
+            this.cbPort.Location = new System.Drawing.Point(50, 34);
             this.cbPort.Name = "cbPort";
             this.cbPort.Size = new System.Drawing.Size(79, 21);
             this.cbPort.TabIndex = 16;
@@ -74,8 +77,12 @@ namespace GenericSerial {
             // cdDataBits
             // 
             this.cdDataBits.FormattingEnabled = true;
-            this.cdDataBits.Items.AddRange(new object[] {"5", "6", "7", "8"});
-            this.cdDataBits.Location = new System.Drawing.Point(192, 49);
+            this.cdDataBits.Items.AddRange(new object[] {
+            "5",
+            "6",
+            "7",
+            "8"});
+            this.cdDataBits.Location = new System.Drawing.Point(190, 61);
             this.cdDataBits.Name = "cdDataBits";
             this.cdDataBits.Size = new System.Drawing.Size(79, 21);
             this.cdDataBits.TabIndex = 15;
@@ -83,8 +90,12 @@ namespace GenericSerial {
             // cbStopBits
             // 
             this.cbStopBits.FormattingEnabled = true;
-            this.cbStopBits.Items.AddRange(new object[] {"None", "One", "Two", "OnePointFive"});
-            this.cbStopBits.Location = new System.Drawing.Point(192, 76);
+            this.cbStopBits.Items.AddRange(new object[] {
+            "None",
+            "One",
+            "Two",
+            "OnePointFive"});
+            this.cbStopBits.Location = new System.Drawing.Point(190, 88);
             this.cbStopBits.Name = "cbStopBits";
             this.cbStopBits.Size = new System.Drawing.Size(79, 21);
             this.cbStopBits.TabIndex = 14;
@@ -92,8 +103,13 @@ namespace GenericSerial {
             // cbParity
             // 
             this.cbParity.FormattingEnabled = true;
-            this.cbParity.Items.AddRange(new object[] {"None", "Odd", "Even", "Mark", "Space"});
-            this.cbParity.Location = new System.Drawing.Point(52, 76);
+            this.cbParity.Items.AddRange(new object[] {
+            "None",
+            "Odd",
+            "Even",
+            "Mark",
+            "Space"});
+            this.cbParity.Location = new System.Drawing.Point(50, 88);
             this.cbParity.Name = "cbParity";
             this.cbParity.Size = new System.Drawing.Size(79, 21);
             this.cbParity.TabIndex = 10;
@@ -101,7 +117,7 @@ namespace GenericSerial {
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(13, 79);
+            this.label5.Location = new System.Drawing.Point(11, 91);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(33, 13);
             this.label5.TabIndex = 9;
@@ -111,7 +127,7 @@ namespace GenericSerial {
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(137, 52);
+            this.label3.Location = new System.Drawing.Point(135, 64);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(49, 13);
             this.label3.TabIndex = 11;
@@ -121,7 +137,7 @@ namespace GenericSerial {
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(138, 79);
+            this.label4.Location = new System.Drawing.Point(136, 91);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(48, 13);
             this.label4.TabIndex = 13;
@@ -131,16 +147,29 @@ namespace GenericSerial {
             // cbBaud
             // 
             this.cbBaud.FormattingEnabled = true;
-            this.cbBaud.Items.AddRange(new object[] {"300", "600", "1200", "2400", "9600", "19200", "38400", "57600", "119200"});
-            this.cbBaud.Location = new System.Drawing.Point(52, 49);
+            this.cbBaud.Items.AddRange(new object[] {
+            "300",
+            "600",
+            "1200",
+            "2400",
+            "9600",
+            "19200",
+            "38400",
+            "57600",
+            "115200",
+            "230400",
+            "460800",
+            "921600"});
+            this.cbBaud.Location = new System.Drawing.Point(50, 61);
             this.cbBaud.Name = "cbBaud";
             this.cbBaud.Size = new System.Drawing.Size(79, 21);
             this.cbBaud.TabIndex = 3;
+            this.cbBaud.SelectedIndexChanged += new System.EventHandler(this.cbBaud_SelectedIndexChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 52);
+            this.label2.Location = new System.Drawing.Point(12, 64);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(32, 13);
             this.label2.TabIndex = 2;
@@ -150,7 +179,7 @@ namespace GenericSerial {
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 25);
+            this.label1.Location = new System.Drawing.Point(13, 37);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(26, 13);
             this.label1.TabIndex = 0;
@@ -225,6 +254,13 @@ namespace GenericSerial {
             this.cbHeader.Text = "Each packet sends this header...";
             this.cbHeader.UseVisualStyleBackColor = true;
             // 
+            // lblWarn
+            // 
+            this.lblWarn.Location = new System.Drawing.Point(139, 11);
+            this.lblWarn.Name = "lblWarn";
+            this.lblWarn.Size = new System.Drawing.Size(143, 44);
+            this.lblWarn.TabIndex = 17;
+            // 
             // DialogSerialSetup
             // 
             this.AcceptButton = this.btnOK;
@@ -238,7 +274,7 @@ namespace GenericSerial {
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.gbSerialPort);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = global::Properties.Resources.VixenPlus;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DialogSerialSetup";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -268,5 +304,6 @@ namespace GenericSerial {
         private Label label3;
         private Label label4;
         private ComboBox cbPort;
+        private Label lblWarn;
     }
 }

@@ -1674,6 +1674,15 @@ namespace Properties {
                 return ResourceManager.GetString("Serial_BaudError", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Selected baud rate might not be supported by your hardware..
+        /// </summary>
+        public static string HighBaudRateSupport {
+            get {
+                return ResourceManager.GetString("HighBaudRateSupport", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to * Invalid numeric value for data bits..

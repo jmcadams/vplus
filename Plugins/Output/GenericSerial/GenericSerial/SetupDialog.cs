@@ -3,12 +3,17 @@ using System.Globalization;
 using System.IO.Ports;
 using System.Windows.Forms;
 using System.Xml;
+
+using Properties;
+
 using VixenPlus;
 
 namespace GenericSerial {
     internal partial class DialogSerialSetup : Form {
-        private readonly XmlNode _setupNode;
 
+        private const int BaudRate115200 = 8;
+
+        private readonly XmlNode _setupNode;
 
         public DialogSerialSetup(XmlNode setupNode) {
             InitializeComponent();
@@ -64,6 +69,10 @@ namespace GenericSerial {
             Xml.SetValue(_setupNode, "StopBits", cbStopBits.Text);
             Xml.SetAttribute(_setupNode, "Header", "checked", cbHeader.Checked.ToString()).InnerText = tbHeader.Text;
             Xml.SetAttribute(_setupNode, "Footer", "checked", cbFooter.Checked.ToString()).InnerText = tbFooter.Text;
+        }
+
+        private void cbBaud_SelectedIndexChanged(object sender, EventArgs e) {
+            lblWarn.Text = cbBaud.SelectedIndex > BaudRate115200 ? Resources.HighBaudRateSupport : "";
         }
     }
 }
