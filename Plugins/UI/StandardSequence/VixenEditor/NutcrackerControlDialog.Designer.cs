@@ -40,6 +40,8 @@ namespace VixenEditor
             this.nutcrackerEffectControl1 = new NutcrackerEffectsControl.NutcrackerEffectControl();
             this.pbPreview = new System.Windows.Forms.PictureBox();
             this.gbSettings = new System.Windows.Forms.GroupBox();
+            this.tbSparkles = new System.Windows.Forms.TrackBar();
+            this.lblSparkles = new System.Windows.Forms.Label();
             this.lblStatsMs = new System.Windows.Forms.Label();
             this.gbLayer = new System.Windows.Forms.GroupBox();
             this.rbAverage = new System.Windows.Forms.RadioButton();
@@ -82,12 +84,11 @@ namespace VixenEditor
             this.nudRows = new System.Windows.Forms.NumericUpDown();
             this.btnCancel = new System.Windows.Forms.Button();
             this.timerRender = new System.Windows.Forms.Timer(this.components);
-            this.lblSparkles = new System.Windows.Forms.Label();
-            this.tbSparkles = new System.Windows.Forms.TrackBar();
             this.gbEffect2.SuspendLayout();
             this.gbEffect1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
             this.gbSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbSparkles)).BeginInit();
             this.gbLayer.SuspendLayout();
             this.gbRenderTo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudStartEvent)).BeginInit();
@@ -95,7 +96,6 @@ namespace VixenEditor
             ((System.ComponentModel.ISupportInitialize)(this.pbRawPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudColumns)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRows)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSparkles)).BeginInit();
             this.SuspendLayout();
             // 
             // gbEffect2
@@ -172,6 +172,25 @@ namespace VixenEditor
             this.gbSettings.TabIndex = 3;
             this.gbSettings.TabStop = false;
             this.gbSettings.Text = "Nutcracker Settings  -  Original Concept by: Sean Meighan and Matt Brown";
+            // 
+            // tbSparkles
+            // 
+            this.tbSparkles.AutoSize = false;
+            this.tbSparkles.Location = new System.Drawing.Point(60, 257);
+            this.tbSparkles.Maximum = 100;
+            this.tbSparkles.Name = "tbSparkles";
+            this.tbSparkles.Size = new System.Drawing.Size(148, 23);
+            this.tbSparkles.TabIndex = 25;
+            this.tbSparkles.TickStyle = System.Windows.Forms.TickStyle.None;
+            // 
+            // lblSparkles
+            // 
+            this.lblSparkles.AutoSize = true;
+            this.lblSparkles.Location = new System.Drawing.Point(6, 262);
+            this.lblSparkles.Name = "lblSparkles";
+            this.lblSparkles.Size = new System.Drawing.Size(48, 13);
+            this.lblSparkles.TabIndex = 24;
+            this.lblSparkles.Text = "Sparkles";
             // 
             // lblStatsMs
             // 
@@ -532,6 +551,7 @@ namespace VixenEditor
             this.cbModels.Name = "cbModels";
             this.cbModels.Size = new System.Drawing.Size(121, 21);
             this.cbModels.TabIndex = 15;
+            this.cbModels.SelectedIndexChanged += new System.EventHandler(this.cbModels_SelectedIndexChanged);
             // 
             // chkBoxEnableRawPreview
             // 
@@ -650,26 +670,6 @@ namespace VixenEditor
             this.timerRender.Interval = 50;
             this.timerRender.Tick += new System.EventHandler(this.timerRender_Tick);
             // 
-            // lblSparkles
-            // 
-            this.lblSparkles.AutoSize = true;
-            this.lblSparkles.Location = new System.Drawing.Point(6, 262);
-            this.lblSparkles.Name = "lblSparkles";
-            this.lblSparkles.Size = new System.Drawing.Size(48, 13);
-            this.lblSparkles.TabIndex = 24;
-            this.lblSparkles.Text = "Sparkles";
-            // 
-            // tbSparkles
-            // 
-            this.tbSparkles.AutoSize = false;
-            this.tbSparkles.Location = new System.Drawing.Point(60, 257);
-            this.tbSparkles.Maximum = 100;
-            this.tbSparkles.Name = "tbSparkles";
-            this.tbSparkles.Size = new System.Drawing.Size(148, 23);
-            this.tbSparkles.TabIndex = 25;
-            this.tbSparkles.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbSparkles.Value = 19;
-            // 
             // NutcrackerControlDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -692,6 +692,7 @@ namespace VixenEditor
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();
             this.gbSettings.ResumeLayout(false);
             this.gbSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbSparkles)).EndInit();
             this.gbLayer.ResumeLayout(false);
             this.gbLayer.PerformLayout();
             this.gbRenderTo.ResumeLayout(false);
@@ -701,7 +702,6 @@ namespace VixenEditor
             ((System.ComponentModel.ISupportInitialize)(this.pbRawPreview)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudColumns)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRows)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSparkles)).EndInit();
             this.ResumeLayout(false);
 
         }

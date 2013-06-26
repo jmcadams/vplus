@@ -16,11 +16,19 @@ namespace VixenEditor
 
         #region Class Members and Accessors
 
+        class Nodes {
+            public Color PixelColor { get; set; }
+            public Point Model { get; set; }
+            public int Sparkle { get; set; }
+            public int BufX { get; set; }
+            public int BufY { get; set; }
+        }
+
         private enum Layers { Effect1, Effect2, Mask1, Mask2, Unmask1, Unmask2, Layered, Average }
 
         private bool[] _isRendering = new[] {false, false};
-        private int[,] _sparkle;
-        private Color[][,] _buffers;
+        private Nodes[,] _nodes;
+        private Color[][,] _effectBuffers;
         private int[] _eventToRender = new[] { 0, 0 };
         private NutcrackerEffectControl[] _effectControls;
 
@@ -61,35 +69,36 @@ namespace VixenEditor
             cbColorLayout.SelectedIndex = 0;
             _rows = (int)nudRows.Value;
             _cols = (int)nudColumns.Value;
-            _buffers = new[] { new Color[_rows, _cols], new Color[_rows, _cols] };
+            _nodes = new Nodes[_rows,_cols];
+            _effectBuffers = new[] {new Color[_rows,_cols], new Color[_rows, _cols]}; 
             _effectControls = new[] { nutcrackerEffectControl1, nutcrackerEffectControl2 };
-            InitializeBuffer(0);
-            InitializeBuffer(1);
-            InitializeSparkle();
+            InitializeEffectBuffer(0);
+            InitializeEffectBuffer(1);
+            InitializeNodes();
             InitializeFromSequence();
+            InitMatrix();
+            InitializeModels();
             SetEffectLayer();
         }
 
 
-        private void InitializeBuffer(int bufferNum) {
-            var buffer = _buffers[bufferNum];
+        private void InitializeEffectBuffer(int bufferNum) {
+            var effectBuffer = _effectBuffers[bufferNum];
             for (var row = 0; row < _rows; row++) {
                 for (var col = 0; col < _cols; col++) {
-                    buffer[row, col] = Color.Transparent;
+                    effectBuffer[row, col] = Color.Black;
                 }
             }
         }
 
 
-        private void InitializeSparkle() {
-            _sparkle = new int[_rows, _cols];
+        private void InitializeNodes() {
             for (var row = 0; row < _rows; row++) {
                 for (var col = 0; col < _cols; col++) {
-                    _sparkle[row, col] = _random.Next() % 5000;
+                    _nodes[row, col] = new Nodes {PixelColor = Color.Black, Sparkle = _random.Next()%5000, Model = new Point(col, _rows - 1 - row)};
                 }
-            } 
+            }
         }
-
         
         private void InitializeFromSequence() {
             nudStartEvent.Maximum = _sequence.TotalEventPeriods;
@@ -109,6 +118,48 @@ namespace VixenEditor
         }
 
 
+        private void InitializeModels() {
+            cbModels.Items.Clear();
+            //Load Here
+            cbModels.Items.Add("Manage Models");
+            
+            var degrees = 180;
+            if (_cols < 2) return;
+            var factor = pbPreview.Height / _rows;
+            var renderWi = pbPreview.Width / 2;
+            var radians = 2.0*Math.PI*degrees/360.0;
+            var radius = renderWi/2.0;
+            var startAngle = -radians/2.0;
+            var angleIncr = radians/(_cols - 1);
+            for (var row = 0; row < _rows; row++) {
+                for (var col = 0; col < _cols; col++) {
+                    var angle = startAngle + _nodes[row,col].BufX * angleIncr;
+                    var x0 = radius*Math.Sin(angle);
+                    var x = (int) Math.Floor(x0*(1.0 - (double) (_nodes[row,col].BufY)/_rows) + 0.5) + renderWi;
+                    var y = _nodes[row, col].BufY * factor;
+                    _nodes[row, col].Model = new Point(x,y);
+                }
+            }
+        }
+
+        private void InitMatrix() {
+            var stringCount = _cols;
+            var nodesPerString = _rows;
+            var strandsPerString = 1;
+            var IsLtoR = false;
+
+            var numStrands = stringCount * strandsPerString;
+            var pixelsPerStrand = nodesPerString / strandsPerString;
+            for (var x = 0; x < numStrands; x++) {
+                var segmentnum = x % strandsPerString;
+                for (var y = 0; y < pixelsPerStrand; y++) {
+                    _nodes[pixelsPerStrand - 1 - y,x].BufX = IsLtoR ? x : numStrands - x - 1;
+                    _nodes[pixelsPerStrand - 1 - y,x].BufY = (segmentnum % 2 == 0) ? y : pixelsPerStrand - y - 1;
+                }
+            }
+        }
+
+
         private void SetupForPlaying() {
             _rows = (int) nudRows.Value;
             _cols = (int) nudColumns.Value;
@@ -119,7 +170,7 @@ namespace VixenEditor
             ResetPreview();
             nudRows.Enabled = false;
             nudColumns.Enabled = false;
-            _buffers = new[] {new Color[_rows,_cols], new Color[_rows,_cols]};
+            _effectBuffers = new[] { new Color[_rows, _cols], new Color[_rows, _cols] }; 
             _eventToRender = new[] {0, 0};
             _isRendering = new[] {false, false};
             timerRender.Start();
@@ -130,6 +181,11 @@ namespace VixenEditor
             using (var g = pbRawPreview.CreateGraphics()) {
                 g.Clear(pbRawPreview.BackColor);
             }
+
+            using (var g = pbPreview.CreateGraphics()) {
+                g.Clear(pbRawPreview.BackColor);
+            }
+
         }
 
 
@@ -143,7 +199,6 @@ namespace VixenEditor
 
         #region Events
 
-        // TODO: Move to resource strings.
         private void btnPlayStop_Click(object sender, EventArgs e) {
             if (btnPlayStop.Text == _playText) {
                 btnPlayStop.Text = StopText;
@@ -240,6 +295,13 @@ namespace VixenEditor
             }
         }
 
+
+        private void cbModels_SelectedIndexChanged(object sender, EventArgs e) {
+            if (cbModels.SelectedIndex == cbModels.Items.Count - 1) {
+                MessageBox.Show(@"manage", @"Manage");
+            }
+        }
+
         #endregion
 
         #region Rendering Support
@@ -251,7 +313,7 @@ namespace VixenEditor
                 // Initialize the buffer, if it is not rendering, since the rendering routine depends on it.
                 if (!_isRendering[i]) {
                     _isRendering[i] = true;
-                    InitializeBuffer(i);
+                    InitializeEffectBuffer(i);
                 }
 
                 if (effects[i] == null) {
@@ -260,7 +322,7 @@ namespace VixenEditor
                 }
 
                 isDataUpdated = true;
-                _buffers[i] = effects[i].RenderEffect(_buffers[i], _effectControls[i].GetPalette(), _eventToRender[i]);
+                _effectBuffers[i] = effects[i].RenderEffect(_effectBuffers[i], _effectControls[i].GetPalette(), _eventToRender[i]);
 
                 _eventToRender[i] += _effectControls[i].GetSpeed();
                 _isRendering[i] = false;
@@ -270,10 +332,8 @@ namespace VixenEditor
                 return;
             }
 
-            if (chkBoxEnableRawPreview.Checked) {
-                RenderRawPreview();
-            }
-            RenderModel();
+            SetPixelColors();
+            Render();
         }
 
 
@@ -290,26 +350,39 @@ namespace VixenEditor
         }
 
 
-        private void RenderRawPreview() {
-            using (var g = pbRawPreview.CreateGraphics()) {
-                // Bitmap is width (col) then height (row), we pass data like Vixen+, hight (row) then width (col)
-                var bitmap = new Bitmap(_cols, _rows, g);
+        private void SetPixelColors() {
+            for (var row = 0; row < _rows; row++) {
+                for (var column = 0; column < _cols; column++) {
+                    _nodes[row, column].PixelColor = GetLayerColor(row, column);
+                }
+            }
+        }
+
+        private void Render() {
+            using (var raw = pbRawPreview.CreateGraphics())
+            using (var preview = pbPreview.CreateGraphics()){
+                var rawBitmap = new Bitmap(_cols, _rows, raw);
+                var previewBitmap = new Bitmap(pbPreview.Width, pbPreview.Height, preview);
                 for (var row = 0; row < _rows; row++) {
                     for (var column = 0; column < _cols; column++) {
-                        var color = GetLayerColor(row, column);
-                        bitmap.SetPixel(column, _rows - 1 - row, color == Color.Transparent ? Color.Black : color);
+                        var node = _nodes[row, column];
+                        rawBitmap.SetPixel(column, _rows - 1 - row, node.PixelColor);
+                        previewBitmap.SetPixel(node.Model.X, node.Model.Y, node.PixelColor);
                     }
                 }
-                g.DrawImage(bitmap, new Point((pbRawPreview.Width - _cols) / 2, (pbRawPreview.Height - _rows) / 2));
+                if (chkBoxEnableRawPreview.Checked) {
+                    raw.DrawImage(rawBitmap, new Point((pbRawPreview.Width - _cols)/2, (pbRawPreview.Height - _rows)/2));
+                }
+                preview.DrawImage(previewBitmap, 0, 0);
             }
         }
 
 
         private Color GetLayerColor(int row, int column) {
-            var returnValue = Color.Transparent;
+            var returnValue = Color.Black;
 
-            var effect1 = _buffers[0][row, column];
-            var effect2 = _buffers[1][row, column];
+            var effect1 = _effectBuffers[0][row, column];
+            var effect2 = _effectBuffers[1][row, column];
 
             switch (EffectLayer) {
                 case Layers.Effect1:
@@ -340,7 +413,7 @@ namespace VixenEditor
             }
 
             if (tbSparkles.Value > 0 && !IsBlackOrTransparent(returnValue)) {
-                switch (_sparkle[row,column]++ % (tbSparkles.Maximum - tbSparkles.Value + 20))
+                switch (_nodes[row,column].Sparkle++ % (tbSparkles.Maximum - tbSparkles.Value + 20))
                 {
                     case 2:
                     case 6:
@@ -378,15 +451,10 @@ namespace VixenEditor
                                   (color1.B + color2.B) / 255);
         }
 
-        private void RenderModel() {
-
-        }
 
         private void RenderFinalResults() {
             RenderData = new byte[_rows, _cols];
         }
-
-
 
         #endregion
 
@@ -402,6 +470,8 @@ namespace VixenEditor
             if (rbLayer.Checked) EffectLayer = Layers.Layered;
             if (rbAverage.Checked) EffectLayer = Layers.Average;
         }
+
+
 
 
         private void SetRenderToChanged() {
@@ -464,11 +534,18 @@ namespace VixenEditor
 
 
         private void LoadGroups() {
-            cbGroups.Items.Clear();
-            foreach (var g in _sequence.Groups) {
-                cbGroups.Items.Add(g.Key);
+            if (_sequence.Groups != null) {
+                cbGroups.Items.Clear();
+                foreach (var g in _sequence.Groups) {
+                    cbGroups.Items.Add(g.Key);
+                }
+                cbGroups.SelectedIndex = _lastGroupSelected;
             }
-            cbGroups.SelectedIndex = _lastGroupSelected;
+            else {
+                chkBoxUseGroup.Checked = false;
+                chkBoxUseGroup.Enabled = false;
+                LoadChannels();
+            }
         }
 
 
@@ -481,6 +558,7 @@ namespace VixenEditor
         }
 
         #endregion
+
 
     }
 }

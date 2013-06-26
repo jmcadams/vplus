@@ -90,6 +90,7 @@
     <Compile Include="NutcrackerEffectControl.Designer.cs">
       <DependentUpon>NutcrackerEffectControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="NutcrackerModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
