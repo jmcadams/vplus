@@ -67,7 +67,7 @@ namespace Snowstorm {
             if (_palette == null) return;
 
             var hsv0 = HSVUtils.ColorToHSV(_palette[0]);
-            var hsv1 = HSVUtils.ColorToHSV(_palette[1]);
+            var hsv1 = HSVUtils.ColorToHSV(_palette.Length > 1 ? _palette[1] : _palette[0]);
 
             var count = Convert.ToInt32(_bufferWidth * _bufferHeight * tbMaxFlakes.Value / 2000) + 1;
             var tailLength = _bufferWidth * _bufferHeight * tbTailLength.Value / 2000 + 2;
