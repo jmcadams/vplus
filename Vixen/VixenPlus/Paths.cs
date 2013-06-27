@@ -9,17 +9,9 @@ namespace VixenPlus {
         private static string _dataPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.Personal), Vendor.ProductName);
 
-        //public static string AddinPath {
-        //    get { return Path.Combine(BinaryPath, "AddIns"); }
-        //}
-
         public static string AudioPath {
             get { return Path.Combine(DataPath, "Audio"); }
         }
-
-        //public static string BidirectionalPluginPath {
-        //    get { return Path.Combine(PluginBasePath, "Bidirectional"); }
-        //}
 
         public static string BinaryPath {
             get {
@@ -49,10 +41,6 @@ namespace VixenPlus {
             }
         }
 
-        //public static string DebugDumpFilePath {
-        //    get { return Path.Combine(DataPath, "debug.txt"); }
-        //}
-
         public static string ImportExportPath {
             get { return Path.Combine(DataPath, "Imports and Exports"); }
         }
@@ -65,8 +53,12 @@ namespace VixenPlus {
             get { return Path.Combine(DataPath, "Libraries"); }
         }
 
-        public static string NutcrackerPath {
-            get { return Path.Combine(PluginBasePath, "Nutcracker"); }
+        public static string NutcrackerEffectsPath {
+            get { return Path.Combine(PluginBasePath, @"Nutcracker\Effects"); }
+        }
+
+        public static string NutcrackerModelsPath {
+            get { return Path.Combine(PluginBasePath, @"Nutcracker\Models"); }
         }
 
         public static string OutputPluginPath {
@@ -89,10 +81,6 @@ namespace VixenPlus {
             get { return Path.Combine(DataPath, "Routines"); }
         }
 
-        //public static string ScriptModulePath {
-        //    get { return Path.Combine(BinaryPath, "Script Modules"); }
-        //}
-
         public static string SequencePath {
             get {
                 var path = Host.Preferences.GetString("DefaultSequenceDirectory");
@@ -104,17 +92,9 @@ namespace VixenPlus {
             }
         }
 
-        //public static string SourceFilePath {
-        //    get { return Path.Combine(DataPath, "Source Files"); }
-        //}
-
         public static string TimerTraceFilePath {
             get { return Path.Combine(DataPath, "timers.trace"); }
         }
-
-        //public static string TriggerPluginPath {
-        //    get { return Path.Combine(PluginBasePath, "Trigger"); }
-        //}
 
         public static string UIPluginPath {
             get { return Path.Combine(PluginBasePath, "UI"); }
