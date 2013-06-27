@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 using CommonUtils;
@@ -17,18 +16,10 @@ namespace VixenEditor
 
         #region Class Members and Accessors
 
-        class Nodes {
-            public Color PixelColor { get; set; }
-            public Point Model { get; set; }
-            public int Sparkle { get; set; }
-            public int BufX { get; set; }
-            public int BufY { get; set; }
-        }
-
         private enum Layers { Effect1, Effect2, Mask1, Mask2, Unmask1, Unmask2, Layered, Average }
 
         private bool[] _isRendering = new[] {false, false};
-        private Nodes[,] _nodes;
+        private NutcrackerNodes[,] _nodes;
         private Color[][,] _effectBuffers;
         private int[] _eventToRender = new[] { 0, 0 };
         private NutcrackerEffectControl[] _effectControls;
@@ -70,7 +61,7 @@ namespace VixenEditor
             cbColorLayout.SelectedIndex = 0;
             _rows = (int)nudRows.Value;
             _cols = (int)nudColumns.Value;
-            _nodes = new Nodes[_rows,_cols];
+            _nodes = new NutcrackerNodes[_rows,_cols];
             _effectBuffers = new[] {new Color[_rows,_cols], new Color[_rows, _cols]}; 
             _effectControls = new[] { nutcrackerEffectControl1, nutcrackerEffectControl2 };
             InitializeEffectBuffer(0);
@@ -96,7 +87,7 @@ namespace VixenEditor
         private void InitializeNodes() {
             for (var row = 0; row < _rows; row++) {
                 for (var col = 0; col < _cols; col++) {
-                    _nodes[row, col] = new Nodes {PixelColor = Color.Black, Sparkle = _random.Next()%5000, Model = new Point(col, _rows - 1 - row)};
+                    _nodes[row, col] = new NutcrackerNodes {PixelColor = Color.Black, Sparkle = _random.Next()%5000, Model = new Point(col, _rows - 1 - row)};
                 }
             }
         }

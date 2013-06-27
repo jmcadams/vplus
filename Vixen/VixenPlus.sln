@@ -76,6 +76,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fireworks", "..\Plugins\Nut
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NutcrackerEffectsControl", "..\Plugins\UI\NutcrackerEffectsControl\NutcrackerEffectsControl.csproj", "{C792440D-580E-4313-A48F-F2EEE85BE98C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Effects", "Effects", "{DDF6E4C4-AC68-4AFB-B269-8663D6182E42}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{13830111-1E9A-4759-8475-E9B55B9B914E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		debug_32|Any CPU = debug_32|Any CPU
@@ -804,9 +808,11 @@ Global
 		{7FDEE8BF-E905-466A-9B47-4DFE36AC734F} = {777F7A14-4042-4724-8ABC-A8779343B741}
 		{4B02A306-D92E-4829-A782-6D9BC5486E88} = {777F7A14-4042-4724-8ABC-A8779343B741}
 		{5741771F-C0FB-4671-9BF0-B407D8C11C94} = {777F7A14-4042-4724-8ABC-A8779343B741}
+		{DDF6E4C4-AC68-4AFB-B269-8663D6182E42} = {777F7A14-4042-4724-8ABC-A8779343B741}
+		{13830111-1E9A-4759-8475-E9B55B9B914E} = {777F7A14-4042-4724-8ABC-A8779343B741}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_BuildVersioningStyle = None.None.Increment.None
 		BuildVersion_UpdateAssemblyVersion = False
+		BuildVersion_BuildVersioningStyle = None.None.Increment.None
 	EndGlobalSection
 EndGlobal

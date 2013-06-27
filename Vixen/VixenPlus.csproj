@@ -303,6 +303,8 @@
     <Compile Include="VixenPlus\GroupData.cs" />
     <Compile Include="VixenPlus\GroupTagData.cs" />
     <Compile Include="VixenPlus\INutcrackerEffect.cs" />
+    <Compile Include="VixenPlus\INutcrackerModel.cs" />
+    <Compile Include="VixenPlus\NutcrackerNodes.cs" />
     <Compile Include="VixenPlus\VixenPlusForm.cs">
       <SubType>Form</SubType>
     </Compile>
