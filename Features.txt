@@ -49,3 +49,8 @@ Waveform
 
 Help
 -- Has a lutefisk help option, for those suffering from seasonal lutefisk disorder :D
+
+Nutcracker
+-- Plugin architecture for models and effects
+-- Various options for rendering effects
+-- More...TBD
