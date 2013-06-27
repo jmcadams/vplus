@@ -91,7 +91,7 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Vixen\VixenPlus.csproj">
+    <ProjectReference Include="..\..\..\..\Vixen\VixenPlus.csproj">
       <Project>{FA99E3F3-4783-485F-A37E-0E24F823E5AE}</Project>
       <Name>VixenPlus</Name>
       <Private>False</Private>
