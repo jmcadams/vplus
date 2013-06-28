@@ -1000,7 +1000,7 @@ namespace VixenPlus
 
         private void SetVendorData()
         {
-            Text = Vendor.ProductName;
+            Text = Vendor.ProductName + @" (" + Vendor.ModuleAuthoring + @")";
         }
 
         private void shutdownTimer_Tick(object sender, EventArgs e)
