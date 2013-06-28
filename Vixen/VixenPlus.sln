@@ -840,7 +840,9 @@ Global
 		{CDD580CD-73D1-4616-89BC-0A60C060F3A7} = {13830111-1E9A-4759-8475-E9B55B9B914E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_BuildVersioningStyle = None.None.Increment.None
-		BuildVersion_UpdateAssemblyVersion = False
+		BuildVersion_AssemblyInfoFilename = AssemblyInfo.cs
+		BuildVersion_UpdateFileVersion = True
+		BuildVersion_UpdateAssemblyVersion = True
+		BuildVersion_BuildVersioningStyle = None.None.Increment.TimeStamp
 	EndGlobalSection
 EndGlobal

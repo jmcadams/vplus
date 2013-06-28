@@ -184,6 +184,12 @@
     <Compile Include="VixenEditor\NutcrackerControlDialog.Designer.cs">
       <DependentUpon>NutcrackerControlDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="VixenEditor\NutcrackerModelDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VixenEditor\NutcrackerModelDialog.Designer.cs">
+      <DependentUpon>NutcrackerModelDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="VixenEditor\ProgressDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -279,6 +285,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\NutcrackerControlDialog.resx">
       <DependentUpon>NutcrackerControlDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VixenEditor\NutcrackerModelDialog.resx">
+      <DependentUpon>NutcrackerModelDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\ProgressDialog.resx">
       <DependentUpon>ProgressDialog.cs</DependentUpon>

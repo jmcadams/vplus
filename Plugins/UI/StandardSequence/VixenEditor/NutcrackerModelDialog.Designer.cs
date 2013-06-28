@@ -27,16 +27,20 @@
             this.lblColorLayout = new System.Windows.Forms.Label();
             this.chkBoxUseGroup = new System.Windows.Forms.CheckBox();
             this.cbGroups = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnOk = new System.Windows.Forms.Button();
+            this.chkBoxDisplay = new System.Windows.Forms.CheckBox();
+            this.rbLtoR = new System.Windows.Forms.RadioButton();
+            this.rbRtoL = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.lblStartChannel = new System.Windows.Forms.Label();
+            this.lblDirection = new System.Windows.Forms.Label();
+            this.lblModelName = new System.Windows.Forms.Label();
+            this.cbModelName = new System.Windows.Forms.ComboBox();
+            this.cbPreviewAs = new System.Windows.Forms.ComboBox();
+            this.lblPreviewAs = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // cbColorLayout
@@ -56,7 +60,7 @@
             this.cbColorLayout.Location = new System.Drawing.Point(192, 346);
             this.cbColorLayout.Name = "cbColorLayout";
             this.cbColorLayout.Size = new System.Drawing.Size(171, 21);
-            this.cbColorLayout.TabIndex = 23;
+            this.cbColorLayout.TabIndex = 5;
             // 
             // lblColorLayout
             // 
@@ -64,7 +68,7 @@
             this.lblColorLayout.Location = new System.Drawing.Point(84, 349);
             this.lblColorLayout.Name = "lblColorLayout";
             this.lblColorLayout.Size = new System.Drawing.Size(102, 13);
-            this.lblColorLayout.TabIndex = 22;
+            this.lblColorLayout.TabIndex = 13;
             this.lblColorLayout.Text = "Channel Color Order";
             // 
             // chkBoxUseGroup
@@ -75,7 +79,7 @@
             this.chkBoxUseGroup.Location = new System.Drawing.Point(109, 321);
             this.chkBoxUseGroup.Name = "chkBoxUseGroup";
             this.chkBoxUseGroup.Size = new System.Drawing.Size(77, 17);
-            this.chkBoxUseGroup.TabIndex = 25;
+            this.chkBoxUseGroup.TabIndex = 3;
             this.chkBoxUseGroup.Text = "Use Group";
             this.chkBoxUseGroup.UseVisualStyleBackColor = true;
             // 
@@ -87,120 +91,159 @@
             this.cbGroups.Location = new System.Drawing.Point(192, 319);
             this.cbGroups.Name = "cbGroups";
             this.cbGroups.Size = new System.Drawing.Size(171, 21);
-            this.cbGroups.TabIndex = 24;
+            this.cbGroups.TabIndex = 4;
             // 
-            // button1
+            // btnCancel
             // 
-            this.button1.Location = new System.Drawing.Point(288, 419);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 26;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Location = new System.Drawing.Point(288, 419);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 9;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnOk
             // 
-            this.button2.Location = new System.Drawing.Point(207, 419);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 27;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnOk.Location = new System.Drawing.Point(207, 419);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(75, 23);
+            this.btnOk.TabIndex = 8;
+            this.btnOk.Text = "OK";
+            this.btnOk.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // chkBoxDisplay
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(255, 396);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(108, 17);
-            this.checkBox1.TabIndex = 28;
-            this.checkBox1.Text = "Part of my display";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.chkBoxDisplay.AutoSize = true;
+            this.chkBoxDisplay.Location = new System.Drawing.Point(255, 396);
+            this.chkBoxDisplay.Name = "chkBoxDisplay";
+            this.chkBoxDisplay.Size = new System.Drawing.Size(108, 17);
+            this.chkBoxDisplay.TabIndex = 7;
+            this.chkBoxDisplay.Text = "Part of my display";
+            this.chkBoxDisplay.UseVisualStyleBackColor = true;
             // 
-            // radioButton1
+            // rbLtoR
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(249, 373);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(54, 17);
-            this.radioButton1.TabIndex = 29;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "L to R";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.rbLtoR.AutoSize = true;
+            this.rbLtoR.Location = new System.Drawing.Point(110, 3);
+            this.rbLtoR.Name = "rbLtoR";
+            this.rbLtoR.Size = new System.Drawing.Size(54, 17);
+            this.rbLtoR.TabIndex = 0;
+            this.rbLtoR.TabStop = true;
+            this.rbLtoR.Text = "L to R";
+            this.rbLtoR.UseVisualStyleBackColor = true;
             // 
-            // radioButton2
+            // rbRtoL
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(309, 373);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(54, 17);
-            this.radioButton2.TabIndex = 30;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "R to L";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.rbRtoL.AutoSize = true;
+            this.rbRtoL.Location = new System.Drawing.Point(170, 3);
+            this.rbRtoL.Name = "rbRtoL";
+            this.rbRtoL.Size = new System.Drawing.Size(54, 17);
+            this.rbRtoL.TabIndex = 1;
+            this.rbRtoL.TabStop = true;
+            this.rbRtoL.Text = "R to L";
+            this.rbRtoL.UseVisualStyleBackColor = true;
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(13, 39);
+            this.panel1.Location = new System.Drawing.Point(13, 63);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(350, 274);
-            this.panel1.TabIndex = 31;
+            this.panel1.Size = new System.Drawing.Size(350, 250);
+            this.panel1.TabIndex = 2;
             // 
-            // label1
+            // lblStartChannel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(32, 322);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 13);
-            this.label1.TabIndex = 32;
-            this.label1.Text = "Start Channel";
+            this.lblStartChannel.AutoSize = true;
+            this.lblStartChannel.Location = new System.Drawing.Point(20, 322);
+            this.lblStartChannel.Name = "lblStartChannel";
+            this.lblStartChannel.Size = new System.Drawing.Size(83, 13);
+            this.lblStartChannel.TabIndex = 12;
+            this.lblStartChannel.Text = "Start Channel or";
             // 
-            // label2
+            // lblDirection
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(172, 375);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 13);
-            this.label2.TabIndex = 33;
-            this.label2.Text = "Start Channel";
+            this.lblDirection.AutoSize = true;
+            this.lblDirection.Location = new System.Drawing.Point(55, 5);
+            this.lblDirection.Name = "lblDirection";
+            this.lblDirection.Size = new System.Drawing.Size(49, 13);
+            this.lblDirection.TabIndex = 2;
+            this.lblDirection.Text = "Direction";
             // 
-            // label3
+            // lblModelName
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(186, 16);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(67, 13);
-            this.label3.TabIndex = 34;
-            this.label3.Text = "Model Name";
+            this.lblModelName.AutoSize = true;
+            this.lblModelName.Location = new System.Drawing.Point(119, 12);
+            this.lblModelName.Name = "lblModelName";
+            this.lblModelName.Size = new System.Drawing.Size(67, 13);
+            this.lblModelName.TabIndex = 10;
+            this.lblModelName.Text = "Model Name";
             // 
-            // textBox1
+            // cbModelName
             // 
-            this.textBox1.Location = new System.Drawing.Point(263, 13);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 35;
+            this.cbModelName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbModelName.FormattingEnabled = true;
+            this.cbModelName.Location = new System.Drawing.Point(192, 9);
+            this.cbModelName.Name = "cbModelName";
+            this.cbModelName.Size = new System.Drawing.Size(171, 21);
+            this.cbModelName.TabIndex = 0;
+            // 
+            // cbPreviewAs
+            // 
+            this.cbPreviewAs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPreviewAs.FormattingEnabled = true;
+            this.cbPreviewAs.Location = new System.Drawing.Point(192, 36);
+            this.cbPreviewAs.Name = "cbPreviewAs";
+            this.cbPreviewAs.Size = new System.Drawing.Size(171, 21);
+            this.cbPreviewAs.TabIndex = 1;
+            // 
+            // lblPreviewAs
+            // 
+            this.lblPreviewAs.AutoSize = true;
+            this.lblPreviewAs.Location = new System.Drawing.Point(126, 39);
+            this.lblPreviewAs.Name = "lblPreviewAs";
+            this.lblPreviewAs.Size = new System.Drawing.Size(60, 13);
+            this.lblPreviewAs.TabIndex = 11;
+            this.lblPreviewAs.Text = "Preview As";
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.lblDirection);
+            this.panel2.Controls.Add(this.rbLtoR);
+            this.panel2.Controls.Add(this.rbRtoL);
+            this.panel2.Location = new System.Drawing.Point(136, 370);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(227, 23);
+            this.panel2.TabIndex = 6;
             // 
             // NutcrackerModelDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(375, 454);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.ControlBox = false;
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.cbPreviewAs);
+            this.Controls.Add(this.lblPreviewAs);
+            this.Controls.Add(this.cbModelName);
+            this.Controls.Add(this.lblModelName);
+            this.Controls.Add(this.lblStartChannel);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.radioButton2);
-            this.Controls.Add(this.radioButton1);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.chkBoxDisplay);
+            this.Controls.Add(this.btnOk);
+            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.chkBoxUseGroup);
             this.Controls.Add(this.cbGroups);
             this.Controls.Add(this.cbColorLayout);
             this.Controls.Add(this.lblColorLayout);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "NutcrackerModelDialog";
-            this.Text = "NutcrackerModelDialog";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.Text = "Nutcracker Model Management";
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -212,15 +255,18 @@
         private System.Windows.Forms.Label lblColorLayout;
         private System.Windows.Forms.CheckBox chkBoxUseGroup;
         private System.Windows.Forms.ComboBox cbGroups;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnOk;
+        private System.Windows.Forms.CheckBox chkBoxDisplay;
+        private System.Windows.Forms.RadioButton rbLtoR;
+        private System.Windows.Forms.RadioButton rbRtoL;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label lblStartChannel;
+        private System.Windows.Forms.Label lblDirection;
+        private System.Windows.Forms.Label lblModelName;
+        private System.Windows.Forms.ComboBox cbModelName;
+        private System.Windows.Forms.ComboBox cbPreviewAs;
+        private System.Windows.Forms.Label lblPreviewAs;
+        private System.Windows.Forms.Panel panel2;
     }
 }

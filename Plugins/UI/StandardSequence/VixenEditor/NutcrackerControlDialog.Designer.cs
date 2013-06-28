@@ -56,12 +56,9 @@ namespace VixenEditor
             this.btnOK = new System.Windows.Forms.Button();
             this.lblModels = new System.Windows.Forms.Label();
             this.btnPlayStop = new System.Windows.Forms.Button();
-            this.cbColorLayout = new System.Windows.Forms.ComboBox();
-            this.lblColorLayout = new System.Windows.Forms.Label();
             this.lblStatsFps = new System.Windows.Forms.Label();
             this.gbRenderTo = new System.Windows.Forms.GroupBox();
             this.lblStartEventTime = new System.Windows.Forms.Label();
-            this.chkBoxUseGroup = new System.Windows.Forms.CheckBox();
             this.nudStartEvent = new System.Windows.Forms.NumericUpDown();
             this.lblStartEvent = new System.Windows.Forms.Label();
             this.lblEventCountTime = new System.Windows.Forms.Label();
@@ -69,7 +66,6 @@ namespace VixenEditor
             this.lblEventCount = new System.Windows.Forms.Label();
             this.rbSpecificPoint = new System.Windows.Forms.RadioButton();
             this.rbCurrentSelection = new System.Windows.Forms.RadioButton();
-            this.cbGroups = new System.Windows.Forms.ComboBox();
             this.rbRoutine = new System.Windows.Forms.RadioButton();
             this.rbClipboard = new System.Windows.Forms.RadioButton();
             this.cbModels = new System.Windows.Forms.ComboBox();
@@ -104,7 +100,7 @@ namespace VixenEditor
             this.gbEffect2.Location = new System.Drawing.Point(788, 304);
             this.gbEffect2.Name = "gbEffect2";
             this.gbEffect2.Size = new System.Drawing.Size(384, 250);
-            this.gbEffect2.TabIndex = 0;
+            this.gbEffect2.TabIndex = 2;
             this.gbEffect2.TabStop = false;
             this.gbEffect2.Text = "Effect 2";
             // 
@@ -151,8 +147,6 @@ namespace VixenEditor
             this.gbSettings.Controls.Add(this.btnOK);
             this.gbSettings.Controls.Add(this.lblModels);
             this.gbSettings.Controls.Add(this.btnPlayStop);
-            this.gbSettings.Controls.Add(this.cbColorLayout);
-            this.gbSettings.Controls.Add(this.lblColorLayout);
             this.gbSettings.Controls.Add(this.lblStatsFps);
             this.gbSettings.Controls.Add(this.gbRenderTo);
             this.gbSettings.Controls.Add(this.cbModels);
@@ -169,7 +163,7 @@ namespace VixenEditor
             this.gbSettings.Location = new System.Drawing.Point(398, 12);
             this.gbSettings.Name = "gbSettings";
             this.gbSettings.Size = new System.Drawing.Size(774, 286);
-            this.gbSettings.TabIndex = 3;
+            this.gbSettings.TabIndex = 0;
             this.gbSettings.TabStop = false;
             this.gbSettings.Text = "Nutcracker Settings  -  Original Concept by: Sean Meighan and Matt Brown";
             // 
@@ -180,7 +174,7 @@ namespace VixenEditor
             this.tbSparkles.Maximum = 100;
             this.tbSparkles.Name = "tbSparkles";
             this.tbSparkles.Size = new System.Drawing.Size(148, 23);
-            this.tbSparkles.TabIndex = 25;
+            this.tbSparkles.TabIndex = 1;
             this.tbSparkles.TickStyle = System.Windows.Forms.TickStyle.None;
             // 
             // lblSparkles
@@ -214,7 +208,7 @@ namespace VixenEditor
             this.gbLayer.Location = new System.Drawing.Point(486, 19);
             this.gbLayer.Name = "gbLayer";
             this.gbLayer.Size = new System.Drawing.Size(141, 232);
-            this.gbLayer.TabIndex = 8;
+            this.gbLayer.TabIndex = 3;
             this.gbLayer.TabStop = false;
             this.gbLayer.Text = "Layer Method";
             // 
@@ -322,7 +316,7 @@ namespace VixenEditor
             this.btnOK.Location = new System.Drawing.Point(612, 257);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 1;
+            this.btnOK.TabIndex = 9;
             this.btnOK.Text = "Okay";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -341,38 +335,10 @@ namespace VixenEditor
             this.btnPlayStop.Location = new System.Drawing.Point(294, 257);
             this.btnPlayStop.Name = "btnPlayStop";
             this.btnPlayStop.Size = new System.Drawing.Size(90, 23);
-            this.btnPlayStop.TabIndex = 14;
+            this.btnPlayStop.TabIndex = 7;
             this.btnPlayStop.Text = "Play Effects";
             this.btnPlayStop.UseVisualStyleBackColor = true;
             this.btnPlayStop.Click += new System.EventHandler(this.btnPlayStop_Click);
-            // 
-            // cbColorLayout
-            // 
-            this.cbColorLayout.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbColorLayout.FormattingEnabled = true;
-            this.cbColorLayout.Items.AddRange(new object[] {
-            "RGB",
-            "RBG",
-            "GRB",
-            "GBR",
-            "BRG",
-            "BGR",
-            "Static - Red Values",
-            "Static - Green Values",
-            "Static - Blue Values"});
-            this.cbColorLayout.Location = new System.Drawing.Point(87, 46);
-            this.cbColorLayout.Name = "cbColorLayout";
-            this.cbColorLayout.Size = new System.Drawing.Size(121, 21);
-            this.cbColorLayout.TabIndex = 21;
-            // 
-            // lblColorLayout
-            // 
-            this.lblColorLayout.AutoSize = true;
-            this.lblColorLayout.Location = new System.Drawing.Point(15, 49);
-            this.lblColorLayout.Name = "lblColorLayout";
-            this.lblColorLayout.Size = new System.Drawing.Size(66, 13);
-            this.lblColorLayout.TabIndex = 20;
-            this.lblColorLayout.Text = "Color Layout";
             // 
             // lblStatsFps
             // 
@@ -386,7 +352,6 @@ namespace VixenEditor
             // gbRenderTo
             // 
             this.gbRenderTo.Controls.Add(this.lblStartEventTime);
-            this.gbRenderTo.Controls.Add(this.chkBoxUseGroup);
             this.gbRenderTo.Controls.Add(this.nudStartEvent);
             this.gbRenderTo.Controls.Add(this.lblStartEvent);
             this.gbRenderTo.Controls.Add(this.lblEventCountTime);
@@ -394,13 +359,12 @@ namespace VixenEditor
             this.gbRenderTo.Controls.Add(this.lblEventCount);
             this.gbRenderTo.Controls.Add(this.rbSpecificPoint);
             this.gbRenderTo.Controls.Add(this.rbCurrentSelection);
-            this.gbRenderTo.Controls.Add(this.cbGroups);
             this.gbRenderTo.Controls.Add(this.rbRoutine);
             this.gbRenderTo.Controls.Add(this.rbClipboard);
             this.gbRenderTo.Location = new System.Drawing.Point(214, 19);
             this.gbRenderTo.Name = "gbRenderTo";
             this.gbRenderTo.Size = new System.Drawing.Size(266, 232);
-            this.gbRenderTo.TabIndex = 16;
+            this.gbRenderTo.TabIndex = 2;
             this.gbRenderTo.TabStop = false;
             this.gbRenderTo.Text = "Render Effects To:";
             // 
@@ -414,25 +378,12 @@ namespace VixenEditor
             this.lblStartEventTime.Text = "00:00.000";
             this.lblStartEventTime.Visible = false;
             // 
-            // chkBoxUseGroup
-            // 
-            this.chkBoxUseGroup.AutoSize = true;
-            this.chkBoxUseGroup.Checked = true;
-            this.chkBoxUseGroup.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkBoxUseGroup.Location = new System.Drawing.Point(6, 110);
-            this.chkBoxUseGroup.Name = "chkBoxUseGroup";
-            this.chkBoxUseGroup.Size = new System.Drawing.Size(77, 17);
-            this.chkBoxUseGroup.TabIndex = 19;
-            this.chkBoxUseGroup.Text = "Use Group";
-            this.chkBoxUseGroup.UseVisualStyleBackColor = true;
-            this.chkBoxUseGroup.CheckedChanged += new System.EventHandler(this.chkBoxUseGroup_CheckedChanged);
-            // 
             // nudStartEvent
             // 
             this.nudStartEvent.Location = new System.Drawing.Point(104, 165);
             this.nudStartEvent.Name = "nudStartEvent";
             this.nudStartEvent.Size = new System.Drawing.Size(51, 20);
-            this.nudStartEvent.TabIndex = 10;
+            this.nudStartEvent.TabIndex = 4;
             this.nudStartEvent.Visible = false;
             this.nudStartEvent.ValueChanged += new System.EventHandler(this.nudStartEvent_ValueChanged);
             // 
@@ -466,7 +417,7 @@ namespace VixenEditor
             0});
             this.nudEventCount.Name = "nudEventCount";
             this.nudEventCount.Size = new System.Drawing.Size(51, 20);
-            this.nudEventCount.TabIndex = 7;
+            this.nudEventCount.TabIndex = 5;
             this.nudEventCount.Value = new decimal(new int[] {
             1,
             0,
@@ -507,25 +458,13 @@ namespace VixenEditor
             this.rbCurrentSelection.UseVisualStyleBackColor = true;
             this.rbCurrentSelection.CheckedChanged += new System.EventHandler(this.RenderToChanged);
             // 
-            // cbGroups
-            // 
-            this.cbGroups.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cbGroups.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbGroups.FormattingEnabled = true;
-            this.cbGroups.Location = new System.Drawing.Point(89, 109);
-            this.cbGroups.Name = "cbGroups";
-            this.cbGroups.Size = new System.Drawing.Size(171, 21);
-            this.cbGroups.TabIndex = 5;
-            this.cbGroups.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbGroups_DrawItem);
-            this.cbGroups.SelectedIndexChanged += new System.EventHandler(this.cbGroups_SelectedIndexChanged);
-            // 
             // rbRoutine
             // 
             this.rbRoutine.AutoSize = true;
             this.rbRoutine.Location = new System.Drawing.Point(6, 19);
             this.rbRoutine.Name = "rbRoutine";
             this.rbRoutine.Size = new System.Drawing.Size(136, 17);
-            this.rbRoutine.TabIndex = 1;
+            this.rbRoutine.TabIndex = 0;
             this.rbRoutine.Text = "Vixen+ Routine (.vir file)";
             this.rbRoutine.UseVisualStyleBackColor = true;
             this.rbRoutine.CheckedChanged += new System.EventHandler(this.RenderToChanged);
@@ -537,7 +476,7 @@ namespace VixenEditor
             this.rbClipboard.Location = new System.Drawing.Point(6, 42);
             this.rbClipboard.Name = "rbClipboard";
             this.rbClipboard.Size = new System.Drawing.Size(69, 17);
-            this.rbClipboard.TabIndex = 0;
+            this.rbClipboard.TabIndex = 1;
             this.rbClipboard.TabStop = true;
             this.rbClipboard.Text = "Clipboard";
             this.rbClipboard.UseVisualStyleBackColor = true;
@@ -550,7 +489,7 @@ namespace VixenEditor
             this.cbModels.Location = new System.Drawing.Point(87, 19);
             this.cbModels.Name = "cbModels";
             this.cbModels.Size = new System.Drawing.Size(121, 21);
-            this.cbModels.TabIndex = 15;
+            this.cbModels.TabIndex = 0;
             this.cbModels.SelectedIndexChanged += new System.EventHandler(this.cbModels_SelectedIndexChanged);
             // 
             // chkBoxEnableRawPreview
@@ -561,7 +500,7 @@ namespace VixenEditor
             this.chkBoxEnableRawPreview.Location = new System.Drawing.Point(648, 152);
             this.chkBoxEnableRawPreview.Name = "chkBoxEnableRawPreview";
             this.chkBoxEnableRawPreview.Size = new System.Drawing.Size(125, 17);
-            this.chkBoxEnableRawPreview.TabIndex = 12;
+            this.chkBoxEnableRawPreview.TabIndex = 4;
             this.chkBoxEnableRawPreview.Text = "Enable Raw Preview";
             this.chkBoxEnableRawPreview.UseVisualStyleBackColor = true;
             // 
@@ -580,7 +519,7 @@ namespace VixenEditor
             this.btnLightsOff.Location = new System.Drawing.Point(648, 205);
             this.btnLightsOff.Name = "btnLightsOff";
             this.btnLightsOff.Size = new System.Drawing.Size(75, 23);
-            this.btnLightsOff.TabIndex = 10;
+            this.btnLightsOff.TabIndex = 5;
             this.btnLightsOff.Text = "Lights Off";
             this.btnLightsOff.UseVisualStyleBackColor = true;
             this.btnLightsOff.Visible = false;
@@ -590,7 +529,7 @@ namespace VixenEditor
             this.btnManagePresets.Location = new System.Drawing.Point(390, 257);
             this.btnManagePresets.Name = "btnManagePresets";
             this.btnManagePresets.Size = new System.Drawing.Size(90, 23);
-            this.btnManagePresets.TabIndex = 9;
+            this.btnManagePresets.TabIndex = 8;
             this.btnManagePresets.Text = "Effect Presets";
             this.btnManagePresets.UseVisualStyleBackColor = true;
             // 
@@ -601,7 +540,7 @@ namespace VixenEditor
             this.cbRender.Location = new System.Drawing.Point(648, 234);
             this.cbRender.Name = "cbRender";
             this.cbRender.Size = new System.Drawing.Size(101, 17);
-            this.cbRender.TabIndex = 7;
+            this.cbRender.TabIndex = 6;
             this.cbRender.Text = "Output to Lights";
             this.cbRender.UseVisualStyleBackColor = true;
             this.cbRender.Visible = false;
@@ -661,7 +600,7 @@ namespace VixenEditor
             this.btnCancel.Location = new System.Drawing.Point(693, 257);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 0;
+            this.btnCancel.TabIndex = 10;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
@@ -742,7 +681,6 @@ namespace VixenEditor
         private Label lblEventCountTime;
         private NumericUpDown nudEventCount;
         private Label lblEventCount;
-        private ComboBox cbGroups;
         private RadioButton rbSpecificPoint;
         private RadioButton rbCurrentSelection;
         private RadioButton rbRoutine;
@@ -750,9 +688,6 @@ namespace VixenEditor
         private Label lblStartEventTime;
         private NumericUpDown nudStartEvent;
         private Label lblStartEvent;
-        private ComboBox cbColorLayout;
-        private Label lblColorLayout;
-        private CheckBox chkBoxUseGroup;
         private Label lblModels;
         private TextBox tbSummary;
         private Label lblStatsMs;

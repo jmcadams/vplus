@@ -415,7 +415,7 @@ namespace VixenEditor{
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.cbGroups = new System.Windows.Forms.ComboBox();
             this.labelPosition = new System.Windows.Forms.Label();
-            this.pictureBoxChannels = new VixenEditor.SelectablePictureBox();
+            this.pictureBoxChannels = new SelectablePictureBox();
             this.contextMenuChannels = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toggleOutputChannelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reorderChannelOutputsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -435,7 +435,7 @@ namespace VixenEditor{
             this.clearAllChannelsForThisEventToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.allChannelsToFullIntensityForThisEventToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblFollowMouse = new System.Windows.Forms.Label();
-            this.pictureBoxGrid = new VixenEditor.SelectablePictureBox();
+            this.pictureBoxGrid = new SelectablePictureBox();
             this.contextMenuGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.onToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.offToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
