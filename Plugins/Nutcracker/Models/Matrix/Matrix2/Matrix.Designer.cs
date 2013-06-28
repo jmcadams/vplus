@@ -23,7 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gbOrientation = new System.Windows.Forms.GroupBox();
             this.rbVertical = new System.Windows.Forms.RadioButton();
             this.rbHorizontal = new System.Windows.Forms.RadioButton();
             this.nudStrandCount = new System.Windows.Forms.NumericUpDown();
@@ -33,23 +33,23 @@
             this.nudStringCount = new System.Windows.Forms.NumericUpDown();
             this.lblStringCount = new System.Windows.Forms.Label();
             this.pbPreview = new System.Windows.Forms.PictureBox();
-            this.groupBox1.SuspendLayout();
+            this.gbOrientation.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudStrandCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudNodeCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudStringCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
             this.SuspendLayout();
             // 
-            // groupBox1
+            // gbOrientation
             // 
-            this.groupBox1.Controls.Add(this.rbVertical);
-            this.groupBox1.Controls.Add(this.rbHorizontal);
-            this.groupBox1.Location = new System.Drawing.Point(240, 125);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(107, 67);
-            this.groupBox1.TabIndex = 19;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Orientation";
+            this.gbOrientation.Controls.Add(this.rbVertical);
+            this.gbOrientation.Controls.Add(this.rbHorizontal);
+            this.gbOrientation.Location = new System.Drawing.Point(240, 125);
+            this.gbOrientation.Name = "gbOrientation";
+            this.gbOrientation.Size = new System.Drawing.Size(107, 67);
+            this.gbOrientation.TabIndex = 19;
+            this.gbOrientation.TabStop = false;
+            this.gbOrientation.Text = "Orientation";
             // 
             // rbVertical
             // 
@@ -168,11 +168,11 @@
             this.pbPreview.TabIndex = 23;
             this.pbPreview.TabStop = false;
             // 
-            // UserControl1
+            // Matrix
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.gbOrientation);
             this.Controls.Add(this.nudStrandCount);
             this.Controls.Add(this.nudNodeCount);
             this.Controls.Add(this.lblNodeCount);
@@ -180,10 +180,10 @@
             this.Controls.Add(this.nudStringCount);
             this.Controls.Add(this.lblStringCount);
             this.Controls.Add(this.pbPreview);
-            this.Name = "UserControl1";
+            this.Name = "Matrix";
             this.Size = new System.Drawing.Size(350, 250);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.gbOrientation.ResumeLayout(false);
+            this.gbOrientation.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudStrandCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudNodeCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudStringCount)).EndInit();
@@ -195,7 +195,7 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox gbOrientation;
         private System.Windows.Forms.RadioButton rbVertical;
         private System.Windows.Forms.RadioButton rbHorizontal;
         private System.Windows.Forms.NumericUpDown nudStrandCount;

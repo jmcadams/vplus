@@ -30,16 +30,16 @@
             this.nudStringCount = new System.Windows.Forms.NumericUpDown();
             this.lblStringCount = new System.Windows.Forms.Label();
             this.pbPreview = new System.Windows.Forms.PictureBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rb360 = new System.Windows.Forms.RadioButton();
-            this.rb270 = new System.Windows.Forms.RadioButton();
-            this.rb180 = new System.Windows.Forms.RadioButton();
+            this.gbDegrees = new System.Windows.Forms.GroupBox();
             this.rb90 = new System.Windows.Forms.RadioButton();
+            this.rb180 = new System.Windows.Forms.RadioButton();
+            this.rb270 = new System.Windows.Forms.RadioButton();
+            this.rb360 = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.nudStrandCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudNodeCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudStringCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.gbDegrees.SuspendLayout();
             this.SuspendLayout();
             // 
             // nudStrandCount
@@ -139,38 +139,28 @@
             this.pbPreview.TabIndex = 7;
             this.pbPreview.TabStop = false;
             // 
-            // groupBox1
+            // gbDegrees
             // 
-            this.groupBox1.Controls.Add(this.rb90);
-            this.groupBox1.Controls.Add(this.rb180);
-            this.groupBox1.Controls.Add(this.rb270);
-            this.groupBox1.Controls.Add(this.rb360);
-            this.groupBox1.Location = new System.Drawing.Point(240, 125);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(107, 67);
-            this.groupBox1.TabIndex = 3;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Visible Degrees";
+            this.gbDegrees.Controls.Add(this.rb90);
+            this.gbDegrees.Controls.Add(this.rb180);
+            this.gbDegrees.Controls.Add(this.rb270);
+            this.gbDegrees.Controls.Add(this.rb360);
+            this.gbDegrees.Location = new System.Drawing.Point(240, 125);
+            this.gbDegrees.Name = "gbDegrees";
+            this.gbDegrees.Size = new System.Drawing.Size(107, 67);
+            this.gbDegrees.TabIndex = 3;
+            this.gbDegrees.TabStop = false;
+            this.gbDegrees.Text = "Visible Degrees";
             // 
-            // rb360
+            // rb90
             // 
-            this.rb360.AutoSize = true;
-            this.rb360.Location = new System.Drawing.Point(7, 20);
-            this.rb360.Name = "rb360";
-            this.rb360.Size = new System.Drawing.Size(43, 17);
-            this.rb360.TabIndex = 0;
-            this.rb360.Text = "360";
-            this.rb360.UseVisualStyleBackColor = true;
-            // 
-            // rb270
-            // 
-            this.rb270.AutoSize = true;
-            this.rb270.Location = new System.Drawing.Point(56, 20);
-            this.rb270.Name = "rb270";
-            this.rb270.Size = new System.Drawing.Size(43, 17);
-            this.rb270.TabIndex = 1;
-            this.rb270.Text = "270";
-            this.rb270.UseVisualStyleBackColor = true;
+            this.rb90.AutoSize = true;
+            this.rb90.Location = new System.Drawing.Point(56, 44);
+            this.rb90.Name = "rb90";
+            this.rb90.Size = new System.Drawing.Size(37, 17);
+            this.rb90.TabIndex = 3;
+            this.rb90.Text = "90";
+            this.rb90.UseVisualStyleBackColor = true;
             // 
             // rb180
             // 
@@ -184,21 +174,31 @@
             this.rb180.Text = "180";
             this.rb180.UseVisualStyleBackColor = true;
             // 
-            // rb90
+            // rb270
             // 
-            this.rb90.AutoSize = true;
-            this.rb90.Location = new System.Drawing.Point(56, 44);
-            this.rb90.Name = "rb90";
-            this.rb90.Size = new System.Drawing.Size(37, 17);
-            this.rb90.TabIndex = 3;
-            this.rb90.Text = "90";
-            this.rb90.UseVisualStyleBackColor = true;
+            this.rb270.AutoSize = true;
+            this.rb270.Location = new System.Drawing.Point(56, 20);
+            this.rb270.Name = "rb270";
+            this.rb270.Size = new System.Drawing.Size(43, 17);
+            this.rb270.TabIndex = 1;
+            this.rb270.Text = "270";
+            this.rb270.UseVisualStyleBackColor = true;
+            // 
+            // rb360
+            // 
+            this.rb360.AutoSize = true;
+            this.rb360.Location = new System.Drawing.Point(7, 20);
+            this.rb360.Name = "rb360";
+            this.rb360.Size = new System.Drawing.Size(43, 17);
+            this.rb360.TabIndex = 0;
+            this.rb360.Text = "360";
+            this.rb360.UseVisualStyleBackColor = true;
             // 
             // Tree
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.gbDegrees);
             this.Controls.Add(this.nudStrandCount);
             this.Controls.Add(this.lblStandCount);
             this.Controls.Add(this.nudNodeCount);
@@ -212,8 +212,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudNodeCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudStringCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.gbDegrees.ResumeLayout(false);
+            this.gbDegrees.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -228,7 +228,7 @@
         private System.Windows.Forms.NumericUpDown nudStringCount;
         private System.Windows.Forms.Label lblStringCount;
         private System.Windows.Forms.PictureBox pbPreview;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox gbDegrees;
         private System.Windows.Forms.RadioButton rb90;
         private System.Windows.Forms.RadioButton rb180;
         private System.Windows.Forms.RadioButton rb270;

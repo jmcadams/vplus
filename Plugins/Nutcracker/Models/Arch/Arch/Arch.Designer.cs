@@ -25,11 +25,11 @@
         private void InitializeComponent() {
             this.nudNodeCount = new System.Windows.Forms.NumericUpDown();
             this.lblNodeCount = new System.Windows.Forms.Label();
-            this.nudStringCount = new System.Windows.Forms.NumericUpDown();
+            this.nudArchCount = new System.Windows.Forms.NumericUpDown();
             this.lblArchCount = new System.Windows.Forms.Label();
             this.pbPreview = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudNodeCount)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudStringCount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudArchCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
             this.SuspendLayout();
             // 
@@ -64,18 +64,18 @@
             this.lblNodeCount.TabIndex = 21;
             this.lblNodeCount.Text = "Number of Nodes per Arch";
             // 
-            // nudStringCount
+            // nudArchCount
             // 
-            this.nudStringCount.Location = new System.Drawing.Point(276, 20);
-            this.nudStringCount.Minimum = new decimal(new int[] {
+            this.nudArchCount.Location = new System.Drawing.Point(276, 20);
+            this.nudArchCount.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.nudStringCount.Name = "nudStringCount";
-            this.nudStringCount.Size = new System.Drawing.Size(71, 20);
-            this.nudStringCount.TabIndex = 16;
-            this.nudStringCount.Value = new decimal(new int[] {
+            this.nudArchCount.Name = "nudArchCount";
+            this.nudArchCount.Size = new System.Drawing.Size(71, 20);
+            this.nudArchCount.TabIndex = 16;
+            this.nudArchCount.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -105,13 +105,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.nudNodeCount);
             this.Controls.Add(this.lblNodeCount);
-            this.Controls.Add(this.nudStringCount);
+            this.Controls.Add(this.nudArchCount);
             this.Controls.Add(this.lblArchCount);
             this.Controls.Add(this.pbPreview);
             this.Name = "Arch";
             this.Size = new System.Drawing.Size(350, 250);
             ((System.ComponentModel.ISupportInitialize)(this.nudNodeCount)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudStringCount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudArchCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -122,7 +122,7 @@
 
         private System.Windows.Forms.NumericUpDown nudNodeCount;
         private System.Windows.Forms.Label lblNodeCount;
-        private System.Windows.Forms.NumericUpDown nudStringCount;
+        private System.Windows.Forms.NumericUpDown nudArchCount;
         private System.Windows.Forms.Label lblArchCount;
         private System.Windows.Forms.PictureBox pbPreview;
     }
