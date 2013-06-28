@@ -84,6 +84,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tree", "..\Plugins\Nutcrack
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matrix", "..\Plugins\Nutcracker\Models\Matrix\Matrix2\Matrix.csproj", "{C4AE0B5F-7E51-442C-B2EA-945119DA40B0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arch", "..\Plugins\Nutcracker\Models\Arch\Arch\Arch.csproj", "{991CD25C-9837-4294-964D-0E93C58E0E53}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		debug_32|Any CPU = debug_32|Any CPU
@@ -828,6 +830,31 @@ Global
 		{C4AE0B5F-7E51-442C-B2EA-945119DA40B0}.Release32|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C4AE0B5F-7E51-442C-B2EA-945119DA40B0}.Release32|Mixed Platforms.Build.0 = Release|Any CPU
 		{C4AE0B5F-7E51-442C-B2EA-945119DA40B0}.Release32|x86.ActiveCfg = Release|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.debug_32|Any CPU.ActiveCfg = Debug|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.debug_32|Any CPU.Build.0 = Debug|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.debug_32|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.debug_32|Mixed Platforms.Build.0 = Debug|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.debug_32|x86.ActiveCfg = Debug|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.Release_x86|Any CPU.ActiveCfg = Release|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.Release_x86|Any CPU.Build.0 = Release|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.Release_x86|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.Release_x86|Mixed Platforms.Build.0 = Release|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.Release_x86|x86.ActiveCfg = Release|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.Release|x86.ActiveCfg = Release|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.Release32|Any CPU.ActiveCfg = Release|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.Release32|Any CPU.Build.0 = Release|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.Release32|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.Release32|Mixed Platforms.Build.0 = Release|Any CPU
+		{991CD25C-9837-4294-964D-0E93C58E0E53}.Release32|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -866,6 +893,7 @@ Global
 		{181F3F6E-B5F8-4CFB-A020-8BB57711C4B2} = {DDF6E4C4-AC68-4AFB-B269-8663D6182E42}
 		{CDD580CD-73D1-4616-89BC-0A60C060F3A7} = {13830111-1E9A-4759-8475-E9B55B9B914E}
 		{C4AE0B5F-7E51-442C-B2EA-945119DA40B0} = {13830111-1E9A-4759-8475-E9B55B9B914E}
+		{991CD25C-9837-4294-964D-0E93C58E0E53} = {13830111-1E9A-4759-8475-E9B55B9B914E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		BuildVersion_BuildVersioningStyle = None.None.Increment.TimeStamp
