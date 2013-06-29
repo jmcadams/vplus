@@ -122,7 +122,7 @@ namespace VixenEditor {
 
             var newControl = _modelCache[cbPreviewAs.SelectedItem.ToString()];
             panel1.Controls.Add((UserControl)newControl);
-            newControl.SetDirection = rbLtoR.Checked;
+            newControl.IsLtoR = rbLtoR.Checked;
             lblNotes.Text = newControl.Notes;
         }
     }

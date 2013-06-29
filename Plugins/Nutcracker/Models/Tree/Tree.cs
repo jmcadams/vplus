@@ -11,12 +11,10 @@ namespace Tree {
         private int _rows;
         private int _cols;
         private NutcrackerNodes[,] _nodes;
-        private bool _isLtoR;
-        private Timer _timer = new Timer {Interval = 20};
+        private const int XyOffset = 5; 
 
         public Tree() {
             InitializeComponent();
-            _timer.Tick += control_ValueChanged;
         }
 
 
@@ -37,9 +35,7 @@ namespace Tree {
         }
 
 
-        public bool SetDirection {
-            set { _isLtoR = value; }
-        }
+        public bool IsLtoR { get; set; }
 
 
         public void DrawPreview() {
@@ -51,7 +47,7 @@ namespace Tree {
                         b.SetPixel(_nodes[row, col].Model.X, _nodes[row, col].Model.Y, Color.White);
                     }
                 }
-                g.DrawImage(b, 0, 0);
+                g.DrawImage(b, XyOffset, XyOffset);
             }
         }
 
@@ -66,7 +62,6 @@ namespace Tree {
             var radius = renderWi * 0.8;
             var startAngle = -radians / 2.0;
             var angleIncr = radians / (_cols - 1);
-            var strands =nudStrandCount.Value;
             for (var row = 0; row < _rows; row++) {
                 for (var col = 0; col < _cols; col++) {
                     var angle = startAngle + _nodes[_rows - 1 - row, col].BufX * angleIncr;
@@ -90,7 +85,7 @@ namespace Tree {
                 for (var pixel = 0; pixel < pixelsPerStrand; pixel++) {
                     var y = index % _rows;
                     var x = index / _rows;
-                    _nodes[y, x].BufX = _isLtoR ? strand : numStrands - strand - 1;
+                    _nodes[y, x].BufX = IsLtoR ? strand : numStrands - strand - 1;
                     _nodes[y, x].BufY = (segmentnum % 2 != 0) ? pixel : pixelsPerStrand - pixel - 1;
                     index++;
                 }
@@ -99,12 +94,15 @@ namespace Tree {
 
 
         private void control_ValueChanged(object sender, EventArgs e) {
-            //This is a hack to initially display the rendering since there isn't an after show event! - UGH!
-            if (_timer != null) {
-                _timer.Tick -= control_ValueChanged;
-                _timer.Stop();
-                _timer = null;
-            }
+            ResetNodes();
+            var rect = pbPreview.DisplayRectangle;
+            rect.Offset(-XyOffset * 2, -XyOffset * 2);
+            InitializePreview(rect);
+            DrawPreview();
+        }
+
+
+        private void ResetNodes() {
             _rows = (int) nudNodeCount.Value / (int) nudStrandCount.Value;
             _cols = (int) nudStringCount.Value * (int) nudStrandCount.Value;
             _nodes = new NutcrackerNodes[_rows,_cols];
@@ -113,12 +111,6 @@ namespace Tree {
                     _nodes[row, col] = new NutcrackerNodes();
                 }
             }
-            InitializePreview(pbPreview.ClientRectangle);
-            DrawPreview();
-        }
-
-        private void Tree_VisibleChanged(object sender, EventArgs e) {
-            _timer.Start();
         }
     }
 }

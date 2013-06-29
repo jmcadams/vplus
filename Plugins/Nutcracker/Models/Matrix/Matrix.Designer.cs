@@ -13,10 +13,6 @@
             if (disposing && (components != null)) {
                 components.Dispose();
             }
-            if (_timer != null) {
-                _timer.Tick -= control_ValueChanged;
-            }
-
             base.Dispose(disposing);
         }
 
@@ -193,7 +189,6 @@
             this.Controls.Add(this.pbPreview);
             this.Name = "Matrix";
             this.Size = new System.Drawing.Size(350, 250);
-            this.VisibleChanged += new System.EventHandler(this.Matrix_VisibleChanged);
             this.gbOrientation.ResumeLayout(false);
             this.gbOrientation.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudStrandCount)).EndInit();

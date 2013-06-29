@@ -27,8 +27,7 @@ namespace Arch {
         }
 
 
-        public bool SetDirection {
-            set { throw new System.NotImplementedException(); }
-        }
+        public bool IsLtoR { get; set; }
+
     }
 }
