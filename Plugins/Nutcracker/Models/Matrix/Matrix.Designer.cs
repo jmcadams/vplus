@@ -13,6 +13,10 @@
             if (disposing && (components != null)) {
                 components.Dispose();
             }
+            if (_timer != null) {
+                _timer.Tick -= control_ValueChanged;
+            }
+
             base.Dispose(disposing);
         }
 
@@ -54,12 +58,15 @@
             // rbVertical
             // 
             this.rbVertical.AutoSize = true;
+            this.rbVertical.Checked = true;
             this.rbVertical.Location = new System.Drawing.Point(7, 43);
             this.rbVertical.Name = "rbVertical";
             this.rbVertical.Size = new System.Drawing.Size(60, 17);
             this.rbVertical.TabIndex = 1;
+            this.rbVertical.TabStop = true;
             this.rbVertical.Text = "Vertical";
             this.rbVertical.UseVisualStyleBackColor = true;
+            this.rbVertical.CheckedChanged += new System.EventHandler(this.control_ValueChanged);
             // 
             // rbHorizontal
             // 
@@ -70,6 +77,7 @@
             this.rbHorizontal.TabIndex = 0;
             this.rbHorizontal.Text = "Horizontal";
             this.rbHorizontal.UseVisualStyleBackColor = true;
+            this.rbHorizontal.CheckedChanged += new System.EventHandler(this.control_ValueChanged);
             // 
             // nudStrandCount
             // 
@@ -92,6 +100,7 @@
             0,
             0,
             0});
+            this.nudStrandCount.ValueChanged += new System.EventHandler(this.control_ValueChanged);
             // 
             // nudNodeCount
             // 
@@ -114,6 +123,7 @@
             0,
             0,
             0});
+            this.nudNodeCount.ValueChanged += new System.EventHandler(this.control_ValueChanged);
             // 
             // lblNodeCount
             // 
@@ -149,6 +159,7 @@
             0,
             0,
             0});
+            this.nudStringCount.ValueChanged += new System.EventHandler(this.control_ValueChanged);
             // 
             // lblStringCount
             // 
@@ -182,6 +193,7 @@
             this.Controls.Add(this.pbPreview);
             this.Name = "Matrix";
             this.Size = new System.Drawing.Size(350, 250);
+            this.VisibleChanged += new System.EventHandler(this.Matrix_VisibleChanged);
             this.gbOrientation.ResumeLayout(false);
             this.gbOrientation.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudStrandCount)).EndInit();

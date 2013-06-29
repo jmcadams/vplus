@@ -12,10 +12,11 @@ namespace Tree {
         private int _cols;
         private NutcrackerNodes[,] _nodes;
         private bool _isLtoR;
-
+        private Timer _timer = new Timer {Interval = 20};
 
         public Tree() {
             InitializeComponent();
+            _timer.Tick += control_ValueChanged;
         }
 
 
@@ -87,8 +88,8 @@ namespace Tree {
             for (var strand = 0; strand < numStrands; strand++) {
                 var segmentnum = strand % strandsPerString;
                 for (var pixel = 0; pixel < pixelsPerStrand; pixel++) {
-                    var y = index % (_rows);// * strandsPerString);
-                    var x = index / (_rows);// * strandsPerString);
+                    var y = index % _rows;
+                    var x = index / _rows;
                     _nodes[y, x].BufX = _isLtoR ? strand : numStrands - strand - 1;
                     _nodes[y, x].BufY = (segmentnum % 2 != 0) ? pixel : pixelsPerStrand - pixel - 1;
                     index++;
@@ -98,6 +99,12 @@ namespace Tree {
 
 
         private void control_ValueChanged(object sender, EventArgs e) {
+            //This is a hack to initially display the rendering since there isn't an after show event! - UGH!
+            if (_timer != null) {
+                _timer.Tick -= control_ValueChanged;
+                _timer.Stop();
+                _timer = null;
+            }
             _rows = (int) nudNodeCount.Value / (int) nudStrandCount.Value;
             _cols = (int) nudStringCount.Value * (int) nudStrandCount.Value;
             _nodes = new NutcrackerNodes[_rows,_cols];
@@ -108,6 +115,10 @@ namespace Tree {
             }
             InitializePreview(pbPreview.ClientRectangle);
             DrawPreview();
+        }
+
+        private void Tree_VisibleChanged(object sender, EventArgs e) {
+            _timer.Start();
         }
     }
 }

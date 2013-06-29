@@ -13,6 +13,10 @@
             if (disposing && (components != null)) {
                 components.Dispose();
             }
+            if (_timer != null)
+            {
+                _timer.Tick -= control_ValueChanged;
+            }
             base.Dispose(disposing);
         }
 
@@ -215,6 +219,7 @@
             this.Controls.Add(this.pbPreview);
             this.Name = "Tree";
             this.Size = new System.Drawing.Size(350, 250);
+            this.VisibleChanged += new System.EventHandler(this.Tree_VisibleChanged);
             ((System.ComponentModel.ISupportInitialize)(this.nudStrandCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudNodeCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudStringCount)).EndInit();
