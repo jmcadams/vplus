@@ -21,5 +21,9 @@ namespace Matrix2 {
         public XmlElement Settings { get; set; }
 
         public NutcrackerNodes[,] InitializeNodes { get; private set; }
+
+        public bool SetDirection {
+            set { throw new System.NotImplementedException(); }
+        }
     }
 }

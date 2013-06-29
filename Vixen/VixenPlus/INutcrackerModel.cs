@@ -6,5 +6,6 @@ namespace VixenPlus {
         string Notes { get; }
         XmlElement Settings { get; set; }
         NutcrackerNodes[,] InitializeNodes { get; }
+        bool SetDirection { set; }
     }
 }
