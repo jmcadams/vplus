@@ -13,6 +13,7 @@ namespace Tree {
         private NutcrackerNodes[,] _nodes;
         private bool _isLtoR;
 
+
         public Tree() {
             InitializeComponent();
         }
@@ -27,6 +28,7 @@ namespace Tree {
         }
 
         public XmlElement Settings { get; set; }
+
 
         public NutcrackerNodes[,] InitializeNodes(Rectangle rect) {
             InitializePreview(rect);
@@ -52,40 +54,41 @@ namespace Tree {
             }
         }
 
+
         private void InitializePreview(Rectangle previewRect) {
             InitMatrix();
             var degrees = rb360.Checked ? 360 : rb270.Checked ? 270 : rb180.Checked ? 180 : 90;
-            if (_cols < 2) return;
+            if (_cols < 2 || _rows < 1) return;
             var factor = previewRect.Height / _rows;
             var renderWi = previewRect.Width / 2;
             var radians = 2.0 * Math.PI * degrees / 360.0;
             var radius = renderWi * 0.8;
             var startAngle = -radians / 2.0;
             var angleIncr = radians / (_cols - 1);
+            var strands =nudStrandCount.Value;
             for (var row = 0; row < _rows; row++) {
                 for (var col = 0; col < _cols; col++) {
                     var angle = startAngle + _nodes[_rows - 1 - row, col].BufX * angleIncr;
                     var x0 = radius * Math.Sin(angle);
-                    var x = (int)Math.Floor(x0 * (1.0 - (double)(_nodes[row, col].BufY) / _rows) + 0.5) + renderWi;
+                    var x = (int) Math.Floor(x0 * (1.0 - (double) (_nodes[row, col].BufY) / _rows) + 0.5) + renderWi;
                     var y = _nodes[_rows - 1 - row, col].BufY * factor;
                     _nodes[_rows - 1 - row, col].Model = new Point(x, y);
                 }
             }
         }
 
-        private void InitMatrix() {
-            var stringCount = _cols;
-            var nodesPerString = _rows;
-            var strandsPerString = (int)nudStrandCount.Value;
 
-            var numStrands = stringCount * strandsPerString;
-            var pixelsPerStrand = nodesPerString / strandsPerString;
+        private void InitMatrix() {
+            var strandsPerString = (int) nudStrandCount.Value;
+
+            var numStrands = _cols;
+            var pixelsPerStrand = _rows;
             var index = 0;
             for (var strand = 0; strand < numStrands; strand++) {
                 var segmentnum = strand % strandsPerString;
                 for (var pixel = 0; pixel < pixelsPerStrand; pixel++) {
-                    var y = index % _rows;
-                    var x = index / _rows;
+                    var y = index % (_rows);// * strandsPerString);
+                    var x = index / (_rows);// * strandsPerString);
                     _nodes[y, x].BufX = _isLtoR ? strand : numStrands - strand - 1;
                     _nodes[y, x].BufY = (segmentnum % 2 != 0) ? pixel : pixelsPerStrand - pixel - 1;
                     index++;
@@ -93,10 +96,11 @@ namespace Tree {
             }
         }
 
+
         private void control_ValueChanged(object sender, EventArgs e) {
-            _rows = (int)nudNodeCount.Value;
-            _cols = (int)nudStringCount.Value;
-            _nodes = new NutcrackerNodes[_rows, _cols];
+            _rows = (int) nudNodeCount.Value / (int) nudStrandCount.Value;
+            _cols = (int) nudStringCount.Value * (int) nudStrandCount.Value;
+            _nodes = new NutcrackerNodes[_rows,_cols];
             for (var row = 0; row < _rows; row++) {
                 for (var col = 0; col < _cols; col++) {
                     _nodes[row, col] = new NutcrackerNodes();
