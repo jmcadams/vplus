@@ -63,6 +63,7 @@
             0,
             0,
             0});
+            this.nudStrandCount.ValueChanged += new System.EventHandler(this.control_ValueChanged);
             // 
             // lblStandCount
             // 
@@ -94,6 +95,7 @@
             0,
             0,
             0});
+            this.nudNodeCount.ValueChanged += new System.EventHandler(this.control_ValueChanged);
             // 
             // lblNodeCount
             // 
@@ -108,7 +110,7 @@
             // 
             this.nudStringCount.Location = new System.Drawing.Point(276, 20);
             this.nudStringCount.Minimum = new decimal(new int[] {
-            1,
+            2,
             0,
             0,
             0});
@@ -116,10 +118,11 @@
             this.nudStringCount.Size = new System.Drawing.Size(71, 20);
             this.nudStringCount.TabIndex = 0;
             this.nudStringCount.Value = new decimal(new int[] {
-            1,
+            16,
             0,
             0,
             0});
+            this.nudStringCount.ValueChanged += new System.EventHandler(this.control_ValueChanged);
             // 
             // lblStringCount
             // 
@@ -161,6 +164,7 @@
             this.rb90.TabIndex = 3;
             this.rb90.Text = "90";
             this.rb90.UseVisualStyleBackColor = true;
+            this.rb90.CheckedChanged += new System.EventHandler(this.control_ValueChanged);
             // 
             // rb180
             // 
@@ -173,6 +177,7 @@
             this.rb180.TabStop = true;
             this.rb180.Text = "180";
             this.rb180.UseVisualStyleBackColor = true;
+            this.rb180.CheckedChanged += new System.EventHandler(this.control_ValueChanged);
             // 
             // rb270
             // 
@@ -183,6 +188,7 @@
             this.rb270.TabIndex = 1;
             this.rb270.Text = "270";
             this.rb270.UseVisualStyleBackColor = true;
+            this.rb270.CheckedChanged += new System.EventHandler(this.control_ValueChanged);
             // 
             // rb360
             // 
@@ -193,6 +199,7 @@
             this.rb360.TabIndex = 0;
             this.rb360.Text = "360";
             this.rb360.UseVisualStyleBackColor = true;
+            this.rb360.CheckedChanged += new System.EventHandler(this.control_ValueChanged);
             // 
             // Tree
             // 
