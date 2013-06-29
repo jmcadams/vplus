@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Drawing;
+using System.Windows.Forms;
 using System.Xml;
 
 using VixenPlus;
@@ -20,7 +21,11 @@ namespace Arch {
 
         public XmlElement Settings { get; set; }
 
-        public NutcrackerNodes[,] InitializeNodes { get; private set; }
+
+        public NutcrackerNodes[,] InitializeNodes(Rectangle rect) {
+            throw new System.NotImplementedException();
+        }
+
 
         public bool SetDirection {
             set { throw new System.NotImplementedException(); }

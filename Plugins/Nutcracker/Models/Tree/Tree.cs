@@ -28,7 +28,11 @@ namespace Tree {
 
         public XmlElement Settings { get; set; }
 
-        public NutcrackerNodes[,] InitializeNodes { get; private set; }
+        public NutcrackerNodes[,] InitializeNodes(Rectangle rect) {
+            InitializePreview(rect);
+            return _nodes;
+        }
+
 
         public bool SetDirection {
             set { _isLtoR = value; }
@@ -48,12 +52,12 @@ namespace Tree {
             }
         }
 
-        private void InitializePreview() {
+        private void InitializePreview(Rectangle previewRect) {
             InitMatrix();
             var degrees = rb360.Checked ? 360 : rb270.Checked ? 270 : rb180.Checked ? 180 : 90;
             if (_cols < 2) return;
-            var factor = pbPreview.Height / _rows;
-            var renderWi = pbPreview.Width / 2;
+            var factor = previewRect.Height / _rows;
+            var renderWi = previewRect.Width / 2;
             var radians = 2.0 * Math.PI * degrees / 360.0;
             var radius = renderWi * 0.8;
             var startAngle = -radians / 2.0;
@@ -70,12 +74,12 @@ namespace Tree {
         }
 
         private void InitMatrix() {
-            var stringCount = _cols;  // 32
-            var nodesPerString = _rows; // 50
+            var stringCount = _cols;
+            var nodesPerString = _rows;
             var strandsPerString = (int)nudStrandCount.Value;
 
-            var numStrands = stringCount * strandsPerString; // 64
-            var pixelsPerStrand = nodesPerString / strandsPerString; // 25
+            var numStrands = stringCount * strandsPerString;
+            var pixelsPerStrand = nodesPerString / strandsPerString;
             var index = 0;
             for (var strand = 0; strand < numStrands; strand++) {
                 var segmentnum = strand % strandsPerString;
@@ -98,7 +102,7 @@ namespace Tree {
                     _nodes[row, col] = new NutcrackerNodes();
                 }
             }
-            InitializePreview();
+            InitializePreview(pbPreview.ClientRectangle);
             DrawPreview();
         }
     }
