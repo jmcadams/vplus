@@ -8,7 +8,8 @@ namespace Tree {
         public Tree() {
             InitializeComponent();
         }
-        
+
+
         public string EffectName {
             get { return "Tree"; }
         }
@@ -18,7 +19,9 @@ namespace Tree {
         }
 
         public XmlElement Settings { get; set; }
-        
+
         public NutcrackerNodes[,] InitializeNodes { get; private set; }
+
+
     }
 }

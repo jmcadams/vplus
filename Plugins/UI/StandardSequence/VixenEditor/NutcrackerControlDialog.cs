@@ -26,8 +26,6 @@ namespace VixenEditor
 
         private int _rows;
         private int _cols;
-        //private int _lastGroupSelected;
-        //private int _lastChannelSelected;
         private string _playText;
         private const string StopText = "Stop";
 
@@ -58,7 +56,6 @@ namespace VixenEditor
 
         private void InitializeControls() {
             _playText = btnPlayStop.Text;
-            //cbColorLayout.SelectedIndex = 0;
             _rows = (int)nudRows.Value;
             _cols = (int)nudColumns.Value;
             _nodes = new NutcrackerNodes[_rows,_cols];
@@ -106,7 +103,6 @@ namespace VixenEditor
             
             UpdateRenderToControls();
             UpdateSummary();
-            //LoadGroups();
         }
 
 
@@ -258,43 +254,11 @@ namespace VixenEditor
         }
 
 
-        //private void chkBoxUseGroup_CheckedChanged(object sender, EventArgs e) {
-        //    if (chkBoxUseGroup.Checked) {
-        //        LoadGroups();
-        //    }
-        //    else {
-        //        LoadChannels();
-        //    }
-        //}
-
-
-        //private void cbGroups_SelectedIndexChanged(object sender, EventArgs e) {
-        //    if (chkBoxUseGroup.Checked) {
-        //        _lastGroupSelected = cbGroups.SelectedIndex;
-        //    }
-        //    else {
-        //        _lastChannelSelected = cbGroups.SelectedIndex;
-        //    }
-        //}
-
-
-        //private void cbGroups_DrawItem(object sender, DrawItemEventArgs e) {
-        //    if (e.Index < 0) return;
-
-        //    if (chkBoxUseGroup.Checked) {
-        //        var indexedItem = _sequence.Groups[cbGroups.Items[e.Index].ToString()];
-        //        Utils.DrawItem(e, indexedItem.Name, indexedItem.GroupColor, true);
-        //    }
-        //    else {
-        //        var indexedItem = _sequence.FullChannels[e.Index];
-        //        Utils.DrawItem(e, indexedItem.Name, indexedItem.Color, true);
-        //    }
-        //}
-
-
         private void cbModels_SelectedIndexChanged(object sender, EventArgs e) {
             if (cbModels.SelectedIndex == cbModels.Items.Count - 1) {
-                MessageBox.Show(@"manage", @"Manage");
+                using (var modelDialog = new NutcrackerModelDialog(_sequence)) {
+                    modelDialog.ShowDialog();
+                }
             }
         }
 
@@ -528,31 +492,6 @@ namespace VixenEditor
 
             tbSummary.Text = String.Format("From {0} thru {1} on {2}", startTime, endTime, String.Empty);
         }
-
-
-        //private void LoadGroups() {
-        //    if (_sequence.Groups != null) {
-        //        cbGroups.Items.Clear();
-        //        foreach (var g in _sequence.Groups) {
-        //            cbGroups.Items.Add(g.Key);
-        //        }
-        //        cbGroups.SelectedIndex = _lastGroupSelected;
-        //    }
-        //    else {
-        //        chkBoxUseGroup.Checked = false;
-        //        chkBoxUseGroup.Enabled = false;
-        //        LoadChannels();
-        //    }
-        //}
-
-
-        //private void LoadChannels() {
-        //    cbGroups.Items.Clear();
-        //    foreach (var c in _sequence.FullChannels) {
-        //        cbGroups.Items.Add(c);
-        //    }
-        //    cbGroups.SelectedIndex = _lastChannelSelected;
-        //}
 
         #endregion
 

@@ -1,4 +1,4 @@
-﻿namespace VixenEditor.VixenEditor {
+﻿namespace VixenEditor {
     partial class NutcrackerModelDialog {
         /// <summary>
         /// Required designer variable.
@@ -40,6 +40,7 @@
             this.cbPreviewAs = new System.Windows.Forms.ComboBox();
             this.lblPreviewAs = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.lblNotes = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -82,6 +83,7 @@
             this.chkBoxUseGroup.TabIndex = 3;
             this.chkBoxUseGroup.Text = "Use Group";
             this.chkBoxUseGroup.UseVisualStyleBackColor = true;
+            this.chkBoxUseGroup.CheckedChanged += new System.EventHandler(this.chkBoxUseGroup_CheckedChanged);
             // 
             // cbGroups
             // 
@@ -92,6 +94,8 @@
             this.cbGroups.Name = "cbGroups";
             this.cbGroups.Size = new System.Drawing.Size(171, 21);
             this.cbGroups.TabIndex = 4;
+            this.cbGroups.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbGroups_DrawItem);
+            this.cbGroups.SelectedIndexChanged += new System.EventHandler(this.cbGroups_SelectedIndexChanged);
             // 
             // btnCancel
             // 
@@ -116,6 +120,8 @@
             // chkBoxDisplay
             // 
             this.chkBoxDisplay.AutoSize = true;
+            this.chkBoxDisplay.Checked = true;
+            this.chkBoxDisplay.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkBoxDisplay.Location = new System.Drawing.Point(255, 396);
             this.chkBoxDisplay.Name = "chkBoxDisplay";
             this.chkBoxDisplay.Size = new System.Drawing.Size(108, 17);
@@ -126,6 +132,7 @@
             // rbLtoR
             // 
             this.rbLtoR.AutoSize = true;
+            this.rbLtoR.Checked = true;
             this.rbLtoR.Location = new System.Drawing.Point(110, 3);
             this.rbLtoR.Name = "rbLtoR";
             this.rbLtoR.Size = new System.Drawing.Size(54, 17);
@@ -141,7 +148,6 @@
             this.rbRtoL.Name = "rbRtoL";
             this.rbRtoL.Size = new System.Drawing.Size(54, 17);
             this.rbRtoL.TabIndex = 1;
-            this.rbRtoL.TabStop = true;
             this.rbRtoL.Text = "R to L";
             this.rbRtoL.UseVisualStyleBackColor = true;
             // 
@@ -196,6 +202,7 @@
             this.cbPreviewAs.Name = "cbPreviewAs";
             this.cbPreviewAs.Size = new System.Drawing.Size(171, 21);
             this.cbPreviewAs.TabIndex = 1;
+            this.cbPreviewAs.SelectedIndexChanged += new System.EventHandler(this.cbPreviewAs_SelectedIndexChanged);
             // 
             // lblPreviewAs
             // 
@@ -216,12 +223,20 @@
             this.panel2.Size = new System.Drawing.Size(227, 23);
             this.panel2.TabIndex = 6;
             // 
+            // lblNotes
+            // 
+            this.lblNotes.Location = new System.Drawing.Point(12, 9);
+            this.lblNotes.Name = "lblNotes";
+            this.lblNotes.Size = new System.Drawing.Size(101, 48);
+            this.lblNotes.TabIndex = 14;
+            // 
             // NutcrackerModelDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(375, 454);
             this.ControlBox = false;
+            this.Controls.Add(this.lblNotes);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.cbPreviewAs);
             this.Controls.Add(this.lblPreviewAs);
@@ -241,6 +256,7 @@
             this.Name = "NutcrackerModelDialog";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Nutcracker Model Management";
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
@@ -268,5 +284,6 @@
         private System.Windows.Forms.ComboBox cbPreviewAs;
         private System.Windows.Forms.Label lblPreviewAs;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label lblNotes;
     }
 }
