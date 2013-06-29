@@ -68,7 +68,6 @@ namespace Meteors {
         private readonly Random _random = new Random();
         private int _lastRenderedEvent = -1;
 
-        //todo not working quite right.
         public Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender) {
             if (eventToRender == 0) _meteors.Clear();
 
@@ -115,11 +114,15 @@ namespace Meteors {
                                 break;
                         }
                         hsv.Value *= (float)(1.0 - (double)ph / tailLength);
-                        if (meteor.X >= 0 && meteor.X < bufferWidth && meteor.Y + ph >= 0 && meteor.Y + ph < bufferHeight) {
-                            buffer[meteor.Y + ph, meteor.X] = HSVUtils.HSVtoColor(hsv);
+                        if (meteor.X < 0 || meteor.X >= bufferWidth || meteor.Y + ph < 0 || meteor.Y + ph >= bufferHeight) {
+                            continue;
+                        }
+                        var y = meteor.Y + (chkBoxUp.Checked ? -ph : ph);
+                        if (y >= 0 && y < bufferHeight) {
+                            buffer[y, meteor.X] = HSVUtils.HSVtoColor(hsv);
                         }
                     }
-                    meteor.Y -= mspeed;
+                    meteor.Y += (chkBoxUp.Checked ? mspeed : -mspeed);
                 }
             }
             // delete old meteors
@@ -134,6 +137,7 @@ namespace Meteors {
             }
             return buffer;
         }
+
 
         private void Meteors_ControlChanged(object sender, EventArgs e) {
             if (_initializing) return;
