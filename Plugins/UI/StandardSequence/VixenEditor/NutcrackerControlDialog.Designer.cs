@@ -40,6 +40,7 @@ namespace VixenEditor
             this.nutcrackerEffectControl1 = new NutcrackerEffectsControl.NutcrackerEffectControl();
             this.pbPreview = new System.Windows.Forms.PictureBox();
             this.gbSettings = new System.Windows.Forms.GroupBox();
+            this.lblRenderInfo = new System.Windows.Forms.Label();
             this.tbSparkles = new System.Windows.Forms.TrackBar();
             this.lblSparkles = new System.Windows.Forms.Label();
             this.lblStatsMs = new System.Windows.Forms.Label();
@@ -139,6 +140,7 @@ namespace VixenEditor
             // 
             // gbSettings
             // 
+            this.gbSettings.Controls.Add(this.lblRenderInfo);
             this.gbSettings.Controls.Add(this.tbSparkles);
             this.gbSettings.Controls.Add(this.lblSparkles);
             this.gbSettings.Controls.Add(this.lblStatsMs);
@@ -166,6 +168,15 @@ namespace VixenEditor
             this.gbSettings.TabIndex = 0;
             this.gbSettings.TabStop = false;
             this.gbSettings.Text = "Nutcracker Settings  -  Original Concept by: Sean Meighan and Matt Brown";
+            // 
+            // lblRenderInfo
+            // 
+            this.lblRenderInfo.AutoSize = true;
+            this.lblRenderInfo.Location = new System.Drawing.Point(7, 152);
+            this.lblRenderInfo.Name = "lblRenderInfo";
+            this.lblRenderInfo.Size = new System.Drawing.Size(114, 13);
+            this.lblRenderInfo.TabIndex = 25;
+            this.lblRenderInfo.Text = "Rendering Information:";
             // 
             // tbSparkles
             // 
@@ -693,5 +704,6 @@ namespace VixenEditor
         private Label lblStatsMs;
         private TrackBar tbSparkles;
         private Label lblSparkles;
+        private Label lblRenderInfo;
     }
 }
