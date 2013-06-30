@@ -164,6 +164,7 @@ namespace NutcrackerEffectsControl
             this.palette1.TabIndex = 17;
             this.palette1.Text = "1";
             this.palette1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.palette1.Click += new System.EventHandler(this.palette_Click);
             // 
             // palette2
             // 
@@ -176,6 +177,7 @@ namespace NutcrackerEffectsControl
             this.palette2.TabIndex = 18;
             this.palette2.Text = "2";
             this.palette2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.palette2.Click += new System.EventHandler(this.palette_Click);
             // 
             // palette3
             // 
@@ -188,6 +190,7 @@ namespace NutcrackerEffectsControl
             this.palette3.TabIndex = 19;
             this.palette3.Text = "3";
             this.palette3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.palette3.Click += new System.EventHandler(this.palette_Click);
             // 
             // palette5
             // 
@@ -200,6 +203,7 @@ namespace NutcrackerEffectsControl
             this.palette5.TabIndex = 21;
             this.palette5.Text = "5";
             this.palette5.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.palette5.Click += new System.EventHandler(this.palette_Click);
             // 
             // palette4
             // 
@@ -212,6 +216,7 @@ namespace NutcrackerEffectsControl
             this.palette4.TabIndex = 22;
             this.palette4.Text = "4";
             this.palette4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.palette4.Click += new System.EventHandler(this.palette_Click);
             // 
             // palette6
             // 
@@ -224,6 +229,7 @@ namespace NutcrackerEffectsControl
             this.palette6.TabIndex = 23;
             this.palette6.Text = "6";
             this.palette6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.palette6.Click += new System.EventHandler(this.palette_Click);
             // 
             // tbNotes
             // 

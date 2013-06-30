@@ -146,5 +146,16 @@ namespace NutcrackerEffectsControl {
         private void NutcrackerEffect_ControlChanged(object sender, EventArgs e) {
             //OnEffectChanged(sender, e);
         }
+
+        private void palette_Click(object sender, EventArgs e) {
+            using (var colorDialog = new ColorDialog {AllowFullOpen = true, AnyColor = true, FullOpen = true}) {
+                colorDialog.CustomColors = Preference2.GetInstance().CustomColors;
+                if (colorDialog.ShowDialog() != DialogResult.OK) {
+                    return;
+                }
+                ((Label) sender).BackColor = colorDialog.Color;
+                Preference2.GetInstance().CustomColors = colorDialog.CustomColors;
+            }
+        }
     }
 }
