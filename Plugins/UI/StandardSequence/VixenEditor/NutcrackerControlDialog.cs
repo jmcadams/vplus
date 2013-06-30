@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 using CommonUtils;
@@ -108,7 +110,11 @@ namespace VixenEditor
 
         private void InitializeModels() {
             cbModels.Items.Clear();
-            //Load Here
+            var data = new NutcrackerXmlManager();
+            var models = data.GetModels();
+            foreach (var nameAttr in models.Select(m => m.Attribute("name")).Where(name => name != null)) {
+                cbModels.Items.Add(nameAttr.Value);
+            }
             cbModels.Items.Add("Manage Models");
             
             var degrees = 180;

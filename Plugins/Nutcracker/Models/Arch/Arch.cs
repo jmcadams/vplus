@@ -23,7 +23,7 @@ namespace Arch {
         }
 
         public string Notes {
-            get { return "Broken!"; }
+            get { return "Broken! WILL CAUSE A CRASH!"; }
         }
 
         public XmlElement Settings { get; set; }

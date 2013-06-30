@@ -4,6 +4,9 @@ using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
+
+using CommonUtils;
+
 using VixenPlus;
 
 namespace NutcrackerEffectsControl {
@@ -155,6 +158,44 @@ namespace NutcrackerEffectsControl {
                 }
                 ((Label) sender).BackColor = colorDialog.Color;
                 Preference2.GetInstance().CustomColors = colorDialog.CustomColors;
+            }
+        }
+
+
+        public void SetPalette(Color[] colors) {
+            palette1.BackColor = colors[0];
+            palette1.ForeColor = Utils.GetForeColor(colors[0]);
+            palette2.BackColor = colors[1];
+            palette2.ForeColor = Utils.GetForeColor(colors[1]);
+            palette3.BackColor = colors[2];
+            palette3.ForeColor = Utils.GetForeColor(colors[2]);
+            palette4.BackColor = colors[3];
+            palette4.ForeColor = Utils.GetForeColor(colors[3]);
+            palette5.BackColor = colors[4];
+            palette5.ForeColor = Utils.GetForeColor(colors[4]);
+            palette6.BackColor = colors[5];
+            palette6.ForeColor = Utils.GetForeColor(colors[5]);
+        }
+
+
+        public string[] GetHtmlPalette() {
+            return new[] {
+                ToHtml(palette1.BackColor), ToHtml(palette2.BackColor), ToHtml(palette3.BackColor), ToHtml(palette4.BackColor),
+                ToHtml(palette5.BackColor), ToHtml(palette6.BackColor)
+            };
+        }
+
+
+        private static string ToHtml(Color color) {
+            return string.Format("#{0:X2}{1:X2}{2:X2}", color.R, color.G, color.B);
+        }
+
+
+        private void btnPalette_Click(object sender, EventArgs e) {
+            Action<Color[]> setPalette = SetPalette;
+            Func<string[]> getPalette = GetHtmlPalette;
+            using (var pm = new NutcrackerPaletteManager(setPalette, getPalette)) {
+                pm.ShowDialog();
             }
         }
     }

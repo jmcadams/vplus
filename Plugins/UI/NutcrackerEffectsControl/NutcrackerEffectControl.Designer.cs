@@ -78,6 +78,7 @@ namespace NutcrackerEffectsControl
             this.btnPalette.TabIndex = 2;
             this.btnPalette.Text = "Palette";
             this.btnPalette.UseVisualStyleBackColor = true;
+            this.btnPalette.Click += new System.EventHandler(this.btnPalette_Click);
             // 
             // cbEffects
             // 
@@ -168,9 +169,9 @@ namespace NutcrackerEffectsControl
             // 
             // palette2
             // 
-            this.palette2.BackColor = System.Drawing.Color.Green;
+            this.palette2.BackColor = System.Drawing.Color.Lime;
             this.palette2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.palette2.ForeColor = System.Drawing.Color.White;
+            this.palette2.ForeColor = System.Drawing.Color.Black;
             this.palette2.Location = new System.Drawing.Point(277, 55);
             this.palette2.Name = "palette2";
             this.palette2.Size = new System.Drawing.Size(28, 14);
