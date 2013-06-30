@@ -54,6 +54,7 @@
             0,
             0,
             0});
+            this.nudNodeCount.ValueChanged += new System.EventHandler(this.control_ValueChanged);
             // 
             // lblNodeCount
             // 
@@ -80,6 +81,7 @@
             0,
             0,
             0});
+            this.nudArchCount.ValueChanged += new System.EventHandler(this.control_ValueChanged);
             // 
             // lblArchCount
             // 
