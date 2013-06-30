@@ -39,11 +39,6 @@
             // nudBottomCount
             // 
             this.nudBottomCount.Location = new System.Drawing.Point(276, 99);
-            this.nudBottomCount.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
             this.nudBottomCount.Minimum = new decimal(new int[] {
             1,
             0,
@@ -57,12 +52,13 @@
             0,
             0,
             0});
+            this.nudBottomCount.ValueChanged += new System.EventHandler(this.control_ValueChanged);
             // 
             // nudSideCount
             // 
             this.nudSideCount.Location = new System.Drawing.Point(276, 59);
             this.nudSideCount.Maximum = new decimal(new int[] {
-            300,
+            200,
             0,
             0,
             0});
@@ -79,6 +75,7 @@
             0,
             0,
             0});
+            this.nudSideCount.ValueChanged += new System.EventHandler(this.control_ValueChanged);
             // 
             // lblSideCount
             // 
@@ -114,6 +111,7 @@
             0,
             0,
             0});
+            this.nudTopCount.ValueChanged += new System.EventHandler(this.control_ValueChanged);
             // 
             // lblTopCount
             // 
