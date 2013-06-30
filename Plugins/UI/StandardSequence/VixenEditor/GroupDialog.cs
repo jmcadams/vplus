@@ -133,7 +133,9 @@ namespace VixenEditor {
 
 
         private void btnGroupColor_Click(object sender, EventArgs e) {
-            using (var color = new ColorDialog()) {
+            using (var color = new ColorDialog{AllowFullOpen = true, AnyColor = true, FullOpen = true}) {
+                color.CustomColors = Preference2.GetInstance().CustomColors;
+
                 if (color.ShowDialog() != DialogResult.OK) {
                     return;
                 }
@@ -145,6 +147,8 @@ namespace VixenEditor {
                     }
                 }
                 tvGroups.EndUpdate();
+                Preference2.GetInstance().CustomColors = color.CustomColors;
+
             }
         }
 

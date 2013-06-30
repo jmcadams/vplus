@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -32,12 +31,7 @@ namespace VixenPlus.Dialogs {
                 _colorsInUse.Add(channel.Color.ToArgb(), channel.Color);
             }
             _preferences = ((ISystem) Interfaces.Available["ISystem"]).UserPreferences;
-            var strArray = _preferences.GetString("CustomColors").Split(new[] {','});
-            var numArray = new int[strArray.Length];
-            for (var i = 0; i < strArray.Length; i++) {
-                numArray[i] = int.Parse(strArray[i]);
-            }
-            colorDialog.CustomColors = numArray;
+            colorDialog.CustomColors = _preferences.CustomColors;
         }
 
 
@@ -73,11 +67,7 @@ namespace VixenPlus.Dialogs {
                 listBoxColorsInUse.Items.Add(colorDialog.Color);
                 _colorsInUse.Add(colorDialog.Color.ToArgb(), colorDialog.Color);
             }
-            var strArray = new string[colorDialog.CustomColors.Length];
-            for (var i = 0; i < strArray.Length; i++) {
-                strArray[i] = colorDialog.CustomColors[i].ToString(CultureInfo.InvariantCulture);
-            }
-            _preferences.SetString("CustomColors", string.Join(",", strArray));
+            _preferences.CustomColors = colorDialog.CustomColors;
         }
 
 

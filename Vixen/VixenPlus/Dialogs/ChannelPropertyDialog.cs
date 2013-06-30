@@ -22,14 +22,8 @@ namespace VixenPlus.Dialogs
             _internalChange = false;
             label3.Visible = labelOutputChannel.Visible = showOutputChannel;
             GotoChannel(currentChannel);
-            _preferences = ((ISystem) Interfaces.Available["ISystem"]).UserPreferences;
-            var strArray = _preferences.GetString("CustomColors").Split(new[] {','});
-            var numArray = new int[strArray.Length];
-            for (var i = 0; i < strArray.Length; i++)
-            {
-                numArray[i] = int.Parse(strArray[i]);
-            }
-            colorDialog.CustomColors = numArray;
+
+            colorDialog.CustomColors = _preferences.CustomColors;
         }
 
         private void buttonClose_Click(object sender, EventArgs e)
@@ -44,12 +38,7 @@ namespace VixenPlus.Dialogs
                 return;
             }
             buttonColor.BackColor = colorDialog.Color;
-            var strArray = new string[colorDialog.CustomColors.Length];
-            for (var i = 0; i < strArray.Length; i++)
-            {
-                strArray[i] = colorDialog.CustomColors[i].ToString(CultureInfo.InvariantCulture);
-            }
-            _preferences.SetString("CustomColors", string.Join(",", strArray));
+            _preferences.CustomColors = colorDialog.CustomColors;
             ToChannel();
             comboBoxChannels.Refresh();
         }

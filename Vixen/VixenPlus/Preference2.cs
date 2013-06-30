@@ -314,5 +314,24 @@ namespace VixenPlus {
             var garbageStart = deviceName.IndexOf("\0", StringComparison.Ordinal);
             return garbageStart < 0 ? deviceName : deviceName.Substring(0, garbageStart);
         }
+
+
+        public int[] CustomColors {
+            get {
+                var loadCustomColors = GetString("CustomColors").Split(new[] { ',' });
+                var numArray = new int[loadCustomColors.Length];
+                for (var i = 0; i < loadCustomColors.Length; i++) {
+                    numArray[i] = int.Parse(loadCustomColors[i]);
+                }
+                return numArray;
+            }
+            set {
+                var saveCustomColors = new string[value.Length];
+                for (var i = 0; i < saveCustomColors.Length; i++) {
+                    saveCustomColors[i] = value[i].ToString(CultureInfo.InvariantCulture);
+                }
+                SetString("CustomColors", string.Join(",", saveCustomColors));
+            }
+        }
     }
 }
