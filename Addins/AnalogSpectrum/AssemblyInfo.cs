@@ -1,8 +1,8 @@
 // Assembly AnalogSpectrum, Version 1.0.0.0
 
-[assembly: System.Reflection.AssemblyVersion("1.0.0.0")]
+[assembly: System.Reflection.AssemblyVersion("0.0.1.180")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
-[assembly: System.Reflection.AssemblyFileVersion("1.0.0.0")]
+[assembly: System.Reflection.AssemblyFileVersion("0.0.1.180")]
 [assembly: System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)]
 [assembly: System.Reflection.AssemblyCopyright("Copyleft 2013")]
 [assembly: System.Reflection.AssemblyProduct("VixenPlus")]

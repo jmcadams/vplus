@@ -1,7 +1,7 @@
 // Assembly K8055, Version 1.0.0.0
 
-[assembly: System.Reflection.AssemblyVersion("1.0.0.0")]
-[assembly: System.Reflection.AssemblyFileVersion("1.0.0.0")]
+[assembly: System.Reflection.AssemblyVersion("0.0.1.180")]
+[assembly: System.Reflection.AssemblyFileVersion("0.0.1.180")]
 [assembly: System.Runtime.InteropServices.Guid("10c9b0a5-5ac1-4232-8a78-78f0ca2751cd")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 [assembly: System.Reflection.AssemblyTrademark("")]

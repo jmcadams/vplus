@@ -1,8 +1,8 @@
 // Assembly EZ-8, Version 1.0.0.0
 
-[assembly: System.Reflection.AssemblyVersion("1.0.0.0")]
+[assembly: System.Reflection.AssemblyVersion("0.0.1.180")]
 [assembly: System.Reflection.AssemblyProduct("EZ-8")]
-[assembly: System.Reflection.AssemblyFileVersion("1.0.0.0")]
+[assembly: System.Reflection.AssemblyFileVersion("0.0.1.180")]
 [assembly: System.Runtime.InteropServices.Guid("26ff95bc-d635-4bcb-bfa9-14b6826f30ba")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 [assembly: System.Reflection.AssemblyTrademark("")]

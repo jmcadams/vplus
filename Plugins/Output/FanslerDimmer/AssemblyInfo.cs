@@ -1,7 +1,7 @@
 // Assembly FanslerDimmer, Version 1.0.0.0
 
-[assembly: System.Reflection.AssemblyVersion("1.0.0.0")]
-[assembly: System.Reflection.AssemblyFileVersion("1.0.0.0")]
+[assembly: System.Reflection.AssemblyVersion("0.0.1.180")]
+[assembly: System.Reflection.AssemblyFileVersion("0.0.1.180")]
 [assembly: System.Runtime.InteropServices.Guid("0c8f1205-7b0f-41b7-ba4c-4dae80bd9548")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 [assembly: System.Reflection.AssemblyTrademark("")]

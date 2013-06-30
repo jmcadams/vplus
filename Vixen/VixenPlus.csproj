@@ -572,6 +572,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenPlus\AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
