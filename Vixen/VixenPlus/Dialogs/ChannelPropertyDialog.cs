@@ -16,6 +16,7 @@ namespace VixenPlus.Dialogs
         public ChannelPropertyDialog(List<Channel> channels, Channel currentChannel, bool showOutputChannel)
         {
             InitializeComponent();
+            _preferences = Preference2.GetInstance();
             _channels = channels;
             _internalChange = true;
             comboBoxChannels.Items.AddRange(channels.ToArray());

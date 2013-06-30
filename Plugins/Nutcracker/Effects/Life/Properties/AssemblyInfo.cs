@@ -7,7 +7,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Life")]
 [assembly: AssemblyDescription("Vixen+ Lighting Control")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyDescription("")]
 [assembly: AssemblyProduct("VixenPlus")]
 [assembly: AssemblyCopyright("Copyleft 2013")]
 [assembly: AssemblyTrademark("")]
