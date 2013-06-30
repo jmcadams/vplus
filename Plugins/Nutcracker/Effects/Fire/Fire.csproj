@@ -39,7 +39,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>..\..\..\Release\Plugins\Nutcracker\Effects</OutputPath>
+    <OutputPath>..\..\..\..\Release\Plugins\Nutcracker\Effects</OutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants>TRACE</DefineConstants>
     <DebugSymbols>false</DebugSymbols>
@@ -62,7 +62,7 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release32|AnyCPU'">
-    <OutputPath>..\..\..\Release32\Plugins\Nutcracker\Effects</OutputPath>
+    <OutputPath>..\..\..\..\Release32\Plugins\Nutcracker\Effects</OutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants>TRACE</DefineConstants>
     <DebugSymbols>false</DebugSymbols>
