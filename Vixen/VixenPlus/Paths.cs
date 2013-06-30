@@ -61,6 +61,10 @@ namespace VixenPlus {
             get { return Path.Combine(PluginBasePath, @"Nutcracker\Models"); }
         }
 
+        public static string NutcrackerDataPath {
+            get { return Path.Combine(DataPath, "Nutcracker"); }
+        }
+
         public static string OutputPluginPath {
             get { return Path.Combine(PluginBasePath, "Output"); }
         }
