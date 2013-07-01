@@ -24,6 +24,9 @@ The next generation of Vixen 2 compatible lighting control sequencer
     Audio engine : FMOD Sound System by Firelight Technologies
     Licensed under FMOD Non-Commercial License
     
+    J1Sys Output Plugin by Joshua 1 Systems, Adapted for Vixen+ by
+    John McAdams, See: J1Sys License.txt for more information.
+    
 NOTES:
 ======
 To download the DirectX runtimes, which are not provided with this distro, see: 
