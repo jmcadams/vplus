@@ -300,7 +300,7 @@ namespace VixenEditor {
                     }
 
                     if (msg != String.Empty) {
-                        if (MessageBox.Show(msg + "\nClick OK to try again.", "Group Naming Error", MessageBoxButtons.OKCancel) == DialogResult.OK) {
+                        if (MessageBox.Show(msg + @"\nClick OK to try again.", @"Group Naming Error", MessageBoxButtons.OKCancel) == DialogResult.OK) {
                             groupNameDialog.Response = value;
                             validName = false;
                         } 
@@ -320,7 +320,7 @@ namespace VixenEditor {
             var childNodes = tvGroups.Nodes.Cast<TreeNode>().Where(n => !existingNodes.Contains(n.Name)).ToList();
 
             if (childNodes.Count == 0) {
-                MessageBox.Show("All possible child nodes have been added", "No more nodes", MessageBoxButtons.OK);
+                MessageBox.Show(@"All possible child nodes have been added", @"No more nodes", MessageBoxButtons.OK);
                 return;
             }
 
@@ -400,10 +400,14 @@ namespace VixenEditor {
             tvGroups.BeginUpdate();
             foreach (int index in lbChannels.SelectedIndices) {
                 var channel = _channels[index];
-                foreach (var newNode in tvGroups.SelectedNodes.Select(node => node.Nodes.Add(channel.Name)).Where(newNode => newNode.Nodes.Find(channel.Name, false).Length == 0)) {
+                foreach (
+                    var newNode in
+                        tvGroups.SelectedNodes.Select(node => node.Nodes.Add(channel.Name))
+                                .Where(newNode => newNode.Nodes.Find(channel.Name, false).Length == 0)) {
                     newNode.Tag = new GroupTagData {
-                        IsLeafNode = true, NodeColor = channel.Color,
-                        UnderlyingChannel = channel.OutputChannel.ToString(CultureInfo.InvariantCulture)
+                        IsLeafNode = true,
+                        NodeColor = channel.Color,
+                        UnderlyingChannel = _seq.FullChannels.IndexOf(channel).ToString(CultureInfo.InvariantCulture)
                     };
                     newNode.Name = channel.Name;
                     AddReferencedNode(newNode);
