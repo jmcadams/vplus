@@ -6,74 +6,77 @@
 
     internal class Widget : IDisposable
     {
-        private string logFile = Path.Combine(VixenPlus.Paths.DataPath, "dmxusbpro.log");
-        private Message m_dmxPacketMessage;
-        private SerialPort m_serialPort = null;
-        private byte[] m_statePacket;
+        private readonly string _logFile = Path.Combine(VixenPlus.Paths.DataPath, "dmxusbpro.log");
+        private readonly Message _dmxPacketMessage;
+        private readonly SerialPort _serialPort;
+        private readonly byte[] _statePacket;
 
         public Widget(SerialPort serialPort)
         {
-            this.m_serialPort = serialPort;
-            this.m_statePacket = new byte[0x201];
-            this.m_dmxPacketMessage = new Message(MessageType.OutputOnlySendDMXPacketRequest);
-            this.m_dmxPacketMessage.Data = this.m_statePacket;
+            _serialPort = serialPort;
+            _statePacket = new byte[0x201];
+            _dmxPacketMessage = new Message(MessageType.OutputOnlySendDMXPacketRequest) {Data = _statePacket};
         }
 
         public void Dispose()
         {
-            if ((this.m_serialPort != null) && this.m_serialPort.IsOpen)
+            if ((_serialPort != null) && _serialPort.IsOpen)
             {
-                this.m_serialPort.Close();
+                _serialPort.Close();
             }
             GC.SuppressFinalize(this);
         }
 
         ~Widget()
         {
-            this.Dispose();
+            Dispose();
         }
 
-        public void OutputDMXPacket(byte[] channelValues)
-        {
-            if (this.m_serialPort == null)
-            {
-                File.AppendAllText(this.logFile, "Port reference is null\n");
+
+        public void OutputDMXPacket(byte[] channelValues) {
+            if (_serialPort == null) {
+                File.AppendAllText(_logFile, @"Port reference is null\n");
             }
-            if (this.m_statePacket == null)
-            {
-                File.AppendAllText(this.logFile, "State packet is null\n");
+            if (_statePacket == null) {
+                File.AppendAllText(_logFile, @"State packet is null\n");
             }
-            if (this.m_dmxPacketMessage == null)
-            {
-                File.AppendAllText(this.logFile, "Packet message is null\n");
+            if (_dmxPacketMessage == null) {
+                File.AppendAllText(_logFile, @"Packet message is null\n");
             }
-            else if (this.m_dmxPacketMessage.Packet == null)
-            {
-                File.AppendAllText(this.logFile, "Packet message : packet is null\n");
+            else if (_dmxPacketMessage.Packet == null) {
+                File.AppendAllText(_logFile, @"Packet message : packet is null\n");
             }
-            if (!this.m_serialPort.IsOpen)
-            {
-                this.m_serialPort.Open();
+            if (_serialPort != null && !_serialPort.IsOpen) {
+                _serialPort.Open();
             }
-            this.m_statePacket[0] = 0;
-            Array.Copy(channelValues, 0, this.m_statePacket, 1, Math.Min(0x200, channelValues.Length));
-            byte[] packet = this.m_dmxPacketMessage.Packet;
-            this.m_serialPort.Write(packet, 0, packet.Length);
+            if (_statePacket != null) {
+                _statePacket[0] = 0;
+                Array.Copy(channelValues, 0, _statePacket, 1, Math.Min(0x200, channelValues.Length));
+            }
+            if (_dmxPacketMessage == null) {
+                return;
+            }
+
+            var packet = _dmxPacketMessage.Packet;
+            if (_serialPort != null && packet != null) {
+                _serialPort.Write(packet, 0, packet.Length);
+            }
         }
+
 
         public void Start()
         {
-            if (!this.m_serialPort.IsOpen)
+            if (!_serialPort.IsOpen)
             {
-                this.m_serialPort.Open();
+                _serialPort.Open();
             }
         }
 
         public void Stop()
         {
-            if (this.m_serialPort.IsOpen)
+            if (_serialPort.IsOpen)
             {
-                this.m_serialPort.Close();
+                _serialPort.Close();
             }
         }
     }

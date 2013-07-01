@@ -1,7 +1,5 @@
 ﻿namespace DMXUSBPro
 {
-    using System;
-
     internal enum MessageType
     {
         GetWidgetParametersReply = 3,

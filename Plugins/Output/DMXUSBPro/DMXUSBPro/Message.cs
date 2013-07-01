@@ -4,21 +4,21 @@
 
     internal class Message
     {
-        private byte[] m_data = null;
-        private ushort m_dataLength = 0;
-        private MessageType m_messageType;
+        private byte[] _data;
+        private ushort _dataLength;
+        private readonly MessageType _messageType;
 
         public Message(MessageType type)
         {
-            this.m_messageType = type;
+            _messageType = type;
         }
 
         public byte[] Data
         {
             set
             {
-                this.m_data = value;
-                this.m_dataLength = (ushort) Math.Min(value.Length, 600);
+                _data = value;
+                _dataLength = (ushort) Math.Min(value.Length, 600);
             }
         }
 
@@ -26,15 +26,15 @@
         {
             get
             {
-                byte[] array = new byte[5 + this.m_dataLength];
+                var array = new byte[5 + _dataLength];
                 array[0] = 0x7e;
-                array[1] = (byte) this.m_messageType;
-                array[2] = (byte) this.m_dataLength;
-                array[3] = (byte) (this.m_dataLength >> 8);
-                array[4 + this.m_dataLength] = 0xe7;
-                if (this.m_data != null)
+                array[1] = (byte) _messageType;
+                array[2] = (byte) _dataLength;
+                array[3] = (byte) (_dataLength >> 8);
+                array[4 + _dataLength] = 0xe7;
+                if (_data != null)
                 {
-                    this.m_data.CopyTo(array, 4);
+                    _data.CopyTo(array, 4);
                 }
                 return array;
             }
