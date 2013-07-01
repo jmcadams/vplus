@@ -57,7 +57,8 @@ namespace VixenPlus {
             credits.AppendLine(Resources.TranslatedBy).AppendLine(Resources.Translators);
             credits.AppendLine(Resources.DedicatedTo).AppendLine(Resources.MyFriends).AppendLine(Resources.ThankYou);
             credits.AppendLine(Resources.OpenSource).AppendLine("FMOD Sound System by:\nFirelight Technologies\n");
-            credits.AppendLine("Nutcracker adapted from xLights\nwhich written by:\nSean Meighan\nMatt Brown");
+            credits.AppendLine("Nutcracker adapted from xLights\nwhich written by:\nSean Meighan\nMatt Brown\n");
+            credits.AppendLine("J1Sys Plugin by: Joshual 1 Systems\nSee: J1Sys License.txt");
             credits.AppendLine(Resources.Lutefisk);
 
             // This is how we get the correct height of the credits regardless of how 
