@@ -2978,6 +2978,9 @@ namespace VixenEditor {
             using (var dialog = new ChannelPropertyDialog(channelsToShow, SelectedChannel, true)) {
                 dialog.ShowDialog();
             }
+            if (_sequence.Profile != null) {
+                _sequence.Profile.SaveToFile();
+            }
             pictureBoxChannels.Refresh();
             pictureBoxGrid.Refresh();
             IsDirty = true;
