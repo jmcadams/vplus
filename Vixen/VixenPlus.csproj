@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectType>local</ProjectType>
@@ -85,8 +85,6 @@
     <ApplicationIcon>Resources\VixenPlus.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -96,7 +94,6 @@
     <Reference Include="System.Drawing">
       <Name>System.Drawing</Name>
     </Reference>
-    <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms">
       <Name>System.Windows.Forms</Name>
     </Reference>
@@ -701,11 +698,6 @@
     <ProjectReference Include="..\fmod\fmod.csproj">
       <Project>{7B3F05AD-9943-4359-97FF-0AE22C225EB4}</Project>
       <Name>fmod</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\VixenControls\CommonControls.csproj">
-      <Project>{6B127E8D-35CC-409E-9E66-520FBA86E283}</Project>
-      <Name>CommonControls</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
