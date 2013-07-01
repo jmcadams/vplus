@@ -3,128 +3,122 @@
     using System;
     using System.Threading;
 
-    public class IDMX
+    public class Idmx
     {
-        private static byte[] m_data = null;
-        private static IntPtr m_FTD2XXHandle = IntPtr.Zero;
-        private static object m_lockObject = new object();
-        private static int m_refCount = 0;
-        private static ThreadState m_running = ThreadState.Stopped;
-        private static Thread m_thread;
+        private static byte[] _data;
+        private static IntPtr _ftd2XxHandle = IntPtr.Zero;
+        private static readonly object LockObject = new object();
+        private static int _refCount;
+        private static Thread _thread;
+
+
+        static Idmx() {
+            Running = ThreadState.Stopped;
+        }
+
 
         public void Close()
         {
-            lock (m_lockObject)
+            lock (LockObject)
             {
-                if ((m_refCount > 0) && (--m_refCount == 0))
-                {
-                    if (this.Running == ThreadState.Running)
-                    {
-                        this.Running = ThreadState.StopRequested;
-                        while (this.Running != ThreadState.Stopped)
-                        {
-                            Thread.Sleep(1);
-                        }
-                    }
-                    m_thread = null;
-                    if (m_FTD2XXHandle != IntPtr.Zero)
-                    {
-                        FTD2XX.FT_Close(m_FTD2XXHandle);
-                        m_FTD2XXHandle = IntPtr.Zero;
-                    }
-                    m_data = null;
+                if ((_refCount <= 0) || (--_refCount != 0)) {
+                    return;
                 }
+                if (Running == ThreadState.Running)
+                {
+                    Running = ThreadState.StopRequested;
+                    while (Running != ThreadState.Stopped)
+                    {
+                        Thread.Sleep(1);
+                    }
+                }
+                _thread = null;
+                if (_ftd2XxHandle != IntPtr.Zero)
+                {
+                    FTD2XX.FT_Close(_ftd2XxHandle);
+                    _ftd2XxHandle = IntPtr.Zero;
+                }
+                _data = null;
             }
         }
 
         public void Init()
         {
-            lock (m_lockObject)
-            {
-                if (((++m_refCount == 1) && (this.Running != ThreadState.Running)) && (m_thread == null))
+            lock (LockObject) {
+                if (((++_refCount != 1) || (Running == ThreadState.Running)) || (_thread != null)) {
+                    return;
+                }
+                try
                 {
-                    try
+                    if (_ftd2XxHandle == IntPtr.Zero)
                     {
-                        if (m_FTD2XXHandle == IntPtr.Zero)
+                        _data = new byte[0x201];
+                        if (FTD2XX.FT_Open(0, ref _ftd2XxHandle) != FTD2XX.FT_STATUS.FT_OK)
                         {
-                            m_data = new byte[0x201];
-                            if (FTD2XX.FT_Open(0, ref m_FTD2XXHandle) != FTD2XX.FT_STATUS.FT_OK)
-                            {
-                                throw new Exception("Error opening FTD2XX device 0");
-                            }
-                            FTD2XX.FT_ResetDevice(m_FTD2XXHandle);
-                            FTD2XX.FT_SetTimeouts(m_FTD2XXHandle, 0x10, 50);
-                            FTD2XX.FT_SetBaudRate(m_FTD2XXHandle, 0x3d090);
-                            FTD2XX.FT_SetDataCharacteristics(m_FTD2XXHandle, 8, 2, 0);
-                            FTD2XX.FT_SetFlowControl(m_FTD2XXHandle, 0, 0, 0);
+                            throw new Exception("Error opening FTD2XX device 0");
                         }
-                        m_thread = new Thread(new ThreadStart(this.SendDataThread));
-                        m_thread.Start();
+                        FTD2XX.FT_ResetDevice(_ftd2XxHandle);
+                        FTD2XX.FT_SetTimeouts(_ftd2XxHandle, 16, 50);
+                        FTD2XX.FT_SetBaudRate(_ftd2XxHandle, 250000);
+                        FTD2XX.FT_SetDataCharacteristics(_ftd2XxHandle, 8, 2, 0);
+                        FTD2XX.FT_SetFlowControl(_ftd2XxHandle, 0, 0, 0);
                     }
-                    catch
-                    {
-                        this.Close();
-                        throw;
-                    }
+                    _thread = new Thread(SendDataThread);
+                    _thread.Start();
+                }
+                catch
+                {
+                    Close();
+                    throw;
                 }
             }
         }
 
         public void SendData(byte[] values)
         {
-            if (m_data != null)
+            if (_data == null) {
+                return;
+            }
+            if (values.Length > 512)
             {
-                if (values.Length > 0x200)
-                {
-                    Array.Resize<byte>(ref values, 0x200);
-                }
-                lock (m_data)
-                {
-                    values.CopyTo(m_data, 1);
-                }
+                Array.Resize(ref values, 512);
+            }
+            lock (_data)
+            {
+                values.CopyTo(_data, 1);
             }
         }
 
         private void SendDataThread()
         {
             uint bytesWritten = 0;
-            this.Running = ThreadState.Running;
-            while (this.Running == ThreadState.Running)
+            Running = ThreadState.Running;
+            while (Running == ThreadState.Running)
             {
-                FTD2XX.FT_SetBreakOn(m_FTD2XXHandle);
+                FTD2XX.FT_SetBreakOn(_ftd2XxHandle);
                 Thread.Sleep(1);
-                FTD2XX.FT_SetBreakOff(m_FTD2XXHandle);
-                if ((m_data != null) && (this.Running == ThreadState.Running))
+                FTD2XX.FT_SetBreakOff(_ftd2XxHandle);
+                if ((_data != null) && (Running == ThreadState.Running))
                 {
-                    lock (m_data)
+                    lock (_data)
                     {
-                        FTD2XX.FT_Write(m_FTD2XXHandle, m_data, (uint) m_data.Length, ref bytesWritten);
+                        FTD2XX.FT_Write(_ftd2XxHandle, _data, (uint) _data.Length, ref bytesWritten);
                     }
                 }
                 Thread.Sleep(2);
             }
-            this.Running = ThreadState.Stopped;
+            Running = ThreadState.Stopped;
         }
 
         public int References
         {
             get
             {
-                return m_refCount;
+                return _refCount;
             }
         }
 
-        private ThreadState Running
-        {
-            get
-            {
-                return m_running;
-            }
-            set
-            {
-                m_running = value;
-            }
-        }
+        private static ThreadState Running { get; set; }
 
         private enum ThreadState
         {

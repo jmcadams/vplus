@@ -1,57 +1,52 @@
 namespace DMX_512
 {
-    using IDMX;
-    using System;
     using System.Windows.Forms;
     using System.Xml;
+    using IDMX;
     using VixenPlus;
 
-    public class DMX_512 : IEventDrivenOutputPlugIn, IOutputPlugIn, IHardwarePlugin, IPlugIn, ISetup
+    public class Dmx512 : IEventDrivenOutputPlugIn
     {
-        private IDMX m_dmxInterface = null;
-        private bool m_dmxRunning = false;
-        private SetupData m_setupData = null;
-        private XmlNode m_setupNode = null;
+        private readonly Idmx _dmxInterface;
+        private bool _dmxRunning;
 
-        public DMX_512()
+        public Dmx512()
         {
-            this.m_dmxInterface = new IDMX();
+            _dmxInterface = new Idmx();
         }
 
         public void Event(byte[] channelValues)
         {
-            this.m_dmxInterface.SendData(channelValues);
+            _dmxInterface.SendData(channelValues);
         }
 
         public void Initialize(IExecutable executableObject, SetupData setupData, XmlNode setupNode)
         {
-            this.m_setupData = setupData;
-            this.m_setupNode = setupNode;
         }
 
         public void Setup()
         {
-            MessageBox.Show("This plugin only supports a single universe.\nNothing to setup.", "DMX-512", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            MessageBox.Show(@"This plugin only supports a single universe.\nNothing to setup.", @"DMX-512", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
         public void Shutdown()
         {
-            if (this.m_dmxRunning && (this.m_dmxInterface != null))
-            {
-                this.m_dmxInterface.Close();
-                this.m_dmxRunning = false;
+            if (!_dmxRunning || (_dmxInterface == null)) {
+                return;
             }
+            _dmxInterface.Close();
+            _dmxRunning = false;
         }
 
         public void Startup()
         {
-            this.m_dmxInterface.Init();
-            this.m_dmxRunning = true;
+            _dmxInterface.Init();
+            _dmxRunning = true;
         }
 
         public override string ToString()
         {
-            return this.Name;
+            return Name;
         }
 
         public string Author
@@ -70,11 +65,11 @@ namespace DMX_512
             }
         }
 
-        public VixenPlus.HardwareMap[] HardwareMap
+        public HardwareMap[] HardwareMap
         {
             get
             {
-                return new VixenPlus.HardwareMap[0];
+                return new HardwareMap[0];
             }
         }
 
