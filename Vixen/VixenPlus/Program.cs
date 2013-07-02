@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 
 using Properties;
@@ -17,7 +18,9 @@ namespace VixenPlus {
                 // ReSharper disable AssignNullToNotNullAttribute
                 var log = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "crash.log");
                 // ReSharper restore AssignNullToNotNullAttribute
+                var version = Assembly.GetExecutingAssembly().GetName().Version;
                 using (var crash = new StreamWriter(log, true)) {
+                    crash.WriteLine(Resources.FormattedVersion, version);
                     crash.WriteLine(DateTime.Now);
                     crash.WriteLine(exception.Message);
                     crash.WriteLine(exception.StackTrace);
