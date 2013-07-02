@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+
+using Properties;
 
 namespace VixenPlus.Dialogs {
     public partial class FirstRunPathDialog : Form {
         public FirstRunPathDialog() {
             InitializeComponent();
+            pbIcon.Image = new Icon(Resources.VixenPlus, new Size(64, 64)).ToBitmap();
         }
 
 
@@ -33,7 +37,7 @@ namespace VixenPlus.Dialogs {
 
         private void btnOk_Click(object sender, EventArgs e) {
             if (rbCustom.Checked && tbFolder.Text == String.Empty) {
-                MessageBox.Show(@"Please select a folder", @"OOPS!", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show(@"Please select or enter a folder", @"OOPS!", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
 
@@ -41,7 +45,7 @@ namespace VixenPlus.Dialogs {
                 if (
                     MessageBox.Show(
                         @"It looks like you already have data in that folder.  " +
-                        @"This is okay, but should only be used if you're sure you want to potentially overwrite some of that data.  " +
+                        @"While this is okay, it should only be used if you're sure you want to potentially overwrite some of that data.  " +
                         Environment.NewLine + Environment.NewLine + @"Do you want to continue to use this folder?", @"Verify Current Folder",
                         MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                     return;
