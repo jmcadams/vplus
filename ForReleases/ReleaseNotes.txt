@@ -1,6 +1,9 @@
 02 JLY 2013 - V 0.0.182.1 (Private BETA)
     Added this ReleaseNotes.txt file
     Added License files to the releases
+    Fixed Names in Credits
+    Removed use of redirect.data and added data.dir.  Now will ask user upon first run for data directory
+    Added Version # to crash.log
 
 01 JLY 2013 - V 0.0.181.1 (Private BETA)
     Released J1Sys Output Plugin
