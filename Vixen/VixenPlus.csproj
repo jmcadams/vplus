@@ -198,6 +198,12 @@
     <Compile Include="VixenPlus\Dialogs\ChannelPropertyDialog.Designer.cs">
       <DependentUpon>ChannelPropertyDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="VixenPlus\Dialogs\FirstRunPathDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VixenPlus\Dialogs\FirstRunPathDialog.Designer.cs">
+      <DependentUpon>FirstRunPathDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="VixenPlus\Dialogs\HelpDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -605,6 +611,9 @@
     <EmbeddedResource Include="VixenPlus\Dialogs\ChannelPropertyDialog.resx">
       <DependentUpon>ChannelPropertyDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="VixenPlus\Dialogs\FirstRunPathDialog.resx">
+      <DependentUpon>FirstRunPathDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VixenPlus\Dialogs\HelpDialog.resx">
       <DependentUpon>HelpDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -868,7 +877,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent />
-    <PostBuildEvent />
+    <PreBuildEvent>del "$(TargetDir)*.txt</PreBuildEvent>
+    <PostBuildEvent>copy $(SolutionDir)..\ForReleases\*.* $(TagetDir)</PostBuildEvent>
   </PropertyGroup>
 </Project>

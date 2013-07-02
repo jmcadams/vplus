@@ -50,8 +50,7 @@ namespace VixenPlus
         private readonly Timers _timers;
         private readonly string _timersPath;
 
-        public VixenPlusForm(IEnumerable<string> args)
-        {
+        public VixenPlusForm(IEnumerable<string> args) {
             var list = new List<string>();
             list.AddRange(args);
             SetDataPath();
@@ -946,24 +945,45 @@ namespace VixenPlus
             dialog.Dispose();
         }
 
-        //todo move to preferences
-        private static void SetDataPath()
-        {
-            if (!File.Exists("redirect.data")) {
+
+        private const string DataDir = "data.dir";
+
+        private static void SetDataPath() {
+            CheckIfFirstRun();
+
+            string path;
+            using (var data = new StreamReader(DataDir)) {
+                path = data.ReadLine();
+            }
+
+            if (!String.IsNullOrEmpty(path)) {
+                path = Environment.ExpandEnvironmentVariables(path);
+                if (Directory.Exists(path)) {
+                    Paths.DataPath = path;
+                    return;
+                }
+            }
+            Paths.DataPath = Path.Combine(Paths.BinaryPath, "Data");
+        }
+
+
+
+        private static void CheckIfFirstRun() {
+            if (File.Exists(DataDir)) {
                 return;
             }
 
             string path;
-            using (var data = new StreamReader("redirect.data")) {
-                path = data.ReadLine();
+            using (var firstRunPath = new FirstRunPathDialog()) {
+                firstRunPath.ShowDialog();
+                path = firstRunPath.DataPath;
             }
-            if (!String.IsNullOrEmpty(path) && Directory.Exists(path)) {
-                Paths.DataPath = path;
-            }
-            else {
-                Paths.DataPath = Path.Combine(Paths.BinaryPath, "Data");
+
+            using (var file = new StreamWriter(Path.Combine(Paths.BinaryPath, DataDir))) {
+                file.WriteLine(path);
             }
         }
+
 
         private void SetShutdownTime(string time)
         {
