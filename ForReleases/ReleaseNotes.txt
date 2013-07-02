@@ -4,6 +4,7 @@
     Fixed Names in Credits
     Removed use of redirect.data and added data.dir.  Now will ask user upon first run for data directory
     Added Version # to crash.log
+    Took all of the libraries out of the project root
 
 01 JLY 2013 - V 0.0.181.1 (Private BETA)
     Released J1Sys Output Plugin
