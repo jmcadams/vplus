@@ -69,14 +69,6 @@ namespace VixenPlus {
             get { return Path.Combine(NutcrackerDataPath, "xlights_rgbeffects.xml"); }
         }
 
-        public static string NutcrackerDataFileWithDefault {
-            get {
-                return Path.Combine(NutcrackerDataPath,
-                                    File.Exists(NutcrackerDataFile)
-                                        ? "xlights_rgbeffects.xml" : "default_rgbeffects.xml");
-            }
-        }
-
         public static string OutputPluginPath {
             get { return Path.Combine(PluginBasePath, "Output"); }
         }

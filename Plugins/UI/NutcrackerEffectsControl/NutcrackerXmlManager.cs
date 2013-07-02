@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -11,8 +12,28 @@ namespace NutcrackerEffectsControl {
 
         private readonly XElement _doc;
 
+
         public NutcrackerXmlManager() {
-            _doc = XElement.Load(Paths.NutcrackerDataFileWithDefault);
+            if (File.Exists(Paths.NutcrackerDataFile)) {
+                _doc = XElement.Load(Paths.NutcrackerDataFile);
+            }
+            else {
+                _doc = new XElement("xrgb",
+                                    new XElement("models"),
+                                    new XElement("effects"),
+                                    new XElement("palettes",
+                                                 new XElement("palette",
+                                                              new XAttribute("name", "default"),
+                                                              new XAttribute("color1", "#FF0000"),
+                                                              new XAttribute("color2", "#00FF00"),
+                                                              new XAttribute("color3", "#0000FF"),
+                                                              new XAttribute("color4", "#FFFF00"),
+                                                              new XAttribute("color5", "#FFFFFF"),
+                                                              new XAttribute("color6", "#000000")
+                                                     )
+                                        )
+                    );
+            }
         }
 
 

@@ -1,0 +1,20 @@
+02 JLY 2013 - V 0.0.182.1 (Private BETA)
+    Added this ReleaseNotes.txt file
+    Added License files to the releases
+    Bug #3 Fix: Crash without crash log due to File Not Found error if default_rgbeffects.xml does not exist.
+       Create, in memory, the nutcracker defaults file if it doesn't exist instead of crashing.
+
+01 JLY 2013 - V 0.0.181.1 (Private BETA)
+    Released J1Sys Output Plugin
+    Renamed the redirect.data file to redirect.data.no so that the default behavior will occur.
+    Bug #2 Fix: If channel output orders do not match channel number, groups do not work properly.
+        Was only capturing the channel output number, not the channel number.
+
+30 JNE 2013 - V 0.0.180.2 (Private BETA)
+    Change Build Number Layout (Major.Minor.BuildDay.BuildNum)
+    Bug #1 Fix: Will not persist any changes to channel properties when using a profile.
+        Was not persisting the profile on a change to these properties.
+    Released the Open DMX and DMX Pro Output Plugins
+
+30 JNE 2013 - V 0.0.1.180 (Private BETA)
+    Initial Private Beta Release

@@ -45,16 +45,15 @@ namespace NutcrackerEffectsControl {
         }
 
         private void Delete_Click(object sender, EventArgs e) {
-            if (lbPalettes.SelectedIndex < 0) return;
+            if (lbPalettes.SelectedIndex < 0 || lbPalettes.SelectedItem.ToString() == "default") return;
 
             _nutcrackerData.RemovePalette(lbPalettes.SelectedItem.ToString());
             PopulatePalettes();
         }
 
         private void EnableButtons() {
-            var canLoadAndDelete = lbPalettes.SelectedIndex >= 0;
-            btnLoad1.Enabled = canLoadAndDelete;
-            btnDeletePalette.Enabled = canLoadAndDelete;
+            btnLoad1.Enabled = lbPalettes.SelectedIndex >= 0;
+            btnDeletePalette.Enabled = lbPalettes.SelectedIndex >= 0 && lbPalettes.SelectedItem.ToString() != "default";
         }
 
         private void lbPalettes_SelectedIndexChanged(object sender, EventArgs e) {
