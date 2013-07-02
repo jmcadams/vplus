@@ -37,7 +37,7 @@ namespace VixenPlus.Dialogs {
 
         private void btnOk_Click(object sender, EventArgs e) {
             if (rbCustom.Checked && tbFolder.Text == String.Empty) {
-                MessageBox.Show(@"Please select or enter a folder", @"OOPS!", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show(@"Please select a folder or enter a path", @"OOPS!", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
 
