@@ -643,6 +643,15 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Welcome to {0}! Thank you for choosing our program. It looks like this is the first time you have run {0} (or maybe you are setting up a new instance.) {0} needs to know where to store your data, so please choose from the following options, which can be changed in Tools..Preferences later:.
+        /// </summary>
+        public static string FirstRunPrompt {
+            get {
+                return ResourceManager.GetString("FirstRunPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This will detach the sequence from the profile and bring the profile data into the sequence.
         ///Is this what you want to do?.
         /// </summary>
@@ -962,6 +971,15 @@ namespace Properties {
         public static string LoadRoutine {
             get {
                 return ResourceManager.GetString("LoadRoutine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We hope you&apos;re enjoying using {0}! If you change your directory, {0} will NOT move your data to the new location, you will need to close {0} and then move your files to the new location, so save your open files before using this feature. Please select where you would like your data to be stored now:.
+        /// </summary>
+        public static string LocationChangePrompt {
+            get {
+                return ResourceManager.GetString("LocationChangePrompt", resourceCulture);
             }
         }
         

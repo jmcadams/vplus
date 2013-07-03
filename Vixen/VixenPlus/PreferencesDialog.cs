@@ -7,6 +7,8 @@ using System.Windows.Forms;
 using FMOD;
 using Properties;
 
+using VixenPlus.Dialogs;
+
 namespace VixenPlus {
     internal partial class PreferencesDialog : Form {
         private readonly Preference2 _preferences;
@@ -508,6 +510,12 @@ namespace VixenPlus {
                 _preferences.SetString(item, colorDialog.Color.ToArgb().ToString(CultureInfo.InvariantCulture));
 
                 _preferences.CustomColors = colorDialog.CustomColors;
+            }
+        }
+
+        private void btnSetDataFolder_Click(object sender, EventArgs e) {
+            using (var firstRunPath = new FirstRunPathDialog(false)) {
+                firstRunPath.ShowDialog();
             }
         }
     }

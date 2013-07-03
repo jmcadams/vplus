@@ -4,10 +4,11 @@ using System.IO;
 
 namespace VixenPlus {
     public static class Paths {
-        private static string _binaryPath = string.Empty;
+        private static string _binaryPath = String.Empty;
 
-        private static string _dataPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.Personal), Vendor.ProductName);
+        private static string _dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Vendor.ProductName);
+
+        public const string DataDir = "data.dir";
 
         public static string AudioPath {
             get { return Path.Combine(DataPath, "Audio"); }
@@ -15,7 +16,7 @@ namespace VixenPlus {
 
         public static string BinaryPath {
             get {
-                if (_binaryPath == string.Empty) {
+                if (_binaryPath == String.Empty) {
                     using (var process = Process.GetCurrentProcess()) {
                         _binaryPath = Path.GetDirectoryName(process.MainModule.FileName);
                     }
@@ -31,14 +32,16 @@ namespace VixenPlus {
         public static string DataPath {
             get { return _dataPath; }
             set {
-                _dataPath = !string.IsNullOrEmpty(value)
-                                ? value
-                                : Path.Combine(
-                                    Environment.GetFolderPath(Environment.SpecialFolder.Personal), Vendor.ProductName);
+                _dataPath = !String.IsNullOrEmpty(value)
+                                ? value : Path.Combine(MyDocutments, Vendor.ProductName);
                 if (!Directory.Exists(_dataPath)) {
                     Directory.CreateDirectory(_dataPath);
                 }
             }
+        }
+
+        public static string DataFolder {
+            get { return @"\" + Vendor.ProductName + "Data"; }
         }
 
         public static string ImportExportPath {
@@ -51,6 +54,10 @@ namespace VixenPlus {
 
         public static string LibraryPath {
             get { return Path.Combine(DataPath, "Libraries"); }
+        }
+
+        public static string MyDocutments {
+            get { return Environment.GetFolderPath(Environment.SpecialFolder.Personal); }
         }
 
         public static string NutcrackerEffectsPath {
@@ -92,8 +99,7 @@ namespace VixenPlus {
         public static string SequencePath {
             get {
                 var path = Host.Preferences.GetString("DefaultSequenceDirectory");
-                if ((path.Length > 0) &&
-                    Directory.Exists(path)) {
+                if ((path.Length > 0) && Directory.Exists(path)) {
                     return path;
                 }
                 return Path.Combine(DataPath, "Sequences");

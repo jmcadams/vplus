@@ -611,9 +611,6 @@
     <EmbeddedResource Include="VixenPlus\Dialogs\ChannelPropertyDialog.resx">
       <DependentUpon>ChannelPropertyDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VixenPlus\Dialogs\FirstRunPathDialog.resx">
-      <DependentUpon>FirstRunPathDialog.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="VixenPlus\Dialogs\HelpDialog.resx">
       <DependentUpon>HelpDialog.cs</DependentUpon>
     </EmbeddedResource>

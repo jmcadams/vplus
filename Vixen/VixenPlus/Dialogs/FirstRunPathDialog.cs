@@ -7,20 +7,31 @@ using Properties;
 
 namespace VixenPlus.Dialogs {
     public partial class FirstRunPathDialog : Form {
-        public FirstRunPathDialog() {
+        public FirstRunPathDialog(bool isFirstRun) {
             InitializeComponent();
+            tbPrompt.Text = string.Format(isFirstRun ? Resources.FirstRunPrompt : Resources.LocationChangePrompt, Vendor.ProductName);
+            if (isFirstRun) {
+                btnOk.Location = btnCancel.Location;
+            }
+            else {
+                btnCancel.Visible = true;
+            }
             pbIcon.Image = new Icon(Resources.VixenPlus, new Size(64, 64)).ToBitmap();
+            lblAppDir.Text = Paths.BinaryPath + Paths.DataFolder;
+            lblMyDocs.Text = Paths.MyDocutments + Paths.DataFolder;
+            lblCustom.Text = Paths.DataFolder;
         }
 
 
         public string DataPath {
-            get { return (rbUseAppDir.Checked ? Paths.BinaryPath : rbMyDocs.Checked ? Paths.DataPath : tbFolder.Text) + @"\Data"; }
+            get { return (rbUseAppDir.Checked ? Paths.BinaryPath : rbMyDocs.Checked ? Paths.DataPath : tbFolder.Text) + Paths.DataFolder; }
         }
 
 
         private void radioButton_CheckedChanged(object sender, EventArgs e) {
             btnFolder.Enabled = rbCustom.Checked;
             tbFolder.Enabled = rbCustom.Checked;
+            lblCustom.Visible = rbCustom.Checked;
         }
 
 
@@ -77,7 +88,15 @@ namespace VixenPlus.Dialogs {
                 Directory.CreateDirectory(path);
             }
 
+            using (var file = new StreamWriter(Path.Combine(Paths.BinaryPath, Paths.DataDir))) {
+                file.WriteLine(path);
+            }
+
             DialogResult = DialogResult.OK;
+        }
+
+        private void tbFolder_TextChanged(object sender, EventArgs e) {
+            lblCustom.Text = Environment.ExpandEnvironmentVariables(tbFolder.Text + Paths.DataFolder);
         }
     }
 }
