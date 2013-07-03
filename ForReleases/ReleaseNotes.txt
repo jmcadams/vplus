@@ -1,3 +1,7 @@
+02 JLY 2013 - V 0.0.182.2 (Private BETA)
+    Bug #3 Fix: If you select more than one row and then paste that selection on the last row, system crashes.
+        Was not checking if the paste went beyond the last row when storing undo/redo data.
+
 02 JLY 2013 - V 0.0.182.1 (Private BETA)
     Added this ReleaseNotes.txt file
     Added License files to the releases
