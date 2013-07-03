@@ -729,6 +729,7 @@ namespace VixenPlus
             if (uiBase != null)
             {
                 uiBase.DirtyChanged += plugin_DirtyChanged;
+                uiBase.IsDirty = DialogResult == DialogResult.None;
             }
             tag.MdiParent = this;
             tag.Show();

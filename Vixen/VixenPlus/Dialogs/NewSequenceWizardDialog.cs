@@ -105,13 +105,19 @@ namespace VixenPlus.Dialogs {
 
 
         private void buttonNext_Click(object sender, EventArgs e) {
-            _skip = false;
-            _back = false;
-            if (tabControl.SelectedTab == tabPageProfile) {
-                tabControl.SelectedTab = comboBoxProfiles.SelectedIndex == 0 ? tabPageChannelCount : tabPageAudio;
+            if (buttonNext.Text == @"&Next  >") {
+                _skip = false;
+                _back = false;
+                if (tabControl.SelectedTab == tabPageProfile) {
+                    tabControl.SelectedTab = comboBoxProfiles.SelectedIndex == 0 ? tabPageChannelCount : tabPageAudio;
+                }
+                else {
+                    tabControl.SelectedIndex++;
+                }
             }
             else {
-                tabControl.SelectedIndex++;
+                buttonOK_Click(null,null);
+                DialogResult = DialogResult.OK;
             }
         }
 
@@ -397,8 +403,9 @@ namespace VixenPlus.Dialogs {
                     break;
             }
             UpdateExplanations(e.TabPageIndex);
-            buttonSkip.Enabled = buttonNext.Enabled = e.TabPageIndex < (tabControl.TabCount - 1);
-            AcceptButton = (e.TabPageIndex == 4) ? null : (buttonNext.Enabled ? (buttonNext) : (buttonOK));
+            buttonSkip.Enabled = e.TabPageIndex < (tabControl.TabCount - 1);
+            buttonNext.Text = e.TabPageIndex < tabControl.TabCount - 1 ? @"&Next  >" : @"Create It";
+            AcceptButton = (e.TabPageIndex == 4) ? null : buttonNext;
         }
 
 
