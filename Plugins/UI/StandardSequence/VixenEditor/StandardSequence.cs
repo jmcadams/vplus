@@ -210,7 +210,7 @@ namespace VixenEditor {
             }
 
             var affectedChannels = new List<int>();
-            for (var i = blockAffected.Top; i < blockAffected.Bottom; i++) {
+            for (var i = blockAffected.Top; i < blockAffected.Bottom && i < _sequence.Channels.Count; i++) {
                 affectedChannels.Add(_sequence.Channels[i].OutputChannel);
             }
 
