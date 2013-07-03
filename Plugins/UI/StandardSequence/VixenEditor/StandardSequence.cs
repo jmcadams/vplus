@@ -3104,6 +3104,7 @@ namespace VixenEditor {
         }
 
 
+        //TODO: implement someting in the UI to show what these do.
         private void HandleBookmarkKeys(KeyEventArgs e) {
             if (!e.Control || e.KeyCode < Keys.D0 || e.KeyCode > Keys.D9) {
                 return;
@@ -3430,6 +3431,7 @@ namespace VixenEditor {
         }
 
 
+        //TODO: Broken on insert
         private void HandleChannelKeyPress(KeyEventArgs e) {
             var selectedChannelIndex = GetChannelSortedIndex(SelectedChannel);
 
