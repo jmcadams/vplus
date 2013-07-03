@@ -3299,6 +3299,7 @@ namespace VixenEditor {
 
                 case Keys.N:
                     tsbNutcracker_Click(null, null);
+                    keyEvent.Handled = true;
                     break;
 
                 case Keys.R:
@@ -4867,7 +4868,25 @@ namespace VixenEditor {
             }
 
             using (var nce = new NutcrackerControlDialog(_sequence, _selectedRange)) {
-                nce.ShowDialog();
+                if (nce.ShowDialog() != DialogResult.OK) {
+                    return;
+                }
+                var ncData = nce.RenderData;
+                var ncType = nce.RenderType;
+                var ncEvents = nce.RenderEvents;
+                var ncRows = nce.RenderRows;
+                var ncCols = nce.RenderCols;
+
+                var cells = new Rectangle(0, 0, ncEvents, ncCols * ncRows * 3);
+                AddUndoItem(cells, UndoOriginalBehavior.Overwrite, "Nutcracker " + ncType);
+                for (var row = 0; row < ncCols * ncRows * 3; row++) {
+                    var channel = _sequence.Channels[row].OutputChannel;
+                    for (var col = 0; col < ncEvents; col++) {
+                        var eventData = ncData[row, col];
+                        _sequence.EventValues[channel, col] = eventData;
+                    }
+                }
+                pictureBoxGrid.Invalidate();
             }
         }
     }

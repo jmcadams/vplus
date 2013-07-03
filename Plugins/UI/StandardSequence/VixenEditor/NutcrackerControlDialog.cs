@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -44,6 +43,15 @@ namespace VixenEditor
 
         public RenderTo RenderType { get; private set; } 
         public byte[,] RenderData { get; private set; }
+        public int RenderEvents { get; private set; }
+
+        public int RenderRows {
+            get { return _rows; }
+        }
+
+        public int RenderCols {
+            get { return _cols; }
+        }
 
         #endregion
 
@@ -212,6 +220,7 @@ namespace VixenEditor
         private void timerRender_Tick(object sender, EventArgs e) {
             _sw.Start();
             RenderEffects();
+            Render();
             _sw.Stop();
 
             var mills = _sw.ElapsedMilliseconds;
@@ -299,7 +308,6 @@ namespace VixenEditor
             }
 
             SetPixelColors();
-            Render();
         }
 
 
@@ -420,7 +428,42 @@ namespace VixenEditor
 
 
         private void RenderFinalResults() {
-            RenderData = new byte[_rows, _cols];
+            // Trees and matrix render rows, cols the other render as 1 x num pixles x (arch count | 1 if windows)
+            RenderEvents = (int) nudEventCount.Value;
+            RenderData = new byte[ _cols * _rows * 3,RenderEvents];
+            for (var i = 0; i < MaxEffects; i++) {
+                _eventToRender[i] = 0;
+            }
+
+            progressBar.Minimum = 0;
+            progressBar.Maximum = RenderEvents;
+            progressBar.Visible = true;
+
+            for (var renderEvent = 0; renderEvent < RenderEvents; renderEvent++) {
+
+                RenderEffects();
+                var nodeRow = 0;
+                var eventRow = 0;
+                for (var row = 0; row < _rows * 3; row += 3) {
+                    for (var col = 0; col < _cols; col++) {
+                        Debug.Print("R:{0} C:{1}", eventRow, renderEvent);
+                        RenderData[eventRow, renderEvent] = _nodes[nodeRow, col].PixelColor.R;
+                        Debug.Print("R:{0} C:{1}", eventRow + 1, renderEvent);
+                        RenderData[eventRow + 1, renderEvent] = _nodes[nodeRow, col].PixelColor.B;
+                        Debug.Print("R:{0} C:{1}", eventRow + 2, renderEvent);
+                        RenderData[eventRow + 2, renderEvent] = _nodes[nodeRow, col].PixelColor.G;
+                        eventRow += 3;
+                    }
+                    nodeRow++;
+                }
+
+                for (var i = 0; i < MaxEffects; i++) {
+                    _eventToRender[i] += _effectControls[i].GetSpeed();
+                }
+                progressBar.Value = renderEvent;
+                Application.DoEvents();
+            }
+            progressBar.Visible = false;
         }
 
         #endregion
@@ -454,9 +497,9 @@ namespace VixenEditor
         private void UpdateRenderToControls() {
             var startEventVisible = false;
             var eventCountVisible = false;
-            //var groupsAndChannelsVisbile = false;
 
             switch (RenderType) {
+                case RenderTo.Clipboard:
                 case RenderTo.Routine:
                     nudStartEvent.Value = 0;
                     eventCountVisible = true;
@@ -465,11 +508,6 @@ namespace VixenEditor
                     break;
                 case RenderTo.SpecificPoint:
                     startEventVisible = true;
-                    eventCountVisible = true;
-                    //groupsAndChannelsVisbile = true;
-                    break;
-                case RenderTo.Clipboard:
-                    nudStartEvent.Value = 0;
                     eventCountVisible = true;
                     break;
             }
@@ -481,9 +519,6 @@ namespace VixenEditor
             lblEventCount.Visible = eventCountVisible;
             lblEventCountTime.Visible = eventCountVisible;
             nudEventCount.Visible = eventCountVisible;
-
-            //chkBoxUseGroup.Visible = groupsAndChannelsVisbile;
-            //cbGroups.Visible = groupsAndChannelsVisbile;
         }
 
 
@@ -496,7 +531,10 @@ namespace VixenEditor
             lblStartEventTime.Text = startTime;
             lblEventCountTime.Text = elapsedTime;
 
-            tbSummary.Text = String.Format("From {0} thru {1} on {2}", startTime, endTime, String.Empty);
+            var channelCount = _rows * _cols * 3;
+            var msg = (channelCount > _sequence.FullChannelCount) ? "(Too Large for your current channel count)" : string.Empty;
+
+            tbSummary.Text = String.Format("From {0} thru {1} on {2} channels {3}", startTime, endTime, channelCount, msg);
         }
 
         #endregion

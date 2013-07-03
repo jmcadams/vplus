@@ -81,6 +81,7 @@ namespace VixenEditor
             this.nudRows = new System.Windows.Forms.NumericUpDown();
             this.btnCancel = new System.Windows.Forms.Button();
             this.timerRender = new System.Windows.Forms.Timer(this.components);
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.gbEffect2.SuspendLayout();
             this.gbEffect1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
@@ -140,6 +141,7 @@ namespace VixenEditor
             // 
             // gbSettings
             // 
+            this.gbSettings.Controls.Add(this.progressBar);
             this.gbSettings.Controls.Add(this.lblRenderInfo);
             this.gbSettings.Controls.Add(this.tbSparkles);
             this.gbSettings.Controls.Add(this.lblSparkles);
@@ -172,7 +174,7 @@ namespace VixenEditor
             // lblRenderInfo
             // 
             this.lblRenderInfo.AutoSize = true;
-            this.lblRenderInfo.Location = new System.Drawing.Point(7, 152);
+            this.lblRenderInfo.Location = new System.Drawing.Point(6, 109);
             this.lblRenderInfo.Name = "lblRenderInfo";
             this.lblRenderInfo.Size = new System.Drawing.Size(114, 13);
             this.lblRenderInfo.TabIndex = 25;
@@ -315,7 +317,7 @@ namespace VixenEditor
             // 
             // tbSummary
             // 
-            this.tbSummary.Location = new System.Drawing.Point(6, 173);
+            this.tbSummary.Location = new System.Drawing.Point(5, 130);
             this.tbSummary.Multiline = true;
             this.tbSummary.Name = "tbSummary";
             this.tbSummary.Size = new System.Drawing.Size(202, 78);
@@ -559,24 +561,24 @@ namespace VixenEditor
             // lblColumns
             // 
             this.lblColumns.AutoSize = true;
-            this.lblColumns.Location = new System.Drawing.Point(149, 86);
+            this.lblColumns.Location = new System.Drawing.Point(57, 60);
             this.lblColumns.Name = "lblColumns";
-            this.lblColumns.Size = new System.Drawing.Size(47, 13);
+            this.lblColumns.Size = new System.Drawing.Size(39, 13);
             this.lblColumns.TabIndex = 6;
-            this.lblColumns.Text = "Columns";
+            this.lblColumns.Text = "Strings";
             // 
             // lblRows
             // 
             this.lblRows.AutoSize = true;
             this.lblRows.Location = new System.Drawing.Point(57, 86);
             this.lblRows.Name = "lblRows";
-            this.lblRows.Size = new System.Drawing.Size(34, 13);
+            this.lblRows.Size = new System.Drawing.Size(82, 13);
             this.lblRows.TabIndex = 5;
-            this.lblRows.Text = "Rows";
+            this.lblRows.Text = "Pixels per String";
             // 
             // nudColumns
             // 
-            this.nudColumns.Location = new System.Drawing.Point(97, 84);
+            this.nudColumns.Location = new System.Drawing.Point(5, 58);
             this.nudColumns.Maximum = new decimal(new int[] {
             300,
             0,
@@ -586,7 +588,7 @@ namespace VixenEditor
             this.nudColumns.Size = new System.Drawing.Size(46, 20);
             this.nudColumns.TabIndex = 4;
             this.nudColumns.Value = new decimal(new int[] {
-            32,
+            11,
             0,
             0,
             0});
@@ -599,7 +601,7 @@ namespace VixenEditor
             this.nudRows.Size = new System.Drawing.Size(45, 20);
             this.nudRows.TabIndex = 3;
             this.nudRows.Value = new decimal(new int[] {
-            50,
+            6,
             0,
             0,
             0});
@@ -619,6 +621,14 @@ namespace VixenEditor
             // 
             this.timerRender.Interval = 50;
             this.timerRender.Tick += new System.EventHandler(this.timerRender_Tick);
+            // 
+            // progressBar
+            // 
+            this.progressBar.Location = new System.Drawing.Point(7, 215);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(201, 23);
+            this.progressBar.TabIndex = 26;
+            this.progressBar.Visible = false;
             // 
             // NutcrackerControlDialog
             // 
@@ -705,5 +715,6 @@ namespace VixenEditor
         private TrackBar tbSparkles;
         private Label lblSparkles;
         private Label lblRenderInfo;
+        private ProgressBar progressBar;
     }
 }
