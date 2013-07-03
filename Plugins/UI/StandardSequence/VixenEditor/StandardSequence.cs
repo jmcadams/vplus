@@ -2513,9 +2513,6 @@ namespace VixenEditor {
                 case UndoOriginalBehavior.Overwrite:
                     DisjointedOverwrite(undo.ColumnOffset, undo.Data, undo.ReferencedChannels);
                     pictureBoxGrid.Refresh();
-                        //Invalidate(new Rectangle((undo.Location.X - hScrollBar1.Value) * _gridColWidth,
-                        //                                    (undo.Location.Y - vScrollBar1.Value) * _gridRowHeight, width * _gridColWidth,
-                        //                                    height * _gridRowHeight));
                     break;
 
                 case UndoOriginalBehavior.Removal:
