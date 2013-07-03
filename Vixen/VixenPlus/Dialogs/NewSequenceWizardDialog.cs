@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 using Properties;
 
-//TODO This still needs to be cleaned up!
+//TODO This still needs to be cleaned up!  Strike that, rewritten
 namespace VixenPlus.Dialogs {
     public partial class NewSequenceWizardDialog : Form {
         private readonly EventSequence _eventSequence;
