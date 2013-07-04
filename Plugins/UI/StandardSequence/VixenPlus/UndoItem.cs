@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 using CommonUtils;
 
@@ -6,25 +7,22 @@ using VixenPlus;
 
 namespace VixenEditor.VixenPlus {
     internal class UndoItem {
-        private readonly EventSequence _sequence;
+        private readonly int _eventPeriod;
 
 
-        public UndoItem(int columnOffset, byte[,] data, UndoOriginalBehavior undoBehavior, EventSequence sequence, IList<int> currentOrder,
+        public UndoItem(int columnOffset, byte[,] data, UndoOriginalBehavior undoBehavior, int eventPeriod, IEnumerable<Channel> currentOrder,
                         string originalAction) {
             ColumnOffset = columnOffset;
             Data = data;
             Behavior = undoBehavior;
             OriginalAction = originalAction;
-            _sequence = sequence;
-            ReferencedChannels = new int[data.GetLength(Utils.IndexRowsOrHeight)];
-            for (var i = 0; i < ReferencedChannels.Length; i++) {
-                ReferencedChannels[i] = _sequence.FullChannels[currentOrder[i]].OutputChannel;
-            }
+            _eventPeriod = eventPeriod;
+            ReferencedChannels = currentOrder.ToArray();
         }
 
 
         public override string ToString() {
-            var formattedTime = Utils.TimeFormatWithMills(ColumnOffset * _sequence.EventPeriod);
+            var formattedTime = Utils.TimeFormatWithMills(ColumnOffset * _eventPeriod);
             var columns = Data.GetLength(Utils.IndexColsOrWidth);
             var rows = Data.GetLength(Utils.IndexRowsOrHeight);
 
@@ -40,7 +38,7 @@ namespace VixenEditor.VixenPlus {
 
         public int ColumnOffset { get; private set; }
 
-        public int[] ReferencedChannels { get; private set; }
+        public Channel[] ReferencedChannels { get; private set; }
 
         public string OriginalAction { get; private set; }
     }
