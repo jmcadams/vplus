@@ -116,18 +116,10 @@ namespace VixenEditor {
                 }
 
                 var drawingLevel = (byte) (VaryIntensity ? random.Next(IntensityMin, IntensityMax + 1) : udMax.Maximum);
-                drawingLevel = (byte) (_actualLevels ? drawingLevel : CommonUtils.Utils.ToValue(drawingLevel));
                 for (var i = 0; (i < PeriodLength && column + i < columns); i++) {
+                    if (eventValues[row, column + i] != 0) computedSaturation--;
                     eventValues[row, column + i] = drawingLevel;
-                }
-
-                computedSaturation = 0;
-                for (row = 0; row < rows; row++) {
-                    for (column = 0; column < columns; column++) {
-                        if (eventValues[row, column] != 0) {
-                            computedSaturation++;
-                        }
-                    }
+                    computedSaturation++;
                 }
             }
             return eventValues;
