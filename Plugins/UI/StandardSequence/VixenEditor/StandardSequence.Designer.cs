@@ -1,6 +1,8 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 
+using CommonControls;
+
 namespace VixenEditor{
 
     public partial class StandardSequence{
@@ -31,7 +33,7 @@ namespace VixenEditor{
         private ToolStripMenuItem resetAllToolbarsToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator19;
         private ToolStripLabel profileToolStripLabel;
-        private Label lblFollowMouse;
+        private TransparentLabel lblFollowMouse;
         private ToolStripButton tsbPlayRange;
         private ToolStripButton tsbPlayPoint;
         private ToolStripMenuItem selectNoneToolStripMenuItem;
@@ -434,7 +436,7 @@ namespace VixenEditor{
             this.contextMenuTime = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.clearAllChannelsForThisEventToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.allChannelsToFullIntensityForThisEventToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lblFollowMouse = new System.Windows.Forms.Label();
+            this.lblFollowMouse = new CommonControls.TransparentLabel();
             this.pictureBoxGrid = new VixenEditor.SelectablePictureBox();
             this.contextMenuGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.onToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
