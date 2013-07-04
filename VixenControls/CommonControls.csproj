@@ -105,6 +105,12 @@
     <Compile Include="CommonControls\MultiSelectTreeview.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="CommonControls\TransparentLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CommonControls\TransparentLabel.Designer.cs">
+      <DependentUpon>TransparentLabel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Global.cs">
       <SubType>Code</SubType>
     </Compile>
