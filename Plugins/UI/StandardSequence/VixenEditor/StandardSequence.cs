@@ -778,7 +778,7 @@ namespace VixenEditor {
 
         private void DisjointedInsert(int colOffset, int width, int height, IList<Channel> channelIndexes) {
             for (var row = 0; row < height; row++) {
-                var channel = channelIndexes[row].OutputChannel;
+                var channel = GetEventFromChannel(channelIndexes[row]);
                 for (var col = _sequence.TotalEventPeriods - colOffset - width - 1; col >= 0; col--) {
                     _sequence.EventValues[channel, col + colOffset + width] = _sequence.EventValues[channel, col + colOffset];
                 }
@@ -788,7 +788,7 @@ namespace VixenEditor {
 
         private void DisjointedOverwrite(int colOffset, byte[,] data, IList<Channel> channelIndexes) {
             for (var row = 0; row < data.GetLength(Utils.IndexRowsOrHeight); row++) {
-                var channel = channelIndexes[row].OutputChannel;
+                var channel = GetEventFromChannel(channelIndexes[row]);
                 for (var col = 0; col < data.GetLength(Utils.IndexColsOrWidth); col++) {
                     _sequence.EventValues[channel, col + colOffset] = data[row, col];
                 }
@@ -798,14 +798,14 @@ namespace VixenEditor {
 
         private void DisjointedRemove(int colOffset, int width, int height, IList<Channel> channelIndexes) {
             for (var row = 0; row < height; row++) {
-                var channel = channelIndexes[row].OutputChannel;
+                var channel = GetEventFromChannel(channelIndexes[row]);
                 for (var col = 0; col < _sequence.TotalEventPeriods - colOffset - width; col++) {
                     _sequence.EventValues[channel, col + colOffset] = _sequence.EventValues[channel, col + colOffset + width];
                 }
             }
 
             for (var row = 0; row < height; row++) {
-                var channel = channelIndexes[row].OutputChannel;
+                var channel = GetEventFromChannel(channelIndexes[row]);
                 for (var col = 0; col < width; col++) {
                     _sequence.EventValues[channel, _sequence.TotalEventPeriods - width + col] = _sequence.MinimumLevel;
                 }
@@ -922,31 +922,16 @@ namespace VixenEditor {
             var buffer = new byte[affectedChannels.Count, Math.Min(numberOfEvents, _sequence.TotalEventPeriods - startEvent)];
             var row = 0;
             foreach (var i in affectedChannels) {
-                var channel = i.OutputChannel;
-                //var output = new StringBuilder(string.Format("Row: {0:D3} Channel:{1:D3}", row, channel));
+                var channel = _sequence.FullChannels.IndexOf(i);
 
                 for (var col = 0; col < numberOfEvents && col + startEvent < _sequence.TotalEventPeriods; col++) {
-                    //output.Append(string.Format(" {0:d3}", _sequence.EventValues[channel, startEvent + col]));
                     buffer[row, col] = _sequence.EventValues[channel, startEvent + col];
                 }
-                //System.Diagnostics.Debug.Print(output.ToString());
                 row++;
             }
-            //System.Diagnostics.Debug.Print("");
             return buffer;
         }
 
-
-        //private void DumpData() {
-            //for (var r = 0; r < _sequence.FullChannelCount; r++) {
-            //    var output = new StringBuilder(string.Format("Row: {0:D3}",r));
-            //    for (var c = 0; c < _sequence.TotalEventPeriods; c++) {
-            //        output.Append(string.Format(" {0:d3}", _sequence.EventValues[r, c]));
-            //    }
-            //    System.Diagnostics.Debug.Print(output.ToString());
-            //}
-            //System.Diagnostics.Debug.Print("");
-        //}
 
         private int GetCellIntensity(int column, int row, out string intensityText) {
             var intensity = 0;
@@ -973,6 +958,16 @@ namespace VixenEditor {
 
         private int GetChannelSortedIndex(Channel channel) {
             return _sequence.Channels.IndexOf(channel);
+        }
+
+
+        private int GetEventFromChannelNumber(int index) {
+            return GetEventFromChannel(_sequence.Channels[index]);
+        }
+
+
+        private int GetEventFromChannel(Channel channel) {
+            return _sequence.FullChannels.IndexOf(channel);
         }
 
 
@@ -2428,7 +2423,7 @@ namespace VixenEditor {
             var right = _selectedCells.Right;
             var left = _selectedCells.Left;
             for (var top = _selectedCells.Top; top < bottom; top++) {
-                var channelOrder = _sequence.Channels[top].OutputChannel;
+                var channelOrder = GetEventFromChannelNumber(top);
                 if (!_sequence.Channels[top].Enabled) {
                     continue;
                 }
@@ -2498,7 +2493,6 @@ namespace VixenEditor {
             if (_redoStack.Count == 0) {
                 return;
             }
-            //DumpData();
 
             var undo = (UndoItem) _redoStack.Pop();
             var height = undo.Data == null ? 0 : undo.Data.GetLength(Utils.IndexRowsOrHeight);
@@ -2531,7 +2525,6 @@ namespace VixenEditor {
             _undoStack.Push(redo);
             toolStripButtonUndo.Enabled = undoToolStripMenuItem.Enabled = true;
             UpdateUndoText();
-            //DumpData();
         }
 
 
@@ -4343,7 +4336,6 @@ namespace VixenEditor {
             if (_undoStack.Count == 0) {
                 return;
             }
-            //DumpData();
 
             var undo = (UndoItem) _undoStack.Pop();
             toolStripButtonUndo.Enabled = undoToolStripMenuItem.Enabled = _undoStack.Count > 0;
@@ -4379,7 +4371,6 @@ namespace VixenEditor {
             _redoStack.Push(redo);
             toolStripButtonRedo.Enabled = redoToolStripMenuItem.Enabled = true;
             UpdateRedoText();
-            //DumpData();
         }
 
 
@@ -4424,8 +4415,7 @@ namespace VixenEditor {
 
                 while ((y < clipRect.Bottom) && (channelIndex < _sequence.ChannelCount)) {
                     var channel = _sequence.Channels[channelIndex];
-                    var currentChannel = channel.OutputChannel;
-
+                    var currentChannel = _sequence.FullChannels.IndexOf(channel);
                     var x = initialX;
 
                     for (var cell = startEvent; (x < clipRect.Right) && (cell < _sequence.TotalEventPeriods); cell++) {
