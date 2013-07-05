@@ -39,6 +39,8 @@ namespace Preview {
 
         private void SetDisplayInfo(XmlNode displayInfo) {
             if (displayInfo == null) {
+                _backBuffer = new uint[0, 0];
+                ImproperSetupMessage();
                 return;
             }
 
@@ -72,6 +74,29 @@ namespace Preview {
         }
 
 
+        private void ImproperSetupMessage() {
+            const string text = @"Preview not setup properly!";
+
+            SizeF textSize;
+            using (var g = pictureBoxShowGrid.CreateGraphics()) {
+                textSize = g.MeasureString(text, pictureBoxShowGrid.Font);
+            }
+
+            var img = new Bitmap((int) textSize.Width, (int) textSize.Height);
+            using (var drawing = Graphics.FromImage(img)) {
+                drawing.Clear(Color.Black);
+                Brush textBrush = new SolidBrush(Color.White);
+                drawing.DrawString(text, pictureBoxShowGrid.Font, textBrush, 0, 0);
+                drawing.Save();
+                textBrush.Dispose();
+            }
+            _originalBackground = img;
+
+            SetPictureBoxSize(_originalBackground.Width, _originalBackground.Height);
+            SetBrightness(0f);
+        }
+
+
         private void SetChannelColors(IList<Channel> channels, int startChannel, bool isOutputRedirected) {
             for (var i = startChannel; i < channels.Count; i++) {
                 var outputChannel = isOutputRedirected ? i : channels[i].OutputChannel;
@@ -100,6 +125,7 @@ namespace Preview {
 
         private void SetChannelBitmaps(IList<Channel> channels, bool isOutputRedirected, IEnumerable xmlChannels) {
             if (xmlChannels == null) {
+                ImproperSetupMessage();
                 return;
             }
 
