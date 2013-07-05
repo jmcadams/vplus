@@ -1015,7 +1015,7 @@ and will cause your undo history to be deleted.  Proceed?</value>
     <value>Error Log Created</value>
   </data>
   <data name="CriticalErrorOccurred" xml:space="preserve">
-    <value> has had a critical error and is closing.
+    <value>{3} has had a critical error and is closing.
 
 This issue was written to {0}, please e-mail this log, your sequence and profile (if applicable) with any support request.
 
@@ -1045,5 +1045,18 @@ Press OK to continue or Cancel to quit {1} and log this error to the crash.log.<
   </data>
   <data name="LocationChangePrompt" xml:space="preserve">
     <value>We hope you're enjoying using {0}! If you change your directory, {0} will NOT move your data to the new location, you will need to close {0} and then move your files to the new location, so save your open files before using this feature. Please select where you would like your data to be stored now:</value>
+  </data>
+    <data name="SoftErrorOccured" xml:space="preserve">
+    <value>{3} has had a non-critical error and may be able to continue.
+
+If you continue, please save any open work and restart {3}.
+
+This issue was written to {0}, please e-mail this log, your sequence and profile (if applicable) with any support request.
+
+{1}
+
+{2}
+
+Do you wish to continue?</value>
   </data>
 </root>

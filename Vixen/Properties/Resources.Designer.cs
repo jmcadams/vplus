@@ -373,7 +373,7 @@ namespace Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  has had a critical error and is closing.
+        ///   Looks up a localized string similar to {3} has had a critical error and is closing.
         ///
         ///This issue was written to {0}, please e-mail this log, your sequence and profile (if applicable) with any support request.
         ///
@@ -1812,6 +1812,25 @@ namespace Properties {
             get {
                 object obj = ResourceManager.GetObject("sliders", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {3} has had a non-critical error and may be able to continue.
+        ///
+        ///If you continue, please save any open work and restart {3}.
+        ///
+        ///This issue was written to {0}, please e-mail this log, your sequence and profile (if applicable) with any support request.
+        ///
+        ///{1}
+        ///
+        ///{2}
+        ///
+        ///Do you wish to continue?.
+        /// </summary>
+        public static string SoftErrorOccured {
+            get {
+                return ResourceManager.GetString("SoftErrorOccured", resourceCulture);
             }
         }
         
