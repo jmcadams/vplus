@@ -6,6 +6,7 @@ using System.Xml;
 
 namespace VixenPlus
 {
+    //TODO: What is this used for?
     internal class MappingSets : ICloneable, IEnumerable<MappingSet>
     {
         public const string DefaultSetName = "Mapping set 1";

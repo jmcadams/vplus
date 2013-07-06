@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -70,8 +71,7 @@ namespace VixenPlus {
                         index++;
                     }
                     try {
-                        foreach (var context in _instances) {
-                            var engineBuffer = context.EngineBuffer;
+                        foreach (var engineBuffer in _instances.Select(context => context.EngineBuffer)) {
                             for (index = 0; index < engineBuffer.Length; index++) {
                                 _data[index] = Math.Max(_data[index], engineBuffer[index]);
                             }
@@ -88,10 +88,7 @@ namespace VixenPlus {
                     }
                     try {
                         lock (_outputPlugins) {
-                            foreach (var outputPlugIn in _outputPlugins) {
-                                if (!((outputPlugIn.From != 0) && outputPlugIn.ContextInitialized)) {
-                                    continue;
-                                }
+                            foreach (var outputPlugIn in _outputPlugins.Where(outputPlugIn => (outputPlugIn.From != 0) && outputPlugIn.ContextInitialized)) {
                                 Array.Copy(_data, outputPlugIn.From - 1, outputPlugIn.Buffer, 0, (outputPlugIn.To - outputPlugIn.From) + 1);
                                 var eventDrivenOutputPlugIn = outputPlugIn.PlugIn as IEventDrivenOutputPlugIn;
                                 if (eventDrivenOutputPlugIn == null) {
@@ -132,14 +129,10 @@ namespace VixenPlus {
                     continue;
                 }
                 Predicate<Channel> match = null;
-                foreach (var input in plugin.Inputs) {
-                    if (!input.Enabled || !input.GetChangedInternal()) {
-                        continue;
-                    }
+                foreach (var input in plugin.Inputs.Where(input => input.Enabled && input.GetChangedInternal())) {
                     flag = true;
                     var valueInternal = input.GetValueInternal();
-                    foreach (var str in plugin.MappingSets.CurrentMappingSet.GetOutputChannelIdList(input)) {
-                        var ulChannelId = ulong.Parse(str);
+                    foreach (var ulChannelId in plugin.MappingSets.CurrentMappingSet.GetOutputChannelIdList(input).Select(ulong.Parse)) {
                         if (match == null) {
                             var id = ulChannelId;
                             match = c => c.Id == id;
@@ -158,8 +151,6 @@ namespace VixenPlus {
                 if ((routerContext == null) || !routerContext.Initialized) {
                     return;
                 }
-                //try
-                //{
                 routerContext.Initialized = false;
                 if (!_instances.Contains(routerContext)) {
                     return;
@@ -212,14 +203,8 @@ namespace VixenPlus {
                 if (_instances.Count == 0) {
                     _data = null;
                 }
-                //}
-                //finally
-                //{
-                //    //_updateLock = false;
-                //}
             }
             catch (Exception exception) {
-                //_updateLock = false;
                 MessageBox.Show(string.Format(Resources.RouterError, exception.Message, exception.StackTrace), Resources.PluginError,
                                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
