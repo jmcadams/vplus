@@ -1,9 +1,15 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
+using System.Linq;
 
 namespace VixenPlus.Dialogs {
     internal class Routine : IDisposable {
+
+        public const int DefaultHeight = 80;
+        public const int DefaultWidth = 150;
+
         public Routine(string filePath) {
             FilePath = filePath;
             if (!File.Exists(filePath)) {
@@ -28,18 +34,43 @@ namespace VixenPlus.Dialogs {
                 string row;
                 while ((row = reader.ReadLine()) != null) {
                     var x = 0;
-                    foreach (var pixels in row.Split(new[] {' '})) {
-                        if (pixels.Length > 0) {
-                            //todo add the routine color to preferences.
-                            Preview.SetPixel(x++, y, Color.FromArgb(Convert.ToByte(pixels), Color.LightBlue));
-                        }
+                    foreach (var pixels in row.Split(new[] {' '}).Where(pixels => pixels.Length > 0)) {
+                        //todo add the routine color to preferences.
+                        Preview.SetPixel(x++, y, Color.FromArgb(Convert.ToByte(pixels), Color.LightBlue));
                     }
                     y++;
                 }
             }
-            var world = GraphicsUnit.World;
-            var bounds = Preview.GetBounds(ref world);
-            PreviewBounds = new Rectangle((int) bounds.X, (int) bounds.Y, (int) bounds.Width, (int) bounds.Height);
+            if (Preview.Width != DefaultWidth || Preview.Height != DefaultHeight) {
+                Preview = ResizeImage(Preview);
+            }
+            PreviewBounds = new Rectangle(0, 0, DefaultWidth, DefaultHeight);
+        }
+
+
+
+
+        private static Bitmap ResizeImage(Bitmap image) {
+            var result = new Bitmap(DefaultWidth, DefaultHeight);
+            result.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+            using (var graphics = Graphics.FromImage(result)) {
+                var oldHeight = image.Height;
+                var oldWidth = image.Width;
+                var widthFactor = (float)DefaultWidth / (image.Width);
+                var heightFactor = (float)DefaultHeight / (image.Height);
+
+                using (var brush = new SolidBrush(Color.LightBlue)) {
+                    for (var i = 0; i < oldHeight; i++) {
+                        for (var j = 0; j < oldWidth; j++) {
+                            brush.Color = Color.FromArgb(image.GetPixel(j, i).ToArgb());
+                            graphics.FillRectangle(brush, j * widthFactor, i * heightFactor, widthFactor, heightFactor);
+                        }
+                    }
+                }
+            }
+
+            return result;
         }
 
 
