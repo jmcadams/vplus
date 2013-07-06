@@ -10,10 +10,6 @@ namespace VixenPlus
 {
     internal partial class InputPluginDialog : Form
     {
-        //TODO: Figure out what the code below does. It was translated to the designer, but doesn't seem to work there.
-        //ComponentResourceManager manager = new ComponentResourceManager(typeof(InputPluginDialog));
-        //this.imageList.ImageStream = (ImageListStreamer)manager.GetObject("imageList.ImageStream"); 
-
         private readonly MappingSets _editingMappingSets;
         private readonly EventSequence _eventSequence;
         private readonly Dictionary<string, Channel> _idChannel;
