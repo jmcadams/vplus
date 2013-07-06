@@ -155,7 +155,7 @@ namespace VixenEditor {
             _timeFont = new Font("Arial", 8f);
             _selectedChannel = null;
             _currentlyEditingChannel = null;
-            _editingChannelSortedIndex = 0; //TODO Need to check where this is set for valid channel information
+            _editingChannelSortedIndex = 0;
             _gridGraphics = null;
             _selectedRange = new Rectangle();
             _gridColWidth = 30;
@@ -339,7 +339,7 @@ namespace VixenEditor {
             AddUndoItem(new Rectangle(left, top, width, height), UndoOriginalBehavior.Overwrite, Resources.UndoText_BooleanPaste);
 
             for (var row = 0; row < height && top + row < _sequence.ChannelCount; row++) {
-                var currentRow = GetEventFromChannelNumber(top + row); ;
+                var currentRow = GetEventFromChannelNumber(top + row); 
                 for (var col = 0; col < width && left + col < _sequence.TotalEventPeriods; col++) {
                     var currentCol = left + col;
                     var currentValue = _sequence.EventValues[currentRow, currentCol];
@@ -458,12 +458,12 @@ namespace VixenEditor {
                 _selectedLineIndex = vScrollBar1.Value + (mouseY - (pictureBoxTime.Height + splitContainer2.SplitterWidth)) / _gridRowHeight;
                 if (_selectedLineIndex < _sequence.ChannelCount) {
                     _editingChannelSortedIndex = _selectedLineIndex;
-                    isValid = (_editingChannelSortedIndex >= 0) && (_editingChannelSortedIndex < _sequence.ChannelCount);
+                    isValid = (_editingChannelSortedIndex >= 0);
                 }
             }
 
             if (isValid) {
-                _currentlyEditingChannel = SelectedChannel = _sequence.Channels[_editingChannelSortedIndex];
+                _currentlyEditingChannel = SelectedChannel = _sequence.Channels[_editingChannelSortedIndex];  //Tested okay
             }
 
             return isValid;
@@ -610,7 +610,7 @@ namespace VixenEditor {
             var columns = data.GetLength(Utils.IndexColsOrWidth);
 
             for (var row = 0; row < rows && startRow + row < _sequence.ChannelCount; row++) {
-                var channel = GetEventFromChannel(_sequence.Channels[startRow + row]);
+                var channel = GetEventFromChannel(_sequence.Channels[startRow + row]);  // tested okay
                 for (var col = 0; col < columns && startCol + col < _sequence.TotalEventPeriods; col++) {
                     _sequence.EventValues[channel, startCol + col] = data[row, col];
                 }
@@ -891,7 +891,7 @@ namespace VixenEditor {
 
 
         private void FillChannel(int lineIndex) {
-            var actualChannel = GetEventFromChannel(_sequence.Channels[lineIndex]);
+            var actualChannel = GetEventFromChannel(_sequence.Channels[lineIndex]); // tested okay
             AddUndoItem(new Rectangle(0, lineIndex, _sequence.TotalEventPeriods, 1), UndoOriginalBehavior.Overwrite, Resources.UndoText_Fill);
             CopyToEventValues(0, actualChannel, _sequence.TotalEventPeriods, 1, _drawingLevel);
             pictureBoxGrid.Refresh();
@@ -1292,7 +1292,7 @@ namespace VixenEditor {
                 AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, Resources.UndoText_AdjustIntensity);
                 var delta = _intensityAdjustDialog.Delta;
                 for (var top = _selectedCells.Top; top < _selectedCells.Bottom; top++) {
-                    var channel = GetEventFromChannelNumber(top);// _sequence.Channels[top].OutputChannel;
+                    var channel = GetEventFromChannelNumber(top);
                     if (!_sequence.Channels[top].Enabled) {
                         continue;
                     }
@@ -1860,8 +1860,8 @@ namespace VixenEditor {
 
             if ((ModifierKeys & Keys.Control) != Keys.None) {
                 _selectedLineIndex = (e.Y / _gridRowHeight) + vScrollBar1.Value;
-                _editingChannelSortedIndex = _sequence.Channels[_selectedLineIndex].OutputChannel;
-                _currentlyEditingChannel = _sequence.FullChannels[_editingChannelSortedIndex];
+                _editingChannelSortedIndex = GetEventFromChannelNumber(_selectedLineIndex);
+                _currentlyEditingChannel = _sequence.Channels[_selectedLineIndex];
                 _lineRect.X = _mouseDownAtInGrid.X;
                 _lineRect.Y = _mouseDownAtInGrid.Y;
                 _lineRect.Width = 0;
@@ -1893,7 +1893,7 @@ namespace VixenEditor {
             else if ((e.Y / _gridRowHeight) + vScrollBar1.Value < _sequence.ChannelCount &&
                      (e.X / _gridColWidth) + hScrollBar1.Value < _sequence.TotalEventPeriods) {
                 _selectedLineIndex = (e.Y / _gridRowHeight) + vScrollBar1.Value;
-                _editingChannelSortedIndex = _sequence.Channels[_selectedLineIndex].OutputChannel;
+                _editingChannelSortedIndex = GetEventFromChannelNumber(_selectedLineIndex);
                 _currentlyEditingChannel = _sequence.Channels[_selectedLineIndex];
                 _selectedRange.X = hScrollBar1.Value + ((int) Math.Floor(e.X / ((float) _gridColWidth)));
                 _selectedRange.Y = _selectedLineIndex;
@@ -1907,6 +1907,7 @@ namespace VixenEditor {
                 _editingChannelSortedIndex = -1;
                 _selectedLineIndex = -1;
             }
+
             UpdatePositionLabel(_selectedCells, false);
         }
 
@@ -2833,7 +2834,7 @@ namespace VixenEditor {
             var flag = false;
             var channelCount = Math.Min(_sequence.ChannelCount, count);
             for (channel = 0; channel < channelCount; channel++) {
-                if (_sequence.Channels[channel].OutputChannel <= (count - 1)) {
+                if (GetEventFromChannelNumber(channel) <= (count - 1)) {
                     continue;
                 }
                 flag = true;
@@ -3659,7 +3660,7 @@ namespace VixenEditor {
                 isValid = true;
                 if (_actualLevels) {
                     var initialValue = isSingleCell
-                                           ? _sequence.EventValues[_sequence.Channels[top].OutputChannel, left].ToString(CultureInfo.InvariantCulture) : @"255";
+                                           ? _sequence.EventValues[GetEventFromChannelNumber(top), left].ToString(CultureInfo.InvariantCulture) : @"255";
 
                     using (var dialog = new TextQueryDialog(Vendor.ProductName, Resources.IntensityLevelPrompt, initialValue)) {
                         if (dialog.ShowDialog() != DialogResult.OK) {
@@ -3677,7 +3678,7 @@ namespace VixenEditor {
                 }
                 else {
                     var initialValue = isSingleCell
-                                           ? Utils.ToPercentage(_sequence.EventValues[_sequence.Channels[top].OutputChannel, left]).ToString(
+                                           ? Utils.ToPercentage(_sequence.EventValues[GetEventFromChannelNumber(top), left]).ToString(
                                                CultureInfo.InvariantCulture) : @"100";
 
                     using (var dialog = new TextQueryDialog(Vendor.ProductName, Resources.IntensityPercentPrompt, initialValue)) {
@@ -4866,7 +4867,7 @@ namespace VixenEditor {
                 var cells = new Rectangle(0, 0, ncEvents, ncCols * ncRows * 3);
                 AddUndoItem(cells, UndoOriginalBehavior.Overwrite, "Nutcracker " + ncType);
                 for (var row = 0; row < ncCols * ncRows * 3; row++) {
-                    var channel = _sequence.Channels[row].OutputChannel;
+                    var channel = GetEventFromChannelNumber(row);
                     for (var col = 0; col < ncEvents; col++) {
                         var eventData = ncData[row, col];
                         _sequence.EventValues[channel, col] = eventData;
