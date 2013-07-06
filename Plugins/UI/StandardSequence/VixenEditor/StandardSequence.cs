@@ -256,7 +256,6 @@ namespace VixenEditor {
             FillChannel(_selectedLineIndex);
         }
 
-
         private void ArithmeticPaste(ArithmeticOperation operation) {
             if (_systemInterface.Clipboard == null) {
                 return;
@@ -274,7 +273,7 @@ namespace VixenEditor {
             var rowOffset = _selectedCells.Top;
             var colOffset = _selectedCells.Left;
             for (var row = 0; (row < height) && ((rowOffset + row) < _sequence.ChannelCount); row++) {
-                var channel = _sequence.Channels[rowOffset + row].OutputChannel;
+                var channel = GetEventFromChannelNumber(rowOffset + row);
                 for (var col = 0; (col < width) && ((colOffset + col) < _sequence.TotalEventPeriods); col++) {
                     var currentValue = _sequence.EventValues[channel, colOffset + col];
                     var clipValue = clipboard[row, col];
@@ -338,7 +337,7 @@ namespace VixenEditor {
             AddUndoItem(new Rectangle(left, top, width, height), UndoOriginalBehavior.Overwrite, Resources.UndoText_BooleanPaste);
 
             for (var row = 0; row < height && top + row < _sequence.ChannelCount; row++) {
-                var currentRow = _sequence.Channels[top + row].OutputChannel;
+                var currentRow = GetEventFromChannelNumber(top + row); ;
                 for (var col = 0; col < width && left + col < _sequence.TotalEventPeriods; col++) {
                     var currentCol = left + col;
                     var currentValue = _sequence.EventValues[currentRow, currentCol];
@@ -405,7 +404,7 @@ namespace VixenEditor {
             for (var i = 0; i < iterations; i++) {
                 var columns = Math.Min(column + cellValues.Count, _sequence.TotalEventPeriods) - column;
                 for (var j = 0; j < columns; j++) {
-                    _sequence.EventValues[_sequence.Channels[channel].OutputChannel, column + j] = cellValues[j];
+                    _sequence.EventValues[GetEventFromChannelNumber(channel), column + j] = cellValues[j];
                 }
                 if (diff < 0) {
                     diff += negDiffIncr;
@@ -430,7 +429,7 @@ namespace VixenEditor {
         private byte[,] CellsToArray() {
             var buffer = new byte[_selectedCells.Height,_selectedCells.Width];
             for (var rowOffset = 0; rowOffset < _selectedCells.Height; rowOffset++) {
-                var row = _sequence.Channels[_selectedCells.Top + rowOffset].OutputChannel;
+                var row = GetEventFromChannelNumber(_selectedCells.Top + rowOffset);
                 for (var col = 0; col < _selectedCells.Width; col++) {
                     buffer[rowOffset, col] = _sequence.EventValues[row, _selectedCells.Left + col];
                 }
@@ -502,6 +501,7 @@ namespace VixenEditor {
             return dialogResult;
         }
 
+        //^^^^^^ OKAY ^^^^^^
 
         private void CheckMaximums() {
             var dirtyFlag = false;
@@ -624,8 +624,9 @@ namespace VixenEditor {
             var endCol = startCol + width;
 
             for (var row = startRow; row < endRow; row++) {
+                var channel = GetEventFromChannelNumber(row);
                 for (var col = startCol; col < endCol; col++) {
-                    _sequence.EventValues[_sequence.Channels[row].OutputChannel, col] = value;
+                    _sequence.EventValues[channel, col] = value;
                 }
             }
         }
@@ -891,7 +892,7 @@ namespace VixenEditor {
 
 
         private void FillChannel(int lineIndex) {
-            var actualChannel = _sequence.Channels[_editingChannelSortedIndex].OutputChannel;
+            var actualChannel = GetEventFromChannel(_sequence.Channels[lineIndex]);
             AddUndoItem(new Rectangle(0, lineIndex, _sequence.TotalEventPeriods, 1), UndoOriginalBehavior.Overwrite, Resources.UndoText_Fill);
             CopyToEventValues(0, actualChannel, _sequence.TotalEventPeriods, 1, _drawingLevel);
             pictureBoxGrid.Refresh();
