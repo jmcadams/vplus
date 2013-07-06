@@ -284,6 +284,7 @@ namespace VixenPlus {
             lbColorizableItems.Items.Add("Grid Background");
             lbColorizableItems.Items.Add("Grid Lines");
             lbColorizableItems.Items.Add("Mouse Caret");
+            lbColorizableItems.Items.Add("Routine Bitmap");
             lbColorizableItems.Items.Add("Waveform");
             lbColorizableItems.Items.Add("Waveform Background");
             lbColorizableItems.Items.Add("Waveform Zero Line");

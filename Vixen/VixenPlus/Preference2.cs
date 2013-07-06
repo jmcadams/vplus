@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
@@ -46,7 +47,8 @@ namespace VixenPlus {
             isDirty |= CreateIfMissing("MouseCaret", "-65536");
             isDirty |= CreateIfMissing("Waveform", "-1");
             isDirty |= CreateIfMissing("WaveformBackground", "-16777216");
-            isDirty |= CreateIfMissing("WaveformZeroLine", "-65536");
+            isDirty |= CreateIfMissing("WaveformZeroLine", Color.Red.ToArgb().ToString(CultureInfo.InvariantCulture));
+            isDirty |= CreateIfMissing("RoutineBitmap", Color.LightBlue.ToArgb().ToString(CultureInfo.InvariantCulture));
 
             //New Sequence Settings
             isDirty |= CreateIfMissing("EventPeriod", 100);
