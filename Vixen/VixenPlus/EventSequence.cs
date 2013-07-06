@@ -16,7 +16,7 @@ using Properties;
 namespace VixenPlus {
     public class EventSequence : IScheduledObject {
         private List<Channel> _fullChannels;
-        private List<Channel> _groupedAndSortedChannels; 
+        private List<Channel> _groupedAndSortedChannels;
         private int _eventPeriod;
         private Profile _profile;
         private SortOrders _sortOrders;
@@ -124,6 +124,14 @@ namespace VixenPlus {
 
         public byte[,] EventValues { get; set; }
 
+        public int Rows {
+            get { return EventValues.GetLength(Utils.IndexRowsOrHeight); }
+        }
+
+        public int Cols {
+            get { return EventValues.GetLength(Utils.IndexColsOrWidth); }
+        }
+
         public SequenceExtensions Extensions { get; private set; }
         public LoadableData LoadableData { get; private set; }
 
@@ -214,10 +222,8 @@ namespace VixenPlus {
 
 
         private bool HasData() {
-            var rows = EventValues.GetLength(Utils.IndexRowsOrHeight);
-            var columns = EventValues.GetLength(Utils.IndexColsOrWidth);
-            for (var row = 0; row < rows; row++) {
-                for (var column = 0; column < columns; column++) {
+            for (var row = 0; row < Rows; row++) {
+                for (var column = 0; column < Cols; column++) {
                     if (EventValues[row, column] != 0) {
                         return true;
                     }
@@ -236,15 +242,12 @@ namespace VixenPlus {
                 sortedIndex = _fullChannels.Count;
             }
             var outputChannel = count;
-            foreach (var channel in _fullChannels) {
-                if (channel.OutputChannel >= outputChannel) {
-                    channel.OutputChannel++;
-                }
+            foreach (var channel in _fullChannels.Where(channel => channel.OutputChannel >= outputChannel)) {
+                channel.OutputChannel++;
             }
             _fullChannels.Insert(count, new Channel(Resources.Channel + " " + sortedIndex + 1, outputChannel, true));
             var newEventValues = new byte[_fullChannels.Count,TotalEventPeriods];
-            var rows = EventValues.GetLength(Utils.IndexRowsOrHeight);
-            for (var row = 0; row < rows; row++) {
+            for (var row = 0; row < Rows; row++) {
                 var rowOffset = (row >= count) ? (row + 1) : row;
                 for (var column = 0; column < TotalEventPeriods; column++) {
                     newEventValues[rowOffset, column] = EventValues[row, column];
@@ -379,14 +382,14 @@ namespace VixenPlus {
             var height = 0;
             var channels = (_profile == null) ? _fullChannels : _profile.Channels;
             if (EventValues != null) {
-                height = EventValues.GetLength(Utils.IndexRowsOrHeight);
+                height = Rows;
             }
             if (!dataExtrapolation) {
                 var originalEvents = EventValues;
                 EventValues = new byte[channels.Count,(int) Math.Ceiling(((Length) / ((float) _eventPeriod)))];
                 if (originalEvents != null) {
-                    var columns = Math.Min(originalEvents.GetLength(Utils.IndexColsOrWidth), EventValues.GetLength(Utils.IndexColsOrWidth));
-                    var rows = Math.Min(originalEvents.GetLength(Utils.IndexRowsOrHeight), EventValues.GetLength(Utils.IndexRowsOrHeight));
+                    var columns = Math.Min(originalEvents.GetLength(Utils.IndexColsOrWidth), Cols);
+                    var rows = Math.Min(originalEvents.GetLength(Utils.IndexRowsOrHeight), Rows);
                     for (var row = 0; row < rows; row++) {
                         for (var column = 0; column < columns; column++) {
                             EventValues[row, column] = originalEvents[row, column];
@@ -396,10 +399,8 @@ namespace VixenPlus {
             }
             else {
                 var newEventValues = new byte[channels.Count,(int) Math.Ceiling(((Length) / ((float) _eventPeriod)))];
-                if (((EventValues != null) && (EventValues.GetLength(Utils.IndexRowsOrHeight) != 0)) &&
-                    (EventValues.GetLength(Utils.IndexColsOrWidth) != 0)) {
-                    var eventCountRatio = (newEventValues.GetLength(Utils.IndexColsOrWidth)) /
-                                          ((double) EventValues.GetLength(Utils.IndexColsOrWidth));
+                if (((EventValues != null) && (Rows != 0)) && (Cols != 0)) {
+                    var eventCountRatio = (newEventValues.GetLength(Utils.IndexColsOrWidth)) / ((double) Cols);
 
                     var oldEventsPerSecond = (float) (Utils.MillsPerSecond / (_eventPeriod * eventCountRatio));
                     var newEventsPerSecond = (float) Utils.MillsPerSecond / (_eventPeriod);
@@ -412,7 +413,7 @@ namespace VixenPlus {
                     var newColumns = newEventsPerSecond / eventPerSecond;
 
                     var columns = (int) Math.Min(((oldEventCount) / oldColumns), ((newEventCount) / newColumns));
-                    var rows = Math.Min(channels.Count, EventValues.GetLength(Utils.IndexRowsOrHeight));
+                    var rows = Math.Min(channels.Count, Rows);
                     for (var row = 0; row < rows; row++) {
                         for (var column = 0f; column < columns; column++) {
                             byte newValue = 0;
@@ -428,7 +429,7 @@ namespace VixenPlus {
                 EventValues = newEventValues;
             }
 
-            TotalEventPeriods = EventValues.GetLength(Utils.IndexColsOrWidth);
+            TotalEventPeriods = Cols;
             ResetOutputPlugins(channels, height);
         }
 
@@ -719,7 +720,7 @@ namespace VixenPlus {
 
         private void AssignChannelArray(List<Channel> channels) {
             _fullChannels = channels;
-            if (_fullChannels.Count != EventValues.GetLength(Utils.IndexRowsOrHeight)) {
+            if (_fullChannels.Count != Rows) {
                 UpdateEventValueArray(true);
             }
             _sortOrders.UpdateChannelCounts(_fullChannels.Count);
@@ -730,8 +731,7 @@ namespace VixenPlus {
             var path = Path.Combine(Paths.ProfilePath, profileName + Vendor.ProfilExtension);
             if (File.Exists(path)) {
                 AttachToProfile(new Profile(path));
-                var groupFile = Path.Combine(Paths.ProfilePath,
-                                                Path.GetFileNameWithoutExtension(_profile.FileName) + Vendor.GroupExtension);
+                var groupFile = Path.Combine(Paths.ProfilePath, Path.GetFileNameWithoutExtension(_profile.FileName) + Vendor.GroupExtension);
                 if (File.Exists(groupFile)) {
                     Groups = Group.LoadGroups(groupFile);
                 }
@@ -762,11 +762,11 @@ namespace VixenPlus {
             Channels.RemoveAt(index);
             var buffer = new byte[ChannelCount,TotalEventPeriods];
             var num3 = 0;
-            for (var i = 0; i < EventValues.GetLength(0); i++) {
+            for (var i = 0; i < Rows; i++) {
                 if (i == index) {
                     continue;
                 }
-                for (var j = 0; j < TotalEventPeriods; j++) {
+                for (var j = 0; j < Cols; j++) {
                     buffer[num3, j] = EventValues[i, j];
                 }
                 num3++;

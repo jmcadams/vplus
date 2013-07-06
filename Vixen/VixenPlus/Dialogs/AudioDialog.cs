@@ -41,7 +41,7 @@ namespace VixenPlus.Dialogs {
             _eventSequence = sequence;
             _keyStates = new bool[_eventSequence.ChannelCount];
             _stopwatch = new Stopwatch();
-            _newEventValues = new byte[_eventSequence.EventValues.GetLength(0),_eventSequence.EventValues.GetLength(1)];
+            _newEventValues = new byte[_eventSequence.Rows,_eventSequence.Cols];
             listBoxChannels.Items.AddRange(_eventSequence.Channels.ToArray());
             _originalAudio = sequence.Audio;
             if (sequence.Audio != null) {
@@ -213,7 +213,7 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private void CopyArray(byte[,] source, byte[,] dest) {
+        private static void CopyArray(byte[,] source, byte[,] dest) {
             var rows = Math.Min(source.GetLength(Utils.IndexRowsOrHeight), dest.GetLength(Utils.IndexRowsOrHeight));
             var columns = Math.Min(source.GetLength(Utils.IndexColsOrWidth), dest.GetLength(Utils.IndexColsOrWidth));
             for (var row = 0; row < rows; row++) {
