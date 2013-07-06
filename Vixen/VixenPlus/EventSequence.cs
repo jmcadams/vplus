@@ -11,8 +11,6 @@ using CommonUtils;
 
 using Properties;
 
-//TODO Can add a getter for ROWS and COLUMNS
-
 namespace VixenPlus {
     public class EventSequence : IScheduledObject {
         private List<Channel> _fullChannels;
