@@ -97,7 +97,6 @@ namespace VixenEditor{
         }
 
         #region Windows Form Designer generated code
-        private ColorDialog colorDialog1; //todo this may not be being used.
         private ContextMenuStrip contextMenuChannels;
         private ContextMenuStrip contextMenuGrid;
         private ContextMenuStrip contextMenuTime;
@@ -588,7 +587,6 @@ namespace VixenEditor{
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.textBoxProgramLength = new System.Windows.Forms.ToolStripTextBox();
-            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this._printDocument = new System.Drawing.Printing.PrintDocument();
@@ -3010,11 +3008,6 @@ namespace VixenEditor{
             this.textBoxProgramLength.Name = "textBoxProgramLength";
             this.textBoxProgramLength.Size = new System.Drawing.Size(75, 25);
             this.textBoxProgramLength.Text = "00:00";
-            // 
-            // colorDialog1
-            // 
-            this.colorDialog1.AnyColor = true;
-            this.colorDialog1.FullOpen = true;
             // 
             // saveFileDialog
             // 
