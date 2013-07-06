@@ -131,7 +131,6 @@ namespace VixenPlus.Dialogs {
             }
 
             var channels = _contextProfile.Channels;
-            //todo can the enable/selected index false/-1 go here?
             if (comboBoxChannelOrder.SelectedIndex == 0) {
                 if (channels.Count == 0) {
                     MessageBox.Show(Resources.NoChannelsToReorder, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
@@ -446,12 +445,7 @@ namespace VixenPlus.Dialogs {
         }
 
         
-        //todo what the hell is this doing?
         private void UpdateProfiles() {
-            //var profiles = new List<Profile>();
-            //foreach (Profile profile in listBoxProfiles.Items) {
-            //    profiles.Add(profile);
-            //} 
             var profiles = listBoxProfiles.Items.Cast<Profile>().ToList();
             listBoxProfiles.SelectedIndex = -1;
             listBoxProfiles.BeginUpdate();

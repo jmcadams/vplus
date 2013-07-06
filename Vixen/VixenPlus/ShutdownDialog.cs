@@ -6,10 +6,6 @@ namespace VixenPlus
 {
     internal partial class ShutdownDialog : Form
     {
-        //TODO: Load these images the proper way.
-        //ComponentResourceManager manager = new ComponentResourceManager(typeof(ShutdownDialog));
-        //this.pictureBox1.Image = (Image) manager.GetObject("pictureBox1.Image");
-
         public ShutdownDialog()
         {
             InitializeComponent();

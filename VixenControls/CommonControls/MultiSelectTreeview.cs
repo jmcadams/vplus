@@ -40,16 +40,11 @@ namespace CommonControls {
             // Make sure at least one node has a selection
             // this way we can tab to the ctrl and use the 
             // keyboard to select nodes
-            try {
-                if (_selectedNode == null && TopNode != null) {
-                    ToggleNode(TopNode, true);
-                }
+            if (_selectedNode == null && TopNode != null) {
+                ToggleNode(TopNode, true);
+            }
 
-                base.OnGotFocus(e);
-            }
-            catch (Exception ex) {
-                HandleException(ex);
-            }
+            base.OnGotFocus(e);
         }
 
 
@@ -57,25 +52,20 @@ namespace CommonControls {
             // If the user clicks on a node that was not
             // previously selected, select it now.
 
-            try {
-                base.SelectedNode = null;
+            base.SelectedNode = null;
 
-                var node = GetNodeAt(e.Location);
-                if (node != null) {
-                    if ((ModifierKeys == Keys.None)  && (_selectedNodes.Contains(node))) {
-                        // Potential Drag Operation
-                        // Let Mouse Up do select
-                    }
-                    else {
-                        SelectNode(node);
-                    }
+            var node = GetNodeAt(e.Location);
+            if (node != null) {
+                if ((ModifierKeys == Keys.None) && (_selectedNodes.Contains(node))) {
+                    // Potential Drag Operation
+                    // Let Mouse Up do select
                 }
+                else {
+                    SelectNode(node);
+                }
+            }
 
-                base.OnMouseDown(e);
-            }
-            catch (Exception ex) {
-                HandleException(ex);
-            }
+            base.OnMouseDown(e);
         }
 
 
@@ -84,20 +74,15 @@ namespace CommonControls {
             // selected then, reselect it now. This will clear
             // any other selected nodes. e.g. A B C D are selected
             // the user clicks on B, now A C & D are no longer selected.
-            try {
-                // Check to see if a node was clicked on 
-                var node = GetNodeAt(e.Location);
-                if (node != null) {
-                    if ((ModifierKeys == Keys.None)  && _selectedNodes.Contains(node)) {
-                        SelectNode(node);
-                    }
+            // Check to see if a node was clicked on 
+            var node = GetNodeAt(e.Location);
+            if (node != null) {
+                if ((ModifierKeys == Keys.None) && _selectedNodes.Contains(node)) {
+                    SelectNode(node);
                 }
+            }
 
-                base.OnMouseUp(e);
-            }
-            catch (Exception ex) {
-                HandleException(ex);
-            }
+            base.OnMouseUp(e);
         }
 
 
@@ -106,47 +91,33 @@ namespace CommonControls {
             // selected, then clear the active selection, select the
             // node being dragged and drag it. Otherwise if the node being
             // dragged is selected, drag the entire selection.
-            try {
-                var node = e.Item as TreeNode;
+            var node = e.Item as TreeNode;
 
-                if (node != null) {
-                    if (!_selectedNodes.Contains(node)) {
-                        SelectSingleNode(node);
-                        ToggleNode(node, true);
-                    }
+            if (node != null) {
+                if (!_selectedNodes.Contains(node)) {
+                    SelectSingleNode(node);
+                    ToggleNode(node, true);
                 }
+            }
 
-                base.OnItemDrag(e);
-            }
-            catch (Exception ex) {
-                HandleException(ex);
-            }
+            base.OnItemDrag(e);
         }
 
 
         protected override void OnBeforeSelect(TreeViewCancelEventArgs e) {
             // Never allow base.SelectedNode to be set!
-            try {
-                base.SelectedNode = null;
-                e.Cancel = true;
+            base.SelectedNode = null;
+            e.Cancel = true;
 
-                base.OnBeforeSelect(e);
-            }
-            catch (Exception ex) {
-                HandleException(ex);
-            }
+            base.OnBeforeSelect(e);
+
         }
 
 
         protected override void OnAfterSelect(TreeViewEventArgs e) {
             // Never allow base.SelectedNode to be set!
-            try {
-                base.OnAfterSelect(e);
-                base.SelectedNode = null;
-            }
-            catch (Exception ex) {
-                HandleException(ex);
-            }
+            base.OnAfterSelect(e);
+            base.SelectedNode = null;
         }
 
 
@@ -162,137 +133,132 @@ namespace CommonControls {
 
             var bShift = (ModifierKeys & Keys.Shift) == Keys.Shift;
 
-            try {
-                // Nothing is selected in the tree, this isn't a good state
-                // select the top node
-                if (_selectedNode == null && TopNode != null) {
-                    ToggleNode(TopNode, true);
-                }
-
-                // Nothing is still selected in the tree, this isn't a good state, leave.
-                if (_selectedNode == null) {
-                    return;
-                }
-
-                switch (e.KeyCode) {
-                    case Keys.Left:
-                        if (_selectedNode.IsExpanded && _selectedNode.Nodes.Count > 0) {
-                            // Collapse an expanded node that has children
-                            _selectedNode.Collapse();
-                        }
-                        else if (_selectedNode.Parent != null) {
-                            // Node is already collapsed, try to select its parent.
-                            SelectSingleNode(_selectedNode.Parent);
-                        }
-                        break;
-                    case Keys.Right:
-                        if (!_selectedNode.IsExpanded) {
-                            // Expand a collpased node's children
-                            _selectedNode.Expand();
-                        }
-                        else {
-                            // Node was already expanded, select the first child
-                            SelectSingleNode(_selectedNode.FirstNode);
-                        }
-                        break;
-                    case Keys.Up:
-                        if (_selectedNode.PrevVisibleNode != null) {
-                            SelectNode(_selectedNode.PrevVisibleNode);
-                        }
-                        break;
-                    case Keys.Down:
-                        if (_selectedNode.NextVisibleNode != null) {
-                            SelectNode(_selectedNode.NextVisibleNode);
-                        }
-                        break;
-                    case Keys.Home:
-                        if (bShift) {
-                            if (_selectedNode.Parent == null) {
-                                // Select all of the root nodes up to this point 
-                                if (Nodes.Count > 0) {
-                                    SelectNode(Nodes[0]);
-                                }
-                            }
-                            else {
-                                // Select all of the nodes up to this point under this nodes parent
-                                SelectNode(_selectedNode.Parent.FirstNode);
-                            }
-                        }
-                        else {
-                            // Select this first node in the tree
-                            if (Nodes.Count > 0) {
-                                SelectSingleNode(Nodes[0]);
-                            }
-                        }
-                        break;
-                    case Keys.End:
-                        if (bShift) {
-                            if (_selectedNode.Parent == null) {
-                                // Select the last ROOT node in the tree
-                                if (Nodes.Count > 0) {
-                                    SelectNode(Nodes[Nodes.Count - 1]);
-                                }
-                            }
-                            else {
-                                // Select the last node in this branch
-                                SelectNode(_selectedNode.Parent.LastNode);
-                            }
-                        }
-                        else {
-                            if (Nodes.Count > 0) {
-                                // Select the last node visible node in the tree.
-                                // Don't expand branches incase the tree is virtual
-                                var ndLast = Nodes[0].LastNode;
-                                while (ndLast.IsExpanded && (ndLast.LastNode != null)) {
-                                    ndLast = ndLast.LastNode;
-                                }
-                                SelectSingleNode(ndLast);
-                            }
-                        }
-                        break;
-                    case Keys.PageUp: {
-                        // Select the highest node in the display
-                        var nCount = VisibleCount;
-                        var ndCurrent = _selectedNode;
-                        while ((nCount) > 0 && (ndCurrent.PrevVisibleNode != null)) {
-                            ndCurrent = ndCurrent.PrevVisibleNode;
-                            nCount--;
-                        }
-                        SelectSingleNode(ndCurrent);
-                    }
-                        break;
-                    case Keys.PageDown: {
-                        // Select the lowest node in the display
-                        var nCount = VisibleCount;
-                        var ndCurrent = _selectedNode;
-                        while ((nCount) > 0 && (ndCurrent.NextVisibleNode != null)) {
-                            ndCurrent = ndCurrent.NextVisibleNode;
-                            nCount--;
-                        }
-                        SelectSingleNode(ndCurrent);
-                    }
-                        break;
-                    default: {
-                        // Assume this is a search character a-z, A-Z, 0-9, etc.
-                        // Select the first node after the current node that 
-                        // starts with this character
-                        var sSearch = ((char) e.KeyValue).ToString(CultureInfo.InvariantCulture);
-
-                        var ndCurrent = _selectedNode;
-                        while ((ndCurrent.NextVisibleNode != null)) {
-                            ndCurrent = ndCurrent.NextVisibleNode;
-                            if (!ndCurrent.Text.StartsWith(sSearch)) {
-                                continue;
-                            }
-                            SelectSingleNode(ndCurrent);
-                            break;
-                        }
-                    }
-                        break;
-                }
+            // Nothing is selected in the tree, this isn't a good state
+            // select the top node
+            if (_selectedNode == null && TopNode != null) {
+                ToggleNode(TopNode, true);
             }
-            catch (Exception ex) {
-                HandleException(ex);
+
+            // Nothing is still selected in the tree, this isn't a good state, leave.
+            if (_selectedNode == null) {
+                return;
+            }
+
+            switch (e.KeyCode) {
+                case Keys.Left:
+                    if (_selectedNode.IsExpanded && _selectedNode.Nodes.Count > 0) {
+                        // Collapse an expanded node that has children
+                        _selectedNode.Collapse();
+                    }
+                    else if (_selectedNode.Parent != null) {
+                        // Node is already collapsed, try to select its parent.
+                        SelectSingleNode(_selectedNode.Parent);
+                    }
+                    break;
+                case Keys.Right:
+                    if (!_selectedNode.IsExpanded) {
+                        // Expand a collpased node's children
+                        _selectedNode.Expand();
+                    }
+                    else {
+                        // Node was already expanded, select the first child
+                        SelectSingleNode(_selectedNode.FirstNode);
+                    }
+                    break;
+                case Keys.Up:
+                    if (_selectedNode.PrevVisibleNode != null) {
+                        SelectNode(_selectedNode.PrevVisibleNode);
+                    }
+                    break;
+                case Keys.Down:
+                    if (_selectedNode.NextVisibleNode != null) {
+                        SelectNode(_selectedNode.NextVisibleNode);
+                    }
+                    break;
+                case Keys.Home:
+                    if (bShift) {
+                        if (_selectedNode.Parent == null) {
+                            // Select all of the root nodes up to this point 
+                            if (Nodes.Count > 0) {
+                                SelectNode(Nodes[0]);
+                            }
+                        }
+                        else {
+                            // Select all of the nodes up to this point under this nodes parent
+                            SelectNode(_selectedNode.Parent.FirstNode);
+                        }
+                    }
+                    else {
+                        // Select this first node in the tree
+                        if (Nodes.Count > 0) {
+                            SelectSingleNode(Nodes[0]);
+                        }
+                    }
+                    break;
+                case Keys.End:
+                    if (bShift) {
+                        if (_selectedNode.Parent == null) {
+                            // Select the last ROOT node in the tree
+                            if (Nodes.Count > 0) {
+                                SelectNode(Nodes[Nodes.Count - 1]);
+                            }
+                        }
+                        else {
+                            // Select the last node in this branch
+                            SelectNode(_selectedNode.Parent.LastNode);
+                        }
+                    }
+                    else {
+                        if (Nodes.Count > 0) {
+                            // Select the last node visible node in the tree.
+                            // Don't expand branches incase the tree is virtual
+                            var ndLast = Nodes[0].LastNode;
+                            while (ndLast.IsExpanded && (ndLast.LastNode != null)) {
+                                ndLast = ndLast.LastNode;
+                            }
+                            SelectSingleNode(ndLast);
+                        }
+                    }
+                    break;
+                case Keys.PageUp: {
+                    // Select the highest node in the display
+                    var nCount = VisibleCount;
+                    var ndCurrent = _selectedNode;
+                    while ((nCount) > 0 && (ndCurrent.PrevVisibleNode != null)) {
+                        ndCurrent = ndCurrent.PrevVisibleNode;
+                        nCount--;
+                    }
+                    SelectSingleNode(ndCurrent);
+                }
+                    break;
+                case Keys.PageDown: {
+                    // Select the lowest node in the display
+                    var nCount = VisibleCount;
+                    var ndCurrent = _selectedNode;
+                    while ((nCount) > 0 && (ndCurrent.NextVisibleNode != null)) {
+                        ndCurrent = ndCurrent.NextVisibleNode;
+                        nCount--;
+                    }
+                    SelectSingleNode(ndCurrent);
+                }
+                    break;
+                default: {
+                    // Assume this is a search character a-z, A-Z, 0-9, etc.
+                    // Select the first node after the current node that 
+                    // starts with this character
+                    var sSearch = ((char) e.KeyValue).ToString(CultureInfo.InvariantCulture);
+
+                    var ndCurrent = _selectedNode;
+                    while ((ndCurrent.NextVisibleNode != null)) {
+                        ndCurrent = ndCurrent.NextVisibleNode;
+                        if (!ndCurrent.Text.StartsWith(sSearch)) {
+                            continue;
+                        }
+                        SelectSingleNode(ndCurrent);
+                        break;
+                    }
+                }
+                    break;
             }
         }
 
@@ -455,16 +421,7 @@ namespace CommonControls {
             _nodeRect.Location = node.Bounds.Location;
             _nodeRect.Width = Width;
             _nodeRect.Height = ItemHeight;
-            Invalidate(_nodeRect);            
+            Invalidate(_nodeRect);
         }
-
-
-        //TODO: Remove this when fully implemented.
-        private void HandleException(Exception ex) {
-            // Perform some error handling here.
-            // We don't want to bubble errors to the CLR. 
-            MessageBox.Show(ex.Message);
-        }
-
     }
 }

@@ -37,7 +37,6 @@ namespace VixenPlus.Dialogs {
                 while ((row = reader.ReadLine()) != null) {
                     var x = 0;
                     foreach (var pixels in row.Split(new[] {' '}).Where(pixels => pixels.Length > 0)) {
-                        //todo add the routine color to preferences.
                         Preview.SetPixel(x++, y, Color.FromArgb(Convert.ToByte(pixels), _routineColor));
                     }
                     y++;

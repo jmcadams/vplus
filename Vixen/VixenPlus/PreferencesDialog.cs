@@ -72,7 +72,7 @@ namespace VixenPlus {
             try {
                 path = Path.GetDirectoryName(textBoxLogFilePath.Text);
             }
-                // ReSharper disable EmptyGeneralCatchClause
+            // ReSharper disable EmptyGeneralCatchClause
             catch {}
             // ReSharper restore EmptyGeneralCatchClause
             var fileName = Path.GetFileName(textBoxLogFilePath.Text);
