@@ -232,7 +232,6 @@ namespace VixenEditor {
 
 
         private void AffectGrid(int startRow, int startCol, byte[,] values) {
-            startRow = _sequence.Channels.IndexOf(_sequence.FullChannels[startRow]);
             AddUndoItem(new Rectangle(startCol, startRow, values.GetLength(Utils.IndexColsOrWidth), values.GetLength(Utils.IndexRowsOrHeight)),
                         UndoOriginalBehavior.Overwrite, Resources.UndoText_CopyChannelData);
             CopyToEventValues(startCol, startRow, values);
@@ -612,7 +611,7 @@ namespace VixenEditor {
             var columns = data.GetLength(Utils.IndexColsOrWidth);
 
             for (var row = 0; row < rows && startRow + row < _sequence.ChannelCount; row++) {
-                var channel = _sequence.Channels[startRow + row].OutputChannel;
+                var channel = GetEventFromChannel(_sequence.Channels[startRow + row]);
                 for (var col = 0; col < columns && startCol + col < _sequence.TotalEventPeriods; col++) {
                     _sequence.EventValues[channel, startCol + col] = data[row, col];
                 }
