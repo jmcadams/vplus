@@ -435,7 +435,7 @@ namespace E131_VixenPlugin {
         //-------------------------------------------------------------
 
         private void univDGVN_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e) {
-            int columnIndex = univDGVN.CurrentCell.ColumnIndex;
+            var columnIndex = univDGVN.CurrentCell.ColumnIndex;
 
             if (columnIndex == UniverseColumn || columnIndex == StartColumn || columnIndex == SizeColumn || columnIndex == TtlColumn) {
                 // first remove the event handler (if previously added)
@@ -808,7 +808,7 @@ namespace E131_VixenPlugin {
             }
 
             else {
-                string ipAddressText = ipAddress.ToString();
+                var ipAddressText = ipAddress.ToString();
 
                 if (_unicasts.ContainsKey(ipAddressText)) {
                     MessageBox.Show(@"Error - Duplicate IP Address", @"IP Address Validation", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -99,14 +99,14 @@ namespace Snowstorm {
         }
 
 
-        private int lastRenderedEvent = -1;
+        private int _lastRenderedEvent = -1;
         
         public Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender) {
             _bufferHeight = buffer.GetLength(Utils.IndexRowsOrHeight);
             _bufferWidth = buffer.GetLength(Utils.IndexColsOrWidth);
             _palette = palette;
-            var speed = eventToRender - lastRenderedEvent;
-            lastRenderedEvent = eventToRender;
+            var speed = eventToRender - _lastRenderedEvent;
+            _lastRenderedEvent = eventToRender;
             var tailLength = _bufferWidth * _bufferHeight * tbTailLength.Value / 2000 + 2;
             var xy = new Point();
             if (eventToRender == 0 || _snowstormItems.Count == 0) {

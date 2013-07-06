@@ -11,7 +11,8 @@ namespace Fire {
         public Fire() {
             InitializeComponent();
         }
-        
+
+
         public event EventHandler OnControlChanged;
 
         public string EffectName {
@@ -35,15 +36,19 @@ namespace Fire {
             set { Setup(value); }
         }
 
+
         private static XmlElement GetCurrentSettings() {
             return Xml.CreateXmlDocument().DocumentElement;
         }
+
 
         private static void Setup(XmlElement settings) {
             System.Diagnostics.Debug.Print(settings.ToString());
         }
 
+
         private Color[] _firePalette;
+
 
         private void InitFirePalette(float hue) {
             _firePalette = new Color[200];
@@ -51,7 +56,7 @@ namespace Fire {
 
             for (var i = 0; i < 100; i++) {
                 hsv.Value = i / 100.0f;
-                _firePalette[i] = HSVUtils.HSVtoColor(hsv); 
+                _firePalette[i] = HSVUtils.HSVtoColor(hsv);
             }
 
             hsv.Value = 1.0f;
@@ -61,11 +66,13 @@ namespace Fire {
             }
         }
 
+
         private int[] _fireBuffer = new int[1];
         private readonly Random _random = new Random();
         private int _width;
         private int _height;
         private Color[] _palette;
+
 
         public Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender) {
             var bufferHeight = buffer.GetLength(Utils.IndexRowsOrHeight);
@@ -110,28 +117,34 @@ namespace Fire {
                         sum += v4;
                         n++;
                     }
-                    var  newIndex = n > 0 ? sum / n : 0;
+                    var newIndex = n > 0 ? sum / n : 0;
                     if (newIndex > 0) {
                         newIndex += (_random.Next() % 100 < 20) ? step : -step;
                         if (newIndex < 0) newIndex = 0;
+                        // ReSharper disable PossibleNullReferenceException
                         if (newIndex >= _firePalette.Length) newIndex = _firePalette.Length - 1;
+                        // ReSharper restore PossibleNullReferenceException
                     }
                     SetFireBuffer(row * bufferWidth + col, newIndex);
                 }
             }
             for (var row = 0; row < bufferHeight; row++) {
                 for (var col = 0; col < bufferWidth; col++) {
+                    // ReSharper disable PossibleNullReferenceException
                     buffer[row, col] = _firePalette[GetFireBuffer(col, row)];
+                    // ReSharper restore PossibleNullReferenceException
                 }
             }
             return buffer;
         }
+
 
         private void SetFireBuffer(int cell, int value) {
             if (cell >= 0 && cell < _fireBuffer.Length) {
                 _fireBuffer[cell] = value;
             }
         }
+
 
         private int GetFireBuffer(int x, int y) {
             var cell = y * _width + x;

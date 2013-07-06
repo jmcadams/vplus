@@ -31,10 +31,11 @@ namespace NutcrackerEffectsControl {
 
         private void Save_Click(object sender, EventArgs e) {
             using (var getName = new TextQueryDialog("Palette Name", "What do you want to name the palette?", string.Empty)) {
-                if (getName.ShowDialog() == DialogResult.OK) {
-                    _nutcrackerData.SavePalette(getName.Response, _getPalette.Invoke());
-                    PopulatePalettes();
+                if (getName.ShowDialog() != DialogResult.OK) {
+                    return;
                 }
+                _nutcrackerData.SavePalette(getName.Response, _getPalette.Invoke());
+                PopulatePalettes();
             }
         }
 

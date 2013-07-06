@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 
@@ -18,7 +17,7 @@ namespace VixenPlus.Dialogs {
             }
 
             Name = Path.GetFileNameWithoutExtension(filePath);
-            _routineColor = Color.FromArgb(Int32.Parse(Preference2.GetInstance().GetString("RoutineBitmap"))); ;
+            _routineColor = Color.FromArgb(Int32.Parse(Preference2.GetInstance().GetString("RoutineBitmap"))); 
             using (var stream = new FileStream(filePath, FileMode.Open))
             using (var reader = new StreamReader(stream)) {
                 var line = reader.ReadLine();

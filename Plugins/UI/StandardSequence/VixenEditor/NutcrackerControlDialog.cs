@@ -270,10 +270,11 @@ namespace VixenEditor
 
 
         private void cbModels_SelectedIndexChanged(object sender, EventArgs e) {
-            if (cbModels.SelectedIndex == cbModels.Items.Count - 1) {
-                using (var modelDialog = new NutcrackerModelDialog(_sequence)) {
-                    modelDialog.ShowDialog();
-                }
+            if (cbModels.SelectedIndex != cbModels.Items.Count - 1) {
+                return;
+            }
+            using (var modelDialog = new NutcrackerModelDialog(_sequence)) {
+                modelDialog.ShowDialog();
             }
         }
 

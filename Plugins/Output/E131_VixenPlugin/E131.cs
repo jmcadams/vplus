@@ -65,6 +65,7 @@
 //=====================================================================
 
 using System;
+using System.Linq;
 using System.Text;
 
 namespace E131_VixenPlugin
@@ -93,14 +94,7 @@ namespace E131_VixenPlugin
         {
             var	txt = string.Empty;
 
-            var bfr = PhyBuffer;
-
-            foreach (var val in bfr)
-            {
-                txt += val.ToString("X2") + ' ';
-            }
-
-            return txt;
+            return PhyBuffer.Aggregate(txt, (current, val) => current + (val.ToString("X2") + ' '));
         }
 
         protected void UInt16ToBfrSwapped(UInt16 value, byte[] bfr, int offset)

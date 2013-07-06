@@ -39,6 +39,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
@@ -87,19 +88,15 @@ namespace E131_VixenPlugin
 
             txt.AppendLine();
 
-            IPGlobalProperties computerProperties = IPGlobalProperties.GetIPGlobalProperties();
+            var computerProperties = IPGlobalProperties.GetIPGlobalProperties();
 
             txt.Append("HostName: " + computerProperties.HostName);
             txt.AppendLine("  DomainName: " + computerProperties.DomainName);
             
-            NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
+            var nics = NetworkInterface.GetAllNetworkInterfaces();
 
             if (nics.Length > 0)
-                foreach (var nic in nics)
-                {
-                    if (nic.NetworkInterfaceType.CompareTo(NetworkInterfaceType.Tunnel) == 0) {
-                        continue;
-                    }
+                foreach (var nic in nics.Where(nic => nic.NetworkInterfaceType.CompareTo(NetworkInterfaceType.Tunnel) != 0)) {
                     txt.AppendLine();
                     txt.AppendLine(nic.Description + ":");
                     txt.AppendLine("  ID: " + nic.Id);

@@ -421,12 +421,8 @@ namespace VixenPlus {
                     try {
                         _plugInRouter.EndUpdate();
                     }
-                    catch (Exception exception) {
+                    catch (Exception) {
                         StopExecution();
-                        //if (!(exception is ObjectDisposedException)) {
-                        //    MessageBox.Show(exception.Message + Resources.EngineStoppedError, Resources.EngineStoppedHeading, MessageBoxButtons.OK,
-                        //                    MessageBoxIcon.Exclamation);
-                        //}
                     }
                 }
                 if ((_isStopping || !_isRunning) || (eventIndex == -1)) {

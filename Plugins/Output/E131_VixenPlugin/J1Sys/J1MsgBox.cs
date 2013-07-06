@@ -42,6 +42,7 @@
 
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -49,16 +50,16 @@ namespace J1Sys
 {
 	public class J1MsgBox : Form
 	{
-		static private	Icon	messageBoxIconExclamation = null;
-		static private	Icon	messageBoxIconInformation = null;
-		static private	Icon	messageBoxIconQuestion    = null;
-		static private	Icon	messageBoxIconStop        = null;
+		static private	Icon	_messageBoxIconExclamation;
+		static private	Icon	_messageBoxIconInformation;
+		static private	Icon	_messageBoxIconQuestion;
+		static private	Icon	_messageBoxIconStop;
 
-		Icon		msgIcon;
-		Point		msgIconPoint;
-		string		msgText;
-		RectangleF	msgTextRectF;
-		TextBox		msgScrollTextBox;
+		Icon		_msgIcon;
+		Point		_msgIconPoint;
+		string		_msgText;
+		RectangleF	_msgTextRectF;
+		TextBox		_msgScrollTextBox;
 
 
 		public J1MsgBox()
@@ -76,11 +77,11 @@ namespace J1Sys
 
 			Controls.Clear();
 
-			msgIcon				= null;
-			msgIconPoint		= new Point();
-			msgText				= "";
-			msgTextRectF		= new RectangleF();
-			msgScrollTextBox	= null;
+			_msgIcon				= null;
+			_msgIconPoint		= new Point();
+			_msgText				= "";
+			_msgTextRectF		= new RectangleF();
+			_msgScrollTextBox	= null;
 
 			DialogResult		= DialogResult.None;
 		}
@@ -113,9 +114,9 @@ namespace J1Sys
 
 		public static DialogResult ShowMsg(string text, string scrollText, string caption, MessageBoxButtons mBB, MessageBoxIcon mBI)
 		{
-			J1MsgBox	j1MB = new J1MsgBox();
+			var	j1Mb = new J1MsgBox();
 
-			return j1MB.Show(text, scrollText, caption, mBB, mBI);
+			return j1Mb.Show(text, scrollText, caption, mBB, mBI);
 		}
 
 		public DialogResult Show(string text)
@@ -170,26 +171,25 @@ namespace J1Sys
 
 			// calculate the raw size of the text
 
-			if (text.Length != 0) textSizeF = grfx.MeasureString(text, Font);
-			else textSizeF = new SizeF(0,0);
+			textSizeF = text.Length != 0 ? grfx.MeasureString(text, Font) : new SizeF(0,0);
 
 			// set the msgIcon
 			
-			if (mBI != MessageBoxIcon.None) msgIcon = LoadMessageBoxIcon(mBI);
-			hasIcon = (msgIcon != null);
+			if (mBI != MessageBoxIcon.None) _msgIcon = LoadMessageBoxIcon(mBI);
+			hasIcon = (_msgIcon != null);
 
 			// if needed, create the textbox and add it to the form
 
 			if (scrollText != null)
 			{
 				scrollTextSizeF = grfx.MeasureString(scrollText, Font);
-				msgScrollTextBox = new TextBox();
-				msgScrollTextBox.Text = scrollText;
-				msgScrollTextBox.Multiline = true;
-				msgScrollTextBox.ReadOnly = true;
-				msgScrollTextBox.Select(0,0);
-				msgScrollTextBox.ScrollBars = ScrollBars.Both;
-				Controls.Add(msgScrollTextBox);
+				_msgScrollTextBox = new TextBox();
+				_msgScrollTextBox.Text = scrollText;
+				_msgScrollTextBox.Multiline = true;
+				_msgScrollTextBox.ReadOnly = true;
+				_msgScrollTextBox.Select(0,0);
+				_msgScrollTextBox.ScrollBars = ScrollBars.Both;
+				Controls.Add(_msgScrollTextBox);
 			}
 
 			else scrollTextSizeF = new SizeF(0,0);
@@ -251,7 +251,6 @@ namespace J1Sys
 			// now figure clientsize, and our points of reference
 
 			clientWidth			=   0;
-			clientHeight		=   0;
 			clientMaxWidth		= 600;
 			clientMaxHeight		= 400;
 			clientWhiteSpace	=  15;
@@ -264,7 +263,7 @@ namespace J1Sys
 			// next check the icon/text combination
 
 			width  = 0;
-			if (hasIcon) width = msgIcon.Size.Width + clientWhiteSpace;
+			if (hasIcon) width = _msgIcon.Size.Width + clientWhiteSpace;
 			width += (int) textSizeF.Width + 1;
 			if (width > clientWidth) clientWidth = width;
 
@@ -282,13 +281,13 @@ namespace J1Sys
 			if (clientWidth > clientMaxWidth) clientWidth = clientMaxWidth;
 
 			width = clientWidth;
-			if (hasIcon) width -= msgIcon.Size.Width + clientWhiteSpace;
+			if (hasIcon) width -= _msgIcon.Size.Width + clientWhiteSpace;
 			if (width < textSizeF.Width) textSizeF = grfx.MeasureString(text, Font, width);
 
 			// now calculate the height of client
 
 			clientHeight = 0;
-			if (hasIcon) clientHeight = msgIcon.Size.Height;
+			if (hasIcon) clientHeight = _msgIcon.Size.Height;
 			if (textSizeF.Height > clientHeight) clientHeight = (int) textSizeF.Height + 1;
 			if (scrollText != null)
 			{
@@ -306,26 +305,26 @@ namespace J1Sys
 
 			ClientSize = new Size(clientWidth + 2 * clientWhiteSpace, clientHeight + 2 * clientWhiteSpace);
 			
-			msgIconPoint = new Point(clientWhiteSpace, clientWhiteSpace);
+			_msgIconPoint = new Point(clientWhiteSpace, clientWhiteSpace);
 			textPoint    = new Point(clientWhiteSpace, clientWhiteSpace);
 			if (hasIcon)
 			{
-				if (msgIcon.Size.Height > textSizeF.Height) textPoint.Y += (msgIcon.Size.Height - (int) textSizeF.Height) / 2;
+				if (_msgIcon.Size.Height > textSizeF.Height) textPoint.Y += (_msgIcon.Size.Height - (int) textSizeF.Height) / 2;
 			
-				textPoint.X += msgIcon.Size.Width + clientWhiteSpace;
+				textPoint.X += _msgIcon.Size.Width + clientWhiteSpace;
 			}
 
 			if (scrollText != null)
 			{
 				height = 0;
-				if (hasIcon) height = msgIcon.Size.Height;
+				if (hasIcon) height = _msgIcon.Size.Height;
 				if ((int) textSizeF.Height > height) height = (int) textSizeF.Height;
 				if (height > 0) height += clientWhiteSpace;
 				height += clientWhiteSpace;
 
-				msgScrollTextBox.Location	= new Point(clientWhiteSpace, height);
-				msgScrollTextBox.Width		= ClientSize.Width - 2 * clientWhiteSpace;
-				msgScrollTextBox.Height		= ClientSize.Height - 2 * clientWhiteSpace - btnsSize.Height - height;
+				_msgScrollTextBox.Location	= new Point(clientWhiteSpace, height);
+				_msgScrollTextBox.Width		= ClientSize.Width - 2 * clientWhiteSpace;
+				_msgScrollTextBox.Height		= ClientSize.Height - 2 * clientWhiteSpace - btnsSize.Height - height;
 			}
 
 			btnsPoint = new Point((ClientSize.Width - btnsSize.Width) / 2, ClientSize.Height - (btnsSize.Height + clientWhiteSpace));
@@ -334,17 +333,12 @@ namespace J1Sys
 			
 			Text = caption;
 
-			msgText      = text;
-			if (msgText.Length > 0) msgTextRectF = new RectangleF(textPoint, textSizeF);
-			else msgTextRectF = new RectangleF(0,0,0,0);
+			_msgText      = text;
+			_msgTextRectF = _msgText.Length > 0 ? new RectangleF(textPoint, textSizeF) : new RectangleF(0,0,0,0);
 
-			foreach (Control control in Controls)
-			{
-				if (control.GetType() == typeof(Button))
-				{
-					control.Location = btnsPoint;
-					btnsPoint.X += control.Size.Width + 10;
-				}
+			foreach (Control control in Controls.Cast<Control>().Where(control => control.GetType() == typeof(Button))) {
+			    control.Location = btnsPoint;
+			    btnsPoint.X += control.Size.Width + 10;
 			}
 
 			ResumeLayout();
@@ -354,11 +348,9 @@ namespace J1Sys
 
 		void AddBtn(string title)
 		{
-			Button	btn = new Button();
+			var	btn = new Button {Text = @"&" + title, Name = title + "Btn"};
 
-			btn.Text   = "&" + title;
-			btn.Name   = title + "Btn";
-			btn.Click += new EventHandler(BtnClick);
+		    btn.Click += BtnClick;
 			Controls.Add(btn);
 		}
 
@@ -402,14 +394,14 @@ namespace J1Sys
 		{
 			base.OnPaint(pEA);
 
-			if (msgIcon != null)
+			if (_msgIcon != null)
 			{
-				pEA.Graphics.DrawIconUnstretched(msgIcon, new Rectangle(msgIconPoint, msgIcon.Size));
+				pEA.Graphics.DrawIconUnstretched(_msgIcon, new Rectangle(_msgIconPoint, _msgIcon.Size));
 			}
 
-			if (msgText.Length > 0)
+			if (_msgText.Length > 0)
 			{
-				pEA.Graphics.DrawString(msgText, Font, Brushes.Black, msgTextRectF);
+				pEA.Graphics.DrawString(_msgText, Font, Brushes.Black, _msgTextRectF);
 			}
 		}
 
@@ -426,63 +418,63 @@ namespace J1Sys
 			switch (mBI)
 			{
 				case MessageBoxIcon.Exclamation:
-					if (messageBoxIconExclamation == null)
+					if (_messageBoxIconExclamation == null)
 					{
 						foreach (string decoratedName in decoratedNames)
 						{
 							if (decoratedName.EndsWith(".MessageBoxIcons.exclamation.ico"))
 							{
-								messageBoxIconExclamation = new Icon(assembly.GetManifestResourceStream(decoratedName));
+								_messageBoxIconExclamation = new Icon(assembly.GetManifestResourceStream(decoratedName));
 								break;
 							}
 						}
 					}
-					icon = messageBoxIconExclamation;
+					icon = _messageBoxIconExclamation;
 					break;
 
 				case MessageBoxIcon.Information:
-					if (messageBoxIconInformation == null)
+					if (_messageBoxIconInformation == null)
 					{
 						foreach (string decoratedName in decoratedNames)
 						{
 							if (decoratedName.EndsWith(".MessageBoxIcons.information.ico"))
 							{
-								messageBoxIconInformation = new Icon(assembly.GetManifestResourceStream(decoratedName));
+								_messageBoxIconInformation = new Icon(assembly.GetManifestResourceStream(decoratedName));
 								break;
 							}
 						}
 					}
-					icon = messageBoxIconInformation;
+					icon = _messageBoxIconInformation;
 					break;
 
 				case MessageBoxIcon.Question:
-					if (messageBoxIconQuestion    == null)
+					if (_messageBoxIconQuestion    == null)
 					{
 						foreach (string decoratedName in decoratedNames)
 						{
 							if (decoratedName.EndsWith(".MessageBoxIcons.question.ico"))
 							{
-								messageBoxIconQuestion = new Icon(assembly.GetManifestResourceStream(decoratedName));
+								_messageBoxIconQuestion = new Icon(assembly.GetManifestResourceStream(decoratedName));
 								break;
 							}
 						}
 					}
-					icon = messageBoxIconQuestion;
+					icon = _messageBoxIconQuestion;
 					break;
 
 				case MessageBoxIcon.Stop:
-					if (messageBoxIconStop        == null)
+					if (_messageBoxIconStop        == null)
 					{
 						foreach (string decoratedName in decoratedNames)
 						{
 							if (decoratedName.EndsWith(".MessageBoxIcons.stop.ico"))
 							{
-								messageBoxIconStop = new Icon(assembly.GetManifestResourceStream(decoratedName));
+								_messageBoxIconStop = new Icon(assembly.GetManifestResourceStream(decoratedName));
 								break;
 							}
 						}
 					}
-					icon = messageBoxIconStop;
+					icon = _messageBoxIconStop;
 					break;
 			}
 

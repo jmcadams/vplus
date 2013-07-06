@@ -30,7 +30,7 @@ namespace Arch {
 
 
         public NutcrackerNodes[,] InitializeNodes(Rectangle rect) {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
 
@@ -99,7 +99,7 @@ namespace Arch {
         }
 
 
-        private void control_ValueChanged(object sender, System.EventArgs e)
+        private void control_ValueChanged(object sender, EventArgs e)
         {
             ResetNodes();
             SetArchCoord();

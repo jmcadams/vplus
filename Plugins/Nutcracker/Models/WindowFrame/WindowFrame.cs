@@ -30,7 +30,7 @@ namespace WindowFrame {
 
 
         public NutcrackerNodes[,] InitializeNodes(Rectangle rect) {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
 
@@ -118,7 +118,7 @@ namespace WindowFrame {
             }
         }
 
-        private void control_ValueChanged(object sender, System.EventArgs e) {
+        private void control_ValueChanged(object sender, EventArgs e) {
             InitFrame();
             DrawPreview();
         }

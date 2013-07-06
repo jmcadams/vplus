@@ -258,7 +258,7 @@ namespace E131_VixenPlugin {
             _pluginChannelsTo = 0;
 
             // get the attribute collection and the from/to attributes if available
-            XmlAttributeCollection setupNodeAttributes = _setupNode.Attributes;
+            var setupNodeAttributes = _setupNode.Attributes;
             if (setupNodeAttributes != null) {
                 var fromAttribute = setupNodeAttributes.GetNamedItem("from");
                 var toAttribute = setupNodeAttributes.GetNamedItem("to");
@@ -313,38 +313,39 @@ namespace E131_VixenPlugin {
                         _eventRepeatCount = TryParseInt32(attribute.Value, 0);
                 }
 
-                if (child.Name == "Universe") {
-                    var active = false;
-                    var universe = 1;
-                    var start = 1;
-                    var size = 1;
-                    string unicast = null;
-                    string multicast = null;
-                    var ttl = 1;
-
-                    if (attributes != null && (attribute = attributes.GetNamedItem("active")) != null)
-                        if (attribute.Value == "True") active = true;
-
-                    if (attributes != null && (attribute = attributes.GetNamedItem("number")) != null)
-                        universe = TryParseInt32(attribute.Value, 1);
-
-                    if (attributes != null && (attribute = attributes.GetNamedItem("start")) != null)
-                        start = TryParseInt32(attribute.Value, 1);
-
-                    if (attributes != null && (attribute = attributes.GetNamedItem("size")) != null)
-                        size = TryParseInt32(attribute.Value, 1);
-
-                    if (attributes != null && (attribute = attributes.GetNamedItem("unicast")) != null)
-                        unicast = attribute.Value;
-
-                    if (attributes != null && (attribute = attributes.GetNamedItem("multicast")) != null)
-                        multicast = attribute.Value;
-
-                    if (attributes != null && (attribute = attributes.GetNamedItem("ttl")) != null)
-                        ttl = TryParseInt32(attribute.Value, 1);
-
-                    _universeTable.Add(new UniverseEntry(rowNum++, active, universe, start - 1, size, unicast, multicast, ttl));
+                if (child.Name != "Universe") {
+                    continue;
                 }
+                var active = false;
+                var universe = 1;
+                var start = 1;
+                var size = 1;
+                string unicast = null;
+                string multicast = null;
+                var ttl = 1;
+
+                if (attributes != null && (attribute = attributes.GetNamedItem("active")) != null)
+                    if (attribute.Value == "True") active = true;
+
+                if (attributes != null && (attribute = attributes.GetNamedItem("number")) != null)
+                    universe = TryParseInt32(attribute.Value, 1);
+
+                if (attributes != null && (attribute = attributes.GetNamedItem("start")) != null)
+                    start = TryParseInt32(attribute.Value, 1);
+
+                if (attributes != null && (attribute = attributes.GetNamedItem("size")) != null)
+                    size = TryParseInt32(attribute.Value, 1);
+
+                if (attributes != null && (attribute = attributes.GetNamedItem("unicast")) != null)
+                    unicast = attribute.Value;
+
+                if (attributes != null && (attribute = attributes.GetNamedItem("multicast")) != null)
+                    multicast = attribute.Value;
+
+                if (attributes != null && (attribute = attributes.GetNamedItem("ttl")) != null)
+                    ttl = TryParseInt32(attribute.Value, 1);
+
+                _universeTable.Add(new UniverseEntry(rowNum++, active, universe, start - 1, size, unicast, multicast, ttl));
             }
 
             if (_guid == Guid.Empty) _guid = Guid.NewGuid();
@@ -417,7 +418,7 @@ namespace E131_VixenPlugin {
 
             _nicTable = new SortedList<string, NetworkInterface>();
 
-            NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
+            var nics = NetworkInterface.GetAllNetworkInterfaces();
 
             if (nics.Length > 0)
                 foreach (var nic in nics.Where(nic => nic.NetworkInterfaceType.CompareTo(NetworkInterfaceType.Tunnel) != 0)) {
@@ -438,7 +439,7 @@ namespace E131_VixenPlugin {
         public HardwareMap[] HardwareMap {
             get {
                 // define objects
-                int activeCnt = _universeTable.Where(uE => uE.Active).Count(uE => uE.Unicast != null || uE.Multicast != null);
+                var activeCnt = _universeTable.Where(uE => uE.Active).Count(uE => uE.Unicast != null || uE.Multicast != null);
 
                 // find how many active universes we have
 
@@ -449,7 +450,7 @@ namespace E131_VixenPlugin {
                 activeCnt = 0;
 
                 // build the table for each active universe
-                foreach (UniverseEntry uE in _universeTable.Where(uE => uE.Active)) {
+                foreach (var uE in _universeTable.Where(uE => uE.Active)) {
                     // unicast is pretty straight forward
                     if (uE.Unicast != null) {
                         hardwareMap[activeCnt++] = new HardwareMap("Universes (E1.31) Unicast >> " + uE.Unicast, uE.Universe);
@@ -489,7 +490,7 @@ namespace E131_VixenPlugin {
                 }
 
                 // for each universe add it to setup form
-                foreach (UniverseEntry uE in _universeTable) {
+                foreach (var uE in _universeTable) {
                     setupForm.UniverseAdd(uE.Active, uE.Universe, uE.Start + 1, uE.Size, uE.Unicast, uE.Multicast, uE.Ttl);
                 }
 
@@ -530,21 +531,22 @@ namespace E131_VixenPlugin {
                         var multicast = string.Empty;
                         var ttl = 0;
 
-                        if (setupForm.UniverseGet(i, ref active, ref universe, ref start, ref size, ref unicast, ref multicast, ref ttl)) {
-                            // ReSharper disable PossibleNullReferenceException
-                            newChild = _setupNode.OwnerDocument.CreateElement("Universe");
-                            // ReSharper restore PossibleNullReferenceException
-
-                            newChild.SetAttribute("active", active.ToString());
-                            newChild.SetAttribute("number", universe.ToString(CultureInfo.InvariantCulture));
-                            newChild.SetAttribute("start", start.ToString(CultureInfo.InvariantCulture));
-                            newChild.SetAttribute("size", size.ToString(CultureInfo.InvariantCulture));
-                            if (unicast != null) newChild.SetAttribute("unicast", unicast);
-                            else if (multicast != null) newChild.SetAttribute("multicast", multicast);
-                            newChild.SetAttribute("ttl", ttl.ToString(CultureInfo.InvariantCulture));
-
-                            _setupNode.AppendChild(newChild);
+                        if (!setupForm.UniverseGet(i, ref active, ref universe, ref start, ref size, ref unicast, ref multicast, ref ttl)) {
+                            continue;
                         }
+                        // ReSharper disable PossibleNullReferenceException
+                        newChild = _setupNode.OwnerDocument.CreateElement("Universe");
+                        // ReSharper restore PossibleNullReferenceException
+
+                        newChild.SetAttribute("active", active.ToString());
+                        newChild.SetAttribute("number", universe.ToString(CultureInfo.InvariantCulture));
+                        newChild.SetAttribute("start", start.ToString(CultureInfo.InvariantCulture));
+                        newChild.SetAttribute("size", size.ToString(CultureInfo.InvariantCulture));
+                        if (unicast != null) newChild.SetAttribute("unicast", unicast);
+                        else if (multicast != null) newChild.SetAttribute("multicast", multicast);
+                        newChild.SetAttribute("ttl", ttl.ToString(CultureInfo.InvariantCulture));
+
+                        _setupNode.AppendChild(newChild);
                     }
                 }
 
