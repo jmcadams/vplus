@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Printing;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
@@ -501,19 +502,17 @@ namespace VixenEditor {
             return dialogResult;
         }
 
-        //^^^^^^ OKAY ^^^^^^
 
         private void CheckMaximums() {
             var dirtyFlag = false;
 
             for (var row = 0; row < _sequence.ChannelCount; row++) {
-                var channel = _sequence.Channels[row].OutputChannel;
                 for (var col = 0; col < _sequence.TotalEventPeriods; col++) {
-                    var currentValue = _sequence.EventValues[channel, col];
+                    var currentValue = _sequence.EventValues[row, col];
                     if (currentValue == 0 || currentValue <= _sequence.MaximumLevel) {
                         continue;
                     }
-                    _sequence.EventValues[channel, col] = _sequence.MaximumLevel;
+                    _sequence.EventValues[row, col] = _sequence.MaximumLevel;
                     dirtyFlag = true;
                 }
             }
@@ -528,13 +527,12 @@ namespace VixenEditor {
             var dirtyFlag = false;
 
             for (var row = 0; row < _sequence.ChannelCount; row++) {
-                var channel = _sequence.Channels[row].OutputChannel;
                 for (var col = 0; col < _sequence.TotalEventPeriods; col++) {
-                    var currentValue = _sequence.EventValues[channel, col];
+                    var currentValue = _sequence.EventValues[row, col];
                     if (currentValue >= _sequence.MinimumLevel) {
                         continue;
                     }
-                    _sequence.EventValues[channel, col] = _sequence.MinimumLevel;
+                    _sequence.EventValues[row, col] = _sequence.MinimumLevel;
                     dirtyFlag = true;
                 }
             }
@@ -544,6 +542,7 @@ namespace VixenEditor {
             }
         }
 
+        //^^^^^^ OKAY ^^^^^^
 
         private void clearAllChannelsForThisEventToolStripMenuItem_Click(object sender, EventArgs e) {
             if (_selectedEventIndex == -1) {
@@ -636,7 +635,7 @@ namespace VixenEditor {
             var rows = _selectedCells.Bottom;
             var columns = _selectedCells.Right;
             for (var row = _selectedCells.Top; row < rows; row++) {
-                var channel = _sequence.Channels[row].OutputChannel;
+                var channel = GetEventFromChannelNumber(row);
                 if (!_sequence.Channels[row].Enabled) {
                     continue;
                 }
@@ -838,6 +837,7 @@ namespace VixenEditor {
         }
 
 
+        //todo test
         private void EditSequenceChannelMask() {
             using (var dialog = new ChannelOutputMaskDialog(_sequence.FullChannels)) {
                 if (dialog.ShowDialog() != DialogResult.OK) {
@@ -921,9 +921,7 @@ namespace VixenEditor {
         private byte[,] GetAffectedChannelData(ICollection<Channel> affectedChannels, int startEvent, int numberOfEvents) {
             var buffer = new byte[affectedChannels.Count, Math.Min(numberOfEvents, _sequence.TotalEventPeriods - startEvent)];
             var row = 0;
-            foreach (var i in affectedChannels) {
-                var channel = _sequence.FullChannels.IndexOf(i);
-
+            foreach (var channel in affectedChannels.Select(i => _sequence.FullChannels.IndexOf(i))) {
                 for (var col = 0; col < numberOfEvents && col + startEvent < _sequence.TotalEventPeriods; col++) {
                     buffer[row, col] = _sequence.EventValues[channel, startEvent + col];
                 }
@@ -938,7 +936,7 @@ namespace VixenEditor {
             intensityText = "";
 
             if (column >= 0 && row >= 0) {
-                var value = _sequence.EventValues[_sequence.Channels[row].OutputChannel, column];
+                var value = _sequence.EventValues[GetEventFromChannelNumber(row), column];
                 intensity = _actualLevels ? value : Utils.ToPercentage(value);
                 intensityText = string.Format(_actualLevels ? "{0}" : "{0}%", intensity);
             }
