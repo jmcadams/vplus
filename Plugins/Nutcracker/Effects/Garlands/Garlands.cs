@@ -1,13 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Xml;
 
 using CommonUtils;
 using VixenPlus;
 
 namespace Garlands {
     public partial class Garlands : UserControl, INutcrackerEffect {
+
+        private const string GarlandsType = "ID_SLIDER_Garlands{0}_Type";
+        private const string GarlandsSpacing = "ID_SLIDER_Garlands{0}_Spacing";
+
         public Garlands() {
             InitializeComponent();
         }
@@ -30,17 +34,19 @@ namespace Garlands {
             get { return true; }
         }
 
-        public XmlElement Settings {
+        public List<string> Settings {
             get { return GetCurrentSettings(); }
             set { Setup(value); }
         }
 
-        private static XmlElement GetCurrentSettings() {
-            return Xml.CreateXmlDocument().DocumentElement;
+        private List<string> GetCurrentSettings() {
+            return new List<string>();
         }
 
-        private static void Setup(XmlElement settings) {
-            System.Diagnostics.Debug.Print(settings.ToString());
+        private void Setup(IEnumerable<string> settings) {
+            foreach (var s in settings) {
+                System.Diagnostics.Debug.Print(s);
+            }
         }
 
 

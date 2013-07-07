@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Xml;
 
 using CommonUtils;
 using VixenPlus;
@@ -10,6 +10,11 @@ namespace Butterfly {
     public partial class Butterfly : UserControl, INutcrackerEffect {
 
         private readonly bool _initializing = true;
+
+        private const string ButterflyPalette = "ID_CHOICE_Butterfly{0}_Colors";
+        private const string ButterflyStyle = "ID_SLIDER_Butterfly{0}_Style";
+        private const string ButterflyChunks = "ID_SLIDER_Butterfly{0}_Chunks";
+        private const string ButterflySkip = "ID_SLIDER_Butterfly{0}_Skip";
 
         public Butterfly() {
             InitializeComponent();
@@ -35,17 +40,19 @@ namespace Butterfly {
             get { return true; }
         }
 
-        public XmlElement Settings {
+        public List<string> Settings {
             get { return GetCurrentSettings(); }
             set { Setup(value); }
         }
 
-        private static XmlElement GetCurrentSettings() {
-            return Xml.CreateXmlDocument().DocumentElement;
+        private List<string> GetCurrentSettings() {
+            return new List<string>();
         }
 
-        private static void Setup(XmlElement settings) {
-            System.Diagnostics.Debug.Print(settings.ToString());
+        private void Setup(IEnumerable<string> settings) {
+            foreach (var s in settings) {
+                System.Diagnostics.Debug.Print(s);
+            }
         }
 
         private const double Pi2 = Math.PI * 2;

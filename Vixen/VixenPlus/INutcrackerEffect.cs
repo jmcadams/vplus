@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Xml;
 
@@ -9,7 +10,7 @@ namespace VixenPlus {
         string Notes { get; }
         bool UsesPalette { get; }
         bool UsesSpeed { get; }
-        XmlElement Settings { get; set; }
+        List<string> Settings { get; set; }
         Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender);
     }   
 }   

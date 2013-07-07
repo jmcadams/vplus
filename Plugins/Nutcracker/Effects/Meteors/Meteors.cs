@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Xml;
 
 using CommonUtils;
 
@@ -13,6 +12,10 @@ namespace Meteors {
     public partial class Meteors : UserControl, INutcrackerEffect {
 
         private readonly bool _initializing = true;
+        private const string MeteorsType = "ID_CHOICE_Meteors{0}_Type";
+        private const string MeteorsCount = "ID_SLIDER_Meteors{0}_Count";
+        private const string MeteorsLength = "ID_SLIDER_Meteors{0}_Length";
+        private const string MeteorsFallUp = "ID_CHECKBOX_Meteors{0}_FallUp";
 
         public Meteors() {
             InitializeComponent();
@@ -38,17 +41,19 @@ namespace Meteors {
             get { return true; }
         }
 
-        public XmlElement Settings {
+        public List<string> Settings {
             get { return GetCurrentSettings(); }
             set { Setup(value); }
         }
 
-        private static XmlElement GetCurrentSettings() {
-            return Xml.CreateXmlDocument().DocumentElement;
+        private List<string> GetCurrentSettings() {
+            return new List<string>();
         }
 
-        private static void Setup(XmlElement settings) {
-            System.Diagnostics.Debug.Print(settings.ToString());
+        private void Setup(IEnumerable<string> settings) {
+            foreach (var s in settings) {
+                System.Diagnostics.Debug.Print(s);
+            }
         }
 
         private readonly List<MeteorClass> _meteors = new List<MeteorClass>();

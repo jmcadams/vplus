@@ -30,6 +30,16 @@ namespace CommonUtils {
             return ((backgroundColor.R * 299) + (backgroundColor.G * 587) + (backgroundColor.B * 114)) / 1000 >= 128 ? Color.Black : Color.White;
         }
 
+        public static int GetParsedValue(string value) {
+            int result;
+
+            if (!int.TryParse(value, out result)) {
+                result = 0;
+            }
+
+            return result;
+        }
+
 
         public static string TimeFormatMillsOnly(int mills) {
             return String.Format(":{0:d2}", mills / MillsPerSecond);

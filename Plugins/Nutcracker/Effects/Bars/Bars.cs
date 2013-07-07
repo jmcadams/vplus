@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
-using System.Xml;
 
 using CommonUtils;
 
@@ -11,6 +12,10 @@ namespace Bars {
     public partial class Bars : UserControl, INutcrackerEffect {
 
         private readonly bool _initializing = true;
+        private const string BarCount = "ID_SLIDER_Bars{0}_BarCount";
+        private const string BarDirection = "ID_CHOICE_Bars{0}_Direction";
+        private const string BarHighlight = "ID_CHECKBOX_Bars{0}_Highlight";
+        private const string Bar3D = "ID_CHECKBOX_Bars{0}_3D";
 
         public Bars() {
             InitializeComponent();
@@ -36,17 +41,39 @@ namespace Bars {
             get { return true; }
         }
 
-        public XmlElement Settings {
+        public List<string> Settings {
             get { return GetCurrentSettings(); }
             set { Setup(value); }
         }
 
-        private static XmlElement GetCurrentSettings() {
-            return Xml.CreateXmlDocument().DocumentElement;
+        private List<string> GetCurrentSettings() {
+            return new List<string>();
         }
 
-        private static void Setup(XmlElement settings) {
-            System.Diagnostics.Debug.Print(settings.ToString());
+        private void Setup(IList<string> settings) {
+            var effectNum = settings[0];
+            var barCount = string.Format(BarCount, effectNum);
+            var barDirection = string.Format(BarDirection, effectNum);
+            var barHighlight = string.Format(BarHighlight, effectNum);
+            var bar3D = string.Format(Bar3D, effectNum);
+
+            foreach (var keyValue in settings.Select(s => s.Split(new[] {'='}))) {
+                if (keyValue[0].Equals(barCount)) {
+                    tbRepeat.Value = Utils.GetParsedValue(keyValue[1]);
+                }
+                else if (keyValue[0].Equals(barDirection)) {
+                    var index = cbDirection.Items.IndexOf(keyValue[1]);
+                    if (index >= 0) {
+                        cbDirection.SelectedIndex = index;
+                    }
+                }
+                else if (keyValue[0].Equals(barHighlight)) {
+                    cbHighlight.Checked = keyValue[1].Equals("1");
+                }
+                else if (keyValue[0].Equals(bar3D)) {
+                    cb3D.Checked = keyValue[1].Equals("1");
+                }
+            }
         }
 
 

@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Xml;
 
 using VixenPlus;
 
 namespace Snowflakes {
     public partial class Snowflakes : UserControl, INutcrackerEffect {
+
+        private const string SnowflakesCount = "ID_SLIDER_Snowflakes{0}_Count";
+        private const string SnowflakesType = "ID_SLIDER_Snowflakes{0}_Type";
+
         public Snowflakes() {
             InitializeComponent();
         }
@@ -29,17 +33,19 @@ namespace Snowflakes {
             get { return true; }
         }
 
-        public XmlElement Settings {
+        public List<string> Settings {
             get { return GetCurrentSettings(); }
             set { Setup(value); }
         }
 
-        private static XmlElement GetCurrentSettings() {
-            return Xml.CreateXmlDocument().DocumentElement;
+        private List<string> GetCurrentSettings() {
+            return new List<string>();
         }
 
-        private static void Setup(XmlElement settings) {
-            System.Diagnostics.Debug.Print(settings.ToString());
+        private void Setup(IEnumerable<string> settings) {
+            foreach (var s in settings) {
+                System.Diagnostics.Debug.Print(s);
+            }
         }
 
         private readonly Random _random = new Random();

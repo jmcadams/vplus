@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
-using System.Xml;
 
 using CommonUtils;
 using VixenPlus;
@@ -15,6 +15,18 @@ namespace Text {
     public partial class Text : UserControl, INutcrackerEffect {
 
         private readonly bool _initializing = true;
+
+        private const string TextLine1 = "ID_TEXTCTRL_Text{0}_Line1";
+        private const string TextFont1 = "ID_TEXTCTRL_Text{0}_1_Font";
+        private const string TextDirection1 = "ID_CHOICE_Text{0}_1_Dir";
+        private const string TextPosition1 = "ID_SLIDER_Text{0}_1_Position";
+        private const string TextRotation1 = "ID_SLIDER_Text{0}_1_TextRotation";
+
+        private const string TextLine2 = "ID_TEXTCTRL_Text{0}_Line2";
+        private const string TextFont2 = "ID_TEXTCTRL_Text{0}_2_Font";
+        private const string TextDirection2 = "ID_CHOICE_Text{0}_2_Dir";
+        private const string TextPostion2 = "ID_SLIDER_Text{0}_2_Position";
+        private const string TextRotation2 = "ID_SLIDER_Text{0}_2_TextRotation";
 
         public Text() {
             InitializeComponent();
@@ -40,17 +52,19 @@ namespace Text {
             get { return true; }
         }
 
-        public XmlElement Settings {
+        public List<string> Settings {
             get { return GetCurrentSettings(); }
             set { Setup(value); }
         }
 
-        private static XmlElement GetCurrentSettings() {
-            return Xml.CreateXmlDocument().DocumentElement;
+        private List<string> GetCurrentSettings() {
+            return new List<string>();
         }
 
-        private static void Setup(XmlElement settings) {
-            System.Diagnostics.Debug.Print(settings.ToString());
+        private void Setup(IEnumerable<string> settings) {
+            foreach (var s in settings) {
+                System.Diagnostics.Debug.Print(s);
+            }
         }
 
 

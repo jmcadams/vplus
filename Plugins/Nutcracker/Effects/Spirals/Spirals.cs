@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Xml;
 
 using CommonUtils;
 
@@ -9,6 +9,14 @@ using VixenPlus;
 
 namespace Spirals {
     public partial class Spirals : UserControl, INutcrackerEffect {
+
+        private const string SpiralsCount = "ID_SLIDER_Spirals{0}_Count";
+        private const string SpiralsRotation = "ID_SLIDER_Spirals{0}_Rotation";
+        private const string SpiralsThickness = "ID_SLIDER_Spirals{0}_Thickness";
+        private const string SpiralsDirection = "ID_SLIDER_Spirals{0}_Direction";
+        private const string SpiralsBlend = "ID_CHECKBOX_Spirals{0}_Blend";
+        private const string Spirals3D = "ID_CHECKBOX_Spirals{0}_3D";
+
         public Spirals() {
             InitializeComponent();
         }
@@ -31,17 +39,19 @@ namespace Spirals {
             get { return true; }
         }
 
-        public XmlElement Settings {
+        public List<string> Settings {
             get { return GetCurrentSettings(); }
             set { Setup(value); }
         }
 
-        private static XmlElement GetCurrentSettings() {
-            return Xml.CreateXmlDocument().DocumentElement;
+        private List<string> GetCurrentSettings() {
+            return new List<string>();
         }
 
-        private static void Setup(XmlElement settings) {
-            System.Diagnostics.Debug.Print(settings.ToString());
+        private void Setup(IEnumerable<string> settings) {
+            foreach (var s in settings) {
+                System.Diagnostics.Debug.Print(s);
+            }
         }
 
 

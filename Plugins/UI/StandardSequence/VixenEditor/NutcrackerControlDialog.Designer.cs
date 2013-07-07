@@ -35,7 +35,9 @@ namespace VixenEditor
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NutcrackerControlDialog));
             this.gbEffect2 = new System.Windows.Forms.GroupBox();
+            this.nutcrackerEffectControl2 = new NutcrackerEffectsControl.NutcrackerEffectControl();
             this.gbEffect1 = new System.Windows.Forms.GroupBox();
+            this.nutcrackerEffectControl1 = new NutcrackerEffectsControl.NutcrackerEffectControl();
             this.pbPreview = new System.Windows.Forms.PictureBox();
             this.gbSettings = new System.Windows.Forms.GroupBox();
             this.progressBar = new System.Windows.Forms.ProgressBar();
@@ -80,8 +82,6 @@ namespace VixenEditor
             this.nudRows = new System.Windows.Forms.NumericUpDown();
             this.btnCancel = new System.Windows.Forms.Button();
             this.timerRender = new System.Windows.Forms.Timer(this.components);
-            this.nutcrackerEffectControl1 = new NutcrackerEffectsControl.NutcrackerEffectControl();
-            this.nutcrackerEffectControl2 = new NutcrackerEffectsControl.NutcrackerEffectControl();
             this.gbEffect2.SuspendLayout();
             this.gbEffect1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
@@ -106,6 +106,15 @@ namespace VixenEditor
             this.gbEffect2.TabStop = false;
             this.gbEffect2.Text = "Effect 2";
             // 
+            // nutcrackerEffectControl2
+            // 
+            this.nutcrackerEffectControl2.Location = new System.Drawing.Point(7, 20);
+            this.nutcrackerEffectControl2.Name = "nutcrackerEffectControl2";
+            this.nutcrackerEffectControl2.Size = new System.Drawing.Size(371, 225);
+            this.nutcrackerEffectControl2.Speed = 1;
+            this.nutcrackerEffectControl2.TabIndex = 0;
+            this.nutcrackerEffectControl2.ControlChanged += new NutcrackerEffectsControl.NutcrackerEffectControl.ControlChangedHandler(this.ControlChanged2);
+            // 
             // gbEffect1
             // 
             this.gbEffect1.Controls.Add(this.nutcrackerEffectControl1);
@@ -115,6 +124,15 @@ namespace VixenEditor
             this.gbEffect1.TabIndex = 1;
             this.gbEffect1.TabStop = false;
             this.gbEffect1.Text = "Effect 1";
+            // 
+            // nutcrackerEffectControl1
+            // 
+            this.nutcrackerEffectControl1.Location = new System.Drawing.Point(7, 20);
+            this.nutcrackerEffectControl1.Name = "nutcrackerEffectControl1";
+            this.nutcrackerEffectControl1.Size = new System.Drawing.Size(371, 225);
+            this.nutcrackerEffectControl1.Speed = 1;
+            this.nutcrackerEffectControl1.TabIndex = 0;
+            this.nutcrackerEffectControl1.ControlChanged += new NutcrackerEffectsControl.NutcrackerEffectControl.ControlChangedHandler(this.ControlChanged1);
             // 
             // pbPreview
             // 
@@ -539,6 +557,7 @@ namespace VixenEditor
             this.btnManagePresets.TabIndex = 5;
             this.btnManagePresets.Text = "Effect Presets";
             this.btnManagePresets.UseVisualStyleBackColor = true;
+            this.btnManagePresets.Click += new System.EventHandler(this.btnManagePresets_Click);
             // 
             // cbRender
             // 
@@ -625,22 +644,6 @@ namespace VixenEditor
             // 
             this.timerRender.Interval = 50;
             this.timerRender.Tick += new System.EventHandler(this.timerRender_Tick);
-            // 
-            // nutcrackerEffectControl1
-            // 
-            this.nutcrackerEffectControl1.Location = new System.Drawing.Point(7, 20);
-            this.nutcrackerEffectControl1.Name = "nutcrackerEffectControl1";
-            this.nutcrackerEffectControl1.Size = new System.Drawing.Size(371, 225);
-            this.nutcrackerEffectControl1.TabIndex = 0;
-            this.nutcrackerEffectControl1.ControlChanged += new NutcrackerEffectsControl.NutcrackerEffectControl.ControlChangedHandler(this.ControlChanged1);
-            // 
-            // nutcrackerEffectControl2
-            // 
-            this.nutcrackerEffectControl2.Location = new System.Drawing.Point(7, 20);
-            this.nutcrackerEffectControl2.Name = "nutcrackerEffectControl2";
-            this.nutcrackerEffectControl2.Size = new System.Drawing.Size(371, 225);
-            this.nutcrackerEffectControl2.TabIndex = 0;
-            this.nutcrackerEffectControl2.ControlChanged += new NutcrackerEffectsControl.NutcrackerEffectControl.ControlChangedHandler(this.ControlChanged2);
             // 
             // NutcrackerControlDialog
             // 

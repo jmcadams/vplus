@@ -1,13 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Xml;
 
 using CommonUtils;
 using VixenPlus;
 
 namespace Fireworks {
     public partial class Fireworks : UserControl, INutcrackerEffect {
+
+        private const string FireworksExplosions = "ID_SLIDER_Fireworks{0}_Number_Explosions";
+        private const string FireworksCount = "ID_SLIDER_Fireworks{0}_Count";
+        private const string FireworksVelocity = "ID_SLIDER_Fireworks{0}_Velocity";
+        private const string FireworksFade = "ID_SLIDER_Fireworks{0}_Fade";
+
         public Fireworks() {
             InitializeComponent();
             InitFireworksBuffer();
@@ -31,17 +37,19 @@ namespace Fireworks {
             get { return true; }
         }
 
-        public XmlElement Settings {
+        public List<string> Settings {
             get { return GetCurrentSettings(); }
             set { Setup(value); }
         }
 
-        private static XmlElement GetCurrentSettings() {
-            return Xml.CreateXmlDocument().DocumentElement;
+        private List<string> GetCurrentSettings() {
+            return new List<string>();
         }
 
-        private static void Setup(XmlElement settings) {
-            System.Diagnostics.Debug.Print(settings.ToString());
+        private void Setup(IEnumerable<string> settings) {
+            foreach (var s in settings) {
+                System.Diagnostics.Debug.Print(s);
+            }
         }
 
         private RgbFireworks[] _fireworkBursts; 

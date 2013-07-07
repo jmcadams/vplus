@@ -55,9 +55,7 @@ namespace VixenEditor {
         public RenderTo RenderType { get; private set; }
         public byte[,] RenderData { get; private set; }
         public int RenderEvents { get; private set; }
-
         public int RenderRows { get; private set; }
-
         public int RenderCols { get; private set; }
 
         #endregion
@@ -321,7 +319,7 @@ namespace VixenEditor {
                 isDataUpdated = true;
                 _effectBuffers[i] = effects[i].RenderEffect(_effectBuffers[i], _effectControls[i].GetPalette(), _eventToRender[i]);
 
-                _eventToRender[i] += _effectControls[i].GetSpeed();
+                _eventToRender[i] += _effectControls[i].Speed;
                 _isRendering[i] = false;
             }
 
@@ -473,7 +471,7 @@ namespace VixenEditor {
                 }
 
                 for (var i = 0; i < MaxEffects; i++) {
-                    _eventToRender[i] += _effectControls[i].GetSpeed();
+                    _eventToRender[i] += _effectControls[i].Speed;
                 }
                 progressBar.Value = renderEvent;
                 progressBar.Text = string.Format("{0:d3}%", renderEvent / RenderEvents);
@@ -554,5 +552,59 @@ namespace VixenEditor {
         }
 
         #endregion
+
+        private void btnManagePresets_Click(object sender, EventArgs e) {
+            var settings =
+                @"Color Wash,Bars,2 is Unmask,ID_SLIDER_SparkleFrequency=150,ID_SLIDER_Speed1=10,ID_SLIDER_Speed2=10,ID_SLIDER_ColorWash1_Count=1,ID_CHECKBOX_ColorWash1_HFade=0,ID_CHECKBOX_ColorWash1_VFade=0,ID_CHECKBOX_Palette1_1=1,ID_BUTTON_Palette1_1=#FF0000,ID_CHECKBOX_Palette1_2=1,ID_BUTTON_Palette1_2=#00FF00,ID_CHECKBOX_Palette1_3=0,ID_BUTTON_Palette1_3=#0000FF,ID_CHECKBOX_Palette1_4=0,ID_BUTTON_Palette1_4=#FFFF00,ID_CHECKBOX_Palette1_5=0,ID_BUTTON_Palette1_5=#FFFFFF,ID_CHECKBOX_Palette1_6=0,ID_BUTTON_Palette1_6=#000000,ID_SLIDER_Bars2_BarCount=1,ID_CHOICE_Bars2_Direction=up,ID_CHECKBOX_Bars2_Highlight=1,ID_CHECKBOX_Bars2_3D=0,ID_CHECKBOX_Palette2_1=1,ID_BUTTON_Palette2_1=#FF0000,ID_CHECKBOX_Palette2_2=1,ID_BUTTON_Palette2_2=#00FF00,ID_CHECKBOX_Palette2_3=0,ID_BUTTON_Palette2_3=#0000FF,ID_CHECKBOX_Palette2_4=0,ID_BUTTON_Palette2_4=#FFFF00,ID_CHECKBOX_Palette2_5=0,ID_BUTTON_Palette2_5=#FFFFFF,ID_CHECKBOX_Palette2_6=0,ID_BUTTON_Palette2_6=#000000".Split(new[] {','}).ToList();
+            
+            // Strip out first 4 settings
+            var effect1Name = settings[0];
+            var effect2Name = settings[1];
+            SetLayeringMethod(settings[2]);
+            SetSparkleFrequency(settings[3].Split(new[] {'='})[1]);
+
+            for (var i = 0; i < 4; i++) {
+                settings.RemoveAt(0);
+            }
+
+            // Pass the remainder to the effects, let them take what they need and ignore the rest.
+            nutcrackerEffectControl1.SetEffect(effect1Name, settings, true);
+            nutcrackerEffectControl2.SetEffect(effect2Name, settings, false);
+        }
+
+
+        private void SetLayeringMethod(string method) {
+            switch (method) {
+                case "Effect 1":
+                    rbEffect1.Checked = true;
+                    break;
+                case "Effect 2":
+                    rbEffect2.Checked = true;
+                    break;
+                case "1 is Mask":
+                    rbMask1.Checked = true;
+                    break;
+                case "2 is Mask":
+                    rbMask2.Checked = true;
+                    break;
+                case "1 is Unmask":
+                    rbUnmask1.Checked = true;
+                    break;
+                case "2 is Unmask":
+                    rbUnmask2.Checked = true;
+                    break;
+                case "Layered":
+                    rbLayer.Checked = true;
+                    break;
+                case "Average":
+                    rbAverage.Checked = true;
+                    break;
+            }
+        }
+
+        private void SetSparkleFrequency(string level) {
+            int frequency;
+            tbSparkles.Value = (Int32.TryParse(level, out frequency) ? 100 - (frequency/2) : 0);
+        }
     }
 }

@@ -1,13 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Xml;
 
 using CommonUtils;
 using VixenPlus;
 
 namespace Spirograph {
     public partial class Spirograph : UserControl, INutcrackerEffect {
+
+        private const string SpirographOuterR = "ID_SLIDER_Spirograph{0}_R";
+        private const string SpirographInnerR = "ID_SLIDER_Spirograph{0}_r";
+        private const string SpirographDiameter = "ID_SLIDER_Spirograph{0}_d";
+        private const string SpirographAnimate = "ID_CHECKBOX_Spirograph{0}_Animate";
+
         public Spirograph() {
             InitializeComponent();
         }
@@ -31,17 +37,19 @@ namespace Spirograph {
             get { return true; }
         }
 
-        public XmlElement Settings {
+        public List<string> Settings {
             get { return GetCurrentSettings(); }
             set { Setup(value); }
         }
 
-        private static XmlElement GetCurrentSettings() {
-            return Xml.CreateXmlDocument().DocumentElement;
+        private List<string> GetCurrentSettings() {
+            return new List<string>();
         }
 
-        private static void Setup(XmlElement settings) {
-            System.Diagnostics.Debug.Print(settings.ToString());
+        private void Setup(IEnumerable<string> settings) {
+            foreach (var s in settings) {
+                System.Diagnostics.Debug.Print(s);
+            }
         }
 
 

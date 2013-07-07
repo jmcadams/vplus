@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
-using System.Xml;
 
 using VixenPlus;
 
@@ -11,6 +11,9 @@ namespace Pictures {
     public partial class Picture : UserControl, INutcrackerEffect {
 
         private readonly bool _initializing = true;
+        private const string PicturesFileName = "ID_TEXTCTRL_Pictures{0}_Filename";
+        private const string PicturesDirection = "ID_CHOICE_Pictures{0}_Direction";
+        private const string PicturesGifSpeed = "ID_SLIDER_Pictures{0}_GifSpeed";
 
         public Picture() {
             InitializeComponent();
@@ -36,17 +39,19 @@ namespace Pictures {
             get { return true; }
         }
 
-        public XmlElement Settings {
+        public List<string> Settings {
             get { return GetCurrentSettings(); }
             set { Setup(value); }
         }
 
-        private static XmlElement GetCurrentSettings() {
-            return Xml.CreateXmlDocument().DocumentElement;
+        private List<string> GetCurrentSettings() {
+            return new List<string>();
         }
 
-        private static void Setup(XmlElement settings) {
-            System.Diagnostics.Debug.Print(settings.ToString());
+        private void Setup(IEnumerable<string> settings) {
+            foreach (var s in settings) {
+                System.Diagnostics.Debug.Print(s);
+            }
         }
 
         private string _pictureName = "";
