@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
@@ -89,12 +90,10 @@ namespace Preview {
                     }
                     break;
                 default:
-                    var item = (uint) ((x << 0x10) | y);
+                    var item = (uint) ((x << 16) | y);
                     var builder = new StringBuilder();
-                    foreach (var num4 in _channelDictionary.Keys) {
-                        if ((num4 < _channels.Count) && _channelDictionary[num4].Contains(item)) {
-                            builder.AppendFormat("{0}, ", toolStripComboBoxChannels.Items[num4]);
-                        }
+                    foreach (var num4 in _channelDictionary.Keys.Where(num4 => (num4 < _channels.Count) && _channelDictionary[num4].Contains(item))) {
+                        builder.AppendFormat("{0}, ", toolStripComboBoxChannels.Items[num4]);
                     }
                     if (builder.Length > 0) {
                         var str = builder.ToString();
@@ -123,8 +122,8 @@ namespace Preview {
 
                     brush.Color = Color.FromArgb(128, _channels[num4].Color);
                     foreach (var num5 in _channelDictionary[num4]) {
-                        num = (int) ((num5 >> 0x10) * (_cellSize + 1));
-                        num2 = (int) ((num5 & 0xffff) * (_cellSize + 1));
+                        num = (int) ((num5 >> 16) * (_cellSize + 1));
+                        num2 = (int) ((num5 & 65535) * (_cellSize + 1));
                         if (e.ClipRectangle.Contains(num, num2)) {
                             e.Graphics.FillRectangle(brush, num, num2, _cellSize, _cellSize);
                         }

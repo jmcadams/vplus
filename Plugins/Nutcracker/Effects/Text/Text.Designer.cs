@@ -147,6 +147,7 @@ namespace Text {
             this.tbRotation.Size = new System.Drawing.Size(186, 23);
             this.tbRotation.TabIndex = 36;
             this.tbRotation.TickFrequency = 90;
+            this.tbRotation.ValueChanged += new System.EventHandler(this.Text_ControlChanged);
             // 
             // lblRotation
             // 

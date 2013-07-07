@@ -110,6 +110,7 @@ namespace Meteors {
             this.chkBoxUp.TabIndex = 3;
             this.chkBoxUp.Text = "Fall Up";
             this.chkBoxUp.UseVisualStyleBackColor = true;
+            this.chkBoxUp.CheckedChanged += new System.EventHandler(this.Meteors_ControlChanged);
             // 
             // Meteors
             // 

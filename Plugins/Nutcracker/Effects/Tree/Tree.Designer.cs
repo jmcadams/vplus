@@ -63,6 +63,7 @@ namespace Tree {
             this.tbGralands.TabIndex = 23;
             this.tbGralands.TickStyle = System.Windows.Forms.TickStyle.None;
             this.tbGralands.Value = 1;
+            this.tbGralands.ValueChanged += new System.EventHandler(this.Tree_ControlChanged);
             // 
             // lblGralands
             // 

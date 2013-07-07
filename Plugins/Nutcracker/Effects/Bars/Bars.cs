@@ -90,7 +90,7 @@ namespace Bars {
 
         private void Bars_ControlChanged(object sender, EventArgs e) {
             if (_initializing) return;
-            OnControlChanged(this, new EventArgs());
+            OnControlChanged(this, e);
         }
     }
 }

@@ -153,10 +153,7 @@ namespace Fire {
 
 
         private void Fire_ControlChanged(object sender, EventArgs e) {
-            if (_palette != null) {
-                InitFirePalette(chkBoxUsePalette.Checked ? _palette[0].GetHue() / 360f : 0.0f);
-            }
-            OnControlChanged(this, new EventArgs());
+            OnControlChanged(this, e);
         }
     }
 }

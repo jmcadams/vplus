@@ -185,8 +185,7 @@ namespace Life {
         }
 
         private void Life_ControlChanged(object sender, EventArgs e) {
-            InitalizeBuffer(_bufferWidth * _bufferHeight * tbCellsToStart.Value / 200 + 1);
-            OnControlChanged(this, new EventArgs());
+            OnControlChanged(this, e);
         }
     }
 }

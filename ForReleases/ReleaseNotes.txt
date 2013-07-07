@@ -1,9 +1,22 @@
-04 JLY 2013 - B 0.0.184.1 (Private BETA)
+?? JLY 2013 - V 0.0.???.1 (Private BETA)
+    Bug #11 - Under specific circumstances, fire effects (and possibly others) will not render properly.  Found
+        that the effect was not being initialized properly in all cases.
+
+06 JLY 2013 - V 0.0.186.1 (Private BETA)
+    Bug #9 Fixed, Improper setup of preview was not handled gracefully.  Now we just state in setup that it
+        is not setup properly and don't crash.
+    Bug #10 Fixed, Channel mapping was not working for everything.  Rewrite of the mapping portions and how
+        the effects that use them.
+    Added more robust, hopefully, logging of errors.
+    Added Routine color preference
+    Code clean up and did some old to do tasks.
+
+04 JLY 2013 - V 0.0.184.1 (Private BETA)
     Bug #5 Fixed, Undo/Redo not working right on non 1 to 1 channel mapping.  Ripped out the old way of doing
         undo/redo of passing channel numbers around and just pass a reference to the channel object itself.
     Bug #6 Fixed, Random took too long to generate on large selections.  I was iterating over the entire collection
         on each generation to ensure the satuaration was correct, reimplemented that algorithm to be more efficient.
-    Bug #7 Fixed, Rando would not generate proper levels if Vary Intensity was selected and was using percentages.  
+    Bug #7 Fixed, Random would not generate proper levels if Vary Intensity was selected and was using percentages.  
         I was calculating the value from % twice, causing an incorrect value.
     Bug #8 Fixed, Can't double click on the last row. The label that follows the selection was getting in the way
         and receiving the click.  I made a new label control that windows sees as transparent and will not capture

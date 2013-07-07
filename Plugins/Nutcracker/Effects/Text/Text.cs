@@ -122,7 +122,7 @@ namespace Text {
 
         private void Text_ControlChanged(object sender, EventArgs e) {
             if (_initializing) return;
-            OnControlChanged(this, new EventArgs());
+            OnControlChanged(this, e);
         }
 
         private void btnFont_Click(object sender, EventArgs e) {

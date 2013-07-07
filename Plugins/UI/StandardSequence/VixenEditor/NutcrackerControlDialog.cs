@@ -11,22 +11,28 @@ using NutcrackerEffectsControl;
 
 using VixenPlus;
 
-namespace VixenEditor
-{
-    public partial class NutcrackerControlDialog: Form {
+namespace VixenEditor {
+    public partial class NutcrackerControlDialog : Form {
 
         #region Class Members and Accessors
 
-        private enum Layers { Effect1, Effect2, Mask1, Mask2, Unmask1, Unmask2, Layered, Average }
+        private enum Layers {
+            Effect1,
+            Effect2,
+            Mask1,
+            Mask2,
+            Unmask1,
+            Unmask2,
+            Layered,
+            Average
+        }
 
         private bool[] _isRendering = new[] {false, false};
         private NutcrackerNodes[,] _nodes;
         private Color[][,] _effectBuffers;
-        private int[] _eventToRender = new[] { 0, 0 };
+        private int[] _eventToRender = new[] {0, 0};
         private NutcrackerEffectControl[] _effectControls;
 
-        private int _rows;
-        private int _cols;
         private string _playText;
         private const string StopText = "Stop";
 
@@ -39,19 +45,20 @@ namespace VixenEditor
 
         private Layers EffectLayer { get; set; }
 
-        public enum RenderTo { Routine, CurrentSelection, SpecificPoint, Clipboard }
+        public enum RenderTo {
+            Routine,
+            CurrentSelection,
+            SpecificPoint,
+            Clipboard
+        }
 
-        public RenderTo RenderType { get; private set; } 
+        public RenderTo RenderType { get; private set; }
         public byte[,] RenderData { get; private set; }
         public int RenderEvents { get; private set; }
 
-        public int RenderRows {
-            get { return _rows; }
-        }
+        public int RenderRows { get; private set; }
 
-        public int RenderCols {
-            get { return _cols; }
-        }
+        public int RenderCols { get; private set; }
 
         #endregion
 
@@ -64,13 +71,14 @@ namespace VixenEditor
             InitializeControls();
         }
 
+
         private void InitializeControls() {
             _playText = btnPlayStop.Text;
-            _rows = (int)nudRows.Value;
-            _cols = (int)nudColumns.Value;
-            _nodes = new NutcrackerNodes[_rows,_cols];
-            _effectBuffers = new[] {new Color[_rows,_cols], new Color[_rows, _cols]}; 
-            _effectControls = new[] { nutcrackerEffectControl1, nutcrackerEffectControl2 };
+            RenderRows = (int) nudRows.Value;
+            RenderCols = (int) nudColumns.Value;
+            _nodes = new NutcrackerNodes[RenderRows,RenderCols];
+            _effectBuffers = new[] {new Color[RenderRows,RenderCols], new Color[RenderRows,RenderCols]};
+            _effectControls = new[] {nutcrackerEffectControl1, nutcrackerEffectControl2};
             InitializeEffectBuffer(0);
             InitializeEffectBuffer(1);
             InitializeNodes();
@@ -83,8 +91,8 @@ namespace VixenEditor
 
         private void InitializeEffectBuffer(int bufferNum) {
             var effectBuffer = _effectBuffers[bufferNum];
-            for (var row = 0; row < _rows; row++) {
-                for (var col = 0; col < _cols; col++) {
+            for (var row = 0; row < RenderRows; row++) {
+                for (var col = 0; col < RenderCols; col++) {
                     effectBuffer[row, col] = Color.Black;
                 }
             }
@@ -92,13 +100,15 @@ namespace VixenEditor
 
 
         private void InitializeNodes() {
-            for (var row = 0; row < _rows; row++) {
-                for (var col = 0; col < _cols; col++) {
-                    _nodes[row, col] = new NutcrackerNodes {PixelColor = Color.Black, Sparkle = _random.Next()%5000, Model = new Point(col, _rows - 1 - row)};
+            for (var row = 0; row < RenderRows; row++) {
+                for (var col = 0; col < RenderCols; col++) {
+                    _nodes[row, col] = new NutcrackerNodes
+                    {PixelColor = Color.Black, Sparkle = _random.Next() % 5000, Model = new Point(col, RenderRows - 1 - row)};
                 }
             }
         }
-        
+
+
         private void InitializeFromSequence() {
             nudStartEvent.Maximum = _sequence.TotalEventPeriods;
             nudStartEvent.Value = _selectedRange.Left;
@@ -110,7 +120,7 @@ namespace VixenEditor
             else {
                 rbCurrentSelection.Enabled = false;
             }
-            
+
             UpdateRenderToControls();
             UpdateSummary();
         }
@@ -124,29 +134,30 @@ namespace VixenEditor
                 cbModels.Items.Add(nameAttr.Value);
             }
             cbModels.Items.Add("Manage Models");
-            
+
             var degrees = 180;
-            if (_cols < 2) return;
-            var factor = pbPreview.Height / _rows;
+            if (RenderCols < 2) return;
+            var factor = pbPreview.Height / RenderRows;
             var renderWi = pbPreview.Width / 2;
-            var radians = 2.0*Math.PI*degrees/360.0;
+            var radians = 2.0 * Math.PI * degrees / 360.0;
             var radius = renderWi * 0.8;
-            var startAngle = -radians/2.0;
-            var angleIncr = radians/(_cols - 1);
-            for (var row = 0; row < _rows; row++) {
-                for (var col = 0; col < _cols; col++) {
-                    var angle = startAngle + _nodes[_rows - 1 - row, col].BufX * angleIncr;
-                    var x0 = radius*Math.Sin(angle);
-                    var x = (int)Math.Floor(x0 * (1.0 - (double)(_nodes[row, col].BufY) / _rows) + 0.5) + renderWi;
-                    var y = _nodes[_rows - 1 - row, col].BufY * factor;
-                    _nodes[_rows - 1 - row, col].Model = new Point(x, y);
+            var startAngle = -radians / 2.0;
+            var angleIncr = radians / (RenderCols - 1);
+            for (var row = 0; row < RenderRows; row++) {
+                for (var col = 0; col < RenderCols; col++) {
+                    var angle = startAngle + _nodes[RenderRows - 1 - row, col].BufX * angleIncr;
+                    var x0 = radius * Math.Sin(angle);
+                    var x = (int) Math.Floor(x0 * (1.0 - (double) (_nodes[row, col].BufY) / RenderRows) + 0.5) + renderWi;
+                    var y = _nodes[RenderRows - 1 - row, col].BufY * factor;
+                    _nodes[RenderRows - 1 - row, col].Model = new Point(x, y);
                 }
             }
         }
 
+
         private void InitMatrix() {
-            var stringCount = _cols;  // 32
-            var nodesPerString = _rows; // 50
+            var stringCount = RenderCols; // 32
+            var nodesPerString = RenderRows; // 50
             var strandsPerString = 1;
             var IsLtoR = true;
 
@@ -156,8 +167,8 @@ namespace VixenEditor
             for (var strand = 0; strand < numStrands; strand++) {
                 var segmentnum = strand % strandsPerString;
                 for (var pixel = 0; pixel < pixelsPerStrand; pixel++) {
-                    var y = index%_rows;
-                    var x = index/_rows;
+                    var y = index % RenderRows;
+                    var x = index / RenderRows;
                     _nodes[y, x].BufX = IsLtoR ? strand : numStrands - strand - 1;
                     _nodes[y, x].BufY = (segmentnum % 2 != 0) ? pixel : pixelsPerStrand - pixel - 1;
                     index++;
@@ -167,16 +178,16 @@ namespace VixenEditor
 
 
         private void SetupForPlaying() {
-            _rows = (int) nudRows.Value;
-            _cols = (int) nudColumns.Value;
-            if (_rows <= 0 || _cols <= 0) {
+            RenderRows = (int) nudRows.Value;
+            RenderCols = (int) nudColumns.Value;
+            if (RenderRows <= 0 || RenderCols <= 0) {
                 return;
             }
 
             ResetPreview();
             nudRows.Enabled = false;
             nudColumns.Enabled = false;
-            _effectBuffers = new[] { new Color[_rows, _cols], new Color[_rows, _cols] }; 
+            _effectBuffers = new[] {new Color[RenderRows,RenderCols], new Color[RenderRows,RenderCols]};
             _eventToRender = new[] {0, 0};
             _isRendering = new[] {false, false};
             timerRender.Start();
@@ -205,6 +216,16 @@ namespace VixenEditor
 
         #region Events
 
+        public void ControlChanged1(object sender, EventArgs e) {
+            _eventToRender[0] = 0;
+        }
+
+
+        private void ControlChanged2(object sender, EventArgs e) {
+            _eventToRender[1] = 0;
+        }
+
+
         private void btnPlayStop_Click(object sender, EventArgs e) {
             if (btnPlayStop.Text == _playText) {
                 btnPlayStop.Text = StopText;
@@ -225,7 +246,7 @@ namespace VixenEditor
 
             var mills = _sw.ElapsedMilliseconds;
             lblStatsMs.Text = String.Format("{0} ms", mills);
-            lblStatsFps.Text = string.Format(@"{0:F2} FPS", mills > 0 ? Utils.MillsPerSecond / (float)mills : 0f);
+            lblStatsFps.Text = string.Format(@"{0:F2} FPS", mills > 0 ? Utils.MillsPerSecond / (float) mills : 0f);
             _sw.Reset();
         }
 
@@ -235,7 +256,7 @@ namespace VixenEditor
             timerRender.Dispose();
         }
 
-        
+
         private void EffectLayerChanged(object sender, EventArgs e) {
             var rb = sender as RadioButton;
             if (rb != null && rb.Checked) SetEffectLayer();
@@ -247,7 +268,7 @@ namespace VixenEditor
             if (rb != null && rb.Checked) SetRenderToChanged();
         }
 
-        
+
         private void RowOrCol_ValueChanged(object sender, EventArgs e) {
             InitializeControls();
         }
@@ -319,15 +340,15 @@ namespace VixenEditor
                     effects.Add(null);
                     continue;
                 }
-                effects.Add((INutcrackerEffect)_effectControls[i].GetCurrentEffectControl());
+                effects.Add((INutcrackerEffect) _effectControls[i].GetCurrentEffectControl());
             }
             return effects;
         }
 
 
         private void SetPixelColors() {
-            for (var row = 0; row < _rows; row++) {
-                for (var column = 0; column < _cols; column++) {
+            for (var row = 0; row < RenderRows; row++) {
+                for (var column = 0; column < RenderCols; column++) {
                     _nodes[row, column].PixelColor = GetLayerColor(row, column);
                 }
             }
@@ -336,18 +357,18 @@ namespace VixenEditor
 
         private void Render() {
             using (var raw = pbRawPreview.CreateGraphics())
-            using (var preview = pbPreview.CreateGraphics()){
-                var rawBitmap = new Bitmap(_cols, _rows, raw);
+            using (var preview = pbPreview.CreateGraphics()) {
+                var rawBitmap = new Bitmap(RenderCols, RenderRows, raw);
                 var previewBitmap = new Bitmap(pbPreview.Width, pbPreview.Height, preview);
-                for (var row = 0; row < _rows; row++) {
-                    for (var column = 0; column < _cols; column++) {
+                for (var row = 0; row < RenderRows; row++) {
+                    for (var column = 0; column < RenderCols; column++) {
                         var node = _nodes[row, column];
-                        rawBitmap.SetPixel(column, _rows - 1 - row, node.PixelColor);
+                        rawBitmap.SetPixel(column, RenderRows - 1 - row, node.PixelColor);
                         previewBitmap.SetPixel(node.Model.X, node.Model.Y, node.PixelColor);
                     }
                 }
                 if (chkBoxEnableRawPreview.Checked) {
-                    raw.DrawImage(rawBitmap, new Point((pbRawPreview.Width - _cols)/2, (pbRawPreview.Height - _rows)/2));
+                    raw.DrawImage(rawBitmap, new Point((pbRawPreview.Width - RenderCols) / 2, (pbRawPreview.Height - RenderRows) / 2));
                 }
                 preview.DrawImage(previewBitmap, 0, 0);
             }
@@ -389,15 +410,14 @@ namespace VixenEditor
             }
 
             if (tbSparkles.Value > 0 && !IsBlackOrTransparent(returnValue)) {
-                switch (_nodes[row,column].Sparkle++ % (tbSparkles.Maximum - tbSparkles.Value + 20))
-                {
+                switch (_nodes[row, column].Sparkle++ % (tbSparkles.Maximum - tbSparkles.Value + 20)) {
                     case 2:
                     case 6:
-                        returnValue = Color.FromArgb(136,136,136);
+                        returnValue = Color.FromArgb(136, 136, 136);
                         break;
                     case 3:
                     case 5:
-                        returnValue = Color.FromArgb(187,187,187);
+                        returnValue = Color.FromArgb(187, 187, 187);
                         break;
                     case 4:
                         returnValue = Color.White;
@@ -421,17 +441,14 @@ namespace VixenEditor
 
 
         private static Color GetAverageColor(Color color1, Color color2) {
-            return Color.FromArgb((color1.A + color2.A) / 255, 
-                                  (color1.R + color2.R) / 255,
-                                  (color1.G + color2.G) / 255,
-                                  (color1.B + color2.B) / 255);
+            return Color.FromArgb((color1.A + color2.A) / 255, (color1.R + color2.R) / 255, (color1.G + color2.G) / 255, (color1.B + color2.B) / 255);
         }
 
 
         private void RenderFinalResults() {
             // Trees and matrix render rows, cols the other render as 1 x num pixles x (arch count | 1 if windows)
             RenderEvents = (int) nudEventCount.Value;
-            RenderData = new byte[ _cols * _rows * 3,RenderEvents];
+            RenderData = new byte[RenderCols * RenderRows * 3,RenderEvents];
             for (var i = 0; i < MaxEffects; i++) {
                 _eventToRender[i] = 0;
             }
@@ -445,13 +462,10 @@ namespace VixenEditor
                 RenderEffects();
                 var nodeRow = 0;
                 var eventRow = 0;
-                for (var row = 0; row < _rows * 3; row += 3) {
-                    for (var col = 0; col < _cols; col++) {
-                        Debug.Print("R:{0} C:{1}", eventRow, renderEvent);
+                for (var row = 0; row < RenderRows * 3; row += 3) {
+                    for (var col = 0; col < RenderCols; col++) {
                         RenderData[eventRow, renderEvent] = _nodes[nodeRow, col].PixelColor.R;
-                        Debug.Print("R:{0} C:{1}", eventRow + 1, renderEvent);
                         RenderData[eventRow + 1, renderEvent] = _nodes[nodeRow, col].PixelColor.B;
-                        Debug.Print("R:{0} C:{1}", eventRow + 2, renderEvent);
                         RenderData[eventRow + 2, renderEvent] = _nodes[nodeRow, col].PixelColor.G;
                         eventRow += 3;
                     }
@@ -462,6 +476,7 @@ namespace VixenEditor
                     _eventToRender[i] += _effectControls[i].GetSpeed();
                 }
                 progressBar.Value = renderEvent;
+                progressBar.Text = string.Format("{0:d3}%", renderEvent / RenderEvents);
                 Application.DoEvents();
             }
             progressBar.Visible = false;
@@ -525,20 +540,19 @@ namespace VixenEditor
 
         private void UpdateSummary() {
             var eventPeriod = _sequence.EventPeriod;
-            var startTime = Utils.TimeFormatWithMills((int)(nudStartEvent.Value * eventPeriod));
-            var elapsedTime = Utils.TimeFormatWithMills((int)(nudEventCount.Value * eventPeriod));
-            var endTime = Utils.TimeFormatWithMills((int)(nudStartEvent.Value + nudEventCount.Value - 1) * eventPeriod);
+            var startTime = Utils.TimeFormatWithMills((int) (nudStartEvent.Value * eventPeriod));
+            var elapsedTime = Utils.TimeFormatWithMills((int) (nudEventCount.Value * eventPeriod));
+            var endTime = Utils.TimeFormatWithMills((int) (nudStartEvent.Value + nudEventCount.Value - 1) * eventPeriod);
 
             lblStartEventTime.Text = startTime;
             lblEventCountTime.Text = elapsedTime;
 
-            var channelCount = _rows * _cols * 3;
+            var channelCount = RenderRows * RenderCols * 3;
             var msg = (channelCount > _sequence.FullChannelCount) ? "(Too Large for your current channel count)" : string.Empty;
 
             tbSummary.Text = String.Format("From {0} thru {1} on {2} channels {3}", startTime, endTime, channelCount, msg);
         }
 
         #endregion
-
     }
 }

@@ -80,7 +80,7 @@ namespace Spirals {
         }
 
         private void Spirals_ControlChanged(object sender, EventArgs e) {
-            OnControlChanged(this, new EventArgs());
+            OnControlChanged(this, e);
         }
     }
 }

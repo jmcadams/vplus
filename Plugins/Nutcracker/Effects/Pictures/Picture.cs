@@ -195,7 +195,7 @@ namespace Pictures {
 
         private void Pictures_ControlChanged(object sender, EventArgs e) {
             if (_initializing) return;
-            OnControlChanged(this, new EventArgs());
+            OnControlChanged(this, e);
         }
 
         private void btnFile_Click(object sender, EventArgs e) {

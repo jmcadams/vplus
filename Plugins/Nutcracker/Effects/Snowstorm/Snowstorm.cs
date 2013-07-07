@@ -153,7 +153,7 @@ namespace Snowstorm {
         }
 
 
-        private Point SnowstormVector(int idx) {
+        private static Point SnowstormVector(int idx) {
             var xy = new Point();
             switch (idx) {
                 case 0:
@@ -230,8 +230,7 @@ namespace Snowstorm {
 
 
         private void SnowStorm_ControlChanged(object sender, EventArgs e) {
-            InitializeSnowstorm();
-            OnControlChanged(this, new EventArgs());
+            OnControlChanged(this, e);
         }
     }
 }

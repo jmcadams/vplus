@@ -107,6 +107,7 @@ namespace NutcrackerEffectsControl
             this.chkBoxPalette1.Size = new System.Drawing.Size(15, 14);
             this.chkBoxPalette1.TabIndex = 11;
             this.chkBoxPalette1.UseVisualStyleBackColor = true;
+            this.chkBoxPalette1.CheckedChanged += new System.EventHandler(this.OnControlChanged);
             // 
             // chkBoxPalette2
             // 
@@ -118,6 +119,7 @@ namespace NutcrackerEffectsControl
             this.chkBoxPalette2.Size = new System.Drawing.Size(15, 14);
             this.chkBoxPalette2.TabIndex = 12;
             this.chkBoxPalette2.UseVisualStyleBackColor = true;
+            this.chkBoxPalette2.CheckedChanged += new System.EventHandler(this.OnControlChanged);
             // 
             // chkBoxPalette3
             // 
@@ -127,6 +129,7 @@ namespace NutcrackerEffectsControl
             this.chkBoxPalette3.Size = new System.Drawing.Size(15, 14);
             this.chkBoxPalette3.TabIndex = 13;
             this.chkBoxPalette3.UseVisualStyleBackColor = true;
+            this.chkBoxPalette3.CheckedChanged += new System.EventHandler(this.OnControlChanged);
             // 
             // chkBoxPalette4
             // 
@@ -136,6 +139,7 @@ namespace NutcrackerEffectsControl
             this.chkBoxPalette4.Size = new System.Drawing.Size(15, 14);
             this.chkBoxPalette4.TabIndex = 14;
             this.chkBoxPalette4.UseVisualStyleBackColor = true;
+            this.chkBoxPalette4.CheckedChanged += new System.EventHandler(this.OnControlChanged);
             // 
             // chkBoxPalette5
             // 
@@ -145,6 +149,7 @@ namespace NutcrackerEffectsControl
             this.chkBoxPalette5.Size = new System.Drawing.Size(15, 14);
             this.chkBoxPalette5.TabIndex = 15;
             this.chkBoxPalette5.UseVisualStyleBackColor = true;
+            this.chkBoxPalette5.CheckedChanged += new System.EventHandler(this.OnControlChanged);
             // 
             // chkBoxPalette6
             // 
@@ -154,6 +159,7 @@ namespace NutcrackerEffectsControl
             this.chkBoxPalette6.Size = new System.Drawing.Size(15, 14);
             this.chkBoxPalette6.TabIndex = 16;
             this.chkBoxPalette6.UseVisualStyleBackColor = true;
+            this.chkBoxPalette6.CheckedChanged += new System.EventHandler(this.OnControlChanged);
             // 
             // palette1
             // 
@@ -165,6 +171,7 @@ namespace NutcrackerEffectsControl
             this.palette1.TabIndex = 17;
             this.palette1.Text = "1";
             this.palette1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.palette1.BackColorChanged += new System.EventHandler(this.OnControlChanged);
             this.palette1.Click += new System.EventHandler(this.palette_Click);
             // 
             // palette2
@@ -178,6 +185,7 @@ namespace NutcrackerEffectsControl
             this.palette2.TabIndex = 18;
             this.palette2.Text = "2";
             this.palette2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.palette2.BackColorChanged += new System.EventHandler(this.OnControlChanged);
             this.palette2.Click += new System.EventHandler(this.palette_Click);
             // 
             // palette3
@@ -191,6 +199,7 @@ namespace NutcrackerEffectsControl
             this.palette3.TabIndex = 19;
             this.palette3.Text = "3";
             this.palette3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.palette3.BackColorChanged += new System.EventHandler(this.OnControlChanged);
             this.palette3.Click += new System.EventHandler(this.palette_Click);
             // 
             // palette5
@@ -204,6 +213,7 @@ namespace NutcrackerEffectsControl
             this.palette5.TabIndex = 21;
             this.palette5.Text = "5";
             this.palette5.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.palette5.BackColorChanged += new System.EventHandler(this.OnControlChanged);
             this.palette5.Click += new System.EventHandler(this.palette_Click);
             // 
             // palette4
@@ -217,6 +227,7 @@ namespace NutcrackerEffectsControl
             this.palette4.TabIndex = 22;
             this.palette4.Text = "4";
             this.palette4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.palette4.BackColorChanged += new System.EventHandler(this.OnControlChanged);
             this.palette4.Click += new System.EventHandler(this.palette_Click);
             // 
             // palette6
@@ -230,6 +241,7 @@ namespace NutcrackerEffectsControl
             this.palette6.TabIndex = 23;
             this.palette6.Text = "6";
             this.palette6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.palette6.BackColorChanged += new System.EventHandler(this.OnControlChanged);
             this.palette6.Click += new System.EventHandler(this.palette_Click);
             // 
             // tbNotes

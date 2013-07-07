@@ -134,6 +134,7 @@ namespace Fireworks {
             this.cbMutliColor.TabIndex = 8;
             this.cbMutliColor.Text = "Multi-Color Shells";
             this.cbMutliColor.UseVisualStyleBackColor = true;
+            this.cbMutliColor.CheckedChanged += new System.EventHandler(this.Fireworks_ControlChanged);
             // 
             // Fireworks
             // 

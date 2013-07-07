@@ -13,6 +13,18 @@ namespace NutcrackerEffectsControl {
     public partial class NutcrackerEffectControl : UserControl {
         private readonly Dictionary<string, INutcrackerEffect> _effectCache = new Dictionary<string, INutcrackerEffect>();
 
+        public delegate void ControlChangedHandler(object sender, EventArgs e);
+
+        public event ControlChangedHandler ControlChanged;
+
+
+        protected virtual void OnControlChanged(object sender, EventArgs e) {
+            var handler = ControlChanged;
+            if (handler != null) {
+                handler(sender, e);
+            }
+        }
+
 
         public NutcrackerEffectControl() {
             InitializeComponent();
@@ -108,7 +120,7 @@ namespace NutcrackerEffectsControl {
         private void cbEffects_SelectedIndexChanged(object sender, EventArgs e) {
             foreach (Control control in panel1.Controls) {
                 panel1.Controls.Remove(control);
-                ((INutcrackerEffect) control).OnControlChanged -= NutcrackerEffect_ControlChanged;
+                ((INutcrackerEffect)control).OnControlChanged -= NutcrackerEffect_ControlChanged;
             }
 
             //OnEffectChanged(this, new EventArgs());
@@ -123,6 +135,7 @@ namespace NutcrackerEffectsControl {
             UpdatePalette(newControl.UsesPalette);
             UpdateSpeed(newControl.UsesSpeed);
             _effectCache[cbEffects.SelectedItem.ToString()].OnControlChanged += NutcrackerEffect_ControlChanged;
+            OnControlChanged(this, EventArgs.Empty);
         }
 
         private void UpdatePalette(bool isEnabled) {
@@ -147,8 +160,9 @@ namespace NutcrackerEffectsControl {
         }
 
         private void NutcrackerEffect_ControlChanged(object sender, EventArgs e) {
-            //OnEffectChanged(sender, e);
+            OnControlChanged(sender, e);
         }
+
 
         private void palette_Click(object sender, EventArgs e) {
             using (var colorDialog = new ColorDialog {AllowFullOpen = true, AnyColor = true, FullOpen = true}) {
@@ -175,6 +189,7 @@ namespace NutcrackerEffectsControl {
             palette5.ForeColor = Utils.GetForeColor(colors[4]);
             palette6.BackColor = colors[5];
             palette6.ForeColor = Utils.GetForeColor(colors[5]);
+            OnControlChanged(null, null);
         }
 
 

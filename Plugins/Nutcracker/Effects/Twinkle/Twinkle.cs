@@ -74,7 +74,7 @@ namespace Twinkle {
 
 
         private void Twinkle_ControlChanged(object sender, EventArgs e) {
-            OnControlChanged(this, new EventArgs());
+            OnControlChanged(this, e);
         }
     }
 }
