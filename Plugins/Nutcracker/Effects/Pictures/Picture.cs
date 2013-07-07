@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Linq;
 using System.Windows.Forms;
+using CommonUtils;
 
 using VixenPlus;
 
@@ -48,9 +50,25 @@ namespace Pictures {
             return new List<string>();
         }
 
-        private void Setup(IEnumerable<string> settings) {
-            foreach (var s in settings) {
-                System.Diagnostics.Debug.Print(s);
+        private void Setup(IList<string> settings) {
+            var effectNum = settings[0];
+            var picturesDirection = string.Format(PicturesDirection, effectNum);
+            var picturesFileName = string.Format(PicturesFileName, effectNum);
+            var picturesGifSpeed = string.Format(PicturesGifSpeed, effectNum);
+
+            foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
+                if (keyValue[0].Equals(picturesDirection)) {
+                    var index = cbDirection.Items.IndexOf(keyValue[1]);
+                    if (index >= 0) {
+                        cbDirection.SelectedIndex = index;
+                    }
+                }
+                else if (keyValue[0].Equals(picturesFileName)) {
+                    txtBoxFile.Text = keyValue[1];
+                }
+                else if (keyValue[0].Equals(picturesGifSpeed)) {
+                    tbGifSpeed.Value = Utils.GetParsedValue(keyValue[1]); ;
+                }
             }
         }
 

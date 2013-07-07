@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
+
+using CommonUtils;
 
 using VixenPlus;
 
@@ -42,9 +45,18 @@ namespace Snowflakes {
             return new List<string>();
         }
 
-        private void Setup(IEnumerable<string> settings) {
-            foreach (var s in settings) {
-                System.Diagnostics.Debug.Print(s);
+        private void Setup(IList<string> settings) {
+            var effectNum = settings[0];
+            var snowflakesCount = string.Format(SnowflakesCount, effectNum);
+            var snowflakesType = string.Format(SnowflakesType, effectNum);
+
+            foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
+                if (keyValue[0].Equals(snowflakesCount)) {
+                    tbMaxFlakes.Value = Utils.GetParsedValue(keyValue[1]);
+                }
+                else if (keyValue[0].Equals(snowflakesType)) {
+                    tbType.Value = Utils.GetParsedValue(keyValue[1]);
+                }
             }
         }
 

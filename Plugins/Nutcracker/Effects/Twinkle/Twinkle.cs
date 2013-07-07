@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 using CommonUtils;
@@ -44,9 +45,22 @@ namespace Twinkle {
             return new List<string>();
         }
 
-        private void Setup(IEnumerable<string> settings) {
-            foreach (var s in settings) {
-                System.Diagnostics.Debug.Print(s);
+        private void Setup(IList<string> settings) {
+            var effectNum = settings[0];
+            var twinkleCount = string.Format(TwinkleCount, effectNum);
+            var twinkleSteps = string.Format(TwinkleSteps, effectNum);
+            var twinkleStrobe = string.Format(TwinkleStrobe, effectNum);
+
+            foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
+                if (keyValue[0].Equals(twinkleCount)) {
+                    tbLightCount.Value = Utils.GetParsedValue(keyValue[1]);
+                }
+                else if (keyValue[0].Equals(twinkleSteps)) {
+                    tbSteps.Value = Utils.GetParsedValue(keyValue[1]);
+                }
+                else if (keyValue[0].Equals(twinkleStrobe)) {
+                    chkBoxStrobe.Checked = keyValue[1].Equals("1");
+                }
             }
         }
 

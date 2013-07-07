@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 using CommonUtils;
@@ -44,9 +45,12 @@ namespace Fire {
             return new List<string>();
         }
 
-        private void Setup(IEnumerable<string> settings) {
-            foreach (var s in settings) {
-                System.Diagnostics.Debug.Print(s);
+        private void Setup(IList<string> settings) {
+            var effectNum = settings[0];
+            var fireHeight = string.Format(FireHeight, effectNum);
+
+            foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' })).Where(keyValue => keyValue[0].Equals(fireHeight))) {
+                tbHeight.Value = Utils.GetParsedValue(keyValue[1]);
             }
         }
 

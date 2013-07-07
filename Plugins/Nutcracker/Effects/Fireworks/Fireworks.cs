@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 using CommonUtils;
@@ -46,9 +47,26 @@ namespace Fireworks {
             return new List<string>();
         }
 
-        private void Setup(IEnumerable<string> settings) {
-            foreach (var s in settings) {
-                System.Diagnostics.Debug.Print(s);
+        private void Setup(IList<string> settings) {
+            var effectNum = settings[0];
+            var fireworksCount = string.Format(FireworksCount, effectNum);
+            var fireworksExplosions = string.Format(FireworksExplosions, effectNum);
+            var fireworksFade = string.Format(FireworksFade, effectNum);
+            var fireworksVelocity = string.Format(FireworksVelocity, effectNum);
+
+            foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
+                if (keyValue[0].Equals(fireworksCount)) {
+                    tbExplosionCount.Value = Utils.GetParsedValue(keyValue[1]);
+                }
+                else if (keyValue[0].Equals(fireworksExplosions)) {
+                    tbExplosionParticles.Value = Utils.GetParsedValue(keyValue[1]);
+                }
+                else if (keyValue[0].Equals(fireworksFade)) {
+                    tbParticleFade.Value = Utils.GetParsedValue(keyValue[1]);
+                }
+                else if (keyValue[0].Equals(fireworksVelocity)) {
+                    tbParticleVelocity.Value = Utils.GetParsedValue(keyValue[1]);
+                }
             }
         }
 

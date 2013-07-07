@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 using CommonUtils;
@@ -48,9 +49,34 @@ namespace Spirals {
             return new List<string>();
         }
 
-        private void Setup(IEnumerable<string> settings) {
-            foreach (var s in settings) {
-                System.Diagnostics.Debug.Print(s);
+        private void Setup(IList<string> settings) {
+            var effectNum = settings[0];
+            var spirals3D = string.Format(Spirals3D, effectNum);
+            var spiralsBlend = string.Format(SpiralsBlend, effectNum);
+            var spiralsCount = string.Format(SpiralsCount, effectNum);
+            var spiralsDirection = string.Format(SpiralsDirection, effectNum);
+            var spiralsRotation = string.Format(SpiralsRotation, effectNum);
+            var spiralsThickness = string.Format(SpiralsThickness, effectNum);
+
+            foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
+                if (keyValue[0].Equals(spirals3D)) {
+                    chkBox3D.Checked = keyValue[1].Equals("1");
+                }
+                else if (keyValue[0].Equals(spiralsBlend)) {
+                    chkBoxBlend.Checked = keyValue[1].Equals("1");
+                }
+                else if (keyValue[0].Equals(spiralsCount)) {
+                    tbPaletteRepeat.Value = Utils.GetParsedValue(keyValue[1]);
+                }
+                else if (keyValue[0].Equals(spiralsDirection)) {
+                    tbDirection.Value = Utils.GetParsedValue(keyValue[1]);
+                }
+                else if (keyValue[0].Equals(spiralsRotation)) {
+                    tbDirection.Value = Utils.GetParsedValue(keyValue[1]);
+                }
+                else if (keyValue[0].Equals(spiralsThickness)) {
+                    tbThickness.Value = Utils.GetParsedValue(keyValue[1]);
+                }
             }
         }
 

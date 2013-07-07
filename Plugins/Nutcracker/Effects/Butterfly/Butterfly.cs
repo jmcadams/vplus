@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 using CommonUtils;
@@ -10,11 +11,11 @@ namespace Butterfly {
     public partial class Butterfly : UserControl, INutcrackerEffect {
 
         private readonly bool _initializing = true;
-
-        private const string ButterflyPalette = "ID_CHOICE_Butterfly{0}_Colors";
-        private const string ButterflyStyle = "ID_SLIDER_Butterfly{0}_Style";
         private const string ButterflyChunks = "ID_SLIDER_Butterfly{0}_Chunks";
+        private const string ButterflyPalette = "ID_CHOICE_Butterfly{0}_Colors";
         private const string ButterflySkip = "ID_SLIDER_Butterfly{0}_Skip";
+        private const string ButterflyStyle = "ID_SLIDER_Butterfly{0}_Style";
+        private const double Pi2 = Math.PI * 2;
 
         public Butterfly() {
             InitializeComponent();
@@ -49,13 +50,31 @@ namespace Butterfly {
             return new List<string>();
         }
 
-        private void Setup(IEnumerable<string> settings) {
-            foreach (var s in settings) {
-                System.Diagnostics.Debug.Print(s);
+        private void Setup(IList<string> settings) {
+            var effectNum = settings[0];
+            var butterflyChunks = string.Format(ButterflyChunks, effectNum);
+            var butterflyPalette = string.Format(ButterflyPalette, effectNum);
+            var butterflySkip = string.Format(ButterflySkip, effectNum);
+            var butterflyStyle = string.Format(ButterflyStyle, effectNum);
+
+            foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
+                if (keyValue[0].Equals(butterflyChunks)) {
+                    tbChunks.Value = Utils.GetParsedValue(keyValue[1]);
+                }
+                else if (keyValue[0].Equals(butterflyPalette)) {
+                    var index = cbColors.Items.IndexOf(keyValue[1]);
+                    if (index >= 0) {
+                        cbColors.SelectedIndex = index;
+                    }
+                }
+                else if (keyValue[0].Equals(butterflySkip)) {
+                    tbSkip.Value = Utils.GetParsedValue(keyValue[1]);
+                }
+                else if (keyValue[0].Equals(butterflyStyle)) {
+                    tbStyle.Value = Utils.GetParsedValue(keyValue[1]);
+                }
             }
         }
-
-        private const double Pi2 = Math.PI * 2;
 
 
         public Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender) {

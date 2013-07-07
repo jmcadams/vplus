@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 using CommonUtils;
@@ -45,9 +46,18 @@ namespace Life {
             return new List<string>();
         }
 
-        private void Setup(IEnumerable<string> settings) {
-            foreach (var s in settings) {
-                System.Diagnostics.Debug.Print(s);
+        private void Setup(IList<string> settings) {
+            var effectNum = settings[0];
+            var lifeCount = string.Format(LifeCount, effectNum);
+            var lifeSeed = string.Format(LifeSeed, effectNum);
+
+            foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
+                if (keyValue[0].Equals(lifeCount)) {
+                    tbCellsToStart.Value = Utils.GetParsedValue(keyValue[1]);
+                }
+                else if (keyValue[0].Equals(lifeSeed)) {
+                    tbType.Value = Utils.GetParsedValue(keyValue[1]);
+                }
             }
         }
 

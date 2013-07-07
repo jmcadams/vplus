@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 using CommonUtils;
@@ -46,9 +47,26 @@ namespace Spirograph {
             return new List<string>();
         }
 
-        private void Setup(IEnumerable<string> settings) {
-            foreach (var s in settings) {
-                System.Diagnostics.Debug.Print(s);
+        private void Setup(IList<string> settings) {
+            var effectNum = settings[0];
+            var spirographAnimate = string.Format(SpirographAnimate, effectNum);
+            var spirographDiameter = string.Format(SpirographDiameter, effectNum);
+            var spirographInnerR = string.Format(SpirographInnerR, effectNum);
+            var spirographOuterR = string.Format(SpirographOuterR, effectNum);
+
+            foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
+                if (keyValue[0].Equals(spirographAnimate)) {
+                    chkBoxAnimate.Checked = keyValue[1].Equals("1");
+                }
+                else if (keyValue[0].Equals(spirographDiameter)) {
+                    tbDistance.Value = Utils.GetParsedValue(keyValue[1]);
+                }
+                else if (keyValue[0].Equals(spirographInnerR)) {
+                    tbInnerR.Value = Utils.GetParsedValue(keyValue[1]);
+                }
+                else if (keyValue[0].Equals(spirographOuterR)) {
+                    tbOuterR.Value = Utils.GetParsedValue(keyValue[1]);
+                }
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 using CommonUtils;
@@ -43,9 +44,12 @@ namespace Tree {
             return new List<string>();
         }
 
-        private void Setup(IEnumerable<string> settings) {
-            foreach (var s in settings) {
-                System.Diagnostics.Debug.Print(s);
+        private void Setup(IList<string> settings) {
+            var effectNum = settings[0];
+            var treeBrachCount = string.Format(TreeBrachCount, effectNum);
+
+            foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' })).Where(keyValue => keyValue[0].Equals(treeBrachCount))) {
+                tbBranchCount.Value = Utils.GetParsedValue(keyValue[1]);
             }
         }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Linq;
 using System.Windows.Forms;
 
 using CommonUtils;
@@ -25,7 +26,7 @@ namespace Text {
         private const string TextLine2 = "ID_TEXTCTRL_Text{0}_Line2";
         private const string TextFont2 = "ID_TEXTCTRL_Text{0}_2_Font";
         private const string TextDirection2 = "ID_CHOICE_Text{0}_2_Dir";
-        private const string TextPostion2 = "ID_SLIDER_Text{0}_2_Position";
+        private const string TextPosition2 = "ID_SLIDER_Text{0}_2_Position";
         private const string TextRotation2 = "ID_SLIDER_Text{0}_2_TextRotation";
 
         public Text() {
@@ -61,9 +62,59 @@ namespace Text {
             return new List<string>();
         }
 
-        private void Setup(IEnumerable<string> settings) {
-            foreach (var s in settings) {
-                System.Diagnostics.Debug.Print(s);
+
+        private void Setup(IList<string> settings) {
+            var effectNum = settings[0];
+            var textLine1 = string.Format(TextLine1, effectNum);
+            var textFont1 = string.Format(TextFont1, effectNum);
+            var textDirection1 = string.Format(TextDirection1, effectNum);
+            var textPosition1 = string.Format(TextPosition1, effectNum);
+            var textRotation1 = string.Format(TextRotation1, effectNum);
+
+            var textLine2 = string.Format(TextLine2, effectNum);
+            var textFont2 = string.Format(TextFont2, effectNum);
+            var textDirection2 = string.Format(TextDirection2, effectNum);
+            var textPosition2 = string.Format(TextPosition2, effectNum);
+            var textRotation2 = string.Format(TextRotation2, effectNum);
+
+            foreach (var keyValue in settings.Select(s => s.Split(new[] {'='}))) {
+
+                if (keyValue[0].Equals(textLine1)) {
+                    txtBoxLine1.Text = keyValue[1];
+                }
+                else if (keyValue[0].Equals(textFont1)) {
+                    lblFont.Text = keyValue[1];
+                }
+                else if (keyValue[0].Equals(textDirection1)) {
+                    var index = cbDirection.Items.IndexOf(keyValue[1]);
+                    if (index >= 0) {
+                        cbDirection.SelectedIndex = index;
+                    }
+                }
+                else if (keyValue[0].Equals(textPosition1)) {
+                    tbTop.Value = Utils.GetParsedValue(keyValue[1]);
+                }
+                else if (keyValue[0].Equals(textRotation1)) {
+                    tbRotation.Value = Utils.GetParsedValue(keyValue[1]);
+                }
+                else if (keyValue[0].Equals(textLine2)) {
+                    txtBoxLine2.Text = keyValue[1];
+                }
+                else if (keyValue[0].Equals(textFont2)) {
+                    //lblFont.Text = keyValue[1];
+                }
+                else if (keyValue[0].Equals(textDirection2)) {
+                    //var index = cbDirection.Items.IndexOf(keyValue[1]);
+                    //if (index >= 0) {
+                    //    cbDirection.SelectedIndex = index;
+                    //}
+                }
+                else if (keyValue[0].Equals(textPosition2)) {
+                    //tbTop.Value = Utils.GetParsedValue(keyValue[1]);
+                }
+                else if (keyValue[0].Equals(textRotation2)) {
+                    //tbRotation.Value = Utils.GetParsedValue(keyValue[1]);
+                }
             }
         }
 
