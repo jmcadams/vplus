@@ -788,16 +788,9 @@ namespace VixenPlus {
             var list = sequence.FullChannels.Select(channel => channel.OutputChannel).ToList();
             for (var i = 0; i < sequence.FullChannelCount; i++) {
                 var row = list[i];
-                var sbOld = new StringBuilder(String.Format("i: {1:d3} Row: {0:d3}", row, i));
-                var sbNew = new StringBuilder(String.Format("i: {1:d3} Row: {0:d3}", row, i));
                 for (var column = 0; column < sequence.TotalEventPeriods; column++) {
                     buffer[row, column] = sequence.EventValues[i, column];
-                    sbOld.Append(String.Format(" {0:d3}", sequence.EventValues[i, column]));
-                    sbNew.Append(String.Format(" {0:d3}", buffer[row, column]));
                 }
-                //System.Diagnostics.Debug.Print(sbOld.ToString());
-                //System.Diagnostics.Debug.Print(sbNew.ToString());
-                //System.Diagnostics.Debug.Print("");
             }
             return buffer;
         }
