@@ -70,6 +70,10 @@ namespace NutcrackerEffectsControl {
         }
 
 
+        public List<XElement> GetPresets() {
+            return _doc.Descendants("effects").Descendants("effect").ToList();
+        } 
+
         public string[] GetPalettes() {
             return _doc.Descendants("palettes").Descendants("palette").Select(e => {
                 var attr = e.Attribute("name");
@@ -96,6 +100,15 @@ namespace NutcrackerEffectsControl {
         public void RemovePalette(string palette) {
             GetPaletteByName(palette).Remove();
             _doc.Save(Paths.NutcrackerDataFile);
+        }
+
+
+        public string GetDataForEffect(string settingName) {
+            var effectData = _doc.Descendants("effects").Descendants("effect").Where(e => {
+                var attr = e.Attribute("name");
+                return attr != null && attr.Value == settingName;
+            }).First().Attribute("settings");
+            return effectData != null ? effectData.Value : null;
         }
     }
 }

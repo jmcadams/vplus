@@ -82,6 +82,7 @@ namespace VixenEditor
             this.nudRows = new System.Windows.Forms.NumericUpDown();
             this.btnCancel = new System.Windows.Forms.Button();
             this.timerRender = new System.Windows.Forms.Timer(this.components);
+            this.cbEffectsPresets = new System.Windows.Forms.ComboBox();
             this.gbEffect2.SuspendLayout();
             this.gbEffect1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
@@ -145,6 +146,7 @@ namespace VixenEditor
             // 
             // gbSettings
             // 
+            this.gbSettings.Controls.Add(this.cbEffectsPresets);
             this.gbSettings.Controls.Add(this.progressBar);
             this.gbSettings.Controls.Add(this.lblRenderInfo);
             this.gbSettings.Controls.Add(this.tbSparkles);
@@ -161,7 +163,6 @@ namespace VixenEditor
             this.gbSettings.Controls.Add(this.chkBoxEnableRawPreview);
             this.gbSettings.Controls.Add(this.pbRawPreview);
             this.gbSettings.Controls.Add(this.btnLightsOff);
-            this.gbSettings.Controls.Add(this.btnManagePresets);
             this.gbSettings.Controls.Add(this.cbRender);
             this.gbSettings.Controls.Add(this.lblColumns);
             this.gbSettings.Controls.Add(this.lblRows);
@@ -386,6 +387,7 @@ namespace VixenEditor
             this.gbRenderTo.Controls.Add(this.rbCurrentSelection);
             this.gbRenderTo.Controls.Add(this.rbRoutine);
             this.gbRenderTo.Controls.Add(this.rbClipboard);
+            this.gbRenderTo.Controls.Add(this.btnManagePresets);
             this.gbRenderTo.Location = new System.Drawing.Point(214, 19);
             this.gbRenderTo.Name = "gbRenderTo";
             this.gbRenderTo.Size = new System.Drawing.Size(266, 232);
@@ -551,7 +553,7 @@ namespace VixenEditor
             // 
             // btnManagePresets
             // 
-            this.btnManagePresets.Location = new System.Drawing.Point(390, 257);
+            this.btnManagePresets.Location = new System.Drawing.Point(126, 126);
             this.btnManagePresets.Name = "btnManagePresets";
             this.btnManagePresets.Size = new System.Drawing.Size(90, 23);
             this.btnManagePresets.TabIndex = 5;
@@ -645,6 +647,16 @@ namespace VixenEditor
             this.timerRender.Interval = 50;
             this.timerRender.Tick += new System.EventHandler(this.timerRender_Tick);
             // 
+            // cbEffectsPresets
+            // 
+            this.cbEffectsPresets.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbEffectsPresets.FormattingEnabled = true;
+            this.cbEffectsPresets.Location = new System.Drawing.Point(390, 259);
+            this.cbEffectsPresets.Name = "cbEffectsPresets";
+            this.cbEffectsPresets.Size = new System.Drawing.Size(164, 21);
+            this.cbEffectsPresets.TabIndex = 22;
+            this.cbEffectsPresets.SelectedIndexChanged += new System.EventHandler(this.cbEffectsPresets_SelectedIndexChanged);
+            // 
             // NutcrackerControlDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -731,5 +743,6 @@ namespace VixenEditor
         private Label lblSparkles;
         private Label lblRenderInfo;
         private ProgressBar progressBar;
+        private ComboBox cbEffectsPresets;
     }
 }

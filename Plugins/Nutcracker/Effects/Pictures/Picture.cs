@@ -26,7 +26,7 @@ namespace Pictures {
         public event EventHandler OnControlChanged;
 
         public string EffectName {
-            get { return "Picture"; }
+            get { return "Pictures"; }
         }
 
         public string Notes {

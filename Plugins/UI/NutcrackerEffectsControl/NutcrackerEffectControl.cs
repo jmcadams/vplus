@@ -63,12 +63,17 @@ namespace NutcrackerEffectsControl {
 
         public void SetEffect(string effectName, List<string> setupData, bool isFirst) {
             setupData.Insert(0, isFirst ? "1" : "2");
+
             ExtractAndSetPalette(setupData);
+
             var newEffectItem = cbEffects.Items.IndexOf(effectName);
             if (newEffectItem >= 0) {
                 cbEffects.SelectedIndex = newEffectItem;
-                _effectCache[cbEffects.SelectedItem.ToString()].Settings = setupData;
+                if (newEffectItem != 0) {
+                    _effectCache[cbEffects.SelectedItem.ToString()].Settings = setupData;
+                }
             }
+
             setupData.RemoveAt(0);
         }
 

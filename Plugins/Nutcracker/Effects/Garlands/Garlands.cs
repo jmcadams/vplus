@@ -54,7 +54,7 @@ namespace Garlands {
                     tbSpacing.Value = Utils.GetParsedValue(keyValue[1]);
                 }
                 else if (keyValue[0].Equals(garlandsType)) {
-                    tbGarlandType.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbGarlandType.Value = Utils.GetParsedValue(keyValue[1]) + 1;
                 }
             }
         }

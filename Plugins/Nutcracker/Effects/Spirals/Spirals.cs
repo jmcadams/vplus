@@ -72,7 +72,7 @@ namespace Spirals {
                     tbDirection.Value = Utils.GetParsedValue(keyValue[1]);
                 }
                 else if (keyValue[0].Equals(spiralsRotation)) {
-                    tbDirection.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbRotations.Value = Utils.GetParsedValue(keyValue[1]);
                 }
                 else if (keyValue[0].Equals(spiralsThickness)) {
                     tbThickness.Value = Utils.GetParsedValue(keyValue[1]);

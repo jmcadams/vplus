@@ -32,7 +32,7 @@ namespace VixenEditor {
         private Color[][,] _effectBuffers;
         private int[] _eventToRender = new[] {0, 0};
         private NutcrackerEffectControl[] _effectControls;
-
+        private NutcrackerXmlManager _nutcrackerData;
         private string _playText;
         private const string StopText = "Stop";
 
@@ -77,12 +77,15 @@ namespace VixenEditor {
             _nodes = new NutcrackerNodes[RenderRows,RenderCols];
             _effectBuffers = new[] {new Color[RenderRows,RenderCols], new Color[RenderRows,RenderCols]};
             _effectControls = new[] {nutcrackerEffectControl1, nutcrackerEffectControl2};
+            _nutcrackerData = new NutcrackerXmlManager();
+
             InitializeEffectBuffer(0);
             InitializeEffectBuffer(1);
             InitializeNodes();
             InitializeFromSequence();
             InitMatrix();
             InitializeModels();
+            InitializePresets();
             SetEffectLayer();
         }
 
@@ -126,8 +129,7 @@ namespace VixenEditor {
 
         private void InitializeModels() {
             cbModels.Items.Clear();
-            var data = new NutcrackerXmlManager();
-            var models = data.GetModels();
+            var models = _nutcrackerData.GetModels();
             foreach (var nameAttr in models.Select(m => m.Attribute("name")).Where(name => name != null)) {
                 cbModels.Items.Add(nameAttr.Value);
             }
@@ -150,6 +152,15 @@ namespace VixenEditor {
                     _nodes[RenderRows - 1 - row, col].Model = new Point(x, y);
                 }
             }
+        }
+
+        private void InitializePresets() {
+            cbEffectsPresets.Items.Clear();
+            var effects = _nutcrackerData.GetPresets();
+            foreach (var nameAttr in effects.Select(m => m.Attribute("name")).Where(name => name != null)) {
+                cbEffectsPresets.Items.Add(nameAttr.Value);
+            }
+            cbEffectsPresets.Items.Add("Manage Effect Presets");
         }
 
 
@@ -554,9 +565,13 @@ namespace VixenEditor {
         #endregion
 
         private void btnManagePresets_Click(object sender, EventArgs e) {
-            var settings =
-                @"Color Wash,Bars,2 is Unmask,ID_SLIDER_SparkleFrequency=150,ID_SLIDER_Speed1=10,ID_SLIDER_Speed2=10,ID_SLIDER_ColorWash1_Count=1,ID_CHECKBOX_ColorWash1_HFade=0,ID_CHECKBOX_ColorWash1_VFade=0,ID_CHECKBOX_Palette1_1=1,ID_BUTTON_Palette1_1=#FF0000,ID_CHECKBOX_Palette1_2=1,ID_BUTTON_Palette1_2=#00FF00,ID_CHECKBOX_Palette1_3=0,ID_BUTTON_Palette1_3=#0000FF,ID_CHECKBOX_Palette1_4=0,ID_BUTTON_Palette1_4=#FFFF00,ID_CHECKBOX_Palette1_5=0,ID_BUTTON_Palette1_5=#FFFFFF,ID_CHECKBOX_Palette1_6=0,ID_BUTTON_Palette1_6=#000000,ID_SLIDER_Bars2_BarCount=1,ID_CHOICE_Bars2_Direction=up,ID_CHECKBOX_Bars2_Highlight=1,ID_CHECKBOX_Bars2_3D=0,ID_CHECKBOX_Palette2_1=1,ID_BUTTON_Palette2_1=#FF0000,ID_CHECKBOX_Palette2_2=1,ID_BUTTON_Palette2_2=#00FF00,ID_CHECKBOX_Palette2_3=0,ID_BUTTON_Palette2_3=#0000FF,ID_CHECKBOX_Palette2_4=0,ID_BUTTON_Palette2_4=#FFFF00,ID_CHECKBOX_Palette2_5=0,ID_BUTTON_Palette2_5=#FFFFFF,ID_CHECKBOX_Palette2_6=0,ID_BUTTON_Palette2_6=#000000".Split(new[] {','}).ToList();
-            
+
+        }
+
+
+        private void SetPreset(string effectData) {
+            var settings = effectData.Split(new[] {','}).ToList();
+
             // Strip out first 4 settings
             var effect1Name = settings[0];
             var effect2Name = settings[1];
@@ -605,6 +620,20 @@ namespace VixenEditor {
         private void SetSparkleFrequency(string level) {
             int frequency;
             tbSparkles.Value = (Int32.TryParse(level, out frequency) ? 100 - (frequency/2) : 0);
+        }
+
+        private void cbEffectsPresets_SelectedIndexChanged(object sender, EventArgs e) {
+            if (cbEffectsPresets.SelectedIndex != cbEffectsPresets.Items.Count - 1) {
+                var effectData = _nutcrackerData.GetDataForEffect(cbEffectsPresets.SelectedItem.ToString());
+                if (effectData != null) {
+                    SetPreset(effectData);
+                }
+                return;
+            }
+            //TODO new dialogType
+            using (var modelDialog = new NutcrackerModelDialog(_sequence)) {
+                modelDialog.ShowDialog();
+            }
         }
     }
 }
