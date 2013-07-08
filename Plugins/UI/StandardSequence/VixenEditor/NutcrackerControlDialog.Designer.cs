@@ -35,9 +35,7 @@ namespace VixenEditor
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NutcrackerControlDialog));
             this.gbEffect2 = new System.Windows.Forms.GroupBox();
-            this.nutcrackerEffectControl2 = new NutcrackerEffectsControl.NutcrackerEffectControl();
             this.gbEffect1 = new System.Windows.Forms.GroupBox();
-            this.nutcrackerEffectControl1 = new NutcrackerEffectsControl.NutcrackerEffectControl();
             this.pbPreview = new System.Windows.Forms.PictureBox();
             this.gbSettings = new System.Windows.Forms.GroupBox();
             this.progressBar = new System.Windows.Forms.ProgressBar();
@@ -74,7 +72,6 @@ namespace VixenEditor
             this.chkBoxEnableRawPreview = new System.Windows.Forms.CheckBox();
             this.pbRawPreview = new System.Windows.Forms.PictureBox();
             this.btnLightsOff = new System.Windows.Forms.Button();
-            this.btnManagePresets = new System.Windows.Forms.Button();
             this.cbRender = new System.Windows.Forms.CheckBox();
             this.lblColumns = new System.Windows.Forms.Label();
             this.lblRows = new System.Windows.Forms.Label();
@@ -83,6 +80,9 @@ namespace VixenEditor
             this.btnCancel = new System.Windows.Forms.Button();
             this.timerRender = new System.Windows.Forms.Timer(this.components);
             this.cbEffectsPresets = new System.Windows.Forms.ComboBox();
+            this.nutcrackerEffectControl1 = new NutcrackerEffectsControl.NutcrackerEffectControl();
+            this.nutcrackerEffectControl2 = new NutcrackerEffectsControl.NutcrackerEffectControl();
+            this.lblPresets = new System.Windows.Forms.Label();
             this.gbEffect2.SuspendLayout();
             this.gbEffect1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
@@ -107,15 +107,6 @@ namespace VixenEditor
             this.gbEffect2.TabStop = false;
             this.gbEffect2.Text = "Effect 2";
             // 
-            // nutcrackerEffectControl2
-            // 
-            this.nutcrackerEffectControl2.Location = new System.Drawing.Point(7, 20);
-            this.nutcrackerEffectControl2.Name = "nutcrackerEffectControl2";
-            this.nutcrackerEffectControl2.Size = new System.Drawing.Size(371, 225);
-            this.nutcrackerEffectControl2.Speed = 1;
-            this.nutcrackerEffectControl2.TabIndex = 0;
-            this.nutcrackerEffectControl2.ControlChanged += new NutcrackerEffectsControl.NutcrackerEffectControl.ControlChangedHandler(this.ControlChanged2);
-            // 
             // gbEffect1
             // 
             this.gbEffect1.Controls.Add(this.nutcrackerEffectControl1);
@@ -125,15 +116,6 @@ namespace VixenEditor
             this.gbEffect1.TabIndex = 1;
             this.gbEffect1.TabStop = false;
             this.gbEffect1.Text = "Effect 1";
-            // 
-            // nutcrackerEffectControl1
-            // 
-            this.nutcrackerEffectControl1.Location = new System.Drawing.Point(7, 20);
-            this.nutcrackerEffectControl1.Name = "nutcrackerEffectControl1";
-            this.nutcrackerEffectControl1.Size = new System.Drawing.Size(371, 225);
-            this.nutcrackerEffectControl1.Speed = 1;
-            this.nutcrackerEffectControl1.TabIndex = 0;
-            this.nutcrackerEffectControl1.ControlChanged += new NutcrackerEffectsControl.NutcrackerEffectControl.ControlChangedHandler(this.ControlChanged1);
             // 
             // pbPreview
             // 
@@ -146,6 +128,7 @@ namespace VixenEditor
             // 
             // gbSettings
             // 
+            this.gbSettings.Controls.Add(this.lblPresets);
             this.gbSettings.Controls.Add(this.cbEffectsPresets);
             this.gbSettings.Controls.Add(this.progressBar);
             this.gbSettings.Controls.Add(this.lblRenderInfo);
@@ -358,7 +341,7 @@ namespace VixenEditor
             // 
             // btnPlayStop
             // 
-            this.btnPlayStop.Location = new System.Drawing.Point(294, 257);
+            this.btnPlayStop.Location = new System.Drawing.Point(214, 257);
             this.btnPlayStop.Name = "btnPlayStop";
             this.btnPlayStop.Size = new System.Drawing.Size(90, 23);
             this.btnPlayStop.TabIndex = 4;
@@ -387,7 +370,6 @@ namespace VixenEditor
             this.gbRenderTo.Controls.Add(this.rbCurrentSelection);
             this.gbRenderTo.Controls.Add(this.rbRoutine);
             this.gbRenderTo.Controls.Add(this.rbClipboard);
-            this.gbRenderTo.Controls.Add(this.btnManagePresets);
             this.gbRenderTo.Location = new System.Drawing.Point(214, 19);
             this.gbRenderTo.Name = "gbRenderTo";
             this.gbRenderTo.Size = new System.Drawing.Size(266, 232);
@@ -551,16 +533,6 @@ namespace VixenEditor
             this.btnLightsOff.UseVisualStyleBackColor = true;
             this.btnLightsOff.Visible = false;
             // 
-            // btnManagePresets
-            // 
-            this.btnManagePresets.Location = new System.Drawing.Point(126, 126);
-            this.btnManagePresets.Name = "btnManagePresets";
-            this.btnManagePresets.Size = new System.Drawing.Size(90, 23);
-            this.btnManagePresets.TabIndex = 5;
-            this.btnManagePresets.Text = "Effect Presets";
-            this.btnManagePresets.UseVisualStyleBackColor = true;
-            this.btnManagePresets.Click += new System.EventHandler(this.btnManagePresets_Click);
-            // 
             // cbRender
             // 
             this.cbRender.AutoSize = true;
@@ -651,11 +623,38 @@ namespace VixenEditor
             // 
             this.cbEffectsPresets.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbEffectsPresets.FormattingEnabled = true;
-            this.cbEffectsPresets.Location = new System.Drawing.Point(390, 259);
+            this.cbEffectsPresets.Location = new System.Drawing.Point(442, 259);
             this.cbEffectsPresets.Name = "cbEffectsPresets";
             this.cbEffectsPresets.Size = new System.Drawing.Size(164, 21);
             this.cbEffectsPresets.TabIndex = 22;
             this.cbEffectsPresets.SelectedIndexChanged += new System.EventHandler(this.cbEffectsPresets_SelectedIndexChanged);
+            // 
+            // nutcrackerEffectControl1
+            // 
+            this.nutcrackerEffectControl1.Location = new System.Drawing.Point(7, 20);
+            this.nutcrackerEffectControl1.Name = "nutcrackerEffectControl1";
+            this.nutcrackerEffectControl1.Size = new System.Drawing.Size(371, 225);
+            this.nutcrackerEffectControl1.Speed = 1;
+            this.nutcrackerEffectControl1.TabIndex = 0;
+            this.nutcrackerEffectControl1.ControlChanged += new NutcrackerEffectsControl.NutcrackerEffectControl.ControlChangedHandler(this.ControlChanged1);
+            // 
+            // nutcrackerEffectControl2
+            // 
+            this.nutcrackerEffectControl2.Location = new System.Drawing.Point(7, 20);
+            this.nutcrackerEffectControl2.Name = "nutcrackerEffectControl2";
+            this.nutcrackerEffectControl2.Size = new System.Drawing.Size(371, 225);
+            this.nutcrackerEffectControl2.Speed = 1;
+            this.nutcrackerEffectControl2.TabIndex = 0;
+            this.nutcrackerEffectControl2.ControlChanged += new NutcrackerEffectsControl.NutcrackerEffectControl.ControlChangedHandler(this.ControlChanged2);
+            // 
+            // lblPresets
+            // 
+            this.lblPresets.AutoSize = true;
+            this.lblPresets.Location = new System.Drawing.Point(360, 262);
+            this.lblPresets.Name = "lblPresets";
+            this.lblPresets.Size = new System.Drawing.Size(76, 13);
+            this.lblPresets.TabIndex = 23;
+            this.lblPresets.Text = "Effect Presets:";
             // 
             // NutcrackerControlDialog
             // 
@@ -718,7 +717,6 @@ namespace VixenEditor
         private RadioButton rbEffect2;
         private RadioButton rbEffect1;
         private Button btnLightsOff;
-        private Button btnManagePresets;
         private Timer timerRender;
         private ComboBox cbModels;
         private Button btnPlayStop;
@@ -744,5 +742,6 @@ namespace VixenEditor
         private Label lblRenderInfo;
         private ProgressBar progressBar;
         private ComboBox cbEffectsPresets;
+        private Label lblPresets;
     }
 }
