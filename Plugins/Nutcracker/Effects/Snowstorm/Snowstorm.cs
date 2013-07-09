@@ -42,9 +42,14 @@ namespace Snowstorm {
             set { Setup(value); }
         }
 
+
         private List<string> GetCurrentSettings() {
-            return new List<string>();
+            return new List<string> {
+                SnowstormCount + "=" + tbMaxFlakes.Value,
+                SnowstormLength + "=" + tbTailLength.Value
+            };
         }
+
 
         private void Setup(IList<string> settings) {
             var effectNum = settings[0];

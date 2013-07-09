@@ -42,7 +42,9 @@ namespace Fire {
 
 
         private List<string> GetCurrentSettings() {
-            return new List<string>();
+            return new List<string> {
+                FireHeight + "=" + tbHeight.Value
+            };
         }
 
         private void Setup(IList<string> settings) {

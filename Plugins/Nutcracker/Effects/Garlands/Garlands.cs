@@ -41,7 +41,10 @@ namespace Garlands {
         }
 
         private List<string> GetCurrentSettings() {
-            return new List<string>();
+            return new List<string> {
+                GarlandsSpacing + "=" + tbSpacing.Value,
+                GarlandsType + "=" + (tbGarlandType.Value - 1)
+            };
         }
 
         private void Setup(IList<string> settings) {

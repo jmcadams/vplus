@@ -47,7 +47,11 @@ namespace Pictures {
         }
 
         private List<string> GetCurrentSettings() {
-            return new List<string>();
+            return new List<string> {
+                PicturesDirection + "=" + cbDirection.SelectedItem,
+                PicturesFileName + "=" + txtBoxFile.Text,
+                PicturesGifSpeed + "=" + tbGifSpeed.Value
+            };
         }
 
         private void Setup(IList<string> settings) {
@@ -67,7 +71,7 @@ namespace Pictures {
                     txtBoxFile.Text = keyValue[1];
                 }
                 else if (keyValue[0].Equals(picturesGifSpeed)) {
-                    tbGifSpeed.Value = Utils.GetParsedValue(keyValue[1]); ;
+                    tbGifSpeed.Value = Utils.GetParsedValue(keyValue[1]); 
                 }
             }
         }

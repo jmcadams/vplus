@@ -44,7 +44,12 @@ namespace Spirograph {
         }
 
         private List<string> GetCurrentSettings() {
-            return new List<string>();
+            return new List<string> {
+                SpirographAnimate + "=" + (chkBoxAnimate.Checked ? "1" : "0"),
+                SpirographDiameter + "=" + tbDistance.Value,
+                SpirographInnerR + "=" + tbInnerR.Value,
+                SpirographOuterR + "=" + tbOuterR.Value
+            };
         }
 
         private void Setup(IList<string> settings) {

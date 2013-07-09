@@ -42,7 +42,10 @@ namespace Snowflakes {
         }
 
         private List<string> GetCurrentSettings() {
-            return new List<string>();
+            return new List<string> {
+                SnowflakesCount + "=" + tbMaxFlakes.Value,
+                SnowflakesType + "=" + tbType.Value
+            };
         }
 
         private void Setup(IList<string> settings) {

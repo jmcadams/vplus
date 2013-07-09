@@ -14,11 +14,14 @@ namespace Fireworks {
         private const string FireworksCount = "ID_SLIDER_Fireworks{0}_Count";
         private const string FireworksVelocity = "ID_SLIDER_Fireworks{0}_Velocity";
         private const string FireworksFade = "ID_SLIDER_Fireworks{0}_Fade";
+        private const string FireworksMultiColor = "ID_CHECKBOX_Fireworks{0}_Multicolor";
+
 
         public Fireworks() {
             InitializeComponent();
             InitFireworksBuffer();
         }
+
 
         public event EventHandler OnControlChanged;
 
@@ -43,9 +46,17 @@ namespace Fireworks {
             set { Setup(value); }
         }
 
+
         private List<string> GetCurrentSettings() {
-            return new List<string>();
+            return new List<string> {
+                FireworksCount + "=" + tbExplosionCount.Value,
+                FireworksExplosions + "=" + tbExplosionParticles.Value,
+                FireworksFade + "=" + tbParticleFade.Value,
+                FireworksVelocity + "=" + tbParticleVelocity.Value,
+                FireworksMultiColor + "=" + (cbMutliColor.Checked ? "1" : "0")
+            };
         }
+
 
         private void Setup(IList<string> settings) {
             var effectNum = settings[0];
@@ -53,8 +64,9 @@ namespace Fireworks {
             var fireworksExplosions = string.Format(FireworksExplosions, effectNum);
             var fireworksFade = string.Format(FireworksFade, effectNum);
             var fireworksVelocity = string.Format(FireworksVelocity, effectNum);
+            var fireworksMultiColor = string.Format(FireworksMultiColor, effectNum);
 
-            foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
+            foreach (var keyValue in settings.Select(s => s.Split(new[] {'='}))) {
                 if (keyValue[0].Equals(fireworksCount)) {
                     tbExplosionCount.Value = Utils.GetParsedValue(keyValue[1]);
                 }
@@ -67,25 +79,29 @@ namespace Fireworks {
                 else if (keyValue[0].Equals(fireworksVelocity)) {
                     tbParticleVelocity.Value = Utils.GetParsedValue(keyValue[1]);
                 }
+                else if (keyValue[0].Equals(fireworksMultiColor)) {
+                    cbMutliColor.Checked = keyValue[1].Equals("1");
+                }
             }
         }
 
-        private RgbFireworks[] _fireworkBursts; 
 
-        private void InitFireworksBuffer()
-        {
+        private RgbFireworks[] _fireworkBursts;
+
+
+        private void InitFireworksBuffer() {
             if (_fireworkBursts != null) {
                 return;
             }
 
             _fireworkBursts = new RgbFireworks[20000];
-            for (var burstNum = 0; burstNum < 20000; burstNum++)
-            {
+            for (var burstNum = 0; burstNum < 20000; burstNum++) {
                 _fireworkBursts[burstNum] = new RgbFireworks();
             }
         }
 
-        static private readonly Random Random = new Random();
+
+        private static readonly Random Random = new Random();
 
 
         public Color[,] RenderEffect(Color[,] buffer, Color[] palette, int eventToRender) {
@@ -98,19 +114,24 @@ namespace Fireworks {
 
 
             if (eventToRender == 0 || _fireworkBursts == null) {
+                InitFireworksBuffer();
                 for (var i = 0; i < maxFlakes; i++) {
+                    // ReSharper disable PossibleNullReferenceException
                     _fireworkBursts[i].IsActive = false;
+                    // ReSharper restore PossibleNullReferenceException
                 }
             }
 
-            if (eventToRender % (101 - numberExplosions) * 10 == 0) {
-                var startX = (int)(bufferWidth * 0.25 + (Random.Next() % (bufferWidth * 0.75 - bufferWidth * 0.25)));
-                var startY = (int)(bufferHeight * 0.25 + (Random.Next() % (bufferHeight * 0.75 - bufferHeight * 0.25)));
-                var shellColor = palette[Random.Next() % palette.Length];
+            if (eventToRender%(101 - numberExplosions)*10 == 0) {
+                var startX = (int) (bufferWidth*0.25 + (Random.Next()%(bufferWidth*0.75 - bufferWidth*0.25)));
+                var startY = (int) (bufferHeight*0.25 + (Random.Next()%(bufferHeight*0.75 - bufferHeight*0.25)));
+                var shellColor = palette[Random.Next()%palette.Length];
                 for (var i = 0; i < tbExplosionParticles.Value; i++) {
                     do {
-                        idxFlakes = (idxFlakes + 1) % maxFlakes;
+                        idxFlakes = (idxFlakes + 1)%maxFlakes;
+                        // ReSharper disable PossibleNullReferenceException
                     } while (_fireworkBursts[idxFlakes].IsActive);
+                    // ReSharper restore PossibleNullReferenceException
 
                     _fireworkBursts[idxFlakes].Reset(startX, startY, true, tbParticleVelocity.Value);
                     _fireworkBursts[idxFlakes].FireworkColor = shellColor;
@@ -118,27 +139,31 @@ namespace Fireworks {
             }
             else {
                 for (var i = 0; i < maxFlakes; i++) {
+                    // ReSharper disable PossibleNullReferenceException
                     if (!_fireworkBursts[i].IsActive) {
+                        // ReSharper restore PossibleNullReferenceException
                         continue;
                     }
 
                     _fireworkBursts[i].X += _fireworkBursts[i].Dx;
-                    _fireworkBursts[i].Y += (float) (-_fireworkBursts[i].Dy - _fireworkBursts[i].Cycles * _fireworkBursts[i].Cycles / 10000000.0);
+                    _fireworkBursts[i].Y +=
+                        (float)
+                        (-_fireworkBursts[i].Dy - _fireworkBursts[i].Cycles*_fireworkBursts[i].Cycles/10000000.0);
                     _fireworkBursts[i].Cycles += 20;
-                    
+
                     if (10000 == _fireworkBursts[i].Cycles) {
                         _fireworkBursts[i].IsActive = false;
                         continue;
                     }
-                    
+
                     if (_fireworkBursts[i].Y >= bufferHeight) {
                         _fireworkBursts[i].IsActive = false;
                         continue;
                     }
-                    
+
                     if (_fireworkBursts[i].X >= 0.0 && _fireworkBursts[i].X < bufferWidth) {
                         if (_fireworkBursts[i].Y >= 0.0 && cbMutliColor.Checked) {
-                            _fireworkBursts[i].FireworkColor = palette[Random.Next() % palette.Length];
+                            _fireworkBursts[i].FireworkColor = palette[Random.Next()%palette.Length];
                         }
                     }
                     else {
@@ -149,12 +174,14 @@ namespace Fireworks {
 
 
             for (var i = 0; i < 1000; i++) {
+                // ReSharper disable PossibleNullReferenceException
                 if (!_fireworkBursts[i].IsActive) {
+                    // ReSharper restore PossibleNullReferenceException
                     continue;
                 }
                 var hsv = HSVUtils.ColorToHSV(_fireworkBursts[i].FireworkColor);
 
-                var v = (float) (((tbParticleFade.Value * 10.0) - _fireworkBursts[i].Cycles) / (tbParticleFade.Value * 10.0));
+                var v = (float) (((tbParticleFade.Value*10.0) - _fireworkBursts[i].Cycles)/(tbParticleFade.Value*10.0));
                 if (v < 0) {
                     v = 0.0f;
                 }
@@ -170,8 +197,7 @@ namespace Fireworks {
         }
 
 
-        public class RgbFireworks
-        {
+        public class RgbFireworks {
             public const int MaxCycle = 4096;
             public const int MaxNewBurstFlakes = 10;
             public float X;
@@ -184,19 +210,20 @@ namespace Fireworks {
             public int Cycles;
             public Color FireworkColor;
 
-            public void Reset(int x, int y, bool active, float velocity)
-            {
+
+            public void Reset(int x, int y, bool active, float velocity) {
                 X = x;
                 Y = y;
-                Vel = (Random.Next() - int.MaxValue / 2) * velocity / (int.MaxValue / 2);
-                Angle = (float)(2 * Math.PI * Random.Next() / int.MaxValue);
-                Dx = (float)(Vel * Math.Cos(Angle));
-                Dy = (float)(Vel * Math.Sin(Angle));
+                Vel = (Random.Next() - int.MaxValue/2)*velocity/(int.MaxValue/2);
+                Angle = (float) (2*Math.PI*Random.Next()/int.MaxValue);
+                Dx = (float) (Vel*Math.Cos(Angle));
+                Dy = (float) (Vel*Math.Sin(Angle));
                 IsActive = active;
                 Cycles = 0;
                 FireworkColor = Color.White;
             }
         }
+
 
         private void Fireworks_ControlChanged(object sender, EventArgs e) {
             OnControlChanged(this, e);

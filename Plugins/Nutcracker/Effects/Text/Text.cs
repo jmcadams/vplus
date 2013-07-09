@@ -59,7 +59,18 @@ namespace Text {
         }
 
         private List<string> GetCurrentSettings() {
-            return new List<string>();
+            return new List<string> {
+                TextLine1 + "=" + txtBoxLine1.Text,
+                TextFont1 + "=" + lblFont.Text,
+                TextDirection1 + "=" + cbDirection.SelectedItem,
+                TextPosition1 + "=" + tbTop.Value,
+                TextRotation1 + "=" + tbRotation.Value,
+                TextLine2 + "=" + txtBoxLine2.Text,
+                TextFont2 + "=" + lblFont.Text,
+                TextDirection2 + "=" + cbDirection.SelectedItem,
+                TextPosition2 + "=" + tbTop.Value,
+                TextRotation2 + "=" + tbRotation.Value
+            };
         }
 
 

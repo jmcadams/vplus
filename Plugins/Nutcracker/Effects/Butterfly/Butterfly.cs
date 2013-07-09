@@ -47,7 +47,12 @@ namespace Butterfly {
         }
 
         private List<string> GetCurrentSettings() {
-            return new List<string>();
+            return new List<string> {
+                ButterflyChunks + "=" + tbChunks.Value,
+                ButterflyPalette + "=" + cbColors.SelectedItem,
+                ButterflySkip + "=" + (tbSkip.Value),
+                ButterflyStyle + "=" + (tbStyle.Value)
+            };
         }
 
         private void Setup(IList<string> settings) {

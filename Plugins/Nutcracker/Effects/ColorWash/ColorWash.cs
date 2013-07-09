@@ -42,7 +42,11 @@ namespace ColorWash {
         }
 
         private List<string> GetCurrentSettings() {
-            return new List<string>();
+            return new List<string> {
+                ColorwashCount + "=" + tbCount.Value,
+                ColorwashHorzFade + "=" + (chkBoxHFade.Checked ? "1" : "0"),
+                ColorwashVertFade + "=" + (chkBoxVFade.Checked ? "1" : "0")
+            };
         }
 
         private void Setup(IList<string> settings) {

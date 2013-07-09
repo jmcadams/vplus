@@ -48,7 +48,12 @@ namespace Meteors {
         }
 
         private List<string> GetCurrentSettings() {
-            return new List<string>();
+            return new List<string> {
+                MeteorsCount + "=" + tbCount.Value,
+                MeteorsFallUp + "=" + (chkBoxUp.Checked ? "1" : "0"),
+                MeteorsLength + "=" + tbTrailLength.Value,
+                MeteorsType + "=" + cbType.SelectedItem
+            };
         }
 
         private void Setup(IList<string> settings) {

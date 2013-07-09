@@ -46,7 +46,14 @@ namespace Spirals {
         }
 
         private List<string> GetCurrentSettings() {
-            return new List<string>();
+            return new List<string> {
+                Spirals3D + "=" + (chkBox3D.Checked ? "1" : "0"),
+                SpiralsBlend+ "=" + (chkBoxBlend.Checked ? "1" : "0"),
+                SpiralsCount+ "=" + tbPaletteRepeat.Value,
+                SpiralsDirection+ "=" + tbDirection.Value,
+                SpiralsRotation+ "=" + tbRotations.Value,
+                SpiralsThickness + "=" + tbThickness.Value
+            };
         }
 
         private void Setup(IList<string> settings) {

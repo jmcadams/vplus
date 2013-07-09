@@ -47,7 +47,12 @@ namespace Bars {
         }
 
         private List<string> GetCurrentSettings() {
-            return new List<string>();
+          return new List<string> {
+                BarCount + "=" + tbRepeat.Value,
+                BarDirection + "=" + cbDirection.SelectedIndex,
+                BarHighlight + "=" + (cbHighlight.Checked ? "1" : "0"),
+                Bar3D + "=" + (cb3D.Checked ? "1" : "0")
+            };
         }
 
         private void Setup(IList<string> settings) {

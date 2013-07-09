@@ -12,6 +12,7 @@ namespace Tree {
     public partial class Tree : UserControl, INutcrackerEffect {
 
         private const string TreeBrachCount = "ID_SLIDER_Tree{0}_Branches";
+        private const string TreeGarlandCount = "ID_SLIDER_Tree{0}_Garlands";
 
         public Tree() {
             InitializeComponent();
@@ -41,15 +42,25 @@ namespace Tree {
         }
 
         private List<string> GetCurrentSettings() {
-            return new List<string>();
+            return new List<string> {
+                TreeBrachCount + "=" + tbBranchCount.Value,
+                TreeGarlandCount + "=" + tbGralands.Value
+            };
         }
 
         private void Setup(IList<string> settings) {
             var effectNum = settings[0];
             var treeBrachCount = string.Format(TreeBrachCount, effectNum);
+            var treeGralandCount = string.Format(TreeGarlandCount, effectNum);
 
-            foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' })).Where(keyValue => keyValue[0].Equals(treeBrachCount))) {
-                tbBranchCount.Value = Utils.GetParsedValue(keyValue[1]);
+            foreach (var keyValue in settings.Select(s => s.Split(new[] {'='}))) {
+
+                if (keyValue[0].Equals(treeBrachCount)) {
+                    tbBranchCount.Value = Utils.GetParsedValue(keyValue[1]);
+                }
+                else if (keyValue[0].Equals(treeGralandCount)) {
+                    tbGralands.Value = Utils.GetParsedValue(keyValue[1]);
+                }
             }
         }
 

@@ -42,7 +42,11 @@ namespace Twinkle {
         }
 
         private List<string> GetCurrentSettings() {
-            return new List<string>();
+            return new List<string> {
+                TwinkleCount + "=" + tbLightCount.Value,
+                TwinkleSteps + "=" + tbSteps.Value,
+                TwinkleStrobe + "=" + (chkBoxStrobe.Checked ? "1" : "0")
+            };
         }
 
         private void Setup(IList<string> settings) {

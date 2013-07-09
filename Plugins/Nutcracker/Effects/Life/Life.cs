@@ -43,7 +43,10 @@ namespace Life {
         }
 
         private List<string> GetCurrentSettings() {
-            return new List<string>();
+            return new List<string> {
+                LifeCount + "=" + tbCellsToStart.Value,
+                LifeSeed + "=" + tbType.Value
+            };
         }
 
         private void Setup(IList<string> settings) {
