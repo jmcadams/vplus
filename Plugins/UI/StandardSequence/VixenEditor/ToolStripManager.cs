@@ -6,6 +6,8 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 
+using CommonUtils;
+
 using Properties;
 
 using VixenPlus;
@@ -34,7 +36,7 @@ namespace VixenEditor {
 
 
         private static void ResizeBackgroundImages() {
-            _onBackground = CommonUtils.Utils.ResizeImage(Resources.Ball_Green, _iconSize);
+            _onBackground = Resources.Ball_Green.ResizeImage(_iconSize);
         }
 
 

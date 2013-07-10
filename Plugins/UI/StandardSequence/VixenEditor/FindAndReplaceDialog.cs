@@ -13,8 +13,8 @@ namespace VixenEditor {
         public FindAndReplaceDialog(byte minimum, byte maximum, bool actualLevels, string whereToSearch) {
             InitializeComponent();
             lblHeading.Text = Resources.Replace_selected_values_in_the_ + whereToSearch + @".";
-            udFind.Minimum = udReplace.Minimum = actualLevels ? minimum : Utils.ToPercentage(minimum);
-            udFind.Maximum = udReplace.Maximum = actualLevels ? maximum : Utils.ToPercentage(maximum);
+            udFind.Minimum = udReplace.Minimum = actualLevels ? minimum : minimum.ToPercentage();
+            udFind.Maximum = udReplace.Maximum = actualLevels ? maximum : maximum.ToPercentage();
         }
 
 

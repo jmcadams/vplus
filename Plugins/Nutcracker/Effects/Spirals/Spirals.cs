@@ -73,16 +73,16 @@ namespace Spirals {
                     chkBoxBlend.Checked = keyValue[1].Equals("1");
                 }
                 else if (keyValue[0].Equals(spiralsCount)) {
-                    tbPaletteRepeat.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbPaletteRepeat.Value = keyValue[1].ToInt();
                 }
                 else if (keyValue[0].Equals(spiralsDirection)) {
-                    tbDirection.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbDirection.Value = keyValue[1].ToInt();
                 }
                 else if (keyValue[0].Equals(spiralsRotation)) {
-                    tbRotations.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbRotations.Value = keyValue[1].ToInt();
                 }
                 else if (keyValue[0].Equals(spiralsThickness)) {
-                    tbThickness.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbThickness.Value = keyValue[1].ToInt();
                 }
             }
         }
@@ -108,12 +108,12 @@ namespace Spirals {
                             column += bufferWidth;
                         }
                         if (chkBoxBlend.Checked) {
-                            color = HSVUtils.GetMultiColorBlend((bufferHeight - row - 1) / (double)bufferHeight, false, palette);
+                            color = palette.GetMultiColorBlend((bufferHeight - row - 1) / (double)bufferHeight, false);
                         }
                         if (chkBox3D.Checked) {
-                            var hsv = HSVUtils.ColorToHSV(color);
+                            var hsv = color.ToHSV();
                             hsv.Value = (float)((double)(tbRotations.Value < 0 ? thickness + 1 : spiralThickness - thickness) / spiralThickness);
-                            color = HSVUtils.HSVtoColor(hsv);
+                            color = hsv.ToColor();
                         }
                         buffer[row, column] = color;
                     }

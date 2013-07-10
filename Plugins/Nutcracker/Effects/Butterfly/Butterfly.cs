@@ -64,7 +64,7 @@ namespace Butterfly {
 
             foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
                 if (keyValue[0].Equals(butterflyChunks)) {
-                    tbChunks.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbChunks.Value = keyValue[1].ToInt();
                 }
                 else if (keyValue[0].Equals(butterflyPalette)) {
                     var index = cbColors.Items.IndexOf(keyValue[1]);
@@ -73,10 +73,10 @@ namespace Butterfly {
                     }
                 }
                 else if (keyValue[0].Equals(butterflySkip)) {
-                    tbSkip.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbSkip.Value = keyValue[1].ToInt();
                 }
                 else if (keyValue[0].Equals(butterflyStyle)) {
-                    tbStyle.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbStyle.Value = keyValue[1].ToInt();
                 }
             }
         }
@@ -86,7 +86,7 @@ namespace Butterfly {
             var h = 0.0;
             var bufferHeight = buffer.GetLength(Utils.IndexRowsOrHeight);
             var bufferWidth = buffer.GetLength(Utils.IndexColsOrWidth);
-            var hsv = new HSVUtils();
+            var hsv = new HSV();
             var maxframe = bufferHeight*2;
             var frame = (int) ((bufferHeight*(double) eventToRender/200.0)%maxframe);
             var offset = eventToRender/100.0;
@@ -128,10 +128,10 @@ namespace Butterfly {
                     Color color;
                     if (cbColors.SelectedIndex == 0) {
                         hsv.Hue = (float) h;
-                        color = HSVUtils.HSVtoColor(hsv);
+                        color = hsv.ToColor();
                     }
                     else {
-                        color = HSVUtils.GetMultiColorBlend(h, false, palette);
+                        color = palette.GetMultiColorBlend(h, false);
                     }
 
                     buffer[row, col] = color;

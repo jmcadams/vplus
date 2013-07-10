@@ -260,7 +260,7 @@ namespace VixenPlus {
                         rc.X = _curvePoints[_selectedPointRelative - 1, 0] - ((int) _halfPointSize);
                         selectedPointRelative = _selectedPointRelative - 1;
                     }
-                    if (Utils.IsNearlyEqual(_selectedPointAbsolute, (_availableValues - 1f))) {
+                    if (((float)_selectedPointAbsolute).IsNearlyEqual((_availableValues - 1f))) {
                         rc.Width = (_curvePoints[_selectedPointRelative, 0] + ((int) _halfPointSize)) - rc.X;
                         num3 = _selectedPointRelative;
                     }

@@ -56,10 +56,10 @@ namespace Life {
 
             foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
                 if (keyValue[0].Equals(lifeCount)) {
-                    tbCellsToStart.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbCellsToStart.Value = keyValue[1].ToInt();
                 }
                 else if (keyValue[0].Equals(lifeSeed)) {
-                    tbType.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbType.Value = keyValue[1].ToInt();
                 }
             }
         }
@@ -161,7 +161,7 @@ namespace Life {
 
 
         private Color GetMultiColor(Color[] palette) {
-            return HSVUtils.GetMultiColorBlend(_random.Next(100) / 100.0, false, palette);
+            return palette.GetMultiColorBlend(_random.Next(100) / 100.0, false);
         }
 
 

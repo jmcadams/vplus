@@ -22,7 +22,7 @@ namespace VixenEditor.VixenPlus {
 
 
         public override string ToString() {
-            var formattedTime = Utils.TimeFormatWithMills(ColumnOffset * _eventPeriod);
+            var formattedTime = (ColumnOffset * _eventPeriod).FormatFull();
             var columns = Data.GetLength(Utils.IndexColsOrWidth);
             var rows = Data.GetLength(Utils.IndexRowsOrHeight);
 

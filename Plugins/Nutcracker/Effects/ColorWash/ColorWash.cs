@@ -57,7 +57,7 @@ namespace ColorWash {
 
             foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
                 if (keyValue[0].Equals(colorwashCount)) {
-                    tbCount.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbCount.Value = keyValue[1].ToInt();
                 }
                 else if (keyValue[0].Equals(colorwashHorzFade)) {
                     chkBoxHFade.Checked = keyValue[1].Equals("1");
@@ -75,16 +75,16 @@ namespace ColorWash {
             var bufferWidth = buffer.GetLength(Utils.IndexColsOrWidth);
 
             Color color;
-            var hsv2 = new HSVUtils();
+            var hsv2 = new HSV();
             var colorcnt = palette.Length;
             var cycleLen = colorcnt * speedFactor;
             var count = tbCount.Value;
             if (eventToRender > (colorcnt - 1) * speedFactor * count && count < 10) {
-                color = HSVUtils.GetMultiColorBlend(count % 2, false, palette);
+                color = palette.GetMultiColorBlend(count % 2, false);
             } else {
-                color = HSVUtils.GetMultiColorBlend(eventToRender % cycleLen / (double)cycleLen, true, palette);
+                color = palette.GetMultiColorBlend(eventToRender % cycleLen / (double)cycleLen, true);
             }
-            var hsv = HSVUtils.ColorToHSV(color);
+            var hsv = color.ToHSV();
             var halfHeight = (bufferHeight - 1) / 2.0;
             var halfWidth = (bufferWidth - 1) / 2.0;
             for (var col = 0; col < bufferWidth; col++) {
@@ -92,7 +92,7 @@ namespace ColorWash {
                     hsv2.SetToHSV(hsv);
                     if (chkBoxHFade.Checked) hsv2.Value *= (float)(1.0 - Math.Abs(halfWidth - col) / halfWidth);
                     if (chkBoxVFade.Checked) hsv2.Value *= (float)(1.0 - Math.Abs(halfHeight - row) / halfHeight);
-                    buffer[row, col] = HSVUtils.HSVtoColor(hsv2);
+                    buffer[row, col] = hsv2.ToColor();
                 }
             }
             return buffer;

@@ -54,10 +54,10 @@ namespace Garlands {
 
             foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
                 if (keyValue[0].Equals(garlandsSpacing)) {
-                    tbSpacing.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbSpacing.Value = keyValue[1].ToInt();
                 }
                 else if (keyValue[0].Equals(garlandsType)) {
-                    tbGarlandType.Value = Utils.GetParsedValue(keyValue[1]) + 1;
+                    tbGarlandType.Value = keyValue[1].ToInt() + 1;
                 }
             }
         }
@@ -71,7 +71,7 @@ namespace Garlands {
             var garlandsState = (limit - (eventToRender % limit)) / 4;
             for (var ring = 0; ring < rows; ring++) {
                 var ratio = ring / (double) rows;
-                var color = HSVUtils.GetMultiColorBlend(ratio, false, palette);
+                var color = palette.GetMultiColorBlend(ratio, false);
                 var intialRow = garlandsState - ring * pixelSpacing;
                 for (var column = 0; column < columns; column++) {
                     var row = intialRow;

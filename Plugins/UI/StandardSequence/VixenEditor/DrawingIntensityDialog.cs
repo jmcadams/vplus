@@ -19,9 +19,9 @@ namespace VixenEditor {
                 udLevel.Value = currentLevel;
             }
             else {
-                udLevel.Minimum = Utils.ToPercentage(sequence.MinimumLevel);
-                udLevel.Maximum = Utils.ToPercentage(sequence.MaximumLevel);
-                udLevel.Value = Utils.ToPercentage(currentLevel);
+                udLevel.Minimum = sequence.MinimumLevel.ToPercentage();
+                udLevel.Maximum = sequence.MaximumLevel.ToPercentage();
+                udLevel.Value = currentLevel.ToPercentage();
             }
 
             lblInfo.Text = string.Format("Current Settings:\nIntensity: {0}{3}\nMinimum Allowed: {1}{3}\nMaximum Allowed: {2}{3}",
@@ -35,7 +35,7 @@ namespace VixenEditor {
 
 
         public byte SelectedIntensity {
-            get { return (byte)(_actualLevels ? udLevel.Value : Utils.ToPercentage((int)udLevel.Value)); }
+            get { return (byte)(_actualLevels ? udLevel.Value : ((int)udLevel.Value).ToPercentage()); }
         }
     }
 }

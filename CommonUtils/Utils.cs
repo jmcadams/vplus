@@ -21,19 +21,19 @@ namespace CommonUtils {
 
 
         // see: http://en.wikipedia.org/wiki/YIQ
-        public static Brush GetTextColor(Color backgroundColor) {
+        public static Brush GetTextColor(this Color backgroundColor) {
             return ((backgroundColor.R * 299) + (backgroundColor.G * 587) + (backgroundColor.B * 114)) / 1000 >= 128 ? Brushes.Black : Brushes.White;
         }
 
 
-        public static Color GetForeColor(Color backgroundColor) {
+        public static Color GetForeColor(this Color backgroundColor) {
             return ((backgroundColor.R * 299) + (backgroundColor.G * 587) + (backgroundColor.B * 114)) / 1000 >= 128 ? Color.Black : Color.White;
         }
 
-        public static int GetParsedValue(string value) {
+        public static int ToInt(this string value) {
             int result;
 
-            if (!int.TryParse(value, out result)) {
+            if (!Int32.TryParse(value, out result)) {
                 result = 0;
             }
 
@@ -41,38 +41,42 @@ namespace CommonUtils {
         }
 
 
-        public static string TimeFormatMillsOnly(int mills) {
+        public static string FormatMillsOnly(this int mills) {
             return String.Format(":{0:d2}", mills / MillsPerSecond);
         }
 
 
-        public static string TimeFormatWithoutMills(int mills, bool suppressLeadingZero = false) {
+        public static string FormatNoMills(this int mills, bool suppressLeadingZero = false) {
             return String.Format(suppressLeadingZero ? "{0:d}:{1:d2}" : "{0:d2}:{1:d2}", mills / MillsPerMinute,
                                  (mills % MillsPerMinute) / MillsPerSecond);
         }
 
 
-        public static string TimeFormatWithMills(int mills) {
+        public static string FormatFull(this int mills) {
             return String.Format("{0:d2}:{1:d2}.{2:d3}", mills / MillsPerMinute, (mills % MillsPerMinute) / MillsPerSecond, mills % MillsPerSecond);
         }
 
 
-        public static int ToPercentage(int value) {
-            return (int) Math.Round(value * 100f / Cell8BitMax, MidpointRounding.AwayFromZero);
+        public static int ToPercentage(this int value) {
+            return (int)Math.Round(value * 100f / Cell8BitMax, MidpointRounding.AwayFromZero);
+        }
+
+        public static int ToPercentage(this byte value) {
+            return (int)Math.Round(value * 100f / Cell8BitMax, MidpointRounding.AwayFromZero);
         }
 
 
-        public static int ToValue(int percentage) {
+        public static int ToValue(this int percentage) {
             return (int) Math.Round(percentage / 100f * Cell8BitMax, MidpointRounding.AwayFromZero);
         }
 
 
-        public static int ToValue(float percentage) {
+        public static int ToValue(this float percentage) {
             return (int) Math.Round(percentage / 100f * Cell8BitMax, MidpointRounding.AwayFromZero);
         }
 
 
-        public static Bitmap ResizeImage(Image image, int size) {
+        public static Bitmap ResizeImage(this Image image, int size) {
             var result = new Bitmap(size, size);
             result.SetResolution(image.HorizontalResolution, image.VerticalResolution);
 
@@ -87,7 +91,15 @@ namespace CommonUtils {
         }
 
 
-        public static bool IsNearlyEqual(float a, float b) {
+        public static Rectangle NormalizeRect(this Rectangle rect) {
+            return new Rectangle {
+                X = Math.Min(rect.Left, rect.Right), Y = Math.Min(rect.Top, rect.Bottom), Width = Math.Abs(rect.Width) + (rect.Width < 0 ? 1 : 0),
+                Height = Math.Abs(rect.Height) + (rect.Height < 0 ? 1 : 0)
+            };
+        }
+
+
+        public static bool IsNearlyEqual(this float a, float b) {
             const float epsilon = 0.00001f;
             var absA = Math.Abs(a);
             var absB = Math.Abs(b);
@@ -112,13 +124,13 @@ namespace CommonUtils {
 
 
         // For ComboBoxes
-        public static void DrawItem(DrawItemEventArgs e, string name, Color color, bool useCheckmark = false) {
+        public static void DrawItem(this DrawItemEventArgs e, string name, Color color, bool useCheckmark = false) {
             e.DrawBackground();
 
             var selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected || (e.State & DrawItemState.ComboBoxEdit) == DrawItemState.ComboBoxEdit;
             GenericBrush.Color = color;
             e.Graphics.FillRectangle(selected && !useCheckmark ? SystemBrushes.Highlight : GenericBrush, e.Bounds);
-            var contrastingBrush = selected && !useCheckmark ? SystemBrushes.HighlightText : GetTextColor(color);
+            var contrastingBrush = selected && !useCheckmark ? SystemBrushes.HighlightText : color.GetTextColor();
             e.Graphics.DrawString(name, e.Font, contrastingBrush, new RectangleF(e.Bounds.Location, e.Bounds.Size));
             if (selected && useCheckmark) {
                 e.Graphics.DrawString(Checkmark, e.Font, contrastingBrush, e.Bounds.Width - e.Bounds.Height, e.Bounds.Y);
@@ -128,12 +140,12 @@ namespace CommonUtils {
 
 
         // For List Boxes
-        public static void DrawItem(ListBox lb, DrawItemEventArgs e, string text, Color color) {
+        public static void DrawItem(this DrawItemEventArgs e, string text, Color color, ListBox lb) {
             e.DrawBackground();
 
             GenericBrush.Color = color;
             e.Graphics.FillRectangle(GenericBrush, e.Bounds);
-            var contrastingBrush = GetTextColor(color);
+            var contrastingBrush = color.GetTextColor();
             e.Graphics.DrawString(text, e.Font, contrastingBrush, lb.GetItemRectangle(e.Index).Location);
             if ((e.State & DrawItemState.Selected) == DrawItemState.Selected) {
                 e.Graphics.DrawString(Checkmark, e.Font, contrastingBrush, e.Bounds.Width - e.Bounds.Height, e.Bounds.Y);
@@ -144,7 +156,7 @@ namespace CommonUtils {
 
 
         // For TreeViews
-        public static void DrawItem(TreeView treeView, DrawTreeNodeEventArgs e, Color channelColor) {
+        public static void DrawItem(this DrawTreeNodeEventArgs e, Color channelColor, TreeView treeView) {
             if (treeView == null) {
                 e.DrawDefault = true;
                 return;
@@ -154,12 +166,10 @@ namespace CommonUtils {
                 return;
             }
 
-            //System.Diagnostics.Debug.Print("Text: {0}, Left: {1}, Top: {2}", e.Node.Text, e.Bounds.Left, e.Bounds.Top);
-
             var fillRect = new Rectangle(e.Node.Bounds.X, e.Node.Bounds.Y, treeView.Width - e.Node.Bounds.Left, e.Node.Bounds.Height);
             GenericBrush.Color = channelColor;
             e.Graphics.FillRectangle(GenericBrush, fillRect);
-            e.Graphics.DrawString(e.Node.Text, treeView.Font, GetTextColor(channelColor), e.Bounds.Left, e.Bounds.Top);
+            e.Graphics.DrawString(e.Node.Text, treeView.Font, channelColor.GetTextColor(), e.Bounds.Left, e.Bounds.Top);
 
             bool selected;
             var view = treeView as MultiSelectTreeview;
@@ -170,7 +180,7 @@ namespace CommonUtils {
                 selected = (e.State & TreeNodeStates.Selected) != 0;
             }
             if (selected) {
-                e.Graphics.DrawString(Checkmark, treeView.Font, GetTextColor(channelColor), fillRect.Right - 40, e.Bounds.Top);
+                e.Graphics.DrawString(Checkmark, treeView.Font, channelColor.GetTextColor(), fillRect.Right - 40, e.Bounds.Top);
             }
         }
     }

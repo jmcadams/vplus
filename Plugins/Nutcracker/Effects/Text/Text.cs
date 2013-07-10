@@ -103,28 +103,21 @@ namespace Text {
                     }
                 }
                 else if (keyValue[0].Equals(textPosition1)) {
-                    tbTop.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbTop.Value = keyValue[1].ToInt();
                 }
                 else if (keyValue[0].Equals(textRotation1)) {
-                    tbRotation.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbRotation.Value = keyValue[1].ToInt();
                 }
                 else if (keyValue[0].Equals(textLine2)) {
                     txtBoxLine2.Text = keyValue[1];
                 }
                 else if (keyValue[0].Equals(textFont2)) {
-                    //lblFont.Text = keyValue[1];
                 }
                 else if (keyValue[0].Equals(textDirection2)) {
-                    //var index = cbDirection.Items.IndexOf(keyValue[1]);
-                    //if (index >= 0) {
-                    //    cbDirection.SelectedIndex = index;
-                    //}
                 }
                 else if (keyValue[0].Equals(textPosition2)) {
-                    //tbTop.Value = Utils.GetParsedValue(keyValue[1]);
                 }
                 else if (keyValue[0].Equals(textRotation2)) {
-                    //tbRotation.Value = Utils.GetParsedValue(keyValue[1]);
                 }
             }
         }

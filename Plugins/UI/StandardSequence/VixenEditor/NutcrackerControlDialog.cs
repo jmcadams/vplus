@@ -549,9 +549,9 @@ namespace VixenEditor {
 
         private void UpdateSummary() {
             var eventPeriod = _sequence.EventPeriod;
-            var startTime = Utils.TimeFormatWithMills((int) (nudStartEvent.Value * eventPeriod));
-            var elapsedTime = Utils.TimeFormatWithMills((int) (nudEventCount.Value * eventPeriod));
-            var endTime = Utils.TimeFormatWithMills((int) (nudStartEvent.Value + nudEventCount.Value - 1) * eventPeriod);
+            var startTime = ((int) (nudStartEvent.Value * eventPeriod)).FormatFull();
+            var elapsedTime = ((int) (nudEventCount.Value * eventPeriod)).FormatFull();
+            var endTime = ((int) (nudStartEvent.Value + nudEventCount.Value - 1) * eventPeriod).FormatFull();
 
             lblStartEventTime.Text = startTime;
             lblEventCountTime.Text = elapsedTime;

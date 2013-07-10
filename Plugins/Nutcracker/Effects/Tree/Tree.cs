@@ -56,10 +56,10 @@ namespace Tree {
             foreach (var keyValue in settings.Select(s => s.Split(new[] {'='}))) {
 
                 if (keyValue[0].Equals(treeBrachCount)) {
-                    tbBranchCount.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbBranchCount.Value = keyValue[1].ToInt();
                 }
                 else if (keyValue[0].Equals(treeGralandCount)) {
-                    tbGralands.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbGralands.Value = keyValue[1].ToInt();
                 }
             }
         }
@@ -92,7 +92,7 @@ namespace Tree {
                         garlandPixel = 6;
                     }
                     var isOdd = branch % 2 == 1;
-                    var hsv = HSVUtils.ColorToHSV(palette[0]);
+                    var hsv = palette[0].ToHSV();
                     hsv.Value = (float)(1 - (1.0 * pixelsThisBranch / pixelsPerBranch) * 0.70);
 
                     if (thisBranch <= branch && x <= frame &&
@@ -105,7 +105,7 @@ namespace Tree {
                             hsv.Value = 1.0f;
                         }
                     }
-                    buffer[y, x] = HSVUtils.HSVtoColor(hsv);
+                    buffer[y, x] = hsv.ToColor();
                 }
             }
             return buffer;

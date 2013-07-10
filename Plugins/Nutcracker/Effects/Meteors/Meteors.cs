@@ -65,13 +65,13 @@ namespace Meteors {
 
             foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
                 if (keyValue[0].Equals(meteorsCount)) {
-                    tbCount.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbCount.Value = keyValue[1].ToInt();
                 }
                 else if (keyValue[0].Equals(meteorsFallUp)) {
                     chkBoxUp.Checked = keyValue[1].Equals("1");
                 }
                 else if (keyValue[0].Equals(meteorsLength)) {
-                    tbTrailLength.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbTrailLength.Value = keyValue[1].ToInt();
                 }
                 else if (keyValue[0].Equals(meteorsType)) {
                     var index = cbType.Items.IndexOf(keyValue[1]);
@@ -89,7 +89,7 @@ namespace Meteors {
 
             public int X;
             public int Y;
-            public HSVUtils HSV = new HSVUtils();
+            public HSV HSV = new HSV();
 
             public bool HasExpired(int tailLength) {
                 return (Y + tailLength < 0);
@@ -108,9 +108,9 @@ namespace Meteors {
             _lastRenderedEvent = eventToRender;
 
             // create new meteors
-            var hsv = new HSVUtils();
-            var hsv0 = HSVUtils.ColorToHSV(palette[0]);
-            var hsv1 = palette.Length > 1 ? HSVUtils.ColorToHSV(palette[1]) : HSVUtils.ColorToHSV(palette[0]);
+            var hsv = new HSV();
+            var hsv0 = palette[0].ToHSV();
+            var hsv1 = (palette.Length > 1 ? palette[1] : palette[0]).ToHSV();
             var colorcnt = palette.Length;
             var count = bufferWidth * tbCount.Value / 100;
             var tailLength = (bufferHeight < 10) ? tbTrailLength.Value / 10 : bufferHeight * tbTrailLength.Value / 100;
@@ -121,10 +121,10 @@ namespace Meteors {
                 var m = new MeteorClass {X = _random.Next() % bufferWidth, Y = bufferHeight - 1 - (_random.Next() % tailStart)};
                 switch (cbType.SelectedIndex) {
                     case 1:
-                        m.HSV = HSVUtils.SetRangeColor(hsv0, hsv1);
+                        m.HSV = hsv0.CreateRangeTo(hsv1);
                         break;
                     case 2:
-                        m.HSV = HSVUtils.ColorToHSV(palette[_random.Next() % colorcnt]) ;
+                        m.HSV = palette[_random.Next() % colorcnt].ToHSV() ;
                         break;
                 }
                 _meteors.Add(m);
@@ -150,7 +150,7 @@ namespace Meteors {
                         }
                         var y = meteor.Y + (chkBoxUp.Checked ? -ph : ph);
                         if (y >= 0 && y < bufferHeight) {
-                            buffer[y, meteor.X] = HSVUtils.HSVtoColor(hsv);
+                            buffer[y, meteor.X] = hsv.ToColor();
                         }
                     }
                     meteor.Y += (chkBoxUp.Checked ? mspeed : -mspeed);

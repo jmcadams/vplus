@@ -478,7 +478,7 @@ namespace VixenPlus.Dialogs {
 
         private void treeViewProfile_DrawNode(object sender, DrawTreeNodeEventArgs e) {
             var treeView = sender as TreeView;
-            Utils.DrawItem(treeView, e, _contextProfile.Channels[_contextProfile.FullChannels.IndexOf((Channel)e.Node.Tag)].Color);
+            e.DrawItem(_contextProfile.Channels[_contextProfile.FullChannels.IndexOf((Channel)e.Node.Tag)].Color, treeView);
         }
     }
 }

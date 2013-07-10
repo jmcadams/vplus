@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Windows.Forms;
 using Properties;
 using VixenPlus;
+using CommonUtils;
 
 namespace VixenEditor {
 
@@ -70,7 +71,7 @@ namespace VixenEditor {
             e.Graphics.TranslateTransform(2f, -(_panelText.Bottom - 5), MatrixOrder.Append);
             e.Graphics.RotateTransform(-90f, MatrixOrder.Append);
             e.Graphics.TranslateTransform(2f, _panelText.Bottom - 5, MatrixOrder.Append);
-            e.Graphics.DrawString(Text, _panelText.Font, _panelText.Enabled ? CommonUtils.Utils.GetTextColor(_panelText.BackColor) : Brushes.WhiteSmoke, 2f, _panelText.Bottom - 5);
+            e.Graphics.DrawString(Text, _panelText.Font, _panelText.Enabled ? _panelText.BackColor.GetTextColor() : Brushes.WhiteSmoke, 2f, _panelText.Bottom - 5);
             e.Graphics.ResetTransform();
         }
 
@@ -85,7 +86,7 @@ namespace VixenEditor {
         private void SetValue(int value, bool masterEventResponse = false) {
             _trackBar.Value = value;
             _textBox.Text = value.ToString(CultureInfo.InvariantCulture);
-            _label.Text = CommonUtils.Utils.ToPercentage(value) + @"%";
+            _label.Text = value.ToPercentage() + @"%";
             if (!(masterEventResponse && !_cascadeMasterEvents)) {
                 OnValueChanged();
             }

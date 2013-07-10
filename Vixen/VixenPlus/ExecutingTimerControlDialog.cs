@@ -269,7 +269,7 @@ namespace VixenPlus {
 
         private void timerWatchdog_Tick(object sender, EventArgs e) {
             var list = listBoxTimers.Items.Cast<TimerContext>().ToList();
-            foreach (var context in list.Where(context => ((Utils.IsNearlyEqual((float) context.Timer.ObjectLength.TotalMilliseconds, 0.0f) && !context.Stopping) &&
+            foreach (var context in list.Where(context => ((((float) context.Timer.ObjectLength.TotalMilliseconds).IsNearlyEqual(0) && !context.Stopping) &&
                                                            (context.ExecutionInterface.EngineStatus(context.ExecutionContextHandle) != Utils.ExecutionStopped)) &&
                                                           (DateTime.Now > context.EndDateTime))) {
                 StopExecutingTimer(context);

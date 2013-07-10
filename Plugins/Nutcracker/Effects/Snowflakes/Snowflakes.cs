@@ -55,10 +55,10 @@ namespace Snowflakes {
 
             foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
                 if (keyValue[0].Equals(snowflakesCount)) {
-                    tbMaxFlakes.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbMaxFlakes.Value = keyValue[1].ToInt();
                 }
                 else if (keyValue[0].Equals(snowflakesType)) {
-                    tbType.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbType.Value = keyValue[1].ToInt();
                 }
             }
         }

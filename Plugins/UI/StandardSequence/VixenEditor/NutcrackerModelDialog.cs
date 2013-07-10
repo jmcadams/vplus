@@ -76,11 +76,11 @@ namespace VixenEditor {
 
             if (chkBoxUseGroup.Checked) {
                 var indexedItem = _sequence.Groups[cbGroups.Items[e.Index].ToString()];
-                Utils.DrawItem(e, indexedItem.Name, indexedItem.GroupColor, true);
+                e.DrawItem(indexedItem.Name, indexedItem.GroupColor, true);
             }
             else {
                 var indexedItem = _sequence.FullChannels[e.Index];
-                Utils.DrawItem(e, indexedItem.Name, indexedItem.Color, true);
+                e.DrawItem(indexedItem.Name, indexedItem.Color, true);
             }
         }
 

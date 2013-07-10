@@ -68,16 +68,16 @@ namespace Fireworks {
 
             foreach (var keyValue in settings.Select(s => s.Split(new[] {'='}))) {
                 if (keyValue[0].Equals(fireworksCount)) {
-                    tbExplosionCount.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbExplosionCount.Value = keyValue[1].ToInt();
                 }
                 else if (keyValue[0].Equals(fireworksExplosions)) {
-                    tbExplosionParticles.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbExplosionParticles.Value = keyValue[1].ToInt();
                 }
                 else if (keyValue[0].Equals(fireworksFade)) {
-                    tbParticleFade.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbParticleFade.Value = keyValue[1].ToInt();
                 }
                 else if (keyValue[0].Equals(fireworksVelocity)) {
-                    tbParticleVelocity.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbParticleVelocity.Value = keyValue[1].ToInt();
                 }
                 else if (keyValue[0].Equals(fireworksMultiColor)) {
                     cbMutliColor.Checked = keyValue[1].Equals("1");
@@ -179,7 +179,7 @@ namespace Fireworks {
                     // ReSharper restore PossibleNullReferenceException
                     continue;
                 }
-                var hsv = HSVUtils.ColorToHSV(_fireworkBursts[i].FireworkColor);
+                var hsv = _fireworkBursts[i].FireworkColor.ToHSV();
 
                 var v = (float) (((tbParticleFade.Value*10.0) - _fireworkBursts[i].Cycles)/(tbParticleFade.Value*10.0));
                 if (v < 0) {
@@ -190,7 +190,7 @@ namespace Fireworks {
                 var x = (int) _fireworkBursts[i].X;
                 var y = (int) _fireworkBursts[i].Y;
                 if (x >= 0 && x < bufferWidth && y >= 0 && y < bufferHeight) {
-                    buffer[y, x] = HSVUtils.HSVtoColor(hsv);
+                    buffer[y, x] = hsv.ToColor();
                 }
             }
             return buffer;

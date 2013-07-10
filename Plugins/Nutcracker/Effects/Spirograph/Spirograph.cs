@@ -64,13 +64,13 @@ namespace Spirograph {
                     chkBoxAnimate.Checked = keyValue[1].Equals("1");
                 }
                 else if (keyValue[0].Equals(spirographDiameter)) {
-                    tbDistance.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbDistance.Value = keyValue[1].ToInt();
                 }
                 else if (keyValue[0].Equals(spirographInnerR)) {
-                    tbInnerR.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbInnerR.Value = keyValue[1].ToInt();
                 }
                 else if (keyValue[0].Equals(spirographOuterR)) {
-                    tbOuterR.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbOuterR.Value = keyValue[1].ToInt();
                 }
             }
         }

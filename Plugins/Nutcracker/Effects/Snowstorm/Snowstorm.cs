@@ -58,17 +58,17 @@ namespace Snowstorm {
 
             foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
                 if (keyValue[0].Equals(snowstormCount)) {
-                    tbMaxFlakes.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbMaxFlakes.Value = keyValue[1].ToInt();
                 }
                 else if (keyValue[0].Equals(snowstormLength)) {
-                    tbTailLength.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbTailLength.Value = keyValue[1].ToInt();
                 }
             }
         }
 
         private class SnowstormClass {
             public readonly List<Point> Points = new List<Point>();
-            public HSVUtils HSV;
+            public HSV HSV;
             public int Idx, SsDecay;
 
 
@@ -86,8 +86,8 @@ namespace Snowstorm {
         private void InitializeSnowstorm() {
             if (_palette == null) return;
 
-            var hsv0 = HSVUtils.ColorToHSV(_palette[0]);
-            var hsv1 = HSVUtils.ColorToHSV(_palette.Length > 1 ? _palette[1] : _palette[0]);
+            var hsv0 = _palette[0].ToHSV();
+            var hsv1 = (_palette.Length > 1 ? _palette[1] : _palette[0]).ToHSV();
 
             var count = Convert.ToInt32(_bufferWidth * _bufferHeight * tbMaxFlakes.Value / 2000) + 1;
             var tailLength = _bufferWidth * _bufferHeight * tbTailLength.Value / 2000 + 2;
@@ -97,7 +97,7 @@ namespace Snowstorm {
             for (var i = 0; i < count; i++) {
                 var ssItem = new SnowstormClass {Idx = i, SsDecay = 0};
                 ssItem.Points.Clear();
-                ssItem.HSV = HSVUtils.SetRangeColor(hsv0, hsv1);
+                ssItem.HSV = hsv0.CreateRangeTo(hsv1);
                 // start in a random state
                 var r = Rand() % (2 * tailLength);
                 if (r > 0) {
@@ -159,7 +159,7 @@ namespace Snowstorm {
                     if (hsv.Value < 0.0) {
                         hsv.Value = 0.0f;
                     }
-                    buffer[it.Points[pt].Y, it.Points[pt].X] = HSVUtils.HSVtoColor(hsv); // (it.points[pt].X, it.points[pt].Y, hsv);
+                    buffer[it.Points[pt].Y, it.Points[pt].X] = hsv.ToColor();
                 }
                 //cnt++;
             }

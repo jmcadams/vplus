@@ -66,7 +66,7 @@ namespace VixenEditor {
 
 
         private byte LevelFromTrackBar() {
-            return (byte) (_actualLevels ? trackBar.Value : Utils.ToValue(trackBar.Value));
+            return (byte) (_actualLevels ? trackBar.Value : trackBar.Value.ToValue());
         }
 
 
@@ -93,7 +93,7 @@ namespace VixenEditor {
 
         private void trackBar_ValueChanged(object sender, EventArgs e) {
             labelLevel.Text = trackBar.Value.ToString(CultureInfo.InvariantCulture);
-            var level = (byte) (_actualLevels ? trackBar.Value : Utils.ToValue(trackBar.Value));
+            var level = (byte) (_actualLevels ? trackBar.Value : trackBar.Value.ToValue());
             foreach (int channel in listBoxChannels.SelectedIndices) {
                 _channelLevels[_channels[channel].OutputChannel] = level;
             }

@@ -13,8 +13,8 @@ namespace VixenEditor {
         public RampQueryDialog(int minimum, int maximum, bool isDescending, bool actualLevels) {
             InitializeComponent();
             _actualLevels = actualLevels;
-            numericUpDownStart.Minimum = numericUpDownEnd.Minimum = actualLevels ? minimum : Utils.ToPercentage(minimum);
-            numericUpDownStart.Maximum = numericUpDownEnd.Maximum = actualLevels ? maximum : Utils.ToPercentage(maximum);
+            numericUpDownStart.Minimum = numericUpDownEnd.Minimum = actualLevels ? minimum : minimum.ToPercentage();
+            numericUpDownStart.Maximum = numericUpDownEnd.Maximum = actualLevels ? maximum : maximum.ToPercentage();
             numericUpDownStart.Value = isDescending ? numericUpDownEnd.Maximum : numericUpDownEnd.Minimum;
             numericUpDownEnd.Value = isDescending ? numericUpDownEnd.Minimum : numericUpDownEnd.Maximum;
         }
@@ -31,11 +31,11 @@ namespace VixenEditor {
 
 
         public int EndingLevel {
-            get { return (int) (_actualLevels ? numericUpDownEnd.Value : Utils.ToValue((int) numericUpDownEnd.Value)); }
+            get { return (int) (_actualLevels ? numericUpDownEnd.Value : ((int) numericUpDownEnd.Value).ToValue()); }
         }
 
         public int StartingLevel {
-            get { return (int)(_actualLevels ? numericUpDownStart.Value : Utils.ToValue((int)numericUpDownStart.Value)); }
+            get { return (int)(_actualLevels ? numericUpDownStart.Value : ((int)numericUpDownStart.Value).ToValue()); }
         }
     }
 }

@@ -52,7 +52,7 @@ namespace Fire {
             var fireHeight = string.Format(FireHeight, effectNum);
 
             foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' })).Where(keyValue => keyValue[0].Equals(fireHeight))) {
-                tbHeight.Value = Utils.GetParsedValue(keyValue[1]);
+                tbHeight.Value = keyValue[1].ToInt();
             }
         }
 
@@ -62,16 +62,16 @@ namespace Fire {
 
         private void InitFirePalette(float hue) {
             _firePalette = new Color[200];
-            var hsv = new HSVUtils {Hue = hue, Saturation = 1.0f};
+            var hsv = new HSV {Hue = hue, Saturation = 1.0f};
 
             for (var i = 0; i < 100; i++) {
                 hsv.Value = i / 100.0f;
-                _firePalette[i] = HSVUtils.HSVtoColor(hsv);
+                _firePalette[i] = hsv.ToColor();
             }
 
             hsv.Value = 1.0f;
             for (var i = 0; i < 100; i++) {
-                _firePalette[i + 100] = HSVUtils.HSVtoColor(hsv);
+                _firePalette[i + 100] = hsv.ToColor();
                 hsv.Hue = (hsv.Hue + 0.00166666f) % 1f;
             }
         }

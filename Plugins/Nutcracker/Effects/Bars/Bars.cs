@@ -64,7 +64,7 @@ namespace Bars {
 
             foreach (var keyValue in settings.Select(s => s.Split(new[] {'='}))) {
                 if (keyValue[0].Equals(barCount)) {
-                    tbRepeat.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbRepeat.Value = keyValue[1].ToInt();
                 }
                 else if (keyValue[0].Equals(barDirection)) {
                     var index = cbDirection.Items.IndexOf(keyValue[1]);
@@ -105,7 +105,7 @@ namespace Bars {
                 }
                 var n = isMovingDown ? row + rowOffset : row - rowOffset + blockHeight;
 
-                var hsv = HSVUtils.ColorToHSV(palette[(n % blockHeight) / barHeight]);
+                var hsv = palette[(n % blockHeight) / barHeight].ToHSV();
                 if (cbHighlight.Checked && (isMovingDown ? n % barHeight == 0 : n % barHeight == barHeight - 1)) {
                     hsv.Saturation = 0f;
                 }
@@ -113,7 +113,7 @@ namespace Bars {
                     hsv.Value *= (float) (isMovingDown ? barHeight - n % barHeight - 1 : n % barHeight) / barHeight;
                 }
                 for (var column = 0; column < bufferWidth; column++) {
-                    buffer[row, column] = HSVUtils.HSVtoColor(hsv);
+                    buffer[row, column] = hsv.ToColor();
                 }
             }
             return buffer;

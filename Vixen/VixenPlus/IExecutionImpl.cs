@@ -119,11 +119,11 @@ namespace VixenPlus {
                 return false;
             }
             if (channelIndex != -1) {
-                context.AsynchronousEngineBuffer[channelIndex] = (byte) Utils.ToValue(percentLevel);
+                context.AsynchronousEngineBuffer[channelIndex] = (byte) percentLevel.ToValue();
             }
             else {
                 for (var i = 0; i < context.AsynchronousEngineBuffer.Length; i++) {
-                    context.AsynchronousEngineBuffer[i] = (byte) Utils.ToValue(percentLevel);
+                    context.AsynchronousEngineBuffer[i] = (byte) percentLevel.ToValue();
                 }
             }
             try {

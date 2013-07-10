@@ -264,8 +264,7 @@ namespace VixenPlus.Dialogs {
             _audioFilename = fileName;
             labelAudioFileName.Text = Path.GetFileName(_audioFilename);
             var audio = new Audio {FileName = labelAudioFileName.Text, Name = _soundChannel.SoundName, Duration = (int) _soundChannel.SoundLength};
-            Utils.TimeFormatWithMills(audio.Duration);
-            labelAudioLength.Text = Utils.TimeFormatWithMills(audio.Duration);
+            labelAudioLength.Text = audio.Duration.FormatFull();
             labelAudioName.Text = string.Format("\"{0}\"", audio.Name);
             UpdateAudioButtons();
             return audio;
@@ -315,7 +314,7 @@ namespace VixenPlus.Dialogs {
                         }
                     }
                     MethodInvoker invoker = delegate {
-                        labelTime.Text = Utils.TimeFormatWithMills((int) position);
+                        labelTime.Text = ((int) position).FormatFull();
                         trackBarPosition.Value = (int) ((position) / _smallChange);
                     };
                     BeginInvoke(invoker);
@@ -351,8 +350,8 @@ namespace VixenPlus.Dialogs {
 
 
         private void trackBarPosition_Scroll(object sender, EventArgs e) {
-            var num = (int) (trackBarPosition.Value * _smallChange);
-            labelTime.Text = Utils.TimeFormatWithMills(num);
+            var mills = (int) (trackBarPosition.Value * _smallChange);
+            labelTime.Text = mills.FormatFull();
         }
 
 
@@ -406,11 +405,11 @@ namespace VixenPlus.Dialogs {
                 Invoke((MethodInvoker) delegate { milliseconds = UpdateTotalTime(); });
                 return milliseconds;
             }
-            var num = (_eventSequence.Audio != null)
+            var mills = (_eventSequence.Audio != null)
                           ? (checkBoxAutoSize.Checked ? _eventSequence.Audio.Duration : Math.Max(_eventSequence.Time, _eventSequence.Audio.Duration))
                           : _eventSequence.Time;
-            labelTotalTime.Text = Utils.TimeFormatWithMills(num);
-            return num;
+            labelTotalTime.Text = mills.FormatFull();
+            return mills;
         }
 
 

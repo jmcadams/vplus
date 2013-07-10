@@ -96,19 +96,19 @@ namespace NutcrackerEffectsControl {
             foreach (var s in setupData) {
                 var keyValue = s.Split(new[] {'='});
                 if (s.StartsWith(chkBoxPrefix)) {
-                    var index = Utils.GetParsedValue(keyValue[0].Substring(keyValue[0].Length - 1, 1)) - 1;
+                    var index = keyValue[0].Substring(keyValue[0].Length - 1, 1).ToInt() - 1;
                     if (index >= 0) {
                         paletteChecked[index] = keyValue[1].Equals("1");
                     }
                 }
                 else if (s.StartsWith(colorPrefix)) {
-                    var index = Utils.GetParsedValue(keyValue[0].Substring(keyValue[0].Length - 1, 1)) - 1;
+                    var index = keyValue[0].Substring(keyValue[0].Length - 1, 1).ToInt() - 1;
                     if (index >= 0) {
                         paletteColor[index] = ColorTranslator.FromHtml(keyValue[1]);
                     }
                 }
                 else if (s.StartsWith(speedPrefix)) {
-                    tbSpeed.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbSpeed.Value = keyValue[1].ToInt();
                 }
             }
 
@@ -226,17 +226,17 @@ namespace NutcrackerEffectsControl {
 
         public void SetPalette(Color[] colors) {
             palette1.BackColor = colors[0];
-            palette1.ForeColor = Utils.GetForeColor(colors[0]);
+            palette1.ForeColor = colors[0].GetForeColor();
             palette2.BackColor = colors[1];
-            palette2.ForeColor = Utils.GetForeColor(colors[1]);
+            palette2.ForeColor = colors[1].GetForeColor();
             palette3.BackColor = colors[2];
-            palette3.ForeColor = Utils.GetForeColor(colors[2]);
+            palette3.ForeColor = colors[2].GetForeColor();
             palette4.BackColor = colors[3];
-            palette4.ForeColor = Utils.GetForeColor(colors[3]);
+            palette4.ForeColor = colors[3].GetForeColor();
             palette5.BackColor = colors[4];
-            palette5.ForeColor = Utils.GetForeColor(colors[4]);
+            palette5.ForeColor = colors[4].GetForeColor();
             palette6.BackColor = colors[5];
-            palette6.ForeColor = Utils.GetForeColor(colors[5]);
+            palette6.ForeColor = colors[5].GetForeColor();
             OnControlChanged(null, null);
         }
 

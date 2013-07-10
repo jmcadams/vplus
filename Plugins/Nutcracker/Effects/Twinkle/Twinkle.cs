@@ -57,10 +57,10 @@ namespace Twinkle {
 
             foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
                 if (keyValue[0].Equals(twinkleCount)) {
-                    tbLightCount.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbLightCount.Value = keyValue[1].ToInt();
                 }
                 else if (keyValue[0].Equals(twinkleSteps)) {
-                    tbSteps.Value = Utils.GetParsedValue(keyValue[1]);
+                    tbSteps.Value = keyValue[1].ToInt();
                 }
                 else if (keyValue[0].Equals(twinkleStrobe)) {
                     chkBoxStrobe.Checked = keyValue[1].Equals("1");
@@ -84,14 +84,14 @@ namespace Twinkle {
                         continue;
                     }
 
-                    var hsv = HSVUtils.ColorToHSV(palette[random.Next() % palette.Length]);
+                    var hsv = palette[random.Next() % palette.Length].ToHSV();
 
                     var randomStep = (eventToRender + random.Next()) % steps;
 
                     hsv.Value = chkBoxStrobe.Checked ? ((randomStep == (int)(stepsHalf + 0.5f)) ? 1.0f : 0.0f) :
                         Math.Max(0.0f, ((randomStep <= stepsHalf ? randomStep : steps - randomStep) / stepsHalf));
 
-                    buffer[y, x] = HSVUtils.HSVtoColor(hsv);
+                    buffer[y, x] = hsv.ToColor();
                 }
             }
             return buffer;

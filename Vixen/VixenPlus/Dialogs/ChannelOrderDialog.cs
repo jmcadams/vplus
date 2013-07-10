@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using CommonUtils;
 
 namespace VixenPlus.Dialogs {
     public partial class ChannelOrderDialog : Form {
@@ -221,7 +222,7 @@ namespace VixenPlus.Dialogs {
                 e.Graphics.DrawRectangle(boarderPen, rect);
                 e.Graphics.DrawString(
                     _showNaturalNumber ? string.Format("{0}: {1}", _channelNaturalOrder.IndexOf(channel) + 1, channel.Name) : channel.Name, font,
-                    CommonUtils.Utils.GetTextColor(backgroundBrush.Color), 15f, (rect.Top + 5));
+                    backgroundBrush.Color.GetTextColor(), 15f, (rect.Top + 5));
                 rect.Y += RowHeight;
             }
 

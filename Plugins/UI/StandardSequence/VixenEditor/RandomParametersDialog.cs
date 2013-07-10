@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
+using CommonUtils;
 
 namespace VixenEditor {
 
@@ -17,8 +18,8 @@ namespace VixenEditor {
             _actualLevels = actualLevels;
             _isGradient = isGradient;
             lblPctMin.Visible = lblPctMax.Visible = !actualLevels;
-            udMin.Minimum = udMax.Minimum = actualLevels ? minLevel : CommonUtils.Utils.ToPercentage(minLevel);
-            udMin.Maximum = udMax.Maximum = actualLevels ? maxLevel : CommonUtils.Utils.ToPercentage(maxLevel);
+            udMin.Minimum = udMax.Minimum = actualLevels ? minLevel : minLevel.ToPercentage();
+            udMin.Maximum = udMax.Maximum = actualLevels ? maxLevel : maxLevel.ToPercentage();
             udMax.Value = udMax.Maximum;
             checkBoxUseSaturation_CheckedChanged(null, null);
             checkBoxIntensityLevel_CheckedChanged(null, null);
@@ -31,11 +32,11 @@ namespace VixenEditor {
 
 
         private int IntensityMax {
-            get { return (int) (_actualLevels ? udMax.Value : CommonUtils.Utils.ToValue((int) udMax.Value)); }
+            get { return (int) (_actualLevels ? udMax.Value : ((int) udMax.Value).ToValue()); }
         }
 
         private int IntensityMin {
-            get { return (int) (_actualLevels ? udMin.Value : CommonUtils.Utils.ToValue((int) udMin.Value)); }
+            get { return (int) (_actualLevels ? udMin.Value : ((int) udMin.Value).ToValue()); }
         }
 
         private int PeriodLength {

@@ -125,7 +125,7 @@ namespace VixenEditor {
 
         private void tvGroups_DrawNode(object sender, DrawTreeNodeEventArgs e) {
             var treeView = sender as MultiSelectTreeview;
-            Utils.DrawItem(treeView, e, ((GroupTagData)e.Node.Tag).NodeColor);
+            e.DrawItem(((GroupTagData)e.Node.Tag).NodeColor, treeView);
         }
 
 

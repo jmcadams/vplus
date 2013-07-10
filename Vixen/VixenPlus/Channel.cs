@@ -156,12 +156,12 @@ namespace VixenPlus {
 
 
         public static void DrawItem(ListBox lb, DrawItemEventArgs e, Channel channel) {
-            Utils.DrawItem(lb, e, channel.Name, channel.Color);
+            e.DrawItem(channel.Name, channel.Color, lb);
         }
 
 
         public static void DrawItem(DrawItemEventArgs e, Channel c, bool useCheckmark = false) {
-            Utils.DrawItem(e, c.Name, c.Color, useCheckmark);
+            e.DrawItem(c.Name, c.Color, useCheckmark);
         }
     }
 }

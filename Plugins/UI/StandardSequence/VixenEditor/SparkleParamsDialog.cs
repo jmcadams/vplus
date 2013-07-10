@@ -49,9 +49,9 @@ namespace VixenEditor {
             _drawTimer.Elapsed += m_drawTimer_Elapsed;
             _drawTimer.Start();
 
-            udMin.Minimum = udMax.Minimum = udMin.Value = actualLevels ? minimum : Utils.ToPercentage(minimum);
-            udMin.Maximum = udMax.Maximum = actualLevels ? maximum : Utils.ToPercentage(maximum);
-            udMax.Value = actualLevels ? _max : Utils.ToPercentage(_max);
+            udMin.Minimum = udMax.Minimum = udMin.Value = actualLevels ? minimum : minimum.ToPercentage();
+            udMin.Maximum = udMax.Maximum = actualLevels ? maximum : maximum.ToPercentage();
+            udMax.Value = actualLevels ? _max : _max.ToPercentage();
 
             lblDecay.Text = trackBarDecay.Value.ToString(CultureInfo.InvariantCulture);
             lblFreq.Text = trackBarFrequency.Value.ToString(CultureInfo.InvariantCulture);
@@ -67,13 +67,13 @@ namespace VixenEditor {
 
 
         private void numericUpDownMax_ValueChanged(object sender, EventArgs e) {
-            _max = (int) (_actualLevels ? udMax.Value : Utils.ToPercentage((int) udMax.Value));
+            _max = (int) (_actualLevels ? udMax.Value : ((int) udMax.Value).ToPercentage());
             Regenerate();
         }
 
 
         private void numericUpDownMin_ValueChanged(object sender, EventArgs e) {
-            _min = (int) (_actualLevels ? udMin.Value : Utils.ToPercentage((int) udMin.Value));
+            _min = (int) (_actualLevels ? udMin.Value : ((int) udMin.Value).ToPercentage());
             Regenerate();
         }
 

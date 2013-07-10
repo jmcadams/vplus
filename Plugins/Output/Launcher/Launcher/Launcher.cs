@@ -84,7 +84,7 @@ namespace Launcher {
                 if (programNode.Attributes == null) {
                     continue;
                 }
-                var num = (byte) Utils.ToValue(Convert.ToSingle(programNode.Attributes["trigger"].Value));
+                var num = (byte) Convert.ToSingle(programNode.Attributes["trigger"].Value).ToValue();
                 if (File.Exists(programNode.InnerText)) {
                     _targets[num] = new[] {programNode.InnerText, programNode.Attributes["params"].Value};
                 }

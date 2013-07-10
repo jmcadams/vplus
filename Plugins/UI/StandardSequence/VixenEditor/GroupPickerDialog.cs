@@ -37,7 +37,7 @@ namespace VixenEditor {
                 return;
             }
             var item = _nodes[e.Index];
-            Utils.DrawItem(lb, e, item.Name, ((GroupTagData)item.Tag).NodeColor);
+            e.DrawItem(item.Name, ((GroupTagData)item.Tag).NodeColor, lb);
         }
     }
 }

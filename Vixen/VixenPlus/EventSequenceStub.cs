@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 
+using CommonUtils;
+
 namespace VixenPlus {
     internal class EventSequenceStub : IDisposable {
         private int _length;
@@ -58,7 +60,7 @@ namespace VixenPlus {
             get { return _length; }
             set {
                 _length = value;
-                LengthString = CommonUtils.Utils.TimeFormatWithoutMills(Length, true);
+                LengthString = Length.FormatNoMills(true);
             }
         }
 

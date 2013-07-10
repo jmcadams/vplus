@@ -71,7 +71,7 @@ namespace Pictures {
                     txtBoxFile.Text = keyValue[1];
                 }
                 else if (keyValue[0].Equals(picturesGifSpeed)) {
-                    tbGifSpeed.Value = Utils.GetParsedValue(keyValue[1]); 
+                    tbGifSpeed.Value = keyValue[1].ToInt(); 
                 }
             }
         }
