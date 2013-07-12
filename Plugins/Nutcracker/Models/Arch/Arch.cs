@@ -74,6 +74,48 @@ namespace Arch {
             }
         }
 
+// Angles are expressed as a number between 0 and 1.  .25 = 90 degrees.
+// If you prefer using degrees, write 90 degrees like so "90/360".
+//function drawArc(centerX, centerY, radius, startAngle, arcAngle, steps){
+    private void DrawArc (int centerX, int centerY, double radius, double startAngle, double arcAngle, int steps){
+        //
+    // For convenience, store the number of radians in a full circle.
+    const double twoPI = 2 * Math.PI;
+    //
+    // To determine the size of the angle between each point on the
+    // arc, divide the overall angle by the total number of points.
+    var angleStep = arcAngle/steps;
+    //
+    // Determine coordinates of first point using basic circle math.
+    var xx = centerX + Math.Cos(startAngle * twoPI) * radius;
+    var yy = centerY + Math.Sin(startAngle * twoPI) * radius;
+    //
+    // Move to the first point.
+    //moveTo(xx, yy);
+    //
+    // Draw a line to each point on the arc.
+    for(var i=1; i<=steps; i++){
+        //
+        // Increment the angle by "angleStep".
+        var angle = startAngle + i * angleStep;
+        //
+        // Determine next point's coordinates using basic circle math.
+        xx = centerX + Math.Cos(angle * twoPI) * radius;
+        yy = centerY + Math.Sin(angle * twoPI) * radius;
+        //
+        // Draw a line to the next point.
+        //lineTo(xx, yy);
+    }
+}
+//
+// Set a line style so we can see what we are drawing.
+// lineStyle(0, 0xFF0000);
+//
+// Draw an arc with a center of (250, 250) and a radius of 200
+// that starts at an angle of 45 degrees then rotates counter-
+// clockwise 90 degrees.  We'll span the arc with 20 evenly spaced points.
+// drawArc(250, 250, 200, 45/360, -90/360, 20);
+//
 
         // Set screen coordinates for arches
         private void SetArchCoord() {
