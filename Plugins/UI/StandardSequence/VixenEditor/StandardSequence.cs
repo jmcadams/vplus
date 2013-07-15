@@ -2823,6 +2823,7 @@ namespace VixenEditor {
                 return;
             }
 
+            //TODO: Manage groups here too. and sort orders
             int channel;
             var flag = false;
             var channelCount = Math.Min(_sequence.ChannelCount, count);
@@ -4869,5 +4870,80 @@ namespace VixenEditor {
                 pictureBoxGrid.Invalidate();
             }
         }
+
+
+        private void textBoxProgramLength_KeyPress(object sender, KeyPressEventArgs e) {
+            if (e.KeyChar != '\r') {
+                return;
+            }
+            e.Handled = true;
+
+            var mins = 0;
+            var secs = 0;
+            var mils = 0;
+
+            var split = textBoxProgramLength.Text.Split(new[] {':'});
+            if (split.Length >= 1) {
+                int.TryParse(split[0], out mins);
+            }
+            if (split.Length == 2) {
+                var splitSecsMils = split[1].Split(new[] {'.'});
+                if (splitSecsMils.Length >= 1) {
+                    int.TryParse(splitSecsMils[0], out secs);
+                }
+                if (splitSecsMils.Length == 2) {
+                    int.TryParse(splitSecsMils[1], out mils);
+                }
+            }
+
+            var programTime = (mils + (secs * 1000)) + (mins * 60000);
+            if (programTime == 0) {
+                MessageBox.Show(Resources.InvalidTimeFormat2, ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else {
+                try {
+                    _sequence.Time = programTime;
+                }
+                catch {
+                    MessageBox.Show(Resources.SetProgramTimeError, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                    textBoxProgramLength.Text = _sequence.Time.FormatFull();
+                    return;
+                }
+                textBoxProgramLength.Text = _sequence.Time.FormatFull();
+                HScrollCheck();
+                pictureBoxTime.Refresh();
+                pictureBoxGrid.Refresh(); 
+
+                IsDirty = true;
+                MessageBox.Show(Resources.SequenceLengthUpdated, ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }
+        }
+
+        private void textBoxChannelCount_KeyPress(object sender, KeyPressEventArgs e) {
+            if (e.KeyChar != '\r') {
+                return;
+            }
+            e.Handled = true;
+            
+            var result = 0;
+            if (int.TryParse(textBoxChannelCount.Text, out result)) {
+                if (result < _sequence.ChannelCount) {
+                    if (MessageBox.Show(Resources.ReduceChannelCount, ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
+                        SetChannelCount(result);
+                    }
+                    else {
+                        textBoxChannelCount.Text = _sequence.ChannelCount.ToString(CultureInfo.InvariantCulture);
+                    }
+                }
+                else if (result > _sequence.ChannelCount) {
+                    SetChannelCount(result);
+                }
+            }
+            else {
+                textBoxChannelCount.Text = _sequence.ChannelCount.ToString(CultureInfo.InvariantCulture);
+                MessageBox.Show(Resources.ValidNumber, ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
     }
 }

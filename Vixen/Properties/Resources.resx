@@ -843,7 +843,7 @@ It was {1} which was below the sequence minimum.</value>
   </data>
   <data name="NewChannelCountPrompt" xml:space="preserve">
     <value>With the new channel count, some channels would refer to outputs that no longer exist.
-To keep the sequence valid, channel outputs would have to be reset.
+To keep the sequence valid, channel outputs will have to be reset.
 
 Do you want to keep the new channel count?</value>
   </data>
@@ -1058,5 +1058,25 @@ This issue was written to {0}, please e-mail this log, your sequence and profile
 {2}
 
 Do you wish to continue?</value>
+  </data>
+    <data name="InvalidTimeFormat2" xml:space="preserve">
+    <value>Not a valid format for time.
+Use one of the following:
+
+Minutes
+Minutes:Seconds
+Minutes:Seconds.Milliseconds</value>
+  </data>
+    <data name="SequenceLengthUpdated" xml:space="preserve">
+    <value>Sequence length has been updated.</value>
+  </data>
+    <data name="ReduceChannelCount" xml:space="preserve">
+    <value>This will reduce the number of channels and potentially lose sequence data.
+Groups will be maintained.
+
+Accept new channel count?</value>
+  </data>
+    <data name="ValidNumber" xml:space="preserve">
+    <value>Please enter a valid number.</value>
   </data>
 </root>

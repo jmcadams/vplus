@@ -435,7 +435,7 @@ namespace VixenEditor{
             this.contextMenuTime = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.clearAllChannelsForThisEventToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.allChannelsToFullIntensityForThisEventToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lblFollowMouse = new CommonControls.TransparentLabel();
+            this.lblFollowMouse = new CommonControls.TransparentLabel(this.components);
             this.pictureBoxGrid = new VixenEditor.SelectablePictureBox();
             this.contextMenuGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.onToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -2907,7 +2907,7 @@ namespace VixenEditor{
             this.textBoxProgramLength});
             this.toolStripText.Location = new System.Drawing.Point(3, 271);
             this.toolStripText.Name = "toolStripText";
-            this.toolStripText.Size = new System.Drawing.Size(942, 25);
+            this.toolStripText.Size = new System.Drawing.Size(973, 25);
             this.toolStripText.TabIndex = 7;
             this.toolStripText.Text = "Text";
             // 
@@ -2991,6 +2991,7 @@ namespace VixenEditor{
             this.textBoxChannelCount.Name = "textBoxChannelCount";
             this.textBoxChannelCount.Size = new System.Drawing.Size(40, 25);
             this.textBoxChannelCount.Text = "0";
+            this.textBoxChannelCount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxChannelCount_KeyPress);
             // 
             // toolStripSeparator12
             // 
@@ -3008,6 +3009,7 @@ namespace VixenEditor{
             this.textBoxProgramLength.Name = "textBoxProgramLength";
             this.textBoxProgramLength.Size = new System.Drawing.Size(75, 25);
             this.textBoxProgramLength.Text = "00:00";
+            this.textBoxProgramLength.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxProgramLength_KeyPress);
             // 
             // saveFileDialog
             // 
