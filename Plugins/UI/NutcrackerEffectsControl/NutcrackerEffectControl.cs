@@ -64,7 +64,7 @@ namespace NutcrackerEffectsControl {
         public void SetEffect(string effectName, List<string> setupData, bool isFirst) {
             setupData.Insert(0, isFirst ? "1" : "2");
 
-            ExtractAndSetPalette(setupData);
+            SetPaletteAndSpeed(setupData);
 
             var newEffectItem = cbEffects.Items.IndexOf(effectName);
             if (newEffectItem >= 0) {
@@ -78,7 +78,7 @@ namespace NutcrackerEffectsControl {
         }
 
 
-        private void ExtractAndSetPalette(IList<string> setupData) {
+        private void SetPaletteAndSpeed(IList<string> setupData) {
             var panelNum = setupData[0];
             
             var chkBoxPrefix = "ID_CHECKBOX_Palette" + panelNum;
@@ -88,10 +88,6 @@ namespace NutcrackerEffectsControl {
             var paletteColor = new Color[6];
 
             var speedPrefix = "ID_SLIDER_Speed" + panelNum;
-            //for (var i = 0; i < 6; i++) {
-            //    paletteChecked[i] = false;
-            //    paletteColor[i] = Color.Black;
-            //}
 
             foreach (var s in setupData) {
                 var keyValue = s.Split(new[] {'='});
