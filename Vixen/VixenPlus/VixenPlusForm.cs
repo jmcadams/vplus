@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -320,30 +321,30 @@ namespace VixenPlus {
 
         //TODO Redo this whole scheme
         private static void CheckForUpdates() {
-            var updateServerURI = Vendor.UpdateURL + Vendor.UpdateFile;
-            var version = Assembly.GetExecutingAssembly().GetName().Version;
-            var updateRootPath = string.Format("{0}/{1}.{2}", Vendor.UpdateFile, version.Major, version.Minor);
-            var path = Path.Combine(Paths.DataPath, "target.update");
-            if (File.Exists(path)) {
-                using (var reader = new StreamReader(path)) {
-                    string updateLine;
-                    while ((updateLine = reader.ReadLine()) != null) {
-                        var strArray = updateLine.Split(new[] {'='});
-                        var parameter = strArray[0];
-                        if (parameter == null) {
-                            continue;
-                        }
-                        switch (parameter) {
-                            case "server":
-                                updateServerURI = strArray[1].Trim();
-                                break;
-                            case "root":
-                                updateRootPath = strArray[1].Trim();
-                                break;
-                        }
-                    }
-                }
-            }
+            //var updateServerURI = Vendor.UpdateURL + Vendor.UpdateFile;
+            //var version = Assembly.GetExecutingAssembly().GetName().Version;
+            //var updateRootPath = string.Format("{0}/{1}.{2}", Vendor.UpdateFile, version.Major, version.Minor);
+            //var path = Path.Combine(Paths.DataPath, "target.update");
+            //if (File.Exists(path)) {
+            //    using (var reader = new StreamReader(path)) {
+            //        string updateLine;
+            //        while ((updateLine = reader.ReadLine()) != null) {
+            //            var strArray = updateLine.Split(new[] {'='});
+            //            var parameter = strArray[0];
+            //            if (parameter == null) {
+            //                continue;
+            //            }
+            //            switch (parameter) {
+            //                case "server":
+            //                    updateServerURI = strArray[1].Trim();
+            //                    break;
+            //                case "root":
+            //                    updateRootPath = strArray[1].Trim();
+            //                    break;
+            //            }
+            //        }
+            //    }
+            //}
             // TODO: For now we are just skipping updating.
             //new AppUpdate.AppUpdate(updateServerURI, updateRootPath).ExecuteMigration();
         }
