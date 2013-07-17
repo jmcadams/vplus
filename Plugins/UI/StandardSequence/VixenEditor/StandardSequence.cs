@@ -2861,13 +2861,33 @@ namespace VixenEditor {
         }
 
         private void UpdateGroupsMapping(int newCount) {
-            
+            if (_sequence.FullChannelCount <= newCount) return;
+
+            var countDiff = _sequence.FullChannelCount - newCount;
+            var changeList = new List<string>();
+            for (var i = newCount; i < _sequence.FullChannelCount; i++) {
+                var channel = i.ToString(CultureInfo.InvariantCulture);
+                var groupsToUpdates = from g in _sequence.Groups
+                                      where g.Value.GroupChannels.Contains(channel)
+                                      select g.Value.Name + ":" + channel;
+                changeList.AddRange(groupsToUpdates.ToList());
+            }
+            foreach (var s in changeList) {
+                System.Diagnostics.Debug.Print(s);
+            }
+            // have to loop though all groups and remove references to removed channels
+            // should warn if going to do this too.  Maybe this should return a bool so false = cancel
         }
 
 
         private void UpdateSortsMapping(int newCount) {
-            
+            if (_sequence.FullChannelCount <= newCount) return;
+
+            var countDiff = _sequence.FullChannelCount - newCount;
+            // have to loop though all groups and remove references to removed channels
+            // should warn if going to do this too.  Maybe this should return a bool so false = cancel        
         }
+
 
         private void SetDrawingLevel(byte level) {
             _drawingLevel = level;
