@@ -2824,6 +2824,12 @@ namespace VixenEditor {
             }
 
             //TODO: Manage groups here too. and sort orders
+            if (_sequence.Groups != null) {
+                UpdateGroupsMapping(count);
+            }
+            if (_sequence.Sorts.Count() > 1) {
+                UpdateSortsMapping(count);
+            }
             int channel;
             var flag = false;
             var channelCount = Math.Min(_sequence.ChannelCount, count);
@@ -2835,7 +2841,7 @@ namespace VixenEditor {
                 break;
             }
             if (flag) {
-                if (MessageBox.Show(Resources.NewChannelCountPrompt, Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) !=
+                if (MessageBox.Show(Resources.NewChannelCountPrompt, Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) !=
                     DialogResult.Yes) {
                     textBoxChannelCount.Text = _sequence.ChannelCount.ToString(CultureInfo.InvariantCulture);
                     return;
@@ -2854,6 +2860,14 @@ namespace VixenEditor {
             MessageBox.Show(Resources.ChannelCountUpdated, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
+        private void UpdateGroupsMapping(int newCount) {
+            
+        }
+
+
+        private void UpdateSortsMapping(int newCount) {
+            
+        }
 
         private void SetDrawingLevel(byte level) {
             _drawingLevel = level;
