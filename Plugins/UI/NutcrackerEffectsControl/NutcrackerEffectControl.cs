@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using System.Windows.Forms;
 
 using CommonUtils;
@@ -75,6 +76,50 @@ namespace NutcrackerEffectsControl {
             }
 
             setupData.RemoveAt(0);
+        }
+
+        public string GetEffect(bool isFirst) {
+            var effectSettings = new StringBuilder();
+            foreach (var e in _effectCache[cbEffects.SelectedItem.ToString()].Settings) {
+                effectSettings.Append(e.Replace("{0}", isFirst ? "1" : "2")).Append(",");
+            }
+            effectSettings.Remove(effectSettings.Length - 1, 1);
+
+            return effectSettings.ToString();
+        }
+
+
+        public string GetPaletteSettings(bool isFirst) {
+            var colors = new Color[6];
+            colors[0] = palette1.BackColor;
+            colors[1] = palette2.BackColor;
+            colors[2] = palette3.BackColor;
+            colors[3] = palette4.BackColor;
+            colors[4] = palette5.BackColor;
+            colors[5] = palette6.BackColor;
+
+            var checkBox = new bool[6];
+            checkBox[0] = chkBoxPalette1.Checked;
+            checkBox[1] = chkBoxPalette2.Checked;
+            checkBox[2] = chkBoxPalette3.Checked;
+            checkBox[3] = chkBoxPalette4.Checked;
+            checkBox[4] = chkBoxPalette5.Checked;
+            checkBox[5] = chkBoxPalette6.Checked;
+
+            const string templ = "ID_CHECKBOX_Palette{0}_{1}={2},ID_BUTTON_Palette{0}_{1}={3}";
+            // ID_CHECKBOX_Palette1_1=1,ID_BUTTON_Palette1_1=#FF0000
+
+            var pal = new StringBuilder();
+            for (var i = 0; i < 6; i++) {
+                pal.Append(string.Format(templ, isFirst ? "1" : "2", i + 1, checkBox[i] ? "1" : "0", ToHtml(colors[i]))).Append(",");
+            }
+            pal.Remove(pal.Length - 1, 1);
+
+            return pal.ToString();
+        }
+
+        public string GetSpeed(bool isFirst) {
+            return "ID_SLIDER_Speed" + (isFirst ? "1" : "2") + "=" + tbSpeed.Value;
         }
 
 

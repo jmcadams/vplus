@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 using CommonUtils;
 
 using NutcrackerEffectsControl;
 
 using VixenPlus;
+using VixenPlus.Dialogs;
 
 namespace VixenEditor {
     public partial class NutcrackerControlDialog : Form {
@@ -154,13 +157,15 @@ namespace VixenEditor {
             }
         }
 
+
         private void InitializePresets() {
             cbEffectsPresets.Items.Clear();
             var effects = _nutcrackerData.GetPresets();
             foreach (var nameAttr in effects.Select(m => m.Attribute("name")).Where(name => name != null)) {
                 cbEffectsPresets.Items.Add(nameAttr.Value);
             }
-            cbEffectsPresets.Items.Add("Manage Effect Presets");
+            cbEffectsPresets.Items.Add("Save current settings...");
+            cbEffectsPresets.Items.Add("Manage Effect Presets...");
         }
 
 
@@ -564,9 +569,7 @@ namespace VixenEditor {
 
         #endregion
 
-        private void btnManagePresets_Click(object sender, EventArgs e) {
-
-        }
+        private void btnManagePresets_Click(object sender, EventArgs e) {}
 
 
         private void SetPreset(string effectData) {
@@ -617,23 +620,97 @@ namespace VixenEditor {
             }
         }
 
+
         private void SetSparkleFrequency(string level) {
             int frequency;
-            tbSparkles.Value = (Int32.TryParse(level, out frequency) ? 100 - (frequency/2) : 0);
+            tbSparkles.Value = (Int32.TryParse(level, out frequency) ? 100 - (frequency / 2) : 0);
         }
 
+
         private void cbEffectsPresets_SelectedIndexChanged(object sender, EventArgs e) {
-            if (cbEffectsPresets.SelectedIndex != cbEffectsPresets.Items.Count - 1) {
+            if (cbEffectsPresets.SelectedIndex < cbEffectsPresets.Items.Count - 2) {
                 var effectData = _nutcrackerData.GetDataForEffect(cbEffectsPresets.SelectedItem.ToString());
                 if (effectData != null) {
                     SetPreset(effectData);
                 }
                 return;
             }
-            //TODO new dialogType
-            using (var modelDialog = new NutcrackerModelDialog(_sequence)) {
-                modelDialog.ShowDialog();
+            if (cbEffectsPresets.SelectedIndex == cbEffectsPresets.Items.Count - 1) {
+                using (var modelDialog = new NutcrackerModelDialog(_sequence)) {
+                    modelDialog.ShowDialog();
+                }
             }
+            else if (cbEffectsPresets.SelectedIndex == cbEffectsPresets.Items.Count - 2) {
+                var isValid = false;
+                while (!isValid)
+                    using (var textDialog = new TextQueryDialog("Preset name", "What do you want to name this preset?", "")) {
+                        if (textDialog.ShowDialog() != DialogResult.OK) {
+                            return;
+                        }
+                        var presetName = textDialog.Response;
+                        if (!cbEffectsPresets.Items.Contains(presetName)) {
+                            isValid = true;
+                            SavePreset(presetName);
+                        }
+                    }
+            }
+        }
+
+
+        private void SavePreset(string presetName) {
+            var settings = new List<string>();
+            for (var i = 0; i < MaxEffects; i++) {
+                if (_effectControls[i] != null) {
+                    settings.Add(_effectControls[i].Name);
+                }
+            }
+            var layerEffects = string.Empty;
+
+            if (rbEffect1.Checked) {
+                layerEffects = "Effect 1";
+            }
+            else if (rbEffect2.Checked) {
+                layerEffects = "Effect 2";
+            }
+            else if (rbMask1.Checked) {
+                layerEffects = "1 is Mask";
+            }
+            else if (rbMask2.Checked) {
+                layerEffects = "2 is Mask";
+            }
+            else if (rbUnmask1.Checked) {
+                layerEffects = "1 is Unmask";
+            }
+            else if (rbUnmask2.Checked) {
+                layerEffects = "2 is Unmask";
+            }
+            if (rbAverage.Checked) {
+                layerEffects = "Average";
+            }
+            else if (rbLayer.Checked) {
+                layerEffects = "Layered";
+            }
+
+            var sparkleFrequency = "ID_SLIDER_SparkleFrequency=" + tbSparkles.Value * 2;
+
+            settings.Add(layerEffects);
+            settings.Add(sparkleFrequency);
+            settings.Add(_effectControls[0].GetSpeed(true));
+            settings.Add(_effectControls[1].GetSpeed(false));
+
+            settings.Add(_effectControls[0].GetEffect(true));
+            settings.Add(_effectControls[1].GetEffect(false));
+
+            settings.Add(_effectControls[0].GetPaletteSettings(true));
+            settings.Add(_effectControls[1].GetPaletteSettings(false));
+
+            var settingString = new StringBuilder();
+            foreach (var s in settings) {
+                settingString.Append(s).Append(",");
+            }
+            settingString.Remove(settingString.Length - 1, 1);
+
+            _nutcrackerData.AddPreset(new XElement("effect", new XAttribute("name", presetName), new XAttribute("settings", settingString)));
         }
     }
 }

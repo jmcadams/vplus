@@ -3277,10 +3277,10 @@ namespace VixenEditor {
                     keyEvent.Handled = true;
                     break;
 
-                case Keys.N:
-                    tsbNutcracker_Click(null, null);
-                    keyEvent.Handled = true;
-                    break;
+                //case Keys.N:
+                //    tsbNutcracker_Click(null, null);
+                //    keyEvent.Handled = true;
+                //    break;
 
                 case Keys.R:
                     if (keyEvent.Shift) {
@@ -4844,6 +4844,7 @@ namespace VixenEditor {
         }
 
         private void tsbNutcracker_Click(object sender, EventArgs e) {
+            return; // disabled!
             if (!tsbNutcracker.Enabled) {
                 return;
             }
@@ -4869,6 +4870,10 @@ namespace VixenEditor {
                 }
                 pictureBoxGrid.Invalidate();
             }
+        }
+
+        private void tsbNutcracker_DoubleClick(object sender, EventArgs e) {
+            MessageBox.Show("Patience Grasshopper!\nClara is fine.");
         }
 
 

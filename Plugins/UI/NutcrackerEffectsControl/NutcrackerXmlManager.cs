@@ -72,6 +72,14 @@ namespace NutcrackerEffectsControl {
 
         public List<XElement> GetPresets() {
             return _doc.Descendants("effects").Descendants("effect").ToList();
+        }
+ 
+        public List<XElement> AddPreset(XElement newPreset) {
+            var effects = GetPresets();
+            effects.Add(newPreset);
+            saveDoc();
+
+            return effects;
         } 
 
         public string[] GetPalettes() {
@@ -93,13 +101,13 @@ namespace NutcrackerEffectsControl {
             }
 
             pals.Add(pal);
-            _doc.Save(Paths.NutcrackerDataFile);
+            saveDoc();
         }
 
 
         public void RemovePalette(string palette) {
             GetPaletteByName(palette).Remove();
-            _doc.Save(Paths.NutcrackerDataFile);
+            saveDoc();
         }
 
 
@@ -109,6 +117,10 @@ namespace NutcrackerEffectsControl {
                 return attr != null && attr.Value == settingName;
             }).First().Attribute("settings");
             return effectData != null ? effectData.Value : null;
+        }
+
+        private void saveDoc() {
+            _doc.Save(Paths.NutcrackerDataFile);
         }
     }
 }
