@@ -243,7 +243,7 @@ namespace VixenPlus {
             foreach (var channel in _fullChannels.Where(channel => channel.OutputChannel >= outputChannel)) {
                 channel.OutputChannel++;
             }
-            _fullChannels.Insert(count, new Channel(Resources.Channel + " " + sortedIndex + 1, outputChannel, true));
+            _fullChannels.Insert(count, new Channel(Resources.Channel + " " + (_fullChannels.Count + 1), outputChannel, true));
             var newEventValues = new byte[_fullChannels.Count,TotalEventPeriods];
             for (var row = 0; row < Rows; row++) {
                 var rowOffset = (row >= count) ? (row + 1) : row;
@@ -252,6 +252,23 @@ namespace VixenPlus {
                 }
             }
             EventValues = newEventValues;
+
+            if (Groups != null) {
+                foreach (var group in Groups) {
+                    var newChannels = new List<string>();
+                    foreach (var channel in group.Value.GroupChannels.Split(new[] {','})) {
+                        var newChannel = channel;
+                        int res;
+                        if (int.TryParse(channel, out res)) {
+                            if (res >= count) res++;
+                            newChannel = res.ToString(CultureInfo.InvariantCulture);
+                        }
+                        newChannels.Add(newChannel);
+                    }
+                    group.Value.GroupChannels = string.Join(",", newChannels.ToArray());
+                }
+            }
+
             _sortOrders.InsertChannel(count, sortedIndex);
             return count;
         }
@@ -295,6 +312,9 @@ namespace VixenPlus {
             }
             // ReSharper restore AssignNullToNotNullAttribute
             SaveTo(FileName);
+            if (Groups != null) {
+                Group.SaveGroups(Groups, Profile != null ? Profile.FileName : FileName);
+            }
         }
 
 
@@ -757,19 +777,44 @@ namespace VixenPlus {
 
 
         public void DeleteChannel(int index) {
+            var currOutputChannel = Channels[index].OutputChannel;
             Channels.RemoveAt(index);
-            var buffer = new byte[ChannelCount,TotalEventPeriods];
-            var num3 = 0;
-            for (var i = 0; i < Rows; i++) {
-                if (i == index) {
+
+            foreach (var channel in _fullChannels.Where(channel => channel.OutputChannel >= currOutputChannel)) {
+                channel.OutputChannel--;
+            }
+
+            var buffer = new byte[FullChannelCount,TotalEventPeriods];
+            var newRow = 0;
+            for (var row = 0; row < Rows; row++) {
+                if (row == index) {
                     continue;
                 }
-                for (var j = 0; j < Cols; j++) {
-                    buffer[num3, j] = EventValues[i, j];
+                for (var col = 0; col < Cols; col++) {
+                    buffer[newRow, col] = EventValues[row, col];
                 }
-                num3++;
+                newRow++;
             }
             EventValues = buffer;
+
+            if (Groups != null) {
+                foreach (var group in Groups) {
+                    var newChannels = new List<string>();
+                    foreach (var channel in group.Value.GroupChannels.Split(new[] { ',' })) {
+                        int res;
+                        if (int.TryParse(channel, out res)) {
+                            if (res != index) {
+                                if (res >= index) res--;
+                                newChannels.Add(res.ToString(CultureInfo.InvariantCulture));
+                            }
+                        }
+                        else {
+                            newChannels.Add(channel);
+                        }
+                    }
+                    group.Value.GroupChannels = string.Join(",", newChannels.ToArray());
+                }
+            }
             _sortOrders.DeleteChannel(index);
         }
 
