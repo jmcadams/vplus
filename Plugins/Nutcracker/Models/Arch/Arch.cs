@@ -132,7 +132,7 @@ namespace Arch {
                 for (var x = 0; x < _rows; x++) {
                     var ptX = xoffset + (int)Math.Floor(midpt * Math.Sin(angle) + midpt) + nodeCount;
                     var ptY = (int) Math.Floor(midpt * Math.Cos(angle) + 0.5);
-                    System.Diagnostics.Debug.Print("X:{0}, Y:{1}", ptX, ptY);
+                    //System.Diagnostics.Debug.Print("X:{0}, Y:{1}", ptX, ptY);
                     _nodes[x, ns].Model = new Point(ptX, ptY);
                     angle += angleIncr;
                     //idx+=incr;
