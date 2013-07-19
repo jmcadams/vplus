@@ -2819,20 +2819,17 @@ namespace VixenEditor {
 
 
         private void SetChannelCount(int count) {
-            if (count == _sequence.ChannelCount) {
+            if (count == _sequence.FullChannelCount) {
                 return;
             }
 
-            //TODO: Manage groups here too. and sort orders
             if (_sequence.Groups != null) {
                 UpdateGroupsMapping(count);
             }
-            if (_sequence.Sorts.Count() > 1) {
-                UpdateSortsMapping(count);
-            }
+
             int channel;
             var flag = false;
-            var channelCount = Math.Min(_sequence.ChannelCount, count);
+            var channelCount = Math.Min(_sequence.FullChannelCount, count);
             for (channel = 0; channel < channelCount; channel++) {
                 if (GetEventFromChannelNumber(channel) <= (count - 1)) {
                     continue;
@@ -2843,15 +2840,16 @@ namespace VixenEditor {
             if (flag) {
                 if (MessageBox.Show(Resources.NewChannelCountPrompt, Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) !=
                     DialogResult.Yes) {
-                    textBoxChannelCount.Text = _sequence.ChannelCount.ToString(CultureInfo.InvariantCulture);
+                        textBoxChannelCount.Text = _sequence.FullChannelCount.ToString(CultureInfo.InvariantCulture);
                     return;
                 }
-                for (channel = 0; channel < _sequence.ChannelCount; channel++) {
-                    _sequence.Channels[channel].OutputChannel = channel;
+                for (channel = 0; channel < _sequence.FullChannelCount; channel++) {
+                    _sequence.FullChannels[channel].OutputChannel = channel;
                 }
             }
             SetOrderArraySize(count);
-            _sequence.ChannelCount = count;
+            _sequence.FullChannelCount = count;
+            _sequence.ApplyGroupAndSort();
             textBoxChannelCount.Text = count.ToString(CultureInfo.InvariantCulture);
             VScrollCheck();
             pictureBoxChannels.Refresh();
@@ -2860,32 +2858,28 @@ namespace VixenEditor {
             MessageBox.Show(Resources.ChannelCountUpdated, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
+
         private void UpdateGroupsMapping(int newCount) {
             if (_sequence.FullChannelCount <= newCount) return;
 
-            var countDiff = _sequence.FullChannelCount - newCount;
-            var changeList = new List<string>();
-            for (var i = newCount; i < _sequence.FullChannelCount; i++) {
-                var channel = i.ToString(CultureInfo.InvariantCulture);
-                var groupsToUpdates = from g in _sequence.Groups
-                                      where g.Value.GroupChannels.Contains(channel)
-                                      select g.Value.Name + ":" + channel;
-                changeList.AddRange(groupsToUpdates.ToList());
+            foreach (var group in _sequence.Groups) {
+                var channels = group.Value.GroupChannels.Split(new[] {','});
+                var newChannels = new List<string>();
+                foreach (var channel in channels) {
+                    int res;
+                    if (int.TryParse(channel, out res)) {
+                        if (res < newCount) { // keep the channel
+                            newChannels.Add(channel);
+                        }
+                    }
+                    else { // Group of groups
+                        newChannels.Add(channel);
+                    }
+                }
+                group.Value.GroupChannels = string.Join(",", newChannels.ToArray());
             }
-            foreach (var s in changeList) {
-                System.Diagnostics.Debug.Print(s);
-            }
-            // have to loop though all groups and remove references to removed channels
-            // should warn if going to do this too.  Maybe this should return a bool so false = cancel
-        }
 
-
-        private void UpdateSortsMapping(int newCount) {
-            if (_sequence.FullChannelCount <= newCount) return;
-
-            var countDiff = _sequence.FullChannelCount - newCount;
-            // have to loop though all groups and remove references to removed channels
-            // should warn if going to do this too.  Maybe this should return a bool so false = cancel        
+            Group.SaveGroups(_sequence.Groups, _sequence.Profile != null ? _sequence.Profile.FileName : _sequence.FileName);
         }
 
 
@@ -3067,7 +3061,6 @@ namespace VixenEditor {
         }
 
 
-        //TODO Save group zooms as well.
         private void StandardSequence_FormClosing(object sender, FormClosingEventArgs e) {
             if ((e.CloseReason == CloseReason.UserClosing) && (CheckDirty() == DialogResult.Cancel)) {
                 e.Cancel = true;
@@ -4272,9 +4265,11 @@ namespace VixenEditor {
 
             UpdateRowHeight();
             _zoomChangedByGroup = _sequence.CurrentGroup != Group.AllChannels;
-            if (_zoomChangedByGroup && cbGroups.Visible) {
-                _sequence.Groups[_sequence.CurrentGroup].Zoom = toolStripComboBoxRowZoom.SelectedItem.ToString();
+            if (!_zoomChangedByGroup || !cbGroups.Visible) {
+                return;
             }
+            _sequence.Groups[_sequence.CurrentGroup].Zoom = toolStripComboBoxRowZoom.SelectedItem.ToString();
+            Group.SaveGroups(_sequence.Groups, _sequence.Profile != null ? _sequence.Profile.FileName : _sequence.FileName);
         }
 
 

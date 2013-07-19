@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Security;
+using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
@@ -62,6 +63,44 @@ namespace VixenPlus {
                 }
             }
             return groups;
+        }
+
+
+        public static string SaveGroups(Dictionary<string, GroupData> groups, string filename) {
+            var doc = new XElement("Groups");
+            foreach (var node in groups) {
+                var nodeData = node.Value;
+                var thisNode = new XElement("Group");
+                thisNode.Add(new XAttribute("Name", nodeData.Name), new XAttribute("Zoom", nodeData.Zoom),
+                             new XAttribute("Color", nodeData.GroupColor.ToArgb()));
+                var previousType = String.Empty;
+                var treeData = new StringBuilder();
+                foreach (var child in nodeData.GroupChannels.Split(new[] {','})) {
+                    var nodeValue = child;
+                    var currentType = "Channels";
+                    if (child.Contains("~")) {
+                        nodeValue = child.Remove(0, 1);
+                        currentType = "Contains";
+                    }
+                    if (string.IsNullOrEmpty(previousType)) {
+                        previousType = currentType;
+                    }
+                    if (currentType != previousType) {
+                        thisNode.Add(new XElement(previousType, treeData.Remove(treeData.Length - 1, 1)));
+                        previousType = currentType;
+                        treeData.Remove(0, treeData.Length);
+                    }
+                    treeData.Append(nodeValue + ",");
+                }
+                if (treeData.Length > 0) {
+                    thisNode.Add(new XElement(previousType, treeData.Remove(treeData.Length - 1, 1)));
+                }
+                doc.Add(thisNode);
+            }
+            var groupFilename = (Path.Combine(Path.GetDirectoryName(filename), Path.GetFileNameWithoutExtension(filename) + Vendor.GroupExtension));
+            doc.Save(groupFilename);
+
+            return groupFilename;
         }
 
 
