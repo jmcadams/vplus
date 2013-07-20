@@ -508,6 +508,10 @@ The plugin's setup data may be invalid or inaccurate.</value>
   <data name="WrittenBy" xml:space="preserve">
     <value>Written By:</value>
   </data>
+  <data name="Exterminators" xml:space="preserve">
+    <value>Public Beta
+ Bug Exterminators:</value>
+  </data>
   <data name="TestedBy" xml:space="preserve">
     <value>Beta Tested By:</value>
   </data>
@@ -997,7 +1001,12 @@ Aurbo99
 teberle
 </value>
   </data>
-  <data name="TranslatedBy" xml:space="preserve">
+    <data name="Buggos" xml:space="preserve">
+    <value>budude: #100
+ErnieHorning: #101
+</value>
+  </data>
+    <data name="TranslatedBy" xml:space="preserve">
     <value>Translated By:</value>
   </data>
   <data name="Translators" xml:space="preserve">

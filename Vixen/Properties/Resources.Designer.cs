@@ -170,6 +170,17 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to budude: #100
+        ///ErnieHorning: #101
+        ///.
+        /// </summary>
+        public static string Buggos {
+            get {
+                return ResourceManager.GetString("Buggos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Can&apos;t import channel names when a sequence is attached to a profile..
         /// </summary>
         public static string CantImportChannels {
@@ -614,6 +625,16 @@ namespace Properties {
         public static string ExportSuccess {
             get {
                 return ResourceManager.GetString("ExportSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public Beta
+        /// Bug Exterminators:.
+        /// </summary>
+        public static string Exterminators {
+            get {
+                return ResourceManager.GetString("Exterminators", resourceCulture);
             }
         }
         

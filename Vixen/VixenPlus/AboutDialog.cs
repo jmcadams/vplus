@@ -54,6 +54,7 @@ namespace VixenPlus {
             credits.AppendLine(Resources.InspiredBy).AppendLine("K.C. Oaks and Vixen 2.x\n");
             credits.AppendLine(Resources.WrittenBy).AppendLine("John McAdams\nAKA Mac E Bo Bo\n");
             credits.AppendLine(Resources.TestedBy).AppendLine(Resources.BetaTesters);
+            credits.AppendLine(Resources.Exterminators).AppendLine(Resources.Buggos);
             credits.AppendLine(Resources.TranslatedBy).AppendLine(Resources.Translators);
             credits.AppendLine(Resources.DedicatedTo).AppendLine(Resources.MyFriends).AppendLine(Resources.ThankYou);
             credits.AppendLine(Resources.OpenSource).AppendLine("FMOD Sound System by:\nFirelight Technologies\n");
