@@ -12,6 +12,7 @@ using System.Xml.Linq;
 using Properties;
 
 namespace VixenPlus {
+    // todo: this is all terribly hacky, need to revist when the time allows
     public class Group {
         public static string AllChannels = Resources.AllChannels;
         public static string ManageGroups = "Manage Groups";
@@ -20,11 +21,14 @@ namespace VixenPlus {
         private readonly List<Channel> _currentList = new List<Channel>();
 
         public static Dictionary<string, GroupData> LoadGroups(string groupFile) {
+            return ParseGroups(Xml.LoadDocument(groupFile).DocumentElement);
+        }
+
+        public static Dictionary<string, GroupData> ParseGroups(XmlElement doc){
             Dictionary<string, GroupData> groups = null;
             try {
-                var doc = Xml.LoadDocument(groupFile).DocumentElement;
                 if (doc != null && doc.ParentNode != null) {
-                    XmlNode nodes = doc.ParentNode["Groups"];
+                    var nodes = doc.ParentNode["Groups"];
                     if (nodes != null) {
                         groups = new Dictionary<string, GroupData>();
                         foreach (XmlNode node in nodes) {
@@ -33,7 +37,7 @@ namespace VixenPlus {
                             }
                             var name = node.Attributes["Name"] == null ? null : node.Attributes["Name"].Value;
                             if (name == null) {
-                                throw new XmlSyntaxException(String.Format(Resources.MissingNameAttribute, Path.GetFileName(groupFile), node));
+                                throw new XmlSyntaxException(String.Format(Resources.MissingNameAttribute, doc, node));
                             }
                             var color = node.Attributes["Color"] == null ? Color.White : Color.FromArgb(Int32.Parse(node.Attributes["Color"].Value));
                             var zoom = node.Attributes["Zoom"] == null ? "100%" : node.Attributes["Zoom"].Value;
@@ -47,8 +51,10 @@ namespace VixenPlus {
                                         text += child.InnerText + ",";
                                         break;
                                     case "Contains":
-                                        text = child.InnerText.Split(new[] {','}).Aggregate(text, (current, @group) => current + (GroupTextDivider + @group + ","));
-                                        break;      
+                                        text = child.InnerText.Split(new[] {','}).Aggregate(text,
+                                                                                            (current, @group) =>
+                                                                                            current + (GroupTextDivider + @group + ","));
+                                        break;
                                 }
                             }
                             groups.Add(name, new GroupData {Name = name, GroupColor = color, GroupChannels = text.TrimEnd(new[] {','}), Zoom = zoom});
@@ -57,7 +63,7 @@ namespace VixenPlus {
                 }
             }
             catch (Exception) {
-                var msg = String.Format(Resources.ErrorLoadingGroup, Path.GetFileName(groupFile), Vendor.ProductName);
+                var msg = String.Format(Resources.ErrorLoadingGroup, doc, Vendor.ProductName);
                 if (MessageBox.Show(msg, Resources.GroupLoadingError, MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel) {
                     throw;
                 }
@@ -104,7 +110,7 @@ namespace VixenPlus {
         }
 
 
-        public static string SaveGroups(TreeView groupTree, String filename) {
+        public static Dictionary<string, GroupData> ParseDialogResults(TreeView groupTree) {
             var doc = new XElement("Groups");
             foreach (TreeNode node in groupTree.Nodes) {
                 var nodeData = ((GroupTagData) node.Tag);
@@ -132,11 +138,13 @@ namespace VixenPlus {
                 }
                 doc.Add(thisNode);
             }
-            var groupFilename = (Path.Combine(Path.GetDirectoryName(filename),
-                              Path.GetFileNameWithoutExtension(filename) + Vendor.GroupExtension));
+            var groupFilename = (Path.Combine(Paths.ProfilePath,
+                              Path.GetTempFileName() + Vendor.GroupExtension));
             doc.Save(groupFilename);
+            var result = LoadGroups(groupFilename);
+            File.Delete(groupFilename);
 
-            return groupFilename;
+            return result;
         }
 
 

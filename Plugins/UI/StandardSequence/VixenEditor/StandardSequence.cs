@@ -1645,33 +1645,30 @@ namespace VixenEditor {
                 return;
             }
 
-            //TODO Implement!
-// ReSharper disable LocalizableElement
-            MessageBox.Show("Drag and Drop disabled until Groups are fully tested.  Sorry");
-// ReSharper restore LocalizableElement
+            var data = (Channel)e.Data.GetData(typeof(Channel));
+            var droppedLine = GetLineIndexAt(pictureBoxChannels.PointToClient(new Point(e.X, e.Y)));
+            var channelAt = _sequence.Channels[droppedLine <= _sequence.ChannelCount ? droppedLine : _sequence.ChannelCount];
 
-            //var data = (VixenPlus.Channel) e.Data.GetData(typeof (VixenPlus.Channel));
-            //var channelAt = GetChannelAt(pictureBoxChannels.PointToClient(new Point(e.X, e.Y)));
+            if (data == channelAt) {
+                return;
+            }
 
-            //if (data == channelAt) {
-            //    return;
-            //}
-
-            //switch (e.Effect) {
-            //    case DragDropEffects.Copy:
-            //        _sequence.CopyChannel(data, channelAt);
-            //        RefreshAll();
-            //        IsDirty = true;
-            //        break;
-            //    case DragDropEffects.Move:
-            //        var channelNaturalIndex = GetChannelNaturalIndex(data);
-            //        _channelOrderMapping.Remove(channelNaturalIndex);
-            //        var channelSortedIndex = channelAt != null ? GetChannelSortedIndex(channelAt) : _channelOrderMapping.Count;
-            //        _channelOrderMapping.Insert(channelSortedIndex, channelNaturalIndex);
-            //        RefreshAll();
-            //        IsDirty = true;
-            //        break;
-            //}
+            switch (e.Effect) {
+                case DragDropEffects.Copy:
+                    _sequence.CopyChannel(data, channelAt);
+                    RefreshAll();
+                    IsDirty = true;
+                    break;
+                case DragDropEffects.Move:
+                    MessageBox.Show(@"Feedback wanted! See the forum for a discussion on 'What drag/drop move should do with groups?'", Vendor.ProductName);
+                    //var channelNaturalIndex = _sequence.Channels.IndexOf(data);
+                    //_channelOrderMapping.Remove(channelNaturalIndex);
+                    //var channelSortedIndex = channelAt != null ? GetChannelSortedIndex(channelAt) : _channelOrderMapping.Count;
+                    //_channelOrderMapping.Insert(channelSortedIndex, channelNaturalIndex);
+                    //RefreshAll();
+                    //IsDirty = true;
+                    break;
+            }
         }
 
 
@@ -2879,7 +2876,6 @@ namespace VixenEditor {
                 group.Value.GroupChannels = string.Join(",", newChannels.ToArray());
             }
 
-            Group.SaveGroups(_sequence.Groups, _sequence.Profile != null ? _sequence.Profile.FileName : _sequence.FileName);
         }
 
 
@@ -3068,6 +3064,9 @@ namespace VixenEditor {
             else {
                 if (_executionInterface.EngineStatus(_executionContextHandle) != Utils.ExecutionStopped) {
                     toolStripButtonStop_Click(null, null);
+                }
+                if (_sequence.Groups != null) {
+                    Group.SaveGroups(_sequence.Groups, _sequence.Profile != null ? _sequence.Profile.FileName : _sequence.FileName);
                 }
                 if (_preferences.GetBoolean("SaveZoomLevels")) {
                     if (!_zoomChangedByGroup) {
@@ -3439,7 +3438,6 @@ namespace VixenEditor {
         }
 
 
-        //TODO: Broken on insert
         private void HandleChannelKeyPress(KeyEventArgs e) {
             var selectedChannelIndex = GetChannelSortedIndex(SelectedChannel);
 
@@ -4269,7 +4267,6 @@ namespace VixenEditor {
                 return;
             }
             _sequence.Groups[_sequence.CurrentGroup].Zoom = toolStripComboBoxRowZoom.SelectedItem.ToString();
-            Group.SaveGroups(_sequence.Groups, _sequence.Profile != null ? _sequence.Profile.FileName : _sequence.FileName);
         }
 
 
@@ -4835,8 +4832,7 @@ namespace VixenEditor {
                 if (groupDialog.ShowDialog() != DialogResult.OK) {
                     return false;
                 }
-                _sequence.Groups =
-                    Group.LoadGroups(Group.SaveGroups(groupDialog.GetResults, _sequence.Profile != null ? _sequence.Profile.FileName : _sequence.FileName));
+                _sequence.Groups = Group.ParseDialogResults(groupDialog.GetResults);
                 cbGroups.SuspendLayout();
                 UpdateGroups();
 
@@ -4873,36 +4869,36 @@ namespace VixenEditor {
         }
 
         private void tsbNutcracker_Click(object sender, EventArgs e) {
-            return; // disabled!
-            if (!tsbNutcracker.Enabled) {
-                return;
-            }
+            // disabled!
+            //if (!tsbNutcracker.Enabled) {
+            //    return;
+            //}
 
-            using (var nce = new NutcrackerControlDialog(_sequence, _selectedRange)) {
-                if (nce.ShowDialog() != DialogResult.OK) {
-                    return;
-                }
-                var ncData = nce.RenderData;
-                var ncType = nce.RenderType;
-                var ncEvents = nce.RenderEvents;
-                var ncRows = nce.RenderRows;
-                var ncCols = nce.RenderCols;
+            //using (var nce = new NutcrackerControlDialog(_sequence, _selectedRange)) {
+            //    if (nce.ShowDialog() != DialogResult.OK) {
+            //        return;
+            //    }
+            //    var ncData = nce.RenderData;
+            //    var ncType = nce.RenderType;
+            //    var ncEvents = nce.RenderEvents;
+            //    var ncRows = nce.RenderRows;
+            //    var ncCols = nce.RenderCols;
 
-                var cells = new Rectangle(0, 0, ncEvents, ncCols * ncRows * 3);
-                AddUndoItem(cells, UndoOriginalBehavior.Overwrite, "Nutcracker " + ncType);
-                for (var row = 0; row < ncCols * ncRows * 3; row++) {
-                    var channel = GetEventFromChannelNumber(row);
-                    for (var col = 0; col < ncEvents; col++) {
-                        var eventData = ncData[row, col];
-                        _sequence.EventValues[channel, col] = eventData;
-                    }
-                }
-                pictureBoxGrid.Invalidate();
-            }
+            //    var cells = new Rectangle(0, 0, ncEvents, ncCols * ncRows * 3);
+            //    AddUndoItem(cells, UndoOriginalBehavior.Overwrite, "Nutcracker " + ncType);
+            //    for (var row = 0; row < ncCols * ncRows * 3; row++) {
+            //        var channel = GetEventFromChannelNumber(row);
+            //        for (var col = 0; col < ncEvents; col++) {
+            //            var eventData = ncData[row, col];
+            //            _sequence.EventValues[channel, col] = eventData;
+            //        }
+            //    }
+            //    pictureBoxGrid.Invalidate();
+            //}
         }
 
         private void tsbNutcracker_DoubleClick(object sender, EventArgs e) {
-            MessageBox.Show("Patience Grasshopper!\nClara is fine.");
+            MessageBox.Show(@"Patience Grasshopper!\nClara is fine.");
         }
 
 
@@ -4959,7 +4955,7 @@ namespace VixenEditor {
             }
             e.Handled = true;
             
-            var result = 0;
+            int result;
             if (int.TryParse(textBoxChannelCount.Text, out result)) {
                 if (result < _sequence.ChannelCount) {
                     if (MessageBox.Show(Resources.ReduceChannelCount, ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
