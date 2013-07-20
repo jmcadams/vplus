@@ -1,6 +1,24 @@
-?? JLY 2013 - V 0.0.???.1 (Private BETA)
+20 JLY 2013 - V 0.1.201.1  {BETA}
     Bug #11 - Under specific circumstances, fire effects (and possibly others) will not render properly.  Found
         that the effect was not being initialized properly in all cases.
+    Bug #12 - Updating sequence length on the tool bar did not change sequence.  (Need to press Enter)
+        There were various presumptions that I made about this tool and that impacted the implementation, mimic
+        what KC did in 2.5.
+    Bug #13 - Updating channel count on the toll bard did not change channel count.  (Need to press Enter) There
+        were various presumptions that I made about this tool and that impacted the implementation, mimic what 
+        KC did in 2.5.
+    Bug #14 - Deleting a channel from a group deletes all channels with the same name.  Now check that name and
+        underlying channel number match.
+    Bug #15 - Some combination of changes to a group and sequence will cause the group to be out of sync with the
+        sequence.  Now save the group only when the sequence is saved.
+    Bug #16 - Zoom levels are not saving with groups.  Saving now when sequence is saved.
+    Bug #17 - Add and remove channels from the main screen works properly now on groups as well.
+    Disabled Nutcracker (Not done)
+    Disabled UI indicator for bookmarks (Is crashing UI at times)
+    Disabled Automatic update checking (Is crashing on server timeout at times)
+    Code cleanup, changed static class to extention methods where it made sense.  Code reads cleaner.
+    Killed off 9 different TODO items.
+    
 
 06 JLY 2013 - V 0.0.186.1 (Private BETA)
     Bug #9 Fixed, Improper setup of preview was not handled gracefully.  Now we just state in setup that it
