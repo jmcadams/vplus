@@ -4416,6 +4416,11 @@ namespace VixenEditor {
                 return;
             }
 
+            //potential fix for bug #101 
+            //http://www.diychristmas.org/vb1/showthread.php?558-VixenPlus-Latest-Release-Link&p=3977&viewfull=1#post3977
+            if (clipRect.Y < 0) 
+                return;
+
             var fontSize = (_gridColWidth <= 20) ? 5 : ((_gridColWidth <= 25) ? 6 : ((_gridColWidth < 50) ? 8 : 10));
             using (var font = new Font(Font.FontFamily, fontSize))
             using (var brush = new SolidBrush(Color.White)) {
