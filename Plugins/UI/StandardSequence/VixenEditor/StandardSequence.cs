@@ -4898,7 +4898,7 @@ namespace VixenEditor {
         }
 
         private void tsbNutcracker_DoubleClick(object sender, EventArgs e) {
-            MessageBox.Show(@"Patience Grasshopper!\nClara is fine.");
+            MessageBox.Show("Patience Grasshopper!\nClara is fine.");
         }
 
 

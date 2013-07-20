@@ -445,10 +445,14 @@ namespace VixenEditor {
 
 
         private void RemoveReferencedNodes(TreeNode parent, TreeNode nodeToRemove) {
-            foreach (var node in tvGroups.Nodes
-                .Find(nodeToRemove.Name, true)
-                .Where(node => node.Parent != null && node.Parent.Name == parent.Name)) {
-                    node.Remove();
+            foreach (var node in from node in tvGroups.Nodes
+                                                      .Find(nodeToRemove.Name, true)
+                                                      .Where(node => node.Parent != null && node.Parent.Name == parent.Name)
+                                 let nodeRemoveTag = nodeToRemove.Tag as GroupTagData
+                                 let nodeTag = node.Tag as GroupTagData
+                                 where nodeRemoveTag != null && (nodeTag != null && nodeTag.UnderlyingChannel.Equals(nodeRemoveTag.UnderlyingChannel))
+                                 select node) {
+                node.Remove();
             }
         }
 
