@@ -574,6 +574,7 @@ namespace VixenEditor {
             AddUndoItem(new Rectangle(0, lineIndex, _sequence.TotalEventPeriods, 1), UndoOriginalBehavior.Overwrite, Resources.UndoText_ClearChannel);
             CopyToEventValues(0, lineIndex, _sequence.TotalEventPeriods, 1, _sequence.MinimumLevel);
             pictureBoxGrid.Refresh();
+            IsDirty = true;
         }
 
 
@@ -618,12 +619,14 @@ namespace VixenEditor {
         }
 
 
+        //Bug #10x? - Context menu doesn't work right.
         private void CopyToEventValues(int startCol, int startRow, int width, int height, byte value) {
             var endRow = startRow + height;
             var endCol = startCol + width;
 
             for (var row = startRow; row < endRow; row++) {
-                var channel = GetEventFromChannelNumber(row);
+                var channel = _sequence.Channels[row].OutputChannel;
+                //GetEventFromChannelNumber(row);
                 for (var col = startCol; col < endCol; col++) {
                     _sequence.EventValues[channel, col] = value;
                 }
@@ -891,10 +894,13 @@ namespace VixenEditor {
 
 
         private void FillChannel(int lineIndex) {
-            var actualChannel = GetEventFromChannel(_sequence.Channels[lineIndex]); // tested okay
-            AddUndoItem(new Rectangle(0, lineIndex, _sequence.TotalEventPeriods, 1), UndoOriginalBehavior.Overwrite, Resources.UndoText_Fill);
-            CopyToEventValues(0, actualChannel, _sequence.TotalEventPeriods, 1, _drawingLevel);
+            AddUndoItem(new Rectangle(0, lineIndex, _sequence.TotalEventPeriods, 1), UndoOriginalBehavior.Overwrite, Resources.UndoText_ClearChannel);
+            CopyToEventValues(0, lineIndex, _sequence.TotalEventPeriods, 1, _drawingLevel);
             pictureBoxGrid.Refresh();
+            //var actualChannel = GetEventFromChannel(_sequence.Channels[lineIndex]); // tested okay
+            //AddUndoItem(new Rectangle(0, lineIndex, _sequence.TotalEventPeriods, 1), UndoOriginalBehavior.Overwrite, Resources.UndoText_Fill);
+            //CopyToEventValues(0, actualChannel, _sequence.TotalEventPeriods, 1, _drawingLevel);
+            //pictureBoxGrid.Refresh();
             IsDirty = true;
         }
 

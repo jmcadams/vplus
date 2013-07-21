@@ -32,7 +32,7 @@ namespace VixenEditor {
             _affectGridDelegate = affectGridDelegate;
         }
 
-
+        //TODO Need to fix this.
         private void buttonCopy_Click(object sender, EventArgs e) {
             var sourceChannel = _eventSequence.Channels.IndexOf(((Channel)comboBoxSourceChannel.SelectedItem));
             var destinationChannel = _eventSequence.Channels.IndexOf(((Channel)comboBoxDestinationChannel.SelectedItem));
