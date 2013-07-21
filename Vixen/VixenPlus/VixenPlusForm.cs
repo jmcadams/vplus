@@ -779,6 +779,10 @@ namespace VixenPlus {
         private static void SetDataPath() {
             CheckIfFirstRun();
 
+            if (!File.Exists(Paths.DataDir)) {
+                throw new FileNotFoundException(string.Format("Delete the {0} file and try restarting {1} or allow {1} to create one.",Paths.DataDir,Vendor.ProductName));
+            }
+
             string path;
             using (var data = new StreamReader(Paths.DataDir)) {
                 path = data.ReadLine();
