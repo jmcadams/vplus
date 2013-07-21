@@ -20,7 +20,14 @@ namespace VixenPlus {
             
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new VixenPlusForm(args));
+
+            try {
+                Application.Run(new VixenPlusForm(args));
+            }
+            catch (Exception e) {
+                ProcessException(e, true);
+                Application.Exit();
+            }
         }
 
 
