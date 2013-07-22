@@ -238,6 +238,7 @@ namespace VixenPlus {
             this.numericUpDownHistoryImages = new System.Windows.Forms.NumericUpDown();
             this.label28 = new System.Windows.Forms.Label();
             this.screenTab = new System.Windows.Forms.TabPage();
+            this.cbUseCheckmark = new System.Windows.Forms.CheckBox();
             this.gbColors = new System.Windows.Forms.GroupBox();
             this.lblClickToUpdate = new System.Windows.Forms.Label();
             this.lblCurrentColor = new System.Windows.Forms.Label();
@@ -1309,6 +1310,7 @@ namespace VixenPlus {
             // 
             // screenTab
             // 
+            this.screenTab.Controls.Add(this.cbUseCheckmark);
             this.screenTab.Controls.Add(this.gbColors);
             this.screenTab.Controls.Add(this.lblPrimaryScreen);
             this.screenTab.Controls.Add(this.cbScreens);
@@ -1318,6 +1320,18 @@ namespace VixenPlus {
             this.screenTab.TabIndex = 7;
             this.screenTab.Text = "screenTab";
             this.screenTab.UseVisualStyleBackColor = true;
+            // 
+            // cbUseCheckmark
+            // 
+            this.cbUseCheckmark.AutoSize = true;
+            this.cbUseCheckmark.Checked = true;
+            this.cbUseCheckmark.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbUseCheckmark.Location = new System.Drawing.Point(12, 148);
+            this.cbUseCheckmark.Name = "cbUseCheckmark";
+            this.cbUseCheckmark.Size = new System.Drawing.Size(193, 17);
+            this.cbUseCheckmark.TabIndex = 4;
+            this.cbUseCheckmark.Text = "Use Checkmark Selection Highlight";
+            this.cbUseCheckmark.UseVisualStyleBackColor = true;
             // 
             // gbColors
             // 
@@ -1330,7 +1344,7 @@ namespace VixenPlus {
             this.gbColors.Size = new System.Drawing.Size(437, 109);
             this.gbColors.TabIndex = 3;
             this.gbColors.TabStop = false;
-            this.gbColors.Text = "g";
+            this.gbColors.Text = "Customizable Colors";
             // 
             // lblClickToUpdate
             // 
@@ -1852,5 +1866,6 @@ namespace VixenPlus {
         private PictureBox pbColor;
         private ColorDialog colorDialog1;
         private Button btnSetDataFolder;
+        private CheckBox cbUseCheckmark;
     }
 }

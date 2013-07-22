@@ -166,6 +166,7 @@ namespace VixenPlus {
 
         private void WirteScreenNodes() {
             _preferences.SetString("PrimaryDisplay", cbScreens.SelectedItem.ToString());
+            _preferences.SetBoolean("UseCheckmark", cbUseCheckmark.Checked);
         }
 
 
@@ -362,6 +363,7 @@ namespace VixenPlus {
         private void ReadScreenNodes() {
             var primaryDisplay = _preferences.GetString("PrimaryDisplay");
             cbScreens.SelectedIndex = primaryDisplay.Length != 0 ? cbScreens.Items.IndexOf(primaryDisplay) : 0;
+            cbUseCheckmark.Checked = _preferences.GetBoolean("UseCheckmark");
         }
 
 
