@@ -11,7 +11,7 @@ namespace VixenEditor {
         private readonly Channel[] _channels;
 
 
-        public ChannelCopyDialog(AffectGridDelegate affectGridDelegate, EventSequence sequence, bool constrainToGroup) {
+        public ChannelCopyDialog(AffectGridDelegate affectGridDelegate, EventSequence sequence, Channel selected, bool constrainToGroup) {
             InitializeComponent();
             _channels = new Channel[constrainToGroup ? sequence.ChannelCount : sequence.FullChannelCount];
             for (var channel = 0; channel < _channels.Length; channel++) {
@@ -22,7 +22,12 @@ namespace VixenEditor {
             comboBoxDestinationChannel.Items.AddRange(_channels);
             // ReSharper restore CoVariantArrayConversion
             if (comboBoxSourceChannel.Items.Count > 0) {
-                comboBoxSourceChannel.SelectedIndex = 0;
+                if (comboBoxSourceChannel.Items.Contains(selected)) {
+                    comboBoxSourceChannel.SelectedItem = selected;
+                }
+                else {
+                    comboBoxSourceChannel.SelectedIndex = 0;
+                }
             }
             if (comboBoxDestinationChannel.Items.Count > 0) {
                 comboBoxDestinationChannel.SelectedIndex = 0;
@@ -32,7 +37,6 @@ namespace VixenEditor {
             _affectGridDelegate = affectGridDelegate;
         }
 
-        //TODO Need to fix this.
         private void buttonCopy_Click(object sender, EventArgs e) {
             var sourceChannelOutput = GetOutputForChannel((Channel)comboBoxSourceChannel.SelectedItem);
             var destChannelIndex = GetChannelIndex((Channel)comboBoxDestinationChannel.SelectedItem);

@@ -659,7 +659,7 @@ namespace VixenEditor {
 
 
         private void copyChannelToolStripMenuItem_Click(object sender, EventArgs e) {
-            new ChannelCopyDialog(AffectGrid, _sequence, (ModifierKeys & Keys.Shift) == Keys.Shift).Show();
+            new ChannelCopyDialog(AffectGrid, _sequence, _selectedChannel, (ModifierKeys & Keys.Shift) == Keys.Shift).Show();
         }
 
 
