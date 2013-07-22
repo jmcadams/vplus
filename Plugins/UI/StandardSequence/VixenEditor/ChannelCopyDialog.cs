@@ -34,12 +34,20 @@ namespace VixenEditor {
 
         //TODO Need to fix this.
         private void buttonCopy_Click(object sender, EventArgs e) {
-            var sourceChannel = _eventSequence.Channels.IndexOf(((Channel)comboBoxSourceChannel.SelectedItem));
-            var destinationChannel = _eventSequence.Channels.IndexOf(((Channel)comboBoxDestinationChannel.SelectedItem));
+            var sourceChannelOutput = GetOutputForChannel((Channel)comboBoxSourceChannel.SelectedItem);
+            var destChannelIndex = GetChannelIndex((Channel)comboBoxDestinationChannel.SelectedItem);
             for (var column = 0; column < _eventSequence.TotalEventPeriods; column++) {
-                _sequenceData[0, column] = _eventSequence.EventValues[sourceChannel, column];
+                _sequenceData[0, column] = _eventSequence.EventValues[sourceChannelOutput, column];
             }
-            _affectGridDelegate(destinationChannel, 0, _sequenceData);
+            _affectGridDelegate(destChannelIndex, 0, _sequenceData);
+        }
+
+        private int GetOutputForChannel(Channel c) {
+            return _eventSequence.Channels[GetChannelIndex(c)].OutputChannel;
+        }
+
+        private int GetChannelIndex(Channel c) {
+            return _eventSequence.Channels.IndexOf(c);
         }
 
 
