@@ -1929,7 +1929,7 @@ namespace VixenEditor {
             if ((e.Button == MouseButtons.Left) && _mouseDownInGrid &&
                 _executionInterface.EngineStatus(_executionContextHandle) != Utils.ExecutionRunning) {
                 if (_lineRect.Left == -1) {
-                    DrawSelectionBox(e.X, e.Y, cellX, cellY);
+                    DrawSelectionBox(e.X, e.Y, cellX, cellY, e);
                 }
                 else {
                     DrawChaseLine(cellX, cellY);
@@ -1943,7 +1943,7 @@ namespace VixenEditor {
         }
 
 
-        private void DrawSelectionBox(int mouseX, int mouseY, int cellX, int cellY) {
+        private void DrawSelectionBox(int mouseX, int mouseY, int cellX, int cellY, MouseEventArgs e) {
             const int scrollNone = 0x0;
             const int scrollDown = 0x1;
             const int scrollRight = 0x2;
@@ -2670,9 +2670,10 @@ namespace VixenEditor {
                     _selectedCells.Height++;
                 }
                 vScrollBar1.Value++;
-                // Ugly, but it is the only way I've found that we seem to be able to catch that the mouse button is not down anymore
-                // when it goes across the grid bounds:(  Please refactor if you know a better way.
-                Application.DoEvents();
+                //// Ugly, but it is the only way I've found that we seem to be able to catch that the mouse button is not down anymore
+                //// when it goes across the grid bounds:(  Please refactor if you know a better way.
+                // 22 JLY 13 Application.DoEvents();
+                // 22 JLY 13 - Bug #101 public beta: http://www.diychristmas.org/vb1/showthread.php?558-VixenPlus-Latest-Release-Link&p=3977&viewfull=1#post3977
             }
         }
 
@@ -2684,9 +2685,10 @@ namespace VixenEditor {
                 _selectedRange.Width--;
                 _selectedCells = _selectedRange.NormalizeRect();
                 hScrollBar1.Value--;
-                // Ugly, but it is the only way I've found that we seem to be able to catch that the mouse button is not down anymore
-                // when it goes across the grid bounds:(  Please refactor if you know a better way.
-                Application.DoEvents();
+                //// Ugly, but it is the only way I've found that we seem to be able to catch that the mouse button is not down anymore
+                //// when it goes across the grid bounds:(  Please refactor if you know a better way.
+                // 22 JLY 13 Application.DoEvents();
+                // 22 JLY 13 - Bug #101 public beta: http://www.diychristmas.org/vb1/showthread.php?558-VixenPlus-Latest-Release-Link&p=3977&viewfull=1#post3977
             }
         }
 
@@ -2695,7 +2697,7 @@ namespace VixenEditor {
             _selectedRange.Height = (cellY + 1) - _selectedRange.Top;
 
             var x = pictureBoxGrid.PointToScreen(new Point(pictureBoxGrid.Right, pictureBoxGrid.Top)).X;
-            while (MousePosition.X > x && MouseButtons == MouseButtons.Left) {
+            while (MousePosition.X > x && x > -75 && MouseButtons == MouseButtons.Left) {
                 var cellX = pictureBoxGrid.PointToClient(MousePosition).X / _gridColWidth;
                 cellX += hScrollBar1.Value;
                 if (cellX >= (_sequence.TotalEventPeriods - 1)) {
@@ -2712,9 +2714,10 @@ namespace VixenEditor {
                     _selectedCells.Width++;
                 }
                 hScrollBar1.Value++;
-                // Ugly, but it is the only way I've found that we seem to be able to catch that the mouse button is not down anymore
-                // when it goes across the grid bounds:(  Please refactor if you know a better way.
-                Application.DoEvents();
+                //// Ugly, but it is the only way I've found that we seem to be able to catch that the mouse button is not down anymore
+                //// when it goes across the grid bounds:(  Please refactor if you know a better way.
+                // 22 JLY 13 Application.DoEvents();
+                // 22 JLY 13 - Bug #101 public beta: http://www.diychristmas.org/vb1/showthread.php?558-VixenPlus-Latest-Release-Link&p=3977&viewfull=1#post3977
             }
         }
 
@@ -2726,9 +2729,10 @@ namespace VixenEditor {
                 _selectedRange.Height--;
                 _selectedCells = _selectedRange.NormalizeRect();
                 vScrollBar1.Value--;
-                // Ugly, but it is the only way I've found that we seem to be able to catch that the mouse button is not down anymore
-                // when it goes across the grid bounds:(  Please refactor if you know a better way.
-                Application.DoEvents();
+                //// Ugly, but it is the only way I've found that we seem to be able to catch that the mouse button is not down anymore
+                //// when it goes across the grid bounds:(  Please refactor if you know a better way.
+                // 22 JLY 13 Application.DoEvents();
+                // 22 JLY 13 - Bug #101 public beta: http://www.diychristmas.org/vb1/showthread.php?558-VixenPlus-Latest-Release-Link&p=3977&viewfull=1#post3977
             }
         }
 
