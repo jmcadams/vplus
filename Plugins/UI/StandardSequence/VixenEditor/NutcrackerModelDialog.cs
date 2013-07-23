@@ -14,7 +14,7 @@ namespace VixenEditor {
         private int _lastGroupSelected;
         private int _lastChannelSelected;
         private readonly Dictionary<string, INutcrackerModel> _modelCache = new Dictionary<string, INutcrackerModel>();
-
+        private readonly bool _useCheckmark = Preference2.GetInstance().GetBoolean("UseCheckmark");
         private const string DefaultModel = "Tree";
 
         public NutcrackerModelDialog(EventSequence sequence) {
@@ -74,13 +74,14 @@ namespace VixenEditor {
         private void cbGroups_DrawItem(object sender, DrawItemEventArgs e) {
             if (e.Index < 0) return;
 
+
             if (chkBoxUseGroup.Checked) {
                 var indexedItem = _sequence.Groups[cbGroups.Items[e.Index].ToString()];
-                e.DrawItem(indexedItem.Name, indexedItem.GroupColor, true);
+                e.DrawItem(indexedItem.Name, indexedItem.GroupColor, _useCheckmark);
             }
             else {
                 var indexedItem = _sequence.FullChannels[e.Index];
-                e.DrawItem(indexedItem.Name, indexedItem.Color, true);
+                e.DrawItem(indexedItem.Name, indexedItem.Color, _useCheckmark);
             }
         }
 
