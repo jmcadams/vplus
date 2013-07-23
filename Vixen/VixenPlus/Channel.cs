@@ -156,7 +156,7 @@ namespace VixenPlus {
 
 
         public static void DrawItem(ListBox lb, DrawItemEventArgs e, Channel channel) {
-            e.DrawItem(channel.Name, channel.Color, lb);
+            e.DrawItem(channel.Name, channel.Color, lb, Preference2.GetInstance().GetBoolean("UseCheckmark"));
         }
 
 

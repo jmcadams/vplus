@@ -21,7 +21,7 @@ namespace VixenPlus.Dialogs {
         private readonly Font _pictureFont = new Font("Arial", 13f, FontStyle.Bold);
         private readonly Pen _picturePen = new Pen(Color.Black, 2f);
         private Profile _contextProfile;
-
+        private readonly bool _useCheckmark = Preference2.GetInstance().GetBoolean("UseCheckmark");
 
         public ProfileManagerDialog(object objectInContext) {
             InitializeComponent();
@@ -478,7 +478,7 @@ namespace VixenPlus.Dialogs {
 
         private void treeViewProfile_DrawNode(object sender, DrawTreeNodeEventArgs e) {
             var treeView = sender as TreeView;
-            e.DrawItem(_contextProfile.Channels[_contextProfile.FullChannels.IndexOf((Channel)e.Node.Tag)].Color, treeView);
+            e.DrawItem(_contextProfile.Channels[_contextProfile.FullChannels.IndexOf((Channel)e.Node.Tag)].Color, treeView, _useCheckmark);
         }
     }
 }

@@ -18,6 +18,7 @@ namespace VixenEditor {
         private readonly EventSequence _seq;
         private List<Channel> _channels = new List<Channel>();
         public TreeView GetResults { get { return tvGroups; } }
+        private readonly bool _useCheckmark = Preference2.GetInstance().GetBoolean("UseCheckmark");
 
         private enum Sorts {
             Natural,
@@ -119,13 +120,13 @@ namespace VixenEditor {
 
 
         private void lbChannels_DrawItem(object sender, DrawItemEventArgs e) {
-            Channel.DrawItem(e, _channels[e.Index], true);
+            Channel.DrawItem(e, _channels[e.Index], _useCheckmark);
         }
 
 
         private void tvGroups_DrawNode(object sender, DrawTreeNodeEventArgs e) {
             var treeView = sender as MultiSelectTreeview;
-            e.DrawItem(((GroupTagData)e.Node.Tag).NodeColor, treeView);
+            e.DrawItem(((GroupTagData)e.Node.Tag).NodeColor, treeView, _useCheckmark);
         }
 
 

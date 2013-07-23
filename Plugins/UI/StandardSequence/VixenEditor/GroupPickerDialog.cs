@@ -10,7 +10,8 @@ using VixenPlus;
 namespace VixenEditor {
     public partial class GroupPickerDialog : Form {
 
-        private readonly List<TreeNode> _nodes; 
+        private readonly List<TreeNode> _nodes;
+        private readonly bool _useCheckmark = Preference2.GetInstance().GetBoolean("UseCheckbox");
 
         public List<string> SelectedItems {
             get {
@@ -37,7 +38,7 @@ namespace VixenEditor {
                 return;
             }
             var item = _nodes[e.Index];
-            e.DrawItem(item.Name, ((GroupTagData)item.Tag).NodeColor, lb);
+            e.DrawItem(item.Name, ((GroupTagData)item.Tag).NodeColor, lb, _useCheckmark);
         }
     }
 }

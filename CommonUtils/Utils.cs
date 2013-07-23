@@ -140,14 +140,16 @@ namespace CommonUtils {
 
 
         // For List Boxes -- TODO Need to make this work with prefereneces for UseCheckmark
-        public static void DrawItem(this DrawItemEventArgs e, string text, Color color, ListBox lb) {
+        public static void DrawItem(this DrawItemEventArgs e, string text, Color color, ListBox lb, bool useCheckmark) {
             e.DrawBackground();
 
+            var selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
             GenericBrush.Color = color;
-            e.Graphics.FillRectangle(GenericBrush, e.Bounds);
-            var contrastingBrush = color.GetTextColor();
+            e.Graphics.FillRectangle(selected && !useCheckmark ? SystemBrushes.Highlight : GenericBrush, e.Bounds);
+            var contrastingBrush = selected && !useCheckmark ? SystemBrushes.HighlightText : color.GetTextColor();
             e.Graphics.DrawString(text, e.Font, contrastingBrush, lb.GetItemRectangle(e.Index).Location);
-            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected) {
+
+            if (selected && useCheckmark) {
                 e.Graphics.DrawString(Checkmark, e.Font, contrastingBrush, e.Bounds.Width - e.Bounds.Height, e.Bounds.Y);
             }
 
@@ -155,8 +157,8 @@ namespace CommonUtils {
         }
 
 
-        // For TreeViews -- TODO Need to make this work with prefereneces for UseCheckmark
-        public static void DrawItem(this DrawTreeNodeEventArgs e, Color channelColor, TreeView treeView) {
+        // For TreeViews
+        public static void DrawItem(this DrawTreeNodeEventArgs e, Color channelColor, TreeView treeView, bool useCheckmark) {
             if (treeView == null) {
                 e.DrawDefault = true;
                 return;
@@ -168,8 +170,6 @@ namespace CommonUtils {
 
             var fillRect = new Rectangle(e.Node.Bounds.X, e.Node.Bounds.Y, treeView.Width - e.Node.Bounds.Left, e.Node.Bounds.Height);
             GenericBrush.Color = channelColor;
-            e.Graphics.FillRectangle(GenericBrush, fillRect);
-            e.Graphics.DrawString(e.Node.Text, treeView.Font, channelColor.GetTextColor(), e.Bounds.Left, e.Bounds.Top);
 
             bool selected;
             var view = treeView as MultiSelectTreeview;
@@ -179,7 +179,14 @@ namespace CommonUtils {
             else {
                 selected = (e.State & TreeNodeStates.Selected) != 0;
             }
-            if (selected) {
+
+            var rectBrush = selected && !useCheckmark ? SystemBrushes.Highlight : GenericBrush;
+            e.Graphics.FillRectangle(rectBrush, fillRect);
+            var stringBrush = selected && !useCheckmark ? SystemBrushes.HighlightText : channelColor.GetTextColor();
+            e.Graphics.DrawString(e.Node.Text, treeView.Font, stringBrush, e.Bounds.Left, e.Bounds.Top);
+
+
+            if (selected && useCheckmark) {
                 e.Graphics.DrawString(Checkmark, treeView.Font, channelColor.GetTextColor(), fillRect.Right - 40, e.Bounds.Top);
             }
         }
