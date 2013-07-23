@@ -139,7 +139,7 @@ namespace CommonUtils {
         }
 
 
-        // For List Boxes
+        // For List Boxes -- TODO Need to make this work with prefereneces for UseCheckmark
         public static void DrawItem(this DrawItemEventArgs e, string text, Color color, ListBox lb) {
             e.DrawBackground();
 
@@ -155,7 +155,7 @@ namespace CommonUtils {
         }
 
 
-        // For TreeViews
+        // For TreeViews -- TODO Need to make this work with prefereneces for UseCheckmark
         public static void DrawItem(this DrawTreeNodeEventArgs e, Color channelColor, TreeView treeView) {
             if (treeView == null) {
                 e.DrawDefault = true;
