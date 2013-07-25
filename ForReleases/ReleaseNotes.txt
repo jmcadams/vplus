@@ -1,3 +1,13 @@
+26 JLY 2013 - V 0.1.207.1  {BETA}
+    Bug #100 - NOT FIXED - Certain DPI do not render well in Vixen+. See forum for work around.
+    Bug #101 - FIXED - Crash when small grid window and a cell get clicked.
+    Bug #102 - FIXED - SaveAs...crashes when there is nothing to save.
+    Bug #103 - FIXED - Channel context menu doesn't operate with mapped channels correctly.
+    Enhancement - Context copy channel now use the clicked channel as the default source.
+    Enhancement - (partial fix for errors from bug #100) - Can select, in preferences, if you want to use
+       the checkmark for highlighting selections or just use the regular windows methodology.
+    Enhancement - Buggos.
+
 20 JLY 2013 - V 0.1.201.1  {BETA}
     Bug #11 - Under specific circumstances, fire effects (and possibly others) will not render properly.  Found
         that the effect was not being initialized properly in all cases.
