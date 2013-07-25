@@ -31,10 +31,9 @@ namespace VixenPlus
             // btnOkay
             // 
             this.btnOkay.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOkay.Location = new System.Drawing.Point(543, 166);
-            this.btnOkay.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnOkay.Location = new System.Drawing.Point(407, 135);
             this.btnOkay.Name = "btnOkay";
-            this.btnOkay.Size = new System.Drawing.Size(100, 28);
+            this.btnOkay.Size = new System.Drawing.Size(75, 23);
             this.btnOkay.TabIndex = 0;
             this.btnOkay.Text = "Done";
             this.btnOkay.UseVisualStyleBackColor = true;
@@ -43,10 +42,9 @@ namespace VixenPlus
             // 
             this.lblName.Font = new System.Drawing.Font("Arial", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblName.ForeColor = System.Drawing.Color.Red;
-            this.lblName.Location = new System.Drawing.Point(196, 11);
-            this.lblName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblName.Location = new System.Drawing.Point(147, 9);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(268, 55);
+            this.lblName.Size = new System.Drawing.Size(201, 45);
             this.lblName.TabIndex = 1;
             this.lblName.Text = "ProductName";
             this.lblName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -55,10 +53,9 @@ namespace VixenPlus
             // lblDescription
             // 
             this.lblDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDescription.Location = new System.Drawing.Point(21, 66);
-            this.lblDescription.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblDescription.Location = new System.Drawing.Point(16, 54);
             this.lblDescription.Name = "lblDescription";
-            this.lblDescription.Size = new System.Drawing.Size(621, 31);
+            this.lblDescription.Size = new System.Drawing.Size(466, 25);
             this.lblDescription.TabIndex = 2;
             this.lblDescription.Text = "PreoductDescripton";
             this.lblDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -67,10 +64,9 @@ namespace VixenPlus
             // 
             this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblVersion.ForeColor = System.Drawing.Color.Green;
-            this.lblVersion.Location = new System.Drawing.Point(16, 97);
-            this.lblVersion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblVersion.Location = new System.Drawing.Point(12, 79);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(627, 31);
+            this.lblVersion.Size = new System.Drawing.Size(470, 25);
             this.lblVersion.TabIndex = 6;
             this.lblVersion.Text = "ProductVersion";
             this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -79,10 +75,9 @@ namespace VixenPlus
             // 
             this.llblURL.AutoSize = true;
             this.llblURL.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.llblURL.Location = new System.Drawing.Point(16, 162);
-            this.llblURL.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.llblURL.Location = new System.Drawing.Point(12, 132);
             this.llblURL.Name = "llblURL";
-            this.llblURL.Size = new System.Drawing.Size(153, 29);
+            this.llblURL.Size = new System.Drawing.Size(121, 24);
             this.llblURL.TabIndex = 7;
             this.llblURL.TabStop = true;
             this.llblURL.Text = "ProductURL";
@@ -92,10 +87,9 @@ namespace VixenPlus
             // 
             this.lblCredits.BackColor = System.Drawing.Color.Transparent;
             this.lblCredits.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCredits.Location = new System.Drawing.Point(16, 0);
-            this.lblCredits.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCredits.Location = new System.Drawing.Point(12, 0);
             this.lblCredits.Name = "lblCredits";
-            this.lblCredits.Size = new System.Drawing.Size(627, 26);
+            this.lblCredits.Size = new System.Drawing.Size(470, 21);
             this.lblCredits.TabIndex = 8;
             this.lblCredits.Text = "label1";
             this.lblCredits.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -104,22 +98,20 @@ namespace VixenPlus
             // 
             // pbIcon
             // 
-            this.pbIcon.Location = new System.Drawing.Point(17, 16);
-            this.pbIcon.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pbIcon.Location = new System.Drawing.Point(13, 13);
             this.pbIcon.Name = "pbIcon";
-            this.pbIcon.Size = new System.Drawing.Size(85, 79);
+            this.pbIcon.Size = new System.Drawing.Size(64, 64);
             this.pbIcon.TabIndex = 9;
             this.pbIcon.TabStop = false;
             // 
             // AboutDialog
             // 
             this.AcceptButton = this.btnOkay;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Gainsboro;
             this.CancelButton = this.btnOkay;
-            this.ClientSize = new System.Drawing.Size(659, 207);
+            this.ClientSize = new System.Drawing.Size(494, 168);
             this.ControlBox = false;
             this.Controls.Add(this.pbIcon);
             this.Controls.Add(this.lblCredits);
@@ -129,7 +121,6 @@ namespace VixenPlus
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.btnOkay);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AboutDialog";
