@@ -5,7 +5,7 @@
     Bug #103 - FIXED - Channel context menu doesn't operate with mapped channels correctly.
     Enhancement - Context copy channel now use the clicked channel as the default source.
     Enhancement - (partial fix for errors from bug #100) - Can select, in preferences, if you want to use
-       the checkmark for highlighting selections or just use the regular windows methodology.
+       the check mark for highlighting selections or just use the regular windows methodology.
     Enhancement - Buggos.
 
 20 JLY 2013 - V 0.1.201.1  {BETA}
