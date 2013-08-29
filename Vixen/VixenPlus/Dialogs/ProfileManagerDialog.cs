@@ -13,7 +13,7 @@ using Properties;
 
 namespace VixenPlus.Dialogs {
     public partial class ProfileManagerDialog : Form {
-        private readonly List<int> _channelOrderMapping;
+        private List<int> _channelOrderMapping;
         private readonly Color _pictureBoxHoverColor = Color.FromArgb(80, 80, 255);
         private readonly SolidBrush _pictureBrush = new SolidBrush(Color.Black);
         private readonly Color _pictureDisabledColor = Color.FromArgb(192, 192, 192);
@@ -410,6 +410,11 @@ namespace VixenPlus.Dialogs {
                 MessageBox.Show(Resources.RemoveProfileItem, Vendor.ProductName, MessageBoxButtons.YesNo,
                                 MessageBoxIcon.Question) == DialogResult.Yes) {
                 _channelOrderMapping.RemoveAt(_contextProfile.Channels.IndexOf((Channel) treeViewProfile.SelectedNode.Tag));
+                var newMap = new List<int>();
+                for (var i = 0; i < _channelOrderMapping.Count; i++) {
+                    newMap.Add(i);
+                }
+                _channelOrderMapping = newMap;
                 _contextProfile.RemoveChannel((Channel) treeViewProfile.SelectedNode.Tag);
                 treeViewProfile.Nodes.Remove(treeViewProfile.SelectedNode);
                 treeViewProfile.SelectedNode = null;
