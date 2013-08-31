@@ -1303,7 +1303,7 @@ namespace Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to Free or open source
-        ///project used:.
+        ///projects used:.
         /// </summary>
         public static string OpenSource {
             get {
