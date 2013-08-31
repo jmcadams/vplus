@@ -149,10 +149,20 @@ namespace VixenPlus.Dialogs {
                 _eventSequence.Time = _eventSequence.Audio.Duration;
             }
             _eventSequence.AudioDeviceIndex = comboBoxAudioDevice.SelectedIndex - 1;
+            var num2 = Math.Min(_newEventValues.GetLength(0), _eventSequence.EventValues.GetLength(0));
+            var num3 = Math.Min(_newEventValues.GetLength(1), _eventSequence.EventValues.GetLength(1));
+            for (var i = 0; i < num2; i++) {
+                for (var j = 0; j < num3; j++) {
+                    _eventSequence.EventValues[i, j] = (byte)(_eventSequence.EventValues[i, j] | _newEventValues[i, j]);
+                }
+            }
         }
 
 
         private void buttonPlayPause_Click(object sender, EventArgs e) {
+// ReSharper disable LocalizableElement
+            buttonPlayPause.Text = buttonPlayPause.Text == "Play" ? "Pause" : "Play";
+// ReSharper restore LocalizableElement
             if (_playing) {
                 buttonPlayPause.Image = _paused ? pictureBoxPause.Image : pictureBoxPlayBlue.Image;
                 if (_soundChannel != null) {
@@ -185,6 +195,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void buttonStop_Click(object sender, EventArgs e) {
+            buttonPlayPause.Text = "Play";
             Stop();
         }
 
@@ -227,15 +238,6 @@ namespace VixenPlus.Dialogs {
         private uint GetPosition() {
             return (_soundChannel != null) && _soundChannel.IsPlaying ? _soundChannel.Position : (uint) (_stopwatch.ElapsedMilliseconds + _timeOffset);
         }
-
-
-        //ComponentResourceManager manager = new ComponentResourceManager(typeof(AudioDialog));
-        //this.pictureBoxPlay.Image = (Image)manager.GetObject("pictureBoxPlay.Image");
-        //this.pictureBoxPlayBlue.Image = (Image)manager.GetObject("pictureBoxPlayBlue.Image");
-        //this.pictureBoxPause.Image = (Image)manager.GetObject("pictureBoxPause.Image");
-        //this.buttonStop.Image = (Image)manager.GetObject("buttonStop.Image");
-        //this.buttonPlayPause.Image = (Image) manager.GetObject("buttonPlayPause.Image");
-
 
         private void linkLabelAssignedKeys_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             contextMenuStrip.Show(linkLabelAssignedKeys.PointToScreen(new Point(0, linkLabelAssignedKeys.Height)));
