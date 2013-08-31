@@ -51,47 +51,53 @@ namespace VixenPlus.Dialogs{
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonDone = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.pictureBoxRemoveProfile = new System.Windows.Forms.PictureBox();
-            this.pictureBoxEditProfile = new System.Windows.Forms.PictureBox();
-            this.pictureBoxAddProfile = new System.Windows.Forms.PictureBox();
-            this.pictureBoxProfileDeleteChannelOrder = new System.Windows.Forms.PictureBox();
-            this.pictureBoxProfileSaveChannelOrder = new System.Windows.Forms.PictureBox();
-            this.pictureBoxProfileChannelColors = new System.Windows.Forms.PictureBox();
-            this.pictureBoxProfileChannelOutputMask = new System.Windows.Forms.PictureBox();
-            this.pictureBoxProfileChannelOutputs = new System.Windows.Forms.PictureBox();
-            this.pictureBoxReturnFromProfileEdit = new System.Windows.Forms.PictureBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tabControl = new VixenPlus.TabControl(this.components);
             this.tabProfiles = new System.Windows.Forms.TabPage();
+            this.pictureBoxRemoveProfile = new System.Windows.Forms.PictureBox();
+            this.pictureBoxEditProfile = new System.Windows.Forms.PictureBox();
+            this.pictureBoxAddProfile = new System.Windows.Forms.PictureBox();
             this.listBoxProfiles = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabEditProfile = new System.Windows.Forms.TabPage();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btnDeleteChannelOrder = new System.Windows.Forms.Button();
+            this.btnSaveChannelOrder = new System.Windows.Forms.Button();
+            this.pictureBoxProfileDeleteChannelOrder = new System.Windows.Forms.PictureBox();
+            this.pictureBoxProfileSaveChannelOrder = new System.Windows.Forms.PictureBox();
             this.comboBoxChannelOrder = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.pictureBoxProfileChannelColors = new System.Windows.Forms.PictureBox();
+            this.pictureBoxProfileChannelOutputMask = new System.Windows.Forms.PictureBox();
+            this.pictureBoxProfileChannelOutputs = new System.Windows.Forms.PictureBox();
             this.buttonPlugins = new System.Windows.Forms.Button();
             this.treeViewProfile = new System.Windows.Forms.TreeView();
             this.buttonChangeProfileName = new System.Windows.Forms.Button();
             this.labelProfileName = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.buttonAddProfileChannel = new System.Windows.Forms.Button();
+            this.pictureBoxReturnFromProfileEdit = new System.Windows.Forms.PictureBox();
             this.buttonRemoveProfileChannels = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.textBoxProfileChannelCount = new System.Windows.Forms.TextBox();
             this.buttonAddMultipleProfileChannels = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
+            this.tabControl.SuspendLayout();
+            this.tabProfiles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRemoveProfile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxEditProfile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAddProfile)).BeginInit();
+            this.tabEditProfile.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfileDeleteChannelOrder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfileSaveChannelOrder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfileChannelColors)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfileChannelOutputMask)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfileChannelOutputs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxReturnFromProfileEdit)).BeginInit();
-            this.tabControl.SuspendLayout();
-            this.tabProfiles.SuspendLayout();
-            this.tabEditProfile.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -125,6 +131,36 @@ namespace VixenPlus.Dialogs{
             this.buttonDone.Text = "OK";
             this.buttonDone.UseVisualStyleBackColor = true;
             this.buttonDone.Click += new System.EventHandler(this.buttonDone_Click);
+            // 
+            // tabControl
+            // 
+            this.tabControl.Controls.Add(this.tabProfiles);
+            this.tabControl.Controls.Add(this.tabEditProfile);
+            this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl.HideTabs = true;
+            this.tabControl.Location = new System.Drawing.Point(0, 0);
+            this.tabControl.Multiline = true;
+            this.tabControl.Name = "tabControl";
+            this.tabControl.OurMultiline = true;
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(598, 424);
+            this.tabControl.TabIndex = 2;
+            // 
+            // tabProfiles
+            // 
+            this.tabProfiles.BackColor = System.Drawing.Color.Transparent;
+            this.tabProfiles.Controls.Add(this.pictureBoxRemoveProfile);
+            this.tabProfiles.Controls.Add(this.pictureBoxEditProfile);
+            this.tabProfiles.Controls.Add(this.pictureBoxAddProfile);
+            this.tabProfiles.Controls.Add(this.listBoxProfiles);
+            this.tabProfiles.Controls.Add(this.label1);
+            this.tabProfiles.Location = new System.Drawing.Point(0, 0);
+            this.tabProfiles.Name = "tabProfiles";
+            this.tabProfiles.Padding = new System.Windows.Forms.Padding(3);
+            this.tabProfiles.Size = new System.Drawing.Size(598, 424);
+            this.tabProfiles.TabIndex = 0;
+            this.tabProfiles.Text = "tabProfiles";
+            this.tabProfiles.UseVisualStyleBackColor = true;
             // 
             // pictureBoxRemoveProfile
             // 
@@ -170,106 +206,6 @@ namespace VixenPlus.Dialogs{
             this.pictureBoxAddProfile.MouseEnter += new System.EventHandler(this.pictureBoxAddProfile_MouseEnter);
             this.pictureBoxAddProfile.MouseLeave += new System.EventHandler(this.pictureBoxAddProfile_MouseLeave);
             // 
-            // pictureBoxProfileDeleteChannelOrder
-            // 
-            this.pictureBoxProfileDeleteChannelOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBoxProfileDeleteChannelOrder.BackColor = System.Drawing.Color.LightGray;
-            this.pictureBoxProfileDeleteChannelOrder.Enabled = false;
-            this.pictureBoxProfileDeleteChannelOrder.Location = new System.Drawing.Point(498, 231);
-            this.pictureBoxProfileDeleteChannelOrder.Name = "pictureBoxProfileDeleteChannelOrder";
-            this.pictureBoxProfileDeleteChannelOrder.Size = new System.Drawing.Size(16, 16);
-            this.pictureBoxProfileDeleteChannelOrder.TabIndex = 38;
-            this.pictureBoxProfileDeleteChannelOrder.TabStop = false;
-            this.toolTip.SetToolTip(this.pictureBoxProfileDeleteChannelOrder, "Delete the current channel order");
-            this.pictureBoxProfileDeleteChannelOrder.Click += new System.EventHandler(this.pictureBoxProfileDeleteChannelOrder_Click);
-            // 
-            // pictureBoxProfileSaveChannelOrder
-            // 
-            this.pictureBoxProfileSaveChannelOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBoxProfileSaveChannelOrder.BackColor = System.Drawing.Color.DarkGray;
-            this.pictureBoxProfileSaveChannelOrder.Location = new System.Drawing.Point(476, 231);
-            this.pictureBoxProfileSaveChannelOrder.Name = "pictureBoxProfileSaveChannelOrder";
-            this.pictureBoxProfileSaveChannelOrder.Size = new System.Drawing.Size(16, 16);
-            this.pictureBoxProfileSaveChannelOrder.TabIndex = 37;
-            this.pictureBoxProfileSaveChannelOrder.TabStop = false;
-            this.toolTip.SetToolTip(this.pictureBoxProfileSaveChannelOrder, "Save the current channel order");
-            this.pictureBoxProfileSaveChannelOrder.Click += new System.EventHandler(this.pictureBoxProfileSaveChannelOrder_Click);
-            // 
-            // pictureBoxProfileChannelColors
-            // 
-            this.pictureBoxProfileChannelColors.BackColor = System.Drawing.Color.Gray;
-            this.pictureBoxProfileChannelColors.Location = new System.Drawing.Point(87, 101);
-            this.pictureBoxProfileChannelColors.Name = "pictureBoxProfileChannelColors";
-            this.pictureBoxProfileChannelColors.Size = new System.Drawing.Size(16, 16);
-            this.pictureBoxProfileChannelColors.TabIndex = 32;
-            this.pictureBoxProfileChannelColors.TabStop = false;
-            this.toolTip.SetToolTip(this.pictureBoxProfileChannelColors, "Set all channel colors");
-            this.pictureBoxProfileChannelColors.Click += new System.EventHandler(this.pictureBoxProfileChannelColors_Click);
-            // 
-            // pictureBoxProfileChannelOutputMask
-            // 
-            this.pictureBoxProfileChannelOutputMask.BackColor = System.Drawing.Color.DimGray;
-            this.pictureBoxProfileChannelOutputMask.Location = new System.Drawing.Point(87, 77);
-            this.pictureBoxProfileChannelOutputMask.Name = "pictureBoxProfileChannelOutputMask";
-            this.pictureBoxProfileChannelOutputMask.Size = new System.Drawing.Size(16, 16);
-            this.pictureBoxProfileChannelOutputMask.TabIndex = 31;
-            this.pictureBoxProfileChannelOutputMask.TabStop = false;
-            this.toolTip.SetToolTip(this.pictureBoxProfileChannelOutputMask, "Enable/disable channels for this profile");
-            this.pictureBoxProfileChannelOutputMask.Click += new System.EventHandler(this.pictureBoxProfileChannelOutputMask_Click);
-            // 
-            // pictureBoxProfileChannelOutputs
-            // 
-            this.pictureBoxProfileChannelOutputs.BackColor = System.Drawing.Color.Black;
-            this.pictureBoxProfileChannelOutputs.Location = new System.Drawing.Point(87, 53);
-            this.pictureBoxProfileChannelOutputs.Name = "pictureBoxProfileChannelOutputs";
-            this.pictureBoxProfileChannelOutputs.Size = new System.Drawing.Size(16, 16);
-            this.pictureBoxProfileChannelOutputs.TabIndex = 30;
-            this.pictureBoxProfileChannelOutputs.TabStop = false;
-            this.toolTip.SetToolTip(this.pictureBoxProfileChannelOutputs, "Change the channel outputs");
-            this.pictureBoxProfileChannelOutputs.Click += new System.EventHandler(this.pictureBoxProfileChannelOutputs_Click);
-            // 
-            // pictureBoxReturnFromProfileEdit
-            // 
-            this.pictureBoxReturnFromProfileEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.pictureBoxReturnFromProfileEdit.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxReturnFromProfileEdit.Image")));
-            this.pictureBoxReturnFromProfileEdit.Location = new System.Drawing.Point(11, 349);
-            this.pictureBoxReturnFromProfileEdit.Name = "pictureBoxReturnFromProfileEdit";
-            this.pictureBoxReturnFromProfileEdit.Size = new System.Drawing.Size(48, 48);
-            this.pictureBoxReturnFromProfileEdit.TabIndex = 22;
-            this.pictureBoxReturnFromProfileEdit.TabStop = false;
-            this.toolTip.SetToolTip(this.pictureBoxReturnFromProfileEdit, "Return to previous");
-            this.pictureBoxReturnFromProfileEdit.Click += new System.EventHandler(this.pictureBoxReturnFromChannelGroupEdit_Click);
-            // 
-            // tabControl
-            // 
-            this.tabControl.Controls.Add(this.tabProfiles);
-            this.tabControl.Controls.Add(this.tabEditProfile);
-            this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl.HideTabs = true;
-            this.tabControl.Location = new System.Drawing.Point(0, 0);
-            this.tabControl.Multiline = true;
-            this.tabControl.Name = "tabControl";
-            this.tabControl.OurMultiline = true;
-            this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(598, 424);
-            this.tabControl.TabIndex = 2;
-            // 
-            // tabProfiles
-            // 
-            this.tabProfiles.BackColor = System.Drawing.Color.Transparent;
-            this.tabProfiles.Controls.Add(this.pictureBoxRemoveProfile);
-            this.tabProfiles.Controls.Add(this.pictureBoxEditProfile);
-            this.tabProfiles.Controls.Add(this.pictureBoxAddProfile);
-            this.tabProfiles.Controls.Add(this.listBoxProfiles);
-            this.tabProfiles.Controls.Add(this.label1);
-            this.tabProfiles.Location = new System.Drawing.Point(0, 0);
-            this.tabProfiles.Name = "tabProfiles";
-            this.tabProfiles.Padding = new System.Windows.Forms.Padding(3);
-            this.tabProfiles.Size = new System.Drawing.Size(598, 424);
-            this.tabProfiles.TabIndex = 0;
-            this.tabProfiles.Text = "tabProfiles";
-            this.tabProfiles.UseVisualStyleBackColor = true;
-            // 
             // listBoxProfiles
             // 
             this.listBoxProfiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
@@ -295,6 +231,12 @@ namespace VixenPlus.Dialogs{
             // tabEditProfile
             // 
             this.tabEditProfile.BackColor = System.Drawing.Color.Transparent;
+            this.tabEditProfile.Controls.Add(this.button4);
+            this.tabEditProfile.Controls.Add(this.button3);
+            this.tabEditProfile.Controls.Add(this.button2);
+            this.tabEditProfile.Controls.Add(this.button1);
+            this.tabEditProfile.Controls.Add(this.btnDeleteChannelOrder);
+            this.tabEditProfile.Controls.Add(this.btnSaveChannelOrder);
             this.tabEditProfile.Controls.Add(this.pictureBoxProfileDeleteChannelOrder);
             this.tabEditProfile.Controls.Add(this.pictureBoxProfileSaveChannelOrder);
             this.tabEditProfile.Controls.Add(this.comboBoxChannelOrder);
@@ -321,6 +263,88 @@ namespace VixenPlus.Dialogs{
             this.tabEditProfile.Text = "tabEditProfile";
             this.tabEditProfile.UseVisualStyleBackColor = true;
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(28, 114);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 43;
+            this.button3.Text = "Ch. Colors";
+            this.toolTip.SetToolTip(this.button3, "Set all channel colors");
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.pictureBoxProfileChannelColors_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(28, 84);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 42;
+            this.button2.Text = "Ch. Mask";
+            this.toolTip.SetToolTip(this.button2, "Enable/disable channels for this profile");
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.pictureBoxProfileChannelOutputMask_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(28, 54);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 41;
+            this.button1.Text = "Ch. Outputs";
+            this.toolTip.SetToolTip(this.button1, "Change the channel outputs");
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.pictureBoxProfileChannelOutputs_Click);
+            // 
+            // btnDeleteChannelOrder
+            // 
+            this.btnDeleteChannelOrder.Location = new System.Drawing.Point(476, 253);
+            this.btnDeleteChannelOrder.Name = "btnDeleteChannelOrder";
+            this.btnDeleteChannelOrder.Size = new System.Drawing.Size(75, 23);
+            this.btnDeleteChannelOrder.TabIndex = 40;
+            this.btnDeleteChannelOrder.Text = "Delete Order";
+            this.toolTip.SetToolTip(this.btnDeleteChannelOrder, "Delete the current channel order");
+            this.btnDeleteChannelOrder.UseVisualStyleBackColor = true;
+            this.btnDeleteChannelOrder.Click += new System.EventHandler(this.pictureBoxProfileDeleteChannelOrder_Click);
+            // 
+            // btnSaveChannelOrder
+            // 
+            this.btnSaveChannelOrder.Location = new System.Drawing.Point(476, 224);
+            this.btnSaveChannelOrder.Name = "btnSaveChannelOrder";
+            this.btnSaveChannelOrder.Size = new System.Drawing.Size(75, 23);
+            this.btnSaveChannelOrder.TabIndex = 39;
+            this.btnSaveChannelOrder.Text = "Save Order";
+            this.toolTip.SetToolTip(this.btnSaveChannelOrder, "Save the current channel order");
+            this.btnSaveChannelOrder.UseVisualStyleBackColor = true;
+            this.btnSaveChannelOrder.Click += new System.EventHandler(this.pictureBoxProfileSaveChannelOrder_Click);
+            // 
+            // pictureBoxProfileDeleteChannelOrder
+            // 
+            this.pictureBoxProfileDeleteChannelOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBoxProfileDeleteChannelOrder.BackColor = System.Drawing.Color.LightGray;
+            this.pictureBoxProfileDeleteChannelOrder.Enabled = false;
+            this.pictureBoxProfileDeleteChannelOrder.Location = new System.Drawing.Point(378, 253);
+            this.pictureBoxProfileDeleteChannelOrder.Name = "pictureBoxProfileDeleteChannelOrder";
+            this.pictureBoxProfileDeleteChannelOrder.Size = new System.Drawing.Size(16, 16);
+            this.pictureBoxProfileDeleteChannelOrder.TabIndex = 38;
+            this.pictureBoxProfileDeleteChannelOrder.TabStop = false;
+            this.toolTip.SetToolTip(this.pictureBoxProfileDeleteChannelOrder, "Delete the current channel order");
+            this.pictureBoxProfileDeleteChannelOrder.Visible = false;
+            this.pictureBoxProfileDeleteChannelOrder.Click += new System.EventHandler(this.pictureBoxProfileDeleteChannelOrder_Click);
+            // 
+            // pictureBoxProfileSaveChannelOrder
+            // 
+            this.pictureBoxProfileSaveChannelOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBoxProfileSaveChannelOrder.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBoxProfileSaveChannelOrder.Location = new System.Drawing.Point(356, 253);
+            this.pictureBoxProfileSaveChannelOrder.Name = "pictureBoxProfileSaveChannelOrder";
+            this.pictureBoxProfileSaveChannelOrder.Size = new System.Drawing.Size(16, 16);
+            this.pictureBoxProfileSaveChannelOrder.TabIndex = 37;
+            this.pictureBoxProfileSaveChannelOrder.TabStop = false;
+            this.toolTip.SetToolTip(this.pictureBoxProfileSaveChannelOrder, "Save the current channel order");
+            this.pictureBoxProfileSaveChannelOrder.Visible = false;
+            this.pictureBoxProfileSaveChannelOrder.Click += new System.EventHandler(this.pictureBoxProfileSaveChannelOrder_Click);
+            // 
             // comboBoxChannelOrder
             // 
             this.comboBoxChannelOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -344,6 +368,42 @@ namespace VixenPlus.Dialogs{
             this.label7.Size = new System.Drawing.Size(73, 13);
             this.label7.TabIndex = 22;
             this.label7.Text = "Channel order";
+            // 
+            // pictureBoxProfileChannelColors
+            // 
+            this.pictureBoxProfileChannelColors.BackColor = System.Drawing.Color.Gray;
+            this.pictureBoxProfileChannelColors.Location = new System.Drawing.Point(87, 301);
+            this.pictureBoxProfileChannelColors.Name = "pictureBoxProfileChannelColors";
+            this.pictureBoxProfileChannelColors.Size = new System.Drawing.Size(16, 16);
+            this.pictureBoxProfileChannelColors.TabIndex = 32;
+            this.pictureBoxProfileChannelColors.TabStop = false;
+            this.toolTip.SetToolTip(this.pictureBoxProfileChannelColors, "Set all channel colors");
+            this.pictureBoxProfileChannelColors.Visible = false;
+            this.pictureBoxProfileChannelColors.Click += new System.EventHandler(this.pictureBoxProfileChannelColors_Click);
+            // 
+            // pictureBoxProfileChannelOutputMask
+            // 
+            this.pictureBoxProfileChannelOutputMask.BackColor = System.Drawing.Color.DimGray;
+            this.pictureBoxProfileChannelOutputMask.Location = new System.Drawing.Point(87, 277);
+            this.pictureBoxProfileChannelOutputMask.Name = "pictureBoxProfileChannelOutputMask";
+            this.pictureBoxProfileChannelOutputMask.Size = new System.Drawing.Size(16, 16);
+            this.pictureBoxProfileChannelOutputMask.TabIndex = 31;
+            this.pictureBoxProfileChannelOutputMask.TabStop = false;
+            this.toolTip.SetToolTip(this.pictureBoxProfileChannelOutputMask, "Enable/disable channels for this profile");
+            this.pictureBoxProfileChannelOutputMask.Visible = false;
+            this.pictureBoxProfileChannelOutputMask.Click += new System.EventHandler(this.pictureBoxProfileChannelOutputMask_Click);
+            // 
+            // pictureBoxProfileChannelOutputs
+            // 
+            this.pictureBoxProfileChannelOutputs.BackColor = System.Drawing.Color.Black;
+            this.pictureBoxProfileChannelOutputs.Location = new System.Drawing.Point(87, 253);
+            this.pictureBoxProfileChannelOutputs.Name = "pictureBoxProfileChannelOutputs";
+            this.pictureBoxProfileChannelOutputs.Size = new System.Drawing.Size(16, 16);
+            this.pictureBoxProfileChannelOutputs.TabIndex = 30;
+            this.pictureBoxProfileChannelOutputs.TabStop = false;
+            this.toolTip.SetToolTip(this.pictureBoxProfileChannelOutputs, "Change the channel outputs");
+            this.pictureBoxProfileChannelOutputs.Visible = false;
+            this.pictureBoxProfileChannelOutputs.Click += new System.EventHandler(this.pictureBoxProfileChannelOutputs_Click);
             // 
             // buttonPlugins
             // 
@@ -414,6 +474,19 @@ namespace VixenPlus.Dialogs{
             this.buttonAddProfileChannel.UseVisualStyleBackColor = true;
             this.buttonAddProfileChannel.Click += new System.EventHandler(this.buttonAddProfileChannel_Click);
             // 
+            // pictureBoxReturnFromProfileEdit
+            // 
+            this.pictureBoxReturnFromProfileEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pictureBoxReturnFromProfileEdit.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxReturnFromProfileEdit.Image")));
+            this.pictureBoxReturnFromProfileEdit.Location = new System.Drawing.Point(28, 253);
+            this.pictureBoxReturnFromProfileEdit.Name = "pictureBoxReturnFromProfileEdit";
+            this.pictureBoxReturnFromProfileEdit.Size = new System.Drawing.Size(48, 48);
+            this.pictureBoxReturnFromProfileEdit.TabIndex = 22;
+            this.pictureBoxReturnFromProfileEdit.TabStop = false;
+            this.toolTip.SetToolTip(this.pictureBoxReturnFromProfileEdit, "Return to previous");
+            this.pictureBoxReturnFromProfileEdit.Visible = false;
+            this.pictureBoxReturnFromProfileEdit.Click += new System.EventHandler(this.pictureBoxReturnFromChannelGroupEdit_Click);
+            // 
             // buttonRemoveProfileChannels
             // 
             this.buttonRemoveProfileChannels.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -466,6 +539,16 @@ namespace VixenPlus.Dialogs{
             this.label4.TabIndex = 1;
             this.label4.Text = "Edit a profile";
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(12, 395);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(139, 23);
+            this.button4.TabIndex = 44;
+            this.button4.Text = "Back to Profile Selection";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.pictureBoxReturnFromChannelGroupEdit_Click);
+            // 
             // ProfileManagerDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -480,20 +563,20 @@ namespace VixenPlus.Dialogs{
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Profiles and Channel Groups";
             this.panel1.ResumeLayout(false);
+            this.tabControl.ResumeLayout(false);
+            this.tabProfiles.ResumeLayout(false);
+            this.tabProfiles.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRemoveProfile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxEditProfile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAddProfile)).EndInit();
+            this.tabEditProfile.ResumeLayout(false);
+            this.tabEditProfile.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfileDeleteChannelOrder)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfileSaveChannelOrder)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfileChannelColors)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfileChannelOutputMask)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfileChannelOutputs)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxReturnFromProfileEdit)).EndInit();
-            this.tabControl.ResumeLayout(false);
-            this.tabProfiles.ResumeLayout(false);
-            this.tabProfiles.PerformLayout();
-            this.tabEditProfile.ResumeLayout(false);
-            this.tabEditProfile.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -514,5 +597,12 @@ namespace VixenPlus.Dialogs{
             }
             base.Dispose(disposing);
         }
+
+        private Button btnSaveChannelOrder;
+        private Button button3;
+        private Button button2;
+        private Button button1;
+        private Button btnDeleteChannelOrder;
+        private Button button4;
     }
 }

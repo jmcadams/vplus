@@ -332,7 +332,7 @@ namespace VixenPlus.Dialogs {
             // buttonClear
             // 
             this.buttonClear.Enabled = false;
-            this.buttonClear.Location = new System.Drawing.Point(193, 115);
+            this.buttonClear.Location = new System.Drawing.Point(237, 116);
             this.buttonClear.Name = "buttonClear";
             this.buttonClear.Size = new System.Drawing.Size(87, 23);
             this.buttonClear.TabIndex = 4;
@@ -342,19 +342,23 @@ namespace VixenPlus.Dialogs {
             // 
             // buttonStop
             // 
-            this.buttonStop.Location = new System.Drawing.Point(167, 116);
+            this.buttonStop.AutoSize = true;
+            this.buttonStop.Location = new System.Drawing.Point(184, 116);
             this.buttonStop.Name = "buttonStop";
-            this.buttonStop.Size = new System.Drawing.Size(20, 20);
+            this.buttonStop.Size = new System.Drawing.Size(47, 23);
             this.buttonStop.TabIndex = 3;
+            this.buttonStop.Text = "Pause";
             this.buttonStop.UseVisualStyleBackColor = true;
             this.buttonStop.Click += new System.EventHandler(this.buttonStop_Click);
             // 
             // buttonPlayPause
             // 
+            this.buttonPlayPause.AutoSize = true;
             this.buttonPlayPause.Location = new System.Drawing.Point(141, 116);
             this.buttonPlayPause.Name = "buttonPlayPause";
-            this.buttonPlayPause.Size = new System.Drawing.Size(20, 20);
+            this.buttonPlayPause.Size = new System.Drawing.Size(37, 23);
             this.buttonPlayPause.TabIndex = 2;
+            this.buttonPlayPause.Text = "Play";
             this.buttonPlayPause.UseVisualStyleBackColor = true;
             this.buttonPlayPause.Click += new System.EventHandler(this.buttonPlayPause_Click);
             // 
