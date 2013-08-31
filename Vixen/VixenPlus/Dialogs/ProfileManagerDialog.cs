@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -14,10 +13,7 @@ using Properties;
 namespace VixenPlus.Dialogs {
     public partial class ProfileManagerDialog : Form {
         private readonly List<int> _channelOrderMapping;
-        private readonly Color _pictureBoxHoverColor = Color.FromArgb(80, 80, 255);
         private readonly SolidBrush _pictureBrush = new SolidBrush(Color.Black);
-        private readonly Color _pictureDisabledColor = Color.FromArgb(192, 192, 192);
-        private readonly Color _pictureEnabledColor = Color.FromArgb(128, 128, 255);
         private readonly Font _pictureFont = new Font("Arial", 13f, FontStyle.Bold);
         private readonly Pen _picturePen = new Pen(Color.Black, 2f);
         private Profile _contextProfile;
@@ -35,9 +31,6 @@ namespace VixenPlus.Dialogs {
                 }
                 // ReSharper restore EmptyGeneralCatchClause
             }
-            var bitmap = new Bitmap(pictureBoxReturnFromProfileEdit.Image);
-            bitmap.MakeTransparent();
-            pictureBoxReturnFromProfileEdit.Image = bitmap;
             _channelOrderMapping = new List<int>();
             var profile = objectInContext as Profile;
             if (profile != null) {
@@ -136,7 +129,7 @@ namespace VixenPlus.Dialogs {
                     MessageBox.Show(Resources.NoChannelsToReorder, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
                     return;
                 }
-                pictureBoxProfileDeleteChannelOrder.Enabled = false;
+                btnDeleteChannelOrder.Enabled = false;
                 comboBoxChannelOrder.SelectedIndex = -1;
                 using (var dialog = new ChannelOrderDialog(channels, _channelOrderMapping)) {
                     if (dialog.ShowDialog() == DialogResult.OK) {
@@ -148,7 +141,7 @@ namespace VixenPlus.Dialogs {
                 }
             }
             else if (comboBoxChannelOrder.SelectedIndex == (comboBoxChannelOrder.Items.Count - 1)) {
-                pictureBoxProfileDeleteChannelOrder.Enabled = false;
+                btnDeleteChannelOrder.Enabled = false;
                 comboBoxChannelOrder.SelectedIndex = -1;
                 _channelOrderMapping.Clear();
                 for (var i = 0; i < channels.Count; i++) {
@@ -160,7 +153,7 @@ namespace VixenPlus.Dialogs {
                 _channelOrderMapping.Clear();
                 _channelOrderMapping.AddRange(((SortOrder) comboBoxChannelOrder.SelectedItem).ChannelIndexes);
                 _contextProfile.LastSort = comboBoxChannelOrder.SelectedIndex;
-                pictureBoxProfileDeleteChannelOrder.Enabled = true;
+                btnDeleteChannelOrder.Enabled = true;
             }
             ReloadProfileChannelObjects();
         }
@@ -192,19 +185,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void listBoxProfiles_SelectedIndexChanged(object sender, EventArgs e) {
-            pictureBoxEditProfile.Enabled = pictureBoxRemoveProfile.Enabled = listBoxProfiles.SelectedIndex != -1;
-        }
-
-
-        private void PictureBase(Control pb, Graphics g) {
-            var color = (m_hoveredButton == pb) ? _pictureBoxHoverColor : (pb.Enabled ? _pictureEnabledColor : _pictureDisabledColor);
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            var clientRectangle = pb.ClientRectangle;
-            clientRectangle.Inflate(-2, -2);
-            _picturePen.Color = color;
-            _pictureBrush.Color = color;
-            g.FillEllipse(Brushes.White, clientRectangle);
-            g.DrawEllipse(_picturePen, clientRectangle);
+            btnEditProfile.Enabled = btnRemoveProfile.Enabled = listBoxProfiles.SelectedIndex != -1;
         }
 
 
@@ -220,34 +201,8 @@ namespace VixenPlus.Dialogs {
             }
         }
 
-
-        private void pictureBoxAddProfile_MouseEnter(object sender, EventArgs e) {
-            m_hoveredButton = (PictureBox) sender;
-            ((PictureBox) sender).Refresh();
-        }
-
-
-        private void pictureBoxAddProfile_MouseLeave(object sender, EventArgs e) {
-            m_hoveredButton = null;
-            ((PictureBox) sender).Refresh();
-        }
-
-
-        private void pictureBoxAddProfile_Paint(object sender, PaintEventArgs e) {
-            PictureBase((PictureBox) sender, e.Graphics);
-            e.Graphics.DrawString("+", _pictureFont, _pictureBrush, 3f, 1f);
-        }
-
-
         private void pictureBoxEditProfile_Click(object sender, EventArgs e) {
             EditProfile((Profile) listBoxProfiles.SelectedItem);
-        }
-
-
-        private void pictureBoxEditProfile_Paint(object sender, PaintEventArgs e) {
-            PictureBase((PictureBox) sender, e.Graphics);
-            e.Graphics.DrawLine(_picturePen, 6, 11, 11, 6);
-            e.Graphics.DrawLine(_picturePen, 9, 14, 14, 9);
         }
 
 
@@ -299,7 +254,7 @@ namespace VixenPlus.Dialogs {
             }
             _contextProfile.Sorts.Remove((SortOrder) comboBoxChannelOrder.SelectedItem);
             comboBoxChannelOrder.Items.RemoveAt(comboBoxChannelOrder.SelectedIndex);
-            pictureBoxProfileDeleteChannelOrder.Enabled = false;
+            btnDeleteChannelOrder.Enabled = false;
         }
 
 
@@ -344,12 +299,6 @@ namespace VixenPlus.Dialogs {
 
         private void pictureBoxRemoveProfile_Click(object sender, EventArgs e) {
             RemoveProfile((Profile) listBoxProfiles.SelectedItem);
-        }
-
-
-        private void pictureBoxRemoveProfile_Paint(object sender, PaintEventArgs e) {
-            PictureBase((PictureBox) sender, e.Graphics);
-            e.Graphics.DrawString("-", _pictureFont, _pictureBrush, 4f, 0f);
         }
 
 
