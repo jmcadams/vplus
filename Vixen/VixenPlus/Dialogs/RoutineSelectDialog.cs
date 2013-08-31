@@ -27,7 +27,7 @@ namespace VixenPlus.Dialogs
 
         private void listBoxRoutines_DrawItem(object sender, DrawItemEventArgs e)
         {
-            if (_resizing) {
+            if (_resizing || e.Index == -1) {
                 return;
             }
             e.Graphics.FillRectangle(Brushes.White, e.Bounds);
