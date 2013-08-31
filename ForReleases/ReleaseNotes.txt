@@ -1,3 +1,14 @@
+31 AUG 2013 - V 0.1.243.1  {BETA}
+    Bug #104 - FIXED - Beat track tapping in audio dialog not working.
+    Bug #105 - FIXED - Channel count on toolbar not updated correctly when creating new sequence.
+    Bug #106 - NOT FIXED - Profile rename actually copies profile and doesn't rename.
+    Bug #107 - NOT FIXED - Profile rename can overwrite an existing profile if the same name is used.
+    Bug #108 - FIXED - Remove a channel crashes when trying to rename channels after removing a channel.
+    Bug #109 - FIXED - Routine dialog crashes when there are not any routines to select.
+    Bug #110 - Can not reproduce (yet) - Sort order UI has some weird behavior when moving channels around.
+    Grammar errors fixed.
+    Buttons fixed on profile dialog screen. No text was appearing.
+
 26 JLY 2013 - V 0.1.207.1  {BETA}
     Bug #100 - NOT FIXED - Certain DPI do not render well in Vixen+. See forum for work around.
     Bug #101 - FIXED - Crash when small grid window and a cell get clicked.
