@@ -170,8 +170,10 @@ namespace Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to budude: #100
-        ///ErnieHorning: #101-#103
+        ///   Looks up a localized string similar to budude
+        ///ErnieHorning
+        ///Materdaddy
+        ///flashpop
         ///.
         /// </summary>
         public static string Buggos {
