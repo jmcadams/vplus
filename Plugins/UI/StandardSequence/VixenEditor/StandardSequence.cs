@@ -3314,9 +3314,9 @@ namespace VixenEditor {
                     break;
 
                 //case Keys.N:
-                    tsbNutcracker_Click(null, null);
-                    keyEvent.Handled = true;
-                    break;
+                //    tsbNutcracker_Click(null, null);
+                //    keyEvent.Handled = true;
+                //    break;
 
                 case Keys.R:
                     if (keyEvent.Shift) {
@@ -4889,27 +4889,27 @@ namespace VixenEditor {
                 return;
             }
 
-            using (var nce = new NutcrackerControlDialog(_sequence, _selectedRange)) {
-                if (nce.ShowDialog() != DialogResult.OK) {
-                    return;
-                }
-                var ncData = nce.RenderData;
-                var ncType = nce.RenderType;
-                var ncEvents = nce.RenderEvents;
-                var ncRows = nce.RenderRows;
-                var ncCols = nce.RenderCols;
+            //using (var nce = new NutcrackerControlDialog(_sequence, _selectedRange)) {
+            //    if (nce.ShowDialog() != DialogResult.OK) {
+            //        return;
+            //    }
+            //    var ncData = nce.RenderData;
+            //    var ncType = nce.RenderType;
+            //    var ncEvents = nce.RenderEvents;
+            //    var ncRows = nce.RenderRows;
+            //    var ncCols = nce.RenderCols;
 
-                var cells = new Rectangle(0, 0, ncEvents, ncCols * ncRows * 3);
-                AddUndoItem(cells, UndoOriginalBehavior.Overwrite, "Nutcracker " + ncType);
-                for (var row = 0; row < ncCols * ncRows * 3; row++) {
-                    var channel = GetEventFromChannelNumber(row);
-                    for (var col = 0; col < ncEvents; col++) {
-                        var eventData = ncData[row, col];
-                        _sequence.EventValues[channel, col] = eventData;
-                    }
-                }
-                pictureBoxGrid.Invalidate();
-            }
+            //    var cells = new Rectangle(0, 0, ncEvents, ncCols * ncRows * 3);
+            //    AddUndoItem(cells, UndoOriginalBehavior.Overwrite, "Nutcracker " + ncType);
+            //    for (var row = 0; row < ncCols * ncRows * 3; row++) {
+            //        var channel = GetEventFromChannelNumber(row);
+            //        for (var col = 0; col < ncEvents; col++) {
+            //            var eventData = ncData[row, col];
+            //            _sequence.EventValues[channel, col] = eventData;
+            //        }
+            //    }
+            //    pictureBoxGrid.Invalidate();
+            //}
         }
 
         private void tsbNutcracker_DoubleClick(object sender, EventArgs e) {
