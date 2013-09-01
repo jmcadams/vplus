@@ -96,7 +96,7 @@ namespace VixenPlus {
         public string Name {
             get { return Path.GetFileNameWithoutExtension(FileName); }
             // ReSharper disable AssignNullToNotNullAttribute
-            set { FileName = Path.Combine(string.IsNullOrEmpty(FileName) ? Paths.ProfilePath : Path.GetDirectoryName(FileName), value + ".pro"); }
+            set { FileName = Path.Combine(string.IsNullOrEmpty(FileName) ? Paths.ProfilePath : Path.GetDirectoryName(FileName), value + Vendor.ProfilExtension); }
             // ReSharper restore AssignNullToNotNullAttribute
         }
 
