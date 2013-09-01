@@ -108,13 +108,41 @@ namespace VixenPlus.Dialogs {
 
 
         private bool ChangeProfileName() {
+            var result = false;
+            var newName = string.Empty;
+
             using (var dialog = new TextQueryDialog(Resources.ProfileNamePrompt, Resources.NameThisProfile, _contextProfile.Name)) {
-                if (dialog.ShowDialog() == DialogResult.OK) {
-                    _contextProfile.Name = dialog.Response;
-                    return true;
+                var showDialog = true;
+                while (showDialog) {
+                    if (dialog.ShowDialog() == DialogResult.OK) {
+                        newName = dialog.Response;
+                        showDialog = false;
+                        result = true;
+                        if (File.Exists(Path.Combine(Paths.ProfilePath, newName + Vendor.ProfilExtension))) {
+                            var overwriteResult = MessageBox.Show(
+                                String.Format("Profile with the name {0} exists.  Overwrite this profile?", newName), "Overwrite?",
+                                MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                            switch (overwriteResult) {
+                                case DialogResult.Yes:
+                                    break;
+                                case DialogResult.No:
+                                    result = false;
+                                    showDialog = true;
+                                    break;
+                                case DialogResult.Cancel:
+                                    result = false;
+                                    break;
+                            }
+                        }
+                    }
+                    else {
+                        showDialog = false;
+                    }
                 }
             }
-            return false;
+
+            if (result) _contextProfile.Name = newName;
+            return result;
         }
 
 
