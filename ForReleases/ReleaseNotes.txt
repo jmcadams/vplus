@@ -1,10 +1,14 @@
+DATE - VER  {BETA}
+    Fixed grammar errors in release notes.  I'm a programmer, not a speller :D
+    Fixed a channel count weirdness where the wrong count was shown when a group is selected.
+
 02 SEP 2013 - V 0.1.245.1  {BETA}
     Bug #111 - FIXED - Red X of death.  When managing profiles, exiting can cause the Red X of death. 
     Bug #112 - ISSUE IN ELF - Elf does not work when a group is selected.
     Bug #113 - FIXED - Sort Order will move up by one when edit/manage a profile, eventually crashing the system.
     Bug #114 - MITIGATED - Looping will cause a crash if let running for a long period. "Fix" writes to crash.log
         if the values are out of range to help with root cause diagnostics.
-    Bug #115 - FIXED - Drawing intensity in percentage mode sets intensity to the incorrect level.
+    Bug #115 - FIXED - Drawing intensity in percentange mode sets intensity to the incorrect level.
     Bug #116 - FIXED - Selecting sequence length on toolbar and pressing enter says it reset the length even though
         nothing changed.
     Bug #117 - CAN NOT REPRODUCE - Channel Order does not show correctly on toolbar when a sequence is opened.
@@ -50,7 +54,7 @@
     Disabled Nutcracker (Not done)
     Disabled UI indicator for bookmarks (Is crashing UI at times)
     Disabled Automatic update checking (Is crashing on server timeout at times)
-    Code cleanup, changed static class to extension methods where it made sense.  Code reads cleaner.
+    Code cleanup, changed static class to extention methods where it made sense.  Code reads cleaner.
     Killed off 9 different TODO items.
     
 
@@ -67,7 +71,7 @@
     Bug #5 Fixed, Undo/Redo not working right on non 1 to 1 channel mapping.  Ripped out the old way of doing
         undo/redo of passing channel numbers around and just pass a reference to the channel object itself.
     Bug #6 Fixed, Random took too long to generate on large selections.  I was iterating over the entire collection
-        on each generation to ensure the saturation was correct, reimplemented that algorithm to be more efficient.
+        on each generation to ensure the satuaration was correct, reimplemented that algorithm to be more efficient.
     Bug #7 Fixed, Random would not generate proper levels if Vary Intensity was selected and was using percentages.  
         I was calculating the value from % twice, causing an incorrect value.
     Bug #8 Fixed, Can't double click on the last row. The label that follows the selection was getting in the way
@@ -85,7 +89,7 @@
 
 02 JLY 2013 - V 0.0.182.1 (Private BETA)
     Bug #3 Fix: If nutcracker default files were missing or not found, would crash.  Removed the need for
-        default files by just adding them ungrammatically if needed.
+        default files by just adding them progammatically if needed.
     Added this ReleaseNotes.txt file
     Added License files to the releases
     Fixed Names in Credits
@@ -103,7 +107,7 @@
     Change Build Number Layout (Major.Minor.BuildDay.BuildNum)
     Bug #1 Fix: Will not persist any changes to channel properties when using a profile.
         Was not persisting the profile on a change to these properties.
-    Released the Open DMX and DMX Pro Output Plug-ins
+    Released the Open DMX and DMX Pro Output Plugins
 
 30 JNE 2013 - V 0.0.1.180 (Private BETA)
     Initial Private Beta Release

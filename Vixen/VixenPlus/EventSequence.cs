@@ -604,7 +604,7 @@ namespace VixenPlus {
 
 
         public int ChannelCount {
-            get { return _groupedAndSortedChannels.Count; }
+            get { return _groupedAndSortedChannels.Count == 0 ? _fullChannels.Count : _groupedAndSortedChannels.Count; }
             set {
                 while (_groupedAndSortedChannels.Count > value) {
                     _groupedAndSortedChannels.RemoveAt(value);
