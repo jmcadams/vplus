@@ -637,10 +637,10 @@ namespace VixenPlus {
             get { return _profile == null ? _sortOrders.LastSort : _profile.Sorts.LastSort; }
             set {
                 if (_profile == null) {
-                    _sortOrders.LastSort = value + 1;
+                    _sortOrders.LastSort = value;
                 }
                 else {
-                    _profile.Sorts.LastSort = value + 1;
+                    _profile.Sorts.LastSort = value;
                 }
                 ApplyGroupAndSort();
             }
@@ -689,7 +689,9 @@ namespace VixenPlus {
                 return;
             }
 
-            if (Sorts.CurrentOrder == null || FullChannelCount != Sorts.CurrentOrder.ChannelIndexes.Count) {
+            var currentOrder = Sorts.CurrentOrder;
+
+            if (currentOrder == null || FullChannelCount !=currentOrder.ChannelIndexes.Count) {
                 var msg = Sorts.CurrentOrder == null
                               ? "The sort order referenced does not exist.\n" +
                                 "Please edit your sequnce or profile to make sure you have the correct number of sort orders defined."
@@ -699,12 +701,11 @@ namespace VixenPlus {
                 return;
             }
 
-            var channelIndexes = Sorts.CurrentOrder;
+            var channelIndexes = currentOrder;
 
-            var sortedChannels = (from t in channelIndexes.ChannelIndexes
-                                  where _groupedAndSortedChannels.Contains(FullChannels[t])
-                                  select FullChannels[t]).ToList();
-            _groupedAndSortedChannels = sortedChannels;
+            _groupedAndSortedChannels = (from channel in channelIndexes.ChannelIndexes
+                                  where _groupedAndSortedChannels.Contains(FullChannels[channel])
+                                  select FullChannels[channel]).ToList();
         }
 
 
