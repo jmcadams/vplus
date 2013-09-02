@@ -35,7 +35,7 @@ namespace VixenEditor {
 
 
         public byte SelectedIntensity {
-            get { return (byte)(_actualLevels ? udLevel.Value : ((int)udLevel.Value).ToPercentage()); }
+            get { return (byte)(_actualLevels ? udLevel.Value : ((int)udLevel.Value).ToValue()); }
         }
     }
 }
