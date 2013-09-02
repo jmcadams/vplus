@@ -1,3 +1,16 @@
+2 SEP 2013 - V 0.1.245.1  {BETA}
+    Bug #111 - FIXED - Red X of death.  When managing profiles, exiting can cause the Red X of death. 
+    Bug #112 - ISSUE IN ELF - Elf does not work when a group is selected.
+    Bug #113 - FIXED - Sort Order will move up by one when edit/manage a profile, eventually crashing the system.
+    Bug #114 - MITIGATED - Looping will cause a crash if let running for a long period. "Fix" writes to crash.log
+        if the values are out of range to help with root cause diagnostics.
+    Bug #115 - FIXED - Drawing intensity in percentange mode sets intensity to the incorrect level.
+    Bug #116 - FIXED - Selecting sequence length on toolbar and pressing enter says it reset the length even though
+        nothing changed.
+    Bug #117 - CAN NOT REPRODUCE - Channel Order does not show correctly on toolbar when a sequence is opened.
+        Tested with both profile and non-profile sequences.
+    Bug #118 - FIXED - Test channels and test console open multiple instances.
+
 31 AUG 2013 - V 0.1.243.1  {BETA}
     Bug #104 - FIXED - Beat track tapping in audio dialog not working.
     Bug #105 - FIXED - Channel count on toolbar not updated correctly when creating new sequence.
