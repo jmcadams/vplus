@@ -23,16 +23,17 @@ namespace VixenEditor {
 
 
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TestConsoleDialog));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.consoleTrackBarMaster = new ConsoleTrackBar();
+            this.consoleTrackBarMaster = new VixenEditor.ConsoleTrackBar();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.consoleTrackBar7 = new ConsoleTrackBar();
-            this.consoleTrackBar5 = new ConsoleTrackBar();
-            this.consoleTrackBar6 = new ConsoleTrackBar();
-            this.consoleTrackBar3 = new ConsoleTrackBar();
-            this.consoleTrackBar4 = new ConsoleTrackBar();
-            this.consoleTrackBar2 = new ConsoleTrackBar();
-            this.consoleTrackBar1 = new ConsoleTrackBar();
+            this.consoleTrackBar7 = new VixenEditor.ConsoleTrackBar();
+            this.consoleTrackBar5 = new VixenEditor.ConsoleTrackBar();
+            this.consoleTrackBar6 = new VixenEditor.ConsoleTrackBar();
+            this.consoleTrackBar3 = new VixenEditor.ConsoleTrackBar();
+            this.consoleTrackBar4 = new VixenEditor.ConsoleTrackBar();
+            this.consoleTrackBar2 = new VixenEditor.ConsoleTrackBar();
+            this.consoleTrackBar1 = new VixenEditor.ConsoleTrackBar();
             this.buttonDone = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -59,13 +60,12 @@ namespace VixenEditor {
             this.consoleTrackBarMaster.Size = new System.Drawing.Size(68, 267);
             this.consoleTrackBarMaster.TabIndex = 0;
             this.consoleTrackBarMaster.Value = 0;
-            this.consoleTrackBarMaster.ValueChanged += new ConsoleTrackBar.ValueChangedHandler(this.consoleTrackBarMaster_ValueChanged);
+            this.consoleTrackBarMaster.ValueChanged += new VixenEditor.ConsoleTrackBar.ValueChangedHandler(this.consoleTrackBarMaster_ValueChanged);
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor =
-                ((System.Windows.Forms.AnchorStyles)
-                 (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.consoleTrackBar7);
             this.groupBox2.Controls.Add(this.consoleTrackBar5);
             this.groupBox2.Controls.Add(this.consoleTrackBar6);
@@ -91,7 +91,7 @@ namespace VixenEditor {
             this.consoleTrackBar7.Size = new System.Drawing.Size(90, 268);
             this.consoleTrackBar7.TabIndex = 6;
             this.consoleTrackBar7.Value = 0;
-            this.consoleTrackBar7.ValueChanged += new ConsoleTrackBar.ValueChangedHandler(this.consoleTrackBar_ValueChanged);
+            this.consoleTrackBar7.ValueChanged += new VixenEditor.ConsoleTrackBar.ValueChangedHandler(this.consoleTrackBar_ValueChanged);
             // 
             // consoleTrackBar5
             // 
@@ -104,7 +104,7 @@ namespace VixenEditor {
             this.consoleTrackBar5.Size = new System.Drawing.Size(90, 268);
             this.consoleTrackBar5.TabIndex = 5;
             this.consoleTrackBar5.Value = 0;
-            this.consoleTrackBar5.ValueChanged += new ConsoleTrackBar.ValueChangedHandler(this.consoleTrackBar_ValueChanged);
+            this.consoleTrackBar5.ValueChanged += new VixenEditor.ConsoleTrackBar.ValueChangedHandler(this.consoleTrackBar_ValueChanged);
             // 
             // consoleTrackBar6
             // 
@@ -117,7 +117,7 @@ namespace VixenEditor {
             this.consoleTrackBar6.Size = new System.Drawing.Size(90, 268);
             this.consoleTrackBar6.TabIndex = 4;
             this.consoleTrackBar6.Value = 0;
-            this.consoleTrackBar6.ValueChanged += new ConsoleTrackBar.ValueChangedHandler(this.consoleTrackBar_ValueChanged);
+            this.consoleTrackBar6.ValueChanged += new VixenEditor.ConsoleTrackBar.ValueChangedHandler(this.consoleTrackBar_ValueChanged);
             // 
             // consoleTrackBar3
             // 
@@ -130,7 +130,7 @@ namespace VixenEditor {
             this.consoleTrackBar3.Size = new System.Drawing.Size(90, 268);
             this.consoleTrackBar3.TabIndex = 3;
             this.consoleTrackBar3.Value = 0;
-            this.consoleTrackBar3.ValueChanged += new ConsoleTrackBar.ValueChangedHandler(this.consoleTrackBar_ValueChanged);
+            this.consoleTrackBar3.ValueChanged += new VixenEditor.ConsoleTrackBar.ValueChangedHandler(this.consoleTrackBar_ValueChanged);
             // 
             // consoleTrackBar4
             // 
@@ -143,7 +143,7 @@ namespace VixenEditor {
             this.consoleTrackBar4.Size = new System.Drawing.Size(90, 268);
             this.consoleTrackBar4.TabIndex = 2;
             this.consoleTrackBar4.Value = 0;
-            this.consoleTrackBar4.ValueChanged += new ConsoleTrackBar.ValueChangedHandler(this.consoleTrackBar_ValueChanged);
+            this.consoleTrackBar4.ValueChanged += new VixenEditor.ConsoleTrackBar.ValueChangedHandler(this.consoleTrackBar_ValueChanged);
             // 
             // consoleTrackBar2
             // 
@@ -156,7 +156,7 @@ namespace VixenEditor {
             this.consoleTrackBar2.Size = new System.Drawing.Size(90, 268);
             this.consoleTrackBar2.TabIndex = 1;
             this.consoleTrackBar2.Value = 0;
-            this.consoleTrackBar2.ValueChanged += new ConsoleTrackBar.ValueChangedHandler(this.consoleTrackBar_ValueChanged);
+            this.consoleTrackBar2.ValueChanged += new VixenEditor.ConsoleTrackBar.ValueChangedHandler(this.consoleTrackBar_ValueChanged);
             // 
             // consoleTrackBar1
             // 
@@ -169,12 +169,11 @@ namespace VixenEditor {
             this.consoleTrackBar1.Size = new System.Drawing.Size(90, 268);
             this.consoleTrackBar1.TabIndex = 0;
             this.consoleTrackBar1.Value = 0;
-            this.consoleTrackBar1.ValueChanged += new ConsoleTrackBar.ValueChangedHandler(this.consoleTrackBar_ValueChanged);
+            this.consoleTrackBar1.ValueChanged += new VixenEditor.ConsoleTrackBar.ValueChangedHandler(this.consoleTrackBar_ValueChanged);
             // 
             // buttonDone
             // 
-            this.buttonDone.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonDone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonDone.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonDone.Location = new System.Drawing.Point(737, 334);
             this.buttonDone.Name = "buttonDone";
@@ -194,9 +193,10 @@ namespace VixenEditor {
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = global::Properties.Resources.VixenPlus;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "TestConsoleDialog";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

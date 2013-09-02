@@ -4094,7 +4094,7 @@ namespace VixenEditor {
 
         private void toolStripButtonTestChannels_Click(object sender, EventArgs e) {
             try {
-                new TestChannelsDialog(_sequence, _executionInterface, (ModifierKeys & Keys.Shift) == Keys.Shift).Show();
+                new TestChannelsDialog(_sequence, _executionInterface, (ModifierKeys & Keys.Shift) == Keys.Shift).ShowDialog();
             }
             catch (Exception exception) {
                 MessageBox.Show(exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -4104,7 +4104,7 @@ namespace VixenEditor {
 
         private void toolStripButtonTestConsole_Click(object sender, EventArgs e) {
             try {
-                new TestConsoleDialog(_sequence, _executionInterface, (ModifierKeys & Keys.Shift) == Keys.Shift).Show();
+                new TestConsoleDialog(_sequence, _executionInterface, (ModifierKeys & Keys.Shift) == Keys.Shift).ShowDialog();
             }
             catch (Exception exception) {
                 MessageBox.Show(exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -4944,6 +4944,10 @@ namespace VixenEditor {
             }
 
             var programTime = (mils + (secs * 1000)) + (mins * 60000);
+            if (programTime == _sequence.Time) {
+                return;
+            }
+
             if (programTime == 0) {
                 MessageBox.Show(Resources.InvalidTimeFormat2, ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
