@@ -8,7 +8,7 @@ DATE - VER  {BETA}
     Bug #113 - FIXED - Sort Order will move up by one when edit/manage a profile, eventually crashing the system.
     Bug #114 - MITIGATED - Looping will cause a crash if let running for a long period. "Fix" writes to crash.log
         if the values are out of range to help with root cause diagnostics.
-    Bug #115 - FIXED - Drawing intensity in percentange mode sets intensity to the incorrect level.
+    Bug #115 - FIXED - Drawing intensity in percentage mode sets intensity to the incorrect level.
     Bug #116 - FIXED - Selecting sequence length on toolbar and pressing enter says it reset the length even though
         nothing changed.
     Bug #117 - CAN NOT REPRODUCE - Channel Order does not show correctly on toolbar when a sequence is opened.
