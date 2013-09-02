@@ -449,6 +449,7 @@ namespace VixenPlus {
 
             TotalEventPeriods = Cols;
             ResetOutputPlugins(channels, height);
+            ApplyGroupAndSort();
         }
 
 
@@ -636,10 +637,10 @@ namespace VixenPlus {
             get { return _profile == null ? _sortOrders.LastSort : _profile.Sorts.LastSort; }
             set {
                 if (_profile == null) {
-                    _sortOrders.LastSort = value;
+                    _sortOrders.LastSort = value + 1;
                 }
                 else {
-                    _profile.Sorts.LastSort = value;
+                    _profile.Sorts.LastSort = value + 1;
                 }
                 ApplyGroupAndSort();
             }
