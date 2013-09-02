@@ -692,7 +692,7 @@ namespace VixenPlus {
             var currentOrder = Sorts.CurrentOrder;
 
             if (currentOrder == null || FullChannelCount !=currentOrder.ChannelIndexes.Count) {
-                var msg = Sorts.CurrentOrder == null
+                var msg = currentOrder == null
                               ? "The sort order referenced does not exist.\n" +
                                 "Please edit your sequnce or profile to make sure you have the correct number of sort orders defined."
                               : "The selected channel order channel count does not match the sequence channel count and cannot be used.\n" +
@@ -701,9 +701,7 @@ namespace VixenPlus {
                 return;
             }
 
-            var channelIndexes = currentOrder;
-
-            _groupedAndSortedChannels = (from channel in channelIndexes.ChannelIndexes
+            _groupedAndSortedChannels = (from channel in currentOrder.ChannelIndexes
                                   where _groupedAndSortedChannels.Contains(FullChannels[channel])
                                   select FullChannels[channel]).ToList();
         }
