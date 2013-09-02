@@ -1346,6 +1346,17 @@ namespace VixenEditor {
                         if (_position >= hScrollBar1.Minimum && _position <= hScrollBar1.Maximum) {
                             hScrollBar1.Value = _position;
                         }
+                        else {
+// ReSharper disable AssignNullToNotNullAttribute
+                            var logFileName = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "crash.log");
+// ReSharper restore AssignNullToNotNullAttribute
+                            using (var crash = new StreamWriter(logFileName, true)) {
+                                crash.WriteLine(DateTime.Now);
+                                crash.WriteLine("Execution postion: {0}", executionPosition);
+                                crash.WriteLine("Event Period: {0}", _sequence.EventPeriod);
+                                crash.WriteLine("Computer postion: {0}", _position);
+                            }
+                        }
                         toolStripLabelExecutionPoint.Text = executionPosition.FormatNoMills();
                     }
                 }
@@ -1931,7 +1942,7 @@ namespace VixenEditor {
             if ((e.Button == MouseButtons.Left) && _mouseDownInGrid &&
                 _executionInterface.EngineStatus(_executionContextHandle) != Utils.ExecutionRunning) {
                 if (_lineRect.Left == -1) {
-                    DrawSelectionBox(e.X, e.Y, cellX, cellY, e);
+                    DrawSelectionBox(e.X, e.Y, cellX, cellY);
                 }
                 else {
                     DrawChaseLine(cellX, cellY);
@@ -1945,7 +1956,7 @@ namespace VixenEditor {
         }
 
 
-        private void DrawSelectionBox(int mouseX, int mouseY, int cellX, int cellY, MouseEventArgs e) {
+        private void DrawSelectionBox(int mouseX, int mouseY, int cellX, int cellY) {
             const int scrollNone = 0x0;
             const int scrollDown = 0x1;
             const int scrollRight = 0x2;
