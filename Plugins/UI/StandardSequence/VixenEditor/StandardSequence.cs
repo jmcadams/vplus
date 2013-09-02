@@ -1343,7 +1343,9 @@ namespace VixenEditor {
                         if (_position >= _sequence.TotalEventPeriods) {
                             _previousPosition = _position = _sequence.TotalEventPeriods - 1;
                         }
-                        hScrollBar1.Value = _position;
+                        if (_position >= hScrollBar1.Minimum && _position <= hScrollBar1.Maximum) {
+                            hScrollBar1.Value = _position;
+                        }
                         toolStripLabelExecutionPoint.Text = executionPosition.FormatNoMills();
                     }
                 }
