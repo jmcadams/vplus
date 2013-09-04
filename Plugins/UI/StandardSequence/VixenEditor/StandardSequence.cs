@@ -1347,15 +1347,8 @@ namespace VixenEditor {
                             hScrollBar1.Value = _position;
                         }
                         else {
-// ReSharper disable AssignNullToNotNullAttribute
-                            var logFileName = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "crash.log");
-// ReSharper restore AssignNullToNotNullAttribute
-                            using (var crash = new StreamWriter(logFileName, true)) {
-                                crash.WriteLine(DateTime.Now);
-                                crash.WriteLine("Execution postion: {0}", executionPosition);
-                                crash.WriteLine("Event Period: {0}", _sequence.EventPeriod);
-                                crash.WriteLine("Computer postion: {0}", _position);
-                            }
+                            string.Format("Execution position: {0} Period: {1} Computed: {2}", executionPosition,
+                                          _sequence.EventPeriod, _position).Log();
                         }
                         toolStripLabelExecutionPoint.Text = executionPosition.FormatNoMills();
                     }
