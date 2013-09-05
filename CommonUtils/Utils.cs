@@ -34,7 +34,7 @@ namespace CommonUtils {
             return ((backgroundColor.R * 299) + (backgroundColor.G * 587) + (backgroundColor.B * 114)) / 1000 >= 128 ? Color.Black : Color.White;
         }
 
-        public static string Log(this string message) {
+        public static void Log(this string message) {
             using (var crash = new StreamWriter(LogFile, true)) {
                 crash.WriteLine(message);
             }
