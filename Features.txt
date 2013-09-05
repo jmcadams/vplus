@@ -14,7 +14,7 @@ Toolbars
 -- Playback speed slider shows standard speeds when selected
 -- Show selected profile or embedded profile by clicking next to the mask
 -- Undo/Redo shows better information that just "Undo Overwrite at..."
--- Undo/Redo tooltip text updates when clickedfr
+-- Undo/Redo tooltip text updates when clicked
 
 Editing Grid area
 -- Shows selection information while selecting and is semi transparent
