@@ -1,16 +1,16 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 
+using CommonUtils;
+
 using Properties;
 
 namespace VixenPlus {
     internal static class Program {
-
-        private static readonly string LogFileName = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "crash.log");
-
 
         [STAThread]
         private static void Main(string[] args) {
@@ -51,20 +51,17 @@ namespace VixenPlus {
 
 
         private static void LogException(string message, string stack, bool isTerminating) {
-            var version = Assembly.GetExecutingAssembly().GetName().Version;
-            using (var crash = new StreamWriter(LogFileName, true)) {
-                crash.WriteLine(Resources.FormattedVersion, version);
-                crash.WriteLine(DateTime.Now);
-                crash.WriteLine("Is Terminating? {0}", isTerminating);
-                crash.WriteLine(message);
-                crash.WriteLine(stack);
-            }
+            string.Format(Resources.FormattedVersion, Assembly.GetExecutingAssembly().GetName().Version).Log();
+            DateTime.Now.ToString(CultureInfo.InvariantCulture).Log();
+            string.Format("Is Terminating? {0}", isTerminating).Log();
+            message.Log();
+            stack.Log();
         }
 
 
         private static void ShowException(Exception exception, bool isTerminating) {
             var msgFormat = isTerminating ? Resources.CriticalErrorOccurred : Resources.SoftErrorOccured;
-            var msg = string.Format(msgFormat, LogFileName, exception.Message, exception.StackTrace, Vendor.ProductName);
+            var msg = string.Format(msgFormat, Utils.LogFileName, exception.Message, exception.StackTrace, Vendor.ProductName);
             var btns = isTerminating ? MessageBoxButtons.OK : MessageBoxButtons.YesNo;
             var icon = isTerminating ? MessageBoxIcon.Error : MessageBoxIcon.Question;
 

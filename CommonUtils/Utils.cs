@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Windows.Forms;
 using CommonControls;
 
@@ -16,7 +17,10 @@ namespace CommonUtils {
         public const int ExecutionPaused = 2;
         public const int ExecutionRunning = 1;
 
+        public const string LogFileName = "crash.log";
+
         private static readonly SolidBrush GenericBrush = new SolidBrush(Color.Black);
+        private static readonly string LogFile =  Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), LogFileName);
         private const string Checkmark = "\u2714";
 
 
@@ -28,6 +32,12 @@ namespace CommonUtils {
 
         public static Color GetForeColor(this Color backgroundColor) {
             return ((backgroundColor.R * 299) + (backgroundColor.G * 587) + (backgroundColor.B * 114)) / 1000 >= 128 ? Color.Black : Color.White;
+        }
+
+        public static void Log(this string message) {
+            using (var crash = new StreamWriter(LogFile, true)) {
+                crash.WriteLine(message);
+            }
         }
 
         public static int ToInt(this string value) {
