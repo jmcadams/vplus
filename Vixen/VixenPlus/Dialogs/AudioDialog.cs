@@ -39,10 +39,10 @@ namespace VixenPlus.Dialogs {
             _timer = new System.Timers.Timer(10.0);
             _timer.Elapsed += TimerElapsed;
             _eventSequence = sequence;
-            _keyStates = new bool[_eventSequence.ChannelCount];
+            _keyStates = new bool[_eventSequence.FullChannelCount];
             _stopwatch = new Stopwatch();
             _newEventValues = new byte[_eventSequence.Rows,_eventSequence.Cols];
-            listBoxChannels.Items.AddRange(_eventSequence.Channels.ToArray());
+            listBoxChannels.Items.AddRange(_eventSequence.FullChannels.ToArray());
             _originalAudio = sequence.Audio;
             if (sequence.Audio != null) {
                 if (LoadAudio(_eventSequence.Audio.FileName) == null) {
@@ -62,7 +62,7 @@ namespace VixenPlus.Dialogs {
             if (!autoSize) {
                 UpdateRecordableLength();
             }
-            var items = (_eventSequence.Channels.ToArray());
+            var items = (_eventSequence.FullChannels.ToArray());
             channel1ToolStripMenuItem.Items.AddRange(items);
             channel2ToolStripMenuItem.Items.AddRange(items);
             channel3ToolStripMenuItem.Items.AddRange(items);
@@ -73,16 +73,16 @@ namespace VixenPlus.Dialogs {
             channel8ToolStripMenuItem.Items.AddRange(items);
             channel9ToolStripMenuItem.Items.AddRange(items);
             channel0ToolStripMenuItem.Items.AddRange(items);
-            channel1ToolStripMenuItem.SelectedIndex = Math.Min(0, _eventSequence.ChannelCount - 1);
-            channel2ToolStripMenuItem.SelectedIndex = Math.Min(1, _eventSequence.ChannelCount - 1);
-            channel3ToolStripMenuItem.SelectedIndex = Math.Min(2, _eventSequence.ChannelCount - 1);
-            channel4ToolStripMenuItem.SelectedIndex = Math.Min(3, _eventSequence.ChannelCount - 1);
-            channel5ToolStripMenuItem.SelectedIndex = Math.Min(4, _eventSequence.ChannelCount - 1);
-            channel6ToolStripMenuItem.SelectedIndex = Math.Min(5, _eventSequence.ChannelCount - 1);
-            channel7ToolStripMenuItem.SelectedIndex = Math.Min(6, _eventSequence.ChannelCount - 1);
-            channel8ToolStripMenuItem.SelectedIndex = Math.Min(7, _eventSequence.ChannelCount - 1);
-            channel9ToolStripMenuItem.SelectedIndex = Math.Min(8, _eventSequence.ChannelCount - 1);
-            channel0ToolStripMenuItem.SelectedIndex = Math.Min(9, _eventSequence.ChannelCount - 1);
+            channel1ToolStripMenuItem.SelectedIndex = Math.Min(0, _eventSequence.FullChannelCount - 1);
+            channel2ToolStripMenuItem.SelectedIndex = Math.Min(1, _eventSequence.FullChannelCount - 1);
+            channel3ToolStripMenuItem.SelectedIndex = Math.Min(2, _eventSequence.FullChannelCount - 1);
+            channel4ToolStripMenuItem.SelectedIndex = Math.Min(3, _eventSequence.FullChannelCount - 1);
+            channel5ToolStripMenuItem.SelectedIndex = Math.Min(4, _eventSequence.FullChannelCount - 1);
+            channel6ToolStripMenuItem.SelectedIndex = Math.Min(5, _eventSequence.FullChannelCount - 1);
+            channel7ToolStripMenuItem.SelectedIndex = Math.Min(6, _eventSequence.FullChannelCount - 1);
+            channel8ToolStripMenuItem.SelectedIndex = Math.Min(7, _eventSequence.FullChannelCount - 1);
+            channel9ToolStripMenuItem.SelectedIndex = Math.Min(8, _eventSequence.FullChannelCount - 1);
+            channel0ToolStripMenuItem.SelectedIndex = Math.Min(9, _eventSequence.FullChannelCount - 1);
             comboBoxAudioDevice.Items.Add(Resources.UseApplicationDefaultAudio);
             comboBoxAudioDevice.Items.AddRange(fmod.GetSoundDeviceList());
             comboBoxAudioDevice.SelectedIndex = _eventSequence.AudioDeviceIndex + 1;
@@ -305,7 +305,7 @@ namespace VixenPlus.Dialogs {
                     var num2 = (int) ((position) / (_eventSequence.EventPeriod));
                     if (num2 != _lastIndex) {
                         _lastIndex = num2;
-                        for (var i = 0; i < _eventSequence.ChannelCount; i++) {
+                        for (var i = 0; i < _eventSequence.FullChannelCount; i++) {
                             if (!_keyStates[i]) {
                                 continue;
                             }
