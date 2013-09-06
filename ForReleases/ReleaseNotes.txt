@@ -3,6 +3,7 @@ xx XXX xxxx - V 0.1.xxx.1  {BETA}
     Fixed a channel count weirdness where the wrong count was shown when a group is selected.
     Added an extension method so that logging to crash.log can be called from any class.
     Bug #119 - FIXED - Channel events not working properly with groups, will put the marks on wrong channel.
+    Bug #120 - FIXED - Ctrl-s (Save) is opening the sparkle function if the sequence is already in a saved state.
 
 02 SEP 2013 - V 0.1.245.1  {BETA}
     Bug #111 - FIXED - Red X of death.  When managing profiles, exiting can cause the Red X of death. 

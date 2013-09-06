@@ -3284,7 +3284,7 @@ namespace VixenEditor {
         /// </summary>
         /// <param name="keyEvent"></param>
         private void HandleAtoZKeys(KeyEventArgs keyEvent) {
-            if (keyEvent.KeyCode < Keys.A || keyEvent.KeyCode > Keys.Z) {
+            if (keyEvent.KeyCode < Keys.A || keyEvent.KeyCode > Keys.Z || keyEvent.Control || keyEvent.Alt) {
                 return;
             }
 
