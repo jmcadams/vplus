@@ -15,6 +15,7 @@ Toolbars
 -- Show selected profile or embedded profile by clicking next to the mask
 -- Undo/Redo shows better information that just "Undo Overwrite at..."
 -- Undo/Redo tooltip text updates when clicked
+-- Channel mapper has been integrated into Vixen+
 
 Editing Grid area
 -- Shows selection information while selecting and is semi transparent
