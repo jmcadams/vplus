@@ -5000,5 +5000,9 @@ namespace VixenEditor {
             }
         }
 
+
+        private void mapperTsb_Click(object sender, EventArgs e) {
+            MessageBox.Show("Mapper!");
+        }
     }
 }

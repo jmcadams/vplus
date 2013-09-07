@@ -9,6 +9,8 @@ namespace VixenEditor{
         private IContainer components;
         private ToolStripButton toolStripButtonWaveform;
         private ToolStripButton newSeqTsb;
+        private ToolStripButton mapperTsb;
+        private ToolStripSeparator toolStripSeparator3;
         private ToolStripButton openSequenceTsb;
         private ToolStripSeparator toolStripSeparator9;
         private ToolStripLabel toolStripLabel1;
@@ -486,6 +488,7 @@ namespace VixenEditor{
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.toolStripSequenceSettings = new System.Windows.Forms.ToolStrip();
             this.newSeqTsb = new System.Windows.Forms.ToolStripButton();
+            this.mapperTsb = new System.Windows.Forms.ToolStripButton();
             this.openSequenceTsb = new System.Windows.Forms.ToolStripButton();
             this.tbsSave = new System.Windows.Forms.ToolStripButton();
             this.tsbSaveAs = new System.Windows.Forms.ToolStripButton();
@@ -496,6 +499,7 @@ namespace VixenEditor{
             this.tsbAudio = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonWaveform = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonChannelOutputMask = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator19 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripDropDownButtonPlugins = new System.Windows.Forms.ToolStripDropDownButton();
@@ -1956,6 +1960,8 @@ namespace VixenEditor{
             this.openSequenceTsb,
             this.tbsSave,
             this.tsbSaveAs,
+            this.toolStripSeparator3,
+            this.mapperTsb,
             this.toolStripSeparator8,
             this.tbsTestChannels,
             this.tbsTestConsole,
@@ -1981,7 +1987,16 @@ namespace VixenEditor{
             this.newSeqTsb.Name = "newSeqTsb";
             this.newSeqTsb.Size = new System.Drawing.Size(52, 52);
             this.newSeqTsb.ToolTipText = "New Sequence";
-            this.newSeqTsb.Click += new System.EventHandler(this.newSeqTsb_Click);
+            this.newSeqTsb.Click += new System.EventHandler(this.newSeqTsb_Click);            // 
+            // mapperTsb
+            // 
+            this.mapperTsb.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.mapperTsb.Image = ((System.Drawing.Image)(resources.GetObject("tsbMap.Image")));
+            this.mapperTsb.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.mapperTsb.Name = "mapperTsb";
+            this.mapperTsb.Size = new System.Drawing.Size(52, 52);
+            this.mapperTsb.ToolTipText = "Channel Mapper";
+            this.mapperTsb.Click += new System.EventHandler(this.mapperTsb_Click);
             // 
             // openSequenceTsb
             // 
