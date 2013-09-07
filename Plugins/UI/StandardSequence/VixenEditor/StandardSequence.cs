@@ -1346,10 +1346,10 @@ namespace VixenEditor {
                         if (_position >= hScrollBar1.Minimum && _position <= hScrollBar1.Maximum) {
                             hScrollBar1.Value = _position;
                         }
-                        else {
-                            string.Format("Execution position: {0} Period: {1} Computed: {2}", executionPosition,
-                                          _sequence.EventPeriod, _position).Log();
-                        }
+                        //else {
+                        //    string.Format("Execution position: {0} Period: {1} Computed: {2}", executionPosition,
+                        //                  _sequence.EventPeriod, _position).Log();
+                        //}  // This code was put here for diagnosing bug #114
                         toolStripLabelExecutionPoint.Text = executionPosition.FormatNoMills();
                     }
                 }
