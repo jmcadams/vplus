@@ -263,6 +263,9 @@
     <EmbeddedResource Include="VixenEditor\ChannelCopyDialog.resx">
       <DependentUpon>ChannelCopyDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="VixenEditor\ChannelMapper.resx">
+      <DependentUpon>ChannelMapper.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\ConsoleTrackBar.resx">
       <DependentUpon>ConsoleTrackBar.cs</DependentUpon>
     </EmbeddedResource>
