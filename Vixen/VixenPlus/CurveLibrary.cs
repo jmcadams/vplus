@@ -142,17 +142,17 @@ namespace VixenPlus
             builder.Append(BuildWhereFragment(_lightCountFilters));
             builder.Append(BuildWhereFragment(_colorFilters));
             builder.Append(BuildWhereFragment(_controllerFilters));
-            if (builder.Length > 0)
+            if (builder.Length <= 0) {
+                return builder.ToString();
+            }
+            var str = builder.ToString();
+            if (str.StartsWith(" " + Filter.Join.And))
             {
-                var str = builder.ToString();
-                if (str.StartsWith(" " + Filter.Join.And))
-                {
-                    builder.Remove(0, 4);
-                }
-                else if (str.StartsWith(" " + Filter.Join.Or))
-                {
-                    builder.Remove(0, 3);
-                }
+                builder.Remove(0, 4);
+            }
+            else if (str.StartsWith(" " + Filter.Join.Or))
+            {
+                builder.Remove(0, 3);
             }
             return builder.ToString();
         }
@@ -160,35 +160,34 @@ namespace VixenPlus
         private string BuildWhereFragment(Filter[] filters)
         {
             var sb = new StringBuilder();
-            if ((filters != null) && (filters.Length > 0))
-            {
-                _delimiter = "'";
-                Action<Filter> action = f => sb.AppendFormat(" {0} {1} {2} {3}",
-                                                             new object[]
-                                                                 {
-                                                                     f.JoinOperator, f.ColumnName, OperatorString(f.ComparisonOperator),
-                                                                     FormatValue(f.Value, f.ColumnType)
-                                                                 });
-                Array.ForEach(filters, action);
+            if ((filters == null) || (filters.Length <= 0)) {
+                return sb.ToString();
             }
+            _delimiter = "'";
+            Action<Filter> action = f => sb.AppendFormat(" {0} {1} {2} {3}",
+                new object[]
+                {
+                    f.JoinOperator, f.ColumnName, OperatorString(f.ComparisonOperator),
+                    FormatValue(f.Value, f.ColumnType)
+                });
+            Array.ForEach(filters, action);
             return sb.ToString();
         }
 
         public CurveLibraryRecord Find(string manufacturer, string lightCount, int color, string controller)
         {
             Load(false);
-            if (_dataTable != null)
-            {
-                var rowArray = _dataTable.Select(GetSelectString(manufacturer, lightCount, color, controller));
-                if (rowArray.Length == 0)
-                {
-                    return null;
-                }
-                var row = rowArray[0];
-                return new CurveLibraryRecord(row["Manufacturer"].ToString(), row["LightCount"].ToString(), (int) row["Color"],
-                                              row["Controller"].ToString(), row["CurveData"].ToString());
+            if (_dataTable == null) {
+                return null;
             }
-            return null;
+            var rowArray = _dataTable.Select(GetSelectString(manufacturer, lightCount, color, controller));
+            if (rowArray.Length == 0)
+            {
+                return null;
+            }
+            var row = rowArray[0];
+            return new CurveLibraryRecord(row["Manufacturer"].ToString(), row["LightCount"].ToString(), (int) row["Color"],
+                row["Controller"].ToString(), row["CurveData"].ToString());
         }
 
         private string FormatValue(string value, Type valueType)
@@ -225,10 +224,11 @@ namespace VixenPlus
         {
             var list = new List<string>();
             Load(false);
-            if (_dataTable != null) {
-                var rowArray = _dataTable.Select(BuildWhereClause(), BuildSortClause());
-                list.AddRange(rowArray.Select(row => row[columnName].ToString()));
+            if (_dataTable == null) {
+                return list.ToArray();
             }
+            var rowArray = _dataTable.Select(BuildWhereClause(), BuildSortClause());
+            list.AddRange(rowArray.Select(row => row[columnName].ToString()));
             return list.ToArray();
         }
 

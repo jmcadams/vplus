@@ -301,10 +301,11 @@ namespace VixenEditor {
                     }
 
                     if (msg != String.Empty) {
-                        if (MessageBox.Show(msg + @"\nClick OK to try again.", @"Group Naming Error", MessageBoxButtons.OKCancel) == DialogResult.OK) {
-                            groupNameDialog.Response = value;
-                            validName = false;
-                        } 
+                        if (MessageBox.Show(msg + @"\nClick OK to try again.", @"Group Naming Error", MessageBoxButtons.OKCancel) != DialogResult.OK) {
+                            continue;
+                        }
+                        groupNameDialog.Response = value;
+                        validName = false;
                     }
                     else {
                         result = response;

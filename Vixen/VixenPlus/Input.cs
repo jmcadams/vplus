@@ -52,17 +52,16 @@ namespace VixenPlus
 
         internal bool GetChangedInternal()
         {
-            if (_isMappingIterator)
-            {
-                var changed = Changed;
-                if (!(_wasChanged || !changed))
-                {
-                    Owner.IteratorTriggered(this);
-                }
-                _wasChanged = changed;
-                return false;
+            if (!_isMappingIterator) {
+                return Changed;
             }
-            return Changed;
+            var changed = Changed;
+            if (!(_wasChanged || !changed))
+            {
+                Owner.IteratorTriggered(this);
+            }
+            _wasChanged = changed;
+            return false;
         }
 
         public abstract byte GetValue();

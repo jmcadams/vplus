@@ -18,10 +18,11 @@
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         internal static System.Resources.ResourceManager ResourceManager {
             get {
-                if (ReferenceEquals(_resourceMan, null)) {
-                    var manager = new System.Resources.ResourceManager("AppUpdate.Properties.Resources", typeof (Resources).Assembly);
-                    _resourceMan = manager;
+                if (!ReferenceEquals(_resourceMan, null)) {
+                    return _resourceMan;
                 }
+                var manager = new System.Resources.ResourceManager("AppUpdate.Properties.Resources", typeof (Resources).Assembly);
+                _resourceMan = manager;
                 return _resourceMan;
             }
         }

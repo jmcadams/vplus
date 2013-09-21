@@ -72,21 +72,23 @@ namespace VixenPlus {
 
         public static XmlNode GetNodeAlways(XmlNode contextNode, string nodeName) {
             var newChild = contextNode.SelectSingleNode(nodeName);
-            if (newChild == null) {
-                newChild = (contextNode.OwnerDocument ?? ((XmlDocument) contextNode)).CreateElement(nodeName);
-                contextNode.AppendChild(newChild);
+            if (newChild != null) {
+                return newChild;
             }
+            newChild = (contextNode.OwnerDocument ?? ((XmlDocument) contextNode)).CreateElement(nodeName);
+            contextNode.AppendChild(newChild);
             return newChild;
         }
 
 
         public static XmlNode GetNodeAlways(XmlNode contextNode, string nodeName, string defaultValue) {
             var newChild = contextNode.SelectSingleNode(nodeName);
-            if (newChild == null) {
-                newChild = (contextNode.OwnerDocument ?? ((XmlDocument) contextNode)).CreateElement(nodeName);
-                contextNode.AppendChild(newChild);
-                newChild.InnerText = defaultValue;
+            if (newChild != null) {
+                return newChild;
             }
+            newChild = (contextNode.OwnerDocument ?? ((XmlDocument) contextNode)).CreateElement(nodeName);
+            contextNode.AppendChild(newChild);
+            newChild.InnerText = defaultValue;
             return newChild;
         }
 
@@ -114,14 +116,15 @@ namespace VixenPlus {
 
 
         public static XmlNode SetAttribute(XmlNode node, string attributeName, string attributeValue) {
-            if (node.Attributes != null) {
-                var attribute = node.Attributes[attributeName];
-                if (attribute == null) {
-                    attribute = (node.OwnerDocument ?? ((XmlDocument) node)).CreateAttribute(attributeName);
-                    node.Attributes.Append(attribute);
-                }
-                attribute.Value = attributeValue;
+            if (node.Attributes == null) {
+                return node;
             }
+            var attribute = node.Attributes[attributeName];
+            if (attribute == null) {
+                attribute = (node.OwnerDocument ?? ((XmlDocument) node)).CreateAttribute(attributeName);
+                node.Attributes.Append(attribute);
+            }
+            attribute.Value = attributeValue;
             return node;
         }
 
@@ -133,14 +136,15 @@ namespace VixenPlus {
                 newChild = document.CreateElement(nodeName);
                 contextNode.AppendChild(newChild);
             }
-            if (newChild.Attributes != null) {
-                var node = newChild.Attributes[attributeName];
-                if (node == null) {
-                    node = document.CreateAttribute(attributeName);
-                    newChild.Attributes.Append(node);
-                }
-                node.Value = attributeValue;
+            if (newChild.Attributes == null) {
+                return newChild;
             }
+            var node = newChild.Attributes[attributeName];
+            if (node == null) {
+                node = document.CreateAttribute(attributeName);
+                newChild.Attributes.Append(node);
+            }
+            node.Value = attributeValue;
             return newChild;
         }
 

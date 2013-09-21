@@ -426,10 +426,11 @@ namespace VixenPlus {
         public int RequestContext(bool suppressAsynchronousContext, bool suppressSynchronousContext, Form keyInterceptor,
                                   ref XmlDocument syncEngineCommDoc) {
             var num = RequestContext(suppressAsynchronousContext, suppressSynchronousContext, keyInterceptor);
-            if (num != 0) {
-                var context = _registeredContexts[num];
-                context.SynchronousEngineComm = syncEngineCommDoc = context.SynchronousEngineInstance.CommDoc = Xml.CreateXmlDocument("Engine");
+            if (num == 0) {
+                return num;
             }
+            var context = _registeredContexts[num];
+            context.SynchronousEngineComm = syncEngineCommDoc = context.SynchronousEngineInstance.CommDoc = Xml.CreateXmlDocument("Engine");
             return num;
         }
 
@@ -572,22 +573,23 @@ namespace VixenPlus {
 
         public string QueryInstance(int index) {
             var builder = new StringBuilder();
-            if ((index >= 0) && (index < _registeredContexts.Count)) {
-                var array = new int[_registeredContexts.Count];
-                _registeredContexts.Keys.CopyTo(array, 0);
-                var context = _registeredContexts[array[index]];
-                builder.AppendLine("Handle: " + array[index]);
-                builder.AppendLine("Asynchronous suppressed: " + context.SuppressAsynchronousContext);
-                builder.AppendLine("Synchronous suppressed: " + context.SuppressSynchronousContext);
-                builder.AppendLine("Form count: " + context.OutputPlugInForms.Count);
-                builder.AppendLine("Form captions:");
-                foreach (var form in context.OutputPlugInForms) {
-                    builder.AppendLine("   " + form.Text);
-                }
-                builder.AppendLine("Local requestor: " + context.LocalRequestor);
-                builder.AppendLine("Key interceptor: " + ((context.KeyInterceptor != null) ? context.KeyInterceptor.Text : "(null)"));
-                builder.AppendLine("Object: " + ((context.Object != null) ? context.Object.Name : "(null)"));
+            if ((index < 0) || (index >= _registeredContexts.Count)) {
+                return builder.ToString();
             }
+            var array = new int[_registeredContexts.Count];
+            _registeredContexts.Keys.CopyTo(array, 0);
+            var context = _registeredContexts[array[index]];
+            builder.AppendLine("Handle: " + array[index]);
+            builder.AppendLine("Asynchronous suppressed: " + context.SuppressAsynchronousContext);
+            builder.AppendLine("Synchronous suppressed: " + context.SuppressSynchronousContext);
+            builder.AppendLine("Form count: " + context.OutputPlugInForms.Count);
+            builder.AppendLine("Form captions:");
+            foreach (var form in context.OutputPlugInForms) {
+                builder.AppendLine("   " + form.Text);
+            }
+            builder.AppendLine("Local requestor: " + context.LocalRequestor);
+            builder.AppendLine("Key interceptor: " + ((context.KeyInterceptor != null) ? context.KeyInterceptor.Text : "(null)"));
+            builder.AppendLine("Object: " + ((context.Object != null) ? context.Object.Name : "(null)"));
             return builder.ToString();
         }
 

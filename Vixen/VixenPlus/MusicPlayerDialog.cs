@@ -125,14 +125,15 @@ namespace VixenPlus {
             }
             try {
                 if (Convert.ToInt32(textBoxNarrativeIntervalCount.Text) >= 2) {
-                    if ((_narrativeSong == null) || !File.Exists(Path.Combine(Paths.AudioPath, _narrativeSong.FileName))) {
-                        if (MessageBox.Show(Resources.NoNarrativeFile, Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
-                            DialogResult.No) {
-                            DialogResult = DialogResult.None;
-                        }
-                        else {
-                            checkBoxEnableNarrative.Checked = false;
-                        }
+                    if ((_narrativeSong != null) && File.Exists(Path.Combine(Paths.AudioPath, _narrativeSong.FileName))) {
+                        return;
+                    }
+                    if (MessageBox.Show(Resources.NoNarrativeFile, Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
+                        DialogResult.No) {
+                        DialogResult = DialogResult.None;
+                    }
+                    else {
+                        checkBoxEnableNarrative.Checked = false;
                     }
                 }
                 else if (MessageBox.Show(Resources.IntervalTooSmall, Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==

@@ -77,7 +77,7 @@ namespace NutcrackerEffectsControl {
         public List<XElement> AddPreset(XElement newPreset) {
             var effects = GetPresets();
             effects.Add(newPreset);
-            saveDoc();
+            SaveDoc();
 
             return effects;
         } 
@@ -101,13 +101,13 @@ namespace NutcrackerEffectsControl {
             }
 
             pals.Add(pal);
-            saveDoc();
+            SaveDoc();
         }
 
 
         public void RemovePalette(string palette) {
             GetPaletteByName(palette).Remove();
-            saveDoc();
+            SaveDoc();
         }
 
 
@@ -119,7 +119,7 @@ namespace NutcrackerEffectsControl {
             return effectData != null ? effectData.Value : null;
         }
 
-        private void saveDoc() {
+        private void SaveDoc() {
             _doc.Save(Paths.NutcrackerDataFile);
         }
     }

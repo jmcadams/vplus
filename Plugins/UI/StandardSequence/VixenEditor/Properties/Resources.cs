@@ -20,11 +20,11 @@
         {
             get
             {
-                if (ReferenceEquals(_resourceManager, null))
-                {
-                    var manager = new ResourceManager("VixenEditor.Properties.Resources", typeof(Resources).Assembly);
-                    _resourceManager = manager;
+                if (!ReferenceEquals(_resourceManager, null)) {
+                    return _resourceManager;
                 }
+                var manager = new ResourceManager("VixenEditor.Properties.Resources", typeof(Resources).Assembly);
+                _resourceManager = manager;
                 return _resourceManager;
             }
         }

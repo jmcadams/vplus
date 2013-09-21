@@ -222,11 +222,11 @@ namespace VixenPlus.Dialogs {
                 num4 = 0;
             }
             num4 = (num4 + (num3 * 1000)) + (num2 * 60000);
-            if (num4 == 0) {
-                MessageBox.Show(Resources.InvalidTimeFormat, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return 0;
+            if (num4 != 0) {
+                return num4;
             }
-            return num4;
+            MessageBox.Show(Resources.InvalidTimeFormat, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            return 0;
         }
 
 

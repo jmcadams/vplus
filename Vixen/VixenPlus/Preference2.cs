@@ -137,11 +137,12 @@ namespace VixenPlus {
             var value = string.Empty;
             // ReSharper disable PossibleNullReferenceException
             var parentNode = _preferencesDoc.DocumentElement.SelectSingleNode(parentName);
-            if (parentNode != null) {
-                var attribute = parentNode.Attributes[name];
-                if (attribute != null) {
-                    value = attribute.Value;
-                }
+            if (parentNode == null) {
+                return value;
+            }
+            var attribute = parentNode.Attributes[name];
+            if (attribute != null) {
+                value = attribute.Value;
             }
             // ReSharper restore PossibleNullReferenceException
             return value;
@@ -256,43 +257,40 @@ namespace VixenPlus {
             newChild.InnerText = value;
         }
 
-
         private bool CreateIfMissing(string name, object defaultValue) {
             // ReSharper disable PossibleNullReferenceException
             var node = _preferencesDoc.DocumentElement.SelectSingleNode(name);
             // ReSharper restore PossibleNullReferenceException
-            var isMissing = false;
-            if (node == null) {
-                isMissing = true;
-                if (defaultValue is bool) {
-                    SetBoolean(name, (bool) defaultValue, (bool) defaultValue);
-                }
-                else if (defaultValue is int) {
-                    SetInteger(name, (int) defaultValue, (int) defaultValue);
-                }
-                else {
-                    SetString(name, defaultValue.ToString(), defaultValue.ToString());
-                }
+            if (node != null) {
+                return false;
             }
-            return isMissing;
+            if (defaultValue is bool) {
+                SetBoolean(name, (bool) defaultValue, (bool) defaultValue);
+            }
+            else if (defaultValue is int) {
+                SetInteger(name, (int) defaultValue, (int) defaultValue);
+            }
+            else {
+                SetString(name, defaultValue.ToString(), defaultValue.ToString());
+            }
+            return true;
         }
 
 
         private bool CreateIfMissing(string parentName, string name, object defaultValue) {
-            var isMissing = false;
-            if (GetChildString(parentName, name) == string.Empty) {
-                isMissing = true;
-                if (defaultValue is bool) {
-                    SetChildBoolean(parentName, name, (bool) defaultValue);
-                }
-                else if (defaultValue is int) {
-                    SetChildInteger(parentName, name, (int) defaultValue);
-                }
-                else {
-                    SetChildString(parentName, name, defaultValue.ToString());
-                }
+            if (GetChildString(parentName, name) != string.Empty) {
+                return false;
             }
-            return isMissing;
+            if (defaultValue is bool) {
+                SetChildBoolean(parentName, name, (bool) defaultValue);
+            }
+            else if (defaultValue is int) {
+                SetChildInteger(parentName, name, (int) defaultValue);
+            }
+            else {
+                SetChildString(parentName, name, defaultValue.ToString());
+            }
+            return true;
         }
 
 

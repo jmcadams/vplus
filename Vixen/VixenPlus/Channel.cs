@@ -118,10 +118,11 @@ namespace VixenPlus {
 
         public Channel Clone() {
             var channel = (Channel) MemberwiseClone();
-            if (DimmingCurve != null) {
-                channel.DimmingCurve = new byte[DimmingCurve.Length];
-                DimmingCurve.CopyTo(channel.DimmingCurve, 0);
+            if (DimmingCurve == null) {
+                return channel;
             }
+            channel.DimmingCurve = new byte[DimmingCurve.Length];
+            DimmingCurve.CopyTo(channel.DimmingCurve, 0);
             return channel;
         }
 

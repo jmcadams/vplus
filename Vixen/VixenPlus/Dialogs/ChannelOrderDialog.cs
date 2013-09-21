@@ -112,30 +112,32 @@ namespace VixenPlus.Dialogs {
 
         private void pictureBoxChannels_MouseDown(object sender, MouseEventArgs e) {
             if (_controlDown) {
-                if (_insertionIndex != -1) {
-                    var index = vScrollBar.Value + (e.Y / RowHeight);
-                    if (_insertionIndex != index) {
-                        if (_insertionIndex > index) {
-                            _insertionIndex--;
-                        }
-                        var item = ChannelMapping[index];
-                        ChannelMapping.RemoveAt(index);
-                        ChannelMapping.Insert(_insertionIndex, item);
-                        if (_insertionIndex < ChannelMapping.Count) {
-                            _insertionIndex++;
-                        }
-                        if (_insertionIndex < index) {
-                            if (vScrollBar.Value <= (vScrollBar.Maximum - vScrollBar.LargeChange)) {
-                                vScrollBar.Value++;
-                            }
-                            else {
-                                pictureBoxChannels.Refresh();
-                            }
-                        }
-                        else {
-                            pictureBoxChannels.Refresh();
-                        }
+                if (_insertionIndex == -1) {
+                    return;
+                }
+                var index = vScrollBar.Value + (e.Y / RowHeight);
+                if (_insertionIndex == index) {
+                    return;
+                }
+                if (_insertionIndex > index) {
+                    _insertionIndex--;
+                }
+                var item = ChannelMapping[index];
+                ChannelMapping.RemoveAt(index);
+                ChannelMapping.Insert(_insertionIndex, item);
+                if (_insertionIndex < ChannelMapping.Count) {
+                    _insertionIndex++;
+                }
+                if (_insertionIndex < index) {
+                    if (vScrollBar.Value <= (vScrollBar.Maximum - vScrollBar.LargeChange)) {
+                        vScrollBar.Value++;
                     }
+                    else {
+                        pictureBoxChannels.Refresh();
+                    }
+                }
+                else {
+                    pictureBoxChannels.Refresh();
                 }
             }
             else {

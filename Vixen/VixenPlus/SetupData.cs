@@ -38,15 +38,15 @@ namespace VixenPlus {
                 Xml.SetAttribute(node, "type", PluginType.Input.ToString());
                 return node;
             }
-            if (plugIn is IOutputPlugIn) {
-                Xml.SetAttribute(node, "type", PluginType.Output.ToString());
+            if (!(plugIn is IOutputPlugIn)) {
                 return node;
             }
+            Xml.SetAttribute(node, "type", PluginType.Output.ToString());
+            return node;
             //if (plugIn is IBidirectionalPlugin)
             //{
             //    Xml.SetAttribute(node, "type", PluginType.Bidirectional.ToString());
             //}
-            return node;
         }
 
 

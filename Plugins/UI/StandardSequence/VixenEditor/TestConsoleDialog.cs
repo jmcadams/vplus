@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 using Properties;
@@ -12,7 +13,6 @@ namespace VixenEditor {
     internal partial class TestConsoleDialog : Form {
         private readonly List<ConsoleTrackBar> _channelControls = new List<ConsoleTrackBar>();
         private readonly byte[] _channelLevels;
-        private readonly Channel[] _channels;
         private readonly int _executionContextHandle;
         private readonly IExecution _executionInterface;
         private readonly EventSequence _sequence;
@@ -25,20 +25,15 @@ namespace VixenEditor {
             _executionContextHandle = _executionInterface.RequestContext(false, true, null);
             _executionInterface.SetAsynchronousContext(_executionContextHandle, sequence);
             _channelLevels = new byte[_sequence.FullChannelCount];
-            _channels = new Channel[constrainToGroup ? _sequence.ChannelCount + 1 : _sequence.FullChannelCount + 1];
-            _channels[0] = new Channel(Resources.Unassigned, Color.Gainsboro, 0);
+            var channels = new Channel[constrainToGroup ? _sequence.ChannelCount + 1 : _sequence.FullChannelCount + 1];
+            channels[0] = new Channel(Resources.Unassigned, Color.Gainsboro, 0);
 
-            for (var channel = 1; channel <= _channels.Length - 1; channel++) {
-                _channels[channel] = constrainToGroup ? _sequence.Channels[channel - 1] : _sequence.FullChannels[channel - 1];
+            for (var channel = 1; channel <= channels.Length - 1; channel++) {
+                channels[channel] = constrainToGroup ? _sequence.Channels[channel - 1] : _sequence.FullChannels[channel - 1];
             }
 
-            foreach (var control in groupBox2.Controls) {
-                var trackBar = control as ConsoleTrackBar;
-                if ((trackBar == null) || (trackBar.Master == null)) {
-                    continue;
-                }
-
-                trackBar.TextStrings = _channels;
+            foreach (var trackBar in groupBox2.Controls.Cast<object>().Select(control => control as ConsoleTrackBar).Where(trackBar => (trackBar != null) && (trackBar.Master != null))) {
+                trackBar.TextStrings = channels;
                 trackBar.ResetIndex = 0;
                 _channelControls.Add(trackBar);
             }

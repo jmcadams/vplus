@@ -199,29 +199,30 @@ namespace VixenPlus {
 
         public string QueryInstance(int index) {
             var builder = new StringBuilder();
-            if ((index >= 0) && (index < InstanceList.Count)) {
-                var engine = InstanceList[index];
-                if (engine.CurrentObject != null) {
-                    builder.AppendLine("Program: " + engine.CurrentObject.Name);
-                    builder.AppendLine("Sequence count: " + engine.CurrentObject.EventSequences.Count);
-                    builder.AppendLine("Sequences:");
-                    foreach (var stub in engine.CurrentObject.EventSequences) {
-                        builder.AppendLine("   " + stub.FileName);
-                    }
-                }
-                else {
-                    builder.AppendLine("Program: (null)");
-                }
-                builder.AppendLine("Primary context: " + engine._primaryContext);
-                builder.Append(QueryContext(engine._engineContexts[engine._primaryContext]));
-                builder.AppendLine("Secondary context: " + engine._secondaryContext);
-                builder.Append(QueryContext(engine._engineContexts[engine._secondaryContext]));
-                builder.AppendLine("Loop: " + engine.IsLooping);
-                builder.AppendLine("Paused: " + engine.IsPaused);
-                builder.AppendLine("Running: " + engine._isRunning);
-                builder.AppendLine("Use sequence plugin data: " + engine._useSequencePluginData);
-                builder.AppendLine("Mode: " + engine.Mode);
+            if ((index < 0) || (index >= InstanceList.Count)) {
+                return builder.ToString();
             }
+            var engine = InstanceList[index];
+            if (engine.CurrentObject != null) {
+                builder.AppendLine("Program: " + engine.CurrentObject.Name);
+                builder.AppendLine("Sequence count: " + engine.CurrentObject.EventSequences.Count);
+                builder.AppendLine("Sequences:");
+                foreach (var stub in engine.CurrentObject.EventSequences) {
+                    builder.AppendLine("   " + stub.FileName);
+                }
+            }
+            else {
+                builder.AppendLine("Program: (null)");
+            }
+            builder.AppendLine("Primary context: " + engine._primaryContext);
+            builder.Append(QueryContext(engine._engineContexts[engine._primaryContext]));
+            builder.AppendLine("Secondary context: " + engine._secondaryContext);
+            builder.Append(QueryContext(engine._engineContexts[engine._secondaryContext]));
+            builder.AppendLine("Loop: " + engine.IsLooping);
+            builder.AppendLine("Paused: " + engine.IsPaused);
+            builder.AppendLine("Running: " + engine._isRunning);
+            builder.AppendLine("Use sequence plugin data: " + engine._useSequencePluginData);
+            builder.AppendLine("Mode: " + engine.Mode);
             return builder.ToString();
         }
 
@@ -296,13 +297,13 @@ namespace VixenPlus {
 
         private int DetermineSecondarySequenceIndex() {
             var sequenceIndex = _engineContexts[_primaryContext].SequenceIndex;
-            if ((sequenceIndex + 1) == CurrentObject.EventSequences.Count) {
-                if (IsLooping) {
-                    return 0;
-                }
-                return -1;
+            if ((sequenceIndex + 1) != CurrentObject.EventSequences.Count) {
+                return (sequenceIndex + 1);
             }
-            return (sequenceIndex + 1);
+            if (IsLooping) {
+                return 0;
+            }
+            return -1;
         }
 
 

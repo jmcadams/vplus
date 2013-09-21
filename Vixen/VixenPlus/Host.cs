@@ -48,10 +48,11 @@ namespace VixenPlus {
             set {
                 StopBackgroundSequence();
                 if (string.IsNullOrEmpty(value)) {
-                    if (_backgroundSequence != null) {
-                        _backgroundSequence.Dispose();
-                        _backgroundSequence = null;
+                    if (_backgroundSequence == null) {
+                        return;
                     }
+                    _backgroundSequence.Dispose();
+                    _backgroundSequence = null;
                 }
                 else if (!File.Exists(value)) {
                     if (Preference2.GetBoolean("EnableBackgroundSequence")) {
@@ -90,10 +91,11 @@ namespace VixenPlus {
                 builder.AppendLine("(Music Player)");
                 builder.AppendLine("Song count: " + _musicPlayer.SongCount);
                 builder.AppendLine("Playing: " + _musicPlayer.IsPlaying);
-                if (_musicPlayer.IsPlaying) {
-                    builder.AppendLine("Song name: " + _musicPlayer.CurrentSongName);
-                    builder.AppendLine("Song length: " + _musicPlayer.CurrentSongLength);
+                if (!_musicPlayer.IsPlaying) {
+                    return builder.ToString();
                 }
+                builder.AppendLine("Song name: " + _musicPlayer.CurrentSongName);
+                builder.AppendLine("Song length: " + _musicPlayer.CurrentSongLength);
             }
             return builder.ToString();
         }

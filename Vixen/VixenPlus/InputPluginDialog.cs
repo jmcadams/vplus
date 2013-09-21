@@ -11,7 +11,6 @@ namespace VixenPlus
     internal partial class InputPluginDialog : Form
     {
         private readonly MappingSets _editingMappingSets;
-        private readonly EventSequence _eventSequence;
         private readonly Dictionary<string, Channel> _idChannel;
         private readonly InputPlugin _inputPlugin;
         private readonly bool _isInit;
@@ -22,17 +21,17 @@ namespace VixenPlus
             InitializeComponent();
             _idChannel = new Dictionary<string, Channel>();
             _inputPlugin = plugin;
-            _eventSequence = sequence;
+            var eventSequence = sequence;
             plugin.SetupDataToPlugin();
             _isInit = true;
             listBoxInputs.DisplayMember = "Name";
             listBoxInputs.ValueMember = "OutputChannelId";
             listBoxInputs.DataSource = _inputPlugin.Inputs;
-            foreach (var channel in _eventSequence.Channels)
+            foreach (var channel in eventSequence.Channels)
             {
                 _idChannel[channel.Id.ToString(CultureInfo.InvariantCulture)] = channel;
             }
-            listBoxChannels.Items.AddRange(_eventSequence.Channels.ToArray());
+            listBoxChannels.Items.AddRange(eventSequence.Channels.ToArray());
             _editingMappingSets = (MappingSets) _inputPlugin.MappingSets.Clone();
             _isInit = false;
             if (listBoxInputs.SelectedItem != null)

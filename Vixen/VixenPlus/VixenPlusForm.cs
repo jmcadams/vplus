@@ -41,13 +41,10 @@ namespace VixenPlus {
 
         private readonly Host _host;
 
-        private readonly LoadableData _loadableData;
-
         private readonly Preference2 _preferences;
 
         private readonly TimerExecutor _timerExecutor;
         private readonly Timers _timers;
-        private readonly string _timersPath;
 
 
         public VixenPlusForm(IEnumerable<string> args) {
@@ -69,7 +66,7 @@ namespace VixenPlus {
                 InitializeComponent();
                 SetVendorData();
                 _registeredFileTypes = new Dictionary<string, IUIPlugIn>();
-                _timersPath = Path.Combine(Paths.DataPath, "timers");
+                var timersPath = Path.Combine(Paths.DataPath, "timers");
                 _preferences.PreferenceChange += PreferencesPreferenceChange;
                 _host = new Host(this);
                 _loadables = new Dictionary<string, List<LoadedObject>>();
@@ -78,8 +75,8 @@ namespace VixenPlus {
                 _newMenuItemClick = NewMenuItemClick;
                 _historyItemClick = HistoryItemClick;
                 LoadHistory();
-                _loadableData = new LoadableData();
-                _loadableData.LoadFromXml(_preferences.XmlDoc.DocumentElement);
+                var loadableData = new LoadableData();
+                loadableData.LoadFromXml(_preferences.XmlDoc.DocumentElement);
                 LoadUIPlugins();
                 Cursor = Cursors.WaitCursor;
                 try {
@@ -92,8 +89,8 @@ namespace VixenPlus {
                 }
                 scheduleTimer.Interval = _preferences.GetInteger("TimerCheckFrequency") * Utils.MillsPerSecond;
                 _timers = new Timers();
-                if (File.Exists(_timersPath)) {
-                    _timers.LoadFromXml(Xml.LoadDocument(_timersPath));
+                if (File.Exists(timersPath)) {
+                    _timers.LoadFromXml(Xml.LoadDocument(timersPath));
                 }
                 _timerExecutor = new TimerExecutor();
                 scheduleTimer.Enabled = !_timers.TimersDisabled;
@@ -134,35 +131,38 @@ namespace VixenPlus {
             }
             var base2 = (OutputPlugInUIBase) child;
             var executable = (IExecutable) Host.Communication["CurrentObject"];
-            if (executable != null) {
-                var str = executable.Key.ToString(CultureInfo.InvariantCulture);
-                XmlNode node2 = null;
-                var node = ((XmlNode) Host.Communication["SetupNode_" + str]).SelectSingleNode("DialogPositions");
-                object obj2;
-                if (Host.Communication.TryGetValue("KeyInterceptor_" + str, out obj2)) {
-                    base2.ExecutionParent = (IVixenMDI) obj2;
-                }
-                if (Host.Communication.TryGetValue("SetupNode_" + str, out obj2)) {
-                    base2.DataNode = (XmlNode) obj2;
-                }
-                child.ControlBox = true;
-                if (!FormContainsChild(this, child)) {
-                    child.MdiParent = this;
-                }
-                ((ExecutionContext) Host.Communication["ExecutionContext_" + str]).OutputPlugInForms.Add(child);
-                child.Show();
-                if (node != null) {
-                    node2 = node.SelectSingleNode(child.Name);
-                }
-                if ((node2 != null) && _preferences.GetBoolean("SavePlugInDialogPositions")) {
-                    if (node2.Attributes != null) {
-                        var attribute = node2.Attributes["x"];
-                        var attribute2 = node2.Attributes["y"];
-                        if ((attribute != null) && (attribute2 != null)) {
-                            child.Location = new Point(Convert.ToInt32(attribute.Value), Convert.ToInt32(attribute2.Value));
-                        }
-                    }
-                }
+            if (executable == null) {
+                return child;
+            }
+            var str = executable.Key.ToString(CultureInfo.InvariantCulture);
+            XmlNode node2 = null;
+            var node = ((XmlNode) Host.Communication["SetupNode_" + str]).SelectSingleNode("DialogPositions");
+            object obj2;
+            if (Host.Communication.TryGetValue("KeyInterceptor_" + str, out obj2)) {
+                base2.ExecutionParent = (IVixenMDI) obj2;
+            }
+            if (Host.Communication.TryGetValue("SetupNode_" + str, out obj2)) {
+                base2.DataNode = (XmlNode) obj2;
+            }
+            child.ControlBox = true;
+            if (!FormContainsChild(this, child)) {
+                child.MdiParent = this;
+            }
+            ((ExecutionContext) Host.Communication["ExecutionContext_" + str]).OutputPlugInForms.Add(child);
+            child.Show();
+            if (node != null) {
+                node2 = node.SelectSingleNode(child.Name);
+            }
+            if ((node2 == null) || !_preferences.GetBoolean("SavePlugInDialogPositions")) {
+                return child;
+            }
+            if (node2.Attributes == null) {
+                return child;
+            }
+            var attribute = node2.Attributes["x"];
+            var attribute2 = node2.Attributes["y"];
+            if ((attribute != null) && (attribute2 != null)) {
+                child.Location = new Point(Convert.ToInt32(attribute.Value), Convert.ToInt32(attribute2.Value));
             }
             return child;
         }
@@ -307,13 +307,14 @@ namespace VixenPlus {
 
         private DialogResult CheckDirty(IUIPlugIn pluginInstance) {
             var none = DialogResult.None;
-            if (pluginInstance.IsDirty) {
-                var str = pluginInstance.Sequence.Name ?? "this unnamed sequence";
-                none = MessageBox.Show(string.Format("[{0}]\nSave changes to {1}?", pluginInstance.FileTypeDescription, str), Vendor.ProductName,
-                                       MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                if (none == DialogResult.Yes) {
-                    Save(pluginInstance);
-                }
+            if (!pluginInstance.IsDirty) {
+                return none;
+            }
+            var str = pluginInstance.Sequence.Name ?? "this unnamed sequence";
+            none = MessageBox.Show(string.Format("[{0}]\nSave changes to {1}?", pluginInstance.FileTypeDescription, str), Vendor.ProductName,
+                MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            if (none == DialogResult.Yes) {
+                Save(pluginInstance);
             }
             return none;
         }
@@ -424,11 +425,11 @@ namespace VixenPlus {
             saveFileDialog1.Filter = string.Format("{0}|*{1}", pluginInstance.FileTypeDescription, pluginInstance.FileExtension);
             saveFileDialog1.InitialDirectory = Paths.SequencePath;
             saveFileDialog1.FileName = string.Empty;
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK) {
-                ChangeSequenceName(pluginInstance, saveFileDialog1.FileName);
-                return true;
+            if (saveFileDialog1.ShowDialog() != DialogResult.OK) {
+                return false;
             }
-            return false;
+            ChangeSequenceName(pluginInstance, saveFileDialog1.FileName);
+            return true;
         }
 
 
@@ -790,10 +791,11 @@ namespace VixenPlus {
 
             if (!String.IsNullOrEmpty(path)) {
                 path = Environment.ExpandEnvironmentVariables(path);
-                if (Directory.Exists(path)) {
-                    Paths.DataPath = path;
+                if (!Directory.Exists(path)) {
                     return;
                 }
+                Paths.DataPath = path;
+                return;
             }
 
             Paths.DataPath = Path.Combine(Paths.BinaryPath, Paths.DataFolder);

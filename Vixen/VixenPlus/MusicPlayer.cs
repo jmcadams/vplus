@@ -96,12 +96,12 @@ namespace VixenPlus
             else
             {
                 var allSongsNode = _xmlDocument.SelectNodes("//MusicPlayer/Songs/*");
-                if (allSongsNode != null)
+                if (allSongsNode == null) {
+                    return;
+                }
+                foreach (XmlNode node2 in allSongsNode)
                 {
-                    foreach (XmlNode node2 in allSongsNode)
-                    {
-                        _playlist.Add(new Audio(node2));
-                    }
+                    _playlist.Add(new Audio(node2));
                 }
             }
         }
@@ -194,26 +194,26 @@ namespace VixenPlus
                 dialog.NarrativeSongInterval = Convert.ToInt32(node.Attributes["interval"].Value);
             }
             var result = dialog.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                var emptyNodeAlways = Xml.GetEmptyNodeAlways(_xmlDocument.DocumentElement, "Songs");
-                Xml.SetAttribute(emptyNodeAlways, "shuffle", dialog.Shuffle.ToString());
-                foreach (var audio in dialog.Songs)
-                {
-                    emptyNodeAlways.AppendChild(audio.SaveToXml(_xmlDocument));
-                }
-                node = Xml.GetEmptyNodeAlways(_xmlDocument.DocumentElement, "Narrative");
-                Xml.SetAttribute(node, "enabled", dialog.NarrativeSongEnabled.ToString());
-                Xml.SetAttribute(node, "interval", dialog.NarrativeSongInterval.ToString(CultureInfo.InvariantCulture));
-                var narrativeSong = dialog.NarrativeSong;
-                if (narrativeSong != null)
-                {
-                    node.AppendChild(narrativeSong.SaveToXml(_xmlDocument));
-                }
-                _xmlDocument.Save(Path.Combine(Paths.AudioPath, "MusicPlayer.data"));
-                LoadAudioData();
-                GeneratePlaylist();
+            if (result != DialogResult.OK) {
+                return result;
             }
+            var emptyNodeAlways = Xml.GetEmptyNodeAlways(_xmlDocument.DocumentElement, "Songs");
+            Xml.SetAttribute(emptyNodeAlways, "shuffle", dialog.Shuffle.ToString());
+            foreach (var audio in dialog.Songs)
+            {
+                emptyNodeAlways.AppendChild(audio.SaveToXml(_xmlDocument));
+            }
+            node = Xml.GetEmptyNodeAlways(_xmlDocument.DocumentElement, "Narrative");
+            Xml.SetAttribute(node, "enabled", dialog.NarrativeSongEnabled.ToString());
+            Xml.SetAttribute(node, "interval", dialog.NarrativeSongInterval.ToString(CultureInfo.InvariantCulture));
+            var narrativeSong = dialog.NarrativeSong;
+            if (narrativeSong != null)
+            {
+                node.AppendChild(narrativeSong.SaveToXml(_xmlDocument));
+            }
+            _xmlDocument.Save(Path.Combine(Paths.AudioPath, "MusicPlayer.data"));
+            LoadAudioData();
+            GeneratePlaylist();
             return result;
         }
 

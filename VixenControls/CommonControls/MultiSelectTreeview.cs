@@ -209,15 +209,16 @@ namespace CommonControls {
                         }
                     }
                     else {
-                        if (Nodes.Count > 0) {
-                            // Select the last node visible node in the tree.
-                            // Don't expand branches incase the tree is virtual
-                            var ndLast = Nodes[0].LastNode;
-                            while (ndLast.IsExpanded && (ndLast.LastNode != null)) {
-                                ndLast = ndLast.LastNode;
-                            }
-                            SelectSingleNode(ndLast);
+                        if (Nodes.Count <= 0) {
+                            return;
                         }
+                        // Select the last node visible node in the tree.
+                        // Don't expand branches incase the tree is virtual
+                        var ndLast = Nodes[0].LastNode;
+                        while (ndLast.IsExpanded && (ndLast.LastNode != null)) {
+                            ndLast = ndLast.LastNode;
+                        }
+                        SelectSingleNode(ndLast);
                     }
                     break;
                 case Keys.PageUp: {

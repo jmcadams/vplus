@@ -170,14 +170,14 @@ namespace VixenPlus {
 
         public byte[][] Mask {
             get {
-                if (_profile == null) {
-                    var buffer = new byte[_fullChannels.Count];
-                    for (var i = 0; i < _fullChannels.Count; i++) {
-                        buffer[i] = _fullChannels[i].Enabled ? ((byte) 255) : ((byte) 0);
-                    }
-                    return new[] {buffer};
+                if (_profile != null) {
+                    return _profile.Mask;
                 }
-                return _profile.Mask;
+                var buffer = new byte[_fullChannels.Count];
+                for (var i = 0; i < _fullChannels.Count; i++) {
+                    buffer[i] = _fullChannels[i].Enabled ? ((byte) 255) : ((byte) 0);
+                }
+                return new[] {buffer};
             }
             set {
                 if (_profile != null) {
@@ -803,10 +803,11 @@ namespace VixenPlus {
                     foreach (var channel in group.Value.GroupChannels.Split(new[] { ',' })) {
                         int res;
                         if (int.TryParse(channel, out res)) {
-                            if (res != index) {
-                                if (res >= index) res--;
-                                newChannels.Add(res.ToString(CultureInfo.InvariantCulture));
+                            if (res == index) {
+                                continue;
                             }
+                            if (res >= index) res--;
+                            newChannels.Add(res.ToString(CultureInfo.InvariantCulture));
                         }
                         else {
                             newChannels.Add(channel);

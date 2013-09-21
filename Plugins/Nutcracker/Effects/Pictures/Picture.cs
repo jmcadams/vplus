@@ -94,43 +94,45 @@ namespace Pictures {
                 _fp = new FastPixel(new Bitmap(image));
             }
 
-            if (_fp != null) {
-                var imgwidth = _fp.Width;
-                var imght = _fp.Height;
-                var yoffset = (_bufferHeight + imght) / 2;
-                var xoffset = (imgwidth - _bufferWidth) / 2;
-                var limit = (cbDirection.SelectedIndex < 2) ? imgwidth + _bufferWidth : imght + _bufferHeight;
-                var movement = Convert.ToInt32((eventToRender % (limit * speedfactor)) / speedfactor);
+            if (_fp == null) {
+                return _buffer;
+            }
 
-                _fp.Lock();
-                for (var x = 0; x < imgwidth; x++) {
-                    for (var y = 0; y < imght; y++) {
-                        var fpColor = _fp.GetPixel(x, y);
-                        if (fpColor == Color.Transparent) {
-                            fpColor = Color.Black;
-                        }
+            var imgwidth = _fp.Width;
+            var imght = _fp.Height;
+            var yoffset = (_bufferHeight + imght) / 2;
+            var xoffset = (imgwidth - _bufferWidth) / 2;
+            var limit = (cbDirection.SelectedIndex < 2) ? imgwidth + _bufferWidth : imght + _bufferHeight;
+            var movement = Convert.ToInt32((eventToRender % (limit * speedfactor)) / speedfactor);
 
-                        switch (cbDirection.SelectedIndex) {
-                            case 0: // left
-                                SetPixel(x + _bufferWidth - movement, yoffset - y, fpColor);
-                                break;
-                            case 1: // right
-                                SetPixel(x + movement - imgwidth, yoffset - y, fpColor);
-                                break;
-                            case 2: // up
-                                SetPixel(x - xoffset, movement - y, fpColor);
-                                break;
-                            case 3: // down
-                                SetPixel(x - xoffset, _bufferHeight + imght - y - movement, fpColor);
-                                break;
-                            default: // no movement - centered
-                                SetPixel(x - xoffset, yoffset - y, fpColor);
-                                break;
-                        }
+            _fp.Lock();
+            for (var x = 0; x < imgwidth; x++) {
+                for (var y = 0; y < imght; y++) {
+                    var fpColor = _fp.GetPixel(x, y);
+                    if (fpColor == Color.Transparent) {
+                        fpColor = Color.Black;
+                    }
+
+                    switch (cbDirection.SelectedIndex) {
+                        case 0: // left
+                            SetPixel(x + _bufferWidth - movement, yoffset - y, fpColor);
+                            break;
+                        case 1: // right
+                            SetPixel(x + movement - imgwidth, yoffset - y, fpColor);
+                            break;
+                        case 2: // up
+                            SetPixel(x - xoffset, movement - y, fpColor);
+                            break;
+                        case 3: // down
+                            SetPixel(x - xoffset, _bufferHeight + imght - y - movement, fpColor);
+                            break;
+                        default: // no movement - centered
+                            SetPixel(x - xoffset, yoffset - y, fpColor);
+                            break;
                     }
                 }
-                _fp.Unlock();
             }
+            _fp.Unlock();
             return _buffer;
         }
 

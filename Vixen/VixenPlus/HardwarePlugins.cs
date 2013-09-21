@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace VixenPlus // ReSharper disable EmptyGeneralCatchClause
@@ -77,27 +78,23 @@ namespace VixenPlus // ReSharper disable EmptyGeneralCatchClause
 
         public static List<IHardwarePlugin> LoadPlugins(string directory, string interfaceName) {
             var list = new List<IHardwarePlugin>();
-            if (Directory.Exists(directory)) {
-                foreach (var str in Directory.GetFiles(directory, "*.dll", SearchOption.TopDirectoryOnly)) {
-                    IHardwarePlugin plugin;
-                    if (!PluginCache.TryGetValue(str, out plugin)) {
-                        try {
-                            var assembly = Assembly.LoadFile(str);
-                            foreach (var type in assembly.GetExportedTypes()) {
-                                foreach (var type2 in type.GetInterfaces()) {
-                                    if (type2.Name != interfaceName) {
-                                        continue;
-                                    }
-                                    plugin = (IHardwarePlugin) Activator.CreateInstance(type);
-                                    PluginCache[str] = plugin;
-                                }
-                            }
+            if (!Directory.Exists(directory)) {
+                return list;
+            }
+            foreach (var str in Directory.GetFiles(directory, "*.dll", SearchOption.TopDirectoryOnly)) {
+                IHardwarePlugin plugin;
+                if (!PluginCache.TryGetValue(str, out plugin)) {
+                    try {
+                        var assembly = Assembly.LoadFile(str);
+                        foreach (var type in from type in assembly.GetExportedTypes() from type2 in type.GetInterfaces() where type2.Name == interfaceName select type) {
+                            plugin = (IHardwarePlugin) Activator.CreateInstance(type);
+                            PluginCache[str] = plugin;
                         }
-                        catch {}
                     }
-                    if (plugin != null) {
-                        list.Add(plugin);
-                    }
+                    catch {}
+                }
+                if (plugin != null) {
+                    list.Add(plugin);
                 }
             }
             return list;

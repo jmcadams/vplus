@@ -148,11 +148,12 @@ namespace VixenPlus {
                 var bounds = e.Bounds;
                 bounds.Inflate(-16, -2);
                 var curveLibraryRecord = e.Item.Tag as CurveLibraryRecord;
-                if (curveLibraryRecord != null) {
-                    using (var brush = new SolidBrush(Color.FromArgb(curveLibraryRecord.Color))) {
-                        e.Graphics.FillRectangle(brush, bounds);
-                        e.Graphics.DrawRectangle(Pens.Black, bounds);
-                    }
+                if (curveLibraryRecord == null) {
+                    return;
+                }
+                using (var brush = new SolidBrush(Color.FromArgb(curveLibraryRecord.Color))) {
+                    e.Graphics.FillRectangle(brush, bounds);
+                    e.Graphics.DrawRectangle(Pens.Black, bounds);
                 }
             }
             else {

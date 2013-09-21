@@ -80,13 +80,13 @@ namespace VixenPlus
                 var bounds = e.Bounds;
                 bounds.Inflate(-16, -2);
                 var boxItems = box.Items[e.Index] as string;
-                if (boxItems != null)
+                if (boxItems == null) {
+                    return;
+                }
+                using (var brush = new SolidBrush(Color.FromArgb(int.Parse(boxItems.Substring(1)))))
                 {
-                    using (var brush = new SolidBrush(Color.FromArgb(int.Parse(boxItems.Substring(1)))))
-                    {
-                        e.Graphics.FillRectangle(brush, bounds);
-                        e.Graphics.DrawRectangle(Pens.Black, bounds);
-                    }
+                    e.Graphics.FillRectangle(brush, bounds);
+                    e.Graphics.DrawRectangle(Pens.Black, bounds);
                 }
             }
         }
@@ -141,13 +141,13 @@ namespace VixenPlus
                 var bounds = e.Bounds;
                 bounds.Inflate(-16, -2);
                 var curveLibraryRecord = e.Item.Tag as CurveLibraryRecord;
-                if (curveLibraryRecord != null)
+                if (curveLibraryRecord == null) {
+                    return;
+                }
+                using (var brush = new SolidBrush(Color.FromArgb(curveLibraryRecord.Color)))
                 {
-                    using (var brush = new SolidBrush(Color.FromArgb(curveLibraryRecord.Color)))
-                    {
-                        e.Graphics.FillRectangle(brush, bounds);
-                        e.Graphics.DrawRectangle(Pens.Black, bounds);
-                    }
+                    e.Graphics.FillRectangle(brush, bounds);
+                    e.Graphics.DrawRectangle(Pens.Black, bounds);
                 }
             }
             else

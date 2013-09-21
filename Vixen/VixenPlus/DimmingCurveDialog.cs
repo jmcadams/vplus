@@ -12,21 +12,15 @@ namespace VixenPlus {
     internal partial class DimmingCurveDialog : Form {
         private readonly SolidBrush _curveBackBrush;
         private readonly float _curveColPointsPerMiniPixel;
-        private readonly Color _curveGridColor;
         private readonly Pen _curveGridPen;
-        private readonly Color _curveLineColor;
         private readonly Pen _curveLinePen;
         private readonly SolidBrush _curvePointBrush;
-        private readonly Color _curvePointColor;
         private readonly float _curveRowPointsPerMiniPixel;
-        private readonly int _dotPitch;
         private readonly EventSequence _eventSequence;
         private readonly int _gridSpacing;
         private readonly float _halfPointSize;
         private readonly SolidBrush _miniBackBrush;
-        private readonly Color _miniBoxColor;
         private readonly Pen _miniBoxPen;
-        private readonly Color _miniLineColor;
         private readonly Pen _miniLinePen;
         private readonly Channel _originalChannel;
         private readonly int _pointSize;
@@ -44,13 +38,13 @@ namespace VixenPlus {
 
 
         public DimmingCurveDialog(EventSequence sequence, Channel selectChannel) {
-            _miniBoxColor = Color.BlueViolet;
-            _miniLineColor = Color.Blue;
-            _curveGridColor = Color.LightGray;
-            _curveLineColor = Color.Blue;
-            _curvePointColor = Color.Black;
+            var miniBoxColor = Color.BlueViolet;
+            var miniLineColor = Color.Blue;
+            var curveGridColor = Color.LightGray;
+            var curveLineColor = Color.Blue;
+            var curvePointColor = Color.Black;
             _pointSize = 4;
-            _dotPitch = 4;
+            const int dotPitch = 4;
             _miniMouseDownLast = new Point(-1, -1);
             _miniMouseMinLocation = new Point(0, 0);
             _miniMouseMaxLocation = new Point(0, 0);
@@ -73,7 +67,7 @@ namespace VixenPlus {
                     comboBoxChannels.Items.Add(selectChannel = selectChannel.Clone());
                 }
             }
-            _gridSpacing = _pointSize + _dotPitch;
+            _gridSpacing = _pointSize + dotPitch;
             _halfPointSize = (_pointSize) / 2f;
             _curveRowPointsPerMiniPixel = _availableValues / (pbMini.Width);
             _curveColPointsPerMiniPixel = _availableValues / (pbMini.Height);
@@ -85,11 +79,11 @@ namespace VixenPlus {
             if (pictureBoxCurve != null) {
                 _curveBackBrush = new SolidBrush(pictureBoxCurve.BackColor);
             }
-            _miniBoxPen = new Pen(_miniBoxColor);
-            _miniLinePen = new Pen(_miniLineColor);
-            _curveGridPen = new Pen(_curveGridColor);
-            _curveLinePen = new Pen(_curveLineColor);
-            _curvePointBrush = new SolidBrush(_curvePointColor);
+            _miniBoxPen = new Pen(miniBoxColor);
+            _miniLinePen = new Pen(miniLineColor);
+            _curveGridPen = new Pen(curveGridColor);
+            _curveLinePen = new Pen(curveLineColor);
+            _curvePointBrush = new SolidBrush(curvePointColor);
             if (comboBoxChannels.Items.Count > 0) {
                 comboBoxChannels.SelectedItem = selectChannel ?? comboBoxChannels.Items[0];
             }
@@ -123,26 +117,29 @@ namespace VixenPlus {
         private void buttonImportFromLibrary_Click(object sender, EventArgs e) {
             if (comboBoxImport.SelectedIndex == 0) {
                 using (var dialog = new CurveLibraryDialog()) {
-                    if (dialog.ShowDialog() == DialogResult.OK) {
-                        if (comboBoxChannels != null) {
-                            ((Channel) comboBoxChannels.SelectedItem).DimmingCurve = _points = dialog.SelectedCurve;
-                        }
-                        RedrawBoth();
+                    if (dialog.ShowDialog() != DialogResult.OK) {
+                        return;
                     }
+                    if (comboBoxChannels != null) {
+                        ((Channel) comboBoxChannels.SelectedItem).DimmingCurve = _points = dialog.SelectedCurve;
+                    }
+                    RedrawBoth();
                 }
             }
             else {
                 using (var dialog2 = new CurveFileImportExportDialog(CurveFileImportExportDialog.ImportExport.Import)) {
-                    if (dialog2.ShowDialog() == DialogResult.OK) {
-                        var selectedCurve = dialog2.SelectedCurve;
-                        if (selectedCurve != null) {
-                            var channel = comboBoxChannels.SelectedItem as Channel;
-                            if (channel != null) {
-                                channel.DimmingCurve = _points = selectedCurve.CurveData;
-                            }
-                            RedrawBoth();
-                        }
+                    if (dialog2.ShowDialog() != DialogResult.OK) {
+                        return;
                     }
+                    var selectedCurve = dialog2.SelectedCurve;
+                    if (selectedCurve == null) {
+                        return;
+                    }
+                    var channel = comboBoxChannels.SelectedItem as Channel;
+                    if (channel != null) {
+                        channel.DimmingCurve = _points = selectedCurve.CurveData;
+                    }
+                    RedrawBoth();
                 }
             }
         }

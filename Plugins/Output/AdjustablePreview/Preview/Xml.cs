@@ -49,10 +49,11 @@ namespace Preview {
 
         public static XmlNode GetNodeAlways(XmlNode contextNode, string nodeName) {
             var newChild = contextNode.SelectSingleNode(nodeName);
-            if (newChild == null) {
-                newChild = (contextNode.OwnerDocument ?? ((XmlDocument) contextNode)).CreateElement(nodeName);
-                contextNode.AppendChild(newChild);
+            if (newChild != null) {
+                return newChild;
             }
+            newChild = (contextNode.OwnerDocument ?? ((XmlDocument) contextNode)).CreateElement(nodeName);
+            contextNode.AppendChild(newChild);
             return newChild;
         }
 
@@ -80,14 +81,15 @@ namespace Preview {
 
 
         public static XmlNode SetAttribute(XmlNode node, string attributeName, string attributeValue) {
-            if (node.Attributes != null) {
-                var attribute = node.Attributes[attributeName];
-                if (attribute == null) {
-                    attribute = (node.OwnerDocument ?? ((XmlDocument) node)).CreateAttribute(attributeName);
-                    node.Attributes.Append(attribute);
-                }
-                attribute.Value = attributeValue;
+            if (node.Attributes == null) {
+                return node;
             }
+            var attribute = node.Attributes[attributeName];
+            if (attribute == null) {
+                attribute = (node.OwnerDocument ?? ((XmlDocument) node)).CreateAttribute(attributeName);
+                node.Attributes.Append(attribute);
+            }
+            attribute.Value = attributeValue;
             return node;
         }
 
@@ -99,14 +101,15 @@ namespace Preview {
                 singleNode = document.CreateElement(nodeName);
                 contextNode.AppendChild(singleNode);
             }
-            if (singleNode.Attributes != null) {
-                var node = singleNode.Attributes[attributeName];
-                if (node == null) {
-                    node = document.CreateAttribute(attributeName);
-                    singleNode.Attributes.Append(node);
-                }
-                node.Value = attributeValue;
+            if (singleNode.Attributes == null) {
+                return singleNode;
             }
+            var node = singleNode.Attributes[attributeName];
+            if (node == null) {
+                node = document.CreateAttribute(attributeName);
+                singleNode.Attributes.Append(node);
+            }
+            node.Value = attributeValue;
             return singleNode;
         }
 

@@ -118,21 +118,22 @@ namespace VixenPlus.Dialogs {
                         newName = dialog.Response;
                         showDialog = false;
                         result = true;
-                        if (File.Exists(Path.Combine(Paths.ProfilePath, newName + Vendor.ProfilExtension))) {
-                            var overwriteResult = MessageBox.Show(
-                                String.Format("Profile with the name {0} exists.  Overwrite this profile?", newName), "Overwrite?",
-                                MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                            switch (overwriteResult) {
-                                case DialogResult.Yes:
-                                    break;
-                                case DialogResult.No:
-                                    result = false;
-                                    showDialog = true;
-                                    break;
-                                case DialogResult.Cancel:
-                                    result = false;
-                                    break;
-                            }
+                        if (!File.Exists(Path.Combine(Paths.ProfilePath, newName + Vendor.ProfilExtension))) {
+                            continue;
+                        }
+                        var overwriteResult = MessageBox.Show(
+                            String.Format("Profile with the name {0} exists.  Overwrite this profile?", newName), "Overwrite?",
+                            MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                        switch (overwriteResult) {
+                            case DialogResult.Yes:
+                                break;
+                            case DialogResult.No:
+                                result = false;
+                                showDialog = true;
+                                break;
+                            case DialogResult.Cancel:
+                                result = false;
+                                break;
                         }
                     }
                     else {

@@ -16,10 +16,11 @@ namespace VixenPlus {
 
         public static string BinaryPath {
             get {
-                if (_binaryPath == String.Empty) {
-                    using (var process = Process.GetCurrentProcess()) {
-                        _binaryPath = Path.GetDirectoryName(process.MainModule.FileName);
-                    }
+                if (_binaryPath != String.Empty) {
+                    return _binaryPath;
+                }
+                using (var process = Process.GetCurrentProcess()) {
+                    _binaryPath = Path.GetDirectoryName(process.MainModule.FileName);
                 }
                 return _binaryPath;
             }

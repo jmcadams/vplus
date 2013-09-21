@@ -80,15 +80,15 @@ namespace Arch {
     private void DrawArc (int centerX, int centerY, double radius, double startAngle, double arcAngle, int steps){
         //
     // For convenience, store the number of radians in a full circle.
-    const double twoPI = 2 * Math.PI;
+    const double twoPi = 2 * Math.PI;
     //
     // To determine the size of the angle between each point on the
     // arc, divide the overall angle by the total number of points.
     var angleStep = arcAngle/steps;
     //
     // Determine coordinates of first point using basic circle math.
-    var xx = centerX + Math.Cos(startAngle * twoPI) * radius;
-    var yy = centerY + Math.Sin(startAngle * twoPI) * radius;
+    var xx = centerX + Math.Cos(startAngle * twoPi) * radius;
+    var yy = centerY + Math.Sin(startAngle * twoPi) * radius;
     //
     // Move to the first point.
     //moveTo(xx, yy);
@@ -100,8 +100,8 @@ namespace Arch {
         var angle = startAngle + i * angleStep;
         //
         // Determine next point's coordinates using basic circle math.
-        xx = centerX + Math.Cos(angle * twoPI) * radius;
-        yy = centerY + Math.Sin(angle * twoPI) * radius;
+        xx = centerX + Math.Cos(angle * twoPi) * radius;
+        yy = centerY + Math.Sin(angle * twoPi) * radius;
         //
         // Draw a line to the next point.
         //lineTo(xx, yy);

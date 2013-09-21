@@ -203,10 +203,11 @@ namespace VixenPlus.Dialogs {
             pt.Offset(-info.SubItem.Bounds.Location.X, -info.SubItem.Bounds.Location.Y);
             _itemAffectedIndex = info.Item.Index;
             if (tag.IsExpanded) {
-                if (_expandedRelativeBounds.Contains(pt)) {
-                    tag.IsExpanded = false;
-                    UpdateConfigDisplay();
+                if (!_expandedRelativeBounds.Contains(pt)) {
+                    return;
                 }
+                tag.IsExpanded = false;
+                UpdateConfigDisplay();
             }
             else if (_collapsedRelativeBounds.Contains(pt)) {
                 tag.IsExpanded = true;

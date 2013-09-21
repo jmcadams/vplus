@@ -136,16 +136,17 @@ namespace VixenPlus {
 
         public byte[][] Mask {
             get {
-                if (_profile == null) {
-                    if (_mask == null) {
-                        _mask = new byte[EventSequences.Count][];
-                        for (var i = 0; i < EventSequences.Count; i++) {
-                            _mask[i] = EventSequences[i].Mask[0];
-                        }
-                    }
+                if (_profile != null) {
+                    return _profile.Mask;
+                }
+                if (_mask != null) {
                     return _mask;
                 }
-                return _profile.Mask;
+                _mask = new byte[EventSequences.Count][];
+                for (var i = 0; i < EventSequences.Count; i++) {
+                    _mask[i] = EventSequences[i].Mask[0];
+                }
+                return _mask;
             }
             set {
                 if (_profile != null) {

@@ -119,37 +119,42 @@ namespace VixenPlus {
 
 
         private bool CanExecute(TimerContext context) {
-            if (Host.GetDebugValue("TimerTrace") != null) {
-                Host.LogTo(Paths.TimerTraceFilePath, "Can execute?");
-                Host.LogTo(Paths.TimerTraceFilePath, "  Stopping: " + context.Stopping);
-                Host.LogTo(Paths.TimerTraceFilePath,
-                           string.Format("  Timer length / Object length: {0}/{1} ({2})", context.Timer.TimerLength, context.Timer.ObjectLength,
-                                         context.Timer.TimerLength >= context.Timer.ObjectLength));
-                Host.LogTo(Paths.TimerTraceFilePath,
-                           string.Format("  Now / end date and time: {0}/{1} ({2})", DateTime.Now, context.EndDateTime,
-                                         DateTime.Now < context.EndDateTime));
+            if (Host.GetDebugValue("TimerTrace") == null) {
+                return ((!context.Stopping && (context.Timer.TimerLength >= context.Timer.ObjectLength)) && (DateTime.Now < context.EndDateTime));
             }
+
+            Host.LogTo(Paths.TimerTraceFilePath, "Can execute?");
+            Host.LogTo(Paths.TimerTraceFilePath, "  Stopping: " + context.Stopping);
+            Host.LogTo(Paths.TimerTraceFilePath,
+                string.Format("  Timer length / Object length: {0}/{1} ({2})", context.Timer.TimerLength, context.Timer.ObjectLength,
+                    context.Timer.TimerLength >= context.Timer.ObjectLength));
+            Host.LogTo(Paths.TimerTraceFilePath,
+                string.Format("  Now / end date and time: {0}/{1} ({2})", DateTime.Now, context.EndDateTime,
+                    DateTime.Now < context.EndDateTime));
             return ((!context.Stopping && (context.Timer.TimerLength >= context.Timer.ObjectLength)) && (DateTime.Now < context.EndDateTime));
         }
 
 
         private bool CanLoop(TimerContext context) {
-            if (Host.GetDebugValue("TimerTrace") != null) {
-                Host.LogTo(Paths.TimerTraceFilePath, "Can loop?");
-                Host.LogTo(Paths.TimerTraceFilePath, "  Repeat interval: " + context.Timer.RepeatInterval.ToString(CultureInfo.InvariantCulture));
-                Host.LogTo(Paths.TimerTraceFilePath,
-                           string.Format("  Timer length / Object length: {0}/{1} ({2})", context.Timer.TimerLength, context.Timer.ObjectLength,
-                                         context.Timer.TimerLength >= context.Timer.ObjectLength));
-                Host.LogTo(Paths.TimerTraceFilePath,
-                           string.Format("  {0} - {1} <= {2} ({3})",
-                                         new object[] {
-                                             context.Timer.ObjectLength.TotalMilliseconds,
-                                             context.ExecutionInterface.GetObjectPosition(context.ExecutionContextHandle), TimeLeftInTimer(context),
-                                             (context.Timer.ObjectLength.TotalMilliseconds -
-                                              context.ExecutionInterface.GetObjectPosition(context.ExecutionContextHandle)) <=
-                                             TimeLeftInTimer(context)
-                                         }));
+            if (Host.GetDebugValue("TimerTrace") == null) {
+                return ((((context.Timer.RepeatInterval == 0) && !context.Stopping) && (context.Timer.TimerLength > context.Timer.ObjectLength)) &&
+                        ((context.Timer.ObjectLength.TotalMilliseconds - context.ExecutionInterface.GetObjectPosition(context.ExecutionContextHandle)) <=
+                         TimeLeftInTimer(context)));
             }
+            Host.LogTo(Paths.TimerTraceFilePath, "Can loop?");
+            Host.LogTo(Paths.TimerTraceFilePath, "  Repeat interval: " + context.Timer.RepeatInterval.ToString(CultureInfo.InvariantCulture));
+            Host.LogTo(Paths.TimerTraceFilePath,
+                string.Format("  Timer length / Object length: {0}/{1} ({2})", context.Timer.TimerLength, context.Timer.ObjectLength,
+                    context.Timer.TimerLength >= context.Timer.ObjectLength));
+            Host.LogTo(Paths.TimerTraceFilePath,
+                string.Format("  {0} - {1} <= {2} ({3})",
+                    new object[] {
+                        context.Timer.ObjectLength.TotalMilliseconds,
+                        context.ExecutionInterface.GetObjectPosition(context.ExecutionContextHandle), TimeLeftInTimer(context),
+                        (context.Timer.ObjectLength.TotalMilliseconds -
+                         context.ExecutionInterface.GetObjectPosition(context.ExecutionContextHandle)) <=
+                        TimeLeftInTimer(context)
+                    }));
             return ((((context.Timer.RepeatInterval == 0) && !context.Stopping) && (context.Timer.TimerLength > context.Timer.ObjectLength)) &&
                     ((context.Timer.ObjectLength.TotalMilliseconds - context.ExecutionInterface.GetObjectPosition(context.ExecutionContextHandle)) <=
                      TimeLeftInTimer(context)));

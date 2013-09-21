@@ -123,13 +123,14 @@ namespace AppUpdate {
                             else if (!catalogItem.HasFlag("NoOverwrite")) {
                                 crc.Reset();
                                 crc.Update(File.ReadAllBytes(str3));
-                                if (catalogItem.CRC32 != crc.Value) {
-                                    flag2 = true;
-                                    if (RunningModule(catalogItem)) {
-                                        flag = true;
-                                    }
-                                    break;
+                                if (catalogItem.CRC32 == crc.Value) {
+                                    continue;
                                 }
+                                flag2 = true;
+                                if (RunningModule(catalogItem)) {
+                                    flag = true;
+                                }
+                                break;
                             }
                         }
                         reader.Close();

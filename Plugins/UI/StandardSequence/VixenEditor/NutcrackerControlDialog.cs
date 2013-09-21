@@ -173,7 +173,7 @@ namespace VixenEditor {
             var stringCount = RenderCols; // 32
             var nodesPerString = RenderRows; // 50
             var strandsPerString = 1;
-            var IsLtoR = true;
+            var isLtoR = true;
 
             var numStrands = stringCount * strandsPerString; // 64
             var pixelsPerStrand = nodesPerString / strandsPerString; // 25
@@ -183,7 +183,7 @@ namespace VixenEditor {
                 for (var pixel = 0; pixel < pixelsPerStrand; pixel++) {
                     var y = index % RenderRows;
                     var x = index / RenderRows;
-                    _nodes[y, x].BufX = IsLtoR ? strand : numStrands - strand - 1;
+                    _nodes[y, x].BufX = isLtoR ? strand : numStrands - strand - 1;
                     _nodes[y, x].BufY = (segmentnum % 2 != 0) ? pixel : pixelsPerStrand - pixel - 1;
                     index++;
                 }
@@ -423,20 +423,21 @@ namespace VixenEditor {
                     break;
             }
 
-            if (tbSparkles.Value > 0 && !IsBlackOrTransparent(returnValue)) {
-                switch (_nodes[row, column].Sparkle++ % (tbSparkles.Maximum - tbSparkles.Value + 20)) {
-                    case 2:
-                    case 6:
-                        returnValue = Color.FromArgb(136, 136, 136);
-                        break;
-                    case 3:
-                    case 5:
-                        returnValue = Color.FromArgb(187, 187, 187);
-                        break;
-                    case 4:
-                        returnValue = Color.White;
-                        break;
-                }
+            if (tbSparkles.Value <= 0 || IsBlackOrTransparent(returnValue)) {
+                return returnValue;
+            }
+            switch (_nodes[row, column].Sparkle++ % (tbSparkles.Maximum - tbSparkles.Value + 20)) {
+                case 2:
+                case 6:
+                    returnValue = Color.FromArgb(136, 136, 136);
+                    break;
+                case 3:
+                case 5:
+                    returnValue = Color.FromArgb(187, 187, 187);
+                    break;
+                case 4:
+                    returnValue = Color.White;
+                    break;
             }
 
             return returnValue;
@@ -569,7 +570,7 @@ namespace VixenEditor {
 
         #endregion
 
-        private void btnManagePresets_Click(object sender, EventArgs e) {}
+        //private void btnManagePresets_Click(object sender, EventArgs e) {}
 
 
         private void SetPreset(string effectData) {
@@ -648,10 +649,11 @@ namespace VixenEditor {
                             return;
                         }
                         var presetName = textDialog.Response;
-                        if (!cbEffectsPresets.Items.Contains(presetName)) {
-                            isValid = true;
-                            SavePreset(presetName);
+                        if (cbEffectsPresets.Items.Contains(presetName)) {
+                            continue;
                         }
+                        isValid = true;
+                        SavePreset(presetName);
                     }
             }
         }

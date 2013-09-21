@@ -492,12 +492,14 @@ namespace VixenEditor {
         private DialogResult CheckDirty() {
             var dialogResult = DialogResult.None;
 
-            if (IsDirty) {
-                var prompt = string.Format(Resources.StringFormat_SaveChanges, _sequence.Name ?? Resources.SaveChanges_Unnamed);
-                dialogResult = MessageBox.Show(prompt, Vendor.ProductName, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                if (dialogResult == DialogResult.Yes) {
-                    _systemInterface.InvokeSave(this);
-                }
+            if (!IsDirty) {
+                return dialogResult;
+            }
+
+            var prompt = string.Format(Resources.StringFormat_SaveChanges, _sequence.Name ?? Resources.SaveChanges_Unnamed);
+            dialogResult = MessageBox.Show(prompt, Vendor.ProductName, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            if (dialogResult == DialogResult.Yes) {
+                _systemInterface.InvokeSave(this);
             }
 
             return dialogResult;
@@ -940,11 +942,13 @@ namespace VixenEditor {
             var intensity = 0;
             intensityText = "";
 
-            if (column >= 0 && row >= 0) {
-                var value = _sequence.EventValues[GetEventFromChannelNumber(row), column];
-                intensity = _actualLevels ? value : value.ToPercentage();
-                intensityText = string.Format(_actualLevels ? "{0}" : "{0}%", intensity);
+            if (column < 0 || row < 0) {
+                return intensity;
             }
+
+            var value = _sequence.EventValues[GetEventFromChannelNumber(row), column];
+            intensity = _actualLevels ? value : value.ToPercentage();
+            intensityText = string.Format(_actualLevels ? "{0}" : "{0}%", intensity);
 
             return intensity;
         }
@@ -982,25 +986,26 @@ namespace VixenEditor {
         private static byte[,] GetRoutine() {
             var list = new List<string[]>();
             using (var dialog = new RoutineSelectDialog()) {
-                if (dialog.ShowDialog() == DialogResult.OK) {
-                    using (var sr = new StreamReader(dialog.SelectedRoutine)) {
-                        string line;
-                        while ((line = sr.ReadLine()) != null) {
-                            list.Add(line.Trim().Split(new[] {' '}));
-                        }
-                    }
-                    var length = list[0].Length;
-                    var count = list.Count;
-                    var buffer = new byte[count,length];
-                    for (var row = 0; row < count; row++) {
-                        for (var col = 0; col < length; col++) {
-                            buffer[row, col] = Convert.ToByte(list[row][col]);
-                        }
-                    }
-                    return buffer;
+                if (dialog.ShowDialog() != DialogResult.OK) {
+                    return null;
                 }
+
+                using (var sr = new StreamReader(dialog.SelectedRoutine)) {
+                    string line;
+                    while ((line = sr.ReadLine()) != null) {
+                        list.Add(line.Trim().Split(new[] {' '}));
+                    }
+                }
+                var length = list[0].Length;
+                var count = list.Count;
+                var buffer = new byte[count,length];
+                for (var row = 0; row < count; row++) {
+                    for (var col = 0; col < length; col++) {
+                        buffer[row, col] = Convert.ToByte(list[row][col]);
+                    }
+                }
+                return buffer;
             }
-            return null;
         }
 
 
@@ -1098,20 +1103,21 @@ namespace VixenEditor {
                 openFileDialog1.DefaultExt = @"txt";
                 openFileDialog1.InitialDirectory = Paths.ImportExportPath;
                 openFileDialog1.FileName = string.Empty;
-                if (openFileDialog1.ShowDialog() == DialogResult.OK) {
-                    using (var reader = new StreamReader(openFileDialog1.FileName)) {
-                        var list = new List<string>();
-                        string str;
-                        while ((str = reader.ReadLine()) != null) {
-                            list.Add(str);
-                        }
-                        SetChannelCount(list.Count);
-                        for (var i = 0; i < list.Count; i++) {
-                            _sequence.FullChannels[i].Name = list[i];
-                        }
-                        pictureBoxChannels.Refresh();
-                        MessageBox.Show(Resources.ChannelNameImport, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                if (openFileDialog1.ShowDialog() != DialogResult.OK) {
+                    return;
+                }
+                using (var reader = new StreamReader(openFileDialog1.FileName)) {
+                    var list = new List<string>();
+                    string str;
+                    while ((str = reader.ReadLine()) != null) {
+                        list.Add(str);
                     }
+                    SetChannelCount(list.Count);
+                    for (var i = 0; i < list.Count; i++) {
+                        _sequence.FullChannels[i].Name = list[i];
+                    }
+                    pictureBoxChannels.Refresh();
+                    MessageBox.Show(Resources.ChannelNameImport, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 }
             }
         }
@@ -1339,19 +1345,20 @@ namespace VixenEditor {
 
             if ((_position < hScrollBar1.Value) || (_position > (hScrollBar1.Value + _visibleEventPeriods))) {
                 if (_autoScrolling) {
-                    if (_position != -1) {
-                        if (_position >= _sequence.TotalEventPeriods) {
-                            _previousPosition = _position = _sequence.TotalEventPeriods - 1;
-                        }
-                        if (_position >= hScrollBar1.Minimum && _position <= hScrollBar1.Maximum) {
-                            hScrollBar1.Value = _position;
-                        }
-                        //else {
-                        //    string.Format("Execution position: {0} Period: {1} Computed: {2}", executionPosition,
-                        //                  _sequence.EventPeriod, _position).Log();
-                        //}  // This code was put here for diagnosing bug #114
-                        toolStripLabelExecutionPoint.Text = executionPosition.FormatNoMills();
+                    if (_position == -1) {
+                        return;
                     }
+                    if (_position >= _sequence.TotalEventPeriods) {
+                        _previousPosition = _position = _sequence.TotalEventPeriods - 1;
+                    }
+                    if (_position >= hScrollBar1.Minimum && _position <= hScrollBar1.Maximum) {
+                        hScrollBar1.Value = _position;
+                    }
+                    //else {
+                    //    string.Format("Execution position: {0} Period: {1} Computed: {2}", executionPosition,
+                    //                  _sequence.EventPeriod, _position).Log();
+                    //}  // This code was put here for diagnosing bug #114
+                    toolStripLabelExecutionPoint.Text = executionPosition.FormatNoMills();
                 }
                 else {
                     UpdateProgress();
@@ -2219,14 +2226,16 @@ namespace VixenEditor {
                         e.Graphics.FillRectangle(_selectionBrush, RangeToRectangle(range));
                     }
                 }
-                if (toolStripButtonToggleCrossHairs.Checked) {
-                    var x = ((_mouseTimeCaret - hScrollBar1.Value) * _gridColWidth) + ((int) (_gridColWidth * 0.5f));
-                    var y = ((_mouseChannelCaret - vScrollBar1.Value) * _gridRowHeight) + ((int) (_gridRowHeight * 0.5f));
-                    if (((x > e.ClipRectangle.Left) && (x < e.ClipRectangle.Right)) || ((y > e.ClipRectangle.Top) && (y < e.ClipRectangle.Bottom))) {
-                        e.Graphics.DrawLine(_crosshairPen, x, 0, x, Height);
-                        e.Graphics.DrawLine(_crosshairPen, 0, y, Width, y);
-                    }
+                if (!toolStripButtonToggleCrossHairs.Checked) {
+                    return;
                 }
+                var x = ((_mouseTimeCaret - hScrollBar1.Value) * _gridColWidth) + ((int) (_gridColWidth * 0.5f));
+                var y = ((_mouseChannelCaret - vScrollBar1.Value) * _gridRowHeight) + ((int) (_gridRowHeight * 0.5f));
+                if (((x <= e.ClipRectangle.Left) || (x >= e.ClipRectangle.Right)) && ((y <= e.ClipRectangle.Top) || (y >= e.ClipRectangle.Bottom))) {
+                    return;
+                }
+                e.Graphics.DrawLine(_crosshairPen, x, 0, x, Height);
+                e.Graphics.DrawLine(_crosshairPen, 0, y, Width, y);
             }
         }
 
@@ -3240,19 +3249,20 @@ namespace VixenEditor {
 
                 case Keys.Right:
                     if (pictureBoxChannels.Focused || pictureBoxGrid.Focused) {
-                        if (_selectedCells.Right < _sequence.TotalEventPeriods) {
-                            e.Handled = true;
-                            _selectedRange.X++;
-                            _selectedCells.X++;
-                            if (((_selectedCells.Right - 1) - hScrollBar1.Value) >= _visibleEventPeriods) {
-                                hScrollBar1.Value++;
-                            }
-                            else {
-                                pictureBoxGrid.Invalidate(new Rectangle(((_selectedCells.Left - hScrollBar1.Value) - 1) * _gridColWidth,
-                                                                        (_selectedCells.Top - vScrollBar1.Value) * _gridRowHeight,
-                                                                        (_selectedCells.Width + 1) * _gridColWidth,
-                                                                        _selectedCells.Height * _gridRowHeight));
-                            }
+                        if (_selectedCells.Right >= _sequence.TotalEventPeriods) {
+                            return;
+                        }
+                        e.Handled = true;
+                        _selectedRange.X++;
+                        _selectedCells.X++;
+                        if (((_selectedCells.Right - 1) - hScrollBar1.Value) >= _visibleEventPeriods) {
+                            hScrollBar1.Value++;
+                        }
+                        else {
+                            pictureBoxGrid.Invalidate(new Rectangle(((_selectedCells.Left - hScrollBar1.Value) - 1) * _gridColWidth,
+                                (_selectedCells.Top - vScrollBar1.Value) * _gridRowHeight,
+                                (_selectedCells.Width + 1) * _gridColWidth,
+                                _selectedCells.Height * _gridRowHeight));
                         }
                     }
                     break;
@@ -3705,10 +3715,11 @@ namespace VixenEditor {
                             MessageBox.Show(Resources.InvalidNumber, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             isValid = false;
                         }
-                        if ((result < 0) || (result > 255)) {
-                            MessageBox.Show(Resources.InvalidValue, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                            isValid = false;
+                        if ((result >= 0) && (result <= 255)) {
+                            continue;
                         }
+                        MessageBox.Show(Resources.InvalidValue, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        isValid = false;
                     }
                 }
                 else {
@@ -3722,10 +3733,11 @@ namespace VixenEditor {
                         }
                         try {
                             result = Convert.ToSingle(dialog.Response).ToValue();
-                            if ((result < 0) || (result > 255)) {
-                                MessageBox.Show(Resources.InvalidPercentage, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                                isValid = false;
+                            if ((result >= 0) && (result <= 255)) {
+                                continue;
                             }
+                            MessageBox.Show(Resources.InvalidPercentage, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            isValid = false;
                         }
                         catch {
                             MessageBox.Show(Resources.InvalidNumber, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);

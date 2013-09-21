@@ -29,47 +29,47 @@ namespace VixenPlus
             var builder = new StringBuilder();
             builder.AppendLine("Disabled: " + _isDisabled);
             builder.AppendLine("Timer count: " + _timers.Length);
-            if (_timers.Length > 0)
+            if (_timers.Length <= 0) {
+                return builder.ToString();
+            }
+            builder.AppendLine("Timers:");
+            foreach (var timer in _timers)
+            {
+                builder.AppendLine("   Start date: " + timer.StartDate);
+                builder.AppendLine("   Start time: " + timer.StartTime);
+                builder.AppendLine("   Timer length: " + timer.TimerLength);
+                builder.AppendLine("   Repeat interval: " + timer.RepeatInterval);
+                builder.AppendLine("   Recurrence: " + timer.Recurrence);
+                builder.AppendLine("   Recurrence start: " + timer.RecurrenceStart);
+                builder.AppendLine("   Recurrence end: " + timer.RecurrenceEnd);
+                builder.AppendLine("   Program: " + timer.ProgramName);
+                builder.AppendLine("   Object type: " + timer.ObjectType);
+                builder.AppendLine("   Object length: " + timer.ObjectLength);
+                builder.AppendLine("   Last execution: " + timer.LastExecution);
+                builder.AppendLine("   Not valid until: " + timer.NotValidUntil);
+                builder.AppendLine("   Executing: " + timer.IsExecuting);
+                builder.AppendLine("   End date: " + timer.EndDate);
+                builder.AppendLine("   End time: " + timer.EndTime);
+            }
+            var list = StartingTimers();
+            builder.AppendLine("Starting timer count: " + list.Count);
+            if (list.Count > 0)
             {
                 builder.AppendLine("Timers:");
-                foreach (var timer in _timers)
+                foreach (var timer in list)
                 {
-                    builder.AppendLine("   Start date: " + timer.StartDate);
-                    builder.AppendLine("   Start time: " + timer.StartTime);
-                    builder.AppendLine("   Timer length: " + timer.TimerLength);
-                    builder.AppendLine("   Repeat interval: " + timer.RepeatInterval);
-                    builder.AppendLine("   Recurrence: " + timer.Recurrence);
-                    builder.AppendLine("   Recurrence start: " + timer.RecurrenceStart);
-                    builder.AppendLine("   Recurrence end: " + timer.RecurrenceEnd);
-                    builder.AppendLine("   Program: " + timer.ProgramName);
-                    builder.AppendLine("   Object type: " + timer.ObjectType);
-                    builder.AppendLine("   Object length: " + timer.ObjectLength);
-                    builder.AppendLine("   Last execution: " + timer.LastExecution);
-                    builder.AppendLine("   Not valid until: " + timer.NotValidUntil);
-                    builder.AppendLine("   Executing: " + timer.IsExecuting);
-                    builder.AppendLine("   End date: " + timer.EndDate);
-                    builder.AppendLine("   End time: " + timer.EndTime);
+                    builder.AppendLine(string.Format("   {0} at {1}", timer.ProgramName, timer.StartDateTime));
                 }
-                var list = StartingTimers();
-                builder.AppendLine("Starting timer count: " + list.Count);
-                if (list.Count > 0)
-                {
-                    builder.AppendLine("Timers:");
-                    foreach (var timer in list)
-                    {
-                        builder.AppendLine(string.Format("   {0} at {1}", timer.ProgramName, timer.StartDateTime));
-                    }
-                }
-                list = CurrentlyEffectiveTimers();
-                builder.AppendLine("Currently-effective timer count: " + list.Count);
-                if (list.Count > 0)
-                {
-                    builder.AppendLine("Timers:");
-                    foreach (var timer in list)
-                    {
-                        builder.AppendLine(string.Format("   {0} at {1}", timer.ProgramName, timer.StartDateTime));
-                    }
-                }
+            }
+            list = CurrentlyEffectiveTimers();
+            builder.AppendLine("Currently-effective timer count: " + list.Count);
+            if (list.Count <= 0) {
+                return builder.ToString();
+            }
+            builder.AppendLine("Timers:");
+            foreach (var timer in list)
+            {
+                builder.AppendLine(string.Format("   {0} at {1}", timer.ProgramName, timer.StartDateTime));
             }
             return builder.ToString();
         }
@@ -230,15 +230,15 @@ namespace VixenPlus
             }
             if (timer.RepeatInterval == 0)
             {
-                if (flag)
-                {
-                    Host.LogTo(Paths.TimerTraceFilePath,
-                               string.Format("  {0} > {1} ({2})", timer.StartTime, intersectionDateTime.TimeOfDay,
-                                             timer.StartTime > intersectionDateTime.TimeOfDay));
-                    Host.LogTo(Paths.TimerTraceFilePath,
-                               string.Format("  {0} > {1} ({2})", timer.EndTime, intersectionDateTime.TimeOfDay,
-                                             timer.EndTime < intersectionDateTime.TimeOfDay));
+                if (!flag) {
+                    return ((timer.StartTime <= intersectionDateTime.TimeOfDay) && (timer.EndTime >= intersectionDateTime.TimeOfDay));
                 }
+                Host.LogTo(Paths.TimerTraceFilePath,
+                    string.Format("  {0} > {1} ({2})", timer.StartTime, intersectionDateTime.TimeOfDay,
+                        timer.StartTime > intersectionDateTime.TimeOfDay));
+                Host.LogTo(Paths.TimerTraceFilePath,
+                    string.Format("  {0} > {1} ({2})", timer.EndTime, intersectionDateTime.TimeOfDay,
+                        timer.EndTime < intersectionDateTime.TimeOfDay));
                 return ((timer.StartTime <= intersectionDateTime.TimeOfDay) && (timer.EndTime >= intersectionDateTime.TimeOfDay));
             }
             if (flag)
@@ -297,11 +297,11 @@ namespace VixenPlus
                 span = intersectionDateTime.TimeOfDay - timer.StartTime;
                 num = (int) (num2 = span.TotalMinutes%(timer.RepeatInterval));
             }
-            if (flag)
-            {
-                Host.LogTo(Paths.TimerTraceFilePath, "  Deviation: " + num2.ToString(CultureInfo.InvariantCulture));
-                Host.LogTo(Paths.TimerTraceFilePath, "  Minutes: " + num.ToString(CultureInfo.InvariantCulture));
+            if (!flag) {
+                return ((num2 >= 0.0) && (num <= deviationTolerance));
             }
+            Host.LogTo(Paths.TimerTraceFilePath, "  Deviation: " + num2.ToString(CultureInfo.InvariantCulture));
+            Host.LogTo(Paths.TimerTraceFilePath, "  Minutes: " + num.ToString(CultureInfo.InvariantCulture));
             return ((num2 >= 0.0) && (num <= deviationTolerance));
         }
 

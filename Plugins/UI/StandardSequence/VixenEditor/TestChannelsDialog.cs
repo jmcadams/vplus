@@ -13,15 +13,14 @@ namespace VixenEditor {
         private readonly int _executionContextHandle;
         private readonly IExecution _executionInterface;
         private bool _suppressSelectedIndexChange;
-        private readonly EventSequence _sequence;
         private readonly bool _actualLevels;
 
 
         public TestChannelsDialog(EventSequence sequence, IExecution executionInterface, bool constrainToGroup) {
             InitializeComponent();
             _executionInterface = executionInterface;
-            _sequence = sequence;
-            _channels = constrainToGroup ? _sequence.Channels : sequence.FullChannels;
+            var sequence1 = sequence; //todo is this really necessary?
+            _channels = constrainToGroup ? sequence1.Channels : sequence.FullChannels;
             if (_channels != null) {
                 // ReSharper disable CoVariantArrayConversion
                 listBoxChannels.Items.AddRange(_channels.ToArray());
@@ -31,7 +30,7 @@ namespace VixenEditor {
             trackBar.Maximum = _actualLevels ? 255 : 100; //todo should these come from preferences?
             _channelLevels = new byte[sequence.FullChannelCount];
             _executionContextHandle = _executionInterface.RequestContext(false, true, null);
-            _executionInterface.SetAsynchronousContext(_executionContextHandle, _sequence);
+            _executionInterface.SetAsynchronousContext(_executionContextHandle, sequence1);
             BringToFront();
             trackBar.Value = trackBar.Maximum;
         }

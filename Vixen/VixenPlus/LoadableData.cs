@@ -13,17 +13,17 @@ namespace VixenPlus
             var nodeAlways = Xml.GetNodeAlways(RootNode, loadableType + "Data");
             var newChild =
                 nodeAlways.SelectSingleNode(string.Format("{0}[attribute::name=\"{1}\"]", loadableType, loadableName));
-            if (newChild == null)
-            {
-                newChild = Document.CreateElement(loadableType);
-                var node = Document.CreateAttribute("name");
-                node.Value = loadableName;
-                if (newChild.Attributes != null)
-                {
-                    newChild.Attributes.Append(node);
-                }
-                nodeAlways.AppendChild(newChild);
+            if (newChild != null) {
+                return newChild;
             }
+            newChild = Document.CreateElement(loadableType);
+            var node = Document.CreateAttribute("name");
+            node.Value = loadableName;
+            if (newChild.Attributes != null)
+            {
+                newChild.Attributes.Append(node);
+            }
+            nodeAlways.AppendChild(newChild);
             return newChild;
         }
     }
