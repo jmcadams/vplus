@@ -16,7 +16,7 @@ namespace VixenPlus.Dialogs {
     public partial class AudioDialog : Form {
         private readonly EventSequence _eventSequence;
         private readonly fmod _fmod;
-        private readonly int[] _keyMap = new[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        private readonly int[] _keyMap = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         private readonly bool[] _keyStates;
         private readonly Audio _originalAudio;
         private readonly Stopwatch _stopwatch;

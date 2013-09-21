@@ -30,10 +30,10 @@ namespace VixenEditor {
             Average
         }
 
-        private bool[] _isRendering = new[] {false, false};
+        private bool[] _isRendering = {false, false};
         private NutcrackerNodes[,] _nodes;
         private Color[][,] _effectBuffers;
-        private int[] _eventToRender = new[] {0, 0};
+        private int[] _eventToRender = {0, 0};
         private NutcrackerEffectControl[] _effectControls;
         private NutcrackerXmlManager _nutcrackerData;
         private string _playText;

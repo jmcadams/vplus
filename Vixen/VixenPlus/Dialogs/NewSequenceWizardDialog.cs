@@ -13,7 +13,7 @@ namespace VixenPlus.Dialogs {
     public partial class NewSequenceWizardDialog : Form {
         private readonly EventSequence _eventSequence;
 
-        private readonly string[,] _explanations = new[,] {
+        private readonly string[,] _explanations = {
             {string.Empty, string.Empty, string.Empty, string.Empty}, {
                 "The event period length is how long a single on/off event lasts.",
                 "A sequence is made up of a series of events of all the same length.  At every event, the program updates the controller with new data if a change needs to be made."
