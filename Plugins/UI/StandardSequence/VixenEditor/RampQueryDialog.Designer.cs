@@ -1,9 +1,6 @@
 namespace VixenEditor {
-    using System;
     using System.Windows.Forms;
-    using System.Drawing;
     using System.ComponentModel;
-    using System.Collections;
 
     internal partial class RampQueryDialog {
         private IContainer components = null;

@@ -1,9 +1,5 @@
 namespace AppUpdate {
-    using System;
     using System.Windows.Forms;
-    using System.Drawing;
-    using System.Collections;
-    using System.ComponentModel;
 
     internal partial class ShutdownDialog {
         private System.ComponentModel.IContainer components = null;

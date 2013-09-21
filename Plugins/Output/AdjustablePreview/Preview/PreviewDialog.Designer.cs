@@ -1,9 +1,5 @@
 namespace Preview {
-    using System;
     using System.Windows.Forms;
-    using System.Drawing;
-    using System.ComponentModel;
-    using System.Collections;
 
     public partial class PreviewDialog {
 

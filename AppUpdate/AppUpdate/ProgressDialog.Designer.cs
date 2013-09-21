@@ -1,5 +1,4 @@
 namespace AppUpdate {
-    using System.Drawing;
     using System.Windows.Forms;
 
     internal partial class ProgressDialog {

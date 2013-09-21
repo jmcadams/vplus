@@ -1,8 +1,5 @@
 namespace AppUpdate {
-    using System;
     using System.Windows.Forms;
-    using System.Drawing;
-    using System.Collections;
 
     internal partial class UpdateNotificationDialog {
         private System.ComponentModel.IContainer components = null;

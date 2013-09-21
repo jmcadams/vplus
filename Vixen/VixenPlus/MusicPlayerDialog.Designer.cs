@@ -1,8 +1,5 @@
 namespace VixenPlus {
-    using System;
     using System.Windows.Forms;
-    using System.Drawing;
-    using System.Collections;
 
     internal partial class MusicPlayerDialog {
         private System.ComponentModel.IContainer components = null;

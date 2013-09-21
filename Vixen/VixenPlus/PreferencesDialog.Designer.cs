@@ -1,9 +1,6 @@
 namespace VixenPlus {
-    using System;
     using System.Windows.Forms;
-    using System.Drawing;
     using System.ComponentModel;
-    using System.Collections;
 
     internal partial class PreferencesDialog {
         private IContainer components;

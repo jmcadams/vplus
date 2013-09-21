@@ -1,11 +1,8 @@
 using E131_VixenPlugin.Controls;
 
 namespace E131_VixenPlugin {
-    using System;
     using System.Windows.Forms;
-    using System.Drawing;
     using System.ComponentModel;
-    using System.Collections;
 
     public partial class SetupForm {
         private IContainer components;

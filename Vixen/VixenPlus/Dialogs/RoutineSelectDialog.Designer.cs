@@ -1,8 +1,5 @@
 namespace VixenPlus.Dialogs {
-    using System;
     using System.Windows.Forms;
-    using System.Drawing;
-    using System.Collections;
 
     public partial class RoutineSelectDialog {
         private System.ComponentModel.IContainer components = null;

@@ -1,8 +1,5 @@
 namespace Renard {
-    using System;
     using System.Windows.Forms;
-    using System.Drawing;
-    using System.Collections;
 
     public partial class SetupDialog {
         private System.ComponentModel.IContainer components = null;

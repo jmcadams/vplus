@@ -1,8 +1,5 @@
 namespace VixenPlus {
-    using System;
     using System.Windows.Forms;
-    using System.Drawing;
-    using System.Collections;
 
     internal partial class SoundDeviceDialog {
         private System.ComponentModel.IContainer components = null;

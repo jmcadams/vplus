@@ -1,9 +1,5 @@
 namespace VixenPlus.Dialogs {
-    using System;
     using System.Windows.Forms;
-    using System.Drawing;
-    using System.Collections;
-    using System.ComponentModel;
 
     public sealed partial class PluginListDialog {
         private System.ComponentModel.IContainer components = null;

@@ -1,9 +1,6 @@
 namespace VixenPlus.Dialogs {
-    using System;
     using System.Windows.Forms;
-    using System.Drawing;
     using System.ComponentModel;
-    using System.Collections;
 
     public partial class SerialSetupDialog {
         private IContainer components;

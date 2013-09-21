@@ -1,8 +1,5 @@
 namespace VixenEditor {
-    using System;
     using System.Windows.Forms;
-    using System.Drawing;
-    using System.Collections;
 
     internal partial class RandomParametersDialog {
         private System.ComponentModel.IContainer components = null;
