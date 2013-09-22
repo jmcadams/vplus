@@ -5014,7 +5014,13 @@ namespace VixenEditor {
 
 
         private void mapperTsb_Click(object sender, EventArgs e) {
-            MessageBox.Show("Mapper!");
+            using (var mapper = new ChannelMapper(_sequence)) {
+                if (mapper.ShowDialog() != DialogResult.OK) {
+                    return;
+                }
+
+                MessageBox.Show("Clicked Okay");
+            }
         }
     }
 }

@@ -25,80 +25,75 @@
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChannelMapper));
-            this.lbSource = new System.Windows.Forms.ListBox();
-            this.lbMapped = new System.Windows.Forms.ListBox();
             this.lbDestination = new System.Windows.Forms.ListBox();
-            this.btnDestProfile = new System.Windows.Forms.Button();
+            this.btnDestinationProfile = new System.Windows.Forms.Button();
             this.btnLoadMap = new System.Windows.Forms.Button();
             this.btnSaveMap = new System.Windows.Forms.Button();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.btnTransform = new System.Windows.Forms.Button();
+            this.btnPreviewEdit = new System.Windows.Forms.Button();
             this.cbKeepUnmapped = new System.Windows.Forms.CheckBox();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.lbDestCnt = new System.Windows.Forms.ListBox();
-            this.lblSort = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.lblSortSrc = new System.Windows.Forms.Label();
+            this.cbSortSrc = new System.Windows.Forms.ComboBox();
             this.lblSouceChannels = new System.Windows.Forms.Label();
             this.lblChannelMapping = new System.Windows.Forms.Label();
             this.lblDestChannels = new System.Windows.Forms.Label();
-            this.lblMap = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.tbEx = new System.Windows.Forms.TextBox();
+            this.lblEx = new System.Windows.Forms.Label();
+            this.vsb = new System.Windows.Forms.VScrollBar();
+            this.cbSortDest = new System.Windows.Forms.ComboBox();
+            this.lblSortDest = new System.Windows.Forms.Label();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // lbSource
-            // 
-            this.lbSource.FormattingEnabled = true;
-            this.lbSource.Location = new System.Drawing.Point(12, 54);
-            this.lbSource.Name = "lbSource";
-            this.lbSource.Size = new System.Drawing.Size(215, 472);
-            this.lbSource.TabIndex = 7;
-            // 
-            // lbMapped
-            // 
-            this.lbMapped.FormattingEnabled = true;
-            this.lbMapped.Location = new System.Drawing.Point(228, 54);
-            this.lbMapped.Name = "lbMapped";
-            this.lbMapped.Size = new System.Drawing.Size(280, 472);
-            this.lbMapped.TabIndex = 8;
             // 
             // lbDestination
             // 
+            this.lbDestination.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.lbDestination.FormattingEnabled = true;
-            this.lbDestination.Location = new System.Drawing.Point(557, 54);
+            this.lbDestination.ItemHeight = 20;
+            this.lbDestination.Location = new System.Drawing.Point(586, 54);
             this.lbDestination.Name = "lbDestination";
-            this.lbDestination.Size = new System.Drawing.Size(215, 472);
+            this.lbDestination.Size = new System.Drawing.Size(186, 464);
             this.lbDestination.TabIndex = 10;
+            this.lbDestination.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lbDestination_DrawItem);
             // 
-            // btnDestProfile
+            // btnDestinationProfile
             // 
-            this.btnDestProfile.Location = new System.Drawing.Point(616, 8);
-            this.btnDestProfile.Name = "btnDestProfile";
-            this.btnDestProfile.Size = new System.Drawing.Size(156, 23);
-            this.btnDestProfile.TabIndex = 0;
-            this.btnDestProfile.Text = "Load Destination Info";
-            this.btnDestProfile.UseVisualStyleBackColor = true;
+            this.btnDestinationProfile.Location = new System.Drawing.Point(460, 532);
+            this.btnDestinationProfile.Name = "btnDestinationProfile";
+            this.btnDestinationProfile.Size = new System.Drawing.Size(139, 23);
+            this.btnDestinationProfile.TabIndex = 0;
+            this.btnDestinationProfile.Text = "New Destination Profile";
+            this.btnDestinationProfile.UseVisualStyleBackColor = true;
+            this.btnDestinationProfile.Click += new System.EventHandler(this.btnDestProfile_Click);
             // 
             // btnLoadMap
             // 
-            this.btnLoadMap.Location = new System.Drawing.Point(228, 532);
+            this.btnLoadMap.Location = new System.Drawing.Point(204, 532);
             this.btnLoadMap.Name = "btnLoadMap";
             this.btnLoadMap.Size = new System.Drawing.Size(75, 23);
             this.btnLoadMap.TabIndex = 3;
             this.btnLoadMap.Text = "Load Map";
             this.toolTips.SetToolTip(this.btnLoadMap, "Load a mapping file.");
             this.btnLoadMap.UseVisualStyleBackColor = true;
+            this.btnLoadMap.Click += new System.EventHandler(this.BtnLoadClick);
             // 
             // btnSaveMap
             // 
-            this.btnSaveMap.Location = new System.Drawing.Point(309, 532);
+            this.btnSaveMap.Location = new System.Drawing.Point(285, 532);
             this.btnSaveMap.Name = "btnSaveMap";
             this.btnSaveMap.Size = new System.Drawing.Size(75, 23);
             this.btnSaveMap.TabIndex = 4;
             this.btnSaveMap.Text = "Save Map";
             this.toolTips.SetToolTip(this.btnSaveMap, "Save a mapping file.");
             this.btnSaveMap.UseVisualStyleBackColor = true;
+            this.btnSaveMap.Click += new System.EventHandler(this.BtnSaveClick);
             // 
             // btnTransform
             // 
+            this.btnTransform.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnTransform.Location = new System.Drawing.Point(697, 532);
             this.btnTransform.Name = "btnTransform";
             this.btnTransform.Size = new System.Drawing.Size(75, 23);
@@ -106,6 +101,18 @@
             this.btnTransform.Text = "Transform";
             this.toolTips.SetToolTip(this.btnTransform, "Transform your sequence.");
             this.btnTransform.UseVisualStyleBackColor = true;
+            this.btnTransform.Click += new System.EventHandler(this.BtnTransformClick);
+            // 
+            // btnPreviewEdit
+            // 
+            this.btnPreviewEdit.Location = new System.Drawing.Point(366, 532);
+            this.btnPreviewEdit.Name = "btnPreviewEdit";
+            this.btnPreviewEdit.Size = new System.Drawing.Size(75, 23);
+            this.btnPreviewEdit.TabIndex = 16;
+            this.btnPreviewEdit.Text = "Preview";
+            this.toolTips.SetToolTip(this.btnPreviewEdit, "Show a Visual Preivew");
+            this.btnPreviewEdit.UseVisualStyleBackColor = true;
+            this.btnPreviewEdit.Click += new System.EventHandler(this.BtnPreviewClick);
             // 
             // cbKeepUnmapped
             // 
@@ -116,9 +123,11 @@
             this.cbKeepUnmapped.TabIndex = 2;
             this.cbKeepUnmapped.Text = "Map Unmapped Source Channels";
             this.cbKeepUnmapped.UseVisualStyleBackColor = true;
+            this.cbKeepUnmapped.Click += new System.EventHandler(this.cbKeepEmpty_CheckedChanged);
             // 
             // btnCancel
             // 
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new System.Drawing.Point(616, 532);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
@@ -126,30 +135,23 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
-            // lbDestCnt
+            // lblSortSrc
             // 
-            this.lbDestCnt.FormattingEnabled = true;
-            this.lbDestCnt.Location = new System.Drawing.Point(520, 54);
-            this.lbDestCnt.Name = "lbDestCnt";
-            this.lbDestCnt.Size = new System.Drawing.Size(36, 472);
-            this.lbDestCnt.TabIndex = 9;
+            this.lblSortSrc.AutoSize = true;
+            this.lblSortSrc.Location = new System.Drawing.Point(13, 13);
+            this.lblSortSrc.Name = "lblSortSrc";
+            this.lblSortSrc.Size = new System.Drawing.Size(44, 13);
+            this.lblSortSrc.TabIndex = 11;
+            this.lblSortSrc.Text = "Sort By:";
             // 
-            // lblSort
+            // cbSortSrc
             // 
-            this.lblSort.AutoSize = true;
-            this.lblSort.Location = new System.Drawing.Point(13, 13);
-            this.lblSort.Name = "lblSort";
-            this.lblSort.Size = new System.Drawing.Size(44, 13);
-            this.lblSort.TabIndex = 11;
-            this.lblSort.Text = "Sort By:";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(63, 10);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(164, 21);
-            this.comboBox1.TabIndex = 1;
+            this.cbSortSrc.FormattingEnabled = true;
+            this.cbSortSrc.Location = new System.Drawing.Point(63, 10);
+            this.cbSortSrc.Name = "cbSortSrc";
+            this.cbSortSrc.Size = new System.Drawing.Size(135, 21);
+            this.cbSortSrc.TabIndex = 1;
+            this.cbSortSrc.SelectedIndexChanged += new System.EventHandler(this.SortSrcIndexChanged);
             // 
             // lblSouceChannels
             // 
@@ -157,19 +159,19 @@
             this.lblSouceChannels.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSouceChannels.Location = new System.Drawing.Point(9, 38);
             this.lblSouceChannels.Name = "lblSouceChannels";
-            this.lblSouceChannels.Size = new System.Drawing.Size(103, 13);
+            this.lblSouceChannels.Size = new System.Drawing.Size(87, 13);
             this.lblSouceChannels.TabIndex = 12;
-            this.lblSouceChannels.Text = "Source Channels";
+            this.lblSouceChannels.Text = "Source Profile";
             // 
             // lblChannelMapping
             // 
             this.lblChannelMapping.AutoSize = true;
             this.lblChannelMapping.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblChannelMapping.Location = new System.Drawing.Point(225, 38);
+            this.lblChannelMapping.Location = new System.Drawing.Point(201, 38);
             this.lblChannelMapping.Name = "lblChannelMapping";
-            this.lblChannelMapping.Size = new System.Drawing.Size(105, 13);
+            this.lblChannelMapping.Size = new System.Drawing.Size(135, 13);
             this.lblChannelMapping.TabIndex = 13;
-            this.lblChannelMapping.Text = "Channel Mapping";
+            this.lblChannelMapping.Text = "Destination Channel(s)";
             // 
             // lblDestChannels
             // 
@@ -177,46 +179,102 @@
             this.lblDestChannels.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDestChannels.Location = new System.Drawing.Point(645, 38);
             this.lblDestChannels.Name = "lblDestChannels";
-            this.lblDestChannels.Size = new System.Drawing.Size(127, 13);
+            this.lblDestChannels.Size = new System.Drawing.Size(111, 13);
             this.lblDestChannels.TabIndex = 14;
-            this.lblDestChannels.Text = "Destination Channels";
+            this.lblDestChannels.Text = "Destination Profile";
             // 
-            // lblMap
+            // panel1
             // 
-            this.lblMap.AutoSize = true;
-            this.lblMap.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMap.Location = new System.Drawing.Point(520, 35);
-            this.lblMap.Name = "lblMap";
-            this.lblMap.Size = new System.Drawing.Size(38, 13);
-            this.lblMap.TabIndex = 15;
-            this.lblMap.Text = "Map?";
+            this.panel1.Controls.Add(this.tbEx);
+            this.panel1.Controls.Add(this.lblEx);
+            this.panel1.Controls.Add(this.vsb);
+            this.panel1.Location = new System.Drawing.Point(12, 56);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(568, 472);
+            this.panel1.TabIndex = 15;
+            // 
+            // tbEx
+            // 
+            this.tbEx.BackColor = System.Drawing.SystemColors.Window;
+            this.tbEx.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.tbEx.Location = new System.Drawing.Point(192, 1);
+            this.tbEx.Margin = new System.Windows.Forms.Padding(0);
+            this.tbEx.Name = "tbEx";
+            this.tbEx.Size = new System.Drawing.Size(359, 20);
+            this.tbEx.TabIndex = 18;
+            this.tbEx.TabStop = false;
+            this.tbEx.Text = "Example Text";
+            this.tbEx.Visible = false;
+            // 
+            // lblEx
+            // 
+            this.lblEx.Enabled = false;
+            this.lblEx.Location = new System.Drawing.Point(0, 0);
+            this.lblEx.Name = "lblEx";
+            this.lblEx.Size = new System.Drawing.Size(186, 20);
+            this.lblEx.TabIndex = 17;
+            this.lblEx.Text = "Example Label";
+            this.lblEx.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblEx.Visible = false;
+            // 
+            // vsb
+            // 
+            this.vsb.Location = new System.Drawing.Point(551, 0);
+            this.vsb.Name = "vsb";
+            this.vsb.Size = new System.Drawing.Size(17, 472);
+            this.vsb.TabIndex = 16;
+            this.vsb.Scroll += new System.Windows.Forms.ScrollEventHandler(this.VsbScroll);
+            this.vsb.ValueChanged += new System.EventHandler(this.VsbValueChanged);
+            // 
+            // cbSortDest
+            // 
+            this.cbSortDest.FormattingEnabled = true;
+            this.cbSortDest.Location = new System.Drawing.Point(637, 10);
+            this.cbSortDest.Name = "cbSortDest";
+            this.cbSortDest.Size = new System.Drawing.Size(135, 21);
+            this.cbSortDest.TabIndex = 17;
+            this.cbSortDest.SelectedIndexChanged += new System.EventHandler(this.SortDestIndexChanged);
+            // 
+            // lblSortDest
+            // 
+            this.lblSortDest.AutoSize = true;
+            this.lblSortDest.Location = new System.Drawing.Point(587, 13);
+            this.lblSortDest.Name = "lblSortDest";
+            this.lblSortDest.Size = new System.Drawing.Size(44, 13);
+            this.lblSortDest.TabIndex = 18;
+            this.lblSortDest.Text = "Sort By:";
             // 
             // ChannelMapper
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(784, 562);
-            this.Controls.Add(this.lblMap);
+            this.Controls.Add(this.cbSortDest);
+            this.Controls.Add(this.lblSortDest);
+            this.Controls.Add(this.btnPreviewEdit);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.lblDestChannels);
             this.Controls.Add(this.lblChannelMapping);
             this.Controls.Add(this.lblSouceChannels);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.lblSort);
-            this.Controls.Add(this.lbDestCnt);
+            this.Controls.Add(this.cbSortSrc);
+            this.Controls.Add(this.lblSortSrc);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnTransform);
             this.Controls.Add(this.cbKeepUnmapped);
             this.Controls.Add(this.btnSaveMap);
             this.Controls.Add(this.btnLoadMap);
-            this.Controls.Add(this.btnDestProfile);
+            this.Controls.Add(this.btnDestinationProfile);
             this.Controls.Add(this.lbDestination);
-            this.Controls.Add(this.lbMapped);
-            this.Controls.Add(this.lbSource);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ChannelMapper";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Channel Mapper";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MapperFormClosing);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -225,21 +283,24 @@
         #endregion
 
         private System.Windows.Forms.ToolTip toolTips;
-        private System.Windows.Forms.ListBox lbSource;
-        private System.Windows.Forms.ListBox lbMapped;
         private System.Windows.Forms.ListBox lbDestination;
-        private System.Windows.Forms.Button btnDestProfile;
+        private System.Windows.Forms.Button btnDestinationProfile;
         private System.Windows.Forms.Button btnLoadMap;
         private System.Windows.Forms.Button btnSaveMap;
         private System.Windows.Forms.CheckBox cbKeepUnmapped;
         private System.Windows.Forms.Button btnTransform;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.ListBox lbDestCnt;
-        private System.Windows.Forms.Label lblSort;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label lblSortSrc;
+        private System.Windows.Forms.ComboBox cbSortSrc;
         private System.Windows.Forms.Label lblSouceChannels;
         private System.Windows.Forms.Label lblChannelMapping;
         private System.Windows.Forms.Label lblDestChannels;
-        private System.Windows.Forms.Label lblMap;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox tbEx;
+        private System.Windows.Forms.Label lblEx;
+        private System.Windows.Forms.VScrollBar vsb;
+        private System.Windows.Forms.Button btnPreviewEdit;
+        private System.Windows.Forms.ComboBox cbSortDest;
+        private System.Windows.Forms.Label lblSortDest;
     }
 }
