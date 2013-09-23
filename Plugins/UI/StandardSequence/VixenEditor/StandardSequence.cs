@@ -2473,6 +2473,7 @@ namespace VixenEditor {
         private void ReactToProfileAssignment() {
             var isProfile = _sequence.Profile != null;
             profileToolStripLabel.Text = isProfile ? _sequence.Profile.Name : "Embedded";
+            mapperTsb.Enabled = isProfile;
             profileToolStripLabel.Visible = isProfile;
             toolStripDropDownButtonPlugins.Visible = !isProfile;
             flattenProfileIntoSequenceToolStripMenuItem.Enabled = isProfile;
@@ -4903,9 +4904,9 @@ namespace VixenEditor {
 
         private void tsbNutcracker_Click(object sender, EventArgs e) {
             // disabled!
-            if (!tsbNutcracker.Enabled) {
-                return;
-            }
+            //if (!tsbNutcracker.Enabled) {
+            //    return;
+            //}
 
             //using (var nce = new NutcrackerControlDialog(_sequence, _selectedRange)) {
             //    if (nce.ShowDialog() != DialogResult.OK) {
@@ -4931,7 +4932,7 @@ namespace VixenEditor {
         }
 
         private void tsbNutcracker_DoubleClick(object sender, EventArgs e) {
-            MessageBox.Show("Patience Grasshopper!\nClara is fine.");
+            //MessageBox.Show(@"Patience Grasshopper!\nClara is fine.");
         }
 
 
@@ -5014,12 +5015,17 @@ namespace VixenEditor {
 
 
         private void mapperTsb_Click(object sender, EventArgs e) {
+            if (IsDirty &&
+                MessageBox.Show(@"In order to transform properly, your sequence must be saved.\n\nDo you want to save your sequence before mapping?", @"Save sequence?", MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question) == DialogResult.Yes) {
+                _systemInterface.InvokeSave(this);
+            }
             using (var mapper = new ChannelMapper(_sequence)) {
-                if (mapper.ShowDialog() != DialogResult.OK) {
+                if (mapper.ShowDialog() != DialogResult.OK || !mapper.IsMapValid) {
                     return;
                 }
 
-                MessageBox.Show("Clicked Okay");
+                MessageBox.Show(string.Format("Your new sequence was saved as {0}", mapper.GetMappedSequenceFile));
             }
         }
     }
