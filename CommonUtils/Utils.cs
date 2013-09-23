@@ -137,13 +137,34 @@ namespace CommonUtils {
         public static void DrawItem(this DrawItemEventArgs e, string name, Color color, bool useCheckmark = false) {
             e.DrawBackground();
 
-            var selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected || (e.State & DrawItemState.ComboBoxEdit) == DrawItemState.ComboBoxEdit;
+            var selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected ||
+                           (e.State & DrawItemState.ComboBoxEdit) == DrawItemState.ComboBoxEdit;
             GenericBrush.Color = color;
             e.Graphics.FillRectangle(selected && !useCheckmark ? SystemBrushes.Highlight : GenericBrush, e.Bounds);
             var contrastingBrush = selected && !useCheckmark ? SystemBrushes.HighlightText : color.GetTextColor();
             e.Graphics.DrawString(name, e.Font, contrastingBrush, new RectangleF(e.Bounds.Location, e.Bounds.Size));
             if (selected && useCheckmark) {
                 e.Graphics.DrawString(Checkmark, e.Font, contrastingBrush, e.Bounds.Width - e.Bounds.Height, e.Bounds.Y);
+            }
+            e.DrawFocusRectangle();
+        }
+
+
+        public static void DrawItemWide(this DrawItemEventArgs e, string name, Color color, bool useCheckmark) {
+            e.DrawBackground();
+
+            var selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected ||
+                           (e.State & DrawItemState.ComboBoxEdit) == DrawItemState.ComboBoxEdit;
+            GenericBrush.Color = color;
+            e.Graphics.FillRectangle(selected && !useCheckmark ? SystemBrushes.Highlight : GenericBrush, e.Bounds);
+            var contrastingBrush = selected && !useCheckmark ? SystemBrushes.HighlightText : color.GetTextColor();
+            var loc = e.Bounds.Location;
+            if (useCheckmark) {
+                loc.Offset((int)e.Graphics.MeasureString(Checkmark, e.Font).Width + 2, 0);
+            }
+            e.Graphics.DrawString(name, e.Font, contrastingBrush, new RectangleF(loc, e.Graphics.MeasureString(name, e.Font)));
+            if (selected && useCheckmark) {
+                e.Graphics.DrawString(Checkmark, e.Font, contrastingBrush, 2, e.Bounds.Y);
             }
             e.DrawFocusRectangle();
         }
