@@ -1,10 +1,14 @@
-xx XXX xxxx - V 0.1.xxx.1  {BETA}
+22 SEP 2013 - V 0.1.265.1  {BETA}
     Fixed grammar errors in release notes.  I'm a programmer, not a speller :D
     Fixed a channel count weirdness where the wrong count was shown when a group is selected.
     Added an extension method so that logging to crash.log can be called from any class.
     Bug #119 - FIXED - Channel events not working properly with groups, will put the marks on wrong channel.
     Bug #120 - FIXED - Ctrl-s (Save) is opening the sparkle function if the sequence is already in a saved state.
     Integrated the channel mapper into Vixen+
+    Bug #121 - KNOWN ISSUE - If you select a light waveform background color, the tick marks are hard to see.
+    Bug #122 - KNOWN ISSUE - If you use a profile with groups and use the wizard to create a new sequence, the
+        groups do not show when the sequence is open.  Close the sequence and reopen it before doing anything with
+        groups.  If you don't you will lose your existing group data.
 
 02 SEP 2013 - V 0.1.245.1  {BETA}
     Bug #111 - FIXED - Red X of death.  When managing profiles, exiting can cause the Red X of death. 
