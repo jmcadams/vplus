@@ -12,9 +12,10 @@ using Properties;
 
 using VixenPlus;
 
+using ContentAlignment = System.Drawing.ContentAlignment;
+
 namespace VixenEditor {
     public partial class ChannelMapper : Form {
-        private Profile _destinationProfile;
         
         #region Class properties, variables and constants.
 
@@ -25,36 +26,44 @@ namespace VixenEditor {
         private const string TextboxNamePrefix = "tb";
         private const string EditButtonTooltip = "Return to editing your destination map";
         private const string EditButtonText = "Edit Map";
-        private const string DestHeaderPreviewText = "Destination Channel(s)";
 
-        private readonly string _destinationHeaderText;
         private readonly Label[] _labels = new Label[MaxChannels];
         private readonly string _previewButtonText;
         private readonly string _previewButtonToolTip;
         private readonly int _sourceChannelCount;
-        private readonly Profile _sourceProfile;
+        private readonly ChannelMapperProfile _sourceProfile;
         private readonly char[] _splitChar = { ',' };
         private readonly TextBox[] _textBoxes = new TextBox[MaxChannels];
+        private readonly bool _useCheckmark;
 
+        private ChannelMapperProfile _destinationProfile;
+        private ChannelMapperProfile _destinationNatural;
         private int _currentTopChannelIndex;
         private string[] _destinationTextBoxText;
         private bool _isPreview;
         private int _maxDestinationCount;
         private int _totalChannelsDisplayed;
         private bool _isDirty;
+        private int _selectedTextBox = -1;
+        private readonly EventSequence _sourceSequence;
+        public bool IsMapValid { get; private set; }
 
-        public bool IsMapValid { get; set; }
+        public string GetMappedSequenceFile {
+            get { return TransformSequence(); }
+        }
 
         #endregion
 
 
         public ChannelMapper(EventSequence sequence) {
-            var sourceSequence = sequence;
+            _sourceSequence = sequence;
+            _useCheckmark = Preference2.GetInstance().GetBoolean("UseCheckmark");
 
             InitializeComponent();
 
-            _sourceProfile = sourceSequence.Profile;
-            _sourceChannelCount = sourceSequence.FullChannelCount;
+            _sourceProfile = new ChannelMapperProfile(_sourceSequence.Profile.FileName);
+            //_sourceNatural = new ChannelMapperProfile(sourceSequence.Profile.FileName);
+            _sourceChannelCount = _sourceProfile.GetChannelCount();
             InitializeDropDownList();
             InitializeScrollbar();
 
@@ -66,10 +75,7 @@ namespace VixenEditor {
             MouseWheel += MapperMouseWheel;
             _previewButtonToolTip = toolTips.GetToolTip(btnPreviewEdit);
             _previewButtonText = btnPreviewEdit.Text;
-            _destinationHeaderText = lblDestChannels.Text;
             TogglePreviewElements(true);
-
-            UpdateButtons();
         }
 
         #region new stuff
@@ -189,6 +195,7 @@ namespace VixenEditor {
             c.Focus();
             c.SelectionStart = 0;
             c.SelectionLength = c.Text.Length;
+            _selectedTextBox = textBoxIndex;
         }
 
         private static void MapperPreviewKeyDown(object sender, PreviewKeyDownEventArgs e) {
@@ -222,26 +229,34 @@ namespace VixenEditor {
             if (save) SaveCurrentValues();
 
             for (var row = 0; row < _totalChannelsDisplayed; row++) {
-                var source = _sourceProfile.FullChannels[start + row];
-                _labels[row].Text = source.Name;
-                _labels[row].BackColor = source.Color;
+                _labels[row].Text = _sourceProfile.GetChannelName(start + row);
+                _labels[row].BackColor = _sourceProfile.GetChannelColor(start + row);
                 _labels[row].ForeColor = _labels[row].BackColor.GetForeColor();
 
-                _textBoxes[row].Text = _destinationTextBoxText[source.OutputChannel];
+                _textBoxes[row].Text = _destinationTextBoxText[_sourceProfile.GetChannelLocation(start + row)];
 
                 if (!_isPreview) continue;
 
                 var s = _textBoxes[row].Text.Split(_splitChar, StringSplitOptions.RemoveEmptyEntries);
                 var col = 0;
+
+                //var destSortOrder = cbSortDest.SelectedIndex;
+                //_destinationProfile.SetSortOrder(0);
+
                 foreach (var channel in s) {
-                    var dest = _destinationProfile.FullChannels[int.Parse(channel)];
+                    var channelNum = int.Parse(channel);
                     var c = Controls.Find("r" + row + "c" + col, true)[0];
-                    c.Text = dest.Name;
-                    c.BackColor = dest.Color;
-                    c.ForeColor = c.BackColor.GetForeColor();
-                    c.Visible = true;
+                    if (channelNum < _destinationNatural.GetChannelCount()) {
+                        c.Text = _destinationNatural.GetChannelName(channelNum);
+                        c.BackColor = _destinationNatural.GetChannelColor(channelNum);
+                        c.ForeColor = c.BackColor.GetForeColor();
+                        c.Visible = true;
+                    }
                     col++;
                 }
+
+                //_destinationProfile.SetSortOrder(destSortOrder);
+
                 for (; col < _maxDestinationCount; col++) {
                     Controls.Find("r" + row + "c" + col, true)[0].Visible = false;
                 }
@@ -249,11 +264,12 @@ namespace VixenEditor {
 
             _currentTopChannelIndex = start;
             vsb.Value = start;
+
         }
 
         private void SaveCurrentValues() {
             for (var i = 0; i < _totalChannelsDisplayed; i++) {
-                _destinationTextBoxText[_sourceProfile.FullChannels[_currentTopChannelIndex + i].OutputChannel] = _textBoxes[i].Text;
+                _destinationTextBoxText[_sourceProfile.GetChannelLocation(_currentTopChannelIndex + i)] = _textBoxes[i].Text;
             }
         }
 
@@ -281,9 +297,18 @@ namespace VixenEditor {
             // Need these events so that we can catch the Tab and Enter key to do special list movement.
             textBox.PreviewKeyDown += MapperPreviewKeyDown;
             textBox.KeyDown += MapperKeyDown;
-
+            textBox.Click += MapperClick;
             return textBox;
         }
+
+
+        private void MapperClick(object sender, EventArgs e) {
+            var tb = sender as TextBox;
+            if (tb == null) return;
+
+            _selectedTextBox = int.Parse(tb.Name.Substring(TextboxNamePrefix.Length));
+        }
+
 
         private void VsbScroll(object sender, ScrollEventArgs e) {
             ScrollTo(e.NewValue);
@@ -295,6 +320,7 @@ namespace VixenEditor {
             for (var i = 0; i < _totalChannelsDisplayed; i++) {
                 _textBoxes[i].PreviewKeyDown -= MapperPreviewKeyDown;
                 _textBoxes[i].KeyDown -= MapperKeyDown;
+                _textBoxes[i].Click -= MapperClick;
             }
         }
 
@@ -302,13 +328,15 @@ namespace VixenEditor {
         private string GetMap() {
             SaveCurrentValues();
 
-            var sortOrder = cbSortSrc.SelectedIndex;
-            SetSortOrder(_sourceProfile.Channels, 0);
+            var srcSortOrder = cbSortSrc.SelectedIndex;
+            var destSortOrder = cbSortDest.SelectedIndex;
+            _sourceProfile.SetSortOrder(0);
+            _destinationProfile.SetSortOrder(0);
 
             var theMap = new StringBuilder();
 
             for (var i = 0; i < _sourceChannelCount; i++) {
-                var src = _sourceProfile.FullChannels[i].OutputChannel;
+                var src = _sourceProfile.GetChannelLocation(i);
                 theMap.Append(i + ":");
                 if (cbKeepUnmapped.Checked && _destinationTextBoxText[src].Equals("")) {
                     theMap.Append(i + " ");
@@ -322,7 +350,8 @@ namespace VixenEditor {
                 theMap.Append(';');
             }
 
-            SetSortOrder(_sourceProfile.Channels, sortOrder);
+            _sourceProfile.SetSortOrder(srcSortOrder);
+            _destinationProfile.SetSortOrder(destSortOrder);
 
             return theMap.ToString();
         }
@@ -344,17 +373,19 @@ namespace VixenEditor {
             SaveCurrentValues();
             SaveToFileIfDirty();
 
-            var destCount = new int[_destinationProfile.FullChannels.Count];
+            var destCount = new int[_destinationProfile.GetChannelCount()];
 
             var badChannels = FindBadChannels(destCount);
             var dupeChannels = FindDupeChannels(destCount);
 
             if (string.IsNullOrEmpty(badChannels) && string.IsNullOrEmpty(dupeChannels)) {
                 IsMapValid = true;
-                if (ActiveForm != null) {
-                    ActiveForm.DialogResult = DialogResult.OK;
-                    if (ActiveForm != null) ActiveForm.Close();
+                if (ActiveForm == null) {
+                    return;
                 }
+
+                ActiveForm.DialogResult = DialogResult.OK;
+                if (ActiveForm != null) ActiveForm.Close();
             }
             else {
                 IsMapValid = false;
@@ -362,8 +393,8 @@ namespace VixenEditor {
             }
         }
 
-        private string FindDupeChannels(int[] destCount) {
-            var destChannelCount = _destinationProfile.FullChannels.Count;
+        private string FindDupeChannels(IList<int> destCount) {
+            var destChannelCount = _destinationProfile.GetChannelCount();
 
             var dupeChannels = new StringBuilder();
             for (var i = 0; i < destChannelCount; i++) {
@@ -375,7 +406,7 @@ namespace VixenEditor {
         }
 
         private string FindBadChannels(int[] destCount) {
-            var destChannelCount = _destinationProfile.FullChannels.Count;
+            var destChannelCount = _destinationProfile.GetChannelCount();
 
             var currentChannel = 0;
 
@@ -383,7 +414,7 @@ namespace VixenEditor {
             for (var i = 0; i < _sourceChannelCount; i++) {
                 var process = true;
 
-                var destChannels = _destinationTextBoxText[_sourceProfile.FullChannels[i].OutputChannel].Split(_splitChar);
+                var destChannels = _destinationTextBoxText[_sourceProfile.GetChannelLocation(i)].Split(_splitChar);
 
                 foreach (var channel in destChannels) {
                     if (channel.Equals("") && cbKeepUnmapped.Checked) {
@@ -414,16 +445,19 @@ namespace VixenEditor {
 
 
         private void SaveToFileIfDirty() {
-            if (_isDirty) {
-                if (MessageBox.Show(@"Would you like to save your mapping data before transforming your sequence?",
-                                    @"Save Changes?",
-                                    MessageBoxButtons.YesNo,
-                                    MessageBoxIcon.Question)
-                        .Equals(DialogResult.Yes)) {
-                    BtnSaveClick(this, new EventArgs());
-                }
+            if (!_isDirty) {
+                return;
+            }
+
+            if (MessageBox.Show(@"Would you like to save your mapping data before transforming your sequence?",
+                @"Save Changes?",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question)
+                .Equals(DialogResult.Yes)) {
+                BtnSaveClick(this, new EventArgs());
             }
         }
+
 
         private static void ShowErrors(string dupes, string bad) {
             var msg = new StringBuilder(@"Transformation cannot take place because of the follow errors:");
@@ -448,6 +482,12 @@ namespace VixenEditor {
 
         private void BtnSaveClick(object sender, EventArgs e) {
             using (var saveMap = new SaveFileDialog()) {
+                saveMap.InitialDirectory = Paths.MapperPath;
+                saveMap.DefaultExt = Vendor.MapperExtension;
+                saveMap.CheckPathExists = true;
+                saveMap.FileName = _sourceProfile.GetFileName() + " to " + _destinationProfile.GetFileName() + Vendor.MapperExtension;
+                saveMap.Filter = @"MapperFile|*" + Vendor.MapperExtension;
+                saveMap.AddExtension = true;
                 if (!saveMap.ShowDialog().Equals(DialogResult.OK)) return;
                 using (TextWriter tw = new StreamWriter(saveMap.FileName)) {
                     tw.WriteLine(GetMap());
@@ -460,22 +500,26 @@ namespace VixenEditor {
 
         private void BtnLoadClick(object sender, EventArgs e) {
             using (var openMap = new OpenFileDialog()) {
-                openMap.InitialDirectory = Paths.ProfilePath + "Mappers\\";
-
+                openMap.InitialDirectory = Paths.MapperPath;
+                openMap.CheckPathExists = true;
+                openMap.DefaultExt = Vendor.MapperExtension;
+                openMap.Filter = @"MapperFile | *" + Vendor.MapperExtension; 
                 if (!openMap.ShowDialog().Equals(DialogResult.OK)) return;
 
                 using (TextReader tr = new StreamReader(openMap.FileName)) {
                     LoadMap(tr.ReadLine());
                     tr.Close();
-                    _isDirty = false;
                 }
             }
         }
 
 
         private void LoadMap(string map) {
-            var sortOrder = cbSortSrc.SelectedIndex;
-            SetSortOrder(_sourceProfile.Channels, 0);
+            var isMapError = false;
+            var srcSortOrder = cbSortSrc.SelectedIndex;
+            var destSortOrder = cbSortDest.SelectedIndex;
+            _sourceProfile.SetSortOrder(0);
+            _destinationProfile.SetSortOrder(0);
 
             var splitChannelChar = new[] { ';' };
             var channels = map.Split(splitChannelChar, StringSplitOptions.RemoveEmptyEntries);
@@ -483,16 +527,27 @@ namespace VixenEditor {
                 var elements = channel.Split(':');
 
                 var sourceChannel = int.Parse(elements[0]);
-                _destinationTextBoxText[_sourceProfile.FullChannels[sourceChannel].OutputChannel] = elements.Length > 1
-                                                             ? elements[1].Trim().Replace(' ', _splitChar[0])
-                                                             : "";
+                if (sourceChannel < _sourceChannelCount) {
+                    _destinationTextBoxText[_sourceProfile.GetChannelLocation(sourceChannel)] = elements.Length > 1
+                        ? elements[1].Trim().Replace(' ', _splitChar[0]) : "";
+                }
+                else {
+                    isMapError = true;
+                }
             }
 
-            SetSortOrder(_sourceProfile.Channels, sortOrder);
+            _sourceProfile.SetSortOrder(srcSortOrder);
+            _destinationProfile.SetSortOrder(destSortOrder);
 
             for (var i = 0; i < _totalChannelsDisplayed; i++) {
-                _textBoxes[i].Text = _destinationTextBoxText[_sourceProfile.FullChannels[i + _currentTopChannelIndex].OutputChannel];
+                _textBoxes[i].Text = _destinationTextBoxText[_sourceProfile.GetChannelLocation(i + _currentTopChannelIndex)];
             }
+
+            if (!isMapError) {
+                return;
+            }
+            var msg = string.Format("The mapping file you selected had more than {0} channels, those channel maps were ignored", _sourceChannelCount);
+            MessageBox.Show(msg, @"Mapping file error", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void BtnPreviewClick(object sender, EventArgs e) {
@@ -501,7 +556,6 @@ namespace VixenEditor {
                 _isPreview = false;
                 btnPreviewEdit.Text = _previewButtonText;
                 toolTips.SetToolTip(btnPreviewEdit, _previewButtonToolTip);
-                lblDestChannels.Text = _destinationHeaderText;
 
                 TeardownPreviewGrid();
             }
@@ -509,8 +563,6 @@ namespace VixenEditor {
                 _isPreview = true;
                 btnPreviewEdit.Text = EditButtonText;
                 toolTips.SetToolTip(btnPreviewEdit, EditButtonTooltip);
-                lblDestChannels.Text = DestHeaderPreviewText;
-
                 ConstructPreviewGrid();
             }
             TogglePreviewElements(!_isPreview);
@@ -530,30 +582,57 @@ namespace VixenEditor {
             for (var row = 0; row < _totalChannelsDisplayed; row++) {
                 for (var col = 0; col < _maxDestinationCount; col++) {
                     panel1.Controls.Add(new Label {
-                        Name = "r" + row + "c" + col,
-                        Height = lblEx.Size.Height,
-                        Width = width,
-                        Location =
-                            new Point(tbEx.Location.X + width * col, row * (lblEx.Height + YOffset)),
-                        Text = Name,
-                        TextAlign = ContentAlignment.MiddleLeft,
-                        Visible = false
-                    }
-                        );
+                        Name = "r" + row + "c" + col, Height = lblEx.Size.Height, Width = width,
+                        Location = new Point(tbEx.Location.X + width * col, row * (lblEx.Height + YOffset)), Text = Name,
+                        TextAlign = ContentAlignment.MiddleLeft, Visible = false
+                    });
                 }
             }
         }
 
+
         private void SetMaxDestinationCount() {
-            _maxDestinationCount = 0;
+            var previewError = false;
+            var errorList = new List<string>();
+            var maxChannel = _destinationProfile.GetChannelCount() - 1;
+            _maxDestinationCount = 1;
             for (var i = 0; i < _sourceChannelCount; i++) {
-                var elementCount = _destinationTextBoxText[_sourceProfile.FullChannels[i].OutputChannel].Split(_splitChar).Length;
+                var channelName = _sourceProfile.GetChannelName(i);
+                var enteredChannels = _destinationTextBoxText[_sourceProfile.GetChannelLocation(i)];
+                if (enteredChannels == "") {
+                    continue;
+                }
+
+                var channels = enteredChannels.Split(_splitChar);
+                var elementCount = channels.Length;
+                // ReSharper disable UnusedVariable
+                foreach (var c in channels.Where(c => int.Parse(c) > maxChannel)) {
+                // ReSharper restore UnusedVariable
+                    previewError = true;
+                    if (!errorList.Contains(channelName)) {
+                        errorList.Add(channelName);
+                    }
+                    elementCount--;
+                }
 
                 if (_maxDestinationCount < elementCount) {
                     _maxDestinationCount = elementCount;
                 }
             }
+            if (!previewError) {
+                return;
+            }
+
+            var msg =
+                string.Format(
+                    "There was one or more invalid channels in your map. The channels in error can not be shown. \n\nThe Maximum channel number you can enter is {0}\n\nPlease Check the following source channel map(s):\n\n",
+                    _destinationProfile.GetChannelCount() - 1);
+
+            msg = errorList.Aggregate(msg, (current, s) => current + (s + Environment.NewLine));
+            
+            MessageBox.Show(msg, @"Error in map", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
 
         private void TeardownPreviewGrid() {
             for (var row = 0; row < _totalChannelsDisplayed; row++) {
@@ -567,11 +646,13 @@ namespace VixenEditor {
         }
 
         private void TogglePreviewElements(bool isVisible) {
-            btnLoadMap.Visible = isVisible;
-            btnSaveMap.Visible = isVisible;
-            cbKeepUnmapped.Visible = _destinationProfile != null && _sourceProfile.FullChannels.Count <= _destinationProfile.FullChannels.Count && isVisible;
+            btnLoadMap.Visible = isVisible && _destinationProfile != null;
+            btnSaveMap.Visible = isVisible && _destinationProfile != null;
+            btnDestinationProfile.Visible = isVisible;
+            btnPreviewEdit.Visible = _destinationProfile != null;
+            cbKeepUnmapped.Visible = _destinationProfile != null && _sourceProfile.GetChannelCount() <= _destinationProfile.GetChannelCount() && isVisible;
             btnCancel.Visible = isVisible;
-            btnTransform.Visible = isVisible;
+            btnTransform.Visible = isVisible && _destinationProfile != null;
             for (var i = 0; i < _totalChannelsDisplayed; i++) {
                 _textBoxes[i].Visible = isVisible;
             }
@@ -579,7 +660,7 @@ namespace VixenEditor {
 
         private void SortSrcIndexChanged(object sender, EventArgs e) {
             SaveCurrentValues();
-            SetSortOrder(_sourceProfile.Channels, cbSortSrc.SelectedIndex);
+            _sourceProfile.SetSortOrder(cbSortSrc.SelectedIndex);
             ShowComponents(_currentTopChannelIndex, false);
         }
 
@@ -588,7 +669,7 @@ namespace VixenEditor {
             if (_destinationProfile == null) return;
 
             SaveCurrentValues();
-            SetSortOrder(_destinationProfile.Channels, cbSortDest.SelectedIndex);
+            _destinationProfile.SetSortOrder(cbSortDest.SelectedIndex);
             PopulateDestinationList();
         }
 
@@ -598,12 +679,22 @@ namespace VixenEditor {
         #endregion
 
         #region old stuff
+
         private void PopulateDestinationList() {
-            lbDestination.Items.Clear();
-            foreach (var channel in _destinationProfile.FullChannels.Sort()) {
-                lbDestination.Items.Add(channel);
+
+            var maxSize = lbDestination.Width;
+            using (var g = lbDestination.CreateGraphics()) {
+                lbDestination.Items.Clear();
+                for (var i = 0; i < _destinationProfile.GetChannelCount(); i++) {
+                    var name = _destinationProfile.GetChannelName(i);
+                    lbDestination.Items.Add(name);
+                    var size = g.MeasureString(name, lbDestination.Font);
+                    if (size.Width > maxSize) maxSize = (int) size.Width;
+                }
             }
+            lbDestination.HorizontalExtent = maxSize;
         }
+
 
         private void GetDestinationProfile() {
             using (var openProfile = new OpenFileDialog()) {
@@ -617,7 +708,8 @@ namespace VixenEditor {
                     return;
                 }
 
-                _destinationProfile = new Profile(openProfile.FileName);
+                _destinationProfile = new ChannelMapperProfile(openProfile.FileName);
+                _destinationNatural = new ChannelMapperProfile(openProfile.FileName);
                 PopulateDestinationList();
             }
         }
@@ -625,48 +717,100 @@ namespace VixenEditor {
 
         private void btnDestProfile_Click(object sender, EventArgs e) {
             GetDestinationProfile();
-            UpdateButtons();
+
+            TogglePreviewElements(true);
         }
-
-
-        private void UpdateButtons() {
-            var enabled = _destinationProfile != null;
-            btnLoadMap.Enabled = enabled;
-            btnSaveMap.Enabled = enabled;
-            btnTransform.Enabled = enabled;
-        }
-
 
         private void lbDestination_DrawItem(object sender, DrawItemEventArgs e) {
             var listBox = sender as ListBox;
             if (e.Index == -1 || listBox == null) {
                 return;
             }
+            var channelNum = e.Index;
+            var name = _destinationProfile.GetChannelName(channelNum);
+            var color = _destinationProfile.GetChannelColor(channelNum);
 
-            Channel.DrawItem(listBox, e, (Channel)lbDestination.Items[e.Index]);
-        }
-
-
-        private static void SetSortOrder(List<Channel> channels, int sortType) {
-            switch (sortType) {
-                case 0:
-                    channels.Sort((lhs, rhs) => lhs.OutputChannel.CompareTo(rhs.OutputChannel));
-                    break;
-                case 1:
-                    channels.Sort((lhs, rhs) => String.Compare(lhs.Name, rhs.Name, StringComparison.Ordinal));
-                    break;
-                case 2:
-                    channels.Sort((lhs, rhs) => lhs.Color.ToArgb().CompareTo(rhs.Color.ToArgb()));
-                    break;
-                case 3:
-                    channels.Sort((lhs, rhs) => String.Compare((lhs.Name + lhs.Color.ToString()), (rhs.Name + rhs.Color.ToString()), StringComparison.Ordinal));
-                    break;
-                case 4:
-                    channels.Sort((lhs, rhs) => String.Compare((lhs.Color.ToString() + lhs.Name), (rhs.Color.ToString() + rhs.Name), StringComparison.Ordinal));
-                    break;
-            }
+            e.DrawItemWide(name, color, _useCheckmark);
         }
         #endregion
 
+        private void lbDestination_DoubleClick(object sender, EventArgs e) {
+            var listBox = sender as ListBox;
+            if (listBox == null || _selectedTextBox == -1 || !btnTransform.Visible) return;
+            
+            var srcChannel = _sourceProfile.GetChannelLocation(_selectedTextBox + _currentTopChannelIndex);
+
+            if (_destinationTextBoxText[srcChannel].Length > 0) {
+                _destinationTextBoxText[srcChannel] += ",";
+            }
+
+            _destinationTextBoxText[srcChannel] += _destinationProfile.GetChannel(lbDestination.SelectedIndex).Location;
+            ShowComponents(_currentTopChannelIndex, false);
+
+            var tbControl = (TextBox)Controls.Find(TextboxNamePrefix + _selectedTextBox, true)[0];
+            tbControl.Focus();
+            tbControl.SelectionStart = tbControl.TextLength;
+        }
+
+        private string TransformSequence() {
+            var sequence = new ChannelMapperSequence(_sourceSequence.FileName);
+            var numOfEvents = sequence.GetEventCount();
+
+            var oldNumOfChannels = _sourceProfile.GetChannelCount();
+            var newNumOfChannels = _destinationProfile.GetChannelCount();
+            var newEventValues = new byte[newNumOfChannels, numOfEvents];
+            var oldEventValues = new byte[oldNumOfChannels, numOfEvents];
+
+
+            var oldEventData = Convert.FromBase64String(sequence.EventData);
+            var oldEventLength = oldEventData.Length;
+
+            var currentEvent = 0;
+
+            for (var chan = 0; chan < oldNumOfChannels; chan++) {
+                for (var thisEvent = 0; currentEvent < oldEventLength && thisEvent < numOfEvents; thisEvent++) {
+                    oldEventValues[chan, thisEvent] = oldEventData[currentEvent++];
+                }
+            }
+
+            //writeChannels("oldChannels.txt", oldEventValues, oldNumOfChannels, numOfEvents);
+
+            var mapSplit = new[] { ';' };
+            var channelSplit = new[] { ':' };
+            var elementSplit = new[] { ' ' };
+
+            var channels = GetMap().Split(mapSplit, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var channel in channels) {
+                var elements = channel.Split(channelSplit, StringSplitOptions.RemoveEmptyEntries);
+
+                if (elements.Length <= 1) continue;
+
+                var from = int.Parse(elements[0]);
+                var toChannels = elements[1].Split(elementSplit, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var toChannel in toChannels) {
+                    var to = int.Parse(toChannel);
+                    for (var i = 0; i < numOfEvents; i++) {
+                        var destinationChannel = _destinationProfile.GetChannelLocation(to);
+                        var sourceChannel = _sourceProfile.GetChannelLocation(from);
+                        var oldEventValue = oldEventValues[sourceChannel, i];
+                        newEventValues[destinationChannel, i] = oldEventValue;
+                    }
+                }
+            }
+
+            //writeChannels("newChannels.txt", newEventValues, newNumOfChannels, numOfEvents);
+
+            var newEventData = new byte[newNumOfChannels * numOfEvents];
+            var index = 0;
+            for (var i = 0; i < newNumOfChannels; i++) {
+                for (var j = 0; j < numOfEvents; j++) {
+                    newEventData[index++] = newEventValues[i, j];
+                }
+            }
+
+            sequence.EventData = Convert.ToBase64String(newEventData);
+
+            return sequence.SaveNewData(_destinationProfile.GetFileName());
+        }
     }
 }

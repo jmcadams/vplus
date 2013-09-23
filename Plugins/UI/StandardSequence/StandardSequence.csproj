@@ -104,6 +104,9 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="VixenEditor\ChannelMapperSequence.cs" />
+    <Compile Include="VixenEditor\ChannelMapperChannel.cs" />
+    <Compile Include="VixenEditor\ChannelMapperProfile.cs" />
     <Compile Include="VixenEditor\ChannelMapper.cs">
       <SubType>Form</SubType>
     </Compile>

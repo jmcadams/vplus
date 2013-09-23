@@ -51,17 +51,19 @@
             // lbDestination
             // 
             this.lbDestination.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.lbDestination.FormattingEnabled = true;
+            this.lbDestination.HorizontalScrollbar = true;
             this.lbDestination.ItemHeight = 20;
             this.lbDestination.Location = new System.Drawing.Point(586, 54);
             this.lbDestination.Name = "lbDestination";
-            this.lbDestination.Size = new System.Drawing.Size(186, 464);
+            this.lbDestination.ScrollAlwaysVisible = true;
+            this.lbDestination.Size = new System.Drawing.Size(186, 484);
             this.lbDestination.TabIndex = 10;
             this.lbDestination.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lbDestination_DrawItem);
+            this.lbDestination.DoubleClick += new System.EventHandler(this.lbDestination_DoubleClick);
             // 
             // btnDestinationProfile
             // 
-            this.btnDestinationProfile.Location = new System.Drawing.Point(460, 532);
+            this.btnDestinationProfile.Location = new System.Drawing.Point(460, 544);
             this.btnDestinationProfile.Name = "btnDestinationProfile";
             this.btnDestinationProfile.Size = new System.Drawing.Size(139, 23);
             this.btnDestinationProfile.TabIndex = 0;
@@ -71,7 +73,7 @@
             // 
             // btnLoadMap
             // 
-            this.btnLoadMap.Location = new System.Drawing.Point(204, 532);
+            this.btnLoadMap.Location = new System.Drawing.Point(204, 544);
             this.btnLoadMap.Name = "btnLoadMap";
             this.btnLoadMap.Size = new System.Drawing.Size(75, 23);
             this.btnLoadMap.TabIndex = 3;
@@ -82,7 +84,7 @@
             // 
             // btnSaveMap
             // 
-            this.btnSaveMap.Location = new System.Drawing.Point(285, 532);
+            this.btnSaveMap.Location = new System.Drawing.Point(285, 544);
             this.btnSaveMap.Name = "btnSaveMap";
             this.btnSaveMap.Size = new System.Drawing.Size(75, 23);
             this.btnSaveMap.TabIndex = 4;
@@ -93,8 +95,7 @@
             // 
             // btnTransform
             // 
-            this.btnTransform.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnTransform.Location = new System.Drawing.Point(697, 532);
+            this.btnTransform.Location = new System.Drawing.Point(697, 544);
             this.btnTransform.Name = "btnTransform";
             this.btnTransform.Size = new System.Drawing.Size(75, 23);
             this.btnTransform.TabIndex = 6;
@@ -105,7 +106,7 @@
             // 
             // btnPreviewEdit
             // 
-            this.btnPreviewEdit.Location = new System.Drawing.Point(366, 532);
+            this.btnPreviewEdit.Location = new System.Drawing.Point(366, 544);
             this.btnPreviewEdit.Name = "btnPreviewEdit";
             this.btnPreviewEdit.Size = new System.Drawing.Size(75, 23);
             this.btnPreviewEdit.TabIndex = 16;
@@ -117,7 +118,7 @@
             // cbKeepUnmapped
             // 
             this.cbKeepUnmapped.AutoSize = true;
-            this.cbKeepUnmapped.Location = new System.Drawing.Point(12, 536);
+            this.cbKeepUnmapped.Location = new System.Drawing.Point(12, 548);
             this.cbKeepUnmapped.Name = "cbKeepUnmapped";
             this.cbKeepUnmapped.Size = new System.Drawing.Size(186, 17);
             this.cbKeepUnmapped.TabIndex = 2;
@@ -128,7 +129,7 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(616, 532);
+            this.btnCancel.Location = new System.Drawing.Point(616, 544);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 5;
@@ -249,7 +250,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(784, 562);
+            this.ClientSize = new System.Drawing.Size(784, 574);
             this.Controls.Add(this.cbSortDest);
             this.Controls.Add(this.lblSortDest);
             this.Controls.Add(this.btnPreviewEdit);
