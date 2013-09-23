@@ -57,6 +57,10 @@ namespace VixenPlus {
             get { return Path.Combine(DataPath, "Libraries"); }
         }
 
+        public static string MapperPath {
+            get { return Path.Combine(ProfilePath, "Mapper"); }
+        }
+
         public static string MyDocutments {
             get { return Environment.GetFolderPath(Environment.SpecialFolder.Personal); }
         }

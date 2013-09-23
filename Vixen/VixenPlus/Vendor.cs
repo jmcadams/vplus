@@ -3,7 +3,7 @@ using Properties;
 namespace VixenPlus
 {
     public static class Vendor {
-        public static string ProductDescription = Resources.ProductDescription;
+        public static readonly string ProductDescription = Resources.ProductDescription;
         public const string ProductName = "Vixen+ {Beta}";
         public const string ProductURL = "http://www.vixenplus.com/";
 
@@ -14,6 +14,7 @@ namespace VixenPlus
 
         public const string DataExtension = ".vda";
         public const string GroupExtension = ".vgr";
+        public const string MapperExtension = ".vmap";
         public const string ProfilExtension = ".pro";
         public const string ProgramExtension = ".vpr";
         public const string RoutineExtension = ".vir";
