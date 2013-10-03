@@ -5016,7 +5016,8 @@ namespace VixenEditor {
 
         private void mapperTsb_Click(object sender, EventArgs e) {
             if (IsDirty &&
-                MessageBox.Show(@"In order to transform properly, your sequence must be saved.\n\nDo you want to save your sequence before mapping?", @"Save sequence?", MessageBoxButtons.YesNo,
+                // ReSharper disable once LocalizableElement
+                MessageBox.Show("In order to transform properly, your sequence must be saved.\n\nDo you want to save your sequence before mapping?", @"Save sequence?", MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question) == DialogResult.Yes) {
                 _systemInterface.InvokeSave(this);
             }
