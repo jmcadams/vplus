@@ -121,7 +121,6 @@
     <Compile Include="Olsen595\SetupDialog.Designer.cs">
       <DependentUpon>SetupDialog.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Olsen595.SetupDialog.resources" />
     <EmbeddedResource Include="Olsen595\SetupDialog.resx">
       <DependentUpon>SetupDialog.cs</DependentUpon>
     </EmbeddedResource>
