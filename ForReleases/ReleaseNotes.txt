@@ -1,3 +1,7 @@
+DD MMM YYYY - V x.x.xxx.x
+    Bug #123 - FIXED - J1Sys plugin crashes on context menu click (right-click)
+    Bug #124 - FIXED - Text in profile mapper popup for saving prompt has \n\n
+
 22 SEP 2013 - V 0.1.265.1  {BETA}
     Fixed grammar errors in release notes.  I'm a programmer, not a speller :D
     Fixed a channel count weirdness where the wrong count was shown when a group is selected.
