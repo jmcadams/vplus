@@ -121,6 +121,9 @@
       <DependentUpon>SetupDialog.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Olsen595.SetupDialog.resources" />
+    <EmbeddedResource Include="Olsen595\SetupDialog.resx">
+      <DependentUpon>SetupDialog.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
