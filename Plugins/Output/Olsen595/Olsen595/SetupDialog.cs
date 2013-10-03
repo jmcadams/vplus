@@ -1,38 +1,49 @@
+using System;
+using System.Windows.Forms;
+using System.Xml;
+
 namespace Olsen595 {
-	using System;
-	using System.ComponentModel;
-	using System.Drawing;
-	using System.Windows.Forms;
-	using System.Xml;
+    public partial class SetupDialog : Form {
 
-	public partial class SetupDialog : Form {
+        private readonly XmlNode _setupNode;
 
-		private XmlNode m_setupNode;
+        public SetupDialog(XmlNode setupNode) {
+            InitializeComponent();
+            _setupNode = setupNode;
+            SetTextFromNode("parallel1", textBoxParallel1From, textBoxParallel1To);
+            SetTextFromNode("parallel2", textBoxParallel2From, textBoxParallel2To);
+            SetTextFromNode("parallel3", textBoxParallel3From, textBoxParallel3To);
+        }
 
-		public SetupDialog(XmlNode setupNode) {
-			this.InitializeComponent();
-			this.m_setupNode = setupNode;
-			XmlNode node = this.m_setupNode.SelectSingleNode("parallel1");
-			this.textBoxParallel1From.Text = node.Attributes["from"].Value;
-			this.textBoxParallel1To.Text = node.Attributes["to"].Value;
-			node = this.m_setupNode.SelectSingleNode("parallel2");
-			this.textBoxParallel2From.Text = node.Attributes["from"].Value;
-			this.textBoxParallel2To.Text = node.Attributes["to"].Value;
-			node = this.m_setupNode.SelectSingleNode("parallel3");
-			this.textBoxParallel3From.Text = node.Attributes["from"].Value;
-			this.textBoxParallel3To.Text = node.Attributes["to"].Value;
-		}
 
-		private void buttonOK_Click(object sender, EventArgs e) {
-			XmlNode node = this.m_setupNode.SelectSingleNode("parallel1");
-			node.Attributes["from"].Value = this.textBoxParallel1From.Text;
-			node.Attributes["to"].Value = this.textBoxParallel1To.Text;
-			node = this.m_setupNode.SelectSingleNode("parallel2");
-			node.Attributes["from"].Value = this.textBoxParallel2From.Text;
-			node.Attributes["to"].Value = this.textBoxParallel2To.Text;
-			node = this.m_setupNode.SelectSingleNode("parallel3");
-			node.Attributes["from"].Value = this.textBoxParallel3From.Text;
-			node.Attributes["to"].Value = this.textBoxParallel3To.Text;
-		}
-	}
+        private void buttonOK_Click(object sender, EventArgs e) {
+            SetNodeFromText(textBoxParallel1From, textBoxParallel1To, "parallel1");
+            SetNodeFromText(textBoxParallel2From, textBoxParallel2To, "parallel2");
+            SetNodeFromText(textBoxParallel3From, textBoxParallel3To, "parallel3");
+        }
+
+
+        private void SetTextFromNode(string singleNode, Control tbFrom, Control tbTo) {
+            var node = _setupNode.SelectSingleNode(singleNode);
+
+            if (node == null || node.Attributes == null) {
+                return;
+            }
+
+            tbFrom.Text = node.Attributes["from"].Value;
+            tbTo.Text = node.Attributes["to"].Value;
+        }
+
+
+        private void SetNodeFromText(Control tbFrom, Control tbTo, string singleNode) {
+            var node = _setupNode.SelectSingleNode(singleNode);
+
+            if (node == null || node.Attributes == null) {
+                return;
+            }
+
+            node.Attributes["from"].Value = tbFrom.Text;
+            node.Attributes["to"].Value = tbTo.Text;
+        }
+    }
 }

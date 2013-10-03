@@ -8,10 +8,7 @@ namespace Olsen595 {
 
 		#region Windows Form Designer generated code
 		private Button buttonCancel;
-		private Button buttonOK;
-		private CheckBox checkBoxParallel1;
-		private CheckBox checkBoxParallel2;
-		private CheckBox checkBoxParallel3;
+        private Button buttonOK;
 		private GroupBox groupBox1;
 		private Label label1;
 		private Label label2;
@@ -28,172 +25,194 @@ namespace Olsen595 {
 		private TextBox textBoxParallel3To;
 
 		private void InitializeComponent() {
-			this.groupBox1 = new GroupBox();
-			this.textBoxParallel3To = new TextBox();
-			this.label4 = new Label();
-			this.textBoxParallel3From = new TextBox();
-			this.checkBoxParallel3 = new CheckBox();
-			this.textBoxParallel2To = new TextBox();
-			this.label3 = new Label();
-			this.textBoxParallel2From = new TextBox();
-			this.checkBoxParallel2 = new CheckBox();
-			this.textBoxParallel1To = new TextBox();
-			this.label2 = new Label();
-			this.textBoxParallel1From = new TextBox();
-			this.label1 = new Label();
-			this.checkBoxParallel1 = new CheckBox();
-			this.buttonOK = new Button();
-			this.buttonCancel = new Button();
-			this.label5 = new Label();
-			this.label6 = new Label();
-			this.label7 = new Label();
-			this.groupBox1.SuspendLayout();
-			base.SuspendLayout();
-			this.groupBox1.Controls.Add(this.label7);
-			this.groupBox1.Controls.Add(this.label6);
-			this.groupBox1.Controls.Add(this.label5);
-			this.groupBox1.Controls.Add(this.textBoxParallel3To);
-			this.groupBox1.Controls.Add(this.label4);
-			this.groupBox1.Controls.Add(this.textBoxParallel3From);
-			this.groupBox1.Controls.Add(this.checkBoxParallel3);
-			this.groupBox1.Controls.Add(this.textBoxParallel2To);
-			this.groupBox1.Controls.Add(this.label3);
-			this.groupBox1.Controls.Add(this.textBoxParallel2From);
-			this.groupBox1.Controls.Add(this.checkBoxParallel2);
-			this.groupBox1.Controls.Add(this.textBoxParallel1To);
-			this.groupBox1.Controls.Add(this.label2);
-			this.groupBox1.Controls.Add(this.textBoxParallel1From);
-			this.groupBox1.Controls.Add(this.label1);
-			this.groupBox1.Controls.Add(this.checkBoxParallel1);
-			this.groupBox1.Location = new Point(14, 0x12);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new Size(0x116, 0xa1);
-			this.groupBox1.TabIndex = 0;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Port mappings";
-			this.textBoxParallel3To.Location = new Point(0xd8, 0x75);
-			this.textBoxParallel3To.Name = "textBoxParallel3To";
-			this.textBoxParallel3To.Size = new Size(40, 20);
-			this.textBoxParallel3To.TabIndex = 12;
-			this.label4.AutoSize = true;
-			this.label4.Location = new Point(0xc2, 120);
-			this.label4.Name = "label4";
-			this.label4.Size = new Size(0x10, 13);
-			this.label4.TabIndex = 11;
-			this.label4.Text = "to";
-			this.textBoxParallel3From.Location = new Point(0x94, 0x75);
-			this.textBoxParallel3From.Name = "textBoxParallel3From";
-			this.textBoxParallel3From.Size = new Size(40, 20);
-			this.textBoxParallel3From.TabIndex = 10;
-			this.checkBoxParallel3.AutoSize = true;
-			this.checkBoxParallel3.Location = new Point(13, 0x5d);
-			this.checkBoxParallel3.Name = "checkBoxParallel3";
-			this.checkBoxParallel3.Size = new Size(0x5b, 0x11);
-			this.checkBoxParallel3.TabIndex = 9;
-			this.checkBoxParallel3.Text = "Use Parallel 3";
-			this.checkBoxParallel3.UseVisualStyleBackColor = true;
-			this.checkBoxParallel3.Visible = false;
-			this.textBoxParallel2To.Location = new Point(0xd8, 80);
-			this.textBoxParallel2To.Name = "textBoxParallel2To";
-			this.textBoxParallel2To.Size = new Size(40, 20);
-			this.textBoxParallel2To.TabIndex = 8;
-			this.label3.AutoSize = true;
-			this.label3.Location = new Point(0xc2, 0x53);
-			this.label3.Name = "label3";
-			this.label3.Size = new Size(0x10, 13);
-			this.label3.TabIndex = 7;
-			this.label3.Text = "to";
-			this.textBoxParallel2From.Location = new Point(0x94, 80);
-			this.textBoxParallel2From.Name = "textBoxParallel2From";
-			this.textBoxParallel2From.Size = new Size(40, 20);
-			this.textBoxParallel2From.TabIndex = 6;
-			this.checkBoxParallel2.AutoSize = true;
-			this.checkBoxParallel2.Location = new Point(13, 0x38);
-			this.checkBoxParallel2.Name = "checkBoxParallel2";
-			this.checkBoxParallel2.Size = new Size(0x5b, 0x11);
-			this.checkBoxParallel2.TabIndex = 5;
-			this.checkBoxParallel2.Text = "Use Parallel 2";
-			this.checkBoxParallel2.UseVisualStyleBackColor = true;
-			this.checkBoxParallel2.Visible = false;
-			this.textBoxParallel1To.Location = new Point(0xd8, 0x2b);
-			this.textBoxParallel1To.Name = "textBoxParallel1To";
-			this.textBoxParallel1To.Size = new Size(40, 20);
-			this.textBoxParallel1To.TabIndex = 4;
-			this.label2.AutoSize = true;
-			this.label2.Location = new Point(0xc2, 0x2e);
-			this.label2.Name = "label2";
-			this.label2.Size = new Size(0x10, 13);
-			this.label2.TabIndex = 3;
-			this.label2.Text = "to";
-			this.textBoxParallel1From.Location = new Point(0x94, 0x2b);
-			this.textBoxParallel1From.Name = "textBoxParallel1From";
-			this.textBoxParallel1From.Size = new Size(40, 20);
-			this.textBoxParallel1From.TabIndex = 2;
-			this.label1.AutoSize = true;
-			this.label1.Location = new Point(0xa5, 0x10);
-			this.label1.Name = "label1";
-			this.label1.Size = new Size(0x51, 13);
-			this.label1.TabIndex = 1;
-			this.label1.Text = "Channel Range";
-			this.checkBoxParallel1.AutoSize = true;
-			this.checkBoxParallel1.Location = new Point(13, 0x13);
-			this.checkBoxParallel1.Name = "checkBoxParallel1";
-			this.checkBoxParallel1.Size = new Size(0x5b, 0x11);
-			this.checkBoxParallel1.TabIndex = 0;
-			this.checkBoxParallel1.Text = "Use Parallel 1";
-			this.checkBoxParallel1.UseVisualStyleBackColor = true;
-			this.checkBoxParallel1.Visible = false;
-			this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.buttonOK.Location = new Point(0x88, 0xc0);
-			this.buttonOK.Name = "buttonOK";
-			this.buttonOK.Size = new Size(0x4b, 23);
-			this.buttonOK.TabIndex = 1;
-			this.buttonOK.Text = "OK";
-			this.buttonOK.UseVisualStyleBackColor = true;
-			this.buttonOK.Click += new EventHandler(this.buttonOK_Click);
-			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.buttonCancel.Location = new Point(0xd9, 0xc0);
-			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.Size = new Size(0x4b, 23);
-			this.buttonCancel.TabIndex = 2;
-			this.buttonCancel.Text = "Cancel";
-			this.buttonCancel.UseVisualStyleBackColor = true;
-			this.label5.AutoSize = true;
-			this.label5.Location = new Point(10, 0x2e);
-			this.label5.Name = "label5";
-			this.label5.Size = new Size(50, 13);
-			this.label5.TabIndex = 13;
-			this.label5.Text = "Parallel 1";
-			this.label6.AutoSize = true;
-			this.label6.Location = new Point(10, 0x53);
-			this.label6.Name = "label6";
-			this.label6.Size = new Size(50, 13);
-			this.label6.TabIndex = 14;
-			this.label6.Text = "Parallel 2";
-			this.label7.AutoSize = true;
-			this.label7.Location = new Point(10, 120);
-			this.label7.Name = "label7";
-			this.label7.Size = new Size(50, 13);
-			this.label7.TabIndex = 15;
-			this.label7.Text = "Parallel 3";
-			base.AcceptButton = this.buttonOK;
-			base.AutoScaleDimensions = new SizeF(6f, 13f);
-			base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			base.CancelButton = this.buttonCancel;
-			base.ClientSize = new Size(0x12e, 0xe3);
-			base.Controls.Add(this.buttonCancel);
-			base.Controls.Add(this.buttonOK);
-			base.Controls.Add(this.groupBox1);
-			base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-			base.MaximizeBox = false;
-			base.MinimizeBox = false;
-			base.Name = "SetupDialog";
-			base.ShowInTaskbar = false;
-			base.StartPosition = FormStartPosition.CenterScreen;
-			this.Text = "Setup";
-			this.groupBox1.ResumeLayout(false);
-			this.groupBox1.PerformLayout();
-			base.ResumeLayout(false);
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBoxParallel3To = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBoxParallel3From = new System.Windows.Forms.TextBox();
+            this.textBoxParallel2To = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBoxParallel2From = new System.Windows.Forms.TextBox();
+            this.textBoxParallel1To = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBoxParallel1From = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.buttonOK = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
+            this.groupBox1.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.textBoxParallel3To);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.textBoxParallel3From);
+            this.groupBox1.Controls.Add(this.textBoxParallel2To);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.textBoxParallel2From);
+            this.groupBox1.Controls.Add(this.textBoxParallel1To);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.textBoxParallel1From);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Location = new System.Drawing.Point(14, 18);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(278, 161);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Port mappings";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(10, 120);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(50, 13);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "Parallel 3";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(10, 83);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(50, 13);
+            this.label6.TabIndex = 14;
+            this.label6.Text = "Parallel 2";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(10, 46);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(50, 13);
+            this.label5.TabIndex = 13;
+            this.label5.Text = "Parallel 1";
+            // 
+            // textBoxParallel3To
+            // 
+            this.textBoxParallel3To.Location = new System.Drawing.Point(216, 117);
+            this.textBoxParallel3To.Name = "textBoxParallel3To";
+            this.textBoxParallel3To.Size = new System.Drawing.Size(40, 20);
+            this.textBoxParallel3To.TabIndex = 12;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(194, 120);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(16, 13);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "to";
+            // 
+            // textBoxParallel3From
+            // 
+            this.textBoxParallel3From.Location = new System.Drawing.Point(148, 117);
+            this.textBoxParallel3From.Name = "textBoxParallel3From";
+            this.textBoxParallel3From.Size = new System.Drawing.Size(40, 20);
+            this.textBoxParallel3From.TabIndex = 10;
+            // 
+            // textBoxParallel2To
+            // 
+            this.textBoxParallel2To.Location = new System.Drawing.Point(216, 80);
+            this.textBoxParallel2To.Name = "textBoxParallel2To";
+            this.textBoxParallel2To.Size = new System.Drawing.Size(40, 20);
+            this.textBoxParallel2To.TabIndex = 8;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(194, 83);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(16, 13);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "to";
+            // 
+            // textBoxParallel2From
+            // 
+            this.textBoxParallel2From.Location = new System.Drawing.Point(148, 80);
+            this.textBoxParallel2From.Name = "textBoxParallel2From";
+            this.textBoxParallel2From.Size = new System.Drawing.Size(40, 20);
+            this.textBoxParallel2From.TabIndex = 6;
+            // 
+            // textBoxParallel1To
+            // 
+            this.textBoxParallel1To.Location = new System.Drawing.Point(216, 43);
+            this.textBoxParallel1To.Name = "textBoxParallel1To";
+            this.textBoxParallel1To.Size = new System.Drawing.Size(40, 20);
+            this.textBoxParallel1To.TabIndex = 4;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(194, 46);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(16, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "to";
+            // 
+            // textBoxParallel1From
+            // 
+            this.textBoxParallel1From.Location = new System.Drawing.Point(148, 43);
+            this.textBoxParallel1From.Name = "textBoxParallel1From";
+            this.textBoxParallel1From.Size = new System.Drawing.Size(40, 20);
+            this.textBoxParallel1From.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(165, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(81, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Channel Range";
+            // 
+            // buttonOK
+            // 
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.buttonOK.Location = new System.Drawing.Point(136, 192);
+            this.buttonOK.Name = "buttonOK";
+            this.buttonOK.Size = new System.Drawing.Size(75, 23);
+            this.buttonOK.TabIndex = 1;
+            this.buttonOK.Text = "OK";
+            this.buttonOK.UseVisualStyleBackColor = true;
+            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
+            // 
+            // buttonCancel
+            // 
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonCancel.Location = new System.Drawing.Point(217, 192);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancel.TabIndex = 2;
+            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.UseVisualStyleBackColor = true;
+            // 
+            // SetupDialog
+            // 
+            this.AcceptButton = this.buttonOK;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.buttonCancel;
+            this.ClientSize = new System.Drawing.Size(302, 227);
+            this.Controls.Add(this.buttonCancel);
+            this.Controls.Add(this.buttonOK);
+            this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "SetupDialog";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Setup";
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.ResumeLayout(false);
+
 		}
 		#endregion
 

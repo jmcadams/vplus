@@ -1,165 +1,137 @@
-namespace Olsen595
-{
-    using System;
-    using System.Runtime.InteropServices;
-    using System.Windows.Forms;
-    using System.Xml;
-    using VixenPlus;
+using System;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
+using System.Xml;
+using VixenPlus;
 
-    public class Olsen595 : IEventDrivenOutputPlugIn, IOutputPlugIn, IHardwarePlugin, IPlugIn, ISetup
-    {
-        private PortMapping[] m_portMappings = new PortMapping[] { new PortMapping(1), new PortMapping(2), new PortMapping(3) };
-        private SetupData m_setupData;
-        private XmlNode m_setupNode;
-
-        private void CompilePortMappings()
-        {
-            PortMapping mapping = this.m_portMappings[0];
-            XmlNode node = this.m_setupNode.SelectSingleNode("parallel1");
-            mapping.From = Convert.ToInt32(node.Attributes["from"].Value);
-            mapping.To = Convert.ToInt32(node.Attributes["to"].Value);
-            mapping.Mapped = (mapping.From != 0) && (mapping.To != 0);
-            mapping = this.m_portMappings[1];
-            node = this.m_setupNode.SelectSingleNode("parallel2");
-            mapping.From = Convert.ToInt32(node.Attributes["from"].Value);
-            mapping.To = Convert.ToInt32(node.Attributes["to"].Value);
-            mapping.Mapped = (mapping.From != 0) && (mapping.To != 0);
-            mapping = this.m_portMappings[2];
-            node = this.m_setupNode.SelectSingleNode("parallel3");
-            mapping.From = Convert.ToInt32(node.Attributes["from"].Value);
-            mapping.To = Convert.ToInt32(node.Attributes["to"].Value);
-            mapping.Mapped = (mapping.From != 0) && (mapping.To != 0);
-        }
-
-        public void Event(byte[] channelValues)
-        {
-            foreach (PortMapping mapping3 in this.m_portMappings)
-            {
-                if (mapping3.Mapped)
-                {
-                    int num2 = mapping3.From - 1;
-                    int num3 = Math.Min(channelValues.Length, mapping3.To) - 1;
-                    for (int i = num3; i >= num2; i--)
-                    {
-                        Out(mapping3.DataPort, (channelValues[i] > 0) ? ((short) 1) : ((short) 0));
-                        Out(mapping3.ControlPort, 2);
-                        Out(mapping3.ControlPort, 3);
-                    }
-                    Out(mapping3.ControlPort, 1);
-                    Out(mapping3.ControlPort, 3);
-                }
-            }
-        }
-
-        [DllImport("inpout32", EntryPoint="Inp32")]
-        private static extern short In(short port);
-        private int IndexOfPort(int dataPort)
-        {
-            switch (dataPort)
-            {
-                case 0x278:
-                    return 1;
-
-                case 0x378:
-                    return 0;
-
-                case 0x3bc:
-                    return 2;
-            }
-            return -1;
-        }
-
-        public void Initialize(IExecutable executableObject, SetupData setupData, XmlNode setupNode)
-        {
-            this.m_setupData = setupData;
-            this.m_setupNode = setupNode;
-            if (this.m_setupNode.SelectSingleNode("parallel1") == null)
-            {
-                Xml.SetAttribute(this.m_setupNode, "parallel1", "from", "0");
-                Xml.SetAttribute(this.m_setupNode, "parallel1", "to", "0");
-            }
-            if (this.m_setupNode.SelectSingleNode("parallel2") == null)
-            {
-                Xml.SetAttribute(this.m_setupNode, "parallel2", "from", "0");
-                Xml.SetAttribute(this.m_setupNode, "parallel2", "to", "0");
-            }
-            if (this.m_setupNode.SelectSingleNode("parallel3") == null)
-            {
-                Xml.SetAttribute(this.m_setupNode, "parallel3", "from", "0");
-                Xml.SetAttribute(this.m_setupNode, "parallel3", "to", "0");
-            }
-            this.CompilePortMappings();
-        }
-
-        [DllImport("inpout32", EntryPoint="Out32")]
+namespace Olsen595 {
+    // ReSharper disable once UnusedMember.Global
+    public class Olsen595 : IEventDrivenOutputPlugIn {
+        private readonly PortMapping[] _portMappings = {new PortMapping(1), new PortMapping(2), new PortMapping(3)};
+        private XmlNode _setupNode;
+        
+        [DllImport("inpout32", EntryPoint = "Out32")]
         private static extern void Out(short port, short data);
-        public void Setup()
-        {
-            SetupDialog dialog = new SetupDialog(this.m_setupNode);
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                this.CompilePortMappings();
+
+        public void Initialize(IExecutable executableObject, SetupData setupData, XmlNode setupNode) {
+            _setupNode = setupNode;
+
+            InitNodes();
+            InitPorts();
+        }
+
+
+        private void InitNodes() {
+            InitNode("parallel1");
+            InitNode("parallel2");
+            InitNode("parallel3");
+        }
+
+
+        private void InitNode(string nodeName) {
+            if (_setupNode.SelectSingleNode(nodeName) != null) {
+                return;
+            }
+
+            Xml.SetAttribute(_setupNode, nodeName, "from", "0");
+            Xml.SetAttribute(_setupNode, nodeName, "to", "0");
+        }
+
+
+        private void InitPorts() {
+            InitPort(0, "parallel1");
+            InitPort(1, "parallel2");
+            InitPort(2, "parallel3");
+        }
+
+
+        private void InitPort(int i, string nodeName) {
+            var node = _setupNode.SelectSingleNode(nodeName);
+            if (node == null || node.Attributes == null) {
+                return;
+            }
+
+            var fromChannel = Convert.ToInt32(node.Attributes["from"].Value);
+            _portMappings[i].From = fromChannel;
+
+            var toChannel = Convert.ToInt32(node.Attributes["to"].Value);
+            _portMappings[i].To = toChannel;
+
+            _portMappings[i].Mapped = (fromChannel != 0 && toChannel != 0);
+        }
+
+
+        public void Event(byte[] channelValues) {
+            foreach (var portMap in _portMappings) {
+                if (!portMap.Mapped) {
+                    continue;
+                }
+
+                var fromChannel = portMap.From - 1;
+                var toChannel = Math.Min(channelValues.Length, portMap.To) - 1;
+                for (var i = toChannel; i >= fromChannel; i--) {
+                    Out(portMap.DataPort, (channelValues[i] > 0) ? ((short) 1) : ((short) 0));
+                    Out(portMap.ControlPort, 2);
+                    Out(portMap.ControlPort, 3);
+                }
+                Out(portMap.ControlPort, 1);
+                Out(portMap.ControlPort, 3);
             }
         }
 
-        public void Shutdown()
-        {
+
+
+        public void Setup() {
+            var dialog = new SetupDialog(_setupNode);
+            if (dialog.ShowDialog() == DialogResult.OK) {
+                InitPorts();
+            }
         }
 
-        public void Startup()
-        {
+
+        public void Shutdown() {}
+
+        public void Startup() {}
+
+
+        public override string ToString() {
+            return Name;
         }
 
-        public override string ToString()
-        {
-            return this.Name;
-        }
 
-        public string Author
-        {
-            get
-            {
+        public string Author {
+            get {
                 return "Vixen and VixenPlus Developers";
             }
         }
 
-        public string Description
-        {
-            get
-            {
-                return "Multi-port Olsen 595 plugin for Vixen";
+        public string Description {
+            get {
+                return "3 port Olsen 595 plugin for Vixen+";
             }
         }
 
-        public VixenPlus.HardwareMap[] HardwareMap
-        {
-            get
-            {
-                int num = 0;
-                foreach (PortMapping mapping in this.m_portMappings)
-                {
+        public HardwareMap[] HardwareMap {
+            get {
+                var num = 0;
+                foreach (var mapping in _portMappings) {
                     num += mapping.Mapped ? 1 : 0;
                 }
-                VixenPlus.HardwareMap[] mapArray = new VixenPlus.HardwareMap[num];
+                var mapArray = new HardwareMap[num];
                 num = 0;
-                foreach (PortMapping mapping in this.m_portMappings)
-                {
-                    if (mapping.Mapped)
-                    {
-                        mapArray[num++] = new VixenPlus.HardwareMap("Parallel", mapping.DataPort, "X");
+                foreach (var mapping in _portMappings) {
+                    if (mapping.Mapped) {
+                        mapArray[num++] = new HardwareMap("Parallel", mapping.DataPort, "X");
                     }
                 }
                 return mapArray;
             }
         }
 
-        public string Name
-        {
-            get
-            {
+        public string Name {
+            get {
                 return "Olsen 595";
             }
         }
     }
 }
-
