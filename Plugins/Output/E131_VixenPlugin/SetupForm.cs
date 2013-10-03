@@ -114,7 +114,11 @@ namespace E131_VixenPlugin {
             InitializeComponent();
             okButton.Location = new Point(ClientSize.Width / 2 - okButton.Width - 10, ClientSize.Height - okButton.Height - 25);
             cancelButton.Location = new Point(ClientSize.Width / 2 + 10, ClientSize.Height - cancelButton.Height - 25);
-            var mIHelpAbout = new MenuItem("&About J1Sys E1.31...", Help.AboutClick);
+            rowManipulationContextMenuStrip.Items.Add("Insert Row", null, new EventHandler(univDGVN_InsertRow));
+            rowManipulationContextMenuStrip.Items.Add("Delete Row", null, new EventHandler(univDGVN_DeleteRow));
+            rowManipulationContextMenuStrip.Items.Add("-");
+            rowManipulationContextMenuStrip.Items.Add("Move Row Up", null, new EventHandler(univDGVN_MoveRowUp));
+            rowManipulationContextMenuStrip.Items.Add("Move Row Down", null, new EventHandler(univDGVN_MoveRowDown)); var mIHelpAbout = new MenuItem("&About J1Sys E1.31...", Help.AboutClick);
             var mIHelpShowSys = new MenuItem("&Show System Info", Help.ShowSysClick);
             var mIHelp = new MenuItem("&Help", new[] {mIHelpAbout, mIHelpShowSys});
 
@@ -515,18 +519,16 @@ namespace E131_VixenPlugin {
         ////
         ////-------------------------------------------------------------
 
-        //void univDGVN_InsertRow(object sender, EventArgs e)
-        //{
-        //    if (univDGVNCellEventArgs == null) {
-        //        return;
-        //    }
-        //    var	row = univDGVN.Rows[univDGVNCellEventArgs.RowIndex];
+        void univDGVN_InsertRow(object sender, EventArgs e) {
+            if (univDGVNCellEventArgs == null) {
+                return;
+            }
+            var row = univDGVN.Rows[univDGVNCellEventArgs.RowIndex];
 
-        //    if (!row.IsNewRow)
-        //    {
-        //        univDGVN.Rows.Insert(row.Index, new object[] { false, "1", "1", "1", null, "1" });
-        //    }
-        //}
+            if (!row.IsNewRow) {
+                univDGVN.Rows.Insert(row.Index, new object[] { false, "1", "1", "1", null, "1" });
+            }
+        }
 
         ////-------------------------------------------------------------
         ////
@@ -534,18 +536,16 @@ namespace E131_VixenPlugin {
         ////
         ////-------------------------------------------------------------
 
-        //void univDGVN_DeleteRow(object sender, EventArgs e)
-        //{
-        //    if (univDGVNCellEventArgs == null) {
-        //        return;
-        //    }
-        //    var	row = univDGVN.Rows[univDGVNCellEventArgs.RowIndex];
+        void univDGVN_DeleteRow(object sender, EventArgs e) {
+            if (univDGVNCellEventArgs == null) {
+                return;
+            }
+            var row = univDGVN.Rows[univDGVNCellEventArgs.RowIndex];
 
-        //    if (!row.IsNewRow)
-        //    {
-        //        univDGVN.Rows.RemoveAt(row.Index);
-        //    }
-        //}
+            if (!row.IsNewRow) {
+                univDGVN.Rows.RemoveAt(row.Index);
+            }
+        }
 
         ////-------------------------------------------------------------
         ////
@@ -553,20 +553,19 @@ namespace E131_VixenPlugin {
         ////
         ////-------------------------------------------------------------
 
-        //void univDGVN_MoveRowUp(object sender, EventArgs e)
-        //{
-        //    if (univDGVNCellEventArgs == null) {
-        //        return;
-        //    }
-        //    var	row = univDGVN.Rows[univDGVNCellEventArgs.RowIndex];
-        //    var	rowIndex = row.Index;
+        void univDGVN_MoveRowUp(object sender, EventArgs e) {
+            if (univDGVNCellEventArgs == null) {
+                return;
+            }
+            var row = univDGVN.Rows[univDGVNCellEventArgs.RowIndex];
+            var rowIndex = row.Index;
 
-        //    if (row.IsNewRow || rowIndex <= 0) {
-        //        return;
-        //    }
-        //    univDGVN.Rows.RemoveAt(rowIndex);
-        //    univDGVN.Rows.Insert(rowIndex - 1, row);
-        //}
+            if (row.IsNewRow || rowIndex <= 0) {
+                return;
+            }
+            univDGVN.Rows.RemoveAt(rowIndex);
+            univDGVN.Rows.Insert(rowIndex - 1, row);
+        }
 
         ////-------------------------------------------------------------
         ////
@@ -574,26 +573,25 @@ namespace E131_VixenPlugin {
         ////
         ////-------------------------------------------------------------
 
-        //void univDGVN_MoveRowDown(object sender, EventArgs e)
-        //{
-        //    if (univDGVNCellEventArgs == null) {
-        //        return;
-        //    }
-        //    var	row = univDGVN.Rows[univDGVNCellEventArgs.RowIndex];
-        //    var	rowIndex = row.Index;
+        void univDGVN_MoveRowDown(object sender, EventArgs e) {
+            if (univDGVNCellEventArgs == null) {
+                return;
+            }
+            var row = univDGVN.Rows[univDGVNCellEventArgs.RowIndex];
+            var rowIndex = row.Index;
 
-        //    if (row.IsNewRow) {
-        //        return;
-        //    }
-        //    if (rowIndex >= univDGVN.Rows.Count - 1) {
-        //        return;
-        //    }
-        //    if (univDGVN.Rows[rowIndex + 1].IsNewRow) {
-        //        return;
-        //    }
-        //    univDGVN.Rows.RemoveAt(rowIndex);
-        //    univDGVN.Rows.Insert(rowIndex + 1, row);
-        //}
+            if (row.IsNewRow) {
+                return;
+            }
+            if (rowIndex >= univDGVN.Rows.Count - 1) {
+                return;
+            }
+            if (univDGVN.Rows[rowIndex + 1].IsNewRow) {
+                return;
+            }
+            univDGVN.Rows.RemoveAt(rowIndex);
+            univDGVN.Rows.Insert(rowIndex + 1, row);
+        }
 
         //-------------------------------------------------------------
         //
@@ -632,14 +630,8 @@ namespace E131_VixenPlugin {
                 // enable/disable move row up
                 contextMenuStrip.Items[3].Enabled = (row.Index != 0);
 
-                // disable move row down
-                contextMenuStrip.Items[4].Enabled = false;
-
-                // enable move row down if able
-                if (row.Index < univDGVN.Rows.Count - 1)
-                    if (!univDGVN.Rows[row.Index + 1].IsNewRow) {
-                        contextMenuStrip.Items[4].Enabled = true;
-                    }
+                // enable/disable move row down
+                contextMenuStrip.Items[4].Enabled = (row.Index < univDGVN.Rows.Count - 1) && (!univDGVN.Rows[row.Index + 1].IsNewRow);
             }
         }
 
