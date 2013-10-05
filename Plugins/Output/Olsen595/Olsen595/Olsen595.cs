@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Xml;
@@ -48,6 +49,9 @@ namespace Olsen595 {
         private void InitPort(int i, string nodeName) {
             var node = _setupNode.SelectSingleNode(nodeName);
             if (node == null || node.Attributes == null) {
+                _portMappings[i].From = 0;
+                _portMappings[i].To = 0;
+                _portMappings[i].Mapped = false;
                 return;
             }
 
@@ -113,16 +117,11 @@ namespace Olsen595 {
 
         public HardwareMap[] HardwareMap {
             get {
-                var num = 0;
-                foreach (var mapping in _portMappings) {
-                    num += mapping.Mapped ? 1 : 0;
-                }
+                var num = _portMappings.Sum(mapping => mapping.Mapped ? 1 : 0);
                 var mapArray = new HardwareMap[num];
                 num = 0;
-                foreach (var mapping in _portMappings) {
-                    if (mapping.Mapped) {
-                        mapArray[num++] = new HardwareMap("Parallel", mapping.DataPort, "X");
-                    }
+                foreach (var mapping in _portMappings.Where(mapping => mapping.Mapped)) {
+                    mapArray[num++] = new HardwareMap("Parallel", mapping.DataPort, "X");
                 }
                 return mapArray;
             }
