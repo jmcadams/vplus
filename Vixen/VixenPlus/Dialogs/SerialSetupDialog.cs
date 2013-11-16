@@ -75,7 +75,6 @@ namespace VixenPlus.Dialogs {
             comboBoxParity.Items.Add(Parity.None);
             comboBoxParity.Items.Add(Parity.Odd);
             comboBoxParity.Items.Add(Parity.Space);
-            comboBoxStop.Items.Add(StopBits.None);
             comboBoxStop.Items.Add(StopBits.One);
             comboBoxStop.Items.Add(StopBits.OnePointFive);
             comboBoxStop.Items.Add(StopBits.Two);
