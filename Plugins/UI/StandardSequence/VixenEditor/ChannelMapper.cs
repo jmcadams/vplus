@@ -151,7 +151,7 @@ namespace VixenEditor {
 
             var isShiftPressed = ((ModifierKeys & Keys.Shift) == Keys.Shift);
 
-            var isAtTopTextBox = textBoxIndex == 00;
+            var isAtTopTextBox = textBoxIndex == 0;
             var isAtTopOfList = isAtTopTextBox && _currentTopChannelIndex == 0;
 
             var isAtBottomTextBox = textBoxIndex == _totalChannelsDisplayed - 1;
@@ -240,9 +240,6 @@ namespace VixenEditor {
                 var s = _textBoxes[row].Text.Split(_splitChar, StringSplitOptions.RemoveEmptyEntries);
                 var col = 0;
 
-                //var destSortOrder = cbSortDest.SelectedIndex;
-                //_destinationProfile.SetSortOrder(0);
-
                 foreach (var channel in s) {
                     var channelNum = int.Parse(channel);
                     var c = Controls.Find("r" + row + "c" + col, true)[0];
@@ -254,8 +251,6 @@ namespace VixenEditor {
                     }
                     col++;
                 }
-
-                //_destinationProfile.SetSortOrder(destSortOrder);
 
                 for (; col < _maxDestinationCount; col++) {
                     Controls.Find("r" + row + "c" + col, true)[0].Visible = false;
@@ -735,6 +730,7 @@ namespace VixenEditor {
         #endregion
 
         private void lbDestination_DoubleClick(object sender, EventArgs e) {
+            SaveCurrentValues();
             var listBox = sender as ListBox;
             if (listBox == null || _selectedTextBox == -1 || !btnTransform.Visible) return;
             
