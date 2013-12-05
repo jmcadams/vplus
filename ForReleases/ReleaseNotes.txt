@@ -2,6 +2,8 @@ DD MMM YYYY - V x.x.xxx.x
     Bug #123 - FIXED - J1Sys plugin crashes on context menu click (right-click)
     Bug #124 - FIXED - Text in profile mapper popup for saving prompt has \n\n
     Bug #125 - FIXED - Profile editing, some controls are not anchored properly.
+    Bug #126 - FIXED - Channel Mapper not removing channels that were placed by mistake and then deleted.
+    Bug #127 - FIXED - Paste full channel events doesn't work right if a group is selected.
 
 22 SEP 2013 - V 0.1.265.1  {BETA}
     Fixed grammar errors in release notes.  I'm a programmer, not a speller :D
