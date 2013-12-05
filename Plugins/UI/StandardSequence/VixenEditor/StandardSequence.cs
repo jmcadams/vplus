@@ -1620,8 +1620,9 @@ namespace VixenEditor {
 
             var width = Math.Min(_systemInterface.Clipboard.GetLength(Utils.IndexColsOrWidth), _sequence.TotalEventPeriods);
             AddUndoItem(new Rectangle(0, _selectedLineIndex, width, 1), UndoOriginalBehavior.Overwrite, Resources.PasteText);
+            var p = GetEventFromChannelNumber(_selectedLineIndex);
             for (var col = 0; col < width; col++) {
-                _sequence.EventValues[_editingChannelSortedIndex, col] = _systemInterface.Clipboard[0, col];
+                _sequence.EventValues[p, col] = _systemInterface.Clipboard[0, col];
             }
             IsDirty = true;
             pictureBoxGrid.Refresh();
