@@ -435,12 +435,14 @@ namespace VixenPlus {
                     for (var row = 0; row < rows; row++) {
                         for (var column = 0f; column < columns; column++) {
                             byte newValue = 0;
-                            for (var oldColumn = 0f; oldColumn < oldColumns; oldColumn++) {
+                            var oldColumn = 0;
+                            //for (var oldColumn = 0f; oldColumn < oldColumns; oldColumn++) {
                                 newValue = Math.Max(newValue, EventValues[row, (int) ((column * oldColumns) + oldColumn)]);
-                            }
-                            for (var newColumn = 0f; newColumn < newColumns; newColumn++) {
+                            //}
+                            var newColumn = 0;
+                            //for (var newColumn = 0f; newColumn < newColumns; newColumn++) {
                                 newEventValues[row, (int) ((column * newColumns) + newColumn)] = newValue;
-                            }
+                            //}
                         }
                     }
                 }
