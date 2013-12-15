@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net.Mime;
+using System.Windows.Forms;
 
 namespace VixenPlus {
     public static class Paths {
@@ -8,7 +10,9 @@ namespace VixenPlus {
 
         private static string _dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Vendor.ProductName);
 
-        public const string DataDir = "data.dir";
+        public static string DataDir {
+            get { return Path.Combine(Application.StartupPath, "data.dir"); }
+        }
 
         public static string AudioPath {
             get { return Path.Combine(DataPath, "Audio"); }
