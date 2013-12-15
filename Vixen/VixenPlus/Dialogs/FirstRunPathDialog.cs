@@ -88,7 +88,7 @@ namespace VixenPlus.Dialogs {
                 Directory.CreateDirectory(path);
             }
 
-            using (var file = new StreamWriter(Path.Combine(Paths.BinaryPath, Paths.DataDir))) {
+            using (var file = new StreamWriter(Paths.DataDir)) {
                 file.WriteLine(path);
             }
 

@@ -46,7 +46,7 @@ namespace VixenPlus {
         }
 
         public static string DataFolder {
-            get { return @"\" + Vendor.ProductName + "Data"; }
+            get { return @"\" + "Data"; }
         }
 
         public static string ImportExportPath {
