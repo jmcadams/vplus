@@ -1,3 +1,2 @@
-A few of the effects don't have key press shortcuts, need to be implemented.
-Toolbar sizes are not all the same height, so when you align them, they may look strange.
-Zoom not persisted on groups when changed.
+Channel mask not displayed in color
+Check shift key and ctrl(?) and moving with arrows cause wierd behavior
