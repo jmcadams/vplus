@@ -11,7 +11,7 @@ namespace VixenPlus {
             base.SuspendLayout();
             base.AutoScaleDimensions = new SizeF(6f, 13f);
             base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            base.ClientSize = new Size(740, 0x1bc);
+            base.ClientSize = new Size(740, 444);
             base.Name = "UIBase";
             this.Text = "UIBase";
             this.Icon = global::Properties.Resources.VixenPlus;
