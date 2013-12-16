@@ -3104,6 +3104,7 @@ namespace VixenEditor {
                 }
                 _sequence.UpdateMetrics(Width, Height, splitContainer1.SplitterDistance);
                 _executionInterface.ReleaseContext(_executionContextHandle);
+                _undoStack.Clear(); // possible solution to memory leak when copying a lot of channels
             }
             // ReSharper disable PossibleNullReferenceException
             toolStripComboBoxColumnZoom.ComboBox.MouseWheel -= comboBox_MouseWheel;
