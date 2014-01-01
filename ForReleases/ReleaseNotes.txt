@@ -1,9 +1,18 @@
-DD MMM YYYY - V x.x.xxx.x
+01 JAN 2014 - V 0.2.1.1
     Bug #123 - FIXED - J1Sys plugin crashes on context menu click (right-click)
-    Bug #124 - FIXED - Text in profile mapper popup for saving prompt has \n\n
+    Bug #124 - FIXED - Text in channel mapper pop-up for saving prompt has \n\n
     Bug #125 - FIXED - Profile editing, some controls are not anchored properly.
     Bug #126 - FIXED - Channel Mapper not removing channels that were placed by mistake and then deleted.
     Bug #127 - FIXED - Paste full channel events doesn't work right if a group is selected.
+    Bug #128 - FIXED - Selecting a large area and then moving the selection box might cause an exception.
+    Bug #129 - FIXED - Sparkle not rendering correctly when you have percentage selected instead of value.
+    Bug #130 - FIXED - Open .vix files with Vixen+ causes data directory to be "reset"
+    Drag and Drop now supported for .VIX files
+    Enhanced how changing the event period re-renders (e.g. go from 10ms to 50ms timing) so that if the original didn't have overlap, the new doesn't
+       either OR if the original did, the new one attempts too as well.
+    Hopefully fixed a memory leak when copy and pasting repeated times in various sequences.  Was not releasing redo/undo information when a sequence
+       closed.
+    Fixed more grammer errors in this file.
 
 22 SEP 2013 - V 0.1.265.1  {BETA}
     Fixed grammar errors in release notes.  I'm a programmer, not a speller :D
@@ -69,7 +78,7 @@ DD MMM YYYY - V x.x.xxx.x
     Disabled Nutcracker (Not done)
     Disabled UI indicator for bookmarks (Is crashing UI at times)
     Disabled Automatic update checking (Is crashing on server timeout at times)
-    Code cleanup, changed static class to extention methods where it made sense.  Code reads cleaner.
+    Code cleanup, changed static class to extension methods where it made sense.  Code reads cleaner.
     Killed off 9 different TODO items.
     
 
@@ -86,7 +95,7 @@ DD MMM YYYY - V x.x.xxx.x
     Bug #5 Fixed, Undo/Redo not working right on non 1 to 1 channel mapping.  Ripped out the old way of doing
         undo/redo of passing channel numbers around and just pass a reference to the channel object itself.
     Bug #6 Fixed, Random took too long to generate on large selections.  I was iterating over the entire collection
-        on each generation to ensure the satuaration was correct, reimplemented that algorithm to be more efficient.
+        on each generation to ensure the saturation was correct, reimplemented that algorithm to be more efficient.
     Bug #7 Fixed, Random would not generate proper levels if Vary Intensity was selected and was using percentages.  
         I was calculating the value from % twice, causing an incorrect value.
     Bug #8 Fixed, Can't double click on the last row. The label that follows the selection was getting in the way
