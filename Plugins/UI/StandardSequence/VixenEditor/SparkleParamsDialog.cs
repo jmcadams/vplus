@@ -67,13 +67,13 @@ namespace VixenEditor {
 
 
         private void numericUpDownMax_ValueChanged(object sender, EventArgs e) {
-            _max = (int) (_actualLevels ? udMax.Value : ((int) udMax.Value).ToPercentage());
+            _max = (int) (_actualLevels ? udMax.Value : ((int) udMax.Value).ToValue());
             Regenerate();
         }
 
 
         private void numericUpDownMin_ValueChanged(object sender, EventArgs e) {
-            _min = (int) (_actualLevels ? udMin.Value : ((int) udMin.Value).ToPercentage());
+            _min = (int) (_actualLevels ? udMin.Value : ((int) udMin.Value).ToValue());
             Regenerate();
         }
 
@@ -97,10 +97,8 @@ namespace VixenEditor {
 
 
         private void Regenerate() {
-            //_drawTimer.Stop();
             _effectGenerator(_effectValues, new[] {_frequency, _decay, _min, _max});
             _tickCount = 0;
-            //_drawTimer.Start();
         }
 
 
