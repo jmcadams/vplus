@@ -901,5 +901,25 @@ namespace VixenPlus {
                 lutefisk.ShowDialog();
             }
         }
+
+        private void VixenPlusForm_DragEnter(object sender, DragEventArgs e) {
+            var validFileTypes = (e.Data.GetDataPresent(DataFormats.FileDrop));
+            
+            if (validFileTypes) {
+                var files = (string[]) e.Data.GetData(DataFormats.FileDrop, false);
+                if (files.Any(f => f.Substring(f.Length - 4, 4) != Vendor.SequenceExtension)) {
+                    validFileTypes = false;
+                }
+            }
+
+            e.Effect = validFileTypes ? DragDropEffects.Copy : DragDropEffects.None;
+        }
+
+        private void VixenPlusForm_DragDrop(object sender, DragEventArgs e) {
+            var files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            foreach (var f in files) {
+                OpenSequence(f);
+            }
+        }
     }
 }

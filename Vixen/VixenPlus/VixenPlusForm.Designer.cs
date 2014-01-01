@@ -383,6 +383,7 @@ namespace VixenPlus {
             // 
             // VixenPlusForm
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(776, 489);
@@ -400,6 +401,8 @@ namespace VixenPlus {
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.MdiChildActivate += new System.EventHandler(this.Form1_MdiChildActivate);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.VixenPlusForm_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.VixenPlusForm_DragEnter);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
