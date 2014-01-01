@@ -140,6 +140,8 @@ namespace VixenEditor {
         }
 
 
+        // Not true since this is called via reflection.
+        // ReSharper disable once MemberCanBePrivate.Global
         public StandardSequence() {
             object obj2;
             _executionInterface = null;
@@ -3234,8 +3236,7 @@ namespace VixenEditor {
                     break;
 
                 case Keys.Up:
-                    if ((pictureBoxChannels.Focused || (pictureBoxGrid.Focused && !e.Control)) &&
-                        ((vScrollBar1.Value > 0) || (_selectedCells.Top > 0))) {
+                    if ((pictureBoxChannels.Focused || (pictureBoxGrid.Focused && !e.Control)) && _selectedCells.Top > 0) {
                         e.Handled = true;
                         _selectedRange.Y--;
                         _selectedCells.Y--;
