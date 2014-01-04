@@ -74,6 +74,16 @@ namespace VixenEditor {
                 Locked = bool.Parse(lockedNode.InnerText);
             }
 
+            var crosshairNode = node2.SelectSingleNode("Crosshairs");
+            if (crosshairNode != null) {
+                Crosshairs = bool.Parse(crosshairNode.InnerText);
+            }
+
+            var waveformShownNode = node2.SelectSingleNode("WaveformShown");
+            if (waveformShownNode != null) {
+                WaveformShown = bool.Parse(waveformShownNode.InnerText);
+            }
+
             foreach (Control control in form.Controls) {
                 var toolStripContainer = control as ToolStripContainer;
                 if (toolStripContainer == null) {
@@ -139,6 +149,8 @@ namespace VixenEditor {
             var emptyNodeAlways = Xml.GetEmptyNodeAlways(Xml.GetNodeAlways(parentNode, "ToolStripConfiguration"), key);
             Xml.SetNewValue(emptyNodeAlways, "Size", IconSize.ToString(CultureInfo.InvariantCulture));
             Xml.SetNewValue(emptyNodeAlways, "Locked", Locked.ToString());
+            Xml.SetNewValue(emptyNodeAlways, "Crosshairs", Crosshairs.ToString());
+            Xml.SetNewValue(emptyNodeAlways, "WaveformShown", WaveformShown.ToString());
             foreach (Control control in form.Controls) {
                 var stripContainer = control as ToolStripContainer;
                 if (stripContainer == null) {
@@ -220,5 +232,9 @@ namespace VixenEditor {
 
 
         public static bool Locked { get; set; }
+
+        public static bool Crosshairs { get; set; }
+
+        public static bool WaveformShown { get; set; }
     }
 }

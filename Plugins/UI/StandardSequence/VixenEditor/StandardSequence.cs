@@ -3520,18 +3520,15 @@ namespace VixenEditor {
                 toolStripContainer1.RightToolStripPanel
             };
             var list = new List<string>();
-            foreach (var panel in panelArray) {
-                foreach (ToolStrip strip in panel.Controls) {
-                    _toolStrips[strip.Text] = strip;
-                    list.Add(strip.Text);
-                }
+            foreach (var strip in panelArray.SelectMany(panel => panel.Controls.Cast<ToolStrip>())) {
+                _toolStrips[strip.Text] = strip;
+                list.Add(strip.Text);
             }
             list.Sort();
 
             //this populates the toolstrip menu with the attached toolstrips
             var position = toolbarsToolStripMenuItem.DropDownItems.IndexOf(toolStripSeparator7);
-            foreach (var str in list) {
-                var menuItem = new ToolStripMenuItem(str) {Tag = _toolStrips[str], Checked = _toolStrips[str].Visible, CheckOnClick = true};
+            foreach (var menuItem in list.Select(str => new ToolStripMenuItem(str) {Tag = _toolStrips[str], Checked = _toolStrips[str].Visible, CheckOnClick = true})) {
                 menuItem.CheckStateChanged += _toolStripCheckStateChangeHandler;
                 toolbarsToolStripMenuItem.DropDownItems.Insert(position++, menuItem);
             }
@@ -3544,6 +3541,16 @@ namespace VixenEditor {
                 toolStripButtonToggleLevels.Image = Resources.number;
                 toolStripButtonToggleCellText.Image = Resources.level_Percent;
             }
+
+            if (ToolStripManager.Crosshairs && !toolStripButtonToggleCrossHairs.Checked) {
+                toolStripButtonToggleCrossHairs_Click(null, null);
+            }
+
+            if (ToolStripManager.WaveformShown && !toolStripButtonWaveform.Checked) {
+                toolStripButtonWaveform.Checked = true;
+                toolStripButtonWaveform_Click(null, null);
+            }
+
             UpdateToolbarMenu();
             UpdateLevelDisplay();
             _sequence.CurrentGroup = Group.AllChannels;
@@ -4145,6 +4152,9 @@ namespace VixenEditor {
             toolStripButtonToggleCrossHairs.Checked = !toolStripButtonToggleCrossHairs.Checked;
             toolStripButtonToggleCrossHairs.BackgroundImage = ToolStripManager.GetBackground(toolStripButtonToggleCrossHairs.Checked);
 
+            ToolStripManager.Crosshairs = toolStripButtonToggleCrossHairs.Checked;
+            ToolStripManager.SaveSettings(this, _preferences.XmlDoc.DocumentElement);
+
             pictureBoxGrid.Invalidate(new Rectangle((_mouseTimeCaret - hScrollBar1.Value) * _gridColWidth, 0, _gridColWidth, pictureBoxGrid.Height));
             pictureBoxGrid.Invalidate(new Rectangle(0, (_mouseChannelCaret - vScrollBar1.Value) * _gridRowHeight, pictureBoxGrid.Width, _gridRowHeight));
             pictureBoxGrid.Update();
@@ -4205,6 +4215,9 @@ namespace VixenEditor {
             if ((_waveformPixelData == null) || (_waveformPcmData == null)) {
                 ParseAudioWaveform();
             }
+
+            ToolStripManager.WaveformShown = toolStripButtonWaveform.Checked;
+            ToolStripManager.SaveSettings(this, _preferences.XmlDoc.DocumentElement);
 
             if (toolStripButtonWaveform.Checked) {
                 pictureBoxTime.Height = WaveformShownSize;

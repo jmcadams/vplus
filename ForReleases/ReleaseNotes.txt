@@ -1,8 +1,10 @@
 xx JAN 2014 - V 0.2.X.1
    Bug #131 - Fixed - Crash when changing sort order on toolbar and then changing again in profile manager.
    Added two new preference items under the general tab
-      1) Auto save tool bars
+      1) Auto save tool bars (A 2014 Feature Request!)
       2) Number of recent files under the File menu (5 to 20)
+   Save crosshair state (A 2014 Feature Request!)
+   Save waveform state (A 2014 Feature Request!)
    Minor internal refactoring.
 
 01 JAN 2014 - V 0.2.1.1
