@@ -16,6 +16,10 @@ namespace VixenPlus {
         public SortOrder CurrentOrder {
             get { return LastSort == -1 ? null : _sortOrders[LastSort-1]; }
             set {
+                if (null == value) {
+                    return;
+                }
+
                 for (var i = 0; i < _sortOrders.Count; i++) {
                     if (_sortOrders[i].Name == value.Name) {
                         LastSort = i + 1;
