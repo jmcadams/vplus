@@ -1,3 +1,10 @@
+xx JAN 2014 - V 0.2.X.1
+   Bug #131 - Fixed - Crash when changing sort order on toolbar and then changing again in profile manager.
+   Added two new preference items under the general tab
+      1) Auto save tool bars
+      2) Number of recent files under the File menu (5 to 20)
+   Minor internal refactoring.
+
 01 JAN 2014 - V 0.2.1.1
     Bug #123 - FIXED - J1Sys plugin crashes on context menu click (right-click)
     Bug #124 - FIXED - Text in channel mapper pop-up for saving prompt has \n\n
@@ -12,7 +19,7 @@
        either OR if the original did, the new one attempts too as well.
     Hopefully fixed a memory leak when copy and pasting repeated times in various sequences.  Was not releasing redo/undo information when a sequence
        closed.
-    Fixed more grammer errors in this file.
+    Fixed more grammar errors in this file.
 
 22 SEP 2013 - V 0.1.265.1  {BETA}
     Fixed grammar errors in release notes.  I'm a programmer, not a speller :D

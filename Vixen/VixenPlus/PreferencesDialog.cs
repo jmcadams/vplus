@@ -93,9 +93,8 @@ namespace VixenPlus {
 
         private void PopulateAudioDeviceList() {
             comboBoxDefaultAudioDevice.Items.Add("Use application's default device");
-            // ReSharper disable CoVariantArrayConversion
+            // ReSharper disable once CoVariantArrayConversion
             comboBoxDefaultAudioDevice.Items.AddRange(fmod.GetSoundDeviceList());
-            // ReSharper restore CoVariantArrayConversion
         }
 
 
@@ -161,6 +160,8 @@ namespace VixenPlus {
                 File.Delete(path);
             }
             _preferences.SetInteger("HistoryImages", (int) numericUpDownHistoryImages.Value);
+            _preferences.SetInteger("RecentFiles", (int) nudRecentFiles.Value);
+            _preferences.SetBoolean("AutoSaveToolbars", cbToolbarAutoSave.Checked);
         }
 
 
@@ -357,6 +358,8 @@ namespace VixenPlus {
             }
             checkBoxDisableAutoUpdate.Checked = File.Exists(Path.Combine(Paths.DataPath, "no.update"));
             numericUpDownHistoryImages.Value = _preferences.GetInteger("HistoryImages");
+            nudRecentFiles.Value = _preferences.GetInteger("RecentFiles");
+            cbToolbarAutoSave.Checked = _preferences.GetBoolean("AutoSaveToolbars");
         }
 
 

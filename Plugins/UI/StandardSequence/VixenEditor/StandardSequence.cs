@@ -3097,6 +3097,7 @@ namespace VixenEditor {
                 if (_sequence.Groups != null) {
                     Group.SaveGroups(_sequence.Groups, _sequence.Profile != null ? _sequence.Profile.FileName : _sequence.FileName);
                 }
+                ToolbarAutoSave();
                 if (_preferences.GetBoolean("SaveZoomLevels")) {
                     if (!_zoomChangedByGroup) {
                         _preferences.SetChildString("SaveZoomLevels", "row", toolStripComboBoxRowZoom.SelectedItem.ToString());
@@ -4734,6 +4735,7 @@ namespace VixenEditor {
             ToolStripManager.IconSize = widthAndHeight;
             ToolStripManager.ResizeToolStrips(this);
             UpdateToolbarMenu();
+            ToolbarAutoSave();
         }
 
 
@@ -4748,6 +4750,7 @@ namespace VixenEditor {
             toolStripExecutionControl.GripStyle = style;
             toolStripSequenceSettings.GripStyle = style;
             toolStripText.GripStyle = style;
+            ToolbarAutoSave();
         }
 
 
@@ -5031,6 +5034,16 @@ namespace VixenEditor {
 
                 MessageBox.Show(string.Format("Your new sequence was saved as {0}", mapper.GetMappedSequenceFile));
             }
+        }
+
+
+        private void ToolbarAutoSave() {
+            if (!_preferences.GetBoolean("AutoSaveToolbars")) {
+                return;
+            }
+
+            ToolStripManager.SaveSettings(this, _preferences.XmlDoc.DocumentElement);
+            _preferences.SaveSettings();
         }
     }
 }

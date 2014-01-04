@@ -145,6 +145,21 @@ namespace VixenPlus {
             treeNode8});
             this.treeView = new System.Windows.Forms.TreeView();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.buttonOK = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.btnSetDataFolder = new System.Windows.Forms.Button();
+            this.tabControl = new VixenPlus.TabControl(this.components);
+            this.generalTab = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cbToolbarAutoSave = new System.Windows.Forms.CheckBox();
+            this.label36 = new System.Windows.Forms.Label();
+            this.nudRecentFiles = new System.Windows.Forms.NumericUpDown();
+            this.label35 = new System.Windows.Forms.Label();
+            this.numericUpDownHistoryImages = new System.Windows.Forms.NumericUpDown();
+            this.label28 = new System.Windows.Forms.Label();
             this.checkBoxDisableAutoUpdate = new System.Windows.Forms.CheckBox();
             this.label26 = new System.Windows.Forms.Label();
             this.dateTimePickerAutoShutdownTime = new System.Windows.Forms.DateTimePicker();
@@ -164,76 +179,6 @@ namespace VixenPlus {
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxTimerCheckFrequency = new System.Windows.Forms.TextBox();
-            this.comboBoxDefaultAudioDevice = new System.Windows.Forms.ComboBox();
-            this.label27 = new System.Windows.Forms.Label();
-            this.buttonPluginSetup = new System.Windows.Forms.Button();
-            this.textBoxDefaultChannelCount = new System.Windows.Forms.TextBox();
-            this.comboBoxDefaultProfile = new System.Windows.Forms.ComboBox();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.buttonCreateProfile = new System.Windows.Forms.Button();
-            this.numericUpDownMaximumLevel = new System.Windows.Forms.NumericUpDown();
-            this.label17 = new System.Windows.Forms.Label();
-            this.numericUpDownMinimumLevel = new System.Windows.Forms.NumericUpDown();
-            this.label14 = new System.Windows.Forms.Label();
-            this.textBoxEventPeriod = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.checkBoxWizardForNewSequences = new System.Windows.Forms.CheckBox();
-            this.checkBoxShowNaturalChannelNumber = new System.Windows.Forms.CheckBox();
-            this.textBoxIntensityLargeDelta = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.checkBoxShowSaveConfirmation = new System.Windows.Forms.CheckBox();
-            this.checkBoxSaveZoomLevels = new System.Windows.Forms.CheckBox();
-            this.checkBoxEventSequenceAutoSize = new System.Windows.Forms.CheckBox();
-            this.textBoxMaxRowHeight = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.textBoxMaxColumnWidth = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.checkBoxClearAtEndOfSequence = new System.Windows.Forms.CheckBox();
-            this.checkBoxShowPositionMarker = new System.Windows.Forms.CheckBox();
-            this.checkBoxSavePlugInDialogPositions = new System.Windows.Forms.CheckBox();
-            this.checkBoxAutoScrolling = new System.Windows.Forms.CheckBox();
-            this.textBoxMusicFadeDuration = new System.Windows.Forms.TextBox();
-            this.label21 = new System.Windows.Forms.Label();
-            this.checkBoxEnableMusicFade = new System.Windows.Forms.CheckBox();
-            this.textBoxBackgroundMusicDelay = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.checkBoxEnableBackgroundMusic = new System.Windows.Forms.CheckBox();
-            this.textBoxBackgroundSequenceDelay = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.checkBoxEnableBackgroundSequence = new System.Windows.Forms.CheckBox();
-            this.radioButtonAsyncSyncObject = new System.Windows.Forms.RadioButton();
-            this.radioButtonAsyncDefaultProfileData = new System.Windows.Forms.RadioButton();
-            this.radioButtonAsyncProfileData = new System.Windows.Forms.RadioButton();
-            this.radioButtonSyncDefaultProfileData = new System.Windows.Forms.RadioButton();
-            this.radioButtonSyncProfileData = new System.Windows.Forms.RadioButton();
-            this.radioButtonSyncEmbeddedData = new System.Windows.Forms.RadioButton();
-            this.checkBoxLogManual = new System.Windows.Forms.CheckBox();
-            this.checkBoxLogScheduled = new System.Windows.Forms.CheckBox();
-            this.checkBoxLogMusicPlayer = new System.Windows.Forms.CheckBox();
-            this.buttonLogFilePath = new System.Windows.Forms.Button();
-            this.textBoxLogFilePath = new System.Windows.Forms.TextBox();
-            this.checkBoxFlipMouseScroll = new System.Windows.Forms.CheckBox();
-            this.label29 = new System.Windows.Forms.Label();
-            this.textBoxCurveLibraryHttpUrl = new System.Windows.Forms.TextBox();
-            this.textBoxCurveLibraryFtpUrl = new System.Windows.Forms.TextBox();
-            this.label30 = new System.Windows.Forms.Label();
-            this.textBoxCurveLibraryFileName = new System.Windows.Forms.TextBox();
-            this.label31 = new System.Windows.Forms.Label();
-            this.label32 = new System.Windows.Forms.Label();
-            this.textBoxCurveLibraryFtpUserName = new System.Windows.Forms.TextBox();
-            this.label33 = new System.Windows.Forms.Label();
-            this.textBoxCurveLibraryFtpPassword = new System.Windows.Forms.TextBox();
-            this.textBoxDefaultSequenceSaveDirectory = new System.Windows.Forms.TextBox();
-            this.buttonOK = new System.Windows.Forms.Button();
-            this.buttonCancel = new System.Windows.Forms.Button();
-            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.tabControl = new VixenPlus.TabControl(this.components);
-            this.generalTab = new System.Windows.Forms.TabPage();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.numericUpDownHistoryImages = new System.Windows.Forms.NumericUpDown();
-            this.label28 = new System.Windows.Forms.Label();
             this.screenTab = new System.Windows.Forms.TabPage();
             this.cbUseCheckmark = new System.Windows.Forms.CheckBox();
             this.gbColors = new System.Windows.Forms.GroupBox();
@@ -245,51 +190,111 @@ namespace VixenPlus {
             this.cbScreens = new System.Windows.Forms.ComboBox();
             this.newSequenceSettingsTab = new System.Windows.Forms.TabPage();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.comboBoxDefaultAudioDevice = new System.Windows.Forms.ComboBox();
+            this.label27 = new System.Windows.Forms.Label();
             this.checkBoxUseDefaultPlugInData = new System.Windows.Forms.CheckBox();
+            this.buttonPluginSetup = new System.Windows.Forms.Button();
+            this.textBoxDefaultChannelCount = new System.Windows.Forms.TextBox();
+            this.comboBoxDefaultProfile = new System.Windows.Forms.ComboBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.buttonCreateProfile = new System.Windows.Forms.Button();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.numericUpDownMaximumLevel = new System.Windows.Forms.NumericUpDown();
+            this.label17 = new System.Windows.Forms.Label();
+            this.numericUpDownMinimumLevel = new System.Windows.Forms.NumericUpDown();
+            this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.textBoxEventPeriod = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.checkBoxWizardForNewSequences = new System.Windows.Forms.CheckBox();
             this.sequenceEditingTab = new System.Windows.Forms.TabPage();
             this.groupBox14 = new System.Windows.Forms.GroupBox();
+            this.textBoxCurveLibraryFtpPassword = new System.Windows.Forms.TextBox();
+            this.label33 = new System.Windows.Forms.Label();
+            this.textBoxCurveLibraryFtpUserName = new System.Windows.Forms.TextBox();
+            this.label32 = new System.Windows.Forms.Label();
+            this.textBoxCurveLibraryFileName = new System.Windows.Forms.TextBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.textBoxCurveLibraryFtpUrl = new System.Windows.Forms.TextBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.textBoxCurveLibraryHttpUrl = new System.Windows.Forms.TextBox();
+            this.label29 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.cbWavefromZeroLine = new System.Windows.Forms.CheckBox();
+            this.textBoxDefaultSequenceSaveDirectory = new System.Windows.Forms.TextBox();
             this.label34 = new System.Windows.Forms.Label();
+            this.checkBoxFlipMouseScroll = new System.Windows.Forms.CheckBox();
+            this.checkBoxShowNaturalChannelNumber = new System.Windows.Forms.CheckBox();
+            this.textBoxIntensityLargeDelta = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.checkBoxShowSaveConfirmation = new System.Windows.Forms.CheckBox();
+            this.checkBoxSaveZoomLevels = new System.Windows.Forms.CheckBox();
+            this.checkBoxEventSequenceAutoSize = new System.Windows.Forms.CheckBox();
+            this.textBoxMaxRowHeight = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.textBoxMaxColumnWidth = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.sequenceExecutionTab = new System.Windows.Forms.TabPage();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
+            this.textBoxLogFilePath = new System.Windows.Forms.TextBox();
+            this.buttonLogFilePath = new System.Windows.Forms.Button();
+            this.checkBoxLogMusicPlayer = new System.Windows.Forms.CheckBox();
+            this.checkBoxLogScheduled = new System.Windows.Forms.CheckBox();
+            this.checkBoxLogManual = new System.Windows.Forms.CheckBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.checkBoxClearAtEndOfSequence = new System.Windows.Forms.CheckBox();
+            this.checkBoxShowPositionMarker = new System.Windows.Forms.CheckBox();
+            this.checkBoxSavePlugInDialogPositions = new System.Windows.Forms.CheckBox();
+            this.checkBoxAutoScrolling = new System.Windows.Forms.CheckBox();
             this.backgroundItemsTab = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.label20 = new System.Windows.Forms.Label();
+            this.textBoxMusicFadeDuration = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.checkBoxEnableMusicFade = new System.Windows.Forms.CheckBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.textBoxBackgroundMusicDelay = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.checkBoxEnableBackgroundMusic = new System.Windows.Forms.CheckBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.textBoxBackgroundSequenceDelay = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.checkBoxEnableBackgroundSequence = new System.Windows.Forms.CheckBox();
             this.remoteExecutionTab = new System.Windows.Forms.TabPage();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.radioButtonAsyncSyncObject = new System.Windows.Forms.RadioButton();
             this.comboBoxAsyncProfile = new System.Windows.Forms.ComboBox();
+            this.radioButtonAsyncDefaultProfileData = new System.Windows.Forms.RadioButton();
+            this.radioButtonAsyncProfileData = new System.Windows.Forms.RadioButton();
             this.label25 = new System.Windows.Forms.Label();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.comboBoxSyncProfile = new System.Windows.Forms.ComboBox();
+            this.radioButtonSyncDefaultProfileData = new System.Windows.Forms.RadioButton();
+            this.radioButtonSyncProfileData = new System.Windows.Forms.RadioButton();
+            this.radioButtonSyncEmbeddedData = new System.Windows.Forms.RadioButton();
             this.label24 = new System.Windows.Forms.Label();
             this.engineTab = new System.Windows.Forms.TabPage();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.buttonEngine = new System.Windows.Forms.Button();
             this.textBoxEngine = new System.Windows.Forms.TextBox();
-            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.btnSetDataFolder = new System.Windows.Forms.Button();
-            this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumLevel)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinimumLevel)).BeginInit();
             this.tabControl.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRecentFiles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHistoryImages)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.screenTab.SuspendLayout();
             this.gbColors.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbColor)).BeginInit();
             this.newSequenceSettingsTab.SuspendLayout();
             this.groupBox12.SuspendLayout();
             this.groupBox8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumLevel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinimumLevel)).BeginInit();
             this.sequenceEditingTab.SuspendLayout();
             this.groupBox14.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -342,868 +347,6 @@ namespace VixenPlus {
             this.treeView.TabIndex = 0;
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
             // 
-            // checkBoxDisableAutoUpdate
-            // 
-            this.checkBoxDisableAutoUpdate.AutoSize = true;
-            this.checkBoxDisableAutoUpdate.Location = new System.Drawing.Point(215, 114);
-            this.checkBoxDisableAutoUpdate.Name = "checkBoxDisableAutoUpdate";
-            this.checkBoxDisableAutoUpdate.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxDisableAutoUpdate.TabIndex = 73;
-            this.toolTip.SetToolTip(this.checkBoxDisableAutoUpdate, "Stops the application from trying to update itself over the internet.");
-            this.checkBoxDisableAutoUpdate.UseVisualStyleBackColor = true;
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(17, 115);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(102, 13);
-            this.label26.TabIndex = 72;
-            this.label26.Text = "Disable auto-update";
-            this.toolTip.SetToolTip(this.label26, "Stops the application from trying to update itself over the internet.");
-            // 
-            // dateTimePickerAutoShutdownTime
-            // 
-            this.dateTimePickerAutoShutdownTime.Checked = false;
-            this.dateTimePickerAutoShutdownTime.CustomFormat = "  hh:mm tt";
-            this.dateTimePickerAutoShutdownTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerAutoShutdownTime.Location = new System.Drawing.Point(215, 83);
-            this.dateTimePickerAutoShutdownTime.Name = "dateTimePickerAutoShutdownTime";
-            this.dateTimePickerAutoShutdownTime.ShowCheckBox = true;
-            this.dateTimePickerAutoShutdownTime.ShowUpDown = true;
-            this.dateTimePickerAutoShutdownTime.Size = new System.Drawing.Size(92, 20);
-            this.dateTimePickerAutoShutdownTime.TabIndex = 71;
-            this.toolTip.SetToolTip(this.dateTimePickerAutoShutdownTime, "If the application is running, it can shut down your computer at a time you speci" +
-                    "fy");
-            this.dateTimePickerAutoShutdownTime.Value = new System.DateTime(2007, 4, 20, 12, 0, 0, 0);
-            // 
-            // labelAutoShutdownTime
-            // 
-            this.labelAutoShutdownTime.AutoSize = true;
-            this.labelAutoShutdownTime.Location = new System.Drawing.Point(17, 87);
-            this.labelAutoShutdownTime.Name = "labelAutoShutdownTime";
-            this.labelAutoShutdownTime.Size = new System.Drawing.Size(78, 13);
-            this.labelAutoShutdownTime.TabIndex = 69;
-            this.labelAutoShutdownTime.Text = "Auto shutdown";
-            this.toolTip.SetToolTip(this.labelAutoShutdownTime, "If the application is running, it can shut down your computer at a time you speci" +
-                    "fy");
-            // 
-            // comboBoxSequenceType
-            // 
-            this.comboBoxSequenceType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxSequenceType.FormattingEnabled = true;
-            this.comboBoxSequenceType.Location = new System.Drawing.Point(215, 56);
-            this.comboBoxSequenceType.Name = "comboBoxSequenceType";
-            this.comboBoxSequenceType.Size = new System.Drawing.Size(196, 21);
-            this.comboBoxSequenceType.TabIndex = 6;
-            this.toolTip.SetToolTip(this.comboBoxSequenceType, "The sequence type you want to initially display when opening a sequence");
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(17, 59);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(126, 13);
-            this.label23.TabIndex = 5;
-            this.label23.Text = "Preferred sequence  type";
-            this.toolTip.SetToolTip(this.label23, "The sequence type you want to initially display when opening a sequence");
-            // 
-            // checkBoxResetAtStartup
-            // 
-            this.checkBoxResetAtStartup.AutoSize = true;
-            this.checkBoxResetAtStartup.Enabled = false;
-            this.checkBoxResetAtStartup.Location = new System.Drawing.Point(215, 166);
-            this.checkBoxResetAtStartup.Name = "checkBoxResetAtStartup";
-            this.checkBoxResetAtStartup.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxResetAtStartup.TabIndex = 68;
-            this.toolTip.SetToolTip(this.checkBoxResetAtStartup, "Sends a blank event to the plugins in the default plugin setup.\r\nUseful for paral" +
-                    "lel port-based controllers.  Does not affect every\r\ncontroller type.");
-            this.checkBoxResetAtStartup.UseVisualStyleBackColor = true;
-            this.checkBoxResetAtStartup.Visible = false;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Enabled = false;
-            this.label16.Location = new System.Drawing.Point(17, 166);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(134, 39);
-            this.label16.TabIndex = 7;
-            this.label16.Text = "Reset controller at startup\r\n(Requires default profiles in\r\nNew Sequence Settings" +
-                ")";
-            this.toolTip.SetToolTip(this.label16, "Sends a blank event to the plugins in the default plugin setup.\r\nUseful for paral" +
-                    "lel port-based controllers.  Does not affect every\r\ncontroller type.");
-            this.label16.Visible = false;
-            // 
-            // textBoxClientName
-            // 
-            this.textBoxClientName.Location = new System.Drawing.Point(215, 28);
-            this.textBoxClientName.Name = "textBoxClientName";
-            this.textBoxClientName.Size = new System.Drawing.Size(196, 20);
-            this.textBoxClientName.TabIndex = 4;
-            this.toolTip.SetToolTip(this.textBoxClientName, "Name used to identify this installation to remote clients and servers");
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(17, 31);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(62, 13);
-            this.label15.TabIndex = 3;
-            this.label15.Text = "Client name";
-            this.toolTip.SetToolTip(this.label15, "Name used to identify this installation to remote clients and servers");
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.textBoxMouseWheelHorizontal);
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.textBoxMouseWheelVertical);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Location = new System.Drawing.Point(19, 80);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(424, 100);
-            this.groupBox2.TabIndex = 3;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Mouse Wheel";
-            this.toolTip.SetToolTip(this.groupBox2, "Mouse wheel increments");
-            // 
-            // textBoxMouseWheelHorizontal
-            // 
-            this.textBoxMouseWheelHorizontal.Location = new System.Drawing.Point(215, 62);
-            this.textBoxMouseWheelHorizontal.Name = "textBoxMouseWheelHorizontal";
-            this.textBoxMouseWheelHorizontal.Size = new System.Drawing.Size(50, 20);
-            this.textBoxMouseWheelHorizontal.TabIndex = 3;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(17, 65);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(149, 13);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Mouse wheel event increment";
-            this.toolTip.SetToolTip(this.label4, "How many event periods a single mouse wheel movement scrolls through");
-            // 
-            // textBoxMouseWheelVertical
-            // 
-            this.textBoxMouseWheelVertical.Location = new System.Drawing.Point(215, 30);
-            this.textBoxMouseWheelVertical.Name = "textBoxMouseWheelVertical";
-            this.textBoxMouseWheelVertical.Size = new System.Drawing.Size(50, 20);
-            this.textBoxMouseWheelVertical.TabIndex = 1;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(17, 33);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(160, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Mouse wheel channel increment";
-            this.toolTip.SetToolTip(this.label3, "How many channels a single mouse wheel movement scrolls through");
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.textBoxTimerCheckFrequency);
-            this.groupBox1.Location = new System.Drawing.Point(19, 6);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(424, 69);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Timers";
-            this.toolTip.SetToolTip(this.groupBox1, "How often the timer schedule is checked (in seconds)");
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(271, 30);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "seconds";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(17, 30);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(116, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Timer check frequency";
-            // 
-            // textBoxTimerCheckFrequency
-            // 
-            this.textBoxTimerCheckFrequency.Location = new System.Drawing.Point(215, 27);
-            this.textBoxTimerCheckFrequency.Name = "textBoxTimerCheckFrequency";
-            this.textBoxTimerCheckFrequency.Size = new System.Drawing.Size(50, 20);
-            this.textBoxTimerCheckFrequency.TabIndex = 1;
-            // 
-            // comboBoxDefaultAudioDevice
-            // 
-            this.comboBoxDefaultAudioDevice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxDefaultAudioDevice.FormattingEnabled = true;
-            this.comboBoxDefaultAudioDevice.Location = new System.Drawing.Point(215, 78);
-            this.comboBoxDefaultAudioDevice.Name = "comboBoxDefaultAudioDevice";
-            this.comboBoxDefaultAudioDevice.Size = new System.Drawing.Size(192, 21);
-            this.comboBoxDefaultAudioDevice.TabIndex = 19;
-            this.toolTip.SetToolTip(this.comboBoxDefaultAudioDevice, "Audio device that will be selected for a new sequence");
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(17, 81);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(155, 13);
-            this.label27.TabIndex = 18;
-            this.label27.Text = "Default sequence audio device";
-            this.toolTip.SetToolTip(this.label27, "Audio device that will be selected for a new sequence");
-            // 
-            // buttonPluginSetup
-            // 
-            this.buttonPluginSetup.Location = new System.Drawing.Point(215, 130);
-            this.buttonPluginSetup.Name = "buttonPluginSetup";
-            this.buttonPluginSetup.Size = new System.Drawing.Size(75, 23);
-            this.buttonPluginSetup.TabIndex = 13;
-            this.buttonPluginSetup.Text = "Plugin Setup";
-            this.toolTip.SetToolTip(this.buttonPluginSetup, "Plugin data for new sequences or for circumstances with no sequence available");
-            this.buttonPluginSetup.UseVisualStyleBackColor = true;
-            this.buttonPluginSetup.Visible = false;
-            // 
-            // textBoxDefaultChannelCount
-            // 
-            this.textBoxDefaultChannelCount.Location = new System.Drawing.Point(215, 104);
-            this.textBoxDefaultChannelCount.Name = "textBoxDefaultChannelCount";
-            this.textBoxDefaultChannelCount.Size = new System.Drawing.Size(50, 20);
-            this.textBoxDefaultChannelCount.TabIndex = 11;
-            this.toolTip.SetToolTip(this.textBoxDefaultChannelCount, "The number of channels for new sequences or the number of channels to assume for " +
-                    "circumstances with no sequence available");
-            this.textBoxDefaultChannelCount.Visible = false;
-            // 
-            // comboBoxDefaultProfile
-            // 
-            this.comboBoxDefaultProfile.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxDefaultProfile.DropDownWidth = 150;
-            this.comboBoxDefaultProfile.FormattingEnabled = true;
-            this.comboBoxDefaultProfile.Location = new System.Drawing.Point(215, 22);
-            this.comboBoxDefaultProfile.Name = "comboBoxDefaultProfile";
-            this.comboBoxDefaultProfile.Size = new System.Drawing.Size(192, 21);
-            this.comboBoxDefaultProfile.TabIndex = 16;
-            this.toolTip.SetToolTip(this.comboBoxDefaultProfile, "Profile that will be used for new sequences and");
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(17, 25);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(72, 13);
-            this.label22.TabIndex = 15;
-            this.label22.Text = "Default profile";
-            this.toolTip.SetToolTip(this.label22, "Profile that will be used for new sequences and\r\nfor external clients.");
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(17, 135);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(101, 13);
-            this.label19.TabIndex = 12;
-            this.label19.Text = "Default plugin setup";
-            this.toolTip.SetToolTip(this.label19, "Plugin data for new sequences or for circumstances with no sequence available");
-            this.label19.Visible = false;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(17, 107);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(112, 13);
-            this.label18.TabIndex = 10;
-            this.label18.Text = "Default channel count";
-            this.toolTip.SetToolTip(this.label18, "The number of channels for new sequences or for circumstances with no sequence av" +
-                    "ailable");
-            this.label18.Visible = false;
-            // 
-            // buttonCreateProfile
-            // 
-            this.buttonCreateProfile.Location = new System.Drawing.Point(215, 49);
-            this.buttonCreateProfile.Name = "buttonCreateProfile";
-            this.buttonCreateProfile.Size = new System.Drawing.Size(75, 23);
-            this.buttonCreateProfile.TabIndex = 17;
-            this.buttonCreateProfile.Text = "Create new";
-            this.toolTip.SetToolTip(this.buttonCreateProfile, "Create new profiles now");
-            this.buttonCreateProfile.UseVisualStyleBackColor = true;
-            // 
-            // numericUpDownMaximumLevel
-            // 
-            this.numericUpDownMaximumLevel.Location = new System.Drawing.Point(215, 74);
-            this.numericUpDownMaximumLevel.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.numericUpDownMaximumLevel.Name = "numericUpDownMaximumLevel";
-            this.numericUpDownMaximumLevel.Size = new System.Drawing.Size(50, 20);
-            this.numericUpDownMaximumLevel.TabIndex = 7;
-            this.toolTip.SetToolTip(this.numericUpDownMaximumLevel, "Maximum illumination level allowed by a sequence");
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(17, 76);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(166, 13);
-            this.label17.TabIndex = 6;
-            this.label17.Text = "Maximum illumination level (0-255)";
-            this.toolTip.SetToolTip(this.label17, "Maximum illumination level allowed by a sequence");
-            // 
-            // numericUpDownMinimumLevel
-            // 
-            this.numericUpDownMinimumLevel.Location = new System.Drawing.Point(215, 48);
-            this.numericUpDownMinimumLevel.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.numericUpDownMinimumLevel.Name = "numericUpDownMinimumLevel";
-            this.numericUpDownMinimumLevel.Size = new System.Drawing.Size(50, 20);
-            this.numericUpDownMinimumLevel.TabIndex = 4;
-            this.toolTip.SetToolTip(this.numericUpDownMinimumLevel, "Minimum illumination level allowed by a sequence");
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(17, 50);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(163, 13);
-            this.label14.TabIndex = 3;
-            this.label14.Text = "Minimum illumination level (0-255)";
-            this.toolTip.SetToolTip(this.label14, "Minimum illumination level allowed by a sequence");
-            // 
-            // textBoxEventPeriod
-            // 
-            this.textBoxEventPeriod.Location = new System.Drawing.Point(215, 22);
-            this.textBoxEventPeriod.Name = "textBoxEventPeriod";
-            this.textBoxEventPeriod.Size = new System.Drawing.Size(50, 20);
-            this.textBoxEventPeriod.TabIndex = 1;
-            this.toolTip.SetToolTip(this.textBoxEventPeriod, "The length of a single event period (in milliseconds)");
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(17, 25);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(99, 13);
-            this.label12.TabIndex = 0;
-            this.label12.Text = "Event period length";
-            this.toolTip.SetToolTip(this.label12, "The length of a single event period (in milliseconds)");
-            // 
-            // checkBoxWizardForNewSequences
-            // 
-            this.checkBoxWizardForNewSequences.AutoSize = true;
-            this.checkBoxWizardForNewSequences.Location = new System.Drawing.Point(19, 260);
-            this.checkBoxWizardForNewSequences.Name = "checkBoxWizardForNewSequences";
-            this.checkBoxWizardForNewSequences.Size = new System.Drawing.Size(316, 17);
-            this.checkBoxWizardForNewSequences.TabIndex = 2;
-            this.checkBoxWizardForNewSequences.Text = "Use the sequence wizard for new sequences, when available";
-            this.toolTip.SetToolTip(this.checkBoxWizardForNewSequences, "Use the sequence wizard for new sequences, when the editor allows for a wizard to" +
-                    " be used");
-            this.checkBoxWizardForNewSequences.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxShowNaturalChannelNumber
-            // 
-            this.checkBoxShowNaturalChannelNumber.AutoSize = true;
-            this.checkBoxShowNaturalChannelNumber.Location = new System.Drawing.Point(20, 181);
-            this.checkBoxShowNaturalChannelNumber.Name = "checkBoxShowNaturalChannelNumber";
-            this.checkBoxShowNaturalChannelNumber.Size = new System.Drawing.Size(167, 17);
-            this.checkBoxShowNaturalChannelNumber.TabIndex = 9;
-            this.checkBoxShowNaturalChannelNumber.Text = "Show natural channel number";
-            this.toolTip.SetToolTip(this.checkBoxShowNaturalChannelNumber, "Show the channel numbers according to the order they were created in");
-            this.checkBoxShowNaturalChannelNumber.UseVisualStyleBackColor = true;
-            // 
-            // textBoxIntensityLargeDelta
-            // 
-            this.textBoxIntensityLargeDelta.Location = new System.Drawing.Point(215, 79);
-            this.textBoxIntensityLargeDelta.Name = "textBoxIntensityLargeDelta";
-            this.textBoxIntensityLargeDelta.Size = new System.Drawing.Size(50, 20);
-            this.textBoxIntensityLargeDelta.TabIndex = 5;
-            this.toolTip.SetToolTip(this.textBoxIntensityLargeDelta, "When using Ctrl-Up or Ctrl-Down to adjust the intensity\r\nof a selection.");
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(17, 82);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(190, 13);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Intensity adjust large change (% points)";
-            this.toolTip.SetToolTip(this.label5, "When using Ctrl-Up or Ctrl-Down to adjust the intensity");
-            // 
-            // checkBoxShowSaveConfirmation
-            // 
-            this.checkBoxShowSaveConfirmation.AutoSize = true;
-            this.checkBoxShowSaveConfirmation.Location = new System.Drawing.Point(20, 158);
-            this.checkBoxShowSaveConfirmation.Name = "checkBoxShowSaveConfirmation";
-            this.checkBoxShowSaveConfirmation.Size = new System.Drawing.Size(139, 17);
-            this.checkBoxShowSaveConfirmation.TabIndex = 8;
-            this.checkBoxShowSaveConfirmation.Text = "Show save confirmation";
-            this.toolTip.SetToolTip(this.checkBoxShowSaveConfirmation, "Show a confirmation message after saving a sequence");
-            this.checkBoxShowSaveConfirmation.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxSaveZoomLevels
-            // 
-            this.checkBoxSaveZoomLevels.AutoSize = true;
-            this.checkBoxSaveZoomLevels.Location = new System.Drawing.Point(20, 135);
-            this.checkBoxSaveZoomLevels.Name = "checkBoxSaveZoomLevels";
-            this.checkBoxSaveZoomLevels.Size = new System.Drawing.Size(109, 17);
-            this.checkBoxSaveZoomLevels.TabIndex = 7;
-            this.checkBoxSaveZoomLevels.Text = "Save zoom levels";
-            this.toolTip.SetToolTip(this.checkBoxSaveZoomLevels, "Save the row and height zoom levels");
-            this.checkBoxSaveZoomLevels.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxEventSequenceAutoSize
-            // 
-            this.checkBoxEventSequenceAutoSize.AutoSize = true;
-            this.checkBoxEventSequenceAutoSize.Location = new System.Drawing.Point(20, 112);
-            this.checkBoxEventSequenceAutoSize.Name = "checkBoxEventSequenceAutoSize";
-            this.checkBoxEventSequenceAutoSize.Size = new System.Drawing.Size(154, 17);
-            this.checkBoxEventSequenceAutoSize.TabIndex = 6;
-            this.checkBoxEventSequenceAutoSize.Text = "Auto size event sequences";
-            this.toolTip.SetToolTip(this.checkBoxEventSequenceAutoSize, "Automatically resize an event sequence to the length of the selected audio");
-            this.checkBoxEventSequenceAutoSize.UseVisualStyleBackColor = true;
-            // 
-            // textBoxMaxRowHeight
-            // 
-            this.textBoxMaxRowHeight.Location = new System.Drawing.Point(215, 48);
-            this.textBoxMaxRowHeight.Name = "textBoxMaxRowHeight";
-            this.textBoxMaxRowHeight.Size = new System.Drawing.Size(50, 20);
-            this.textBoxMaxRowHeight.TabIndex = 3;
-            this.toolTip.SetToolTip(this.textBoxMaxRowHeight, "The height of a channel in the editing grid at 100%");
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(17, 51);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(79, 13);
-            this.label7.TabIndex = 2;
-            this.label7.Text = "Max row height";
-            this.toolTip.SetToolTip(this.label7, "The height of a channel in the editing grid at 100%");
-            // 
-            // textBoxMaxColumnWidth
-            // 
-            this.textBoxMaxColumnWidth.Location = new System.Drawing.Point(215, 27);
-            this.textBoxMaxColumnWidth.Name = "textBoxMaxColumnWidth";
-            this.textBoxMaxColumnWidth.Size = new System.Drawing.Size(50, 20);
-            this.textBoxMaxColumnWidth.TabIndex = 1;
-            this.toolTip.SetToolTip(this.textBoxMaxColumnWidth, "The width of an event period in the editing grid at 100%");
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(17, 30);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(92, 13);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "Max column width";
-            this.toolTip.SetToolTip(this.label6, "The width of an event period in the editing grid at 100%");
-            // 
-            // checkBoxClearAtEndOfSequence
-            // 
-            this.checkBoxClearAtEndOfSequence.AutoSize = true;
-            this.checkBoxClearAtEndOfSequence.Location = new System.Drawing.Point(26, 96);
-            this.checkBoxClearAtEndOfSequence.Name = "checkBoxClearAtEndOfSequence";
-            this.checkBoxClearAtEndOfSequence.Size = new System.Drawing.Size(200, 17);
-            this.checkBoxClearAtEndOfSequence.TabIndex = 3;
-            this.checkBoxClearAtEndOfSequence.Text = "Reset controller at end of sequences";
-            this.toolTip.SetToolTip(this.checkBoxClearAtEndOfSequence, "Sends a blank event to the plugins at the end of a sequence.\r\nUseful for parallel" +
-                    " port-based controllers.  Does not affect every\r\ncontroller type.");
-            this.checkBoxClearAtEndOfSequence.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxShowPositionMarker
-            // 
-            this.checkBoxShowPositionMarker.AutoSize = true;
-            this.checkBoxShowPositionMarker.Location = new System.Drawing.Point(26, 27);
-            this.checkBoxShowPositionMarker.Name = "checkBoxShowPositionMarker";
-            this.checkBoxShowPositionMarker.Size = new System.Drawing.Size(127, 17);
-            this.checkBoxShowPositionMarker.TabIndex = 0;
-            this.checkBoxShowPositionMarker.Text = "Show position marker";
-            this.toolTip.SetToolTip(this.checkBoxShowPositionMarker, "Show the current point of exeuction with a mark in the time panel");
-            this.checkBoxShowPositionMarker.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxSavePlugInDialogPositions
-            // 
-            this.checkBoxSavePlugInDialogPositions.AutoSize = true;
-            this.checkBoxSavePlugInDialogPositions.Location = new System.Drawing.Point(26, 73);
-            this.checkBoxSavePlugInDialogPositions.Name = "checkBoxSavePlugInDialogPositions";
-            this.checkBoxSavePlugInDialogPositions.Size = new System.Drawing.Size(157, 17);
-            this.checkBoxSavePlugInDialogPositions.TabIndex = 2;
-            this.checkBoxSavePlugInDialogPositions.Text = "Save plugin dialog positions";
-            this.toolTip.SetToolTip(this.checkBoxSavePlugInDialogPositions, "Save the positions of any windows created and displayed by plugins during executi" +
-                    "on");
-            this.checkBoxSavePlugInDialogPositions.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxAutoScrolling
-            // 
-            this.checkBoxAutoScrolling.AutoSize = true;
-            this.checkBoxAutoScrolling.Location = new System.Drawing.Point(26, 50);
-            this.checkBoxAutoScrolling.Name = "checkBoxAutoScrolling";
-            this.checkBoxAutoScrolling.Size = new System.Drawing.Size(89, 17);
-            this.checkBoxAutoScrolling.TabIndex = 1;
-            this.checkBoxAutoScrolling.Text = "Auto scrolling";
-            this.toolTip.SetToolTip(this.checkBoxAutoScrolling, "Automatically scroll the editing display during execution so that the current poi" +
-                    "nt of execution is always visible");
-            this.checkBoxAutoScrolling.UseVisualStyleBackColor = true;
-            // 
-            // textBoxMusicFadeDuration
-            // 
-            this.textBoxMusicFadeDuration.Location = new System.Drawing.Point(215, 102);
-            this.textBoxMusicFadeDuration.Name = "textBoxMusicFadeDuration";
-            this.textBoxMusicFadeDuration.Size = new System.Drawing.Size(50, 20);
-            this.textBoxMusicFadeDuration.TabIndex = 10;
-            this.toolTip.SetToolTip(this.textBoxMusicFadeDuration, "How long (in seconds) it will take the background music to fade out");
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(14, 105);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(100, 13);
-            this.label21.TabIndex = 9;
-            this.label21.Text = "Music fade duration";
-            this.toolTip.SetToolTip(this.label21, "How long (in seconds) it will take the background music to fade out");
-            // 
-            // checkBoxEnableMusicFade
-            // 
-            this.checkBoxEnableMusicFade.AutoSize = true;
-            this.checkBoxEnableMusicFade.Location = new System.Drawing.Point(17, 80);
-            this.checkBoxEnableMusicFade.Name = "checkBoxEnableMusicFade";
-            this.checkBoxEnableMusicFade.Size = new System.Drawing.Size(113, 17);
-            this.checkBoxEnableMusicFade.TabIndex = 8;
-            this.checkBoxEnableMusicFade.Text = "Enable music fade";
-            this.toolTip.SetToolTip(this.checkBoxEnableMusicFade, "Enable the fading of the background music when it\'s stopped");
-            this.checkBoxEnableMusicFade.UseVisualStyleBackColor = true;
-            // 
-            // textBoxBackgroundMusicDelay
-            // 
-            this.textBoxBackgroundMusicDelay.Location = new System.Drawing.Point(215, 45);
-            this.textBoxBackgroundMusicDelay.Name = "textBoxBackgroundMusicDelay";
-            this.textBoxBackgroundMusicDelay.Size = new System.Drawing.Size(50, 20);
-            this.textBoxBackgroundMusicDelay.TabIndex = 6;
-            this.toolTip.SetToolTip(this.textBoxBackgroundMusicDelay, "How long (in seconds) the background sequence will wait before starting after seq" +
-                    "uence or program execution stops");
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(14, 48);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(123, 13);
-            this.label11.TabIndex = 5;
-            this.label11.Text = "Background music delay";
-            this.toolTip.SetToolTip(this.label11, "How long (in seconds) the background music will wait before starting after sequen" +
-                    "ce or program execution stops");
-            // 
-            // checkBoxEnableBackgroundMusic
-            // 
-            this.checkBoxEnableBackgroundMusic.AutoSize = true;
-            this.checkBoxEnableBackgroundMusic.Location = new System.Drawing.Point(17, 23);
-            this.checkBoxEnableBackgroundMusic.Name = "checkBoxEnableBackgroundMusic";
-            this.checkBoxEnableBackgroundMusic.Size = new System.Drawing.Size(149, 17);
-            this.checkBoxEnableBackgroundMusic.TabIndex = 4;
-            this.checkBoxEnableBackgroundMusic.Text = "Enable background music";
-            this.toolTip.SetToolTip(this.checkBoxEnableBackgroundMusic, "Enable the playing of background music while no sequences or programs are playing" +
-                    "");
-            this.checkBoxEnableBackgroundMusic.UseVisualStyleBackColor = true;
-            // 
-            // textBoxBackgroundSequenceDelay
-            // 
-            this.textBoxBackgroundSequenceDelay.Location = new System.Drawing.Point(215, 67);
-            this.textBoxBackgroundSequenceDelay.Name = "textBoxBackgroundSequenceDelay";
-            this.textBoxBackgroundSequenceDelay.Size = new System.Drawing.Size(50, 20);
-            this.textBoxBackgroundSequenceDelay.TabIndex = 2;
-            this.toolTip.SetToolTip(this.textBoxBackgroundSequenceDelay, "How long (in seconds) the background sequence will wait before starting after seq" +
-                    "uence or program execution stops");
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(14, 70);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(143, 13);
-            this.label8.TabIndex = 1;
-            this.label8.Text = "Background sequence delay";
-            this.toolTip.SetToolTip(this.label8, "How long (in seconds) the background sequence will wait before starting after seq" +
-                    "uence or program execution stops");
-            // 
-            // checkBoxEnableBackgroundSequence
-            // 
-            this.checkBoxEnableBackgroundSequence.AutoSize = true;
-            this.checkBoxEnableBackgroundSequence.Location = new System.Drawing.Point(17, 30);
-            this.checkBoxEnableBackgroundSequence.Name = "checkBoxEnableBackgroundSequence";
-            this.checkBoxEnableBackgroundSequence.Size = new System.Drawing.Size(169, 17);
-            this.checkBoxEnableBackgroundSequence.TabIndex = 0;
-            this.checkBoxEnableBackgroundSequence.Text = "Enable background sequence";
-            this.toolTip.SetToolTip(this.checkBoxEnableBackgroundSequence, "Enable the playing of a scripted background sequence while no sequences or progra" +
-                    "ms are playing");
-            this.checkBoxEnableBackgroundSequence.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonAsyncSyncObject
-            // 
-            this.radioButtonAsyncSyncObject.AutoSize = true;
-            this.radioButtonAsyncSyncObject.Location = new System.Drawing.Point(100, 96);
-            this.radioButtonAsyncSyncObject.Name = "radioButtonAsyncSyncObject";
-            this.radioButtonAsyncSyncObject.Size = new System.Drawing.Size(242, 17);
-            this.radioButtonAsyncSyncObject.TabIndex = 1;
-            this.radioButtonAsyncSyncObject.TabStop = true;
-            this.radioButtonAsyncSyncObject.Text = "Use the sequence loaded for execution, if any";
-            this.toolTip.SetToolTip(this.radioButtonAsyncSyncObject, "The sequence will use channel masking and plugin setup data from\r\nthe default pro" +
-                    "file.");
-            this.radioButtonAsyncSyncObject.UseVisualStyleBackColor = true;
-            this.radioButtonAsyncSyncObject.CheckedChanged += new System.EventHandler(this.radioButtonAsyncProfileData_CheckedChanged);
-            // 
-            // radioButtonAsyncDefaultProfileData
-            // 
-            this.radioButtonAsyncDefaultProfileData.AutoSize = true;
-            this.radioButtonAsyncDefaultProfileData.Location = new System.Drawing.Point(100, 142);
-            this.radioButtonAsyncDefaultProfileData.Name = "radioButtonAsyncDefaultProfileData";
-            this.radioButtonAsyncDefaultProfileData.Size = new System.Drawing.Size(128, 17);
-            this.radioButtonAsyncDefaultProfileData.TabIndex = 4;
-            this.radioButtonAsyncDefaultProfileData.TabStop = true;
-            this.radioButtonAsyncDefaultProfileData.Text = "Use the default profile";
-            this.toolTip.SetToolTip(this.radioButtonAsyncDefaultProfileData, "The sequence will use channel masking and plugin setup data from\r\nthe default pro" +
-                    "file.");
-            this.radioButtonAsyncDefaultProfileData.UseVisualStyleBackColor = true;
-            this.radioButtonAsyncDefaultProfileData.CheckedChanged += new System.EventHandler(this.radioButtonAsyncProfileData_CheckedChanged);
-            // 
-            // radioButtonAsyncProfileData
-            // 
-            this.radioButtonAsyncProfileData.AutoSize = true;
-            this.radioButtonAsyncProfileData.Location = new System.Drawing.Point(100, 119);
-            this.radioButtonAsyncProfileData.Name = "radioButtonAsyncProfileData";
-            this.radioButtonAsyncProfileData.Size = new System.Drawing.Size(123, 17);
-            this.radioButtonAsyncProfileData.TabIndex = 2;
-            this.radioButtonAsyncProfileData.TabStop = true;
-            this.radioButtonAsyncProfileData.Text = "Use a specific profile";
-            this.toolTip.SetToolTip(this.radioButtonAsyncProfileData, "The sequence will use channel masking and plugin setup data from\r\na specified pro" +
-                    "file.");
-            this.radioButtonAsyncProfileData.UseVisualStyleBackColor = true;
-            this.radioButtonAsyncProfileData.CheckedChanged += new System.EventHandler(this.radioButtonAsyncProfileData_CheckedChanged);
-            // 
-            // radioButtonSyncDefaultProfileData
-            // 
-            this.radioButtonSyncDefaultProfileData.AutoSize = true;
-            this.radioButtonSyncDefaultProfileData.Location = new System.Drawing.Point(100, 130);
-            this.radioButtonSyncDefaultProfileData.Name = "radioButtonSyncDefaultProfileData";
-            this.radioButtonSyncDefaultProfileData.Size = new System.Drawing.Size(128, 17);
-            this.radioButtonSyncDefaultProfileData.TabIndex = 3;
-            this.radioButtonSyncDefaultProfileData.TabStop = true;
-            this.radioButtonSyncDefaultProfileData.Text = "Use the default profile";
-            this.toolTip.SetToolTip(this.radioButtonSyncDefaultProfileData, "The sequence will use channel masking and plugin setup data from\r\nthe default pro" +
-                    "file.");
-            this.radioButtonSyncDefaultProfileData.UseVisualStyleBackColor = true;
-            this.radioButtonSyncDefaultProfileData.CheckedChanged += new System.EventHandler(this.radioButtonSyncProfileData_CheckedChanged);
-            // 
-            // radioButtonSyncProfileData
-            // 
-            this.radioButtonSyncProfileData.AutoSize = true;
-            this.radioButtonSyncProfileData.Location = new System.Drawing.Point(100, 107);
-            this.radioButtonSyncProfileData.Name = "radioButtonSyncProfileData";
-            this.radioButtonSyncProfileData.Size = new System.Drawing.Size(123, 17);
-            this.radioButtonSyncProfileData.TabIndex = 2;
-            this.radioButtonSyncProfileData.TabStop = true;
-            this.radioButtonSyncProfileData.Text = "Use a specific profile";
-            this.toolTip.SetToolTip(this.radioButtonSyncProfileData, "The sequence will use channel masking and plugin setup data from\r\na specified pro" +
-                    "file.");
-            this.radioButtonSyncProfileData.UseVisualStyleBackColor = true;
-            this.radioButtonSyncProfileData.CheckedChanged += new System.EventHandler(this.radioButtonSyncProfileData_CheckedChanged);
-            // 
-            // radioButtonSyncEmbeddedData
-            // 
-            this.radioButtonSyncEmbeddedData.AutoSize = true;
-            this.radioButtonSyncEmbeddedData.Location = new System.Drawing.Point(100, 84);
-            this.radioButtonSyncEmbeddedData.Name = "radioButtonSyncEmbeddedData";
-            this.radioButtonSyncEmbeddedData.Size = new System.Drawing.Size(114, 17);
-            this.radioButtonSyncEmbeddedData.TabIndex = 1;
-            this.radioButtonSyncEmbeddedData.TabStop = true;
-            this.radioButtonSyncEmbeddedData.Text = "Use their own data";
-            this.toolTip.SetToolTip(this.radioButtonSyncEmbeddedData, "The sequence will determine its own channel masking and use\r\nits own plugin setup" +
-                    ".");
-            this.radioButtonSyncEmbeddedData.UseVisualStyleBackColor = true;
-            this.radioButtonSyncEmbeddedData.CheckedChanged += new System.EventHandler(this.radioButtonSyncProfileData_CheckedChanged);
-            // 
-            // checkBoxLogManual
-            // 
-            this.checkBoxLogManual.AutoSize = true;
-            this.checkBoxLogManual.Location = new System.Drawing.Point(26, 30);
-            this.checkBoxLogManual.Name = "checkBoxLogManual";
-            this.checkBoxLogManual.Size = new System.Drawing.Size(185, 17);
-            this.checkBoxLogManual.TabIndex = 0;
-            this.checkBoxLogManual.Text = "Log manual sequence executions";
-            this.toolTip.SetToolTip(this.checkBoxLogManual, "Sequence executions that you start manually in an editor");
-            this.checkBoxLogManual.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxLogScheduled
-            // 
-            this.checkBoxLogScheduled.AutoSize = true;
-            this.checkBoxLogScheduled.Location = new System.Drawing.Point(26, 53);
-            this.checkBoxLogScheduled.Name = "checkBoxLogScheduled";
-            this.checkBoxLogScheduled.Size = new System.Drawing.Size(200, 17);
-            this.checkBoxLogScheduled.TabIndex = 1;
-            this.checkBoxLogScheduled.Text = "Log scheduled sequence executions";
-            this.toolTip.SetToolTip(this.checkBoxLogScheduled, "Sequence executions that are started automatically by the scheduler");
-            this.checkBoxLogScheduled.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxLogMusicPlayer
-            // 
-            this.checkBoxLogMusicPlayer.AutoSize = true;
-            this.checkBoxLogMusicPlayer.Location = new System.Drawing.Point(26, 76);
-            this.checkBoxLogMusicPlayer.Name = "checkBoxLogMusicPlayer";
-            this.checkBoxLogMusicPlayer.Size = new System.Drawing.Size(159, 17);
-            this.checkBoxLogMusicPlayer.TabIndex = 2;
-            this.checkBoxLogMusicPlayer.Text = "Log music player executions";
-            this.toolTip.SetToolTip(this.checkBoxLogMusicPlayer, "Log the audio files that the music player executes");
-            this.checkBoxLogMusicPlayer.UseVisualStyleBackColor = true;
-            // 
-            // buttonLogFilePath
-            // 
-            this.buttonLogFilePath.Location = new System.Drawing.Point(26, 106);
-            this.buttonLogFilePath.Name = "buttonLogFilePath";
-            this.buttonLogFilePath.Size = new System.Drawing.Size(75, 23);
-            this.buttonLogFilePath.TabIndex = 3;
-            this.buttonLogFilePath.Text = "Log path";
-            this.toolTip.SetToolTip(this.buttonLogFilePath, "Path of the log file");
-            this.buttonLogFilePath.UseVisualStyleBackColor = true;
-            this.buttonLogFilePath.Click += new System.EventHandler(this.buttonLogFilePath_Click);
-            // 
-            // textBoxLogFilePath
-            // 
-            this.textBoxLogFilePath.Location = new System.Drawing.Point(107, 108);
-            this.textBoxLogFilePath.Name = "textBoxLogFilePath";
-            this.textBoxLogFilePath.Size = new System.Drawing.Size(311, 20);
-            this.textBoxLogFilePath.TabIndex = 4;
-            this.toolTip.SetToolTip(this.textBoxLogFilePath, "Path of the log file");
-            // 
-            // checkBoxFlipMouseScroll
-            // 
-            this.checkBoxFlipMouseScroll.AutoSize = true;
-            this.checkBoxFlipMouseScroll.Location = new System.Drawing.Point(20, 204);
-            this.checkBoxFlipMouseScroll.Name = "checkBoxFlipMouseScroll";
-            this.checkBoxFlipMouseScroll.Size = new System.Drawing.Size(180, 17);
-            this.checkBoxFlipMouseScroll.TabIndex = 10;
-            this.checkBoxFlipMouseScroll.Text = "Flip mouse scroll + Shift behavior";
-            this.toolTip.SetToolTip(this.checkBoxFlipMouseScroll, "The default behavior scrolls horizontally when Shift is down.\r\nSelect this to mak" +
-                    "e it scroll vertically when Shift is down.");
-            this.checkBoxFlipMouseScroll.UseVisualStyleBackColor = true;
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(20, 24);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(61, 13);
-            this.label29.TabIndex = 0;
-            this.label29.Text = "HTTP URL";
-            this.toolTip.SetToolTip(this.label29, "HTTP location of the remote curve library");
-            // 
-            // textBoxCurveLibraryHttpUrl
-            // 
-            this.textBoxCurveLibraryHttpUrl.Location = new System.Drawing.Point(105, 21);
-            this.textBoxCurveLibraryHttpUrl.Name = "textBoxCurveLibraryHttpUrl";
-            this.textBoxCurveLibraryHttpUrl.Size = new System.Drawing.Size(310, 20);
-            this.textBoxCurveLibraryHttpUrl.TabIndex = 1;
-            this.toolTip.SetToolTip(this.textBoxCurveLibraryHttpUrl, "HTTP location of the remote curve library");
-            // 
-            // textBoxCurveLibraryFtpUrl
-            // 
-            this.textBoxCurveLibraryFtpUrl.Location = new System.Drawing.Point(105, 47);
-            this.textBoxCurveLibraryFtpUrl.Name = "textBoxCurveLibraryFtpUrl";
-            this.textBoxCurveLibraryFtpUrl.Size = new System.Drawing.Size(310, 20);
-            this.textBoxCurveLibraryFtpUrl.TabIndex = 3;
-            this.toolTip.SetToolTip(this.textBoxCurveLibraryFtpUrl, "FTP location of the remote curve library.  May possibly be the same as the HTTP l" +
-                    "ocation.");
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(20, 50);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(52, 13);
-            this.label30.TabIndex = 2;
-            this.label30.Text = "FTP URL";
-            this.toolTip.SetToolTip(this.label30, "FTP location of the remote curve library.  May possibly be the same as the HTTP l" +
-                    "ocation.");
-            // 
-            // textBoxCurveLibraryFileName
-            // 
-            this.textBoxCurveLibraryFileName.Location = new System.Drawing.Point(105, 73);
-            this.textBoxCurveLibraryFileName.Name = "textBoxCurveLibraryFileName";
-            this.textBoxCurveLibraryFileName.Size = new System.Drawing.Size(142, 20);
-            this.textBoxCurveLibraryFileName.TabIndex = 5;
-            this.toolTip.SetToolTip(this.textBoxCurveLibraryFileName, "Name of the remote curve library file.");
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(20, 76);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(52, 13);
-            this.label31.TabIndex = 4;
-            this.label31.Text = "File name";
-            this.toolTip.SetToolTip(this.label31, "Name of the remote curve library file.");
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(20, 102);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(79, 13);
-            this.label32.TabIndex = 6;
-            this.label32.Text = "FTP user name";
-            this.toolTip.SetToolTip(this.label32, "FTP user name for the FTP server on which the remote curve library is located.  M" +
-                    "ay possibly be blank.");
-            this.label32.Visible = false;
-            // 
-            // textBoxCurveLibraryFtpUserName
-            // 
-            this.textBoxCurveLibraryFtpUserName.Location = new System.Drawing.Point(105, 99);
-            this.textBoxCurveLibraryFtpUserName.Name = "textBoxCurveLibraryFtpUserName";
-            this.textBoxCurveLibraryFtpUserName.Size = new System.Drawing.Size(100, 20);
-            this.textBoxCurveLibraryFtpUserName.TabIndex = 7;
-            this.toolTip.SetToolTip(this.textBoxCurveLibraryFtpUserName, "FTP user name for the FTP server on which the remote curve library is located.  M" +
-                    "ay possibly be blank.");
-            this.textBoxCurveLibraryFtpUserName.Visible = false;
-            // 
-            // label33
-            // 
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(223, 102);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(75, 13);
-            this.label33.TabIndex = 8;
-            this.label33.Text = "FTP password";
-            this.toolTip.SetToolTip(this.label33, "FTP password for the FTP server on which the remote curve library is located.  Ma" +
-                    "y possibly be blank.");
-            this.label33.Visible = false;
-            // 
-            // textBoxCurveLibraryFtpPassword
-            // 
-            this.textBoxCurveLibraryFtpPassword.Location = new System.Drawing.Point(304, 99);
-            this.textBoxCurveLibraryFtpPassword.Name = "textBoxCurveLibraryFtpPassword";
-            this.textBoxCurveLibraryFtpPassword.Size = new System.Drawing.Size(111, 20);
-            this.textBoxCurveLibraryFtpPassword.TabIndex = 9;
-            this.toolTip.SetToolTip(this.textBoxCurveLibraryFtpPassword, "FTP password for the FTP server on which the remote curve library is located.  Ma" +
-                    "y possibly be blank.");
-            this.textBoxCurveLibraryFtpPassword.Visible = false;
-            // 
-            // textBoxDefaultSequenceSaveDirectory
-            // 
-            this.textBoxDefaultSequenceSaveDirectory.Location = new System.Drawing.Point(20, 253);
-            this.textBoxDefaultSequenceSaveDirectory.Name = "textBoxDefaultSequenceSaveDirectory";
-            this.textBoxDefaultSequenceSaveDirectory.Size = new System.Drawing.Size(395, 20);
-            this.textBoxDefaultSequenceSaveDirectory.TabIndex = 12;
-            this.toolTip.SetToolTip(this.textBoxDefaultSequenceSaveDirectory, "Application default is My Documents\\Vixen\\Sequences");
-            // 
             // buttonOK
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -1230,6 +373,16 @@ namespace VixenPlus {
             // openFileDialog
             // 
             this.openFileDialog.SupportMultiDottedExtensions = true;
+            // 
+            // btnSetDataFolder
+            // 
+            this.btnSetDataFolder.Location = new System.Drawing.Point(12, 445);
+            this.btnSetDataFolder.Name = "btnSetDataFolder";
+            this.btnSetDataFolder.Size = new System.Drawing.Size(161, 23);
+            this.btnSetDataFolder.TabIndex = 5;
+            this.btnSetDataFolder.Text = "Set Data Folder";
+            this.btnSetDataFolder.UseVisualStyleBackColor = true;
+            this.btnSetDataFolder.Click += new System.EventHandler(this.btnSetDataFolder_Click);
             // 
             // tabControl
             // 
@@ -1270,6 +423,10 @@ namespace VixenPlus {
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.cbToolbarAutoSave);
+            this.groupBox3.Controls.Add(this.label36);
+            this.groupBox3.Controls.Add(this.nudRecentFiles);
+            this.groupBox3.Controls.Add(this.label35);
             this.groupBox3.Controls.Add(this.numericUpDownHistoryImages);
             this.groupBox3.Controls.Add(this.label28);
             this.groupBox3.Controls.Add(this.checkBoxDisableAutoUpdate);
@@ -1282,28 +439,278 @@ namespace VixenPlus {
             this.groupBox3.Controls.Add(this.label16);
             this.groupBox3.Controls.Add(this.textBoxClientName);
             this.groupBox3.Controls.Add(this.label15);
-            this.groupBox3.Location = new System.Drawing.Point(19, 188);
+            this.groupBox3.Location = new System.Drawing.Point(3, 108);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(424, 222);
+            this.groupBox3.Size = new System.Drawing.Size(440, 242);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Miscellaneous";
             // 
+            // cbToolbarAutoSave
+            // 
+            this.cbToolbarAutoSave.AutoSize = true;
+            this.cbToolbarAutoSave.Location = new System.Drawing.Point(179, 170);
+            this.cbToolbarAutoSave.Name = "cbToolbarAutoSave";
+            this.cbToolbarAutoSave.Size = new System.Drawing.Size(15, 14);
+            this.cbToolbarAutoSave.TabIndex = 79;
+            this.toolTip.SetToolTip(this.cbToolbarAutoSave, "Sends a blank event to the plugins in the default plugin setup.\r\nUseful for paral" +
+                    "lel port-based controllers.  Does not affect every\r\ncontroller type.");
+            this.cbToolbarAutoSave.UseVisualStyleBackColor = true;
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(17, 170);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(95, 13);
+            this.label36.TabIndex = 78;
+            this.label36.Text = "Auto save toolbars";
+            this.toolTip.SetToolTip(this.label36, "Sends a blank event to the plugins in the default plugin setup.\r\nUseful for paral" +
+                    "lel port-based controllers.  Does not affect every\r\ncontroller type.");
+            // 
+            // nudRecentFiles
+            // 
+            this.nudRecentFiles.Location = new System.Drawing.Point(179, 144);
+            this.nudRecentFiles.Maximum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            this.nudRecentFiles.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.nudRecentFiles.Name = "nudRecentFiles";
+            this.nudRecentFiles.Size = new System.Drawing.Size(117, 20);
+            this.nudRecentFiles.TabIndex = 77;
+            this.nudRecentFiles.Value = new decimal(new int[] {
+            7,
+            0,
+            0,
+            0});
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(17, 146);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(91, 13);
+            this.label35.TabIndex = 76;
+            this.label35.Text = "Recent file history";
+            // 
             // numericUpDownHistoryImages
             // 
-            this.numericUpDownHistoryImages.Location = new System.Drawing.Point(215, 140);
+            this.numericUpDownHistoryImages.Location = new System.Drawing.Point(179, 118);
             this.numericUpDownHistoryImages.Name = "numericUpDownHistoryImages";
-            this.numericUpDownHistoryImages.Size = new System.Drawing.Size(50, 20);
+            this.numericUpDownHistoryImages.Size = new System.Drawing.Size(117, 20);
             this.numericUpDownHistoryImages.TabIndex = 75;
             // 
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(17, 142);
+            this.label28.Location = new System.Drawing.Point(17, 120);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(113, 13);
             this.label28.TabIndex = 74;
             this.label28.Text = "Backup history images";
+            // 
+            // checkBoxDisableAutoUpdate
+            // 
+            this.checkBoxDisableAutoUpdate.AutoSize = true;
+            this.checkBoxDisableAutoUpdate.Location = new System.Drawing.Point(179, 98);
+            this.checkBoxDisableAutoUpdate.Name = "checkBoxDisableAutoUpdate";
+            this.checkBoxDisableAutoUpdate.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxDisableAutoUpdate.TabIndex = 73;
+            this.toolTip.SetToolTip(this.checkBoxDisableAutoUpdate, "Stops the application from trying to update itself over the internet.");
+            this.checkBoxDisableAutoUpdate.UseVisualStyleBackColor = true;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(17, 99);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(102, 13);
+            this.label26.TabIndex = 72;
+            this.label26.Text = "Disable auto-update";
+            this.toolTip.SetToolTip(this.label26, "Stops the application from trying to update itself over the internet.");
+            // 
+            // dateTimePickerAutoShutdownTime
+            // 
+            this.dateTimePickerAutoShutdownTime.Checked = false;
+            this.dateTimePickerAutoShutdownTime.CustomFormat = "  hh:mm tt";
+            this.dateTimePickerAutoShutdownTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerAutoShutdownTime.Location = new System.Drawing.Point(179, 72);
+            this.dateTimePickerAutoShutdownTime.Name = "dateTimePickerAutoShutdownTime";
+            this.dateTimePickerAutoShutdownTime.ShowCheckBox = true;
+            this.dateTimePickerAutoShutdownTime.ShowUpDown = true;
+            this.dateTimePickerAutoShutdownTime.Size = new System.Drawing.Size(117, 20);
+            this.dateTimePickerAutoShutdownTime.TabIndex = 71;
+            this.toolTip.SetToolTip(this.dateTimePickerAutoShutdownTime, "If the application is running, it can shut down your computer at a time you speci" +
+                    "fy");
+            this.dateTimePickerAutoShutdownTime.Value = new System.DateTime(2007, 4, 20, 12, 0, 0, 0);
+            // 
+            // labelAutoShutdownTime
+            // 
+            this.labelAutoShutdownTime.AutoSize = true;
+            this.labelAutoShutdownTime.Location = new System.Drawing.Point(17, 78);
+            this.labelAutoShutdownTime.Name = "labelAutoShutdownTime";
+            this.labelAutoShutdownTime.Size = new System.Drawing.Size(78, 13);
+            this.labelAutoShutdownTime.TabIndex = 69;
+            this.labelAutoShutdownTime.Text = "Auto shutdown";
+            this.toolTip.SetToolTip(this.labelAutoShutdownTime, "If the application is running, it can shut down your computer at a time you speci" +
+                    "fy");
+            // 
+            // comboBoxSequenceType
+            // 
+            this.comboBoxSequenceType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSequenceType.FormattingEnabled = true;
+            this.comboBoxSequenceType.Location = new System.Drawing.Point(179, 45);
+            this.comboBoxSequenceType.Name = "comboBoxSequenceType";
+            this.comboBoxSequenceType.Size = new System.Drawing.Size(255, 21);
+            this.comboBoxSequenceType.TabIndex = 6;
+            this.toolTip.SetToolTip(this.comboBoxSequenceType, "The sequence type you want to initially display when opening a sequence");
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(17, 48);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(126, 13);
+            this.label23.TabIndex = 5;
+            this.label23.Text = "Preferred sequence  type";
+            this.toolTip.SetToolTip(this.label23, "The sequence type you want to initially display when opening a sequence");
+            // 
+            // checkBoxResetAtStartup
+            // 
+            this.checkBoxResetAtStartup.AutoSize = true;
+            this.checkBoxResetAtStartup.Enabled = false;
+            this.checkBoxResetAtStartup.Location = new System.Drawing.Point(179, 190);
+            this.checkBoxResetAtStartup.Name = "checkBoxResetAtStartup";
+            this.checkBoxResetAtStartup.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxResetAtStartup.TabIndex = 68;
+            this.toolTip.SetToolTip(this.checkBoxResetAtStartup, "Sends a blank event to the plugins in the default plugin setup.\r\nUseful for paral" +
+                    "lel port-based controllers.  Does not affect every\r\ncontroller type.");
+            this.checkBoxResetAtStartup.UseVisualStyleBackColor = true;
+            this.checkBoxResetAtStartup.Visible = false;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Enabled = false;
+            this.label16.Location = new System.Drawing.Point(17, 190);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(134, 39);
+            this.label16.TabIndex = 7;
+            this.label16.Text = "Reset controller at startup\r\n(Requires default profiles in\r\nNew Sequence Settings" +
+                ")";
+            this.toolTip.SetToolTip(this.label16, "Sends a blank event to the plugins in the default plugin setup.\r\nUseful for paral" +
+                    "lel port-based controllers.  Does not affect every\r\ncontroller type.");
+            this.label16.Visible = false;
+            // 
+            // textBoxClientName
+            // 
+            this.textBoxClientName.Location = new System.Drawing.Point(179, 19);
+            this.textBoxClientName.Name = "textBoxClientName";
+            this.textBoxClientName.Size = new System.Drawing.Size(255, 20);
+            this.textBoxClientName.TabIndex = 4;
+            this.toolTip.SetToolTip(this.textBoxClientName, "Name used to identify this installation to remote clients and servers");
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(17, 22);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(62, 13);
+            this.label15.TabIndex = 3;
+            this.label15.Text = "Client name";
+            this.toolTip.SetToolTip(this.label15, "Name used to identify this installation to remote clients and servers");
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.textBoxMouseWheelHorizontal);
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.textBoxMouseWheelVertical);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Location = new System.Drawing.Point(3, 57);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(440, 45);
+            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Mouse Wheel";
+            this.toolTip.SetToolTip(this.groupBox2, "Mouse wheel increments");
+            // 
+            // textBoxMouseWheelHorizontal
+            // 
+            this.textBoxMouseWheelHorizontal.Location = new System.Drawing.Point(296, 13);
+            this.textBoxMouseWheelHorizontal.Name = "textBoxMouseWheelHorizontal";
+            this.textBoxMouseWheelHorizontal.Size = new System.Drawing.Size(50, 20);
+            this.textBoxMouseWheelHorizontal.TabIndex = 3;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(212, 16);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(84, 13);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Event increment";
+            this.toolTip.SetToolTip(this.label4, "How many event periods a single mouse wheel movement scrolls through");
+            // 
+            // textBoxMouseWheelVertical
+            // 
+            this.textBoxMouseWheelVertical.Location = new System.Drawing.Point(118, 13);
+            this.textBoxMouseWheelVertical.Name = "textBoxMouseWheelVertical";
+            this.textBoxMouseWheelVertical.Size = new System.Drawing.Size(50, 20);
+            this.textBoxMouseWheelVertical.TabIndex = 1;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(17, 16);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(95, 13);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Channel increment";
+            this.toolTip.SetToolTip(this.label3, "How many channels a single mouse wheel movement scrolls through");
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.textBoxTimerCheckFrequency);
+            this.groupBox1.Location = new System.Drawing.Point(3, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(440, 45);
+            this.groupBox1.TabIndex = 2;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Timers";
+            this.toolTip.SetToolTip(this.groupBox1, "How often the timer schedule is checked (in seconds)");
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(195, 16);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(47, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "seconds";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(17, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(116, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Timer check frequency";
+            // 
+            // textBoxTimerCheckFrequency
+            // 
+            this.textBoxTimerCheckFrequency.Location = new System.Drawing.Point(139, 13);
+            this.textBoxTimerCheckFrequency.Name = "textBoxTimerCheckFrequency";
+            this.textBoxTimerCheckFrequency.Size = new System.Drawing.Size(50, 20);
+            this.textBoxTimerCheckFrequency.TabIndex = 1;
             // 
             // screenTab
             // 
@@ -1430,6 +837,26 @@ namespace VixenPlus {
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Defaults";
             // 
+            // comboBoxDefaultAudioDevice
+            // 
+            this.comboBoxDefaultAudioDevice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxDefaultAudioDevice.FormattingEnabled = true;
+            this.comboBoxDefaultAudioDevice.Location = new System.Drawing.Point(215, 78);
+            this.comboBoxDefaultAudioDevice.Name = "comboBoxDefaultAudioDevice";
+            this.comboBoxDefaultAudioDevice.Size = new System.Drawing.Size(192, 21);
+            this.comboBoxDefaultAudioDevice.TabIndex = 19;
+            this.toolTip.SetToolTip(this.comboBoxDefaultAudioDevice, "Audio device that will be selected for a new sequence");
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(17, 81);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(155, 13);
+            this.label27.TabIndex = 18;
+            this.label27.Text = "Default sequence audio device";
+            this.toolTip.SetToolTip(this.label27, "Audio device that will be selected for a new sequence");
+            // 
             // checkBoxUseDefaultPlugInData
             // 
             this.checkBoxUseDefaultPlugInData.AutoSize = true;
@@ -1441,6 +868,81 @@ namespace VixenPlus {
             this.checkBoxUseDefaultPlugInData.Text = "Copy this to new sequences";
             this.checkBoxUseDefaultPlugInData.UseVisualStyleBackColor = true;
             this.checkBoxUseDefaultPlugInData.Visible = false;
+            // 
+            // buttonPluginSetup
+            // 
+            this.buttonPluginSetup.Location = new System.Drawing.Point(215, 130);
+            this.buttonPluginSetup.Name = "buttonPluginSetup";
+            this.buttonPluginSetup.Size = new System.Drawing.Size(75, 23);
+            this.buttonPluginSetup.TabIndex = 13;
+            this.buttonPluginSetup.Text = "Plugin Setup";
+            this.toolTip.SetToolTip(this.buttonPluginSetup, "Plugin data for new sequences or for circumstances with no sequence available");
+            this.buttonPluginSetup.UseVisualStyleBackColor = true;
+            this.buttonPluginSetup.Visible = false;
+            // 
+            // textBoxDefaultChannelCount
+            // 
+            this.textBoxDefaultChannelCount.Location = new System.Drawing.Point(215, 104);
+            this.textBoxDefaultChannelCount.Name = "textBoxDefaultChannelCount";
+            this.textBoxDefaultChannelCount.Size = new System.Drawing.Size(50, 20);
+            this.textBoxDefaultChannelCount.TabIndex = 11;
+            this.toolTip.SetToolTip(this.textBoxDefaultChannelCount, "The number of channels for new sequences or the number of channels to assume for " +
+                    "circumstances with no sequence available");
+            this.textBoxDefaultChannelCount.Visible = false;
+            // 
+            // comboBoxDefaultProfile
+            // 
+            this.comboBoxDefaultProfile.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxDefaultProfile.DropDownWidth = 150;
+            this.comboBoxDefaultProfile.FormattingEnabled = true;
+            this.comboBoxDefaultProfile.Location = new System.Drawing.Point(215, 22);
+            this.comboBoxDefaultProfile.Name = "comboBoxDefaultProfile";
+            this.comboBoxDefaultProfile.Size = new System.Drawing.Size(192, 21);
+            this.comboBoxDefaultProfile.TabIndex = 16;
+            this.toolTip.SetToolTip(this.comboBoxDefaultProfile, "Profile that will be used for new sequences and");
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(17, 25);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(72, 13);
+            this.label22.TabIndex = 15;
+            this.label22.Text = "Default profile";
+            this.toolTip.SetToolTip(this.label22, "Profile that will be used for new sequences and\r\nfor external clients.");
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(17, 135);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(101, 13);
+            this.label19.TabIndex = 12;
+            this.label19.Text = "Default plugin setup";
+            this.toolTip.SetToolTip(this.label19, "Plugin data for new sequences or for circumstances with no sequence available");
+            this.label19.Visible = false;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(17, 107);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(112, 13);
+            this.label18.TabIndex = 10;
+            this.label18.Text = "Default channel count";
+            this.toolTip.SetToolTip(this.label18, "The number of channels for new sequences or for circumstances with no sequence av" +
+                    "ailable");
+            this.label18.Visible = false;
+            // 
+            // buttonCreateProfile
+            // 
+            this.buttonCreateProfile.Location = new System.Drawing.Point(215, 49);
+            this.buttonCreateProfile.Name = "buttonCreateProfile";
+            this.buttonCreateProfile.Size = new System.Drawing.Size(75, 23);
+            this.buttonCreateProfile.TabIndex = 17;
+            this.buttonCreateProfile.Text = "Create new";
+            this.toolTip.SetToolTip(this.buttonCreateProfile, "Create new profiles now");
+            this.buttonCreateProfile.UseVisualStyleBackColor = true;
             // 
             // groupBox8
             // 
@@ -1458,6 +960,52 @@ namespace VixenPlus {
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Editing Grid";
             // 
+            // numericUpDownMaximumLevel
+            // 
+            this.numericUpDownMaximumLevel.Location = new System.Drawing.Point(215, 74);
+            this.numericUpDownMaximumLevel.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.numericUpDownMaximumLevel.Name = "numericUpDownMaximumLevel";
+            this.numericUpDownMaximumLevel.Size = new System.Drawing.Size(50, 20);
+            this.numericUpDownMaximumLevel.TabIndex = 7;
+            this.toolTip.SetToolTip(this.numericUpDownMaximumLevel, "Maximum illumination level allowed by a sequence");
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(17, 76);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(166, 13);
+            this.label17.TabIndex = 6;
+            this.label17.Text = "Maximum illumination level (0-255)";
+            this.toolTip.SetToolTip(this.label17, "Maximum illumination level allowed by a sequence");
+            // 
+            // numericUpDownMinimumLevel
+            // 
+            this.numericUpDownMinimumLevel.Location = new System.Drawing.Point(215, 48);
+            this.numericUpDownMinimumLevel.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.numericUpDownMinimumLevel.Name = "numericUpDownMinimumLevel";
+            this.numericUpDownMinimumLevel.Size = new System.Drawing.Size(50, 20);
+            this.numericUpDownMinimumLevel.TabIndex = 4;
+            this.toolTip.SetToolTip(this.numericUpDownMinimumLevel, "Minimum illumination level allowed by a sequence");
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(17, 50);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(163, 13);
+            this.label14.TabIndex = 3;
+            this.label14.Text = "Minimum illumination level (0-255)";
+            this.toolTip.SetToolTip(this.label14, "Minimum illumination level allowed by a sequence");
+            // 
             // label13
             // 
             this.label13.AutoSize = true;
@@ -1466,6 +1014,36 @@ namespace VixenPlus {
             this.label13.Size = new System.Drawing.Size(63, 13);
             this.label13.TabIndex = 2;
             this.label13.Text = "milliseconds";
+            // 
+            // textBoxEventPeriod
+            // 
+            this.textBoxEventPeriod.Location = new System.Drawing.Point(215, 22);
+            this.textBoxEventPeriod.Name = "textBoxEventPeriod";
+            this.textBoxEventPeriod.Size = new System.Drawing.Size(50, 20);
+            this.textBoxEventPeriod.TabIndex = 1;
+            this.toolTip.SetToolTip(this.textBoxEventPeriod, "The length of a single event period (in milliseconds)");
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(17, 25);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(99, 13);
+            this.label12.TabIndex = 0;
+            this.label12.Text = "Event period length";
+            this.toolTip.SetToolTip(this.label12, "The length of a single event period (in milliseconds)");
+            // 
+            // checkBoxWizardForNewSequences
+            // 
+            this.checkBoxWizardForNewSequences.AutoSize = true;
+            this.checkBoxWizardForNewSequences.Location = new System.Drawing.Point(19, 260);
+            this.checkBoxWizardForNewSequences.Name = "checkBoxWizardForNewSequences";
+            this.checkBoxWizardForNewSequences.Size = new System.Drawing.Size(316, 17);
+            this.checkBoxWizardForNewSequences.TabIndex = 2;
+            this.checkBoxWizardForNewSequences.Text = "Use the sequence wizard for new sequences, when available";
+            this.toolTip.SetToolTip(this.checkBoxWizardForNewSequences, "Use the sequence wizard for new sequences, when the editor allows for a wizard to" +
+                    " be used");
+            this.checkBoxWizardForNewSequences.UseVisualStyleBackColor = true;
             // 
             // sequenceEditingTab
             // 
@@ -1500,6 +1078,106 @@ namespace VixenPlus {
             this.groupBox14.TabStop = false;
             this.groupBox14.Text = "Remote curve library";
             this.groupBox14.Visible = false;
+            // 
+            // textBoxCurveLibraryFtpPassword
+            // 
+            this.textBoxCurveLibraryFtpPassword.Location = new System.Drawing.Point(304, 99);
+            this.textBoxCurveLibraryFtpPassword.Name = "textBoxCurveLibraryFtpPassword";
+            this.textBoxCurveLibraryFtpPassword.Size = new System.Drawing.Size(111, 20);
+            this.textBoxCurveLibraryFtpPassword.TabIndex = 9;
+            this.toolTip.SetToolTip(this.textBoxCurveLibraryFtpPassword, "FTP password for the FTP server on which the remote curve library is located.  Ma" +
+                    "y possibly be blank.");
+            this.textBoxCurveLibraryFtpPassword.Visible = false;
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(223, 102);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(75, 13);
+            this.label33.TabIndex = 8;
+            this.label33.Text = "FTP password";
+            this.toolTip.SetToolTip(this.label33, "FTP password for the FTP server on which the remote curve library is located.  Ma" +
+                    "y possibly be blank.");
+            this.label33.Visible = false;
+            // 
+            // textBoxCurveLibraryFtpUserName
+            // 
+            this.textBoxCurveLibraryFtpUserName.Location = new System.Drawing.Point(105, 99);
+            this.textBoxCurveLibraryFtpUserName.Name = "textBoxCurveLibraryFtpUserName";
+            this.textBoxCurveLibraryFtpUserName.Size = new System.Drawing.Size(100, 20);
+            this.textBoxCurveLibraryFtpUserName.TabIndex = 7;
+            this.toolTip.SetToolTip(this.textBoxCurveLibraryFtpUserName, "FTP user name for the FTP server on which the remote curve library is located.  M" +
+                    "ay possibly be blank.");
+            this.textBoxCurveLibraryFtpUserName.Visible = false;
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(20, 102);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(79, 13);
+            this.label32.TabIndex = 6;
+            this.label32.Text = "FTP user name";
+            this.toolTip.SetToolTip(this.label32, "FTP user name for the FTP server on which the remote curve library is located.  M" +
+                    "ay possibly be blank.");
+            this.label32.Visible = false;
+            // 
+            // textBoxCurveLibraryFileName
+            // 
+            this.textBoxCurveLibraryFileName.Location = new System.Drawing.Point(105, 73);
+            this.textBoxCurveLibraryFileName.Name = "textBoxCurveLibraryFileName";
+            this.textBoxCurveLibraryFileName.Size = new System.Drawing.Size(142, 20);
+            this.textBoxCurveLibraryFileName.TabIndex = 5;
+            this.toolTip.SetToolTip(this.textBoxCurveLibraryFileName, "Name of the remote curve library file.");
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(20, 76);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(52, 13);
+            this.label31.TabIndex = 4;
+            this.label31.Text = "File name";
+            this.toolTip.SetToolTip(this.label31, "Name of the remote curve library file.");
+            // 
+            // textBoxCurveLibraryFtpUrl
+            // 
+            this.textBoxCurveLibraryFtpUrl.Location = new System.Drawing.Point(105, 47);
+            this.textBoxCurveLibraryFtpUrl.Name = "textBoxCurveLibraryFtpUrl";
+            this.textBoxCurveLibraryFtpUrl.Size = new System.Drawing.Size(310, 20);
+            this.textBoxCurveLibraryFtpUrl.TabIndex = 3;
+            this.toolTip.SetToolTip(this.textBoxCurveLibraryFtpUrl, "FTP location of the remote curve library.  May possibly be the same as the HTTP l" +
+                    "ocation.");
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(20, 50);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(52, 13);
+            this.label30.TabIndex = 2;
+            this.label30.Text = "FTP URL";
+            this.toolTip.SetToolTip(this.label30, "FTP location of the remote curve library.  May possibly be the same as the HTTP l" +
+                    "ocation.");
+            // 
+            // textBoxCurveLibraryHttpUrl
+            // 
+            this.textBoxCurveLibraryHttpUrl.Location = new System.Drawing.Point(105, 21);
+            this.textBoxCurveLibraryHttpUrl.Name = "textBoxCurveLibraryHttpUrl";
+            this.textBoxCurveLibraryHttpUrl.Size = new System.Drawing.Size(310, 20);
+            this.textBoxCurveLibraryHttpUrl.TabIndex = 1;
+            this.toolTip.SetToolTip(this.textBoxCurveLibraryHttpUrl, "HTTP location of the remote curve library");
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(20, 24);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(61, 13);
+            this.label29.TabIndex = 0;
+            this.label29.Text = "HTTP URL";
+            this.toolTip.SetToolTip(this.label29, "HTTP location of the remote curve library");
             // 
             // groupBox5
             // 
@@ -1536,6 +1214,14 @@ namespace VixenPlus {
             this.cbWavefromZeroLine.Text = "Show Wavform Zero Line";
             this.cbWavefromZeroLine.UseVisualStyleBackColor = true;
             // 
+            // textBoxDefaultSequenceSaveDirectory
+            // 
+            this.textBoxDefaultSequenceSaveDirectory.Location = new System.Drawing.Point(20, 253);
+            this.textBoxDefaultSequenceSaveDirectory.Name = "textBoxDefaultSequenceSaveDirectory";
+            this.textBoxDefaultSequenceSaveDirectory.Size = new System.Drawing.Size(395, 20);
+            this.textBoxDefaultSequenceSaveDirectory.TabIndex = 12;
+            this.toolTip.SetToolTip(this.textBoxDefaultSequenceSaveDirectory, "Application default is My Documents\\Vixen\\Sequences");
+            // 
             // label34
             // 
             this.label34.AutoSize = true;
@@ -1544,6 +1230,116 @@ namespace VixenPlus {
             this.label34.Size = new System.Drawing.Size(302, 13);
             this.label34.TabIndex = 11;
             this.label34.Text = "Default sequence save directory: (blank for application default)";
+            // 
+            // checkBoxFlipMouseScroll
+            // 
+            this.checkBoxFlipMouseScroll.AutoSize = true;
+            this.checkBoxFlipMouseScroll.Location = new System.Drawing.Point(20, 204);
+            this.checkBoxFlipMouseScroll.Name = "checkBoxFlipMouseScroll";
+            this.checkBoxFlipMouseScroll.Size = new System.Drawing.Size(180, 17);
+            this.checkBoxFlipMouseScroll.TabIndex = 10;
+            this.checkBoxFlipMouseScroll.Text = "Flip mouse scroll + Shift behavior";
+            this.toolTip.SetToolTip(this.checkBoxFlipMouseScroll, "The default behavior scrolls horizontally when Shift is down.\r\nSelect this to mak" +
+                    "e it scroll vertically when Shift is down.");
+            this.checkBoxFlipMouseScroll.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxShowNaturalChannelNumber
+            // 
+            this.checkBoxShowNaturalChannelNumber.AutoSize = true;
+            this.checkBoxShowNaturalChannelNumber.Location = new System.Drawing.Point(20, 181);
+            this.checkBoxShowNaturalChannelNumber.Name = "checkBoxShowNaturalChannelNumber";
+            this.checkBoxShowNaturalChannelNumber.Size = new System.Drawing.Size(167, 17);
+            this.checkBoxShowNaturalChannelNumber.TabIndex = 9;
+            this.checkBoxShowNaturalChannelNumber.Text = "Show natural channel number";
+            this.toolTip.SetToolTip(this.checkBoxShowNaturalChannelNumber, "Show the channel numbers according to the order they were created in");
+            this.checkBoxShowNaturalChannelNumber.UseVisualStyleBackColor = true;
+            // 
+            // textBoxIntensityLargeDelta
+            // 
+            this.textBoxIntensityLargeDelta.Location = new System.Drawing.Point(215, 79);
+            this.textBoxIntensityLargeDelta.Name = "textBoxIntensityLargeDelta";
+            this.textBoxIntensityLargeDelta.Size = new System.Drawing.Size(50, 20);
+            this.textBoxIntensityLargeDelta.TabIndex = 5;
+            this.toolTip.SetToolTip(this.textBoxIntensityLargeDelta, "When using Ctrl-Up or Ctrl-Down to adjust the intensity\r\nof a selection.");
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(17, 82);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(190, 13);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "Intensity adjust large change (% points)";
+            this.toolTip.SetToolTip(this.label5, "When using Ctrl-Up or Ctrl-Down to adjust the intensity");
+            // 
+            // checkBoxShowSaveConfirmation
+            // 
+            this.checkBoxShowSaveConfirmation.AutoSize = true;
+            this.checkBoxShowSaveConfirmation.Location = new System.Drawing.Point(20, 158);
+            this.checkBoxShowSaveConfirmation.Name = "checkBoxShowSaveConfirmation";
+            this.checkBoxShowSaveConfirmation.Size = new System.Drawing.Size(139, 17);
+            this.checkBoxShowSaveConfirmation.TabIndex = 8;
+            this.checkBoxShowSaveConfirmation.Text = "Show save confirmation";
+            this.toolTip.SetToolTip(this.checkBoxShowSaveConfirmation, "Show a confirmation message after saving a sequence");
+            this.checkBoxShowSaveConfirmation.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxSaveZoomLevels
+            // 
+            this.checkBoxSaveZoomLevels.AutoSize = true;
+            this.checkBoxSaveZoomLevels.Location = new System.Drawing.Point(20, 135);
+            this.checkBoxSaveZoomLevels.Name = "checkBoxSaveZoomLevels";
+            this.checkBoxSaveZoomLevels.Size = new System.Drawing.Size(109, 17);
+            this.checkBoxSaveZoomLevels.TabIndex = 7;
+            this.checkBoxSaveZoomLevels.Text = "Save zoom levels";
+            this.toolTip.SetToolTip(this.checkBoxSaveZoomLevels, "Save the row and height zoom levels");
+            this.checkBoxSaveZoomLevels.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxEventSequenceAutoSize
+            // 
+            this.checkBoxEventSequenceAutoSize.AutoSize = true;
+            this.checkBoxEventSequenceAutoSize.Location = new System.Drawing.Point(20, 112);
+            this.checkBoxEventSequenceAutoSize.Name = "checkBoxEventSequenceAutoSize";
+            this.checkBoxEventSequenceAutoSize.Size = new System.Drawing.Size(154, 17);
+            this.checkBoxEventSequenceAutoSize.TabIndex = 6;
+            this.checkBoxEventSequenceAutoSize.Text = "Auto size event sequences";
+            this.toolTip.SetToolTip(this.checkBoxEventSequenceAutoSize, "Automatically resize an event sequence to the length of the selected audio");
+            this.checkBoxEventSequenceAutoSize.UseVisualStyleBackColor = true;
+            // 
+            // textBoxMaxRowHeight
+            // 
+            this.textBoxMaxRowHeight.Location = new System.Drawing.Point(215, 48);
+            this.textBoxMaxRowHeight.Name = "textBoxMaxRowHeight";
+            this.textBoxMaxRowHeight.Size = new System.Drawing.Size(50, 20);
+            this.textBoxMaxRowHeight.TabIndex = 3;
+            this.toolTip.SetToolTip(this.textBoxMaxRowHeight, "The height of a channel in the editing grid at 100%");
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(17, 51);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(79, 13);
+            this.label7.TabIndex = 2;
+            this.label7.Text = "Max row height";
+            this.toolTip.SetToolTip(this.label7, "The height of a channel in the editing grid at 100%");
+            // 
+            // textBoxMaxColumnWidth
+            // 
+            this.textBoxMaxColumnWidth.Location = new System.Drawing.Point(215, 27);
+            this.textBoxMaxColumnWidth.Name = "textBoxMaxColumnWidth";
+            this.textBoxMaxColumnWidth.Size = new System.Drawing.Size(50, 20);
+            this.textBoxMaxColumnWidth.TabIndex = 1;
+            this.toolTip.SetToolTip(this.textBoxMaxColumnWidth, "The width of an event period in the editing grid at 100%");
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(17, 30);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(92, 13);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Max column width";
+            this.toolTip.SetToolTip(this.label6, "The width of an event period in the editing grid at 100%");
             // 
             // sequenceExecutionTab
             // 
@@ -1570,6 +1366,58 @@ namespace VixenPlus {
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Audio Log";
             // 
+            // textBoxLogFilePath
+            // 
+            this.textBoxLogFilePath.Location = new System.Drawing.Point(107, 108);
+            this.textBoxLogFilePath.Name = "textBoxLogFilePath";
+            this.textBoxLogFilePath.Size = new System.Drawing.Size(311, 20);
+            this.textBoxLogFilePath.TabIndex = 4;
+            this.toolTip.SetToolTip(this.textBoxLogFilePath, "Path of the log file");
+            // 
+            // buttonLogFilePath
+            // 
+            this.buttonLogFilePath.Location = new System.Drawing.Point(26, 106);
+            this.buttonLogFilePath.Name = "buttonLogFilePath";
+            this.buttonLogFilePath.Size = new System.Drawing.Size(75, 23);
+            this.buttonLogFilePath.TabIndex = 3;
+            this.buttonLogFilePath.Text = "Log path";
+            this.toolTip.SetToolTip(this.buttonLogFilePath, "Path of the log file");
+            this.buttonLogFilePath.UseVisualStyleBackColor = true;
+            this.buttonLogFilePath.Click += new System.EventHandler(this.buttonLogFilePath_Click);
+            // 
+            // checkBoxLogMusicPlayer
+            // 
+            this.checkBoxLogMusicPlayer.AutoSize = true;
+            this.checkBoxLogMusicPlayer.Location = new System.Drawing.Point(26, 76);
+            this.checkBoxLogMusicPlayer.Name = "checkBoxLogMusicPlayer";
+            this.checkBoxLogMusicPlayer.Size = new System.Drawing.Size(159, 17);
+            this.checkBoxLogMusicPlayer.TabIndex = 2;
+            this.checkBoxLogMusicPlayer.Text = "Log music player executions";
+            this.toolTip.SetToolTip(this.checkBoxLogMusicPlayer, "Log the audio files that the music player executes");
+            this.checkBoxLogMusicPlayer.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxLogScheduled
+            // 
+            this.checkBoxLogScheduled.AutoSize = true;
+            this.checkBoxLogScheduled.Location = new System.Drawing.Point(26, 53);
+            this.checkBoxLogScheduled.Name = "checkBoxLogScheduled";
+            this.checkBoxLogScheduled.Size = new System.Drawing.Size(200, 17);
+            this.checkBoxLogScheduled.TabIndex = 1;
+            this.checkBoxLogScheduled.Text = "Log scheduled sequence executions";
+            this.toolTip.SetToolTip(this.checkBoxLogScheduled, "Sequence executions that are started automatically by the scheduler");
+            this.checkBoxLogScheduled.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxLogManual
+            // 
+            this.checkBoxLogManual.AutoSize = true;
+            this.checkBoxLogManual.Location = new System.Drawing.Point(26, 30);
+            this.checkBoxLogManual.Name = "checkBoxLogManual";
+            this.checkBoxLogManual.Size = new System.Drawing.Size(185, 17);
+            this.checkBoxLogManual.TabIndex = 0;
+            this.checkBoxLogManual.Text = "Log manual sequence executions";
+            this.toolTip.SetToolTip(this.checkBoxLogManual, "Sequence executions that you start manually in an editor");
+            this.checkBoxLogManual.UseVisualStyleBackColor = true;
+            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.checkBoxClearAtEndOfSequence);
@@ -1582,6 +1430,53 @@ namespace VixenPlus {
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Sequence Execution";
+            // 
+            // checkBoxClearAtEndOfSequence
+            // 
+            this.checkBoxClearAtEndOfSequence.AutoSize = true;
+            this.checkBoxClearAtEndOfSequence.Location = new System.Drawing.Point(26, 96);
+            this.checkBoxClearAtEndOfSequence.Name = "checkBoxClearAtEndOfSequence";
+            this.checkBoxClearAtEndOfSequence.Size = new System.Drawing.Size(200, 17);
+            this.checkBoxClearAtEndOfSequence.TabIndex = 3;
+            this.checkBoxClearAtEndOfSequence.Text = "Reset controller at end of sequences";
+            this.toolTip.SetToolTip(this.checkBoxClearAtEndOfSequence, "Sends a blank event to the plugins at the end of a sequence.\r\nUseful for parallel" +
+                    " port-based controllers.  Does not affect every\r\ncontroller type.");
+            this.checkBoxClearAtEndOfSequence.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxShowPositionMarker
+            // 
+            this.checkBoxShowPositionMarker.AutoSize = true;
+            this.checkBoxShowPositionMarker.Location = new System.Drawing.Point(26, 27);
+            this.checkBoxShowPositionMarker.Name = "checkBoxShowPositionMarker";
+            this.checkBoxShowPositionMarker.Size = new System.Drawing.Size(127, 17);
+            this.checkBoxShowPositionMarker.TabIndex = 0;
+            this.checkBoxShowPositionMarker.Text = "Show position marker";
+            this.toolTip.SetToolTip(this.checkBoxShowPositionMarker, "Show the current point of exeuction with a mark in the time panel");
+            this.checkBoxShowPositionMarker.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxSavePlugInDialogPositions
+            // 
+            this.checkBoxSavePlugInDialogPositions.AutoSize = true;
+            this.checkBoxSavePlugInDialogPositions.Location = new System.Drawing.Point(26, 73);
+            this.checkBoxSavePlugInDialogPositions.Name = "checkBoxSavePlugInDialogPositions";
+            this.checkBoxSavePlugInDialogPositions.Size = new System.Drawing.Size(157, 17);
+            this.checkBoxSavePlugInDialogPositions.TabIndex = 2;
+            this.checkBoxSavePlugInDialogPositions.Text = "Save plugin dialog positions";
+            this.toolTip.SetToolTip(this.checkBoxSavePlugInDialogPositions, "Save the positions of any windows created and displayed by plugins during executi" +
+                    "on");
+            this.checkBoxSavePlugInDialogPositions.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxAutoScrolling
+            // 
+            this.checkBoxAutoScrolling.AutoSize = true;
+            this.checkBoxAutoScrolling.Location = new System.Drawing.Point(26, 50);
+            this.checkBoxAutoScrolling.Name = "checkBoxAutoScrolling";
+            this.checkBoxAutoScrolling.Size = new System.Drawing.Size(89, 17);
+            this.checkBoxAutoScrolling.TabIndex = 1;
+            this.checkBoxAutoScrolling.Text = "Auto scrolling";
+            this.toolTip.SetToolTip(this.checkBoxAutoScrolling, "Automatically scroll the editing display during execution so that the current poi" +
+                    "nt of execution is always visible");
+            this.checkBoxAutoScrolling.UseVisualStyleBackColor = true;
             // 
             // backgroundItemsTab
             // 
@@ -1620,6 +1515,35 @@ namespace VixenPlus {
             this.label20.TabIndex = 11;
             this.label20.Text = "seconds";
             // 
+            // textBoxMusicFadeDuration
+            // 
+            this.textBoxMusicFadeDuration.Location = new System.Drawing.Point(215, 102);
+            this.textBoxMusicFadeDuration.Name = "textBoxMusicFadeDuration";
+            this.textBoxMusicFadeDuration.Size = new System.Drawing.Size(50, 20);
+            this.textBoxMusicFadeDuration.TabIndex = 10;
+            this.toolTip.SetToolTip(this.textBoxMusicFadeDuration, "How long (in seconds) it will take the background music to fade out");
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(14, 105);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(100, 13);
+            this.label21.TabIndex = 9;
+            this.label21.Text = "Music fade duration";
+            this.toolTip.SetToolTip(this.label21, "How long (in seconds) it will take the background music to fade out");
+            // 
+            // checkBoxEnableMusicFade
+            // 
+            this.checkBoxEnableMusicFade.AutoSize = true;
+            this.checkBoxEnableMusicFade.Location = new System.Drawing.Point(17, 80);
+            this.checkBoxEnableMusicFade.Name = "checkBoxEnableMusicFade";
+            this.checkBoxEnableMusicFade.Size = new System.Drawing.Size(113, 17);
+            this.checkBoxEnableMusicFade.TabIndex = 8;
+            this.checkBoxEnableMusicFade.Text = "Enable music fade";
+            this.toolTip.SetToolTip(this.checkBoxEnableMusicFade, "Enable the fading of the background music when it\'s stopped");
+            this.checkBoxEnableMusicFade.UseVisualStyleBackColor = true;
+            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -1628,6 +1552,38 @@ namespace VixenPlus {
             this.label10.Size = new System.Drawing.Size(47, 13);
             this.label10.TabIndex = 7;
             this.label10.Text = "seconds";
+            // 
+            // textBoxBackgroundMusicDelay
+            // 
+            this.textBoxBackgroundMusicDelay.Location = new System.Drawing.Point(215, 45);
+            this.textBoxBackgroundMusicDelay.Name = "textBoxBackgroundMusicDelay";
+            this.textBoxBackgroundMusicDelay.Size = new System.Drawing.Size(50, 20);
+            this.textBoxBackgroundMusicDelay.TabIndex = 6;
+            this.toolTip.SetToolTip(this.textBoxBackgroundMusicDelay, "How long (in seconds) the background sequence will wait before starting after seq" +
+                    "uence or program execution stops");
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(14, 48);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(123, 13);
+            this.label11.TabIndex = 5;
+            this.label11.Text = "Background music delay";
+            this.toolTip.SetToolTip(this.label11, "How long (in seconds) the background music will wait before starting after sequen" +
+                    "ce or program execution stops");
+            // 
+            // checkBoxEnableBackgroundMusic
+            // 
+            this.checkBoxEnableBackgroundMusic.AutoSize = true;
+            this.checkBoxEnableBackgroundMusic.Location = new System.Drawing.Point(17, 23);
+            this.checkBoxEnableBackgroundMusic.Name = "checkBoxEnableBackgroundMusic";
+            this.checkBoxEnableBackgroundMusic.Size = new System.Drawing.Size(149, 17);
+            this.checkBoxEnableBackgroundMusic.TabIndex = 4;
+            this.checkBoxEnableBackgroundMusic.Text = "Enable background music";
+            this.toolTip.SetToolTip(this.checkBoxEnableBackgroundMusic, "Enable the playing of background music while no sequences or programs are playing" +
+                    "");
+            this.checkBoxEnableBackgroundMusic.UseVisualStyleBackColor = true;
             // 
             // groupBox6
             // 
@@ -1650,6 +1606,38 @@ namespace VixenPlus {
             this.label9.Size = new System.Drawing.Size(47, 13);
             this.label9.TabIndex = 3;
             this.label9.Text = "seconds";
+            // 
+            // textBoxBackgroundSequenceDelay
+            // 
+            this.textBoxBackgroundSequenceDelay.Location = new System.Drawing.Point(215, 67);
+            this.textBoxBackgroundSequenceDelay.Name = "textBoxBackgroundSequenceDelay";
+            this.textBoxBackgroundSequenceDelay.Size = new System.Drawing.Size(50, 20);
+            this.textBoxBackgroundSequenceDelay.TabIndex = 2;
+            this.toolTip.SetToolTip(this.textBoxBackgroundSequenceDelay, "How long (in seconds) the background sequence will wait before starting after seq" +
+                    "uence or program execution stops");
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(14, 70);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(143, 13);
+            this.label8.TabIndex = 1;
+            this.label8.Text = "Background sequence delay";
+            this.toolTip.SetToolTip(this.label8, "How long (in seconds) the background sequence will wait before starting after seq" +
+                    "uence or program execution stops");
+            // 
+            // checkBoxEnableBackgroundSequence
+            // 
+            this.checkBoxEnableBackgroundSequence.AutoSize = true;
+            this.checkBoxEnableBackgroundSequence.Location = new System.Drawing.Point(17, 30);
+            this.checkBoxEnableBackgroundSequence.Name = "checkBoxEnableBackgroundSequence";
+            this.checkBoxEnableBackgroundSequence.Size = new System.Drawing.Size(169, 17);
+            this.checkBoxEnableBackgroundSequence.TabIndex = 0;
+            this.checkBoxEnableBackgroundSequence.Text = "Enable background sequence";
+            this.toolTip.SetToolTip(this.checkBoxEnableBackgroundSequence, "Enable the playing of a scripted background sequence while no sequences or progra" +
+                    "ms are playing");
+            this.checkBoxEnableBackgroundSequence.UseVisualStyleBackColor = true;
             // 
             // remoteExecutionTab
             // 
@@ -1676,6 +1664,20 @@ namespace VixenPlus {
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Channel Control";
             // 
+            // radioButtonAsyncSyncObject
+            // 
+            this.radioButtonAsyncSyncObject.AutoSize = true;
+            this.radioButtonAsyncSyncObject.Location = new System.Drawing.Point(100, 96);
+            this.radioButtonAsyncSyncObject.Name = "radioButtonAsyncSyncObject";
+            this.radioButtonAsyncSyncObject.Size = new System.Drawing.Size(242, 17);
+            this.radioButtonAsyncSyncObject.TabIndex = 1;
+            this.radioButtonAsyncSyncObject.TabStop = true;
+            this.radioButtonAsyncSyncObject.Text = "Use the sequence loaded for execution, if any";
+            this.toolTip.SetToolTip(this.radioButtonAsyncSyncObject, "The sequence will use channel masking and plugin setup data from\r\nthe default pro" +
+                    "file.");
+            this.radioButtonAsyncSyncObject.UseVisualStyleBackColor = true;
+            this.radioButtonAsyncSyncObject.CheckedChanged += new System.EventHandler(this.radioButtonAsyncProfileData_CheckedChanged);
+            // 
             // comboBoxAsyncProfile
             // 
             this.comboBoxAsyncProfile.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -1685,6 +1687,34 @@ namespace VixenPlus {
             this.comboBoxAsyncProfile.Name = "comboBoxAsyncProfile";
             this.comboBoxAsyncProfile.Size = new System.Drawing.Size(160, 21);
             this.comboBoxAsyncProfile.TabIndex = 3;
+            // 
+            // radioButtonAsyncDefaultProfileData
+            // 
+            this.radioButtonAsyncDefaultProfileData.AutoSize = true;
+            this.radioButtonAsyncDefaultProfileData.Location = new System.Drawing.Point(100, 142);
+            this.radioButtonAsyncDefaultProfileData.Name = "radioButtonAsyncDefaultProfileData";
+            this.radioButtonAsyncDefaultProfileData.Size = new System.Drawing.Size(128, 17);
+            this.radioButtonAsyncDefaultProfileData.TabIndex = 4;
+            this.radioButtonAsyncDefaultProfileData.TabStop = true;
+            this.radioButtonAsyncDefaultProfileData.Text = "Use the default profile";
+            this.toolTip.SetToolTip(this.radioButtonAsyncDefaultProfileData, "The sequence will use channel masking and plugin setup data from\r\nthe default pro" +
+                    "file.");
+            this.radioButtonAsyncDefaultProfileData.UseVisualStyleBackColor = true;
+            this.radioButtonAsyncDefaultProfileData.CheckedChanged += new System.EventHandler(this.radioButtonAsyncProfileData_CheckedChanged);
+            // 
+            // radioButtonAsyncProfileData
+            // 
+            this.radioButtonAsyncProfileData.AutoSize = true;
+            this.radioButtonAsyncProfileData.Location = new System.Drawing.Point(100, 119);
+            this.radioButtonAsyncProfileData.Name = "radioButtonAsyncProfileData";
+            this.radioButtonAsyncProfileData.Size = new System.Drawing.Size(123, 17);
+            this.radioButtonAsyncProfileData.TabIndex = 2;
+            this.radioButtonAsyncProfileData.TabStop = true;
+            this.radioButtonAsyncProfileData.Text = "Use a specific profile";
+            this.toolTip.SetToolTip(this.radioButtonAsyncProfileData, "The sequence will use channel masking and plugin setup data from\r\na specified pro" +
+                    "file.");
+            this.radioButtonAsyncProfileData.UseVisualStyleBackColor = true;
+            this.radioButtonAsyncProfileData.CheckedChanged += new System.EventHandler(this.radioButtonAsyncProfileData_CheckedChanged);
             // 
             // label25
             // 
@@ -1716,6 +1746,48 @@ namespace VixenPlus {
             this.comboBoxSyncProfile.Name = "comboBoxSyncProfile";
             this.comboBoxSyncProfile.Size = new System.Drawing.Size(160, 21);
             this.comboBoxSyncProfile.TabIndex = 4;
+            // 
+            // radioButtonSyncDefaultProfileData
+            // 
+            this.radioButtonSyncDefaultProfileData.AutoSize = true;
+            this.radioButtonSyncDefaultProfileData.Location = new System.Drawing.Point(100, 130);
+            this.radioButtonSyncDefaultProfileData.Name = "radioButtonSyncDefaultProfileData";
+            this.radioButtonSyncDefaultProfileData.Size = new System.Drawing.Size(128, 17);
+            this.radioButtonSyncDefaultProfileData.TabIndex = 3;
+            this.radioButtonSyncDefaultProfileData.TabStop = true;
+            this.radioButtonSyncDefaultProfileData.Text = "Use the default profile";
+            this.toolTip.SetToolTip(this.radioButtonSyncDefaultProfileData, "The sequence will use channel masking and plugin setup data from\r\nthe default pro" +
+                    "file.");
+            this.radioButtonSyncDefaultProfileData.UseVisualStyleBackColor = true;
+            this.radioButtonSyncDefaultProfileData.CheckedChanged += new System.EventHandler(this.radioButtonSyncProfileData_CheckedChanged);
+            // 
+            // radioButtonSyncProfileData
+            // 
+            this.radioButtonSyncProfileData.AutoSize = true;
+            this.radioButtonSyncProfileData.Location = new System.Drawing.Point(100, 107);
+            this.radioButtonSyncProfileData.Name = "radioButtonSyncProfileData";
+            this.radioButtonSyncProfileData.Size = new System.Drawing.Size(123, 17);
+            this.radioButtonSyncProfileData.TabIndex = 2;
+            this.radioButtonSyncProfileData.TabStop = true;
+            this.radioButtonSyncProfileData.Text = "Use a specific profile";
+            this.toolTip.SetToolTip(this.radioButtonSyncProfileData, "The sequence will use channel masking and plugin setup data from\r\na specified pro" +
+                    "file.");
+            this.radioButtonSyncProfileData.UseVisualStyleBackColor = true;
+            this.radioButtonSyncProfileData.CheckedChanged += new System.EventHandler(this.radioButtonSyncProfileData_CheckedChanged);
+            // 
+            // radioButtonSyncEmbeddedData
+            // 
+            this.radioButtonSyncEmbeddedData.AutoSize = true;
+            this.radioButtonSyncEmbeddedData.Location = new System.Drawing.Point(100, 84);
+            this.radioButtonSyncEmbeddedData.Name = "radioButtonSyncEmbeddedData";
+            this.radioButtonSyncEmbeddedData.Size = new System.Drawing.Size(114, 17);
+            this.radioButtonSyncEmbeddedData.TabIndex = 1;
+            this.radioButtonSyncEmbeddedData.TabStop = true;
+            this.radioButtonSyncEmbeddedData.Text = "Use their own data";
+            this.toolTip.SetToolTip(this.radioButtonSyncEmbeddedData, "The sequence will determine its own channel masking and use\r\nits own plugin setup" +
+                    ".");
+            this.radioButtonSyncEmbeddedData.UseVisualStyleBackColor = true;
+            this.radioButtonSyncEmbeddedData.CheckedChanged += new System.EventHandler(this.radioButtonSyncProfileData_CheckedChanged);
             // 
             // label24
             // 
@@ -1765,16 +1837,6 @@ namespace VixenPlus {
             this.textBoxEngine.Size = new System.Drawing.Size(365, 20);
             this.textBoxEngine.TabIndex = 0;
             // 
-            // btnSetDataFolder
-            // 
-            this.btnSetDataFolder.Location = new System.Drawing.Point(12, 445);
-            this.btnSetDataFolder.Name = "btnSetDataFolder";
-            this.btnSetDataFolder.Size = new System.Drawing.Size(161, 23);
-            this.btnSetDataFolder.TabIndex = 5;
-            this.btnSetDataFolder.Text = "Set Data Folder";
-            this.btnSetDataFolder.UseVisualStyleBackColor = true;
-            this.btnSetDataFolder.Click += new System.EventHandler(this.btnSetDataFolder_Click);
-            // 
             // PreferencesDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1793,17 +1855,16 @@ namespace VixenPlus {
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Preferences";
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumLevel)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinimumLevel)).EndInit();
             this.tabControl.ResumeLayout(false);
             this.generalTab.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRecentFiles)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHistoryImages)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.screenTab.ResumeLayout(false);
             this.screenTab.PerformLayout();
             this.gbColors.ResumeLayout(false);
@@ -1815,6 +1876,8 @@ namespace VixenPlus {
             this.groupBox12.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumLevel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinimumLevel)).EndInit();
             this.sequenceEditingTab.ResumeLayout(false);
             this.groupBox14.ResumeLayout(false);
             this.groupBox14.PerformLayout();
@@ -1864,5 +1927,9 @@ namespace VixenPlus {
         private ColorDialog colorDialog1;
         private Button btnSetDataFolder;
         private CheckBox cbUseCheckmark;
+        private CheckBox cbToolbarAutoSave;
+        private Label label36;
+        private NumericUpDown nudRecentFiles;
+        private Label label35;
     }
 }

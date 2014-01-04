@@ -37,6 +37,8 @@ namespace VixenPlus {
             isDirty |= CreateIfMissing("PreferredSequenceType", ".vix");
             isDirty |= CreateIfMissing("ShutdownTime", string.Empty);
             isDirty |= CreateIfMissing("HistoryImages", 0);
+            isDirty |= CreateIfMissing("AutoSaveToolbars", false);
+            isDirty |= CreateIfMissing("RecentFiles", 7);
 
             // Screen & Colors
             isDirty |= CreateIfMissing("PrimaryDisplay", FixDeviceName(Screen.AllScreens[0].DeviceName));

@@ -23,7 +23,6 @@ namespace VixenPlus {
         private const int ExpectationDelay = 1500;
 #endif
 
-        private const int HistoryMax = 7;
         private List<string> _history;
 
         private DateTime _shutdownAt;
@@ -270,7 +269,8 @@ namespace VixenPlus {
             var item = Path.GetFileName(fileName);
             _history.Remove(item);
             _history.Insert(0, item);
-            if (_history.Count > HistoryMax) {
+            var maxCount = _preferences.GetInteger("RecentFiles");
+            while (_history.Count > maxCount) {
                 _history.RemoveAt(_history.Count - 1);
             }
             FlushHistory();
@@ -453,8 +453,14 @@ namespace VixenPlus {
             recentToolStripMenuItem.DropDownItems.Clear();
             _history = new List<string>();
             var list = _preferences.XmlDoc.SelectNodes("//User/History/*");
+            var maxCount = _preferences.GetInteger("RecentFiles");
+            var currentCount = 0;
             if (list != null) {
                 foreach (XmlNode node in list) {
+                    currentCount++;
+                    if (currentCount > maxCount) {
+                        continue;
+                    }
                     _history.Add(node.InnerText);
                     recentToolStripMenuItem.DropDownItems.Add(node.InnerText, null, _historyItemClick);
                 }
