@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -261,9 +260,9 @@ namespace VixenPlus {
 
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-            var dialog = new AboutDialog();
-            dialog.ShowDialog();
-            dialog.Dispose();
+            using (var aboutDialog = new AboutDialog()) {
+                aboutDialog.ShowDialog();
+            }
         }
 
 
@@ -383,6 +382,7 @@ namespace VixenPlus {
                 e.Cancel = true;
                 return;
             }
+
             _host.StopBackgroundObjects();
             _host.BackgroundSequenceName = null;
             _preferences.SaveSettings();
@@ -467,29 +467,28 @@ namespace VixenPlus {
             if (!Directory.Exists(Paths.UIPluginPath)) {
                 return;
             }
+
             foreach (var str in Directory.GetFiles(Paths.UIPluginPath, "*.dll")) {
                 Exception exception;
                 try {
                     var assembly = Assembly.LoadFile(str);
-                    foreach (var exportedTypes in assembly.GetExportedTypes()) {
-                        foreach (var interfaceTypes in exportedTypes.GetInterfaces()) {
-                            if (interfaceTypes.Name != "IUIPlugIn") {
-                                continue;
-                            }
-                            try {
-                                var inputPlugin = (IUIPlugIn) Activator.CreateInstance(exportedTypes);
-                                if (!RegisterFileType(inputPlugin.FileExtension, inputPlugin)) {
-                                    MessageBox.Show(
-                                        string.Format("Could not register UI plugin {0}.\nFile type is already handled.", inputPlugin.Name),
-                                        Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                                }
-                            }
-                            catch (Exception exception1) {
-                                exception = exception1;
+                    foreach (var exportedTypes in 
+                        from exportedTypes in assembly.GetExportedTypes() 
+                        from interfaceTypes in exportedTypes.GetInterfaces().Where(interfaceTypes => interfaceTypes.Name == "IUIPlugIn") 
+                        select exportedTypes) {
+                        try {
+                            var inputPlugin = (IUIPlugIn) Activator.CreateInstance(exportedTypes);
+                            if (!RegisterFileType(inputPlugin.FileExtension, inputPlugin)) {
                                 MessageBox.Show(
-                                    string.Format("Error when loading UI plugin from {0}:\n{1}", Path.GetFileNameWithoutExtension(str),
-                                                  exception.StackTrace), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                    string.Format("Could not register UI plugin {0}.\nFile type is already handled.", inputPlugin.Name),
+                                    Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             }
+                        }
+                        catch (Exception exception1) {
+                            exception = exception1;
+                            MessageBox.Show(
+                                string.Format("Error when loading UI plugin from {0}:\n{1}", Path.GetFileNameWithoutExtension(str),
+                                    exception.StackTrace), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         }
                     }
                 }
@@ -564,11 +563,11 @@ namespace VixenPlus {
 
 
         private void manageToolStripMenuItem_Click(object sender, EventArgs e) {
-            var dialog = new ProfileManagerDialog(null);
-            if (dialog.ShowDialog() == DialogResult.OK) {
-                NotifyAll(Notification.ProfileChange);
+            using (var profileManagerDialog = new ProfileManagerDialog(null)) {
+                if (profileManagerDialog.ShowDialog() == DialogResult.OK) {
+                    NotifyAll(Notification.ProfileChange);
+                }
             }
-            dialog.Dispose();
         }
 
 
@@ -582,20 +581,21 @@ namespace VixenPlus {
             if (!(item.Tag is IUIPlugIn)) {
                 return;
             }
+
             var tag = (IUIPlugIn) item.Tag;
-            tag = (IUIPlugIn) Activator.CreateInstance(tag.GetType());
-            tag.Sequence = null;
+            var instance = (IUIPlugIn) Activator.CreateInstance(tag.GetType());
+            instance.Sequence = null;
             if (_preferences.GetBoolean("WizardForNewSequences")) {
                 EventSequence resultSequence = null;
-                switch (tag.RunWizard(ref resultSequence)) {
+                switch (instance.RunWizard(ref resultSequence)) {
                     case DialogResult.None:
                         MessageBox.Show(Resources.VixenPlusForm_NoWizardMsg, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                        tag.Sequence = tag.New();
+                        instance.Sequence = instance.New();
                         break;
 
                     case DialogResult.OK:
-                        tag.Sequence = tag.New(resultSequence);
-                        if (!SaveAs(tag)) {
+                        instance.Sequence = instance.New(resultSequence);
+                        if (!SaveAs(instance)) {
                             DialogResult = DialogResult.None;
                         }
                         break;
@@ -605,29 +605,26 @@ namespace VixenPlus {
                 }
             }
             else {
-                tag.Sequence = tag.New();
+                instance.Sequence = instance.New();
             }
 
-            if (tag.Sequence == null) {
+            if (instance.Sequence == null) {
                 return;
             }
 
-            var uiBase = tag as UIBase;
+            var uiBase = instance as UIBase;
             if (uiBase != null) {
                 uiBase.DirtyChanged += plugin_DirtyChanged;
                 uiBase.IsDirty = DialogResult == DialogResult.None;
             }
-            tag.MdiParent = this;
-            tag.Show();
+            instance.MdiParent = this;
+            instance.Show();
         }
 
 
         private void NotifyAll(Notification notification) {
-            foreach (var form in MdiChildren) {
-                var vixenMdi = form as IVixenMDI;
-                if (vixenMdi != null) {
-                    vixenMdi.Notify(notification, null);
-                }
+            foreach (var vixenMdi in MdiChildren.OfType<IVixenMDI>()) {
+                vixenMdi.Notify(notification, null);
             }
         }
 
@@ -638,21 +635,22 @@ namespace VixenPlus {
         }
 
 
+        // ReSharper disable once MemberCanBePrivate.Global
         public void openALightingProgramToolStripMenuItem_Click(object sender, EventArgs e) {
-            var num = 0;
-            var num2 = 1;
-            var str = _preferences.GetString("PreferredSequenceType");
-            foreach (var @in in _registeredFileTypes.Values) {
-                if (str == @in.FileExtension) {
-                    num = num2;
+            var filterIndex = 0;
+            var filterIndexCount = 1;
+            var preferredType = _preferences.GetString("PreferredSequenceType");
+            foreach (var thisType in _registeredFileTypes.Values) {
+                if (preferredType == thisType.FileExtension) {
+                    filterIndex = filterIndexCount;
                     break;
                 }
-                num2++;
+                filterIndexCount++;
             }
             openFileDialog1.Filter = KnownFileTypesFilter;
             openFileDialog1.InitialDirectory = Paths.SequencePath;
             openFileDialog1.FileName = string.Empty;
-            openFileDialog1.FilterIndex = num;
+            openFileDialog1.FilterIndex = filterIndex;
             if (openFileDialog1.ShowDialog() != DialogResult.OK) {
                 return;
             }
@@ -666,6 +664,7 @@ namespace VixenPlus {
         }
 
 
+        // ReSharper disable once MemberCanBePrivate.Global
         public void OpenSequence(string fileName) {
             IUIPlugIn plugInInterface;
             //new XmlDocument();
@@ -696,21 +695,23 @@ namespace VixenPlus {
 
 
         private void preferencesToolStripMenuItem_Click(object sender, EventArgs e) {
-            var array = new IUIPlugIn[_registeredFileTypes.Values.Count];
-            _registeredFileTypes.Values.CopyTo(array, 0);
-            var dialog = new PreferencesDialog(array);
-            if (dialog.ShowDialog() == DialogResult.OK) {
+            var plugIns = new IUIPlugIn[_registeredFileTypes.Values.Count];
+            _registeredFileTypes.Values.CopyTo(plugIns, 0);
+            using (var preferencesDialog = new PreferencesDialog(plugIns)) {
+                if (preferencesDialog.ShowDialog() != DialogResult.OK) {
+                    return;
+                }
+
                 _preferences.Reload();
                 NotifyAll(Notification.PreferenceChange);
             }
-            dialog.Dispose();
         }
 
 
         private void programToolStripMenuItem_DropDownOpening(object sender, EventArgs e) {
-            var @in = ActiveMdiChild as IUIPlugIn;
-            if (@in != null) {
-                var activeMdiChild = @in;
+            var plugIn = ActiveMdiChild as IUIPlugIn;
+            if (plugIn != null) {
+                var activeMdiChild = plugIn;
                 saveToolStripMenuItem.Text = !string.IsNullOrEmpty(activeMdiChild.Sequence.Name)
                                                  ? string.Format("{0} ({1})", Resources.VixenPlusForm_Save, activeMdiChild.Sequence.Name)
                                                  : Resources.VixenPlusForm_Save;
@@ -768,12 +769,14 @@ namespace VixenPlus {
 
 
         private void setBackgroundSequenceToolStripMenuItem_Click(object sender, EventArgs e) {
-            var dialog = new BackgroundSequenceDialog(_preferences.GetString("BackgroundSequence"), Paths.SequencePath);
-            if (dialog.ShowDialog() == DialogResult.OK) {
-                _preferences.SetString("BackgroundSequence", dialog.BackgroundSequenceFileName);
-                _host.BackgroundSequenceName = dialog.BackgroundSequenceFileName;
+            using (var backgroundSequenceDialog = new BackgroundSequenceDialog(_preferences.GetString("BackgroundSequence"), Paths.SequencePath)) {
+                if (backgroundSequenceDialog.ShowDialog() != DialogResult.OK) {
+                    return;
+                }
+
+                _preferences.SetString("BackgroundSequence", backgroundSequenceDialog.BackgroundSequenceFileName);
+                _host.BackgroundSequenceName = backgroundSequenceDialog.BackgroundSequenceFileName;
             }
-            dialog.Dispose();
         }
 
 
@@ -803,7 +806,6 @@ namespace VixenPlus {
         }
 
 
-
         private static void CheckIfFirstRun() {
             if (File.Exists(Paths.DataDir)) {
                 return;
@@ -827,13 +829,13 @@ namespace VixenPlus {
 
 
         private void setSoundDeviceToolStripMenuItem_Click(object sender, EventArgs e) {
-            var dialog = new SoundDeviceDialog(_preferences);
-            dialog.ShowDialog();
-            dialog.Dispose();
+            using (var soundDeviceDialog = new SoundDeviceDialog(_preferences)) {
+                soundDeviceDialog.ShowDialog();
+            }
         }
 
 
-        private void SetTimerTraceFlag() {
+        private static void SetTimerTraceFlag() {
             if (((Host.GetDebugValue("TraceTimers") == bool.TrueString) && (DateTime.Now >= DateTime.Parse(Host.GetDebugValue("TraceStart")))) &&
                 (DateTime.Now <= DateTime.Parse(Host.GetDebugValue("TraceEnd")))) {
                 Host.SetDebugValue("TimerTrace");
@@ -877,19 +879,19 @@ namespace VixenPlus {
             if (!File.Exists(baseFilePath)) {
                 return;
             }
-            var integer = _preferences.GetInteger("HistoryImages");
-            if (integer == 0) {
+            var maxBackupCount = _preferences.GetInteger("HistoryImages");
+            if (maxBackupCount == 0) {
                 return;
             }
-            var files = Directory.GetFiles(Paths.SequencePath, Path.GetFileName(baseFilePath) + ".bak*");
-            var num2 = files.Length + 1;
-            if (files.Length >= integer) {
-                num2--;
-                for (var i = 2; i <= integer; i++) {
+            var backupFiles = Directory.GetFiles(Paths.SequencePath, Path.GetFileName(baseFilePath) + ".bak*");
+            var nextBackupCount = backupFiles.Length + 1;
+            if (backupFiles.Length >= maxBackupCount) {
+                nextBackupCount--;
+                for (var i = 2; i <= maxBackupCount; i++) {
                     File.Copy(string.Format("{0}.bak{1}", baseFilePath, i), string.Format("{0}.bak{1}", baseFilePath, i - 1), true);
                 }
             }
-            File.Copy(baseFilePath, string.Format("{0}.bak{1}", baseFilePath, num2), true);
+            File.Copy(baseFilePath, string.Format("{0}.bak{1}", baseFilePath, nextBackupCount), true);
         }
 
 
