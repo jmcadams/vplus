@@ -10,6 +10,7 @@ namespace CommonUtils {
         public const int IndexRowsOrHeight = 0;
         public const int IndexColsOrWidth = 1;
         public const byte Cell8BitMax = 255;
+        public const byte Cell8BitMin = 0;
         public const int MillsPerSecond = 1000;
         public const int MillsPerMinute = 60 * MillsPerSecond;
 
