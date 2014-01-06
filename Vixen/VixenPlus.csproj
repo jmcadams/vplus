@@ -875,6 +875,7 @@
   <ItemGroup>
     <Content Include="Resources\nutcracker.png" />
     <Content Include="Resources\paste bool.png" />
+    <None Include="Resources\pastePreview.png" />
     <Content Include="Resources\test channels.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
