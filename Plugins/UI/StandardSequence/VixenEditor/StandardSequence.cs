@@ -1172,6 +1172,7 @@ namespace VixenEditor {
             toolStripComboBoxColumnZoom.ComboBox.MouseWheel += comboBox_MouseWheel;
             toolStripComboBoxRowZoom.ComboBox.MouseWheel += comboBox_MouseWheel;
             toolStripComboBoxChannelOrder.ComboBox.MouseWheel += comboBox_MouseWheel;
+            cbPastePreview.ComboBox.MouseWheel += comboBox_MouseWheel;
             cbGroups.MouseWheel += comboBox_MouseWheel;
             // ReSharper restore PossibleNullReferenceException
 
@@ -1188,6 +1189,7 @@ namespace VixenEditor {
                     toolStripComboBoxRowZoom.SelectedIndex = index;
                 }
             }
+            cbPastePreview.SelectedIndex = 0;
             if (_sequence.WindowWidth != 0) {
                 Width = _sequence.WindowWidth;
             }
@@ -3122,6 +3124,7 @@ namespace VixenEditor {
             toolStripComboBoxColumnZoom.ComboBox.MouseWheel -= comboBox_MouseWheel;
             toolStripComboBoxRowZoom.ComboBox.MouseWheel -= comboBox_MouseWheel;
             toolStripComboBoxChannelOrder.ComboBox.MouseWheel -= comboBox_MouseWheel;
+            cbPastePreview.ComboBox.MouseWheel -= comboBox_MouseWheel;
             // ReSharper restore PossibleNullReferenceException
             cbGroups.MouseWheel -= comboBox_MouseWheel;
         }
@@ -5104,10 +5107,24 @@ namespace VixenEditor {
             _preferences.SaveSettings();
         }
 
-        private void pastePreviewToolStripMenuItem_Click(object sender, EventArgs e) {
-            var tsmi = sender as ToolStripMenuItem;
-            if (null != tsmi) {
-                Debug.Print(tsmi.Name);
+        private void pastePreviewItemChanged_Click(object sender, EventArgs e) {
+            UpdatePastePreviewMenu(cbPastePreview.SelectedItem.ToString());
+        }
+
+        private void pastePreviewItem_Click(object sender, EventArgs e) {
+            var item = sender as ToolStripDropDownItem;
+            if (null == item) {
+                return;
+            }
+
+            UpdatePastePreviewMenu(item.Text);
+            cbPastePreview.SelectedIndex = pastePreviewToolStripMenuItem.DropDownItems.IndexOf(item);
+        }
+
+
+        private void UpdatePastePreviewMenu(string item) {
+            foreach (ToolStripMenuItem ddi in pastePreviewToolStripMenuItem.DropDownItems) {
+                ddi.Checked = ddi.Text == item;
             }
         }
     }
