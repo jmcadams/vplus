@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Globalization;
@@ -32,6 +33,7 @@ namespace VixenEditor {
         private bool _showingGradient;
         private bool _showingOutputs;
         private bool _zoomChangedByGroup;
+        private bool _ctrlShiftPressed;
 
         private byte _drawingLevel;
         
@@ -125,6 +127,13 @@ namespace VixenEditor {
         private const float AudioOneQtr = 0.25f;
 
         private const int CaretSize = 5;
+        private const int GridSmall = 20;
+        private const int GridMedium = 25;
+        private const int GridLarge = 50;
+        private const int GridFontSmall = 5;
+        private const int GridFontMedium = 6;
+        private const int GridFontLarge = 8;
+        private const int GridFontDefault = 10;
         private const int SemiTransparent = 154;
         private const int WaveformOffset = 6;
         private const int WaveformHiddenSize = 60;
@@ -3118,6 +3127,7 @@ namespace VixenEditor {
         }
 
 
+
         private void StandardSequence_KeyDown(object sender, KeyEventArgs keyEvent) {
             HandelGlobalKeys(keyEvent);
 
@@ -3131,13 +3141,44 @@ namespace VixenEditor {
 
                 if (!keyEvent.Handled && isNotRunning && pictureBoxGrid.Focused) {
                     HandleIntensityAdjustKeys(keyEvent);
-                    if (!keyEvent.Handled) HandleAtoZKeys(keyEvent);
+                    if (!keyEvent.Handled) {
+                        HandleAtoZKeys(keyEvent);
+                    }
+                    if (!keyEvent.Handled) {
+                        HandleCtrlShift(keyEvent);
+                    }
                 }
             }
 
             if (!keyEvent.Handled && isNotRunning && pictureBoxChannels.Focused && SelectedChannel != null) {
                 HandleChannelKeyPress(keyEvent);
             }
+        }
+
+
+        private void HandleCtrlShift(KeyEventArgs keyEvent) {
+            if (_ctrlShiftPressed || ((ModifierKeys & Keys.Shift) != Keys.Shift)) {
+                return;
+            }
+
+            keyEvent.Handled = true;
+            _ctrlShiftPressed = true;
+            Debug.Print("Down");
+            toolStripButtonOpaquePaste_Click(null, null);
+            //pictureBoxGrid.Invalidate(RangeToRectangle(_selectedCells));
+        }
+
+
+        private void StandardSequence_KeyUp(object sender, KeyEventArgs keyEvent) {
+            if (!_ctrlShiftPressed && keyEvent.KeyCode != Keys.Shift) {
+                return;
+            }
+
+            keyEvent.Handled = true;
+            _ctrlShiftPressed = false;
+            Debug.Print("Up");
+            toolStripButtonUndo_Click(null, null);
+            //pictureBoxGrid.Invalidate(RangeToRectangle(_selectedCells));
         }
 
 
@@ -3727,7 +3768,7 @@ namespace VixenEditor {
                             MessageBox.Show(Resources.InvalidNumber, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             isValid = false;
                         }
-                        if ((result >= 0) && (result <= 255)) {
+                        if ((result >= Utils.Cell8BitMin) && (result <= Utils.Cell8BitMax)) {
                             continue;
                         }
                         MessageBox.Show(Resources.InvalidValue, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -3745,7 +3786,7 @@ namespace VixenEditor {
                         }
                         try {
                             result = Convert.ToSingle(dialog.Response).ToValue();
-                            if ((result >= 0) && (result <= 255)) {
+                            if ((result >= Utils.Cell8BitMin) && (result <= Utils.Cell8BitMax)) {
                                 continue;
                             }
                             MessageBox.Show(Resources.InvalidPercentage, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -4467,7 +4508,10 @@ namespace VixenEditor {
             if (clipRect.Y < 0) 
                 return;
 
-            var fontSize = (_gridColWidth <= 20) ? 5 : ((_gridColWidth <= 25) ? 6 : ((_gridColWidth < 50) ? 8 : 10));
+            var fontSize = (_gridColWidth <= GridSmall) ? GridFontSmall :
+                ((_gridColWidth <= GridMedium) ? GridFontMedium :
+                ((_gridColWidth < GridLarge) ? GridFontLarge : GridFontDefault));
+
             using (var font = new Font(Font.FontFamily, fontSize))
             using (var brush = new SolidBrush(Color.White)) {
                 var initialX = (clipRect.X / _gridColWidth * _gridColWidth) + 1;
@@ -4481,18 +4525,19 @@ namespace VixenEditor {
                     var x = initialX;
 
                     for (var cell = startEvent; (x < clipRect.Right) && (cell < _sequence.TotalEventPeriods); cell++) {
+                        var eventValue = _sequence.EventValues[currentChannel, cell];
                         if (_showingGradient) {
-                            brush.Color = Color.FromArgb(_sequence.EventValues[currentChannel, cell], channel.Color);
+                            brush.Color = Color.FromArgb(eventValue, channel.Color);
                             g.FillRectangle(brush, x, y, _gridColWidth - 1, _gridRowHeight - 1);
                         }
                         else {
-                            var height = ((_gridRowHeight - 1) * _sequence.EventValues[currentChannel, cell]) / 255;
-                            brush.Color = Color.FromArgb(255, channel.Color);
+                            brush.Color = Color.FromArgb(Utils.Cell8BitMax, channel.Color);
+                            var height = ((_gridRowHeight - 1) * eventValue) / Utils.Cell8BitMax;
                             g.FillRectangle(brush, x, ((y + _gridRowHeight) - 1) - height, _gridColWidth - 1, height);
                         }
 
                         string cellIntensity;
-                        if (_showCellText && (GetCellIntensity(cell, channelIndex, out cellIntensity) > 0)) {
+                        if (_showCellText && (GetCellIntensity(cell, channelIndex, out cellIntensity) > Utils.Cell8BitMin)) {
                             g.DrawString(cellIntensity, font, Brushes.Black, new RectangleF(x, y, (_gridColWidth - 1), (_gridRowHeight - 1)));
                         }
                         x += _gridColWidth;
@@ -5057,6 +5102,13 @@ namespace VixenEditor {
 
             ToolStripManager.SaveSettings(this, _preferences.XmlDoc.DocumentElement);
             _preferences.SaveSettings();
+        }
+
+        private void pastePreviewToolStripMenuItem_Click(object sender, EventArgs e) {
+            var tsmi = sender as ToolStripMenuItem;
+            if (null != tsmi) {
+                Debug.Print(tsmi.Name);
+            }
         }
     }
 }

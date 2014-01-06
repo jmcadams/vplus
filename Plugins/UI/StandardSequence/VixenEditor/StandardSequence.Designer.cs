@@ -1414,7 +1414,7 @@ namespace VixenEditor{
             this.toolStripMenuItem14,
             this.channelPropertiesToolStripMenuItem});
             this.contextMenuChannels.Name = "contextMenuChannels";
-            this.contextMenuChannels.Size = new System.Drawing.Size(287, 242);
+            this.contextMenuChannels.Size = new System.Drawing.Size(287, 220);
             this.contextMenuChannels.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuChannels_Opening);
             // 
             // toggleOutputChannelsToolStripMenuItem
@@ -2310,7 +2310,7 @@ namespace VixenEditor{
             this.toolStripButtonChangeIntensity});
             this.toolStripEffect.Location = new System.Drawing.Point(3, 110);
             this.toolStripEffect.Name = "toolStripEffect";
-            this.toolStripEffect.Size = new System.Drawing.Size(973, 55);
+            this.toolStripEffect.Size = new System.Drawing.Size(954, 55);
             this.toolStripEffect.TabIndex = 3;
             this.toolStripEffect.Text = "Effects";
             // 
@@ -3077,6 +3077,7 @@ namespace VixenEditor{
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StandardSequence_FormClosing);
             this.Load += new System.EventHandler(this.StandardSequence_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StandardSequence_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.StandardSequence_KeyUp);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
