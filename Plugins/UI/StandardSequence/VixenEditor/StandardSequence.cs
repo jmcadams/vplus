@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Globalization;
@@ -3159,6 +3158,23 @@ namespace VixenEditor {
         }
 
 
+        private enum PastePreviewItem {
+            Opaque = 0,
+            Transparent,
+            OR,
+            AND,
+            XOR,
+            NOR,
+            NAND,
+            XNOR,
+            Add,
+            Subtract,
+            Scale,
+            Min,
+            Max,
+            Insert
+        }
+
         private void HandleCtrlShift(KeyEventArgs keyEvent) {
             if (_ctrlShiftPressed || ((ModifierKeys & Keys.Shift) != Keys.Shift)) {
                 return;
@@ -3166,9 +3182,64 @@ namespace VixenEditor {
 
             keyEvent.Handled = true;
             _ctrlShiftPressed = true;
-            Debug.Print("Down");
-            toolStripButtonOpaquePaste_Click(null, null);
-            //pictureBoxGrid.Invalidate(RangeToRectangle(_selectedCells));
+            switch (cbPastePreview.SelectedIndex) {
+                case (int)PastePreviewItem.Opaque:
+                    toolStripButtonOpaquePaste_Click(null, null);
+                    break;
+
+                case (int)PastePreviewItem.Transparent:
+                    toolStripButtonTransparentPaste_Click(null, null);
+                    break;
+
+                case (int)PastePreviewItem.OR:
+                    toolStripMenuItemPasteOr_Click(null, null);
+                    break;
+
+                case (int)PastePreviewItem.AND:
+                    toolStripMenuItemPasteAnd_Click(null, null);
+                    break;
+
+                case (int)PastePreviewItem.XOR:
+                    toolStripMenuItemPasteXor_Click(null, null);
+                    break;
+
+                case (int)PastePreviewItem.NOR:
+                    toolStripMenuItemPasteNor_Click(null, null);
+                    break;
+
+                case (int)PastePreviewItem.NAND:
+                    toolStripMenuItemPasteNand_Click(null, null);
+                    break;
+
+                case (int)PastePreviewItem.XNOR:
+                    toolStripMenuItemPasteXnor_Click(null, null);
+                    break;
+
+                case (int)PastePreviewItem.Add:
+                    additionToolStripMenuItem_Click(null, null);
+                    break;
+
+                case (int)PastePreviewItem.Subtract:
+                    subtractionToolStripMenuItem_Click(null, null);
+                    break;
+
+                case (int)PastePreviewItem.Scale:
+                    scaleToolStripMenuItem_Click(null, null);
+                    break;
+
+                case (int)PastePreviewItem.Min:
+                    minToolStripMenuItem_Click(null, null);
+                    break;
+
+                case (int)PastePreviewItem.Max:
+                    maxToolStripMenuItem_Click(null, null);
+                    break;
+
+                case (int)PastePreviewItem.Insert:
+                    toolStripButtonInsertPaste_Click(null, null);
+                    break;
+
+            }
         }
 
 
@@ -3179,9 +3250,7 @@ namespace VixenEditor {
 
             keyEvent.Handled = true;
             _ctrlShiftPressed = false;
-            Debug.Print("Up");
             toolStripButtonUndo_Click(null, null);
-            //pictureBoxGrid.Invalidate(RangeToRectangle(_selectedCells));
         }
 
 

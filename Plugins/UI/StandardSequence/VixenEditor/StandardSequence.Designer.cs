@@ -2628,7 +2628,7 @@ namespace VixenEditor{
             this.toolStripButtonRedo});
             this.toolStripEditing.Location = new System.Drawing.Point(3, 165);
             this.toolStripEditing.Name = "toolStripEditing";
-            this.toolStripEditing.Size = new System.Drawing.Size(825, 55);
+            this.toolStripEditing.Size = new System.Drawing.Size(856, 55);
             this.toolStripEditing.TabIndex = 6;
             this.toolStripEditing.Text = "Editing";
             // 
