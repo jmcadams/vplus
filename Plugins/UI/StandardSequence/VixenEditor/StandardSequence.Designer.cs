@@ -3197,7 +3197,7 @@ namespace VixenEditor{
             // positionTimer
             // 
             this.positionTimer.Interval = 1;
-            this.positionTimer.Tick += new System.EventHandler(this.m_positionTimer_Tick);
+            this.positionTimer.Tick += new System.EventHandler(this.positionTimer_Tick);
             // 
             // pictureBoxChannels
             // 
