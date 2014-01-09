@@ -1,3 +1,6 @@
+09 JAN 2014 - V 0.2.9.1
+   Bug #132 - Fixed - Pressing shift for paste preview could cause data to be undone.  Now useing F3 key to preview.
+
 08 JAN 2014 - V 0.2.8.1
    Bug #131 - Fixed - Crash when changing sort order on toolbar and then changing again in profile manager.
    Added two new preference items under the general tab

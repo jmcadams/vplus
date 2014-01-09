@@ -3174,7 +3174,7 @@ namespace VixenEditor {
         private bool _dirty;
 
         private void HandleCtrlShift(KeyEventArgs keyEvent) {
-            if (_ctrlShiftPressed || ((ModifierKeys & Keys.Shift) != Keys.Shift)) {
+            if (_ctrlShiftPressed || keyEvent.KeyCode != Keys.F3) {
                 return;
             }
 
@@ -3243,7 +3243,7 @@ namespace VixenEditor {
 
 
         private void StandardSequence_KeyUp(object sender, KeyEventArgs keyEvent) {
-            if (!_ctrlShiftPressed && keyEvent.KeyCode != Keys.Shift) {
+            if (!_ctrlShiftPressed && keyEvent.KeyCode != Keys.F3) {
                 return;
             }
 
