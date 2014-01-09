@@ -1936,8 +1936,7 @@ namespace VixenEditor {
         private void pictureBoxGrid_MouseMove(object sender, MouseEventArgs e) {
             var cellX = Math.Min((Math.Max(e.X / _gridColWidth, 0) + hScrollBar1.Value), _sequence.TotalEventPeriods - 1);
             var cellY = Math.Min((Math.Max(e.Y / _gridRowHeight, 0) + vScrollBar1.Value), _sequence.ChannelCount - 1);
-            tsbPlayPoint.Enabled = _selectedCells.Width > 0;
-            tsbPlayRange.Enabled = _selectedCells.Width > 1;
+            SetSpecialPlayButtons();
 
             if (cellX == _lastCellX && cellY == _lastCellY && pictureBoxGrid.ClientRectangle.Contains(e.Location)) {
                 return;
@@ -1959,6 +1958,12 @@ namespace VixenEditor {
             UpdateToolStrip(cellX, cellY);
             _lastCellX = cellX;
             _lastCellY = cellY;
+        }
+
+
+        private void SetSpecialPlayButtons() {
+            tsbPlayPoint.Enabled = _selectedCells.Width > 0;
+            tsbPlayRange.Enabled = _selectedCells.Width > 1 || (_eventMarks[1] != -1 && _eventMarks[9] != -1);
         }
 
 
@@ -3270,6 +3275,7 @@ namespace VixenEditor {
             else if (_eventMarks[index] != -1) {
                 hScrollBar1.Value = _eventMarks[index];
             }
+            SetSpecialPlayButtons();
         }
 
 
@@ -4056,9 +4062,11 @@ namespace VixenEditor {
                 return;
             }
 
+            var startEvent = _selectedCells.Width <= 1 ? Math.Min(_eventMarks[1], _eventMarks[9]) : _selectedCells.Left;
+            var endEvent = _selectedCells.Width <= 1 ? Math.Max(_eventMarks[1], _eventMarks[9]) + 1 : _selectedCells.Right;
+
             SetEditingState(false);
-            _executionInterface.ExecutePlay(_executionContextHandle, _selectedCells.Left * _sequence.EventPeriod,
-                                            _selectedCells.Right * _sequence.EventPeriod);
+            _executionInterface.ExecutePlay(_executionContextHandle, startEvent * _sequence.EventPeriod, endEvent * _sequence.EventPeriod);
             UpdatePlayButtons(PlayControl.PlayRange);
             positionTimer.Start();
         }
@@ -4967,8 +4975,7 @@ namespace VixenEditor {
 
         private void selectNoneToolStripMenuItem_Click(object sender, EventArgs e) {
             _selectedCells.Width = _selectedCells.Height = 0;
-            tsbPlayPoint.Enabled = false;
-            tsbPlayRange.Enabled = false;
+            SetSpecialPlayButtons();
             EraseSelectedRange();
             pictureBoxGrid.Refresh();
         }
