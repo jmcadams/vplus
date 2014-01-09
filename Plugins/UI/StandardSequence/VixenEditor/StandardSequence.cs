@@ -73,7 +73,7 @@ namespace VixenEditor {
         private int _visibleRowCount;
         private int _waveformMaxAmplitude;
         private readonly int _waveformCenterLine;
-        private readonly int[] _bookmarks;
+        private readonly List<int> _eventMarks;
         
         private IntensityAdjustDialog _intensityAdjustDialog;
         
@@ -193,7 +193,7 @@ namespace VixenEditor {
             _waveformCenterLine = 36;
             _showingOutputs = false;
             _selectedLineIndex = 0;
-            _bookmarks = new[] {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+            _eventMarks = new List<int> {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
             _showingGradient = true;
             _showWaveformZeroLine = true;
             _actualLevels = false;
@@ -631,14 +631,12 @@ namespace VixenEditor {
         }
 
 
-        //Bug #10x? - Context menu doesn't work right.
         private void CopyToEventValues(int startCol, int startRow, int width, int height, byte value) {
             var endRow = startRow + height;
             var endCol = startCol + width;
 
             for (var row = startRow; row < endRow; row++) {
                 var channel = _sequence.Channels[row].OutputChannel;
-                //GetEventFromChannelNumber(row);
                 for (var col = startCol; col < endCol; col++) {
                     _sequence.EventValues[channel, col] = value;
                 }
@@ -1336,9 +1334,8 @@ namespace VixenEditor {
             }
         }
 
-        //^^^^^^ OKAY ^^^^^^
 
-        private void m_positionTimer_Tick(object sender, EventArgs e) {
+        private void positionTimer_Tick(object sender, EventArgs e) {
             int executionPosition;
 
             if (_executionInterface.EngineStatus(_executionContextHandle, out executionPosition) == Utils.ExecutionStopped) {
@@ -1366,10 +1363,6 @@ namespace VixenEditor {
                     if (_position >= hScrollBar1.Minimum && _position <= hScrollBar1.Maximum) {
                         hScrollBar1.Value = _position;
                     }
-                    //else {
-                    //    string.Format("Execution position: {0} Period: {1} Computed: {2}", executionPosition,
-                    //                  _sequence.EventPeriod, _position).Log();
-                    //}  // This code was put here for diagnosing bug #114
                     toolStripLabelExecutionPoint.Text = executionPosition.FormatNoMills();
                 }
                 else {
@@ -2319,6 +2312,11 @@ namespace VixenEditor {
                         e.Graphics.DrawString(time, _timeFont, Brushes.White, x - (ef.Width / 2f), topLeftPt.Y - ef.Height - CaretSize);
                     }
                     currentMills += Utils.MillsPerSecond;
+                    foreach (var b in _eventMarks.Where(b => b != -1)) {
+                        if (b == currentMills / Utils.MillsPerSecond) {
+                            e.Graphics.DrawLine(Pens.Green, topLeftPt, bottomRightPt);
+                        }
+                    }
                 }
             }
 
@@ -2337,6 +2335,16 @@ namespace VixenEditor {
                     bottomRightPt.X = x;
                     e.Graphics.DrawLine(Pens.Red, topLeftPt, bottomRightPt);
                 }
+            }
+
+            drawingRect.Height = pictureBoxTime.Height;
+            //Draw Bookmarks
+            foreach (var x in _eventMarks.Where(b => b != -1).Select(b => _gridColWidth * (b - hScrollBar1.Value)).Where(x => x < pictureBoxTime.Width)) {
+                topLeftPt.X = x;
+                bottomRightPt.X = x;
+                e.Graphics.DrawLine(Pens.Green, topLeftPt, bottomRightPt);
+                var num = _eventMarks.IndexOf((x / _gridColWidth) + hScrollBar1.Value);
+                e.Graphics.DrawString(num.ToString(CultureInfo.InvariantCulture), _timeFont, Brushes.White, x + 1, topLeftPt.Y);
             }
 
             //Draw the column caret
@@ -2699,10 +2707,6 @@ namespace VixenEditor {
                     _selectedCells.Height++;
                 }
                 vScrollBar1.Value++;
-                //// Ugly, but it is the only way I've found that we seem to be able to catch that the mouse button is not down anymore
-                //// when it goes across the grid bounds:(  Please refactor if you know a better way.
-                // 22 JLY 13 Application.DoEvents();
-                // 22 JLY 13 - Bug #101 public beta: http://www.diychristmas.org/vb1/showthread.php?558-VixenPlus-Latest-Release-Link&p=3977&viewfull=1#post3977
             }
         }
 
@@ -2714,10 +2718,6 @@ namespace VixenEditor {
                 _selectedRange.Width--;
                 _selectedCells = _selectedRange.NormalizeRect();
                 hScrollBar1.Value--;
-                //// Ugly, but it is the only way I've found that we seem to be able to catch that the mouse button is not down anymore
-                //// when it goes across the grid bounds:(  Please refactor if you know a better way.
-                // 22 JLY 13 Application.DoEvents();
-                // 22 JLY 13 - Bug #101 public beta: http://www.diychristmas.org/vb1/showthread.php?558-VixenPlus-Latest-Release-Link&p=3977&viewfull=1#post3977
             }
         }
 
@@ -2743,10 +2743,6 @@ namespace VixenEditor {
                     _selectedCells.Width++;
                 }
                 hScrollBar1.Value++;
-                //// Ugly, but it is the only way I've found that we seem to be able to catch that the mouse button is not down anymore
-                //// when it goes across the grid bounds:(  Please refactor if you know a better way.
-                // 22 JLY 13 Application.DoEvents();
-                // 22 JLY 13 - Bug #101 public beta: http://www.diychristmas.org/vb1/showthread.php?558-VixenPlus-Latest-Release-Link&p=3977&viewfull=1#post3977
             }
         }
 
@@ -2758,10 +2754,6 @@ namespace VixenEditor {
                 _selectedRange.Height--;
                 _selectedCells = _selectedRange.NormalizeRect();
                 vScrollBar1.Value--;
-                //// Ugly, but it is the only way I've found that we seem to be able to catch that the mouse button is not down anymore
-                //// when it goes across the grid bounds:(  Please refactor if you know a better way.
-                // 22 JLY 13 Application.DoEvents();
-                // 22 JLY 13 - Bug #101 public beta: http://www.diychristmas.org/vb1/showthread.php?558-VixenPlus-Latest-Release-Link&p=3977&viewfull=1#post3977
             }
         }
 
@@ -3014,7 +3006,6 @@ namespace VixenEditor {
         }
 
 
-        //TODO: If you don't make any changes, don't set IsDirty
         private void ShowChannelProperties() {
             var channelsToShow = (ModifierKeys & Keys.Shift) == Keys.Shift ? _sequence.Channels : _sequence.FullChannels;
             using (var dialog = new ChannelPropertyDialog(channelsToShow, SelectedChannel, true)) {
@@ -3258,9 +3249,8 @@ namespace VixenEditor {
         }
 
 
-        //TODO: implement someting in the UI to show what these do.
         private void HandleBookmarkKeys(KeyEventArgs e) {
-            if (!e.Control || e.KeyCode < Keys.D0 || e.KeyCode > Keys.D9) {
+            if (!e.Control || e.KeyCode < Keys.D1 || e.KeyCode > Keys.D9) {
                 return;
             }
 
@@ -3268,11 +3258,17 @@ namespace VixenEditor {
             e.Handled = true;
 
             if (e.Shift) {
-                _bookmarks[index] = (_bookmarks[index] == _selectedCells.Left) ? -1 : _selectedCells.Left;
+                var eventCell = _selectedCells.Left;
+                for (var i = 0; i < 10; i++) {
+                    if (i != index && _eventMarks[i] == eventCell) {
+                        _eventMarks[i] = -1;
+                    }
+                }
+                _eventMarks[index] = (_eventMarks[index] == eventCell) ? -1 : eventCell;
                 pictureBoxTime.Refresh();
             }
-            else if (_bookmarks[index] != -1) {
-                hScrollBar1.Value = _bookmarks[index];
+            else if (_eventMarks[index] != -1) {
+                hScrollBar1.Value = _eventMarks[index];
             }
         }
 
@@ -4583,7 +4579,7 @@ namespace VixenEditor {
                 return;
             }
 
-            //potential fix for bug #101 
+            //fix for bug #101 
             //http://www.diychristmas.org/vb1/showthread.php?558-VixenPlus-Latest-Release-Link&p=3977&viewfull=1#post3977
             if (clipRect.Y < 0) 
                 return;

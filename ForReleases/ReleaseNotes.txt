@@ -5,6 +5,8 @@ xx JAN 2014 - V 0.2.X.1
       2) Number of recent files under the File menu (5 to 20)
    Save crosshair state (A 2014 Feature Request!)
    Save waveform state (A 2014 Feature Request!)
+   Paste Preview - Hold down the shift key when in the event grid to see how pasting will look before pasting!
+   Event bookmarks. Hold down shift-ctrl-1 through shift-ctrl-9 to set/reset a event bookmark, and press ctrl-1 through ctrl-9 to move there.
    Minor internal refactoring.
 
 01 JAN 2014 - V 0.2.1.1
