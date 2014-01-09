@@ -233,11 +233,11 @@ namespace VixenEditor {
 
 
         private void SetUndoRedo(bool setUndo, bool setRedo) {
-            toolStripButtonUndo.Enabled = undoToolStripMenuItem.Enabled = setUndo;
+            toolStripButtonUndo.Enabled = undoToolStripMenuItem.Enabled = _undoStack.Count > 0;
             if (!setUndo) _undoStack.Clear();
             UpdateUndoText();
-            toolStripButtonRedo.Enabled = redoToolStripMenuItem.Enabled = setRedo;
-            if (!setRedo) _redoStack.Clear();
+            toolStripButtonRedo.Enabled = redoToolStripMenuItem.Enabled = _redoStack.Count > 0;
+            if (!setRedo && !_ctrlShiftPressed) _redoStack.Clear();
             UpdateRedoText();
         }
 
@@ -3175,11 +3175,14 @@ namespace VixenEditor {
             Insert
         }
 
+        private bool _dirty;
+
         private void HandleCtrlShift(KeyEventArgs keyEvent) {
             if (_ctrlShiftPressed || ((ModifierKeys & Keys.Shift) != Keys.Shift)) {
                 return;
             }
 
+            _dirty = IsDirty;
             keyEvent.Handled = true;
             _ctrlShiftPressed = true;
             switch (cbPastePreview.SelectedIndex) {
@@ -3249,8 +3252,9 @@ namespace VixenEditor {
             }
 
             keyEvent.Handled = true;
-            _ctrlShiftPressed = false;
             toolStripButtonUndo_Click(null, null);
+            _ctrlShiftPressed = false;
+            IsDirty = _dirty;
         }
 
 
@@ -4541,8 +4545,12 @@ namespace VixenEditor {
             }
 
             UpdateUndoText();
-            _redoStack.Push(redo);
-            toolStripButtonRedo.Enabled = redoToolStripMenuItem.Enabled = true;
+
+            if (!_ctrlShiftPressed) {
+                _redoStack.Push(redo);
+            }
+
+            toolStripButtonRedo.Enabled = redoToolStripMenuItem.Enabled = _redoStack.Count > 0;
             UpdateRedoText();
         }
 
@@ -5195,6 +5203,7 @@ namespace VixenEditor {
             foreach (ToolStripMenuItem ddi in pastePreviewToolStripMenuItem.DropDownItems) {
                 ddi.Checked = ddi.Text == item;
             }
+            pictureBoxGrid.Focus();
         }
     }
 }
