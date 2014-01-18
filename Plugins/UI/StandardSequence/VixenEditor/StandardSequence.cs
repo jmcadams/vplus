@@ -3812,16 +3812,17 @@ namespace VixenEditor {
             var oldColumnOffset = _selectedCells.Left;
             var newColumnOffset = oldColumnOffset + cols;
             var maxPeriods = Math.Min(_sequence.TotalEventPeriods - newColumnOffset, _sequence.TotalEventPeriods - oldColumnOffset);
+            AddUndoItem(new Rectangle(_selectedCells.X, _selectedCells.Y, _sequence.TotalEventPeriods - _selectedCells.X, rows),
+                UndoOriginalBehavior.Insertion, Resources.UndoText_InsertPaste);
 
             for (var row = 0; (row < rows) && ((_selectedCells.Top + row) < _sequence.ChannelCount); row++) {
-                var channel = GetEventFromChannelNumber(row);
+                var channel = GetEventFromChannelNumber(_selectedCells.Top + row);
                 for (var col = maxPeriods - 1; col >= 0; col--) {
                     _sequence.EventValues[channel, newColumnOffset + col] = _sequence.EventValues[channel, oldColumnOffset + col];
                 }
             }
 
             PasteOver();
-            AddUndoItem(new Rectangle(_selectedCells.X, _selectedCells.Y, cols, rows), UndoOriginalBehavior.Insertion, Resources.UndoText_InsertPaste);
         }
 
 
@@ -4532,6 +4533,7 @@ namespace VixenEditor {
 
             switch (undo.Behavior) {
                 case UndoOriginalBehavior.Overwrite:
+                case UndoOriginalBehavior.Insertion:
                     DisjointedOverwrite(undo.ColumnOffset, undo.Data, undo.ReferencedChannels);
                     pictureBoxGrid.Refresh();
                     break;
@@ -4539,11 +4541,6 @@ namespace VixenEditor {
                 case UndoOriginalBehavior.Removal:
                     DisjointedInsert(undo.ColumnOffset, width, height, undo.ReferencedChannels);
                     DisjointedOverwrite(undo.ColumnOffset, undo.Data, undo.ReferencedChannels);
-                    pictureBoxGrid.Refresh();
-                    break;
-
-                case UndoOriginalBehavior.Insertion:
-                    DisjointedRemove(undo.ColumnOffset, width, height, undo.ReferencedChannels);
                     pictureBoxGrid.Refresh();
                     break;
             }
