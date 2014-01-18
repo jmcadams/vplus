@@ -14,8 +14,8 @@ using Properties;
 namespace VixenPlus {
     // todo: this is all terribly hacky, need to revist when the time allows
     public class Group {
-        public static string AllChannels = Resources.AllChannels;
-        public static string ManageGroups = "Manage Groups";
+        public static readonly string AllChannels = Resources.AllChannels;
+        public const string ManageGroups = "Manage Groups";
         public const string GroupTextDivider = "~";
 
         private readonly List<Channel> _currentList = new List<Channel>();
@@ -24,7 +24,8 @@ namespace VixenPlus {
             return ParseGroups(Xml.LoadDocument(groupFile).DocumentElement);
         }
 
-        public static Dictionary<string, GroupData> ParseGroups(XmlElement doc){
+
+        private static Dictionary<string, GroupData> ParseGroups(XmlElement doc){
             Dictionary<string, GroupData> groups = null;
             try {
                 if (doc != null && doc.ParentNode != null) {
@@ -72,13 +73,13 @@ namespace VixenPlus {
         }
 
 
-        public static string SaveGroups(Dictionary<string, GroupData> groups, string filename) {
+        public static void SaveGroups(Dictionary<string, GroupData> groups, string filename) {
             var doc = new XElement("Groups");
             foreach (var node in groups) {
                 var nodeData = node.Value;
                 var thisNode = new XElement("Group");
                 thisNode.Add(new XAttribute("Name", nodeData.Name), new XAttribute("Zoom", nodeData.Zoom),
-                             new XAttribute("Color", nodeData.GroupColor.ToArgb()));
+                    new XAttribute("Color", nodeData.GroupColor.ToArgb()));
                 var previousType = String.Empty;
                 var treeData = new StringBuilder();
                 foreach (var child in nodeData.GroupChannels.Split(new[] {','})) {
@@ -103,10 +104,9 @@ namespace VixenPlus {
                 }
                 doc.Add(thisNode);
             }
+            // ReSharper disable once AssignNullToNotNullAttribute
             var groupFilename = (Path.Combine(Path.GetDirectoryName(filename), Path.GetFileNameWithoutExtension(filename) + Vendor.GroupExtension));
             doc.Save(groupFilename);
-
-            return groupFilename;
         }
 
 

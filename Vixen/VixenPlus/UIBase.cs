@@ -46,6 +46,7 @@ namespace VixenPlus {
         }
 
 
+        // ReSharper disable UnusedAutoPropertyAccessor.Global
         public virtual string Author { get; set; }
 
         public virtual string Description { get; set; }
@@ -53,6 +54,7 @@ namespace VixenPlus {
         public virtual string FileExtension { get; set; }
 
         public virtual string FileTypeDescription { get; set; }
+        // ReSharper restore UnusedAutoPropertyAccessor.Global
 
         public bool IsDirty {
             get { return _isDirty; }
