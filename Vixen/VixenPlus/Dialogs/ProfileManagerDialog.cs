@@ -245,6 +245,7 @@ namespace VixenPlus.Dialogs {
                 for (var i = 0; i < channels.Count; i++) {
                     channels[i].Color = channelColors[i];
                 }
+                treeViewProfile.Refresh();
             }
         }
 
