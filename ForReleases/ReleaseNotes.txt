@@ -1,3 +1,7 @@
+XX JAN 2014 - V X.X.X.X
+   Bug #133 - FIXED - Insert paste is not working correctly and undo doesn't undo every change, you lose events at the end of the line.
+   Bug #134 - FIXED - Color's don't update in profile editing screen when you exit from color dialog.
+
 09 JAN 2014 - V 0.2.9.1
    Bug #132 - Fixed - Pressing shift for paste preview could cause data to be undone.  Now useing F3 key to do paste preview.
 
