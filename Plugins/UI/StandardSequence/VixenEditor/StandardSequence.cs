@@ -5205,5 +5205,23 @@ namespace VixenEditor {
             }
             pictureBoxGrid.Focus();
         }
+
+        private void selectAllChannelsForPeriod_Click(object sender, EventArgs e) {
+            _selectedCells.X = _selectedEventIndex;
+            _selectedCells.Width = 1;
+
+            _selectedCells.Y = 0;
+            _selectedCells.Height = _sequence.ChannelCount;
+            pictureBoxGrid.Invalidate();
+        }
+
+        private void selectAllEventsMenuItem_Click(object sender, EventArgs e) {
+            _selectedCells.X = 0;
+            _selectedCells.Width = _sequence.TotalEventPeriods;
+
+            _selectedCells.Y = _selectedLineIndex;
+            _selectedCells.Height = 1;
+            pictureBoxGrid.Invalidate();
+        }
     }
 }
