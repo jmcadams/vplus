@@ -25,10 +25,22 @@ namespace VixenPlus {
             Name = CanDoDimming ? channelNode.Attributes["name"].Value : channelNode.InnerText;
             // ReSharper restore PossibleNullReferenceException
 
-            Color = Color.FromArgb(Convert.ToInt32(channelNode.Attributes["color"].Value));
-            OutputChannel = Convert.ToInt32(channelNode.Attributes["output"].Value);
-            Id = ulong.Parse(channelNode.Attributes["id"].Value);
-            Enabled = bool.Parse(channelNode.Attributes["enabled"].Value);
+            var elementName = "color";
+            try {
+                Color = Color.FromArgb(Convert.ToInt32(channelNode.Attributes[elementName].Value));
+                elementName = "output";
+                OutputChannel = Convert.ToInt32(channelNode.Attributes[elementName].Value);
+                elementName = "id";
+                Id = ulong.Parse(channelNode.Attributes[elementName].Value);
+                elementName = "enabled";
+                Enabled = bool.Parse(channelNode.Attributes[elementName].Value);
+            }
+            catch (NullReferenceException e) {
+                MessageBox.Show(String.Format("Embedded or attached profile is missing '{0}' elenment on channel node.\n\nExiting {1}", elementName, Vendor.ProductName), "Missing element");
+                throw new NullReferenceException(String.Format("Channel XML is missing '{0}' element", elementName));
+            }
+            
+            
             if (channelNode["Curve"] == null) {
                 return;
             }
