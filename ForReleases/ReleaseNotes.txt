@@ -1,4 +1,4 @@
-XX JAN 2014 - V X.X.X.X
+31 JAN 2014 - V 0.2.31.1
    Bug #133 - FIXED - Insert paste is not working correctly and undo doesn't undo every change, you lose events at the end of the line.
    Bug #134 - FIXED - Color's don't update in profile editing screen when you exit from color dialog.
    Added more detail to channel XML checking if a Null Reference Exception is thrown.
@@ -91,7 +91,7 @@ XX JAN 2014 - V X.X.X.X
     Bug #12 - Updating sequence length on the tool bar did not change sequence.  (Need to press Enter)
         There were various presumptions that I made about this tool and that impacted the implementation, mimic
         what KC did in 2.5.
-    Bug #13 - Updating channel count on the toll bar did not change channel count.  (Need to press Enter) There
+    Bug #13 - Updating channel count on the tool bar did not change channel count.  (Need to press Enter) There
         were various presumptions that I made about this tool and that impacted the implementation, mimic what 
         KC did in 2.5.
     Bug #14 - Deleting a channel from a group deletes all channels with the same name.  Now check that name and
