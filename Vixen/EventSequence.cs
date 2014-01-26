@@ -103,9 +103,9 @@ public class EventSequence : IScheduledObject {
 
 
 
-    public int ChannelWidth { get; set; }
+    public int ChannelWidth { get; private set; }
     public Audio Audio { get; set; }
-    public EngineType EngineType { get; set; }
+    public EngineType EngineType { get; private set; }
 
     public int EventPeriod {
         get { return _eventPeriod; }
@@ -119,7 +119,7 @@ public class EventSequence : IScheduledObject {
         get { return (_eventPeriod != 0) ? Utils.MillsPerSecond / _eventPeriod : 0; }
     }
 
-    public byte[,] EventValues { get; set; }
+    public byte[,] EventValues { get; private set; }
 
     public int Rows {
         get { return EventValues.GetLength(Utils.IndexRowsOrHeight); }
@@ -129,8 +129,8 @@ public class EventSequence : IScheduledObject {
         get { return EventValues.GetLength(Utils.IndexColsOrWidth); }
     }
 
-    public SequenceExtensions Extensions { get; private set; }
-    public LoadableData LoadableData { get; private set; }
+    private SequenceExtensions Extensions { get; set; }
+    private LoadableData LoadableData { get; set; }
 
     public byte MaximumLevel { get; set; }
 
@@ -143,9 +143,9 @@ public class EventSequence : IScheduledObject {
 
     public int TotalEventPeriods { get; private set; }
 
-    public int WindowHeight { get; set; }
+    public int WindowHeight { get; private set; }
 
-    public int WindowWidth { get; set; }
+    public int WindowWidth { get; private set; }
 
 
     public void Dispose() {
@@ -155,13 +155,13 @@ public class EventSequence : IScheduledObject {
 
     public int AudioDeviceIndex { get; set; }
 
-    public int AudioDeviceVolume { get; set; }
+    public int AudioDeviceVolume { get; private set; }
 
     public bool CanBePlayed {
         get { return true; }
     }
 
-    public string FileName { get; set; }
+    public string FileName { get; private set; }
 
     public ulong Key { get; private set; }
 
@@ -211,7 +211,7 @@ public class EventSequence : IScheduledObject {
         }
     }
 
-    public SetupData PlugInData { get; set; }
+    public SetupData PlugInData { get; private set; }
 
     public bool TreatAsLocal { get; set; }
 
@@ -304,6 +304,7 @@ public class EventSequence : IScheduledObject {
     }
 
 
+/*
     public void Save() {
         // ReSharper disable AssignNullToNotNullAttribute
         if (!Directory.Exists(Path.GetDirectoryName(FileName))) {
@@ -315,15 +316,11 @@ public class EventSequence : IScheduledObject {
             Group.SaveGroups(Groups, Profile != null ? Profile.FileName : FileName);
         }
     }
-
-
-    public void SaveTo(string fileName) {
-        SaveTo(fileName, true);
-    }
+*/
 
 
     //TODO Need to ask if this is a 2.1 or 2.5 format before saving.
-    public void SaveTo(string fileName, bool setSequenceFileName) {
+    public void SaveTo(string fileName, bool setSequenceFileName = true) {
         var contextNode = Xml.CreateXmlDocument();
         SaveToXml(contextNode);
         if (setSequenceFileName) {
@@ -434,13 +431,11 @@ public class EventSequence : IScheduledObject {
                 for (var row = 0; row < rows; row++) {
                     for (var column = 0f; column < columns; column++) {
                         byte newValue = 0;
-                        var oldColumn = 0;
                         //for (var oldColumn = 0f; oldColumn < oldColumns; oldColumn++) {
-                        newValue = Math.Max(newValue, EventValues[row, (int) ((column * oldColumns) + oldColumn)]);
+                        newValue = Math.Max(newValue, EventValues[row, (int) (column * oldColumns)]);
                         //}
-                        var newColumn = 0;
                         //for (var newColumn = 0f; newColumn < newColumns; newColumn++) {
-                        newEventValues[row, (int) ((column * newColumns) + newColumn)] = newValue;
+                        newEventValues[row, (int) (column * newColumns)] = newValue;
                         //}
                     }
                 }
@@ -606,6 +601,7 @@ public class EventSequence : IScheduledObject {
 
     public int ChannelCount {
         get { return _groupedAndSortedChannels.Count == 0 ? _fullChannels.Count : _groupedAndSortedChannels.Count; }
+/*
         set {
             while (_groupedAndSortedChannels.Count > value) {
                 _groupedAndSortedChannels.RemoveAt(value);
@@ -616,6 +612,7 @@ public class EventSequence : IScheduledObject {
             UpdateEventValueArray();
             _sortOrders.UpdateChannelCounts(value);
         }
+*/
     }
 
 
@@ -713,7 +710,9 @@ public class EventSequence : IScheduledObject {
 
     public List<Channel> Channels {
         get { return _groupedAndSortedChannels; }
+/*
         set { AssignChannelArray(value); }
+*/
     }
 
 
