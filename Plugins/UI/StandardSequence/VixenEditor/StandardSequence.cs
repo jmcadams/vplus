@@ -12,13 +12,12 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 using CommonUtils;
+
+using Dialogs;
+
 using FMOD;
-using Properties;
+using VixenPlus.Properties;
 using VixenEditor.VixenPlus;
-using VixenPlus;
-using VixenPlus.Dialogs;
-using Channel = VixenPlus.Channel;
-using SortOrder = VixenPlus.SortOrder;
 
 namespace VixenEditor {
     public partial class StandardSequence : UIBase {

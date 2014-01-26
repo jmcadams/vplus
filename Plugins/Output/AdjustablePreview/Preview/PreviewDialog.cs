@@ -28,7 +28,7 @@ namespace Preview {
             _startChannel = startChannel;
             _channelDictionary = new Dictionary<int, List<uint>>();
             _channelColors = new Color[channels.Count - startChannel];
-            var isOutputRedirected = bool.Parse(VixenPlus.Xml.GetNodeAlways(setupNode, "RedirectOutputs", "False").InnerText);
+            var isOutputRedirected = bool.Parse(global::Xml.GetNodeAlways(setupNode, "RedirectOutputs", "False").InnerText);
 
             SetChannelColors(channels, startChannel, isOutputRedirected);
             SetChannelBitmaps(channels, isOutputRedirected, setupNode.SelectNodes("Channels/Channel"));

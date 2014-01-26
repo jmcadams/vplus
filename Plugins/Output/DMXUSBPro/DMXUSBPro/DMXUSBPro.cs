@@ -1,3 +1,5 @@
+using Dialogs;
+
 namespace DMXUSBPro
 {
     using System;
@@ -5,8 +7,6 @@ namespace DMXUSBPro
     using System.Text;
     using System.Windows.Forms;
     using System.Xml;
-    using VixenPlus;
-    using VixenPlus.Dialogs;
 
     public class DmxusbPro : IEventDrivenOutputPlugIn
     {

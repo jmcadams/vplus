@@ -115,7 +115,7 @@ namespace Renard {
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = global::Properties.Resources.VixenPlus;
+            this.Icon = global::VixenPlus.Properties.Resources.VixenPlus;
             this.Name = "SetupDialog";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

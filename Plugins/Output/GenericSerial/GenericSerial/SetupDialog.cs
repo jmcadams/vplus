@@ -4,7 +4,7 @@ using System.IO.Ports;
 using System.Windows.Forms;
 using System.Xml;
 
-using Properties;
+using VixenPlus.Properties;
 
 using VixenPlus;
 

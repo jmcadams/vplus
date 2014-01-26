@@ -1,9 +1,9 @@
+using Dialogs;
+
 namespace Renard {
     using System;
     using System.IO.Ports;
     using System.Windows.Forms;
-
-    using VixenPlus.Dialogs;
 
     public partial class SetupDialog : Form {
         public SetupDialog(SerialPort selectedPort, bool holdPort) {

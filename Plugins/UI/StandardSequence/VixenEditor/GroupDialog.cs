@@ -9,8 +9,7 @@ using CommonControls;
 
 using CommonUtils;
 
-using VixenPlus;
-using VixenPlus.Dialogs;
+using Dialogs;
 
 namespace VixenEditor {
     public sealed partial class GroupDialog : Form {

@@ -9,10 +9,9 @@ using System.Xml.Linq;
 
 using CommonUtils;
 
-using NutcrackerEffectsControl;
+using Dialogs;
 
-using VixenPlus;
-using VixenPlus.Dialogs;
+using NutcrackerEffectsControl;
 
 namespace VixenEditor {
     public partial class NutcrackerControlDialog : Form {

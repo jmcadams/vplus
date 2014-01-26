@@ -8,7 +8,7 @@ using System.Xml;
 
 using CommonUtils;
 
-using Properties;
+using VixenPlus.Properties;
 
 using VixenPlus;
 

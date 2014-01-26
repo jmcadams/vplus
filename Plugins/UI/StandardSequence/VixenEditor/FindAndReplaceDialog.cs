@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Forms;
 using CommonUtils;
 
-using Properties;
+using VixenPlus.Properties;
 
 namespace VixenEditor {
 

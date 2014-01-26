@@ -1,4 +1,4 @@
-using Properties;
+using VixenPlus.Properties;
 
 namespace VixenEditor {
     using System;
