@@ -4,7 +4,7 @@ vplus
 The next generation of Vixen 2 compatible lighting control sequencer
 
     <VPlus (V+) - Vixen 2 Compatible Lighting Control Software>
-    Creative Commons Non-Commercial Share Alike (CC BY-NC-SA)
+    GNU General Public License, version 3 (GPL-3.0)
     Based upon work originally done by: K.C. Oaks and others.
 
     This program is free software: you can redistribute it and/or modify
