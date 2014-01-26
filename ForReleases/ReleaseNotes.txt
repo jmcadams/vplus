@@ -4,6 +4,9 @@ XX JAN 2014 - V X.X.X.X
    Added more detail to channel XML checking if a Null Reference Exception is thrown.
    Added the ability to select all events for a channel in the channel context menu. (Right click on a channel)
    Added the ability to select all events for a period in the event contect menu. (Right click in the waveform)
+   Updated FMOD to version 4.44.30
+   Bug #135 - FIXED - The title tag from MP3 files was not being read by FMOD properly, implemented custom solution bypassing flawed
+      FMOD implementation.
 
 09 JAN 2014 - V 0.2.9.1
    Bug #132 - Fixed - Pressing shift for paste preview could cause data to be undone.  Now useing F3 key to do paste preview.

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Timers;
@@ -118,9 +120,24 @@ namespace FMOD
 
         private string GetSoundName(FMOD.Sound sound)
         {
-            StringBuilder name = new StringBuilder(0x100);
-            sound.getName(name, name.Capacity);
-            return name.ToString().Trim();
+            //original implementation did not return all characters
+            //StringBuilder name = new StringBuilder(0x100);
+            //sound.getName(name, name.Capacity);
+
+            //begin custom implementation
+            string name = "";
+            var tagCount = 0;
+            var tagsUpdated = 0;
+            sound.getNumTags(ref tagCount, ref tagsUpdated);
+            TAG tag = new TAG();
+            for (var i = 0; i < tagCount; i++) {
+                sound.getTag(null, i, ref tag);
+                if (tag.name == "TIT2") {
+                    name = Marshal.PtrToStringAnsi(tag.data);
+                    break;
+                }
+            }
+            return name;
         }
 
         public void ImmediateFade(int durationInSeconds)
