@@ -35,7 +35,7 @@ namespace VixenPlus {
                 elementName = "enabled";
                 Enabled = bool.Parse(channelNode.Attributes[elementName].Value);
             }
-            catch (NullReferenceException e) {
+            catch (NullReferenceException) {
                 MessageBox.Show(String.Format("Embedded or attached profile is missing '{0}' elenment on channel node.\n\nExiting {1}", elementName, Vendor.ProductName), "Missing element");
                 throw new NullReferenceException(String.Format("Channel XML is missing '{0}' element", elementName));
             }
