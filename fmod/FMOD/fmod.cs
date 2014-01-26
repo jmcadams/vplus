@@ -1,6 +1,6 @@
 /* ========================================================================================== */
 /*                                                                                            */
-/* FMOD Ex - C# Wrapper . Copyright (c), Firelight Technologies Pty, Ltd. 2004-2011.          */
+/* FMOD Ex - C# Wrapper . Copyright (c), Firelight Technologies Pty, Ltd. 2004-2014.          */
 /*                                                                                            */
 /* ========================================================================================== */
 
@@ -16,8 +16,7 @@ namespace FMOD
     */
     public class VERSION
     {
-        public const int    number = 0x00044410;
-
+        public const int    number = 0x00044430;
 #if WIN64
         public const string dll    = "fmodex64";
 #else
@@ -288,7 +287,7 @@ namespace FMOD
         PSP,             /* PSP             - Native PSP output.                        (Default on PSP) */
         PS3,             /* PS3             - Native PS3 output.                        (Default on PS3) */
         NGP,             /* NGP             - Native NGP output.                        (Default on NGP) */
-        WII,             /* Wii                - Native Wii output.                        (Default on Wii) */
+        WII,			 /* Wii			    - Native Wii output.                        (Default on Wii) */
         _3DS,            /* 3DS             - Native 3DS output                         (Default on 3DS) */
         AUDIOTRACK,      /* Android         - Java Audio Track output.                  (Default on Android 2.2 and below) */
         OPENSL,          /* Android         - OpenSL ES output.                         (Default on Android 2.3 and above) */
@@ -485,13 +484,13 @@ namespace FMOD
         <br>
         FMOD_SPEAKERMODE_SRS5_1_MATRIX<br>
         ------------------------------------------------------<br>
-        This mode is for mono, stereo, 5.1 and 7.1 speaker arrangements, as it is backwards and forwards compatible with 
-        stereo, but to get a surround effect a SRS 5.1, Prologic or Prologic 2 hardware decoder / amplifier is needed.<br>
-        Pan behavior is the same as FMOD_SPEAKERMODE_5POINT1.<br>
-        <br>
-        If this function is called the numoutputchannels setting in System::setSoftwareFormat is overwritten.<br>
-        <br>
-        Output rate must be 44100, 48000 or 96000 for this to work otherwise FMOD_ERR_OUTPUT_INIT will be returned.<br>
+		This mode is for mono, stereo, 5.1 and 7.1 speaker arrangements, as it is backwards and forwards compatible with 
+		stereo, but to get a surround effect a SRS 5.1, Prologic or Prologic 2 hardware decoder / amplifier is needed.<br>
+		Pan behavior is the same as FMOD_SPEAKERMODE_5POINT1.<br>
+		<br>
+		If this function is called the numoutputchannels setting in System::setSoftwareFormat is overwritten.<br>
+		<br>
+		Output rate must be 44100, 48000 or 96000 for this to work otherwise FMOD_ERR_OUTPUT_INIT will be returned.<br>
     
         FMOD_SPEAKERMODE_MYEARS<br>
         ------------------------------------------------------<br>
@@ -751,7 +750,6 @@ namespace FMOD
         Channel::set3DCustomRolloff
     ]
     */
-    [FlagsAttribute]
     public enum MODE :uint
     {
         DEFAULT                = 0x00000000,  /* FMOD_DEFAULT is a default sound type.  Equivalent to all the defaults listed below.  FMOD_LOOP_OFF, FMOD_2D, FMOD_HARDWARE. */
