@@ -49,9 +49,11 @@ internal class EventSequenceStub : IDisposable {
     }
 
 
-    public string AudioFileName { get; set; }
+    // ReSharper disable UnusedAutoPropertyAccessor.Local
+    private string AudioFileName { get; set; }
 
-    public string AudioName { get; set; }
+    private string AudioName { get; set; }
+    // ReSharper restore UnusedAutoPropertyAccessor.Local
 
     public string FileName { get; private set; }
 
@@ -63,24 +65,25 @@ internal class EventSequenceStub : IDisposable {
         }
     }
 
-    public string LengthString { get; private set; }
+    private string LengthString { get; set; }
 
-    public byte[][] Mask { get; set; }
+    public byte[][] Mask { get; private set; }
 
     public string Name {
-        get { return Path.GetFileNameWithoutExtension(FileName); }
+        private get { return Path.GetFileNameWithoutExtension(FileName); }
         set { FileName = Path.ChangeExtension(value, ".vpr"); }
     }
 
     public EventSequence Sequence { get; private set; }
 
+/*
+    public void Dispose() {
+        Dispose();
+    }
+*/
+
 
     public void Dispose() {
-        Dispose(true);
-    }
-
-
-    public void Dispose(bool disposing) {
         if (Sequence != null) {
             Sequence.Dispose();
             Sequence = null;
@@ -90,13 +93,15 @@ internal class EventSequenceStub : IDisposable {
 
 
     ~EventSequenceStub() {
-        Dispose(false);
+        Dispose();
     }
 
 
+/*
     public EventSequence RetrieveSequence() {
         return Sequence ?? (Sequence = new EventSequence(FileName));
     }
+*/
 
 
     public override string ToString() {
