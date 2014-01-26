@@ -111,7 +111,6 @@
     </Compile>
     <Compile Include="Audio.cs" />
     <Compile Include="Channel.cs" />
-    <Compile Include="ConcreteClassAttribute.cs" />
     <Compile Include="CurveLibrary.cs" />
     <Compile Include="CurveLibraryRecord.cs" />
     <Compile Include="DataExtension.cs" />
@@ -235,7 +234,6 @@
     <Compile Include="Dialogs\NewSequenceWizardDialog.Designer.cs">
       <DependentUpon>NewSequenceWizardDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\OutputPort.cs" />
     <Compile Include="Dialogs\PluginListDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -254,7 +252,6 @@
     <Compile Include="Dialogs\ProfileManagerDialog.Designer.cs">
       <DependentUpon>ProfileManagerDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\Routine.cs" />
     <Compile Include="Dialogs\RoutineSelectDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -298,9 +295,6 @@
     <Compile Include="EventSequence.cs" />
     <Compile Include="EventSequenceStub.cs" />
     <Compile Include="ExecutionContext.cs" />
-    <Compile Include="Global.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Group.cs" />
     <Compile Include="GroupData.cs" />
     <Compile Include="GroupTagData.cs" />
@@ -354,6 +348,7 @@
     <Compile Include="OutputPlugInUIBase.Designer.cs">
       <DependentUpon>OutputPlugInUIBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="OutputPort.cs" />
     <Compile Include="Paths.cs" />
     <Compile Include="PlugInRouter.cs" />
     <Compile Include="Preference2.cs" />
@@ -376,6 +371,7 @@
     <Compile Include="ReferenceRectF.cs" />
     <Compile Include="RegisteredResponse.cs" />
     <Compile Include="RouterContext.cs" />
+    <Compile Include="Routine.cs" />
     <Compile Include="SequenceExtensions.cs" />
     <Compile Include="SequenceProgram.cs" />
     <Compile Include="SetupData.cs" />
@@ -716,6 +712,9 @@
     <Content Include="Resources\paste bool.png" />
     <None Include="Resources\pastePreview.png" />
     <Content Include="Resources\test channels.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Classes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
