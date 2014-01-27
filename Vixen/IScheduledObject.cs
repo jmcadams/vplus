@@ -1,4 +1,4 @@
 ﻿internal interface IScheduledObject : IExecutable
 {
-    int Length { get; }
+    //int Length { get; }
 }

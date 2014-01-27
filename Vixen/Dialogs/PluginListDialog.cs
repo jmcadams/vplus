@@ -6,7 +6,6 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 
-using VixenPlus;
 using VixenPlus.Properties;
 
 namespace Dialogs {
@@ -64,7 +63,7 @@ namespace Dialogs {
         }
 
 
-        public object[] MappedPluginList {
+        public IEnumerable<object> MappedPluginList {
             get {
                 return (from XmlNode node in _setupData.GetAllPluginData()
                         let attributes = node.Attributes
@@ -350,7 +349,7 @@ namespace Dialogs {
                             _outputPorts[key] = dictionary = new Dictionary<int, OutputPort>();
                         }
                         if (!dictionary.TryGetValue(map.PortTypeIndex, out port)) {
-                            dictionary[map.PortTypeIndex] = port = new OutputPort(key, map.PortTypeIndex, map.Shared, map.StringFormat);
+                            dictionary[map.PortTypeIndex] = port = new OutputPort(map.PortTypeIndex, map.Shared, map.StringFormat);
                         }
                         else {
                             port.Shared |= map.Shared;

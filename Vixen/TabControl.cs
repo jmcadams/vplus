@@ -59,7 +59,7 @@ public class TabControl : System.Windows.Forms.TabControl
     [DefaultValue(false), RefreshProperties(RefreshProperties.All)]
     public bool HideTabs
     {
-        get { return _hideTabs; }
+        private get { return _hideTabs; }
         set
         {
             if (_hideTabs == value) {
@@ -77,7 +77,9 @@ public class TabControl : System.Windows.Forms.TabControl
     [RefreshProperties(RefreshProperties.All)]
     public bool OurMultiline
     {
+/*
         get { return (HideTabs || Multiline); }
+*/
         set { Multiline = HideTabs || value; }
     }
 

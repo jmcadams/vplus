@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
-using VixenPlus;
 using VixenPlus.Properties;
 
 namespace Dialogs {

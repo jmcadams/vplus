@@ -6,8 +6,6 @@ using System.Xml;
 
 using VixenPlus.Properties;
 
-using VixenPlus;
-
 namespace GenericSerial {
     internal partial class DialogSerialSetup : Form {
 

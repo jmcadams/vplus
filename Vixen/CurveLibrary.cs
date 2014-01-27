@@ -8,12 +8,12 @@ using System.Text;
 
 public class CurveLibrary : IDisposable
 {
-    public const string Color = "Color";
-    public const string Controller = "Controller";
-    public const string CurveData = "CurveData";
-    public const string LightCount = "LightCount";
-    public const string Manufacturer = "Manufacturer";
-    public const string LibraryFile = "library.xml";
+    //public const string Color = "Color";
+    //public const string Controller = "Controller";
+    //public const string CurveData = "CurveData";
+    //public const string LightCount = "LightCount";
+    //public const string Manufacturer = "Manufacturer";
+    //public const string LibraryFile = "library.xml";
     private Filter[] _colorFilters;
     private Filter[] _controllerFilters;
     private DataTable _dataTable;
@@ -42,7 +42,9 @@ public class CurveLibrary : IDisposable
 
     public Filter[] ColorFilter
     {
+/*
         get { return _colorFilters; }
+*/
         set
         {
             _colorFilters = value;
@@ -59,7 +61,9 @@ public class CurveLibrary : IDisposable
 
     public Filter[] ControllerFilter
     {
+/*
         get { return _controllerFilters; }
+*/
         set
         {
             _controllerFilters = value;
@@ -74,7 +78,7 @@ public class CurveLibrary : IDisposable
         }
     }
 
-    public string FilePath { get; private set; }
+    private string FilePath { get; set; }
 
     public bool IsFiltered
     {
@@ -89,7 +93,9 @@ public class CurveLibrary : IDisposable
 
     public Filter[] LightCountFilter
     {
+/*
         get { return _lightCountFilters; }
+*/
         set
         {
             _lightCountFilters = value;
@@ -106,7 +112,9 @@ public class CurveLibrary : IDisposable
 
     public Filter[] ManufacturerFilter
     {
+/*
         get { return _manufacturerFilters; }
+*/
         set
         {
             _manufacturerFilters = value;
@@ -121,7 +129,7 @@ public class CurveLibrary : IDisposable
         }
     }
 
-    public Sort SortOrder { get; set; }
+    public Sort SortOrder { private get; set; }
 
 
     public void Dispose()
@@ -165,13 +173,14 @@ public class CurveLibrary : IDisposable
         Action<Filter> action = f => sb.AppendFormat(" {0} {1} {2} {3}",
             new object[]
             {
-                f.JoinOperator, f.ColumnName, OperatorString(f.ComparisonOperator),
+                Filter.JoinOperator, f.ColumnName, OperatorString(f.ComparisonOperator),
                 FormatValue(f.Value, f.ColumnType)
             });
         Array.ForEach(filters, action);
         return sb.ToString();
     }
 
+/*
     public CurveLibraryRecord Find(string manufacturer, string lightCount, int color, string controller)
     {
         Load(false);
@@ -187,6 +196,7 @@ public class CurveLibrary : IDisposable
         return new CurveLibraryRecord(row["Manufacturer"].ToString(), row["LightCount"].ToString(), (int) row["Color"],
             row["Controller"].ToString(), row["CurveData"].ToString());
     }
+*/
 
     private string FormatValue(string value, Type valueType)
     {
@@ -203,12 +213,12 @@ public class CurveLibrary : IDisposable
         return GetColumnData("Controller");
     }
 
-    public string[] GetAllLightColors()
+    public IEnumerable<string> GetAllLightColors()
     {
         return GetColumnData("Color");
     }
 
-    public string[] GetAllLightCounts()
+    public IEnumerable<string> GetAllLightCounts()
     {
         return GetColumnData("LightCount");
     }
@@ -230,6 +240,7 @@ public class CurveLibrary : IDisposable
         return list.ToArray();
     }
 
+/*
     public int GetRecordCount()
     {
         Load(false);
@@ -239,6 +250,7 @@ public class CurveLibrary : IDisposable
         }
         return -1;
     }
+*/
 
     private static string GetSelectString(string manufacturer, string lightCount, int color, string controller)
     {
@@ -250,12 +262,8 @@ public class CurveLibrary : IDisposable
             });
     }
 
-    public void Import(CurveLibraryRecord clr)
-    {
-        Import(clr, false);
-    }
 
-    public void Import(CurveLibraryRecord clr, bool updateIfPresent)
+    public void Import(CurveLibraryRecord clr, bool updateIfPresent = false)
     {
         Load(false);
         if (_dataTable == null) {
@@ -284,10 +292,12 @@ public class CurveLibrary : IDisposable
         _modified = true;
     }
 
+/*
     public void Load()
     {
         Load(false);
     }
+*/
 
     public void Load(bool forcedLoad)
     {
@@ -349,12 +359,7 @@ public class CurveLibrary : IDisposable
     //    return d__;
     //}
 
-    public void Save()
-    {
-        Save(false);
-    }
-
-    public void Save(bool force)
+    public void Save(bool force = false)
     {
         if (!force && !_modified) {
             return;
@@ -655,9 +660,9 @@ public class CurveLibrary : IDisposable
 
         public string ColumnName;
         public Type ColumnType;
-        public Operator ComparisonOperator;
-        public Join JoinOperator = Join.And;
-        public string Value;
+        public readonly Operator ComparisonOperator;
+        public const Join JoinOperator = Join.And;
+        public readonly string Value;
 
         public Filter(Operator op, string value)
         {
@@ -674,8 +679,8 @@ public class CurveLibrary : IDisposable
             Desc
         }
 
-        public string ColumnName;
-        public Direction SortDirection;
+        public readonly string ColumnName;
+        public readonly Direction SortDirection;
 
         public Sort(string columnName, Direction direction)
         {

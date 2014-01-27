@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using CommonUtils;
-
-using VixenPlus;
 
 //TODO: Add support for movies
 namespace Pictures {
@@ -188,7 +187,7 @@ namespace Pictures {
                 _bmpPtr = _bmpData.Scan0;
 
                 _rgbValues = new byte[ _width * _height * (_isAlpha ? 4 : 3)];
-                System.Runtime.InteropServices.Marshal.Copy(_bmpPtr, _rgbValues, 0, _rgbValues.Length);
+                Marshal.Copy(_bmpPtr, _rgbValues, 0, _rgbValues.Length);
                 _locked = true;
             }
 

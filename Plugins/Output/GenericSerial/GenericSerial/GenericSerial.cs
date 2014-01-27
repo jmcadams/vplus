@@ -1,9 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.IO.Ports;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
-using VixenPlus;
 
 namespace GenericSerial {
     public class GenericSerial : IEventDrivenOutputPlugIn {
@@ -91,7 +91,7 @@ namespace GenericSerial {
             get { return "Generic serial output plugin"; }
         }
 
-        public HardwareMap[] HardwareMap {
+        public IEnumerable<HardwareMap> HardwareMap {
             get { return new[] {new HardwareMap("Serial", int.Parse(_serialPort.PortName.Substring(3)))}; }
         }
 

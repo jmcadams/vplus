@@ -1493,7 +1493,7 @@ namespace VixenEditor {
         }
 
 
-        public override void OnDirtyChanged(EventArgs e) {
+        protected override void OnDirtyChanged(EventArgs e) {
             base.OnDirtyChanged(e);
             tbsSave.Enabled = IsDirty;
         }
@@ -4797,13 +4797,17 @@ namespace VixenEditor {
         }
 
 
-        public override string Author {
+/*
+        public string Author {
             get { return "Vixen and VixenPlus Developers"; }
         }
+*/
 
-        public override string Description {
+/*
+        public string Description {
             get { return "Vixen+ sequence user interface"; }
         }
+*/
 
         public override string FileExtension {
             get { return Vendor.SequenceExtension; }

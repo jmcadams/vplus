@@ -79,7 +79,8 @@ internal class Routine : IDisposable {
 
     public Bitmap Preview { get; private set; }
 
-    public Rectangle PreviewBounds { get; private set; }
+    // ReSharper disable once UnusedAutoPropertyAccessor.Local
+    private Rectangle PreviewBounds { get; set; }
 
 
     public void Dispose() {

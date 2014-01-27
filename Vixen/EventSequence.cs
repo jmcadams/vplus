@@ -13,7 +13,6 @@ using VixenPlus.Properties;
 
 public class EventSequence : IScheduledObject {
     private List<Channel> _fullChannels;
-    private List<Channel> _groupedAndSortedChannels;
     private int _eventPeriod;
     private Profile _profile;
     private SortOrders _sortOrders;
@@ -65,7 +64,7 @@ public class EventSequence : IScheduledObject {
         UserData = null;
         Key = Host.GetUniqueKey();
         _fullChannels = new List<Channel>();
-        _groupedAndSortedChannels = new List<Channel>();
+        Channels = new List<Channel>();
         PlugInData = new SetupData();
         LoadableData = new LoadableData();
         _sortOrders = new SortOrders();
@@ -165,7 +164,7 @@ public class EventSequence : IScheduledObject {
 
     public ulong Key { get; private set; }
 
-    public int Length { get; private set; }
+    private int Length { get; set; }
 
     public byte[][] Mask {
         get {
@@ -213,9 +212,10 @@ public class EventSequence : IScheduledObject {
 
     public SetupData PlugInData { get; private set; }
 
-    public bool TreatAsLocal { get; set; }
+    public bool TreatAsLocal { get; private set; }
 
-    public object UserData { get; set; }
+    // ReSharper disable once UnusedAutoPropertyAccessor.Local
+    private object UserData { get; set; }
 
 
     private bool HasData() {
@@ -484,7 +484,7 @@ public class EventSequence : IScheduledObject {
     private void LoadFromXml(XmlNode contextNode) {
         var requiredNode = Xml.GetRequiredNode(contextNode, "Program");
         _fullChannels = new List<Channel>();
-        _groupedAndSortedChannels = new List<Channel>();
+        Channels = new List<Channel>();
         PlugInData = new SetupData();
         LoadableData = new LoadableData();
         Extensions = new SequenceExtensions();
@@ -600,7 +600,7 @@ public class EventSequence : IScheduledObject {
 
 
     public int ChannelCount {
-        get { return _groupedAndSortedChannels.Count == 0 ? _fullChannels.Count : _groupedAndSortedChannels.Count; }
+        get { return Channels.Count == 0 ? _fullChannels.Count : Channels.Count; }
 /*
         set {
             while (_groupedAndSortedChannels.Count > value) {
@@ -674,13 +674,13 @@ public class EventSequence : IScheduledObject {
 
 
     public void ApplyGroupAndSort() {
-        _groupedAndSortedChannels = new List<Channel>();
+        Channels = new List<Channel>();
 
         if (_currentGroup != Group.AllChannels && _currentGroup != "") {
-            _groupedAndSortedChannels = new Group().GetGroupChannels(_currentGroup, Groups, FullChannels);
+            Channels = new Group().GetGroupChannels(_currentGroup, Groups, FullChannels);
         }
         else {
-            _groupedAndSortedChannels = FullChannels;
+            Channels = FullChannels;
         }
 
         if (LastSort == -1) {
@@ -699,21 +699,13 @@ public class EventSequence : IScheduledObject {
             return;
         }
 
-        _groupedAndSortedChannels = (from channel in currentOrder.ChannelIndexes
-            where _groupedAndSortedChannels.Contains(FullChannels[channel])
+        Channels = (from channel in currentOrder.ChannelIndexes
+            where Channels.Contains(FullChannels[channel])
             select FullChannels[channel]).ToList();
     }
 
 
-
-
-
-    public List<Channel> Channels {
-        get { return _groupedAndSortedChannels; }
-/*
-        set { AssignChannelArray(value); }
-*/
-    }
+    public List<Channel> Channels { get; private set; }
 
 
     public List<Channel> FullChannels {

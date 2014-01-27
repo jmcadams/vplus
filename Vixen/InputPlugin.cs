@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Xml;
@@ -38,7 +39,7 @@ public abstract class InputPlugin : IInputPlugin {
 
     public Input SingleIterator { get; set; }
 
-    public abstract void Initialize(SetupData setupData, XmlNode setupNode);
+    protected abstract void Initialize(SetupData setupData, XmlNode setupNode);
 
     public virtual void Setup() {}
 
@@ -46,11 +47,15 @@ public abstract class InputPlugin : IInputPlugin {
 
     public virtual void Startup() {}
 
+/*
     public abstract string Author { get; }
+*/
 
+/*
     public abstract string Description { get; }
+*/
 
-    public abstract HardwareMap[] HardwareMap { get; }
+    public abstract IEnumerable<HardwareMap> HardwareMap { get; }
 
     public abstract Input[] Inputs { get; }
 

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 using Dialogs;
 
 namespace DMXUSBPro
@@ -91,7 +93,7 @@ namespace DMXUSBPro
             }
         }
 
-        public HardwareMap[] HardwareMap
+        public IEnumerable<HardwareMap> HardwareMap
         {
             get
             {

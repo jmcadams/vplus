@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-using VixenPlus;
-
 namespace Dialogs {
     public partial class ChannelOutputMaskDialog : Form {
         public ChannelOutputMaskDialog(IEnumerable<Channel> channels) {
@@ -13,7 +11,7 @@ namespace Dialogs {
         }
 
 
-        public List<int> DisabledChannels {
+        public IEnumerable<int> DisabledChannels {
             get {
                 var disabledChannels = new List<int>();
                 for (var i = 0; i < checkedListBoxChannels.Items.Count; i++) {

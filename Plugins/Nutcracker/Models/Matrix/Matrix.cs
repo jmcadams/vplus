@@ -3,8 +3,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
 
-using VixenPlus;
-
 namespace Matrix2 {
     public partial class Matrix : UserControl, INutcrackerModel {
 

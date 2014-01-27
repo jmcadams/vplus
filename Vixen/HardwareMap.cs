@@ -1,9 +1,9 @@
 ﻿public class HardwareMap
 {
-    public int PortTypeIndex;
-    public string PortTypeName;
-    public bool Shared;
-    public string StringFormat;
+    public readonly int PortTypeIndex;
+    public readonly string PortTypeName;
+    public readonly bool Shared;
+    public readonly string StringFormat;
 
     public HardwareMap(string portTypeName, int portTypeIndex)
     {
@@ -13,6 +13,7 @@
         StringFormat = "d";
     }
 
+/*
     public HardwareMap(string portTypeName, int portTypeIndex, bool shared)
     {
         PortTypeName = portTypeName;
@@ -20,7 +21,9 @@
         Shared = shared;
         StringFormat = "d";
     }
+*/
 
+/*
     public HardwareMap(string portTypeName, int portTypeIndex, string stringFormat)
     {
         PortTypeName = portTypeName;
@@ -28,7 +31,9 @@
         Shared = false;
         StringFormat = stringFormat;
     }
+*/
 
+/*
     public HardwareMap(string portTypeName, int portTypeIndex, bool shared, string stringFormat)
     {
         PortTypeName = portTypeName;
@@ -36,4 +41,5 @@
         Shared = shared;
         StringFormat = stringFormat;
     }
+*/
 }

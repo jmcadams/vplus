@@ -8,8 +8,8 @@ internal interface IUIPlugIn : IVixenMDI, IPlugIn
 
     bool IsDirty { get; set; }
 
-    Form MdiParent { get; set; }
-    EventSequence New();
+    Form MdiParent {/*get; */ set; }
+    EventSequence New(); 
     EventSequence New(EventSequence seedSequence);
     EventSequence Open(string filePath);
     DialogResult RunWizard(ref EventSequence resultSequence);

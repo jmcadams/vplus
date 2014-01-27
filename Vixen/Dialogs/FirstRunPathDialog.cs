@@ -3,7 +3,6 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-using VixenPlus;
 using VixenPlus.Properties;
 
 namespace Dialogs {
@@ -24,7 +23,7 @@ namespace Dialogs {
         }
 
 
-        public string DataPath {
+        private string DataPath {
             get { return (rbUseAppDir.Checked ? Paths.BinaryPath : rbMyDocs.Checked ? Paths.DataPath : tbFolder.Text) + Paths.DataFolder; }
         }
 

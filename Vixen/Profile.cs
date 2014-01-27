@@ -40,11 +40,6 @@ public class Profile : IExecutable {
     public SortOrders Sorts { get; private set; }
 
 
-    public void Dispose() {
-        Dispose(true);
-    }
-
-
     public int AudioDeviceIndex {
         get { return -1; }
     }
@@ -119,9 +114,10 @@ public class Profile : IExecutable {
 
     public SetupData PlugInData { get; private set; }
 
-    public bool TreatAsLocal { get; set; }
+    public bool TreatAsLocal { get; private set; }
 
-    public object UserData { get; set; }
+    // ReSharper disable once UnusedAutoPropertyAccessor.Local
+    private object UserData { get; set; }
 
 
     public void AddChannelObject(Channel channelObject) {
@@ -131,7 +127,7 @@ public class Profile : IExecutable {
     }
 
 
-    public void Dispose(bool disposing) {
+    public void Dispose() {
         foreach (var channel in _channelObjects) {
             channel.Dispose();
         }
@@ -140,7 +136,7 @@ public class Profile : IExecutable {
 
 
     ~Profile() {
-        Dispose(false);
+        Dispose();
     }
 
 
@@ -176,11 +172,13 @@ public class Profile : IExecutable {
     }
 
 
+/*
     public void MoveChannelObject(int oldIndex, int newIndex) {
         var item = _channelObjects[oldIndex];
         _channelObjects.RemoveAt(oldIndex);
         _channelObjects.Insert(newIndex, item);
     }
+*/
 
 
     public void RemoveChannel(Channel channelObject) {
@@ -247,7 +245,7 @@ public class Profile : IExecutable {
     }
 
 
-    public void ReloadFrom(string fileName) {
+    private void ReloadFrom(string fileName) {
         FileName = fileName;
         Reload();
     }
@@ -262,7 +260,7 @@ public class Profile : IExecutable {
     }
 
 
-    public XmlNode SaveToXml(XmlDocument doc) {
+    private XmlNode SaveToXml(XmlDocument doc) {
         XmlNode profile;
             
         if (doc == null) {

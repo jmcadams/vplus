@@ -4,9 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Xml;
 
 using CommonUtils;
 
@@ -67,6 +65,7 @@ internal class ExecutionImpl : IExecution, IQueryable {
     }
 
 
+/*
     public bool ExecuteChannelOff(int contextHandle, int channelIndex) {
         ExecutionContext context;
         if (!_registeredContexts.TryGetValue(contextHandle, out context)) {
@@ -97,13 +96,17 @@ internal class ExecutionImpl : IExecution, IQueryable {
         }
         return true;
     }
+*/
 
 
+/*
     public bool ExecuteChannelOn(int contextHandle, int channelIndex) {
         return ExecuteChannelOn(contextHandle, channelIndex, 100);
     }
+*/
 
 
+/*
     public bool ExecuteChannelOn(int contextHandle, int channelIndex, int percentLevel) {
         ExecutionContext context;
         if (!_registeredContexts.TryGetValue(contextHandle, out context)) {
@@ -134,8 +137,10 @@ internal class ExecutionImpl : IExecution, IQueryable {
         }
         return true;
     }
+*/
 
 
+/*
     public bool ExecuteChannelToggle(int contextHandle, int channelIndex) {
         ExecutionContext context;
         if (!_registeredContexts.TryGetValue(contextHandle, out context)) {
@@ -166,33 +171,31 @@ internal class ExecutionImpl : IExecution, IQueryable {
         }
         return true;
     }
+*/
 
 
-    public bool ExecutePause(int contextHandle) {
+    public void ExecutePause(int contextHandle) {
         ExecutionContext context;
         if (!_registeredContexts.TryGetValue(contextHandle, out context)) {
-            return false;
+            return;
         }
         if (!(((context.SynchronousEngineInstance != null) && (context.Object != null)) && context.Object.CanBePlayed)) {
-            return false;
-        }
-        if (context.SynchronousEngineComm != null) {
-            Xml.SetAttribute(context.SynchronousEngineComm.DocumentElement, "Result", "response", string.Empty);
+            return;
         }
         try {
             context.SynchronousEngineInstance.Pause();
         }
         catch (Exception exception) {
             LogError("ExecutePause", exception);
-            return false;
         }
-        return true;
     }
 
 
+/*
     public bool ExecutePlay(int contextHandle) {
         return ExecutePlay(contextHandle, _preferences.GetBoolean("LogAudioManual"));
     }
+*/
 
 
     public bool ExecutePlay(int contextHandle, bool logAudio) {
@@ -216,9 +219,6 @@ internal class ExecutionImpl : IExecution, IQueryable {
         if (context.SynchronousEngineInstance.IsRunning) {
             return false;
         }
-        if (context.SynchronousEngineComm != null) {
-            Xml.SetAttribute(context.SynchronousEngineComm.DocumentElement, "Result", "response", string.Empty);
-        }
         if (!context.SynchronousEngineInstance.IsPaused) {
             try {
                 context.SynchronousEngineInstance.Initialize(context.Object);
@@ -239,16 +239,13 @@ internal class ExecutionImpl : IExecution, IQueryable {
     }
 
 
-    public bool ExecuteStop(int contextHandle) {
+    public void ExecuteStop(int contextHandle) {
         ExecutionContext context;
         if (!_registeredContexts.TryGetValue(contextHandle, out context)) {
-            return false;
+            return;
         }
         if (!(((context.SynchronousEngineInstance != null) && (context.Object != null)) && context.Object.CanBePlayed)) {
-            return false;
-        }
-        if (context.SynchronousEngineComm != null) {
-            Xml.SetAttribute(context.SynchronousEngineComm.DocumentElement, "Result", "response", string.Empty);
+            return;
         }
         try {
             context.SynchronousEngineInstance.Stop();
@@ -267,9 +264,7 @@ internal class ExecutionImpl : IExecution, IQueryable {
         }
         catch (Exception exception) {
             LogError("ExecuteStop", exception);
-            return false;
         }
-        return true;
     }
 
 
@@ -299,6 +294,7 @@ internal class ExecutionImpl : IExecution, IQueryable {
     }
 
 
+/*
     public int GetCurrentPosition(int contextHandle) {
         ExecutionContext context;
         if (!_registeredContexts.TryGetValue(contextHandle, out context)) {
@@ -306,12 +302,15 @@ internal class ExecutionImpl : IExecution, IQueryable {
         }
         return context.SynchronousEngineInstance == null ? 0 : context.SynchronousEngineInstance.Position;
     }
+*/
 
 
+/*
     public IExecutable GetObjectInContext(int contextHandle) {
         ExecutionContext context;
         return !_registeredContexts.TryGetValue(contextHandle, out context) ? null : context.Object;
     }
+*/
 
 
     public int GetObjectPosition(int contextHandle) {
@@ -341,6 +340,7 @@ internal class ExecutionImpl : IExecution, IQueryable {
     }
 
 
+/*
     public int ProgramLength(int contextHandle) {
         ExecutionContext context;
         if (!_registeredContexts.TryGetValue(contextHandle, out context)) {
@@ -348,6 +348,7 @@ internal class ExecutionImpl : IExecution, IQueryable {
         }
         return context.SynchronousEngineInstance == null ? 0 : context.SynchronousEngineInstance.LoadedProgramLength;
     }
+*/
 
 
     public void ReleaseContext(int contextHandle) {
@@ -423,6 +424,7 @@ internal class ExecutionImpl : IExecution, IQueryable {
     }
 
 
+/*
     public int RequestContext(bool suppressAsynchronousContext, bool suppressSynchronousContext, Form keyInterceptor,
         ref XmlDocument syncEngineCommDoc) {
         var num = RequestContext(suppressAsynchronousContext, suppressSynchronousContext, keyInterceptor);
@@ -433,8 +435,10 @@ internal class ExecutionImpl : IExecution, IQueryable {
         context.SynchronousEngineComm = syncEngineCommDoc = context.SynchronousEngineInstance.CommDoc = Xml.CreateXmlDocument("Engine");
         return num;
     }
+*/
 
 
+/*
     public int SequenceLength(int contextHandle) {
         ExecutionContext context;
         if (!_registeredContexts.TryGetValue(contextHandle, out context)) {
@@ -442,6 +446,7 @@ internal class ExecutionImpl : IExecution, IQueryable {
         }
         return context.SynchronousEngineInstance == null ? 0 : context.SynchronousEngineInstance.LoadedSequenceLength;
     }
+*/
 
 
     public void SetAsynchronousContext(int contextHandle, IExecutable executableObject) {
@@ -465,12 +470,14 @@ internal class ExecutionImpl : IExecution, IQueryable {
     }
 
 
+/*
     public void SetAsynchronousProgramChangeHandler(int contextHandle, ProgramChangeHandler programChangeHandler) {
         ExecutionContext context;
         if (_registeredContexts.TryGetValue(contextHandle, out context)) {
             context.AsynchronousProgramChangeHandler += programChangeHandler;
         }
     }
+*/
 
 
     public void SetAudioSpeed(int contextHandle, float rate) {
@@ -571,6 +578,7 @@ internal class ExecutionImpl : IExecution, IQueryable {
     }
 
 
+/*
     public string QueryInstance(int index) {
         var builder = new StringBuilder();
         if ((index < 0) || (index >= _registeredContexts.Count)) {
@@ -592,13 +600,17 @@ internal class ExecutionImpl : IExecution, IQueryable {
         builder.AppendLine("Object: " + ((context.Object != null) ? context.Object.Name : "(null)"));
         return builder.ToString();
     }
+*/
 
 
+/*
     public int Count {
         get { return _registeredContexts.Count; }
     }
+*/
 
 
+/*
     private static bool AsynchronousAccessSanityCheck(int channelIndex, ExecutionContext context) {
         if (context.SuppressAsynchronousContext) {
             return false;
@@ -608,11 +620,11 @@ internal class ExecutionImpl : IExecution, IQueryable {
         }
         return channelIndex < context.Object.Channels.Count;
     }
-
-
+*/
+    
+    // can probably be removed
     private static void AsyncInit(ExecutionContext context) {
         context.AsynchronousEngineInstance.Initialize(context.Object);
-        context.AsynchronousEngineBuffer = new byte[context.Object.Channels.Count];
     }
 
 

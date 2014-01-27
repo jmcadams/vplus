@@ -10,8 +10,6 @@ using CommonUtils;
 
 using VixenPlus.Properties;
 
-using VixenPlus;
-
 using ContentAlignment = System.Drawing.ContentAlignment;
 
 namespace VixenEditor {

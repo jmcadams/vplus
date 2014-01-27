@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-public class CurveLibraryRecord
+﻿public class CurveLibraryRecord
 {
     public int Color;
     public string Controller;
@@ -9,6 +6,7 @@ public class CurveLibraryRecord
     public string LightCount;
     public string Manufacturer;
 
+/*
     public CurveLibraryRecord(string text) {
         var strArray = text.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
         switch (strArray.Length) {
@@ -50,12 +48,15 @@ public class CurveLibraryRecord
                 break;
         }
     }
+*/
 
 
+/*
     public CurveLibraryRecord(string manufacturer, string lightCount, string controller)
         : this(manufacturer, lightCount, System.Drawing.Color.White.ToArgb(), controller)
     {
     }
+*/
 
     public CurveLibraryRecord(string manufacturer, string lightCount, int color, string controller)
     {
@@ -66,18 +67,22 @@ public class CurveLibraryRecord
         CurveData = null;
     }
 
+/*
     public CurveLibraryRecord(string manufacturer, string lightCount, int color, string controller, string curveDataString)
         : this(manufacturer, lightCount, color, controller)
     {
         CurveData = BreakCurveDataString(curveDataString);
     }
+*/
 
+/*
     private byte[] BreakCurveDataString(string text)
     {
         var dataBytes = new List<byte>();
         Array.ForEach(text.Split(new[] {'|'}), s => dataBytes.Add(byte.Parse(s)));
         return dataBytes.ToArray();
     }
+*/
 
     public override string ToString()
     {

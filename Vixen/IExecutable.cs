@@ -19,11 +19,7 @@ public interface IExecutable : IMaskable, IDisposable
 
     string Name { get; }
 
-    List<Channel> OutputChannels { get; }
-
     SetupData PlugInData { get; }
 
-    bool TreatAsLocal { get; set; }
-
-    object UserData { get; set; }
+    bool TreatAsLocal { get; }
 }

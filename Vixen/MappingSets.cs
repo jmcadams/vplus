@@ -7,13 +7,13 @@ using System.Xml;
 
 internal class MappingSets : ICloneable, IEnumerable<MappingSet>
 {
-    public const string DefaultSetName = "Mapping set 1";
+    private const string DefaultSetName = "Mapping set 1";
     private readonly List<MappingSet> _mappingSets = new List<MappingSet>();
     private int _currentMappingSetIndex;
 
     public MappingSets()
     {
-        _mappingSets.Add(new MappingSet("Mapping set 1"));
+        _mappingSets.Add(new MappingSet(DefaultSetName));
         _currentMappingSetIndex = 0;
     }
 
@@ -22,10 +22,12 @@ internal class MappingSets : ICloneable, IEnumerable<MappingSet>
         get { return _mappingSets.ToArray(); }
     }
 
+/*
     public int Count
     {
         get { return _mappingSets.Count; }
     }
+*/
 
     public MappingSet CurrentMappingSet
     {
@@ -87,7 +89,7 @@ internal class MappingSets : ICloneable, IEnumerable<MappingSet>
     }
 
 
-    public int FindMappingSetIndex(MappingSet mappingSet)
+    private int FindMappingSetIndex(MappingSet mappingSet)
     {
         if (mappingSet == null)
         {
@@ -96,22 +98,19 @@ internal class MappingSets : ICloneable, IEnumerable<MappingSet>
         return _mappingSets.FindIndex(m => m == mappingSet);
     }
 
-    public MappingSet GetMappingSet(string mappingSetName, Input input)
-    {
-        foreach (var set in _mappingSets)
-        {
-            if (!string.Equals(set.Name, mappingSetName, StringComparison.OrdinalIgnoreCase)) {
-                continue;
-            }
+    public void GetMappingSet(string mappingSetName, Input input) {
+        foreach (var set in _mappingSets.Where(set => string.Equals(set.Name, mappingSetName, StringComparison.OrdinalIgnoreCase))) {
             set.GetOutputChannelIdList(input);
-            return set;
+            return;
         }
-        return null;
     }
 
+
+/*
     public int GetMappingSetCountFor(Input input) {
         return _mappingSets.Count(set => set.HasMappingFor(input));
     }
+*/
 
 
     internal List<string> GetOutputChannelIdList(Input input)
@@ -119,10 +118,12 @@ internal class MappingSets : ICloneable, IEnumerable<MappingSet>
         return _mappingSets[_currentMappingSetIndex].GetOutputChannelIdList(input);
     }
 
+/*
     public void InsertMappingAt(int index)
     {
         _mappingSets.Insert(index, new MappingSet("Mapping set " + (index + 1)));
     }
+*/
 
     public void MoveMappingTo(int oldIndex, int newIndex)
     {
@@ -150,6 +151,7 @@ internal class MappingSets : ICloneable, IEnumerable<MappingSet>
         CheckIndex();
     }
 
+/*
     public void RenameMapping(ulong id, string name)
     {
         var set = FindMappingSet(id);
@@ -158,6 +160,7 @@ internal class MappingSets : ICloneable, IEnumerable<MappingSet>
             set.Name = name;
         }
     }
+*/
 
     public void StepMapping()
     {

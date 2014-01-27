@@ -2,16 +2,14 @@
 
 internal class OutputPort
 {
-    public int Index;
+    public readonly int Index;
     public bool IsExpanded;
-    public string Name;
-    public List<IHardwarePlugin> ReferencingPlugins = new List<IHardwarePlugin>();
+    public readonly List<IHardwarePlugin> ReferencingPlugins = new List<IHardwarePlugin>();
     public bool Shared;
-    public string StringFormat;
+    public readonly string StringFormat;
 
-    public OutputPort(string name, int index, bool shared, string stringFormat)
+    public OutputPort(int index, bool shared, string stringFormat)
     {
-        Name = name;
         Index = index;
         Shared = shared;
         StringFormat = stringFormat;

@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Xml;
 
 internal class ExecutionContext : IDisposable
 {
-    public byte[] AsynchronousEngineBuffer;
     public Form KeyInterceptor;
     public bool LocalRequestor;
     public IExecutable Object;
-    public List<Form> OutputPlugInForms;
+    public readonly List<Form> OutputPlugInForms;
     public bool SuppressAsynchronousContext;
     public bool SuppressSynchronousContext;
-    public XmlDocument SynchronousEngineComm;
     private Engine8 _asynchronousEngineInstance;
     private Engine8 _synchronousEngineInstance;
 
@@ -58,24 +55,15 @@ internal class ExecutionContext : IDisposable
         GC.SuppressFinalize(this);
     }
 
-    public event ProgramChangeHandler AsynchronousProgramChangeHandler;
 
     public event ProgramChangeHandler SynchronousProgramChangeHandler;
 
     private void AsynchronousEngineProgramChangeHandler()
     {
-        if (AsynchronousProgramChangeHandler != null)
-        {
-            AsynchronousProgramChangeHandler(ProgramChange.SequenceChange);
-        }
     }
 
     private void AsynchronousEngineProgramEndHandler()
     {
-        if (AsynchronousProgramChangeHandler != null)
-        {
-            AsynchronousProgramChangeHandler(ProgramChange.End);
-        }
     }
 
     ~ExecutionContext()

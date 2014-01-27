@@ -5,9 +5,12 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 
+//todo since we don't have input plugins, how do we get rid of this.
+
+// ReSharper disable once ClassNeverInstantiated.Global
 internal class InputPlugins : HardwarePlugins
 {
-    public static IHardwarePlugin FindPlugin(string pluginName)
+    private static IHardwarePlugin FindPlugin(string pluginName)
     {
         return FindPlugin(pluginName, Paths.InputPluginPath, "IInputPlugin");
     }
@@ -17,10 +20,12 @@ internal class InputPlugins : HardwarePlugins
         return FindPlugin(pluginName, uniqueInstance, Paths.InputPluginPath, "IInputPlugin");
     }
 
+/*
     public static List<string> LoadPluginNames()
     {
         return LoadPluginNames(Paths.InputPluginPath, "IInputPlugin");
     }
+*/
 
     public static List<IHardwarePlugin> LoadPlugins()
     {

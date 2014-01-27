@@ -7,8 +7,6 @@ using System.Xml;
 
 using CommonUtils;
 
-using VixenPlus;
-
 namespace Launcher {
     public class Launcher : IEventDrivenOutputPlugIn {
         private XmlNode _setupNode;
@@ -105,7 +103,7 @@ namespace Launcher {
             get { return "External program launcher"; }
         }
 
-        public HardwareMap[] HardwareMap {
+        public IEnumerable<HardwareMap> HardwareMap {
             get { return new HardwareMap[0]; }
         }
 

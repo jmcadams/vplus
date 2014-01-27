@@ -5,7 +5,6 @@ using System.Linq;
 using System.Windows.Forms;
 
 using CommonUtils;
-using VixenPlus;
 
 namespace Fireworks {
     public partial class Fireworks : UserControl, INutcrackerEffect {

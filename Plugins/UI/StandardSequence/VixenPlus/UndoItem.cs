@@ -3,8 +3,6 @@ using System.Linq;
 
 using CommonUtils;
 
-using VixenPlus;
-
 namespace VixenEditor.VixenPlus {
     internal class UndoItem {
         private readonly int _eventPeriod;

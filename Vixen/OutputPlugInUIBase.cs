@@ -3,10 +3,11 @@ using System.Xml;
 
 public partial class OutputPlugInUIBase : Form
 {
-    public XmlNode DataNode = null;
-    public IVixenMDI ExecutionParent = null;
+    public XmlNode DataNode;
+    public IVixenMDI ExecutionParent;
 
-    public OutputPlugInUIBase()
+
+    protected OutputPlugInUIBase()
     {
         InitializeComponent();
     }

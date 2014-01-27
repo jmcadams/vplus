@@ -13,7 +13,6 @@ public partial class UIBase {
         base.ClientSize = new Size(740, 444);
         base.Name = "UIBase";
         this.Text = "UIBase";
-        this.Icon = global::VixenPlus.Properties.Resources.VixenPlus;
         base.ResumeLayout(false);
     }
 

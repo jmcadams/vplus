@@ -3,8 +3,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
 
-using VixenPlus;
-
 namespace Arch {
     public partial class Arch : UserControl, INutcrackerModel {
 

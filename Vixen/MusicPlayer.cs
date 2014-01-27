@@ -52,20 +52,26 @@ internal class MusicPlayer
         LoadAudioData();
     }
 
+/*
     public uint CurrentSongLength
     {
         get { return ((_soundChannel == null) ? 0 : _soundChannel.SoundLength); }
     }
+*/
 
+/*
     public string CurrentSongName
     {
         get { return ((_soundChannel == null) ? "(null)" : _soundChannel.SoundName); }
     }
+*/
 
+/*
     public bool IsPlaying
     {
         get { return ((_soundChannel != null) && _soundChannel.IsPlaying); }
     }
+*/
 
     public int SongCount
     {
@@ -74,7 +80,8 @@ internal class MusicPlayer
 
     public event OnSongChange SongChange;
 
-    public void GeneratePlaylist()
+
+    private void GeneratePlaylist()
     {
         _playlist.Clear();
         var songNode = _xmlDocument.SelectSingleNode("//MusicPlayer/Songs");
@@ -164,7 +171,7 @@ internal class MusicPlayer
         _songTimer.Enabled = true;
     }
 
-    public DialogResult ShowDialog()
+    public void ShowDialog()
     {
         var songNode = _xmlDocument.SelectSingleNode("//MusicPlayer/Songs");
         var dialog = new MusicPlayerDialog(_fmod)
@@ -196,7 +203,7 @@ internal class MusicPlayer
         }
         var result = dialog.ShowDialog();
         if (result != DialogResult.OK) {
-            return result;
+            return;
         }
         var emptyNodeAlways = Xml.GetEmptyNodeAlways(_xmlDocument.DocumentElement, "Songs");
         Xml.SetAttribute(emptyNodeAlways, "shuffle", dialog.Shuffle.ToString());
@@ -215,7 +222,6 @@ internal class MusicPlayer
         _xmlDocument.Save(Path.Combine(Paths.AudioPath, "MusicPlayer.data"));
         LoadAudioData();
         GeneratePlaylist();
-        return result;
     }
 
     public void Start()

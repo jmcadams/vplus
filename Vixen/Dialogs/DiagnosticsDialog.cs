@@ -4,10 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
-using VixenPlus;
 using VixenPlus.Properties;
-
-using Timer = Timer;
 
 namespace Dialogs {
     internal partial class DiagnosticsDialog : Form {
@@ -37,7 +34,7 @@ namespace Dialogs {
             }
             using (var writer = new StreamWriter(path)) {
                 try {
-                    var list = new List<global::Timer>(_timers.TimerArray);
+                    var list = new List<Timer>(_timers.TimerArray);
                     writer.WriteLine("Timers dumped at " + DateTime.Now.ToString(CultureInfo.InvariantCulture));
                     writer.WriteLine();
                     writer.WriteLine("(Starting timers)");

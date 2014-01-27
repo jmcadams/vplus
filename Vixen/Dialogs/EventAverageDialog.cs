@@ -2,8 +2,6 @@
 using System.Globalization;
 using System.Windows.Forms;
 
-using VixenPlus;
-
 namespace Dialogs
 {
     internal partial class EventAverageDialog : Form

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -10,11 +8,11 @@ using VixenPlus.Properties;
 
 public class SequenceProgram : IScheduledObject {
     private readonly ulong _key;
-    private int _crossFadeLength;
     private byte[][] _mask;
     private Profile _profile;
 
 
+/*
     public SequenceProgram() {
         Loop = false;
         _profile = null;
@@ -28,6 +26,7 @@ public class SequenceProgram : IScheduledObject {
         ConstructUsing();
         SetupData = new SetupData();
     }
+*/
 
 
     public SequenceProgram(string fileName) {
@@ -36,7 +35,7 @@ public class SequenceProgram : IScheduledObject {
         UseSequencePluginData = false;
         TreatAsLocal = false;
         UserData = null;
-        _crossFadeLength = 0;
+        CrossFadeLength = 0;
         _key = Host.GetUniqueKey();
         _mask = null;
         FileName = fileName;
@@ -52,7 +51,7 @@ public class SequenceProgram : IScheduledObject {
         UseSequencePluginData = false;
         TreatAsLocal = false;
         UserData = null;
-        _crossFadeLength = 0;
+        CrossFadeLength = 0;
         _key = Host.GetUniqueKey();
         _mask = null;
         FileName = sequence.FileName;
@@ -62,21 +61,22 @@ public class SequenceProgram : IScheduledObject {
     }
 
 
-    public int CrossFadeLength {
-        get { return _crossFadeLength; }
-        set { _crossFadeLength = value; }
-    }
+    public int CrossFadeLength { get; private set; }
 
+    /*
     public List<string> EventSequenceFileNames {
         get {
             return EventSequences.Select(stub => Path.GetFileName(stub.FileName)).ToList();
         }
     }
+*/
 
     internal List<EventSequenceStub> EventSequences { get; private set; }
 
-    public bool Loop { get; set; }
+    // ReSharper disable once UnusedAutoPropertyAccessor.Local
+    private bool Loop { get; set; }
 
+/*
     public Profile Profile {
         get { return _profile; }
         set {
@@ -88,16 +88,11 @@ public class SequenceProgram : IScheduledObject {
             }
         }
     }
+*/
 
-    public SetupData SetupData { get; set; }
+    public SetupData SetupData { get; private set; }
 
-    public bool UseSequencePluginData { get; set; }
-
-
-    public void Dispose() {
-        Dispose(true);
-    }
-
+    public bool UseSequencePluginData { get; private set; }
 
     public int AudioDeviceIndex {
         get { return -1; }
@@ -127,11 +122,13 @@ public class SequenceProgram : IScheduledObject {
         get { return _key; }
     }
 
+/*
     public int Length {
         get {
             return EventSequences.Sum(stub => stub.Length);
         }
     }
+*/
 
     public byte[][] Mask {
         get {
@@ -159,14 +156,18 @@ public class SequenceProgram : IScheduledObject {
 
     public string Name {
         get { return Path.GetFileNameWithoutExtension(FileName); }
+/*
         set { FileName = Path.ChangeExtension(value, ".vpr"); }
+*/
     }
 
+/*
     public List<Channel> OutputChannels {
         get {
             return _profile == null ? new List<Channel>() : _profile.OutputChannels;
         }
     }
+*/
 
     public SetupData PlugInData {
         get {
@@ -174,21 +175,26 @@ public class SequenceProgram : IScheduledObject {
         }
     }
 
-    public bool TreatAsLocal { get; set; }
+    public bool TreatAsLocal { get; private set; }
 
-    public object UserData { get; set; }
+    // ReSharper disable once UnusedAutoPropertyAccessor.Local
+    private object UserData { get; set; }
 
 
+/*
     public void AddSequence(string sequenceFileName) {
         // ReSharper disable AssignNullToNotNullAttribute
         EventSequences.Add(new EventSequenceStub(Path.Combine(Paths.SequencePath, Path.GetFileName(sequenceFileName)), true));
         // ReSharper restore AssignNullToNotNullAttribute
     }
+*/
 
 
+/*
     public void AddSequence(EventSequence sequence) {
         EventSequences.Add(new EventSequenceStub(sequence));
     }
+*/
 
 
     private void AttachToProfile(string profileName) {
@@ -209,9 +215,11 @@ public class SequenceProgram : IScheduledObject {
     }
 
 
+/*
     public void ClearSequences() {
         EventSequences.Clear();
     }
+*/
 
 
     private void ConstructUsing() {
@@ -219,13 +227,15 @@ public class SequenceProgram : IScheduledObject {
     }
 
 
+/*
     private void DetachFromProfile() {
         _profile = null;
         LoadEmbeddedData(FileName);
     }
+*/
 
 
-    public void Dispose(bool disposing) {
+    public void Dispose() {
         foreach (var stub in EventSequences) {
             stub.Dispose();
         }
@@ -234,7 +244,7 @@ public class SequenceProgram : IScheduledObject {
 
 
     ~SequenceProgram() {
-        Dispose(false);
+        Dispose();
     }
 
 
@@ -280,10 +290,11 @@ public class SequenceProgram : IScheduledObject {
                 AttachToProfile(node3.InnerText);
             }
         }
-        _crossFadeLength = int.Parse(Xml.GetNodeAlways(node, "CrossFadeLength", "0").InnerText);
+        CrossFadeLength = int.Parse(Xml.GetNodeAlways(node, "CrossFadeLength", "0").InnerText);
     }
 
 
+/*
     public void Refresh() {
         foreach (var stub in EventSequences) {
             if (string.IsNullOrEmpty(stub.FileName)) {
@@ -295,20 +306,24 @@ public class SequenceProgram : IScheduledObject {
             }
         }
     }
+*/
 
 
-    public void ReloadProfile() {
+    private void ReloadProfile() {
         SetupData = _profile.PlugInData;
     }
 
 
+/*
     public void SaveTo(string filePath) {
         var contextNode = Xml.CreateXmlDocument();
         SaveToXml(contextNode);
         contextNode.Save(filePath);
     }
+*/
 
 
+/*
     private void SaveToXml(XmlNode contextNode) {
         var emptyNodeAlways = Xml.GetEmptyNodeAlways(contextNode, "Program");
         if (UseSequencePluginData) {
@@ -330,6 +345,7 @@ public class SequenceProgram : IScheduledObject {
         }
         Xml.SetValue(emptyNodeAlways, "CrossFadeLength", _crossFadeLength.ToString(CultureInfo.InvariantCulture));
     }
+*/
 
 
     public override string ToString() {

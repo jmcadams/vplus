@@ -1,4 +1,4 @@
 ﻿public interface ITickSource
 {
-    int Milliseconds { get; }
+    //int Milliseconds { get; }
 }

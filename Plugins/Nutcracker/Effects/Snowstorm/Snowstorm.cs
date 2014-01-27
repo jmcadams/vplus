@@ -5,7 +5,6 @@ using System.Linq;
 using System.Windows.Forms;
 
 using CommonUtils;
-using VixenPlus;
 
 namespace Snowstorm {
     public partial class Snowstorm : UserControl, INutcrackerEffect {

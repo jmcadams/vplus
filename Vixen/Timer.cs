@@ -1,34 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Xml;
 
 internal class Timer : IComparable<Timer>
 {
-    private bool _isExecuting;
     private string _objectFileName;
-    private TimeSpan _objectLength;
-    private ObjectType _objectType;
-    private DateTime _recurrenceEnd;
-    private DateTime _recurrenceStart;
+    private readonly TimeSpan _objectLength;
+    private readonly ObjectType _objectType;
+    private readonly DateTime _recurrenceEnd;
+    private readonly DateTime _recurrenceStart;
 
 
+/*
     public Timer()
     {
         _objectType = ObjectType.Sequence;
-        DisplayBounds = new List<ReferenceRectF>();
         _isExecuting = false;
         LastExecution = DateTime.MinValue;
         NotValidUntil = DateTime.MinValue;
     }
+*/
 
     public Timer(XmlNode timerNode)
     {
         _objectType = ObjectType.Sequence;
-        DisplayBounds = new List<ReferenceRectF>();
-        _isExecuting = false;
+        IsExecuting = false;
         LastExecution = DateTime.MinValue;
         NotValidUntil = DateTime.MinValue;
         var startDateTimeNode = timerNode["StartDateTime"];
@@ -106,8 +103,6 @@ internal class Timer : IComparable<Timer>
     }
 
 
-    public List<ReferenceRectF> DisplayBounds { get; set; }
-
     public DateTime EndDate
     {
         get
@@ -127,11 +122,7 @@ internal class Timer : IComparable<Timer>
         get { return (StartTime + TimerLength); }
     }
 
-    public bool IsExecuting
-    {
-        get { return _isExecuting; }
-        set { _isExecuting = value; }
-    }
+    public bool IsExecuting { get; set; }
 
     public DateTime LastExecution { get; set; }
 
@@ -140,23 +131,27 @@ internal class Timer : IComparable<Timer>
     public TimeSpan ObjectLength
     {
         get { return _objectLength; }
+/*
         set { _objectLength = value; }
+*/
     }
 
     public ObjectType ObjectType
     {
         get { return _objectType; }
-        set
+/*
+        private set
         {
             _objectType = value;
             SetObjectPath();
         }
+*/
     }
 
     public string ProgramFileName
     {
         get { return _objectFileName; }
-        set
+        private set
         {
             _objectFileName = value;
             ProgramName = Path.GetFileName(value);
@@ -166,16 +161,18 @@ internal class Timer : IComparable<Timer>
 
     public string ProgramName { get; private set; }
 
-    public RecurrenceType Recurrence { get; set; }
+    public RecurrenceType Recurrence { get; private set; }
 
-    public object RecurrenceData { get; set; }
+    public object RecurrenceData { get; private set; }
 
     public DateTime RecurrenceEnd
     {
         get {
             return Recurrence == RecurrenceType.None ? EndDateTime : _recurrenceEnd;
         }
+/*
         set { _recurrenceEnd = value; }
+*/
     }
 
     public DateTime RecurrenceEndDateTime
@@ -207,7 +204,9 @@ internal class Timer : IComparable<Timer>
         get {
             return Recurrence == RecurrenceType.None ? StartDateTime : _recurrenceStart;
         }
+/*
         set { _recurrenceStart = value; }
+*/
     }
 
     public DateTime RecurrenceStartDateTime
@@ -222,27 +221,31 @@ internal class Timer : IComparable<Timer>
         }
     }
 
-    public int RepeatInterval { get; set; }
+    public int RepeatInterval { get; private set; }
 
     public DateTime StartDate
     {
         get { return StartDateTime.Date; }
+/*
         set { StartDateTime = new DateTime(value.Year, value.Month, value.Day, StartDateTime.Hour, StartDateTime.Minute, 0); }
+*/
     }
 
-    public DateTime StartDateTime { get; set; }
+    public DateTime StartDateTime { get; private set; }
 
     public TimeSpan StartTime
     {
         get { return StartDateTime.TimeOfDay; }
+/*
         set
         {
             StartDateTime = new DateTime(StartDateTime.Year, StartDateTime.Month, StartDateTime.Day, value.Hours,
                 value.Minutes, 0);
         }
+*/
     }
 
-    public TimeSpan TimerLength { get; set; }
+    public TimeSpan TimerLength { get; private set; }
 
 
     public int CompareTo(Timer other)
@@ -250,16 +253,18 @@ internal class Timer : IComparable<Timer>
         return StartTime.CompareTo(other.StartTime);
     }
 
+/*
     public Timer Clone()
     {
         var timer = new Timer();
         timer.Copy(this);
         return timer;
     }
+*/
 
+/*
     public void Copy(Timer timer)
     {
-        DisplayBounds = timer.DisplayBounds;
         _objectLength = timer._objectLength;
         ObjectType = timer.ObjectType;
         ProgramFileName = timer.ProgramFileName;
@@ -273,7 +278,9 @@ internal class Timer : IComparable<Timer>
         RecurrenceData = timer.RecurrenceData;
         _isExecuting = timer._isExecuting;
     }
+*/
 
+/*
     public void SaveToXml(XmlNode contextNode)
     {
         var node = Xml.SetNewValue(contextNode, "Timer", string.Empty);
@@ -308,6 +315,7 @@ internal class Timer : IComparable<Timer>
                 break;
         }
     }
+*/
 
 
     private void SetObjectPath() {

@@ -2,8 +2,6 @@ using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-using VixenPlus;
-
 namespace Dialogs
 {
     internal partial class ShutdownDialog : Form

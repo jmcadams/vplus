@@ -4,7 +4,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Timers;
 using System.Windows.Forms;
@@ -14,7 +13,7 @@ using FMOD;
 
 using VixenPlus.Properties;
 
-internal class Engine8 : IDisposable, IQueryable {
+internal sealed class Engine8 : IDisposable, IQueryable {
     public delegate void ProgramEndDelegate();
 
     public delegate void SequenceChangeDelegate();
@@ -72,10 +71,12 @@ internal class Engine8 : IDisposable, IQueryable {
 
     public float AudioSpeed { get; set; }
 
-    public XmlDocument CommDoc { private get; set; }
+    // ReSharper disable once UnusedAutoPropertyAccessor.Local
+    private XmlDocument CommDoc { get; set; }
 
     public SequenceProgram CurrentObject { get; private set; }
 
+/*
     public string ExecutingProgram {
         get {
             if ((Mode != EngineMode.Asynchronous) && (IsRunning || IsPaused)) {
@@ -84,7 +85,9 @@ internal class Engine8 : IDisposable, IQueryable {
             return string.Empty;
         }
     }
+*/
 
+/*
     public string ExecutingSequence {
         get {
             if (Mode == EngineMode.Asynchronous) {
@@ -93,6 +96,7 @@ internal class Engine8 : IDisposable, IQueryable {
             return IsRunning || IsPaused ? _engineContexts[_primaryContext].CurrentSequence.Name : "None";
         }
     }
+*/
 
     public bool IsPaused { get; private set; }
 
@@ -109,6 +113,7 @@ internal class Engine8 : IDisposable, IQueryable {
         }
     }
 
+/*
     public int LoadedProgramLength {
         get {
             if (Mode == EngineMode.Asynchronous) {
@@ -117,6 +122,7 @@ internal class Engine8 : IDisposable, IQueryable {
             return CurrentObject == null ? 0 : CurrentObject.Length;
         }
     }
+*/
 
     public string LoadedSequence {
         get {
@@ -127,6 +133,7 @@ internal class Engine8 : IDisposable, IQueryable {
         }
     }
 
+/*
     public int LoadedSequenceLength {
         get {
             if (Mode == EngineMode.Asynchronous) {
@@ -135,10 +142,11 @@ internal class Engine8 : IDisposable, IQueryable {
             return _engineContexts[_primaryContext].CurrentSequence == null ? 0 : _engineContexts[_primaryContext].CurrentSequence.Length;
         }
     }
+*/
 
-    public bool IsLooping { get; set; }
+    public bool IsLooping { private get; set; }
 
-    public EngineMode Mode { get; private set; }
+    private EngineMode Mode { get; set; }
 
     public int ObjectPosition {
         get {
@@ -197,6 +205,7 @@ internal class Engine8 : IDisposable, IQueryable {
     }
 
 
+/*
     public string QueryInstance(int index) {
         var builder = new StringBuilder();
         if ((index < 0) || (index >= InstanceList.Count)) {
@@ -225,11 +234,14 @@ internal class Engine8 : IDisposable, IQueryable {
         builder.AppendLine("Mode: " + engine.Mode);
         return builder.ToString();
     }
+*/
 
 
+/*
     public int Count {
         get { return InstanceList.Count; }
     }
+*/
 
     public event ProgramEndDelegate ProgramEnd;
 
@@ -381,7 +393,7 @@ internal class Engine8 : IDisposable, IQueryable {
     }
 
 
-    public void HardwareUpdate(byte[] values, int eventIndex) {
+    private void HardwareUpdate(byte[] values, int eventIndex) {
         if (!_isRunning || _isStopping) {
             return;
         }
@@ -500,7 +512,7 @@ internal class Engine8 : IDisposable, IQueryable {
     }
 
 
-    public void Initialize(EventSequence sequence) {
+    private void Initialize(EventSequence sequence) {
         switch (Mode) {
             case EngineMode.Asynchronous:
                 InitializeForAsynchronous(sequence);
@@ -533,7 +545,7 @@ internal class Engine8 : IDisposable, IQueryable {
     }
 
 
-    public void Initialize(Profile profile) {
+    private void Initialize(Profile profile) {
         if (Mode == EngineMode.Synchronous) {
             throw new Exception("Only an asynchronous engine instance can be initialized with a profile.");
         }
@@ -542,7 +554,7 @@ internal class Engine8 : IDisposable, IQueryable {
     }
 
 
-    public void Initialize(SequenceProgram program) {
+    private void Initialize(SequenceProgram program) {
         if (Mode == EngineMode.Asynchronous) {
             InitializeForAsynchronous(program);
         }
@@ -635,7 +647,7 @@ internal class Engine8 : IDisposable, IQueryable {
     }
 
 
-    protected virtual void OnProgramEnd(bool restartBackgroundObjects) {
+    private void OnProgramEnd(bool restartBackgroundObjects) {
         if (ProgramEnd != null) {
             _host.DelegateNullMethod(ProgramEnd.Invoke);
         }
@@ -648,7 +660,7 @@ internal class Engine8 : IDisposable, IQueryable {
     }
 
 
-    protected virtual void OnSequenceChange() {
+    private void OnSequenceChange() {
         if (SequenceChange != null) {
             SequenceChange();
         }
@@ -752,6 +764,7 @@ internal class Engine8 : IDisposable, IQueryable {
     }
 
 
+/*
     private string QueryContext(EngineContext context) {
         if (context == null) {
             return "   (null)\n";
@@ -774,14 +787,17 @@ internal class Engine8 : IDisposable, IQueryable {
         }
         return builder.ToString();
     }
+*/
 
 
+/*
     private string QueryMappedPlugIn(MappedOutputPlugIn mappedPlugIn) {
         var builder =
             new StringBuilder("         Name: " + mappedPlugIn.PlugIn.Name).AppendLine("         From: " + mappedPlugIn.From).AppendLine(
                 "         To: " + mappedPlugIn.To).AppendLine("         Enabled: " + mappedPlugIn.Enabled);
         return builder.ToString();
     }
+*/
 
 
     private static byte[,] ReconfigureSourceData(EventSequence sequence) {

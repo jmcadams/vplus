@@ -4,8 +4,6 @@ using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 
-using VixenPlus;
-
 namespace Dialogs
 {
     internal partial class CurveLibraryDialog : Form

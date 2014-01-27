@@ -4,7 +4,6 @@ using System.IO.Ports;
 using System.Text;
 using System.Windows.Forms;
 
-using VixenPlus;
 using VixenPlus.Properties;
 
 namespace Dialogs {
@@ -20,6 +19,7 @@ namespace Dialogs {
         }
 
 
+/*
         public SerialSetupDialog(SerialPort serialPort, bool allowPortEdit, bool allowBaudEdit, bool allowParityEdit, bool allowDataEdit,
                                  bool allowStopEdit) {
             components = null;
@@ -32,6 +32,7 @@ namespace Dialogs {
             comboBoxStop.Enabled = allowStopEdit;
             Init(serialPort);
         }
+*/
 
 
         public SerialPort SelectedPort {

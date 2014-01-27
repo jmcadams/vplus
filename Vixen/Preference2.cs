@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -114,7 +115,7 @@ public class Preference2 {
     }
 
 
-    public string FileName { get; set; }
+    private string FileName { get; set; }
 
     public XmlDocument XmlDoc {
         get { return _preferencesDoc; }
@@ -187,17 +188,17 @@ public class Preference2 {
     }
 
 
-    public void SetBoolean(string name, bool value, bool defaultValue) {
+    private void SetBoolean(string name, bool value, bool defaultValue) {
         SetString(name, value.ToString(), defaultValue.ToString());
     }
 
 
-    public void SetChildBoolean(string parentName, string name, bool value) {
+    private void SetChildBoolean(string parentName, string name, bool value) {
         SetChildString(parentName, name, value.ToString());
     }
 
 
-    public void SetChildInteger(string parentName, string name, int value) {
+    private void SetChildInteger(string parentName, string name, int value) {
         SetChildString(parentName, name, value.ToString(CultureInfo.InvariantCulture));
     }
 
@@ -228,12 +229,7 @@ public class Preference2 {
     }
 
 
-    public void SetString(string name, string value) {
-        SetString(name, value, null);
-    }
-
-
-    public void SetString(string name, string value, string defaultValue) {
+    public void SetString(string name, string value, string defaultValue = null) {
         var flag = GetString(name) != value;
         SetValue(_preferencesDoc.DocumentElement, name, value, defaultValue);
         if (flag && (PreferenceChange != null)) {
@@ -242,7 +238,7 @@ public class Preference2 {
     }
 
 
-    public void SetValue(XmlNode parentNode, string name, string value, string defaultValue) {
+    private void SetValue(XmlNode parentNode, string name, string value, string defaultValue) {
         var newChild = (XmlElement) parentNode.SelectSingleNode(name);
         if (newChild == null) {
             newChild = _preferencesDoc.CreateElement(name);
@@ -295,13 +291,10 @@ public class Preference2 {
     }
 
 
-    public Screen GetScreen(string displayName) {
+    public static Screen GetScreen(string displayName) {
         var value = Screen.AllScreens[0];
 
-        foreach (var s in Screen.AllScreens) {
-            if (!FixDeviceName(s.DeviceName).Equals(displayName)) {
-                continue;
-            }
+        foreach (var s in Screen.AllScreens.Where(s => FixDeviceName(s.DeviceName).Equals(displayName))) {
             value = s;
             break;
         }

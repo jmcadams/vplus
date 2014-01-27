@@ -3,8 +3,8 @@ using System.Text;
 using System.Xml;
 
 public class SortOrder {
-    public List<int> ChannelIndexes;
-    public string Name;
+    public readonly List<int> ChannelIndexes;
+    public readonly string Name;
 
 
     public SortOrder(XmlNode node) {
@@ -28,14 +28,18 @@ public class SortOrder {
     }
 
 
+/*
     internal SortOrder Clone() {
         return new SortOrder(Name, ChannelIndexes);
     }
+*/
 
 
+/*
     public int FindNaturalIndex(int sortedIndex) {
         return ChannelIndexes.IndexOf(sortedIndex);
     }
+*/
 
 
     public XmlNode SaveToXml(XmlDocument doc) {

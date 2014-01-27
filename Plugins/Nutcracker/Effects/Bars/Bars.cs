@@ -6,8 +6,6 @@ using System.Windows.Forms;
 
 using CommonUtils;
 
-using VixenPlus;
-
 namespace Bars {
     public partial class Bars : UserControl, INutcrackerEffect {
 

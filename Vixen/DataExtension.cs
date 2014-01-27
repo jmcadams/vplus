@@ -8,27 +8,31 @@ public class DataExtension
     protected XmlDocument Document;
 
 
-    public DataExtension(string extensionName)
+    protected DataExtension(string extensionName)
     {
         _extensionName = extensionName;
         Document = Xml.CreateXmlDocument(extensionName);
         RootNode = Document.DocumentElement;
     }
 
+/*
     public bool IsEmpty
     {
         get { return !RootNode.HasChildNodes; }
     }
+*/
 
     public XmlNode RootNode { get; protected set; }
 
 
+/*
     public DataExtension Clone()
     {
         var extension = new DataExtension(_extensionName);
         Xml.CloneNode(extension.Document, Document.DocumentElement, true);
         return extension;
     }
+*/
 
     public bool GetBoolean(XmlNode setupDataNode, string childNode, bool defaultValue)
     {
@@ -48,22 +52,14 @@ public class DataExtension
         return defaultValue;
     }
 
-    public byte[] GetBytes(XmlNode setupDataNode, string childNode, byte[] defaultValue)
+    public void GetBytes(XmlNode setupDataNode, string childNode, byte[] defaultValue)
     {
         var node = setupDataNode.SelectSingleNode(childNode);
         if (node != null)
         {
-            try
-            {
-                return Convert.FromBase64String(node.InnerText);
-            }
-            catch
-            {
-                return new byte[0];
-            }
+            return;
         }
         SetBytes(setupDataNode, childNode, defaultValue);
-        return defaultValue;
     }
 
     public int GetInteger(XmlNode setupDataNode, string childNode, int defaultValue)
@@ -112,7 +108,8 @@ public class DataExtension
         newChild.InnerText = value.ToString();
     }
 
-    public void SetBytes(XmlNode setupDataNode, string childNode, byte[] value)
+
+    private void SetBytes(XmlNode setupDataNode, string childNode, byte[] value)
     {
         var newChild = setupDataNode.SelectSingleNode(childNode);
         if (newChild == null)

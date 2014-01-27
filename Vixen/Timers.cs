@@ -2,26 +2,23 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Xml;
 
 internal class Timers : IQueryable
 {
-    private bool _isDisabled;
     private Timer[] _timers = new Timer[0];
 
-    public Timer[] TimerArray
+    public IEnumerable<Timer> TimerArray
     {
         get { return _timers; }
+/*
         set { _timers = value; }
+*/
     }
 
-    public bool TimersDisabled
-    {
-        get { return _isDisabled; }
-        set { _isDisabled = value; }
-    }
+    public bool TimersDisabled { get; private set; }
 
+    /*
     public string QueryInstance(int index)
     {
         var builder = new StringBuilder();
@@ -71,18 +68,21 @@ internal class Timers : IQueryable
         }
         return builder.ToString();
     }
+*/
 
+/*
     public int Count
     {
         get { return 1; }
     }
+*/
 
-    public List<Timer> CurrentlyEffectiveTimers()
+    public IEnumerable<Timer> CurrentlyEffectiveTimers()
     {
         return EffectiveTimers(0x7fffffff);
     }
 
-    private List<Timer> EffectiveTimers(int deviationToleranceInMinutes)
+    private IEnumerable<Timer> EffectiveTimers(int deviationToleranceInMinutes)
     {
         var flag = Host.GetDebugValue("TimerTrace") != null;
         if (flag)
@@ -203,7 +203,7 @@ internal class Timers : IQueryable
         const bool flag = false;
         if (node != null && node.Attributes != null)
         {
-            _isDisabled = node.Attributes["enabled"].Value == flag.ToString();
+            TimersDisabled = node.Attributes["enabled"].Value == flag.ToString();
         }
         var list = new List<Timer>();
         if (node != null)
@@ -303,6 +303,7 @@ internal class Timers : IQueryable
         return ((num2 >= 0.0) && (num <= deviationTolerance));
     }
 
+/*
     public void SaveToXml(XmlNode contextNode)
     {
         //XmlDocument document = contextNode.OwnerDocument ?? ((XmlDocument) contextNode);
@@ -313,8 +314,9 @@ internal class Timers : IQueryable
             timer.SaveToXml(emptyNodeAlways);
         }
     }
+*/
 
-    public List<Timer> StartingTimers()
+    public IEnumerable<Timer> StartingTimers()
     {
         var flag = Host.GetDebugValue("TimerTrace") != null;
         var list = new List<Timer>();

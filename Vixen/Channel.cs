@@ -84,6 +84,7 @@ public class Channel : IDisposable, IComparable<Channel> {
     }
 
 
+/*
     public Channel(string name, Color color, int outputChannel, bool ensureUniqueId) : this(name, outputChannel) {
         Color = color;
         if (ensureUniqueId) {
@@ -92,6 +93,7 @@ public class Channel : IDisposable, IComparable<Channel> {
         }
         Id = Host.GetUniqueKey();
     }
+*/
 
 
     public Color Color {

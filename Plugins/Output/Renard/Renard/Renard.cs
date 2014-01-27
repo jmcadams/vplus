@@ -8,8 +8,6 @@ namespace Renard {
     using System.Windows.Forms;
     using System.Xml;
 
-    using VixenPlus;
-
     public class Renard : IEventDrivenOutputPlugIn {
         private byte[] _channelValues;
         private AutoResetEvent _eventTrigger;
@@ -197,7 +195,7 @@ namespace Renard {
             get { return "Renard Protocol Output"; }
         }
 
-        public HardwareMap[] HardwareMap {
+        public IEnumerable<HardwareMap> HardwareMap {
             get { return new[] {new HardwareMap("Serial", int.Parse(_selectedPort.PortName.Substring(3)))}; }
         }
 

@@ -10,10 +10,7 @@ using CommonUtils;
 
 using FMOD;
 
-using VixenPlus;
 using VixenPlus.Properties;
-
-using Channel = Channel;
 
 namespace Dialogs {
     public partial class AudioDialog : Form {
@@ -118,7 +115,7 @@ namespace Dialogs {
             for (var i = 0; i < _newEventValues.GetLength(1); i++) {
                 _newEventValues[listBoxChannels.SelectedIndex, i] = 0;
             }
-            MessageBox.Show(string.Format(Resources.ChannelEventsClerared, ((global::Channel) listBoxChannels.SelectedItem).Name), Vendor.ProductName,
+            MessageBox.Show(string.Format(Resources.ChannelEventsClerared, ((Channel) listBoxChannels.SelectedItem).Name), Vendor.ProductName,
                             MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
@@ -366,9 +363,9 @@ namespace Dialogs {
 
 
         private void UpdateAudioButtons() {
-            global::Channel selectedItem = null;
+            Channel selectedItem = null;
             if (listBoxChannels.SelectedItem != null) {
-                selectedItem = (global::Channel) listBoxChannels.SelectedItem;
+                selectedItem = (Channel) listBoxChannels.SelectedItem;
             }
             buttonClear.Enabled = selectedItem != null && selectedItem.Enabled;
         }

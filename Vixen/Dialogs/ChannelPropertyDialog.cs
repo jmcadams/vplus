@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Forms;
 
-using VixenPlus;
-
 namespace Dialogs
 {
     public partial class ChannelPropertyDialog : Form

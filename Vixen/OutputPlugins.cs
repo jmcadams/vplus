@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using System.Xml;
 
 internal static class OutputPlugins {
-    public static IHardwarePlugin FindPlugin(string pluginName) {
+    private static IHardwarePlugin FindPlugin(string pluginName) {
         return HardwarePlugins.FindPlugin(pluginName, Paths.OutputPluginPath, "IOutputPlugIn");
     }
 
@@ -16,9 +16,11 @@ internal static class OutputPlugins {
     }
 
 
+/*
     public static List<string> LoadPluginNames() {
         return HardwarePlugins.LoadPluginNames(Paths.OutputPluginPath, "IOutputPlugIn");
     }
+*/
 
 
     public static List<IHardwarePlugin> LoadPlugins() {

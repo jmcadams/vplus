@@ -5,7 +5,6 @@ using System.Xml;
 public abstract class Input : ICloneable
 {
     private bool _isEnabled;
-    private bool _isMappingIterator;
     private bool _wasChanged;
 
     protected Input(InputPlugin owner, string name, bool isIterator)
@@ -13,14 +12,14 @@ public abstract class Input : ICloneable
         Owner = owner;
         Name = name;
         _isEnabled = true;
-        _isMappingIterator = isIterator;
+        IsMappingIterator = isIterator;
         Owner.MappingSets.GetMappingSet("Mapping set 1", this);
         Id = Host.GetUniqueKey();
     }
 
     public MappingSet AssignedMappingSet { get; set; }
 
-    public abstract bool Changed { get; }
+    protected abstract bool Changed { get; }
 
     public bool Enabled
     {
@@ -30,15 +29,11 @@ public abstract class Input : ICloneable
 
     public ulong Id { get; private set; }
 
-    public bool IsMappingIterator
-    {
-        get { return _isMappingIterator; }
-        set { _isMappingIterator = value; }
-    }
+    public bool IsMappingIterator { get; private set; }
 
     public string Name { get; private set; }
 
-    internal InputPlugin Owner { get; private set; }
+    private InputPlugin Owner { get; set; }
 
 
     public object Clone()
@@ -50,7 +45,7 @@ public abstract class Input : ICloneable
 
     internal bool GetChangedInternal()
     {
-        if (!_isMappingIterator) {
+        if (!IsMappingIterator) {
             return Changed;
         }
         var changed = Changed;
@@ -62,10 +57,11 @@ public abstract class Input : ICloneable
         return false;
     }
 
-    public abstract byte GetValue();
+
+    protected abstract byte GetValue();
 
     internal byte GetValueInternal() {
-        return _isMappingIterator ? (byte) 0 : GetValue();
+        return IsMappingIterator ? (byte) 0 : GetValue();
     }
 
 
@@ -77,7 +73,7 @@ public abstract class Input : ICloneable
         Name = node.Attributes["name"].Value;
         _isEnabled = bool.Parse(node.Attributes["enabled"].Value);
         Id = ulong.Parse(node.Attributes["id"].Value);
-        _isMappingIterator = bool.Parse(node.Attributes["isIterator"].Value);
+        IsMappingIterator = bool.Parse(node.Attributes["isIterator"].Value);
     }
 
     public override string ToString()
@@ -85,13 +81,13 @@ public abstract class Input : ICloneable
         return Name;
     }
 
-    public XmlNode WriteData(XmlNode parentNode)
+    //TODO This can go to linq for easier readability
+    public void WriteData(XmlNode parentNode)
     {
         var node = Xml.SetNewValue(parentNode, "Input", "");
         Xml.SetAttribute(node, "name", Name);
         Xml.SetAttribute(node, "enabled", Enabled.ToString());
         Xml.SetAttribute(node, "id", Id.ToString(CultureInfo.InvariantCulture));
-        Xml.SetAttribute(node, "isIterator", _isMappingIterator.ToString());
-        return node;
+        Xml.SetAttribute(node, "isIterator", IsMappingIterator.ToString());
     }
 }

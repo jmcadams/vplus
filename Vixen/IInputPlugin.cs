@@ -1,11 +1,9 @@
-﻿using System.Xml;
-
-internal interface IInputPlugin : IHardwarePlugin
+﻿internal interface IInputPlugin : IHardwarePlugin
 {
-    Input[] Inputs { get; }
+    //Input[] Inputs { get; }
 
-    bool LiveUpdate { get; }
+    //bool LiveUpdate { get; }
 
-    bool Record { get; }
-    void Initialize(SetupData setupData, XmlNode setupNode);
+    //bool Record { get; }
+    //void Initialize(SetupData setupData, XmlNode setupNode);
 }

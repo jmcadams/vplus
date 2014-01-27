@@ -3,8 +3,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
 
-using VixenPlus;
-
 namespace WindowFrame {
     public partial class WindowFrame : UserControl, INutcrackerModel {
 

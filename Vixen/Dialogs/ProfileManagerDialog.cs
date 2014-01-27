@@ -8,10 +8,7 @@ using System.Windows.Forms;
 
 using CommonUtils;
 
-using VixenPlus;
 using VixenPlus.Properties;
-
-using SortOrder = SortOrder;
 
 namespace Dialogs {
     public partial class ProfileManagerDialog : Form {
@@ -183,7 +180,7 @@ namespace Dialogs {
             }
             else {
                 _channelOrderMapping.Clear();
-                _channelOrderMapping.AddRange(((global::SortOrder) comboBoxChannelOrder.SelectedItem).ChannelIndexes);
+                _channelOrderMapping.AddRange(((SortOrder) comboBoxChannelOrder.SelectedItem).ChannelIndexes);
                 _contextProfile.LastSort = comboBoxChannelOrder.SelectedIndex;
                 btnDeleteChannelOrder.Enabled = true;
             }
@@ -285,14 +282,14 @@ namespace Dialogs {
                                 MessageBoxIcon.Question) != DialogResult.Yes) {
                 return;
             }
-            _contextProfile.Sorts.Remove((global::SortOrder) comboBoxChannelOrder.SelectedItem);
+            _contextProfile.Sorts.Remove((SortOrder) comboBoxChannelOrder.SelectedItem);
             comboBoxChannelOrder.Items.RemoveAt(comboBoxChannelOrder.SelectedIndex);
             btnDeleteChannelOrder.Enabled = false;
         }
 
 
         private void pictureBoxProfileSaveChannelOrder_Click(object sender, EventArgs e) {
-            global::SortOrder sortOrder = null;
+            SortOrder sortOrder = null;
             using (var dialog = new TextQueryDialog(Resources.NewOrderPrompt, Resources.ChannelOrderingName, string.Empty)) {
                 var dialogResult = DialogResult.No;
                 while (dialogResult == DialogResult.No) {
@@ -320,7 +317,7 @@ namespace Dialogs {
                     comboBoxChannelOrder.SelectedItem = sortOrder;
                 }
                 else {
-                    _contextProfile.Sorts.Add(sortOrder = new global::SortOrder(dialog.Response, _channelOrderMapping));
+                    _contextProfile.Sorts.Add(sortOrder = new SortOrder(dialog.Response, _channelOrderMapping));
                     sortOrder.ChannelIndexes.Clear();
                     sortOrder.ChannelIndexes.AddRange(_channelOrderMapping);
                     comboBoxChannelOrder.Items.Insert(comboBoxChannelOrder.Items.Count - 1, sortOrder);

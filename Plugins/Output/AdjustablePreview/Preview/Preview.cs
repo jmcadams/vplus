@@ -5,8 +5,6 @@ using System.Xml;
 
 using AdjustablePreview.Properties;
 
-using VixenPlus;
-
 namespace Preview {
     public class Preview : IEventDrivenOutputPlugIn {
         private readonly List<Channel> _channels;
@@ -93,7 +91,7 @@ namespace Preview {
             get { return "Built in previewer for VixenPlus"; }
         }
 
-        public HardwareMap[] HardwareMap {
+        public IEnumerable<HardwareMap> HardwareMap {
             get { return new HardwareMap[0]; }
         }
 

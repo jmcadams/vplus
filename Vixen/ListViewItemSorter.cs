@@ -4,9 +4,10 @@ using System.Windows.Forms;
 
 internal class ListViewItemSorter : IComparer
 {
-    public int SortColumn { get; set; }
+    // ReSharper disable once UnusedAutoPropertyAccessor.Local
+    private int SortColumn { get; set; }
 
-    public System.Windows.Forms.SortOrder SortOrder { get; set; }
+    //public System.Windows.Forms.SortOrder SortOrder { get; set; }
 
     public int Compare(object x, object y)
     {

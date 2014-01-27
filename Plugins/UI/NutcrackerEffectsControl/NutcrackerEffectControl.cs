@@ -8,8 +8,6 @@ using System.Windows.Forms;
 
 using CommonUtils;
 
-using VixenPlus;
-
 namespace NutcrackerEffectsControl {
     public partial class NutcrackerEffectControl : UserControl {
         private readonly Dictionary<string, INutcrackerEffect> _effectCache = new Dictionary<string, INutcrackerEffect>();

@@ -5,6 +5,8 @@ using System.Timers;
 using System.Windows.Forms;
 using CommonUtils;
 
+using Timer = System.Timers.Timer;
+
 namespace VixenEditor {
 
 
@@ -16,7 +18,7 @@ namespace VixenEditor {
         private int _tickCount;
 
         private readonly bool _actualLevels;
-        private readonly System.Timers.Timer _drawTimer;
+        private readonly Timer _drawTimer;
         private readonly FrequencyEffectGenerator _effectGenerator;
         private readonly byte[,] _effectValues;
         private readonly int _maxColumn;
@@ -45,7 +47,7 @@ namespace VixenEditor {
             _treePoints[2] = new[] {new Point(112, 36), new Point(127, 91), new Point(97, 91)};
             _treePoints[3] = new[] {new Point(157, 36), new Point(172, 91), new Point(142, 91)};
             
-            _drawTimer = new System.Timers.Timer(100.0);
+            _drawTimer = new Timer(100.0);
             _drawTimer.Elapsed += m_drawTimer_Elapsed;
             _drawTimer.Start();
 

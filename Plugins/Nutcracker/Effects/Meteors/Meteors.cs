@@ -6,8 +6,6 @@ using System.Windows.Forms;
 
 using CommonUtils;
 
-using VixenPlus;
-
 
 namespace Meteors {
     public partial class Meteors : UserControl, INutcrackerEffect {

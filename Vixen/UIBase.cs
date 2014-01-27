@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Windows.Forms;
 
+using VixenPlus.Properties;
+
 public partial class UIBase : Form, IUIPlugIn {
     private bool _isDirty;
 
 
-    public UIBase() {
+    protected UIBase() {
         InitializeComponent();
+        Icon = Resources.VixenPlus;
     }
 
 
@@ -45,11 +48,15 @@ public partial class UIBase : Form, IUIPlugIn {
     }
 
 
-    // ReSharper disable UnusedAutoPropertyAccessor.Global
+/*
     public virtual string Author { get; set; }
+*/
 
+/*
     public virtual string Description { get; set; }
+*/
 
+    // ReSharper disable UnusedAutoPropertyAccessor.Global
     public virtual string FileExtension { get; set; }
 
     public virtual string FileTypeDescription { get; set; }
@@ -67,7 +74,7 @@ public partial class UIBase : Form, IUIPlugIn {
     public event EventHandler DirtyChanged;
 
 
-    public virtual void OnDirtyChanged(EventArgs e) {
+    protected virtual void OnDirtyChanged(EventArgs e) {
         if (DirtyChanged != null) {
             DirtyChanged(this, e);
         }

@@ -6,8 +6,6 @@ using System.Windows.Forms;
 
 using AdjustablePreview.Properties;
 
-using VixenPlus;
-
 namespace Preview {
     internal partial class ReorderDialog : Form {
 

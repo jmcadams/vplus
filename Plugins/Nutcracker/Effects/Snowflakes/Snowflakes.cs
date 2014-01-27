@@ -6,8 +6,6 @@ using System.Windows.Forms;
 
 using CommonUtils;
 
-using VixenPlus;
-
 namespace Snowflakes {
     public partial class Snowflakes : UserControl, INutcrackerEffect {
 

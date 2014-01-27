@@ -6,21 +6,18 @@ using System.Xml;
 public class MappingSet : ICloneable
 {
     private readonly Dictionary<ulong, List<string>> _inputMappings;
-    private readonly Dictionary<ulong, List<int>> _inputOutputMappings;
 
 
     public MappingSet(string name)
     {
         Name = name;
         _inputMappings = new Dictionary<ulong, List<string>>();
-        _inputOutputMappings = new Dictionary<ulong, List<int>>();
         Id = Host.GetUniqueKey();
     }
 
     public MappingSet(XmlNode dataNode)
     {
         _inputMappings = new Dictionary<ulong, List<string>>();
-        _inputOutputMappings = new Dictionary<ulong, List<int>>();
         ReadData(dataNode);
     }
 
@@ -41,7 +38,8 @@ public class MappingSet : ICloneable
         return set;
     }
 
-    public List<string> GetOutputChannelIdList(ulong inputId)
+
+    private List<string> GetOutputChannelIdList(ulong inputId)
     {
         List<string> list;
         if (!_inputMappings.TryGetValue(inputId, out list))
@@ -56,17 +54,22 @@ public class MappingSet : ICloneable
         return GetOutputChannelIdList(input.Id);
     }
 
+/*
     internal List<int> GetOutputChannelIndexList(Input input)
     {
         return _inputOutputMappings[input.Id];
     }
+*/
 
+/*
     public bool HasMappingFor(Input input)
     {
         return _inputMappings.ContainsKey(input.Id);
     }
+*/
 
-    public void ReadData(XmlNode dataNode)
+
+    private void ReadData(XmlNode dataNode)
     {
         if (dataNode.Attributes != null)
         {

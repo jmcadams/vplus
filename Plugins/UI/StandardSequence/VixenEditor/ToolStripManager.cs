@@ -10,8 +10,6 @@ using CommonUtils;
 
 using VixenPlus.Properties;
 
-using VixenPlus;
-
 namespace VixenEditor {
     internal static class ToolStripManager {
 

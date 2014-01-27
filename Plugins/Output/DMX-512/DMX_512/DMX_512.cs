@@ -1,9 +1,10 @@
+using System.Collections.Generic;
+
 namespace DMX_512
 {
     using System.Windows.Forms;
     using System.Xml;
     using IDMX;
-    using VixenPlus;
 
     public class Dmx512 : IEventDrivenOutputPlugIn
     {
@@ -65,7 +66,7 @@ namespace DMX_512
             }
         }
 
-        public HardwareMap[] HardwareMap
+        public IEnumerable<HardwareMap> HardwareMap
         {
             get
             {

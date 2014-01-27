@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 
-public class Xml {
-    public static XmlNode CloneNode(XmlDocument targetDoc, XmlNode finalNode, bool deep) {
+public static class Xml {
+    public static void CloneNode(XmlDocument targetDoc, XmlNode finalNode, bool deep) {
         var stack = new Stack<XmlNode>();
         while (finalNode is XmlElement) {
             stack.Push(finalNode);
@@ -19,7 +19,6 @@ public class Xml {
                 : node2.SelectSingleNode(node.Name);
             node2 = node3 ?? node2.AppendChild(stack.Count == 0 ? targetDoc.ImportNode(node, deep) : targetDoc.ImportNode(node, false));
         }
-        return node2;
     }
 
 
@@ -40,11 +39,14 @@ public class Xml {
     }
 
 
+/*
     public static string GetAttribute(XmlNode node, string attributeName) {
         return GetAttribute(node, attributeName, "");
     }
+*/
 
 
+/*
     public static string GetAttribute(XmlNode node, string attributeName, string attributeDefaultValue) {
         var returnValue = attributeDefaultValue;
             
@@ -60,6 +62,7 @@ public class Xml {
             
         return returnValue;
     }
+*/
 
 
     public static XmlNode GetEmptyNodeAlways(XmlNode contextNode, string nodeName) {
@@ -114,9 +117,9 @@ public class Xml {
     }
 
 
-    public static XmlNode SetAttribute(XmlNode node, string attributeName, string attributeValue) {
+    public static void SetAttribute(XmlNode node, string attributeName, string attributeValue) {
         if (node.Attributes == null) {
-            return node;
+            return;
         }
         var attribute = node.Attributes[attributeName];
         if (attribute == null) {
@@ -124,7 +127,6 @@ public class Xml {
             node.Attributes.Append(attribute);
         }
         attribute.Value = attributeValue;
-        return node;
     }
 
 

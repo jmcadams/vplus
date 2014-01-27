@@ -4,7 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.Windows.Forms;
 using VixenPlus.Properties;
-using VixenPlus;
+
 using CommonUtils;
 
 namespace VixenEditor {

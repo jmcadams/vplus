@@ -13,7 +13,7 @@ public partial class OutputPlugInUIBase {
         this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         this.ClientSize = new System.Drawing.Size(284, 262);
-        this.Icon = global::VixenPlus.Properties.Resources.VixenPlus;
+        //this.Icon = global::VixenPlus.Properties.Resources.VixenPlus;
         this.Name = "OutputPlugInUIBase";
         this.ShowInTaskbar = false;
         this.Text = "OutputPlugInUIBase";

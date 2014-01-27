@@ -15,8 +15,6 @@ using CommonUtils;
 
 using Dialogs;
 
-using FMOD;
-
 using VixenPlus.Properties;
 
 internal sealed partial class VixenPlusForm : Form, ISystem {
@@ -32,10 +30,8 @@ internal sealed partial class VixenPlusForm : Form, ISystem {
 
     private string _lastWindowsClipboardValue = "";
 
-    private string[] _audioDevices;
-
     private readonly Dictionary<string, IUIPlugIn> _registeredFileTypes;
-    private readonly Dictionary<string, List<LoadedObject>> _loadables;
+    //private readonly Dictionary<string, List<LoadedObject>> _loadables;
 
     private readonly EventHandler _historyItemClick;
     private readonly EventHandler _newMenuItemClick;
@@ -63,7 +59,7 @@ internal sealed partial class VixenPlusForm : Form, ISystem {
         Ensure(Paths.CurveLibraryPath);
         using (var splash = new Splash()) {
             _preferences = Preference2.GetInstance();
-            var screen = _preferences.GetScreen(_preferences.GetString("PrimaryDisplay"));
+            var screen = Preference2.GetScreen(_preferences.GetString("PrimaryDisplay"));
             splash.FadeIn(screen);
             InitializeComponent();
             SetVendorData();
@@ -71,7 +67,7 @@ internal sealed partial class VixenPlusForm : Form, ISystem {
             var timersPath = Path.Combine(Paths.DataPath, "timers");
             _preferences.PreferenceChange += PreferencesPreferenceChange;
             _host = new Host(this);
-            _loadables = new Dictionary<string, List<LoadedObject>>();
+            //_loadables = new Dictionary<string, List<LoadedObject>>();
             Interfaces.Available["ISystem"] = this;
             Interfaces.Available["IExecution"] = new ExecutionImpl(_host);
             _newMenuItemClick = NewMenuItemClick;
@@ -115,9 +111,11 @@ internal sealed partial class VixenPlusForm : Form, ISystem {
     }
 
 
+/*
     public int GetExecutingTimerExecutionContextHandle(int executingTimerIndex) {
         return _timerExecutor.GetExecutingTimerExecutionContextHandle(executingTimerIndex);
     }
+*/
 
 
     public Form InstantiateForm(ConstructorInfo constructorInfo, params object[] parameters) {
@@ -170,11 +168,12 @@ internal sealed partial class VixenPlusForm : Form, ISystem {
     }
 
 
-    public bool InvokeSave(UIBase pluginInstance) {
-        return Save(pluginInstance);
+    public void InvokeSave(UIBase pluginInstance) {
+        Save(pluginInstance);
     }
 
 
+/*
     public List<ILoadable> LoadableList(string interfaceName) {
         var list = new List<ILoadable>();
         if (_loadables.ContainsKey(interfaceName)) {
@@ -184,6 +183,7 @@ internal sealed partial class VixenPlusForm : Form, ISystem {
         }
         return list;
     }
+*/
 
 
     public void VerifySequenceHardwarePlugins(EventSequence sequence) {
@@ -197,9 +197,11 @@ internal sealed partial class VixenPlusForm : Form, ISystem {
     }
 
 
+/*
     public string[] AudioDevices {
         get { return _audioDevices ?? (_audioDevices = fmod.GetSoundDeviceList()); }
     }
+*/
 
     public byte[,] Clipboard {
         get {
@@ -250,11 +252,13 @@ internal sealed partial class VixenPlusForm : Form, ISystem {
         }
     }
 
+/*
     public int ExecutingTimerCount {
         get { return _timerExecutor.ExecutingTimerCount; }
     }
+*/
 
-    public string KnownFileTypesFilter { get; private set; }
+    private string KnownFileTypesFilter { get; set; }
 
     public Preference2 UserPreferences {
         get { return _preferences; }
@@ -644,8 +648,7 @@ internal sealed partial class VixenPlusForm : Form, ISystem {
     }
 
 
-    // ReSharper disable once MemberCanBePrivate.Global
-    public void openALightingProgramToolStripMenuItem_Click(object sender, EventArgs e) {
+    private void openALightingProgramToolStripMenuItem_Click(object sender, EventArgs e) {
         var filterIndex = 0;
         var filterIndexCount = 1;
         var preferredType = _preferences.GetString("PreferredSequenceType");
@@ -673,8 +676,7 @@ internal sealed partial class VixenPlusForm : Form, ISystem {
     }
 
 
-    // ReSharper disable once MemberCanBePrivate.Global
-    public void OpenSequence(string fileName) {
+    private void OpenSequence(string fileName) {
         IUIPlugIn plugInInterface;
         //new XmlDocument();
         var extension = Path.GetExtension(fileName);

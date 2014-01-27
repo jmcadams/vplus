@@ -6,8 +6,6 @@ using System.Windows.Forms;
 
 using VixenPlus.Properties;
 
-using VixenPlus;
-
 namespace VixenEditor {
 
     internal partial class TestConsoleDialog : Form {

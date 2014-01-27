@@ -1,8 +1,6 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 
-using TabControl = TabControl;
-
 namespace Dialogs {
     internal partial class PreferencesDialog {
         private IContainer components;

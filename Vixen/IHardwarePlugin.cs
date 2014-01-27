@@ -1,6 +1,8 @@
-﻿public interface IHardwarePlugin : IPlugIn, ISetup
+﻿using System.Collections.Generic;
+
+public interface IHardwarePlugin : IPlugIn, ISetup
 {
-    HardwareMap[] HardwareMap { get; }
+    IEnumerable<HardwareMap> HardwareMap { get; }
     void Shutdown();
     void Startup();
 }

@@ -55,7 +55,7 @@ public static class Paths {
         get { return Path.Combine(PluginBasePath, "Input"); }
     }
 
-    public static string LibraryPath {
+    private static string LibraryPath {
         get { return Path.Combine(DataPath, "Libraries"); }
     }
 
@@ -87,7 +87,7 @@ public static class Paths {
         get { return Path.Combine(PluginBasePath, "Output"); }
     }
 
-    public static string PluginBasePath {
+    private static string PluginBasePath {
         get { return Path.Combine(BinaryPath, "Plugins"); }
     }
 

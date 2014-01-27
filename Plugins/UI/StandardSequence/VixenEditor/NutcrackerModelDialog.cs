@@ -6,8 +6,6 @@ using System.Windows.Forms;
 
 using CommonUtils;
 
-using VixenPlus;
-
 namespace VixenEditor {
     public partial class NutcrackerModelDialog : Form {
         private readonly EventSequence _sequence;

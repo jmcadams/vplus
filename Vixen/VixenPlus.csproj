@@ -310,7 +310,6 @@
     <Compile Include="IExecutionImpl.cs" />
     <Compile Include="IHardwarePlugin.cs" />
     <Compile Include="IInputPlugin.cs" />
-    <Compile Include="ILoadable.cs" />
     <Compile Include="IMaskable.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="InputPlugin.cs" />
@@ -331,7 +330,6 @@
     <Compile Include="ListViewSortIcons.cs" />
     <Compile Include="LoadableData.cs" />
     <Compile Include="LoadableDataLocation.cs" />
-    <Compile Include="LoadedObject.cs" />
     <Compile Include="MappedOutputPlugIn.cs" />
     <Compile Include="MappingSet.cs" />
     <Compile Include="MappingSets.cs" />
@@ -340,7 +338,6 @@
     <Compile Include="NutcrackerNodes.cs" />
     <Compile Include="ObjectType.cs" />
     <Compile Include="OnEngineError.cs" />
-    <Compile Include="OutputPlugin.cs" />
     <Compile Include="OutputPlugins.cs" />
     <Compile Include="OutputPlugInUIBase.cs">
       <SubType>Form</SubType>
@@ -368,8 +365,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="RecurrenceType.cs" />
-    <Compile Include="ReferenceRectF.cs" />
-    <Compile Include="RegisteredResponse.cs" />
     <Compile Include="RouterContext.cs" />
     <Compile Include="Routine.cs" />
     <Compile Include="SequenceExtensions.cs" />
@@ -395,9 +390,6 @@
     </Compile>
     <Compile Include="UIBase.Designer.cs">
       <DependentUpon>UIBase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UIBaseConcreteForm.cs">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Vendor.cs" />
     <Compile Include="VixenPlusForm.cs">

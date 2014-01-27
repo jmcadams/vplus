@@ -1,5 +1,6 @@
-﻿public enum LoadableDataLocation
+﻿/*
+public enum LoadableDataLocation
 {
     Sequence,
     Application
-}
+}*/

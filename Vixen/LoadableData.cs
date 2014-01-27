@@ -1,11 +1,10 @@
-﻿using System.Xml;
-
-public class LoadableData : DataExtension
+﻿public class LoadableData : DataExtension
 {
     public LoadableData() : base("LoadableData")
     {
     }
 
+/*
     public XmlNode GetLoadableData(string loadableType, string loadableName)
     {
         var nodeAlways = Xml.GetNodeAlways(RootNode, loadableType + "Data");
@@ -24,4 +23,5 @@ public class LoadableData : DataExtension
         nodeAlways.AppendChild(newChild);
         return newChild;
     }
+*/
 }

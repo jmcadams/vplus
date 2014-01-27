@@ -9,8 +9,6 @@ using System.Xml;
 
 using CommonUtils;
 
-using VixenPlus;
-
 namespace Preview {
     public partial class PreviewDialog : OutputPlugInUIBase {
         private uint[,] _backBuffer;

@@ -56,7 +56,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using J1Sys;
-using VixenPlus;
 
 namespace E131_VixenPlugin {
     //-----------------------------------------------------------------
@@ -436,7 +435,7 @@ namespace E131_VixenPlugin {
         //
         //-------------------------------------------------------------
 
-        public HardwareMap[] HardwareMap {
+        public IEnumerable<HardwareMap> HardwareMap {
             get {
                 // define objects
                 var activeCnt = _universeTable.Where(uE => uE.Active).Count(uE => uE.Unicast != null || uE.Multicast != null);

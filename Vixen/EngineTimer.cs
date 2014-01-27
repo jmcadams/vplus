@@ -2,23 +2,27 @@
 
 internal class EngineTimer : ITickSource, IDisposable
 {
-    private TickCallDelegate _tickCall;
+    // ReSharper disable once UnusedAutoPropertyAccessor.Local
+    private TickCallDelegate TickCall { get; set; }
+
 
     internal EngineTimer(TickCallDelegate tickCall)
     {
-        _tickCall = tickCall.Invoke;
+        TickCall = tickCall.Invoke;
     }
 
     public void Dispose()
     {
-        _tickCall = null;
+        TickCall = null;
         GC.SuppressFinalize(this);
     }
 
+/*
     public int Milliseconds
     {
         get { return _tickCall(); }
     }
+*/
 
     ~EngineTimer()
     {

@@ -6,8 +6,6 @@ using System.Windows.Forms;
 
 using CommonUtils;
 
-using VixenPlus;
-
 namespace Dialogs {
     public partial class ChannelOrderDialog : Form {
         private List<Channel> _channelNaturalOrder;

@@ -1,6 +1,8 @@
 ﻿using System.Threading;
 using System.Windows.Forms;
 
+using VixenPlus.Properties;
+
 internal partial class Splash : Form
 {
     private const int FadeMS = 40;
@@ -12,6 +14,8 @@ internal partial class Splash : Form
     }
 
     public void FadeIn(Screen screen) {
+        BackgroundImage = Resources.VixenPlusSplash;
+
         if (!Visible) {
             Left = screen.Bounds.X + (screen.WorkingArea.Width - Width) /2;
             Top = screen.Bounds.Y + (screen.WorkingArea.Height - Height) / 2;

@@ -5,7 +5,6 @@ using System.Windows.Forms;
 
 using CommonUtils;
 
-using VixenPlus;
 using VixenPlus.Properties;
 
 namespace Dialogs {
@@ -21,9 +20,11 @@ namespace Dialogs {
         }
 
 
+/*
         public int TimerCount {
             get { return listBoxTimers.Items.Count; }
         }
+*/
 
 
         public void AddTimer(TimerContext context) {
@@ -225,12 +226,14 @@ namespace Dialogs {
         }
 
 
+/*
         public TimerContext GetContextOf(int executingTimerIndex) {
             if (executingTimerIndex < listBoxTimers.Items.Count) {
                 return (TimerContext) listBoxTimers.Items[executingTimerIndex];
             }
             return null;
         }
+*/
 
 
         private void listBoxTimers_SelectedIndexChanged(object sender, EventArgs e) {

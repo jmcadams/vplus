@@ -55,11 +55,11 @@ internal class EventSequenceStub : IDisposable {
     private string AudioName { get; set; }
     // ReSharper restore UnusedAutoPropertyAccessor.Local
 
-    public string FileName { get; private set; }
+    private string FileName { get; set; }
 
     public int Length {
         get { return _length; }
-        set {
+        private set {
             _length = value;
             LengthString = Length.FormatNoMills(true);
         }
@@ -69,9 +69,8 @@ internal class EventSequenceStub : IDisposable {
 
     public byte[][] Mask { get; private set; }
 
-    public string Name {
-        private get { return Path.GetFileNameWithoutExtension(FileName); }
-        set { FileName = Path.ChangeExtension(value, ".vpr"); }
+    private string Name {
+        get { return Path.GetFileNameWithoutExtension(FileName); }
     }
 
     public EventSequence Sequence { get; private set; }

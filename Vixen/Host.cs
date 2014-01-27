@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Text;
 using System.Timers;
 using System.Windows.Forms;
+
+using CommonUtils;
 
 using VixenPlus.Properties;
 
 internal class Host : IQueryable {
-    public static byte[,] Clipboard = null;
-    internal static Dictionary<string, object> Communication = new Dictionary<string, object>();
+    public static byte[,] Clipboard;
+    internal static readonly Dictionary<string, object> Communication = new Dictionary<string, object>();
     private static ulong _lastKey;
     private static readonly Preference2 Preference2 = Preference2.GetInstance();
     private static readonly Dictionary<string, string> Properties = new Dictionary<string, string>();
@@ -41,9 +42,11 @@ internal class Host : IQueryable {
 
 
     public string BackgroundSequenceName {
+/*
         get {
             return _backgroundSequence == null ? null : _backgroundSequence.FileName;
         }
+*/
         set {
             StopBackgroundSequence();
             if (string.IsNullOrEmpty(value)) {
@@ -79,6 +82,7 @@ internal class Host : IQueryable {
     public static PlugInRouter Router { get; private set; }
 
 
+/*
     public string QueryInstance(int index) {
         var builder = new StringBuilder();
         if (index == 0) {
@@ -98,11 +102,14 @@ internal class Host : IQueryable {
         }
         return builder.ToString();
     }
+*/
 
 
+/*
     public int Count {
         get { return 2; }
     }
+*/
 
 
     public static void BeginInvoke(Delegate method, params object[] args) {
@@ -110,9 +117,11 @@ internal class Host : IQueryable {
     }
 
 
+/*
     public static void ClearLog(string filePath) {
         File.Delete(filePath);
     }
+*/
 
 
     private void CreateBackgroundContext() {
@@ -161,7 +170,7 @@ internal class Host : IQueryable {
     }
 
 
-    public void ExecuteBackgroundSequence() {
+    private void ExecuteBackgroundSequence() {
         if ((((_executionInterface != null) && (_backgroundExecutionContextHandle != 0)) && (_backgroundSequence != null)) &&
             !_executionInterface.ExecutePlay(_backgroundExecutionContextHandle, 0, 0, Preference2.GetBoolean("LogAudioScheduled"))) {
             MessageBox.Show(Resources.Host_StartingBackgroundSequenceFailed, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -306,7 +315,7 @@ internal class Host : IQueryable {
             return;
         }
         CreateBackgroundContext();
-        if (_executionInterface.EngineStatus(_backgroundExecutionContextHandle) != CommonUtils.Utils.ExecutionStopped) {
+        if (_executionInterface.EngineStatus(_backgroundExecutionContextHandle) != Utils.ExecutionStopped) {
             return;
         }
         _backgroundSequenceDelayTimer.Interval = Preference2.GetInteger("BackgroundSequenceDelay") * 1000;
@@ -333,7 +342,7 @@ internal class Host : IQueryable {
     }
 
 
-    public void StopBackgroundSequenceExecution() {
+    private void StopBackgroundSequenceExecution() {
         if (_backgroundExecutionContextHandle == 0) {
             return;
         }
