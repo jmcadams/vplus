@@ -521,11 +521,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AppUpdate\AppUpdate.csproj">
-      <Project>{F3158DD2-126D-427C-891B-971EFAF1315A}</Project>
-      <Name>AppUpdate</Name>
-      <Private>False</Private>
-    </ProjectReference>
     <ProjectReference Include="..\CommonUtils\CommonUtils.csproj">
       <Project>{43B2665C-A5AB-4908-8E6D-C08975513E12}</Project>
       <Name>CommonUtils</Name>

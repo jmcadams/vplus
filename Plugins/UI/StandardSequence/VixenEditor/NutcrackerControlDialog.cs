@@ -47,18 +47,18 @@ namespace VixenEditor {
 
         private Layers EffectLayer { get; set; }
 
-        public enum RenderTo {
+        private enum RenderTo {
             Routine,
             CurrentSelection,
             SpecificPoint,
             Clipboard
         }
 
-        public RenderTo RenderType { get; private set; }
-        public byte[,] RenderData { get; private set; }
-        public int RenderEvents { get; private set; }
-        public int RenderRows { get; private set; }
-        public int RenderCols { get; private set; }
+        private RenderTo RenderType { get; set; }
+        private byte[,] RenderData { get; set; }
+        private int RenderEvents { get; set; }
+        private int RenderRows { get; set; }
+        private int RenderCols { get; set; }
 
         #endregion
 
@@ -137,13 +137,13 @@ namespace VixenEditor {
             }
             cbModels.Items.Add("Manage Models");
 
-            var degrees = 180;
+            const int degrees = 180;
             if (RenderCols < 2) return;
             var factor = pbPreview.Height / RenderRows;
             var renderWi = pbPreview.Width / 2;
-            var radians = 2.0 * Math.PI * degrees / 360.0;
+            const double radians = 2.0 * Math.PI * degrees / 360.0;
             var radius = renderWi * 0.8;
-            var startAngle = -radians / 2.0;
+            const double startAngle = -radians / 2.0;
             var angleIncr = radians / (RenderCols - 1);
             for (var row = 0; row < RenderRows; row++) {
                 for (var col = 0; col < RenderCols; col++) {
@@ -171,8 +171,7 @@ namespace VixenEditor {
         private void InitMatrix() {
             var stringCount = RenderCols; // 32
             var nodesPerString = RenderRows; // 50
-            var strandsPerString = 1;
-            var isLtoR = true;
+            const int strandsPerString = 1;
 
             var numStrands = stringCount * strandsPerString; // 64
             var pixelsPerStrand = nodesPerString / strandsPerString; // 25
@@ -182,7 +181,7 @@ namespace VixenEditor {
                 for (var pixel = 0; pixel < pixelsPerStrand; pixel++) {
                     var y = index % RenderRows;
                     var x = index / RenderRows;
-                    _nodes[y, x].BufX = isLtoR ? strand : numStrands - strand - 1;
+                    _nodes[y, x].BufX = strand;
                     _nodes[y, x].BufY = (segmentnum % 2 != 0) ? pixel : pixelsPerStrand - pixel - 1;
                     index++;
                 }
@@ -229,7 +228,7 @@ namespace VixenEditor {
 
         #region Events
 
-        public void ControlChanged1(object sender, EventArgs e) {
+        private void ControlChanged1(object sender, EventArgs e) {
             _eventToRender[0] = 0;
         }
 

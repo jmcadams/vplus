@@ -10,7 +10,7 @@ using CommonUtils;
 namespace VixenEditor {
 
 
-    public partial class ConsoleTrackBar : UserControl {
+    public sealed partial class ConsoleTrackBar : UserControl {
         private bool _cascadeMasterEvents;
         private ConsoleTrackBar _master;
         private int _resetIndex = -1;
@@ -35,7 +35,7 @@ namespace VixenEditor {
         }
 
 
-        protected virtual void OnValueChanged() {
+        private void OnValueChanged() {
             if (ValueChanged != null) {
                 ValueChanged(this);
             }
@@ -107,12 +107,16 @@ namespace VixenEditor {
 
 
         public bool AllowText {
+/*
             get { return _panelText.Visible; }
+*/
             set { _panelText.Visible = value; }
         }
 
         public bool CascadeMasterEvents {
+/*
             get { return _cascadeMasterEvents; }
+*/
             set { _cascadeMasterEvents = value; }
         }
 
@@ -130,7 +134,7 @@ namespace VixenEditor {
         }
 
         public int ResetIndex {
-            get { return _resetIndex; }
+            private get { return _resetIndex; }
             set {
                 _resetIndex = value;
                 if (SelectedTextIndex == _resetIndex) {

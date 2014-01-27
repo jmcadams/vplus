@@ -9,14 +9,15 @@ using System.Windows.Forms;
 using CommonUtils;
 
 namespace NutcrackerEffectsControl {
-    public partial class NutcrackerEffectControl : UserControl {
+    public sealed partial class NutcrackerEffectControl : UserControl {
         private readonly Dictionary<string, INutcrackerEffect> _effectCache = new Dictionary<string, INutcrackerEffect>();
 
         public delegate void ControlChangedHandler(object sender, EventArgs e);
 
         public event ControlChangedHandler ControlChanged;
 
-        protected virtual void OnControlChanged(object sender, EventArgs e) {
+
+        private void OnControlChanged(object sender, EventArgs e) {
             var handler = ControlChanged;
             if (handler != null) {
                 handler(sender, e);
@@ -263,7 +264,8 @@ namespace NutcrackerEffectsControl {
 
         }
 
-        public void SetPalette(Color[] colors) {
+
+        private void SetPalette(Color[] colors) {
             palette1.BackColor = colors[0];
             palette1.ForeColor = colors[0].GetForeColor();
             palette2.BackColor = colors[1];
@@ -279,7 +281,8 @@ namespace NutcrackerEffectsControl {
             OnControlChanged(null, null);
         }
 
-        public string[] GetHtmlPalette() {
+
+        private string[] GetHtmlPalette() {
             return new[] {
                 ToHtml(palette1.BackColor), ToHtml(palette2.BackColor), ToHtml(palette3.BackColor), ToHtml(palette4.BackColor),
                 ToHtml(palette5.BackColor), ToHtml(palette6.BackColor)

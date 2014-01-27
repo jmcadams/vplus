@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Xml;
 
 namespace Arch {
+    // ReSharper disable once UnusedMember.Global
     public partial class Arch : UserControl, INutcrackerModel {
 
         private int _rows;
@@ -24,18 +24,22 @@ namespace Arch {
             get { return "Broken! WILL CAUSE A CRASH!"; }
         }
 
+/*
         public XmlElement Settings { get; set; }
+*/
 
 
+/*
         public NutcrackerNodes[,] InitializeNodes(Rectangle rect) {
             throw new NotImplementedException();
         }
+*/
 
 
-        public bool IsLtoR { get; set; }
+        public bool IsLtoR { private get; set; }
 
 
-        public void DrawPreview() {
+        private void DrawPreview() {
             using (var g = pbPreview.CreateGraphics()) {
                 g.Clear(Color.Black);
                 var b = new Bitmap(pbPreview.Width, pbPreview.Height, g);
@@ -75,6 +79,7 @@ namespace Arch {
 // Angles are expressed as a number between 0 and 1.  .25 = 90 degrees.
 // If you prefer using degrees, write 90 degrees like so "90/360".
 //function drawArc(centerX, centerY, radius, startAngle, arcAngle, steps){
+/*
     private void DrawArc (int centerX, int centerY, double radius, double startAngle, double arcAngle, int steps){
         //
     // For convenience, store the number of radians in a full circle.
@@ -92,19 +97,20 @@ namespace Arch {
     //moveTo(xx, yy);
     //
     // Draw a line to each point on the arc.
-    for(var i=1; i<=steps; i++){
+    //for(var i=1; i<=steps; i++){
         //
         // Increment the angle by "angleStep".
-        var angle = startAngle + i * angleStep;
+        //var angle = startAngle + i * angleStep;
         //
         // Determine next point's coordinates using basic circle math.
-        xx = centerX + Math.Cos(angle * twoPi) * radius;
-        yy = centerY + Math.Sin(angle * twoPi) * radius;
+        //xx = centerX + Math.Cos(angle * twoPi) * radius;
+        //yy = centerY + Math.Sin(angle * twoPi) * radius;
         //
         // Draw a line to the next point.
         //lineTo(xx, yy);
-    }
+    //}
 }
+*/
 //
 // Set a line style so we can see what we are drawing.
 // lineStyle(0, 0xFF0000);
@@ -120,7 +126,6 @@ namespace Arch {
             var nodeCount = _cols * _rows;
 
             //var idx = IsLtoR ? 0 : nodeCount - 1;
-            var incr = IsLtoR ? 1 : -1;
             //SetRenderSize(parm2,NodeCount*2);
             double midpt = _rows;
             var angleIncr = Math.PI / _rows;

@@ -4,7 +4,7 @@ using System.Windows.Forms;
 namespace VixenEditor
 {
 
-    public partial class ConsoleTrackBar {
+    public sealed partial class ConsoleTrackBar {
         private readonly IContainer components = null;
         private Label _label;
         private Panel _panelText;

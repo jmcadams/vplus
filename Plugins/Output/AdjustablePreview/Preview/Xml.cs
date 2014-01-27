@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Xml;
+﻿using System.Xml;
 
 namespace Preview {
-    internal class Xml {
+    internal static class Xml {
+/*
         public static XmlNode CloneNode(XmlDocument doc, XmlNode finalNode, bool deep) {
             var stack = new Stack<XmlNode>();
             while (finalNode is XmlElement) {
@@ -21,16 +20,20 @@ namespace Preview {
             }
             return childNode;
         }
+*/
 
 
+/*
         public static XmlDocument CreateXmlDocument() {
             var document = new XmlDocument();
             var newChild = document.CreateXmlDeclaration("1.0", "utf-8", string.Empty);
             document.AppendChild(newChild);
             return document;
         }
+*/
 
 
+/*
         public static XmlDocument CreateXmlDocument(string rootNodeName) {
             var document = new XmlDocument();
             var newChild = document.CreateXmlDeclaration("1.0", string.Empty, string.Empty);
@@ -38,6 +41,7 @@ namespace Preview {
             document.AppendChild(document.CreateElement(rootNodeName));
             return document;
         }
+*/
 
 
         public static XmlNode GetEmptyNodeAlways(XmlNode contextNode, string nodeName) {
@@ -47,7 +51,7 @@ namespace Preview {
         }
 
 
-        public static XmlNode GetNodeAlways(XmlNode contextNode, string nodeName) {
+        private static XmlNode GetNodeAlways(XmlNode contextNode, string nodeName) {
             var newChild = contextNode.SelectSingleNode(nodeName);
             if (newChild != null) {
                 return newChild;
@@ -58,12 +62,15 @@ namespace Preview {
         }
 
 
+/*
         public static string GetOptionalNodeValue(XmlNode contextNode, string nodeName) {
             var node = contextNode.SelectSingleNode(nodeName);
             return node == null ? string.Empty : node.InnerText;
         }
+*/
 
 
+/*
         public static XmlNode GetRequiredNode(XmlNode contextNode, string nodeName) {
             var node = contextNode.SelectSingleNode(nodeName);
             if (node == null) {
@@ -71,18 +78,21 @@ namespace Preview {
             }
             return node;
         }
+*/
 
 
+/*
         public static XmlDocument LoadDocument(string filename) {
             var document = new XmlDocument();
             document.Load(filename);
             return document;
         }
+*/
 
 
-        public static XmlNode SetAttribute(XmlNode node, string attributeName, string attributeValue) {
+        public static void SetAttribute(XmlNode node, string attributeName, string attributeValue) {
             if (node.Attributes == null) {
-                return node;
+                return;
             }
             var attribute = node.Attributes[attributeName];
             if (attribute == null) {
@@ -90,10 +100,10 @@ namespace Preview {
                 node.Attributes.Append(attribute);
             }
             attribute.Value = attributeValue;
-            return node;
         }
 
 
+/*
         public static XmlNode SetAttribute(XmlNode contextNode, string nodeName, string attributeName, string attributeValue) {
             var singleNode = contextNode.SelectSingleNode(nodeName);
             var document = contextNode.OwnerDocument ?? ((XmlDocument) contextNode);
@@ -112,6 +122,7 @@ namespace Preview {
             node.Value = attributeValue;
             return singleNode;
         }
+*/
 
 
         public static XmlNode SetNewValue(XmlNode contextNode, string nodeName, string nodeValue) {

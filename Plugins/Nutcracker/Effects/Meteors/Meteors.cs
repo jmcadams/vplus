@@ -8,6 +8,7 @@ using CommonUtils;
 
 
 namespace Meteors {
+    // ReSharper disable once UnusedMember.Global
     public partial class Meteors : UserControl, INutcrackerEffect {
 
         private readonly bool _initializing = true;
@@ -83,7 +84,7 @@ namespace Meteors {
         private readonly List<MeteorClass> _meteors = new List<MeteorClass>();
 
         // for meteor effect
-        public class MeteorClass {
+        private class MeteorClass {
 
             public int X;
             public int Y;

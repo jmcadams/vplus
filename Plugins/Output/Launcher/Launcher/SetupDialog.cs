@@ -132,7 +132,7 @@ namespace Launcher {
         }
 
 
-        public string[][] Programs {
+        public IEnumerable<string[]> Programs {
             get {
                 var strArray = new string[listViewPrograms.Items.Count][];
                 var index = 0;

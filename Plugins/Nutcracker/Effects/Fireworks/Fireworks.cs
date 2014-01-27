@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using CommonUtils;
 
 namespace Fireworks {
+    // ReSharper disable once UnusedMember.Global
     public partial class Fireworks : UserControl, INutcrackerEffect {
 
         private const string FireworksExplosions = "ID_SLIDER_Fireworks{0}_Number_Explosions";
@@ -196,15 +197,13 @@ namespace Fireworks {
         }
 
 
-        public class RgbFireworks {
-            public const int MaxCycle = 4096;
-            public const int MaxNewBurstFlakes = 10;
+        private class RgbFireworks {
             public float X;
             public float Y;
             public float Dx;
             public float Dy;
-            public float Vel;
-            public float Angle;
+            private float _vel;
+            private float _angle;
             public bool IsActive;
             public int Cycles;
             public Color FireworkColor;
@@ -213,10 +212,10 @@ namespace Fireworks {
             public void Reset(int x, int y, bool active, float velocity) {
                 X = x;
                 Y = y;
-                Vel = (Random.Next() - int.MaxValue/2)*velocity/(int.MaxValue/2);
-                Angle = (float) (2*Math.PI*Random.Next()/int.MaxValue);
-                Dx = (float) (Vel*Math.Cos(Angle));
-                Dy = (float) (Vel*Math.Sin(Angle));
+                _vel = (Random.Next() - int.MaxValue/2)*velocity/(int.MaxValue/2);
+                _angle = (float) (2*Math.PI*Random.Next()/int.MaxValue);
+                Dx = (float) (_vel*Math.Cos(_angle));
+                Dy = (float) (_vel*Math.Sin(_angle));
                 IsActive = active;
                 Cycles = 0;
                 FireworkColor = Color.White;

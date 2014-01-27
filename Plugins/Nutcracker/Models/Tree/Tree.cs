@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Xml;
 
 namespace Tree {
+    // ReSharper disable once UnusedMember.Global
     public partial class Tree : UserControl, INutcrackerModel {
 
         private int _rows;
@@ -24,19 +24,23 @@ namespace Tree {
             get { return string.Empty; }
         }
 
+/*
         public XmlElement Settings { get; set; }
+*/
 
 
+/*
         public NutcrackerNodes[,] InitializeNodes(Rectangle rect) {
             InitializePreview(rect);
             return _nodes;
         }
+*/
 
 
-        public bool IsLtoR { get; set; }
+        public bool IsLtoR { private get; set; }
 
 
-        public void DrawPreview() {
+        private void DrawPreview() {
             using (var g = pbPreview.CreateGraphics()) {
                 g.Clear(Color.Black);
                 var b = new Bitmap(pbPreview.Width, pbPreview.Height, g);

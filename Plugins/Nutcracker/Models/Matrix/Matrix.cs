@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Xml;
 
 namespace Matrix2 {
+    // ReSharper disable once UnusedMember.Global
     public partial class Matrix : UserControl, INutcrackerModel {
 
         private int _rows;
@@ -23,17 +23,22 @@ namespace Matrix2 {
             get { return string.Empty; }
         }
 
+/*
         public XmlElement Settings { get; set; }
+*/
 
+/*
         public NutcrackerNodes[,] InitializeNodes(Rectangle rect) {
             InitMatrix();
             return _nodes;
         }
+*/
 
 
-        public bool IsLtoR { get; set; }
+        public bool IsLtoR { private get; set; }
 
-        public void DrawPreview() {
+
+        private void DrawPreview() {
             using (var g = pbPreview.CreateGraphics()) {
                 g.Clear(Color.Black);
                 var b = new Bitmap(pbPreview.Width, pbPreview.Height, g);

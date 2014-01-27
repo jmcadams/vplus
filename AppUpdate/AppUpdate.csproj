@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectType>local</ProjectType>
@@ -97,36 +97,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppUpdate\AppUpdate.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="AppUpdate\Migration.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="AppUpdate\MigrationCatalogItem.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="AppUpdate\ProgressDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AppUpdate\ProgressDialog.Designer.cs">
-      <DependentUpon>ProgressDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AppUpdate\Properties\Resources.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="AppUpdate\ShutdownDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AppUpdate\ShutdownDialog.Designer.cs">
-      <DependentUpon>ShutdownDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AppUpdate\UpdateNotificationDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AppUpdate\UpdateNotificationDialog.Designer.cs">
-      <DependentUpon>UpdateNotificationDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -138,15 +108,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="AppUpdate\ProgressDialog.resx">
-      <DependentUpon>ProgressDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppUpdate\ShutdownDialog.resx">
-      <DependentUpon>ShutdownDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppUpdate\UpdateNotificationDialog.resx">
-      <DependentUpon>UpdateNotificationDialog.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -171,6 +132,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\VixenPlus.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AppUpdate\Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

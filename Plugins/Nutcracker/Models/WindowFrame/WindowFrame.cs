@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Xml;
 
 namespace WindowFrame {
+    // ReSharper disable once UnusedMember.Global
     public partial class WindowFrame : UserControl, INutcrackerModel {
 
         private int _rows;
@@ -24,18 +24,22 @@ namespace WindowFrame {
             get { return string.Empty; }
         }
 
+/*
         public XmlElement Settings { get; set; }
+*/
 
 
+/*
         public NutcrackerNodes[,] InitializeNodes(Rectangle rect) {
             throw new NotImplementedException();
         }
+*/
 
 
-        public bool IsLtoR { get; set; }
+        public bool IsLtoR { private get; set; }
 
 
-        public void DrawPreview() {
+        private void DrawPreview() {
             using (var g = pbPreview.CreateGraphics()) {
                 g.Clear(Color.Black);
                 var b = new Bitmap(pbPreview.Width, pbPreview.Height, g);

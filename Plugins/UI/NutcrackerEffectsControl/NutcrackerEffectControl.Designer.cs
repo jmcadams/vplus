@@ -1,6 +1,6 @@
 namespace NutcrackerEffectsControl
 {
-    partial class NutcrackerEffectControl
+    sealed partial class NutcrackerEffectControl
     {
         /// <summary> 
         /// Required designer variable.
