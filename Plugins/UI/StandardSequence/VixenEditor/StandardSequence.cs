@@ -4572,7 +4572,6 @@ namespace VixenEditor {
         }
 
 
-        //TODO remove magic numbers
         private void UpdateGrid(Graphics g, Rectangle clipRect) {
             if (_sequence.ChannelCount == 0) {
                 return;
