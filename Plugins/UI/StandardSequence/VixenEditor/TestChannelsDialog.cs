@@ -18,18 +18,17 @@ namespace VixenEditor {
         public TestChannelsDialog(EventSequence sequence, IExecution executionInterface, bool constrainToGroup) {
             InitializeComponent();
             _executionInterface = executionInterface;
-            var sequence1 = sequence; //todo is this really necessary?
-            _channels = constrainToGroup ? sequence1.Channels : sequence.FullChannels;
+            _channels = constrainToGroup ? sequence.Channels : sequence.FullChannels;
             if (_channels != null) {
                 // ReSharper disable CoVariantArrayConversion
                 listBoxChannels.Items.AddRange(_channels.ToArray());
                 // ReSharper restore CoVariantArrayConversion
             }
             _actualLevels = ((ISystem) Interfaces.Available["ISystem"]).UserPreferences.GetBoolean("ActualLevels");
-            trackBar.Maximum = _actualLevels ? 255 : 100; //todo should these come from preferences?
+            trackBar.Maximum = _actualLevels ? Utils.Cell8BitMax : Utils.Cell8BitMax.ToPercentage();
             _channelLevels = new byte[sequence.FullChannelCount];
             _executionContextHandle = _executionInterface.RequestContext(false, true, null);
-            _executionInterface.SetAsynchronousContext(_executionContextHandle, sequence1);
+            _executionInterface.SetAsynchronousContext(_executionContextHandle, sequence);
             BringToFront();
             trackBar.Value = trackBar.Maximum;
         }
