@@ -30,7 +30,7 @@ namespace VixenEditor {
                 channels[channel] = constrainToGroup ? _sequence.Channels[channel - 1] : _sequence.FullChannels[channel - 1];
             }
 
-            foreach (var trackBar in groupBox2.Controls.Cast<object>().Select(control => control as ConsoleTrackBar).Where(trackBar => (trackBar != null) && (trackBar.Master != null))) {
+            foreach (var trackBar in groupBox2.Controls.Cast<object>().OfType<ConsoleTrackBar>().Where(trackBar => trackBar.Master != null)) {
                 trackBar.TextStrings = channels;
                 trackBar.ResetIndex = 0;
                 _channelControls.Add(trackBar);
