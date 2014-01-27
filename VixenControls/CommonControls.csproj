@@ -111,9 +111,6 @@
     <Compile Include="CommonControls\TransparentLabel.Designer.cs">
       <DependentUpon>TransparentLabel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Global.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <EmbeddedResource Include="CommonControls\FadableLabel.resx">
       <DependentUpon>FadableLabel.cs</DependentUpon>
     </EmbeddedResource>
