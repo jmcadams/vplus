@@ -27,21 +27,6 @@ public class SortOrder {
         ChannelIndexes.AddRange(indexes);
     }
 
-
-/*
-    internal SortOrder Clone() {
-        return new SortOrder(Name, ChannelIndexes);
-    }
-*/
-
-
-/*
-    public int FindNaturalIndex(int sortedIndex) {
-        return ChannelIndexes.IndexOf(sortedIndex);
-    }
-*/
-
-
     public XmlNode SaveToXml(XmlDocument doc) {
         XmlNode node = doc.CreateElement("SortOrder");
         Xml.SetAttribute(node, "name", Name);

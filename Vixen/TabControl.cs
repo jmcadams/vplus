@@ -77,9 +77,6 @@ public class TabControl : System.Windows.Forms.TabControl
     [RefreshProperties(RefreshProperties.All)]
     public bool OurMultiline
     {
-/*
-        get { return (HideTabs || Multiline); }
-*/
         set { Multiline = HideTabs || value; }
     }
 

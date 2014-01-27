@@ -15,14 +15,6 @@ internal static class OutputPlugins {
         return HardwarePlugins.FindPlugin(pluginName, uniqueInstance, Paths.OutputPluginPath, "IOutputPlugIn");
     }
 
-
-/*
-    public static List<string> LoadPluginNames() {
-        return HardwarePlugins.LoadPluginNames(Paths.OutputPluginPath, "IOutputPlugIn");
-    }
-*/
-
-
     public static List<IHardwarePlugin> LoadPlugins() {
         return HardwarePlugins.LoadPlugins(Paths.OutputPluginPath, "IOutputPlugIn");
     }

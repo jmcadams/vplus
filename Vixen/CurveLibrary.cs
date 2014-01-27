@@ -8,12 +8,6 @@ using System.Text;
 
 public class CurveLibrary : IDisposable
 {
-    //public const string Color = "Color";
-    //public const string Controller = "Controller";
-    //public const string CurveData = "CurveData";
-    //public const string LightCount = "LightCount";
-    //public const string Manufacturer = "Manufacturer";
-    //public const string LibraryFile = "library.xml";
     private Filter[] _colorFilters;
     private Filter[] _controllerFilters;
     private DataTable _dataTable;
@@ -42,9 +36,6 @@ public class CurveLibrary : IDisposable
 
     public Filter[] ColorFilter
     {
-/*
-        get { return _colorFilters; }
-*/
         set
         {
             _colorFilters = value;
@@ -61,9 +52,6 @@ public class CurveLibrary : IDisposable
 
     public Filter[] ControllerFilter
     {
-/*
-        get { return _controllerFilters; }
-*/
         set
         {
             _controllerFilters = value;
@@ -93,9 +81,6 @@ public class CurveLibrary : IDisposable
 
     public Filter[] LightCountFilter
     {
-/*
-        get { return _lightCountFilters; }
-*/
         set
         {
             _lightCountFilters = value;
@@ -112,9 +97,6 @@ public class CurveLibrary : IDisposable
 
     public Filter[] ManufacturerFilter
     {
-/*
-        get { return _manufacturerFilters; }
-*/
         set
         {
             _manufacturerFilters = value;
@@ -180,24 +162,6 @@ public class CurveLibrary : IDisposable
         return sb.ToString();
     }
 
-/*
-    public CurveLibraryRecord Find(string manufacturer, string lightCount, int color, string controller)
-    {
-        Load(false);
-        if (_dataTable == null) {
-            return null;
-        }
-        var rowArray = _dataTable.Select(GetSelectString(manufacturer, lightCount, color, controller));
-        if (rowArray.Length == 0)
-        {
-            return null;
-        }
-        var row = rowArray[0];
-        return new CurveLibraryRecord(row["Manufacturer"].ToString(), row["LightCount"].ToString(), (int) row["Color"],
-            row["Controller"].ToString(), row["CurveData"].ToString());
-    }
-*/
-
     private string FormatValue(string value, Type valueType)
     {
         var name = valueType.Name;
@@ -240,18 +204,6 @@ public class CurveLibrary : IDisposable
         return list.ToArray();
     }
 
-/*
-    public int GetRecordCount()
-    {
-        Load(false);
-        if (_dataTable != null)
-        {
-            return _dataTable.Rows.Count;
-        }
-        return -1;
-    }
-*/
-
     private static string GetSelectString(string manufacturer, string lightCount, int color, string controller)
     {
         return string.Format("{0} = '{1}' and {2} = {3} and {4} = {5} and {6} = '{7}'",
@@ -291,13 +243,6 @@ public class CurveLibrary : IDisposable
         }
         _modified = true;
     }
-
-/*
-    public void Load()
-    {
-        Load(false);
-    }
-*/
 
     public void Load(bool forcedLoad)
     {
@@ -345,20 +290,6 @@ public class CurveLibrary : IDisposable
         return null;
     }
 
-    //public IEnumerable<CurveLibraryRecord> Read()
-    //{
-    //    <Read>d__0 d__ = new <Read>d__0(-2);
-    //    d__.<>4__this = this;
-    //    return d__;
-    //}
-
-    //private IEnumerable<CurveLibraryRecord> ReadRecords()
-    //{
-    //    <ReadRecords>d__5 d__ = new <ReadRecords>d__5(-2);
-    //    d__.<>4__this = this;
-    //    return d__;
-    //}
-
     public void Save(bool force = false)
     {
         if (!force && !_modified) {
@@ -380,266 +311,6 @@ public class CurveLibrary : IDisposable
         }
         _modified = false;
     }
-
-    //public void SynchronizeWith(CurveLibrary library)
-    //{
-    //    int recordCount = library.GetRecordCount();
-    //    List<CurveLibraryRecord> list = new List<CurveLibraryRecord>();
-    //    foreach (CurveLibraryRecord record2 in library.ReadRecords())
-    //    {
-    //        CurveLibraryRecord record = this.Find(record2.Manufacturer, record2.LightCount, record2.Color, record2.Controller);
-    //        if (record != null)
-    //        {
-    //            if (!this.ArrayMatch(record.CurveData, record2.CurveData))
-    //            {
-    //                list.Add(record2);
-    //            }
-    //        }
-    //        else
-    //        {
-    //            this.Import(record2);
-    //        }
-    //    }
-    //    if (list.Count > 0)
-    //    {
-    //        CurveConflictResolutionDialog dialog = new CurveConflictResolutionDialog(list.ToArray());
-    //        if (dialog.ShowDialog() == DialogResult.OK)
-    //        {
-    //            foreach (CurveLibraryRecord record3 in dialog.SelectedRecords)
-    //            {
-    //                this.Import(record3, true);
-    //            }
-    //        }
-    //        dialog.Dispose();
-    //    }
-    //}
-
-    //[CompilerGenerated]
-    //private sealed class <Read>d__0 : IEnumerable<CurveLibraryRecord>, IEnumerable, IEnumerator<CurveLibraryRecord>, IEnumerator, IDisposable
-    //{
-    //    private int <>1__state;
-    //    private CurveLibraryRecord <>2__current;
-    //    public CurveLibrary <>4__this;
-    //    public IEnumerator<CurveLibraryRecord> <>7__wrap2;
-    //    public CurveLibraryRecord <clr>5__1;
-
-    //    [DebuggerHidden]
-    //    public <Read>d__0(int <>1__state)
-    //    {
-    //        this.<>1__state = <>1__state;
-    //    }
-
-    //    private bool MoveNext()
-    //    {
-    //        try
-    //        {
-    //            switch (this.<>1__state)
-    //            {
-    //                case 0:
-    //                    this.<>1__state = -1;
-    //                    this.<>7__wrap2 = this.<>4__this.ReadRecords().GetEnumerator();
-    //                    this.<>1__state = 1;
-    //                    while (this.<>7__wrap2.MoveNext())
-    //                    {
-    //                        this.<clr>5__1 = this.<>7__wrap2.Current;
-    //                        this.<>2__current = this.<clr>5__1;
-    //                        this.<>1__state = 2;
-    //                        return true;
-    //                    Label_0075:
-    //                        this.<>1__state = 1;
-    //                    }
-    //                    this.<>1__state = -1;
-    //                    if (this.<>7__wrap2 != null)
-    //                    {
-    //                        this.<>7__wrap2.Dispose();
-    //                    }
-    //                    break;
-
-    //                case 2:
-    //                    goto Label_0075;
-    //            }
-    //            return false;
-    //        }
-    //        fault
-    //        {
-    //            ((IDisposable) this).Dispose();
-    //        }
-    //    }
-
-    //    [DebuggerHidden]
-    //    IEnumerator<CurveLibraryRecord> IEnumerable<CurveLibraryRecord>.GetEnumerator()
-    //    {
-    //        if (Interlocked.CompareExchange(ref this.<>1__state, 0, -2) == -2)
-    //        {
-    //            return this;
-    //        }
-    //        CurveLibrary.<Read>d__0 d__ = new CurveLibrary.<Read>d__0(0);
-    //        d__.<>4__this = this.<>4__this;
-    //        return d__;
-    //    }
-
-    //    [DebuggerHidden]
-    //    IEnumerator IEnumerable.GetEnumerator()
-    //    {
-    //        return this.System.Collections.Generic.IEnumerable<Vixen.CurveLibraryRecord>.GetEnumerator();
-    //    }
-
-    //    [DebuggerHidden]
-    //    void IEnumerator.Reset()
-    //    {
-    //        throw new NotSupportedException();
-    //    }
-
-    //    void IDisposable.Dispose()
-    //    {
-    //        switch (this.<>1__state)
-    //        {
-    //            case 1:
-    //            case 2:
-    //                try
-    //                {
-    //                }
-    //                finally
-    //                {
-    //                    this.<>1__state = -1;
-    //                    if (this.<>7__wrap2 != null)
-    //                    {
-    //                        this.<>7__wrap2.Dispose();
-    //                    }
-    //                }
-    //                break;
-    //        }
-    //    }
-
-    //    CurveLibraryRecord IEnumerator<CurveLibraryRecord>.Current
-    //    {
-    //        [DebuggerHidden]
-    //        get
-    //        {
-    //            return this.<>2__current;
-    //        }
-    //    }
-
-    //    object IEnumerator.Current
-    //    {
-    //        [DebuggerHidden]
-    //        get
-    //        {
-    //            return this.<>2__current;
-    //        }
-    //    }
-    //}
-
-    //[CompilerGenerated]
-    //private sealed class <ReadRecords>d__5 : IEnumerable<CurveLibraryRecord>, IEnumerable, IEnumerator<CurveLibraryRecord>, IEnumerator, IDisposable
-    //{
-    //    private int <>1__state;
-    //    private CurveLibraryRecord <>2__current;
-    //    public CurveLibrary <>4__this;
-    //    public DataRow[] <>7__wrap8;
-    //    public int <>7__wrap9;
-    //    public DataRow <row>5__7;
-    //    public DataRow[] <rows>5__6;
-
-    //    [DebuggerHidden]
-    //    public <ReadRecords>d__5(int <>1__state)
-    //    {
-    //        this.<>1__state = <>1__state;
-    //    }
-
-    //    private bool MoveNext()
-    //    {
-    //        try
-    //        {
-    //            switch (this.<>1__state)
-    //            {
-    //                case 0:
-    //                    this.<>1__state = -1;
-    //                    this.<>4__this.Load(false);
-    //                    if (this.<>4__this._dataTable != null)
-    //                    {
-    //                        this.<rows>5__6 = this.<>4__this._dataTable.Select(this.<>4__this.BuildWhereClause(), this.<>4__this.BuildSortClause());
-    //                        this.<>1__state = 1;
-    //                        this.<>7__wrap8 = this.<rows>5__6;
-    //                        this.<>7__wrap9 = 0;
-    //                        while (this.<>7__wrap9 < this.<>7__wrap8.Length)
-    //                        {
-    //                            this.<row>5__7 = this.<>7__wrap8[this.<>7__wrap9];
-    //                            this.<>2__current = new CurveLibraryRecord(this.<row>5__7["Manufacturer"].ToString(), this.<row>5__7["LightCount"].ToString(), int.Parse(this.<row>5__7["Color"].ToString()), this.<row>5__7["Controller"].ToString(), this.<row>5__7["CurveData"].ToString());
-    //                            this.<>1__state = 2;
-    //                            return true;
-    //                        Label_0136:
-    //                            this.<>1__state = 1;
-    //                            this.<>7__wrap9++;
-    //                        }
-    //                        this.<>1__state = -1;
-    //                    }
-    //                    break;
-
-    //                case 2:
-    //                    goto Label_0136;
-    //            }
-    //            return false;
-    //        }
-    //        fault
-    //        {
-    //            ((IDisposable) this).Dispose();
-    //        }
-    //    }
-
-    //    [DebuggerHidden]
-    //    IEnumerator<CurveLibraryRecord> IEnumerable<CurveLibraryRecord>.GetEnumerator()
-    //    {
-    //        if (Interlocked.CompareExchange(ref this.<>1__state, 0, -2) == -2)
-    //        {
-    //            return this;
-    //        }
-    //        CurveLibrary.<ReadRecords>d__5 d__ = new CurveLibrary.<ReadRecords>d__5(0);
-    //        d__.<>4__this = this.<>4__this;
-    //        return d__;
-    //    }
-
-    //    [DebuggerHidden]
-    //    IEnumerator IEnumerable.GetEnumerator()
-    //    {
-    //        return this.System.Collections.Generic.IEnumerable<Vixen.CurveLibraryRecord>.GetEnumerator();
-    //    }
-
-    //    [DebuggerHidden]
-    //    void IEnumerator.Reset()
-    //    {
-    //        throw new NotSupportedException();
-    //    }
-
-    //    void IDisposable.Dispose()
-    //    {
-    //        switch (this.<>1__state)
-    //        {
-    //            case 1:
-    //            case 2:
-    //                this.<>1__state = -1;
-    //                break;
-    //        }
-    //    }
-
-    //    CurveLibraryRecord IEnumerator<CurveLibraryRecord>.Current
-    //    {
-    //        [DebuggerHidden]
-    //        get
-    //        {
-    //            return this.<>2__current;
-    //        }
-    //    }
-
-    //    object IEnumerator.Current
-    //    {
-    //        [DebuggerHidden]
-    //        get
-    //        {
-    //            return this.<>2__current;
-    //        }
-    //    }
-    //}
 
     public class Filter
     {

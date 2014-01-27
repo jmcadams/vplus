@@ -43,36 +43,6 @@ internal class HardwarePlugins {
         return null;
     }
 
-
-/*
-    public static List<string> LoadPluginNames(string directory, string interfaceName) {
-        var list = new List<string>();
-        foreach (var str in Directory.GetFiles(directory, "*.dll")) {
-            IHardwarePlugin plugin;
-            if (!PluginCache.TryGetValue(str, out plugin)) {
-                try {
-                    var assembly = Assembly.LoadFile(str);
-                    foreach (var type in from type in assembly.GetExportedTypes() 
-                                         from type2 in type.GetInterfaces() 
-                                            where type2.Name == interfaceName select type) {
-                        plugin = (IHardwarePlugin) Activator.CreateInstance(type);
-                        PluginCache[str] = plugin;
-                    }
-                }
-                    //ReSharper disable once EmptyGeneralCatchClause
-                catch {
-                    // We want to eat this error
-                }
-            }
-            if (plugin != null) {
-                list.Add(plugin.Name);
-            }
-        }
-        return list;
-    }
-*/
-
-
     public static List<IHardwarePlugin> LoadPlugins(string directory, string interfaceName) {
         var list = new List<IHardwarePlugin>();
         if (!Directory.Exists(directory)) {

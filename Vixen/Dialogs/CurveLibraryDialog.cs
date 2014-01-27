@@ -27,8 +27,7 @@ namespace Dialogs
             _isInternal = false;
             comboBoxSource.SelectedIndex = 0;
             listViewRecords.ListViewItemSorter = new ListViewItemSorter();
-            ListViewSortIcons.SetSortIcon(listViewRecords, 0, /* this.listViewRecords.Columns[0].Tag = */
-                                          System.Windows.Forms.SortOrder.Ascending);
+            ListViewSortIcons.SetSortIcon(listViewRecords, 0, System.Windows.Forms.SortOrder.Ascending);
         }
 
 

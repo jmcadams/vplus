@@ -171,16 +171,6 @@ public class Profile : IExecutable {
         Sorts = (sequence.Sorts == null) ? null : sequence.Sorts.Clone();
     }
 
-
-/*
-    public void MoveChannelObject(int oldIndex, int newIndex) {
-        var item = _channelObjects[oldIndex];
-        _channelObjects.RemoveAt(oldIndex);
-        _channelObjects.Insert(newIndex, item);
-    }
-*/
-
-
     public void RemoveChannel(Channel channelObject) {
         //Find where the associated channel info is
         var objectIndex = _channelObjects.IndexOf(channelObject);

@@ -19,14 +19,6 @@ namespace Dialogs {
             _onExecutionEndHandler = context_ExecutionEnd;
         }
 
-
-/*
-        public int TimerCount {
-            get { return listBoxTimers.Items.Count; }
-        }
-*/
-
-
         public void AddTimer(TimerContext context) {
             IExecutable executable;
             Exception exception;
@@ -224,17 +216,6 @@ namespace Dialogs {
         private void ExecutingTimerControlDialog_VisibleChanged(object sender, EventArgs e) {
             timerWatchdog.Enabled = Visible;
         }
-
-
-/*
-        public TimerContext GetContextOf(int executingTimerIndex) {
-            if (executingTimerIndex < listBoxTimers.Items.Count) {
-                return (TimerContext) listBoxTimers.Items[executingTimerIndex];
-            }
-            return null;
-        }
-*/
-
 
         private void listBoxTimers_SelectedIndexChanged(object sender, EventArgs e) {
             buttonPause.Enabled = buttonResume.Enabled = buttonStop.Enabled = listBoxTimers.SelectedIndex != -1;

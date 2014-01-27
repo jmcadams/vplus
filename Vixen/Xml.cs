@@ -38,33 +38,6 @@ public static class Xml {
         return document;
     }
 
-
-/*
-    public static string GetAttribute(XmlNode node, string attributeName) {
-        return GetAttribute(node, attributeName, "");
-    }
-*/
-
-
-/*
-    public static string GetAttribute(XmlNode node, string attributeName, string attributeDefaultValue) {
-        var returnValue = attributeDefaultValue;
-            
-        if (node.Attributes == null) {
-            SetAttribute(node, attributeName, attributeDefaultValue);
-        }
-        else if (node.Attributes[attributeName] == null) {
-            SetAttribute(node, attributeName, attributeDefaultValue);
-        }
-        else {
-            returnValue = node.Attributes[attributeName].Value;
-        }
-            
-        return returnValue;
-    }
-*/
-
-
     public static XmlNode GetEmptyNodeAlways(XmlNode contextNode, string nodeName) {
         var nodeAlways = GetNodeAlways(contextNode, nodeName);
         nodeAlways.RemoveAll();

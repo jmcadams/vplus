@@ -18,22 +18,6 @@ namespace Dialogs
             set { base.Text = value; }
         }
 
-/*
-        public string Caption
-        {
-            get { return Text; }
-            set { Text = value; }
-        }
-*/
-
-/*
-        public string Query
-        {
-            get { return labelQuery.Text; }
-            set { labelQuery.Text = value; }
-        }
-*/
-
         public string Response
         {
             get { return textBoxResponse.Text; }

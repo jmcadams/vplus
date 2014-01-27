@@ -17,13 +17,6 @@ internal class EngineTimer : ITickSource, IDisposable
         GC.SuppressFinalize(this);
     }
 
-/*
-    public int Milliseconds
-    {
-        get { return _tickCall(); }
-    }
-*/
-
     ~EngineTimer()
     {
         Dispose();

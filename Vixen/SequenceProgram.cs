@@ -12,23 +12,6 @@ public class SequenceProgram : IScheduledObject {
     private Profile _profile;
 
 
-/*
-    public SequenceProgram() {
-        Loop = false;
-        _profile = null;
-        UseSequencePluginData = false;
-        TreatAsLocal = false;
-        UserData = null;
-        _crossFadeLength = 0;
-        _key = Host.GetUniqueKey();
-        _mask = null;
-        FileName = string.Empty;
-        ConstructUsing();
-        SetupData = new SetupData();
-    }
-*/
-
-
     public SequenceProgram(string fileName) {
         Loop = false;
         _profile = null;
@@ -63,32 +46,10 @@ public class SequenceProgram : IScheduledObject {
 
     public int CrossFadeLength { get; private set; }
 
-    /*
-    public List<string> EventSequenceFileNames {
-        get {
-            return EventSequences.Select(stub => Path.GetFileName(stub.FileName)).ToList();
-        }
-    }
-*/
-
     internal List<EventSequenceStub> EventSequences { get; private set; }
 
     // ReSharper disable once UnusedAutoPropertyAccessor.Local
     private bool Loop { get; set; }
-
-/*
-    public Profile Profile {
-        get { return _profile; }
-        set {
-            if ((value == null) && (_profile != null)) {
-                DetachFromProfile();
-            }
-            else if (_profile != value) {
-                AttachToProfile(value);
-            }
-        }
-    }
-*/
 
     public SetupData SetupData { get; private set; }
 
@@ -122,14 +83,6 @@ public class SequenceProgram : IScheduledObject {
         get { return _key; }
     }
 
-/*
-    public int Length {
-        get {
-            return EventSequences.Sum(stub => stub.Length);
-        }
-    }
-*/
-
     public byte[][] Mask {
         get {
             if (_profile != null) {
@@ -156,18 +109,7 @@ public class SequenceProgram : IScheduledObject {
 
     public string Name {
         get { return Path.GetFileNameWithoutExtension(FileName); }
-/*
-        set { FileName = Path.ChangeExtension(value, ".vpr"); }
-*/
     }
-
-/*
-    public List<Channel> OutputChannels {
-        get {
-            return _profile == null ? new List<Channel>() : _profile.OutputChannels;
-        }
-    }
-*/
 
     public SetupData PlugInData {
         get {
@@ -179,22 +121,6 @@ public class SequenceProgram : IScheduledObject {
 
     // ReSharper disable once UnusedAutoPropertyAccessor.Local
     private object UserData { get; set; }
-
-
-/*
-    public void AddSequence(string sequenceFileName) {
-        // ReSharper disable AssignNullToNotNullAttribute
-        EventSequences.Add(new EventSequenceStub(Path.Combine(Paths.SequencePath, Path.GetFileName(sequenceFileName)), true));
-        // ReSharper restore AssignNullToNotNullAttribute
-    }
-*/
-
-
-/*
-    public void AddSequence(EventSequence sequence) {
-        EventSequences.Add(new EventSequenceStub(sequence));
-    }
-*/
 
 
     private void AttachToProfile(string profileName) {
@@ -215,25 +141,9 @@ public class SequenceProgram : IScheduledObject {
     }
 
 
-/*
-    public void ClearSequences() {
-        EventSequences.Clear();
-    }
-*/
-
-
     private void ConstructUsing() {
         EventSequences = new List<EventSequenceStub>();
     }
-
-
-/*
-    private void DetachFromProfile() {
-        _profile = null;
-        LoadEmbeddedData(FileName);
-    }
-*/
-
 
     public void Dispose() {
         foreach (var stub in EventSequences) {
@@ -293,60 +203,9 @@ public class SequenceProgram : IScheduledObject {
         CrossFadeLength = int.Parse(Xml.GetNodeAlways(node, "CrossFadeLength", "0").InnerText);
     }
 
-
-/*
-    public void Refresh() {
-        foreach (var stub in EventSequences) {
-            if (string.IsNullOrEmpty(stub.FileName)) {
-                throw new Exception(Resources.OneOrMoreSequencesNotSaved);
-            }
-            using (var sequence = new EventSequence(stub.FileName)) {
-                stub.Name = sequence.Name;
-                stub.Length = sequence.Time;
-            }
-        }
-    }
-*/
-
-
     private void ReloadProfile() {
         SetupData = _profile.PlugInData;
     }
-
-
-/*
-    public void SaveTo(string filePath) {
-        var contextNode = Xml.CreateXmlDocument();
-        SaveToXml(contextNode);
-        contextNode.Save(filePath);
-    }
-*/
-
-
-/*
-    private void SaveToXml(XmlNode contextNode) {
-        var emptyNodeAlways = Xml.GetEmptyNodeAlways(contextNode, "Program");
-        if (UseSequencePluginData) {
-            Xml.SetAttribute(emptyNodeAlways, "useSequencePluginData", UseSequencePluginData.ToString());
-        }
-        foreach (var stub in EventSequences) {
-            if (string.IsNullOrEmpty(stub.FileName)) {
-                throw new Exception(Resources.SequencesMustBeSavedBeforeSavingProgram);
-            }
-            Xml.SetNewValue(emptyNodeAlways, "Sequence", Path.GetFileName(stub.FileName));
-        }
-        if (_profile == null) {
-            if (emptyNodeAlways.OwnerDocument != null) {
-                emptyNodeAlways.AppendChild(emptyNodeAlways.OwnerDocument.ImportNode(SetupData.RootNode, true));
-            }
-        }
-        else {
-            Xml.SetValue(emptyNodeAlways, "Profile", _profile.Name);
-        }
-        Xml.SetValue(emptyNodeAlways, "CrossFadeLength", _crossFadeLength.ToString(CultureInfo.InvariantCulture));
-    }
-*/
-
 
     public override string ToString() {
         return Name;

@@ -83,19 +83,6 @@ public class Channel : IDisposable, IComparable<Channel> {
         Id = Host.GetUniqueKey();
     }
 
-
-/*
-    public Channel(string name, Color color, int outputChannel, bool ensureUniqueId) : this(name, outputChannel) {
-        Color = color;
-        if (ensureUniqueId) {
-            var ticks = DateTime.Now.Ticks;
-            while (ticks == DateTime.Now.Ticks) {}
-        }
-        Id = Host.GetUniqueKey();
-    }
-*/
-
-
     public Color Color {
         get { return _color; }
         set {

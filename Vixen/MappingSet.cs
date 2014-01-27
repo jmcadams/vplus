@@ -54,21 +54,6 @@ public class MappingSet : ICloneable
         return GetOutputChannelIdList(input.Id);
     }
 
-/*
-    internal List<int> GetOutputChannelIndexList(Input input)
-    {
-        return _inputOutputMappings[input.Id];
-    }
-*/
-
-/*
-    public bool HasMappingFor(Input input)
-    {
-        return _inputMappings.ContainsKey(input.Id);
-    }
-*/
-
-
     private void ReadData(XmlNode dataNode)
     {
         if (dataNode.Attributes != null)

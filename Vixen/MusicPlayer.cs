@@ -52,27 +52,6 @@ internal class MusicPlayer
         LoadAudioData();
     }
 
-/*
-    public uint CurrentSongLength
-    {
-        get { return ((_soundChannel == null) ? 0 : _soundChannel.SoundLength); }
-    }
-*/
-
-/*
-    public string CurrentSongName
-    {
-        get { return ((_soundChannel == null) ? "(null)" : _soundChannel.SoundName); }
-    }
-*/
-
-/*
-    public bool IsPlaying
-    {
-        get { return ((_soundChannel != null) && _soundChannel.IsPlaying); }
-    }
-*/
-
     public int SongCount
     {
         get { return _songs.Count; }

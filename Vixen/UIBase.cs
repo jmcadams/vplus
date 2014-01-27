@@ -48,14 +48,6 @@ public partial class UIBase : Form, IUIPlugIn {
     }
 
 
-/*
-    public virtual string Author { get; set; }
-*/
-
-/*
-    public virtual string Description { get; set; }
-*/
-
     // ReSharper disable UnusedAutoPropertyAccessor.Global
     public virtual string FileExtension { get; set; }
 

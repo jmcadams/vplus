@@ -75,13 +75,6 @@ internal class EventSequenceStub : IDisposable {
 
     public EventSequence Sequence { get; private set; }
 
-/*
-    public void Dispose() {
-        Dispose();
-    }
-*/
-
-
     public void Dispose() {
         if (Sequence != null) {
             Sequence.Dispose();
@@ -94,13 +87,6 @@ internal class EventSequenceStub : IDisposable {
     ~EventSequenceStub() {
         Dispose();
     }
-
-
-/*
-    public EventSequence RetrieveSequence() {
-        return Sequence ?? (Sequence = new EventSequence(FileName));
-    }
-*/
 
 
     public override string ToString() {

@@ -4,21 +4,6 @@ public interface IExecution
 {
     int EngineStatus(int contextHandle);
     int EngineStatus(int contextHandle, out int sequencePosition);
-    /* 
-        bool ExecuteChannelOff(int contextHandle, int channelIndex);
-        bool ExecuteChannelOn(int contextHandle, int channelIndex);
-        bool ExecuteChannelOn(int contextHandle, int channelIndex, int percentLevel);
-        bool ExecuteChannelToggle(int contextHandle, int channelIndex);
-        bool ExecutePlay(int contextHandle);
-        int GetCurrentPosition(int contextHandle);
-        IExecutable GetObjectInContext(int contextHandle);
-        int ProgramLength(int contextHandle);
-        int RequestContext(bool suppressAsynchronousContext, bool suppressSynchronousContext, Form keyInterceptor,
-            ref XmlDocument syncEngineCommDoc);
-        int SequenceLength(int contextHandle);
-        void SetAsynchronousProgramChangeHandler(int contextHandle, ProgramChangeHandler programChangeHandler);
-    */
-
     void ExecutePause(int contextHandle);
     bool ExecutePlay(int contextHandle, bool logAudio);
     bool ExecutePlay(int contextHandle, int millisecondStart, int millisecondCount);

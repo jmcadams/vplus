@@ -11,17 +11,6 @@ public abstract class InputPlugin : IInputPlugin {
         MultiInput
     }
 
-    //private const string AttributeId = "id";
-    //private const string AttributeLiveUpdate = "liveUpdate";
-    //private const string AttributeMappingId = "mappingId";
-    //private const string AttributeName = "name";
-    //private const string AttributeRecord = "record";
-    //private const string AttributeType = "type";
-    //private const string ElementInput = "Input";
-    //private const string ElementInputs = "Inputs";
-    //private const string ElementIterator = "Iterator";
-    //private const string ElementMappingSets = "MappingSets";
-    //private const int InvalidId = 0;
     private XmlNode _setupNode;
 
 
@@ -46,14 +35,6 @@ public abstract class InputPlugin : IInputPlugin {
     public virtual void Shutdown() {}
 
     public virtual void Startup() {}
-
-/*
-    public abstract string Author { get; }
-*/
-
-/*
-    public abstract string Description { get; }
-*/
 
     public abstract IEnumerable<HardwareMap> HardwareMap { get; }
 

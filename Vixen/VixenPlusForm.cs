@@ -98,10 +98,6 @@ internal sealed partial class VixenPlusForm : Form, ISystem {
             _host.StartBackgroundObjects();
             SetShutdownTime(_preferences.GetString("ShutdownTime"));
 
-            if (!(startupArgs.Contains("no_update") || File.Exists(Path.Combine(Paths.DataPath, "no.update")))) {
-                CheckForUpdates();
-            }
-
             Thread.Sleep(ExpectationDelay);
 
             splash.FadeOut();
@@ -109,14 +105,6 @@ internal sealed partial class VixenPlusForm : Form, ISystem {
             Top = screen.Bounds.Top;
         }
     }
-
-
-/*
-    public int GetExecutingTimerExecutionContextHandle(int executingTimerIndex) {
-        return _timerExecutor.GetExecutingTimerExecutionContextHandle(executingTimerIndex);
-    }
-*/
-
 
     public Form InstantiateForm(ConstructorInfo constructorInfo, params object[] parameters) {
         if (InvokeRequired) {
@@ -173,19 +161,6 @@ internal sealed partial class VixenPlusForm : Form, ISystem {
     }
 
 
-/*
-    public List<ILoadable> LoadableList(string interfaceName) {
-        var list = new List<ILoadable>();
-        if (_loadables.ContainsKey(interfaceName)) {
-            list.AddRange(from obj2 in _loadables[interfaceName]
-                where obj2.Instance != null
-                select obj2.Instance);
-        }
-        return list;
-    }
-*/
-
-
     public void VerifySequenceHardwarePlugins(EventSequence sequence) {
         OutputPlugins.VerifyPlugIns(sequence);
         InputPlugins.VerifyPlugIns(sequence);
@@ -195,13 +170,6 @@ internal sealed partial class VixenPlusForm : Form, ISystem {
     public void InvokeNew(object sender) {
         NewMenuItemClick(sender, null);
     }
-
-
-/*
-    public string[] AudioDevices {
-        get { return _audioDevices ?? (_audioDevices = fmod.GetSoundDeviceList()); }
-    }
-*/
 
     public byte[,] Clipboard {
         get {
@@ -251,12 +219,6 @@ internal sealed partial class VixenPlusForm : Form, ISystem {
             System.Windows.Forms.Clipboard.SetText(builder.ToString());
         }
     }
-
-/*
-    public int ExecutingTimerCount {
-        get { return _timerExecutor.ExecutingTimerCount; }
-    }
-*/
 
     private string KnownFileTypesFilter { get; set; }
 
@@ -326,40 +288,7 @@ internal sealed partial class VixenPlusForm : Form, ISystem {
         return none;
     }
 
-
-    //TODO Redo this whole scheme
-    private static void CheckForUpdates() {
-        //var updateServerURI = Vendor.UpdateURL + Vendor.UpdateFile;
-        //var version = Assembly.GetExecutingAssembly().GetName().Version;
-        //var updateRootPath = string.Format("{0}/{1}.{2}", Vendor.UpdateFile, version.Major, version.Minor);
-        //var path = Path.Combine(Paths.DataPath, "target.update");
-        //if (File.Exists(path)) {
-        //    using (var reader = new StreamReader(path)) {
-        //        string updateLine;
-        //        while ((updateLine = reader.ReadLine()) != null) {
-        //            var strArray = updateLine.Split(new[] {'='});
-        //            var parameter = strArray[0];
-        //            if (parameter == null) {
-        //                continue;
-        //            }
-        //            switch (parameter) {
-        //                case "server":
-        //                    updateServerURI = strArray[1].Trim();
-        //                    break;
-        //                case "root":
-        //                    updateRootPath = strArray[1].Trim();
-        //                    break;
-        //            }
-        //        }
-        //    }
-        //}
-        // TODO: For now we are just skipping updating.
-        //new AppUpdate.AppUpdate(updateServerURI, updateRootPath).ExecuteMigration();
-    }
-
-
     private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e) {
-        CheckForUpdates();
     }
 
 
@@ -778,7 +707,7 @@ internal sealed partial class VixenPlusForm : Form, ISystem {
         Save((UIBase) ActiveMdiChild);
     }
 
-
+    //TODO this can be removed.
     private void setBackgroundSequenceToolStripMenuItem_Click(object sender, EventArgs e) {
         using (var backgroundSequenceDialog = new BackgroundSequenceDialog(_preferences.GetString("BackgroundSequence"), Paths.SequencePath)) {
             if (backgroundSequenceDialog.ShowDialog() != DialogResult.OK) {

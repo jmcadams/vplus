@@ -66,7 +66,7 @@ public class EventSequence : IScheduledObject {
         _fullChannels = new List<Channel>();
         Channels = new List<Channel>();
         PlugInData = new SetupData();
-        LoadableData = new LoadableData();
+        //LoadableData = new LoadableData();
         _sortOrders = new SortOrders();
         Extensions = new SequenceExtensions();
         if (preferences != null) {
@@ -302,21 +302,6 @@ public class EventSequence : IScheduledObject {
         _profile.Reload();
         LoadFromProfile();
     }
-
-
-/*
-    public void Save() {
-        // ReSharper disable AssignNullToNotNullAttribute
-        if (!Directory.Exists(Path.GetDirectoryName(FileName))) {
-            throw new Exception(Resources.InvalidPath + FileName);
-        }
-        // ReSharper restore AssignNullToNotNullAttribute
-        SaveTo(FileName);
-        if (Groups != null) {
-            Group.SaveGroups(Groups, Profile != null ? Profile.FileName : FileName);
-        }
-    }
-*/
 
 
     //TODO Need to ask if this is a 2.1 or 2.5 format before saving.
@@ -601,18 +586,6 @@ public class EventSequence : IScheduledObject {
 
     public int ChannelCount {
         get { return Channels.Count == 0 ? _fullChannels.Count : Channels.Count; }
-/*
-        set {
-            while (_groupedAndSortedChannels.Count > value) {
-                _groupedAndSortedChannels.RemoveAt(value);
-            }
-            for (var i = _groupedAndSortedChannels.Count + 1; _groupedAndSortedChannels.Count < value; i++) {
-                _groupedAndSortedChannels.Add(new Channel(Resources.Channel + @" " + i.ToString(CultureInfo.InvariantCulture), i - 1, true));
-            }
-            UpdateEventValueArray();
-            _sortOrders.UpdateChannelCounts(value);
-        }
-*/
     }
 
 

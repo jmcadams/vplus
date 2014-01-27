@@ -11,71 +11,9 @@ internal class Timers : IQueryable
     public IEnumerable<Timer> TimerArray
     {
         get { return _timers; }
-/*
-        set { _timers = value; }
-*/
     }
 
     public bool TimersDisabled { get; private set; }
-
-    /*
-    public string QueryInstance(int index)
-    {
-        var builder = new StringBuilder();
-        builder.AppendLine("Disabled: " + _isDisabled);
-        builder.AppendLine("Timer count: " + _timers.Length);
-        if (_timers.Length <= 0) {
-            return builder.ToString();
-        }
-        builder.AppendLine("Timers:");
-        foreach (var timer in _timers)
-        {
-            builder.AppendLine("   Start date: " + timer.StartDate);
-            builder.AppendLine("   Start time: " + timer.StartTime);
-            builder.AppendLine("   Timer length: " + timer.TimerLength);
-            builder.AppendLine("   Repeat interval: " + timer.RepeatInterval);
-            builder.AppendLine("   Recurrence: " + timer.Recurrence);
-            builder.AppendLine("   Recurrence start: " + timer.RecurrenceStart);
-            builder.AppendLine("   Recurrence end: " + timer.RecurrenceEnd);
-            builder.AppendLine("   Program: " + timer.ProgramName);
-            builder.AppendLine("   Object type: " + timer.ObjectType);
-            builder.AppendLine("   Object length: " + timer.ObjectLength);
-            builder.AppendLine("   Last execution: " + timer.LastExecution);
-            builder.AppendLine("   Not valid until: " + timer.NotValidUntil);
-            builder.AppendLine("   Executing: " + timer.IsExecuting);
-            builder.AppendLine("   End date: " + timer.EndDate);
-            builder.AppendLine("   End time: " + timer.EndTime);
-        }
-        var list = StartingTimers();
-        builder.AppendLine("Starting timer count: " + list.Count);
-        if (list.Count > 0)
-        {
-            builder.AppendLine("Timers:");
-            foreach (var timer in list)
-            {
-                builder.AppendLine(string.Format("   {0} at {1}", timer.ProgramName, timer.StartDateTime));
-            }
-        }
-        list = CurrentlyEffectiveTimers();
-        builder.AppendLine("Currently-effective timer count: " + list.Count);
-        if (list.Count <= 0) {
-            return builder.ToString();
-        }
-        builder.AppendLine("Timers:");
-        foreach (var timer in list)
-        {
-            builder.AppendLine(string.Format("   {0} at {1}", timer.ProgramName, timer.StartDateTime));
-        }
-        return builder.ToString();
-    }
-*/
-
-/*
-    public int Count
-    {
-        get { return 1; }
-    }
-*/
 
     public IEnumerable<Timer> CurrentlyEffectiveTimers()
     {
@@ -302,19 +240,6 @@ internal class Timers : IQueryable
         Host.LogTo(Paths.TimerTraceFilePath, "  Minutes: " + num.ToString(CultureInfo.InvariantCulture));
         return ((num2 >= 0.0) && (num <= deviationTolerance));
     }
-
-/*
-    public void SaveToXml(XmlNode contextNode)
-    {
-        //XmlDocument document = contextNode.OwnerDocument ?? ((XmlDocument) contextNode);
-        var emptyNodeAlways = Xml.GetEmptyNodeAlways(contextNode, "Timers");
-        Xml.SetAttribute(emptyNodeAlways, "enabled", _isDisabled ? false.ToString() : true.ToString());
-        foreach (var timer in _timers)
-        {
-            timer.SaveToXml(emptyNodeAlways);
-        }
-    }
-*/
 
     public IEnumerable<Timer> StartingTimers()
     {

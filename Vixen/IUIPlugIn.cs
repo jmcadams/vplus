@@ -3,12 +3,9 @@
 internal interface IUIPlugIn : IVixenMDI, IPlugIn
 {
     string FileExtension { get; }
-
     string FileTypeDescription { get; }
-
     bool IsDirty { get; set; }
-
-    Form MdiParent {/*get; */ set; }
+    Form MdiParent {set; }
     EventSequence New(); 
     EventSequence New(EventSequence seedSequence);
     EventSequence Open(string filePath);

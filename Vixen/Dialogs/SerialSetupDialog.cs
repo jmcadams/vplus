@@ -18,23 +18,6 @@ namespace Dialogs {
             Init(serialPort);
         }
 
-
-/*
-        public SerialSetupDialog(SerialPort serialPort, bool allowPortEdit, bool allowBaudEdit, bool allowParityEdit, bool allowDataEdit,
-                                 bool allowStopEdit) {
-            components = null;
-            InitializeComponent();
-            comboBoxPortName.Items.AddRange(SerialPort.GetPortNames());
-            comboBoxPortName.Enabled = allowPortEdit;
-            comboBoxBaudRate.Enabled = allowBaudEdit;
-            comboBoxParity.Enabled = allowParityEdit;
-            textBoxData.Enabled = allowDataEdit;
-            comboBoxStop.Enabled = allowStopEdit;
-            Init(serialPort);
-        }
-*/
-
-
         public SerialPort SelectedPort {
             get {
                 return new SerialPort(comboBoxPortName.SelectedItem.ToString(), int.Parse(comboBoxBaudRate.SelectedItem.ToString()),

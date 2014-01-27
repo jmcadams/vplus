@@ -56,27 +56,6 @@ public class SetupData : DataExtension {
     }
 
 
-/*
-    public int GetHighestChannel(bool enabledOnly) {
-        var list = enabledOnly ? GetAllPluginData(PluginType.Output, true) : GetAllPluginData();
-        return (from XmlNode node in list
-            let attributes = node.Attributes
-            where attributes != null
-            select Convert.ToInt32(attributes["to"].Value)).Concat(new[] {0}).Max();
-    }
-*/
-
-
-/*
-    public OutputPlugin[] GetOutputPlugins() {
-        return (from XmlNode node in GetAllPluginData()
-            let attributes = node.Attributes
-            where attributes != null
-            select new OutputPlugin(attributes["name"].Value, int.Parse(attributes["id"].Value), bool.Parse(attributes["enabled"].Value), int.Parse(attributes["from"].Value), int.Parse(attributes["to"].Value))).ToArray();
-    }
-*/
-
-
     public XmlNode GetPlugInData(string pluginId) {
         return RootNode.SelectSingleNode(string.Format("PlugIn[@id='{0}']", pluginId));
     }

@@ -12,16 +12,6 @@ internal class Timer : IComparable<Timer>
     private readonly DateTime _recurrenceStart;
 
 
-/*
-    public Timer()
-    {
-        _objectType = ObjectType.Sequence;
-        _isExecuting = false;
-        LastExecution = DateTime.MinValue;
-        NotValidUntil = DateTime.MinValue;
-    }
-*/
-
     public Timer(XmlNode timerNode)
     {
         _objectType = ObjectType.Sequence;
@@ -131,21 +121,11 @@ internal class Timer : IComparable<Timer>
     public TimeSpan ObjectLength
     {
         get { return _objectLength; }
-/*
-        set { _objectLength = value; }
-*/
     }
 
     public ObjectType ObjectType
     {
         get { return _objectType; }
-/*
-        private set
-        {
-            _objectType = value;
-            SetObjectPath();
-        }
-*/
     }
 
     public string ProgramFileName
@@ -170,9 +150,6 @@ internal class Timer : IComparable<Timer>
         get {
             return Recurrence == RecurrenceType.None ? EndDateTime : _recurrenceEnd;
         }
-/*
-        set { _recurrenceEnd = value; }
-*/
     }
 
     public DateTime RecurrenceEndDateTime
@@ -204,9 +181,6 @@ internal class Timer : IComparable<Timer>
         get {
             return Recurrence == RecurrenceType.None ? StartDateTime : _recurrenceStart;
         }
-/*
-        set { _recurrenceStart = value; }
-*/
     }
 
     public DateTime RecurrenceStartDateTime
@@ -226,9 +200,6 @@ internal class Timer : IComparable<Timer>
     public DateTime StartDate
     {
         get { return StartDateTime.Date; }
-/*
-        set { StartDateTime = new DateTime(value.Year, value.Month, value.Day, StartDateTime.Hour, StartDateTime.Minute, 0); }
-*/
     }
 
     public DateTime StartDateTime { get; private set; }
@@ -236,13 +207,6 @@ internal class Timer : IComparable<Timer>
     public TimeSpan StartTime
     {
         get { return StartDateTime.TimeOfDay; }
-/*
-        set
-        {
-            StartDateTime = new DateTime(StartDateTime.Year, StartDateTime.Month, StartDateTime.Day, value.Hours,
-                value.Minutes, 0);
-        }
-*/
     }
 
     public TimeSpan TimerLength { get; private set; }
@@ -252,71 +216,6 @@ internal class Timer : IComparable<Timer>
     {
         return StartTime.CompareTo(other.StartTime);
     }
-
-/*
-    public Timer Clone()
-    {
-        var timer = new Timer();
-        timer.Copy(this);
-        return timer;
-    }
-*/
-
-/*
-    public void Copy(Timer timer)
-    {
-        _objectLength = timer._objectLength;
-        ObjectType = timer.ObjectType;
-        ProgramFileName = timer.ProgramFileName;
-        ProgramName = timer.ProgramName;
-        Recurrence = timer.Recurrence;
-        _recurrenceEnd = timer._recurrenceEnd;
-        _recurrenceStart = timer._recurrenceStart;
-        RepeatInterval = timer.RepeatInterval;
-        StartDateTime = timer.StartDateTime;
-        TimerLength = timer.TimerLength;
-        RecurrenceData = timer.RecurrenceData;
-        _isExecuting = timer._isExecuting;
-    }
-*/
-
-/*
-    public void SaveToXml(XmlNode contextNode)
-    {
-        var node = Xml.SetNewValue(contextNode, "Timer", string.Empty);
-        Xml.SetValue(node, "StartDateTime", StartDateTime.ToString(CultureInfo.InvariantCulture));
-        Xml.SetValue(node, "TimerLength", TimerLength.ToString());
-        var node2 = Xml.SetValue(node, "Item", Path.GetFileName(_objectFileName));
-        Xml.SetAttribute(node2, "length", _objectLength.ToString());
-        Xml.SetAttribute(node2, "type", _objectType.ToString());
-        if (_objectLength != TimerLength)
-        {
-            Xml.SetValue(node, "RepeatInterval", RepeatInterval.ToString(CultureInfo.InvariantCulture));
-        }
-        if (Recurrence == RecurrenceType.None) {
-            return;
-        }
-        var node3 = Xml.SetValue(node, "Recurrence", string.Empty);
-        Xml.SetAttribute(node3, "type", Recurrence.ToString());
-        Xml.SetValue(node3, "StartDate", _recurrenceStart.ToShortDateString());
-        Xml.SetValue(node3, "EndDate", _recurrenceEnd.ToShortDateString());
-        switch (Recurrence)
-        {
-            case RecurrenceType.Weekly:
-                Xml.SetValue(node3, "Data", ((int) RecurrenceData).ToString(CultureInfo.InvariantCulture));
-                break;
-
-            case RecurrenceType.Monthly:
-                Xml.SetValue(node3, "Data", (string) RecurrenceData);
-                break;
-
-            case RecurrenceType.Yearly:
-                Xml.SetValue(node3, "Data", ((DateTime) RecurrenceData).ToString(CultureInfo.InvariantCulture));
-                break;
-        }
-    }
-*/
-
 
     private void SetObjectPath() {
         if (string.IsNullOrEmpty(_objectFileName)) {

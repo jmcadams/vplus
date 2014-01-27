@@ -20,13 +20,6 @@ internal class InputPlugins : HardwarePlugins
         return FindPlugin(pluginName, uniqueInstance, Paths.InputPluginPath, "IInputPlugin");
     }
 
-/*
-    public static List<string> LoadPluginNames()
-    {
-        return LoadPluginNames(Paths.InputPluginPath, "IInputPlugin");
-    }
-*/
-
     public static List<IHardwarePlugin> LoadPlugins()
     {
         return LoadPlugins(Paths.InputPluginPath, "IInputPlugin");
@@ -39,8 +32,6 @@ internal class InputPlugins : HardwarePlugins
             return;
         }
         var builder = new StringBuilder();
-        //var dialog = new ProgressDialog();
-        //dialog.Show();
         foreach (XmlNode node in allPluginData)
         {
             if (node.Attributes == null) {
@@ -73,8 +64,6 @@ internal class InputPlugins : HardwarePlugins
                 node.ParentNode.RemoveChild(node);
             }
         }
-        //dialog.Hide();
-        //dialog.Dispose();
         if (builder.Length == 0) {
             return;
         }

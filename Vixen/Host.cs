@@ -42,11 +42,6 @@ internal class Host : IQueryable {
 
 
     public string BackgroundSequenceName {
-/*
-        get {
-            return _backgroundSequence == null ? null : _backgroundSequence.FileName;
-        }
-*/
         set {
             StopBackgroundSequence();
             if (string.IsNullOrEmpty(value)) {
@@ -81,48 +76,9 @@ internal class Host : IQueryable {
 
     public static PlugInRouter Router { get; private set; }
 
-
-/*
-    public string QueryInstance(int index) {
-        var builder = new StringBuilder();
-        if (index == 0) {
-            builder.AppendLine("(Background Sequence)");
-            builder.AppendLine("Execution handle: " + _backgroundExecutionContextHandle);
-            builder.AppendLine("Sequence: " + ((_backgroundSequence == null) ? "(null)" : _backgroundSequence.Name));
-        }
-        else {
-            builder.AppendLine("(Music Player)");
-            builder.AppendLine("Song count: " + _musicPlayer.SongCount);
-            builder.AppendLine("Playing: " + _musicPlayer.IsPlaying);
-            if (!_musicPlayer.IsPlaying) {
-                return builder.ToString();
-            }
-            builder.AppendLine("Song name: " + _musicPlayer.CurrentSongName);
-            builder.AppendLine("Song length: " + _musicPlayer.CurrentSongLength);
-        }
-        return builder.ToString();
-    }
-*/
-
-
-/*
-    public int Count {
-        get { return 2; }
-    }
-*/
-
-
     public static void BeginInvoke(Delegate method, params object[] args) {
         Application.OpenForms[0].BeginInvoke(method, args);
     }
-
-
-/*
-    public static void ClearLog(string filePath) {
-        File.Delete(filePath);
-    }
-*/
-
 
     private void CreateBackgroundContext() {
         if (_executionInterface == null) {

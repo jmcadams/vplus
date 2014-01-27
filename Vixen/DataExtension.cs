@@ -15,24 +15,7 @@ public class DataExtension
         RootNode = Document.DocumentElement;
     }
 
-/*
-    public bool IsEmpty
-    {
-        get { return !RootNode.HasChildNodes; }
-    }
-*/
-
     public XmlNode RootNode { get; protected set; }
-
-
-/*
-    public DataExtension Clone()
-    {
-        var extension = new DataExtension(_extensionName);
-        Xml.CloneNode(extension.Document, Document.DocumentElement, true);
-        return extension;
-    }
-*/
 
     public bool GetBoolean(XmlNode setupDataNode, string childNode, bool defaultValue)
     {

@@ -329,7 +329,6 @@
     <Compile Include="ListViewItemSorter.cs" />
     <Compile Include="ListViewSortIcons.cs" />
     <Compile Include="LoadableData.cs" />
-    <Compile Include="LoadableDataLocation.cs" />
     <Compile Include="MappedOutputPlugIn.cs" />
     <Compile Include="MappingSet.cs" />
     <Compile Include="MappingSets.cs" />
@@ -405,6 +404,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\AllChannelsColorDialog.resx">
       <DependentUpon>AllChannelsColorDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\AudioDialog.resx">
       <DependentUpon>AudioDialog.cs</DependentUpon>

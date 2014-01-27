@@ -19,7 +19,6 @@ internal sealed class Engine8 : IDisposable, IQueryable {
     public delegate void SequenceChangeDelegate();
 
     private static readonly List<Engine8> InstanceList = new List<Engine8>();
-    //private static int _nextInstanceId;
     private readonly object _runLock;
     private EngineContext[] _engineContexts;
     private System.Timers.Timer _eventTimer;
@@ -76,28 +75,6 @@ internal sealed class Engine8 : IDisposable, IQueryable {
 
     public SequenceProgram CurrentObject { get; private set; }
 
-/*
-    public string ExecutingProgram {
-        get {
-            if ((Mode != EngineMode.Asynchronous) && (IsRunning || IsPaused)) {
-                return CurrentObject.Name;
-            }
-            return string.Empty;
-        }
-    }
-*/
-
-/*
-    public string ExecutingSequence {
-        get {
-            if (Mode == EngineMode.Asynchronous) {
-                return string.Empty;
-            }
-            return IsRunning || IsPaused ? _engineContexts[_primaryContext].CurrentSequence.Name : "None";
-        }
-    }
-*/
-
     public bool IsPaused { get; private set; }
 
     public bool IsRunning {
@@ -113,17 +90,6 @@ internal sealed class Engine8 : IDisposable, IQueryable {
         }
     }
 
-/*
-    public int LoadedProgramLength {
-        get {
-            if (Mode == EngineMode.Asynchronous) {
-                return 0;
-            }
-            return CurrentObject == null ? 0 : CurrentObject.Length;
-        }
-    }
-*/
-
     public string LoadedSequence {
         get {
             if (Mode == EngineMode.Asynchronous) {
@@ -132,17 +98,6 @@ internal sealed class Engine8 : IDisposable, IQueryable {
             return _engineContexts[_primaryContext].CurrentSequence == null ? string.Empty : _engineContexts[_primaryContext].CurrentSequence.Name;
         }
     }
-
-/*
-    public int LoadedSequenceLength {
-        get {
-            if (Mode == EngineMode.Asynchronous) {
-                return 0;
-            }
-            return _engineContexts[_primaryContext].CurrentSequence == null ? 0 : _engineContexts[_primaryContext].CurrentSequence.Length;
-        }
-    }
-*/
 
     public bool IsLooping { private get; set; }
 
@@ -205,48 +160,9 @@ internal sealed class Engine8 : IDisposable, IQueryable {
     }
 
 
-/*
-    public string QueryInstance(int index) {
-        var builder = new StringBuilder();
-        if ((index < 0) || (index >= InstanceList.Count)) {
-            return builder.ToString();
-        }
-        var engine = InstanceList[index];
-        if (engine.CurrentObject != null) {
-            builder.AppendLine("Program: " + engine.CurrentObject.Name);
-            builder.AppendLine("Sequence count: " + engine.CurrentObject.EventSequences.Count);
-            builder.AppendLine("Sequences:");
-            foreach (var stub in engine.CurrentObject.EventSequences) {
-                builder.AppendLine("   " + stub.FileName);
-            }
-        }
-        else {
-            builder.AppendLine("Program: (null)");
-        }
-        builder.AppendLine("Primary context: " + engine._primaryContext);
-        builder.Append(QueryContext(engine._engineContexts[engine._primaryContext]));
-        builder.AppendLine("Secondary context: " + engine._secondaryContext);
-        builder.Append(QueryContext(engine._engineContexts[engine._secondaryContext]));
-        builder.AppendLine("Loop: " + engine.IsLooping);
-        builder.AppendLine("Paused: " + engine.IsPaused);
-        builder.AppendLine("Running: " + engine._isRunning);
-        builder.AppendLine("Use sequence plugin data: " + engine._useSequencePluginData);
-        builder.AppendLine("Mode: " + engine.Mode);
-        return builder.ToString();
-    }
-*/
-
-
-/*
-    public int Count {
-        get { return InstanceList.Count; }
-    }
-*/
-
     public event ProgramEndDelegate ProgramEnd;
 
     public event SequenceChangeDelegate SequenceChange;
-
 
     private int CalcContainingSequence(int milliseconds) {
         var mills = 0;
@@ -259,9 +175,7 @@ internal sealed class Engine8 : IDisposable, IQueryable {
         return -1;
     }
 
-
     private void ConstructUsing(EngineMode mode, Host host, int audioDeviceIndex) {
-        //_nextInstanceId++;
         Mode = mode;
         _host = host;
         _plugInRouter = Host.Router;
@@ -672,7 +586,6 @@ internal sealed class Engine8 : IDisposable, IQueryable {
             return;
         }
 
-        //lock (_runLock) {
         if (_secondaryEngine != null) {
             _secondaryEngine.Pause();
             IsPaused = true;
@@ -694,7 +607,6 @@ internal sealed class Engine8 : IDisposable, IQueryable {
             IsPaused = true;
             _isRunning = false;
         }
-        //}
     }
 
 
@@ -762,43 +674,6 @@ internal sealed class Engine8 : IDisposable, IQueryable {
         context.SoundChannel.Position = (uint) millisecondPosition;
         context.SoundChannel.Frequency = AudioSpeed;
     }
-
-
-/*
-    private string QueryContext(EngineContext context) {
-        if (context == null) {
-            return "   (null)\n";
-        }
-        var builder = new StringBuilder();
-        builder.AppendLine("   Sequence: " + ((context.CurrentSequence != null) ? context.CurrentSequence.Name : "(null)"));
-        builder.AppendLine("   Sequence index: " + context.SequenceIndex);
-        builder.AppendLine("   Sequence tick length: " + context.SequenceTickLength);
-        builder.AppendLine("   Tick count: " + context.TickCount);
-        if (context.RouterContext != null) {
-            builder.AppendLine("   Router context:");
-            builder.AppendLine("      Mapped plugin count: " + context.RouterContext.OutputPluginList.Count);
-            builder.AppendLine("      Mapped plugins: " + context.RouterContext.OutputPluginList.Count);
-            foreach (var outputPlugIn in context.RouterContext.OutputPluginList) {
-                builder.Append(QueryMappedPlugIn(outputPlugIn));
-            }
-        }
-        else {
-            builder.AppendLine("   Router context: (null)");
-        }
-        return builder.ToString();
-    }
-*/
-
-
-/*
-    private string QueryMappedPlugIn(MappedOutputPlugIn mappedPlugIn) {
-        var builder =
-            new StringBuilder("         Name: " + mappedPlugIn.PlugIn.Name).AppendLine("         From: " + mappedPlugIn.From).AppendLine(
-                "         To: " + mappedPlugIn.To).AppendLine("         Enabled: " + mappedPlugIn.Enabled);
-        return builder.ToString();
-    }
-*/
-
 
     private static byte[,] ReconfigureSourceData(EventSequence sequence) {
         var buffer = new byte[sequence.FullChannelCount,sequence.TotalEventPeriods];

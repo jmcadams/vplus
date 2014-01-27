@@ -22,13 +22,6 @@ internal class MappingSets : ICloneable, IEnumerable<MappingSet>
         get { return _mappingSets.ToArray(); }
     }
 
-/*
-    public int Count
-    {
-        get { return _mappingSets.Count; }
-    }
-*/
-
     public MappingSet CurrentMappingSet
     {
         get { return _mappingSets[_currentMappingSetIndex]; }
@@ -105,25 +98,10 @@ internal class MappingSets : ICloneable, IEnumerable<MappingSet>
         }
     }
 
-
-/*
-    public int GetMappingSetCountFor(Input input) {
-        return _mappingSets.Count(set => set.HasMappingFor(input));
-    }
-*/
-
-
     internal List<string> GetOutputChannelIdList(Input input)
     {
         return _mappingSets[_currentMappingSetIndex].GetOutputChannelIdList(input);
     }
-
-/*
-    public void InsertMappingAt(int index)
-    {
-        _mappingSets.Insert(index, new MappingSet("Mapping set " + (index + 1)));
-    }
-*/
 
     public void MoveMappingTo(int oldIndex, int newIndex)
     {
@@ -150,17 +128,6 @@ internal class MappingSets : ICloneable, IEnumerable<MappingSet>
         _mappingSets.RemoveAt(index);
         CheckIndex();
     }
-
-/*
-    public void RenameMapping(ulong id, string name)
-    {
-        var set = FindMappingSet(id);
-        if (set != null)
-        {
-            set.Name = name;
-        }
-    }
-*/
 
     public void StepMapping()
     {
