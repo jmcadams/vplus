@@ -302,15 +302,15 @@ namespace Dialogs {
                     if (port.ReferencingPlugins.Count == 1) {
                         item =
                             new ListViewItem(
-                                new[] {string.Empty, port.Index.ToString(port.StringFormat), string.Empty, port.ReferencingPlugins[0].Name}, group);
+                                new[] {string.Empty, port.Index.ToString("d"), string.Empty, port.ReferencingPlugins[0].Name}, group);
                     }
                     else if (port.IsExpanded) {
-                        item = new ListViewItem(new[] {string.Empty, port.Index.ToString(port.StringFormat), string.Empty, Resources.Multiple}, group);
-                        item.SubItems[3].ForeColor = port.Shared ? Color.LightSteelBlue : Color.Pink;
+                        item = new ListViewItem(new[] {string.Empty, port.Index.ToString("d"), string.Empty, Resources.Multiple}, group);
+                        item.SubItems[3].ForeColor = Color.Pink;
                     }
                     else {
-                        item = new ListViewItem(new[] {string.Empty, port.Index.ToString(port.StringFormat), string.Empty, Resources.Multiple}, group);
-                        item.SubItems[3].ForeColor = port.Shared ? Color.SteelBlue : Color.Red;
+                        item = new ListViewItem(new[] {string.Empty, port.Index.ToString("d"), string.Empty, Resources.Multiple}, group);
+                        item.SubItems[3].ForeColor = Color.Red;
                     }
                     item.Tag = port;
                     listViewOutputPorts.Items.Add(item);
@@ -349,10 +349,7 @@ namespace Dialogs {
                             _outputPorts[key] = dictionary = new Dictionary<int, OutputPort>();
                         }
                         if (!dictionary.TryGetValue(map.PortTypeIndex, out port)) {
-                            dictionary[map.PortTypeIndex] = port = new OutputPort(map.PortTypeIndex, map.Shared, map.StringFormat);
-                        }
-                        else {
-                            port.Shared |= map.Shared;
+                            dictionary[map.PortTypeIndex] = port = new OutputPort(map.PortTypeIndex);
                         }
                         port.ReferencingPlugins.Add(plugin);
                     }

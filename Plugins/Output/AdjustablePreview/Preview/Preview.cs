@@ -82,15 +82,6 @@ namespace Preview {
             return Name;
         }
 
-
-        public string Author {
-            get { return "Vixen and VixenPlus Developers"; }
-        }
-
-        public string Description {
-            get { return "Built in previewer for VixenPlus"; }
-        }
-
         public IEnumerable<HardwareMap> HardwareMap {
             get { return new HardwareMap[0]; }
         }

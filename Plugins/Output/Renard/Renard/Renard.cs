@@ -187,14 +187,6 @@ namespace Renard {
         }
 
 
-        public string Author {
-            get { return "Vixen and Vixen+ Developers"; }
-        }
-
-        public string Description {
-            get { return "Renard Protocol Output"; }
-        }
-
         public IEnumerable<HardwareMap> HardwareMap {
             get { return new[] {new HardwareMap("Serial", int.Parse(_selectedPort.PortName.Substring(3)))}; }
         }
