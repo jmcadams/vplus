@@ -44,7 +44,6 @@ internal class MappingSets : ICloneable, IEnumerable<MappingSet>
         var sets = new MappingSets {_currentMappingSetIndex = _currentMappingSetIndex};
         sets._mappingSets.Clear();
         sets._mappingSets.AddRange(_mappingSets);
-        //TODO Is this working as expected?
         // ReSharper disable RedundantAssignment
         sets._mappingSets.ForEach(delegate(MappingSet m) { m = (MappingSet) m.Clone(); });
         // ReSharper restore RedundantAssignment
