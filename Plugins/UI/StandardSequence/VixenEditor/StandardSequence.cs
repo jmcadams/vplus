@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Printing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -87,10 +86,8 @@ namespace VixenEditor {
 
         private Point _mouseDownAtInChannels;
         private Point _mouseDownAtInGrid;
-        
+
         private Preference2 _preferences;
-        
-        private PrintDocument _printDocument;
         
         private Rectangle _lineRect;
         private Rectangle _selectedCells;
@@ -891,17 +888,6 @@ namespace VixenEditor {
         }
 
 
-        private void exportChannelNamesListToolStripMenuItem_Click(object sender, EventArgs e) {
-            var path = Path.Combine(Paths.ImportExportPath, _sequence.Name + "_" + Resources.Channels + @".txt");
-            using (var sw = new StreamWriter(path, false)) {
-                foreach (var channel in _sequence.FullChannels) {
-                    sw.WriteLine(channel.Name);
-                }
-            }
-            MessageBox.Show(Resources.ChannelNameListExported + @" " + path, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-        }
-
-
         private void FillChannel(int lineIndex) {
             AddUndoItem(new Rectangle(0, lineIndex, _sequence.TotalEventPeriods, 1), UndoOriginalBehavior.Overwrite, Resources.UndoText_ClearChannel);
             CopyToEventValues(0, lineIndex, _sequence.TotalEventPeriods, 1, _drawingLevel);
@@ -1059,11 +1045,6 @@ namespace VixenEditor {
         }
 
 
-        private void halfSpeedToolStripMenuItem_Click(object sender, EventArgs e) {
-            SetAudioSpeed(0.5f);
-        }
-
-
         private void hScrollBar1_ValueChanged(object sender, EventArgs e) {
             pictureBoxGrid.Refresh();
             pictureBoxTime.Refresh();
@@ -1097,35 +1078,6 @@ namespace VixenEditor {
 
             if (hScrollBar1.Minimum == -1) {
                 hScrollBar1.Minimum = 0;
-            }
-        }
-
-
-        private void importChannelNamesListToolStripMenuItem_Click(object sender, EventArgs e) {
-            if (_sequence.Profile != null) {
-                MessageBox.Show(Resources.CantImportChannels, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-            }
-            else {
-                openFileDialog1.Filter = Resources.TextFile + @" | *.txt";
-                openFileDialog1.DefaultExt = @"txt";
-                openFileDialog1.InitialDirectory = Paths.ImportExportPath;
-                openFileDialog1.FileName = string.Empty;
-                if (openFileDialog1.ShowDialog() != DialogResult.OK) {
-                    return;
-                }
-                using (var reader = new StreamReader(openFileDialog1.FileName)) {
-                    var list = new List<string>();
-                    string str;
-                    while ((str = reader.ReadLine()) != null) {
-                        list.Add(str);
-                    }
-                    SetChannelCount(list.Count);
-                    for (var i = 0; i < list.Count; i++) {
-                        _sequence.FullChannels[i].Name = list[i];
-                    }
-                    pictureBoxChannels.Refresh();
-                    MessageBox.Show(Resources.ChannelNameImport, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                }
             }
         }
 
@@ -1401,12 +1353,6 @@ namespace VixenEditor {
         }
 
 
-
-        private void normalSpeedToolStripMenuItem_Click(object sender, EventArgs e) {
-            SetAudioSpeed(AudioFull);
-        }
-
-
         private void normalToolStripMenuItem_Click(object sender, EventArgs e) {
             normalToolStripMenuItem.Checked = true;
             paintFromClipboardToolStripMenuItem.Checked = false;
@@ -1530,11 +1476,6 @@ namespace VixenEditor {
             _preferences = _systemInterface.UserPreferences;
             Init();
             return _sequence;
-        }
-
-
-        private void otherToolStripMenuItem_Click(object sender, EventArgs e) {
-            SetVariablePlaybackSpeed(new Point(0, 0));
         }
 
 
@@ -2441,11 +2382,6 @@ namespace VixenEditor {
         }
 
 
-        private void quarterSpeedToolStripMenuItem_Click(object sender, EventArgs e) {
-            SetAudioSpeed(AudioOneQtr);
-        }
-
-
         private void Ramp(int startingLevel, int endingLevel) {
             var originalAction = (startingLevel > endingLevel) ? Resources.UndoText_Fade : Resources.UndoText_Ramp;
             if ((startingLevel != _sequence.MinimumLevel && endingLevel != _sequence.MinimumLevel) ||
@@ -2678,13 +2614,6 @@ namespace VixenEditor {
         }
 
 
-        private void saveToolbarPositionsToolStripMenuItem_Click(object sender, EventArgs e) {
-            ToolStripManager.SaveSettings(this, _preferences.XmlDoc.DocumentElement);
-            _preferences.SaveSettings();
-            MessageBox.Show(Resources.ToolbarSettingsSaved, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-        }
-
-
         private void scaleToolStripMenuItem_Click(object sender, EventArgs e) {
             ArithmeticPaste(ArithmeticOperation.Scale);
         }
@@ -2808,35 +2737,24 @@ namespace VixenEditor {
             if ((!(rate > 0f)) || (!(rate <= AudioFull))) {
                 return;
             }
-
-            xToolStripMenuItem.Checked = false;
-            xToolStripMenuItem1.Checked = false;
-            xToolStripMenuItem2.Checked = false;
-            normalToolStripMenuItem1.Checked = false;
-            otherToolStripMenuItem.Checked = false;
             SpeedQtrTsb.Checked = false;
             SpeedHalfTsb.Checked = false;
             SpeedThreeQtrTsb.Checked = false;
             SpeedNormalTsb.Checked = false;
             SpeedVariableTsb.Checked = false;
             if (Equals(rate, AudioOneQtr)) {
-                xToolStripMenuItem.Checked = true;
                 SpeedQtrTsb.Checked = true;
             }
             else if (Equals(rate, AudioHalf)) {
-                xToolStripMenuItem1.Checked = true;
                 SpeedHalfTsb.Checked = true;
             }
             else if (Equals(rate, AudioThreeQtr)) {
-                xToolStripMenuItem2.Checked = true;
                 SpeedThreeQtrTsb.Checked = true;
             }
             else if (Equals(rate, AudioFull)) {
-                normalToolStripMenuItem1.Checked = true;
                 SpeedNormalTsb.Checked = true;
             }
             else {
-                otherToolStripMenuItem.Checked = true;
                 SpeedVariableTsb.Checked = true;
             }
 
@@ -3021,35 +2939,6 @@ namespace VixenEditor {
             pictureBoxChannels.Refresh();
             pictureBoxGrid.Refresh();
             IsDirty = true;
-        }
-
-
-        private void sortByChannelNumberToolStripMenuItem_Click(object sender, EventArgs e) {
-            //_printingChannelList = _sequence.Channels;
-            //if (printDialog.ShowDialog() != DialogResult.OK) {
-            //    return;
-            //}
-
-            //_printDocument.DocumentName = "Vixen channel configuration";
-            ////_printingChannelIndex = 0;
-            //_printDocument.Print();
-        }
-
-
-        private void sortByChannelOutputToolStripMenuItem_Click(object sender, EventArgs e) {
-            //_printingChannelList = new List<VixenPlus.Channel>();
-            //var collection = new VixenPlus.Channel[_sequence.ChannelCount];
-            //foreach (var channel in _sequence.Channels) {
-            //    collection[channel.OutputChannel] = channel;
-            //}
-            //_printingChannelList.AddRange(collection);
-
-            //if (printDialog.ShowDialog() != DialogResult.OK) {
-            //    return;
-            //}
-            //_printDocument.DocumentName = "Vixen channel configuration";
-            ////_printingChannelIndex = 0;
-            //_printDocument.Print();
         }
 
 
@@ -4790,24 +4679,6 @@ namespace VixenEditor {
             }
         }
 
-
-        private void xToolStripMenuItem2_Click(object sender, EventArgs e) {
-            SetAudioSpeed(AudioThreeQtr);
-        }
-
-
-/*
-        public string Author {
-            get { return "Vixen and VixenPlus Developers"; }
-        }
-*/
-
-/*
-        public string Description {
-            get { return "Vixen+ sequence user interface"; }
-        }
-*/
-
         public override string FileExtension {
             get { return Vendor.SequenceExtension; }
         }
@@ -5050,31 +4921,33 @@ namespace VixenEditor {
 
         private void tsbNutcracker_Click(object sender, EventArgs e) {
             // disabled!
-            //if (!tsbNutcracker.Enabled) {
-            //    return;
-            //}
+            /*
+            if (!tsbNutcracker.Enabled) {
+                return;
+            }
 
-            //using (var nce = new NutcrackerControlDialog(_sequence, _selectedRange)) {
-            //    if (nce.ShowDialog() != DialogResult.OK) {
-            //        return;
-            //    }
-            //    var ncData = nce.RenderData;
-            //    var ncType = nce.RenderType;
-            //    var ncEvents = nce.RenderEvents;
-            //    var ncRows = nce.RenderRows;
-            //    var ncCols = nce.RenderCols;
+            using (var nce = new NutcrackerControlDialog(_sequence, _selectedRange)) {
+                if (nce.ShowDialog() != DialogResult.OK) {
+                    return;
+                }
+                var ncData = nce.RenderData;
+                var ncType = nce.RenderType;
+                var ncEvents = nce.RenderEvents;
+                var ncRows = nce.RenderRows;
+                var ncCols = nce.RenderCols;
 
-            //    var cells = new Rectangle(0, 0, ncEvents, ncCols * ncRows * 3);
-            //    AddUndoItem(cells, UndoOriginalBehavior.Overwrite, "Nutcracker " + ncType);
-            //    for (var row = 0; row < ncCols * ncRows * 3; row++) {
-            //        var channel = GetEventFromChannelNumber(row);
-            //        for (var col = 0; col < ncEvents; col++) {
-            //            var eventData = ncData[row, col];
-            //            _sequence.EventValues[channel, col] = eventData;
-            //        }
-            //    }
-            //    pictureBoxGrid.Invalidate();
-            //}
+                var cells = new Rectangle(0, 0, ncEvents, ncCols * ncRows * 3);
+                AddUndoItem(cells, UndoOriginalBehavior.Overwrite, "Nutcracker " + ncType);
+                for (var row = 0; row < ncCols * ncRows * 3; row++) {
+                    var channel = GetEventFromChannelNumber(row);
+                    for (var col = 0; col < ncEvents; col++) {
+                        var eventData = ncData[row, col];
+                        _sequence.EventValues[channel, col] = eventData;
+                    }
+                }
+                pictureBoxGrid.Invalidate();
+            }
+             */
         }
 
         private void tsbNutcracker_DoubleClick(object sender, EventArgs e) {

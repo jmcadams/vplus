@@ -29,7 +29,6 @@ namespace VixenEditor{
         private ToolStripMenuItem smallToolStripMenuItem;
         private ToolStripMenuItem mediumToolStripMenuItem;
         private ToolStripMenuItem largeToolStripMenuItem;
-        private ToolStripMenuItem saveToolbarPositionsToolStripMenuItem;
         private ToolStripSeparator toolStripMenuItem15;
         private ToolStripSeparator toolStripSeparator7;
         private ToolStripMenuItem resetAllToolbarsToolStripMenuItem;
@@ -105,8 +104,6 @@ namespace VixenEditor{
         private Label labelPosition;
         private MenuStrip menuStrip;
         private OpenFileDialog openFileDialog1;
-        private PrintDialog printDialog;
-        private PrintPreviewDialog printPreviewDialog;
         private SaveFileDialog saveFileDialog;
         private SelectablePictureBox pictureBoxChannels;
         private SplitContainer splitContainer1;
@@ -183,7 +180,6 @@ namespace VixenEditor{
         private ToolStripMenuItem allEventsToFullIntensityToolStripMenuItem;
         private ToolStripMenuItem arithmeticPasteToolStripMenuItem;
         private ToolStripMenuItem attachSequenceToToolStripMenuItem;
-        private ToolStripMenuItem audioSpeedToolStripMenuItem;
         private ToolStripMenuItem audioToolStripMenuItem1;
         private ToolStripMenuItem booleanPasteToolStripMenuItem1;
         private ToolStripMenuItem booleanPasteToolStripMenuItem;
@@ -195,7 +191,6 @@ namespace VixenEditor{
         private ToolStripMenuItem clearChannelEventsToolStripMenuItem;
         private ToolStripMenuItem copyChannelEventsToClipboardToolStripMenuItem;
         private ToolStripMenuItem copyChannelToolStripMenuItem1;
-        private ToolStripMenuItem copyChannelToolStripMenuItem;
         private ToolStripMenuItem copyToolStripMenuItem1;
         private ToolStripMenuItem copyToolStripMenuItem;
         private ToolStripMenuItem createFromSequenceToolStripMenuItem;
@@ -205,11 +200,9 @@ namespace VixenEditor{
         private ToolStripMenuItem detachSequenceFromItsProfileToolStripMenuItem;
         private ToolStripMenuItem editToolStripMenuItem;
         private ToolStripMenuItem effectsToolStripMenuItem;
-        private ToolStripMenuItem exportChannelNamesListToolStripMenuItem;
         private ToolStripMenuItem findAndReplaceToolStripMenuItem1;
         private ToolStripMenuItem findAndReplaceToolStripMenuItem;
         private ToolStripMenuItem flattenProfileIntoSequenceToolStripMenuItem;
-        private ToolStripMenuItem importChannelNamesListToolStripMenuItem;
         private ToolStripMenuItem insertPasteToolStripMenuItem1;
         private ToolStripMenuItem insertPasteToolStripMenuItem;
         private ToolStripMenuItem invertToolStripMenuItem1;
@@ -228,7 +221,6 @@ namespace VixenEditor{
         private ToolStripMenuItem nANDToolStripMenuItem;
         private ToolStripMenuItem nORToolStripMenuItem1;
         private ToolStripMenuItem nORToolStripMenuItem;
-        private ToolStripMenuItem normalToolStripMenuItem1;
         private ToolStripMenuItem normalToolStripMenuItem;
         private ToolStripMenuItem oRToolStripMenuItem1;
         private ToolStripMenuItem oRToolStripMenuItem;
@@ -238,7 +230,6 @@ namespace VixenEditor{
         private ToolStripMenuItem onToolStripMenuItem;
         private ToolStripMenuItem opaquePasteToolStripMenuItem1;
         private ToolStripMenuItem opaquePasteToolStripMenuItem;
-        private ToolStripMenuItem otherToolStripMenuItem;
         private ToolStripMenuItem paintFromClipboardToolStripMenuItem;
         private ToolStripMenuItem partialRampOffToolStripMenuItem1;
         private ToolStripMenuItem partialRampOffToolStripMenuItem;
@@ -247,7 +238,6 @@ namespace VixenEditor{
         private ToolStripMenuItem pasteFullChannelEventsFromClipboardToolStripMenuItem;
         private ToolStripMenuItem pasteToolStripMenuItem1;
         private ToolStripMenuItem pasteToolStripMenuItem;
-        private ToolStripMenuItem printChannelConfigurationToolStripMenuItem;
         private ToolStripMenuItem viewToolStripMenuItem;
         private ToolStripMenuItem programToolStripMenuItem;
         private ToolStripMenuItem rampOffToolStripMenuItem1;
@@ -268,8 +258,6 @@ namespace VixenEditor{
         private ToolStripMenuItem setIntensityToolStripMenuItem;
         private ToolStripMenuItem shimmerToolStripMenuItem1;
         private ToolStripMenuItem shimmerToolStripMenuItem;
-        private ToolStripMenuItem sortByChannelNumberToolStripMenuItem;
-        private ToolStripMenuItem sortByChannelOutputToolStripMenuItem;
         private ToolStripMenuItem sparkleToolStripMenuItem1;
         private ToolStripMenuItem sparkleToolStripMenuItem;
         private ToolStripMenuItem subtractionToolStripMenuItem1;
@@ -288,13 +276,9 @@ namespace VixenEditor{
         private ToolStripMenuItem xNORToolStripMenuItem;
         private ToolStripMenuItem xORToolStripMenuItem1;
         private ToolStripMenuItem xORToolStripMenuItem;
-        private ToolStripMenuItem xToolStripMenuItem1;
-        private ToolStripMenuItem xToolStripMenuItem2;
-        private ToolStripMenuItem xToolStripMenuItem;
         private ToolStripSeparator toolStripMenuItem10;
         private ToolStripSeparator toolStripMenuItem11;
         private ToolStripSeparator toolStripMenuItem12;
-        private ToolStripSeparator toolStripMenuItem13;
         private ToolStripSeparator toolStripMenuItem14;
         private ToolStripSeparator toolStripMenuItem16;
         private ToolStripSeparator toolStripMenuItem17;
@@ -302,12 +286,9 @@ namespace VixenEditor{
         private ToolStripSeparator toolStripMenuItem19;
         private ToolStripSeparator toolStripMenuItem20;
         private ToolStripSeparator toolStripMenuItem21;
-        private ToolStripSeparator toolStripMenuItem22;
         private ToolStripSeparator toolStripMenuItem23;
-        private ToolStripSeparator toolStripMenuItem24;
         private ToolStripSeparator toolStripMenuItem2;
         private ToolStripSeparator toolStripMenuItem3;
-        private ToolStripSeparator toolStripMenuItem4;
         private ToolStripSeparator toolStripMenuItem5;
         private ToolStripSeparator toolStripMenuItem6;
         private ToolStripSeparator toolStripMenuItem7;
@@ -334,12 +315,6 @@ namespace VixenEditor{
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StandardSequence));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.programToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportChannelNamesListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importChannelNamesListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.printChannelConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sortByChannelNumberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sortByChannelOutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripSeparator();
             this.audioToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.channelOutputMaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.currentProgramsSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -382,16 +357,6 @@ namespace VixenEditor{
             this.clearAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem18 = new System.Windows.Forms.ToolStripSeparator();
             this.findAndReplaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
-            this.copyChannelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem22 = new System.Windows.Forms.ToolStripSeparator();
-            this.audioSpeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.xToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.xToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.xToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.normalToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem24 = new System.Windows.Forms.ToolStripSeparator();
-            this.otherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmProfiles = new System.Windows.Forms.ToolStripMenuItem();
             this.createFromSequenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -404,7 +369,6 @@ namespace VixenEditor{
             this.smallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mediumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.largeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolbarPositionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem15 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.resetAllToolbarsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -442,6 +406,7 @@ namespace VixenEditor{
             this.allEventsToFullIntensityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyChannelToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.setAllChannelColorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.selectAllEventsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem23 = new System.Windows.Forms.ToolStripSeparator();
             this.copyChannelEventsToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteFullChannelEventsFromClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -452,6 +417,7 @@ namespace VixenEditor{
             this.contextMenuTime = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.clearAllChannelsForThisEventToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.allChannelsToFullIntensityForThisEventToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.selectAllChannelsForPeriod = new System.Windows.Forms.ToolStripMenuItem();
             this.lblFollowMouse = new CommonControls.TransparentLabel(this.components);
             this.pictureBoxGrid = new VixenEditor.SelectablePictureBox();
             this.contextMenuGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -610,12 +576,7 @@ namespace VixenEditor{
             this.textBoxProgramLength = new System.Windows.Forms.ToolStripTextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this._printDocument = new System.Drawing.Printing.PrintDocument();
-            this.printDialog = new System.Windows.Forms.PrintDialog();
-            this.printPreviewDialog = new System.Windows.Forms.PrintPreviewDialog();
             this.positionTimer = new System.Windows.Forms.Timer(this.components);
-            this.selectAllEventsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.selectAllChannelsForPeriod = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -657,10 +618,6 @@ namespace VixenEditor{
             // programToolStripMenuItem
             // 
             this.programToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.exportChannelNamesListToolStripMenuItem,
-            this.importChannelNamesListToolStripMenuItem,
-            this.printChannelConfigurationToolStripMenuItem,
-            this.toolStripMenuItem13,
             this.audioToolStripMenuItem1,
             this.channelOutputMaskToolStripMenuItem,
             this.currentProgramsSettingsToolStripMenuItem,
@@ -670,60 +627,6 @@ namespace VixenEditor{
             this.programToolStripMenuItem.Name = "programToolStripMenuItem";
             this.programToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.programToolStripMenuItem.Text = "File";
-            // 
-            // exportChannelNamesListToolStripMenuItem
-            // 
-            this.exportChannelNamesListToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert;
-            this.exportChannelNamesListToolStripMenuItem.MergeIndex = 6;
-            this.exportChannelNamesListToolStripMenuItem.Name = "exportChannelNamesListToolStripMenuItem";
-            this.exportChannelNamesListToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.exportChannelNamesListToolStripMenuItem.Text = "Export channel names list";
-            this.exportChannelNamesListToolStripMenuItem.Visible = false;
-            this.exportChannelNamesListToolStripMenuItem.Click += new System.EventHandler(this.exportChannelNamesListToolStripMenuItem_Click);
-            // 
-            // importChannelNamesListToolStripMenuItem
-            // 
-            this.importChannelNamesListToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert;
-            this.importChannelNamesListToolStripMenuItem.MergeIndex = 7;
-            this.importChannelNamesListToolStripMenuItem.Name = "importChannelNamesListToolStripMenuItem";
-            this.importChannelNamesListToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.importChannelNamesListToolStripMenuItem.Text = "Import channel names list";
-            this.importChannelNamesListToolStripMenuItem.Visible = false;
-            this.importChannelNamesListToolStripMenuItem.Click += new System.EventHandler(this.importChannelNamesListToolStripMenuItem_Click);
-            // 
-            // printChannelConfigurationToolStripMenuItem
-            // 
-            this.printChannelConfigurationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.sortByChannelNumberToolStripMenuItem,
-            this.sortByChannelOutputToolStripMenuItem});
-            this.printChannelConfigurationToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert;
-            this.printChannelConfigurationToolStripMenuItem.MergeIndex = 8;
-            this.printChannelConfigurationToolStripMenuItem.Name = "printChannelConfigurationToolStripMenuItem";
-            this.printChannelConfigurationToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.printChannelConfigurationToolStripMenuItem.Text = "Print channel configuration";
-            this.printChannelConfigurationToolStripMenuItem.Visible = false;
-            // 
-            // sortByChannelNumberToolStripMenuItem
-            // 
-            this.sortByChannelNumberToolStripMenuItem.Name = "sortByChannelNumberToolStripMenuItem";
-            this.sortByChannelNumberToolStripMenuItem.Size = new System.Drawing.Size(227, 22);
-            this.sortByChannelNumberToolStripMenuItem.Text = "Sort by natural channel order";
-            this.sortByChannelNumberToolStripMenuItem.Click += new System.EventHandler(this.sortByChannelNumberToolStripMenuItem_Click);
-            // 
-            // sortByChannelOutputToolStripMenuItem
-            // 
-            this.sortByChannelOutputToolStripMenuItem.Name = "sortByChannelOutputToolStripMenuItem";
-            this.sortByChannelOutputToolStripMenuItem.Size = new System.Drawing.Size(227, 22);
-            this.sortByChannelOutputToolStripMenuItem.Text = "Sort by channel output";
-            this.sortByChannelOutputToolStripMenuItem.Click += new System.EventHandler(this.sortByChannelOutputToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem13
-            // 
-            this.toolStripMenuItem13.MergeAction = System.Windows.Forms.MergeAction.Insert;
-            this.toolStripMenuItem13.MergeIndex = 9;
-            this.toolStripMenuItem13.Name = "toolStripMenuItem13";
-            this.toolStripMenuItem13.Size = new System.Drawing.Size(216, 6);
-            this.toolStripMenuItem13.Visible = false;
             // 
             // audioToolStripMenuItem1
             // 
@@ -773,11 +676,7 @@ namespace VixenEditor{
             this.removeCellsToolStripMenuItem1,
             this.clearAllToolStripMenuItem,
             this.toolStripMenuItem18,
-            this.findAndReplaceToolStripMenuItem,
-            this.toolStripMenuItem4,
-            this.copyChannelToolStripMenuItem,
-            this.toolStripMenuItem22,
-            this.audioSpeedToolStripMenuItem});
+            this.findAndReplaceToolStripMenuItem});
             this.editToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert;
             this.editToolStripMenuItem.MergeIndex = 1;
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
@@ -921,8 +820,8 @@ namespace VixenEditor{
             // insertPasteToolStripMenuItem
             // 
             this.insertPasteToolStripMenuItem.Name = "insertPasteToolStripMenuItem";
-            this.insertPasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
-                        | System.Windows.Forms.Keys.V)));
+            this.insertPasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.V)));
             this.insertPasteToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.insertPasteToolStripMenuItem.ToolTipText = "Insert paste (Ctrl-Shift-V)";
             this.insertPasteToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonInsertPaste_Click);
@@ -1058,8 +957,8 @@ namespace VixenEditor{
             // clearAllToolStripMenuItem
             // 
             this.clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
-            this.clearAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
-                        | System.Windows.Forms.Keys.A)));
+            this.clearAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.A)));
             this.clearAllToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.clearAllToolStripMenuItem.Text = "Clear all";
             this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearAllToolStripMenuItem_Click);
@@ -1076,82 +975,6 @@ namespace VixenEditor{
             this.findAndReplaceToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.findAndReplaceToolStripMenuItem.Text = "Find and replace";
             this.findAndReplaceToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonFindAndReplace_Click);
-            // 
-            // toolStripMenuItem4
-            // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(198, 6);
-            this.toolStripMenuItem4.Visible = false;
-            // 
-            // copyChannelToolStripMenuItem
-            // 
-            this.copyChannelToolStripMenuItem.Name = "copyChannelToolStripMenuItem";
-            this.copyChannelToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.copyChannelToolStripMenuItem.Text = "Copy channel";
-            this.copyChannelToolStripMenuItem.Visible = false;
-            this.copyChannelToolStripMenuItem.Click += new System.EventHandler(this.copyChannelToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem22
-            // 
-            this.toolStripMenuItem22.Name = "toolStripMenuItem22";
-            this.toolStripMenuItem22.Size = new System.Drawing.Size(198, 6);
-            this.toolStripMenuItem22.Visible = false;
-            // 
-            // audioSpeedToolStripMenuItem
-            // 
-            this.audioSpeedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.xToolStripMenuItem,
-            this.xToolStripMenuItem1,
-            this.xToolStripMenuItem2,
-            this.normalToolStripMenuItem1,
-            this.toolStripMenuItem24,
-            this.otherToolStripMenuItem});
-            this.audioSpeedToolStripMenuItem.Name = "audioSpeedToolStripMenuItem";
-            this.audioSpeedToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.audioSpeedToolStripMenuItem.Text = "Audio speed";
-            this.audioSpeedToolStripMenuItem.Visible = false;
-            // 
-            // xToolStripMenuItem
-            // 
-            this.xToolStripMenuItem.Name = "xToolStripMenuItem";
-            this.xToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
-            this.xToolStripMenuItem.Text = "1/4x";
-            this.xToolStripMenuItem.Click += new System.EventHandler(this.quarterSpeedToolStripMenuItem_Click);
-            // 
-            // xToolStripMenuItem1
-            // 
-            this.xToolStripMenuItem1.Name = "xToolStripMenuItem1";
-            this.xToolStripMenuItem1.Size = new System.Drawing.Size(114, 22);
-            this.xToolStripMenuItem1.Text = "1/2x";
-            this.xToolStripMenuItem1.Click += new System.EventHandler(this.halfSpeedToolStripMenuItem_Click);
-            // 
-            // xToolStripMenuItem2
-            // 
-            this.xToolStripMenuItem2.Name = "xToolStripMenuItem2";
-            this.xToolStripMenuItem2.Size = new System.Drawing.Size(114, 22);
-            this.xToolStripMenuItem2.Text = "3/4x";
-            this.xToolStripMenuItem2.Click += new System.EventHandler(this.xToolStripMenuItem2_Click);
-            // 
-            // normalToolStripMenuItem1
-            // 
-            this.normalToolStripMenuItem1.Checked = true;
-            this.normalToolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.normalToolStripMenuItem1.Name = "normalToolStripMenuItem1";
-            this.normalToolStripMenuItem1.Size = new System.Drawing.Size(114, 22);
-            this.normalToolStripMenuItem1.Text = "Normal";
-            this.normalToolStripMenuItem1.Click += new System.EventHandler(this.normalSpeedToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem24
-            // 
-            this.toolStripMenuItem24.Name = "toolStripMenuItem24";
-            this.toolStripMenuItem24.Size = new System.Drawing.Size(111, 6);
-            // 
-            // otherToolStripMenuItem
-            // 
-            this.otherToolStripMenuItem.Name = "otherToolStripMenuItem";
-            this.otherToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
-            this.otherToolStripMenuItem.Text = "Other";
-            this.otherToolStripMenuItem.Click += new System.EventHandler(this.otherToolStripMenuItem_Click);
             // 
             // viewToolStripMenuItem
             // 
@@ -1211,7 +1034,6 @@ namespace VixenEditor{
             this.toolbarsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lockToolbarToolStripMenuItem,
             this.toolbarIconSizeToolStripMenuItem,
-            this.saveToolbarPositionsToolStripMenuItem,
             this.toolStripMenuItem15,
             this.toolStripSeparator7,
             this.resetAllToolbarsToolStripMenuItem});
@@ -1264,13 +1086,6 @@ namespace VixenEditor{
             this.largeToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.largeToolStripMenuItem.Text = "Large";
             this.largeToolStripMenuItem.Click += new System.EventHandler(this.largeToolStripMenuItem_Click);
-            // 
-            // saveToolbarPositionsToolStripMenuItem
-            // 
-            this.saveToolbarPositionsToolStripMenuItem.Name = "saveToolbarPositionsToolStripMenuItem";
-            this.saveToolbarPositionsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.saveToolbarPositionsToolStripMenuItem.Text = "Save Toolbar Settings";
-            this.saveToolbarPositionsToolStripMenuItem.Click += new System.EventHandler(this.saveToolbarPositionsToolStripMenuItem_Click);
             // 
             // toolStripMenuItem15
             // 
@@ -1511,8 +1326,8 @@ namespace VixenEditor{
             // 
             // labelPosition
             // 
-            this.labelPosition.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelPosition.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labelPosition.BackColor = System.Drawing.Color.Transparent;
             this.labelPosition.Location = new System.Drawing.Point(12, 9);
             this.labelPosition.Name = "labelPosition";
@@ -1605,6 +1420,13 @@ namespace VixenEditor{
             this.setAllChannelColorsToolStripMenuItem.Size = new System.Drawing.Size(286, 22);
             this.setAllChannelColorsToolStripMenuItem.Text = "Set all channel colors";
             this.setAllChannelColorsToolStripMenuItem.Click += new System.EventHandler(this.setAllChannelColorsToolStripMenuItem_Click);
+            // 
+            // selectAllEventsMenuItem
+            // 
+            this.selectAllEventsMenuItem.Name = "selectAllEventsMenuItem";
+            this.selectAllEventsMenuItem.Size = new System.Drawing.Size(286, 22);
+            this.selectAllEventsMenuItem.Text = "Select All Channel Events";
+            this.selectAllEventsMenuItem.Click += new System.EventHandler(this.selectAllEventsMenuItem_Click);
             // 
             // toolStripMenuItem23
             // 
@@ -1700,6 +1522,13 @@ namespace VixenEditor{
             this.allChannelsToFullIntensityForThisEventToolStripMenuItem.Size = new System.Drawing.Size(292, 22);
             this.allChannelsToFullIntensityForThisEventToolStripMenuItem.Text = "All channels to full intensity for this event";
             this.allChannelsToFullIntensityForThisEventToolStripMenuItem.Click += new System.EventHandler(this.allChannelsToFullIntensityForThisEventToolStripMenuItem_Click);
+            // 
+            // selectAllChannelsForPeriod
+            // 
+            this.selectAllChannelsForPeriod.Name = "selectAllChannelsForPeriod";
+            this.selectAllChannelsForPeriod.Size = new System.Drawing.Size(292, 22);
+            this.selectAllChannelsForPeriod.Text = "Select All Events for this Period";
+            this.selectAllChannelsForPeriod.Click += new System.EventHandler(this.selectAllChannelsForPeriod_Click);
             // 
             // lblFollowMouse
             // 
@@ -3218,41 +3047,10 @@ namespace VixenEditor{
             this.saveFileDialog.Filter = "Vixen Event Sequence | *.vix";
             this.saveFileDialog.Title = "Save As";
             // 
-            // printDialog
-            // 
-            this.printDialog.AllowPrintToFile = false;
-            this.printDialog.Document = this._printDocument;
-            this.printDialog.UseEXDialog = true;
-            // 
-            // printPreviewDialog
-            // 
-            this.printPreviewDialog.AutoScrollMargin = new System.Drawing.Size(0, 0);
-            this.printPreviewDialog.AutoScrollMinSize = new System.Drawing.Size(0, 0);
-            this.printPreviewDialog.ClientSize = new System.Drawing.Size(400, 300);
-            this.printPreviewDialog.Document = this._printDocument;
-            this.printPreviewDialog.Enabled = true;
-            this.printPreviewDialog.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog.Icon")));
-            this.printPreviewDialog.Name = "printPreviewDialog";
-            this.printPreviewDialog.Visible = false;
-            // 
             // positionTimer
             // 
             this.positionTimer.Interval = 1;
             this.positionTimer.Tick += new System.EventHandler(this.positionTimer_Tick);
-            // 
-            // selectAllEventsMenuItem
-            // 
-            this.selectAllEventsMenuItem.Name = "selectAllEventsMenuItem";
-            this.selectAllEventsMenuItem.Size = new System.Drawing.Size(286, 22);
-            this.selectAllEventsMenuItem.Text = "Select All Channel Events";
-            this.selectAllEventsMenuItem.Click += new System.EventHandler(this.selectAllEventsMenuItem_Click);
-            // 
-            // selectAllChannelsForPeriod
-            // 
-            this.selectAllChannelsForPeriod.Name = "selectAllChannelsForPeriod";
-            this.selectAllChannelsForPeriod.Size = new System.Drawing.Size(292, 22);
-            this.selectAllChannelsForPeriod.Text = "Select All Events for this Period";
-            this.selectAllChannelsForPeriod.Click += new System.EventHandler(this.selectAllChannelsForPeriod_Click);
             // 
             // StandardSequence
             // 
