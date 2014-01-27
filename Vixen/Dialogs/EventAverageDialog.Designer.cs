@@ -65,7 +65,6 @@ namespace Dialogs {
             this.Controls.Add(this.buttonDone);
             this.Controls.Add(this.lvData);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = global::VixenPlus.Properties.Resources.VixenPlus;
             this.Name = "EventAverageDialog";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

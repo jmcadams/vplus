@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Forms;
 
+using VixenPlus.Properties;
+
 namespace Dialogs
 {
     public partial class ChannelPropertyDialog : Form
@@ -16,6 +18,7 @@ namespace Dialogs
         public ChannelPropertyDialog(List<Channel> channels, Channel currentChannel, bool showOutputChannel)
         {
             InitializeComponent();
+            Icon = Resources.VixenPlus;
             _preferences = Preference2.GetInstance();
             _channels = channels;
             _internalChange = true;

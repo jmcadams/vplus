@@ -110,11 +110,8 @@ namespace Dialogs{
             this.tabControl.Controls.Add(this.tabProfiles);
             this.tabControl.Controls.Add(this.tabEditProfile);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl.HideTabs = true;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
-            this.tabControl.Multiline = true;
             this.tabControl.Name = "tabControl";
-            this.tabControl.OurMultiline = true;
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(598, 424);
             this.tabControl.TabIndex = 2;
@@ -444,7 +441,6 @@ namespace Dialogs{
             this.ClientSize = new System.Drawing.Size(598, 464);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.panel1);
-            this.Icon = global::VixenPlus.Properties.Resources.VixenPlus;
             this.MinimumSize = new System.Drawing.Size(614, 502);
             this.Name = "ProfileManagerDialog";
             this.ShowInTaskbar = false;

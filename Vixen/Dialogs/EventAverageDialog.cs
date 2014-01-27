@@ -2,6 +2,8 @@
 using System.Globalization;
 using System.Windows.Forms;
 
+using VixenPlus.Properties;
+
 namespace Dialogs
 {
     internal partial class EventAverageDialog : Form
@@ -11,6 +13,7 @@ namespace Dialogs
         public EventAverageDialog()
         {
             InitializeComponent();
+            Icon = Resources.VixenPlus;
             lvData.Columns[0].Width = 146;
             lvData.Columns[1].Width = 87;
             lvData.Columns[2].Width = 184;

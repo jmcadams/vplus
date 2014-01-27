@@ -13,6 +13,7 @@ namespace Dialogs {
 
         public DiagnosticsDialog(Timers timers) {
             InitializeComponent();
+            Icon = Resources.VixenPlus;
             _timers = timers;
             if (Host.GetDebugValue("TraceStart") != null) {
                 dateTimePickerTimerTraceFrom.Value = DateTime.Parse(Host.GetDebugValue("TraceStart"));

@@ -626,7 +626,6 @@ namespace Dialogs {
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.tabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = global::VixenPlus.Properties.Resources.VixenPlus;
             this.Name = "NewSequenceWizardDialog";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

@@ -626,7 +626,6 @@ namespace Dialogs {
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = global::VixenPlus.Properties.Resources.VixenPlus;
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;

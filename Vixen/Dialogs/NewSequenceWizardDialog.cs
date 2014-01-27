@@ -59,6 +59,7 @@ namespace Dialogs {
 
         public NewSequenceWizardDialog(Preference2 preferences) {
             InitializeComponent();
+            Icon = Resources.VixenPlus;
             openFileDialog.InitialDirectory = Paths.SequencePath;
             tabControl.SelectedIndex = 0;
             _preferences = preferences;

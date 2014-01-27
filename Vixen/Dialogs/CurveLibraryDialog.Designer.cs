@@ -297,7 +297,6 @@ namespace Dialogs {
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.btnOkay);
-            this.Icon = global::VixenPlus.Properties.Resources.VixenPlus;
             this.Name = "CurveLibraryDialog";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

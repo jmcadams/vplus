@@ -168,7 +168,6 @@ namespace Dialogs {
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.gbAll);
-            this.Icon = global::VixenPlus.Properties.Resources.VixenPlus;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;

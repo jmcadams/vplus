@@ -28,6 +28,9 @@ namespace Dialogs {
 
         public PreferencesDialog(IUIPlugIn[] uiPlugins) {
             InitializeComponent();
+            tabControl.HideTabs = true;
+            tabControl.OurMultiline = true;
+            Icon = Resources.VixenPlus;
             _preferences = Preference2.GetInstance();
             _uiPlugins = uiPlugins;
             foreach (var plugIn in uiPlugins) {

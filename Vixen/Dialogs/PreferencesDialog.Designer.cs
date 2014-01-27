@@ -397,11 +397,9 @@ namespace Dialogs {
             this.tabControl.Controls.Add(this.backgroundItemsTab);
             this.tabControl.Controls.Add(this.remoteExecutionTab);
             this.tabControl.Controls.Add(this.engineTab);
-            this.tabControl.HideTabs = true;
             this.tabControl.Location = new System.Drawing.Point(179, 12);
             this.tabControl.Multiline = true;
             this.tabControl.Name = "tabControl";
-            this.tabControl.OurMultiline = true;
             this.tabControl.SelectedIndex = 0;
             this.tabControl.ShowToolTips = true;
             this.tabControl.Size = new System.Drawing.Size(446, 413);
@@ -1848,7 +1846,6 @@ namespace Dialogs {
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.treeView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = global::VixenPlus.Properties.Resources.VixenPlus;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "PreferencesDialog";

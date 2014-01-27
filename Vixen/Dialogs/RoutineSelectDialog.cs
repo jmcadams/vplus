@@ -3,6 +3,8 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
+using VixenPlus.Properties;
+
 namespace Dialogs
 {
     public partial class RoutineSelectDialog : Form
@@ -12,6 +14,7 @@ namespace Dialogs
         public RoutineSelectDialog()
         {
             InitializeComponent();
+            Icon = Resources.VixenPlus;
             foreach (var str in Directory.GetFiles(Paths.RoutinePath, "*.vir"))
             {
                 listBoxRoutines.Items.Add(new Routine(str));

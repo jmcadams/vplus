@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 
+using VixenPlus.Properties;
+
 namespace Dialogs
 {
     internal partial class CurveLibraryDialog : Form
@@ -14,6 +16,7 @@ namespace Dialogs
         public CurveLibraryDialog()
         {
             InitializeComponent();
+            Icon = Resources.VixenPlus;
             listViewRecords.Columns[0].Name = "Manufacturer";
             listViewRecords.Columns[1].Name = "LightCount";
             listViewRecords.Columns[2].Name = "Color";

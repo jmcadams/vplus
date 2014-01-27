@@ -11,6 +11,7 @@ namespace Dialogs {
 
         public SequenceSettingsDialog(EventSequence sequence) {
             InitializeComponent();
+            Icon = Resources.VixenPlus;
             _eventSequence = sequence;
             numericUpDownMinimum.Value = sequence.MinimumLevel;
             numericUpDownMaximum.Value = sequence.MaximumLevel;

@@ -1,5 +1,7 @@
 using System.Windows.Forms;
 
+using VixenPlus.Properties;
+
 namespace Dialogs
 {
     public partial class TextQueryDialog : Form
@@ -7,6 +9,7 @@ namespace Dialogs
         public TextQueryDialog(string caption, string query, string response)
         {
             InitializeComponent();
+            Icon = Resources.VixenPlus;
             Text = caption;
             labelQuery.Text = query;
             textBoxResponse.Text = response;

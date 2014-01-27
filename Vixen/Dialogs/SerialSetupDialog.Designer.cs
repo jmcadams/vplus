@@ -232,7 +232,6 @@ namespace Dialogs {
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = global::VixenPlus.Properties.Resources.VixenPlus;
             this.Name = "SerialSetupDialog";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

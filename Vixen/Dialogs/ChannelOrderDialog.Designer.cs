@@ -93,7 +93,6 @@ namespace Dialogs{
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.panel1);
             this.HelpButton = true;
-            this.Icon = global::VixenPlus.Properties.Resources.VixenPlus;
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;

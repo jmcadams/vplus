@@ -66,7 +66,6 @@ namespace Dialogs{
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.checkedListBoxChannels);
             this.Controls.Add(this.label1);
-            this.Icon = global::VixenPlus.Properties.Resources.VixenPlus;
             this.Name = "ChannelOutputMaskDialog";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

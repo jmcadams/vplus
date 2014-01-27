@@ -9,6 +9,7 @@ namespace Dialogs {
     public partial class FirstRunPathDialog : Form {
         public FirstRunPathDialog(bool isFirstRun) {
             InitializeComponent();
+            Icon = Resources.VixenPlus;
             tbPrompt.Text = string.Format(isFirstRun ? Resources.FirstRunPrompt : Resources.LocationChangePrompt, Vendor.ProductName);
             if (isFirstRun) {
                 btnOk.Location = btnCancel.Location;

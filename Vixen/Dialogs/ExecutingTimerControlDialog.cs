@@ -15,6 +15,7 @@ namespace Dialogs {
 
         public ExecutingTimerControlDialog() {
             InitializeComponent();
+            Icon = Resources.VixenPlus;
             _onExecutionChangeHandler = context_ExecutionChange;
             _onExecutionEndHandler = context_ExecutionEnd;
         }

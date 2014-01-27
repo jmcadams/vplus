@@ -54,6 +54,7 @@ namespace Dialogs {
             _availableValues = 256f;
             components = null;
             InitializeComponent();
+            Icon = Resources.VixenPlus;
             if (sequence != null) {
                 Action<Channel> action = c => comboBoxChannels.Items.Add(c.Clone());
                 sequence.Channels.ForEach(action);

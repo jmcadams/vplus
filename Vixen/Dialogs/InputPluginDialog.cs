@@ -19,6 +19,7 @@ namespace Dialogs
         public InputPluginDialog(InputPlugin plugin, EventSequence sequence)
         {
             InitializeComponent();
+            Icon = Resources.VixenPlus;
             _idChannel = new Dictionary<string, Channel>();
             _inputPlugin = plugin;
             var eventSequence = sequence;

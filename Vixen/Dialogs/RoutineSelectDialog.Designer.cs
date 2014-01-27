@@ -71,7 +71,6 @@ namespace Dialogs {
             this.Controls.Add(this.listBoxRoutines);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
-            this.Icon = global::VixenPlus.Properties.Resources.VixenPlus;
             this.Name = "RoutineSelectDialog";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

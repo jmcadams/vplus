@@ -14,6 +14,7 @@ namespace Dialogs
         public CurveLibraryRecordEditDialog(CurveLibraryRecord clr)
         {
             InitializeComponent();
+            Icon = Resources.VixenPlus;
             LibraryRecord = clr;
             _curveLibrary = new CurveLibrary();
             textBoxManufacturer.AutoCompleteCustomSource.AddRange(_curveLibrary.GetAllManufacturers());

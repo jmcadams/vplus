@@ -167,7 +167,6 @@ namespace Dialogs {
             this.Controls.Add(this.buttonDone);
             this.Controls.Add(this.tcPage);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = global::VixenPlus.Properties.Resources.VixenPlus;
             this.Name = "DiagnosticsDialog";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

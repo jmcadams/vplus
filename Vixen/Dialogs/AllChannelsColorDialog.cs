@@ -17,6 +17,8 @@ namespace Dialogs {
 
         public AllChannelsColorDialog(List<Channel> channels) {
             InitializeComponent();
+            Icon = Resources.VixenPlus;
+
             foreach (var channel in channels) {
                 listBoxChannels.Items.Add(channel.Clone());
             }

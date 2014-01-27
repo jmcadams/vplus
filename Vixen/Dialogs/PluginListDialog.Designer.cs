@@ -325,7 +325,6 @@ namespace Dialogs {
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonUse);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = global::VixenPlus.Properties.Resources.VixenPlus;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "PluginListDialog";

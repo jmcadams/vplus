@@ -248,7 +248,6 @@ namespace Dialogs {
             this.Controls.Add(this.labelChannelValue);
             this.Controls.Add(this.pictureBoxCurve);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = global::VixenPlus.Properties.Resources.VixenPlus;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "DimmingCurveDialog";

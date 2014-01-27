@@ -2,6 +2,8 @@ using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 
+using VixenPlus.Properties;
+
 namespace Dialogs
 {
     internal partial class ShutdownDialog : Form
@@ -9,6 +11,7 @@ namespace Dialogs
         public ShutdownDialog()
         {
             InitializeComponent();
+            Icon = Resources.VixenPlus;
             labelShutdownMessage.Text =
                 string.Format(
                     "{0} is shutting down your computer in 30 seconds.\n\nYou can stop this by clicking the Abort button below.",

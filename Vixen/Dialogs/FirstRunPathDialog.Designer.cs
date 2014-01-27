@@ -195,7 +195,6 @@
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.Icon = global::VixenPlus.Properties.Resources.VixenPlus;
             this.Name = "FirstRunPathDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Welcome to Vixen+";

@@ -6,6 +6,8 @@ using System.Windows.Forms;
 
 using CommonUtils;
 
+using VixenPlus.Properties;
+
 namespace Dialogs {
     public partial class ChannelOrderDialog : Form {
         private List<Channel> _channelNaturalOrder;
@@ -30,6 +32,7 @@ namespace Dialogs {
             _controlDown = false;
             components = null;
             InitializeComponent();
+            Icon = Resources.VixenPlus;
             Construct(channelList, channelOrder);
         }
 

@@ -14,6 +14,7 @@ namespace Dialogs {
 
         public SoundDeviceDialog(Preference2 preferences) {
             InitializeComponent();
+            Icon = Resources.VixenPlus;
             _preferences = preferences;
         }
 

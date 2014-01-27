@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
+using VixenPlus.Properties;
+
 namespace Dialogs {
     public partial class ChannelOutputMaskDialog : Form {
         public ChannelOutputMaskDialog(IEnumerable<Channel> channels) {
             InitializeComponent();
+            Icon = Resources.VixenPlus;
             foreach (var channel in channels) {
                 checkedListBoxChannels.Items.Add(channel, channel.Enabled);
             }

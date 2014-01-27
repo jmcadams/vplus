@@ -16,6 +16,7 @@ namespace Dialogs {
 
         public MusicPlayerDialog(fmod fmod) {
             InitializeComponent();
+            Icon = Resources.VixenPlus;
             _fmod = fmod;
         }
 

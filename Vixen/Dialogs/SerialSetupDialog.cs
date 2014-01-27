@@ -14,6 +14,7 @@ namespace Dialogs {
         public SerialSetupDialog(SerialPort serialPort) {
             components = null;
             InitializeComponent();
+            Icon = Resources.VixenPlus;
             comboBoxPortName.Items.AddRange(SerialPort.GetPortNames());
             Init(serialPort);
         }
