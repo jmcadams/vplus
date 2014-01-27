@@ -389,7 +389,6 @@ internal sealed partial class VixenPlusForm {
         this.Controls.Add(this.statusStrip);
         this.Controls.Add(this.menuStrip1);
         this.helpProvider.SetHelpNavigator(this, System.Windows.Forms.HelpNavigator.TableOfContents);
-        this.Icon = global::VixenPlus.Properties.Resources.VixenPlus;
         this.IsMdiContainer = true;
         this.KeyPreview = true;
         this.MainMenuStrip = this.menuStrip1;

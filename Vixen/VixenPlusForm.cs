@@ -62,6 +62,7 @@ internal sealed partial class VixenPlusForm : Form, ISystem {
             var screen = Preference2.GetScreen(_preferences.GetString("PrimaryDisplay"));
             splash.FadeIn(screen);
             InitializeComponent();
+            Icon = Resources.VixenPlus;
             SetVendorData();
             _registeredFileTypes = new Dictionary<string, IUIPlugIn>();
             var timersPath = Path.Combine(Paths.DataPath, "timers");
