@@ -5,12 +5,10 @@ public class HardwareMap
 {
     public readonly int PortTypeIndex;
     public readonly string PortTypeName;
-    public readonly string StringFormat;
 
     public HardwareMap(string portTypeName, int portTypeIndex)
     {
         PortTypeName = portTypeName;
         PortTypeIndex = portTypeIndex;
-        StringFormat = "d";
     }
 }

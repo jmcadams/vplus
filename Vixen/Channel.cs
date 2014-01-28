@@ -78,6 +78,7 @@ public class Channel : IDisposable, IComparable<Channel> {
     public Channel(string name, int outputChannel, bool ensureUniqueId) : this(name, outputChannel) {
         if (ensureUniqueId) {
             var ticks = DateTime.Now.Ticks;
+            // ReSharper disable once LoopVariableIsNeverChangedInsideLoop
             while (ticks == DateTime.Now.Ticks) {}
         }
         Id = Host.GetUniqueKey();

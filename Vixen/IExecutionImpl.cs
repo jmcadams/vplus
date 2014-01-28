@@ -133,7 +133,8 @@ internal class ExecutionImpl : IExecution, IQueryable {
         try {
             context.SynchronousEngineInstance.Stop();
             if (_preferences.GetBoolean("SavePlugInDialogPositions")) {
-                foreach (OutputPlugInUIBase base2 in context.OutputPlugInForms) {
+                foreach (var form in context.OutputPlugInForms) {
+                    var base2 = (OutputPlugInUIBase) form;
                     if (base2.WindowState != FormWindowState.Normal) {
                         continue;
                     }
