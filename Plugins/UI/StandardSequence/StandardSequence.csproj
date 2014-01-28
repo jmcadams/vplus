@@ -208,9 +208,6 @@
     <Compile Include="VixenEditor\ProgressDialog.Designer.cs">
       <DependentUpon>ProgressDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="VixenEditor\Properties\Resources.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="VixenEditor\RampQueryDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -375,6 +372,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+    <Folder Include="VixenEditor\Properties\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\map.png" />

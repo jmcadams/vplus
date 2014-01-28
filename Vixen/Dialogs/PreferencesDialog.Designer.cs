@@ -17,12 +17,12 @@ namespace Dialogs {
 
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("General");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Screen and Colors");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("New Sequence Settings");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Sequence Editing");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Sequence Execution");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Background Items");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("General");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Screen and Colors");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("New Sequence Settings");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Sequence Editing");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Sequence Execution");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Background Items");
             this.treeView = new System.Windows.Forms.TreeView();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.checkBoxEnableBackgroundSequence = new System.Windows.Forms.CheckBox();
@@ -57,7 +57,6 @@ namespace Dialogs {
             this.numericUpDownMinimumLevel = new System.Windows.Forms.NumericUpDown();
             this.label17 = new System.Windows.Forms.Label();
             this.numericUpDownMaximumLevel = new System.Windows.Forms.NumericUpDown();
-            this.buttonCreateProfile = new System.Windows.Forms.Button();
             this.label22 = new System.Windows.Forms.Label();
             this.comboBoxDefaultProfile = new System.Windows.Forms.ComboBox();
             this.label27 = new System.Windows.Forms.Label();
@@ -145,25 +144,25 @@ namespace Dialogs {
             | System.Windows.Forms.AnchorStyles.Left)));
             this.treeView.Location = new System.Drawing.Point(12, 12);
             this.treeView.Name = "treeView";
-            treeNode7.Name = "nodeGeneral";
-            treeNode7.Text = "General";
-            treeNode8.Name = "nodeScreen";
-            treeNode8.Text = "Screen and Colors";
-            treeNode9.Name = "nodeNewSequenceSettings";
-            treeNode9.Text = "New Sequence Settings";
-            treeNode10.Name = "nodeSequenceEditing";
-            treeNode10.Text = "Sequence Editing";
-            treeNode11.Name = "nodeSequenceExecution";
-            treeNode11.Text = "Sequence Execution";
-            treeNode12.Name = "nodeBackgroundItems";
-            treeNode12.Text = "Background Items";
+            treeNode1.Name = "nodeGeneral";
+            treeNode1.Text = "General";
+            treeNode2.Name = "nodeScreen";
+            treeNode2.Text = "Screen and Colors";
+            treeNode3.Name = "nodeNewSequenceSettings";
+            treeNode3.Text = "New Sequence Settings";
+            treeNode4.Name = "nodeSequenceEditing";
+            treeNode4.Text = "Sequence Editing";
+            treeNode5.Name = "nodeSequenceExecution";
+            treeNode5.Text = "Sequence Execution";
+            treeNode6.Name = "nodeBackgroundItems";
+            treeNode6.Text = "Background Items";
             this.treeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode7,
-            treeNode8,
-            treeNode9,
-            treeNode10,
-            treeNode11,
-            treeNode12});
+            treeNode1,
+            treeNode2,
+            treeNode3,
+            treeNode4,
+            treeNode5,
+            treeNode6});
             this.treeView.Size = new System.Drawing.Size(161, 310);
             this.treeView.TabIndex = 0;
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
@@ -502,16 +501,6 @@ namespace Dialogs {
             this.numericUpDownMaximumLevel.TabIndex = 7;
             this.toolTip.SetToolTip(this.numericUpDownMaximumLevel, "Maximum illumination level allowed by a sequence");
             // 
-            // buttonCreateProfile
-            // 
-            this.buttonCreateProfile.Location = new System.Drawing.Point(296, 20);
-            this.buttonCreateProfile.Name = "buttonCreateProfile";
-            this.buttonCreateProfile.Size = new System.Drawing.Size(75, 23);
-            this.buttonCreateProfile.TabIndex = 17;
-            this.buttonCreateProfile.Text = "Create new";
-            this.toolTip.SetToolTip(this.buttonCreateProfile, "Create new profiles now");
-            this.buttonCreateProfile.UseVisualStyleBackColor = true;
-            // 
             // label22
             // 
             this.label22.AutoSize = true;
@@ -763,7 +752,7 @@ namespace Dialogs {
             this.backgroundItemsTab.Controls.Add(this.groupBox6);
             this.backgroundItemsTab.Location = new System.Drawing.Point(4, 41);
             this.backgroundItemsTab.Name = "backgroundItemsTab";
-            this.backgroundItemsTab.Size = new System.Drawing.Size(438, 368);
+            this.backgroundItemsTab.Size = new System.Drawing.Size(438, 265);
             this.backgroundItemsTab.TabIndex = 4;
             this.backgroundItemsTab.Text = "backgroundItemsTab";
             // 
@@ -830,7 +819,7 @@ namespace Dialogs {
             this.sequenceExecutionTab.Controls.Add(this.groupBox4);
             this.sequenceExecutionTab.Location = new System.Drawing.Point(4, 41);
             this.sequenceExecutionTab.Name = "sequenceExecutionTab";
-            this.sequenceExecutionTab.Size = new System.Drawing.Size(438, 368);
+            this.sequenceExecutionTab.Size = new System.Drawing.Size(438, 265);
             this.sequenceExecutionTab.TabIndex = 2;
             this.sequenceExecutionTab.Text = "sequenceExecutionTab";
             // 
@@ -909,7 +898,7 @@ namespace Dialogs {
             this.newSequenceSettingsTab.Controls.Add(this.checkBoxWizardForNewSequences);
             this.newSequenceSettingsTab.Location = new System.Drawing.Point(4, 41);
             this.newSequenceSettingsTab.Name = "newSequenceSettingsTab";
-            this.newSequenceSettingsTab.Size = new System.Drawing.Size(438, 368);
+            this.newSequenceSettingsTab.Size = new System.Drawing.Size(438, 265);
             this.newSequenceSettingsTab.TabIndex = 0;
             this.newSequenceSettingsTab.Text = "newSequenceSettingsTab";
             // 
@@ -919,7 +908,6 @@ namespace Dialogs {
             this.groupBox12.Controls.Add(this.label27);
             this.groupBox12.Controls.Add(this.comboBoxDefaultProfile);
             this.groupBox12.Controls.Add(this.label22);
-            this.groupBox12.Controls.Add(this.buttonCreateProfile);
             this.groupBox12.Location = new System.Drawing.Point(3, 118);
             this.groupBox12.Name = "groupBox12";
             this.groupBox12.Size = new System.Drawing.Size(432, 85);
@@ -960,7 +948,7 @@ namespace Dialogs {
             this.screenTab.Controls.Add(this.cbScreens);
             this.screenTab.Location = new System.Drawing.Point(4, 41);
             this.screenTab.Name = "screenTab";
-            this.screenTab.Size = new System.Drawing.Size(438, 368);
+            this.screenTab.Size = new System.Drawing.Size(438, 265);
             this.screenTab.TabIndex = 7;
             this.screenTab.Text = "screenTab";
             this.screenTab.UseVisualStyleBackColor = true;
@@ -1052,7 +1040,7 @@ namespace Dialogs {
             this.generalTab.Controls.Add(this.groupBox2);
             this.generalTab.Location = new System.Drawing.Point(4, 41);
             this.generalTab.Name = "generalTab";
-            this.generalTab.Size = new System.Drawing.Size(438, 368);
+            this.generalTab.Size = new System.Drawing.Size(438, 265);
             this.generalTab.TabIndex = 3;
             this.generalTab.Text = "generalTab";
             // 
@@ -1263,7 +1251,6 @@ namespace Dialogs {
         private Label label27;
         private ComboBox comboBoxDefaultProfile;
         private Label label22;
-        private Button buttonCreateProfile;
         private GroupBox groupBox8;
         private NumericUpDown numericUpDownMaximumLevel;
         private Label label17;
