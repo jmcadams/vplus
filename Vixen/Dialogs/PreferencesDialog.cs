@@ -21,8 +21,6 @@ namespace Dialogs {
             SequenceEditing,
             SequenceExecution,
             Background,
-            RemoteExecution,
-            Engine
         }
 
 
@@ -42,8 +40,6 @@ namespace Dialogs {
             treeView.Nodes["nodeSequenceEditing"].Tag = sequenceEditingTab;
             treeView.Nodes["nodeSequenceExecution"].Tag = sequenceExecutionTab;
             treeView.Nodes["nodeBackgroundItems"].Tag = backgroundItemsTab;
-            treeView.Nodes["nodeAdvanced"].Nodes["nodeRemoteExecution"].Tag = remoteExecutionTab;
-            treeView.Nodes["nodeAdvanced"].Nodes["nodeEngine"].Tag = engineTab;
             tabControl.SelectedTab = generalTab;
             ReadPreferences(tabControl.TabPages.IndexOf(generalTab));
             PopulateProfileLists();
@@ -55,36 +51,6 @@ namespace Dialogs {
                 dateTimePickerAutoShutdownTime.Enabled = false;
             }
             PopulateAudioDeviceList();
-        }
-
-
-        private void buttonEngine_Click(object sender, EventArgs e) {
-            openFileDialog.Filter = Resources.Filter_EngineAssembly + @"|*.dll";
-            openFileDialog.FileName = string.Empty;
-            openFileDialog.InitialDirectory = Paths.BinaryPath;
-            openFileDialog.Title = Resources.Title_SelectEngine;
-            if (openFileDialog.ShowDialog() == DialogResult.OK) {
-                textBoxEngine.Text = Path.GetFileName(openFileDialog.FileName);
-            }
-        }
-
-
-        //TODO This is not robust at all, it does not check for valid paths.
-        private void buttonLogFilePath_Click(object sender, EventArgs e) {
-            var path = string.Empty;
-            try {
-                path = Path.GetDirectoryName(textBoxLogFilePath.Text);
-            }
-            // ReSharper disable EmptyGeneralCatchClause
-            catch {}
-            // ReSharper restore EmptyGeneralCatchClause
-            var fileName = Path.GetFileName(textBoxLogFilePath.Text);
-            if (path != null && Directory.Exists(path)) {
-                folderBrowserDialog.SelectedPath = path;
-            }
-            if (folderBrowserDialog.ShowDialog() == DialogResult.OK) {
-                textBoxLogFilePath.Text = Path.Combine(folderBrowserDialog.SelectedPath, string.IsNullOrEmpty(fileName) ? "audio.log" : fileName);
-            }
         }
 
 
@@ -130,23 +96,13 @@ namespace Dialogs {
                 case (int) RootNodes.Background:
                     WirteBackgroundNodes();
                     return;
-
-                case (int) RootNodes.RemoteExecution:
-                    WriteRemoteExecutionNodes();
-                    return;
-
-                case (int) RootNodes.Engine:
-                    WirteEngineNodes();
-                    return;
             }
         }
 
 
         private void WriteGeneralNodes() {
-            _preferences.SetString("TimerCheckFrequency", textBoxTimerCheckFrequency.Text);
             _preferences.SetString("MouseWheelVerticalDelta", textBoxMouseWheelVertical.Text);
             _preferences.SetString("MouseWheelHorizontalDelta", textBoxMouseWheelHorizontal.Text);
-            _preferences.SetString("ClientName", textBoxClientName.Text);
             _preferences.SetBoolean("ResetAtStartup", checkBoxResetAtStartup.Checked);
             _preferences.SetString("PreferredSequenceType", _uiPlugins[comboBoxSequenceType.SelectedIndex].FileExtension);
             _preferences.SetString("ShutdownTime",
@@ -200,9 +156,6 @@ namespace Dialogs {
             _preferences.SetBoolean("ShowSaveConfirmation", checkBoxShowSaveConfirmation.Checked);
             _preferences.SetBoolean("ShowNaturalChannelNumber", checkBoxShowNaturalChannelNumber.Checked);
             _preferences.SetBoolean("FlipScrollBehavior", checkBoxFlipMouseScroll.Checked);
-            _preferences.SetString("RemoteLibraryHTTPURL", textBoxCurveLibraryHttpUrl.Text);
-            _preferences.SetString("RemoteLibraryFTPURL", textBoxCurveLibraryFtpUrl.Text);
-            _preferences.SetString("RemoteLibraryFileName", textBoxCurveLibraryFileName.Text);
             _preferences.SetString("DefaultSequenceDirectory", textBoxDefaultSequenceSaveDirectory.Text);
             _preferences.SetBoolean("ShowWaveformZeroLine", cbWavefromZeroLine.Checked);
         }
@@ -213,10 +166,6 @@ namespace Dialogs {
             _preferences.SetBoolean("AutoScrolling", checkBoxAutoScrolling.Checked);
             _preferences.SetBoolean("SavePlugInDialogPositions", checkBoxSavePlugInDialogPositions.Checked);
             _preferences.SetBoolean("ClearAtEndOfSequence", checkBoxClearAtEndOfSequence.Checked);
-            _preferences.SetBoolean("LogAudioManual", checkBoxLogManual.Checked);
-            _preferences.SetBoolean("LogAudioScheduled", checkBoxLogScheduled.Checked);
-            _preferences.SetBoolean("LogAudioMusicPlayer", checkBoxLogMusicPlayer.Checked);
-            _preferences.SetString("AudioLogFilePath", textBoxLogFilePath.Text);
         }
 
 
@@ -230,37 +179,8 @@ namespace Dialogs {
         }
 
 
-        private void WriteRemoteExecutionNodes() {
-            if (!radioButtonSyncEmbeddedData.Checked) {
-                if (radioButtonSyncDefaultProfileData.Checked || (comboBoxSyncProfile.SelectedItem == null)) {
-                    _preferences.SetString("SynchronousData", "Default");
-                }
-                else {
-                    _preferences.SetString("SynchronousData", comboBoxSyncProfile.SelectedItem.ToString());
-                }
-            }
-            else {
-                _preferences.SetString("SynchronousData", "Embedded");
-            }
-            if (radioButtonAsyncSyncObject.Checked) {
-                _preferences.SetString("AsynchronousData", "Sync");
-            }
-            else if (radioButtonAsyncDefaultProfileData.Checked || (comboBoxAsyncProfile.SelectedItem == null)) {
-                _preferences.SetString("AsynchronousData", "Default");
-            }
-            else {
-                _preferences.SetString("AsynchronousData", comboBoxAsyncProfile.SelectedItem.ToString());
-            }
-        }
-
-
-        private void WirteEngineNodes() {
-            _preferences.SetString("SecondaryEngine", Path.GetFileName(textBoxEngine.Text));
-        }
-
-
         private void PopulateProfileLists() {
-            var boxArray = new[] {comboBoxDefaultProfile, comboBoxSyncProfile, comboBoxAsyncProfile};
+            var boxArray = new[] {comboBoxDefaultProfile};
             foreach (var box in boxArray) {
                 var selectedIndex = box.SelectedIndex;
                 box.BeginUpdate();
@@ -325,23 +245,13 @@ namespace Dialogs {
                 case (int) RootNodes.Background:
                     ReadBackgroundNodes();
                     return;
-
-                case (int) RootNodes.RemoteExecution: {
-                    ReadRemoteExecutionNodes();
-                    return;
-                }
-                case (int) RootNodes.Engine:
-                    ReadEngineNodes();
-                    return;
             }
         }
 
 
         private void ReadGeneralNodes() {
-            textBoxTimerCheckFrequency.Text = _preferences.GetString("TimerCheckFrequency");
             textBoxMouseWheelVertical.Text = _preferences.GetString("MouseWheelVerticalDelta");
             textBoxMouseWheelHorizontal.Text = _preferences.GetString("MouseWheelHorizontalDelta");
-            textBoxClientName.Text = _preferences.GetString("ClientName");
             checkBoxResetAtStartup.Checked = _preferences.GetBoolean("ResetAtStartup");
             var str = _preferences.GetString("PreferredSequenceType");
             for (var i = 0; i < _uiPlugins.Length; i++) {
@@ -400,9 +310,6 @@ namespace Dialogs {
             checkBoxShowSaveConfirmation.Checked = _preferences.GetBoolean("ShowSaveConfirmation");
             checkBoxShowNaturalChannelNumber.Checked = _preferences.GetBoolean("ShowNaturalChannelNumber");
             checkBoxFlipMouseScroll.Checked = _preferences.GetBoolean("FlipScrollBehavior");
-            textBoxCurveLibraryHttpUrl.Text = _preferences.GetString("RemoteLibraryHTTPURL");
-            textBoxCurveLibraryFtpUrl.Text = _preferences.GetString("RemoteLibraryFTPURL");
-            textBoxCurveLibraryFileName.Text = _preferences.GetString("RemoteLibraryFileName");
             textBoxDefaultSequenceSaveDirectory.Text = _preferences.GetString("DefaultSequenceDirectory");
             cbWavefromZeroLine.Checked = _preferences.GetBoolean("ShowWaveformZeroLine");
         }
@@ -413,10 +320,6 @@ namespace Dialogs {
             checkBoxAutoScrolling.Checked = _preferences.GetBoolean("AutoScrolling");
             checkBoxSavePlugInDialogPositions.Checked = _preferences.GetBoolean("SavePlugInDialogPositions");
             checkBoxClearAtEndOfSequence.Checked = _preferences.GetBoolean("ClearAtEndOfSequence");
-            checkBoxLogManual.Checked = _preferences.GetBoolean("LogAudioManual");
-            checkBoxLogScheduled.Checked = _preferences.GetBoolean("LogAudioScheduled");
-            checkBoxLogMusicPlayer.Checked = _preferences.GetBoolean("LogAudioMusicPlayer");
-            textBoxLogFilePath.Text = _preferences.GetString("AudioLogFilePath");
         }
 
 
@@ -427,57 +330,6 @@ namespace Dialogs {
             textBoxBackgroundMusicDelay.Text = _preferences.GetString("BackgroundMusicDelay");
             checkBoxEnableMusicFade.Checked = _preferences.GetBoolean("EnableMusicFade");
             textBoxMusicFadeDuration.Text = _preferences.GetString("MusicFadeDuration");
-        }
-
-
-        private void ReadRemoteExecutionNodes() {
-            var syncType = _preferences.GetString("SynchronousData");
-            if (syncType != "Embedded") {
-                if (syncType == "Default") {
-                    radioButtonSyncDefaultProfileData.Checked = true;
-                }
-                else {
-                    radioButtonSyncProfileData.Checked = true;
-                    comboBoxSyncProfile.SelectedIndex = comboBoxSyncProfile.Items.IndexOf(syncType);
-                }
-            }
-            else {
-                radioButtonSyncEmbeddedData.Checked = true;
-            }
-            syncType = _preferences.GetString("AsynchronousData");
-            switch (syncType) {
-                case "Sync":
-                    radioButtonAsyncSyncObject.Checked = true;
-                    break;
-                case "Default":
-                    radioButtonAsyncDefaultProfileData.Checked = true;
-                    break;
-                default:
-                    radioButtonAsyncProfileData.Checked = true;
-                    comboBoxAsyncProfile.SelectedIndex = comboBoxAsyncProfile.Items.IndexOf(syncType);
-                    break;
-            }
-        }
-
-
-        private void ReadEngineNodes() {
-            textBoxEngine.Text = Path.GetFileName(_preferences.GetString("SecondaryEngine"));
-        }
-
-
-        private void radioButtonAsyncProfileData_CheckedChanged(object sender, EventArgs e) {
-            comboBoxAsyncProfile.Enabled = radioButtonAsyncProfileData.Checked;
-            if (comboBoxAsyncProfile.Enabled && (comboBoxAsyncProfile.SelectedIndex == -1)) {
-                comboBoxAsyncProfile.SelectedIndex = 0;
-            }
-        }
-
-
-        private void radioButtonSyncProfileData_CheckedChanged(object sender, EventArgs e) {
-            comboBoxSyncProfile.Enabled = radioButtonSyncProfileData.Checked;
-            if (comboBoxSyncProfile.Enabled && (comboBoxSyncProfile.SelectedIndex == -1)) {
-                comboBoxSyncProfile.SelectedIndex = 0;
-            }
         }
 
 
