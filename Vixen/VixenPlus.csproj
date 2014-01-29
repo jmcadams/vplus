@@ -87,6 +87,9 @@
   <PropertyGroup>
     <ApplicationIcon>Resources\VixenPlus.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>VixenPlus</RootNamespace>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System">
       <Name>System</Name>
@@ -245,6 +248,12 @@
     </Compile>
     <Compile Include="Dialogs\PreferencesDialog.Designer.cs">
       <DependentUpon>PreferencesDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ProfileManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ProfileManager.Designer.cs">
+      <DependentUpon>ProfileManager.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\ProfileManagerDialog.cs">
       <SubType>Form</SubType>
@@ -465,6 +474,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\PreferencesDialog.resx">
       <DependentUpon>PreferencesDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ProfileManager.resx">
+      <DependentUpon>ProfileManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ProfileManagerDialog.resx">
       <DependentUpon>ProfileManagerDialog.cs</DependentUpon>
