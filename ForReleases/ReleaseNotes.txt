@@ -1,4 +1,4 @@
-31 JAN 2014 - V 0.2.31.1
+01 FEB 2014 - V 0.2.32.1
    Bug #133 - FIXED - Insert paste is not working correctly and undo doesn't undo every change, you lose events at the end of the line.
    Bug #134 - FIXED - Color's don't update in profile editing screen when you exit from color dialog.
    Added more detail to channel XML checking if a Null Reference Exception is thrown.
