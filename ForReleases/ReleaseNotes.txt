@@ -1,3 +1,5 @@
+NOTE: For items prefixed with VIX-, you can view more details on https://vixenplus.atlassian.net
+
 02 FEB 2014 - V 0.2.33.1
    Implemented VIX-8 & VIX-11 - Added auto update and the ability to disable in preferences.  Also have the ability to read release notes.
 
