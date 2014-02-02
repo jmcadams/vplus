@@ -12,6 +12,8 @@ using System.Xml;
 
 using AdjustablePreview.Properties;
 
+using VixenPlus;
+
 namespace Preview {
     public partial class SetupDialog : Form {
         private string _backgroundImageFileName;

@@ -1,6 +1,8 @@
 ﻿using System.Reflection;
 using System.Windows.Forms;
 
+using VixenPlus;
+
 public interface ISystem
 {
     byte[,] Clipboard { get; set; }

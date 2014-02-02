@@ -8,6 +8,8 @@ using System.Windows.Forms;
 
 using CommonUtils;
 
+using VixenPlus;
+
 internal class ExecutionImpl : IExecution, IQueryable {
     private readonly string _errorLog;
     private readonly Host _host;

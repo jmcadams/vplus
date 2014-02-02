@@ -1,33 +1,33 @@
 ﻿namespace VixenPlus.Dialogs
 {
-	partial class ProfileManager
-	{
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+    partial class ProfileManager
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (components != null))
-			{
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-		#region Windows Form Designer generated code
+        #region Windows Form Designer generated code
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnNewProfile = new System.Windows.Forms.Button();
@@ -52,7 +52,7 @@
             this.textBoxProfileChannelCount = new System.Windows.Forms.TextBox();
             this.buttonAddMultipleProfileChannels = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Enabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ChannelEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.ChannelName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OutputChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
@@ -308,7 +308,7 @@
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Enabled,
+            this.ChannelEnabled,
             this.ChannelName,
             this.OutputChannel});
             this.dataGridView1.Location = new System.Drawing.Point(6, 6);
@@ -319,10 +319,10 @@
             // 
             // Enabled
             // 
-            this.Enabled.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Enabled.HeaderText = "Enabled";
-            this.Enabled.Name = "Enabled";
-            this.Enabled.Width = 52;
+            this.ChannelEnabled.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.ChannelEnabled.HeaderText = "Enabled";
+            this.ChannelEnabled.Name = "Enabled";
+            this.ChannelEnabled.Width = 52;
             // 
             // ChannelName
             // 
@@ -355,9 +355,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
-		}
+        }
 
-		#endregion
+        #endregion
 
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -370,7 +370,7 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Enabled;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ChannelEnabled;
         private System.Windows.Forms.DataGridViewTextBoxColumn ChannelName;
         private System.Windows.Forms.DataGridViewTextBoxColumn OutputChannel;
         private System.Windows.Forms.Button btnChannelColors;
@@ -386,5 +386,5 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox textBoxProfileChannelCount;
         private System.Windows.Forms.Button buttonAddMultipleProfileChannels;
-	}
+    }
 }

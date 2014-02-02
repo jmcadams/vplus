@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using VixenPlus;
+using VixenPlus.Dialogs;
 using VixenPlus.Properties;
 
 namespace Dialogs {

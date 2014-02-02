@@ -5,6 +5,8 @@ using System.Xml;
 
 using AdjustablePreview.Properties;
 
+using VixenPlus;
+
 namespace Preview {
     public class Preview : IEventDrivenOutputPlugIn {
         private readonly List<Channel> _channels;

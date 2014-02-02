@@ -11,6 +11,8 @@ using Dialogs;
 
 using FMOD;
 
+using VixenPlus;
+
 internal class MusicPlayer
 {
     public delegate void OnSongChange(string songName);

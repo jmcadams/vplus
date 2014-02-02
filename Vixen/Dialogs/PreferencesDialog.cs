@@ -5,11 +5,13 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
+using Dialogs;
+
 using FMOD;
 
 using VixenPlus.Properties;
 
-namespace Dialogs {
+namespace VixenPlus.Dialogs {
     internal partial class PreferencesDialog : Form {
         private readonly Preference2 _preferences;
         private readonly IUIPlugIn[] _uiPlugins;
@@ -103,21 +105,12 @@ namespace Dialogs {
         private void WriteGeneralNodes() {
             _preferences.SetString("MouseWheelVerticalDelta", textBoxMouseWheelVertical.Text);
             _preferences.SetString("MouseWheelHorizontalDelta", textBoxMouseWheelHorizontal.Text);
-            _preferences.SetBoolean("ResetAtStartup", checkBoxResetAtStartup.Checked);
             _preferences.SetString("PreferredSequenceType", _uiPlugins[comboBoxSequenceType.SelectedIndex].FileExtension);
             _preferences.SetString("ShutdownTime",
                                    !dateTimePickerAutoShutdownTime.Checked
                                        ? string.Empty
                                        : dateTimePickerAutoShutdownTime.Value.ToString("h:mm tt"));
-            var path = Path.Combine(Paths.DataPath, "no.update");
-            if (checkBoxDisableAutoUpdate.Checked) {
-                if (!File.Exists(path)) {
-                    File.Create(path).Close();
-                }
-            }
-            else if (File.Exists(path)) {
-                File.Delete(path);
-            }
+            _preferences.SetBoolean("DisableAutoUpdate", checkBoxDisableAutoUpdate.Checked);
             _preferences.SetInteger("HistoryImages", (int) numericUpDownHistoryImages.Value);
             _preferences.SetInteger("RecentFiles", (int) nudRecentFiles.Value);
             _preferences.SetBoolean("AutoSaveToolbars", cbToolbarAutoSave.Checked);
@@ -252,7 +245,6 @@ namespace Dialogs {
         private void ReadGeneralNodes() {
             textBoxMouseWheelVertical.Text = _preferences.GetString("MouseWheelVerticalDelta");
             textBoxMouseWheelHorizontal.Text = _preferences.GetString("MouseWheelHorizontalDelta");
-            checkBoxResetAtStartup.Checked = _preferences.GetBoolean("ResetAtStartup");
             var str = _preferences.GetString("PreferredSequenceType");
             for (var i = 0; i < _uiPlugins.Length; i++) {
                 if (_uiPlugins[i].FileExtension != str) {
@@ -269,7 +261,7 @@ namespace Dialogs {
                 dateTimePickerAutoShutdownTime.Checked = true;
                 dateTimePickerAutoShutdownTime.Value = DateTime.Parse(s);
             }
-            checkBoxDisableAutoUpdate.Checked = File.Exists(Path.Combine(Paths.DataPath, "no.update"));
+            checkBoxDisableAutoUpdate.Checked = _preferences.GetBoolean("DisableAutoUpdate");
             numericUpDownHistoryImages.Value = _preferences.GetInteger("HistoryImages");
             nudRecentFiles.Value = _preferences.GetInteger("RecentFiles");
             cbToolbarAutoSave.Checked = _preferences.GetBoolean("AutoSaveToolbars");

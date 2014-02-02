@@ -8,6 +8,7 @@ using System.Windows.Forms;
 
 using CommonUtils;
 
+using VixenPlus;
 using VixenPlus.Properties;
 
 using ContentAlignment = System.Drawing.ContentAlignment;

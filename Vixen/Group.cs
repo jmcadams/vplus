@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 
+using VixenPlus;
 using VixenPlus.Properties;
 
 public class Group {

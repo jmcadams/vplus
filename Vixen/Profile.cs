@@ -5,6 +5,8 @@ using System.IO;
 using System.Text;
 using System.Xml;
 
+using VixenPlus;
+
 public class Profile : IExecutable {
     private readonly List<int> _channelOutputs;
     private List<Channel> _channelObjects;

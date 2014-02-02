@@ -4,6 +4,7 @@ using System.IO.Ports;
 using System.Text;
 using System.Windows.Forms;
 
+using VixenPlus;
 using VixenPlus.Properties;
 
 namespace Dialogs {

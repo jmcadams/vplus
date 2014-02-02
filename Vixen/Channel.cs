@@ -7,6 +7,8 @@ using System.Xml;
 
 using CommonUtils;
 
+using VixenPlus;
+
 public class Channel : IDisposable, IComparable<Channel> {
     private Color _color;
 

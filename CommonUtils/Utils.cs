@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 using CommonControls;
 
@@ -13,7 +14,7 @@ namespace CommonUtils {
         public const byte Cell8BitMin = 0;
         public const int MillsPerSecond = 1000;
         public const int MillsPerMinute = 60 * MillsPerSecond;
-
+        public const int BytesPerK = 1024;
         public const int ExecutionStopped = 0;
         public const int ExecutionPaused = 2;
         public const int ExecutionRunning = 1;
@@ -30,6 +31,10 @@ namespace CommonUtils {
             return ((backgroundColor.R * 299) + (backgroundColor.G * 587) + (backgroundColor.B * 114)) / 1000 >= 128 ? Brushes.Black : Brushes.White;
         }
 
+
+        public static string GetVersion() {
+            return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        }
 
         public static Color GetForeColor(this Color backgroundColor) {
             return ((backgroundColor.R * 299) + (backgroundColor.G * 587) + (backgroundColor.B * 114)) / 1000 >= 128 ? Color.Black : Color.White;
@@ -221,6 +226,15 @@ namespace CommonUtils {
             if (selected && useCheckmark) {
                 e.Graphics.DrawString(Checkmark, treeView.Font, channelColor.GetTextColor(), fillRect.Right - 40, e.Bounds.Top);
             }
+        }
+
+
+        public static bool IsWindows64BitOS() {
+#if __WIN64
+            return true;
+#else
+            return false;
+#endif
         }
     }
 }

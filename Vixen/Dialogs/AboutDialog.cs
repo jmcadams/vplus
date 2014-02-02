@@ -5,6 +5,9 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
+using CommonUtils;
+
+using VixenPlus;
 using VixenPlus.Properties;
 
 namespace Dialogs {
@@ -29,10 +32,7 @@ namespace Dialogs {
 
             lblName.Text = Vendor.ProductName;
             lblDescription.Text = Vendor.ProductDescription;
-
-            var version = Assembly.GetExecutingAssembly().GetName().Version;
-            lblVersion.Text = string.Format(Resources.FormattedVersion, version);
-
+            lblVersion.Text = string.Format(Resources.FormattedVersion, Utils.GetVersion());
             llblURL.Text = Vendor.ProductURL;
         }
 
@@ -59,7 +59,8 @@ namespace Dialogs {
             credits.AppendLine(Resources.DedicatedTo).AppendLine(Resources.MyFriends).AppendLine(Resources.ThankYou);
             credits.AppendLine(Resources.OpenSource).AppendLine("FMOD Sound System by:\nFirelight Technologies\n");
             credits.AppendLine("Nutcracker adapted from xLights\nwhich was written by:\nSean Meighan\nMatt Brown\n");
-            credits.AppendLine("J1Sys Plugin by: Joshual 1 Systems\nSee: J1Sys License.txt");
+            credits.AppendLine("J1Sys Plugin by: Joshual 1 Systems\nSee: J1Sys License.txt\n");
+            credits.AppendLine("7zip (7zr.exe) by Igor Pavlov\nSee: http://www.7-zip.org/license.txt");
             credits.AppendLine(Resources.Lutefisk);
 
             // This is how we get the correct height of the credits regardless of how 

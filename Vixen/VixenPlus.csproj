@@ -41,7 +41,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>..\build\</OutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DefineConstants>TRACE;DEBUG;debug</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;debug WIN64</DefineConstants>
     <DebugSymbols>true</DebugSymbols>
     <NoStdLib>false</NoStdLib>
     <Optimize>false</Optimize>
@@ -52,7 +52,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>..\Release\</OutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;_win64</DefineConstants>
     <DebugSymbols>false</DebugSymbols>
     <NoStdLib>false</NoStdLib>
     <Optimize>true</Optimize>
@@ -297,6 +297,12 @@
     <Compile Include="Dialogs\TextQueryDialog.Designer.cs">
       <DependentUpon>TextQueryDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\UpdateDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\UpdateDialog.Designer.cs">
+      <DependentUpon>UpdateDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Engine8.cs" />
     <Compile Include="EngineContext.cs" />
     <Compile Include="EngineTimer.cs" />
@@ -499,6 +505,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\TextQueryDialog.resx">
       <DependentUpon>TextQueryDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\UpdateDialog.resx">
+      <DependentUpon>UpdateDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OutputPlugInUIBase.resx">
       <DependentUpon>OutputPlugInUIBase.cs</DependentUpon>

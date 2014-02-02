@@ -15,6 +15,9 @@ using CommonUtils;
 using Dialogs;
 
 using FMOD;
+
+using VixenPlus;
+using VixenPlus.Dialogs;
 using VixenPlus.Properties;
 using VixenEditor.VixenPlus;
 

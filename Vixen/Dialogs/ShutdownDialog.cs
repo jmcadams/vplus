@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 
+using VixenPlus;
 using VixenPlus.Properties;
 
 namespace Dialogs

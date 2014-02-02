@@ -7,6 +7,7 @@ using System.Windows.Forms;
 
 using CommonUtils;
 
+using VixenPlus;
 using VixenPlus.Properties;
 
 internal class Host : IQueryable {

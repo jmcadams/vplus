@@ -212,9 +212,6 @@ Only a scripted sequence can be selected for background execution.</value>
   <data name="About" xml:space="preserve">
     <value>About </value>
   </data>
-  <data name="FormattedVersion" xml:space="preserve">
-    <value>Version {0}</value>
-  </data>
   <data name="RestartForChange" xml:space="preserve">
     <value>Application must be restarted for this change to be effective.</value>
   </data>
@@ -1001,14 +998,14 @@ Aurbo99
 teberle
 </value>
   </data>
-    <data name="Buggos" xml:space="preserve">
+  <data name="Buggos" xml:space="preserve">
     <value>budude
 ErnieHorning
 Materdaddy
 flashpop
 </value>
   </data>
-    <data name="TranslatedBy" xml:space="preserve">
+  <data name="TranslatedBy" xml:space="preserve">
     <value>Translated By:</value>
   </data>
   <data name="Translators" xml:space="preserve">
@@ -1057,7 +1054,7 @@ Press OK to continue or Cancel to quit {1} and log this error to the crash.log.<
   <data name="LocationChangePrompt" xml:space="preserve">
     <value>We hope you're enjoying using {0}! If you change your directory, {0} will NOT move your data to the new location, you will need to close {0} and then move your files to the new location, so save your open files before using this feature. Please select where you would like your data to be stored now:</value>
   </data>
-    <data name="SoftErrorOccured" xml:space="preserve">
+  <data name="SoftErrorOccured" xml:space="preserve">
     <value>{3} has had a non-critical error and may be able to continue.
 
 If you continue, please save any open work and restart {3}.
@@ -1070,7 +1067,7 @@ This issue was written to {0}, please e-mail this log, your sequence and profile
 
 Do you wish to continue?</value>
   </data>
-    <data name="InvalidTimeFormat2" xml:space="preserve">
+  <data name="InvalidTimeFormat2" xml:space="preserve">
     <value>Not a valid format for time.
 Use one of the following:
 
@@ -1078,16 +1075,19 @@ Minutes
 Minutes:Seconds
 Minutes:Seconds.Milliseconds</value>
   </data>
-    <data name="SequenceLengthUpdated" xml:space="preserve">
+  <data name="SequenceLengthUpdated" xml:space="preserve">
     <value>Sequence length has been updated.</value>
   </data>
-    <data name="ReduceChannelCount" xml:space="preserve">
+  <data name="ReduceChannelCount" xml:space="preserve">
     <value>This will reduce the number of channels and potentially lose sequence data.
 Groups will be maintained.
 
 Accept new channel count?</value>
   </data>
-    <data name="ValidNumber" xml:space="preserve">
+  <data name="ValidNumber" xml:space="preserve">
     <value>Please enter a valid number.</value>
+  </data>
+  <data name="FormattedVersion" xml:space="preserve">
+    <value>Version {0}</value>
   </data>
 </root>

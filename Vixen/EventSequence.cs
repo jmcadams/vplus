@@ -9,6 +9,7 @@ using System.Xml;
 
 using CommonUtils;
 
+using VixenPlus;
 using VixenPlus.Properties;
 
 public class EventSequence : IScheduledObject {

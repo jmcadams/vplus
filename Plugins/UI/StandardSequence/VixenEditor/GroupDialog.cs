@@ -11,6 +11,8 @@ using CommonUtils;
 
 using Dialogs;
 
+using VixenPlus;
+
 namespace VixenEditor {
     public sealed partial class GroupDialog : Form {
 

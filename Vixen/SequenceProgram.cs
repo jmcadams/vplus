@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 
+using VixenPlus;
 using VixenPlus.Properties;
 
 public class SequenceProgram : IScheduledObject {

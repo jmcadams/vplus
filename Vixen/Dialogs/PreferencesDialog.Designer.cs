@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace Dialogs {
+namespace VixenPlus.Dialogs {
     internal partial class PreferencesDialog {
         private IContainer components;
 
@@ -66,8 +66,6 @@ namespace Dialogs {
             this.label4 = new System.Windows.Forms.Label();
             this.textBoxMouseWheelVertical = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.checkBoxResetAtStartup = new System.Windows.Forms.CheckBox();
             this.label23 = new System.Windows.Forms.Label();
             this.comboBoxSequenceType = new System.Windows.Forms.ComboBox();
             this.labelAutoShutdownTime = new System.Windows.Forms.Label();
@@ -109,7 +107,6 @@ namespace Dialogs {
             this.cbScreens = new System.Windows.Forms.ComboBox();
             this.generalTab = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.nudRecentFiles = new System.Windows.Forms.NumericUpDown();
             this.label35 = new System.Windows.Forms.Label();
             this.numericUpDownHistoryImages = new System.Windows.Forms.NumericUpDown();
@@ -140,8 +137,8 @@ namespace Dialogs {
             // 
             // treeView
             // 
-            this.treeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.treeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
             this.treeView.Location = new System.Drawing.Point(12, 12);
             this.treeView.Name = "treeView";
             treeNode1.Name = "nodeGeneral";
@@ -176,7 +173,7 @@ namespace Dialogs {
             this.checkBoxEnableBackgroundSequence.TabIndex = 0;
             this.checkBoxEnableBackgroundSequence.Text = "Enable background sequence";
             this.toolTip.SetToolTip(this.checkBoxEnableBackgroundSequence, "Enable the playing of a scripted background sequence while no sequences or progra" +
-        "ms are playing");
+                    "ms are playing");
             this.checkBoxEnableBackgroundSequence.UseVisualStyleBackColor = true;
             // 
             // label8
@@ -188,7 +185,7 @@ namespace Dialogs {
             this.label8.TabIndex = 1;
             this.label8.Text = "Background sequence delay";
             this.toolTip.SetToolTip(this.label8, "How long (in seconds) the background sequence will wait before starting after seq" +
-        "uence or program execution stops");
+                    "uence or program execution stops");
             // 
             // textBoxBackgroundSequenceDelay
             // 
@@ -197,7 +194,7 @@ namespace Dialogs {
             this.textBoxBackgroundSequenceDelay.Size = new System.Drawing.Size(50, 20);
             this.textBoxBackgroundSequenceDelay.TabIndex = 2;
             this.toolTip.SetToolTip(this.textBoxBackgroundSequenceDelay, "How long (in seconds) the background sequence will wait before starting after seq" +
-        "uence or program execution stops");
+                    "uence or program execution stops");
             // 
             // checkBoxEnableBackgroundMusic
             // 
@@ -208,7 +205,7 @@ namespace Dialogs {
             this.checkBoxEnableBackgroundMusic.TabIndex = 4;
             this.checkBoxEnableBackgroundMusic.Text = "Enable background music";
             this.toolTip.SetToolTip(this.checkBoxEnableBackgroundMusic, "Enable the playing of background music while no sequences or programs are playing" +
-        "");
+                    "");
             this.checkBoxEnableBackgroundMusic.UseVisualStyleBackColor = true;
             // 
             // label11
@@ -220,7 +217,7 @@ namespace Dialogs {
             this.label11.TabIndex = 5;
             this.label11.Text = "Background music start delay";
             this.toolTip.SetToolTip(this.label11, "How long (in seconds) the background music will wait before starting after sequen" +
-        "ce or program execution stops");
+                    "ce or program execution stops");
             // 
             // textBoxBackgroundMusicDelay
             // 
@@ -229,7 +226,7 @@ namespace Dialogs {
             this.textBoxBackgroundMusicDelay.Size = new System.Drawing.Size(50, 20);
             this.textBoxBackgroundMusicDelay.TabIndex = 6;
             this.toolTip.SetToolTip(this.textBoxBackgroundMusicDelay, "How long (in seconds) the background sequence will wait before starting after seq" +
-        "uence or program execution stops");
+                    "uence or program execution stops");
             // 
             // checkBoxEnableMusicFade
             // 
@@ -269,7 +266,7 @@ namespace Dialogs {
             this.checkBoxAutoScrolling.TabIndex = 1;
             this.checkBoxAutoScrolling.Text = "Auto scrolling";
             this.toolTip.SetToolTip(this.checkBoxAutoScrolling, "Automatically scroll the editing display during execution so that the current poi" +
-        "nt of execution is always visible");
+                    "nt of execution is always visible");
             this.checkBoxAutoScrolling.UseVisualStyleBackColor = true;
             // 
             // checkBoxSavePlugInDialogPositions
@@ -281,7 +278,7 @@ namespace Dialogs {
             this.checkBoxSavePlugInDialogPositions.TabIndex = 2;
             this.checkBoxSavePlugInDialogPositions.Text = "Save plugin dialog positions";
             this.toolTip.SetToolTip(this.checkBoxSavePlugInDialogPositions, "Save the positions of any windows created and displayed by plugins during executi" +
-        "on");
+                    "on");
             this.checkBoxSavePlugInDialogPositions.UseVisualStyleBackColor = true;
             // 
             // checkBoxShowPositionMarker
@@ -304,7 +301,7 @@ namespace Dialogs {
             this.checkBoxClearAtEndOfSequence.TabIndex = 3;
             this.checkBoxClearAtEndOfSequence.Text = "Reset controller at end of sequences";
             this.toolTip.SetToolTip(this.checkBoxClearAtEndOfSequence, "Sends a blank event to the plugins at the end of a sequence.\r\nUseful for parallel" +
-        " port-based controllers.  Does not affect every\r\ncontroller type.");
+                    " port-based controllers.  Does not affect every\r\ncontroller type.");
             this.checkBoxClearAtEndOfSequence.UseVisualStyleBackColor = true;
             // 
             // label6
@@ -414,7 +411,7 @@ namespace Dialogs {
             this.checkBoxFlipMouseScroll.TabIndex = 10;
             this.checkBoxFlipMouseScroll.Text = "Flip mouse scroll + Shift behavior";
             this.toolTip.SetToolTip(this.checkBoxFlipMouseScroll, "The default behavior scrolls horizontally when Shift is down.\r\nSelect this to mak" +
-        "e it scroll vertically when Shift is down.");
+                    "e it scroll vertically when Shift is down.");
             this.checkBoxFlipMouseScroll.UseVisualStyleBackColor = true;
             // 
             // textBoxDefaultSequenceSaveDirectory
@@ -434,7 +431,7 @@ namespace Dialogs {
             this.checkBoxWizardForNewSequences.TabIndex = 2;
             this.checkBoxWizardForNewSequences.Text = "Use the sequence wizard for new sequences, when available";
             this.toolTip.SetToolTip(this.checkBoxWizardForNewSequences, "Use the sequence wizard for new sequences, when the editor allows for a wizard to" +
-        " be used");
+                    " be used");
             this.checkBoxWizardForNewSequences.UseVisualStyleBackColor = true;
             // 
             // label12
@@ -590,33 +587,6 @@ namespace Dialogs {
             this.label3.Text = "Channel increment";
             this.toolTip.SetToolTip(this.label3, "How many channels a single mouse wheel movement scrolls through");
             // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Enabled = false;
-            this.label16.Location = new System.Drawing.Point(7, 158);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(134, 39);
-            this.label16.TabIndex = 7;
-            this.label16.Text = "Reset controller at startup\r\n(Requires default profiles in\r\nNew Sequence Settings" +
-    ")";
-            this.toolTip.SetToolTip(this.label16, "Sends a blank event to the plugins in the default plugin setup.\r\nUseful for paral" +
-        "lel port-based controllers.  Does not affect every\r\ncontroller type.");
-            this.label16.Visible = false;
-            // 
-            // checkBoxResetAtStartup
-            // 
-            this.checkBoxResetAtStartup.AutoSize = true;
-            this.checkBoxResetAtStartup.Enabled = false;
-            this.checkBoxResetAtStartup.Location = new System.Drawing.Point(169, 158);
-            this.checkBoxResetAtStartup.Name = "checkBoxResetAtStartup";
-            this.checkBoxResetAtStartup.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxResetAtStartup.TabIndex = 68;
-            this.toolTip.SetToolTip(this.checkBoxResetAtStartup, "Sends a blank event to the plugins in the default plugin setup.\r\nUseful for paral" +
-        "lel port-based controllers.  Does not affect every\r\ncontroller type.");
-            this.checkBoxResetAtStartup.UseVisualStyleBackColor = true;
-            this.checkBoxResetAtStartup.Visible = false;
-            // 
             // label23
             // 
             this.label23.AutoSize = true;
@@ -646,7 +616,7 @@ namespace Dialogs {
             this.labelAutoShutdownTime.TabIndex = 69;
             this.labelAutoShutdownTime.Text = "Auto shutdown";
             this.toolTip.SetToolTip(this.labelAutoShutdownTime, "If the application is running, it can shut down your computer at a time you speci" +
-        "fy");
+                    "fy");
             // 
             // dateTimePickerAutoShutdownTime
             // 
@@ -660,13 +630,12 @@ namespace Dialogs {
             this.dateTimePickerAutoShutdownTime.Size = new System.Drawing.Size(117, 20);
             this.dateTimePickerAutoShutdownTime.TabIndex = 71;
             this.toolTip.SetToolTip(this.dateTimePickerAutoShutdownTime, "If the application is running, it can shut down your computer at a time you speci" +
-        "fy");
+                    "fy");
             this.dateTimePickerAutoShutdownTime.Value = new System.DateTime(2007, 4, 20, 12, 0, 0, 0);
             // 
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Enabled = false;
             this.label26.Location = new System.Drawing.Point(7, 67);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(102, 13);
@@ -677,7 +646,6 @@ namespace Dialogs {
             // checkBoxDisableAutoUpdate
             // 
             this.checkBoxDisableAutoUpdate.AutoSize = true;
-            this.checkBoxDisableAutoUpdate.Enabled = false;
             this.checkBoxDisableAutoUpdate.Location = new System.Drawing.Point(169, 66);
             this.checkBoxDisableAutoUpdate.Name = "checkBoxDisableAutoUpdate";
             this.checkBoxDisableAutoUpdate.Size = new System.Drawing.Size(15, 14);
@@ -694,7 +662,7 @@ namespace Dialogs {
             this.label36.TabIndex = 78;
             this.label36.Text = "Auto save toolbars";
             this.toolTip.SetToolTip(this.label36, "Sends a blank event to the plugins in the default plugin setup.\r\nUseful for paral" +
-        "lel port-based controllers.  Does not affect every\r\ncontroller type.");
+                    "lel port-based controllers.  Does not affect every\r\ncontroller type.");
             // 
             // cbToolbarAutoSave
             // 
@@ -704,7 +672,7 @@ namespace Dialogs {
             this.cbToolbarAutoSave.Size = new System.Drawing.Size(15, 14);
             this.cbToolbarAutoSave.TabIndex = 79;
             this.toolTip.SetToolTip(this.cbToolbarAutoSave, "Sends a blank event to the plugins in the default plugin setup.\r\nUseful for paral" +
-        "lel port-based controllers.  Does not affect every\r\ncontroller type.");
+                    "lel port-based controllers.  Does not affect every\r\ncontroller type.");
             this.cbToolbarAutoSave.UseVisualStyleBackColor = true;
             // 
             // buttonOK
@@ -848,8 +816,8 @@ namespace Dialogs {
             // 
             // groupBox5
             // 
-            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox5.Controls.Add(this.cbWavefromZeroLine);
             this.groupBox5.Controls.Add(this.textBoxDefaultSequenceSaveDirectory);
             this.groupBox5.Controls.Add(this.label34);
@@ -1046,7 +1014,6 @@ namespace Dialogs {
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.label1);
             this.groupBox3.Controls.Add(this.cbToolbarAutoSave);
             this.groupBox3.Controls.Add(this.label36);
             this.groupBox3.Controls.Add(this.nudRecentFiles);
@@ -1059,23 +1026,12 @@ namespace Dialogs {
             this.groupBox3.Controls.Add(this.labelAutoShutdownTime);
             this.groupBox3.Controls.Add(this.comboBoxSequenceType);
             this.groupBox3.Controls.Add(this.label23);
-            this.groupBox3.Controls.Add(this.checkBoxResetAtStartup);
-            this.groupBox3.Controls.Add(this.label16);
             this.groupBox3.Location = new System.Drawing.Point(3, 54);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(432, 211);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Miscellaneous";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(190, 66);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(181, 13);
-            this.label1.TabIndex = 80;
-            this.label1.Text = "NOTE: Auto-update not implemented";
             // 
             // nudRecentFiles
             // 
@@ -1126,9 +1082,9 @@ namespace Dialogs {
             // 
             // tabControl
             // 
-            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl.Controls.Add(this.generalTab);
             this.tabControl.Controls.Add(this.screenTab);
             this.tabControl.Controls.Add(this.newSequenceSettingsTab);
@@ -1271,7 +1227,6 @@ namespace Dialogs {
         private ComboBox cbScreens;
         private TabPage generalTab;
         private GroupBox groupBox3;
-        private Label label1;
         private CheckBox cbToolbarAutoSave;
         private Label label36;
         private NumericUpDown nudRecentFiles;
@@ -1284,8 +1239,6 @@ namespace Dialogs {
         private Label labelAutoShutdownTime;
         private ComboBox comboBoxSequenceType;
         private Label label23;
-        private CheckBox checkBoxResetAtStartup;
-        private Label label16;
         private GroupBox groupBox2;
         private TextBox textBoxMouseWheelHorizontal;
         private Label label4;

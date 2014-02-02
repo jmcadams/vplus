@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
+using VixenPlus;
+
 public static class Paths {
     private static string _binaryPath = String.Empty;
 

@@ -11,6 +11,7 @@ using System.Xml;
 
 using FMOD;
 
+using VixenPlus;
 using VixenPlus.Properties;
 
 internal sealed class Engine8 : IDisposable, IQueryable {

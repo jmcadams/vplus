@@ -3,6 +3,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 
+using VixenPlus;
+
 internal class Routine : IDisposable {
 
     public const int DefaultHeight = 80;

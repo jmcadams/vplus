@@ -4,8 +4,8 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
-
 //todo since we don't have input plugins, how do we get rid of this.
+using VixenPlus;
 
 // ReSharper disable once ClassNeverInstantiated.Global
 internal class InputPlugins : HardwarePlugins

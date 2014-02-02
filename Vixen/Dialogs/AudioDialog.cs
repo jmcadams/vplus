@@ -10,6 +10,7 @@ using CommonUtils;
 
 using FMOD;
 
+using VixenPlus;
 using VixenPlus.Properties;
 
 namespace Dialogs {

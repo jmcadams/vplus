@@ -5,6 +5,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 
+using VixenPlus;
+
 internal static class OutputPlugins {
     private static IHardwarePlugin FindPlugin(string pluginName) {
         return HardwarePlugins.FindPlugin(pluginName, Paths.OutputPluginPath, "IOutputPlugIn");

@@ -8,9 +8,11 @@ using System.Windows.Forms;
 
 using CommonUtils;
 
+using Dialogs;
+
 using VixenPlus.Properties;
 
-namespace Dialogs {
+namespace VixenPlus.Dialogs {
     public partial class ProfileManagerDialog : Form {
         private readonly List<int> _channelOrderMapping;
         private readonly SolidBrush _pictureBrush = new SolidBrush(Color.Black);
