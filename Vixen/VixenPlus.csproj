@@ -261,6 +261,12 @@
     <Compile Include="Dialogs\ProfileManagerDialog.Designer.cs">
       <DependentUpon>ProfileManagerDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\ReleaseNotesDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ReleaseNotesDialog.Designer.cs">
+      <DependentUpon>ReleaseNotesDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\RoutineSelectDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -487,6 +493,9 @@
     <EmbeddedResource Include="Dialogs\ProfileManagerDialog.resx">
       <DependentUpon>ProfileManagerDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ReleaseNotesDialog.resx">
+      <DependentUpon>ReleaseNotesDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\RoutineSelectDialog.resx">
       <DependentUpon>RoutineSelectDialog.cs</DependentUpon>

@@ -24,7 +24,7 @@ namespace VixenPlus {
 
         public const string UpdateURL = "http://www.vixenplus.com/Current/";
         public const string UpdateFile = "ver.xml";
-
+        public const string UpdateReleaseNote = "ReleaseNotes.txt";
         public const string UpdateFileURL = UpdateURL + "Release";
         // ReSharper disable InconsistentNaming
         public const string UpdateSupport7zrProtected = "_7zr.exe";

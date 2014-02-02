@@ -1,5 +1,5 @@
 ﻿namespace VixenPlus.Dialogs {
-    partial class UpdateDialog {
+    sealed partial class UpdateDialog {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -29,20 +29,21 @@
             this.btnDownloadOnly = new System.Windows.Forms.Button();
             this.btnDoNotDownload = new System.Windows.Forms.Button();
             this.pbDownload = new System.Windows.Forms.ProgressBar();
+            this.btnReleaseNotes = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblPrompt
             // 
             this.lblPrompt.Location = new System.Drawing.Point(13, 13);
             this.lblPrompt.Name = "lblPrompt";
-            this.lblPrompt.Size = new System.Drawing.Size(269, 87);
+            this.lblPrompt.Size = new System.Drawing.Size(317, 92);
             this.lblPrompt.TabIndex = 0;
             this.lblPrompt.Text = "label1";
             // 
             // cbTurnOffAutoUpdate
             // 
             this.cbTurnOffAutoUpdate.AutoSize = true;
-            this.cbTurnOffAutoUpdate.Location = new System.Drawing.Point(12, 150);
+            this.cbTurnOffAutoUpdate.Location = new System.Drawing.Point(12, 161);
             this.cbTurnOffAutoUpdate.Name = "cbTurnOffAutoUpdate";
             this.cbTurnOffAutoUpdate.Size = new System.Drawing.Size(163, 17);
             this.cbTurnOffAutoUpdate.TabIndex = 1;
@@ -52,7 +53,7 @@
             // 
             // btnDownloadAndInstall
             // 
-            this.btnDownloadAndInstall.Location = new System.Drawing.Point(12, 103);
+            this.btnDownloadAndInstall.Location = new System.Drawing.Point(12, 108);
             this.btnDownloadAndInstall.Name = "btnDownloadAndInstall";
             this.btnDownloadAndInstall.Size = new System.Drawing.Size(75, 41);
             this.btnDownloadAndInstall.TabIndex = 2;
@@ -62,7 +63,7 @@
             // 
             // btnDownloadOnly
             // 
-            this.btnDownloadOnly.Location = new System.Drawing.Point(93, 103);
+            this.btnDownloadOnly.Location = new System.Drawing.Point(93, 108);
             this.btnDownloadOnly.Name = "btnDownloadOnly";
             this.btnDownloadOnly.Size = new System.Drawing.Size(75, 41);
             this.btnDownloadOnly.TabIndex = 3;
@@ -72,7 +73,7 @@
             // 
             // btnDoNotDownload
             // 
-            this.btnDoNotDownload.Location = new System.Drawing.Point(207, 103);
+            this.btnDoNotDownload.Location = new System.Drawing.Point(255, 108);
             this.btnDoNotDownload.Name = "btnDoNotDownload";
             this.btnDoNotDownload.Size = new System.Drawing.Size(75, 41);
             this.btnDoNotDownload.TabIndex = 4;
@@ -82,28 +83,42 @@
             // 
             // pbDownload
             // 
-            this.pbDownload.Location = new System.Drawing.Point(12, 112);
+            this.pbDownload.Location = new System.Drawing.Point(12, 155);
             this.pbDownload.Name = "pbDownload";
-            this.pbDownload.Size = new System.Drawing.Size(270, 23);
+            this.pbDownload.Size = new System.Drawing.Size(318, 23);
             this.pbDownload.TabIndex = 5;
             this.pbDownload.Visible = false;
+            // 
+            // btnReleaseNotes
+            // 
+            this.btnReleaseNotes.Location = new System.Drawing.Point(174, 108);
+            this.btnReleaseNotes.Name = "btnReleaseNotes";
+            this.btnReleaseNotes.Size = new System.Drawing.Size(75, 41);
+            this.btnReleaseNotes.TabIndex = 6;
+            this.btnReleaseNotes.Text = "Release Notes";
+            this.btnReleaseNotes.UseVisualStyleBackColor = true;
+            this.btnReleaseNotes.Click += new System.EventHandler(this.btnReleaseNotes_Click);
             // 
             // UpdateDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(294, 190);
+            this.ClientSize = new System.Drawing.Size(342, 190);
             this.ControlBox = false;
+            this.Controls.Add(this.btnReleaseNotes);
             this.Controls.Add(this.pbDownload);
             this.Controls.Add(this.btnDoNotDownload);
             this.Controls.Add(this.btnDownloadOnly);
             this.Controls.Add(this.btnDownloadAndInstall);
             this.Controls.Add(this.cbTurnOffAutoUpdate);
             this.Controls.Add(this.lblPrompt);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "UpdateDialog";
+            this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "A new version is available.";
             this.TopMost = true;
             this.ResumeLayout(false);
@@ -119,5 +134,6 @@
         private System.Windows.Forms.Button btnDownloadOnly;
         private System.Windows.Forms.Button btnDoNotDownload;
         private System.Windows.Forms.ProgressBar pbDownload;
+        private System.Windows.Forms.Button btnReleaseNotes;
     }
 }

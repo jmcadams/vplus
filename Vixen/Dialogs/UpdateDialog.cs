@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Windows.Forms;
@@ -8,7 +7,7 @@ using System.Windows.Forms;
 using CommonUtils;
 
 namespace VixenPlus.Dialogs {
-    public partial class UpdateDialog : Form {
+    public sealed partial class UpdateDialog : Form {
         private readonly Preference2 _preferences;
         private readonly string _version;
         private DialogResult _result;
@@ -18,11 +17,13 @@ namespace VixenPlus.Dialogs {
         public UpdateDialog(Screen screen, string version) {
             InitializeComponent();
             _version = version;
-            lblPrompt.Text = string.Format("Version {0} of {1} is available would you like to download and install this version?", 
-                version, Vendor.ProductName);
+            lblPrompt.Text = string.Format("Version {0} of {1} is available would you like to download and install this version?\n\nYou are running version {2}", 
+                version, Vendor.ProductName, Utils.GetVersion());
             _preferences = Preference2.GetInstance();
             Left = screen.Bounds.X + (screen.WorkingArea.Width - Width) / 2;
             Top = screen.Bounds.Y + (screen.WorkingArea.Height - Height) / 2;
+            MinimumSize = Size;
+            MaximumSize = Size;
         }
 
 
@@ -84,7 +85,7 @@ namespace VixenPlus.Dialogs {
                 client.DownloadFileAsync(new Uri(url), UpdateFile);
             }
             catch (Exception e) {
-                Debug.Print(e.Message);
+                e.StackTrace.Log();
             }
         }
 
@@ -109,6 +110,12 @@ namespace VixenPlus.Dialogs {
             else {
                 MessageBox.Show("Download failed: " + e.Error.Message);
                 DialogResult = DialogResult.No;
+            }
+        }
+
+        private void btnReleaseNotes_Click(object sender, EventArgs e) {
+            using (var dialog = new ReleaseNotesDialog()) {
+                dialog.ShowDialog();
             }
         }
 
