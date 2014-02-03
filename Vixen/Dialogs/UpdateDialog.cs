@@ -152,8 +152,10 @@ namespace VixenPlus.Dialogs {
                 else if (!_isInStartup) {
                     SetupDialogForOkay();
                     Text = "You're up to date";
-                    lblPrompt.Text = string.Format("You have version {0}, which is the latest version of {1} ", Utils.GetVersion(),
-                        Vendor.ProductName);
+                    lblPrompt.Text = string.Format("You have version {0}, which is the latest version of {1} ", Utils.GetVersion(), Vendor.ProductName);
+                }
+                else {
+                    DialogResult = DialogResult.No;
                 }
             }
             else {

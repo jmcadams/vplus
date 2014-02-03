@@ -1,5 +1,8 @@
 NOTE: For items prefixed with VIX-, you can view more details on https://vixenplus.atlassian.net
 
+02 FEB 2014 - V 0.2.33.2
+   Fixed auto update bug when you were up to date, it didn't close.
+
 02 FEB 2014 - V 0.2.33.1
    Implemented VIX-8 & VIX-11 - Added auto update, the ability to set the update check frequency or disable in preferences and the ability to read release notes before downloading.
 
