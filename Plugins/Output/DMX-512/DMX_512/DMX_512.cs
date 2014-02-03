@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 using VixenPlus;
 
 namespace DMX_512
@@ -68,7 +66,7 @@ namespace DMX_512
             }
         }
 
-        public IEnumerable<HardwareMap> HardwareMap
+        public HardwareMap[] HardwareMap
         {
             get
             {

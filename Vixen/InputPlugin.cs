@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Xml;
@@ -37,7 +36,7 @@ namespace VixenPlus {
 
         public virtual void Startup() {}
 
-        public abstract IEnumerable<HardwareMap> HardwareMap { get; }
+        public abstract HardwareMap[] HardwareMap { get; }
 
         public abstract Input[] Inputs { get; }
 

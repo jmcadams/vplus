@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.IO.Ports;
 using System.Text;
 using System.Windows.Forms;
@@ -93,7 +92,7 @@ namespace GenericSerial {
             get { return "Generic serial output plugin"; }
         }
 
-        public IEnumerable<HardwareMap> HardwareMap {
+        public HardwareMap[] HardwareMap {
             get { return new[] {new HardwareMap("Serial", int.Parse(_serialPort.PortName.Substring(3)))}; }
         }
 

@@ -105,7 +105,7 @@ namespace Launcher {
             get { return "External program launcher"; }
         }
 
-        public IEnumerable<HardwareMap> HardwareMap {
+        public HardwareMap[] HardwareMap {
             get { return new HardwareMap[0]; }
         }
 

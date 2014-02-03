@@ -437,7 +437,7 @@ namespace E131_VixenPlugin {
         //
         //-------------------------------------------------------------
 
-        public IEnumerable<HardwareMap> HardwareMap {
+        public HardwareMap[] HardwareMap {
             get {
                 // define objects
                 var activeCnt = _universeTable.Where(uE => uE.Active).Count(uE => uE.Unicast != null || uE.Multicast != null);

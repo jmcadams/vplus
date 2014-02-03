@@ -84,7 +84,7 @@ namespace Preview {
             return Name;
         }
 
-        public IEnumerable<HardwareMap> HardwareMap {
+        public HardwareMap[] HardwareMap {
             get { return new HardwareMap[0]; }
         }
 

@@ -31,7 +31,6 @@ namespace VixenPlus {
 
         private readonly Preference2 _preferences;
 
-        private readonly TimerExecutor _timerExecutor;
         private readonly Timers _timers;
 
 
@@ -87,7 +86,6 @@ namespace VixenPlus {
                 if (File.Exists(timersPath)) {
                     _timers.LoadFromXml(Xml.LoadDocument(timersPath));
                 }
-                _timerExecutor = new TimerExecutor();
                 if (_preferences.GetBoolean("EnableBackgroundSequence")) {
                     _host.BackgroundSequenceName = _preferences.GetString("BackgroundSequence");
                 }
@@ -803,17 +801,6 @@ namespace VixenPlus {
         private void setSoundDeviceToolStripMenuItem_Click(object sender, EventArgs e) {
             using (var soundDeviceDialog = new SoundDeviceDialog(_preferences)) {
                 soundDeviceDialog.ShowDialog();
-            }
-        }
-
-
-        private static void SetTimerTraceFlag() {
-            if (((Host.GetDebugValue("TraceTimers") == bool.TrueString) && (DateTime.Now >= DateTime.Parse(Host.GetDebugValue("TraceStart")))) &&
-                (DateTime.Now <= DateTime.Parse(Host.GetDebugValue("TraceEnd")))) {
-                Host.SetDebugValue("TimerTrace");
-            }
-            else {
-                Host.ResetDebugValue("TimerTrace");
             }
         }
 

@@ -189,7 +189,7 @@ namespace Renard {
         }
 
 
-        public IEnumerable<HardwareMap> HardwareMap {
+        public HardwareMap[] HardwareMap {
             get { return new[] {new HardwareMap("Serial", int.Parse(_selectedPort.PortName.Substring(3)))}; }
         }
 

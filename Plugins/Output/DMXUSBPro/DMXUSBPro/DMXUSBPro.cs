@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 using VixenPlus;
 using VixenPlus.Dialogs;
 
@@ -94,7 +92,7 @@ namespace DMXUSBPro
             }
         }
 
-        public IEnumerable<HardwareMap> HardwareMap
+        public HardwareMap[] HardwareMap
         {
             get
             {
