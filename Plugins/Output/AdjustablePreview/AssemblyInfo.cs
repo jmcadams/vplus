@@ -5,10 +5,10 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyVersion("0.2.33.2")]
+[assembly: AssemblyVersion("0.2.33.3")]
 [assembly: AssemblyCopyright("Copyleft 2013")]
 [assembly: RuntimeCompatibility(WrapNonExceptionThrows=true)]
-[assembly: AssemblyFileVersion("0.2.33.2")]
+[assembly: AssemblyFileVersion("0.2.33.3")]
 [assembly: ComVisible(false)]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyProduct("VixenPlus")]
