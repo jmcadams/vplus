@@ -37,7 +37,9 @@ namespace VixenPlus {
             isDirty |= CreateIfMissing("HistoryImages", 0);
             isDirty |= CreateIfMissing("AutoSaveToolbars", false);
             isDirty |= CreateIfMissing("RecentFiles", 7);
-            isDirty |= CreateIfMissing("DisableAutoUpdate", false);
+            isDirty |= CreateIfMissing("AutoUpdateCheckFreq", "On Startup");
+            isDirty |= CreateIfMissing("LastUpdateCheck", DateTime.Now.ToString(CultureInfo.InvariantCulture));
+            isDirty |= CreateIfMissing("SkippedVersion", string.Empty);
 
             // Screen & Colors
             isDirty |= CreateIfMissing("PrimaryDisplay", FixDeviceName(Screen.AllScreens[0].DeviceName));

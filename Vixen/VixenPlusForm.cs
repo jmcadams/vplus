@@ -5,13 +5,11 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
-using System.Xml.Linq;
 
 using CommonUtils;
 
@@ -22,12 +20,6 @@ using VixenPlus.Properties;
 
 namespace VixenPlus {
     internal sealed partial class VixenPlusForm : Form, ISystem {
-#if debug
-        private const int ExpectationDelay = 0;
-#else
-        private const int ExpectationDelay = 1500;
-#endif
-
         private List<string> _history;
 
         private DateTime _shutdownAt;
@@ -35,7 +27,6 @@ namespace VixenPlus {
         private string _lastWindowsClipboardValue = "";
 
         private readonly Dictionary<string, IUIPlugIn> _registeredFileTypes;
-        //private readonly Dictionary<string, List<LoadedObject>> _loadables;
 
         private readonly EventHandler _historyItemClick;
         private readonly EventHandler _newMenuItemClick;
@@ -67,7 +58,7 @@ namespace VixenPlus {
                 var screen = Preference2.GetScreen(_preferences.GetString("PrimaryDisplay"));
                 splash.FadeIn(screen);
                 
-                if (!_preferences.GetBoolean("DisableAutoUpdate") && CheckForUpdates(screen)) {
+                if (CheckForUpdates(screen, true)) {
                     Environment.Exit(0);
                 } 
                 
@@ -109,8 +100,6 @@ namespace VixenPlus {
                 _host.StartBackgroundObjects();
                 SetShutdownTime(_preferences.GetString("ShutdownTime"));
 
-                Thread.Sleep(ExpectationDelay);
-
                 splash.FadeOut();
                 Left = screen.Bounds.Left;
                 Top = screen.Bounds.Top;
@@ -137,40 +126,24 @@ namespace VixenPlus {
         }
 
 
-        private static bool CheckForUpdates(Screen screen) {
+        private static bool CheckForUpdates(Screen startupScreen, bool isInStartup) {
             var result = false;
-            using (var client = new WebClient()) {
-                try {
-                    var currentRev = Utils.GetVersion();
-                    var response = client.DownloadData(Vendor.UpdateURL + Vendor.UpdateFile + "?ver=" +currentRev);
-                    var xml = XDocument.Parse(Encoding.ASCII.GetString(response));
-                    var rev =
-                        (from r in xml.Descendants("version")
-                            where r.Attribute("format") != null
-                            select r.Attribute("rev")).SingleOrDefault();
-                    if (null != rev && rev.Value != currentRev) {
-                        using (var dialog = new UpdateDialog(screen, rev.Value)) {
-                            dialog.ShowDialog();
-                            switch (dialog.DialogResult) {
-                                case DialogResult.Yes:
-                                    InstallDownload(dialog.UpdateFile);
-                                    result = true;
-                                    break;
-                            }
-                        }
-                    }
+            using (var dialog = new UpdateDialog(startupScreen, isInStartup)) {
+                if (isInStartup && !dialog.IsTimeToCheckForUpdate()) {
+                    return false;
                 }
-                catch (Exception e) {
-                    e.StackTrace.Log();
+
+                dialog.ShowDialog();
+                
+                switch (dialog.DialogResult) {
+                    case DialogResult.Yes:
+                        result = true;
+                        break;
                 }
             }
             return result;
         }
 
-
-        private static void InstallDownload(string filePath) {
-            Process.Start(Vendor.UpdateSupportBatchReal, Process.GetCurrentProcess().Id +  " \"" + filePath + "\" \"" + Application.StartupPath + @"\" + "\"");
-        }
 
 
         public Form InstantiateForm(ConstructorInfo constructorInfo, params object[] parameters) {
@@ -341,21 +314,10 @@ namespace VixenPlus {
         }
 
 
-        private DialogResult CheckDirty(IUIPlugIn pluginInstance) {
-            var none = DialogResult.None;
-            if (!pluginInstance.IsDirty) {
-                return none;
-            }
-            var str = pluginInstance.Sequence.Name ?? "this unnamed sequence";
-            none = MessageBox.Show(string.Format("[{0}]\nSave changes to {1}?", pluginInstance.FileTypeDescription, str), Vendor.ProductName,
-                MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-            if (none == DialogResult.Yes) {
-                Save(pluginInstance);
-            }
-            return none;
-        }
-
         private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e) {
+            if (CheckForUpdates(Preference2.GetScreen(_preferences.GetString("PrimaryDisplay")), false)) {
+                Close();
+            }
         }
 
 
@@ -391,6 +353,19 @@ namespace VixenPlus {
             _preferences.SaveSettings();
         }
 
+        private DialogResult CheckDirty(IUIPlugIn pluginInstance) {
+            var none = DialogResult.None;
+            if (!pluginInstance.IsDirty) {
+                return none;
+            }
+            var str = pluginInstance.Sequence.Name ?? "this unnamed sequence";
+            none = MessageBox.Show(string.Format("[{0}]\nSave changes to {1}?", pluginInstance.FileTypeDescription, str), Vendor.ProductName,
+                MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            if (none == DialogResult.Yes) {
+                Save(pluginInstance);
+            }
+            return none;
+        }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e) {
             if (ActiveMdiChild == null) {

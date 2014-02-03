@@ -110,7 +110,7 @@ namespace VixenPlus.Dialogs {
                                    !dateTimePickerAutoShutdownTime.Checked
                                        ? string.Empty
                                        : dateTimePickerAutoShutdownTime.Value.ToString("h:mm tt"));
-            _preferences.SetBoolean("DisableAutoUpdate", checkBoxDisableAutoUpdate.Checked);
+            _preferences.SetString("AutoUpdateCheckFreq", cbUpdateFrequency.SelectedItem.ToString());
             _preferences.SetInteger("HistoryImages", (int) numericUpDownHistoryImages.Value);
             _preferences.SetInteger("RecentFiles", (int) nudRecentFiles.Value);
             _preferences.SetBoolean("AutoSaveToolbars", cbToolbarAutoSave.Checked);
@@ -261,7 +261,7 @@ namespace VixenPlus.Dialogs {
                 dateTimePickerAutoShutdownTime.Checked = true;
                 dateTimePickerAutoShutdownTime.Value = DateTime.Parse(s);
             }
-            checkBoxDisableAutoUpdate.Checked = _preferences.GetBoolean("DisableAutoUpdate");
+            cbUpdateFrequency.SelectedItem  = _preferences.GetString("AutoUpdateCheckFreq");
             numericUpDownHistoryImages.Value = _preferences.GetInteger("HistoryImages");
             nudRecentFiles.Value = _preferences.GetInteger("RecentFiles");
             cbToolbarAutoSave.Checked = _preferences.GetBoolean("AutoSaveToolbars");

@@ -92,11 +92,11 @@ namespace VixenPlus {
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.programToolStripMenuItem,
-                this.viewToolStripMenuItem,
-                this.utilityToolStripMenuItem,
-                this.windowsToolStripMenuItem,
-                this.helpToolStripMenuItem});
+            this.programToolStripMenuItem,
+            this.viewToolStripMenuItem,
+            this.utilityToolStripMenuItem,
+            this.windowsToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.MdiWindowListItem = this.windowsToolStripMenuItem;
             this.menuStrip1.Name = "menuStrip1";
@@ -107,16 +107,16 @@ namespace VixenPlus {
             // programToolStripMenuItem
             // 
             this.programToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.newLightingProgramToolStripMenuItem,
-                this.openALightingProgramToolStripMenuItem,
-                this.toolStripMenuItem2,
-                this.saveToolStripMenuItem,
-                this.saveAsToolStripMenuItem,
-                this.toolStripMenuItem8,
-                this.setBackgroundSequenceToolStripMenuItem,
-                this.channelDimmingCurvesToolStripMenuItem,
-                this.toolStripMenuItem6,
-                this.recentToolStripMenuItem});
+            this.newLightingProgramToolStripMenuItem,
+            this.openALightingProgramToolStripMenuItem,
+            this.toolStripMenuItem2,
+            this.saveToolStripMenuItem,
+            this.saveAsToolStripMenuItem,
+            this.toolStripMenuItem8,
+            this.setBackgroundSequenceToolStripMenuItem,
+            this.channelDimmingCurvesToolStripMenuItem,
+            this.toolStripMenuItem6,
+            this.recentToolStripMenuItem});
             this.programToolStripMenuItem.Name = "programToolStripMenuItem";
             this.programToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.programToolStripMenuItem.Text = "File";
@@ -196,7 +196,7 @@ namespace VixenPlus {
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.tsmProfiles});
+            this.tsmProfiles});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "View";
@@ -204,7 +204,7 @@ namespace VixenPlus {
             // tsmProfiles
             // 
             this.tsmProfiles.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.manageToolStripMenuItem});
+            this.manageToolStripMenuItem});
             this.tsmProfiles.Name = "tsmProfiles";
             this.tsmProfiles.Size = new System.Drawing.Size(113, 22);
             this.tsmProfiles.Text = "Profiles";
@@ -220,11 +220,11 @@ namespace VixenPlus {
             // utilityToolStripMenuItem
             // 
             this.utilityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.setSoundDeviceToolStripMenuItem,
-                this.musicPlayerToolStripMenuItem,
-                this.diagnosticsToolStripMenuItem,
-                this.toolStripMenuItem1,
-                this.preferencesToolStripMenuItem});
+            this.setSoundDeviceToolStripMenuItem,
+            this.musicPlayerToolStripMenuItem,
+            this.diagnosticsToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.preferencesToolStripMenuItem});
             this.utilityToolStripMenuItem.Name = "utilityToolStripMenuItem";
             this.utilityToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.utilityToolStripMenuItem.Text = "Tools";
@@ -267,8 +267,8 @@ namespace VixenPlus {
             // windowsToolStripMenuItem
             // 
             this.windowsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.tileToolStripMenuItem,
-                this.cascadeToolStripMenuItem});
+            this.tileToolStripMenuItem,
+            this.cascadeToolStripMenuItem});
             this.windowsToolStripMenuItem.Name = "windowsToolStripMenuItem";
             this.windowsToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
             this.windowsToolStripMenuItem.Text = "Windows";
@@ -290,11 +290,11 @@ namespace VixenPlus {
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.onlineSupportForumToolStripMenuItem,
-                this.checkForUpdatesToolStripMenuItem,
-                this.toolStripMenuItem3,
-                this.aboutToolStripMenuItem1,
-                this.iLikeLutefiskToolStripMenuItem});
+            this.onlineSupportForumToolStripMenuItem,
+            this.checkForUpdatesToolStripMenuItem,
+            this.toolStripMenuItem3,
+            this.aboutToolStripMenuItem1,
+            this.iLikeLutefiskToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
@@ -311,7 +311,6 @@ namespace VixenPlus {
             this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
             this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.checkForUpdatesToolStripMenuItem.Text = "Check for updates";
-            this.checkForUpdatesToolStripMenuItem.Visible = false;
             this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
             // 
             // toolStripMenuItem3
@@ -347,8 +346,8 @@ namespace VixenPlus {
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.toolStripProgressBarBackgroundSequenceRunning,
-                this.toolStripStatusLabelMusic});
+            this.toolStripProgressBarBackgroundSequenceRunning,
+            this.toolStripStatusLabelMusic});
             this.statusStrip.Location = new System.Drawing.Point(0, 467);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.ShowItemToolTips = true;

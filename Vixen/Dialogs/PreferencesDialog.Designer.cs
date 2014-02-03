@@ -71,7 +71,6 @@ namespace VixenPlus.Dialogs {
             this.labelAutoShutdownTime = new System.Windows.Forms.Label();
             this.dateTimePickerAutoShutdownTime = new System.Windows.Forms.DateTimePicker();
             this.label26 = new System.Windows.Forms.Label();
-            this.checkBoxDisableAutoUpdate = new System.Windows.Forms.CheckBox();
             this.label36 = new System.Windows.Forms.Label();
             this.cbToolbarAutoSave = new System.Windows.Forms.CheckBox();
             this.buttonOK = new System.Windows.Forms.Button();
@@ -112,6 +111,7 @@ namespace VixenPlus.Dialogs {
             this.numericUpDownHistoryImages = new System.Windows.Forms.NumericUpDown();
             this.label28 = new System.Windows.Forms.Label();
             this.tabControl = new TabControl(this.components);
+            this.cbUpdateFrequency = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinimumLevel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumLevel)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -590,7 +590,7 @@ namespace VixenPlus.Dialogs {
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(7, 16);
+            this.label23.Location = new System.Drawing.Point(6, 16);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(126, 13);
             this.label23.TabIndex = 5;
@@ -601,7 +601,7 @@ namespace VixenPlus.Dialogs {
             // 
             this.comboBoxSequenceType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSequenceType.FormattingEnabled = true;
-            this.comboBoxSequenceType.Location = new System.Drawing.Point(169, 13);
+            this.comboBoxSequenceType.Location = new System.Drawing.Point(168, 13);
             this.comboBoxSequenceType.Name = "comboBoxSequenceType";
             this.comboBoxSequenceType.Size = new System.Drawing.Size(255, 21);
             this.comboBoxSequenceType.TabIndex = 6;
@@ -610,7 +610,7 @@ namespace VixenPlus.Dialogs {
             // labelAutoShutdownTime
             // 
             this.labelAutoShutdownTime.AutoSize = true;
-            this.labelAutoShutdownTime.Location = new System.Drawing.Point(7, 46);
+            this.labelAutoShutdownTime.Location = new System.Drawing.Point(6, 186);
             this.labelAutoShutdownTime.Name = "labelAutoShutdownTime";
             this.labelAutoShutdownTime.Size = new System.Drawing.Size(78, 13);
             this.labelAutoShutdownTime.TabIndex = 69;
@@ -623,7 +623,7 @@ namespace VixenPlus.Dialogs {
             this.dateTimePickerAutoShutdownTime.Checked = false;
             this.dateTimePickerAutoShutdownTime.CustomFormat = "  hh:mm tt";
             this.dateTimePickerAutoShutdownTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerAutoShutdownTime.Location = new System.Drawing.Point(169, 40);
+            this.dateTimePickerAutoShutdownTime.Location = new System.Drawing.Point(168, 179);
             this.dateTimePickerAutoShutdownTime.Name = "dateTimePickerAutoShutdownTime";
             this.dateTimePickerAutoShutdownTime.ShowCheckBox = true;
             this.dateTimePickerAutoShutdownTime.ShowUpDown = true;
@@ -631,32 +631,22 @@ namespace VixenPlus.Dialogs {
             this.dateTimePickerAutoShutdownTime.TabIndex = 71;
             this.toolTip.SetToolTip(this.dateTimePickerAutoShutdownTime, "If the application is running, it can shut down your computer at a time you speci" +
                     "fy");
-            this.dateTimePickerAutoShutdownTime.Value = new System.DateTime(2007, 4, 20, 12, 0, 0, 0);
+            this.dateTimePickerAutoShutdownTime.Value = new System.DateTime(2014, 2, 2, 23, 0, 0, 0);
             // 
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(7, 67);
+            this.label26.Location = new System.Drawing.Point(6, 50);
             this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(102, 13);
+            this.label26.Size = new System.Drawing.Size(129, 13);
             this.label26.TabIndex = 72;
-            this.label26.Text = "Disable auto-update";
+            this.label26.Text = "Update Check Frequency";
             this.toolTip.SetToolTip(this.label26, "Stops the application from trying to update itself over the internet.");
-            // 
-            // checkBoxDisableAutoUpdate
-            // 
-            this.checkBoxDisableAutoUpdate.AutoSize = true;
-            this.checkBoxDisableAutoUpdate.Location = new System.Drawing.Point(169, 66);
-            this.checkBoxDisableAutoUpdate.Name = "checkBoxDisableAutoUpdate";
-            this.checkBoxDisableAutoUpdate.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxDisableAutoUpdate.TabIndex = 73;
-            this.toolTip.SetToolTip(this.checkBoxDisableAutoUpdate, "Stops the application from trying to update itself over the internet.");
-            this.checkBoxDisableAutoUpdate.UseVisualStyleBackColor = true;
             // 
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(7, 138);
+            this.label36.Location = new System.Drawing.Point(6, 152);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(95, 13);
             this.label36.TabIndex = 78;
@@ -667,7 +657,7 @@ namespace VixenPlus.Dialogs {
             // cbToolbarAutoSave
             // 
             this.cbToolbarAutoSave.AutoSize = true;
-            this.cbToolbarAutoSave.Location = new System.Drawing.Point(169, 138);
+            this.cbToolbarAutoSave.Location = new System.Drawing.Point(168, 152);
             this.cbToolbarAutoSave.Name = "cbToolbarAutoSave";
             this.cbToolbarAutoSave.Size = new System.Drawing.Size(15, 14);
             this.cbToolbarAutoSave.TabIndex = 79;
@@ -1014,13 +1004,13 @@ namespace VixenPlus.Dialogs {
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.cbUpdateFrequency);
             this.groupBox3.Controls.Add(this.cbToolbarAutoSave);
             this.groupBox3.Controls.Add(this.label36);
             this.groupBox3.Controls.Add(this.nudRecentFiles);
             this.groupBox3.Controls.Add(this.label35);
             this.groupBox3.Controls.Add(this.numericUpDownHistoryImages);
             this.groupBox3.Controls.Add(this.label28);
-            this.groupBox3.Controls.Add(this.checkBoxDisableAutoUpdate);
             this.groupBox3.Controls.Add(this.label26);
             this.groupBox3.Controls.Add(this.dateTimePickerAutoShutdownTime);
             this.groupBox3.Controls.Add(this.labelAutoShutdownTime);
@@ -1035,7 +1025,7 @@ namespace VixenPlus.Dialogs {
             // 
             // nudRecentFiles
             // 
-            this.nudRecentFiles.Location = new System.Drawing.Point(169, 112);
+            this.nudRecentFiles.Location = new System.Drawing.Point(168, 116);
             this.nudRecentFiles.Maximum = new decimal(new int[] {
             20,
             0,
@@ -1058,7 +1048,7 @@ namespace VixenPlus.Dialogs {
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(7, 114);
+            this.label35.Location = new System.Drawing.Point(6, 118);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(91, 13);
             this.label35.TabIndex = 76;
@@ -1066,7 +1056,7 @@ namespace VixenPlus.Dialogs {
             // 
             // numericUpDownHistoryImages
             // 
-            this.numericUpDownHistoryImages.Location = new System.Drawing.Point(169, 86);
+            this.numericUpDownHistoryImages.Location = new System.Drawing.Point(168, 82);
             this.numericUpDownHistoryImages.Name = "numericUpDownHistoryImages";
             this.numericUpDownHistoryImages.Size = new System.Drawing.Size(117, 20);
             this.numericUpDownHistoryImages.TabIndex = 75;
@@ -1074,7 +1064,7 @@ namespace VixenPlus.Dialogs {
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(7, 88);
+            this.label28.Location = new System.Drawing.Point(6, 84);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(113, 13);
             this.label28.TabIndex = 74;
@@ -1100,6 +1090,24 @@ namespace VixenPlus.Dialogs {
             this.tabControl.TabIndex = 1;
             this.tabControl.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl_Selected);
             this.tabControl.Deselecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl_Deselecting);
+            // 
+            // cbUpdateFrequency
+            // 
+            this.cbUpdateFrequency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbUpdateFrequency.FormattingEnabled = true;
+            this.cbUpdateFrequency.Items.AddRange(new object[] {
+            "On Startup",
+            "Daily",
+            "Weekly",
+            "Monthly",
+            "Quarterly",
+            "Annually",
+            "Never"});
+            this.cbUpdateFrequency.Location = new System.Drawing.Point(168, 47);
+            this.cbUpdateFrequency.Name = "cbUpdateFrequency";
+            this.cbUpdateFrequency.Size = new System.Drawing.Size(117, 21);
+            this.cbUpdateFrequency.TabIndex = 80;
+            this.toolTip.SetToolTip(this.cbUpdateFrequency, "How often will Vixen+ check for updates.");
             // 
             // PreferencesDialog
             // 
@@ -1233,7 +1241,6 @@ namespace VixenPlus.Dialogs {
         private Label label35;
         private NumericUpDown numericUpDownHistoryImages;
         private Label label28;
-        private CheckBox checkBoxDisableAutoUpdate;
         private Label label26;
         private DateTimePicker dateTimePickerAutoShutdownTime;
         private Label labelAutoShutdownTime;
@@ -1245,5 +1252,6 @@ namespace VixenPlus.Dialogs {
         private TextBox textBoxMouseWheelVertical;
         private Label label3;
         private TabControl tabControl;
+        private ComboBox cbUpdateFrequency;
     }
 }

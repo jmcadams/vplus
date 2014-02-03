@@ -19,6 +19,15 @@ namespace CommonUtils {
         public const int ExecutionPaused = 2;
         public const int ExecutionRunning = 1;
 
+        /// <summary>
+        /// Constants, in hours for UpdateCheckTime
+        /// </summary>
+        public const double UpdateDaily = 24;
+        public const double UpdateWeekly = 168;       // 7 x Daily
+        public const double UpdateMonthly = 730.5;    // 1/3 Quarterly
+        public const double UpdateQuarterly = 2191.5; // 1/4 Annual
+        public const double UpdateAnnually = 8766;    // (365.25 * 24)
+    
         public const string LogFileName = "crash.log";
 
         private static readonly SolidBrush GenericBrush = new SolidBrush(Color.Black);
