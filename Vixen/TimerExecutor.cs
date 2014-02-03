@@ -1,17 +1,19 @@
-﻿using Dialogs;
+﻿using VixenPlus.Dialogs;
 
-internal class TimerExecutor
-{
-    private readonly ExecutingTimerControlDialog _controlDialog;
-
-    public TimerExecutor()
+namespace VixenPlus {
+    internal class TimerExecutor
     {
-        _controlDialog = new ExecutingTimerControlDialog();
-    }
+        private readonly ExecutingTimerControlDialog _controlDialog;
 
-    public void SpawnExecutorFor(Timer timer)
-    {
-        var context = new TimerContext(timer);
-        _controlDialog.AddTimer(context);
+        public TimerExecutor()
+        {
+            _controlDialog = new ExecutingTimerControlDialog();
+        }
+
+        public void SpawnExecutorFor(Timer timer)
+        {
+            var context = new TimerContext(timer);
+            _controlDialog.AddTimer(context);
+        }
     }
 }

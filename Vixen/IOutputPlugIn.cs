@@ -1,3 +1,5 @@
-﻿public interface IOutputPlugIn : IHardwarePlugin
-{
+﻿namespace VixenPlus {
+    public interface IOutputPlugIn : IHardwarePlugin
+    {
+    }
 }

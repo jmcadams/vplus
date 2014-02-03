@@ -10,10 +10,9 @@ using CommonUtils;
 
 using FMOD;
 
-using VixenPlus;
 using VixenPlus.Properties;
 
-namespace Dialogs {
+namespace VixenPlus.Dialogs {
     public partial class AudioDialog : Form {
         private readonly EventSequence _eventSequence;
         private readonly fmod _fmod;

@@ -1,4 +1,5 @@
 //TODO This still needs to be cleaned up!  Strike that, rewritten
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -7,11 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using VixenPlus;
-using VixenPlus.Dialogs;
 using VixenPlus.Properties;
 
-namespace Dialogs {
+namespace VixenPlus.Dialogs {
     public partial class NewSequenceWizardDialog : Form {
         private readonly EventSequence _eventSequence;
 

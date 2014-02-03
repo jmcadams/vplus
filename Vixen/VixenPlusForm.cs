@@ -11,10 +11,6 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 
-using CommonUtils;
-
-using Dialogs;
-
 using VixenPlus.Dialogs;
 using VixenPlus.Properties;
 
@@ -87,13 +83,11 @@ namespace VixenPlus {
                 finally {
                     Cursor = Cursors.Default;
                 }
-                scheduleTimer.Interval = _preferences.GetInteger("TimerCheckFrequency") * Utils.MillsPerSecond;
                 _timers = new Timers();
                 if (File.Exists(timersPath)) {
                     _timers.LoadFromXml(Xml.LoadDocument(timersPath));
                 }
                 _timerExecutor = new TimerExecutor();
-                scheduleTimer.Enabled = !_timers.TimersDisabled;
                 if (_preferences.GetBoolean("EnableBackgroundSequence")) {
                     _host.BackgroundSequenceName = _preferences.GetString("BackgroundSequence");
                 }
@@ -497,10 +491,6 @@ namespace VixenPlus {
 
         private void PreferencesPreferenceChange(string preferenceName) {
             switch (preferenceName) {
-                case "TimerCheckFrequency":
-                    scheduleTimer.Interval = _preferences.GetInteger("TimerCheckFrequency") * 1000;
-                    break;
-
                 case "EnableBackgroundSequence":
                     if (!_preferences.GetBoolean("EnableBackgroundSequence")) {
                         _host.StopBackgroundSequence();
@@ -846,14 +836,6 @@ namespace VixenPlus {
 
         private void tileToolStripMenuItem_Click(object sender, EventArgs e) {
             LayoutMdi(MdiLayout.TileHorizontal);
-        }
-
-
-        private void timer1_Tick(object sender, EventArgs e) {
-            SetTimerTraceFlag();
-            foreach (var timer in _timers.StartingTimers()) {
-                _timerExecutor.SpawnExecutorFor(timer);
-            }
         }
 
 

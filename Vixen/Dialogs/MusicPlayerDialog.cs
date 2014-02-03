@@ -6,10 +6,9 @@ using System.Windows.Forms;
 
 using FMOD;
 
-using VixenPlus;
 using VixenPlus.Properties;
 
-namespace Dialogs {
+namespace VixenPlus.Dialogs {
     internal partial class MusicPlayerDialog : Form {
         private readonly fmod _fmod;
         private Audio _narrativeSong;

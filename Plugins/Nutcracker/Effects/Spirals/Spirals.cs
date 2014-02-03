@@ -6,6 +6,8 @@ using System.Windows.Forms;
 
 using CommonUtils;
 
+using VixenPlus;
+
 namespace Spirals {
     public partial class Spirals : UserControl, INutcrackerEffect {
 

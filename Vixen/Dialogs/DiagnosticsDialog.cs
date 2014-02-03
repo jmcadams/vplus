@@ -4,10 +4,9 @@ using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
-using VixenPlus;
 using VixenPlus.Properties;
 
-namespace Dialogs {
+namespace VixenPlus.Dialogs {
     internal partial class DiagnosticsDialog : Form {
         private readonly Timers _timers;
 

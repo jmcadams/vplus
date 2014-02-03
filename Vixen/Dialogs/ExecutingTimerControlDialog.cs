@@ -5,10 +5,9 @@ using System.Windows.Forms;
 
 using CommonUtils;
 
-using VixenPlus;
 using VixenPlus.Properties;
 
-namespace Dialogs {
+namespace VixenPlus.Dialogs {
     internal partial class ExecutingTimerControlDialog : Form {
         private readonly TimerContext.OnExecutionChange _onExecutionChangeHandler;
         private readonly TimerContext.OnExecutionEnd _onExecutionEndHandler;

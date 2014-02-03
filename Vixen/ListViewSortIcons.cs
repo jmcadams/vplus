@@ -2,57 +2,59 @@
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-internal static class ListViewSortIcons
-{
-    [DllImport("user32.dll")]
-    private static extern IntPtr SendMessage(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
-
-    [DllImport("user32.dll", EntryPoint = "SendMessage")]
-    private static extern IntPtr SendMessageLVCOLUMN(IntPtr hWnd, int msg, IntPtr wParam, ref Lvcolumn lPlvcolumn);
-
-    public static void SetSortIcon(ListView listViewControl, int columnIndex, System.Windows.Forms.SortOrder order)
+namespace VixenPlus {
+    internal static class ListViewSortIcons
     {
-        var hWnd = SendMessage(listViewControl.Handle, 0x101f, IntPtr.Zero, IntPtr.Zero);
-        for (var i = 0; i <= (listViewControl.Columns.Count - 1); i++)
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll", EntryPoint = "SendMessage")]
+        private static extern IntPtr SendMessageLVCOLUMN(IntPtr hWnd, int msg, IntPtr wParam, ref Lvcolumn lPlvcolumn);
+
+        public static void SetSortIcon(ListView listViewControl, int columnIndex, System.Windows.Forms.SortOrder order)
         {
-            var wParam = new IntPtr(i);
-            var lPlvcolumn = new Lvcolumn {mask = 4};
-            SendMessageLVCOLUMN(hWnd, 0x120b, wParam, ref lPlvcolumn);
-            if ((order != System.Windows.Forms.SortOrder.None) && (i == columnIndex))
+            var hWnd = SendMessage(listViewControl.Handle, 0x101f, IntPtr.Zero, IntPtr.Zero);
+            for (var i = 0; i <= (listViewControl.Columns.Count - 1); i++)
             {
-                switch (order)
+                var wParam = new IntPtr(i);
+                var lPlvcolumn = new Lvcolumn {mask = 4};
+                SendMessageLVCOLUMN(hWnd, 0x120b, wParam, ref lPlvcolumn);
+                if ((order != System.Windows.Forms.SortOrder.None) && (i == columnIndex))
                 {
-                    case System.Windows.Forms.SortOrder.Ascending:
-                        lPlvcolumn.fmt &= -513;
-                        lPlvcolumn.fmt |= 0x400;
-                        goto Label_00DE;
+                    switch (order)
+                    {
+                        case System.Windows.Forms.SortOrder.Ascending:
+                            lPlvcolumn.fmt &= -513;
+                            lPlvcolumn.fmt |= 0x400;
+                            goto Label_00DE;
 
-                    case System.Windows.Forms.SortOrder.Descending:
-                        lPlvcolumn.fmt &= -1025;
-                        lPlvcolumn.fmt |= 0x200;
-                        goto Label_00DE;
+                        case System.Windows.Forms.SortOrder.Descending:
+                            lPlvcolumn.fmt &= -1025;
+                            lPlvcolumn.fmt |= 0x200;
+                            goto Label_00DE;
+                    }
                 }
+                else
+                {
+                    lPlvcolumn.fmt &= -1537;
+                }
+                Label_00DE:
+                SendMessageLVCOLUMN(hWnd, 0x120c, wParam, ref lPlvcolumn);
             }
-            else
-            {
-                lPlvcolumn.fmt &= -1537;
-            }
-            Label_00DE:
-            SendMessageLVCOLUMN(hWnd, 0x120c, wParam, ref lPlvcolumn);
         }
-    }
 
-    [StructLayout(LayoutKind.Sequential)]
-    private struct Lvcolumn
-    {
-        public int mask;
-        private readonly int cx;
-        [MarshalAs(UnmanagedType.LPTStr)] private readonly string pszText;
-        private readonly IntPtr hbm;
-        private readonly int cchTextMax;
-        public int fmt;
-        private readonly int iSubItem;
-        private readonly int iImage;
-        private readonly int iOrder;
+        [StructLayout(LayoutKind.Sequential)]
+        private struct Lvcolumn
+        {
+            public int mask;
+            private readonly int cx;
+            [MarshalAs(UnmanagedType.LPTStr)] private readonly string pszText;
+            private readonly IntPtr hbm;
+            private readonly int cchTextMax;
+            public int fmt;
+            private readonly int iSubItem;
+            private readonly int iImage;
+            private readonly int iOrder;
+        }
     }
 }

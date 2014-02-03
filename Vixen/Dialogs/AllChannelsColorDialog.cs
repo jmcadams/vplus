@@ -5,10 +5,9 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-using VixenPlus;
 using VixenPlus.Properties;
 
-namespace Dialogs {
+namespace VixenPlus.Dialogs {
     public partial class AllChannelsColorDialog : Form {
         private readonly Dictionary<int, Color> _colorsInUse;
         private readonly Preference2 _preferences;

@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-using Dialogs;
+using VixenPlus.Dialogs;
 
 namespace NutcrackerEffectsControl {
     public partial class NutcrackerPaletteManager : Form {

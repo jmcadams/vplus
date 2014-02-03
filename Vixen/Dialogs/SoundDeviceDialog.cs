@@ -3,10 +3,9 @@ using System.Windows.Forms;
 
 using FMOD;
 
-using VixenPlus;
 using VixenPlus.Properties;
 
-namespace Dialogs {
+namespace VixenPlus.Dialogs {
     internal partial class SoundDeviceDialog : Form {
         private readonly Preference2 _preferences;
         private bool _internal;

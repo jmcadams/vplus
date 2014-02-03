@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 
+using VixenPlus;
+
 namespace Renard {
     using System;
     using System.IO.Ports;

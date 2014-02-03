@@ -1,6 +1,6 @@
 using System.Windows.Forms;
 
-namespace Dialogs {
+namespace VixenPlus.Dialogs {
     internal partial class SoundDeviceDialog {
         private System.ComponentModel.IContainer components = null;
 

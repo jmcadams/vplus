@@ -1,4 +1,4 @@
-﻿namespace Dialogs
+﻿namespace VixenPlus.Dialogs
 {
     partial class Lutefisk
     {

@@ -6,6 +6,8 @@ using System.Windows.Forms;
 
 using CommonUtils;
 
+using VixenPlus;
+
 namespace Garlands {
     public partial class Garlands : UserControl, INutcrackerEffect {
 

@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 
+using VixenPlus;
+
 namespace Matrix2 {
     // ReSharper disable once UnusedMember.Global
     public partial class Matrix : UserControl, INutcrackerModel {

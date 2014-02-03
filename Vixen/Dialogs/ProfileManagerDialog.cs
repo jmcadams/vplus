@@ -8,8 +8,6 @@ using System.Windows.Forms;
 
 using CommonUtils;
 
-using Dialogs;
-
 using VixenPlus.Properties;
 
 namespace VixenPlus.Dialogs {

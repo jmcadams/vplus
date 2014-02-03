@@ -1,1 +1,3 @@
-﻿public delegate void ProgramChangeHandler(ProgramChange changeType);
+﻿namespace VixenPlus {
+    public delegate void ProgramChangeHandler(ProgramChange changeType);
+}

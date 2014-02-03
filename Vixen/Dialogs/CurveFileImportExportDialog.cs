@@ -6,10 +6,9 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-using VixenPlus;
 using VixenPlus.Properties;
 
-namespace Dialogs {
+namespace VixenPlus.Dialogs {
     internal partial class CurveFileImportExportDialog : Form {
         public enum ImportExport {
             Import,

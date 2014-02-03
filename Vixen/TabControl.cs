@@ -2,95 +2,97 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-[ToolboxBitmap(typeof (System.Windows.Forms.TabControl))]
-public class TabControl : System.Windows.Forms.TabControl
-{
-    private bool _hideTabs;
-    private IContainer components;
-
-    public TabControl()
+namespace VixenPlus {
+    [ToolboxBitmap(typeof (System.Windows.Forms.TabControl))]
+    public class TabControl : System.Windows.Forms.TabControl
     {
-        _hideTabs = false;
-        components = null;
-        InitializeComponent();
-    }
+        private bool _hideTabs;
+        private IContainer components;
 
-    public TabControl(IContainer container)
-    {
-        _hideTabs = false;
-        components = null;
-        container.Add(this);
-        InitializeComponent();
-    }
-
-    public override Rectangle DisplayRectangle
-    {
-        get
+        public TabControl()
         {
-            int num;
-            if (HideTabs)
-            {
-                return new Rectangle(0, 0, Width, Height);
-            }
-            var height = Alignment <= TabAlignment.Bottom ? ItemSize.Height : ItemSize.Width;
-            if (Appearance == TabAppearance.Normal)
-            {
-                num = 5 + (height*RowCount);
-            }
-            else
-            {
-                num = (3 + height)*RowCount;
-            }
-            switch (Alignment)
-            {
-                case TabAlignment.Bottom:
-                    return new Rectangle(4, 4, Width - 8, (Height - num) - 4);
-
-                case TabAlignment.Left:
-                    return new Rectangle(num, 4, (Width - num) - 4, Height - 8);
-
-                case TabAlignment.Right:
-                    return new Rectangle(4, 4, (Width - num) - 4, Height - 8);
-            }
-            return new Rectangle(4, num, Width - 8, (Height - num) - 4);
+            _hideTabs = false;
+            components = null;
+            InitializeComponent();
         }
-    }
 
-    [DefaultValue(false), RefreshProperties(RefreshProperties.All)]
-    public bool HideTabs
-    {
-        private get { return _hideTabs; }
-        set
+        public TabControl(IContainer container)
         {
-            if (_hideTabs == value) {
-                return;
-            }
-            _hideTabs = value;
-            if (value)
-            {
-                OurMultiline = true;
-            }
-            UpdateStyles();
+            _hideTabs = false;
+            components = null;
+            container.Add(this);
+            InitializeComponent();
         }
-    }
 
-    [RefreshProperties(RefreshProperties.All)]
-    public bool OurMultiline
-    {
-        set { Multiline = HideTabs || value; }
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        if (disposing && (components != null))
+        public override Rectangle DisplayRectangle
         {
-            components.Dispose();
-        }
-        base.Dispose(disposing);
-    }
+            get
+            {
+                int num;
+                if (HideTabs)
+                {
+                    return new Rectangle(0, 0, Width, Height);
+                }
+                var height = Alignment <= TabAlignment.Bottom ? ItemSize.Height : ItemSize.Width;
+                if (Appearance == TabAppearance.Normal)
+                {
+                    num = 5 + (height*RowCount);
+                }
+                else
+                {
+                    num = (3 + height)*RowCount;
+                }
+                switch (Alignment)
+                {
+                    case TabAlignment.Bottom:
+                        return new Rectangle(4, 4, Width - 8, (Height - num) - 4);
 
-    private void InitializeComponent()
-    {
-        components = new Container();
+                    case TabAlignment.Left:
+                        return new Rectangle(num, 4, (Width - num) - 4, Height - 8);
+
+                    case TabAlignment.Right:
+                        return new Rectangle(4, 4, (Width - num) - 4, Height - 8);
+                }
+                return new Rectangle(4, num, Width - 8, (Height - num) - 4);
+            }
+        }
+
+        [DefaultValue(false), RefreshProperties(RefreshProperties.All)]
+        public bool HideTabs
+        {
+            private get { return _hideTabs; }
+            set
+            {
+                if (_hideTabs == value) {
+                    return;
+                }
+                _hideTabs = value;
+                if (value)
+                {
+                    OurMultiline = true;
+                }
+                UpdateStyles();
+            }
+        }
+
+        [RefreshProperties(RefreshProperties.All)]
+        public bool OurMultiline
+        {
+            set { Multiline = HideTabs || value; }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            components = new Container();
+        }
     }
 }

@@ -6,10 +6,9 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 
-using VixenPlus;
 using VixenPlus.Properties;
 
-namespace Dialogs {
+namespace VixenPlus.Dialogs {
     public sealed partial class PluginListDialog : Form {
         private readonly List<Channel> _channels;
         private readonly IExecutable _executableObject;

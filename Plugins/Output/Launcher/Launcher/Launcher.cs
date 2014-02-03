@@ -7,6 +7,8 @@ using System.Xml;
 
 using CommonUtils;
 
+using VixenPlus;
+
 namespace Launcher {
     public class Launcher : IEventDrivenOutputPlugIn {
         private XmlNode _setupNode;

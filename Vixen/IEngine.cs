@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Xml;
 
-public interface IEngine : IDisposable
-{
-    XmlDocument CommDoc { set; }
+namespace VixenPlus {
+    public interface IEngine : IDisposable
+    {
+        XmlDocument CommDoc { set; }
 
-    HardwareUpdateDelegate HardwareUpdate { set; }
+        HardwareUpdateDelegate HardwareUpdate { set; }
 
-    bool IsRunning { get; }
-    event OnEngineError EngineError;
+        bool IsRunning { get; }
+        event OnEngineError EngineError;
 
-    event EventHandler EngineStopped;
+        event EventHandler EngineStopped;
 
-    void Initialize(EventSequence sequence);
-    void Pause();
-    bool Play();
-    void Stop();
+        void Initialize(EventSequence sequence);
+        void Pause();
+        bool Play();
+        void Stop();
+    }
 }

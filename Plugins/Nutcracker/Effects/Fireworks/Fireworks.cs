@@ -6,6 +6,8 @@ using System.Windows.Forms;
 
 using CommonUtils;
 
+using VixenPlus;
+
 namespace Fireworks {
     // ReSharper disable once UnusedMember.Global
     public partial class Fireworks : UserControl, INutcrackerEffect {

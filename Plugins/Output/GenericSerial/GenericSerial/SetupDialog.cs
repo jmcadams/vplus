@@ -4,6 +4,7 @@ using System.IO.Ports;
 using System.Windows.Forms;
 using System.Xml;
 
+using VixenPlus;
 using VixenPlus.Properties;
 
 namespace GenericSerial {

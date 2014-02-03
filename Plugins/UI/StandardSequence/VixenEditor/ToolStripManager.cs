@@ -8,6 +8,7 @@ using System.Xml;
 
 using CommonUtils;
 
+using VixenPlus;
 using VixenPlus.Properties;
 
 namespace VixenEditor {

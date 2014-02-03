@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
-using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
 using CommonUtils;
 
-using VixenPlus;
 using VixenPlus.Properties;
 
-namespace Dialogs {
+namespace VixenPlus.Dialogs {
     internal partial class AboutDialog : Form {
         private readonly System.Windows.Forms.Timer _timer = new System.Windows.Forms.Timer {Interval = 25};
         private int _creditsTop;

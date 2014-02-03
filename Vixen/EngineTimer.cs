@@ -1,26 +1,28 @@
 ﻿using System;
 
-internal class EngineTimer : ITickSource, IDisposable
-{
-    // ReSharper disable once UnusedAutoPropertyAccessor.Local
-    private TickCallDelegate TickCall { get; set; }
-
-
-    internal EngineTimer(TickCallDelegate tickCall)
+namespace VixenPlus {
+    internal class EngineTimer : ITickSource, IDisposable
     {
-        TickCall = tickCall.Invoke;
-    }
+        // ReSharper disable once UnusedAutoPropertyAccessor.Local
+        private TickCallDelegate TickCall { get; set; }
 
-    public void Dispose()
-    {
-        TickCall = null;
-        GC.SuppressFinalize(this);
-    }
 
-    ~EngineTimer()
-    {
-        Dispose();
-    }
+        internal EngineTimer(TickCallDelegate tickCall)
+        {
+            TickCall = tickCall.Invoke;
+        }
 
-    internal delegate int TickCallDelegate();
+        public void Dispose()
+        {
+            TickCall = null;
+            GC.SuppressFinalize(this);
+        }
+
+        ~EngineTimer()
+        {
+            Dispose();
+        }
+
+        internal delegate int TickCallDelegate();
+    }
 }

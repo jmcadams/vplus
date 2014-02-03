@@ -1,4 +1,6 @@
-﻿namespace DMXUSBPro
+﻿using VixenPlus;
+
+namespace DMXUSBPro
 {
     using System;
     using System.IO;

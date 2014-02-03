@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 using VixenPlus.Properties;
 
-namespace Dialogs {
+namespace VixenPlus.Dialogs {
     public partial class ChannelOutputMaskDialog : Form {
         public ChannelOutputMaskDialog(IEnumerable<Channel> channels) {
             InitializeComponent();

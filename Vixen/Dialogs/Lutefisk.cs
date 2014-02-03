@@ -2,7 +2,7 @@
 
 using VixenPlus.Properties;
 
-namespace Dialogs
+namespace VixenPlus.Dialogs
 {
     public partial class Lutefisk: Form
     {

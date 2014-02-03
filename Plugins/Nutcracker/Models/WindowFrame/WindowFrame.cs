@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 
+using VixenPlus;
+
 namespace WindowFrame {
     // ReSharper disable once UnusedMember.Global
     public partial class WindowFrame : UserControl, INutcrackerModel {

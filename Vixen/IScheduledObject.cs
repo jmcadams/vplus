@@ -1,4 +1,6 @@
-﻿internal interface IScheduledObject : IExecutable
-{
-    //int Length { get; }
+﻿namespace VixenPlus {
+    internal interface IScheduledObject : IExecutable
+    {
+        //int Length { get; }
+    }
 }

@@ -6,8 +6,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using CommonUtils;
-
 //TODO: Add support for movies
+using VixenPlus;
+
 namespace Pictures {
     public partial class Picture : UserControl, INutcrackerEffect {
 

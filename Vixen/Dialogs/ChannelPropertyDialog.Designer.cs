@@ -1,6 +1,6 @@
 using System.Windows.Forms;
 
-namespace Dialogs {
+namespace VixenPlus.Dialogs {
     public partial class ChannelPropertyDialog {
         private System.ComponentModel.IContainer components = null;
 

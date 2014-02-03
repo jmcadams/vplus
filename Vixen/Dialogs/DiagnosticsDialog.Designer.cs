@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace Dialogs {
+namespace VixenPlus.Dialogs {
     internal partial class DiagnosticsDialog {
         private IContainer components = null;
 

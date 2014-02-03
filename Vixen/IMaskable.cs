@@ -1,4 +1,6 @@
-﻿public interface IMaskable
-{
-    byte[][] Mask { get; set; }
+﻿namespace VixenPlus {
+    public interface IMaskable
+    {
+        byte[][] Mask { get; set; }
+    }
 }

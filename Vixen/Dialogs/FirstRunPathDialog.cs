@@ -3,10 +3,9 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-using VixenPlus;
 using VixenPlus.Properties;
 
-namespace Dialogs {
+namespace VixenPlus.Dialogs {
     public partial class FirstRunPathDialog : Form {
         public FirstRunPathDialog(bool isFirstRun) {
             InitializeComponent();

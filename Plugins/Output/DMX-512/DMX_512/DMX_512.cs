@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 
+using VixenPlus;
+
 namespace DMX_512
 {
     using System.Windows.Forms;

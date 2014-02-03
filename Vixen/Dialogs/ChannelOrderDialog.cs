@@ -8,7 +8,7 @@ using CommonUtils;
 
 using VixenPlus.Properties;
 
-namespace Dialogs {
+namespace VixenPlus.Dialogs {
     public partial class ChannelOrderDialog : Form {
         private List<Channel> _channelNaturalOrder;
         private bool _controlDown;

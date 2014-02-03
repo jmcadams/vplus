@@ -6,10 +6,9 @@ using System.Windows.Forms;
 
 using CommonUtils;
 
-using VixenPlus;
 using VixenPlus.Properties;
 
-namespace Dialogs {
+namespace VixenPlus.Dialogs {
     internal partial class DimmingCurveDialog : Form {
         private readonly SolidBrush _curveBackBrush;
         private readonly float _curveColPointsPerMiniPixel;

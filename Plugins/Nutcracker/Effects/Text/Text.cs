@@ -6,10 +6,10 @@ using System.Linq;
 using System.Windows.Forms;
 
 using CommonUtils;
-
 //TODO: Add support for:
 // Line1 and Line2 now individually controlled and can be rotated independently and colored independently
 //TODO: Fix calculating
+using VixenPlus;
 
 namespace Text {
     public partial class Text : UserControl, INutcrackerEffect {

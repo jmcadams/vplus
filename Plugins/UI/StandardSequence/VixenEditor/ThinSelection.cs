@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 
+using VixenPlus;
+
 
 namespace VixenEditor {
     internal partial class ThinSelection : Form {

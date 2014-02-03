@@ -1,4 +1,4 @@
-using Dialogs;
+using VixenPlus.Dialogs;
 
 namespace Renard {
     using System;

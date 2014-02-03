@@ -1,1 +1,3 @@
-﻿public delegate void HardwareUpdateDelegate(byte[] channelValues);
+﻿namespace VixenPlus {
+    public delegate void HardwareUpdateDelegate(byte[] channelValues);
+}

@@ -4,10 +4,9 @@ using System.IO.Ports;
 using System.Text;
 using System.Windows.Forms;
 
-using VixenPlus;
 using VixenPlus.Properties;
 
-namespace Dialogs {
+namespace VixenPlus.Dialogs {
     public partial class SerialSetupDialog : Form {
 
         private const int BaudRate115200 = 6;

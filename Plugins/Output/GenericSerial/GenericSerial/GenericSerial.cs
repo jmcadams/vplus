@@ -5,6 +5,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 
+using VixenPlus;
+
 namespace GenericSerial {
     public class GenericSerial : IEventDrivenOutputPlugIn {
         private byte[] _footer;

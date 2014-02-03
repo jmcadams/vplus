@@ -57,6 +57,8 @@ using System.Windows.Forms;
 using System.Xml;
 using J1Sys;
 
+using VixenPlus;
+
 namespace E131_VixenPlugin {
     //-----------------------------------------------------------------
     //

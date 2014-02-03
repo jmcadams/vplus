@@ -1,25 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public interface IExecutable : IMaskable, IDisposable
-{
-    int AudioDeviceIndex { get; }
+namespace VixenPlus {
+    public interface IExecutable : IMaskable, IDisposable
+    {
+        int AudioDeviceIndex { get; }
 
-    int AudioDeviceVolume { get; }
+        int AudioDeviceVolume { get; }
 
-    bool CanBePlayed { get; }
+        bool CanBePlayed { get; }
 
-    List<Channel> Channels { get; }
+        List<Channel> Channels { get; }
 
-    List<Channel> FullChannels { get; } 
+        List<Channel> FullChannels { get; } 
 
-    string FileName { get; }
+        string FileName { get; }
 
-    ulong Key { get; }
+        ulong Key { get; }
 
-    string Name { get; }
+        string Name { get; }
 
-    SetupData PlugInData { get; }
+        SetupData PlugInData { get; }
 
-    bool TreatAsLocal { get; }
+        bool TreatAsLocal { get; }
+    }
 }

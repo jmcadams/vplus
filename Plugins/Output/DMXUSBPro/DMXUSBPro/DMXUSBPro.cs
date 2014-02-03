@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 
-using Dialogs;
+using VixenPlus;
+using VixenPlus.Dialogs;
 
 namespace DMXUSBPro
 {

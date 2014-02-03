@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 using VixenPlus.Properties;
 
-namespace Dialogs
+namespace VixenPlus.Dialogs
 {
     public partial class RoutineSelectDialog : Form
     {

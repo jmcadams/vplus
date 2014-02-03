@@ -6,6 +6,8 @@ using System.Windows.Forms;
 
 using CommonUtils;
 
+using VixenPlus;
+
 namespace Spirograph {
     public partial class Spirograph : UserControl, INutcrackerEffect {
 

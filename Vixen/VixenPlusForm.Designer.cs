@@ -27,7 +27,6 @@ namespace VixenPlus {
         private ToolStripMenuItem saveAsToolStripMenuItem;
         private SaveFileDialog saveFileDialog1;
         private ToolStripMenuItem saveToolStripMenuItem;
-        private System.Windows.Forms.Timer scheduleTimer;
         private ToolStripMenuItem setBackgroundSequenceToolStripMenuItem;
         private ToolStripMenuItem setSoundDeviceToolStripMenuItem;
         private System.Windows.Forms.Timer shutdownTimer;
@@ -78,7 +77,6 @@ namespace VixenPlus {
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.iLikeLutefiskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.scheduleTimer = new System.Windows.Forms.Timer(this.components);
             this.helpProvider = new System.Windows.Forms.HelpProvider();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBarBackgroundSequenceRunning = new System.Windows.Forms.ToolStripProgressBar();
@@ -337,11 +335,6 @@ namespace VixenPlus {
             this.openFileDialog1.DefaultExt = "vix";
             this.openFileDialog1.Filter = "Vixen event sequence | *.vix";
             this.openFileDialog1.InitialDirectory = "Sequences";
-            // 
-            // scheduleTimer
-            // 
-            this.scheduleTimer.Interval = 10000;
-            this.scheduleTimer.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // statusStrip
             // 

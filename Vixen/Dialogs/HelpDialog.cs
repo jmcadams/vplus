@@ -2,7 +2,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Dialogs
+namespace VixenPlus.Dialogs
 {
     public sealed partial class HelpDialog : Form
     {

@@ -1,18 +1,20 @@
 using System.Windows.Forms;
 
-internal partial class ProgressDialog : Form
-{
-    public ProgressDialog()
+namespace VixenPlus {
+    internal partial class ProgressDialog : Form
     {
-        InitializeComponent();
-    }
-
-    public string Message
-    {
-        set
+        public ProgressDialog()
         {
-            labelMessage.Text = value;
-            labelMessage.Refresh();
+            InitializeComponent();
+        }
+
+        public string Message
+        {
+            set
+            {
+                labelMessage.Text = value;
+                labelMessage.Refresh();
+            }
         }
     }
 }

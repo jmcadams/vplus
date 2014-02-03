@@ -1,5 +1,7 @@
-﻿public enum ProgramChange
-{
-    SequenceChange,
-    End
+﻿namespace VixenPlus {
+    public enum ProgramChange
+    {
+        SequenceChange,
+        End
+    }
 }

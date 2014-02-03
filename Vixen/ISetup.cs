@@ -1,4 +1,6 @@
-﻿public interface ISetup
-{
-    void Setup();
+﻿namespace VixenPlus {
+    public interface ISetup
+    {
+        void Setup();
+    }
 }

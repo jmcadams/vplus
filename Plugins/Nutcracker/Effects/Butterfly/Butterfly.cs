@@ -6,6 +6,8 @@ using System.Windows.Forms;
 
 using CommonUtils;
 
+using VixenPlus;
+
 namespace Butterfly {
     public partial class Butterfly : UserControl, INutcrackerEffect {
 

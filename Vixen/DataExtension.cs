@@ -2,126 +2,128 @@
 using System.Globalization;
 using System.Xml;
 
-public class DataExtension
-{
-    private readonly string _extensionName;
-    protected XmlDocument Document;
-
-
-    protected DataExtension(string extensionName)
+namespace VixenPlus {
+    public class DataExtension
     {
-        _extensionName = extensionName;
-        Document = Xml.CreateXmlDocument(extensionName);
-        RootNode = Document.DocumentElement;
-    }
+        private readonly string _extensionName;
+        protected XmlDocument Document;
 
-    public XmlNode RootNode { get; protected set; }
 
-    public bool GetBoolean(XmlNode setupDataNode, string childNode, bool defaultValue)
-    {
-        var node = setupDataNode.SelectSingleNode(childNode);
-        if (node != null)
+        protected DataExtension(string extensionName)
         {
-            try
+            _extensionName = extensionName;
+            Document = Xml.CreateXmlDocument(extensionName);
+            RootNode = Document.DocumentElement;
+        }
+
+        public XmlNode RootNode { get; protected set; }
+
+        public bool GetBoolean(XmlNode setupDataNode, string childNode, bool defaultValue)
+        {
+            var node = setupDataNode.SelectSingleNode(childNode);
+            if (node != null)
             {
-                return Convert.ToBoolean(node.InnerText);
+                try
+                {
+                    return Convert.ToBoolean(node.InnerText);
+                }
+                catch
+                {
+                    return false;
+                }
             }
-            catch
+            SetBoolean(setupDataNode, childNode, defaultValue);
+            return defaultValue;
+        }
+
+        public void GetBytes(XmlNode setupDataNode, string childNode, byte[] defaultValue)
+        {
+            var node = setupDataNode.SelectSingleNode(childNode);
+            if (node != null)
             {
-                return false;
+                return;
             }
+            SetBytes(setupDataNode, childNode, defaultValue);
         }
-        SetBoolean(setupDataNode, childNode, defaultValue);
-        return defaultValue;
-    }
 
-    public void GetBytes(XmlNode setupDataNode, string childNode, byte[] defaultValue)
-    {
-        var node = setupDataNode.SelectSingleNode(childNode);
-        if (node != null)
+        public int GetInteger(XmlNode setupDataNode, string childNode, int defaultValue)
         {
-            return;
-        }
-        SetBytes(setupDataNode, childNode, defaultValue);
-    }
-
-    public int GetInteger(XmlNode setupDataNode, string childNode, int defaultValue)
-    {
-        var node = setupDataNode.SelectSingleNode(childNode);
-        if (node != null)
-        {
-            try
+            var node = setupDataNode.SelectSingleNode(childNode);
+            if (node != null)
             {
-                return Convert.ToInt32(node.InnerText);
+                try
+                {
+                    return Convert.ToInt32(node.InnerText);
+                }
+                catch
+                {
+                    return 0;
+                }
             }
-            catch
+            SetInteger(setupDataNode, childNode, defaultValue);
+            return defaultValue;
+        }
+
+        public string GetString(XmlNode setupDataNode, string childNode, string defaultValue)
+        {
+            var node = setupDataNode.SelectSingleNode(childNode);
+            if (node != null)
             {
-                return 0;
+                return node.InnerText;
             }
+            SetString(setupDataNode, childNode, defaultValue);
+            return defaultValue;
         }
-        SetInteger(setupDataNode, childNode, defaultValue);
-        return defaultValue;
-    }
 
-    public string GetString(XmlNode setupDataNode, string childNode, string defaultValue)
-    {
-        var node = setupDataNode.SelectSingleNode(childNode);
-        if (node != null)
+        public void LoadFromXml(XmlNode contextNode)
         {
-            return node.InnerText;
+            RootNode = Xml.GetNodeAlways(contextNode, _extensionName);
+            Document = RootNode.OwnerDocument;
         }
-        SetString(setupDataNode, childNode, defaultValue);
-        return defaultValue;
-    }
 
-    public void LoadFromXml(XmlNode contextNode)
-    {
-        RootNode = Xml.GetNodeAlways(contextNode, _extensionName);
-        Document = RootNode.OwnerDocument;
-    }
-
-    public void SetBoolean(XmlNode setupDataNode, string childNode, bool value)
-    {
-        var newChild = setupDataNode.SelectSingleNode(childNode);
-        if (newChild == null)
+        public void SetBoolean(XmlNode setupDataNode, string childNode, bool value)
         {
-            newChild = Document.CreateElement(childNode);
-            setupDataNode.AppendChild(newChild);
+            var newChild = setupDataNode.SelectSingleNode(childNode);
+            if (newChild == null)
+            {
+                newChild = Document.CreateElement(childNode);
+                setupDataNode.AppendChild(newChild);
+            }
+            newChild.InnerText = value.ToString();
         }
-        newChild.InnerText = value.ToString();
-    }
 
 
-    private void SetBytes(XmlNode setupDataNode, string childNode, byte[] value)
-    {
-        var newChild = setupDataNode.SelectSingleNode(childNode);
-        if (newChild == null)
+        private void SetBytes(XmlNode setupDataNode, string childNode, byte[] value)
         {
-            newChild = Document.CreateElement(childNode);
-            setupDataNode.AppendChild(newChild);
+            var newChild = setupDataNode.SelectSingleNode(childNode);
+            if (newChild == null)
+            {
+                newChild = Document.CreateElement(childNode);
+                setupDataNode.AppendChild(newChild);
+            }
+            newChild.InnerText = Convert.ToBase64String(value);
         }
-        newChild.InnerText = Convert.ToBase64String(value);
-    }
 
-    public void SetInteger(XmlNode setupDataNode, string childNode, int value)
-    {
-        var newChild = setupDataNode.SelectSingleNode(childNode);
-        if (newChild == null)
+        public void SetInteger(XmlNode setupDataNode, string childNode, int value)
         {
-            newChild = Document.CreateElement(childNode);
-            setupDataNode.AppendChild(newChild);
+            var newChild = setupDataNode.SelectSingleNode(childNode);
+            if (newChild == null)
+            {
+                newChild = Document.CreateElement(childNode);
+                setupDataNode.AppendChild(newChild);
+            }
+            newChild.InnerText = value.ToString(CultureInfo.InvariantCulture);
         }
-        newChild.InnerText = value.ToString(CultureInfo.InvariantCulture);
-    }
 
-    public void SetString(XmlNode setupDataNode, string childNode, string value)
-    {
-        var newChild = setupDataNode.SelectSingleNode(childNode);
-        if (newChild == null)
+        public void SetString(XmlNode setupDataNode, string childNode, string value)
         {
-            newChild = Document.CreateElement(childNode);
-            setupDataNode.AppendChild(newChild);
+            var newChild = setupDataNode.SelectSingleNode(childNode);
+            if (newChild == null)
+            {
+                newChild = Document.CreateElement(childNode);
+                setupDataNode.AppendChild(newChild);
+            }
+            newChild.InnerText = value;
         }
-        newChild.InnerText = value;
     }
 }

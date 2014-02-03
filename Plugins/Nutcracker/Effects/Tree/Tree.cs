@@ -6,6 +6,8 @@ using System.Windows.Forms;
 
 using CommonUtils;
 
+using VixenPlus;
+
 namespace Tree {
     public partial class Tree : UserControl, INutcrackerEffect {
 

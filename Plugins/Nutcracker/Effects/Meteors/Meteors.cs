@@ -6,6 +6,8 @@ using System.Windows.Forms;
 
 using CommonUtils;
 
+using VixenPlus;
+
 
 namespace Meteors {
     // ReSharper disable once UnusedMember.Global
