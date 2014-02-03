@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
+using CommonUtils;
+
 namespace VixenPlus {
     internal class HardwarePlugins {
         private static readonly Dictionary<string, IHardwarePlugin> PluginCache = new Dictionary<string, IHardwarePlugin>();
@@ -39,7 +41,7 @@ namespace VixenPlus {
                 }
                     //ReSharper disable once EmptyGeneralCatchClause
                 catch (Exception e){
-                    Debug.Print(e.StackTrace);
+                    e.ToString().Log();
                 }
             }
             return null;
