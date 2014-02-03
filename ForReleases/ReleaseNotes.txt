@@ -1,5 +1,8 @@
 NOTE: For items prefixed with VIX-, you can view more details on https://vixenplus.atlassian.net
 
+02 FEB 2014 - V 0.2.33.4
+   NO JIRA - Found that ElfPreview was not loading since it was looking for a specific type interface instead of a generic one. Replaced the specific type and made todo item to replace once Rob and I can collaborate.
+
 02 FEB 2014 - V 0.2.33.3
    A New Record for Fixes in one day.
    VIX-12 - Fixed a preference bug, was trying to set a value for a timer I had removed from preferences, but didn't remove from program.

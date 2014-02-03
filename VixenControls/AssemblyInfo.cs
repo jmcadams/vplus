@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyVersion("0.2.33.3")]
+[assembly: AssemblyVersion("0.2.33.4")]
 [assembly: Debuggable(DebuggableAttribute.DebuggingModes.DisableOptimizations | DebuggableAttribute.DebuggingModes.EnableEditAndContinue | DebuggableAttribute.DebuggingModes.IgnoreSymbolStoreSequencePoints | DebuggableAttribute.DebuggingModes.Default)]
 [assembly: RuntimeCompatibility(WrapNonExceptionThrows=true)]
 [assembly: AssemblyTitle("VixenPlus")]
@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Vixen+ Lighting Control")]
 [assembly: ComVisible(false)]
 [assembly: AssemblyTrademark("")]
-[assembly: AssemblyFileVersion("0.2.33.3")]
+[assembly: AssemblyFileVersion("0.2.33.4")]
 [assembly: AssemblyProduct("VixenPlus")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyConfiguration("")]

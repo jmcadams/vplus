@@ -5,8 +5,8 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyVersion("0.2.33.3")]
-[assembly: AssemblyFileVersion("0.2.33.3")]
+[assembly: AssemblyVersion("0.2.33.4")]
+[assembly: AssemblyFileVersion("0.2.33.4")]
 [assembly: RuntimeCompatibility(WrapNonExceptionThrows=true)]
 [assembly: ComVisible(false)]
 [assembly: AssemblyTrademark("")]

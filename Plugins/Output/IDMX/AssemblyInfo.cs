@@ -1,7 +1,7 @@
 // Assembly IDMX, Version 1.0.0.0
 
-[assembly: System.Reflection.AssemblyVersion("0.2.33.3")]
-[assembly: System.Reflection.AssemblyFileVersion("0.2.33.3")]
+[assembly: System.Reflection.AssemblyVersion("0.2.33.4")]
+[assembly: System.Reflection.AssemblyFileVersion("0.2.33.4")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 [assembly: System.Reflection.AssemblyTrademark("")]
 [assembly: System.Reflection.AssemblyCopyright("Copyleft 2013")]
