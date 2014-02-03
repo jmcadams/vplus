@@ -34,6 +34,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\README.txt = ..\README.txt
 		..\ForReleases\ReleaseNotes.txt = ..\ForReleases\ReleaseNotes.txt
 		..\todos.txt = ..\todos.txt
+		..\ver.xml = ..\ver.xml
 		VixenPlus.exe.config = VixenPlus.exe.config
 	EndProjectSection
 EndProject
@@ -1182,9 +1183,9 @@ Global
 		{64A53068-B235-4A1E-8E40-D9F39708EAEC} = {13830111-1E9A-4759-8475-E9B55B9B914E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_BuildVersioningStyle = None.None.Increment.TimeStamp
-		BuildVersion_UpdateAssemblyVersion = True
-		BuildVersion_UpdateFileVersion = True
 		BuildVersion_AssemblyInfoFilename = AssemblyInfo.cs
+		BuildVersion_UpdateFileVersion = True
+		BuildVersion_UpdateAssemblyVersion = True
+		BuildVersion_BuildVersioningStyle = None.None.Increment.TimeStamp
 	EndGlobalSection
 EndGlobal
