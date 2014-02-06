@@ -14,9 +14,10 @@ Rem Looks okay, start updating
 
 Rem Loop until the process id that is Vixen+ ends.  This presumes there is only one instance.
 :loop
-tasklist /FI "pid eq %1" 2>NUL | find /I /N "INFO: No">NUL
+tasklist /FI "pid eq %1" >vixen__2.txt 2>&1
+find /I /N "INFO: No" vixen__2.txt > NUL
 if not "%ERRORLEVEL%"=="0" goto loop
-
+del vixen__2.txt
 
 Rem Okay Vixen+ is closed, call 7zr.exe with the right flags and parameters
 cd %3

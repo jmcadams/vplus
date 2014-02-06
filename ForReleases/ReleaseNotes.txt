@@ -1,4 +1,12 @@
+
 NOTE: For items prefixed with VIX-, you can view more details on https://vixenplus.atlassian.net
+
+05 FEB 2014 - V 0.2.36.1
+   NO JIRA - Added better logging to help diagnose update issues.  Created an Update.log file for these logs.
+
+03 FEB 2014 - V 0.2.34.1
+   NO JIRA - Batch file was not working on Windows XP, root cause, find returns errorlevel 1 on success and fail.
+   Added some logging on failure in the update dialog to ensure I could troubleshoot issues better.
 
 02 FEB 2014 - V 0.2.33.4
    NO JIRA - Found that ElfPreview was not loading since it was looking for a specific type interface instead of a generic one. Replaced the specific type and made todo item to replace once Rob and I can collaborate.
