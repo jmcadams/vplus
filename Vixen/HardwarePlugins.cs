@@ -40,7 +40,7 @@ namespace VixenPlus {
                 }
                     //ReSharper disable once EmptyGeneralCatchClause
                 catch (Exception e){
-                    e.ToString().Log();
+                    e.ToString().CrashLog();
                 }
             }
             return null;

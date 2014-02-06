@@ -29,9 +29,11 @@ namespace CommonUtils {
         public const double UpdateAnnually = 8766;    // (365.25 * 24)
     
         public const string LogFileName = "crash.log";
+        public const string UpdateLogFileName = "update.log";
 
         private static readonly SolidBrush GenericBrush = new SolidBrush(Color.Black);
-        private static readonly string LogFile =  Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), LogFileName);
+        private static readonly string LogFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), LogFileName);
+        private static readonly string UpdateLogFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), UpdateLogFileName);
         private const string Checkmark = "\u2714";
 
 
@@ -49,9 +51,19 @@ namespace CommonUtils {
             return ((backgroundColor.R * 299) + (backgroundColor.G * 587) + (backgroundColor.B * 114)) / 1000 >= 128 ? Color.Black : Color.White;
         }
 
-        public static void Log(this string message) {
-            using (var crash = new StreamWriter(LogFile, true)) {
-                crash.WriteLine(message);
+        public static void CrashLog(this string message) {
+            WriteLog(message, LogFile);
+        }
+
+
+        public static void UpdateLog(this string message) {
+            WriteLog(message, UpdateLogFile);
+        }
+
+
+        private static void WriteLog(string message, string logFile) {
+            using (var log = new StreamWriter(logFile, true)) {
+                log.WriteLine(message);
             }
         }
 

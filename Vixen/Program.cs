@@ -50,11 +50,11 @@ namespace VixenPlus {
 
 
         private static void LogException(string message, string stack, bool isTerminating) {
-            string.Format(Resources.FormattedVersion, Assembly.GetExecutingAssembly().GetName().Version).Log();
-            DateTime.Now.ToString(CultureInfo.InvariantCulture).Log();
-            string.Format("Is Terminating? {0}", isTerminating).Log();
-            message.Log();
-            stack.Log();
+            string.Format(Resources.FormattedVersion, Assembly.GetExecutingAssembly().GetName().Version).CrashLog();
+            DateTime.Now.ToString(CultureInfo.InvariantCulture).CrashLog();
+            string.Format("Is Terminating? {0}", isTerminating).CrashLog();
+            message.CrashLog();
+            stack.CrashLog();
         }
 
 
