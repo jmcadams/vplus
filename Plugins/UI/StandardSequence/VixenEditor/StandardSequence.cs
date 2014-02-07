@@ -85,6 +85,7 @@ namespace VixenEditor {
 
         private Pen _gridLinePen;
         private Pen _crosshairPen;
+        private Pen _tickPen;
         private Pen _waveformPen;
         private Pen _waveformZeroLinePen;
 
@@ -105,6 +106,7 @@ namespace VixenEditor {
         private SolidBrush _gridLineBrush;
         private readonly SolidBrush _positionBrush;
         private readonly SolidBrush _selectionBrush;
+        private SolidBrush _tickBrush;
         private SolidBrush _waveformBackBrush;
         private SolidBrush _waveformBrush;
         private SolidBrush _waveformZeroLineBrush;
@@ -1418,29 +1420,40 @@ namespace VixenEditor {
             _gridLineBrush = BrushHandler(_gridLineBrush, "GridLines");
             _mouseCaretBrush = BrushHandler(_mouseCaretBrush, "MouseCaret");
             _waveformBackBrush = BrushHandler(_waveformBackBrush, "WaveformBackground");
+            _tickBrush = BrushHandler(_tickBrush, _waveformBackBrush.Color.GetForeColor());
             _waveformBrush = BrushHandler(_waveformBrush, "Waveform");
             _waveformZeroLineBrush = BrushHandler(_waveformZeroLineBrush, "WaveformZeroLine");
 
             _crosshairPen = PenHandler(_crosshairPen, "Crosshair");
             _gridLinePen = PenHandler(_gridLinePen, "GridLines");
             _waveformPen = PenHandler(_waveformPen, "Waveform");
+            _tickPen = PenHandler(_tickPen, _tickBrush.Color);
             _waveformZeroLinePen = PenHandler(_waveformZeroLinePen, "WaveformZeroLine");
         }
 
 
-        private SolidBrush BrushHandler(IDisposable brush, string preference) {
+        private static SolidBrush BrushHandler(IDisposable brush, Color color) {
             if (brush != null) {
                 brush.Dispose();
             }
-            return new SolidBrush(GetPreferenceColor(preference));
+            return new SolidBrush(color);
+        }
+
+        private SolidBrush BrushHandler(IDisposable brush, string preference) {
+            return BrushHandler(brush, GetPreferenceColor(preference));
+        }
+
+
+        private static Pen PenHandler(IDisposable pen, Color color) {
+             if (pen != null) {
+                pen.Dispose();
+            }
+            return new Pen(color);
         }
 
 
         private Pen PenHandler(IDisposable pen, string preference) {
-            if (pen != null) {
-                pen.Dispose();
-            }
-            return new Pen(GetPreferenceColor(preference));
+            return PenHandler(pen, GetPreferenceColor(preference));
         }
 
 
@@ -2230,7 +2243,7 @@ namespace VixenEditor {
                     if (rightmosCell != 0) {
                         topLeftPt.X = x;
                         bottomRightPt.X = x;
-                        e.Graphics.DrawLine(Pens.White, topLeftPt, bottomRightPt);
+                        e.Graphics.DrawLine(_tickPen, topLeftPt, bottomRightPt);
                     }
                     rightmosCell++;
                 }
@@ -2257,21 +2270,16 @@ namespace VixenEditor {
                         x = e.ClipRectangle.Left + ((int) (((currentMills - startMills) / Utils.MillsPerSecond) * (_gridColWidth * eventCount)));
                         topLeftPt.X = x;
                         bottomRightPt.X = x;
-                        e.Graphics.DrawLine(Pens.White, topLeftPt, bottomRightPt);
+                        e.Graphics.DrawLine(_tickPen, topLeftPt, bottomRightPt);
                         topLeftPt.X++;
                         bottomRightPt.X++;
-                        e.Graphics.DrawLine(Pens.White, topLeftPt, bottomRightPt);
+                        e.Graphics.DrawLine(_tickPen, topLeftPt, bottomRightPt);
                         var time = currentMills >= Utils.MillsPerMinute
                                        ? currentMills.FormatNoMills(true) : currentMills.FormatMillsOnly();
                         var ef = e.Graphics.MeasureString(time, _timeFont);
-                        e.Graphics.DrawString(time, _timeFont, Brushes.White, x - (ef.Width / 2f), topLeftPt.Y - ef.Height - CaretSize);
+                        e.Graphics.DrawString(time, _timeFont, _tickBrush, x - (ef.Width / 2f), topLeftPt.Y - ef.Height - CaretSize);
                     }
                     currentMills += Utils.MillsPerSecond;
-                    foreach (var b in _eventMarks.Where(b => b != -1)) {
-                        if (b == currentMills / Utils.MillsPerSecond) {
-                            e.Graphics.DrawLine(Pens.Green, topLeftPt, bottomRightPt);
-                        }
-                    }
                 }
             }
 
@@ -2297,9 +2305,9 @@ namespace VixenEditor {
             foreach (var x in _eventMarks.Where(b => b != -1).Select(b => _gridColWidth * (b - hScrollBar1.Value)).Where(x => x < pictureBoxTime.Width)) {
                 topLeftPt.X = x;
                 bottomRightPt.X = x;
-                e.Graphics.DrawLine(Pens.Green, topLeftPt, bottomRightPt);
+                e.Graphics.DrawLine(_tickPen, topLeftPt, bottomRightPt);
                 var num = _eventMarks.IndexOf((x / _gridColWidth) + hScrollBar1.Value);
-                e.Graphics.DrawString(num.ToString(CultureInfo.InvariantCulture), _timeFont, Brushes.White, x + 1, topLeftPt.Y);
+                e.Graphics.DrawString(num.ToString(CultureInfo.InvariantCulture), _timeFont, _tickBrush, x + 1, topLeftPt.Y);
             }
 
             //Draw the column caret
