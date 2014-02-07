@@ -1390,14 +1390,19 @@ namespace VixenEditor {
                     IsDirty = true;
                     break;
 
-                case Notification.ProfileChange: {
+                case Notification.ProfileChange:
                     var currentOrder = _sequence.Sorts.CurrentOrder;
                     _sequence.ReloadProfile();
                     _sequence.Sorts.CurrentOrder = currentOrder;
                     LoadSequenceSorts();
                     RefreshAll();
                     break;
-                }
+
+                case Notification.GroupChange:
+                    var currentGroup = cbGroups.Items[_lastGroupIndex].ToString();
+                    _sequence.Groups = Group.ParseDialogResults((TreeView) data);
+                    UpdateAndSetIndex(currentGroup);
+                    break;
             }
         }
 
@@ -3570,7 +3575,7 @@ namespace VixenEditor {
         }
 
 
-        private void UpdateGroups() {
+        private void UpdateGroups(bool resetIndex = true) {
             cbGroups.Visible = true;
             cbGroups.Items.Clear();
             cbGroups.Items.Add(Group.AllChannels);
@@ -3579,8 +3584,10 @@ namespace VixenEditor {
                     cbGroups.Items.Add(g.Key);
                 }
             }
-            cbGroups.SelectedIndex = 0;
             cbGroups.Items.Add(Group.ManageGroups);
+            if (resetIndex) {
+                cbGroups.SelectedIndex = 0;
+            }
         }
 
 
@@ -4859,6 +4866,7 @@ namespace VixenEditor {
         private void cbGroups_SelectedIndexChanged(object sender, EventArgs e) {
             if (cbGroups.Items.Count > 1 && cbGroups.SelectedIndex == cbGroups.Items.Count - 1) {
                 if (!GroupChanged()) return;
+                Group.SaveGroups(_sequence.Groups, _sequence.Profile != null ? _sequence.Profile.FileName : _sequence.FileName);
             }
             _lastGroupIndex = cbGroups.SelectedIndex;
             _sequence.CurrentGroup = cbGroups.SelectedItem.ToString();
@@ -4883,24 +4891,27 @@ namespace VixenEditor {
 
         private bool GroupChanged() {
             cbGroups.SelectedIndex = _lastGroupIndex;
-            var currentGroup = cbGroups.Items[_lastGroupIndex].ToString();
             using (var groupDialog = new GroupDialog(_sequence, false)) {
                 if (groupDialog.ShowDialog() != DialogResult.OK) {
                     return false;
                 }
-                _sequence.Groups = Group.ParseDialogResults(groupDialog.GetResults);
-                cbGroups.SuspendLayout();
-                UpdateGroups();
-
-                var oldGroup = cbGroups.Items.IndexOf(currentGroup);
-                if (oldGroup == -1) {
-                    oldGroup = 0;
-                }
-                cbGroups.SelectedIndex = oldGroup;
-                _sequence.CurrentGroup = oldGroup > 0 ? currentGroup : Group.AllChannels;
-                cbGroups.ResumeLayout();
+                _systemInterface.InvokeGroupChange(groupDialog.GetResults);
             }
             return true;
+        }
+
+
+        private void UpdateAndSetIndex(string currentGroup) {
+            cbGroups.SuspendLayout();
+            UpdateGroups(false);
+
+            var oldGroup = cbGroups.Items.IndexOf(currentGroup);
+            if (oldGroup == -1) {
+                oldGroup = 0;
+            }
+            cbGroups.SelectedIndex = oldGroup;
+            _sequence.CurrentGroup = oldGroup > 0 ? currentGroup : Group.AllChannels;
+            cbGroups.ResumeLayout();
         }
 
 

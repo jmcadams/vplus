@@ -649,7 +649,6 @@ namespace VixenPlus {
         public string CurrentGroup {
             get { return _currentGroup; }
             set {
-                if (_currentGroup == value) return;
                 _currentGroup = value;
                 ApplyGroupAndSort();
             }

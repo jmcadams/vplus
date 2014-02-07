@@ -543,6 +543,10 @@ namespace VixenPlus {
         }
 
 
+        public void InvokeGroupChange(object data) {
+            NotifyAll(Notification.GroupChange, data);
+        }
+
         private void musicPlayerToolStripMenuItem_Click(object sender, EventArgs e) {
             _host.MusicPlayer.ShowDialog();
         }
@@ -594,11 +598,13 @@ namespace VixenPlus {
         }
 
 
-        private void NotifyAll(Notification notification) {
+        private void NotifyAll(Notification notification, object data = null) {
             foreach (var vixenMdi in MdiChildren.OfType<IVixenMDI>()) {
-                vixenMdi.Notify(notification, null);
+                vixenMdi.Notify(notification, data);
             }
         }
+
+
 
 
         private void onlineSupportForumToolStripMenuItem_Click(object sender, EventArgs e) {
