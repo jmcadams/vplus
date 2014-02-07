@@ -268,7 +268,8 @@ namespace VixenPlus.Dialogs {
 
         private void ReadScreenNodes() {
             var primaryDisplay = _preferences.GetString("PrimaryDisplay");
-            cbScreens.SelectedIndex = primaryDisplay.Length != 0 ? cbScreens.Items.IndexOf(primaryDisplay) : 0;
+            var screenIndex = cbScreens.Items.IndexOf(primaryDisplay);
+            cbScreens.SelectedIndex = primaryDisplay.Length != 0 ? (screenIndex != -1 ? screenIndex : 0) : 0;
             cbUseCheckmark.Checked = _preferences.GetBoolean("UseCheckmark");
         }
 
