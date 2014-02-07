@@ -1,6 +1,11 @@
 
 NOTE: For items prefixed with VIX-, you can view more details on https://vixenplus.atlassian.net
 
+06 FEB 2014 - V 0.2.37.1
+   VIX-13 - Fixed sequence settings, event period length not working correctly.
+   VIX-14 - Can not create new sequence from Wizard, crash log.
+   VIX-4 - Group issues resolved.  When you create a sequence you no longer need to close and reopen.  Also, when you edit group information, other sequences are notified of that change as well.
+
 05 FEB 2014 - V 0.2.36.1
    NO JIRA - Added better logging to help diagnose update issues.  Created an Update.log file for these logs.
 

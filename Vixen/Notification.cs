@@ -5,6 +5,7 @@ namespace VixenPlus {
         PreferenceChange,
         KeyDown,
         SequenceChange,
-        ProfileChange
+        ProfileChange,
+        GroupChange
     }
 }

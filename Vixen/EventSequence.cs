@@ -355,7 +355,7 @@ namespace VixenPlus {
                 }
             }
             Xml.GetNodeAlways(emptyNodeAlways, "EventValues").InnerText = Convert.ToBase64String(inArray);
-            if (emptyNodeAlways.OwnerDocument != null) {
+            if (emptyNodeAlways.OwnerDocument != null && LoadableData != null) {
                 emptyNodeAlways.AppendChild(emptyNodeAlways.OwnerDocument.ImportNode(LoadableData.RootNode, true));
             }
             Xml.SetValue(emptyNodeAlways, "EngineType", EngineType.ToString());
