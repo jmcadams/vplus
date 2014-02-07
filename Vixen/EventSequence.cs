@@ -110,6 +110,10 @@ namespace VixenPlus {
         public int EventPeriod {
             get { return _eventPeriod; }
             set {
+                if (_eventPeriod == value) {
+                    return;
+                }
+
                 _eventPeriod = value;
                 UpdateEventValueArray(true);
             }
@@ -417,12 +421,17 @@ namespace VixenPlus {
                     for (var row = 0; row < rows; row++) {
                         for (var column = 0f; column < columns; column++) {
                             byte newValue = 0;
-                            //for (var oldColumn = 0f; oldColumn < oldColumns; oldColumn++) {
-                            newValue = Math.Max(newValue, EventValues[row, (int) (column * oldColumns)]);
-                            //}
-                            //for (var newColumn = 0f; newColumn < newColumns; newColumn++) {
-                            newEventValues[row, (int) (column * newColumns)] = newValue;
-                            //}
+                            if (oldEventCount < newEventCount) {
+                                for (var oldColumn = 0f; oldColumn < oldColumns; oldColumn++) {
+                                    newValue = Math.Max(newValue, EventValues[row, (int) ((column * oldColumns) + oldColumn)]);
+                                }
+                                for (var newColumn = 0f; newColumn < newColumns; newColumn++) {
+                                    newEventValues[row, (int) ((column * newColumns) + newColumn)] = newValue;
+                                }
+                            }
+                            else {
+                                newEventValues[row, (int)(column * newColumns)] = Math.Max(newValue, EventValues[row, (int)(column * oldColumns)]);
+                            }
                         }
                     }
                 }

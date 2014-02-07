@@ -718,6 +718,7 @@ namespace VixenEditor {
             }
 
             if (originalEventPeriod != _sequence.EventPeriod) {
+                IsDirty = true;
                 HScrollCheck();
                 ParseAudioWaveform();
                 pictureBoxTime.Refresh();
