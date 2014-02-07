@@ -2466,6 +2466,9 @@ namespace VixenEditor {
             pictureBoxGrid.Refresh();
             LoadSequenceSorts();
             LoadSequencePlugins();
+            if (null != _sequence.Groups) {
+                Group.SaveGroups(_sequence.Groups, _sequence.Profile != null ? _sequence.Profile.FileName : _sequence.FileName);
+            }
         }
 
 
@@ -2908,6 +2911,17 @@ namespace VixenEditor {
 
         private void SetProfile(Profile profile) {
             _sequence.Profile = profile;
+
+            if (null != profile) {
+                var groupFile = Path.Combine(Paths.ProfilePath, Path.GetFileNameWithoutExtension(_sequence.Profile.FileName) + Vendor.GroupExtension);
+                if (File.Exists(groupFile)) {
+                    _sequence.Groups = Group.LoadGroups(groupFile);
+                }
+            }
+            else {
+                _sequence.Groups = null;
+            }
+            UpdateGroups();
             ReactToProfileAssignment();
             IsDirty = true;
         }

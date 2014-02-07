@@ -365,7 +365,7 @@ Do you want to overwrite it?</value>
   <data name="RemoveProfile" xml:space="preserve">
     <value>Remove profile {0}?
 
-This will affect any sequences that use this profile.</value>
+This will affect any sequences and groups that use this profile.</value>
   </data>
   <data name="RemoveProfileItem" xml:space="preserve">
     <value>Remove the selected item from this profile?</value>

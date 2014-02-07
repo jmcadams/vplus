@@ -25,6 +25,7 @@ namespace VixenPlus {
             _channelOutputs = new List<int>();
             PlugInData = new SetupData();
             Sorts = new SortOrders();
+            IsDirty = false;
         }
 
 
@@ -35,11 +36,13 @@ namespace VixenPlus {
 
         public int LastSort {
             get { return Sorts.LastSort; }
-            set { Sorts.LastSort = value; }
+            set {
+                Sorts.LastSort = value;
+                IsDirty = true;
+            }
         }
 
         public SortOrders Sorts { get; private set; }
-
 
         public int AudioDeviceIndex {
             get { return -1; }
@@ -71,6 +74,8 @@ namespace VixenPlus {
         } 
 
         public string FileName { get; set; }
+        
+        public bool IsDirty { get; set; }
 
         public ulong Key { get; private set; }
 
@@ -91,7 +96,10 @@ namespace VixenPlus {
         public string Name {
             get { return Path.GetFileNameWithoutExtension(FileName); }
             // ReSharper disable AssignNullToNotNullAttribute
-            set { FileName = Path.Combine(string.IsNullOrEmpty(FileName) ? Paths.ProfilePath : Path.GetDirectoryName(FileName), value + Vendor.ProfilExtension); }
+            set {
+                FileName = Path.Combine(string.IsNullOrEmpty(FileName) ? Paths.ProfilePath : Path.GetDirectoryName(FileName), value + Vendor.ProfilExtension);
+                IsDirty = true;
+            }
             // ReSharper restore AssignNullToNotNullAttribute
         }
 
@@ -110,6 +118,7 @@ namespace VixenPlus {
                 for (var i = 0; i < Channels.Count; i++) {
                     _channelOutputs[i] = value.IndexOf(Channels[i]);
                 }
+                IsDirty = true;
             }
         }
 
@@ -125,6 +134,7 @@ namespace VixenPlus {
             _channelObjects.Add(channelObject);
             _channelOutputs.Add(_channelOutputs.Count);
             Sorts.UpdateChannelCounts(Channels.Count);
+            IsDirty = true;
         }
 
 
@@ -160,6 +170,7 @@ namespace VixenPlus {
                 _channelOutputs.Add(channel.OutputChannel);
             }
             Sorts.UpdateChannelCounts(Channels.Count);
+            IsDirty = true;
         }
 
 
@@ -170,6 +181,7 @@ namespace VixenPlus {
 
         public void InheritSortsFrom(EventSequence sequence) {
             Sorts = (sequence.Sorts == null) ? null : sequence.Sorts.Clone();
+            IsDirty = true;
         }
 
         public void RemoveChannel(Channel channelObject) {
@@ -189,6 +201,7 @@ namespace VixenPlus {
             }
 
             Sorts.UpdateChannelCounts(Channels.Count);
+            IsDirty = true;
         }
 
 
@@ -227,6 +240,7 @@ namespace VixenPlus {
                     }
                 }
             }
+            IsDirty = false;
             if (!_isFrozen) {
                 return;
             }
@@ -248,6 +262,7 @@ namespace VixenPlus {
             if (ownerDocument != null) {
                 ownerDocument.Save(FileName);
             }
+            IsDirty = false;
         }
 
 
@@ -284,7 +299,8 @@ namespace VixenPlus {
                 }
             }
             Xml.SetValue(profile, "DisabledChannels", string.Join(",", disabledChannels.ToArray()));
-            
+
+            IsDirty = false;
             return profile;
         }
 

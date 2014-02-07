@@ -9,6 +9,9 @@
 //------------------------------------------------------------------------------
 
 namespace VixenPlus.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -1714,7 +1717,7 @@ namespace VixenPlus.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Remove profile {0}?
         ///
-        ///This will affect any sequences that use this profile..
+        ///This will affect any sequences and groups that use this profile..
         /// </summary>
         public static string RemoveProfile {
             get {

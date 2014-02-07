@@ -82,9 +82,12 @@ namespace VixenPlus.Dialogs {
 
 
         private void buttonChangeProfileName_Click(object sender, EventArgs e) {
-            if (ChangeProfileName()) {
-                labelProfileName.Text = _contextProfile.Name;
+            if (!ChangeProfileName()) {
+                return;
             }
+
+            labelProfileName.Text = _contextProfile.Name;
+            _contextProfile.IsDirty = true;
         }
 
 
@@ -94,7 +97,9 @@ namespace VixenPlus.Dialogs {
                     DialogResult = DialogResult.None;
                     break;
                 }
-                profile.SaveToFile();
+                if (profile.IsDirty) {
+                    profile.SaveToFile();
+                }
             }
         }
 
@@ -102,6 +107,9 @@ namespace VixenPlus.Dialogs {
         private void buttonPlugins_Click(object sender, EventArgs e) {
             using (var dialog = new PluginListDialog(_contextProfile)) {
                 dialog.ShowDialog();
+                if (dialog.DialogResult == DialogResult.OK) {
+                    _contextProfile.IsDirty = true;
+                }
             }
         }
 
@@ -112,7 +120,7 @@ namespace VixenPlus.Dialogs {
 
 
         private bool ChangeProfileName() {
-            var result = false;
+            var nameChanged = false;
             var newName = string.Empty;
 
             using (var dialog = new TextQueryDialog(Resources.ProfileNamePrompt, Resources.NameThisProfile, _contextProfile.Name)) {
@@ -121,22 +129,23 @@ namespace VixenPlus.Dialogs {
                     if (dialog.ShowDialog() == DialogResult.OK) {
                         newName = dialog.Response;
                         showDialog = false;
-                        result = true;
-                        if (!File.Exists(Path.Combine(Paths.ProfilePath, newName + Vendor.ProfilExtension))) {
+                        nameChanged = true;
+                        if (!File.Exists(Path.Combine(Paths.ProfilePath, newName + Vendor.ProfilExtension)) &&
+                            !File.Exists(Path.Combine(Paths.RoutinePath, newName + Vendor.GroupExtension))) {
                             continue;
                         }
                         var overwriteResult = MessageBox.Show(
-                            String.Format("Profile with the name {0} exists.  Overwrite this profile?", newName), "Overwrite?",
+                            String.Format("Profile or Group with the name {0} exists.  Overwrite this profile?", newName), "Overwrite?",
                             MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                         switch (overwriteResult) {
                             case DialogResult.Yes:
                                 break;
                             case DialogResult.No:
-                                result = false;
+                                nameChanged = false;
                                 showDialog = true;
                                 break;
                             case DialogResult.Cancel:
-                                result = false;
+                                nameChanged = false;
                                 break;
                         }
                     }
@@ -146,8 +155,23 @@ namespace VixenPlus.Dialogs {
                 }
             }
 
-            if (result) _contextProfile.Name = newName;
-            return result;
+            if (!nameChanged) {
+                return false;
+            }
+
+            if (File.Exists(_contextProfile.FileName)) {
+                File.Delete(_contextProfile.FileName);
+            }
+            // ReSharper disable AssignNullToNotNullAttribute
+            var groupName = Path.Combine(Path.GetDirectoryName(_contextProfile.FileName), Path.GetFileNameWithoutExtension(_contextProfile.FileName)) + Vendor.GroupExtension;
+            // ReSharper restore AssignNullToNotNullAttribute
+            if (File.Exists(groupName)) {
+                File.Delete(groupName);
+            }
+            _contextProfile.Name = newName;
+            _contextProfile.IsDirty = true;
+
+            return true;
         }
 
 
@@ -170,6 +194,7 @@ namespace VixenPlus.Dialogs {
                         foreach (var channel in dialog.ChannelMapping) {
                             _channelOrderMapping.Add(channels.IndexOf(channel));
                         }
+                        _contextProfile.IsDirty = true;
                     }
                 }
             }
@@ -181,12 +206,14 @@ namespace VixenPlus.Dialogs {
                     _channelOrderMapping.Add(i);
                 }
                 _contextProfile.LastSort = -1;
+                _contextProfile.IsDirty = true;
             }
             else {
                 _channelOrderMapping.Clear();
                 _channelOrderMapping.AddRange(((SortOrder) comboBoxChannelOrder.SelectedItem).ChannelIndexes);
                 _contextProfile.LastSort = comboBoxChannelOrder.SelectedIndex;
                 btnDeleteChannelOrder.Enabled = true;
+                _contextProfile.IsDirty = true;
             }
             ReloadProfileChannelObjects();
         }
@@ -381,6 +408,10 @@ namespace VixenPlus.Dialogs {
                 return;
             }
             File.Delete(profile.FileName);
+            var groupName = Path.GetFileNameWithoutExtension(profile.FileName) + Vendor.GroupExtension;
+            if (File.Exists(groupName)) {
+                File.Delete(groupName);
+            }
             listBoxProfiles.Items.Remove(profile);
         }
 
@@ -397,6 +428,7 @@ namespace VixenPlus.Dialogs {
                 treeViewProfile.Nodes.Remove(treeViewProfile.SelectedNode);
                 treeViewProfile.SelectedNode = null;
                 treeViewProfile_AfterSelect(null, null);
+                _contextProfile.IsDirty = true;
             }
         }
 
@@ -417,6 +449,7 @@ namespace VixenPlus.Dialogs {
             using (var dialog = new ChannelPropertyDialog(channels, tag, false)) {
                 dialog.ShowDialog();
                 ReloadProfileChannelObjects();
+                _contextProfile.IsDirty = true;
             }
         }
 
