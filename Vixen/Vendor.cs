@@ -1,3 +1,5 @@
+using System.Data;
+
 using VixenPlus.Properties;
 
 namespace VixenPlus {
@@ -5,7 +7,8 @@ namespace VixenPlus {
         public static readonly string ProductDescription = Resources.ProductDescription;
         public const string ProductName = "Vixen+ {Beta}";
         public const string ProductURL = "http://www.vixenplus.com/";
-
+        public const string All = "*";
+        
         public const string ModuleAuthoring = "Artisan";
         //public const string ModulePreview = "Rehersal";
         //public const string ModuleManager = "Roadie";
