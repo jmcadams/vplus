@@ -151,7 +151,7 @@ namespace VixenPlus.Dialogs {
                     return;
                 }
                 if (_version != Utils.GetVersion()) {
-                    Log(string.Format("current: {0}, new: {1}", _version, Utils.GetVersion()));
+                    Log(string.Format("current: {1}, new: {0}", _version, Utils.GetVersion()));
                     SetupDialogShowHide(true);
                     pbDownload.Visible = false;
                     Text = "New update available";
