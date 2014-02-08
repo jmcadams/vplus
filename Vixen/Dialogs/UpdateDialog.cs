@@ -150,7 +150,7 @@ namespace VixenPlus.Dialogs {
                     DialogResult = DialogResult.No;
                     return;
                 }
-                if (_version != Utils.GetVersion()) {
+                if (String.Compare(_version, Utils.GetVersion(), StringComparison.Ordinal) < 0) {
                     Log(string.Format("current: {1}, new: {0}", _version, Utils.GetVersion()));
                     SetupDialogShowHide(true);
                     pbDownload.Visible = false;
