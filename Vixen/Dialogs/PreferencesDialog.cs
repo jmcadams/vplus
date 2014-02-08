@@ -149,6 +149,7 @@ namespace VixenPlus.Dialogs {
             _preferences.SetBoolean("FlipScrollBehavior", checkBoxFlipMouseScroll.Checked);
             _preferences.SetString("DefaultSequenceDirectory", textBoxDefaultSequenceSaveDirectory.Text);
             _preferences.SetBoolean("ShowWaveformZeroLine", cbWavefromZeroLine.Checked);
+            _preferences.SetBoolean("SilenceProfileErrors", cbProfileErrors.Checked);
         }
 
 
@@ -303,6 +304,7 @@ namespace VixenPlus.Dialogs {
             checkBoxFlipMouseScroll.Checked = _preferences.GetBoolean("FlipScrollBehavior");
             textBoxDefaultSequenceSaveDirectory.Text = _preferences.GetString("DefaultSequenceDirectory");
             cbWavefromZeroLine.Checked = _preferences.GetBoolean("ShowWaveformZeroLine");
+            cbProfileErrors.Checked = _preferences.GetBoolean("SilenceProfileErrors");
         }
 
 

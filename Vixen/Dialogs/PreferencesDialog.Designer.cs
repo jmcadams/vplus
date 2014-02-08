@@ -73,6 +73,7 @@ namespace VixenPlus.Dialogs {
             this.label26 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
             this.cbToolbarAutoSave = new System.Windows.Forms.CheckBox();
+            this.cbUpdateFrequency = new System.Windows.Forms.ComboBox();
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -110,8 +111,8 @@ namespace VixenPlus.Dialogs {
             this.label35 = new System.Windows.Forms.Label();
             this.numericUpDownHistoryImages = new System.Windows.Forms.NumericUpDown();
             this.label28 = new System.Windows.Forms.Label();
-            this.tabControl = new TabControl(this.components);
-            this.cbUpdateFrequency = new System.Windows.Forms.ComboBox();
+            this.tabControl = new VixenPlus.TabControl(this.components);
+            this.cbProfileErrors = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinimumLevel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumLevel)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -345,9 +346,9 @@ namespace VixenPlus.Dialogs {
             this.checkBoxEventSequenceAutoSize.AutoSize = true;
             this.checkBoxEventSequenceAutoSize.Location = new System.Drawing.Point(9, 64);
             this.checkBoxEventSequenceAutoSize.Name = "checkBoxEventSequenceAutoSize";
-            this.checkBoxEventSequenceAutoSize.Size = new System.Drawing.Size(224, 17);
+            this.checkBoxEventSequenceAutoSize.Size = new System.Drawing.Size(195, 17);
             this.checkBoxEventSequenceAutoSize.TabIndex = 6;
-            this.checkBoxEventSequenceAutoSize.Text = "Auto sizesequence to match audio length.";
+            this.checkBoxEventSequenceAutoSize.Text = "Auto size sequence to audio length.";
             this.toolTip.SetToolTip(this.checkBoxEventSequenceAutoSize, "Automatically resize an event sequence to the length of the selected audio");
             this.checkBoxEventSequenceAutoSize.UseVisualStyleBackColor = true;
             // 
@@ -665,6 +666,24 @@ namespace VixenPlus.Dialogs {
                     "lel port-based controllers.  Does not affect every\r\ncontroller type.");
             this.cbToolbarAutoSave.UseVisualStyleBackColor = true;
             // 
+            // cbUpdateFrequency
+            // 
+            this.cbUpdateFrequency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbUpdateFrequency.FormattingEnabled = true;
+            this.cbUpdateFrequency.Items.AddRange(new object[] {
+            "On Startup",
+            "Daily",
+            "Weekly",
+            "Monthly",
+            "Quarterly",
+            "Annually",
+            "Never"});
+            this.cbUpdateFrequency.Location = new System.Drawing.Point(168, 47);
+            this.cbUpdateFrequency.Name = "cbUpdateFrequency";
+            this.cbUpdateFrequency.Size = new System.Drawing.Size(117, 21);
+            this.cbUpdateFrequency.TabIndex = 80;
+            this.toolTip.SetToolTip(this.cbUpdateFrequency, "How often will Vixen+ check for updates.");
+            // 
             // buttonOK
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -808,6 +827,7 @@ namespace VixenPlus.Dialogs {
             // 
             this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox5.Controls.Add(this.cbProfileErrors);
             this.groupBox5.Controls.Add(this.cbWavefromZeroLine);
             this.groupBox5.Controls.Add(this.textBoxDefaultSequenceSaveDirectory);
             this.groupBox5.Controls.Add(this.label34);
@@ -1091,23 +1111,17 @@ namespace VixenPlus.Dialogs {
             this.tabControl.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl_Selected);
             this.tabControl.Deselecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl_Deselecting);
             // 
-            // cbUpdateFrequency
+            // cbProfileErrors
             // 
-            this.cbUpdateFrequency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbUpdateFrequency.FormattingEnabled = true;
-            this.cbUpdateFrequency.Items.AddRange(new object[] {
-            "On Startup",
-            "Daily",
-            "Weekly",
-            "Monthly",
-            "Quarterly",
-            "Annually",
-            "Never"});
-            this.cbUpdateFrequency.Location = new System.Drawing.Point(168, 47);
-            this.cbUpdateFrequency.Name = "cbUpdateFrequency";
-            this.cbUpdateFrequency.Size = new System.Drawing.Size(117, 21);
-            this.cbUpdateFrequency.TabIndex = 80;
-            this.toolTip.SetToolTip(this.cbUpdateFrequency, "How often will Vixen+ check for updates.");
+            this.cbProfileErrors.AutoSize = true;
+            this.cbProfileErrors.Location = new System.Drawing.Point(240, 64);
+            this.cbProfileErrors.Name = "cbProfileErrors";
+            this.cbProfileErrors.Size = new System.Drawing.Size(150, 17);
+            this.cbProfileErrors.TabIndex = 14;
+            this.cbProfileErrors.Text = "Silence profile editor errors";
+            this.toolTip.SetToolTip(this.cbProfileErrors, "The default behavior scrolls horizontally when Shift is down.\r\nSelect this to mak" +
+                    "e it scroll vertically when Shift is down.");
+            this.cbProfileErrors.UseVisualStyleBackColor = true;
             // 
             // PreferencesDialog
             // 
@@ -1253,5 +1267,6 @@ namespace VixenPlus.Dialogs {
         private Label label3;
         private TabControl tabControl;
         private ComboBox cbUpdateFrequency;
+        private CheckBox cbProfileErrors;
     }
 }

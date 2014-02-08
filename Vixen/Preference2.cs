@@ -74,6 +74,7 @@ namespace VixenPlus {
             isDirty |= CreateIfMissing("FlipScrollBehavior", false);
             isDirty |= CreateIfMissing("DefaultSequenceDirectory", "");
             isDirty |= CreateIfMissing("ShowWaveformZeroLine", true);
+            isDirty |= CreateIfMissing("SilenceProfileErrors", false);
 
             //Sequence Execution
             isDirty |= CreateIfMissing("ShowPositionMarker", true);
