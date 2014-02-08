@@ -15,7 +15,7 @@ namespace VixenPlus.Dialogs
         {
             InitializeComponent();
             Icon = Resources.VixenPlus;
-            foreach (var str in Directory.GetFiles(Paths.RoutinePath, "*.vir"))
+            foreach (var str in Directory.GetFiles(Paths.RoutinePath, Vendor.All + Vendor.RoutineExtension))
             {
                 listBoxRoutines.Items.Add(new Routine(str));
             }
