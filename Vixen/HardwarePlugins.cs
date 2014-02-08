@@ -23,7 +23,7 @@ namespace VixenPlus {
                 }
                 return plugin2;
             }
-            foreach (var str in Directory.GetFiles(directory, "*.dll")) {
+            foreach (var str in Directory.GetFiles(directory, Vendor.All + Vendor.AppExtension)) {
                 try {
                     var assembly = Assembly.LoadFile(str);
                     foreach (var plugin in from type in assembly.GetExportedTypes()
@@ -51,7 +51,7 @@ namespace VixenPlus {
             if (!Directory.Exists(directory)) {
                 return list;
             }
-            foreach (var str in Directory.GetFiles(directory, "*.dll", SearchOption.TopDirectoryOnly)) {
+            foreach (var str in Directory.GetFiles(directory, Vendor.All + Vendor.AppExtension, SearchOption.TopDirectoryOnly)) {
                 IHardwarePlugin plugin;
                 if (!PluginCache.TryGetValue(str, out plugin)) {
                     try {

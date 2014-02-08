@@ -14,6 +14,7 @@ namespace VixenPlus {
         //public const string ModuleManager = "Roadie";
         //public const string ModuleScheduler = "Conductor";
 
+        public const string AppExtension = ".dll";
         //public const string DataExtension = ".vda";
         public const string GroupExtension = ".vgr";
         public const string MapperExtension = ".vmap";

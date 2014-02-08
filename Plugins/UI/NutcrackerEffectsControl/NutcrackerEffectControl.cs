@@ -38,7 +38,7 @@ namespace NutcrackerEffectsControl {
         }
 
         private void LoadEffects() {
-            foreach (var str in Directory.GetFiles(Paths.NutcrackerEffectsPath, "*.dll")) {
+            foreach (var str in Directory.GetFiles(Paths.NutcrackerEffectsPath, Vendor.All + Vendor.AppExtension)) {
                 var assembly = Assembly.LoadFile(str);
                 foreach (var type in assembly.GetExportedTypes()) {
                     foreach (var type2 in type.GetInterfaces()) {

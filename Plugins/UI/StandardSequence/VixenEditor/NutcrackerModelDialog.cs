@@ -86,7 +86,7 @@ namespace VixenEditor {
         }
 
         private void LoadModels() {
-            foreach (var str in Directory.GetFiles(Paths.NutcrackerModelsPath, "*.dll")) {
+            foreach (var str in Directory.GetFiles(Paths.NutcrackerModelsPath, Vendor.All + Vendor.AppExtension)) {
                 var assembly = Assembly.LoadFile(str);
                 foreach (var type in assembly.GetExportedTypes()) {
                     foreach (var type2 in type.GetInterfaces()) {
