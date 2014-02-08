@@ -692,8 +692,8 @@ namespace VixenEditor {
 
         private void GetDestinationProfile() {
             using (var openProfile = new OpenFileDialog()) {
-                openProfile.Filter = Resources.Profile + @"|*" + Vendor.ProfilExtension;
-                openProfile.DefaultExt = Vendor.ProfilExtension.Replace(".", "");
+                openProfile.Filter = Resources.Profile + @"|*" + Vendor.ProfileExtension;
+                openProfile.DefaultExt = Vendor.ProfileExtension.Replace(".", "");
                 openProfile.CheckFileExists = true;
                 openProfile.Title = @"Select a destination profile";
                 openProfile.InitialDirectory = Paths.ProfilePath;

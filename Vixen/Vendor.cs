@@ -17,7 +17,7 @@ namespace VixenPlus {
         //public const string DataExtension = ".vda";
         public const string GroupExtension = ".vgr";
         public const string MapperExtension = ".vmap";
-        public const string ProfilExtension = ".pro";
+        public const string ProfileExtension = ".pro";
         //public const string ProgramExtension = ".vpr";
         public const string RoutineExtension = ".vir";
         public const string SequenceExtension = ".vix";

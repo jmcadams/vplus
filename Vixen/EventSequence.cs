@@ -720,7 +720,7 @@ namespace VixenPlus {
 
 
         private void AttachToProfile(string profileName) {
-            var path = Path.Combine(Paths.ProfilePath, profileName + Vendor.ProfilExtension);
+            var path = Path.Combine(Paths.ProfilePath, profileName + Vendor.ProfileExtension);
             if (File.Exists(path)) {
                 AttachToProfile(new Profile(path));
                 var groupFile = Path.Combine(Paths.ProfilePath, Path.GetFileNameWithoutExtension(_profile.FileName) + Vendor.GroupExtension);

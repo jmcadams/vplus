@@ -237,7 +237,7 @@ namespace VixenPlus.Dialogs {
             comboBoxProfiles.BeginUpdate();
             comboBoxProfiles.Items.Clear();
             comboBoxProfiles.Items.Add(Resources.None);
-            foreach (var str in Directory.GetFiles(Paths.ProfilePath, @"*.pro")) {
+            foreach (var str in Directory.GetFiles(Paths.ProfilePath, @Vendor.All + Vendor.ProfileExtension)) {
                 // ReSharper disable AssignNullToNotNullAttribute
                 comboBoxProfiles.Items.Add(Path.GetFileNameWithoutExtension(str));
                 // ReSharper restore AssignNullToNotNullAttribute

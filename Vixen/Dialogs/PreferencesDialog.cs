@@ -177,7 +177,7 @@ namespace VixenPlus.Dialogs {
                 var selectedIndex = box.SelectedIndex;
                 box.BeginUpdate();
                 box.Items.Clear();
-                box.Items.AddRange(Directory.GetFiles(Paths.ProfilePath, "*.pro").Select(Path.GetFileNameWithoutExtension).ToArray());
+                box.Items.AddRange(Directory.GetFiles(Paths.ProfilePath, Vendor.All + Vendor.ProfileExtension).Select(Path.GetFileNameWithoutExtension).ToArray());
                 if (selectedIndex < box.Items.Count) {
                     box.SelectedIndex = selectedIndex;
                 }
