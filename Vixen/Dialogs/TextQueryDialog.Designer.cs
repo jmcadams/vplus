@@ -29,9 +29,9 @@ namespace VixenPlus.Dialogs{
             // 
             // textBoxResponse
             // 
-            this.textBoxResponse.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.textBoxResponse.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxResponse.Location = new System.Drawing.Point(10, 33);
+            this.textBoxResponse.Location = new System.Drawing.Point(10, 76);
             this.textBoxResponse.Name = "textBoxResponse";
             this.textBoxResponse.Size = new System.Drawing.Size(396, 20);
             this.textBoxResponse.TabIndex = 1;
@@ -40,7 +40,7 @@ namespace VixenPlus.Dialogs{
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(246, 68);
+            this.buttonOK.Location = new System.Drawing.Point(246, 111);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 2;
@@ -51,7 +51,7 @@ namespace VixenPlus.Dialogs{
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(327, 68);
+            this.buttonCancel.Location = new System.Drawing.Point(327, 111);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 3;
@@ -64,11 +64,12 @@ namespace VixenPlus.Dialogs{
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(414, 99);
+            this.ClientSize = new System.Drawing.Size(414, 142);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.textBoxResponse);
             this.Controls.Add(this.labelQuery);
+            this.MinimumSize = new System.Drawing.Size(430, 180);
             this.Name = "TextQueryDialog";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
