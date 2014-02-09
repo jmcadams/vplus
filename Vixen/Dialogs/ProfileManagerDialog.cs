@@ -25,7 +25,7 @@ namespace VixenPlus.Dialogs {
             tabControl.Multiline = true;
             Icon = Resources.VixenPlus;
             tabControl.OurMultiline = true;
-            foreach (var str in Directory.GetFiles(Paths.ProfilePath, "*.pro")) {
+            foreach (var str in Directory.GetFiles(Paths.ProfilePath, Vendor.All + Vendor.ProfileExtension)) {
                 // ReSharper disable EmptyGeneralCatchClause
                 try {
                     listBoxProfiles.Items.Add(new Profile(str));
@@ -130,7 +130,7 @@ namespace VixenPlus.Dialogs {
                         newName = dialog.Response;
                         showDialog = false;
                         nameChanged = true;
-                        if (!File.Exists(Path.Combine(Paths.ProfilePath, newName + Vendor.ProfilExtension)) &&
+                        if (!File.Exists(Path.Combine(Paths.ProfilePath, newName + Vendor.ProfileExtension)) &&
                             !File.Exists(Path.Combine(Paths.RoutinePath, newName + Vendor.GroupExtension))) {
                             continue;
                         }
