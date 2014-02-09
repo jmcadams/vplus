@@ -444,7 +444,7 @@ namespace VixenPlus {
                 return;
             }
 
-            foreach (var str in Directory.GetFiles(Paths.UIPluginPath, "*.dll")) {
+            foreach (var str in Directory.GetFiles(Paths.UIPluginPath, Vendor.All + Vendor.AppExtension)) {
                 Exception exception;
                 try {
                     var assembly = Assembly.LoadFile(str);
@@ -535,11 +535,16 @@ namespace VixenPlus {
 
 
         private void manageToolStripMenuItem_Click(object sender, EventArgs e) {
-            using (var profileManagerDialog = new ProfileManagerDialog(null)) {
-                if (profileManagerDialog.ShowDialog() == DialogResult.OK) {
-                    NotifyAll(Notification.ProfileChange);
+            using (var dialog = new FrmProfileManager()) {
+                if (dialog.ShowDialog() == DialogResult.OK) {
+                    //NotifyAll(Notification.ProfileChange);
                 }
             }
+            //using (var profileManagerDialog = new ProfileManagerDialog(null)) {
+            //    if (profileManagerDialog.ShowDialog() == DialogResult.OK) {
+            //        NotifyAll(Notification.ProfileChange);
+            //    }
+            //}
         }
 
 

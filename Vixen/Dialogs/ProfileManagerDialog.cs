@@ -123,7 +123,7 @@ namespace VixenPlus.Dialogs {
             var nameChanged = false;
             var newName = string.Empty;
 
-            using (var dialog = new TextQueryDialog(Resources.ProfileNamePrompt, Resources.NameThisProfile, _contextProfile.Name)) {
+            using (var dialog = new TextQueryDialog(Resources.ProfileNamePrompt, Resources.NameThisProfile, _contextProfile.Name, "Delete")) {
                 var showDialog = true;
                 while (showDialog) {
                     if (dialog.ShowDialog() == DialogResult.OK) {
