@@ -535,16 +535,12 @@ namespace VixenPlus {
 
 
         private void manageToolStripMenuItem_Click(object sender, EventArgs e) {
-            using (var dialog = new FrmProfileManager()) {
+            //using (var dialog = new FrmProfileManager()) {
+            using (var dialog = new ProfileManagerDialog(null)) {
                 if (dialog.ShowDialog() == DialogResult.OK) {
-                    //NotifyAll(Notification.ProfileChange);
+                    NotifyAll(Notification.ProfileChange);
                 }
             }
-            //using (var profileManagerDialog = new ProfileManagerDialog(null)) {
-            //    if (profileManagerDialog.ShowDialog() == DialogResult.OK) {
-            //        NotifyAll(Notification.ProfileChange);
-            //    }
-            //}
         }
 
 

@@ -1,6 +1,9 @@
 
 NOTE: For items prefixed with VIX-, you can view more details on https://vixenplus.atlassian.net
 
+10 FEB 2014 - V 0.2.41.1
+   VIX-14 - Fixed - Creating a profile from a sequence cause a hard crash.
+
 07 FEB 2014 - V 0.2.38.1
    VIX-13 - Fixed - Sequence settings, event period length not working correctly.
    VIX-14 - Fixed - Can not create new sequence from Wizard, crash log.

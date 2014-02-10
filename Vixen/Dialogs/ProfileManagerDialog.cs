@@ -123,7 +123,7 @@ namespace VixenPlus.Dialogs {
             var nameChanged = false;
             var newName = string.Empty;
 
-            using (var dialog = new TextQueryDialog(Resources.ProfileNamePrompt, Resources.NameThisProfile, _contextProfile.Name, "Delete")) {
+            using (var dialog = new TextQueryDialog(Resources.ProfileNamePrompt, Resources.NameThisProfile, _contextProfile.Name)) {
                 var showDialog = true;
                 while (showDialog) {
                     if (dialog.ShowDialog() == DialogResult.OK) {
@@ -159,14 +159,17 @@ namespace VixenPlus.Dialogs {
                 return false;
             }
 
-            if (File.Exists(_contextProfile.FileName)) {
-                File.Delete(_contextProfile.FileName);
-            }
-            // ReSharper disable AssignNullToNotNullAttribute
-            var groupName = Path.Combine(Path.GetDirectoryName(_contextProfile.FileName), Path.GetFileNameWithoutExtension(_contextProfile.FileName)) + Vendor.GroupExtension;
-            // ReSharper restore AssignNullToNotNullAttribute
-            if (File.Exists(groupName)) {
-                File.Delete(groupName);
+            if (!string.IsNullOrEmpty(_contextProfile.FileName)) {
+                if (File.Exists(_contextProfile.FileName)) {
+                    File.Delete(_contextProfile.FileName);
+                }
+
+                var root = Path.GetDirectoryName(_contextProfile.FileName) ?? Paths.ProfilePath;
+
+                var groupName = Path.Combine(root, Path.GetFileNameWithoutExtension(_contextProfile.FileName)) + Vendor.GroupExtension;
+                if (File.Exists(groupName)) {
+                    File.Delete(groupName);
+                }
             }
             _contextProfile.Name = newName;
             _contextProfile.IsDirty = true;
