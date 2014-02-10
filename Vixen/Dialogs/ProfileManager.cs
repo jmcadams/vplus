@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -14,6 +16,7 @@ namespace VixenPlus.Dialogs {
     public partial class FrmProfileManager : Form {
         #region ClassMembers
 
+
         private readonly bool _suppressErrors = Preference2.GetInstance().GetBoolean("SilenceProfileErrors");
         private readonly int _dgvWidthDiff;
         private readonly int _dgvHeightDiff;
@@ -25,8 +28,16 @@ namespace VixenPlus.Dialogs {
         private const int OutputChannelCol = 3;
         private const int ChannelColorCol = 4;
 
+        private const int TabChannels = 0;
+        private const int TabPlugins = 1;
+        private const int TabGroups = 2;
+        private const int TabSorts = 3;
+        private const int TabNutcracker = 4;
+
         private const string Warning = "\n\nNOTE: While most functions can be undone by pressing cancel in the Profile Manager dialog, this one cannot.";
         #endregion
+
+        #region Constructor
 
         //TODO Can this really be an IExecutable?
         public FrmProfileManager(Profile defaultProfile = null) {
@@ -45,6 +56,8 @@ namespace VixenPlus.Dialogs {
             }
         }
 
+        #endregion
+
         #region Events
 
         #region "Generic" Events
@@ -54,26 +67,36 @@ namespace VixenPlus.Dialogs {
             dgvChannels.Height = Height - _dgvHeightDiff;
         }
 
+        private void tcProfile_SelectedIndexChanged(object sender, EventArgs e) {
+            DoButtonManagement();
+        }
 
-        private void cbProfiles_SelectedIndexChanged(object sender, EventArgs e) {
-            //todo need to save any changes before changing index
-            dgvChannels.Rows.Clear();
+        #region Channel Tab Events
 
-            if (0 == cbProfiles.SelectedIndex) {
-                EnableButtons(false);
+        private void btnChannelOutputs_Click(object sender, EventArgs e) {
+            foreach (var z in GetSelectedRows().Reverse()) {
+                Debug.Print(z.Cells["ChannelNum"].Value.ToString());
+            }
+        }
+
+        private void dgvChannels_SelectionChanged(object sender, EventArgs e) {
+            DoButtonManagement();
+        }
+
+        private void btnEnableDisable_Click(object sender, EventArgs e) {
+            var button = sender as Button;
+            if (null == button) {
                 return;
             }
 
-            EnableButtons(true);
-
-            _contextProfile = (Profile) cbProfiles.SelectedItem;
-            var count = 1;
-            foreach (var ch in _contextProfile.FullChannels) {
-                var row = dgvChannels.Rows.Add(new object[] {ch.Enabled, count++, ch.Name, ch.OutputChannel + 1, ColorTranslator.ToHtml(ch.Color)});
-                dgvChannels.Rows[row].DefaultCellStyle.BackColor = ch.Color;
-                dgvChannels.Rows[row].DefaultCellStyle.ForeColor = ch.Color.GetForeColor();
+            var enable = button.Text.Equals("Enable");
+            foreach (var row in GetSelectedRows()) {
+                row.Cells[ChannelEnabledCol].Value = enable;
             }
+            DoButtonManagement();
         }
+
+        #endregion
 
         #endregion
 
@@ -138,7 +161,7 @@ namespace VixenPlus.Dialogs {
 
         #endregion
 
-        #region Profile Group Box Buttons
+        #region Profile Group Box Events
         
         private void btnAddProfile_Click(object sender, EventArgs e) {
             var newName = GetNewName("Create");
@@ -168,7 +191,7 @@ namespace VixenPlus.Dialogs {
 
             DeleteIfExists(_contextProfile.FileName);
             DeleteIfExists(Path.Combine(Path.GetDirectoryName(_contextProfile.FileName) ?? Paths.ProfilePath, _contextProfile.Name + Vendor.GroupExtension));
-            InitializeProfileComboBox();
+            InitializeChannelTab();
             cbProfiles.SelectedIndex = 0;
         }
 
@@ -182,12 +205,112 @@ namespace VixenPlus.Dialogs {
             RenameOrCopyProfile(true);
         }
 
+
+        private void cbProfiles_SelectedIndexChanged(object sender, EventArgs e) {
+            //todo need to save any changes before changing index
+            dgvChannels.Rows.Clear();
+
+            if (0 == cbProfiles.SelectedIndex) {
+                _contextProfile = null;
+                DoButtonManagement();
+                return;
+            }
+
+            _contextProfile = (Profile)cbProfiles.SelectedItem;
+            DoButtonManagement();
+
+            var count = 1;
+            foreach (var ch in _contextProfile.FullChannels) {
+                var row = dgvChannels.Rows.Add(new object[] { ch.Enabled, count++, ch.Name, ch.OutputChannel + 1, ColorTranslator.ToHtml(ch.Color) });
+                dgvChannels.Rows[row].DefaultCellStyle.BackColor = ch.Color;
+                dgvChannels.Rows[row].DefaultCellStyle.ForeColor = ch.Color.GetForeColor();
+            }
+        }
+
         #endregion
         
         #endregion
 
         #region Support Methods
 
+        #region Button management
+        private void DoButtonManagement() {
+            var isProfileLoaded = _contextProfile != null;
+            SetGeneralButtons(isProfileLoaded);
+ 
+            switch (tcProfile.SelectedIndex) {
+                case TabChannels:
+                    SetChannelTabButtons(isProfileLoaded);
+                    break;
+                case TabPlugins:
+                    SetPluginsTabButtons(isProfileLoaded);
+                    break;
+                case TabGroups:
+                    SetGroupTabButtons(isProfileLoaded);
+                    break;
+                case TabSorts:
+                    SetSortsTabButtons(isProfileLoaded);
+                    break;
+                case TabNutcracker:
+                    SetNutcrackerTabButtons(isProfileLoaded);
+                    break;
+            }
+        }
+
+
+        private void SetChannelTabButtons(bool isProfileLoaded) {
+            var selectedRows = GetSelectedRows().ToList();
+            var cellsSelected = selectedRows.Any();
+            var oneRowSelected = selectedRows.Count() == 1;
+            var hasEnabledChannels = (from DataGridViewRow x in selectedRows where (bool.Parse(x.Cells[ChannelEnabledCol].Value.ToString())) select x).Any();
+            var hasDisabledChannels = (from DataGridViewRow x in selectedRows where (!bool.Parse(x.Cells[ChannelEnabledCol].Value.ToString())) select x).Any();
+
+            btnChAddMulti.Enabled = isProfileLoaded; // todo
+            btnChAddOne.Enabled = isProfileLoaded; // todo
+            btnChColorMulti.Enabled = isProfileLoaded && !oneRowSelected; // todo
+            btnChColorOne.Enabled = isProfileLoaded && cellsSelected; // todo
+            btnChDisable.Enabled = isProfileLoaded && cellsSelected && hasEnabledChannels;
+            btnChEnable.Enabled = isProfileLoaded && cellsSelected && hasDisabledChannels;
+            btnChExport.Enabled = isProfileLoaded;
+            btnChImport.Enabled = isProfileLoaded;
+            btnChMapAbove.Enabled = isProfileLoaded && cellsSelected; //todo
+            btnChMapBelow.Enabled = isProfileLoaded && cellsSelected; //todo
+        }
+
+
+        private void SetGeneralButtons(bool isProfileLoaded) {
+            btnChannelOutputs.Enabled = isProfileLoaded;
+            
+            btnCopyProfile.Enabled = isProfileLoaded;
+            btnDeleteProfile.Enabled = isProfileLoaded;
+            btnRenameProfile.Enabled = isProfileLoaded;
+        }
+
+
+        private void SetGroupTabButtons(bool isProfileLoaded) {
+            btnGraButton.Enabled = isProfileLoaded;
+        }
+
+
+        private void SetPluginsTabButtons(bool isProfileLoaded) {
+            btnPiaButton.Enabled = isProfileLoaded;
+        }
+
+
+        private void SetNutcrackerTabButtons(bool isProfileLoaded) {
+            btnNcaButton.Enabled = isProfileLoaded;
+        }
+
+
+        private void SetSortsTabButtons(bool isProfileLoaded) {
+            btnSrtDelete.Enabled = isProfileLoaded;
+            btnSrtSave.Enabled = isProfileLoaded;
+            cbSrtOrders.Enabled = isProfileLoaded;
+        }
+
+        #endregion
+
+        #region Helper Methods
         private static void CopyFile(string originalFile, string newFile) {
             DeleteIfExists(newFile);
             File.Copy(originalFile, newFile);
@@ -198,24 +321,6 @@ namespace VixenPlus.Dialogs {
             if (File.Exists(fileName)) {
                 File.Delete(fileName);
             }
-        }
-
-        private void EnableButtons(bool isEnabled) {
-            btnAddMultipleProfileChannels.Enabled = isEnabled;
-            btnAddProfileChannel.Enabled = isEnabled;
-            btnChannelColors.Enabled = isEnabled;
-            btnChannelMask.Enabled = isEnabled;
-            btnChannelOutputs.Enabled = isEnabled;
-            btnCopyProfile.Enabled = isEnabled;
-            btnDeleteChannelOrder.Enabled = isEnabled;
-            btnDeleteProfile.Enabled = isEnabled;
-            btnExport.Enabled = isEnabled;
-            btnImport.Enabled = isEnabled;
-            btnRemoveProfileChannels.Enabled = isEnabled;
-            btnRenameProfile.Enabled = isEnabled;
-            btnSaveChannelOrder.Enabled = isEnabled;
-            cbChannelOrder.Enabled = isEnabled;
-            tbProfileChannelCount.Enabled = isEnabled;
         }
 
 
@@ -256,12 +361,22 @@ namespace VixenPlus.Dialogs {
         }
 
 
+        private IEnumerable<DataGridViewRow> GetSelectedRows() {
+            var hashSet = new HashSet<DataGridViewRow>();
+            foreach (var cell in from DataGridViewCell x in dgvChannels.SelectedCells where !hashSet.Contains(x.OwningRow) select x) {
+                hashSet.Add(cell.OwningRow);
+            }
+
+            return hashSet;
+        } 
+
+
         private void InitializeControls() {
-            InitializeProfileComboBox();
+            InitializeChannelTab();
         }
 
 
-        private void InitializeProfileComboBox(bool reload = false) {
+        private void InitializeChannelTab(bool reload = false) {
             var errors = new StringBuilder();
             cbProfiles.Items.Clear();
             cbProfiles.Items.Add("Select or add a profile");
@@ -293,7 +408,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void RefreshProfileComboBox(string newName) {
-            InitializeProfileComboBox(true);
+            InitializeChannelTab(true);
             SetProfileIndex(newName);
         }
 
@@ -338,6 +453,8 @@ namespace VixenPlus.Dialogs {
                 cbProfiles.SelectedIndex = cbProfiles.Items.IndexOf(profile);
             }
         }
+
+        #endregion
 
         #endregion
     }
