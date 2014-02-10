@@ -1,4 +1,3 @@
-
 NOTE: For items prefixed with VIX-, you can view more details on https://vixenplus.atlassian.net
 
 10 FEB 2014 - V 0.2.41.1
