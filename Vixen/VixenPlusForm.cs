@@ -24,8 +24,8 @@ namespace VixenPlus {
 
         private readonly Dictionary<string, IUIPlugIn> _registeredFileTypes;
 
-        private readonly EventHandler _historyItemClick;
-        private readonly EventHandler _newMenuItemClick;
+        private EventHandler _historyItemClick;
+        private EventHandler _newMenuItemClick;
 
         private readonly Host _host;
 
@@ -343,6 +343,8 @@ namespace VixenPlus {
             _host.StopBackgroundObjects();
             _host.BackgroundSequenceName = null;
             _preferences.SaveSettings();
+            _historyItemClick = null;
+            _newMenuItemClick = null;
         }
 
         private DialogResult CheckDirty(IUIPlugIn pluginInstance) {
@@ -535,10 +537,10 @@ namespace VixenPlus {
 
 
         private void manageToolStripMenuItem_Click(object sender, EventArgs e) {
-            //using (var dialog = new FrmProfileManager()) {
-            using (var dialog = new ProfileManagerDialog(null)) {
+            using (var dialog = new FrmProfileManager()) {
+            //using (var dialog = new ProfileManagerDialog(null)) {
                 if (dialog.ShowDialog() == DialogResult.OK) {
-                    NotifyAll(Notification.ProfileChange);
+            //        NotifyAll(Notification.ProfileChange);
                 }
             }
         }
