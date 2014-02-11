@@ -14,9 +14,9 @@ using VixenPlus.Properties;
 
 namespace VixenPlus.Dialogs {
     public partial class FrmProfileManager : Form {
+
         #region ClassMembers
-
-
+        
         private readonly bool _suppressErrors = Preference2.GetInstance().GetBoolean("SilenceProfileErrors");
         private readonly int _dgvWidthDiff;
         private readonly int _dgvHeightDiff;
@@ -35,6 +35,8 @@ namespace VixenPlus.Dialogs {
         private const int TabNutcracker = 4;
 
         private const string Warning = "\n\nNOTE: While most functions can be undone by pressing cancel in the Profile Manager dialog, this one cannot.";
+        
+        
         #endregion
 
         #region Constructor
@@ -61,6 +63,27 @@ namespace VixenPlus.Dialogs {
         #region Events
 
         #region "Generic" Events
+
+        private void FrmProfileManager_KeyDown(object sender, KeyEventArgs e) {
+            switch (tcProfile.SelectedIndex) {
+                case TabChannels:
+                    DoChannelKeys(e);
+                    break;
+                case TabPlugins:
+                    DoPluginsKeys(e);
+                    break;
+                case TabGroups:
+                    DoGroupKeys(e);
+                    break;
+                case TabSorts:
+                    DoSortsKeys(e);
+                    break;
+                case TabNutcracker:
+                    DoNutcrackerKeys(e);
+                    break;
+            }
+        }
+
 
         private void frmProfileManager_Resize(object sender, EventArgs e) {
             dgvChannels.Width = Width - _dgvWidthDiff;
@@ -234,6 +257,7 @@ namespace VixenPlus.Dialogs {
         #region Support Methods
 
         #region Button management
+
         private void DoButtonManagement() {
             var isProfileLoaded = _contextProfile != null;
             SetGeneralButtons(isProfileLoaded);
@@ -279,11 +303,14 @@ namespace VixenPlus.Dialogs {
 
 
         private void SetGeneralButtons(bool isProfileLoaded) {
+            var isChannelPanel = panelChButtons.Visible;
             btnChannelOutputs.Enabled = isProfileLoaded;
-            
-            btnCopyProfile.Enabled = isProfileLoaded;
-            btnDeleteProfile.Enabled = isProfileLoaded;
-            btnRenameProfile.Enabled = isProfileLoaded;
+            btnCancel.Enabled = isChannelPanel;
+            btnOkay.Enabled = isChannelPanel;
+            btnAddProfile.Enabled = isChannelPanel;
+            btnCopyProfile.Enabled = isProfileLoaded && isChannelPanel;
+            btnDeleteProfile.Enabled = isProfileLoaded && isChannelPanel;
+            btnRenameProfile.Enabled = isProfileLoaded && isChannelPanel;
         }
 
 
@@ -306,6 +333,82 @@ namespace VixenPlus.Dialogs {
             btnSrtDelete.Enabled = isProfileLoaded;
             btnSrtSave.Enabled = isProfileLoaded;
             cbSrtOrders.Enabled = isProfileLoaded;
+        }
+
+        #endregion
+
+        #region Key Press Management
+
+        #region Group Key Management
+
+        private void DoGroupKeys(KeyEventArgs e) {
+            Debug.Print(e.KeyCode.ToString());
+        }
+        
+        #endregion
+
+        #region Channel Key Management
+
+        private void DoChannelKeys(KeyEventArgs e) {
+            switch (e.KeyCode) {
+                case Keys.C:
+                    if (!e.Control) {
+                        return;
+                    }
+
+                    DoChannelCopy();
+                    e.Handled = true;
+                    break;
+
+                case Keys.V:
+                    if (!e.Control) {
+                        return;
+                    }
+
+                    DoChannelPaste();
+                    e.Handled = true;
+                    break;
+            }
+        }
+
+
+        private void DoChannelCopy() {
+            if (dgvChannels.GetCellCount(DataGridViewElementStates.Selected) <= 0) {
+                return;
+            }
+
+            var data = dgvChannels.GetClipboardContent();
+            if (null != data) {
+                Clipboard.SetDataObject(data);
+            }
+        }
+
+
+        private static void DoChannelPaste() {
+            if (Clipboard.ContainsData(DataFormats.Text)) {
+                var s = (string)Clipboard.GetData(DataFormats.Text);
+                Clipboard.SetData(DataFormats.Text, s);
+                var csv = s.Split(new []{"\r\n"}, StringSplitOptions.None).ToList();
+                foreach (var cc in csv.SelectMany(c => c.Split('\t').ToList())) {
+                    Debug.Print("'" + cc + "'");
+                }
+            }
+        }
+
+        #endregion
+
+        private void DoNutcrackerKeys(KeyEventArgs e) {
+            throw new NotImplementedException();
+        }
+
+
+        private void DoPluginsKeys(KeyEventArgs e) {
+            throw new NotImplementedException();
+        }
+
+
+        private void DoSortsKeys(KeyEventArgs e) {
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -456,6 +559,22 @@ namespace VixenPlus.Dialogs {
 
         #endregion
 
+        private void btnChAddMulti_Click(object sender, EventArgs e) {
+            panelChButtons.Visible = false;
+            panelChGenerator.Visible = true;
+            DoButtonManagement();
+        }
+
         #endregion
+
+        private void btnGenOk_Click(object sender, EventArgs e) {
+            panelChButtons.Visible = true;
+            panelChGenerator.Visible = false;
+            DoButtonManagement();
+        }
+
+        private void FrmProfileManager_Shown(object sender, EventArgs e) {
+            DoButtonManagement();
+        }
     }
 }
