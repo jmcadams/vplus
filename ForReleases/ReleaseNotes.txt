@@ -1,5 +1,8 @@
 NOTE: For items prefixed with VIX-, you can view more details on https://vixenplus.atlassian.net
 
+01 MAR 2014 - V 0.2.60.1
+   VIX-5 - New profile editor, plugin editor, sort editor, group editor and nutcracker model editor.
+
 10 FEB 2014 - V 0.2.41.1
    VIX-14 - Fixed - Creating a profile from a sequence cause a hard crash.
 

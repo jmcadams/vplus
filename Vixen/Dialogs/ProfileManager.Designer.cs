@@ -38,30 +38,36 @@
             this.tcProfile = new System.Windows.Forms.TabControl();
             this.tpChannels = new System.Windows.Forms.TabPage();
             this.panelChGenerator = new System.Windows.Forms.Panel();
+            this.btnChGenSaveTemplate = new System.Windows.Forms.Button();
             this.gbRules = new System.Windows.Forms.GroupBox();
-            this.btnRuleSave = new System.Windows.Forms.Button();
             this.panelRuleEditor = new System.Windows.Forms.Panel();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.cbRuleEndNum = new System.Windows.Forms.CheckBox();
+            this.nudRuleIncr = new System.Windows.Forms.NumericUpDown();
+            this.nudRuleEnd = new System.Windows.Forms.NumericUpDown();
+            this.nudRuleStart = new System.Windows.Forms.NumericUpDown();
+            this.lblRuleIncr = new System.Windows.Forms.Label();
+            this.lblRuleStartNum = new System.Windows.Forms.Label();
+            this.tbRuleWords = new System.Windows.Forms.TextBox();
+            this.lblRulePrompt = new System.Windows.Forms.Label();
+            this.cbRuleColors = new System.Windows.Forms.CheckBox();
+            this.pbRuleColor1 = new System.Windows.Forms.PictureBox();
+            this.pbRuleColor2 = new System.Windows.Forms.PictureBox();
+            this.pbRuleColor3 = new System.Windows.Forms.PictureBox();
+            this.pbRuleColor4 = new System.Windows.Forms.PictureBox();
             this.btnRuleDelete = new System.Windows.Forms.Button();
             this.btnRuleAdd = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cbRuleRules = new System.Windows.Forms.ComboBox();
             this.btnRuleDown = new System.Windows.Forms.Button();
             this.btnRuleUp = new System.Windows.Forms.Button();
             this.lbRules = new System.Windows.Forms.ListBox();
-            this.nudChannels = new System.Windows.Forms.NumericUpDown();
+            this.nudChGenChannels = new System.Windows.Forms.NumericUpDown();
             this.lblChGenCount = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.cbTemplate = new System.Windows.Forms.ComboBox();
-            this.lblChFormat = new System.Windows.Forms.Label();
-            this.lblTemplate = new System.Windows.Forms.Label();
-            this.btnGenClose = new System.Windows.Forms.Button();
-            this.btnGenOk = new System.Windows.Forms.Button();
+            this.tbChGenNameFormat = new System.Windows.Forms.TextBox();
+            this.cbChGenTemplate = new System.Windows.Forms.ComboBox();
+            this.lblChGenNameFormat = new System.Windows.Forms.Label();
+            this.lblChGenTemplate = new System.Windows.Forms.Label();
+            this.btnChGrnCancel = new System.Windows.Forms.Button();
+            this.btnChGenOk = new System.Windows.Forms.Button();
             this.panelChButtons = new System.Windows.Forms.Panel();
             this.gbChannels = new System.Windows.Forms.GroupBox();
             this.btnChRename = new System.Windows.Forms.Button();
@@ -106,11 +112,14 @@
             this.panelChGenerator.SuspendLayout();
             this.gbRules.SuspendLayout();
             this.panelRuleEditor.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudChannels)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRuleIncr)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRuleEnd)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRuleStart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudChGenChannels)).BeginInit();
             this.panelChButtons.SuspendLayout();
             this.gbChannels.SuspendLayout();
             this.gbExportImport.SuspendLayout();
@@ -223,28 +232,38 @@
             // 
             this.panelChGenerator.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelChGenerator.Controls.Add(this.btnRuleSave);
+            this.panelChGenerator.Controls.Add(this.btnChGenSaveTemplate);
             this.panelChGenerator.Controls.Add(this.gbRules);
-            this.panelChGenerator.Controls.Add(this.nudChannels);
+            this.panelChGenerator.Controls.Add(this.nudChGenChannels);
             this.panelChGenerator.Controls.Add(this.lblChGenCount);
-            this.panelChGenerator.Controls.Add(this.textBox1);
-            this.panelChGenerator.Controls.Add(this.cbTemplate);
-            this.panelChGenerator.Controls.Add(this.lblChFormat);
-            this.panelChGenerator.Controls.Add(this.lblTemplate);
-            this.panelChGenerator.Controls.Add(this.btnGenClose);
-            this.panelChGenerator.Controls.Add(this.btnGenOk);
+            this.panelChGenerator.Controls.Add(this.tbChGenNameFormat);
+            this.panelChGenerator.Controls.Add(this.cbChGenTemplate);
+            this.panelChGenerator.Controls.Add(this.lblChGenNameFormat);
+            this.panelChGenerator.Controls.Add(this.lblChGenTemplate);
+            this.panelChGenerator.Controls.Add(this.btnChGrnCancel);
+            this.panelChGenerator.Controls.Add(this.btnChGenOk);
             this.panelChGenerator.Location = new System.Drawing.Point(578, 0);
             this.panelChGenerator.Name = "panelChGenerator";
             this.panelChGenerator.Size = new System.Drawing.Size(174, 454);
             this.panelChGenerator.TabIndex = 17;
             this.panelChGenerator.Visible = false;
             // 
+            // btnChGenSaveTemplate
+            // 
+            this.btnChGenSaveTemplate.Image = global::VixenPlus.Properties.Resources.saveSm;
+            this.btnChGenSaveTemplate.Location = new System.Drawing.Point(140, 21);
+            this.btnChGenSaveTemplate.Name = "btnChGenSaveTemplate";
+            this.btnChGenSaveTemplate.Size = new System.Drawing.Size(24, 24);
+            this.btnChGenSaveTemplate.TabIndex = 7;
+            this.toolTip1.SetToolTip(this.btnChGenSaveTemplate, "Save template");
+            this.btnChGenSaveTemplate.UseVisualStyleBackColor = true;
+            // 
             // gbRules
             // 
             this.gbRules.Controls.Add(this.panelRuleEditor);
             this.gbRules.Controls.Add(this.btnRuleDelete);
             this.gbRules.Controls.Add(this.btnRuleAdd);
-            this.gbRules.Controls.Add(this.comboBox1);
+            this.gbRules.Controls.Add(this.cbRuleRules);
             this.gbRules.Controls.Add(this.btnRuleDown);
             this.gbRules.Controls.Add(this.btnRuleUp);
             this.gbRules.Controls.Add(this.lbRules);
@@ -255,100 +274,168 @@
             this.gbRules.TabStop = false;
             this.gbRules.Text = "Rules";
             // 
-            // btnRuleSave
-            // 
-            this.btnRuleSave.Image = global::VixenPlus.Properties.Resources.saveSm;
-            this.btnRuleSave.Location = new System.Drawing.Point(140, 21);
-            this.btnRuleSave.Name = "btnRuleSave";
-            this.btnRuleSave.Size = new System.Drawing.Size(24, 24);
-            this.btnRuleSave.TabIndex = 7;
-            this.toolTip1.SetToolTip(this.btnRuleSave, "Save template");
-            this.btnRuleSave.UseVisualStyleBackColor = true;
-            // 
             // panelRuleEditor
             // 
-            this.panelRuleEditor.Controls.Add(this.textBox2);
-            this.panelRuleEditor.Controls.Add(this.label1);
-            this.panelRuleEditor.Controls.Add(this.checkBox1);
-            this.panelRuleEditor.Controls.Add(this.pictureBox4);
-            this.panelRuleEditor.Controls.Add(this.pictureBox3);
-            this.panelRuleEditor.Controls.Add(this.pictureBox2);
-            this.panelRuleEditor.Controls.Add(this.pictureBox1);
+            this.panelRuleEditor.Controls.Add(this.cbRuleEndNum);
+            this.panelRuleEditor.Controls.Add(this.nudRuleIncr);
+            this.panelRuleEditor.Controls.Add(this.nudRuleEnd);
+            this.panelRuleEditor.Controls.Add(this.nudRuleStart);
+            this.panelRuleEditor.Controls.Add(this.lblRuleIncr);
+            this.panelRuleEditor.Controls.Add(this.lblRuleStartNum);
+            this.panelRuleEditor.Controls.Add(this.tbRuleWords);
+            this.panelRuleEditor.Controls.Add(this.lblRulePrompt);
+            this.panelRuleEditor.Controls.Add(this.cbRuleColors);
+            this.panelRuleEditor.Controls.Add(this.pbRuleColor1);
+            this.panelRuleEditor.Controls.Add(this.pbRuleColor2);
+            this.panelRuleEditor.Controls.Add(this.pbRuleColor3);
+            this.panelRuleEditor.Controls.Add(this.pbRuleColor4);
             this.panelRuleEditor.Location = new System.Drawing.Point(0, 152);
             this.panelRuleEditor.Name = "panelRuleEditor";
             this.panelRuleEditor.Size = new System.Drawing.Size(168, 151);
             this.panelRuleEditor.TabIndex = 6;
             // 
-            // textBox2
+            // cbRuleEndNum
             // 
-            this.textBox2.Location = new System.Drawing.Point(6, 21);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(156, 98);
-            this.textBox2.TabIndex = 6;
-            this.textBox2.Text = "Red,Blue,Green";
+            this.cbRuleEndNum.AutoSize = true;
+            this.cbRuleEndNum.Location = new System.Drawing.Point(5, 60);
+            this.cbRuleEndNum.Name = "cbRuleEndNum";
+            this.cbRuleEndNum.Size = new System.Drawing.Size(58, 17);
+            this.cbRuleEndNum.TabIndex = 13;
+            this.cbRuleEndNum.Text = "End #:";
+            this.cbRuleEndNum.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // nudRuleIncr
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 4);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(147, 13);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Words (separate with comma)";
+            this.nudRuleIncr.Location = new System.Drawing.Point(69, 85);
+            this.nudRuleIncr.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudRuleIncr.Name = "nudRuleIncr";
+            this.nudRuleIncr.Size = new System.Drawing.Size(92, 20);
+            this.nudRuleIncr.TabIndex = 12;
+            this.nudRuleIncr.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.nudRuleIncr.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
-            // checkBox1
+            // nudRuleEnd
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(3, 128);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(58, 17);
-            this.checkBox1.TabIndex = 4;
-            this.checkBox1.Text = "Colors:";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.nudRuleEnd.Location = new System.Drawing.Point(69, 59);
+            this.nudRuleEnd.Maximum = new decimal(new int[] {
+            8000,
+            0,
+            0,
+            0});
+            this.nudRuleEnd.Name = "nudRuleEnd";
+            this.nudRuleEnd.Size = new System.Drawing.Size(92, 20);
+            this.nudRuleEnd.TabIndex = 11;
+            this.nudRuleEnd.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // pictureBox4
+            // nudRuleStart
             // 
-            this.pictureBox4.BackColor = System.Drawing.Color.Red;
-            this.pictureBox4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox4.Location = new System.Drawing.Point(65, 125);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(20, 20);
-            this.pictureBox4.TabIndex = 3;
-            this.pictureBox4.TabStop = false;
+            this.nudRuleStart.Location = new System.Drawing.Point(69, 33);
+            this.nudRuleStart.Maximum = new decimal(new int[] {
+            8000,
+            0,
+            0,
+            0});
+            this.nudRuleStart.Name = "nudRuleStart";
+            this.nudRuleStart.Size = new System.Drawing.Size(92, 20);
+            this.nudRuleStart.TabIndex = 10;
+            this.nudRuleStart.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // pictureBox3
+            // lblRuleIncr
             // 
-            this.pictureBox3.BackColor = System.Drawing.Color.Blue;
-            this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox3.Location = new System.Drawing.Point(91, 125);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(20, 20);
-            this.pictureBox3.TabIndex = 2;
-            this.pictureBox3.TabStop = false;
+            this.lblRuleIncr.AutoSize = true;
+            this.lblRuleIncr.Location = new System.Drawing.Point(6, 87);
+            this.lblRuleIncr.Name = "lblRuleIncr";
+            this.lblRuleIncr.Size = new System.Drawing.Size(57, 13);
+            this.lblRuleIncr.TabIndex = 9;
+            this.lblRuleIncr.Text = "Increment:";
             // 
-            // pictureBox2
+            // lblRuleStartNum
             // 
-            this.pictureBox2.BackColor = System.Drawing.Color.Lime;
-            this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox2.Location = new System.Drawing.Point(117, 125);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(20, 20);
-            this.pictureBox2.TabIndex = 1;
-            this.pictureBox2.TabStop = false;
+            this.lblRuleStartNum.AutoSize = true;
+            this.lblRuleStartNum.Location = new System.Drawing.Point(21, 35);
+            this.lblRuleStartNum.Name = "lblRuleStartNum";
+            this.lblRuleStartNum.Size = new System.Drawing.Size(42, 13);
+            this.lblRuleStartNum.TabIndex = 7;
+            this.lblRuleStartNum.Text = "Start #:";
             // 
-            // pictureBox1
+            // tbRuleWords
             // 
-            this.pictureBox1.BackgroundImage = global::VixenPlus.Properties.Resources.none1;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox1.Location = new System.Drawing.Point(143, 125);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(20, 20);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.tbRuleWords.Location = new System.Drawing.Point(6, 21);
+            this.tbRuleWords.Multiline = true;
+            this.tbRuleWords.Name = "tbRuleWords";
+            this.tbRuleWords.Size = new System.Drawing.Size(156, 98);
+            this.tbRuleWords.TabIndex = 6;
+            // 
+            // lblRulePrompt
+            // 
+            this.lblRulePrompt.AutoSize = true;
+            this.lblRulePrompt.Location = new System.Drawing.Point(6, 4);
+            this.lblRulePrompt.Name = "lblRulePrompt";
+            this.lblRulePrompt.Size = new System.Drawing.Size(109, 13);
+            this.lblRulePrompt.TabIndex = 5;
+            this.lblRulePrompt.Text = "Words (One Per Line)";
+            // 
+            // cbRuleColors
+            // 
+            this.cbRuleColors.AutoSize = true;
+            this.cbRuleColors.Checked = true;
+            this.cbRuleColors.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbRuleColors.Location = new System.Drawing.Point(3, 128);
+            this.cbRuleColors.Name = "cbRuleColors";
+            this.cbRuleColors.Size = new System.Drawing.Size(58, 17);
+            this.cbRuleColors.TabIndex = 4;
+            this.cbRuleColors.Text = "Colors:";
+            this.cbRuleColors.UseVisualStyleBackColor = true;
+            this.cbRuleColors.CheckedChanged += new System.EventHandler(this.cbRuleColors_CheckedChanged);
+            // 
+            // pbRuleColor1
+            // 
+            this.pbRuleColor1.BackColor = System.Drawing.Color.Red;
+            this.pbRuleColor1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pbRuleColor1.Location = new System.Drawing.Point(65, 125);
+            this.pbRuleColor1.Name = "pbRuleColor1";
+            this.pbRuleColor1.Size = new System.Drawing.Size(20, 20);
+            this.pbRuleColor1.TabIndex = 3;
+            this.pbRuleColor1.TabStop = false;
+            // 
+            // pbRuleColor2
+            // 
+            this.pbRuleColor2.BackColor = System.Drawing.Color.Blue;
+            this.pbRuleColor2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pbRuleColor2.Location = new System.Drawing.Point(91, 125);
+            this.pbRuleColor2.Name = "pbRuleColor2";
+            this.pbRuleColor2.Size = new System.Drawing.Size(20, 20);
+            this.pbRuleColor2.TabIndex = 2;
+            this.pbRuleColor2.TabStop = false;
+            // 
+            // pbRuleColor3
+            // 
+            this.pbRuleColor3.BackColor = System.Drawing.Color.Lime;
+            this.pbRuleColor3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pbRuleColor3.Location = new System.Drawing.Point(117, 125);
+            this.pbRuleColor3.Name = "pbRuleColor3";
+            this.pbRuleColor3.Size = new System.Drawing.Size(20, 20);
+            this.pbRuleColor3.TabIndex = 1;
+            this.pbRuleColor3.TabStop = false;
+            // 
+            // pbRuleColor4
+            // 
+            this.pbRuleColor4.BackgroundImage = global::VixenPlus.Properties.Resources.none1;
+            this.pbRuleColor4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pbRuleColor4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pbRuleColor4.Location = new System.Drawing.Point(143, 125);
+            this.pbRuleColor4.Name = "pbRuleColor4";
+            this.pbRuleColor4.Size = new System.Drawing.Size(20, 20);
+            this.pbRuleColor4.TabIndex = 0;
+            this.pbRuleColor4.TabStop = false;
             // 
             // btnRuleDelete
             // 
@@ -370,17 +457,17 @@
             this.toolTip1.SetToolTip(this.btnRuleAdd, "Add selected rule.");
             this.btnRuleAdd.UseVisualStyleBackColor = true;
             // 
-            // comboBox1
+            // cbRuleRules
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.cbRuleRules.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbRuleRules.FormattingEnabled = true;
+            this.cbRuleRules.Items.AddRange(new object[] {
             "Numbers",
             "Words"});
-            this.comboBox1.Location = new System.Drawing.Point(9, 19);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(123, 21);
-            this.comboBox1.TabIndex = 3;
+            this.cbRuleRules.Location = new System.Drawing.Point(9, 19);
+            this.cbRuleRules.Name = "cbRuleRules";
+            this.cbRuleRules.Size = new System.Drawing.Size(123, 21);
+            this.cbRuleRules.TabIndex = 3;
             // 
             // btnRuleDown
             // 
@@ -405,35 +492,30 @@
             // lbRules
             // 
             this.lbRules.FormattingEnabled = true;
-            this.lbRules.Items.AddRange(new object[] {
-            "Numbers = {0}",
-            "Words = {1}",
-            "2",
-            "3"});
             this.lbRules.Location = new System.Drawing.Point(9, 46);
             this.lbRules.Name = "lbRules";
             this.lbRules.Size = new System.Drawing.Size(153, 69);
             this.lbRules.TabIndex = 0;
             // 
-            // nudChannels
+            // nudChGenChannels
             // 
-            this.nudChannels.Location = new System.Drawing.Point(88, 51);
-            this.nudChannels.Maximum = new decimal(new int[] {
+            this.nudChGenChannels.Location = new System.Drawing.Point(88, 51);
+            this.nudChGenChannels.Maximum = new decimal(new int[] {
             8000,
             0,
             0,
             0});
-            this.nudChannels.Minimum = new decimal(new int[] {
+            this.nudChGenChannels.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.nudChannels.Name = "nudChannels";
-            this.nudChannels.Size = new System.Drawing.Size(79, 20);
-            this.nudChannels.TabIndex = 7;
-            this.nudChannels.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.nudChannels.Value = new decimal(new int[] {
-            12,
+            this.nudChGenChannels.Name = "nudChGenChannels";
+            this.nudChGenChannels.Size = new System.Drawing.Size(79, 20);
+            this.nudChGenChannels.TabIndex = 7;
+            this.nudChGenChannels.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.nudChGenChannels.Value = new decimal(new int[] {
+            1,
             0,
             0,
             0});
@@ -447,65 +529,64 @@
             this.lblChGenCount.TabIndex = 6;
             this.lblChGenCount.Text = "# of Channels:";
             // 
-            // textBox1
+            // tbChGenNameFormat
             // 
-            this.textBox1.Location = new System.Drawing.Point(9, 90);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(155, 20);
-            this.textBox1.TabIndex = 5;
-            this.textBox1.Text = "Mini Tree {0:00}:{1}";
+            this.tbChGenNameFormat.Location = new System.Drawing.Point(9, 90);
+            this.tbChGenNameFormat.Name = "tbChGenNameFormat";
+            this.tbChGenNameFormat.Size = new System.Drawing.Size(155, 20);
+            this.tbChGenNameFormat.TabIndex = 5;
             // 
-            // cbTemplate
+            // cbChGenTemplate
             // 
-            this.cbTemplate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbTemplate.FormattingEnabled = true;
-            this.cbTemplate.Items.AddRange(new object[] {
+            this.cbChGenTemplate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbChGenTemplate.FormattingEnabled = true;
+            this.cbChGenTemplate.Items.AddRange(new object[] {
             "RGB Channels",
             "Numbered Elements"});
-            this.cbTemplate.Location = new System.Drawing.Point(9, 24);
-            this.cbTemplate.Name = "cbTemplate";
-            this.cbTemplate.Size = new System.Drawing.Size(125, 21);
-            this.cbTemplate.TabIndex = 3;
+            this.cbChGenTemplate.Location = new System.Drawing.Point(9, 24);
+            this.cbChGenTemplate.Name = "cbChGenTemplate";
+            this.cbChGenTemplate.Size = new System.Drawing.Size(125, 21);
+            this.cbChGenTemplate.TabIndex = 3;
             // 
-            // lblChFormat
+            // lblChGenNameFormat
             // 
-            this.lblChFormat.AutoSize = true;
-            this.lblChFormat.Location = new System.Drawing.Point(6, 74);
-            this.lblChFormat.Name = "lblChFormat";
-            this.lblChFormat.Size = new System.Drawing.Size(115, 13);
-            this.lblChFormat.TabIndex = 4;
-            this.lblChFormat.Text = "Channel Name Format:";
+            this.lblChGenNameFormat.AutoSize = true;
+            this.lblChGenNameFormat.Location = new System.Drawing.Point(6, 74);
+            this.lblChGenNameFormat.Name = "lblChGenNameFormat";
+            this.lblChGenNameFormat.Size = new System.Drawing.Size(115, 13);
+            this.lblChGenNameFormat.TabIndex = 4;
+            this.lblChGenNameFormat.Text = "Channel Name Format:";
             // 
-            // lblTemplate
+            // lblChGenTemplate
             // 
-            this.lblTemplate.AutoSize = true;
-            this.lblTemplate.Location = new System.Drawing.Point(9, 7);
-            this.lblTemplate.Name = "lblTemplate";
-            this.lblTemplate.Size = new System.Drawing.Size(54, 13);
-            this.lblTemplate.TabIndex = 2;
-            this.lblTemplate.Text = "Template:";
+            this.lblChGenTemplate.AutoSize = true;
+            this.lblChGenTemplate.Location = new System.Drawing.Point(9, 7);
+            this.lblChGenTemplate.Name = "lblChGenTemplate";
+            this.lblChGenTemplate.Size = new System.Drawing.Size(54, 13);
+            this.lblChGenTemplate.TabIndex = 2;
+            this.lblChGenTemplate.Text = "Template:";
             // 
-            // btnGenClose
+            // btnChGrnCancel
             // 
-            this.btnGenClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnGenClose.Location = new System.Drawing.Point(90, 425);
-            this.btnGenClose.Name = "btnGenClose";
-            this.btnGenClose.Size = new System.Drawing.Size(75, 23);
-            this.btnGenClose.TabIndex = 1;
-            this.btnGenClose.Text = "Close";
-            this.btnGenClose.UseVisualStyleBackColor = true;
-            this.btnGenClose.Click += new System.EventHandler(this.btnGenOk_Click);
+            this.btnChGrnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnChGrnCancel.Location = new System.Drawing.Point(90, 425);
+            this.btnChGrnCancel.Name = "btnChGrnCancel";
+            this.btnChGrnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnChGrnCancel.TabIndex = 1;
+            this.btnChGrnCancel.Text = "Cancel";
+            this.btnChGrnCancel.UseVisualStyleBackColor = true;
+            this.btnChGrnCancel.Click += new System.EventHandler(this.btnGenOk_Click);
             // 
-            // btnGenOk
+            // btnChGenOk
             // 
-            this.btnGenOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnGenOk.Location = new System.Drawing.Point(9, 425);
-            this.btnGenOk.Name = "btnGenOk";
-            this.btnGenOk.Size = new System.Drawing.Size(75, 23);
-            this.btnGenOk.TabIndex = 0;
-            this.btnGenOk.Text = "Generate";
-            this.btnGenOk.UseVisualStyleBackColor = true;
-            this.btnGenOk.Click += new System.EventHandler(this.btnGenOk_Click);
+            this.btnChGenOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnChGenOk.Location = new System.Drawing.Point(9, 425);
+            this.btnChGenOk.Name = "btnChGenOk";
+            this.btnChGenOk.Size = new System.Drawing.Size(75, 23);
+            this.btnChGenOk.TabIndex = 0;
+            this.btnChGenOk.Text = "Generate";
+            this.btnChGenOk.UseVisualStyleBackColor = true;
+            this.btnChGenOk.Click += new System.EventHandler(this.btnGenOk_Click);
             // 
             // panelChButtons
             // 
@@ -922,11 +1003,14 @@
             this.gbRules.ResumeLayout(false);
             this.panelRuleEditor.ResumeLayout(false);
             this.panelRuleEditor.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudChannels)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRuleIncr)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRuleEnd)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRuleStart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudChGenChannels)).EndInit();
             this.panelChButtons.ResumeLayout(false);
             this.gbChannels.ResumeLayout(false);
             this.gbExportImport.ResumeLayout(false);
@@ -990,30 +1074,36 @@
         private System.Windows.Forms.Button btnChDelete;
         private System.Windows.Forms.Panel panelChButtons;
         private System.Windows.Forms.Panel panelChGenerator;
-        private System.Windows.Forms.Button btnGenClose;
-        private System.Windows.Forms.Button btnGenOk;
+        private System.Windows.Forms.Button btnChGrnCancel;
+        private System.Windows.Forms.Button btnChGenOk;
         private System.Windows.Forms.GroupBox gbRules;
         private System.Windows.Forms.Button btnRuleAdd;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cbRuleRules;
         private System.Windows.Forms.Button btnRuleDown;
         private System.Windows.Forms.Button btnRuleUp;
         private System.Windows.Forms.ListBox lbRules;
-        private System.Windows.Forms.NumericUpDown nudChannels;
+        private System.Windows.Forms.NumericUpDown nudChGenChannels;
         private System.Windows.Forms.Label lblChGenCount;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label lblChFormat;
-        private System.Windows.Forms.ComboBox cbTemplate;
-        private System.Windows.Forms.Label lblTemplate;
+        private System.Windows.Forms.TextBox tbChGenNameFormat;
+        private System.Windows.Forms.Label lblChGenNameFormat;
+        private System.Windows.Forms.ComboBox cbChGenTemplate;
+        private System.Windows.Forms.Label lblChGenTemplate;
         private System.Windows.Forms.Panel panelRuleEditor;
         private System.Windows.Forms.Button btnRuleDelete;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Button btnRuleSave;
+        private System.Windows.Forms.PictureBox pbRuleColor1;
+        private System.Windows.Forms.PictureBox pbRuleColor2;
+        private System.Windows.Forms.PictureBox pbRuleColor3;
+        private System.Windows.Forms.PictureBox pbRuleColor4;
+        private System.Windows.Forms.TextBox tbRuleWords;
+        private System.Windows.Forms.Label lblRulePrompt;
+        private System.Windows.Forms.CheckBox cbRuleColors;
+        private System.Windows.Forms.Button btnChGenSaveTemplate;
+        private System.Windows.Forms.CheckBox cbRuleEndNum;
+        private System.Windows.Forms.NumericUpDown nudRuleIncr;
+        private System.Windows.Forms.NumericUpDown nudRuleEnd;
+        private System.Windows.Forms.NumericUpDown nudRuleStart;
+        private System.Windows.Forms.Label lblRuleIncr;
+        private System.Windows.Forms.Label lblRuleStartNum;
     }
 }

@@ -90,6 +90,12 @@ namespace VixenPlus.Dialogs {
             dgvChannels.Height = Height - _dgvHeightDiff;
         }
 
+
+        private void FrmProfileManager_Shown(object sender, EventArgs e) {
+            DoButtonManagement();
+        }
+
+
         private void tcProfile_SelectedIndexChanged(object sender, EventArgs e) {
             DoButtonManagement();
         }
@@ -259,6 +265,24 @@ namespace VixenPlus.Dialogs {
 
         #region Button management
 
+        #region Channel Generator
+
+        private void btnChAddMulti_Click(object sender, EventArgs e) {
+            panelChButtons.Visible = false;
+            panelChGenerator.Visible = true;
+            DoButtonManagement();
+        }
+
+
+        private void btnGenOk_Click(object sender, EventArgs e) {
+            panelChButtons.Visible = true;
+            panelChGenerator.Visible = false;
+            DoButtonManagement();
+        }
+
+        #endregion
+
+        #region Profile Channels
         private void DoButtonManagement() {
             var isProfileLoaded = _contextProfile != null;
             SetGeneralButtons(isProfileLoaded);
@@ -338,6 +362,8 @@ namespace VixenPlus.Dialogs {
 
         #endregion
 
+        #endregion
+
         #region Key Press Management
 
         #region Group Key Management
@@ -399,17 +425,17 @@ namespace VixenPlus.Dialogs {
         #endregion
 
         private void DoNutcrackerKeys(KeyEventArgs e) {
-            throw new NotImplementedException();
+            Debug.Print(e.KeyCode.ToString());
         }
 
 
         private void DoPluginsKeys(KeyEventArgs e) {
-            throw new NotImplementedException();
+            Debug.Print(e.KeyCode.ToString());
         }
 
 
         private void DoSortsKeys(KeyEventArgs e) {
-            throw new NotImplementedException();
+            Debug.Print(e.KeyCode.ToString());
         }
 
         #endregion
@@ -560,22 +586,15 @@ namespace VixenPlus.Dialogs {
 
         #endregion
 
-        private void btnChAddMulti_Click(object sender, EventArgs e) {
-            panelChButtons.Visible = false;
-            panelChGenerator.Visible = true;
-            DoButtonManagement();
+        private void cbRuleColors_CheckedChanged(object sender, EventArgs e) {
+            var isVisible = cbRuleColors.Checked && cbRuleColors.Visible;
+            pbRuleColor1.Visible = isVisible;
+            pbRuleColor2.Visible = isVisible;
+            pbRuleColor2.Visible = isVisible;
+            pbRuleColor4.Visible = isVisible;
         }
 
         #endregion
 
-        private void btnGenOk_Click(object sender, EventArgs e) {
-            panelChButtons.Visible = true;
-            panelChGenerator.Visible = false;
-            DoButtonManagement();
-        }
-
-        private void FrmProfileManager_Shown(object sender, EventArgs e) {
-            DoButtonManagement();
-        }
     }
 }
