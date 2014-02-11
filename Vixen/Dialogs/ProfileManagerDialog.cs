@@ -166,7 +166,8 @@ namespace VixenPlus.Dialogs {
 
                 var root = Path.GetDirectoryName(_contextProfile.FileName) ?? Paths.ProfilePath;
 
-                var groupName = Path.Combine(root, Path.GetFileNameWithoutExtension(_contextProfile.FileName)) + Vendor.GroupExtension;
+                var groupName = Path.Combine(root,
+                    (Path.GetFileNameWithoutExtension(_contextProfile.FileName)) + Vendor.GroupExtension);
                 if (File.Exists(groupName)) {
                     File.Delete(groupName);
                 }

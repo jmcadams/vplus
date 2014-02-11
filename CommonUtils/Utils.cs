@@ -29,7 +29,7 @@ namespace CommonUtils {
         public const double UpdateAnnually = 8766;    // (365.25 * 24)
     
         public const string LogFileName = "crash.log";
-        public const string UpdateLogFileName = "update.log";
+        private const string UpdateLogFileName = "update.log";
 
         private static readonly SolidBrush GenericBrush = new SolidBrush(Color.Black);
         private static readonly string LogFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), LogFileName);

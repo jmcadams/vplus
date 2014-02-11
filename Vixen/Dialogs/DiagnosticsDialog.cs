@@ -6,6 +6,7 @@ using System.Windows.Forms;
 
 using VixenPlus.Properties;
 
+//TODO Remove this and then we can remove the timers as well.
 namespace VixenPlus.Dialogs {
     internal partial class DiagnosticsDialog : Form {
         private readonly Timers _timers;

@@ -1,5 +1,3 @@
-using System.Data;
-
 using VixenPlus.Properties;
 
 namespace VixenPlus {

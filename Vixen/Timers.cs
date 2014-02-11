@@ -14,7 +14,7 @@ namespace VixenPlus {
             get { return _timers; }
         }
 
-        public bool TimersDisabled { get; private set; }
+        private bool TimersDisabled { get; set; }
 
         public IEnumerable<Timer> CurrentlyEffectiveTimers()
         {
