@@ -141,12 +141,6 @@
     <Compile Include="Dialogs\BackgroundSequenceDialog.Designer.cs">
       <DependentUpon>BackgroundSequenceDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\ChannelGenerator\ChannelGenerator.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\ChannelGenerator\ChannelGenerator.Designer.cs">
-      <DependentUpon>ChannelGenerator.cs</DependentUpon>
-    </Compile>
     <Compile Include="Dialogs\ChannelOrderDialog.cs">
       <SubType>Form</SubType>
     </Compile>
