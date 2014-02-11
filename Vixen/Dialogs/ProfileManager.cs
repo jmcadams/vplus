@@ -248,6 +248,7 @@ namespace VixenPlus.Dialogs {
                 dgvChannels.Rows[row].DefaultCellStyle.BackColor = ch.Color;
                 dgvChannels.Rows[row].DefaultCellStyle.ForeColor = ch.Color.GetForeColor();
             }
+            dgvChannels.Focus();
         }
 
         #endregion
