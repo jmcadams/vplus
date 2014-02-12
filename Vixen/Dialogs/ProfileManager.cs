@@ -48,8 +48,8 @@ namespace VixenPlus.Dialogs {
 
             _dgvWidthDiff = Width - dgvChannels.Width;
             _dgvHeightDiff = Height - dgvChannels.Height;
-
             InitializeControls();
+
             if (null != defaultProfile) {
                 SetProfileIndex(defaultProfile.Name);
             }
@@ -198,9 +198,11 @@ namespace VixenPlus.Dialogs {
                 return;
             }
 
-            var root = Path.GetDirectoryName(_contextProfile.FileName) ?? Paths.ProfilePath;
-            DeleteIfExists(Path.Combine(root, newName + Vendor.GroupExtension));
-            DeleteIfExists(Path.Combine(root, newName + Vendor.ProfileExtension));
+            if (null != _contextProfile) {
+                var root = Path.GetDirectoryName(_contextProfile.FileName) ?? Paths.ProfilePath;
+                DeleteIfExists(Path.Combine(root, newName + Vendor.GroupExtension));
+                DeleteIfExists(Path.Combine(root, newName + Vendor.ProfileExtension));
+            }
 
             var pro = new Profile {Name = newName};
             pro.SaveToFile();
@@ -270,6 +272,14 @@ namespace VixenPlus.Dialogs {
         private void btnChAddMulti_Click(object sender, EventArgs e) {
             panelChButtons.Visible = false;
             panelChGenerator.Visible = true;
+            lblRulePrompt.Text = "";
+            tbRuleWords.Visible = false;
+            lblRuleStartNum.Visible = false;
+            cbRuleEndNum.Visible = false;
+            lblRuleIncr.Visible = false;
+            nudRuleStart.Visible = false;
+            nudRuleEnd.Visible = false;
+            nudRuleIncr.Visible = false;
             DoButtonManagement();
         }
 
@@ -590,11 +600,131 @@ namespace VixenPlus.Dialogs {
             var isVisible = cbRuleColors.Checked && cbRuleColors.Visible;
             pbRuleColor1.Visible = isVisible;
             pbRuleColor2.Visible = isVisible;
-            pbRuleColor2.Visible = isVisible;
+            pbRuleColor3.Visible = isVisible;
             pbRuleColor4.Visible = isVisible;
         }
 
         #endregion
+
+        private void btnRuleAdd_Click(object sender, EventArgs e) {
+            if (cbRuleRules.SelectedIndex == -1) {
+                return;
+            }
+            switch (cbRuleRules.SelectedItem.ToString()) {
+                case "Numbers":
+                    lbRules.Items.Add(new ProfileManagerNumbers {Start = 1, IsLimited = true, End = 1, Increment = 1});
+                    break;
+                case "Words":
+                    lbRules.Items.Add(new ProfileManagerWords {Words = String.Empty});
+                    break;
+            }
+            FormatRuleItems();
+        }
+
+
+        private void lbRules_SelectedIndexChanged(object sender, EventArgs e) {
+            var rule = lbRules.SelectedItem as IRules;
+            if (null == rule) {
+                return;
+            }
+
+            if (rule is ProfileManagerNumbers) {
+                var numbers = rule as ProfileManagerNumbers;
+                ShowNumbers(true, numbers.Prompt);
+                nudRuleStart.Value = numbers.Start;
+                nudRuleEnd.Value = numbers.End;
+                nudRuleEnd.Enabled = numbers.IsLimited;
+                cbRuleEndNum.Checked = numbers.IsLimited;
+                nudRuleIncr.Value = numbers.Increment;
+            }
+            else if (rule is ProfileManagerWords) {
+                var words = rule as ProfileManagerWords;
+                ShowNumbers(false, words.Prompt);
+                tbRuleWords.Text = words.Words;
+            }
+        }
+
+
+        private void ShowNumbers(bool isNumbers, string prompt) {
+            lblRulePrompt.Text = prompt;
+            tbRuleWords.Visible = !isNumbers;
+            lblRuleStartNum.Visible = isNumbers;
+            cbRuleEndNum.Visible = isNumbers;
+            lblRuleIncr.Visible = isNumbers;
+            nudRuleStart.Visible = isNumbers;
+            nudRuleEnd.Visible = isNumbers;
+            nudRuleIncr.Visible = isNumbers;
+        }
+
+        private void nudRuleStart_ValueChanged(object sender, EventArgs e) {
+            ((ProfileManagerNumbers) lbRules.SelectedItem).Start = (int)nudRuleStart.Value;
+        }
+
+        private void nudRuleEnd_ValueChanged(object sender, EventArgs e) {
+            ((ProfileManagerNumbers)lbRules.SelectedItem).End = (int)nudRuleEnd.Value;
+        }
+
+        private void nudRuleIncr_ValueChanged(object sender, EventArgs e) {
+            ((ProfileManagerNumbers)lbRules.SelectedItem).Increment = (int)nudRuleIncr.Value;
+        }
+
+        private void cbRuleEndNum_CheckedChanged(object sender, EventArgs e) {
+            ((ProfileManagerNumbers)lbRules.SelectedItem).IsLimited = cbRuleEndNum.Checked;
+            nudRuleEnd.Enabled = cbRuleEndNum.Checked;
+        }
+
+        private void tbRuleWords_TextChanged(object sender, EventArgs e) {
+            ((ProfileManagerWords) lbRules.SelectedItem).Words = tbRuleWords.Text;
+        }
+
+        private void btnRuleUp_Click(object sender, EventArgs e) {
+            var selected = lbRules.SelectedIndex;
+            if (selected > 0) {
+                SwapRules(selected, selected - 1);
+            }
+        }
+
+        private void btnRuleDown_Click(object sender, EventArgs e) {
+            var selected = lbRules.SelectedIndex;
+            if (selected < lbRules.Items.Count) {
+                SwapRules(selected, selected + 1);
+            }
+        }
+
+
+        private void SwapRules(int originalIndex, int newIndex) {
+            var totalCount = lbRules.Items.Count - 1;
+            if (originalIndex > totalCount || originalIndex < 0 || newIndex > totalCount || newIndex < 0) {
+                return;
+            }
+
+            var holdItem = lbRules.Items[newIndex];
+            lbRules.Items[newIndex] = lbRules.Items[originalIndex];
+            lbRules.Items[originalIndex] = holdItem;
+            FormatRuleItems();
+            //((IRules)lbRules.Items[originalIndex]).Name = string.Format("{0} {{{1}}}", ((IRules)lbRules.Items[newIndex]).BaseName, newIndex);
+            //((IRules)lbRules.Items[newIndex]).Name = string.Format("{0} {{{1}}}", ((IRules)lbRules.Items[originalIndex]).BaseName, originalIndex);
+
+            lbRules.SelectedIndex = newIndex;
+        }
+
+
+        private void FormatRuleItems() {
+            for (var count = 0; count < lbRules.Items.Count; count++) {
+                ((IRules)lbRules.Items[count]).Name = string.Format("{0} {{{1}}}", ((IRules)lbRules.Items[count]).BaseName, count);
+            }
+            lbRules.DisplayMember = "";
+            lbRules.DisplayMember = "Name";
+        }
+
+        private void btnRuleDelete_Click(object sender, EventArgs e) {
+            if (lbRules.SelectedIndex < 0) {
+                return;
+            }
+
+            lbRules.Items.RemoveAt(lbRules.SelectedIndex);
+            FormatRuleItems();
+        }
 
     }
 }

@@ -199,9 +199,9 @@
             // 
             // tcProfile
             // 
-            this.tcProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tcProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tcProfile.Controls.Add(this.tpChannels);
             this.tcProfile.Controls.Add(this.tpPlugins);
             this.tcProfile.Controls.Add(this.tpGroups);
@@ -230,8 +230,8 @@
             // 
             // panelChGenerator
             // 
-            this.panelChGenerator.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelChGenerator.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelChGenerator.Controls.Add(this.btnChGenSaveTemplate);
             this.panelChGenerator.Controls.Add(this.gbRules);
             this.panelChGenerator.Controls.Add(this.nudChGenChannels);
@@ -251,7 +251,7 @@
             // btnChGenSaveTemplate
             // 
             this.btnChGenSaveTemplate.Image = global::VixenPlus.Properties.Resources.saveSm;
-            this.btnChGenSaveTemplate.Location = new System.Drawing.Point(140, 21);
+            this.btnChGenSaveTemplate.Location = new System.Drawing.Point(141, 21);
             this.btnChGenSaveTemplate.Name = "btnChGenSaveTemplate";
             this.btnChGenSaveTemplate.Size = new System.Drawing.Size(24, 24);
             this.btnChGenSaveTemplate.TabIndex = 7;
@@ -303,6 +303,7 @@
             this.cbRuleEndNum.TabIndex = 13;
             this.cbRuleEndNum.Text = "End #:";
             this.cbRuleEndNum.UseVisualStyleBackColor = true;
+            this.cbRuleEndNum.CheckedChanged += new System.EventHandler(this.cbRuleEndNum_CheckedChanged);
             // 
             // nudRuleIncr
             // 
@@ -321,6 +322,7 @@
             0,
             0,
             0});
+            this.nudRuleIncr.ValueChanged += new System.EventHandler(this.nudRuleIncr_ValueChanged);
             // 
             // nudRuleEnd
             // 
@@ -334,6 +336,7 @@
             this.nudRuleEnd.Size = new System.Drawing.Size(92, 20);
             this.nudRuleEnd.TabIndex = 11;
             this.nudRuleEnd.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.nudRuleEnd.ValueChanged += new System.EventHandler(this.nudRuleEnd_ValueChanged);
             // 
             // nudRuleStart
             // 
@@ -347,6 +350,7 @@
             this.nudRuleStart.Size = new System.Drawing.Size(92, 20);
             this.nudRuleStart.TabIndex = 10;
             this.nudRuleStart.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.nudRuleStart.ValueChanged += new System.EventHandler(this.nudRuleStart_ValueChanged);
             // 
             // lblRuleIncr
             // 
@@ -373,6 +377,7 @@
             this.tbRuleWords.Name = "tbRuleWords";
             this.tbRuleWords.Size = new System.Drawing.Size(156, 98);
             this.tbRuleWords.TabIndex = 6;
+            this.tbRuleWords.TextChanged += new System.EventHandler(this.tbRuleWords_TextChanged);
             // 
             // lblRulePrompt
             // 
@@ -446,6 +451,7 @@
             this.btnRuleDelete.TabIndex = 5;
             this.toolTip1.SetToolTip(this.btnRuleDelete, "Remove selected rule");
             this.btnRuleDelete.UseVisualStyleBackColor = true;
+            this.btnRuleDelete.Click += new System.EventHandler(this.btnRuleDelete_Click);
             // 
             // btnRuleAdd
             // 
@@ -456,6 +462,7 @@
             this.btnRuleAdd.TabIndex = 4;
             this.toolTip1.SetToolTip(this.btnRuleAdd, "Add selected rule.");
             this.btnRuleAdd.UseVisualStyleBackColor = true;
+            this.btnRuleAdd.Click += new System.EventHandler(this.btnRuleAdd_Click);
             // 
             // cbRuleRules
             // 
@@ -478,6 +485,7 @@
             this.btnRuleDown.TabIndex = 2;
             this.toolTip1.SetToolTip(this.btnRuleDown, "Move Rule Down");
             this.btnRuleDown.UseVisualStyleBackColor = true;
+            this.btnRuleDown.Click += new System.EventHandler(this.btnRuleDown_Click);
             // 
             // btnRuleUp
             // 
@@ -488,14 +496,18 @@
             this.btnRuleUp.TabIndex = 1;
             this.toolTip1.SetToolTip(this.btnRuleUp, "Move rule up");
             this.btnRuleUp.UseVisualStyleBackColor = true;
+            this.btnRuleUp.Click += new System.EventHandler(this.btnRuleUp_Click);
             // 
             // lbRules
             // 
+            this.lbRules.DisplayMember = "Name";
             this.lbRules.FormattingEnabled = true;
             this.lbRules.Location = new System.Drawing.Point(9, 46);
             this.lbRules.Name = "lbRules";
+            this.lbRules.ScrollAlwaysVisible = true;
             this.lbRules.Size = new System.Drawing.Size(153, 69);
             this.lbRules.TabIndex = 0;
+            this.lbRules.SelectedIndexChanged += new System.EventHandler(this.lbRules_SelectedIndexChanged);
             // 
             // nudChGenChannels
             // 

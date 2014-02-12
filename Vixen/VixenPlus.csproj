@@ -219,6 +219,7 @@
     <Compile Include="Dialogs\InputPluginDialog.Designer.cs">
       <DependentUpon>InputPluginDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\IRules.cs" />
     <Compile Include="Dialogs\Lutefisk.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -261,6 +262,8 @@
     <Compile Include="Dialogs\ProfileManagerDialog.Designer.cs">
       <DependentUpon>ProfileManagerDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\ProfileManagerNumbers.cs" />
+    <Compile Include="Dialogs\ProfileManagerWords.cs" />
     <Compile Include="Dialogs\ReleaseNotesDialog.cs">
       <SubType>Form</SubType>
     </Compile>
