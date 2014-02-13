@@ -301,6 +301,7 @@ namespace VixenPlus.Dialogs {
                 .Where(file => file.EndsWith(Vendor.TemplateExtension)).Select(Path.GetFileNameWithoutExtension)) {
                 cbChGenTemplate.Items.Add(fileName);
             }
+            ShowNumbers(false,"");
         }
 
         #endregion
@@ -636,6 +637,7 @@ namespace VixenPlus.Dialogs {
             nudRuleStart.Visible = isItemSelected && isNumbers;
             nudRuleEnd.Visible = isItemSelected && isNumbers;
             nudRuleIncr.Visible = isItemSelected && isNumbers;
+            PreviewNewChannels();
         }
 
         private void nudRuleStart_ValueChanged(object sender, EventArgs e) {
@@ -860,6 +862,7 @@ namespace VixenPlus.Dialogs {
             }
             FormatRuleItems();
             DoRuleButtons();
+            ShowNumbers(false,"");
         }
 
 
@@ -872,6 +875,54 @@ namespace VixenPlus.Dialogs {
             pb.BackgroundImage = pb.BackColor == Color.Transparent ? Resources.none1 : null;
             pb.BackgroundImageLayout = ImageLayout.Center;
         }
+
+
+        private void PreviewNewChannels() {
+            dgvChannels.Rows.Clear();
+
+        }
+
+        // depth is 1-offset, as it will be the same as the one the user uses
+        //private IEnumerable<string> GenerateNames(int depth, string format, int currentNumber, int maxNumber) {
+        //    List<string> result = new List<string>();
+
+        //    if (Generators.Count < depth || currentNumber > maxNumber)
+        //        return result;
+
+        //    INamingGenerator generator = Generators[depth - 1];
+
+        //    // if the generator is endless, this will be an empty list.
+        //    List<string> names = new List<string>(generator.GenerateNames());
+
+        //    for (int i = 0; i < generator.IterationsInCycle || generator.EndlessCycle; i++) {
+        //        string substitution;
+        //        if (generator.EndlessCycle) {
+        //            substitution = generator.GenerateName(i);
+        //        } else {
+        //            substitution = names[i];
+        //        }
+
+        //        string newFormat = format.Replace("{" + depth + "}", substitution);
+
+        //        // if this is the last generator, use the single string; otherwise, recurse so the next
+        //        // generator can have a crack at it as well.
+        //        if (depth >= Generators.Count) {
+        //            result.Add(newFormat);
+        //        } else {
+        //            // if the sub-generator didn't make anything, add the name directly and treat this one as the final.
+        //            IEnumerable<string> subResult = GenerateNames(depth + 1, newFormat, currentNumber + result.Count, maxNumber);
+        //            if (subResult.Any())
+        //                result.AddRange(subResult);
+        //            else
+        //                result.Add(newFormat);
+        //        }
+
+        //        if (currentNumber + result.Count >= maxNumber)
+        //            break;
+        //    }
+
+        //    return result;
+        //}
 
         private void pbRuleColor_DoubleClick(object sender, EventArgs e) {
             //todo bring up the color dialog and apply the color.
