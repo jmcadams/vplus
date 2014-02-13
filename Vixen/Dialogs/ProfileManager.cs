@@ -4,9 +4,11 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Linq;
 
 using CommonUtils;
 
@@ -163,7 +165,7 @@ namespace VixenPlus.Dialogs {
                                 cols[OutputChannelCol].ToInt(), 
                                 cols[ChannelColorCol]
                             });
-                        dgvChannels.Rows[row].DefaultCellStyle.BackColor = ColorTranslator.FromHtml(cols[ChannelColorCol]);
+                        dgvChannels.Rows[row].DefaultCellStyle.BackColor = cols[ChannelColorCol].FromHTML();
                         dgvChannels.Rows[row].DefaultCellStyle.ForeColor = dgvChannels.Rows[row].DefaultCellStyle.BackColor.GetForeColor();
                     }
                 }
@@ -280,7 +282,9 @@ namespace VixenPlus.Dialogs {
             nudRuleStart.Visible = false;
             nudRuleEnd.Visible = false;
             nudRuleIncr.Visible = false;
+            LoadTemplates();
             DoButtonManagement();
+            DoRuleButtons();
         }
 
 
@@ -288,6 +292,15 @@ namespace VixenPlus.Dialogs {
             panelChButtons.Visible = true;
             panelChGenerator.Visible = false;
             DoButtonManagement();
+        }
+
+
+        private void LoadTemplates() {
+            cbChGenTemplate.Items.Clear();
+            foreach (var fileName in Directory.GetFiles(Paths.ProfilePath, Vendor.All + Vendor.TemplateExtension)
+                .Where(file => file.EndsWith(Vendor.TemplateExtension)).Select(Path.GetFileNameWithoutExtension)) {
+                cbChGenTemplate.Items.Add(fileName);
+            }
         }
 
         #endregion
@@ -623,14 +636,16 @@ namespace VixenPlus.Dialogs {
 
 
         private void lbRules_SelectedIndexChanged(object sender, EventArgs e) {
-            var rule = lbRules.SelectedItem as IRules;
+            var rule = lbRules.SelectedItem as Rules;
             if (null == rule) {
+                ShowNumbers(false, string.Empty);
+                DoRuleButtons();
                 return;
             }
 
             if (rule is ProfileManagerNumbers) {
                 var numbers = rule as ProfileManagerNumbers;
-                ShowNumbers(true, numbers.Prompt);
+                ShowNumbers(true, ProfileManagerNumbers.Prompt);
                 nudRuleStart.Value = numbers.Start;
                 nudRuleEnd.Value = numbers.End;
                 nudRuleEnd.Enabled = numbers.IsLimited;
@@ -639,21 +654,24 @@ namespace VixenPlus.Dialogs {
             }
             else if (rule is ProfileManagerWords) {
                 var words = rule as ProfileManagerWords;
-                ShowNumbers(false, words.Prompt);
+                ShowNumbers(false, ProfileManagerWords.Prompt);
                 tbRuleWords.Text = words.Words;
             }
+            DoRuleButtons();
         }
 
 
         private void ShowNumbers(bool isNumbers, string prompt) {
+            var isItemSelected = lbRules.SelectedIndex != -1;
             lblRulePrompt.Text = prompt;
-            tbRuleWords.Visible = !isNumbers;
-            lblRuleStartNum.Visible = isNumbers;
-            cbRuleEndNum.Visible = isNumbers;
-            lblRuleIncr.Visible = isNumbers;
-            nudRuleStart.Visible = isNumbers;
-            nudRuleEnd.Visible = isNumbers;
-            nudRuleIncr.Visible = isNumbers;
+            lblRulePrompt.Visible = isItemSelected;
+            tbRuleWords.Visible = isItemSelected && !isNumbers;
+            lblRuleStartNum.Visible = isItemSelected && isNumbers;
+            cbRuleEndNum.Visible = isItemSelected && isNumbers;
+            lblRuleIncr.Visible = isItemSelected && isNumbers;
+            nudRuleStart.Visible = isItemSelected && isNumbers;
+            nudRuleEnd.Visible = isItemSelected && isNumbers;
+            nudRuleIncr.Visible = isItemSelected && isNumbers;
         }
 
         private void nudRuleStart_ValueChanged(object sender, EventArgs e) {
@@ -701,20 +719,20 @@ namespace VixenPlus.Dialogs {
             var holdItem = lbRules.Items[newIndex];
             lbRules.Items[newIndex] = lbRules.Items[originalIndex];
             lbRules.Items[originalIndex] = holdItem;
-            FormatRuleItems();
-            //((IRules)lbRules.Items[originalIndex]).Name = string.Format("{0} {{{1}}}", ((IRules)lbRules.Items[newIndex]).BaseName, newIndex);
-            //((IRules)lbRules.Items[newIndex]).Name = string.Format("{0} {{{1}}}", ((IRules)lbRules.Items[originalIndex]).BaseName, originalIndex);
-
             lbRules.SelectedIndex = newIndex;
+            FormatRuleItems();
         }
 
 
         private void FormatRuleItems() {
-            for (var count = 0; count < lbRules.Items.Count; count++) {
-                ((IRules)lbRules.Items[count]).Name = string.Format("{0} {{{1}}}", ((IRules)lbRules.Items[count]).BaseName, count);
+            var count = 0;
+            foreach (Rules rule in lbRules.Items) {
+                rule.Name = string.Format("{0} {{{1}}}", rule.BaseName, count);
+                count++;
             }
             lbRules.DisplayMember = "";
             lbRules.DisplayMember = "Name";
+            DoRuleButtons();
         }
 
         private void btnRuleDelete_Click(object sender, EventArgs e) {
@@ -726,5 +744,156 @@ namespace VixenPlus.Dialogs {
             FormatRuleItems();
         }
 
+
+        private void DoRuleButtons() {
+            var index = lbRules.SelectedIndex;
+            var count = lbRules.Items.Count;
+            btnRuleUp.Enabled = index > 0;
+            btnRuleDown.Enabled = index != -1 && index != count  - 1;
+            btnRuleAdd.Enabled = cbRuleRules.SelectedIndex != -1;
+            btnRuleDelete.Enabled = index != -1;
+
+            btnChGenSaveTemplate.Enabled = !string.IsNullOrEmpty(tbChGenNameFormat.Text) && count > 0;
+        }
+
+        private void cbRuleRules_SelectedIndexChanged(object sender, EventArgs e) {
+            DoRuleButtons();
+        }
+
+        private void lbRules_KeyDown(object sender, KeyEventArgs e) {
+            if (lbRules.SelectedIndex != -1 && e.KeyCode == Keys.Delete) {
+                btnRuleDelete_Click(null, null);
+            }
+        }
+
+        // todo Refactor
+        private void btnChGenSaveTemplate_Click(object sender, EventArgs e) {
+            var newName = string.Empty;
+            using (var dialog = new TextQueryDialog("Template name", "What would you like to name this template?", string.Empty)) {
+                var showDialog = true;
+                while (showDialog) {
+                    if (dialog.ShowDialog() == DialogResult.OK) {
+                        newName = dialog.Response;
+                        showDialog = false;
+                        if (!File.Exists(Path.Combine(Paths.ProfilePath, newName + Vendor.TemplateExtension))) {
+                            continue;
+                        }
+                        var overwriteResult = MessageBox.Show(
+                            String.Format("Template with the name {0} exists.  Overwrite this profile?", newName), "Overwrite?",
+                            MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                        switch (overwriteResult) {
+                            case DialogResult.Yes:
+                                break;
+                            case DialogResult.No:
+                                newName = string.Empty;
+                                showDialog = true;
+                                break;
+                            case DialogResult.Cancel:
+                                newName = string.Empty;
+                                break;
+                        }
+                    } else {
+                        showDialog = false;
+                    }
+                }
+                
+            }
+            if (string.IsNullOrEmpty(newName)) {
+                return;
+            }
+
+            CreateTemplate().Save(Path.Combine(Paths.ProfilePath, newName + Vendor.TemplateExtension));
+        }
+
+
+        private XElement CreateTemplate() {
+            var rules = (new XElement("Rules"));
+            foreach (Rules rule in lbRules.Items) {
+                rules.Add(rule.RuleData);
+            }
+
+            var colors = new XElement("Colors");
+            if (cbRuleColors.Checked) {
+                colors.Add(new XElement("Color1", pbRuleColor1.BackColor.ToHTML()));
+                colors.Add(new XElement("Color2", pbRuleColor2.BackColor.ToHTML()));
+                colors.Add(new XElement("Color3", pbRuleColor3.BackColor.ToHTML()));
+                colors.Add(new XElement("Color4", pbRuleColor4.BackColor.ToHTML()));
+            }
+
+            var template = new XElement("Template",
+                new XElement("Channels", nudChGenChannels.Value),
+                new XElement("ChannelNameFormat", tbChGenNameFormat.Text),
+                rules,
+                colors);
+
+            return template;
+        }
+
+        private void tbChGenNameFormat_TextChanged(object sender, EventArgs e) {
+            DoRuleButtons();
+        }
+
+        private void cbChGenTemplate_SelectedIndexChanged(object sender, EventArgs e) {
+            var template = XElement.Load(Path.Combine(Paths.ProfilePath, cbChGenTemplate.SelectedItem + Vendor.TemplateExtension));
+            var element = template.Element("Channels");
+            nudChGenChannels.Value = element != null ? int.Parse(element.Value) : 1;
+
+            element = template.Element("ChannelNameFormat");
+            tbChGenNameFormat.Text = element != null ? element.Value : string.Empty;
+
+            element = template.Element("Colors");
+            if (element != null && element.Elements().Any()) {
+                cbRuleColors.Checked = true;
+                SetColor(pbRuleColor1, element.Element("Color1"));
+                SetColor(pbRuleColor2, element.Element("Color2"));
+                SetColor(pbRuleColor3, element.Element("Color3"));
+                SetColor(pbRuleColor4, element.Element("Color4"));
+            }
+            else {
+                cbRuleColors.Checked = false;
+            }
+
+            var rules = template.Element("Rules");
+
+            lbRules.Items.Clear();
+            if (null == rules) {
+                return;
+            }
+
+            foreach (var ele in rules.Elements(Rules.RuleDataElement)) {
+                if (null == ele) {
+                    continue;
+                }
+
+                var attr = ele.Attribute(Rules.RuleAttribute);
+                if (null == attr) {
+                    continue;
+                }
+
+                switch (attr.Value) {
+                    case "Numbers":
+                        lbRules.Items.Add(new ProfileManagerNumbers {RuleData = ele});
+                        break;
+                    case "Words":
+                        lbRules.Items.Add(new ProfileManagerWords {RuleData = ele});
+                        break;
+                }
+            }
+        }
+
+
+        private static void SetColor(Control pb, XElement color) {
+            if (color == null) {
+                return;
+            }
+
+            pb.BackColor = color.Value.FromHTML();
+            pb.BackgroundImage = pb.BackColor == Color.Transparent ? Resources.none1 : null;
+            pb.BackgroundImageLayout = ImageLayout.Center;
+        }
+
+        private void pbRuleColor_DoubleClick(object sender, EventArgs e) {
+            //todo bring up the color dialog and apply the color.
+        }
     }
 }

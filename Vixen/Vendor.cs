@@ -20,6 +20,7 @@ namespace VixenPlus {
         //public const string ProgramExtension = ".vpr";
         public const string RoutineExtension = ".vir";
         public const string SequenceExtension = ".vix";
+        public const string TemplateExtension = ".vpt";
         public const string UpdateFileExtension = ".7z";
 
         public const string SupportURL = "http://www.diychristmas.org/vb1/forumdisplay.php?19-VixenPlus";

@@ -219,7 +219,7 @@
     <Compile Include="Dialogs\InputPluginDialog.Designer.cs">
       <DependentUpon>InputPluginDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\IRules.cs" />
+    <Compile Include="Dialogs\Rules.cs" />
     <Compile Include="Dialogs\Lutefisk.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -382,6 +382,7 @@
     <Compile Include="ProgressDialog.Designer.cs">
       <DependentUpon>ProgressDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

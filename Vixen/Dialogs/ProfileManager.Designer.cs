@@ -257,6 +257,7 @@
             this.btnChGenSaveTemplate.TabIndex = 7;
             this.toolTip1.SetToolTip(this.btnChGenSaveTemplate, "Save template");
             this.btnChGenSaveTemplate.UseVisualStyleBackColor = true;
+            this.btnChGenSaveTemplate.Click += new System.EventHandler(this.btnChGenSaveTemplate_Click);
             // 
             // gbRules
             // 
@@ -375,6 +376,7 @@
             this.tbRuleWords.Location = new System.Drawing.Point(6, 21);
             this.tbRuleWords.Multiline = true;
             this.tbRuleWords.Name = "tbRuleWords";
+            this.tbRuleWords.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbRuleWords.Size = new System.Drawing.Size(156, 98);
             this.tbRuleWords.TabIndex = 6;
             this.tbRuleWords.TextChanged += new System.EventHandler(this.tbRuleWords_TextChanged);
@@ -403,13 +405,14 @@
             // 
             // pbRuleColor1
             // 
-            this.pbRuleColor1.BackColor = System.Drawing.Color.Red;
+            this.pbRuleColor1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pbRuleColor1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pbRuleColor1.Location = new System.Drawing.Point(65, 125);
             this.pbRuleColor1.Name = "pbRuleColor1";
             this.pbRuleColor1.Size = new System.Drawing.Size(20, 20);
             this.pbRuleColor1.TabIndex = 3;
             this.pbRuleColor1.TabStop = false;
+            this.pbRuleColor1.DoubleClick += new System.EventHandler(this.pbRuleColor_DoubleClick);
             // 
             // pbRuleColor2
             // 
@@ -420,6 +423,7 @@
             this.pbRuleColor2.Size = new System.Drawing.Size(20, 20);
             this.pbRuleColor2.TabIndex = 2;
             this.pbRuleColor2.TabStop = false;
+            this.pbRuleColor2.DoubleClick += new System.EventHandler(this.pbRuleColor_DoubleClick);
             // 
             // pbRuleColor3
             // 
@@ -430,6 +434,7 @@
             this.pbRuleColor3.Size = new System.Drawing.Size(20, 20);
             this.pbRuleColor3.TabIndex = 1;
             this.pbRuleColor3.TabStop = false;
+            this.pbRuleColor3.DoubleClick += new System.EventHandler(this.pbRuleColor_DoubleClick);
             // 
             // pbRuleColor4
             // 
@@ -441,6 +446,7 @@
             this.pbRuleColor4.Size = new System.Drawing.Size(20, 20);
             this.pbRuleColor4.TabIndex = 0;
             this.pbRuleColor4.TabStop = false;
+            this.pbRuleColor4.DoubleClick += new System.EventHandler(this.pbRuleColor_DoubleClick);
             // 
             // btnRuleDelete
             // 
@@ -475,6 +481,7 @@
             this.cbRuleRules.Name = "cbRuleRules";
             this.cbRuleRules.Size = new System.Drawing.Size(123, 21);
             this.cbRuleRules.TabIndex = 3;
+            this.cbRuleRules.SelectedIndexChanged += new System.EventHandler(this.cbRuleRules_SelectedIndexChanged);
             // 
             // btnRuleDown
             // 
@@ -508,6 +515,7 @@
             this.lbRules.Size = new System.Drawing.Size(153, 69);
             this.lbRules.TabIndex = 0;
             this.lbRules.SelectedIndexChanged += new System.EventHandler(this.lbRules_SelectedIndexChanged);
+            this.lbRules.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lbRules_KeyDown);
             // 
             // nudChGenChannels
             // 
@@ -547,6 +555,7 @@
             this.tbChGenNameFormat.Name = "tbChGenNameFormat";
             this.tbChGenNameFormat.Size = new System.Drawing.Size(155, 20);
             this.tbChGenNameFormat.TabIndex = 5;
+            this.tbChGenNameFormat.TextChanged += new System.EventHandler(this.tbChGenNameFormat_TextChanged);
             // 
             // cbChGenTemplate
             // 
@@ -559,6 +568,7 @@
             this.cbChGenTemplate.Name = "cbChGenTemplate";
             this.cbChGenTemplate.Size = new System.Drawing.Size(125, 21);
             this.cbChGenTemplate.TabIndex = 3;
+            this.cbChGenTemplate.SelectedIndexChanged += new System.EventHandler(this.cbChGenTemplate_SelectedIndexChanged);
             // 
             // lblChGenNameFormat
             // 

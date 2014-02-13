@@ -67,6 +67,16 @@ namespace CommonUtils {
             }
         }
 
+
+        public static string ToHTML(this Color value) {
+            return ColorTranslator.ToHtml(value);
+        }
+
+
+        public static Color FromHTML(this string value) {
+            return ColorTranslator.FromHtml(value);
+        }
+
         public static int ToInt(this string value) {
             int result;
 
