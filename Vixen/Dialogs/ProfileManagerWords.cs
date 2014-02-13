@@ -18,12 +18,12 @@ namespace VixenPlus.Dialogs {
             get {
                 return new XElement(RuleDataElement, 
                     new XAttribute(RuleAttribute, BaseName),
-                    new XElement(WordsElement, Words.Replace(Environment.NewLine, "&#10"))
+                    new XElement(WordsElement, Words.Replace(Environment.NewLine, "&#10;"))
                 );
             }
             set {
                 var xElement = value.Element(WordsElement);
-                Words = (xElement != null) ? xElement.Value : string.Empty;
+                Words = (xElement != null) ? xElement.Value.Replace("&#10;", Environment.NewLine) : string.Empty;
             }
         }
 
