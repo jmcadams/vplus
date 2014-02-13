@@ -7,6 +7,7 @@ namespace VixenPlus.Dialogs {
         private const string EndElement = "End";
         private const string IncrementElement = "Increment";
 
+
         public override string BaseName { get { return "Numbers"; } }
 
         private string _name = string.Empty;

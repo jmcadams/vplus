@@ -42,8 +42,7 @@ namespace VixenPlus.Dialogs {
 
         #region Constructor
 
-        //TODO Can this really be an IExecutable?
-        public FrmProfileManager(Profile defaultProfile = null) {
+        public FrmProfileManager(IExecutable defaultProfile = null) {
             InitializeComponent();
             Icon = Resources.VixenPlus;
 
@@ -194,7 +193,9 @@ namespace VixenPlus.Dialogs {
         #region Profile Group Box Events
         
         private void btnAddProfile_Click(object sender, EventArgs e) {
-            var newName = GetNewName("Create");
+            var newName = GetFileName("Profile/Group Name", Paths.ProfilePath,
+                new[] { Vendor.ProfileExtension, Vendor.GroupExtension }, "", "Create");
+
             if(string.Empty == newName) {
                 return;
             }
@@ -336,7 +337,7 @@ namespace VixenPlus.Dialogs {
             var hasEnabledChannels = (from DataGridViewRow x in selectedRows where (bool.Parse(x.Cells[ChannelEnabledCol].Value.ToString())) select x).Any();
             var hasDisabledChannels = (from DataGridViewRow x in selectedRows where (!bool.Parse(x.Cells[ChannelEnabledCol].Value.ToString())) select x).Any();
 
-            btnChAddMulti.Enabled = isProfileLoaded; // todo
+            btnChAddMulti.Enabled = isProfileLoaded;
             btnChAddOne.Enabled = isProfileLoaded; // todo
             btnChColorMulti.Enabled = isProfileLoaded && !oneRowSelected; // todo
             btnChColorOne.Enabled = isProfileLoaded && cellsSelected; // todo
@@ -475,44 +476,7 @@ namespace VixenPlus.Dialogs {
             }
         }
 
-
-        private string GetNewName(string buttonText) {
-            var newName = string.Empty;
-            using (var dialog = new TextQueryDialog("Profile Name?", Resources.NameThisProfile + Warning, _contextProfile != null ? _contextProfile.Name : "", buttonText)) {
-                var showDialog = true;
-                while (showDialog) {
-                    if (dialog.ShowDialog() == DialogResult.OK) {
-                        newName = dialog.Response;
-                        showDialog = false;
-                        if (!File.Exists(Path.Combine(Paths.ProfilePath, newName + Vendor.ProfileExtension)) &&
-                            !File.Exists(Path.Combine(Paths.RoutinePath, newName + Vendor.GroupExtension))) {
-                            continue;
-                        }
-                        var overwriteResult = MessageBox.Show(
-                            String.Format("Profile or Group with the name {0} exists.  Overwrite this profile?", newName), "Overwrite?",
-                            MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                        switch (overwriteResult) {
-                            case DialogResult.Yes:
-                                break;
-                            case DialogResult.No:
-                                newName = string.Empty;
-                                showDialog = true;
-                                break;
-                            case DialogResult.Cancel:
-                                newName = string.Empty;
-                                break;
-                        }
-                    }
-                    else {
-                        showDialog = false;
-                    }
-                }
-            }
-
-            return newName;
-        }
-
-
+        
         private IEnumerable<DataGridViewRow> GetSelectedRows() {
             var hashSet = new HashSet<DataGridViewRow>();
             foreach (var cell in from DataGridViewCell x in dgvChannels.SelectedCells where !hashSet.Contains(x.OwningRow) select x) {
@@ -566,7 +530,8 @@ namespace VixenPlus.Dialogs {
 
 
         private void RenameOrCopyProfile(bool isRename) {
-            var newName = GetNewName(isRename ? "Rename" : "Copy");
+            var newName = GetFileName("Profile/Group Name", Paths.ProfilePath,
+                new[] { Vendor.ProfileExtension, Vendor.GroupExtension }, "", isRename ? "Rename" : "Copy");
 
             if (String.Empty == newName) {
                 return;
@@ -765,21 +730,39 @@ namespace VixenPlus.Dialogs {
             }
         }
 
-        // todo Refactor
         private void btnChGenSaveTemplate_Click(object sender, EventArgs e) {
+            var newName = GetFileName("Template", Paths.ProfilePath, new [] {Vendor.TemplateExtension}, "", "OK");
+
+            if (string.IsNullOrEmpty(newName)) {
+                return;
+            }
+
+            CreateTemplate().Save(Path.Combine(Paths.ProfilePath, newName + Vendor.TemplateExtension));
+            LoadTemplates();
+            cbChGenTemplate.SelectedIndex = cbChGenTemplate.Items.IndexOf(newName);
+        }
+
+
+        private static string GetFileName(string fileType, string filePath, IList<string> extension, string defaultResponse, string buttonText) {
             var newName = string.Empty;
-            using (var dialog = new TextQueryDialog("Template name", "What would you like to name this template?", string.Empty)) {
+            var caption = string.Format("{0} name", fileType);
+            var query = string.Format("What would you like to name this {0}?", fileType);
+
+            using (var dialog = new TextQueryDialog(caption, query, defaultResponse, buttonText)) {
                 var showDialog = true;
                 while (showDialog) {
                     if (dialog.ShowDialog() == DialogResult.OK) {
                         newName = dialog.Response;
                         showDialog = false;
-                        if (!File.Exists(Path.Combine(Paths.ProfilePath, newName + Vendor.TemplateExtension))) {
+
+                        if (!extension.Aggregate(false, (current, ext) => current | File.Exists(Path.Combine(filePath, newName + ext)))) {
                             continue;
                         }
-                        var overwriteResult = MessageBox.Show(
-                            String.Format("Template with the name {0} exists.  Overwrite this profile?", newName), "Overwrite?",
-                            MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+                        var msg = String.Format("{0} with the name {1} exists.  Overwrite this {0}?", fileType, newName);
+                        var overwriteResult = MessageBox.Show(msg, "Overwrite?", MessageBoxButtons.YesNoCancel,
+                            MessageBoxIcon.Question);
+
                         switch (overwriteResult) {
                             case DialogResult.Yes:
                                 break;
@@ -791,17 +774,14 @@ namespace VixenPlus.Dialogs {
                                 newName = string.Empty;
                                 break;
                         }
-                    } else {
+                    }
+                    else {
                         showDialog = false;
                     }
                 }
-                
-            }
-            if (string.IsNullOrEmpty(newName)) {
-                return;
             }
 
-            CreateTemplate().Save(Path.Combine(Paths.ProfilePath, newName + Vendor.TemplateExtension));
+            return newName;
         }
 
 
