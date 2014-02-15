@@ -402,9 +402,6 @@
     <Compile Include="Splash.Designer.cs">
       <DependentUpon>Splash.cs</DependentUpon>
     </Compile>
-    <Compile Include="TabControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Timer.cs" />
     <Compile Include="TimerContext.cs" />
     <Compile Include="TimerExecutor.cs" />
@@ -564,6 +561,10 @@
       <Project>{7B3F05AD-9943-4359-97FF-0AE22C225EB4}</Project>
       <Name>fmod</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\VixenControls\CommonControls.csproj">
+      <Project>{6B127E8D-35CC-409E-9E66-520FBA86E283}</Project>
+      <Name>CommonControls</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -742,6 +743,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Classes\" />
+    <Folder Include="UserControls\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

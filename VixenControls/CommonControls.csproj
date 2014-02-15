@@ -105,6 +105,9 @@
     <Compile Include="CommonControls\MultiSelectTreeview.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="CommonControls\TabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CommonControls\TransparentLabel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -113,6 +116,7 @@
     </Compile>
     <EmbeddedResource Include="CommonControls\FadableLabel.resx">
       <DependentUpon>FadableLabel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenControls.Toolbox.resources" />
   </ItemGroup>

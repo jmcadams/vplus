@@ -1,6 +1,8 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 
+using TabControl = CommonControls.TabControl;
+
 namespace VixenPlus.Dialogs {
     internal partial class PreferencesDialog {
         private IContainer components;
@@ -111,7 +113,7 @@ namespace VixenPlus.Dialogs {
             this.label35 = new System.Windows.Forms.Label();
             this.numericUpDownHistoryImages = new System.Windows.Forms.NumericUpDown();
             this.label28 = new System.Windows.Forms.Label();
-            this.tabControl = new VixenPlus.TabControl(this.components);
+            this.tabControl = new TabControl(this.components);
             this.cbProfileErrors = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinimumLevel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumLevel)).BeginInit();

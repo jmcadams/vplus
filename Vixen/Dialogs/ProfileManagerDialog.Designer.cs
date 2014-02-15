@@ -1,6 +1,8 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 
+using TabControl = CommonControls.TabControl;
+
 namespace VixenPlus.Dialogs{
     public partial class ProfileManagerDialog{
         private IContainer components;

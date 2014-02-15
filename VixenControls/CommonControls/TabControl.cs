@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace VixenPlus {
+namespace CommonControls {
     [ToolboxBitmap(typeof (System.Windows.Forms.TabControl))]
     public class TabControl : System.Windows.Forms.TabControl
     {
