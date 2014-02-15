@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -33,20 +32,9 @@ namespace VixenPlus.Dialogs {
             }
         }
 
-
-        private IEnumerable<string> GenerateNames(int count) {
-            //Debug.Assert(count <= Iterations);
-            //var result = new List<string>();
-            //for (var i = 0; i < count; i++) {
-            //    result.Add(GenerateName(i));
-            //}
+        public override IEnumerable<string> GenerateNames() {
             return _wordArray;
         }
-
-        public override IEnumerable<string> GenerateNames() {
-            return GenerateNames(Iterations);
-        }
-
 
         public override string GenerateName(int index) {
             return _wordArray[index % _wordArray.Count()];
