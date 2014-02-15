@@ -68,8 +68,8 @@ namespace CommonUtils {
         }
 
 
-        public static string ToHTML(this Color value) {
-            return ColorTranslator.ToHtml(value);
+        public static string ToHTML(this Color color) {
+            return "#" + color.R.ToString("X2") + color.G.ToString("X2") + color.B.ToString("X2");
         }
 
 
