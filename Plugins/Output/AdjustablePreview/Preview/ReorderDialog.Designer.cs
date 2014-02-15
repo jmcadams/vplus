@@ -1,5 +1,3 @@
-using CommonControls;
-
 using System.Windows.Forms;
 
 namespace Preview {
@@ -31,7 +29,7 @@ namespace Preview {
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.timerFade = new System.Windows.Forms.Timer(this.components);
-            this.lblChannelCopied = new CommonControls.FadableLabel();
+            this.lblChannelCopied = new FadableLabel();
             this.SuspendLayout();
             // 
             // label1

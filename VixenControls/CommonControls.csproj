@@ -96,25 +96,25 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CommonControls\FadableLabel.cs">
+    <Compile Include="FadableLabel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="CommonControls\FadableLabel.Designer.cs">
+    <Compile Include="FadableLabel.Designer.cs">
       <DependentUpon>FadableLabel.cs</DependentUpon>
     </Compile>
-    <Compile Include="CommonControls\MultiSelectTreeview.cs">
+    <Compile Include="MultiSelectTreeview.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="CommonControls\TabControl.cs">
+    <Compile Include="TabControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="CommonControls\TransparentLabel.cs">
+    <Compile Include="TransparentLabel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="CommonControls\TransparentLabel.Designer.cs">
+    <Compile Include="TransparentLabel.Designer.cs">
       <DependentUpon>TransparentLabel.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="CommonControls\FadableLabel.resx">
+    <EmbeddedResource Include="FadableLabel.resx">
       <DependentUpon>FadableLabel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -136,6 +136,9 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CommonControls\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

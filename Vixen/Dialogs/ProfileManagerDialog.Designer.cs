@@ -1,8 +1,6 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 
-using TabControl = CommonControls.TabControl;
-
 namespace VixenPlus.Dialogs{
     public partial class ProfileManagerDialog{
         private IContainer components;
@@ -26,7 +24,7 @@ namespace VixenPlus.Dialogs{
         private PictureBox m_hoveredButton = null;
         private OpenFileDialog openFileDialog;
         private Panel panel1;
-        private TabControl tabControl;
+        private global::TabControl tabControl;
         private TabPage tabEditProfile;
         private TabPage tabProfiles;
         private TextBox textBoxProfileChannelCount;
@@ -41,7 +39,7 @@ namespace VixenPlus.Dialogs{
             this.buttonDone = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.tabControl = new TabControl(this.components);
+            this.tabControl = new global::TabControl(this.components);
             this.tabProfiles = new System.Windows.Forms.TabPage();
             this.btnRemoveProfile = new System.Windows.Forms.Button();
             this.btnEditProfile = new System.Windows.Forms.Button();

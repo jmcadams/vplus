@@ -4,7 +4,6 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
-using CommonControls;
 
 namespace CommonUtils {
     public static class Utils {

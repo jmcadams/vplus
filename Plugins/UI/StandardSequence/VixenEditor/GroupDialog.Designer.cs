@@ -45,7 +45,7 @@
             this.btnAddChild = new System.Windows.Forms.Button();
             this.btnExpand = new System.Windows.Forms.Button();
             this.btnCollapse = new System.Windows.Forms.Button();
-            this.tvGroups = new CommonControls.MultiSelectTreeview();
+            this.tvGroups = new MultiSelectTreeview();
             this.cbSort = new System.Windows.Forms.ComboBox();
             this.btnAddMutli = new System.Windows.Forms.Button();
             this.lblStats = new System.Windows.Forms.Label();
@@ -330,7 +330,7 @@
         private System.Windows.Forms.Button btnAddChannels;
         private System.Windows.Forms.Button btnRenameGroup;
         private System.Windows.Forms.Button btnRemoveChannels;
-        private CommonControls.MultiSelectTreeview tvGroups;
+        private MultiSelectTreeview tvGroups;
         private System.Windows.Forms.Label lblChannels;
         private System.Windows.Forms.Label lblGroups;
         private System.Windows.Forms.Button btnAddChild;
