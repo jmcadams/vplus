@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
@@ -36,8 +37,9 @@ namespace VixenPlus.Dialogs {
         private const int TabNutcracker = 4;
 
         private const string Warning = "\n\nNOTE: While most functions can be undone by pressing cancel in the Profile Manager dialog, this one cannot.";
-        
-        
+
+        private readonly IList<Rules> _ruleEngines = new List<Rules>(); 
+
         #endregion
 
         #region Constructor
@@ -252,13 +254,18 @@ namespace VixenPlus.Dialogs {
             _contextProfile = (Profile)cbProfiles.SelectedItem;
             DoButtonManagement();
 
-            var count = 1;
-            foreach (var ch in _contextProfile.FullChannels) {
-                var row = dgvChannels.Rows.Add(new object[] { ch.Enabled, count++, ch.Name, ch.OutputChannel + 1, ColorTranslator.ToHtml(ch.Color) });
+            AddRows(_contextProfile.FullChannels);
+
+            dgvChannels.Focus();
+        }
+
+
+        private void AddRows(IEnumerable<Channel> channels, int startCh = 1) {
+            foreach (var ch in channels) {
+                var row = dgvChannels.Rows.Add(new object[] { ch.Enabled, startCh++, ch.Name, ch.OutputChannel + 1, ch.Color.ToHTML() });
                 dgvChannels.Rows[row].DefaultCellStyle.BackColor = ch.Color;
                 dgvChannels.Rows[row].DefaultCellStyle.ForeColor = ch.Color.GetForeColor();
-            }
-            dgvChannels.Focus();
+            } 
         }
 
         #endregion
@@ -291,6 +298,13 @@ namespace VixenPlus.Dialogs {
         private void btnGenOk_Click(object sender, EventArgs e) {
             panelChButtons.Visible = true;
             panelChGenerator.Visible = false;
+            dgvChannels.Rows.Clear();
+            if (((Button) sender).Name == btnChGenOk.Name) {
+                foreach (var c in GenerateChannels()) {
+                    _contextProfile.AddChannelObject(c);
+                }
+            }
+            AddRows(_contextProfile.FullChannels);
             DoButtonManagement();
         }
 
@@ -637,7 +651,7 @@ namespace VixenPlus.Dialogs {
             nudRuleStart.Visible = isItemSelected && isNumbers;
             nudRuleEnd.Visible = isItemSelected && isNumbers;
             nudRuleIncr.Visible = isItemSelected && isNumbers;
-            PreviewNewChannels();
+            PreviewChannels();
         }
 
         private void nudRuleStart_ValueChanged(object sender, EventArgs e) {
@@ -877,55 +891,80 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private void PreviewNewChannels() {
+        private void PreviewChannels() {
             dgvChannels.Rows.Clear();
-
+            AddRows(GenerateChannels(), _contextProfile.FullChannels.Count() + 1);
         }
 
-        // depth is 1-offset, as it will be the same as the one the user uses
-        //private IEnumerable<string> GenerateNames(int depth, string format, int currentNumber, int maxNumber) {
-        //    List<string> result = new List<string>();
+        private IEnumerable<Channel> GenerateChannels() {
+            _ruleEngines.Clear();
+            foreach (Rules item in lbRules.Items) {
+                _ruleEngines.Add(item);
+            }
 
-        //    if (Generators.Count < depth || currentNumber > maxNumber)
-        //        return result;
+            var colors = new List<Color>();
+            if (cbRuleColors.Checked) {
+                AddNonTransparent(pbRuleColor1, colors);
+                AddNonTransparent(pbRuleColor2, colors);
+                AddNonTransparent(pbRuleColor3, colors);
+                AddNonTransparent(pbRuleColor4, colors);
+            }
+            if (colors.Count == 0) { colors.Add(Color.White); }
 
-        //    INamingGenerator generator = Generators[depth - 1];
+            var generatedNames = GenerateNames(1, tbChGenNameFormat.Text, 0, (int)nudChGenChannels.Value).ToList();
 
-        //    // if the generator is endless, this will be an empty list.
-        //    List<string> names = new List<string>(generator.GenerateNames());
+            var generatedChannels = new List<Channel>();
+            var startChannelNum = _contextProfile.FullChannels.Count();
 
-        //    for (int i = 0; i < generator.IterationsInCycle || generator.EndlessCycle; i++) {
-        //        string substitution;
-        //        if (generator.EndlessCycle) {
-        //            substitution = generator.GenerateName(i);
-        //        } else {
-        //            substitution = names[i];
-        //        }
+            for (var count = 0; count < generatedNames.Count(); count++){
+                var chNum = startChannelNum + count;
+                generatedChannels.Add(new Channel(generatedNames[count], chNum) {Color = colors[count % colors.Count]});
+            }
 
-        //        string newFormat = format.Replace("{" + depth + "}", substitution);
+            return generatedChannels;
+        }
 
-        //        // if this is the last generator, use the single string; otherwise, recurse so the next
-        //        // generator can have a crack at it as well.
-        //        if (depth >= Generators.Count) {
-        //            result.Add(newFormat);
-        //        } else {
-        //            // if the sub-generator didn't make anything, add the name directly and treat this one as the final.
-        //            IEnumerable<string> subResult = GenerateNames(depth + 1, newFormat, currentNumber + result.Count, maxNumber);
-        //            if (subResult.Any())
-        //                result.AddRange(subResult);
-        //            else
-        //                result.Add(newFormat);
-        //        }
 
-        //        if (currentNumber + result.Count >= maxNumber)
-        //            break;
-        //    }
+        private static void AddNonTransparent(Control pb, ICollection<Color> list) {
+            if (pb.BackColor != Color.Transparent) {
+                list.Add(pb.BackColor);
+            }
+        } 
 
-        //    return result;
-        //}
+        private IEnumerable<string> GenerateNames(int ruleNum, string nameFormat, int currentChannel, int totalChannels) {
+            var names = new List<string>();
+
+            if (lbRules.Items.Count < ruleNum || currentChannel > totalChannels) {
+                return names;
+            }
+
+            var ruleEngine = _ruleEngines[ruleNum - 1];
+            var generatedNames = new List<string>(ruleEngine.GenerateNames());
+
+            for (var i = 0; (i < ruleEngine.Iterations || ruleEngine.IsUnlimited) && currentChannel + names.Count < totalChannels; i++) {
+                var parts = new Regex("{" + (ruleNum - 1) + "[:]?[a-zA-Z0-9]*}").Match(nameFormat).ToString().Split(':');
+                var format = parts.Count() == 2 ? "{0:" + parts[1] : "{0}";
+                var replace = parts.Count() == 2 ? "{" + (ruleNum - 1) + ":" + parts[1] : "{" + (ruleNum - 1) + "}";
+                var replacementValue = ruleEngine.IsUnlimited ? ruleEngine.GenerateName(i) : generatedNames[i];
+                int numericReplacement;
+                var formattingResult = nameFormat.Replace(replace,
+                    int.TryParse(replacementValue, out numericReplacement) ? string.Format(format, numericReplacement) : replacementValue);
+
+                // Is this the last rule?
+                if (ruleNum >= _ruleEngines.Count) {
+                    names.Add(formattingResult);
+                }
+                else {
+                    names.AddRange(GenerateNames(ruleNum + 1, formattingResult, currentChannel + names.Count, totalChannels).ToList());
+                }
+            }
+
+            return names;
+        }
 
         private void pbRuleColor_DoubleClick(object sender, EventArgs e) {
             //todo bring up the color dialog and apply the color.
         }
+
     }
 }
