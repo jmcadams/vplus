@@ -1,4 +1,6 @@
-﻿namespace VixenEditor
+﻿using CommonControls;
+
+namespace VixenEditor
 {
     sealed partial class GroupDialog
     {

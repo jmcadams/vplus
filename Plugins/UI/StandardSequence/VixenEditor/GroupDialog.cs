@@ -5,10 +5,14 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
+using CommonControls;
+
 using CommonUtils;
 
 using VixenPlus;
 using VixenPlus.Dialogs;
+
+using ColorDialog = System.Windows.Forms.ColorDialog;
 
 namespace VixenEditor {
     public sealed partial class GroupDialog : Form {
