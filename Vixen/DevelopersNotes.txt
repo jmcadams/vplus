@@ -1,0 +1,41 @@
+Please follow these simple coding standards for this project:
+
+ 1) Use explicit bracketing even when only one statement is being used.
+
+    No:
+        if (isSomthing)
+            DoSomething();
+
+    Yes:
+        if (isSomething) {
+            DoSomething();
+        }
+
+ 2) Curly braces at the end of the line on the defining construct, ending brace at the same indentation as the defining contruct
+
+    No:
+        if (isSomthing)
+        {
+            DoSomething();
+        }   
+      
+    No:
+        if (isSomthing) { DoSomething(); }  // Sometimes you might see this, please refactor
+
+    Yes:
+        if (isSomething) {
+            DoSomething();
+        }
+
+ 3) Spaces not tabs, expand tabs to 4 spaces.  Convert tabs to spaces before checking in or your pull will be returned for
+    for you to repair.
+
+ 4) Fix or ignore (only in exceptional circumstances, then comment why) all ReSharper recommendations.  Changes to the 
+    .DotSettings file for the project will be scrutinized.  Do not check in Persona.DotSettings file (OOPS, I did that :)
+
+ 5) Implicit typing is preferred over explicit typing where applicable. (I'm lazy)
+
+ 6) When comparing with null or some other non-assignable value, put it first in the comparison.  Please fix these when
+    you find them in the code.
+
+    e.g. if (null == somthing) {...   instead of if (something == null) {...
