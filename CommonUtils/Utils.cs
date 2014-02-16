@@ -5,6 +5,8 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
+using CommonControls;
+
 namespace CommonUtils {
     public static class Utils {
         public const int IndexRowsOrHeight = 0;
