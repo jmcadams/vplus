@@ -26,6 +26,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fmod", "..\fmod\fmod.csproj
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{31988693-7C2F-459B-9D0A-3A679EBDD678}"
 	ProjectSection(SolutionItems) = preProject
+		DevelopersNotes.txt = DevelopersNotes.txt
 		..\Features.txt = ..\Features.txt
 		..\J1Sys License.txt = ..\J1Sys License.txt
 		..\Known Bugs.txt = ..\Known Bugs.txt
@@ -1183,9 +1184,9 @@ Global
 		{64A53068-B235-4A1E-8E40-D9F39708EAEC} = {13830111-1E9A-4759-8475-E9B55B9B914E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_AssemblyInfoFilename = AssemblyInfo.cs
-		BuildVersion_UpdateFileVersion = True
-		BuildVersion_UpdateAssemblyVersion = True
 		BuildVersion_BuildVersioningStyle = None.None.Increment.TimeStamp
+		BuildVersion_UpdateAssemblyVersion = True
+		BuildVersion_UpdateFileVersion = True
+		BuildVersion_AssemblyInfoFilename = AssemblyInfo.cs
 	EndGlobalSection
 EndGlobal
