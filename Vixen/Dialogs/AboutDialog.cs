@@ -58,7 +58,8 @@ namespace VixenPlus.Dialogs {
             credits.AppendLine(Resources.OpenSource).AppendLine("FMOD Sound System by:\nFirelight Technologies\n");
             credits.AppendLine("Nutcracker adapted from xLights\nwhich was written by:\nSean Meighan\nMatt Brown\n");
             credits.AppendLine("J1Sys Plugin by: Joshual 1 Systems\nSee: J1Sys License.txt\n");
-            credits.AppendLine("7zip (7zr.exe) by Igor Pavlov\nSee: http://www.7-zip.org/license.txt");
+            credits.AppendLine("7zip (7zr.exe) by Igor Pavlov\nSee: http://www.7-zip.org/license.txt \n");
+            credits.AppendLine("Cyotek Color Picker controls library\nSee: http://cyotek.com/blog/tag/colorpicker");
             credits.AppendLine(Resources.Lutefisk);
 
             // This is how we get the correct height of the credits regardless of how 
@@ -100,6 +101,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void UpdateVisibility(bool isNormal) {
+            btnCredits.Visible = isNormal;
             lblCredits.Visible = !isNormal;
             lblDescription.Visible = isNormal;
             lblName.Visible = isNormal;

@@ -21,6 +21,7 @@ namespace VixenPlus.Dialogs
             this.llblURL = new System.Windows.Forms.LinkLabel();
             this.lblCredits = new System.Windows.Forms.Label();
             this.pbIcon = new System.Windows.Forms.PictureBox();
+            this.btnCredits = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbIcon)).BeginInit();
             this.SuspendLayout();
             // 
@@ -100,6 +101,16 @@ namespace VixenPlus.Dialogs
             this.pbIcon.TabIndex = 9;
             this.pbIcon.TabStop = false;
             // 
+            // btnCredits
+            // 
+            this.btnCredits.Location = new System.Drawing.Point(326, 135);
+            this.btnCredits.Name = "btnCredits";
+            this.btnCredits.Size = new System.Drawing.Size(75, 23);
+            this.btnCredits.TabIndex = 10;
+            this.btnCredits.Text = "Credits";
+            this.btnCredits.UseVisualStyleBackColor = true;
+            this.btnCredits.Click += new System.EventHandler(this.AboutDialog_MouseClick);
+            // 
             // AboutDialog
             // 
             this.AcceptButton = this.btnOkay;
@@ -109,6 +120,7 @@ namespace VixenPlus.Dialogs
             this.CancelButton = this.btnOkay;
             this.ClientSize = new System.Drawing.Size(494, 168);
             this.ControlBox = false;
+            this.Controls.Add(this.btnCredits);
             this.Controls.Add(this.pbIcon);
             this.Controls.Add(this.lblCredits);
             this.Controls.Add(this.llblURL);
@@ -143,5 +155,6 @@ namespace VixenPlus.Dialogs
         private LinkLabel llblURL;
         private Label lblCredits;
         private PictureBox pbIcon;
+        private Button btnCredits;
     }
 }
