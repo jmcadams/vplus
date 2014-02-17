@@ -82,7 +82,7 @@ namespace VixenPlus.Dialogs {
             }
 
             // Finally, calculate elapsed time in seconds and return result
-            var lastChecked = DateTime.Parse(_preferences.GetString(LastChecked));
+            var lastChecked = DateTime.Parse(_preferences.GetString(LastChecked), CultureInfo.InvariantCulture);
             var elapsedSeconds = (DateTime.Now - lastChecked).TotalHours;
             Log("IsTimeToCheckForUpdate normal: " + (elapsedSeconds >= waitHours));
             return elapsedSeconds >= waitHours;
