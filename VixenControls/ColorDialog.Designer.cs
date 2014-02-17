@@ -27,9 +27,8 @@
             this.btnNone = new System.Windows.Forms.Button();
             this.btnOkay = new System.Windows.Forms.Button();
             this.pbOriginalColor = new System.Windows.Forms.PictureBox();
-            this.lblOriginalColor = new System.Windows.Forms.Label();
             this.pbNewColor = new System.Windows.Forms.PictureBox();
-            this.lblNewColor = new System.Windows.Forms.Label();
+            this.cgPalette = new CommonControls.ColorGrid();
             this.colorEditor1 = new CommonControls.ColorEditor();
             ((System.ComponentModel.ISupportInitialize)(this.pbOriginalColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbNewColor)).BeginInit();
@@ -38,7 +37,7 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(301, 133);
+            this.btnCancel.Location = new System.Drawing.Point(184, 227);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 2;
@@ -48,7 +47,7 @@
             // btnNone
             // 
             this.btnNone.DialogResult = System.Windows.Forms.DialogResult.No;
-            this.btnNone.Location = new System.Drawing.Point(220, 133);
+            this.btnNone.Location = new System.Drawing.Point(98, 227);
             this.btnNone.Name = "btnNone";
             this.btnNone.Size = new System.Drawing.Size(75, 23);
             this.btnNone.TabIndex = 3;
@@ -58,7 +57,7 @@
             // btnOkay
             // 
             this.btnOkay.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOkay.Location = new System.Drawing.Point(139, 133);
+            this.btnOkay.Location = new System.Drawing.Point(12, 227);
             this.btnOkay.Name = "btnOkay";
             this.btnOkay.Size = new System.Drawing.Size(75, 23);
             this.btnOkay.TabIndex = 4;
@@ -67,44 +66,38 @@
             // 
             // pbOriginalColor
             // 
-            this.pbOriginalColor.Location = new System.Drawing.Point(12, 25);
+            this.pbOriginalColor.Location = new System.Drawing.Point(12, 188);
             this.pbOriginalColor.Name = "pbOriginalColor";
-            this.pbOriginalColor.Size = new System.Drawing.Size(121, 52);
+            this.pbOriginalColor.Size = new System.Drawing.Size(124, 33);
             this.pbOriginalColor.TabIndex = 5;
             this.pbOriginalColor.TabStop = false;
             // 
-            // lblOriginalColor
-            // 
-            this.lblOriginalColor.AutoSize = true;
-            this.lblOriginalColor.Location = new System.Drawing.Point(12, 9);
-            this.lblOriginalColor.Name = "lblOriginalColor";
-            this.lblOriginalColor.Size = new System.Drawing.Size(72, 13);
-            this.lblOriginalColor.TabIndex = 6;
-            this.lblOriginalColor.Text = "Original Color:";
-            // 
             // pbNewColor
             // 
-            this.pbNewColor.Location = new System.Drawing.Point(11, 104);
+            this.pbNewColor.Location = new System.Drawing.Point(135, 188);
             this.pbNewColor.Name = "pbNewColor";
-            this.pbNewColor.Size = new System.Drawing.Size(121, 52);
+            this.pbNewColor.Size = new System.Drawing.Size(124, 33);
             this.pbNewColor.TabIndex = 7;
             this.pbNewColor.TabStop = false;
             // 
-            // lblNewColor
+            // cgPalette
             // 
-            this.lblNewColor.AutoSize = true;
-            this.lblNewColor.Location = new System.Drawing.Point(12, 88);
-            this.lblNewColor.Name = "lblNewColor";
-            this.lblNewColor.Size = new System.Drawing.Size(59, 13);
-            this.lblNewColor.TabIndex = 8;
-            this.lblNewColor.Text = "New Color:";
+            this.cgPalette.AutoAddColors = false;
+            this.cgPalette.EditMode = CommonControls.ColorEditingMode.Both;
+            this.cgPalette.Location = new System.Drawing.Point(12, 107);
+            this.cgPalette.Name = "cgPalette";
+            this.cgPalette.Palette = CommonControls.ColorPalette.Standard;
+            this.cgPalette.ShowCustomColors = false;
+            this.cgPalette.Size = new System.Drawing.Size(247, 75);
+            this.cgPalette.TabIndex = 9;
+            this.cgPalette.ColorChanged += new System.EventHandler(this.cgPalette_ColorChanged);
             // 
             // colorEditor1
             // 
             this.colorEditor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.colorEditor1.Location = new System.Drawing.Point(138, 12);
+            this.colorEditor1.Location = new System.Drawing.Point(12, 12);
             this.colorEditor1.Name = "colorEditor1";
-            this.colorEditor1.Size = new System.Drawing.Size(239, 89);
+            this.colorEditor1.Size = new System.Drawing.Size(247, 90);
             this.colorEditor1.TabIndex = 1;
             this.colorEditor1.ColorChanged += new System.EventHandler(this.colorEditor1_ColorChanged);
             // 
@@ -112,10 +105,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(387, 169);
-            this.Controls.Add(this.lblNewColor);
+            this.ClientSize = new System.Drawing.Size(273, 266);
+            this.Controls.Add(this.cgPalette);
             this.Controls.Add(this.pbNewColor);
-            this.Controls.Add(this.lblOriginalColor);
             this.Controls.Add(this.pbOriginalColor);
             this.Controls.Add(this.btnOkay);
             this.Controls.Add(this.btnNone);
@@ -140,8 +132,7 @@
         private System.Windows.Forms.Button btnNone;
         private System.Windows.Forms.Button btnOkay;
         private System.Windows.Forms.PictureBox pbOriginalColor;
-        private System.Windows.Forms.Label lblOriginalColor;
         private System.Windows.Forms.PictureBox pbNewColor;
-        private System.Windows.Forms.Label lblNewColor;
+        private ColorGrid cgPalette;
     }
 }

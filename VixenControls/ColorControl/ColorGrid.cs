@@ -20,10 +20,13 @@ namespace CommonControls {
     /// </summary>
     [DefaultProperty("Color")]
     [DefaultEvent("ColorChanged")]
+    // ReSharper disable MemberCanBePrivate.Global
+    // ReSharper disable MemberCanBeProtected.Global
+    // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
     public class ColorGrid : Control, IColorEditor {
         #region Constants
 
-        public const int InvalidIndex = -1;
+        private const int InvalidIndex = -1;
 
         #endregion
 
@@ -63,7 +66,7 @@ namespace CommonControls {
 
         private Size _spacing;
 
-        private ToolTip _toolTip;
+        //private ToolTip _toolTip;
 
         private int _updateCount;
 
@@ -71,25 +74,25 @@ namespace CommonControls {
 
         #region Constructors
 
-        public ColorGrid(IEnumerable<Color> colors) : this(new ColorCollection(colors)) {}
+        //public ColorGrid(IEnumerable<Color> colors) : this(new ColorCollection(colors)) {}
 
-        public ColorGrid(ColorCollection colors) : this(colors, new ColorCollection(Enumerable.Repeat(Color.White, 32))) {}
+        //public ColorGrid(ColorCollection colors) : this(colors, new ColorCollection(Enumerable.Repeat(Color.White, 32))) {}
 
         public ColorGrid(ColorPalette palette) : this(null, new ColorCollection(Enumerable.Repeat(Color.White, 32)), palette) {}
 
-        public ColorGrid(ColorCollection colors, ColorCollection customColors) : this(colors, customColors, ColorPalette.None) {}
+        //public ColorGrid(ColorCollection colors, ColorCollection customColors) : this(colors, customColors, ColorPalette.None) {}
 
         public ColorGrid() : this(ColorPalette.Named) {}
 
 
         protected ColorGrid(ColorCollection colors, ColorCollection customColors, ColorPalette palette) {
-            _cellBackground =
-                new Bitmap(Resources.cellbackground);
+            _cellBackground = new Bitmap(Resources.cellbackground);
             _cellBackgroundBrush = new TextureBrush(_cellBackground, WrapMode.Tile);
             SetStyle(
                 ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.Selectable |
                 ControlStyles.StandardClick | ControlStyles.StandardDoubleClick, true);
             UpdateStyles();
+            // ReSharper disable DoNotCallOverridableMethodsInConstructor
             HotIndex = InvalidIndex;
             ColorRegions = new Dictionary<int, Rectangle>();
             if (Palette != ColorPalette.None)
@@ -111,35 +114,36 @@ namespace CommonControls {
             Color = Color.Black;
             CellBorderStyle = ColorCellBorderStyle.FixedSingle;
             SelectedCellStyle = ColorGridSelectedCellStyle.Zoomed;
+            // ReSharper restore DoNotCallOverridableMethodsInConstructor
         }
 
         #endregion
 
         #region Events
 
-        /// <summary>
-        /// Occurs when the AutoAddColors property value changes
-        /// </summary>
-        [Category("Property Changed")]
-        public event EventHandler AutoAddColorsChanged;
+        ///// <summary>
+        ///// Occurs when the AutoAddColors property value changes
+        ///// </summary>
+        //[Category("Property Changed")]
+        //public event EventHandler AutoAddColorsChanged;
 
-        /// <summary>
-        /// Occurs when the CellBorderColor property value changes
-        /// </summary>
-        [Category("Property Changed")]
-        public event EventHandler CellBorderColorChanged;
+        ///// <summary>
+        ///// Occurs when the CellBorderColor property value changes
+        ///// </summary>
+        //[Category("Property Changed")]
+        //public event EventHandler CellBorderColorChanged;
 
-        /// <summary>
-        /// Occurs when the CellBorderStyle property value changes
-        /// </summary>
-        [Category("Property Changed")]
-        public event EventHandler CellBorderStyleChanged;
+        ///// <summary>
+        ///// Occurs when the CellBorderStyle property value changes
+        ///// </summary>
+        //[Category("Property Changed")]
+        //public event EventHandler CellBorderStyleChanged;
 
-        /// <summary>
-        /// Occurs when the CellSize property value changes
-        /// </summary>
-        [Category("Property Changed")]
-        public event EventHandler CellSizeChanged;
+        ///// <summary>
+        ///// Occurs when the CellSize property value changes
+        ///// </summary>
+        //[Category("Property Changed")]
+        //public event EventHandler CellSizeChanged;
 
         /// <summary>
         /// Occurs when the Color property value changes
@@ -147,35 +151,35 @@ namespace CommonControls {
         [Category("Property Changed")]
         public event EventHandler ColorChanged;
 
-        /// <summary>
-        /// Occurs when the Colors property value changes
-        /// </summary>
-        [Category("Property Changed")]
-        public event EventHandler ColorsChanged;
+        ///// <summary>
+        ///// Occurs when the Colors property value changes
+        ///// </summary>
+        //[Category("Property Changed")]
+        //public event EventHandler ColorsChanged;
 
-        /// <summary>
-        /// Occurs when the Columns property value changes
-        /// </summary>
-        [Category("Property Changed")]
-        public event EventHandler ColumnsChanged;
+        ///// <summary>
+        ///// Occurs when the Columns property value changes
+        ///// </summary>
+        //[Category("Property Changed")]
+        //public event EventHandler ColumnsChanged;
 
-        /// <summary>
-        /// Occurs when the CustomColors property value changes
-        /// </summary>
-        [Category("Property Changed")]
-        public event EventHandler CustomColorsChanged;
+        ///// <summary>
+        ///// Occurs when the CustomColors property value changes
+        ///// </summary>
+        //[Category("Property Changed")]
+        //public event EventHandler CustomColorsChanged;
 
-        /// <summary>
-        /// Occurs when the EditMode property value changes
-        /// </summary>
-        [Category("Property Changed")]
-        public event EventHandler EditModeChanged;
+        ///// <summary>
+        ///// Occurs when the EditMode property value changes
+        ///// </summary>
+        //[Category("Property Changed")]
+        //public event EventHandler EditModeChanged;
 
-        /// <summary>
-        /// Occurs when the HotIndex property value changes
-        /// </summary>
-        [Category("Property Changed")]
-        public event EventHandler HotIndexChanged;
+        ///// <summary>
+        ///// Occurs when the HotIndex property value changes
+        ///// </summary>
+        //[Category("Property Changed")]
+        //public event EventHandler HotIndexChanged;
 
         /// <summary>
         /// Occurs when the Palette property value changes
@@ -183,29 +187,29 @@ namespace CommonControls {
         [Category("Property Changed")]
         public event EventHandler PaletteChanged;
 
-        /// <summary>
-        /// Occurs when the SelectedCellStyle property value changes
-        /// </summary>
-        [Category("Property Changed")]
-        public event EventHandler SelectedCellStyleChanged;
+        ///// <summary>
+        ///// Occurs when the SelectedCellStyle property value changes
+        ///// </summary>
+        //[Category("Property Changed")]
+        //public event EventHandler SelectedCellStyleChanged;
 
-        /// <summary>
-        /// Occurs when the ShowCustomColors property value changes
-        /// </summary>
-        [Category("Property Changed")]
-        public event EventHandler ShowCustomColorsChanged;
+        ///// <summary>
+        ///// Occurs when the ShowCustomColors property value changes
+        ///// </summary>
+        //[Category("Property Changed")]
+        //public event EventHandler ShowCustomColorsChanged;
 
-        /// <summary>
-        /// Occurs when the ShowToolTips property value changes
-        /// </summary>
-        [Category("Property Changed")]
-        public event EventHandler ShowToolTipsChanged;
+        ///// <summary>
+        ///// Occurs when the ShowToolTips property value changes
+        ///// </summary>
+        //[Category("Property Changed")]
+        //public event EventHandler ShowToolTipsChanged;
 
-        /// <summary>
-        /// Occurs when the Spacing property value changes
-        /// </summary>
-        [Category("Property Changed")]
-        public event EventHandler SpacingChanged;
+        ///// <summary>
+        ///// Occurs when the Spacing property value changes
+        ///// </summary>
+        //[Category("Property Changed")]
+        //public event EventHandler SpacingChanged;
 
         #endregion
 
@@ -250,8 +254,8 @@ namespace CommonControls {
 
         protected override void Dispose(bool disposing) {
             if (disposing) {
-                if (_toolTip != null)
-                    _toolTip.Dispose();
+                //if (_toolTip != null)
+                //    _toolTip.Dispose();
 
                 if (_cellBackground != null)
                     _cellBackground.Dispose();
@@ -293,18 +297,13 @@ namespace CommonControls {
 
 
         protected override void OnKeyDown(KeyEventArgs e) {
-            Point cellLocation;
             bool processed;
-            int row;
-            int column;
-            int lastStandardRowOffset;
-            int lastStandardRowLastColumn;
 
-            lastStandardRowOffset = (PrimaryRows * Columns) - Colors.Count;
-            lastStandardRowLastColumn = Columns - lastStandardRowOffset;
-            cellLocation = GetCell(ColorIndex);
-            column = cellLocation.X;
-            row = cellLocation.Y;
+            var lastStandardRowOffset = (PrimaryRows * Columns) - Colors.Count;
+            var lastStandardRowLastColumn = Columns - lastStandardRowOffset;
+            var cellLocation = GetCell(ColorIndex);
+            var column = cellLocation.X;
+            var row = cellLocation.Y;
 
             switch (e.KeyData) {
                 case Keys.Down:
@@ -353,9 +352,7 @@ namespace CommonControls {
             }
 
             if (processed) {
-                int index;
-
-                index = GetCellIndex(column, row);
+                var index = GetCellIndex(column, row);
                 if (index != InvalidIndex) {
                     // setting the Color property will automatically set the ColorIndex to the index of the first match
                     // which is not exactly what you want when navigating the grid with the keyboard! Disable painting
@@ -373,20 +370,20 @@ namespace CommonControls {
         }
 
 
-        protected override void OnKeyUp(KeyEventArgs e) {
-            if (e.KeyData == Keys.Enter && ColorIndex != InvalidIndex) {
-                ColorSource source;
+        //protected override void OnKeyUp(KeyEventArgs e) {
+        //    if (e.KeyData == Keys.Enter && ColorIndex != InvalidIndex) {
+        //        ColorSource source;
 
-                source = GetColorSource(ColorIndex);
-                if (source == ColorSource.Custom && EditMode != ColorEditingMode.None ||
-                    source == ColorSource.Standard && EditMode == ColorEditingMode.Both) {
-                    e.Handled = true;
-                    EditColor(ColorIndex);
-                }
-            }
+        //        source = GetColorSource(ColorIndex);
+        //        if (source == ColorSource.Custom && EditMode != ColorEditingMode.None ||
+        //            source == ColorSource.Standard && EditMode == ColorEditingMode.Both) {
+        //            e.Handled = true;
+        //            EditColor(ColorIndex);
+        //        }
+        //    }
 
-            base.OnKeyUp(e);
-        }
+        //    base.OnKeyUp(e);
+        //}
 
 
         protected override void OnLostFocus(EventArgs e) {
@@ -396,17 +393,17 @@ namespace CommonControls {
         }
 
 
-        protected override void OnMouseDoubleClick(MouseEventArgs e) {
-            ColorHitTestInfo hitTest;
+        //protected override void OnMouseDoubleClick(MouseEventArgs e) {
+        //    ColorHitTestInfo hitTest;
 
-            base.OnMouseDoubleClick(e);
+        //    base.OnMouseDoubleClick(e);
 
-            hitTest = HitTest(e.Location);
+        //    hitTest = HitTest(e.Location);
 
-            if (hitTest.Source == ColorSource.Custom && EditMode != ColorEditingMode.None ||
-                hitTest.Source == ColorSource.Standard && EditMode == ColorEditingMode.Both)
-                EditColor(hitTest.Index);
-        }
+        //    if (hitTest.Source == ColorSource.Custom && EditMode != ColorEditingMode.None ||
+        //        hitTest.Source == ColorSource.Standard && EditMode == ColorEditingMode.Both)
+        //        EditColor(hitTest.Index);
+        //}
 
 
         protected override void OnMouseDown(MouseEventArgs e) {
@@ -447,27 +444,29 @@ namespace CommonControls {
         protected override void OnPaint(PaintEventArgs e) {
             base.OnPaint(e);
 
-            if (AllowPainting) {
-                base.OnPaintBackground(e);
-                    // HACK: Easiest way of supporting things like BackgroundImage, BackgroundImageLayout etc as the PaintBackground event is no longer being called
-
-                // draw cells for all current colors
-                for (int i = 0; i < Colors.Count; i++)
-                    PaintCell(e, i, i, Colors[i], ColorRegions[i]);
-
-                if (CustomColors.Count != 0 && ShowCustomColors) {
-                    // draw a separator
-                    PaintSeparator(e);
-
-                    // and the custom colors
-                    for (int i = 0; i < CustomColors.Count; i++)
-                        PaintCell(e, i, Colors.Count + i, CustomColors[i], ColorRegions[Colors.Count + i]);
-                }
-
-                // draw the selected color
-                if (SelectedCellStyle != ColorGridSelectedCellStyle.None && ColorIndex >= 0)
-                    PaintSelectedCell(e, ColorIndex, Color, ColorRegions[ColorIndex]);
+            if (!AllowPainting) {
+                return;
             }
+
+            base.OnPaintBackground(e);
+            // HACK: Easiest way of supporting things like BackgroundImage, BackgroundImageLayout etc as the PaintBackground event is no longer being called
+
+            // draw cells for all current colors
+            for (var i = 0; i < Colors.Count; i++)
+                PaintCell(e, i, Colors[i], ColorRegions[i]);
+
+            if (CustomColors.Count != 0 && ShowCustomColors) {
+                // draw a separator
+                PaintSeparator(e);
+
+                // and the custom colors
+                for (var i = 0; i < CustomColors.Count; i++)
+                    PaintCell(e, Colors.Count + i, CustomColors[i], ColorRegions[Colors.Count + i]);
+            }
+
+            // draw the selected color
+            if (SelectedCellStyle != ColorGridSelectedCellStyle.None && ColorIndex >= 0)
+                PaintSelectedCell(e, Color, ColorRegions[ColorIndex]);
         }
 
 
@@ -486,50 +485,54 @@ namespace CommonControls {
         public virtual bool AutoAddColors {
             get { return _autoAddColors; }
             set {
-                if (AutoAddColors != value) {
-                    _autoAddColors = value;
-
-                    OnAutoAddColorsChanged(EventArgs.Empty);
+                if (AutoAddColors == value) {
+                    return;
                 }
+                _autoAddColors = value;
+
+                //OnAutoAddColorsChanged(EventArgs.Empty);
             }
         }
 
         [Category("Appearance")]
-        [DefaultValue(typeof (Color), "ButtonShadow")]
+        [DefaultValue(typeof(Color), "ButtonShadow")]
         public virtual Color CellBorderColor {
             get { return _cellBorderColor; }
             set {
-                if (CellBorderColor != value) {
-                    _cellBorderColor = value;
-
-                    OnCellBorderColorChanged(EventArgs.Empty);
+                if (CellBorderColor == value) {
+                    return;
                 }
+                _cellBorderColor = value;
+
+                //OnCellBorderColorChanged(EventArgs.Empty);
             }
         }
 
         [Category("Appearance")]
-        [DefaultValue(typeof (ColorCellBorderStyle), "FixedSingle")]
+        [DefaultValue(typeof(ColorCellBorderStyle), "FixedSingle")]
         public virtual ColorCellBorderStyle CellBorderStyle {
             get { return _cellBorderStyle; }
             set {
-                if (CellBorderStyle != value) {
-                    _cellBorderStyle = value;
-
-                    OnCellBorderStyleChanged(EventArgs.Empty);
+                if (CellBorderStyle == value) {
+                    return;
                 }
+                _cellBorderStyle = value;
+
+                //OnCellBorderStyleChanged(EventArgs.Empty);
             }
         }
 
         [Category("Appearance")]
-        [DefaultValue(typeof (Size), "12, 12")]
+        [DefaultValue(typeof(Size), "12, 12")]
         public virtual Size CellSize {
             get { return _cellSize; }
             set {
-                if (CellSize != value) {
-                    _cellSize = value;
-
-                    OnCellSizeChanged(EventArgs.Empty);
+                if (CellSize == value) {
+                    return;
                 }
+                _cellSize = value;
+
+                //OnCellSizeChanged(EventArgs.Empty);
             }
         }
 
@@ -538,11 +541,9 @@ namespace CommonControls {
         public virtual Color Color {
             get { return _color; }
             set {
-                int newIndex;
-
                 _color = value;
 
-                newIndex = GetColorIndex(value);
+                var newIndex = GetColorIndex(value);
 
                 if (newIndex == InvalidIndex)
                     newIndex = AddCustomColor(value);
@@ -558,11 +559,12 @@ namespace CommonControls {
         public virtual ColorCollection Colors {
             get { return _colors; }
             set {
-                if (Colors != value) {
-                    _colors = value;
-
-                    OnColorsChanged(EventArgs.Empty);
+                if (Colors == value) {
+                    return;
                 }
+                _colors = value;
+
+                //OnColorsChanged(EventArgs.Empty);
             }
         }
 
@@ -571,12 +573,13 @@ namespace CommonControls {
         public virtual int Columns {
             get { return _columns; }
             set {
-                if (Columns != value) {
-                    _columns = value;
-                    CalculateRows();
-
-                    OnColumnsChanged(EventArgs.Empty);
+                if (Columns == value) {
+                    return;
                 }
+                _columns = value;
+                CalculateRows();
+
+                //OnColumnsChanged(EventArgs.Empty);
             }
         }
 
@@ -585,11 +588,12 @@ namespace CommonControls {
         public virtual ColorCollection CustomColors {
             get { return _customColors; }
             set {
-                if (CustomColors != value) {
-                    _customColors = value;
-
-                    OnCustomColorsChanged(EventArgs.Empty);
+                if (CustomColors == value) {
+                    return;
                 }
+                _customColors = value;
+
+                //OnCustomColorsChanged(EventArgs.Empty);
             }
         }
 
@@ -598,11 +602,12 @@ namespace CommonControls {
         public virtual ColorEditingMode EditMode {
             get { return _editMode; }
             set {
-                if (EditMode != value) {
-                    _editMode = value;
-
-                    OnEditModeChanged(EventArgs.Empty);
+                if (EditMode == value) {
+                    return;
                 }
+                _editMode = value;
+
+                //OnEditModeChanged(EventArgs.Empty);
             }
         }
 
@@ -611,11 +616,12 @@ namespace CommonControls {
         public virtual int HotIndex {
             get { return _hotIndex; }
             set {
-                if (HotIndex != value) {
-                    _hotIndex = value;
-
-                    OnHotIndexChanged(EventArgs.Empty);
+                if (HotIndex == value) {
+                    return;
                 }
+                _hotIndex = value;
+
+                //OnHotIndexChanged(EventArgs.Empty);
             }
         }
 
@@ -630,11 +636,12 @@ namespace CommonControls {
         public virtual ColorPalette Palette {
             get { return _palette; }
             set {
-                if (Palette != value) {
-                    _palette = value;
-
-                    OnPaletteChanged(EventArgs.Empty);
+                if (Palette == value) {
+                    return;
                 }
+                _palette = value;
+
+                OnPaletteChanged(EventArgs.Empty);
             }
         }
 
@@ -643,11 +650,12 @@ namespace CommonControls {
         public virtual ColorGridSelectedCellStyle SelectedCellStyle {
             get { return _selectedCellStyle; }
             set {
-                if (SelectedCellStyle != value) {
-                    _selectedCellStyle = value;
-
-                    OnSelectedCellStyleChanged(EventArgs.Empty);
+                if (SelectedCellStyle == value) {
+                    return;
                 }
+                _selectedCellStyle = value;
+
+                //OnSelectedCellStyleChanged(EventArgs.Empty);
             }
         }
 
@@ -656,11 +664,12 @@ namespace CommonControls {
         public virtual bool ShowCustomColors {
             get { return _showCustomColors; }
             set {
-                if (ShowCustomColors != value) {
-                    _showCustomColors = value;
-
-                    OnShowCustomColorsChanged(EventArgs.Empty);
+                if (ShowCustomColors == value) {
+                    return;
                 }
+                _showCustomColors = value;
+
+                //OnShowCustomColorsChanged(EventArgs.Empty);
             }
         }
 
@@ -669,11 +678,12 @@ namespace CommonControls {
         public virtual bool ShowToolTips {
             get { return _showToolTips; }
             set {
-                if (ShowToolTips != value) {
-                    _showToolTips = value;
-
-                    OnShowToolTipsChanged(EventArgs.Empty);
+                if (ShowToolTips == value) {
+                    return;
                 }
+                _showToolTips = value;
+
+                //OnShowToolTipsChanged(EventArgs.Empty);
             }
         }
 
@@ -682,11 +692,12 @@ namespace CommonControls {
         public virtual Size Spacing {
             get { return _spacing; }
             set {
-                if (Spacing != value) {
-                    _spacing = value;
-
-                    OnSpacingChanged(EventArgs.Empty);
+                if (Spacing == value) {
+                    return;
                 }
+                _spacing = value;
+
+                //OnSpacingChanged(EventArgs.Empty);
             }
         }
 
@@ -706,7 +717,7 @@ namespace CommonControls {
 
         protected int CustomRows { get; set; }
 
-        protected bool LockUpdates { get; set; }
+        //protected bool LockUpdates { get; set; }
 
         protected int PrimaryRows { get; set; }
 
@@ -717,26 +728,25 @@ namespace CommonControls {
         #region Members
 
         public virtual int AddCustomColor(Color value) {
-            int newIndex;
+            var newIndex = GetColorIndex(value);
 
-            newIndex = GetColorIndex(value);
-
-            if (newIndex == InvalidIndex) {
-                if (AutoAddColors)
-                    CustomColors.Add(value);
-                else {
-                    if (CustomColors == null) {
-                        CustomColors = new ColorCollection();
-                        CustomColors.Add(value);
-                    }
-                    else
-                        CustomColors[0] = value;
-
-                    newIndex = GetColorIndex(value);
-                }
-
-                RefreshColors();
+            if (newIndex != InvalidIndex) {
+                return newIndex;
             }
+
+            if (AutoAddColors)
+                CustomColors.Add(value);
+            else {
+                if (CustomColors == null) {
+                    CustomColors = new ColorCollection {value};
+                }
+                else
+                    CustomColors[0] = value;
+
+                newIndex = GetColorIndex(value);
+            }
+
+            RefreshColors();
 
             return newIndex;
         }
@@ -764,16 +774,16 @@ namespace CommonControls {
 
         public Color GetColor(int index) {
             Color result;
-            int colorCount;
-            int customColorCount;
 
-            colorCount = Colors != null ? Colors.Count : 0;
-            customColorCount = CustomColors != null ? CustomColors.Count : 0;
+            var colorCount = Colors != null ? Colors.Count : 0;
+            var customColorCount = CustomColors != null ? CustomColors.Count : 0;
 
             if (index < 0 || index > (colorCount + customColorCount))
                 result = Color.Empty;
             else
+                // ReSharper disablePossibleNullReferenceException
                 result = index > colorCount - 1 ? CustomColors[index - colorCount] : Colors[index];
+                // ReSharper enable PossibleNullReferenceException
 
             return result;
         }
@@ -781,11 +791,8 @@ namespace CommonControls {
 
         public ColorSource GetColorSource(int colorIndex) {
             ColorSource result;
-            int colorCount;
-            int customColorCount;
-
-            colorCount = Colors != null ? Colors.Count : 0;
-            customColorCount = CustomColors != null ? CustomColors.Count : 0;
+            var colorCount = Colors != null ? Colors.Count : 0;
+            var customColorCount = CustomColors != null ? CustomColors.Count : 0;
 
             if (colorCount < 0 || colorIndex > (colorCount + customColorCount))
                 result = ColorSource.None;
@@ -796,30 +803,26 @@ namespace CommonControls {
         }
 
 
-        public ColorSource GetColorSource(Color color) {
-            int index;
-            ColorSource result;
+        //public ColorSource GetColorSource(Color color) {
+        //    ColorSource result;
 
-            index = Colors.IndexOf(color);
-            if (index != InvalidIndex)
-                result = ColorSource.Standard;
-            else {
-                index = CustomColors.IndexOf(color);
-                result = index != InvalidIndex ? ColorSource.Custom : ColorSource.None;
-            }
+        //    var index = Colors.IndexOf(color);
+        //    if (index != InvalidIndex)
+        //        result = ColorSource.Standard;
+        //    else {
+        //        index = CustomColors.IndexOf(color);
+        //        result = index != InvalidIndex ? ColorSource.Custom : ColorSource.None;
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
 
 
         public ColorHitTestInfo HitTest(Point point) {
-            ColorHitTestInfo result;
-            int colorIndex;
+            var result = new ColorHitTestInfo();
+            var colorIndex = InvalidIndex;
 
-            result = new ColorHitTestInfo();
-            colorIndex = InvalidIndex;
-
-            foreach (KeyValuePair<int, Rectangle> pair in ColorRegions.Where(pair => pair.Value.Contains(point))) {
+            foreach (var pair in ColorRegions.Where(pair => pair.Value.Contains(point))) {
                 colorIndex = pair.Key;
                 break;
             }
@@ -837,14 +840,11 @@ namespace CommonControls {
 
 
         protected virtual void CalculateRows() {
-            int primaryRows;
-            int customRows;
-
-            primaryRows = GetRows(Colors != null ? Colors.Count : 0);
+            var primaryRows = GetRows(Colors != null ? Colors.Count : 0);
             if (primaryRows == 0)
                 primaryRows = 1;
 
-            customRows = ShowCustomColors ? GetRows(CustomColors != null ? CustomColors.Count : 0) : 0;
+            var customRows = ShowCustomColors ? GetRows(CustomColors != null ? CustomColors.Count : 0) : 0;
 
             PrimaryRows = primaryRows;
             CustomRows = customRows;
@@ -852,48 +852,43 @@ namespace CommonControls {
 
 
         protected void DefineColorRegions(ColorCollection colors, int rangeStart, int offset) {
-            if (colors != null) {
-                int rows;
-                int index;
+            if (colors == null) {
+                return;
+            }
+            var rows = GetRows(colors.Count);
+            var index = 0;
 
-                rows = GetRows(colors.Count);
-                index = 0;
+            for (var row = 0; row < rows; row++) {
+                for (var column = 0; column < Columns; column++) {
+                    if (index < colors.Count)
+                        ColorRegions.Add(rangeStart + index,
+                            new Rectangle(Padding.Left + (column * (CellSize.Width + Spacing.Width)),
+                                offset + (row * (CellSize.Height + Spacing.Height)), CellSize.Width, CellSize.Height));
 
-                for (int row = 0; row < rows; row++) {
-                    for (int column = 0; column < Columns; column++) {
-                        if (index < colors.Count)
-                            ColorRegions.Add(rangeStart + index,
-                                new Rectangle(Padding.Left + (column * (CellSize.Width + Spacing.Width)),
-                                    offset + (row * (CellSize.Height + Spacing.Height)), CellSize.Width, CellSize.Height));
-
-                        index++;
-                    }
+                    index++;
                 }
             }
         }
 
 
-        protected virtual void EditColor(int colorIndex) {
-            using (ColorPickerDialog dialog = new ColorPickerDialog()) {
-                dialog.Color = GetColor(colorIndex);
-                if (dialog.ShowDialog(this) == DialogResult.OK) {
-                    BeginUpdate();
-                    SetColor(colorIndex, dialog.Color);
-                    Color = dialog.Color;
-                    EndUpdate();
-                }
-            }
-        }
+        //protected virtual void EditColor(int colorIndex) {
+        //    using (ColorPickerDialog dialog = new ColorPickerDialog()) {
+        //        dialog.Color = GetColor(colorIndex);
+        //        if (dialog.ShowDialog(this) == DialogResult.OK) {
+        //            BeginUpdate();
+        //            SetColor(colorIndex, dialog.Color);
+        //            Color = dialog.Color;
+        //            EndUpdate();
+        //        }
+        //    }
+        //}
 
 
         protected Size GetAutoSize() {
-            int offset;
-
-            offset = CustomRows != 0 ? SeparatorHeight : 0;
+            var offset = CustomRows != 0 ? SeparatorHeight : 0;
 
             return new Size(((CellSize.Width + Spacing.Width) * Columns) + Padding.Horizontal - Spacing.Width,
-                ((CellSize.Height + Spacing.Height) * (PrimaryRows + CustomRows)) + offset + Padding.Vertical -
-                Spacing.Height);
+                ((CellSize.Height + Spacing.Height) * (PrimaryRows + CustomRows)) + offset + Padding.Vertical - Spacing.Height);
         }
 
 
@@ -901,9 +896,7 @@ namespace CommonControls {
             int result;
 
             if (column >= 0 && column < Columns && row >= 0 && row < (PrimaryRows + CustomRows)) {
-                int lastStandardRowOffset;
-
-                lastStandardRowOffset = (PrimaryRows * Columns) - Colors.Count;
+                var lastStandardRowOffset = (PrimaryRows * Columns) - Colors.Count;
                 result = row * Columns + column;
                 if (row == PrimaryRows - 1 && column >= (Columns - lastStandardRowOffset))
                     result -= lastStandardRowOffset;
@@ -921,14 +914,14 @@ namespace CommonControls {
 
 
         protected virtual int GetColorIndex(Color value) {
-            int index;
-
-            index = Colors != null ? Colors.IndexOf(value) : InvalidIndex;
-            if (index == InvalidIndex && CustomColors != null) {
-                index = CustomColors.IndexOf(value);
-                if (index != InvalidIndex)
-                    index += Colors.Count;
+            var index = Colors != null ? Colors.IndexOf(value) : InvalidIndex;
+            if (index != InvalidIndex || CustomColors == null) {
+                return index;
             }
+
+            index = CustomColors.IndexOf(value);
+            if (index != InvalidIndex && null != Colors)
+                index += Colors.Count;
 
             return index;
         }
@@ -954,68 +947,60 @@ namespace CommonControls {
         }
 
 
-        /// <summary>
-        /// Raises the <see cref="AutoAddColorsChanged" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnAutoAddColorsChanged(EventArgs e) {
-            EventHandler handler;
+        ///// <summary>
+        ///// Raises the <see cref="AutoAddColorsChanged" /> event.
+        ///// </summary>
+        ///// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        //protected virtual void OnAutoAddColorsChanged(EventArgs e) {
+        //    var handler = AutoAddColorsChanged;
 
-            handler = AutoAddColorsChanged;
-
-            if (handler != null)
-                handler(this, e);
-        }
+        //    if (handler != null)
+        //        handler(this, e);
+        //}
 
 
-        /// <summary>
-        /// Raises the <see cref="CellBorderColorChanged" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnCellBorderColorChanged(EventArgs e) {
-            EventHandler handler;
+        ///// <summary>
+        ///// Raises the <see cref="CellBorderColorChanged" /> event.
+        ///// </summary>
+        ///// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        //protected virtual void OnCellBorderColorChanged(EventArgs e) {
+        //    Invalidate();
 
-            Invalidate();
+        //    var handler = CellBorderColorChanged;
 
-            handler = CellBorderColorChanged;
-
-            if (handler != null)
-                handler(this, e);
-        }
+        //    if (handler != null)
+        //        handler(this, e);
+        //}
 
 
-        /// <summary>
-        /// Raises the <see cref="CellBorderStyleChanged" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnCellBorderStyleChanged(EventArgs e) {
-            EventHandler handler;
+        ///// <summary>
+        ///// Raises the <see cref="CellBorderStyleChanged" /> event.
+        ///// </summary>
+        ///// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        //protected virtual void OnCellBorderStyleChanged(EventArgs e) {
+        //    Invalidate();
 
-            Invalidate();
+        //    var handler = CellBorderStyleChanged;
 
-            handler = CellBorderStyleChanged;
-
-            if (handler != null)
-                handler(this, e);
-        }
+        //    if (handler != null)
+        //        handler(this, e);
+        //}
 
 
-        /// <summary>
-        /// Raises the <see cref="CellSizeChanged" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnCellSizeChanged(EventArgs e) {
-            EventHandler handler;
+        ///// <summary>
+        ///// Raises the <see cref="CellSizeChanged" /> event.
+        ///// </summary>
+        ///// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        //protected virtual void OnCellSizeChanged(EventArgs e) {
+        //    if (AutoSize)
+        //        SizeToFit();
+        //    Invalidate();
 
-            if (AutoSize)
-                SizeToFit();
-            Invalidate();
+        //    var handler = CellSizeChanged;
 
-            handler = CellSizeChanged;
-
-            if (handler != null)
-                handler(this, e);
-        }
+        //    if (handler != null)
+        //        handler(this, e);
+        //}
 
 
         /// <summary>
@@ -1023,99 +1008,87 @@ namespace CommonControls {
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnColorChanged(EventArgs e) {
-            EventHandler handler;
-
             if (AllowPainting)
                 Refresh();
 
-            handler = ColorChanged;
+            var handler = ColorChanged;
 
             if (handler != null)
                 handler(this, e);
         }
 
 
-        /// <summary>
-        /// Raises the <see cref="ColorsChanged" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnColorsChanged(EventArgs e) {
-            EventHandler handler;
+        ///// <summary>
+        ///// Raises the <see cref="ColorsChanged" /> event.
+        ///// </summary>
+        ///// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        //protected virtual void OnColorsChanged(EventArgs e) {
+        //    if (Colors != null)
+        //        Colors.CollectionChanged += ColorsCollectionChangedHandler;
+        //    RefreshColors();
 
-            if (Colors != null)
-                Colors.CollectionChanged += ColorsCollectionChangedHandler;
-            RefreshColors();
+        //    var handler = ColorsChanged;
 
-            handler = ColorsChanged;
-
-            if (handler != null)
-                handler(this, e);
-        }
+        //    if (handler != null)
+        //        handler(this, e);
+        //}
 
 
-        /// <summary>
-        /// Raises the <see cref="ColumnsChanged" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnColumnsChanged(EventArgs e) {
-            EventHandler handler;
+        ///// <summary>
+        ///// Raises the <see cref="ColumnsChanged" /> event.
+        ///// </summary>
+        ///// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        //protected virtual void OnColumnsChanged(EventArgs e) {
+        //    RefreshColors();
 
-            RefreshColors();
+        //    var handler = ColumnsChanged;
 
-            handler = ColumnsChanged;
-
-            if (handler != null)
-                handler(this, e);
-        }
+        //    if (handler != null)
+        //        handler(this, e);
+        //}
 
 
-        /// <summary>
-        /// Raises the <see cref="CustomColorsChanged" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnCustomColorsChanged(EventArgs e) {
-            EventHandler handler;
+        ///// <summary>
+        ///// Raises the <see cref="CustomColorsChanged" /> event.
+        ///// </summary>
+        ///// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        //protected virtual void OnCustomColorsChanged(EventArgs e) {
+        //    if (CustomColors != null)
+        //        CustomColors.CollectionChanged += ColorsCollectionChangedHandler;
+        //    RefreshColors();
 
-            if (CustomColors != null)
-                CustomColors.CollectionChanged += ColorsCollectionChangedHandler;
-            RefreshColors();
+        //    var handler = CustomColorsChanged;
 
-            handler = CustomColorsChanged;
-
-            if (handler != null)
-                handler(this, e);
-        }
+        //    if (handler != null)
+        //        handler(this, e);
+        //}
 
 
-        /// <summary>
-        /// Raises the <see cref="EditModeChanged" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnEditModeChanged(EventArgs e) {
-            EventHandler handler;
+        ///// <summary>
+        ///// Raises the <see cref="EditModeChanged" /> event.
+        ///// </summary>
+        ///// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        //protected virtual void OnEditModeChanged(EventArgs e) {
+        //    var handler = EditModeChanged;
 
-            handler = EditModeChanged;
-
-            if (handler != null)
-                handler(this, e);
-        }
+        //    if (handler != null)
+        //        handler(this, e);
+        //}
 
 
-        /// <summary>
-        /// Raises the <see cref="HotIndexChanged" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnHotIndexChanged(EventArgs e) {
-            EventHandler handler;
+        ///// <summary>
+        ///// Raises the <see cref="HotIndexChanged" /> event.
+        ///// </summary>
+        ///// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        //protected virtual void OnHotIndexChanged(EventArgs e) {
+        //    SetToolTip();
+        //    Refresh();
 
-            SetToolTip();
-            Refresh();
+        //    var handler = HotIndexChanged;
 
-            handler = HotIndexChanged;
-
-            if (handler != null)
-                handler(this, e);
-        }
+        //    if (handler != null)
+        //        handler(this, e);
+        //}
 
 
         /// <summary>
@@ -1123,89 +1096,80 @@ namespace CommonControls {
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnPaletteChanged(EventArgs e) {
-            EventHandler handler;
-
             Colors = GetPredefinedPalette();
 
-            handler = PaletteChanged;
+            var handler = PaletteChanged;
 
             if (handler != null)
                 handler(this, e);
         }
 
 
-        /// <summary>
-        /// Raises the <see cref="SelectedCellStyleChanged" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnSelectedCellStyleChanged(EventArgs e) {
-            EventHandler handler;
+        ///// <summary>
+        ///// Raises the <see cref="SelectedCellStyleChanged" /> event.
+        ///// </summary>
+        ///// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        //protected virtual void OnSelectedCellStyleChanged(EventArgs e) {
+        //    Invalidate();
 
-            Invalidate();
+        //    var handler = SelectedCellStyleChanged;
 
-            handler = SelectedCellStyleChanged;
-
-            if (handler != null)
-                handler(this, e);
-        }
+        //    if (handler != null)
+        //        handler(this, e);
+        //}
 
 
-        /// <summary>
-        /// Raises the <see cref="ShowCustomColorsChanged" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnShowCustomColorsChanged(EventArgs e) {
-            EventHandler handler;
+        ///// <summary>
+        ///// Raises the <see cref="ShowCustomColorsChanged" /> event.
+        ///// </summary>
+        ///// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        //protected virtual void OnShowCustomColorsChanged(EventArgs e) {
+        //    RefreshColors();
 
-            RefreshColors();
+        //    var handler = ShowCustomColorsChanged;
 
-            handler = ShowCustomColorsChanged;
-
-            if (handler != null)
-                handler(this, e);
-        }
+        //    if (handler != null)
+        //        handler(this, e);
+        //}
 
 
-        /// <summary>
-        /// Raises the <see cref="ShowToolTipsChanged" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnShowToolTipsChanged(EventArgs e) {
-            EventHandler handler;
+        ///// <summary>
+        ///// Raises the <see cref="ShowToolTipsChanged" /> event.
+        ///// </summary>
+        ///// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        //protected virtual void OnShowToolTipsChanged(EventArgs e) {
+        //    if (ShowToolTips)
+        //        _toolTip = new ToolTip();
+        //    else if (_toolTip != null) {
+        //        _toolTip.Dispose();
+        //        _toolTip = null;
+        //    }
 
-            if (ShowToolTips)
-                _toolTip = new ToolTip();
-            else if (_toolTip != null) {
-                _toolTip.Dispose();
-                _toolTip = null;
-            }
+        //    var handler = ShowToolTipsChanged;
 
-            handler = ShowToolTipsChanged;
-
-            if (handler != null)
-                handler(this, e);
-        }
+        //    if (handler != null)
+        //        handler(this, e);
+        //}
 
 
-        /// <summary>
-        /// Raises the <see cref="SpacingChanged" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnSpacingChanged(EventArgs e) {
-            EventHandler handler;
+        ///// <summary>
+        ///// Raises the <see cref="SpacingChanged" /> event.
+        ///// </summary>
+        ///// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        //protected virtual void OnSpacingChanged(EventArgs e) {
+        //    if (AutoSize) {
+        //        SizeToFit();
+        //    }
+        //    Invalidate();
 
-            if (AutoSize)
-                SizeToFit();
-            Invalidate();
+        //    var handler = SpacingChanged;
 
-            handler = SpacingChanged;
-
-            if (handler != null)
-                handler(this, e);
-        }
+        //    if (handler != null)
+        //        handler(this, e);
+        //}
 
 
-        protected virtual void PaintCell(PaintEventArgs e, int colorIndex, int cellIndex, Color color, Rectangle bounds) {
+        protected virtual void PaintCell(PaintEventArgs e, int cellIndex, Color color, Rectangle bounds) {
             if (color.A != 255)
                 e.Graphics.FillRectangle(_cellBackgroundBrush, bounds);
 
@@ -1213,18 +1177,19 @@ namespace CommonControls {
                 e.Graphics.FillRectangle(brush, bounds);
 
             if (CellBorderStyle == ColorCellBorderStyle.FixedSingle) {
-                using (Pen pen = new Pen(CellBorderColor))
+                using (var pen = new Pen(CellBorderColor))
                     e.Graphics.DrawRectangle(pen, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1);
             }
 
-            if (HotIndex != InvalidIndex && HotIndex == cellIndex) {
-                e.Graphics.DrawRectangle(Pens.Black, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1);
-                e.Graphics.DrawRectangle(Pens.White, bounds.Left + 1, bounds.Top + 1, bounds.Width - 3, bounds.Height - 3);
+            if (HotIndex == InvalidIndex || HotIndex != cellIndex) {
+                return;
             }
+            e.Graphics.DrawRectangle(Pens.Black, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1);
+            e.Graphics.DrawRectangle(Pens.White, bounds.Left + 1, bounds.Top + 1, bounds.Width - 3, bounds.Height - 3);
         }
 
 
-        protected virtual void PaintSelectedCell(PaintEventArgs e, int colorIndex, Color color, Rectangle bounds) {
+        protected virtual void PaintSelectedCell(PaintEventArgs e, Color color, Rectangle bounds) {
             switch (SelectedCellStyle) {
                 case ColorGridSelectedCellStyle.Standard:
                     if (Focused)
@@ -1254,8 +1219,9 @@ namespace CommonControls {
                     else {
                         bounds = new Rectangle(bounds.Left - 2, bounds.Top - 2, bounds.Width + 3, bounds.Height + 3);
 
-                        using (Pen pen = new Pen(CellBorderColor))
+                        using (var pen = new Pen(CellBorderColor)) {
                             e.Graphics.DrawRectangle(pen, bounds);
+                        }
                     }
                     break;
             }
@@ -1263,79 +1229,79 @@ namespace CommonControls {
 
 
         protected virtual void PaintSeparator(PaintEventArgs e) {
-            int x1;
-            int y1;
-            int x2;
-            int y2;
+            var x1 = Padding.Left;
+            var x2 = ClientSize.Width - Padding.Right;
+            var y1 = (SeparatorHeight / 2) + Padding.Top + (PrimaryRows * (CellSize.Height + Spacing.Height)) + 1 - Spacing.Height;
+            var y2 = y1;
 
-            x1 = Padding.Left;
-            x2 = ClientSize.Width - Padding.Right;
-            y1 = (SeparatorHeight / 2) + Padding.Top + (PrimaryRows * (CellSize.Height + Spacing.Height)) + 1 -
-                 Spacing.Height;
-            y2 = y1;
-
-            using (Pen pen = new Pen(CellBorderColor))
+            using (var pen = new Pen(CellBorderColor)) {
                 e.Graphics.DrawLine(pen, x1, y1, x2, y2);
+            }
         }
 
 
         protected virtual void ProcessMouseClick(MouseEventArgs e) {
-            if (e.Button == MouseButtons.Left) {
-                ColorHitTestInfo hitTest;
-
-                hitTest = HitTest(e.Location);
-
-                if (hitTest.Source != ColorSource.None) {
-                    Color = hitTest.Color;
-                    ColorIndex = hitTest.Index;
-                    Invalidate();
-                }
+            if (e.Button != MouseButtons.Left) {
+                return;
             }
+
+            var hitTest = HitTest(e.Location);
+
+            if (hitTest.Source == ColorSource.None) {
+                return;
+            }
+
+            Color = hitTest.Color;
+            ColorIndex = hitTest.Index;
+            Invalidate();
         }
 
 
         protected virtual void RefreshColors() {
-            if (AllowPainting) {
-                CalculateRows();
-                if (AutoSize)
-                    SizeToFit();
-
-                ColorRegions.Clear();
-
-                if (Colors != null) {
-                    DefineColorRegions(Colors, 0, Padding.Top);
-                    DefineColorRegions(CustomColors, Colors.Count,
-                        Padding.Top + SeparatorHeight + ((CellSize.Height + Spacing.Height) * PrimaryRows));
-
-                    ColorIndex = GetColorIndex(Color);
-
-                    if (!Color.IsEmpty && ColorIndex == InvalidIndex)
-                        AddCustomColor(Color);
-
-                    Invalidate();
-                }
+            if (!AllowPainting) {
+                return;
             }
+
+            CalculateRows();
+            if (AutoSize)
+                SizeToFit();
+
+            ColorRegions.Clear();
+
+            if (Colors == null) {
+                return;
+            }
+
+            DefineColorRegions(Colors, 0, Padding.Top);
+            DefineColorRegions(CustomColors, Colors.Count, Padding.Top + SeparatorHeight + ((CellSize.Height + Spacing.Height) * PrimaryRows));
+
+            ColorIndex = GetColorIndex(Color);
+
+            if (!Color.IsEmpty && ColorIndex == InvalidIndex)
+                AddCustomColor(Color);
+
+            Invalidate();
         }
 
 
-        protected virtual void SetColor(int colorIndex, Color color) {
-            int colorCount;
+        //protected virtual void SetColor(int colorIndex, Color color) {
+        //    int colorCount;
 
-            colorCount = Colors.Count;
-            if (colorIndex < 0 || colorIndex > (colorCount + CustomColors.Count))
-                throw new ArgumentOutOfRangeException("colorIndex");
+        //    colorCount = Colors.Count;
+        //    if (colorIndex < 0 || colorIndex > (colorCount + CustomColors.Count))
+        //        throw new ArgumentOutOfRangeException("colorIndex");
 
-            if (colorIndex > colorCount - 1)
-                CustomColors[colorIndex - colorCount] = color;
-            else
-                Colors[colorIndex] = color;
-        }
+        //    if (colorIndex > colorCount - 1)
+        //        CustomColors[colorIndex - colorCount] = color;
+        //    else
+        //        Colors[colorIndex] = color;
+        //}
 
 
-        protected virtual void SetToolTip() {
-            if (ShowToolTips)
-                _toolTip.SetToolTip(this, HotIndex != InvalidIndex ? GetColor(HotIndex).Name : null);
-        }
+        //protected virtual void SetToolTip() {
+        //    if (ShowToolTips)
+        //        _toolTip.SetToolTip(this, HotIndex != InvalidIndex ? GetColor(HotIndex).Name : null);
+        //}
 
 
         private Point GetCell(int index) {
@@ -1367,10 +1333,14 @@ namespace CommonControls {
 
         #region Event Handlers
 
-        private void ColorsCollectionChangedHandler(object sender, ColorCollectionEventArgs e) {
-            RefreshColors();
-        }
+        //private void ColorsCollectionChangedHandler(object sender, ColorCollectionEventArgs e) {
+        //    RefreshColors();
+        //}
 
         #endregion
     }
+
+    // ReSharper restore MemberCanBePrivate.Global
+    // ReSharper restore MemberCanBeProtected.Global
+
 }
