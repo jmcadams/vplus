@@ -13,6 +13,11 @@ namespace CommonControls {
 
     [Serializable]
     public struct HslColor {
+        #region Constants
+
+        public static readonly HslColor Empty;
+
+        #endregion
 
         #region Instance Fields
 
@@ -31,18 +36,15 @@ namespace CommonControls {
         #region Static Constructors
 
         static HslColor() {
-            // ReSharper disable once ObjectCreationAsStatement
-            new HslColor {
-                IsEmpty = true
-            };
+            Empty = new HslColor {IsEmpty = true};
         }
 
         #endregion
 
         #region Constructors
 
-        public HslColor(double hue, double saturation, double lightness)
-            : this(255, hue, saturation, lightness) { }
+        public HslColor(double hue, double saturation, double lightness) : this(255, hue, saturation, lightness) {}
+
 
         public HslColor(int alpha, double hue, double saturation, double lightness) {
             _hue = Math.Min(359, hue);
@@ -51,6 +53,7 @@ namespace CommonControls {
             _alpha = alpha;
             _isEmpty = false;
         }
+
 
         public HslColor(Color color) {
             _alpha = color.A;
@@ -65,40 +68,21 @@ namespace CommonControls {
         #region Operators
 
         public static bool operator ==(HslColor a, HslColor b) {
-            return (IsNearlyEqual(a.H, b.H) && IsNearlyEqual(a.L, b.L) && IsNearlyEqual(a.S,b.S) && a.A == b.A);
+            // ReSharper disable CompareOfFloatsByEqualityOperator
+            return (a.H == b.H && a.L == b.L && a.S == b.S && a.A == b.A);
+            // ReSharper restore CompareOfFloatsByEqualityOperator
         }
 
-        public static bool IsNearlyEqual(double a, double b) {
-        // ReSharper disable CompareOfFloatsByEqualityOperator
-
-            const float epsilon = 0.00001f;
-            var absA = Math.Abs(a);
-            var absB = Math.Abs(b);
-            var diff = Math.Abs(a - b);
-
-            // shortcut, handles infinities
-            if (a == b) {
-                return true;
-            }
-
-            // a or b is zero or both are extremely close to it relative error is less meaningful here
-            if (a == 0 || b == 0 || diff < Single.MinValue) {
-                return diff < (epsilon * Single.MinValue);
-            }
-
-            // use relative error
-            return diff / (absA + absB) < epsilon;
-
-        // ReSharper restore CompareOfFloatsByEqualityOperator
-        }
 
         public static implicit operator HslColor(Color color) {
             return new HslColor(color);
         }
 
+
         public static implicit operator Color(HslColor color) {
             return color.ToRgbColor();
         }
+
 
         public static bool operator !=(HslColor a, HslColor b) {
             return !(a == b);
@@ -109,15 +93,30 @@ namespace CommonControls {
         #region Overridden Members
 
         public override bool Equals(object obj) {
-            return (obj is HslColor) && (this == (HslColor)obj);
+            bool result;
+
+            if (obj is HslColor) {
+                HslColor color;
+
+                color = (HslColor) obj;
+                result = (this == color);
+            }
+            else
+                result = false;
+
+            return result;
         }
+
 
         public override int GetHashCode() {
             return base.GetHashCode();
         }
 
+
         public override string ToString() {
-            var builder = new StringBuilder();
+            StringBuilder builder;
+
+            builder = new StringBuilder();
             builder.Append(GetType().Name);
             builder.Append(" [");
             builder.Append("H=");
@@ -145,13 +144,10 @@ namespace CommonControls {
             set {
                 _hue = value;
 
-                if (_hue > 359) {
+                if (_hue > 359)
                     _hue = 0;
-                }
-
-                if (_hue < 0) {
+                if (_hue < 0)
                     _hue = 359;
-                }
             }
         }
 
@@ -178,45 +174,64 @@ namespace CommonControls {
             return ToRgbColor(A);
         }
 
+
         public Color ToRgbColor(int alpha) {
-            var q = (L < 0.5) ? L * (1 + S) : L + S - (L * S);
-            var p = 2 * L - q;
-            var hk = H / 360;
+            double q;
+            if (L < 0.5)
+                q = L * (1 + S);
+            else
+                q = L + S - (L * S);
+            double p = 2 * L - q;
+            double hk = H / 360;
 
             // r,g,b colors
-            var tc = new[] {hk + (1d / 3d), hk, hk - (1d / 3d)};
-            var colors = new[] {0.0, 0.0, 0.0};
+            double[] tc = {hk + (1d / 3d), hk, hk - (1d / 3d)};
+            double[] colors = {0.0, 0.0, 0.0};
 
-            for (var color = 0; color < colors.Length; color++) {
-                if (tc[color] < 0) {
+            for (int color = 0; color < colors.Length; color++) {
+                if (tc[color] < 0)
                     tc[color] += 1;
-                }
-
-                if (tc[color] > 1) {
+                if (tc[color] > 1)
                     tc[color] -= 1;
-                }
 
-                if (tc[color] < (1d / 6d)) {
+                if (tc[color] < (1d / 6d))
                     colors[color] = p + ((q - p) * 6 * tc[color]);
-                }
-                else if (tc[color] >= (1d / 6d) && tc[color] < (1d / 2d)) {
+                else if (tc[color] >= (1d / 6d) && tc[color] < (1d / 2d))
                     colors[color] = q;
-                }
-                else if (tc[color] >= (1d / 2d) && tc[color] < (2d / 3d)) {
+                else if (tc[color] >= (1d / 2d) && tc[color] < (2d / 3d))
                     colors[color] = p + ((q - p) * 6 * (2d / 3d - tc[color]));
-                }
-                else {
+                else
                     colors[color] = p;
-                }
 
                 colors[color] *= 255;
             }
 
-            return Color.FromArgb(alpha, (int)colors[0], (int)colors[1], (int)colors[2]);
+            return Color.FromArgb(alpha, (int) colors[0], (int) colors[1], (int) colors[2]);
+        }
+
+        public static bool IsNearlyEqual(double a, double b) {
+            const float epsilon = 0.00001f;
+            var absA = Math.Abs(a);
+            var absB = Math.Abs(b);
+            var diff = Math.Abs(a - b);
+
+            // ReSharper disable CompareOfFloatsByEqualityOperator
+
+            if (a == b) { // shortcut, handles infinities
+                return true;
+            }
+
+            if (a == 0 || b == 0 || diff < Single.MinValue) {
+                // a or b is zero or both are extremely close to it relative error is less meaningful here
+                return diff < (epsilon * Single.MinValue);
+            }
+
+            // use relative error
+            return diff / (absA + absB) < epsilon;
+
+            // ReSharper restore CompareOfFloatsByEqualityOperator
         }
 
         #endregion
-
-
-     }
+    }
 }

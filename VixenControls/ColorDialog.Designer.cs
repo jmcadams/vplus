@@ -26,16 +26,19 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnNone = new System.Windows.Forms.Button();
             this.btnOkay = new System.Windows.Forms.Button();
-            this.pbColor = new System.Windows.Forms.PictureBox();
+            this.pbOriginalColor = new System.Windows.Forms.PictureBox();
+            this.lblOriginalColor = new System.Windows.Forms.Label();
+            this.pbNewColor = new System.Windows.Forms.PictureBox();
+            this.lblNewColor = new System.Windows.Forms.Label();
             this.colorEditor1 = new CommonControls.ColorEditor();
-            this.colorWheel1 = new CommonControls.ColorWheel();
-            ((System.ComponentModel.ISupportInitialize)(this.pbColor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbOriginalColor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbNewColor)).BeginInit();
             this.SuspendLayout();
             // 
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(302, 138);
+            this.btnCancel.Location = new System.Drawing.Point(301, 133);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 2;
@@ -45,7 +48,7 @@
             // btnNone
             // 
             this.btnNone.DialogResult = System.Windows.Forms.DialogResult.No;
-            this.btnNone.Location = new System.Drawing.Point(221, 138);
+            this.btnNone.Location = new System.Drawing.Point(220, 133);
             this.btnNone.Name = "btnNone";
             this.btnNone.Size = new System.Drawing.Size(75, 23);
             this.btnNone.TabIndex = 3;
@@ -55,64 +58,90 @@
             // btnOkay
             // 
             this.btnOkay.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOkay.Location = new System.Drawing.Point(140, 138);
+            this.btnOkay.Location = new System.Drawing.Point(139, 133);
             this.btnOkay.Name = "btnOkay";
             this.btnOkay.Size = new System.Drawing.Size(75, 23);
             this.btnOkay.TabIndex = 4;
             this.btnOkay.Text = "OK";
             this.btnOkay.UseVisualStyleBackColor = true;
             // 
-            // pbColor
+            // pbOriginalColor
             // 
-            this.pbColor.Location = new System.Drawing.Point(13, 139);
-            this.pbColor.Name = "pbColor";
-            this.pbColor.Size = new System.Drawing.Size(121, 23);
-            this.pbColor.TabIndex = 5;
-            this.pbColor.TabStop = false;
+            this.pbOriginalColor.Location = new System.Drawing.Point(12, 25);
+            this.pbOriginalColor.Name = "pbOriginalColor";
+            this.pbOriginalColor.Size = new System.Drawing.Size(121, 52);
+            this.pbOriginalColor.TabIndex = 5;
+            this.pbOriginalColor.TabStop = false;
+            // 
+            // lblOriginalColor
+            // 
+            this.lblOriginalColor.AutoSize = true;
+            this.lblOriginalColor.Location = new System.Drawing.Point(12, 9);
+            this.lblOriginalColor.Name = "lblOriginalColor";
+            this.lblOriginalColor.Size = new System.Drawing.Size(72, 13);
+            this.lblOriginalColor.TabIndex = 6;
+            this.lblOriginalColor.Text = "Original Color:";
+            // 
+            // pbNewColor
+            // 
+            this.pbNewColor.Location = new System.Drawing.Point(11, 104);
+            this.pbNewColor.Name = "pbNewColor";
+            this.pbNewColor.Size = new System.Drawing.Size(121, 52);
+            this.pbNewColor.TabIndex = 7;
+            this.pbNewColor.TabStop = false;
+            // 
+            // lblNewColor
+            // 
+            this.lblNewColor.AutoSize = true;
+            this.lblNewColor.Location = new System.Drawing.Point(12, 88);
+            this.lblNewColor.Name = "lblNewColor";
+            this.lblNewColor.Size = new System.Drawing.Size(59, 13);
+            this.lblNewColor.TabIndex = 8;
+            this.lblNewColor.Text = "New Color:";
             // 
             // colorEditor1
             // 
+            this.colorEditor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.colorEditor1.Location = new System.Drawing.Point(138, 12);
             this.colorEditor1.Name = "colorEditor1";
-            this.colorEditor1.Size = new System.Drawing.Size(238, 120);
+            this.colorEditor1.Size = new System.Drawing.Size(239, 89);
             this.colorEditor1.TabIndex = 1;
             this.colorEditor1.ColorChanged += new System.EventHandler(this.colorEditor1_ColorChanged);
-            // 
-            // colorWheel1
-            // 
-            this.colorWheel1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.colorWheel1.Location = new System.Drawing.Point(12, 12);
-            this.colorWheel1.Name = "colorWheel1";
-            this.colorWheel1.Size = new System.Drawing.Size(120, 120);
-            this.colorWheel1.TabIndex = 0;
-            this.colorWheel1.ColorChanged += new System.EventHandler(this.colorWheel1_ColorChanged);
             // 
             // ColorDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(389, 174);
-            this.Controls.Add(this.pbColor);
+            this.ClientSize = new System.Drawing.Size(387, 169);
+            this.Controls.Add(this.lblNewColor);
+            this.Controls.Add(this.pbNewColor);
+            this.Controls.Add(this.lblOriginalColor);
+            this.Controls.Add(this.pbOriginalColor);
             this.Controls.Add(this.btnOkay);
             this.Controls.Add(this.btnNone);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.colorEditor1);
-            this.Controls.Add(this.colorWheel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ColorDialog";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ColorDialog";
-            ((System.ComponentModel.ISupportInitialize)(this.pbColor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbOriginalColor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbNewColor)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private ColorWheel colorWheel1;
         private ColorEditor colorEditor1;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnNone;
         private System.Windows.Forms.Button btnOkay;
-        private System.Windows.Forms.PictureBox pbColor;
+        private System.Windows.Forms.PictureBox pbOriginalColor;
+        private System.Windows.Forms.Label lblOriginalColor;
+        private System.Windows.Forms.PictureBox pbNewColor;
+        private System.Windows.Forms.Label lblNewColor;
     }
 }

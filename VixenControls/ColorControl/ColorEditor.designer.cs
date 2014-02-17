@@ -1,6 +1,6 @@
 ﻿namespace CommonControls
 {
-    partial class ColorEditor
+  partial class ColorEditor
   {
     /// <summary> 
     /// Required designer variable.
@@ -28,44 +28,35 @@
     /// </summary>
     private void InitializeComponent()
     {
-        this.rgbHeaderLabel = new System.Windows.Forms.Label();
         this.rLabel = new System.Windows.Forms.Label();
         this.rNumericUpDown = new System.Windows.Forms.NumericUpDown();
-        this.rColorBar = new CommonControls.RgbaColorSlider();
         this.gLabel = new System.Windows.Forms.Label();
-        this.gColorBar = new CommonControls.RgbaColorSlider();
         this.gNumericUpDown = new System.Windows.Forms.NumericUpDown();
         this.bLabel = new System.Windows.Forms.Label();
-        this.bColorBar = new CommonControls.RgbaColorSlider();
         this.bNumericUpDown = new System.Windows.Forms.NumericUpDown();
         this.hexLabel = new System.Windows.Forms.Label();
         this.hexTextBox = new System.Windows.Forms.ComboBox();
+        this.bColorBar = new CommonControls.RgbaColorSlider();
+        this.gColorBar = new CommonControls.RgbaColorSlider();
+        this.rColorBar = new CommonControls.RgbaColorSlider();
         ((System.ComponentModel.ISupportInitialize)(this.rNumericUpDown)).BeginInit();
         ((System.ComponentModel.ISupportInitialize)(this.gNumericUpDown)).BeginInit();
         ((System.ComponentModel.ISupportInitialize)(this.bNumericUpDown)).BeginInit();
         this.SuspendLayout();
         // 
-        // rgbHeaderLabel
-        // 
-        this.rgbHeaderLabel.AutoSize = true;
-        this.rgbHeaderLabel.Location = new System.Drawing.Point(-3, 0);
-        this.rgbHeaderLabel.Name = "rgbHeaderLabel";
-        this.rgbHeaderLabel.Size = new System.Drawing.Size(33, 13);
-        this.rgbHeaderLabel.TabIndex = 0;
-        this.rgbHeaderLabel.Text = "RGB:";
-        // 
         // rLabel
         // 
         this.rLabel.AutoSize = true;
-        this.rLabel.Location = new System.Drawing.Point(3, 13);
+        this.rLabel.Location = new System.Drawing.Point(12, 0);
         this.rLabel.Name = "rLabel";
         this.rLabel.Size = new System.Drawing.Size(18, 13);
         this.rLabel.TabIndex = 1;
         this.rLabel.Text = "R:";
+        this.rLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
         // 
         // rNumericUpDown
         // 
-        this.rNumericUpDown.Location = new System.Drawing.Point(105, 11);
+        this.rNumericUpDown.Location = new System.Drawing.Point(105, -2);
         this.rNumericUpDown.Maximum = new decimal(new int[] {
             255,
             0,
@@ -77,35 +68,19 @@
         this.rNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
         this.rNumericUpDown.ValueChanged += new System.EventHandler(this.ValueChangedHandler);
         // 
-        // rColorBar
-        // 
-        this.rColorBar.Location = new System.Drawing.Point(27, 13);
-        this.rColorBar.Name = "rColorBar";
-        this.rColorBar.Size = new System.Drawing.Size(72, 20);
-        this.rColorBar.TabIndex = 2;
-        this.rColorBar.ValueChanged += new System.EventHandler(this.ValueChangedHandler);
-        // 
         // gLabel
         // 
         this.gLabel.AutoSize = true;
-        this.gLabel.Location = new System.Drawing.Point(3, 39);
+        this.gLabel.Location = new System.Drawing.Point(12, 26);
         this.gLabel.Name = "gLabel";
         this.gLabel.Size = new System.Drawing.Size(18, 13);
         this.gLabel.TabIndex = 4;
         this.gLabel.Text = "G:";
-        // 
-        // gColorBar
-        // 
-        this.gColorBar.Channel = CommonControls.RgbaChannel.Green;
-        this.gColorBar.Location = new System.Drawing.Point(27, 39);
-        this.gColorBar.Name = "gColorBar";
-        this.gColorBar.Size = new System.Drawing.Size(72, 20);
-        this.gColorBar.TabIndex = 5;
-        this.gColorBar.ValueChanged += new System.EventHandler(this.ValueChangedHandler);
+        this.gLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
         // 
         // gNumericUpDown
         // 
-        this.gNumericUpDown.Location = new System.Drawing.Point(105, 37);
+        this.gNumericUpDown.Location = new System.Drawing.Point(105, 24);
         this.gNumericUpDown.Maximum = new decimal(new int[] {
             255,
             0,
@@ -120,24 +95,16 @@
         // bLabel
         // 
         this.bLabel.AutoSize = true;
-        this.bLabel.Location = new System.Drawing.Point(3, 65);
+        this.bLabel.Location = new System.Drawing.Point(13, 54);
         this.bLabel.Name = "bLabel";
         this.bLabel.Size = new System.Drawing.Size(17, 13);
         this.bLabel.TabIndex = 7;
         this.bLabel.Text = "B:";
-        // 
-        // bColorBar
-        // 
-        this.bColorBar.Channel = CommonControls.RgbaChannel.Blue;
-        this.bColorBar.Location = new System.Drawing.Point(27, 65);
-        this.bColorBar.Name = "bColorBar";
-        this.bColorBar.Size = new System.Drawing.Size(72, 20);
-        this.bColorBar.TabIndex = 8;
-        this.bColorBar.ValueChanged += new System.EventHandler(this.ValueChangedHandler);
+        this.bLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
         // 
         // bNumericUpDown
         // 
-        this.bNumericUpDown.Location = new System.Drawing.Point(105, 65);
+        this.bNumericUpDown.Location = new System.Drawing.Point(105, 52);
         this.bNumericUpDown.Maximum = new decimal(new int[] {
             255,
             0,
@@ -152,7 +119,7 @@
         // hexLabel
         // 
         this.hexLabel.AutoSize = true;
-        this.hexLabel.Location = new System.Drawing.Point(3, 94);
+        this.hexLabel.Location = new System.Drawing.Point(1, 81);
         this.hexLabel.Name = "hexLabel";
         this.hexLabel.Size = new System.Drawing.Size(29, 13);
         this.hexLabel.TabIndex = 10;
@@ -161,13 +128,42 @@
         // hexTextBox
         // 
         this.hexTextBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-        this.hexTextBox.Location = new System.Drawing.Point(105, 91);
+        this.hexTextBox.Location = new System.Drawing.Point(105, 78);
         this.hexTextBox.Name = "hexTextBox";
         this.hexTextBox.Size = new System.Drawing.Size(58, 21);
         this.hexTextBox.TabIndex = 11;
         this.hexTextBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.hexTextBox_DrawItem);
         this.hexTextBox.SelectedIndexChanged += new System.EventHandler(this.hexTextBox_SelectedIndexChanged);
         this.hexTextBox.TextChanged += new System.EventHandler(this.ValueChangedHandler);
+        // 
+        // bColorBar
+        // 
+        this.bColorBar.Channel = CommonControls.RgbaChannel.Blue;
+        this.bColorBar.Location = new System.Drawing.Point(27, 52);
+        this.bColorBar.Name = "bColorBar";
+        this.bColorBar.NubColor = System.Drawing.Color.Blue;
+        this.bColorBar.Size = new System.Drawing.Size(72, 20);
+        this.bColorBar.TabIndex = 8;
+        this.bColorBar.ValueChanged += new System.EventHandler(this.ValueChangedHandler);
+        // 
+        // gColorBar
+        // 
+        this.gColorBar.Channel = CommonControls.RgbaChannel.Green;
+        this.gColorBar.Location = new System.Drawing.Point(27, 26);
+        this.gColorBar.Name = "gColorBar";
+        this.gColorBar.NubColor = System.Drawing.Color.Lime;
+        this.gColorBar.Size = new System.Drawing.Size(72, 20);
+        this.gColorBar.TabIndex = 5;
+        this.gColorBar.ValueChanged += new System.EventHandler(this.ValueChangedHandler);
+        // 
+        // rColorBar
+        // 
+        this.rColorBar.Location = new System.Drawing.Point(27, 0);
+        this.rColorBar.Name = "rColorBar";
+        this.rColorBar.NubColor = System.Drawing.Color.Red;
+        this.rColorBar.Size = new System.Drawing.Size(72, 20);
+        this.rColorBar.TabIndex = 2;
+        this.rColorBar.ValueChanged += new System.EventHandler(this.ValueChangedHandler);
         // 
         // ColorEditor
         // 
@@ -184,9 +180,8 @@
         this.Controls.Add(this.rColorBar);
         this.Controls.Add(this.rNumericUpDown);
         this.Controls.Add(this.rLabel);
-        this.Controls.Add(this.rgbHeaderLabel);
         this.Name = "ColorEditor";
-        this.Size = new System.Drawing.Size(173, 116);
+        this.Size = new System.Drawing.Size(166, 102);
         ((System.ComponentModel.ISupportInitialize)(this.rNumericUpDown)).EndInit();
         ((System.ComponentModel.ISupportInitialize)(this.gNumericUpDown)).EndInit();
         ((System.ComponentModel.ISupportInitialize)(this.bNumericUpDown)).EndInit();
@@ -197,15 +192,14 @@
 
     #endregion
 
-    private System.Windows.Forms.Label rgbHeaderLabel;
     private System.Windows.Forms.Label rLabel;
     private System.Windows.Forms.NumericUpDown rNumericUpDown;
-    private CommonControls.RgbaColorSlider rColorBar;
+    private RgbaColorSlider rColorBar;
     private System.Windows.Forms.Label gLabel;
-    private CommonControls.RgbaColorSlider gColorBar;
+    private RgbaColorSlider gColorBar;
     private System.Windows.Forms.NumericUpDown gNumericUpDown;
     private System.Windows.Forms.Label bLabel;
-    private CommonControls.RgbaColorSlider bColorBar;
+    private RgbaColorSlider bColorBar;
     private System.Windows.Forms.NumericUpDown bNumericUpDown;
     private System.Windows.Forms.Label hexLabel;
     private System.Windows.Forms.ComboBox hexTextBox;

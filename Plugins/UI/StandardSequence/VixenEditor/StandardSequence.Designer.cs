@@ -1,6 +1,8 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 
+using CommonControls;
+
 namespace VixenEditor{
 
     public partial class StandardSequence{

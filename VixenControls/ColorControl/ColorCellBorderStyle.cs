@@ -6,22 +6,17 @@
     // If you use this code in your applications, donations or attribution are welcome
 
     /// <summary>
-    /// Specifies the style of a color bar
+    /// Specifies the style of a color cell border.
     /// </summary>
-    public enum ColorBarStyle {
+    public enum ColorCellBorderStyle {
         /// <summary>
-        /// A gradient from one color to another.
+        /// No border.
         /// </summary>
-        TwoColor,
+        None,
 
         /// <summary>
-        /// A gradient between three colors.
+        /// A single line border.
         /// </summary>
-        ThreeColor,
-
-        /// <summary>
-        /// A gadient between a user defined number of colors.
-        /// </summary>
-        Custom
+        FixedSingle
     }
 }

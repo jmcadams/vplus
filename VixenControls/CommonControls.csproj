@@ -100,37 +100,67 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ColorControl\ColorBarStyle.cs" />
+    <Compile Include="ColorControl\ColorCellBorderStyle.cs" />
     <Compile Include="ColorControl\ColorCollection.cs" />
     <Compile Include="ColorControl\ColorCollectionEventArgs.cs" />
     <Compile Include="ColorControl\ColorCollectionSortOrder.cs" />
     <Compile Include="ColorControl\ColorComparer.cs" />
-    <Compile Include="ColorControl\ColorDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ColorControl\ColorDialog.Designer.cs">
-      <DependentUpon>ColorDialog.cs</DependentUpon>
-    </Compile>
+    <Compile Include="ColorControl\ColorEditingMode.cs" />
     <Compile Include="ColorControl\ColorEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ColorControl\ColorEditor.designer.cs">
       <DependentUpon>ColorEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ColorControl\ColorEditorManager.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ColorControl\ColorGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ColorControl\ColorGridSelectedCellStyle.cs" />
+    <Compile Include="ColorControl\ColorHitTestInfo.cs" />
+    <Compile Include="ColorControl\ColorPalette.cs" />
+    <Compile Include="ColorControl\ColorPalettes.cs" />
+    <Compile Include="ColorControl\ColorPickerDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ColorControl\ColorPickerDialog.designer.cs">
+      <DependentUpon>ColorPickerDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="ColorControl\ColorSlider.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ColorControl\ColorSliderNubStyle.cs" />
+    <Compile Include="ColorControl\ColorSource.cs" />
     <Compile Include="ColorControl\ColorWheel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ColorControl\GimpPaletteSerializer.cs" />
     <Compile Include="ColorControl\HslColor.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ColorControl\IColorEditor.cs" />
+    <Compile Include="ColorControl\IPaletteSerializer.cs" />
+    <Compile Include="ColorControl\JascPaletteSerializer.cs" />
+    <Compile Include="ColorControl\LightnessColorSlider.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ColorControl\NativeMethods.cs" />
+    <Compile Include="ColorControl\PaintNetPaletteSerializer.cs" />
+    <Compile Include="ColorControl\PaletteSerializer.cs" />
     <Compile Include="ColorControl\RgbaChannel.cs" />
     <Compile Include="ColorControl\RgbaColorSlider.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ColorControl\ScreenColorPicker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ColorDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ColorDialog.Designer.cs">
+      <DependentUpon>ColorDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="FadableLabel.cs">
       <SubType>Component</SubType>
@@ -155,11 +185,14 @@
     <Compile Include="TransparentLabel.Designer.cs">
       <DependentUpon>TransparentLabel.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="ColorControl\ColorDialog.resx">
-      <DependentUpon>ColorDialog.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ColorControl\ColorEditor.resx">
       <DependentUpon>ColorEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorControl\ColorPickerDialog.resx">
+      <DependentUpon>ColorPickerDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorDialog.resx">
+      <DependentUpon>ColorDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FadableLabel.resx">
       <DependentUpon>FadableLabel.cs</DependentUpon>

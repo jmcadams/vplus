@@ -19,10 +19,21 @@ namespace CommonControls {
         /// <param name="x">A color to compare to y.</param>
         /// <param name="y">A color to compare to x.</param>
         public static int Brightness(Color x, Color y) {
-            var v1 = x.GetBrightness();
-            var v2 = y.GetBrightness();
+            float v1;
+            float v2;
+            int result;
 
-            return (v1 < v2) ? -1 : (v1 > v2) ? 1 : 0;
+            v1 = x.GetBrightness();
+            v2 = y.GetBrightness();
+
+            if (v1 < v2)
+                result = -1;
+            else if (v1 > v2)
+                result = 1;
+            else
+                result = 0;
+
+            return result;
         }
 
 
@@ -32,10 +43,21 @@ namespace CommonControls {
         /// <param name="x">A color to compare to y.</param>
         /// <param name="y">A color to compare to x.</param>
         public static int Hue(Color x, Color y) {
-            var v1 = x.GetHue();
-            var v2 = y.GetHue();
+            float v1;
+            float v2;
+            int result;
 
-            return (v1 < v2) ? -1 : (v1 > v2) ? 1 : 0;
+            v1 = x.GetHue();
+            v2 = y.GetHue();
+
+            if (v1 < v2)
+                result = -1;
+            else if (v1 > v2)
+                result = 1;
+            else
+                result = 0;
+
+            return result;
         }
 
 
@@ -45,11 +67,21 @@ namespace CommonControls {
         /// <param name="x">A color to compare to y.</param>
         /// <param name="y">A color to compare to x.</param>
         public static int Value(Color x, Color y) {
-            var v1 = x.R << 16 | x.G << 8 | x.B;
-            var v2 = y.R << 16 | y.G << 8 | y.B;
-            
-            //todo: this seems inverted from the others, why?
-            return (v1 < v2) ? 1 : (v1 > v2) ? -1 : 0;
+            int v1;
+            int v2;
+            int result;
+
+            v1 = x.R << 16 | x.G << 8 | x.B;
+            v2 = y.R << 16 | y.G << 8 | y.B;
+
+            if (v1 > v2)
+                result = -1;
+            else if (v1 < v2)
+                result = 1;
+            else
+                result = 0;
+
+            return result;
         }
 
         #endregion

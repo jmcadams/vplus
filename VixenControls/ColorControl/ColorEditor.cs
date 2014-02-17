@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
@@ -21,7 +22,10 @@ namespace CommonControls {
     public partial class ColorEditor : UserControl, IColorEditor {
         #region Instance Fields
 
-        //private Orientation _orientation;
+        //private HslColor _hslColor;
+        private Color _color;
+
+        private Orientation _orientation;
 
         #endregion
 
@@ -34,14 +38,18 @@ namespace CommonControls {
             InitializeComponent();
 
             Color = Color.Black;
-            //Orientation = Orientation.Vertical;
+            Orientation = Orientation.Vertical;
             Size = new Size(200, 260);
 
             foreach (
-                var color in
+                PropertyInfo property in
                     typeof (Color).GetProperties(BindingFlags.Public | BindingFlags.Static).Where(property => property.PropertyType == typeof (Color))
-                        .Select(property => (Color) property.GetValue(typeof (Color), null)).Where(color => !color.IsEmpty)) {
-                hexTextBox.Items.Add(color.Name);
+                ) {
+                Color color;
+
+                color = (Color) property.GetValue(typeof (Color), null);
+                if (!color.IsEmpty)
+                    hexTextBox.Items.Add(color.Name);
             }
 
             SetDropDownWidth();
@@ -57,11 +65,11 @@ namespace CommonControls {
         [Category("Property Changed")]
         public event EventHandler ColorChanged;
 
-        ///// <summary>
-        ///// Occurs when the Orientation property value changes
-        ///// </summary>
-        //[Category("Property Changed")]
-        //public event EventHandler OrientationChanged;
+        /// <summary>
+        /// Occurs when the Orientation property value changes
+        /// </summary>
+        [Category("Property Changed")]
+        public event EventHandler OrientationChanged;
 
         #endregion
 
@@ -106,6 +114,7 @@ namespace CommonControls {
             ResizeComponents();
         }
 
+
         // ReSharper disable once CSharpWarnings::CS1584
         /// <summary>
         /// Raises the <see cref="E:Resize" /> event.
@@ -127,31 +136,57 @@ namespace CommonControls {
         /// <value>The component color.</value>
         [Category("Appearance")]
         [DefaultValue(typeof (Color), "0, 0, 0")]
-        public Color Color { get; set; }
+        public virtual Color Color {
+            get { return _color; }
+            set {
+                if (value == _color) {
+                    return;
+                }
+
+                _color = value;
+                OnColorChanged(EventArgs.Empty);
+            }
+        }
 
         ///// <summary>
-        ///// Gets or sets the orientation of the editor.
+        ///// Gets or sets the component color as a HSL structure.
         ///// </summary>
-        ///// <value>The orientation.</value>
-        //[Category("Appearance")]
-        //[DefaultValue(typeof (Orientation), "Vertical")]
-        //private Orientation Orientation {
-        //    get { return _orientation; }
+        ///// <value>The component color.</value>
+        //[Browsable(false)]
+        //[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        //public virtual HslColor HslColor {
+        //    get { return _hslColor; }
         //    set {
-        //        if (Orientation == value) {
-        //            return;
-        //        }
+        //        if (HslColor != value) {
+        //            _hslColor = value;
 
-        //        _orientation = value;
-        //        OnOrientationChanged(EventArgs.Empty);
+        //            OnColorChanged(EventArgs.Empty);
+        //        }
         //    }
         //}
+
+        /// <summary>
+        /// Gets or sets the orientation of the editor.
+        /// </summary>
+        /// <value>The orientation.</value>
+        [Category("Appearance")]
+        [DefaultValue(typeof (Orientation), "Vertical")]
+        public virtual Orientation Orientation {
+            get { return _orientation; }
+            set {
+                if (Orientation != value) {
+                    _orientation = value;
+
+                    OnOrientationChanged(EventArgs.Empty);
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether input changes should be processed.
         /// </summary>
         /// <value><c>true</c> if input changes should be processed; otherwise, <c>false</c>.</value>
-        private bool LockUpdates { get; set; }
+        protected bool LockUpdates { get; set; }
 
         #endregion
 
@@ -161,85 +196,75 @@ namespace CommonControls {
         /// Raises the <see cref="ColorChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        private void OnColorChanged(EventArgs e) {
+        protected virtual void OnColorChanged(EventArgs e) {
+            EventHandler handler;
+
             UpdateFields(false);
 
-            var handler = ColorChanged;
+            handler = ColorChanged;
 
-            if (handler != null) {
+            if (handler != null)
                 handler(this, e);
-            }
         }
 
 
-        ///// <summary>
-        ///// Raises the <see cref="OrientationChanged" /> event.
-        ///// </summary>
-        ///// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        //private void OnOrientationChanged(EventArgs e) {
-        //    ResizeComponents();
+        /// <summary>
+        /// Raises the <see cref="OrientationChanged" /> event.
+        /// </summary>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        protected virtual void OnOrientationChanged(EventArgs e) {
+            EventHandler handler;
 
-        //    var handler = OrientationChanged;
+            ResizeComponents();
 
-        //    if (handler != null) {
-        //        handler(this, e);
-        //    }
-        //}
+            handler = OrientationChanged;
+
+            if (handler != null)
+                handler(this, e);
+        }
 
 
         /// <summary>
         /// Resizes the editing components.
         /// </summary>
-        private void ResizeComponents() {
-            const int innerMargin = 3;
-
+        protected virtual void ResizeComponents() {
             try {
-                var top = Padding.Top;
+                const int innerMargin = 3;
+                var labelWidth = hexLabel.Width;
+
                 var editWidth = TextRenderer.MeasureText(new string('W', 6), Font).Width;
                 var rowHeight = Math.Max(Math.Max(rLabel.Height, rColorBar.Height), rNumericUpDown.Height);
                 var labelOffset = (rowHeight - rLabel.Height) / 2;
                 var colorBarOffset = (rowHeight - rColorBar.Height) / 2;
                 var editOffset = (rowHeight - rNumericUpDown.Height) / 2;
-
-                //switch (Orientation) {
-                //    case Orientation.Horizontal:
-                        //var columnWidth = (ClientSize.Width - (Padding.Horizontal + innerMargin)) / 2;
-                //        break;
-                //    default:
                 var columnWidth = ClientSize.Width - Padding.Horizontal;
-                //        break;
-                //}
-
-                var group1HeaderLeft = Padding.Left;
-                var group1EditLeft = columnWidth - editWidth;
-                var group1BarLeft = group1HeaderLeft + innerMargin;
-                var barWidth = group1EditLeft - (group1BarLeft + innerMargin);
-
-                // RGB header
-                rgbHeaderLabel.SetBounds(group1HeaderLeft, top + labelOffset, 0, 0, BoundsSpecified.Location);
-                top += rowHeight + innerMargin;
+                var headerLeft = Padding.Left;
+                var editLeft = columnWidth - editWidth;
+                var barLeft = headerLeft + innerMargin + labelWidth;
+                var barWidth = editLeft - (barLeft);
+                var top = Padding.Top;
 
                 // R row
-                rLabel.SetBounds(group1HeaderLeft, top + labelOffset, 0, 0, BoundsSpecified.Location);
-                rColorBar.SetBounds(group1BarLeft, top + colorBarOffset, barWidth, 0, BoundsSpecified.Location | BoundsSpecified.Width);
-                rNumericUpDown.SetBounds(group1EditLeft + editOffset, top, editWidth, 0, BoundsSpecified.Location | BoundsSpecified.Width);
+                rLabel.SetBounds(headerLeft + hexLabel.Width - rLabel.Width, top + labelOffset, rLabel.Width, rLabel.Height, BoundsSpecified.Location);
+                rColorBar.SetBounds(barLeft, top + colorBarOffset, barWidth, 0, BoundsSpecified.Location | BoundsSpecified.Width);
+                rNumericUpDown.SetBounds(editLeft + editOffset, top, editWidth, 0, BoundsSpecified.Location | BoundsSpecified.Width);
                 top += rowHeight + innerMargin;
 
                 // G row
-                gLabel.SetBounds(group1HeaderLeft, top + labelOffset, 0, 0, BoundsSpecified.Location);
-                gColorBar.SetBounds(group1BarLeft, top + colorBarOffset, barWidth, 0, BoundsSpecified.Location | BoundsSpecified.Width);
-                gNumericUpDown.SetBounds(group1EditLeft + editOffset, top, editWidth, 0, BoundsSpecified.Location | BoundsSpecified.Width);
+                gLabel.SetBounds(headerLeft + hexLabel.Width - gLabel.Width, top + labelOffset, 0, 0, BoundsSpecified.Location);
+                gColorBar.SetBounds(barLeft, top + colorBarOffset, barWidth, 0, BoundsSpecified.Location | BoundsSpecified.Width);
+                gNumericUpDown.SetBounds(editLeft + editOffset, top, editWidth, 0, BoundsSpecified.Location | BoundsSpecified.Width);
                 top += rowHeight + innerMargin;
 
                 // B row
-                bLabel.SetBounds(group1HeaderLeft, top + labelOffset, 0, 0, BoundsSpecified.Location);
-                bColorBar.SetBounds(group1BarLeft, top + colorBarOffset, barWidth, 0, BoundsSpecified.Location | BoundsSpecified.Width);
-                bNumericUpDown.SetBounds(group1EditLeft + editOffset, top, editWidth, 0, BoundsSpecified.Location | BoundsSpecified.Width);
+                bLabel.SetBounds(headerLeft + hexLabel.Width - bLabel.Width, top + labelOffset, 0, 0, BoundsSpecified.Location);
+                bColorBar.SetBounds(barLeft, top + colorBarOffset, barWidth, 0, BoundsSpecified.Location | BoundsSpecified.Width);
+                bNumericUpDown.SetBounds(editLeft + editOffset, top, editWidth, 0, BoundsSpecified.Location | BoundsSpecified.Width);
                 top += rowHeight + innerMargin;
 
                 // Hex row
-                hexLabel.SetBounds(group1HeaderLeft, top + labelOffset, 0, 0, BoundsSpecified.Location);
-                hexTextBox.SetBounds(group1EditLeft, top + colorBarOffset, editWidth, 0, BoundsSpecified.Location | BoundsSpecified.Width);
+                hexLabel.SetBounds(headerLeft, top + labelOffset, 0, 0, BoundsSpecified.Location);
+                hexTextBox.SetBounds(editLeft, top + colorBarOffset, editWidth, 0, BoundsSpecified.Location | BoundsSpecified.Width);
             }
                 // ReSharper disable EmptyGeneralCatchClause
             catch
@@ -254,75 +279,84 @@ namespace CommonControls {
         /// Updates the editing field values.
         /// </summary>
         /// <param name="userAction">if set to <c>true</c> the update is due to user interaction.</param>
-        private void UpdateFields(bool userAction) {
-            if (LockUpdates) {
-                return;
-            }
+        protected virtual void UpdateFields(bool userAction) {
+            if (!LockUpdates) {
+                try {
+                    LockUpdates = true;
 
-            try {
-                LockUpdates = true;
+                    // RGB
+                    if (!(userAction && rNumericUpDown.Focused))
+                        rNumericUpDown.Value = Color.R;
+                    if (!(userAction && gNumericUpDown.Focused))
+                        gNumericUpDown.Value = Color.G;
+                    if (!(userAction && bNumericUpDown.Focused))
+                        bNumericUpDown.Value = Color.B;
+                    rColorBar.Value = Color.R;
+                    rColorBar.Color = Color;
+                    gColorBar.Value = Color.G;
+                    gColorBar.Color = Color;
+                    bColorBar.Value = Color.B;
+                    bColorBar.Color = Color;
 
-                // RGB
-                if (!(userAction && rNumericUpDown.Focused)) {
-                    rNumericUpDown.Value = Color.R;
+                    // HTML
+                    if (!(userAction && hexTextBox.Focused))
+                        hexTextBox.Text = string.Format("{0:X2}{1:X2}{2:X2}", Color.R, Color.G, Color.B);
+
+                    // HSL
+                    //if (!(userAction && hNumericUpDown.Focused))
+                    //    hNumericUpDown.Value = (int) HslColor.H;
+                    //if (!(userAction && sNumericUpDown.Focused))
+                    //    sNumericUpDown.Value = (int) (HslColor.S * 100);
+                    //if (!(userAction && lNumericUpDown.Focused))
+                    //    lNumericUpDown.Value = (int) (HslColor.L * 100);
+                    //hColorBar.Value = (int) HslColor.H;
+                    //sColorBar.Color = Color;
+                    //sColorBar.Value = (int) (HslColor.S * 100);
+                    //lColorBar.Color = Color;
+                    //lColorBar.Value = (int) (HslColor.L * 100);
+
+                    // Alpha
+                    //if (!(userAction && aNumericUpDown.Focused))
+                    //    aNumericUpDown.Value = Color.A;
+                    //aColorBar.Color = Color;
+                    //aColorBar.Value = Color.A;
                 }
-
-                if (!(userAction && gNumericUpDown.Focused)) {
-                    gNumericUpDown.Value = Color.G;
+                finally {
+                    LockUpdates = false;
                 }
-
-                if (!(userAction && bNumericUpDown.Focused)) {
-                    bNumericUpDown.Value = Color.B;
-                }
-
-                rColorBar.Value = Color.R;
-                rColorBar.Color = Color;
-                gColorBar.Value = Color.G;
-                gColorBar.Color = Color;
-                bColorBar.Value = Color.B;
-                bColorBar.Color = Color;
-
-                // HTML
-                if (!(userAction && hexTextBox.Focused)) {
-                    hexTextBox.Text = string.Format("{0:X2}{1:X2}{2:X2}", Color.R, Color.G, Color.B);
-                }
-            }
-            finally {
-                LockUpdates = false;
             }
         }
 
 
-        private static string AddSpaces(string text) {
+        private string AddSpaces(string text) {
             string result;
 
             //http://stackoverflow.com/a/272929/148962
 
             if (!string.IsNullOrEmpty(text)) {
-                var newText = new StringBuilder(text.Length * 2);
+                StringBuilder newText;
+
+                newText = new StringBuilder(text.Length * 2);
                 newText.Append(text[0]);
-                for (var i = 1; i < text.Length; i++) {
-                    if (char.IsUpper(text[i]) && text[i - 1] != ' ') {
+                for (int i = 1; i < text.Length; i++) {
+                    if (char.IsUpper(text[i]) && text[i - 1] != ' ')
                         newText.Append(' ');
-                    }
                     newText.Append(text[i]);
                 }
 
                 result = newText.ToString();
             }
-            else {
+            else
                 result = null;
-            }
 
             return result;
         }
 
 
         private void SetDropDownWidth() {
-            if (hexTextBox.Items.Count != 0) {
+            if (hexTextBox.Items.Count != 0)
                 hexTextBox.DropDownWidth = (hexTextBox.ItemHeight * 2) +
                                            hexTextBox.Items.Cast<string>().Max(s => TextRenderer.MeasureText(s, Font).Width);
-            }
         }
 
         #endregion
@@ -339,6 +373,9 @@ namespace CommonControls {
                 return;
             }
 
+            //var useHsl = false;
+            //var useRgb = false;
+
             LockUpdates = true;
 
             if (sender == hexTextBox) {
@@ -352,20 +389,51 @@ namespace CommonControls {
                 if (namedIndex != -1 || text.Length == 6 || text.Length == 8) {
                     try {
                         var color = namedIndex != -1 ? Color.FromName(text) : ColorTranslator.FromHtml("#" + text);
+                        //aNumericUpDown.Value = color.A;
                         rNumericUpDown.Value = color.R;
                         bNumericUpDown.Value = color.B;
                         gNumericUpDown.Value = color.G;
+
+                        //useRgb = true;
                     }
                         // ReSharper disable EmptyGeneralCatchClause
                     catch {}
                     // ReSharper restore EmptyGeneralCatchClause
                 }
             }
-            else if (sender == rColorBar || sender == gColorBar || sender == bColorBar) {
+            else if (/*sender == aColorBar ||*/ sender == rColorBar || sender == gColorBar || sender == bColorBar) {
+                //aNumericUpDown.Value = (int) aColorBar.Value;
                 rNumericUpDown.Value = (int) rColorBar.Value;
                 gNumericUpDown.Value = (int) gColorBar.Value;
                 bNumericUpDown.Value = (int) bColorBar.Value;
+
+                //useRgb = true;
             }
+            //else if (/*sender == aNumericUpDown ||*/ sender == rNumericUpDown || sender == gNumericUpDown || sender == bNumericUpDown) {
+                //useRgb = true;
+            //}
+            //else if (sender == hColorBar || sender == lColorBar || sender == sColorBar) {
+            //    hNumericUpDown.Value = (int) hColorBar.Value;
+            //    sNumericUpDown.Value = (int) sColorBar.Value;
+            //    lNumericUpDown.Value = (int) lColorBar.Value;
+
+            //    useHsl = true;
+            //}
+            //else if (sender == hNumericUpDown || sender == sNumericUpDown || sender == lNumericUpDown) {
+            //    useHsl = true;
+            //}
+
+            //if (useRgb) {
+                var aColor = Color.FromArgb(255, (int) rNumericUpDown.Value, (int) gNumericUpDown.Value,
+                    (int) bNumericUpDown.Value);
+                Debug.Print("R:{0:D3} B:{1:D3} G:{2:D3} A:{3:D3}", aColor.R, aColor.B, aColor.G, aColor.A);
+                Color = aColor;
+                Debug.Print("R:{0:D3} B:{1:D3} G:{2:D3} A:{3:D3}", Color.R, Color.B, Color.G, Color.A);
+            //}
+            //else if (useHsl) {
+                //HslColor = new HslColor((int)aNumericUpDown.Value, (double)hNumericUpDown.Value, (double)sNumericUpDown.Value / 100,
+                //    (double) lNumericUpDown.Value / 100);
+            //}
 
             LockUpdates = false;
             UpdateFields(true);
@@ -375,32 +443,30 @@ namespace CommonControls {
         private void hexTextBox_DrawItem(object sender, DrawItemEventArgs e) {
             // TODO: Really, this should be another control - ColorComboBox or ColorListBox etc.
 
-            if (e.Index == -1) {
-                return;
+            if (e.Index != -1) {
+                Rectangle colorBox;
+                string name;
+
+                e.DrawBackground();
+
+                name = (string) hexTextBox.Items[e.Index];
+                colorBox = new Rectangle(e.Bounds.Left + 1, e.Bounds.Top + 1, e.Bounds.Height - 3, e.Bounds.Height - 3);
+
+                using (Brush brush = new SolidBrush(Color.FromName(name)))
+                    e.Graphics.FillRectangle(brush, colorBox);
+                e.Graphics.DrawRectangle(SystemPens.ControlText, colorBox);
+
+                using (Brush brush = new SolidBrush(e.ForeColor))
+                    e.Graphics.DrawString(AddSpaces(name), Font, brush, colorBox.Right + 3, colorBox.Top);
+
+                e.DrawFocusRectangle();
             }
-
-            e.DrawBackground();
-
-            var name = (string) hexTextBox.Items[e.Index];
-            var colorBox = new Rectangle(e.Bounds.Left + 1, e.Bounds.Top + 1, e.Bounds.Height - 3, e.Bounds.Height - 3);
-
-            using (Brush brush = new SolidBrush(Color.FromName(name))) {
-                e.Graphics.FillRectangle(brush, colorBox);
-            }
-            e.Graphics.DrawRectangle(SystemPens.ControlText, colorBox);
-
-            using (Brush brush = new SolidBrush(e.ForeColor)) {
-                e.Graphics.DrawString(AddSpaces(name), Font, brush, colorBox.Right + 3, colorBox.Top);
-            }
-
-            e.DrawFocusRectangle();
         }
 
 
         private void hexTextBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (hexTextBox.SelectedIndex != -1) {
+            if (hexTextBox.SelectedIndex != -1)
                 Color = Color.FromName((string) hexTextBox.SelectedItem);
-            }
         }
 
         #endregion

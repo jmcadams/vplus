@@ -5,11 +5,11 @@
 
     // If you use this code in your applications, donations or attribution are welcome
 
-    public enum ColorSliderNubStyle {
+    public enum ColorGridSelectedCellStyle {
         None,
 
-        TopLeft,
+        Standard,
 
-        BottomRight
+        Zoomed
     }
 }

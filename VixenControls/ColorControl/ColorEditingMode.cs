@@ -6,22 +6,22 @@
     // If you use this code in your applications, donations or attribution are welcome
 
     /// <summary>
-    /// Specifies the style of a color bar
+    /// Specifies the edit mode of a <see cref="ColorGrid" />.
     /// </summary>
-    public enum ColorBarStyle {
+    public enum ColorEditingMode {
         /// <summary>
-        /// A gradient from one color to another.
+        /// None. No editing is allowed.
         /// </summary>
-        TwoColor,
+        None,
 
         /// <summary>
-        /// A gradient between three colors.
+        /// Only custom colors can be edited.
         /// </summary>
-        ThreeColor,
+        CustomOnly,
 
         /// <summary>
-        /// A gadient between a user defined number of colors.
+        /// Custom or standard colors can be edited.
         /// </summary>
-        Custom
+        Both,
     }
 }

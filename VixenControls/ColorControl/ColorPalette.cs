@@ -5,11 +5,15 @@
 
     // If you use this code in your applications, donations or attribution are welcome
 
-    public enum ColorSliderNubStyle {
+    public enum ColorPalette {
         None,
 
-        TopLeft,
+        Named,
 
-        BottomRight
+        Office2010,
+
+        Paint,
+
+        Standard
     }
 }

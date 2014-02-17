@@ -60,7 +60,7 @@ namespace CommonControls {
 
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public override sealed ColorBarStyle BarStyle {
+        public override ColorBarStyle BarStyle {
             get { return base.BarStyle; }
             set { base.BarStyle = value; }
         }
@@ -88,7 +88,7 @@ namespace CommonControls {
 
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public override sealed float Maximum {
+        public override float Maximum {
             get { return base.Maximum; }
             set { base.Maximum = value; }
         }
@@ -134,29 +134,27 @@ namespace CommonControls {
 
         [Category("Appearance")]
         [DefaultValue(typeof (RgbaChannel), "Red")]
-        public RgbaChannel Channel {
+        public virtual RgbaChannel Channel {
             get { return _channel; }
             set {
-                if (Channel == value) {
-                    return;
-                }
+                if (Channel != value) {
+                    _channel = value;
 
-                _channel = value;
-                OnChannelChanged(EventArgs.Empty);
+                    OnChannelChanged(EventArgs.Empty);
+                }
             }
         }
 
         [Category("Appearance")]
         [DefaultValue(typeof (Color), "Black")]
-        public Color Color {
+        public virtual Color Color {
             get { return _color; }
             set {
-                if (Color == value) {
-                    return;
-                }
+                if (Color != value) {
+                    _color = value;
 
-                _color = value;
-                OnColorChanged(EventArgs.Empty);
+                    OnColorChanged(EventArgs.Empty);
+                }
             }
         }
 
@@ -164,7 +162,7 @@ namespace CommonControls {
 
         #region Members
 
-        private void CreateScale() {
+        protected virtual void CreateScale() {
             CustomColors =
                 new ColorCollection(
                     Enumerable.Range(0, 254).Select(
@@ -178,14 +176,15 @@ namespace CommonControls {
         /// Raises the <see cref="ChannelChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        private void OnChannelChanged(EventArgs e) {
+        protected virtual void OnChannelChanged(EventArgs e) {
+            EventHandler handler;
+
             CreateScale();
 
-            var handler = ChannelChanged;
+            handler = ChannelChanged;
 
-            if (handler != null) {
+            if (handler != null)
                 handler(this, e);
-            }
         }
 
 
@@ -193,15 +192,16 @@ namespace CommonControls {
         /// Raises the <see cref="ColorChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        private void OnColorChanged(EventArgs e) {
+        protected virtual void OnColorChanged(EventArgs e) {
+            EventHandler handler;
+
             CreateScale();
             Invalidate();
 
-            var handler = ColorChanged;
+            handler = ColorChanged;
 
-            if (handler != null) {
+            if (handler != null)
                 handler(this, e);
-            }
         }
 
         #endregion

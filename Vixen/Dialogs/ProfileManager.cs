@@ -973,14 +973,16 @@ namespace VixenPlus.Dialogs {
             using (var dialog = new ColorDialog(pb.BackColor)) {
                 dialog.ShowDialog();
                 switch (dialog.DialogResult) {
-                        case DialogResult.OK:
+                    case DialogResult.OK:
                         pb.BackColor = dialog.GetColor();
                         break;
-                        case DialogResult.No:
+                    case DialogResult.No:
                         pb.BackColor = Color.Transparent;
                         break;
                 }
             }
+            pb.BackgroundImage = pb.BackColor == Color.Transparent ? Resources.none1 : null;
+            pb.BackgroundImageLayout = ImageLayout.Center;
         }
 
     }

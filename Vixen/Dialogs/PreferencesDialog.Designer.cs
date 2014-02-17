@@ -111,7 +111,7 @@ namespace VixenPlus.Dialogs {
             this.label35 = new System.Windows.Forms.Label();
             this.numericUpDownHistoryImages = new System.Windows.Forms.NumericUpDown();
             this.label28 = new System.Windows.Forms.Label();
-            this.tabControl = new global::TabControl(this.components);
+            this.tabControl = new global::CommonControls.TabControl(this.components);
             this.cbProfileErrors = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinimumLevel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumLevel)).BeginInit();
@@ -1265,7 +1265,7 @@ namespace VixenPlus.Dialogs {
         private Label label4;
         private TextBox textBoxMouseWheelVertical;
         private Label label3;
-        private global::TabControl tabControl;
+        private global::CommonControls.TabControl tabControl;
         private ComboBox cbUpdateFrequency;
         private CheckBox cbProfileErrors;
     }

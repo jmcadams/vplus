@@ -1,5 +1,7 @@
 using System.Windows.Forms;
 
+using CommonControls;
+
 namespace Preview {
     internal partial class ReorderDialog {
         private System.ComponentModel.IContainer components = null;
