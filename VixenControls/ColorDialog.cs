@@ -15,18 +15,11 @@ namespace CommonControls {
 
         private void colorEditor1_ColorChanged(object sender, EventArgs e) {
             SetColorOrImage(pbNewColor, colorEditor1.Color);
-            cgPalette.Color = colorEditor1.Color;
         }
 
 
         public Color GetColor() {
             return pbNewColor.BackColor;
-        }
-
-
-        private void cgPalette_ColorChanged(object sender, EventArgs e) {
-            SetColorOrImage(pbNewColor, cgPalette.Color);
-            colorEditor1.Color = cgPalette.Color;
         }
 
 

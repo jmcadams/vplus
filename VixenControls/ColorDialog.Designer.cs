@@ -28,7 +28,6 @@
             this.btnOkay = new System.Windows.Forms.Button();
             this.pbOriginalColor = new System.Windows.Forms.PictureBox();
             this.pbNewColor = new System.Windows.Forms.PictureBox();
-            this.cgPalette = new CommonControls.ColorGrid();
             this.colorEditor1 = new CommonControls.ColorEditor();
             ((System.ComponentModel.ISupportInitialize)(this.pbOriginalColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbNewColor)).BeginInit();
@@ -80,18 +79,6 @@
             this.pbNewColor.TabIndex = 7;
             this.pbNewColor.TabStop = false;
             // 
-            // cgPalette
-            // 
-            this.cgPalette.AutoAddColors = false;
-            this.cgPalette.EditMode = CommonControls.ColorEditingMode.Both;
-            this.cgPalette.Location = new System.Drawing.Point(12, 107);
-            this.cgPalette.Name = "cgPalette";
-            this.cgPalette.Palette = CommonControls.ColorPalette.Standard;
-            this.cgPalette.ShowCustomColors = false;
-            this.cgPalette.Size = new System.Drawing.Size(247, 75);
-            this.cgPalette.TabIndex = 9;
-            this.cgPalette.ColorChanged += new System.EventHandler(this.cgPalette_ColorChanged);
-            // 
             // colorEditor1
             // 
             this.colorEditor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -106,7 +93,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(273, 266);
-            this.Controls.Add(this.cgPalette);
             this.Controls.Add(this.pbNewColor);
             this.Controls.Add(this.pbOriginalColor);
             this.Controls.Add(this.btnOkay);
@@ -121,7 +107,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbOriginalColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbNewColor)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -133,6 +118,5 @@
         private System.Windows.Forms.Button btnOkay;
         private System.Windows.Forms.PictureBox pbOriginalColor;
         private System.Windows.Forms.PictureBox pbNewColor;
-        private ColorGrid cgPalette;
     }
 }
