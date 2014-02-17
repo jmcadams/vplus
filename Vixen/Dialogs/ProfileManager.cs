@@ -14,6 +14,8 @@ using CommonUtils;
 
 using VixenPlus.Properties;
 
+using ColorDialog = CommonControls.ColorDialog;
+
 namespace VixenPlus.Dialogs {
     public partial class FrmProfileManager : Form {
 
@@ -963,7 +965,22 @@ namespace VixenPlus.Dialogs {
         }
 
         private void pbRuleColor_DoubleClick(object sender, EventArgs e) {
-            //todo bring up the color dialog and apply the color.
+            var pb = sender as PictureBox;
+            if (null == pb) {
+                return;
+            }
+
+            using (var dialog = new ColorDialog(pb.BackColor)) {
+                dialog.ShowDialog();
+                switch (dialog.DialogResult) {
+                        case DialogResult.OK:
+                        pb.BackColor = dialog.GetColor();
+                        break;
+                        case DialogResult.No:
+                        pb.BackColor = Color.Transparent;
+                        break;
+                }
+            }
         }
 
     }

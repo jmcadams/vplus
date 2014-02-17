@@ -37,7 +37,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>..\Build\Libraries\Vixen+\</OutputPath>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugSymbols>true</DebugSymbols>
     <NoStdLib>false</NoStdLib>
@@ -88,18 +88,49 @@
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing">
       <Name>System.Drawing</Name>
     </Reference>
     <Reference Include="System.Windows.Forms">
       <Name>System.Windows.Forms</Name>
     </Reference>
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ColorControl\ColorBarStyle.cs" />
+    <Compile Include="ColorControl\ColorCollection.cs" />
+    <Compile Include="ColorControl\ColorCollectionEventArgs.cs" />
+    <Compile Include="ColorControl\ColorCollectionSortOrder.cs" />
+    <Compile Include="ColorControl\ColorComparer.cs" />
+    <Compile Include="ColorControl\ColorDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ColorControl\ColorDialog.Designer.cs">
+      <DependentUpon>ColorDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ColorControl\ColorEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ColorControl\ColorEditor.designer.cs">
+      <DependentUpon>ColorEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ColorControl\ColorSlider.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ColorControl\ColorSliderNubStyle.cs" />
+    <Compile Include="ColorControl\ColorWheel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ColorControl\HslColor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ColorControl\IColorEditor.cs" />
+    <Compile Include="ColorControl\NativeMethods.cs" />
+    <Compile Include="ColorControl\RgbaChannel.cs" />
+    <Compile Include="ColorControl\RgbaColorSlider.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="FadableLabel.cs">
       <SubType>Component</SubType>
@@ -110,6 +141,11 @@
     <Compile Include="MultiSelectTreeview.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="TabControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -119,9 +155,19 @@
     <Compile Include="TransparentLabel.Designer.cs">
       <DependentUpon>TransparentLabel.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ColorControl\ColorDialog.resx">
+      <DependentUpon>ColorDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorControl\ColorEditor.resx">
+      <DependentUpon>ColorEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FadableLabel.resx">
       <DependentUpon>FadableLabel.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenControls.Toolbox.resources" />
   </ItemGroup>
@@ -142,7 +188,13 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Resources\cellbackground.png" />
+    <Content Include="Resources\eyedropper.cur" />
+    <Content Include="Resources\eyedropper.png" />
+    <Content Include="Resources\palette-load.png" />
+    <Content Include="Resources\palette-save.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent />
