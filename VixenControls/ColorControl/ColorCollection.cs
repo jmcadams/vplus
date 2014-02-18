@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 
+using CommonControls.Annotations;
+
 namespace CommonControls {
     // Cyotek Color Picker controls library
     // Copyright © 2013 Cyotek. All Rights Reserved.
@@ -17,6 +19,7 @@ namespace CommonControls {
     /// 	<para>ColorCollection allows duplicate elements.</para>
     /// 	<para>Elements in this collection can be accessed using an integer index. Indexes in this collection are zero-based.</para>
     /// </remarks>
+    // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
     public class ColorCollection : Collection<Color> {
         #region Constructors
 
@@ -41,6 +44,7 @@ namespace CommonControls {
         /// <summary>
         /// Occurs when elements in the collection are added, removed or modified.
         /// </summary>
+        [UsedImplicitly]
         public event EventHandler<ColorCollectionEventArgs> CollectionChanged;
 
         #endregion
@@ -74,9 +78,7 @@ namespace CommonControls {
         /// </summary>
         /// <param name="index">The zero-based index of the element to remove.</param>
         protected override void RemoveItem(int index) {
-            Color color;
-
-            color = this[index];
+            var color = this[index];
 
             base.RemoveItem(index);
 
@@ -101,41 +103,11 @@ namespace CommonControls {
 
         /// <summary>Adds the elements of the specified collection to the end of the <see cref="ColorCollection"/>.</summary>
         /// <param name="colors">The collection whose elements should be added to the end of the <see cref="ColorCollection"/>.</param>
+        // ReSharper disable once MemberCanBePrivate.Global
         public void AddRange(IEnumerable<Color> colors) {
-            foreach (Color color in colors)
+            foreach (var color in colors) {
                 Add(color);
-        }
-
-
-        /// <summary>
-        /// Sorts the elements in the entire %ColorCollection% using the specified order.
-        /// </summary>
-        /// <param name="sortOrder">The sort order.</param>
-        /// <exception cref="System.ArgumentException">Thrown when an invalid sort order is specified</exception>
-        public void Sort(ColorCollectionSortOrder sortOrder) {
-            Comparison<Color> sortDelegate;
-            List<Color> orderedItems;
-
-            // HACK: This is a bit nasty
-
-            switch (sortOrder) {
-                case ColorCollectionSortOrder.Brightness:
-                    sortDelegate = ColorComparer.Brightness;
-                    break;
-                case ColorCollectionSortOrder.Hue:
-                    sortDelegate = ColorComparer.Hue;
-                    break;
-                case ColorCollectionSortOrder.Value:
-                    sortDelegate = ColorComparer.Value;
-                    break;
-                default:
-                    throw new ArgumentException("Invalid sort order", "sortOrder");
             }
-
-            orderedItems = new List<Color>(this);
-            orderedItems.Sort(sortDelegate);
-            ClearItems();
-            AddRange(orderedItems);
         }
 
 
@@ -144,9 +116,7 @@ namespace CommonControls {
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnCollectionChanged(ColorCollectionEventArgs e) {
-            EventHandler<ColorCollectionEventArgs> handler;
-
-            handler = CollectionChanged;
+            var handler = CollectionChanged;
 
             if (handler != null)
                 handler(this, e);

@@ -5,10 +5,8 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Windows.Forms;
-#if USEEXTERNALCYOTEKLIBS
-using Cyotek.Win32;
-#else
-#endif
+
+using CommonControls.Annotations;
 
 namespace CommonControls {
     // Cyotek Color Picker controls library
@@ -30,14 +28,6 @@ namespace CommonControls {
 
         private Padding _barPadding;
 
-        private ColorBarStyle _barStyle;
-
-        private Color _color1;
-
-        private Color _color2;
-
-        private Color _color3;
-
         private ColorCollection _customColors;
 
         private int _largeChange;
@@ -49,12 +39,6 @@ namespace CommonControls {
         private Color _nubColor;
 
         private Size _nubSize;
-
-        private ColorSliderNubStyle _nubStyle;
-
-        private Orientation _orientation;
-
-        private bool _showValueDivider;
 
         private int _smallChange;
 
@@ -72,17 +56,14 @@ namespace CommonControls {
                 ControlStyles.SupportsTransparentBackColor | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint |
                 ControlStyles.ResizeRedraw | ControlStyles.Selectable, true);
             UpdateStyles();
-            Orientation = Orientation.Horizontal;
-            Color1 = Color.Black;
-            Color2 = Color.FromArgb(127, 127, 127);
-            Color3 = Color.White;
+            // ReSharper disable DoNotCallOverridableMethodsInConstructor
             Minimum = 0;
             Maximum = 100;
-            NubStyle = ColorSliderNubStyle.BottomRight;
             NubSize = new Size(8, 8);
             NubColor = Color.Black;
             SmallChange = 1;
             LargeChange = 10;
+            // ReSharper restore DoNotCallOverridableMethodsInConstructor
         }
 
         #endregion
@@ -92,103 +73,73 @@ namespace CommonControls {
         /// <summary>
         /// Occurs when the BarBounds property value changes
         /// </summary>
-        [Category("Property Changed")]
+        [Category("Property Changed"), UsedImplicitly]
         public event EventHandler BarBoundsChanged;
 
         /// <summary>
         /// Occurs when the BarPadding property value changes
         /// </summary>
-        [Category("Property Changed")]
+        [Category("Property Changed"), UsedImplicitly]
         public event EventHandler BarPaddingChanged;
 
         /// <summary>
         /// Occurs when the Style property value changes
         /// </summary>
-        [Category("Property Changed")]
+        [Category("Property Changed"), UsedImplicitly]
         public event EventHandler BarStyleChanged;
-
-        /// <summary>
-        /// Occurs when the Color1 property value changes
-        /// </summary>
-        [Category("Property Changed")]
-        public event EventHandler Color1Changed;
-
-        /// <summary>
-        /// Occurs when the Color2 property value changes
-        /// </summary>
-        [Category("Property Changed")]
-        public event EventHandler Color2Changed;
-
-        /// <summary>
-        /// Occurs when the Color3 property value changes
-        /// </summary>
-        [Category("Property Changed")]
-        public event EventHandler Color3Changed;
 
         /// <summary>
         /// Occurs when the CustomColors property value changes
         /// </summary>
-        [Category("Property Changed")]
+        [Category("Property Changed"), UsedImplicitly]
         public event EventHandler CustomColorsChanged;
 
         /// <summary>
         /// Occurs when the LargeChange property value changes
         /// </summary>
-        [Category("Property Changed")]
+        [Category("Property Changed"), UsedImplicitly]
         public event EventHandler LargeChangeChanged;
 
         /// <summary>
         /// Occurs when the Maximum property value changes
         /// </summary>
-        [Category("Property Changed")]
+        [Category("Property Changed"), UsedImplicitly]
         public event EventHandler MaximumChanged;
 
         /// <summary>
         /// Occurs when the Minimum property value changes
         /// </summary>
-        [Category("Property Changed")]
+        [Category("Property Changed"), UsedImplicitly]
         public event EventHandler MinimumChanged;
 
         /// <summary>
         /// Occurs when the NubColor property value changes
         /// </summary>
-        [Category("Property Changed")]
+        [Category("Property Changed"), UsedImplicitly]
         public event EventHandler NubColorChanged;
 
         /// <summary>
         /// Occurs when the NubSize property value changes
         /// </summary>
-        [Category("Property Changed")]
+        [Category("Property Changed"), UsedImplicitly]
         public event EventHandler NubSizeChanged;
 
         /// <summary>
         /// Occurs when the NubStyle property value changes
         /// </summary>
-        [Category("Property Changed")]
+        [Category("Property Changed"), UsedImplicitly]
         public event EventHandler NubStyleChanged;
-
-        /// <summary>
-        /// Occurs when the Orientation property value changes
-        /// </summary>
-        [Category("Property Changed")]
-        public event EventHandler OrientationChanged;
-
-        /// <summary>
-        /// Occurs when the ShowValueDivider property value changes
-        /// </summary>
-        [Category("Property Changed")]
-        public event EventHandler ShowValueDividerChanged;
 
         /// <summary>
         /// Occurs when the SliderStyle property value changes
         /// </summary>
-        [Category("Property Changed")]
+        [Category("Property Changed"), UsedImplicitly]
         public event EventHandler SliderStyleChanged;
 
         /// <summary>
         /// Occurs when the SmallChange property value changes
         /// </summary>
-        [Category("Property Changed")]
+        [Category("Property Changed"), UsedImplicitly]
         public event EventHandler SmallChangeChanged;
 
         /// <summary>
@@ -288,11 +239,8 @@ namespace CommonControls {
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.KeyEventArgs" /> that contains the event data.</param>
         protected override void OnKeyDown(KeyEventArgs e) {
-            int step;
-            float value;
-
-            step = e.Shift ? LargeChange : SmallChange;
-            value = Value;
+            var step = e.Shift ? LargeChange : SmallChange;
+            var value = Value;
 
             switch (e.KeyCode) {
                 case Keys.Right:
@@ -420,11 +368,12 @@ namespace CommonControls {
         public virtual Rectangle BarBounds {
             get { return _barBounds; }
             protected set {
-                if (BarBounds != value) {
-                    _barBounds = value;
-
-                    OnBarBoundsChanged(EventArgs.Empty);
+                if (BarBounds == value) {
+                    return;
                 }
+                _barBounds = value;
+
+                OnBarBoundsChanged(EventArgs.Empty);
             }
         }
 
@@ -437,82 +386,12 @@ namespace CommonControls {
         public virtual Padding BarPadding {
             get { return _barPadding; }
             protected set {
-                if (BarPadding != value) {
-                    _barPadding = value;
-
-                    OnBarPaddingChanged(EventArgs.Empty);
+                if (BarPadding == value) {
+                    return;
                 }
-            }
-        }
+                _barPadding = value;
 
-        /// <summary>
-        /// Gets or sets the bar style.
-        /// </summary>
-        /// <value>The bar style.</value>
-        [Category("Appearance")]
-        [DefaultValue(typeof (ColorBarStyle), "TwoColor")]
-        public virtual ColorBarStyle BarStyle {
-            get { return _barStyle; }
-            set {
-                if (BarStyle != value) {
-                    _barStyle = value;
-
-                    OnBarStyleChanged(EventArgs.Empty);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the first color of the bar.
-        /// </summary>
-        /// <value>The first color.</value>
-        /// <remarks>This property is ignored if the <see cref="BarStyle"/> property is set to Custom and a valid color set has been specified</remarks>
-        [Category("Appearance")]
-        [DefaultValue(typeof (Color), "Black")]
-        public virtual Color Color1 {
-            get { return _color1; }
-            set {
-                if (Color1 != value) {
-                    _color1 = value;
-
-                    OnColor1Changed(EventArgs.Empty);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the second color of the bar.
-        /// </summary>
-        /// <value>The second color.</value>
-        /// <remarks>This property is ignored if the <see cref="BarStyle"/> property is set to Custom and a valid color set has been specified</remarks>
-        [Category("Appearance")]
-        [DefaultValue(typeof (Color), "127, 127, 127")]
-        public virtual Color Color2 {
-            get { return _color2; }
-            set {
-                if (Color2 != value) {
-                    _color2 = value;
-
-                    OnColor2Changed(EventArgs.Empty);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the third color of the bar.
-        /// </summary>
-        /// <value>The third color.</value>
-        /// <remarks>This property is ignored if the <see cref="BarStyle"/> property is set to Custom and a valid color set has been specified, or if the BarStyle is set to TwoColor.</remarks>
-        [Category("Appearance")]
-        [DefaultValue(typeof (Color), "White")]
-        public virtual Color Color3 {
-            get { return _color3; }
-            set {
-                if (Color3 != value) {
-                    _color3 = value;
-
-                    OnColor3Changed(EventArgs.Empty);
-                }
+                OnBarPaddingChanged(EventArgs.Empty);
             }
         }
 
@@ -520,17 +399,17 @@ namespace CommonControls {
         /// Gets or sets the color range used by the custom bar style.
         /// </summary>
         /// <value>The custom colors.</value>
-        /// <remarks>This property is ignored if the <see cref="BarStyle"/> property is not set to Custom</remarks>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public virtual ColorCollection CustomColors {
             get { return _customColors; }
             set {
-                if (CustomColors != value) {
-                    _customColors = value;
-
-                    OnCustomColorsChanged(EventArgs.Empty);
+                if (CustomColors == value) {
+                    return;
                 }
+                _customColors = value;
+
+                OnCustomColorsChanged(EventArgs.Empty);
             }
         }
 
@@ -543,11 +422,12 @@ namespace CommonControls {
         public virtual int LargeChange {
             get { return _largeChange; }
             set {
-                if (LargeChange != value) {
-                    _largeChange = value;
-
-                    OnLargeChangeChanged(EventArgs.Empty);
+                if (LargeChange == value) {
+                    return;
                 }
+                _largeChange = value;
+
+                OnLargeChangeChanged(EventArgs.Empty);
             }
         }
 
@@ -560,14 +440,13 @@ namespace CommonControls {
         public virtual float Maximum {
             get { return _maximum; }
             set {
-                // ReSharper disable CompareOfFloatsByEqualityOperator
-                if (Maximum != value)
-                    // ReSharper restore CompareOfFloatsByEqualityOperator
-                {
-                    _maximum = value;
-
-                    OnMaximumChanged(EventArgs.Empty);
+                // ReSharper disable once CompareOfFloatsByEqualityOperator
+                if (Maximum == value) {
+                    return;
                 }
+                _maximum = value;
+
+                OnMaximumChanged(EventArgs.Empty);
             }
         }
 
@@ -581,13 +460,12 @@ namespace CommonControls {
             get { return _minimum; }
             set {
                 // ReSharper disable CompareOfFloatsByEqualityOperator
-                if (Minimum != value)
-                    // ReSharper restore CompareOfFloatsByEqualityOperator
-                {
-                    _minimum = value;
-
-                    OnMinimumChanged(EventArgs.Empty);
+                if (Minimum == value) {
+                    return;
                 }
+                _minimum = value;
+
+                OnMinimumChanged(EventArgs.Empty);
             }
         }
 
@@ -600,11 +478,12 @@ namespace CommonControls {
         public virtual Color NubColor {
             get { return _nubColor; }
             set {
-                if (NubColor != value) {
-                    _nubColor = value;
-
-                    OnNubColorChanged(EventArgs.Empty);
+                if (NubColor == value) {
+                    return;
                 }
+                _nubColor = value;
+
+                OnNubColorChanged(EventArgs.Empty);
             }
         }
 
@@ -617,62 +496,12 @@ namespace CommonControls {
         public virtual Size NubSize {
             get { return _nubSize; }
             set {
-                if (NubSize != value) {
-                    _nubSize = value;
-
-                    OnNubSizeChanged(EventArgs.Empty);
+                if (NubSize == value) {
+                    return;
                 }
-            }
-        }
+                _nubSize = value;
 
-        /// <summary>
-        /// Gets or sets the selection nub style.
-        /// </summary>
-        /// <value>The nub style.</value>
-        [Category("Appearance")]
-        [DefaultValue(typeof (ColorSliderNubStyle), "BottomRight")]
-        public virtual ColorSliderNubStyle NubStyle {
-            get { return _nubStyle; }
-            set {
-                if (NubStyle != value) {
-                    _nubStyle = value;
-
-                    OnNubStyleChanged(EventArgs.Empty);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the orientation of the color bar.
-        /// </summary>
-        /// <value>The orientation.</value>
-        [Category("Appearance")]
-        [DefaultValue(typeof (Orientation), "Horizontal")]
-        public virtual Orientation Orientation {
-            get { return _orientation; }
-            set {
-                if (Orientation != value) {
-                    _orientation = value;
-
-                    OnOrientationChanged(EventArgs.Empty);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether a divider is shown at the selection nub location.
-        /// </summary>
-        /// <value><c>true</c> if a value divider is to be shown; otherwise, <c>false</c>.</value>
-        [Category("Appearance")]
-        [DefaultValue(false)]
-        public virtual bool ShowValueDivider {
-            get { return _showValueDivider; }
-            set {
-                if (ShowValueDivider != value) {
-                    _showValueDivider = value;
-
-                    OnShowValueDividerChanged(EventArgs.Empty);
-                }
+                OnNubSizeChanged(EventArgs.Empty);
             }
         }
 
@@ -685,11 +514,12 @@ namespace CommonControls {
         public virtual int SmallChange {
             get { return _smallChange; }
             set {
-                if (SmallChange != value) {
-                    _smallChange = value;
-
-                    OnSmallChangeChanged(EventArgs.Empty);
+                if (SmallChange == value) {
+                    return;
                 }
+                _smallChange = value;
+
+                OnSmallChangeChanged(EventArgs.Empty);
             }
         }
 
@@ -702,19 +532,16 @@ namespace CommonControls {
         public virtual float Value {
             get { return _value; }
             set {
-                if (value < Minimum)
-                    value = Minimum;
-                if (value > Maximum)
-                    value = Maximum;
+                value = value < Minimum ? Minimum : value > Maximum ? Maximum : value;
 
-                // ReSharper disable CompareOfFloatsByEqualityOperator
-                if (Value != value)
-                    // ReSharper restore CompareOfFloatsByEqualityOperator
-                {
-                    _value = value;
-
-                    OnValueChanged(EventArgs.Empty);
+                // ReSharper disable once CompareOfFloatsByEqualityOperator
+                if (Value == value) {
+                    return;
                 }
+
+                _value = value;
+
+                OnValueChanged(EventArgs.Empty);
             }
         }
 
@@ -733,50 +560,18 @@ namespace CommonControls {
         /// </summary>
         /// <returns>Image.</returns>
         protected virtual Image CreateNubGlyph() {
-            Image image;
+            var firstCorner = new Point(0, NubSize.Height);
+            var lastCorner = new Point(NubSize.Width, NubSize.Height);
+            var tipCorner = new Point(NubSize.Width / 2, 0);
+            var outer = new[] { firstCorner, lastCorner, tipCorner };
 
-            image = new Bitmap(NubSize.Width + 1, NubSize.Height + 1, PixelFormat.Format32bppArgb);
+            var image = new Bitmap(NubSize.Width + 1, NubSize.Height + 1, PixelFormat.Format32bppArgb);
 
-            using (Graphics g = Graphics.FromImage(image)) {
-                Point[] outer;
-                Point firstCorner;
-                Point lastCorner;
-                Point tipCorner;
-
-                if (NubStyle == ColorSliderNubStyle.BottomRight) {
-                    lastCorner = new Point(NubSize.Width, NubSize.Height);
-
-                    if (Orientation == Orientation.Horizontal) {
-                        firstCorner = new Point(0, NubSize.Height);
-                        tipCorner = new Point(NubSize.Width / 2, 0);
-                    }
-                    else {
-                        firstCorner = new Point(NubSize.Width, 0);
-                        tipCorner = new Point(0, NubSize.Height / 2);
-                    }
-                }
-                else {
-                    firstCorner = Point.Empty;
-
-                    if (Orientation == Orientation.Horizontal) {
-                        lastCorner = new Point(NubSize.Width, 0);
-                        tipCorner = new Point(NubSize.Width / 2, NubSize.Height);
-                    }
-                    else {
-                        lastCorner = new Point(0, NubSize.Height);
-                        tipCorner = new Point(NubSize.Width, NubSize.Height / 2);
-                    }
-                }
-
-                // draw the shape
-                outer = new[] {firstCorner, lastCorner, tipCorner};
-
-                // TODO: Add 3D edging similar to the mousewheel's diamond
-
+            using (var g = Graphics.FromImage(image)) {
                 g.SmoothingMode = SmoothingMode.AntiAlias;
-
-                using (Brush brush = new SolidBrush(NubColor))
+                using (Brush brush = new SolidBrush(NubColor)) {
                     g.FillPolygon(brush, outer);
+                }
             }
 
             return image;
@@ -792,7 +587,7 @@ namespace CommonControls {
 
             BarPadding = GetBarPadding();
             BarBounds = GetBarBounds();
-            SelectionGlyph = NubStyle != ColorSliderNubStyle.None ? CreateNubGlyph() : null;
+            SelectionGlyph = CreateNubGlyph();
         }
 
 
@@ -801,11 +596,8 @@ namespace CommonControls {
         /// </summary>
         /// <returns>Rectangle.</returns>
         protected virtual Rectangle GetBarBounds() {
-            Rectangle clientRectangle;
-            Padding padding;
-
-            clientRectangle = ClientRectangle;
-            padding = BarPadding + Padding;
+            var clientRectangle = ClientRectangle;
+            var padding = BarPadding + Padding;
 
             return new Rectangle(clientRectangle.Left + padding.Left, clientRectangle.Top + padding.Top, clientRectangle.Width - padding.Horizontal,
                 clientRectangle.Height - padding.Vertical);
@@ -817,42 +609,11 @@ namespace CommonControls {
         /// </summary>
         /// <returns>Padding.</returns>
         protected virtual Padding GetBarPadding() {
-            int left;
-            int top;
-            int right;
-            int bottom;
+            const int top = 0;
 
-            left = 0;
-            top = 0;
-            right = 0;
-            bottom = 0;
-
-            switch (NubStyle) {
-                case ColorSliderNubStyle.BottomRight:
-                    if (Orientation == Orientation.Horizontal) {
-                        bottom = NubSize.Height + 1;
-                        left = (NubSize.Width / 2) + 1;
-                        right = left;
-                    }
-                    else {
-                        right = NubSize.Width + 1;
-                        top = (NubSize.Height / 2) + 1;
-                        bottom = top;
-                    }
-                    break;
-                case ColorSliderNubStyle.TopLeft:
-                    if (Orientation == Orientation.Horizontal) {
-                        top = NubSize.Height + 1;
-                        left = (NubSize.Width / 2) + 1;
-                        right = left;
-                    }
-                    else {
-                        left = NubSize.Width + 1;
-                        top = (NubSize.Height / 2) + 1;
-                        bottom = top;
-                    }
-                    break;
-            }
+            var bottom = NubSize.Height + 1;
+            var left = (NubSize.Width / 2) + 1;
+            var right = left;
 
             return new Padding(left, top, right, bottom);
         }
@@ -863,9 +624,7 @@ namespace CommonControls {
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnBarBoundsChanged(EventArgs e) {
-            EventHandler handler;
-
-            handler = BarBoundsChanged;
+            var handler = BarBoundsChanged;
 
             if (handler != null)
                 handler(this, e);
@@ -877,11 +636,9 @@ namespace CommonControls {
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnBarPaddingChanged(EventArgs e) {
-            EventHandler handler;
-
             Invalidate();
 
-            handler = BarPaddingChanged;
+            var handler = BarPaddingChanged;
 
             if (handler != null)
                 handler(this, e);
@@ -893,59 +650,9 @@ namespace CommonControls {
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnBarStyleChanged(EventArgs e) {
-            EventHandler handler;
-
             Invalidate();
 
-            handler = BarStyleChanged;
-
-            if (handler != null)
-                handler(this, e);
-        }
-
-
-        /// <summary>
-        /// Raises the <see cref="Color1Changed" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnColor1Changed(EventArgs e) {
-            EventHandler handler;
-
-            Invalidate();
-
-            handler = Color1Changed;
-
-            if (handler != null)
-                handler(this, e);
-        }
-
-
-        /// <summary>
-        /// Raises the <see cref="Color2Changed" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnColor2Changed(EventArgs e) {
-            EventHandler handler;
-
-            Invalidate();
-
-            handler = Color2Changed;
-
-            if (handler != null)
-                handler(this, e);
-        }
-
-
-        /// <summary>
-        /// Raises the <see cref="Color3Changed" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnColor3Changed(EventArgs e) {
-            EventHandler handler;
-
-            Invalidate();
-
-            handler = Color3Changed;
+            var handler = BarStyleChanged;
 
             if (handler != null)
                 handler(this, e);
@@ -957,11 +664,9 @@ namespace CommonControls {
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnCustomColorsChanged(EventArgs e) {
-            EventHandler handler;
-
             Invalidate();
 
-            handler = CustomColorsChanged;
+            var handler = CustomColorsChanged;
 
             if (handler != null)
                 handler(this, e);
@@ -973,9 +678,7 @@ namespace CommonControls {
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnLargeChangeChanged(EventArgs e) {
-            EventHandler handler;
-
-            handler = LargeChangeChanged;
+            var handler = LargeChangeChanged;
 
             if (handler != null)
                 handler(this, e);
@@ -987,9 +690,7 @@ namespace CommonControls {
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnMaximumChanged(EventArgs e) {
-            EventHandler handler;
-
-            handler = MaximumChanged;
+            var handler = MaximumChanged;
 
             if (handler != null)
                 handler(this, e);
@@ -1001,11 +702,9 @@ namespace CommonControls {
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnMinimumChanged(EventArgs e) {
-            EventHandler handler;
-
             Invalidate();
 
-            handler = MinimumChanged;
+            var handler = MinimumChanged;
 
             if (handler != null)
                 handler(this, e);
@@ -1017,11 +716,9 @@ namespace CommonControls {
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnNubColorChanged(EventArgs e) {
-            EventHandler handler;
-
             Invalidate();
 
-            handler = NubColorChanged;
+            var handler = NubColorChanged;
 
             if (handler != null)
                 handler(this, e);
@@ -1033,12 +730,10 @@ namespace CommonControls {
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnNubSizeChanged(EventArgs e) {
-            EventHandler handler;
-
             DefineBar();
             Invalidate();
 
-            handler = NubSizeChanged;
+            var handler = NubSizeChanged;
 
             if (handler != null)
                 handler(this, e);
@@ -1050,49 +745,43 @@ namespace CommonControls {
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnNubStyleChanged(EventArgs e) {
-            EventHandler handler;
-
             DefineBar();
             Invalidate();
 
-            handler = NubStyleChanged;
+            var handler = NubStyleChanged;
 
             if (handler != null)
                 handler(this, e);
         }
 
 
-        /// <summary>
-        /// Raises the <see cref="OrientationChanged" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnOrientationChanged(EventArgs e) {
-            EventHandler handler;
+        ///// <summary>
+        ///// Raises the <see cref="OrientationChanged" /> event.
+        ///// </summary>
+        ///// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        //protected virtual void OnOrientationChanged(EventArgs e) {
+        //    DefineBar();
+        //    Invalidate();
 
-            DefineBar();
-            Invalidate();
+        //    var handler = OrientationChanged;
 
-            handler = OrientationChanged;
-
-            if (handler != null)
-                handler(this, e);
-        }
+        //    if (handler != null)
+        //        handler(this, e);
+        //}
 
 
-        /// <summary>
-        /// Raises the <see cref="ShowValueDividerChanged" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnShowValueDividerChanged(EventArgs e) {
-            EventHandler handler;
+        ///// <summary>
+        ///// Raises the <see cref="ShowValueDividerChanged" /> event.
+        ///// </summary>
+        ///// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        //protected virtual void OnShowValueDividerChanged(EventArgs e) {
+        //    Invalidate();
 
-            Invalidate();
+        //    var handler = ShowValueDividerChanged;
 
-            handler = ShowValueDividerChanged;
-
-            if (handler != null)
-                handler(this, e);
-        }
+        //    if (handler != null)
+        //        handler(this, e);
+        //}
 
 
         /// <summary>
@@ -1100,12 +789,10 @@ namespace CommonControls {
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnSliderStyleChanged(EventArgs e) {
-            EventHandler handler;
-
             DefineBar();
             Invalidate();
 
-            handler = SliderStyleChanged;
+            var handler = SliderStyleChanged;
 
             if (handler != null)
                 handler(this, e);
@@ -1117,9 +804,7 @@ namespace CommonControls {
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnSmallChangeChanged(EventArgs e) {
-            EventHandler handler;
-
-            handler = SmallChangeChanged;
+            var handler = SmallChangeChanged;
 
             if (handler != null)
                 handler(this, e);
@@ -1131,11 +816,9 @@ namespace CommonControls {
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnValueChanged(EventArgs e) {
-            EventHandler handler;
-
             Refresh();
 
-            handler = ValueChanged;
+            var handler = ValueChanged;
 
             if (handler != null)
                 handler(this, e);
@@ -1147,54 +830,9 @@ namespace CommonControls {
         /// </summary>
         /// <param name="e">The <see cref="PaintEventArgs"/> instance containing the event data.</param>
         protected virtual void PaintAdornments(PaintEventArgs e) {
-            Point point;
-
-            point = ValueToPoint(Value);
-
-            // divider
-            if (ShowValueDivider) {
-                Point start;
-                Point end;
-                IntPtr hdc;
-
-                if (Orientation == Orientation.Horizontal) {
-                    start = new Point(point.X, BarBounds.Top);
-                    end = new Point(point.X, BarBounds.Bottom);
-                }
-                else {
-                    start = new Point(BarBounds.Left, point.Y);
-                    end = new Point(BarBounds.Right, point.Y);
-                }
-
-                // draw a XOR'd line using Win32 API as this functionality isn't part of .NET
-                hdc = e.Graphics.GetHdc();
-                NativeMethods.SetROP2(hdc, NativeMethods.R2_NOT);
-                NativeMethods.MoveToEx(hdc, start.X, start.Y, IntPtr.Zero);
-                NativeMethods.LineTo(hdc, end.X, end.Y);
-                e.Graphics.ReleaseHdc(hdc);
-            }
-
             // drag nub
-            if (NubStyle != ColorSliderNubStyle.None && SelectionGlyph != null) {
-                int x;
-                int y;
-
-                if (Orientation == Orientation.Horizontal) {
-                    x = point.X - NubSize.Width / 2;
-                    if (NubStyle == ColorSliderNubStyle.BottomRight)
-                        y = BarBounds.Bottom;
-                    else
-                        y = BarBounds.Top - NubSize.Height;
-                }
-                else {
-                    y = point.Y - NubSize.Height / 2;
-                    if (NubStyle == ColorSliderNubStyle.BottomRight)
-                        x = BarBounds.Right;
-                    else
-                        x = BarBounds.Left - NubSize.Width;
-                }
-
-                e.Graphics.DrawImage(SelectionGlyph, x, y);
+            if (SelectionGlyph != null) {
+                e.Graphics.DrawImage(SelectionGlyph, ValueToPoint(Value).X - NubSize.Width / 2, BarBounds.Bottom);
             }
 
             // focus
@@ -1208,44 +846,22 @@ namespace CommonControls {
         /// </summary>
         /// <param name="e">The <see cref="PaintEventArgs"/> instance containing the event data.</param>
         protected virtual void PaintBar(PaintEventArgs e) {
-            float angle;
+            if (BarBounds.Height <= 0 || BarBounds.Width <= 0) {
+                return;
+            }
 
-            angle = (Orientation == Orientation.Horizontal) ? 0 : 270;
+            var blend = new ColorBlend();
+            if (CustomColors != null && CustomColors.Count > 0) {
+                blend.Colors = CustomColors.ToArray();
+                blend.Positions = Enumerable.Range(0, CustomColors.Count).Select(
+                    i => i == 0 ? 0 : i == CustomColors.Count - 1 ? 1 : (float) (1.0D / CustomColors.Count) * i).ToArray();
+            }
 
-            if (BarBounds.Height > 0 && BarBounds.Width > 0) {
-                ColorBlend blend;
-
-                // HACK: Inflating the brush rectangle by 1 seems to get rid of a odd issue where the last color is drawn on the first pixel
-
-                blend = new ColorBlend();
-                using (LinearGradientBrush brush = new LinearGradientBrush(Rectangle.Inflate(BarBounds, 1, 1), Color.Empty, Color.Empty, angle, false)
-                    ) {
-                    switch (BarStyle) {
-                        case ColorBarStyle.TwoColor:
-                            blend.Colors = new[] {Color1, Color2};
-                            blend.Positions = new[] {0F, 1F};
-                            break;
-                        case ColorBarStyle.ThreeColor:
-                            blend.Colors = new[] {Color1, Color2, Color3};
-                            blend.Positions = new[] {0, 0.5F, 1};
-                            break;
-                        case ColorBarStyle.Custom:
-                            if (CustomColors != null && CustomColors.Count > 0) {
-                                blend.Colors = CustomColors.ToArray();
-                                blend.Positions =
-                                    Enumerable.Range(0, CustomColors.Count).Select(
-                                        i => i == 0 ? 0 : i == CustomColors.Count - 1 ? 1 : (float) (1.0D / CustomColors.Count) * i).ToArray();
-                            }
-                            else {
-                                blend.Colors = new[] {Color1, Color2};
-                                blend.Positions = new[] {0F, 1F};
-                            }
-                            break;
-                    }
-
-                    brush.InterpolationColors = blend;
-                    e.Graphics.FillRectangle(brush, BarBounds);
-                }
+            const int angle = 0;
+            // HACK: Inflating the brush rectangle by 1 seems to get rid of a odd issue where the last color is drawn on the first pixel
+            using (var brush = new LinearGradientBrush(Rectangle.Inflate(BarBounds, 1, 1), Color.Empty, Color.Empty, angle, false)) {
+                brush.InterpolationColors = blend;
+                e.Graphics.FillRectangle(brush, BarBounds);
             }
         }
 
@@ -1255,27 +871,12 @@ namespace CommonControls {
         /// </summary>
         /// <param name="location">The client coordinate <see cref="Point"/> to convert.</param>
         protected virtual void PointToValue(Point location) {
-            float value;
-
             location.X += ClientRectangle.X - BarBounds.X;
             location.Y += ClientRectangle.Y - BarBounds.Y;
 
-            switch (Orientation) {
-                case Orientation.Horizontal:
-                    value = Minimum + (location.X / (float) BarBounds.Width * (Minimum + Maximum));
-                    break;
-                default:
-                    value = Minimum + (location.Y / (float) BarBounds.Height * (Minimum + Maximum));
-                    break;
-            }
+            var value = Minimum + (location.X / (float) BarBounds.Width * (Minimum + Maximum));
 
-            if (value < Minimum)
-                value = Minimum;
-
-            if (value > Maximum)
-                value = Maximum;
-
-            Value = value;
+            Value = value < Minimum ? Minimum : value > Maximum ? Maximum : value;
         }
 
 
@@ -1285,24 +886,8 @@ namespace CommonControls {
         /// <param name="value">The value coordinate <see cref="Point"/> to convert.</param>
         /// <returns>A <see cref="Point"/> that represents the converted <see cref="Point"/>, value, in client coordinates.</returns>
         protected virtual Point ValueToPoint(float value) {
-            double x;
-            double y;
-            Padding padding;
-
-            padding = BarPadding + Padding;
-            x = 0;
-            y = 0;
-
-            switch (Orientation) {
-                case Orientation.Horizontal:
-                    x = (BarBounds.Width / Maximum) * value;
-                    break;
-                default:
-                    y = (BarBounds.Height / Maximum) * value;
-                    break;
-            }
-
-            return new Point((int) x + padding.Left, (int) y + padding.Top);
+            var padding = BarPadding + Padding;
+            return new Point((int) ((BarBounds.Width / Maximum) * value) + padding.Left, padding.Top);
         }
 
         #endregion

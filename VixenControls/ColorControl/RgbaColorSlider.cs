@@ -32,7 +32,7 @@ namespace CommonControls {
         public RgbaColorSlider() {
             _cellBackground = new Bitmap(Resources.cellbackground);
             _cellBackgroundBrush = new TextureBrush(_cellBackground, WrapMode.Tile);
-            BarStyle = ColorBarStyle.Custom;
+            //BarStyle = ColorBarStyle.Custom;
             Maximum = 255;
             Color = Color.Black;
             CreateScale();
@@ -58,33 +58,33 @@ namespace CommonControls {
 
         #region Overridden Properties
 
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public override ColorBarStyle BarStyle {
-            get { return base.BarStyle; }
-            set { base.BarStyle = value; }
-        }
+        //[Browsable(false)]
+        //[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        //public override ColorBarStyle BarStyle {
+        //    get { return base.BarStyle; }
+        //    set { base.BarStyle = value; }
+        //}
 
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public override Color Color1 {
-            get { return base.Color1; }
-            set { base.Color1 = value; }
-        }
+        //[Browsable(false)]
+        //[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        //public override Color Color1 {
+        //    get { return base.Color1; }
+        //    set { base.Color1 = value; }
+        //}
 
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public override Color Color2 {
-            get { return base.Color2; }
-            set { base.Color2 = value; }
-        }
+        //[Browsable(false)]
+        //[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        //public override Color Color2 {
+        //    get { return base.Color2; }
+        //    set { base.Color2 = value; }
+        //}
 
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public override Color Color3 {
-            get { return base.Color3; }
-            set { base.Color3 = value; }
-        }
+        //[Browsable(false)]
+        //[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        //public override Color Color3 {
+        //    get { return base.Color3; }
+        //    set { base.Color3 = value; }
+        //}
 
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]

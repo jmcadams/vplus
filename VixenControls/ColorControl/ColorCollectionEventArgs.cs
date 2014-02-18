@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 
+using CommonControls.Annotations;
+
 namespace CommonControls {
     // Cyotek Color Picker controls library
     // Copyright © 2013 Cyotek. All Rights Reserved.
@@ -36,13 +38,19 @@ namespace CommonControls {
         /// Gets the color that raised the event.
         /// </summary>
         /// <value>The color that raised the event.</value>
-        public Color Color { get; protected set; }
+        // ReSharper disable once MemberCanBePrivate.Global
+        public Color Color {
+            [UsedImplicitly]
+            get; protected set; }
 
         /// <summary>
         /// Gets the color index that raised the event.
         /// </summary>
         /// <value>The color index that raised the event.</value>
-        public int Index { get; protected set; }
+        // ReSharper disable once MemberCanBePrivate.Global
+        public int Index {
+            [UsedImplicitly]
+            get; protected set; }
 
         #endregion
     }
