@@ -16,7 +16,7 @@ namespace CommonControls {
     // If you use this code in your applications, donations or attribution are welcome
 
     /// <summary>
-    /// Represents a control for selecting a value from a scale
+    ///     Represents a control for selecting a value from a scale
     /// </summary>
     [DefaultValue("Value")]
     [DefaultEvent("ValueChanged")]
@@ -49,7 +49,7 @@ namespace CommonControls {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ColorSlider"/> class.
+        ///     Initializes a new instance of the <see cref="ColorSlider" /> class.
         /// </summary>
         public ColorSlider() {
             SetStyle(
@@ -71,79 +71,91 @@ namespace CommonControls {
         #region Events
 
         /// <summary>
-        /// Occurs when the BarBounds property value changes
+        ///     Occurs when the BarBounds property value changes
         /// </summary>
-        [Category("Property Changed"), UsedImplicitly]
+        [Category("Property Changed")]
+        [UsedImplicitly]
         public event EventHandler BarBoundsChanged;
 
         /// <summary>
-        /// Occurs when the BarPadding property value changes
+        ///     Occurs when the BarPadding property value changes
         /// </summary>
-        [Category("Property Changed"), UsedImplicitly]
+        [Category("Property Changed")]
+        [UsedImplicitly]
         public event EventHandler BarPaddingChanged;
 
         /// <summary>
-        /// Occurs when the Style property value changes
+        ///     Occurs when the Style property value changes
         /// </summary>
-        [Category("Property Changed"), UsedImplicitly]
+        [Category("Property Changed")]
+        [UsedImplicitly]
         public event EventHandler BarStyleChanged;
 
         /// <summary>
-        /// Occurs when the CustomColors property value changes
+        ///     Occurs when the CustomColors property value changes
         /// </summary>
-        [Category("Property Changed"), UsedImplicitly]
+        [Category("Property Changed")]
+        [UsedImplicitly]
         public event EventHandler CustomColorsChanged;
 
         /// <summary>
-        /// Occurs when the LargeChange property value changes
+        ///     Occurs when the LargeChange property value changes
         /// </summary>
-        [Category("Property Changed"), UsedImplicitly]
+        [Category("Property Changed")]
+        [UsedImplicitly]
         public event EventHandler LargeChangeChanged;
 
         /// <summary>
-        /// Occurs when the Maximum property value changes
+        ///     Occurs when the Maximum property value changes
         /// </summary>
-        [Category("Property Changed"), UsedImplicitly]
+        [Category("Property Changed")]
+        [UsedImplicitly]
         public event EventHandler MaximumChanged;
 
         /// <summary>
-        /// Occurs when the Minimum property value changes
+        ///     Occurs when the Minimum property value changes
         /// </summary>
-        [Category("Property Changed"), UsedImplicitly]
+        [Category("Property Changed")]
+        [UsedImplicitly]
         public event EventHandler MinimumChanged;
 
         /// <summary>
-        /// Occurs when the NubColor property value changes
+        ///     Occurs when the NubColor property value changes
         /// </summary>
-        [Category("Property Changed"), UsedImplicitly]
+        [Category("Property Changed")]
+        [UsedImplicitly]
         public event EventHandler NubColorChanged;
 
         /// <summary>
-        /// Occurs when the NubSize property value changes
+        ///     Occurs when the NubSize property value changes
         /// </summary>
-        [Category("Property Changed"), UsedImplicitly]
+        [Category("Property Changed")]
+        [UsedImplicitly]
         public event EventHandler NubSizeChanged;
 
         /// <summary>
-        /// Occurs when the NubStyle property value changes
+        ///     Occurs when the NubStyle property value changes
         /// </summary>
-        [Category("Property Changed"), UsedImplicitly]
+        [Category("Property Changed")]
+        [UsedImplicitly]
         public event EventHandler NubStyleChanged;
 
         /// <summary>
-        /// Occurs when the SliderStyle property value changes
+        ///     Occurs when the SliderStyle property value changes
         /// </summary>
-        [Category("Property Changed"), UsedImplicitly]
+        [Category("Property Changed")]
+        [UsedImplicitly]
         public event EventHandler SliderStyleChanged;
 
         /// <summary>
-        /// Occurs when the SmallChange property value changes
+        ///     Occurs when the SmallChange property value changes
         /// </summary>
-        [Category("Property Changed"), UsedImplicitly]
+        [Category("Property Changed")]
+        [UsedImplicitly]
         public event EventHandler SmallChangeChanged;
 
         /// <summary>
-        /// Occurs when the Percent property value changes
+        ///     Occurs when the Percent property value changes
         /// </summary>
         [Category("Property Changed")]
         public event EventHandler ValueChanged;
@@ -153,10 +165,13 @@ namespace CommonControls {
         #region Overridden Properties
 
         /// <summary>
-        /// Gets or sets the font of the text displayed by the control.
+        ///     Gets or sets the font of the text displayed by the control.
         /// </summary>
         /// <value>The font.</value>
-        /// <returns>The <see cref="T:System.Drawing.Font" /> to apply to the text displayed by the control. The default is the value of the <see cref="P:System.Windows.Forms.Control.DefaultFont" /> property.</returns>
+        /// <returns>
+        ///     The <see cref="T:System.Drawing.Font" /> to apply to the text displayed by the control. The default is the
+        ///     value of the <see cref="P:System.Windows.Forms.Control.DefaultFont" /> property.
+        /// </returns>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override Font Font {
@@ -165,10 +180,13 @@ namespace CommonControls {
         }
 
         /// <summary>
-        /// Gets or sets the foreground color of the control.
+        ///     Gets or sets the foreground color of the control.
         /// </summary>
         /// <value>The color of the fore.</value>
-        /// <returns>The foreground <see cref="T:System.Drawing.Color" /> of the control. The default is the value of the <see cref="P:System.Windows.Forms.Control.DefaultForeColor" /> property.</returns>
+        /// <returns>
+        ///     The foreground <see cref="T:System.Drawing.Color" /> of the control. The default is the value of the
+        ///     <see cref="P:System.Windows.Forms.Control.DefaultForeColor" /> property.
+        /// </returns>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override Color ForeColor {
@@ -177,7 +195,7 @@ namespace CommonControls {
         }
 
         /// <summary>
-        /// Gets or sets the text associated with this control.
+        ///     Gets or sets the text associated with this control.
         /// </summary>
         /// <value>The text.</value>
         /// <returns>The text associated with this control.</returns>
@@ -190,22 +208,25 @@ namespace CommonControls {
 
         #endregion
 
-        #region Overridden Members
-
         /// <summary>
-        /// Releases the unmanaged resources used by the <see cref="T:System.Windows.Forms.Control" /> and its child controls and optionally releases the managed resources.
+        ///     Releases the unmanaged resources used by the <see cref="T:System.Windows.Forms.Control" /> and its child controls
+        ///     and optionally releases the managed resources.
         /// </summary>
-        /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+        /// <param name="disposing">
+        ///     true to release both managed and unmanaged resources; false to release only unmanaged
+        ///     resources.
+        /// </param>
         protected override void Dispose(bool disposing) {
-            if (disposing && SelectionGlyph != null)
+            if (disposing && SelectionGlyph != null) {
                 SelectionGlyph.Dispose();
+            }
 
             base.Dispose(disposing);
         }
 
 
         /// <summary>
-        /// Determines whether the specified key is a regular input key or a special key that requires preprocessing.
+        ///     Determines whether the specified key is a regular input key or a special key that requires preprocessing.
         /// </summary>
         /// <param name="keyData">One of the <see cref="T:System.Windows.Forms.Keys" /> values.</param>
         /// <returns>true if the specified key is a regular input key; otherwise, false.</returns>
@@ -214,17 +235,19 @@ namespace CommonControls {
 
             if ((keyData & Keys.Left) == Keys.Left || (keyData & Keys.Up) == Keys.Up || (keyData & Keys.Down) == Keys.Down ||
                 (keyData & Keys.Right) == Keys.Right || (keyData & Keys.PageUp) == Keys.PageUp || (keyData & Keys.PageDown) == Keys.PageDown ||
-                (keyData & Keys.Home) == Keys.Home || (keyData & Keys.End) == Keys.End)
+                (keyData & Keys.Home) == Keys.Home || (keyData & Keys.End) == Keys.End) {
                 result = true;
-            else
+            }
+            else {
                 result = base.IsInputKey(keyData);
+            }
 
             return result;
         }
 
 
         /// <summary>
-        /// Raises the <see cref="E:System.Windows.Forms.Control.GotFocus" /> event.
+        ///     Raises the <see cref="E:System.Windows.Forms.Control.GotFocus" /> event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
         protected override void OnGotFocus(EventArgs e) {
@@ -235,12 +258,12 @@ namespace CommonControls {
 
 
         /// <summary>
-        /// Raises the <see cref="E:System.Windows.Forms.Control.KeyDown" /> event.
+        ///     Raises the <see cref="E:System.Windows.Forms.Control.KeyDown" /> event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.KeyEventArgs" /> that contains the event data.</param>
         protected override void OnKeyDown(KeyEventArgs e) {
-            var step = e.Shift ? LargeChange : SmallChange;
-            var value = Value;
+            int step = e.Shift ? LargeChange : SmallChange;
+            float value = Value;
 
             switch (e.KeyCode) {
                 case Keys.Right:
@@ -265,11 +288,13 @@ namespace CommonControls {
                     break;
             }
 
-            if (value < Minimum)
+            if (value < Minimum) {
                 value = Minimum;
+            }
 
-            if (value > Maximum)
+            if (value > Maximum) {
                 value = Maximum;
+            }
 
             // ReSharper disable CompareOfFloatsByEqualityOperator
             if (value != Value)
@@ -285,7 +310,7 @@ namespace CommonControls {
 
 
         /// <summary>
-        /// Raises the <see cref="E:System.Windows.Forms.Control.LostFocus" /> event.
+        ///     Raises the <see cref="E:System.Windows.Forms.Control.LostFocus" /> event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
         protected override void OnLostFocus(EventArgs e) {
@@ -296,34 +321,37 @@ namespace CommonControls {
 
 
         /// <summary>
-        /// Raises the <see cref="E:System.Windows.Forms.Control.MouseDown" /> event.
+        ///     Raises the <see cref="E:System.Windows.Forms.Control.MouseDown" /> event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs" /> that contains the event data.</param>
         protected override void OnMouseDown(MouseEventArgs e) {
             base.OnMouseDown(e);
 
-            if (!Focused && TabStop)
+            if (!Focused && TabStop) {
                 Focus();
+            }
 
-            if (e.Button == MouseButtons.Left)
+            if (e.Button == MouseButtons.Left) {
                 PointToValue(e.Location);
+            }
         }
 
 
         /// <summary>
-        /// Raises the <see cref="E:System.Windows.Forms.Control.MouseMove" /> event.
+        ///     Raises the <see cref="E:System.Windows.Forms.Control.MouseMove" /> event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs" /> that contains the event data.</param>
         protected override void OnMouseMove(MouseEventArgs e) {
             base.OnMouseMove(e);
 
-            if (e.Button == MouseButtons.Left)
+            if (e.Button == MouseButtons.Left) {
                 PointToValue(e.Location);
+            }
         }
 
 
         /// <summary>
-        /// Raises the <see cref="E:System.Windows.Forms.Control.PaddingChanged" /> event.
+        ///     Raises the <see cref="E:System.Windows.Forms.Control.PaddingChanged" /> event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.EventArgs" /> that contains the event data.</param>
         protected override void OnPaddingChanged(EventArgs e) {
@@ -334,7 +362,7 @@ namespace CommonControls {
 
 
         /// <summary>
-        /// Raises the <see cref="E:System.Windows.Forms.Control.Paint" /> event.
+        ///     Raises the <see cref="E:System.Windows.Forms.Control.Paint" /> event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.PaintEventArgs" /> that contains the event data.</param>
         protected override void OnPaint(PaintEventArgs e) {
@@ -346,7 +374,7 @@ namespace CommonControls {
 
 
         /// <summary>
-        /// Raises the <see cref="E:System.Windows.Forms.Control.Resize" /> event.
+        ///     Raises the <see cref="E:System.Windows.Forms.Control.Resize" /> event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
         protected override void OnResize(EventArgs e) {
@@ -355,12 +383,10 @@ namespace CommonControls {
             DefineBar();
         }
 
-        #endregion
-
         #region Properties
 
         /// <summary>
-        /// Gets or sets the location and size of the color bar.
+        ///     Gets or sets the location and size of the color bar.
         /// </summary>
         /// <value>The location and size of the color bar.</value>
         [Browsable(false)]
@@ -378,7 +404,7 @@ namespace CommonControls {
         }
 
         /// <summary>
-        /// Gets or sets the bar padding.
+        ///     Gets or sets the bar padding.
         /// </summary>
         /// <value>The bar padding.</value>
         [Browsable(false)]
@@ -396,7 +422,7 @@ namespace CommonControls {
         }
 
         /// <summary>
-        /// Gets or sets the color range used by the custom bar style.
+        ///     Gets or sets the color range used by the custom bar style.
         /// </summary>
         /// <value>The custom colors.</value>
         [Browsable(false)]
@@ -414,7 +440,8 @@ namespace CommonControls {
         }
 
         /// <summary>
-        /// Gets or sets a value to be added to or subtracted from the <see cref="Value"/> property when the selection is moved a large distance.
+        ///     Gets or sets a value to be added to or subtracted from the <see cref="Value" /> property when the selection is
+        ///     moved a large distance.
         /// </summary>
         /// <value>A numeric value. The default value is 10.</value>
         [Category("Behavior")]
@@ -432,7 +459,7 @@ namespace CommonControls {
         }
 
         /// <summary>
-        /// Gets or sets the upper limit of values of the selection range.
+        ///     Gets or sets the upper limit of values of the selection range.
         /// </summary>
         /// <value>A numeric value. The default value is 100.</value>
         [Category("Behavior")]
@@ -451,7 +478,7 @@ namespace CommonControls {
         }
 
         /// <summary>
-        /// Gets or sets the lower limit of values of the selection range.
+        ///     Gets or sets the lower limit of values of the selection range.
         /// </summary>
         /// <value>A numeric value. The default value is 0.</value>
         [Category("Behavior")]
@@ -470,7 +497,7 @@ namespace CommonControls {
         }
 
         /// <summary>
-        /// Gets or sets the color of the selection nub.
+        ///     Gets or sets the color of the selection nub.
         /// </summary>
         /// <value>The color of the nub.</value>
         [Category("Appearance")]
@@ -488,7 +515,7 @@ namespace CommonControls {
         }
 
         /// <summary>
-        /// Gets or sets the size of the selection nub.
+        ///     Gets or sets the size of the selection nub.
         /// </summary>
         /// <value>The size of the nub.</value>
         [Category("Appearance")]
@@ -506,7 +533,8 @@ namespace CommonControls {
         }
 
         /// <summary>
-        /// Gets or sets the value to be added to or subtracted from the <see cref="Value"/> property when the selection is moved a small distance.
+        ///     Gets or sets the value to be added to or subtracted from the <see cref="Value" /> property when the selection is
+        ///     moved a small distance.
         /// </summary>
         /// <value>A numeric value. The default value is 1.</value>
         [Category("Behavior")]
@@ -524,9 +552,13 @@ namespace CommonControls {
         }
 
         /// <summary>
-        /// Gets or sets a numeric value that represents the current position of the selection numb on the color slider control.
+        ///     Gets or sets a numeric value that represents the current position of the selection numb on the color slider
+        ///     control.
         /// </summary>
-        /// <value>A numeric value that is within the <see cref="Minimum"/> and <see cref="Maximum"/> range. The default value is 0.</value>
+        /// <value>
+        ///     A numeric value that is within the <see cref="Minimum" /> and <see cref="Maximum" /> range. The default value is
+        ///     0.
+        /// </value>
         [Category("Appearance")]
         [DefaultValue(0F)]
         public virtual float Value {
@@ -546,7 +578,7 @@ namespace CommonControls {
         }
 
         /// <summary>
-        /// Gets or sets the selection glyph.
+        ///     Gets or sets the selection glyph.
         /// </summary>
         /// <value>The selection glyph.</value>
         protected Image SelectionGlyph { get; set; }
@@ -556,18 +588,18 @@ namespace CommonControls {
         #region Members
 
         /// <summary>
-        /// Creates the selection nub glyph.
+        ///     Creates the selection nub glyph.
         /// </summary>
         /// <returns>Image.</returns>
         protected virtual Image CreateNubGlyph() {
             var firstCorner = new Point(0, NubSize.Height);
             var lastCorner = new Point(NubSize.Width, NubSize.Height);
             var tipCorner = new Point(NubSize.Width / 2, 0);
-            var outer = new[] { firstCorner, lastCorner, tipCorner };
+            var outer = new[] {firstCorner, lastCorner, tipCorner};
 
             var image = new Bitmap(NubSize.Width + 1, NubSize.Height + 1, PixelFormat.Format32bppArgb);
 
-            using (var g = Graphics.FromImage(image)) {
+            using (Graphics g = Graphics.FromImage(image)) {
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 using (Brush brush = new SolidBrush(NubColor)) {
                     g.FillPolygon(brush, outer);
@@ -579,11 +611,12 @@ namespace CommonControls {
 
 
         /// <summary>
-        /// Defines the bar bounds and padding.
+        ///     Defines the bar bounds and padding.
         /// </summary>
         protected virtual void DefineBar() {
-            if (SelectionGlyph != null)
+            if (SelectionGlyph != null) {
                 SelectionGlyph.Dispose();
+            }
 
             BarPadding = GetBarPadding();
             BarBounds = GetBarBounds();
@@ -592,12 +625,12 @@ namespace CommonControls {
 
 
         /// <summary>
-        /// Gets the bar bounds.
+        ///     Gets the bar bounds.
         /// </summary>
         /// <returns>Rectangle.</returns>
         protected virtual Rectangle GetBarBounds() {
-            var clientRectangle = ClientRectangle;
-            var padding = BarPadding + Padding;
+            Rectangle clientRectangle = ClientRectangle;
+            Padding padding = BarPadding + Padding;
 
             return new Rectangle(clientRectangle.Left + padding.Left, clientRectangle.Top + padding.Top, clientRectangle.Width - padding.Horizontal,
                 clientRectangle.Height - padding.Vertical);
@@ -605,153 +638,163 @@ namespace CommonControls {
 
 
         /// <summary>
-        /// Gets the bar padding.
+        ///     Gets the bar padding.
         /// </summary>
         /// <returns>Padding.</returns>
         protected virtual Padding GetBarPadding() {
             const int top = 0;
 
-            var bottom = NubSize.Height + 1;
-            var left = (NubSize.Width / 2) + 1;
-            var right = left;
+            int bottom = NubSize.Height + 1;
+            int left = (NubSize.Width / 2) + 1;
+            int right = left;
 
             return new Padding(left, top, right, bottom);
         }
 
 
         /// <summary>
-        /// Raises the <see cref="BarBoundsChanged" /> event.
+        ///     Raises the <see cref="BarBoundsChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnBarBoundsChanged(EventArgs e) {
-            var handler = BarBoundsChanged;
+            EventHandler handler = BarBoundsChanged;
 
-            if (handler != null)
+            if (handler != null) {
                 handler(this, e);
+            }
         }
 
 
         /// <summary>
-        /// Raises the <see cref="BarPaddingChanged" /> event.
+        ///     Raises the <see cref="BarPaddingChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnBarPaddingChanged(EventArgs e) {
             Invalidate();
 
-            var handler = BarPaddingChanged;
+            EventHandler handler = BarPaddingChanged;
 
-            if (handler != null)
+            if (handler != null) {
                 handler(this, e);
+            }
         }
 
 
         /// <summary>
-        /// Raises the <see cref="BarStyleChanged" /> event.
+        ///     Raises the <see cref="BarStyleChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnBarStyleChanged(EventArgs e) {
             Invalidate();
 
-            var handler = BarStyleChanged;
+            EventHandler handler = BarStyleChanged;
 
-            if (handler != null)
+            if (handler != null) {
                 handler(this, e);
+            }
         }
 
 
         /// <summary>
-        /// Raises the <see cref="CustomColorsChanged" /> event.
+        ///     Raises the <see cref="CustomColorsChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnCustomColorsChanged(EventArgs e) {
             Invalidate();
 
-            var handler = CustomColorsChanged;
+            EventHandler handler = CustomColorsChanged;
 
-            if (handler != null)
+            if (handler != null) {
                 handler(this, e);
+            }
         }
 
 
         /// <summary>
-        /// Raises the <see cref="LargeChangeChanged" /> event.
+        ///     Raises the <see cref="LargeChangeChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnLargeChangeChanged(EventArgs e) {
-            var handler = LargeChangeChanged;
+            EventHandler handler = LargeChangeChanged;
 
-            if (handler != null)
+            if (handler != null) {
                 handler(this, e);
+            }
         }
 
 
         /// <summary>
-        /// Raises the <see cref="MaximumChanged" /> event.
+        ///     Raises the <see cref="MaximumChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnMaximumChanged(EventArgs e) {
-            var handler = MaximumChanged;
+            EventHandler handler = MaximumChanged;
 
-            if (handler != null)
+            if (handler != null) {
                 handler(this, e);
+            }
         }
 
 
         /// <summary>
-        /// Raises the <see cref="MinimumChanged" /> event.
+        ///     Raises the <see cref="MinimumChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnMinimumChanged(EventArgs e) {
             Invalidate();
 
-            var handler = MinimumChanged;
+            EventHandler handler = MinimumChanged;
 
-            if (handler != null)
+            if (handler != null) {
                 handler(this, e);
+            }
         }
 
 
         /// <summary>
-        /// Raises the <see cref="NubColorChanged" /> event.
+        ///     Raises the <see cref="NubColorChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnNubColorChanged(EventArgs e) {
             Invalidate();
 
-            var handler = NubColorChanged;
+            EventHandler handler = NubColorChanged;
 
-            if (handler != null)
+            if (handler != null) {
                 handler(this, e);
+            }
         }
 
 
         /// <summary>
-        /// Raises the <see cref="NubSizeChanged" /> event.
+        ///     Raises the <see cref="NubSizeChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnNubSizeChanged(EventArgs e) {
             DefineBar();
             Invalidate();
 
-            var handler = NubSizeChanged;
+            EventHandler handler = NubSizeChanged;
 
-            if (handler != null)
+            if (handler != null) {
                 handler(this, e);
+            }
         }
 
 
         /// <summary>
-        /// Raises the <see cref="NubStyleChanged" /> event.
+        ///     Raises the <see cref="NubStyleChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnNubStyleChanged(EventArgs e) {
             DefineBar();
             Invalidate();
 
-            var handler = NubStyleChanged;
+            EventHandler handler = NubStyleChanged;
 
-            if (handler != null)
+            if (handler != null) {
                 handler(this, e);
+            }
         }
 
 
@@ -785,50 +828,53 @@ namespace CommonControls {
 
 
         /// <summary>
-        /// Raises the <see cref="SliderStyleChanged" /> event.
+        ///     Raises the <see cref="SliderStyleChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnSliderStyleChanged(EventArgs e) {
             DefineBar();
             Invalidate();
 
-            var handler = SliderStyleChanged;
+            EventHandler handler = SliderStyleChanged;
 
-            if (handler != null)
+            if (handler != null) {
                 handler(this, e);
+            }
         }
 
 
         /// <summary>
-        /// Raises the <see cref="SmallChangeChanged" /> event.
+        ///     Raises the <see cref="SmallChangeChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnSmallChangeChanged(EventArgs e) {
-            var handler = SmallChangeChanged;
+            EventHandler handler = SmallChangeChanged;
 
-            if (handler != null)
+            if (handler != null) {
                 handler(this, e);
+            }
         }
 
 
         /// <summary>
-        /// Raises the <see cref="ValueChanged" /> event.
+        ///     Raises the <see cref="ValueChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnValueChanged(EventArgs e) {
             Refresh();
 
-            var handler = ValueChanged;
+            EventHandler handler = ValueChanged;
 
-            if (handler != null)
+            if (handler != null) {
                 handler(this, e);
+            }
         }
 
 
         /// <summary>
-        /// Paints control adornments.
+        ///     Paints control adornments.
         /// </summary>
-        /// <param name="e">The <see cref="PaintEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="PaintEventArgs" /> instance containing the event data.</param>
         protected virtual void PaintAdornments(PaintEventArgs e) {
             // drag nub
             if (SelectionGlyph != null) {
@@ -836,15 +882,16 @@ namespace CommonControls {
             }
 
             // focus
-            if (Focused)
+            if (Focused) {
                 ControlPaint.DrawFocusRectangle(e.Graphics, Rectangle.Inflate(BarBounds, -2, -2));
+            }
         }
 
 
         /// <summary>
-        /// Paints the bar.
+        ///     Paints the bar.
         /// </summary>
-        /// <param name="e">The <see cref="PaintEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="PaintEventArgs" /> instance containing the event data.</param>
         protected virtual void PaintBar(PaintEventArgs e) {
             if (BarBounds.Height <= 0 || BarBounds.Width <= 0) {
                 return;
@@ -853,8 +900,9 @@ namespace CommonControls {
             var blend = new ColorBlend();
             if (CustomColors != null && CustomColors.Count > 0) {
                 blend.Colors = CustomColors.ToArray();
-                blend.Positions = Enumerable.Range(0, CustomColors.Count).Select(
-                    i => i == 0 ? 0 : i == CustomColors.Count - 1 ? 1 : (float) (1.0D / CustomColors.Count) * i).ToArray();
+                blend.Positions =
+                    Enumerable.Range(0, CustomColors.Count).Select(
+                        i => i == 0 ? 0 : i == CustomColors.Count - 1 ? 1 : (float) (1.0D / CustomColors.Count) * i).ToArray();
             }
 
             const int angle = 0;
@@ -867,26 +915,26 @@ namespace CommonControls {
 
 
         /// <summary>
-        /// Computes the location of the specified client point into value coordinates.
+        ///     Computes the location of the specified client point into value coordinates.
         /// </summary>
-        /// <param name="location">The client coordinate <see cref="Point"/> to convert.</param>
+        /// <param name="location">The client coordinate <see cref="Point" /> to convert.</param>
         protected virtual void PointToValue(Point location) {
             location.X += ClientRectangle.X - BarBounds.X;
             location.Y += ClientRectangle.Y - BarBounds.Y;
 
-            var value = Minimum + (location.X / (float) BarBounds.Width * (Minimum + Maximum));
+            float value = Minimum + (location.X / (float) BarBounds.Width * (Minimum + Maximum));
 
             Value = value < Minimum ? Minimum : value > Maximum ? Maximum : value;
         }
 
 
         /// <summary>
-        /// Computes the location of the value point into client coordinates.
+        ///     Computes the location of the value point into client coordinates.
         /// </summary>
-        /// <param name="value">The value coordinate <see cref="Point"/> to convert.</param>
-        /// <returns>A <see cref="Point"/> that represents the converted <see cref="Point"/>, value, in client coordinates.</returns>
+        /// <param name="value">The value coordinate <see cref="Point" /> to convert.</param>
+        /// <returns>A <see cref="Point" /> that represents the converted <see cref="Point" />, value, in client coordinates.</returns>
         protected virtual Point ValueToPoint(float value) {
-            var padding = BarPadding + Padding;
+            Padding padding = BarPadding + Padding;
             return new Point((int) ((BarBounds.Width / Maximum) * value) + padding.Left, padding.Top);
         }
 

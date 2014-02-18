@@ -10,12 +10,15 @@ namespace CommonControls {
 
     // If you use this code in your applications, donations or attribution are welcome
 
-    /// <summary>Provides data for the <see cref="ColorCollection.CollectionChanged"/> event of a <see cref="ColorCollection"/> instance.</summary>
+    /// <summary>
+    ///     Provides data for the <see cref="ColorCollection.CollectionChanged" /> event of a
+    ///     <see cref="ColorCollection" /> instance.
+    /// </summary>
     public class ColorCollectionEventArgs : EventArgs {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ColorCollectionEventArgs"/> class for the specified color.
+        ///     Initializes a new instance of the <see cref="ColorCollectionEventArgs" /> class for the specified color.
         /// </summary>
         /// <param name="index">The color index that the event is responding to.</param>
         /// <param name="color">The %Color% that the event is responding to.</param>
@@ -26,7 +29,7 @@ namespace CommonControls {
 
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ColorCollectionEventArgs"/> class.
+        ///     Initializes a new instance of the <see cref="ColorCollectionEventArgs" /> class.
         /// </summary>
         protected ColorCollectionEventArgs() {}
 
@@ -35,22 +38,26 @@ namespace CommonControls {
         #region Properties
 
         /// <summary>
-        /// Gets the color that raised the event.
+        ///     Gets the color that raised the event.
         /// </summary>
         /// <value>The color that raised the event.</value>
         // ReSharper disable once MemberCanBePrivate.Global
         public Color Color {
             [UsedImplicitly]
-            get; protected set; }
+            get;
+            protected set;
+        }
 
         /// <summary>
-        /// Gets the color index that raised the event.
+        ///     Gets the color index that raised the event.
         /// </summary>
         /// <value>The color index that raised the event.</value>
         // ReSharper disable once MemberCanBePrivate.Global
         public int Index {
             [UsedImplicitly]
-            get; protected set; }
+            get;
+            protected set;
+        }
 
         #endregion
     }

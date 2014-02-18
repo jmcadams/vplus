@@ -43,13 +43,13 @@ namespace CommonControls {
         #region Events
 
         /// <summary>
-        /// Occurs when the Channel property value changes
+        ///     Occurs when the Channel property value changes
         /// </summary>
         [Category("Property Changed")]
         public event EventHandler ChannelChanged;
 
         /// <summary>
-        /// Occurs when the Color property value changes
+        ///     Occurs when the Color property value changes
         /// </summary>
         [Category("Property Changed")]
         public event EventHandler ColorChanged;
@@ -107,15 +107,15 @@ namespace CommonControls {
 
         #endregion
 
-        #region Overridden Members
-
         protected override void Dispose(bool disposing) {
             if (disposing) {
-                if (_cellBackground != null)
+                if (_cellBackground != null) {
                     _cellBackground.Dispose();
+                }
 
-                if (_cellBackgroundBrush != null)
+                if (_cellBackgroundBrush != null) {
                     _cellBackgroundBrush.Dispose();
+                }
             }
 
             base.Dispose(disposing);
@@ -127,8 +127,6 @@ namespace CommonControls {
 
             base.PaintBar(e);
         }
-
-        #endregion
 
         #region Properties
 
@@ -173,7 +171,7 @@ namespace CommonControls {
 
 
         /// <summary>
-        /// Raises the <see cref="ChannelChanged" /> event.
+        ///     Raises the <see cref="ChannelChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnChannelChanged(EventArgs e) {
@@ -183,13 +181,14 @@ namespace CommonControls {
 
             handler = ChannelChanged;
 
-            if (handler != null)
+            if (handler != null) {
                 handler(this, e);
+            }
         }
 
 
         /// <summary>
-        /// Raises the <see cref="ColorChanged" /> event.
+        ///     Raises the <see cref="ColorChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnColorChanged(EventArgs e) {
@@ -200,8 +199,9 @@ namespace CommonControls {
 
             handler = ColorChanged;
 
-            if (handler != null)
+            if (handler != null) {
                 handler(this, e);
+            }
         }
 
         #endregion

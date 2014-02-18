@@ -13,24 +13,28 @@ namespace CommonControls {
     // If you use this code in your applications, donations or attribution are welcome
 
     /// <summary>
-    /// Represents a collection of colors
+    ///     Represents a collection of colors
     /// </summary>
     /// <remarks>
-    /// 	<para>ColorCollection allows duplicate elements.</para>
-    /// 	<para>Elements in this collection can be accessed using an integer index. Indexes in this collection are zero-based.</para>
+    ///     <para>ColorCollection allows duplicate elements.</para>
+    ///     <para>
+    ///         Elements in this collection can be accessed using an integer index. Indexes in this collection are
+    ///         zero-based.
+    ///     </para>
     /// </remarks>
     // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
     public class ColorCollection : Collection<Color> {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ColorCollection"/> class.
+        ///     Initializes a new instance of the <see cref="ColorCollection" /> class.
         /// </summary>
         public ColorCollection() {}
 
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ColorCollection"/> class that contains elements copied from the specified collection.
+        ///     Initializes a new instance of the <see cref="ColorCollection" /> class that contains elements copied from the
+        ///     specified collection.
         /// </summary>
         /// <param name="collection">The collection whose elements are copied to the new collection.</param>
         public ColorCollection(IEnumerable<Color> collection) : this() {
@@ -42,17 +46,15 @@ namespace CommonControls {
         #region Events
 
         /// <summary>
-        /// Occurs when elements in the collection are added, removed or modified.
+        ///     Occurs when elements in the collection are added, removed or modified.
         /// </summary>
         [UsedImplicitly]
         public event EventHandler<ColorCollectionEventArgs> CollectionChanged;
 
         #endregion
 
-        #region Overridden Members
-
         /// <summary>
-        /// Removes all elements from the <see cref="T:System.Collections.ObjectModel.Collection`1" />.
+        ///     Removes all elements from the <see cref="T:System.Collections.ObjectModel.Collection`1" />.
         /// </summary>
         protected override void ClearItems() {
             base.ClearItems();
@@ -62,7 +64,7 @@ namespace CommonControls {
 
 
         /// <summary>
-        /// Inserts an element into the <see cref="T:System.Collections.ObjectModel.Collection`1" /> at the specified index.
+        ///     Inserts an element into the <see cref="T:System.Collections.ObjectModel.Collection`1" /> at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index at which <paramref name="item" /> should be inserted.</param>
         /// <param name="item">The object to insert.</param>
@@ -74,11 +76,11 @@ namespace CommonControls {
 
 
         /// <summary>
-        /// Removes the element at the specified index of the <see cref="T:System.Collections.ObjectModel.Collection`1" />.
+        ///     Removes the element at the specified index of the <see cref="T:System.Collections.ObjectModel.Collection`1" />.
         /// </summary>
         /// <param name="index">The zero-based index of the element to remove.</param>
         protected override void RemoveItem(int index) {
-            var color = this[index];
+            Color color = this[index];
 
             base.RemoveItem(index);
 
@@ -87,7 +89,7 @@ namespace CommonControls {
 
 
         /// <summary>
-        /// Replaces the element at the specified index.
+        ///     Replaces the element at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index of the element to replace.</param>
         /// <param name="item">The new value for the element at the specified index.</param>
@@ -97,29 +99,28 @@ namespace CommonControls {
             OnCollectionChanged(new ColorCollectionEventArgs(index, item));
         }
 
-        #endregion
-
         #region Members
 
-        /// <summary>Adds the elements of the specified collection to the end of the <see cref="ColorCollection"/>.</summary>
-        /// <param name="colors">The collection whose elements should be added to the end of the <see cref="ColorCollection"/>.</param>
+        /// <summary>Adds the elements of the specified collection to the end of the <see cref="ColorCollection" />.</summary>
+        /// <param name="colors">The collection whose elements should be added to the end of the <see cref="ColorCollection" />.</param>
         // ReSharper disable once MemberCanBePrivate.Global
         public void AddRange(IEnumerable<Color> colors) {
-            foreach (var color in colors) {
+            foreach (Color color in colors) {
                 Add(color);
             }
         }
 
 
         /// <summary>
-        /// Raises the <see cref="CollectionChanged" /> event.
+        ///     Raises the <see cref="CollectionChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnCollectionChanged(ColorCollectionEventArgs e) {
-            var handler = CollectionChanged;
+            EventHandler<ColorCollectionEventArgs> handler = CollectionChanged;
 
-            if (handler != null)
+            if (handler != null) {
                 handler(this, e);
+            }
         }
 
         #endregion
