@@ -22,8 +22,7 @@ namespace CommonControls {
     ///         zero-based.
     ///     </para>
     /// </remarks>
-    // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
-    public class ColorCollection : Collection<Color> {
+    public sealed class ColorCollection : Collection<Color> {
         #region Constructors
 
         /// <summary>
@@ -80,7 +79,7 @@ namespace CommonControls {
         /// </summary>
         /// <param name="index">The zero-based index of the element to remove.</param>
         protected override void RemoveItem(int index) {
-            Color color = this[index];
+            var color = this[index];
 
             base.RemoveItem(index);
 
@@ -105,7 +104,7 @@ namespace CommonControls {
         /// <param name="colors">The collection whose elements should be added to the end of the <see cref="ColorCollection" />.</param>
         // ReSharper disable once MemberCanBePrivate.Global
         public void AddRange(IEnumerable<Color> colors) {
-            foreach (Color color in colors) {
+            foreach (var color in colors) {
                 Add(color);
             }
         }
@@ -115,8 +114,8 @@ namespace CommonControls {
         ///     Raises the <see cref="CollectionChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnCollectionChanged(ColorCollectionEventArgs e) {
-            EventHandler<ColorCollectionEventArgs> handler = CollectionChanged;
+        private void OnCollectionChanged(ColorCollectionEventArgs e) {
+            var handler = CollectionChanged;
 
             if (handler != null) {
                 handler(this, e);

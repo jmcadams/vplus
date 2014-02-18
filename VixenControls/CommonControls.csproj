@@ -94,7 +94,6 @@
     <Reference Include="System.Windows.Forms">
       <Name>System.Windows.Forms</Name>
     </Reference>
-    <Reference Include="VixenPlusControls, Version=0.2.41.1, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs">

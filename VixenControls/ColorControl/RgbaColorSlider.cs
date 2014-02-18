@@ -14,7 +14,7 @@ namespace CommonControls {
 
     // If you use this code in your applications, donations or attribution are welcome
 
-    public class RgbaColorSlider : ColorSlider {
+    public sealed class RgbaColorSlider : ColorSlider {
         #region Instance Fields
 
         private readonly Image _cellBackground;
@@ -88,14 +88,14 @@ namespace CommonControls {
 
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public override float Maximum {
+        protected override float Maximum {
             get { return base.Maximum; }
             set { base.Maximum = value; }
         }
 
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public override float Minimum {
+        protected override float Minimum {
             get { return base.Minimum; }
             set { base.Minimum = value; }
         }
@@ -132,7 +132,7 @@ namespace CommonControls {
 
         [Category("Appearance")]
         [DefaultValue(typeof (RgbaChannel), "Red")]
-        public virtual RgbaChannel Channel {
+        public RgbaChannel Channel {
             get { return _channel; }
             set {
                 if (Channel != value) {
@@ -145,7 +145,7 @@ namespace CommonControls {
 
         [Category("Appearance")]
         [DefaultValue(typeof (Color), "Black")]
-        public virtual Color Color {
+        public Color Color {
             get { return _color; }
             set {
                 if (Color != value) {
@@ -160,7 +160,7 @@ namespace CommonControls {
 
         #region Members
 
-        protected virtual void CreateScale() {
+        private void CreateScale() {
             CustomColors =
                 new ColorCollection(
                     Enumerable.Range(0, 254).Select(
@@ -174,12 +174,10 @@ namespace CommonControls {
         ///     Raises the <see cref="ChannelChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnChannelChanged(EventArgs e) {
-            EventHandler handler;
-
+        private void OnChannelChanged(EventArgs e) {
             CreateScale();
 
-            handler = ChannelChanged;
+            var handler = ChannelChanged;
 
             if (handler != null) {
                 handler(this, e);
@@ -191,13 +189,11 @@ namespace CommonControls {
         ///     Raises the <see cref="ColorChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnColorChanged(EventArgs e) {
-            EventHandler handler;
-
+        private void OnColorChanged(EventArgs e) {
             CreateScale();
             Invalidate();
 
-            handler = ColorChanged;
+            var handler = ColorChanged;
 
             if (handler != null) {
                 handler(this, e);

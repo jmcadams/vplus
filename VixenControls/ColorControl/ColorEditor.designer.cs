@@ -1,6 +1,6 @@
 ﻿namespace CommonControls
 {
-  partial class ColorEditor
+    sealed partial class ColorEditor
   {
     /// <summary> 
     /// Required designer variable.
