@@ -20,7 +20,9 @@ namespace VixenPlus.Dialogs {
     public partial class FrmProfileManager : Form {
 
         #region ClassMembers
-        
+
+        private Preference2 _pref = Preference2.GetInstance();
+
         private readonly bool _suppressErrors = Preference2.GetInstance().GetBoolean("SilenceProfileErrors");
         private readonly int _dgvWidthDiff;
         private readonly int _dgvHeightDiff;
@@ -38,9 +40,10 @@ namespace VixenPlus.Dialogs {
         private const int TabSorts = 3;
         private const int TabNutcracker = 4;
 
-        private const string Warning = "\n\nNOTE: While most functions can be undone by pressing cancel in the Profile Manager dialog, this one cannot.";
+        private const string Warning =
+            "\n\nNOTE: While most functions can be undone by pressing cancel in the Profile Manager dialog, this one cannot.";
 
-        private readonly IList<Rules> _ruleEngines = new List<Rules>(); 
+        private readonly IList<Rules> _ruleEngines = new List<Rules>();
 
         #endregion
 
@@ -112,9 +115,11 @@ namespace VixenPlus.Dialogs {
             }
         }
 
+
         private void dgvChannels_SelectionChanged(object sender, EventArgs e) {
             DoButtonManagement();
         }
+
 
         private void btnEnableDisable_Click(object sender, EventArgs e) {
             var button = sender as Button;
@@ -148,7 +153,9 @@ namespace VixenPlus.Dialogs {
                         }
                         else {
                             for (var i = 0; i < dgvChannels.ColumnCount; i++) {
-                                valid &= String.Compare(dgvChannels.Columns[i].Name, cols[i], StringComparison.OrdinalIgnoreCase) == 0;
+                                valid &=
+                                    String.Compare(dgvChannels.Columns[i].Name, cols[i],
+                                        StringComparison.OrdinalIgnoreCase) == 0;
                             }
                         }
                         if (!valid) {
@@ -161,20 +168,18 @@ namespace VixenPlus.Dialogs {
                     else {
                         var row =
                             dgvChannels.Rows.Add(new object[] {
-                                cols[ChannelEnabledCol] == "True", 
-                                cols[ChannelNumCol].ToInt(), 
-                                cols[ChannelNameCol], 
-                                cols[OutputChannelCol].ToInt(), 
-                                cols[ChannelColorCol]
+                                cols[ChannelEnabledCol] == "True", cols[ChannelNumCol].ToInt(), cols[ChannelNameCol],
+                                cols[OutputChannelCol].ToInt(), cols[ChannelColorCol]
                             });
                         dgvChannels.Rows[row].DefaultCellStyle.BackColor = cols[ChannelColorCol].FromHTML();
-                        dgvChannels.Rows[row].DefaultCellStyle.ForeColor = dgvChannels.Rows[row].DefaultCellStyle.BackColor.GetForeColor();
+                        dgvChannels.Rows[row].DefaultCellStyle.ForeColor =
+                            dgvChannels.Rows[row].DefaultCellStyle.BackColor.GetForeColor();
                     }
                 }
             }
         }
 
-        
+
         private void btnExport_Click(object sender, EventArgs e) {
             using (var file = File.CreateText(Paths.ProfilePath + "\\Testing.csv")) {
                 var data = new StringBuilder();
@@ -195,12 +200,12 @@ namespace VixenPlus.Dialogs {
         #endregion
 
         #region Profile Group Box Events
-        
+
         private void btnAddProfile_Click(object sender, EventArgs e) {
             var newName = GetFileName("Profile/Group Name", Paths.ProfilePath,
-                new[] { Vendor.ProfileExtension, Vendor.GroupExtension }, "", "Create");
+                new[] {Vendor.ProfileExtension, Vendor.GroupExtension}, "", "Create");
 
-            if(string.Empty == newName) {
+            if (string.Empty == newName) {
                 return;
             }
 
@@ -222,12 +227,15 @@ namespace VixenPlus.Dialogs {
 
 
         private void btnDeleteProfile_Click(object sender, EventArgs e) {
-            if (MessageBox.Show("Are you sure you want to delete this profile and group, if one exists?" + Warning, "Delete Profile", MessageBoxButtons.YesNo) != DialogResult.Yes) {
+            if (
+                MessageBox.Show("Are you sure you want to delete this profile and group, if one exists?" + Warning,
+                    "Delete Profile", MessageBoxButtons.YesNo) != DialogResult.Yes) {
                 return;
             }
 
             DeleteIfExists(_contextProfile.FileName);
-            DeleteIfExists(Path.Combine(Path.GetDirectoryName(_contextProfile.FileName) ?? Paths.ProfilePath, _contextProfile.Name + Vendor.GroupExtension));
+            DeleteIfExists(Path.Combine(Path.GetDirectoryName(_contextProfile.FileName) ?? Paths.ProfilePath,
+                _contextProfile.Name + Vendor.GroupExtension));
             InitializeChannelTab();
             cbProfiles.SelectedIndex = 0;
         }
@@ -253,7 +261,7 @@ namespace VixenPlus.Dialogs {
                 return;
             }
 
-            _contextProfile = (Profile)cbProfiles.SelectedItem;
+            _contextProfile = (Profile) cbProfiles.SelectedItem;
             DoButtonManagement();
 
             AddRows(_contextProfile.FullChannels);
@@ -264,14 +272,16 @@ namespace VixenPlus.Dialogs {
 
         private void AddRows(IEnumerable<Channel> channels, int startCh = 1) {
             foreach (var ch in channels) {
-                var row = dgvChannels.Rows.Add(new object[] { ch.Enabled, startCh++, ch.Name, ch.OutputChannel + 1, ch.Color.ToHTML() });
+                var row =
+                    dgvChannels.Rows.Add(new object[]
+                    {ch.Enabled, startCh++, ch.Name, ch.OutputChannel + 1, ch.Color.ToHTML()});
                 dgvChannels.Rows[row].DefaultCellStyle.BackColor = ch.Color;
                 dgvChannels.Rows[row].DefaultCellStyle.ForeColor = ch.Color.GetForeColor();
-            } 
+            }
         }
 
         #endregion
-        
+
         #endregion
 
         #region Support Methods
@@ -313,20 +323,24 @@ namespace VixenPlus.Dialogs {
 
         private void LoadTemplates() {
             cbChGenTemplate.Items.Clear();
-            foreach (var fileName in Directory.GetFiles(Paths.ProfilePath, Vendor.All + Vendor.TemplateExtension)
-                .Where(file => file.EndsWith(Vendor.TemplateExtension)).Select(Path.GetFileNameWithoutExtension)) {
+            foreach (
+                var fileName in
+                    Directory.GetFiles(Paths.ProfilePath, Vendor.All + Vendor.TemplateExtension)
+                        .Where(file => file.EndsWith(Vendor.TemplateExtension))
+                        .Select(Path.GetFileNameWithoutExtension)) {
                 cbChGenTemplate.Items.Add(fileName);
             }
-            ShowNumbers(false,"");
+            ShowNumbers(false, "");
         }
 
         #endregion
 
         #region Profile Channels
+
         private void DoButtonManagement() {
             var isProfileLoaded = _contextProfile != null;
             SetGeneralButtons(isProfileLoaded);
- 
+
             switch (tcProfile.SelectedIndex) {
                 case TabChannels:
                     SetChannelTabButtons(isProfileLoaded);
@@ -351,8 +365,14 @@ namespace VixenPlus.Dialogs {
             var selectedRows = GetSelectedRows().ToList();
             var cellsSelected = selectedRows.Any();
             var oneRowSelected = selectedRows.Count() == 1;
-            var hasEnabledChannels = (from DataGridViewRow x in selectedRows where (bool.Parse(x.Cells[ChannelEnabledCol].Value.ToString())) select x).Any();
-            var hasDisabledChannels = (from DataGridViewRow x in selectedRows where (!bool.Parse(x.Cells[ChannelEnabledCol].Value.ToString())) select x).Any();
+            var hasEnabledChannels =
+                (from DataGridViewRow x in selectedRows
+                    where (bool.Parse(x.Cells[ChannelEnabledCol].Value.ToString()))
+                    select x).Any();
+            var hasDisabledChannels =
+                (from DataGridViewRow x in selectedRows
+                    where (!bool.Parse(x.Cells[ChannelEnabledCol].Value.ToString()))
+                    select x).Any();
 
             btnChAddMulti.Enabled = isProfileLoaded;
             btnChAddOne.Enabled = isProfileLoaded; // todo
@@ -411,7 +431,7 @@ namespace VixenPlus.Dialogs {
         private void DoGroupKeys(KeyEventArgs e) {
             Debug.Print(e.KeyCode.ToString());
         }
-        
+
         #endregion
 
         #region Channel Key Management
@@ -453,9 +473,9 @@ namespace VixenPlus.Dialogs {
 
         private static void DoChannelPaste() {
             if (Clipboard.ContainsData(DataFormats.Text)) {
-                var s = (string)Clipboard.GetData(DataFormats.Text);
+                var s = (string) Clipboard.GetData(DataFormats.Text);
                 Clipboard.SetData(DataFormats.Text, s);
-                var csv = s.Split(new []{"\r\n"}, StringSplitOptions.None).ToList();
+                var csv = s.Split(new[] {"\r\n"}, StringSplitOptions.None).ToList();
                 foreach (var cc in csv.SelectMany(c => c.Split('\t').ToList())) {
                     Debug.Print("'" + cc + "'");
                 }
@@ -481,6 +501,7 @@ namespace VixenPlus.Dialogs {
         #endregion
 
         #region Helper Methods
+
         private static void CopyFile(string originalFile, string newFile) {
             DeleteIfExists(newFile);
             File.Copy(originalFile, newFile);
@@ -493,15 +514,17 @@ namespace VixenPlus.Dialogs {
             }
         }
 
-        
+
         private IEnumerable<DataGridViewRow> GetSelectedRows() {
             var hashSet = new HashSet<DataGridViewRow>();
-            foreach (var cell in from DataGridViewCell x in dgvChannels.SelectedCells where !hashSet.Contains(x.OwningRow) select x) {
+            foreach (
+                var cell in
+                    from DataGridViewCell x in dgvChannels.SelectedCells where !hashSet.Contains(x.OwningRow) select x) {
                 hashSet.Add(cell.OwningRow);
             }
 
             return hashSet;
-        } 
+        }
 
 
         private void InitializeControls() {
@@ -514,8 +537,8 @@ namespace VixenPlus.Dialogs {
             cbProfiles.Items.Clear();
             cbProfiles.Items.Add("Select or add a profile");
             foreach (var profileFile in
-                Directory.GetFiles(Paths.ProfilePath, Vendor.All + Vendor.ProfileExtension).Where(
-                    profileFile => Path.GetExtension(profileFile) == Vendor.ProfileExtension)) {
+                Directory.GetFiles(Paths.ProfilePath, Vendor.All + Vendor.ProfileExtension)
+                    .Where(profileFile => Path.GetExtension(profileFile) == Vendor.ProfileExtension)) {
                 try {
                     cbProfiles.Items.Add(new Profile(profileFile));
                 }
@@ -548,7 +571,7 @@ namespace VixenPlus.Dialogs {
 
         private void RenameOrCopyProfile(bool isRename) {
             var newName = GetFileName("Profile/Group Name", Paths.ProfilePath,
-                new[] { Vendor.ProfileExtension, Vendor.GroupExtension }, "", isRename ? "Rename" : "Copy");
+                new[] {Vendor.ProfileExtension, Vendor.GroupExtension}, "", isRename ? "Rename" : "Copy");
 
             if (String.Empty == newName) {
                 return;
@@ -568,14 +591,14 @@ namespace VixenPlus.Dialogs {
 
             var oldProfile = Path.Combine(root, _contextProfile.Name + Vendor.ProfileExtension);
             var newProfile = Path.Combine(root, newName + Vendor.ProfileExtension);
-            
+
             if (isRename) {
                 RenameFile(oldProfile, newProfile);
             }
             else {
                 CopyFile(oldProfile, newProfile);
             }
-            
+
             _contextProfile.Name = newName;
 
             RefreshProfileComboBox(newName);
@@ -583,7 +606,9 @@ namespace VixenPlus.Dialogs {
 
 
         private void SetProfileIndex(string profileName) {
-            foreach (var profile in cbProfiles.Items.Cast<object>().OfType<Profile>().Where(profile => profile.Name == profileName)) {
+            foreach (
+                var profile in
+                    cbProfiles.Items.Cast<object>().OfType<Profile>().Where(profile => profile.Name == profileName)) {
                 cbProfiles.SelectedIndex = cbProfiles.Items.IndexOf(profile);
             }
         }
@@ -656,26 +681,32 @@ namespace VixenPlus.Dialogs {
             PreviewChannels();
         }
 
+
         private void nudRuleStart_ValueChanged(object sender, EventArgs e) {
-            ((ProfileManagerNumbers) lbRules.SelectedItem).Start = (int)nudRuleStart.Value;
+            ((ProfileManagerNumbers) lbRules.SelectedItem).Start = (int) nudRuleStart.Value;
         }
+
 
         private void nudRuleEnd_ValueChanged(object sender, EventArgs e) {
-            ((ProfileManagerNumbers)lbRules.SelectedItem).End = (int)nudRuleEnd.Value;
+            ((ProfileManagerNumbers) lbRules.SelectedItem).End = (int) nudRuleEnd.Value;
         }
+
 
         private void nudRuleIncr_ValueChanged(object sender, EventArgs e) {
-            ((ProfileManagerNumbers)lbRules.SelectedItem).Increment = (int)nudRuleIncr.Value;
+            ((ProfileManagerNumbers) lbRules.SelectedItem).Increment = (int) nudRuleIncr.Value;
         }
 
+
         private void cbRuleEndNum_CheckedChanged(object sender, EventArgs e) {
-            ((ProfileManagerNumbers)lbRules.SelectedItem).IsLimited = cbRuleEndNum.Checked;
+            ((ProfileManagerNumbers) lbRules.SelectedItem).IsLimited = cbRuleEndNum.Checked;
             nudRuleEnd.Enabled = cbRuleEndNum.Checked;
         }
+
 
         private void tbRuleWords_TextChanged(object sender, EventArgs e) {
             ((ProfileManagerWords) lbRules.SelectedItem).Words = tbRuleWords.Text;
         }
+
 
         private void btnRuleUp_Click(object sender, EventArgs e) {
             var selected = lbRules.SelectedIndex;
@@ -683,6 +714,7 @@ namespace VixenPlus.Dialogs {
                 SwapRules(selected, selected - 1);
             }
         }
+
 
         private void btnRuleDown_Click(object sender, EventArgs e) {
             var selected = lbRules.SelectedIndex;
@@ -717,6 +749,7 @@ namespace VixenPlus.Dialogs {
             DoRuleButtons();
         }
 
+
         private void btnRuleDelete_Click(object sender, EventArgs e) {
             if (lbRules.SelectedIndex < 0) {
                 return;
@@ -731,16 +764,18 @@ namespace VixenPlus.Dialogs {
             var index = lbRules.SelectedIndex;
             var count = lbRules.Items.Count;
             btnRuleUp.Enabled = index > 0;
-            btnRuleDown.Enabled = index != -1 && index != count  - 1;
+            btnRuleDown.Enabled = index != -1 && index != count - 1;
             btnRuleAdd.Enabled = cbRuleRules.SelectedIndex != -1;
             btnRuleDelete.Enabled = index != -1;
 
             btnChGenSaveTemplate.Enabled = !string.IsNullOrEmpty(tbChGenNameFormat.Text) && count > 0;
         }
 
+
         private void cbRuleRules_SelectedIndexChanged(object sender, EventArgs e) {
             DoRuleButtons();
         }
+
 
         private void lbRules_KeyDown(object sender, KeyEventArgs e) {
             if (lbRules.SelectedIndex != -1 && e.KeyCode == Keys.Delete) {
@@ -748,8 +783,9 @@ namespace VixenPlus.Dialogs {
             }
         }
 
+
         private void btnChGenSaveTemplate_Click(object sender, EventArgs e) {
-            var newName = GetFileName("Template", Paths.ProfilePath, new [] {Vendor.TemplateExtension}, "", "OK");
+            var newName = GetFileName("Template", Paths.ProfilePath, new[] {Vendor.TemplateExtension}, "", "OK");
 
             if (string.IsNullOrEmpty(newName)) {
                 return;
@@ -761,7 +797,8 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private static string GetFileName(string fileType, string filePath, IList<string> extension, string defaultResponse, string buttonText) {
+        private static string GetFileName(string fileType, string filePath, IList<string> extension,
+            string defaultResponse, string buttonText) {
             var newName = string.Empty;
             var caption = string.Format("{0} name", fileType);
             var query = string.Format("What would you like to name this {0}?", fileType);
@@ -773,7 +810,9 @@ namespace VixenPlus.Dialogs {
                         newName = dialog.Response;
                         showDialog = false;
 
-                        if (!extension.Aggregate(false, (current, ext) => current | File.Exists(Path.Combine(filePath, newName + ext)))) {
+                        if (
+                            !extension.Aggregate(false,
+                                (current, ext) => current | File.Exists(Path.Combine(filePath, newName + ext)))) {
                             continue;
                         }
 
@@ -817,21 +856,21 @@ namespace VixenPlus.Dialogs {
                 colors.Add(new XElement("Color4", pbRuleColor4.BackColor.ToHTML()));
             }
 
-            var template = new XElement("Template",
-                new XElement("Channels", nudChGenChannels.Value),
-                new XElement("ChannelNameFormat", tbChGenNameFormat.Text),
-                rules,
-                colors);
+            var template = new XElement("Template", new XElement("Channels", nudChGenChannels.Value),
+                new XElement("ChannelNameFormat", tbChGenNameFormat.Text), rules, colors);
 
             return template;
         }
+
 
         private void tbChGenNameFormat_TextChanged(object sender, EventArgs e) {
             DoRuleButtons();
         }
 
+
         private void cbChGenTemplate_SelectedIndexChanged(object sender, EventArgs e) {
-            var template = XElement.Load(Path.Combine(Paths.ProfilePath, cbChGenTemplate.SelectedItem + Vendor.TemplateExtension));
+            var template =
+                XElement.Load(Path.Combine(Paths.ProfilePath, cbChGenTemplate.SelectedItem + Vendor.TemplateExtension));
             var element = template.Element("Channels");
             nudChGenChannels.Value = element != null ? int.Parse(element.Value) : 1;
 
@@ -878,7 +917,7 @@ namespace VixenPlus.Dialogs {
             }
             FormatRuleItems();
             DoRuleButtons();
-            ShowNumbers(false,"");
+            ShowNumbers(false, "");
         }
 
 
@@ -898,6 +937,7 @@ namespace VixenPlus.Dialogs {
             AddRows(GenerateChannels(), _contextProfile.FullChannels.Count() + 1);
         }
 
+
         private IEnumerable<Channel> GenerateChannels() {
             _ruleEngines.Clear();
             foreach (Rules item in lbRules.Items) {
@@ -911,16 +951,18 @@ namespace VixenPlus.Dialogs {
                 AddNonTransparent(pbRuleColor3, colors);
                 AddNonTransparent(pbRuleColor4, colors);
             }
-            if (colors.Count == 0) { colors.Add(Color.White); }
+            if (colors.Count == 0) {
+                colors.Add(Color.White);
+            }
 
-            var generatedNames = GenerateNames(1, tbChGenNameFormat.Text, 0, (int)nudChGenChannels.Value).ToList();
+            var generatedNames = GenerateNames(1, tbChGenNameFormat.Text, 0, (int) nudChGenChannels.Value).ToList();
 
             var generatedChannels = new List<Channel>();
             var startChannelNum = _contextProfile.FullChannels.Count();
 
-            for (var count = 0; count < generatedNames.Count(); count++){
+            for (var count = 0; count < generatedNames.Count(); count++) {
                 var chNum = startChannelNum + count;
-                generatedChannels.Add(new Channel(generatedNames[count], chNum) {Color = colors[count % colors.Count]});
+                generatedChannels.Add(new Channel(generatedNames[count], chNum) {Color = colors[count%colors.Count]});
             }
 
             return generatedChannels;
@@ -931,7 +973,8 @@ namespace VixenPlus.Dialogs {
             if (pb.BackColor != Color.Transparent) {
                 list.Add(pb.BackColor);
             }
-        } 
+        }
+
 
         private IEnumerable<string> GenerateNames(int ruleNum, string nameFormat, int currentChannel, int totalChannels) {
             var names = new List<string>();
@@ -943,26 +986,33 @@ namespace VixenPlus.Dialogs {
             var ruleEngine = _ruleEngines[ruleNum - 1];
             var generatedNames = new List<string>(ruleEngine.GenerateNames());
 
-            for (var i = 0; (i < ruleEngine.Iterations || ruleEngine.IsUnlimited) && currentChannel + names.Count < totalChannels; i++) {
+            for (var i = 0;
+                (i < ruleEngine.Iterations || ruleEngine.IsUnlimited) && currentChannel + names.Count < totalChannels;
+                i++) {
                 var parts = new Regex("{" + (ruleNum - 1) + "[:]?[a-zA-Z0-9]*}").Match(nameFormat).ToString().Split(':');
                 var format = parts.Count() == 2 ? "{0:" + parts[1] : "{0}";
                 var replace = parts.Count() == 2 ? "{" + (ruleNum - 1) + ":" + parts[1] : "{" + (ruleNum - 1) + "}";
                 var replacementValue = ruleEngine.IsUnlimited ? ruleEngine.GenerateName(i) : generatedNames[i];
                 int numericReplacement;
                 var formattingResult = nameFormat.Replace(replace,
-                    int.TryParse(replacementValue, out numericReplacement) ? string.Format(format, numericReplacement) : replacementValue);
+                    int.TryParse(replacementValue, out numericReplacement)
+                        ? string.Format(format, numericReplacement)
+                        : replacementValue);
 
                 // Is this the last rule?
                 if (ruleNum >= _ruleEngines.Count) {
                     names.Add(formattingResult);
                 }
                 else {
-                    names.AddRange(GenerateNames(ruleNum + 1, formattingResult, currentChannel + names.Count, totalChannels).ToList());
+                    names.AddRange(
+                        GenerateNames(ruleNum + 1, formattingResult, currentChannel + names.Count, totalChannels)
+                            .ToList());
                 }
             }
 
             return names;
         }
+
 
         private void pbRuleColor_DoubleClick(object sender, EventArgs e) {
             var pb = sender as PictureBox;
@@ -970,8 +1020,14 @@ namespace VixenPlus.Dialogs {
                 return;
             }
 
-            using (var dialog = new ColorDialog(pb.BackColor)) {
+
+            using (var dialog = new ColorDialog(pb.BackColor, _pref.GetString("CustomColors"))) {
+                const int border = 2;
+                var pbLoc = pb.PointToScreen(new Point(0,0));
+
+                dialog.Location = new Point(pbLoc.X - dialog.Width - border, pbLoc.Y - dialog.Height - border);
                 dialog.ShowDialog();
+                _pref.SetString("CustomColors", dialog.GetCustomColors());
                 switch (dialog.DialogResult) {
                     case DialogResult.OK:
                         pb.BackColor = dialog.GetColor();
@@ -984,6 +1040,5 @@ namespace VixenPlus.Dialogs {
             pb.BackgroundImage = pb.BackColor == Color.Transparent ? Resources.none1 : null;
             pb.BackgroundImageLayout = ImageLayout.Center;
         }
-
     }
 }
