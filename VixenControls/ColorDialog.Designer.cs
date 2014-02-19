@@ -100,6 +100,7 @@ namespace CommonControls {
             // 
             // pbOriginalColor
             // 
+            this.pbOriginalColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbOriginalColor.Location = new System.Drawing.Point(12, 188);
             this.pbOriginalColor.Name = "pbOriginalColor";
             this.pbOriginalColor.Size = new System.Drawing.Size(124, 33);
@@ -109,6 +110,7 @@ namespace CommonControls {
             // 
             // pbNewColor
             // 
+            this.pbNewColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbNewColor.Location = new System.Drawing.Point(135, 188);
             this.pbNewColor.Name = "pbNewColor";
             this.pbNewColor.Size = new System.Drawing.Size(124, 33);
@@ -117,7 +119,7 @@ namespace CommonControls {
             // 
             // btnAddColor
             // 
-            this.btnAddColor.Location = new System.Drawing.Point(141, 108);
+            this.btnAddColor.Location = new System.Drawing.Point(141, 106);
             this.btnAddColor.Name = "btnAddColor";
             this.btnAddColor.Size = new System.Drawing.Size(118, 23);
             this.btnAddColor.TabIndex = 8;
@@ -296,10 +298,9 @@ namespace CommonControls {
             // 
             // ColorDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(273, 286);
-            this.ControlBox = false;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.ClientSize = new System.Drawing.Size(271, 262);
             this.Controls.Add(this.pbCustomF);
             this.Controls.Add(this.pbCustomE);
             this.Controls.Add(this.pbCustomD);
@@ -323,15 +324,14 @@ namespace CommonControls {
             this.Controls.Add(this.btnNone);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.colorEditor1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.MaximumSize = new System.Drawing.Size(283, 318);
-            this.MinimumSize = new System.Drawing.Size(283, 318);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ColorDialog";
+            this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "ColorDialog";
-            this.Shown += new System.EventHandler(this.ColorDialog_Shown);
+            this.Text = "Choose a color";
             ((System.ComponentModel.ISupportInitialize)(this.pbOriginalColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbNewColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCustomF)).EndInit();

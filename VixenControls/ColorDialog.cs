@@ -9,12 +9,14 @@ using CommonControls.Properties;
 namespace CommonControls {
     public partial class ColorDialog : Form {
         private readonly string _customColors;
-
+        private const string ControlPb = "pbCustom";
         public ColorDialog(Color color, string customColors) {
             InitializeComponent();
+            ControlBox = false; // Workaround: If this is set to false in the designer.cs, it renders wrong.
             SetColorOrImage(pbOriginalColor, color);
             colorEditor1.Color = color;
             _customColors = customColors;
+            SetCustomColors();
         }
 
 
@@ -30,7 +32,7 @@ namespace CommonControls {
 
         public string GetCustomColors() {
             var colors = (from PictureBox c in (from object c in Controls where c is PictureBox select c)
-                where c.Name.StartsWith("pbCustom")
+                where c.Name.StartsWith(ControlPb)
                 select c.BackColor).Reverse().ToArray();
             var color = new string[colors.Count()];
             for (var i=0; i < colors.Count();i++) {
@@ -64,9 +66,6 @@ namespace CommonControls {
             pb.BackgroundImage = color == Color.Transparent ? Resources.cellbackground : null;
         }
 
-        private void ColorDialog_Shown(object sender, EventArgs e) {
-            SetCustomColors();
-        }
 
         private void pbCustom_Click(object sender, EventArgs e) {
             var control = sender as PictureBox;
@@ -77,7 +76,7 @@ namespace CommonControls {
             colorEditor1.Color = control.BackColor;
             pbNewColor.BackColor = control.BackColor;
 
-            foreach (PictureBox c in from object c in Controls where c is PictureBox select c) {
+            foreach (var c in from PictureBox c in (from object c in Controls where c is PictureBox select c) where c.Name.StartsWith(ControlPb) select c) {
                 c.BorderStyle = c == sender ? BorderStyle.Fixed3D : BorderStyle.FixedSingle;
             }
         }
@@ -85,9 +84,9 @@ namespace CommonControls {
 
         private void btnAddColor_Click(object sender, EventArgs e) {
             if ((from object c in Controls select c as PictureBox).Count(
-                    pb => pb != null && pb.Name.StartsWith("pbCustom") && pb.BorderStyle == BorderStyle.Fixed3D) > 0) {
+                    pb => pb != null && pb.Name.StartsWith(ControlPb) && pb.BorderStyle == BorderStyle.Fixed3D) > 0) {
                 foreach (var c in from PictureBox c in (from object c in Controls where c is PictureBox select c)
-                    where c.Name.StartsWith("pbCustom") && c.BorderStyle == BorderStyle.Fixed3D
+                    where c.Name.StartsWith(ControlPb) && c.BorderStyle == BorderStyle.Fixed3D
                     select c) {
                     c.BackColor = colorEditor1.Color;
                 }

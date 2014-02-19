@@ -21,9 +21,9 @@ namespace VixenPlus.Dialogs {
 
         #region ClassMembers
 
-        private Preference2 _pref = Preference2.GetInstance();
+        private readonly Preference2 _pref = Preference2.GetInstance();
 
-        private readonly bool _suppressErrors = Preference2.GetInstance().GetBoolean("SilenceProfileErrors");
+        private readonly bool _suppressErrors;
         private readonly int _dgvWidthDiff;
         private readonly int _dgvHeightDiff;
         private Profile _contextProfile;
@@ -53,6 +53,7 @@ namespace VixenPlus.Dialogs {
             InitializeComponent();
             Icon = Resources.VixenPlus;
 
+            _suppressErrors = _pref.GetBoolean("SilenceProfileErrors");
             _dgvWidthDiff = Width - dgvChannels.Width;
             _dgvHeightDiff = Height - dgvChannels.Height;
             InitializeControls();
