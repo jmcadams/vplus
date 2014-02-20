@@ -117,6 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="ChannelEnabled.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ChannelNum.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ChannelName.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="OutputChannel.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ChannelColor.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
@@ -124,7 +139,7 @@
   <data name="pbRuleColor8.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAACxEAAAsRAX9kX5EAAAAGYktHRAAAAAAAAPlDu38AAAAJdnBBZwAAABAAAAAQAFzG
+        YQUAAAAJcEhZcwAACxAAAAsQAa0jvXUAAAAGYktHRAAAAAAAAPlDu38AAAAJdnBBZwAAABAAAAAQAFzG
         rcMAAAAldEVYdGNyZWF0ZS1kYXRlADIwMDktMTEtMTVUMjM6MDQ6MDYtMDc6MDAeMafSAAAAJXRFWHRk
         YXRlOmNyZWF0ZQAyMDEwLTAyLTIwVDIzOjI2OjE4LTA3OjAwZ+w9QQAAACV0RVh0ZGF0ZTptb2RpZnkA
         MjAxMC0wMS0xMVQwOTowODo0MC0wNzowMK6OorsAAAA0dEVYdExpY2Vuc2UAaHR0cDovL2NyZWF0aXZl
@@ -143,7 +158,7 @@
   <data name="pbRuleColor7.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAACxEAAAsRAX9kX5EAAAAGYktHRAAAAAAAAPlDu38AAAAJdnBBZwAAABAAAAAQAFzG
+        YQUAAAAJcEhZcwAACxAAAAsQAa0jvXUAAAAGYktHRAAAAAAAAPlDu38AAAAJdnBBZwAAABAAAAAQAFzG
         rcMAAAAldEVYdGNyZWF0ZS1kYXRlADIwMDktMTEtMTVUMjM6MDQ6MDYtMDc6MDAeMafSAAAAJXRFWHRk
         YXRlOmNyZWF0ZQAyMDEwLTAyLTIwVDIzOjI2OjE4LTA3OjAwZ+w9QQAAACV0RVh0ZGF0ZTptb2RpZnkA
         MjAxMC0wMS0xMVQwOTowODo0MC0wNzowMK6OorsAAAA0dEVYdExpY2Vuc2UAaHR0cDovL2NyZWF0aXZl
@@ -162,7 +177,7 @@
   <data name="pbRuleColor6.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAACxEAAAsRAX9kX5EAAAAGYktHRAAAAAAAAPlDu38AAAAJdnBBZwAAABAAAAAQAFzG
+        YQUAAAAJcEhZcwAACxAAAAsQAa0jvXUAAAAGYktHRAAAAAAAAPlDu38AAAAJdnBBZwAAABAAAAAQAFzG
         rcMAAAAldEVYdGNyZWF0ZS1kYXRlADIwMDktMTEtMTVUMjM6MDQ6MDYtMDc6MDAeMafSAAAAJXRFWHRk
         YXRlOmNyZWF0ZQAyMDEwLTAyLTIwVDIzOjI2OjE4LTA3OjAwZ+w9QQAAACV0RVh0ZGF0ZTptb2RpZnkA
         MjAxMC0wMS0xMVQwOTowODo0MC0wNzowMK6OorsAAAA0dEVYdExpY2Vuc2UAaHR0cDovL2NyZWF0aXZl
@@ -178,19 +193,7 @@
         vH1GxQAAAABJRU5ErkJggg==
 </value>
   </data>
-  <metadata name="ChannelEnabled.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ChannelNum.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ChannelName.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="OutputChannel.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ChannelColor.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
   </metadata>
 </root>

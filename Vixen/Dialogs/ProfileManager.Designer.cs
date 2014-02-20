@@ -42,6 +42,10 @@
             this.btnChGenSaveTemplate = new System.Windows.Forms.Button();
             this.gbRules = new System.Windows.Forms.GroupBox();
             this.panelRuleEditor = new System.Windows.Forms.Panel();
+            this.pbRuleColor8 = new System.Windows.Forms.PictureBox();
+            this.pbRuleColor7 = new System.Windows.Forms.PictureBox();
+            this.pbRuleColor6 = new System.Windows.Forms.PictureBox();
+            this.pbRuleColor5 = new System.Windows.Forms.PictureBox();
             this.cbRuleEndNum = new System.Windows.Forms.CheckBox();
             this.nudRuleIncr = new System.Windows.Forms.NumericUpDown();
             this.nudRuleEnd = new System.Windows.Forms.NumericUpDown();
@@ -107,16 +111,16 @@
             this.btnOkay = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.pbRuleColor5 = new System.Windows.Forms.PictureBox();
-            this.pbRuleColor6 = new System.Windows.Forms.PictureBox();
-            this.pbRuleColor7 = new System.Windows.Forms.PictureBox();
-            this.pbRuleColor8 = new System.Windows.Forms.PictureBox();
             this.gbProfiles.SuspendLayout();
             this.tcProfile.SuspendLayout();
             this.tpChannels.SuspendLayout();
             this.panelChGenerator.SuspendLayout();
             this.gbRules.SuspendLayout();
             this.panelRuleEditor.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRuleIncr)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRuleEnd)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRuleStart)).BeginInit();
@@ -136,10 +140,6 @@
             this.tpGroups.SuspendLayout();
             this.tpSortOrders.SuspendLayout();
             this.tpNutcracker.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor8)).BeginInit();
             this.SuspendLayout();
             // 
             // cbProfiles
@@ -208,9 +208,9 @@
             // 
             // tcProfile
             // 
-            this.tcProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tcProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tcProfile.Controls.Add(this.tpChannels);
             this.tcProfile.Controls.Add(this.tpPlugins);
             this.tcProfile.Controls.Add(this.tpGroups);
@@ -239,8 +239,8 @@
             // 
             // panelChGenerator
             // 
-            this.panelChGenerator.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelChGenerator.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.panelChGenerator.Controls.Add(this.btnChGenSaveTemplate);
             this.panelChGenerator.Controls.Add(this.gbRules);
             this.panelChGenerator.Controls.Add(this.nudChGenChannels);
@@ -307,6 +307,54 @@
             this.panelRuleEditor.Name = "panelRuleEditor";
             this.panelRuleEditor.Size = new System.Drawing.Size(168, 151);
             this.panelRuleEditor.TabIndex = 6;
+            // 
+            // pbRuleColor8
+            // 
+            this.pbRuleColor8.BackColor = System.Drawing.Color.Transparent;
+            this.pbRuleColor8.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pbRuleColor8.BackgroundImage")));
+            this.pbRuleColor8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pbRuleColor8.Location = new System.Drawing.Point(142, 124);
+            this.pbRuleColor8.Name = "pbRuleColor8";
+            this.pbRuleColor8.Size = new System.Drawing.Size(20, 20);
+            this.pbRuleColor8.TabIndex = 17;
+            this.pbRuleColor8.TabStop = false;
+            this.pbRuleColor8.DoubleClick += new System.EventHandler(this.pbRuleColor_DoubleClick);
+            // 
+            // pbRuleColor7
+            // 
+            this.pbRuleColor7.BackColor = System.Drawing.Color.Transparent;
+            this.pbRuleColor7.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pbRuleColor7.BackgroundImage")));
+            this.pbRuleColor7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pbRuleColor7.Location = new System.Drawing.Point(116, 124);
+            this.pbRuleColor7.Name = "pbRuleColor7";
+            this.pbRuleColor7.Size = new System.Drawing.Size(20, 20);
+            this.pbRuleColor7.TabIndex = 16;
+            this.pbRuleColor7.TabStop = false;
+            this.pbRuleColor7.DoubleClick += new System.EventHandler(this.pbRuleColor_DoubleClick);
+            // 
+            // pbRuleColor6
+            // 
+            this.pbRuleColor6.BackColor = System.Drawing.Color.Transparent;
+            this.pbRuleColor6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pbRuleColor6.BackgroundImage")));
+            this.pbRuleColor6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pbRuleColor6.Location = new System.Drawing.Point(90, 124);
+            this.pbRuleColor6.Name = "pbRuleColor6";
+            this.pbRuleColor6.Size = new System.Drawing.Size(20, 20);
+            this.pbRuleColor6.TabIndex = 15;
+            this.pbRuleColor6.TabStop = false;
+            this.pbRuleColor6.DoubleClick += new System.EventHandler(this.pbRuleColor_DoubleClick);
+            // 
+            // pbRuleColor5
+            // 
+            this.pbRuleColor5.BackColor = System.Drawing.Color.Transparent;
+            this.pbRuleColor5.BackgroundImage = global::VixenPlus.Properties.Resources.none1;
+            this.pbRuleColor5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pbRuleColor5.Location = new System.Drawing.Point(64, 124);
+            this.pbRuleColor5.Name = "pbRuleColor5";
+            this.pbRuleColor5.Size = new System.Drawing.Size(20, 20);
+            this.pbRuleColor5.TabIndex = 14;
+            this.pbRuleColor5.TabStop = false;
+            this.pbRuleColor5.DoubleClick += new System.EventHandler(this.pbRuleColor_DoubleClick);
             // 
             // cbRuleEndNum
             // 
@@ -669,6 +717,7 @@
             this.btnChDelete.TabIndex = 2;
             this.btnChDelete.Text = "Delete";
             this.btnChDelete.UseVisualStyleBackColor = true;
+            this.btnChDelete.Click += new System.EventHandler(this.btnChDelete_Click);
             // 
             // btnChAddMulti
             // 
@@ -688,6 +737,7 @@
             this.btnChAddOne.TabIndex = 0;
             this.btnChAddOne.Text = "Add One";
             this.btnChAddOne.UseVisualStyleBackColor = true;
+            this.btnChAddOne.Click += new System.EventHandler(this.btnChAddOne_Click);
             // 
             // btnChannelOutputs
             // 
@@ -829,6 +879,7 @@
             // 
             // dgvChannels
             // 
+            this.dgvChannels.AllowDrop = true;
             this.dgvChannels.AllowUserToAddRows = false;
             this.dgvChannels.AllowUserToDeleteRows = false;
             this.dgvChannels.AllowUserToOrderColumns = true;
@@ -846,6 +897,10 @@
             this.dgvChannels.Size = new System.Drawing.Size(566, 442);
             this.dgvChannels.TabIndex = 0;
             this.dgvChannels.SelectionChanged += new System.EventHandler(this.dgvChannels_SelectionChanged);
+            this.dgvChannels.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragDrop);
+            this.dgvChannels.DragOver += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragOver);
+            this.dgvChannels.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dataGridView1_MouseDown);
+            this.dgvChannels.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dataGridView1_MouseMove);
             // 
             // ChannelEnabled
             // 
@@ -1012,54 +1067,6 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
-            // pbRuleColor5
-            // 
-            this.pbRuleColor5.BackColor = System.Drawing.Color.Transparent;
-            this.pbRuleColor5.BackgroundImage = global::VixenPlus.Properties.Resources.none1;
-            this.pbRuleColor5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pbRuleColor5.Location = new System.Drawing.Point(64, 124);
-            this.pbRuleColor5.Name = "pbRuleColor5";
-            this.pbRuleColor5.Size = new System.Drawing.Size(20, 20);
-            this.pbRuleColor5.TabIndex = 14;
-            this.pbRuleColor5.TabStop = false;
-            this.pbRuleColor5.DoubleClick += new System.EventHandler(this.pbRuleColor_DoubleClick);
-            // 
-            // pbRuleColor6
-            // 
-            this.pbRuleColor6.BackColor = System.Drawing.Color.Transparent;
-            this.pbRuleColor6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pbRuleColor6.BackgroundImage")));
-            this.pbRuleColor6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pbRuleColor6.Location = new System.Drawing.Point(90, 124);
-            this.pbRuleColor6.Name = "pbRuleColor6";
-            this.pbRuleColor6.Size = new System.Drawing.Size(20, 20);
-            this.pbRuleColor6.TabIndex = 15;
-            this.pbRuleColor6.TabStop = false;
-            this.pbRuleColor6.DoubleClick += new System.EventHandler(this.pbRuleColor_DoubleClick);
-            // 
-            // pbRuleColor7
-            // 
-            this.pbRuleColor7.BackColor = System.Drawing.Color.Transparent;
-            this.pbRuleColor7.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pbRuleColor7.BackgroundImage")));
-            this.pbRuleColor7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pbRuleColor7.Location = new System.Drawing.Point(116, 124);
-            this.pbRuleColor7.Name = "pbRuleColor7";
-            this.pbRuleColor7.Size = new System.Drawing.Size(20, 20);
-            this.pbRuleColor7.TabIndex = 16;
-            this.pbRuleColor7.TabStop = false;
-            this.pbRuleColor7.DoubleClick += new System.EventHandler(this.pbRuleColor_DoubleClick);
-            // 
-            // pbRuleColor8
-            // 
-            this.pbRuleColor8.BackColor = System.Drawing.Color.Transparent;
-            this.pbRuleColor8.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pbRuleColor8.BackgroundImage")));
-            this.pbRuleColor8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pbRuleColor8.Location = new System.Drawing.Point(142, 124);
-            this.pbRuleColor8.Name = "pbRuleColor8";
-            this.pbRuleColor8.Size = new System.Drawing.Size(20, 20);
-            this.pbRuleColor8.TabIndex = 17;
-            this.pbRuleColor8.TabStop = false;
-            this.pbRuleColor8.DoubleClick += new System.EventHandler(this.pbRuleColor_DoubleClick);
-            // 
             // FrmProfileManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1087,6 +1094,10 @@
             this.gbRules.ResumeLayout(false);
             this.panelRuleEditor.ResumeLayout(false);
             this.panelRuleEditor.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRuleIncr)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRuleEnd)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRuleStart)).EndInit();
@@ -1106,10 +1117,6 @@
             this.tpGroups.ResumeLayout(false);
             this.tpSortOrders.ResumeLayout(false);
             this.tpNutcracker.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor8)).EndInit();
             this.ResumeLayout(false);
 
         }
