@@ -83,9 +83,6 @@
             this.gbExportImport = new System.Windows.Forms.GroupBox();
             this.btnChExport = new System.Windows.Forms.Button();
             this.btnChImport = new System.Windows.Forms.Button();
-            this.gbChMapping = new System.Windows.Forms.GroupBox();
-            this.btnChMapBelow = new System.Windows.Forms.Button();
-            this.btnChMapAbove = new System.Windows.Forms.Button();
             this.gbEnable = new System.Windows.Forms.GroupBox();
             this.btnChEnable = new System.Windows.Forms.Button();
             this.btnChDisable = new System.Windows.Forms.Button();
@@ -132,7 +129,6 @@
             this.panelChButtons.SuspendLayout();
             this.gbChannels.SuspendLayout();
             this.gbExportImport.SuspendLayout();
-            this.gbChMapping.SuspendLayout();
             this.gbEnable.SuspendLayout();
             this.gbColors.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvChannels)).BeginInit();
@@ -678,7 +674,6 @@
             this.panelChButtons.Controls.Add(this.gbChannels);
             this.panelChButtons.Controls.Add(this.btnChannelOutputs);
             this.panelChButtons.Controls.Add(this.gbExportImport);
-            this.panelChButtons.Controls.Add(this.gbChMapping);
             this.panelChButtons.Controls.Add(this.gbEnable);
             this.panelChButtons.Controls.Add(this.gbColors);
             this.panelChButtons.Location = new System.Drawing.Point(578, 0);
@@ -756,7 +751,7 @@
             this.gbExportImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.gbExportImport.Controls.Add(this.btnChExport);
             this.gbExportImport.Controls.Add(this.btnChImport);
-            this.gbExportImport.Location = new System.Drawing.Point(3, 227);
+            this.gbExportImport.Location = new System.Drawing.Point(3, 179);
             this.gbExportImport.Name = "gbExportImport";
             this.gbExportImport.Size = new System.Drawing.Size(168, 48);
             this.gbExportImport.TabIndex = 11;
@@ -784,36 +779,6 @@
             this.btnChImport.Text = "Import CSV";
             this.btnChImport.UseVisualStyleBackColor = true;
             this.btnChImport.Click += new System.EventHandler(this.btnImport_Click);
-            // 
-            // gbChMapping
-            // 
-            this.gbChMapping.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbChMapping.Controls.Add(this.btnChMapBelow);
-            this.gbChMapping.Controls.Add(this.btnChMapAbove);
-            this.gbChMapping.Location = new System.Drawing.Point(3, 179);
-            this.gbChMapping.Name = "gbChMapping";
-            this.gbChMapping.Size = new System.Drawing.Size(168, 48);
-            this.gbChMapping.TabIndex = 15;
-            this.gbChMapping.TabStop = false;
-            this.gbChMapping.Text = "Output Mapping";
-            // 
-            // btnChMapBelow
-            // 
-            this.btnChMapBelow.Location = new System.Drawing.Point(87, 19);
-            this.btnChMapBelow.Name = "btnChMapBelow";
-            this.btnChMapBelow.Size = new System.Drawing.Size(75, 23);
-            this.btnChMapBelow.TabIndex = 1;
-            this.btnChMapBelow.Text = "Below";
-            this.btnChMapBelow.UseVisualStyleBackColor = true;
-            // 
-            // btnChMapAbove
-            // 
-            this.btnChMapAbove.Location = new System.Drawing.Point(6, 19);
-            this.btnChMapAbove.Name = "btnChMapAbove";
-            this.btnChMapAbove.Size = new System.Drawing.Size(75, 23);
-            this.btnChMapAbove.TabIndex = 0;
-            this.btnChMapAbove.Text = "Above";
-            this.btnChMapAbove.UseVisualStyleBackColor = true;
             // 
             // gbEnable
             // 
@@ -876,6 +841,7 @@
             this.btnChColorOne.TabIndex = 0;
             this.btnChColorOne.Text = "One Color";
             this.btnChColorOne.UseVisualStyleBackColor = true;
+            this.btnChColorOne.Click += new System.EventHandler(this.btnChColorOne_Click);
             // 
             // dgvChannels
             // 
@@ -883,6 +849,8 @@
             this.dgvChannels.AllowUserToAddRows = false;
             this.dgvChannels.AllowUserToDeleteRows = false;
             this.dgvChannels.AllowUserToOrderColumns = true;
+            this.dgvChannels.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvChannels.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvChannels.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
             this.dgvChannels.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvChannels.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1109,7 +1077,6 @@
             this.panelChButtons.ResumeLayout(false);
             this.gbChannels.ResumeLayout(false);
             this.gbExportImport.ResumeLayout(false);
-            this.gbChMapping.ResumeLayout(false);
             this.gbEnable.ResumeLayout(false);
             this.gbColors.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvChannels)).EndInit();
@@ -1159,9 +1126,6 @@
         private System.Windows.Forms.GroupBox gbChannels;
         private System.Windows.Forms.Button btnChAddMulti;
         private System.Windows.Forms.Button btnChAddOne;
-        private System.Windows.Forms.GroupBox gbChMapping;
-        private System.Windows.Forms.Button btnChMapBelow;
-        private System.Windows.Forms.Button btnChMapAbove;
         private System.Windows.Forms.Button btnPiaButton;
         private System.Windows.Forms.Button btnGraButton;
         private System.Windows.Forms.Button btnNcaButton;

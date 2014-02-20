@@ -21,7 +21,7 @@ namespace VixenPlus.Dialogs {
 
         #region ClassMembers
 
-        private Preference2 _pref = Preference2.GetInstance();
+        private readonly Preference2 _pref = Preference2.GetInstance();
 
         private readonly bool _suppressErrors;
         private readonly int _dgvWidthDiff;
@@ -99,6 +99,7 @@ namespace VixenPlus.Dialogs {
         private void frmProfileManager_Resize(object sender, EventArgs e) {
             dgvChannels.Width = Width - _dgvWidthDiff;
             dgvChannels.Height = Height - _dgvHeightDiff;
+            dgvChannels.Invalidate();
         }
 
 
@@ -385,8 +386,6 @@ namespace VixenPlus.Dialogs {
             btnChEnable.Enabled = isProfileLoaded && cellsSelected && hasDisabledChannels;
             btnChExport.Enabled = isProfileLoaded;
             btnChImport.Enabled = isProfileLoaded;
-            btnChMapAbove.Enabled = isProfileLoaded && cellsSelected; //todo
-            btnChMapBelow.Enabled = isProfileLoaded && cellsSelected; //todo
         }
 
 
@@ -1038,23 +1037,40 @@ namespace VixenPlus.Dialogs {
                 return;
             }
 
-            var pbLoc = pb.PointToScreen(new Point(0, 0));
+            Color color;
+            if(GetColor(pb, pb.BackColor, out color)) {
+                FormatPaintBox(pb,color);
+            }
+        }
 
-            using (var dialog = new ColorDialog(pb.BackColor)) {
-                dialog.Location = new Point(pbLoc.X - dialog.Width - _borderSize.Width, pbLoc.Y - dialog.Height - _borderSize.Height);
+
+        private bool GetColor(Control ctrl, Color initialColor, out Color resultColor, bool showNone = true) {
+            var result = false;
+            resultColor = Color.Black;
+
+            var location = ctrl.PointToScreen(new Point(0, 0));
+
+            using (var dialog = new ColorDialog(initialColor, showNone)) {
+                dialog.Location = new Point(Math.Max(_borderSize.Width * 4, location.X - dialog.Width - _borderSize.Width),
+                    Math.Max(_borderSize.Height * 4, location.Y - dialog.Height - _borderSize.Height));
 
                 dialog.CustomColors = _pref.GetString(Preference2.CustomColorsPreference);
-
                 dialog.ShowDialog();
-
                 _pref.SetString(Preference2.CustomColorsPreference, dialog.CustomColors);
 
-                if (dialog.DialogResult == DialogResult.Cancel) {
-                    return;
+                switch (dialog.DialogResult) {
+                    case DialogResult.OK:
+                        resultColor = dialog.GetColor();
+                        result = true;
+                        break;
+                    case DialogResult.No:
+                        resultColor = Color.Transparent;
+                        result = true;
+                        break;
                 }
-
-                FormatPaintBox(pb, (dialog.DialogResult == DialogResult.OK) ? dialog.GetColor() : Color.Transparent);
             }
+
+            return result;
         }
 
         #endregion
@@ -1070,7 +1086,7 @@ namespace VixenPlus.Dialogs {
 
         private void btnChDelete_Click(object sender, EventArgs e) {
             foreach (var row in GetSelectedRows()) {
-                var chNum = int.Parse(row.Cells[OutputChannelCol].Value.ToString());
+                var chNum = int.Parse(row.Cells[OutputChannelCol].Value.ToString()) - 1;
                 _contextProfile.RemoveChannel(_contextProfile.FullChannels[chNum]);
                 dgvChannels.Rows.Remove(row);
             }
@@ -1145,6 +1161,20 @@ namespace VixenPlus.Dialogs {
             foreach (var row in rows) {
                 dgvChannels.Rows.RemoveAt(dgvChannels.Rows.IndexOf(row));
                 dgvChannels.Rows.Insert(rowIndexOfItemUnderMouseToDrop, row);
+            }
+        }
+
+        private void btnChColorOne_Click(object sender, EventArgs e) {
+            var color = GetSelectedRows().First().Cells[ChannelColorCol].Value.ToString().FromHTML();
+            
+            if (!GetColor(sender as Button, color, out color, false)) {
+                return;
+            }
+
+            foreach (var row in GetSelectedRows()) {
+                row.Cells[ChannelColorCol].Value = color.ToHTML();
+                row.DefaultCellStyle.BackColor = color;
+                row.DefaultCellStyle.ForeColor = color.GetForeColor();
             }
         }
     }
