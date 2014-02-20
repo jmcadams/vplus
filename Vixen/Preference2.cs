@@ -13,6 +13,7 @@ namespace VixenPlus {
         private static Preference2 _preference2;
         private readonly XmlDocument _preferencesDoc;
 
+        public const string CustomColorsElement = "CustomColors";
 
         private Preference2(string preferenceFilePath) {
             if (!Directory.Exists(Paths.DataPath)) {
@@ -91,7 +92,7 @@ namespace VixenPlus {
             isDirty |= CreateIfMissing("MusicFadeDuration", 5);
 
             //Set in various Application classes
-            isDirty |= CreateIfMissing("CustomColors",
+            isDirty |= CreateIfMissing(CustomColorsElement,
                 "16777215,16777215,16777215,16777215,16777215,16777215,16777215,16777215,16777215,16777215,16777215,16777215,16777215,16777215,16777215,16777215");
             isDirty |= CreateIfMissing("ActualLevels", false);
             isDirty |= CreateIfMissing("BackgroundSequence", string.Empty);
@@ -297,10 +298,10 @@ namespace VixenPlus {
             return garbageStart < 0 ? deviceName : deviceName.Substring(0, garbageStart);
         }
 
-
+        //TODO Refactor this when we move all color dialogs to our own.
         public int[] CustomColors {
             get {
-                var loadCustomColors = GetString("CustomColors").Split(new[] { ',' });
+                var loadCustomColors = GetString(CustomColorsElement).Split(new[] { ',' });
                 var numArray = new int[loadCustomColors.Length];
                 for (var i = 0; i < loadCustomColors.Length; i++) {
                     numArray[i] = int.Parse(loadCustomColors[i]);
@@ -312,7 +313,7 @@ namespace VixenPlus {
                 for (var i = 0; i < saveCustomColors.Length; i++) {
                     saveCustomColors[i] = value[i].ToString(CultureInfo.InvariantCulture);
                 }
-                SetString("CustomColors", string.Join(",", saveCustomColors));
+                SetString(CustomColorsElement, string.Join(",", saveCustomColors));
             }
         }
     }
