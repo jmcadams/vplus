@@ -21,12 +21,15 @@ namespace VixenPlus.Dialogs {
 
         #region ClassMembers
 
-        private readonly Preference2 _pref = Preference2.GetInstance();
+        private Preference2 _pref = Preference2.GetInstance();
 
         private readonly bool _suppressErrors;
         private readonly int _dgvWidthDiff;
         private readonly int _dgvHeightDiff;
+        private readonly Size _borderSize = SystemInformation.BorderSize;
         private Profile _contextProfile;
+
+        private const string PbPrefix = "pbRuleColor";
 
         private const int ChannelEnabledCol = 0;
         private const int ChannelNumCol = 1;
@@ -53,7 +56,7 @@ namespace VixenPlus.Dialogs {
             InitializeComponent();
             Icon = Resources.VixenPlus;
 
-            _suppressErrors = _pref.GetBoolean("SilenceProfileErrors");
+            _suppressErrors = Preference2.GetInstance().GetBoolean("SilenceProfileErrors");
             _dgvWidthDiff = Width - dgvChannels.Width;
             _dgvHeightDiff = Height - dgvChannels.Height;
             InitializeControls();
@@ -146,6 +149,7 @@ namespace VixenPlus.Dialogs {
                 string line;
                 var count = 0;
                 var valid = true;
+                dgvChannels.SuspendLayout();
                 while ((line = file.ReadLine()) != null) {
                     var cols = line.Replace("\"", "").Split(',');
                     if (0 == count) {
@@ -161,7 +165,7 @@ namespace VixenPlus.Dialogs {
                         }
                         if (!valid) {
                             MessageBox.Show("Import file not valid, cannot import.");
-                            return;
+                            break;
                         }
                         dgvChannels.Rows.Clear();
                         count++;
@@ -177,6 +181,7 @@ namespace VixenPlus.Dialogs {
                             dgvChannels.Rows[row].DefaultCellStyle.BackColor.GetForeColor();
                     }
                 }
+                dgvChannels.ResumeLayout();
             }
         }
 
@@ -254,6 +259,7 @@ namespace VixenPlus.Dialogs {
 
         private void cbProfiles_SelectedIndexChanged(object sender, EventArgs e) {
             //todo need to save any changes before changing index
+            dgvChannels.SuspendLayout();
             dgvChannels.Rows.Clear();
 
             if (0 == cbProfiles.SelectedIndex) {
@@ -267,11 +273,13 @@ namespace VixenPlus.Dialogs {
 
             AddRows(_contextProfile.FullChannels);
 
+            dgvChannels.ResumeLayout();
             dgvChannels.Focus();
         }
 
 
         private void AddRows(IEnumerable<Channel> channels, int startCh = 1) {
+            dgvChannels.SuspendLayout();
             foreach (var ch in channels) {
                 var row =
                     dgvChannels.Rows.Add(new object[]
@@ -279,6 +287,7 @@ namespace VixenPlus.Dialogs {
                 dgvChannels.Rows[row].DefaultCellStyle.BackColor = ch.Color;
                 dgvChannels.Rows[row].DefaultCellStyle.ForeColor = ch.Color.GetForeColor();
             }
+            dgvChannels.ResumeLayout();
         }
 
         #endregion
@@ -324,11 +333,10 @@ namespace VixenPlus.Dialogs {
 
         private void LoadTemplates() {
             cbChGenTemplate.Items.Clear();
-            foreach (
-                var fileName in
-                    Directory.GetFiles(Paths.ProfilePath, Vendor.All + Vendor.TemplateExtension)
-                        .Where(file => file.EndsWith(Vendor.TemplateExtension))
-                        .Select(Path.GetFileNameWithoutExtension)) {
+            foreach (var fileName in
+                Directory.GetFiles(Paths.ProfilePath, Vendor.All + Vendor.TemplateExtension)
+                    .Where(file => file.EndsWith(Vendor.TemplateExtension))
+                    .Select(Path.GetFileNameWithoutExtension)) {
                 cbChGenTemplate.Items.Add(fileName);
             }
             ShowNumbers(false, "");
@@ -518,9 +526,8 @@ namespace VixenPlus.Dialogs {
 
         private IEnumerable<DataGridViewRow> GetSelectedRows() {
             var hashSet = new HashSet<DataGridViewRow>();
-            foreach (
-                var cell in
-                    from DataGridViewCell x in dgvChannels.SelectedCells where !hashSet.Contains(x.OwningRow) select x) {
+            foreach (var cell in
+                from DataGridViewCell x in dgvChannels.SelectedCells where !hashSet.Contains(x.OwningRow) select x) {
                 hashSet.Add(cell.OwningRow);
             }
 
@@ -607,9 +614,8 @@ namespace VixenPlus.Dialogs {
 
 
         private void SetProfileIndex(string profileName) {
-            foreach (
-                var profile in
-                    cbProfiles.Items.Cast<object>().OfType<Profile>().Where(profile => profile.Name == profileName)) {
+            foreach (var profile in
+                cbProfiles.Items.Cast<object>().OfType<Profile>().Where(profile => profile.Name == profileName)) {
                 cbProfiles.SelectedIndex = cbProfiles.Items.IndexOf(profile);
             }
         }
@@ -618,10 +624,9 @@ namespace VixenPlus.Dialogs {
 
         private void cbRuleColors_CheckedChanged(object sender, EventArgs e) {
             var isVisible = cbRuleColors.Checked && cbRuleColors.Visible;
-            pbRuleColor1.Visible = isVisible;
-            pbRuleColor2.Visible = isVisible;
-            pbRuleColor3.Visible = isVisible;
-            pbRuleColor4.Visible = isVisible;
+            foreach (var c in GetAllPictureBoxes()) {
+                c.Visible = isVisible;
+            }
         }
 
         #endregion
@@ -786,7 +791,9 @@ namespace VixenPlus.Dialogs {
 
 
         private void btnChGenSaveTemplate_Click(object sender, EventArgs e) {
-            var newName = GetFileName("Template", Paths.ProfilePath, new[] {Vendor.TemplateExtension}, "", "OK");
+            var name = (cbChGenTemplate.SelectedIndex != -1) ? cbChGenTemplate.SelectedItem.ToString() : "";
+
+            var newName = GetFileName("Template", Paths.ProfilePath, new[] {Vendor.TemplateExtension}, name, "OK");
 
             if (string.IsNullOrEmpty(newName)) {
                 return;
@@ -798,8 +805,7 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private static string GetFileName(string fileType, string filePath, IList<string> extension,
-            string defaultResponse, string buttonText) {
+        private static string GetFileName(string fileType, string filePath, IList<string> extension, string defaultResponse, string buttonText) {
             var newName = string.Empty;
             var caption = string.Format("{0} name", fileType);
             var query = string.Format("What would you like to name this {0}?", fileType);
@@ -851,10 +857,10 @@ namespace VixenPlus.Dialogs {
 
             var colors = new XElement("Colors");
             if (cbRuleColors.Checked) {
-                colors.Add(new XElement("Color1", pbRuleColor1.BackColor.ToHTML()));
-                colors.Add(new XElement("Color2", pbRuleColor2.BackColor.ToHTML()));
-                colors.Add(new XElement("Color3", pbRuleColor3.BackColor.ToHTML()));
-                colors.Add(new XElement("Color4", pbRuleColor4.BackColor.ToHTML()));
+                var count = 1;
+                foreach (var c in GetAllPictureBoxes()) {
+                    colors.Add(new XElement(String.Format("Color{0}", count++), c.BackColor.ToHTML()));
+                }
             }
 
             var template = new XElement("Template", new XElement("Channels", nudChGenChannels.Value),
@@ -881,10 +887,17 @@ namespace VixenPlus.Dialogs {
             element = template.Element("Colors");
             if (element != null && element.Elements().Any()) {
                 cbRuleColors.Checked = true;
-                SetColor(pbRuleColor1, element.Element("Color1"));
-                SetColor(pbRuleColor2, element.Element("Color2"));
-                SetColor(pbRuleColor3, element.Element("Color3"));
-                SetColor(pbRuleColor4, element.Element("Color4"));
+                for (var i = 1; i <= 8; i++) {
+                    var color = element.Element(String.Format("Color{0}", i));
+                    var control = Controls.Find(string.Format("{0}{1}", PbPrefix, i), true)[0];
+                    if (null != color) {
+                        FormatPaintBox(control, color);
+                    }
+                    else {
+                        FormatPaintBox(control, Color.Transparent);
+                    }
+
+                }
             }
             else {
                 cbRuleColors.Checked = false;
@@ -922,20 +935,27 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private static void SetColor(Control pb, XElement color) {
+        private static void FormatPaintBox(Control pb, XElement color) {
             if (color == null) {
                 return;
             }
 
-            pb.BackColor = color.Value.FromHTML();
-            pb.BackgroundImage = pb.BackColor == Color.Transparent ? Resources.none1 : null;
+            FormatPaintBox(pb, color.Value.FromHTML());
+        }
+
+
+        private static void FormatPaintBox(Control pb, Color color) {
+            pb.BackColor = color;
+            pb.BackgroundImage = color == Color.Transparent ? Resources.none1 : null;
             pb.BackgroundImageLayout = ImageLayout.Center;
         }
 
 
         private void PreviewChannels() {
+            dgvChannels.SuspendLayout();
             dgvChannels.Rows.Clear();
             AddRows(GenerateChannels(), _contextProfile.FullChannels.Count() + 1);
+            dgvChannels.ResumeLayout();
         }
 
 
@@ -945,35 +965,47 @@ namespace VixenPlus.Dialogs {
                 _ruleEngines.Add(item);
             }
 
-            var colors = new List<Color>();
-            if (cbRuleColors.Checked) {
-                AddNonTransparent(pbRuleColor1, colors);
-                AddNonTransparent(pbRuleColor2, colors);
-                AddNonTransparent(pbRuleColor3, colors);
-                AddNonTransparent(pbRuleColor4, colors);
-            }
-            if (colors.Count == 0) {
-                colors.Add(Color.White);
-            }
-
-            var generatedNames = GenerateNames(1, tbChGenNameFormat.Text, 0, (int) nudChGenChannels.Value).ToList();
-
+            var generatedNames = GenerateNames(1, tbChGenNameFormat.Text, 0, (int)nudChGenChannels.Value).ToList();
             var generatedChannels = new List<Channel>();
             var startChannelNum = _contextProfile.FullChannels.Count();
+            var colors = GetColorList();
 
             for (var count = 0; count < generatedNames.Count(); count++) {
-                var chNum = startChannelNum + count;
-                generatedChannels.Add(new Channel(generatedNames[count], chNum) {Color = colors[count%colors.Count]});
+                generatedChannels.Add(new Channel(generatedNames[count], startChannelNum + count) {
+                    Color = colors[count%colors.Count]
+                });
             }
 
             return generatedChannels;
         }
 
 
-        private static void AddNonTransparent(Control pb, ICollection<Color> list) {
-            if (pb.BackColor != Color.Transparent) {
-                list.Add(pb.BackColor);
+        private List<Color> GetColorList() {
+            var colors = new List<Color>();
+
+            if (cbRuleColors.Checked) {
+                colors.AddRange(
+                    GetAllPictureBoxes().Where(c => c.BackColor != Color.Transparent).Select(c => c.BackColor));
             }
+
+            if (colors.Count == 0) {
+                colors.Add(Color.White);
+            }
+
+            return colors;
+        }
+
+
+        // ReSharper disable PossibleMultipleEnumeration
+        private static IEnumerable<Control> GetAll(Control control, Type type) {
+            var controls = control.Controls.Cast<Control>();
+            return controls.SelectMany(ctrl => GetAll(ctrl, type)).Concat(controls).Where(c => c.GetType() == type);
+        }
+        // ReSharper restore PossibleMultipleEnumeration
+
+
+        private IEnumerable<Control> GetAllPictureBoxes() {
+            return GetAll(this, typeof (PictureBox)).Where(c => c.Name.StartsWith(PbPrefix)).OrderBy(c => c.Name);
         }
 
 
@@ -1021,25 +1053,24 @@ namespace VixenPlus.Dialogs {
                 return;
             }
 
+            var pbLoc = pb.PointToScreen(new Point(0, 0));
 
-            using (var dialog = new ColorDialog(pb.BackColor, _pref.GetString("CustomColors"))) {
-                const int border = 2;
-                var pbLoc = pb.PointToScreen(new Point(0,0));
+            using (var dialog = new ColorDialog(pb.BackColor)) {
+                dialog.Location = new Point(pbLoc.X - dialog.Width - _borderSize.Width, 
+                    pbLoc.Y - dialog.Height - _borderSize.Height);
+                
+                dialog.CustomColors = _pref.GetString(Preference2.CustomColorsPreference);
 
-                dialog.Location = new Point(pbLoc.X - dialog.Width - border, pbLoc.Y - dialog.Height - border);
                 dialog.ShowDialog();
-                _pref.SetString("CustomColors", dialog.GetCustomColors());
-                switch (dialog.DialogResult) {
-                    case DialogResult.OK:
-                        pb.BackColor = dialog.GetColor();
-                        break;
-                    case DialogResult.No:
-                        pb.BackColor = Color.Transparent;
-                        break;
+
+                _pref.SetString(Preference2.CustomColorsPreference, dialog.CustomColors);
+
+                if (dialog.DialogResult == DialogResult.Cancel) {
+                    return;
                 }
+
+                FormatPaintBox(pb, (dialog.DialogResult == DialogResult.OK) ? dialog.GetColor() : Color.Transparent);
             }
-            pb.BackgroundImage = pb.BackColor == Color.Transparent ? Resources.none1 : null;
-            pb.BackgroundImageLayout = ImageLayout.Center;
         }
     }
 }
