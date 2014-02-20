@@ -70,7 +70,7 @@ namespace CommonUtils {
 
 
         public static string ToHTML(this Color color) {
-            return "#" + color.R.ToString("X2") + color.G.ToString("X2") + color.B.ToString("X2");
+            return color == Color.Transparent ? "Transparent" : "#" + color.R.ToString("X2") + color.G.ToString("X2") + color.B.ToString("X2");
         }
 
 
