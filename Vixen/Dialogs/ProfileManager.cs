@@ -99,7 +99,11 @@ namespace VixenPlus.Dialogs {
         private void frmProfileManager_Resize(object sender, EventArgs e) {
             dgvChannels.Width = Width - _dgvWidthDiff;
             dgvChannels.Height = Height - _dgvHeightDiff;
-            dgvChannels.Invalidate();
+
+            // HACK:  Had to do this to get the columns dgv to resize 
+            // not the same issue but found it here: http://stackoverflow.com/questions/296418/datagridview-column-resize-problem
+            dgvChannels.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+            dgvChannels.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
         }
 
 
@@ -114,13 +118,6 @@ namespace VixenPlus.Dialogs {
 
         #region Channel Tab Events
 
-        private void btnChannelOutputs_Click(object sender, EventArgs e) {
-            foreach (var z in GetSelectedRows().Reverse()) {
-                Debug.Print(z.Cells["ChannelNum"].Value.ToString());
-            }
-        }
-
-
         private void dgvChannels_SelectionChanged(object sender, EventArgs e) {
             DoButtonManagement();
         }
@@ -133,7 +130,8 @@ namespace VixenPlus.Dialogs {
             }
 
             var enable = button.Text.Equals("Enable");
-            foreach (var row in GetSelectedRows()) {
+            var rows = GetSelectedRows().ToList();
+            foreach (var row in rows) {
                 row.Cells[ChannelEnabledCol].Value = enable;
             }
             DoButtonManagement();
@@ -256,8 +254,9 @@ namespace VixenPlus.Dialogs {
 
         private void cbProfiles_SelectedIndexChanged(object sender, EventArgs e) {
             //todo need to save any changes before changing index
-            dgvChannels.SuspendLayout();
             dgvChannels.Rows.Clear();
+
+            dgvChannels.SuspendLayout();
 
             if (0 == cbProfiles.SelectedIndex) {
                 _contextProfile = null;
@@ -276,16 +275,20 @@ namespace VixenPlus.Dialogs {
 
 
         private void AddRows(IEnumerable<Channel> channels, int startCh = 1) {
+            Debug.Print(DateTime.Now + "");
+            dgvChannels.SelectionChanged -= dgvChannels_SelectionChanged;
             dgvChannels.SuspendLayout();
             foreach (var ch in channels) {
                 AddRow(ch, startCh++);
             }
             dgvChannels.ResumeLayout();
+            dgvChannels.SelectionChanged += dgvChannels_SelectionChanged;
+            Debug.Print(DateTime.Now + "");
         }
 
 
         private void AddRow(Channel ch, int chNum) {
-            var row = dgvChannels.Rows.Add(new object[] {ch.Enabled, chNum, ch.Name, ch.OutputChannel + 1, ch.Color.ToHTML()});
+            var row = dgvChannels.Rows.Add(new object[] { ch.Enabled, chNum, ch.Name, ch.OutputChannel + 1, ch.Color.ToHTML() });
             dgvChannels.Rows[row].DefaultCellStyle.BackColor = ch.Color;
             dgvChannels.Rows[row].DefaultCellStyle.ForeColor = ch.Color.GetForeColor();
         }
@@ -391,7 +394,6 @@ namespace VixenPlus.Dialogs {
 
         private void SetGeneralButtons(bool isProfileLoaded) {
             var isChannelPanel = panelChButtons.Visible;
-            btnChannelOutputs.Enabled = isProfileLoaded;
             btnCancel.Enabled = isChannelPanel;
             btnOkay.Enabled = isChannelPanel;
             btnAddProfile.Enabled = isChannelPanel;
@@ -1085,11 +1087,17 @@ namespace VixenPlus.Dialogs {
 
 
         private void btnChDelete_Click(object sender, EventArgs e) {
-            foreach (var row in GetSelectedRows()) {
-                var chNum = int.Parse(row.Cells[OutputChannelCol].Value.ToString()) - 1;
-                _contextProfile.RemoveChannel(_contextProfile.FullChannels[chNum]);
-                dgvChannels.Rows.Remove(row);
+            var rows = GetSelectedRows().ToList();
+            var channels = rows.Select(row => _contextProfile.FullChannels[int.Parse(row.Cells[ChannelNumCol].Value.ToString()) - 1]).ToList();
+
+            foreach (var c in channels) {
+                _contextProfile.RemoveChannel(c);
             }
+
+            foreach (var r in rows) {
+                dgvChannels.Rows.Remove(r);
+            }
+
             dgvChannels.SuspendLayout();
             dgvChannels.Rows.Clear();
             AddRows(_contextProfile.FullChannels);
@@ -1165,17 +1173,23 @@ namespace VixenPlus.Dialogs {
         }
 
         private void btnChColorOne_Click(object sender, EventArgs e) {
-            var color = GetSelectedRows().First().Cells[ChannelColorCol].Value.ToString().FromHTML();
+            var rows = GetSelectedRows().ToList();
+            var color = rows.First().Cells[ChannelColorCol].Value.ToString().FromHTML();
             
             if (!GetColor(sender as Button, color, out color, false)) {
                 return;
             }
 
-            foreach (var row in GetSelectedRows()) {
-                row.Cells[ChannelColorCol].Value = color.ToHTML();
+            var htmlColor = color.ToHTML();
+            var foreColor = color.GetForeColor();
+
+            dgvChannels.SuspendLayout();
+            foreach (var row in rows) {
+                row.Cells[ChannelColorCol].Value = htmlColor;
                 row.DefaultCellStyle.BackColor = color;
-                row.DefaultCellStyle.ForeColor = color.GetForeColor();
+                row.DefaultCellStyle.ForeColor = foreColor;
             }
+            dgvChannels.ResumeLayout();
         }
     }
 }

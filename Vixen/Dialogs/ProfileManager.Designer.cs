@@ -79,7 +79,6 @@
             this.btnChDelete = new System.Windows.Forms.Button();
             this.btnChAddMulti = new System.Windows.Forms.Button();
             this.btnChAddOne = new System.Windows.Forms.Button();
-            this.btnChannelOutputs = new System.Windows.Forms.Button();
             this.gbExportImport = new System.Windows.Forms.GroupBox();
             this.btnChExport = new System.Windows.Forms.Button();
             this.btnChImport = new System.Windows.Forms.Button();
@@ -90,11 +89,6 @@
             this.btnChColorMulti = new System.Windows.Forms.Button();
             this.btnChColorOne = new System.Windows.Forms.Button();
             this.dgvChannels = new System.Windows.Forms.DataGridView();
-            this.ChannelEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.ChannelNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ChannelName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OutputChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ChannelColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tpPlugins = new System.Windows.Forms.TabPage();
             this.btnPiaButton = new System.Windows.Forms.Button();
             this.tpGroups = new System.Windows.Forms.TabPage();
@@ -108,6 +102,11 @@
             this.btnOkay = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.ChannelEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ChannelNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ChannelName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OutputChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ChannelColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gbProfiles.SuspendLayout();
             this.tcProfile.SuspendLayout();
             this.tpChannels.SuspendLayout();
@@ -222,7 +221,6 @@
             // 
             // tpChannels
             // 
-            this.tpChannels.Controls.Add(this.panelChGenerator);
             this.tpChannels.Controls.Add(this.panelChButtons);
             this.tpChannels.Controls.Add(this.dgvChannels);
             this.tpChannels.Location = new System.Drawing.Point(4, 22);
@@ -247,7 +245,7 @@
             this.panelChGenerator.Controls.Add(this.lblChGenTemplate);
             this.panelChGenerator.Controls.Add(this.btnChGrnCancel);
             this.panelChGenerator.Controls.Add(this.btnChGenOk);
-            this.panelChGenerator.Location = new System.Drawing.Point(578, 0);
+            this.panelChGenerator.Location = new System.Drawing.Point(0, 0);
             this.panelChGenerator.Name = "panelChGenerator";
             this.panelChGenerator.Size = new System.Drawing.Size(174, 454);
             this.panelChGenerator.TabIndex = 17;
@@ -671,8 +669,8 @@
             // panelChButtons
             // 
             this.panelChButtons.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelChButtons.Controls.Add(this.panelChGenerator);
             this.panelChButtons.Controls.Add(this.gbChannels);
-            this.panelChButtons.Controls.Add(this.btnChannelOutputs);
             this.panelChButtons.Controls.Add(this.gbExportImport);
             this.panelChButtons.Controls.Add(this.gbEnable);
             this.panelChButtons.Controls.Add(this.gbColors);
@@ -733,18 +731,6 @@
             this.btnChAddOne.Text = "Add One";
             this.btnChAddOne.UseVisualStyleBackColor = true;
             this.btnChAddOne.Click += new System.EventHandler(this.btnChAddOne_Click);
-            // 
-            // btnChannelOutputs
-            // 
-            this.btnChannelOutputs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnChannelOutputs.Location = new System.Drawing.Point(93, 425);
-            this.btnChannelOutputs.Name = "btnChannelOutputs";
-            this.btnChannelOutputs.Size = new System.Drawing.Size(75, 23);
-            this.btnChannelOutputs.TabIndex = 1;
-            this.btnChannelOutputs.Text = "Ch. Outputs";
-            this.btnChannelOutputs.UseVisualStyleBackColor = true;
-            this.btnChannelOutputs.Visible = false;
-            this.btnChannelOutputs.Click += new System.EventHandler(this.btnChannelOutputs_Click);
             // 
             // gbExportImport
             // 
@@ -849,8 +835,8 @@
             this.dgvChannels.AllowUserToAddRows = false;
             this.dgvChannels.AllowUserToDeleteRows = false;
             this.dgvChannels.AllowUserToOrderColumns = true;
-            this.dgvChannels.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dgvChannels.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvChannels.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.dgvChannels.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dgvChannels.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
             this.dgvChannels.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvChannels.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -869,44 +855,6 @@
             this.dgvChannels.DragOver += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragOver);
             this.dgvChannels.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dataGridView1_MouseDown);
             this.dgvChannels.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dataGridView1_MouseMove);
-            // 
-            // ChannelEnabled
-            // 
-            this.ChannelEnabled.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ChannelEnabled.HeaderText = "Ch Enabled";
-            this.ChannelEnabled.Name = "ChannelEnabled";
-            this.ChannelEnabled.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.ChannelEnabled.Width = 87;
-            // 
-            // ChannelNum
-            // 
-            this.ChannelNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ChannelNum.HeaderText = "Ch #";
-            this.ChannelNum.Name = "ChannelNum";
-            this.ChannelNum.ReadOnly = true;
-            this.ChannelNum.Width = 55;
-            // 
-            // ChannelName
-            // 
-            this.ChannelName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ChannelName.HeaderText = "Channel Name";
-            this.ChannelName.Name = "ChannelName";
-            // 
-            // OutputChannel
-            // 
-            this.OutputChannel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.OutputChannel.HeaderText = "Output Ch #";
-            this.OutputChannel.Name = "OutputChannel";
-            this.OutputChannel.ReadOnly = true;
-            this.OutputChannel.Width = 90;
-            // 
-            // ChannelColor
-            // 
-            this.ChannelColor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ChannelColor.HeaderText = "Channel Color";
-            this.ChannelColor.Name = "ChannelColor";
-            this.ChannelColor.ReadOnly = true;
-            this.ChannelColor.Width = 98;
             // 
             // tpPlugins
             // 
@@ -1035,6 +983,58 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
+            // ChannelEnabled
+            // 
+            this.ChannelEnabled.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ChannelEnabled.FillWeight = 1F;
+            this.ChannelEnabled.HeaderText = "Ch Enabled";
+            this.ChannelEnabled.MinimumWidth = 87;
+            this.ChannelEnabled.Name = "ChannelEnabled";
+            this.ChannelEnabled.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.ChannelEnabled.ToolTipText = "Is the channel outputing data";
+            this.ChannelEnabled.Width = 87;
+            // 
+            // ChannelNum
+            // 
+            this.ChannelNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ChannelNum.FillWeight = 1F;
+            this.ChannelNum.HeaderText = "Ch #";
+            this.ChannelNum.MinimumWidth = 80;
+            this.ChannelNum.Name = "ChannelNum";
+            this.ChannelNum.ReadOnly = true;
+            this.ChannelNum.ToolTipText = "Channel Number (Sequence Order)";
+            this.ChannelNum.Width = 80;
+            // 
+            // ChannelName
+            // 
+            this.ChannelName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ChannelName.FillWeight = 10F;
+            this.ChannelName.HeaderText = "Channel Name";
+            this.ChannelName.Name = "ChannelName";
+            this.ChannelName.ToolTipText = "Human Readable Name of the Channel";
+            // 
+            // OutputChannel
+            // 
+            this.OutputChannel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.OutputChannel.FillWeight = 1F;
+            this.OutputChannel.HeaderText = "Output Ch #";
+            this.OutputChannel.MinimumWidth = 90;
+            this.OutputChannel.Name = "OutputChannel";
+            this.OutputChannel.ReadOnly = true;
+            this.OutputChannel.ToolTipText = "Channel where the output goes (Physical controller)";
+            this.OutputChannel.Width = 90;
+            // 
+            // ChannelColor
+            // 
+            this.ChannelColor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ChannelColor.FillWeight = 1F;
+            this.ChannelColor.HeaderText = "Channel Color";
+            this.ChannelColor.MinimumWidth = 98;
+            this.ChannelColor.Name = "ChannelColor";
+            this.ChannelColor.ReadOnly = true;
+            this.ChannelColor.ToolTipText = "Sequencer Color of the Channel";
+            this.ChannelColor.Width = 98;
+            // 
             // FrmProfileManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1100,7 +1100,6 @@
         private System.Windows.Forms.TabPage tpChannels;
         private System.Windows.Forms.TabPage tpPlugins;
         private System.Windows.Forms.DataGridView dgvChannels;
-        private System.Windows.Forms.Button btnChannelOutputs;
         private System.Windows.Forms.Button btnOkay;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnChImport;
@@ -1112,11 +1111,6 @@
         private System.Windows.Forms.ComboBox cbSrtOrders;
         private System.Windows.Forms.GroupBox gbExportImport;
         private System.Windows.Forms.TabPage tpNutcracker;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn ChannelEnabled;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ChannelNum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ChannelName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn OutputChannel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ChannelColor;
         private System.Windows.Forms.GroupBox gbEnable;
         private System.Windows.Forms.Button btnChEnable;
         private System.Windows.Forms.Button btnChDisable;
@@ -1168,5 +1162,10 @@
         private System.Windows.Forms.PictureBox pbRuleColor7;
         private System.Windows.Forms.PictureBox pbRuleColor6;
         private System.Windows.Forms.PictureBox pbRuleColor5;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ChannelEnabled;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ChannelNum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ChannelName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OutputChannel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ChannelColor;
     }
 }
