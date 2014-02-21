@@ -15,6 +15,8 @@ using CommonUtils;
 using VixenPlus.Properties;
 
 using ColorDialog = CommonControls.ColorDialog;
+ 
+//todo some things I want to do, keep selected cells between refresh of dgv, refactor massively, compartmentalize controls/tabpages
 
 namespace VixenPlus.Dialogs {
     public partial class FrmProfileManager : Form {
@@ -60,6 +62,10 @@ namespace VixenPlus.Dialogs {
             _dgvWidthDiff = Width - dgvChannels.Width;
             _dgvHeightDiff = Height - dgvChannels.Height;
             InitializeControls();
+
+            for (var i = TabPlugins; i <= TabNutcracker; i++) {
+                tcProfile.TabPages.Remove(tcProfile.TabPages[1]);
+            }
 
             if (null != defaultProfile) {
                 SetProfileIndex(defaultProfile.Name);
@@ -119,6 +125,7 @@ namespace VixenPlus.Dialogs {
         #region Channel Tab Events
 
         private void dgvChannels_SelectionChanged(object sender, EventArgs e) {
+
             DoButtonManagement();
         }
 
@@ -320,16 +327,16 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private void btnGenOk_Click(object sender, EventArgs e) {
+        private void btnGeneratorButton_Click(object sender, EventArgs e) {
             panelChButtons.Visible = true;
             panelChGenerator.Visible = false;
-            dgvChannels.Rows.Clear();
-            if (((Button) sender).Name == btnChGenOk.Name) {
+            if (((Button) sender).Text == btnChGenOk.Text) {
+                dgvChannels.Rows.Clear();
                 foreach (var c in GenerateChannels()) {
                     _contextProfile.AddChannelObject(c);
                 }
+                AddRows(_contextProfile.FullChannels);
             }
-            AddRows(_contextProfile.FullChannels);
             DoButtonManagement();
         }
 
@@ -387,6 +394,7 @@ namespace VixenPlus.Dialogs {
             btnChColorOne.Enabled = isProfileLoaded && cellsSelected; // todo
             btnChDisable.Enabled = isProfileLoaded && cellsSelected && hasEnabledChannels;
             btnChEnable.Enabled = isProfileLoaded && cellsSelected && hasDisabledChannels;
+            btnChDelete.Enabled = isProfileLoaded && cellsSelected;
             btnChExport.Enabled = isProfileLoaded;
             btnChImport.Enabled = isProfileLoaded;
         }
@@ -1046,6 +1054,7 @@ namespace VixenPlus.Dialogs {
         }
 
 
+        //todo refactor to take point instead of control for positioning.
         private bool GetColor(Control ctrl, Color initialColor, out Color resultColor, bool showNone = true) {
             var result = false;
             resultColor = Color.Black;
@@ -1190,6 +1199,57 @@ namespace VixenPlus.Dialogs {
                 row.DefaultCellStyle.ForeColor = foreColor;
             }
             dgvChannels.ResumeLayout();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e) {
+            //todo check if there are changes and then warn if we're going to dump changes.
+            DialogResult = DialogResult.Cancel;
+        }
+
+
+        private void dgvChannels_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e) {
+            if (e.ColumnIndex != ChannelColorCol) {
+                return;
+            }
+
+            var rows = GetSelectedRows().ToList();
+            var color = rows.First().Cells[ChannelColorCol].Value.ToString().FromHTML();
+            var cl = dgvChannels.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
+            var cc = new Control(dgvChannels, "hold", cl.Left, cl.Top, cl.Width, cl.Height) {Visible = false};
+
+            try {
+                if (!GetColor(cc, color, out color, false)) {
+                    return;
+                }
+            }
+            finally {
+                dgvChannels.Controls.Remove(cc);
+            }
+
+            var htmlColor = color.ToHTML();
+            var foreColor = color.GetForeColor();
+
+            dgvChannels.SuspendLayout();
+            foreach (var row in rows) {
+                row.Cells[ChannelColorCol].Value = htmlColor;
+                row.DefaultCellStyle.BackColor = color;
+                row.DefaultCellStyle.ForeColor = foreColor;
+            }
+            dgvChannels.ResumeLayout();
+        }
+
+        private void btnChColorMulti_Click(object sender, EventArgs e) {
+            panelChButtons.Visible = false;
+            panelChGenerator.Visible = true;
+            lblRulePrompt.Text = "";
+            tbRuleWords.Visible = false;
+            lblRuleStartNum.Visible = false;
+            cbRuleEndNum.Visible = false;
+            lblRuleIncr.Visible = false;
+            nudRuleStart.Visible = false;
+            nudRuleEnd.Visible = false;
+            nudRuleIncr.Visible = false;
+            DoButtonManagement();
         }
     }
 }

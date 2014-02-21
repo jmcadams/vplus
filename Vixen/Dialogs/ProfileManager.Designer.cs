@@ -38,6 +38,20 @@
             this.btnAddProfile = new System.Windows.Forms.Button();
             this.tcProfile = new System.Windows.Forms.TabControl();
             this.tpChannels = new System.Windows.Forms.TabPage();
+            this.panelChButtons = new System.Windows.Forms.Panel();
+            this.gbChannels = new System.Windows.Forms.GroupBox();
+            this.btnChDelete = new System.Windows.Forms.Button();
+            this.btnChAddMulti = new System.Windows.Forms.Button();
+            this.btnChAddOne = new System.Windows.Forms.Button();
+            this.gbExportImport = new System.Windows.Forms.GroupBox();
+            this.btnChExport = new System.Windows.Forms.Button();
+            this.btnChImport = new System.Windows.Forms.Button();
+            this.gbEnable = new System.Windows.Forms.GroupBox();
+            this.btnChEnable = new System.Windows.Forms.Button();
+            this.btnChDisable = new System.Windows.Forms.Button();
+            this.gbColors = new System.Windows.Forms.GroupBox();
+            this.btnChColorMulti = new System.Windows.Forms.Button();
+            this.btnChColorOne = new System.Windows.Forms.Button();
             this.panelChGenerator = new System.Windows.Forms.Panel();
             this.btnChGenSaveTemplate = new System.Windows.Forms.Button();
             this.gbRules = new System.Windows.Forms.GroupBox();
@@ -73,22 +87,12 @@
             this.lblChGenTemplate = new System.Windows.Forms.Label();
             this.btnChGrnCancel = new System.Windows.Forms.Button();
             this.btnChGenOk = new System.Windows.Forms.Button();
-            this.panelChButtons = new System.Windows.Forms.Panel();
-            this.gbChannels = new System.Windows.Forms.GroupBox();
-            this.btnChRename = new System.Windows.Forms.Button();
-            this.btnChDelete = new System.Windows.Forms.Button();
-            this.btnChAddMulti = new System.Windows.Forms.Button();
-            this.btnChAddOne = new System.Windows.Forms.Button();
-            this.gbExportImport = new System.Windows.Forms.GroupBox();
-            this.btnChExport = new System.Windows.Forms.Button();
-            this.btnChImport = new System.Windows.Forms.Button();
-            this.gbEnable = new System.Windows.Forms.GroupBox();
-            this.btnChEnable = new System.Windows.Forms.Button();
-            this.btnChDisable = new System.Windows.Forms.Button();
-            this.gbColors = new System.Windows.Forms.GroupBox();
-            this.btnChColorMulti = new System.Windows.Forms.Button();
-            this.btnChColorOne = new System.Windows.Forms.Button();
             this.dgvChannels = new System.Windows.Forms.DataGridView();
+            this.ChannelEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ChannelNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ChannelName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OutputChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ChannelColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tpPlugins = new System.Windows.Forms.TabPage();
             this.btnPiaButton = new System.Windows.Forms.Button();
             this.tpGroups = new System.Windows.Forms.TabPage();
@@ -102,14 +106,14 @@
             this.btnOkay = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.ChannelEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.ChannelNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ChannelName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OutputChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ChannelColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gbProfiles.SuspendLayout();
             this.tcProfile.SuspendLayout();
             this.tpChannels.SuspendLayout();
+            this.panelChButtons.SuspendLayout();
+            this.gbChannels.SuspendLayout();
+            this.gbExportImport.SuspendLayout();
+            this.gbEnable.SuspendLayout();
+            this.gbColors.SuspendLayout();
             this.panelChGenerator.SuspendLayout();
             this.gbRules.SuspendLayout();
             this.panelRuleEditor.SuspendLayout();
@@ -125,11 +129,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudChGenChannels)).BeginInit();
-            this.panelChButtons.SuspendLayout();
-            this.gbChannels.SuspendLayout();
-            this.gbExportImport.SuspendLayout();
-            this.gbEnable.SuspendLayout();
-            this.gbColors.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvChannels)).BeginInit();
             this.tpPlugins.SuspendLayout();
             this.tpGroups.SuspendLayout();
@@ -222,6 +221,7 @@
             // tpChannels
             // 
             this.tpChannels.Controls.Add(this.panelChButtons);
+            this.tpChannels.Controls.Add(this.panelChGenerator);
             this.tpChannels.Controls.Add(this.dgvChannels);
             this.tpChannels.Location = new System.Drawing.Point(4, 22);
             this.tpChannels.Name = "tpChannels";
@@ -230,6 +230,159 @@
             this.tpChannels.TabIndex = 0;
             this.tpChannels.Text = "Channels";
             this.tpChannels.UseVisualStyleBackColor = true;
+            // 
+            // panelChButtons
+            // 
+            this.panelChButtons.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelChButtons.Controls.Add(this.gbChannels);
+            this.panelChButtons.Controls.Add(this.gbExportImport);
+            this.panelChButtons.Controls.Add(this.gbEnable);
+            this.panelChButtons.Controls.Add(this.gbColors);
+            this.panelChButtons.Location = new System.Drawing.Point(575, 0);
+            this.panelChButtons.Name = "panelChButtons";
+            this.panelChButtons.Size = new System.Drawing.Size(174, 231);
+            this.panelChButtons.TabIndex = 16;
+            // 
+            // gbChannels
+            // 
+            this.gbChannels.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbChannels.Controls.Add(this.btnChDelete);
+            this.gbChannels.Controls.Add(this.btnChAddMulti);
+            this.gbChannels.Controls.Add(this.btnChAddOne);
+            this.gbChannels.Location = new System.Drawing.Point(3, 6);
+            this.gbChannels.Name = "gbChannels";
+            this.gbChannels.Size = new System.Drawing.Size(168, 77);
+            this.gbChannels.TabIndex = 15;
+            this.gbChannels.TabStop = false;
+            this.gbChannels.Text = "Channels";
+            // 
+            // btnChDelete
+            // 
+            this.btnChDelete.Location = new System.Drawing.Point(6, 48);
+            this.btnChDelete.Name = "btnChDelete";
+            this.btnChDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnChDelete.TabIndex = 2;
+            this.btnChDelete.Text = "Delete";
+            this.btnChDelete.UseVisualStyleBackColor = true;
+            this.btnChDelete.Click += new System.EventHandler(this.btnChDelete_Click);
+            // 
+            // btnChAddMulti
+            // 
+            this.btnChAddMulti.Location = new System.Drawing.Point(87, 19);
+            this.btnChAddMulti.Name = "btnChAddMulti";
+            this.btnChAddMulti.Size = new System.Drawing.Size(75, 23);
+            this.btnChAddMulti.TabIndex = 1;
+            this.btnChAddMulti.Text = "Add Multiple";
+            this.btnChAddMulti.UseVisualStyleBackColor = true;
+            this.btnChAddMulti.Click += new System.EventHandler(this.btnChAddMulti_Click);
+            // 
+            // btnChAddOne
+            // 
+            this.btnChAddOne.Location = new System.Drawing.Point(6, 19);
+            this.btnChAddOne.Name = "btnChAddOne";
+            this.btnChAddOne.Size = new System.Drawing.Size(75, 23);
+            this.btnChAddOne.TabIndex = 0;
+            this.btnChAddOne.Text = "Add One";
+            this.btnChAddOne.UseVisualStyleBackColor = true;
+            this.btnChAddOne.Click += new System.EventHandler(this.btnChAddOne_Click);
+            // 
+            // gbExportImport
+            // 
+            this.gbExportImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbExportImport.Controls.Add(this.btnChExport);
+            this.gbExportImport.Controls.Add(this.btnChImport);
+            this.gbExportImport.Location = new System.Drawing.Point(3, 179);
+            this.gbExportImport.Name = "gbExportImport";
+            this.gbExportImport.Size = new System.Drawing.Size(168, 48);
+            this.gbExportImport.TabIndex = 11;
+            this.gbExportImport.TabStop = false;
+            this.gbExportImport.Text = "Export/Import Channel Data";
+            // 
+            // btnChExport
+            // 
+            this.btnChExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnChExport.Location = new System.Drawing.Point(6, 19);
+            this.btnChExport.Name = "btnChExport";
+            this.btnChExport.Size = new System.Drawing.Size(75, 23);
+            this.btnChExport.TabIndex = 8;
+            this.btnChExport.Text = "Export CSV";
+            this.btnChExport.UseVisualStyleBackColor = true;
+            this.btnChExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
+            // btnChImport
+            // 
+            this.btnChImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnChImport.Location = new System.Drawing.Point(87, 19);
+            this.btnChImport.Name = "btnChImport";
+            this.btnChImport.Size = new System.Drawing.Size(75, 23);
+            this.btnChImport.TabIndex = 9;
+            this.btnChImport.Text = "Import CSV";
+            this.btnChImport.UseVisualStyleBackColor = true;
+            this.btnChImport.Click += new System.EventHandler(this.btnImport_Click);
+            // 
+            // gbEnable
+            // 
+            this.gbEnable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbEnable.Controls.Add(this.btnChEnable);
+            this.gbEnable.Controls.Add(this.btnChDisable);
+            this.gbEnable.Location = new System.Drawing.Point(3, 131);
+            this.gbEnable.Name = "gbEnable";
+            this.gbEnable.Size = new System.Drawing.Size(168, 48);
+            this.gbEnable.TabIndex = 13;
+            this.gbEnable.TabStop = false;
+            this.gbEnable.Text = "Channel Enabling";
+            // 
+            // btnChEnable
+            // 
+            this.btnChEnable.Location = new System.Drawing.Point(6, 19);
+            this.btnChEnable.Name = "btnChEnable";
+            this.btnChEnable.Size = new System.Drawing.Size(75, 23);
+            this.btnChEnable.TabIndex = 13;
+            this.btnChEnable.Text = "Enable";
+            this.btnChEnable.UseVisualStyleBackColor = true;
+            this.btnChEnable.Click += new System.EventHandler(this.btnEnableDisable_Click);
+            // 
+            // btnChDisable
+            // 
+            this.btnChDisable.Location = new System.Drawing.Point(87, 19);
+            this.btnChDisable.Name = "btnChDisable";
+            this.btnChDisable.Size = new System.Drawing.Size(75, 23);
+            this.btnChDisable.TabIndex = 12;
+            this.btnChDisable.Text = "Disable";
+            this.btnChDisable.UseVisualStyleBackColor = true;
+            this.btnChDisable.Click += new System.EventHandler(this.btnEnableDisable_Click);
+            // 
+            // gbColors
+            // 
+            this.gbColors.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbColors.Controls.Add(this.btnChColorMulti);
+            this.gbColors.Controls.Add(this.btnChColorOne);
+            this.gbColors.Location = new System.Drawing.Point(3, 83);
+            this.gbColors.Name = "gbColors";
+            this.gbColors.Size = new System.Drawing.Size(168, 48);
+            this.gbColors.TabIndex = 14;
+            this.gbColors.TabStop = false;
+            this.gbColors.Text = "Channel Colors";
+            // 
+            // btnChColorMulti
+            // 
+            this.btnChColorMulti.Location = new System.Drawing.Point(87, 19);
+            this.btnChColorMulti.Name = "btnChColorMulti";
+            this.btnChColorMulti.Size = new System.Drawing.Size(75, 23);
+            this.btnChColorMulti.TabIndex = 1;
+            this.btnChColorMulti.Text = "Multi Color";
+            this.btnChColorMulti.UseVisualStyleBackColor = true;
+            this.btnChColorMulti.Click += new System.EventHandler(this.btnChColorMulti_Click);
+            // 
+            // btnChColorOne
+            // 
+            this.btnChColorOne.Location = new System.Drawing.Point(6, 19);
+            this.btnChColorOne.Name = "btnChColorOne";
+            this.btnChColorOne.Size = new System.Drawing.Size(75, 23);
+            this.btnChColorOne.TabIndex = 0;
+            this.btnChColorOne.Text = "One Color";
+            this.btnChColorOne.UseVisualStyleBackColor = true;
+            this.btnChColorOne.Click += new System.EventHandler(this.btnChColorOne_Click);
             // 
             // panelChGenerator
             // 
@@ -245,7 +398,7 @@
             this.panelChGenerator.Controls.Add(this.lblChGenTemplate);
             this.panelChGenerator.Controls.Add(this.btnChGrnCancel);
             this.panelChGenerator.Controls.Add(this.btnChGenOk);
-            this.panelChGenerator.Location = new System.Drawing.Point(0, 0);
+            this.panelChGenerator.Location = new System.Drawing.Point(575, 0);
             this.panelChGenerator.Name = "panelChGenerator";
             this.panelChGenerator.Size = new System.Drawing.Size(174, 454);
             this.panelChGenerator.TabIndex = 17;
@@ -653,7 +806,7 @@
             this.btnChGrnCancel.TabIndex = 1;
             this.btnChGrnCancel.Text = "Cancel";
             this.btnChGrnCancel.UseVisualStyleBackColor = true;
-            this.btnChGrnCancel.Click += new System.EventHandler(this.btnGenOk_Click);
+            this.btnChGrnCancel.Click += new System.EventHandler(this.btnGeneratorButton_Click);
             // 
             // btnChGenOk
             // 
@@ -664,170 +817,7 @@
             this.btnChGenOk.TabIndex = 0;
             this.btnChGenOk.Text = "Generate";
             this.btnChGenOk.UseVisualStyleBackColor = true;
-            this.btnChGenOk.Click += new System.EventHandler(this.btnGenOk_Click);
-            // 
-            // panelChButtons
-            // 
-            this.panelChButtons.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelChButtons.Controls.Add(this.panelChGenerator);
-            this.panelChButtons.Controls.Add(this.gbChannels);
-            this.panelChButtons.Controls.Add(this.gbExportImport);
-            this.panelChButtons.Controls.Add(this.gbEnable);
-            this.panelChButtons.Controls.Add(this.gbColors);
-            this.panelChButtons.Location = new System.Drawing.Point(578, 0);
-            this.panelChButtons.Name = "panelChButtons";
-            this.panelChButtons.Size = new System.Drawing.Size(174, 454);
-            this.panelChButtons.TabIndex = 16;
-            // 
-            // gbChannels
-            // 
-            this.gbChannels.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbChannels.Controls.Add(this.btnChRename);
-            this.gbChannels.Controls.Add(this.btnChDelete);
-            this.gbChannels.Controls.Add(this.btnChAddMulti);
-            this.gbChannels.Controls.Add(this.btnChAddOne);
-            this.gbChannels.Location = new System.Drawing.Point(3, 6);
-            this.gbChannels.Name = "gbChannels";
-            this.gbChannels.Size = new System.Drawing.Size(168, 77);
-            this.gbChannels.TabIndex = 15;
-            this.gbChannels.TabStop = false;
-            this.gbChannels.Text = "Channels";
-            // 
-            // btnChRename
-            // 
-            this.btnChRename.Location = new System.Drawing.Point(87, 48);
-            this.btnChRename.Name = "btnChRename";
-            this.btnChRename.Size = new System.Drawing.Size(75, 23);
-            this.btnChRename.TabIndex = 3;
-            this.btnChRename.Text = "Rename";
-            this.btnChRename.UseVisualStyleBackColor = true;
-            // 
-            // btnChDelete
-            // 
-            this.btnChDelete.Location = new System.Drawing.Point(6, 48);
-            this.btnChDelete.Name = "btnChDelete";
-            this.btnChDelete.Size = new System.Drawing.Size(75, 23);
-            this.btnChDelete.TabIndex = 2;
-            this.btnChDelete.Text = "Delete";
-            this.btnChDelete.UseVisualStyleBackColor = true;
-            this.btnChDelete.Click += new System.EventHandler(this.btnChDelete_Click);
-            // 
-            // btnChAddMulti
-            // 
-            this.btnChAddMulti.Location = new System.Drawing.Point(87, 19);
-            this.btnChAddMulti.Name = "btnChAddMulti";
-            this.btnChAddMulti.Size = new System.Drawing.Size(75, 23);
-            this.btnChAddMulti.TabIndex = 1;
-            this.btnChAddMulti.Text = "Add Multiple";
-            this.btnChAddMulti.UseVisualStyleBackColor = true;
-            this.btnChAddMulti.Click += new System.EventHandler(this.btnChAddMulti_Click);
-            // 
-            // btnChAddOne
-            // 
-            this.btnChAddOne.Location = new System.Drawing.Point(6, 19);
-            this.btnChAddOne.Name = "btnChAddOne";
-            this.btnChAddOne.Size = new System.Drawing.Size(75, 23);
-            this.btnChAddOne.TabIndex = 0;
-            this.btnChAddOne.Text = "Add One";
-            this.btnChAddOne.UseVisualStyleBackColor = true;
-            this.btnChAddOne.Click += new System.EventHandler(this.btnChAddOne_Click);
-            // 
-            // gbExportImport
-            // 
-            this.gbExportImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbExportImport.Controls.Add(this.btnChExport);
-            this.gbExportImport.Controls.Add(this.btnChImport);
-            this.gbExportImport.Location = new System.Drawing.Point(3, 179);
-            this.gbExportImport.Name = "gbExportImport";
-            this.gbExportImport.Size = new System.Drawing.Size(168, 48);
-            this.gbExportImport.TabIndex = 11;
-            this.gbExportImport.TabStop = false;
-            this.gbExportImport.Text = "Export/Import Channel Data";
-            // 
-            // btnChExport
-            // 
-            this.btnChExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnChExport.Location = new System.Drawing.Point(6, 19);
-            this.btnChExport.Name = "btnChExport";
-            this.btnChExport.Size = new System.Drawing.Size(75, 23);
-            this.btnChExport.TabIndex = 8;
-            this.btnChExport.Text = "Export CSV";
-            this.btnChExport.UseVisualStyleBackColor = true;
-            this.btnChExport.Click += new System.EventHandler(this.btnExport_Click);
-            // 
-            // btnChImport
-            // 
-            this.btnChImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnChImport.Location = new System.Drawing.Point(87, 19);
-            this.btnChImport.Name = "btnChImport";
-            this.btnChImport.Size = new System.Drawing.Size(75, 23);
-            this.btnChImport.TabIndex = 9;
-            this.btnChImport.Text = "Import CSV";
-            this.btnChImport.UseVisualStyleBackColor = true;
-            this.btnChImport.Click += new System.EventHandler(this.btnImport_Click);
-            // 
-            // gbEnable
-            // 
-            this.gbEnable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbEnable.Controls.Add(this.btnChEnable);
-            this.gbEnable.Controls.Add(this.btnChDisable);
-            this.gbEnable.Location = new System.Drawing.Point(3, 131);
-            this.gbEnable.Name = "gbEnable";
-            this.gbEnable.Size = new System.Drawing.Size(168, 48);
-            this.gbEnable.TabIndex = 13;
-            this.gbEnable.TabStop = false;
-            this.gbEnable.Text = "Channel Enabling";
-            // 
-            // btnChEnable
-            // 
-            this.btnChEnable.Location = new System.Drawing.Point(6, 19);
-            this.btnChEnable.Name = "btnChEnable";
-            this.btnChEnable.Size = new System.Drawing.Size(75, 23);
-            this.btnChEnable.TabIndex = 13;
-            this.btnChEnable.Text = "Enable";
-            this.btnChEnable.UseVisualStyleBackColor = true;
-            this.btnChEnable.Click += new System.EventHandler(this.btnEnableDisable_Click);
-            // 
-            // btnChDisable
-            // 
-            this.btnChDisable.Location = new System.Drawing.Point(87, 19);
-            this.btnChDisable.Name = "btnChDisable";
-            this.btnChDisable.Size = new System.Drawing.Size(75, 23);
-            this.btnChDisable.TabIndex = 12;
-            this.btnChDisable.Text = "Disable";
-            this.btnChDisable.UseVisualStyleBackColor = true;
-            this.btnChDisable.Click += new System.EventHandler(this.btnEnableDisable_Click);
-            // 
-            // gbColors
-            // 
-            this.gbColors.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbColors.Controls.Add(this.btnChColorMulti);
-            this.gbColors.Controls.Add(this.btnChColorOne);
-            this.gbColors.Location = new System.Drawing.Point(3, 83);
-            this.gbColors.Name = "gbColors";
-            this.gbColors.Size = new System.Drawing.Size(168, 48);
-            this.gbColors.TabIndex = 14;
-            this.gbColors.TabStop = false;
-            this.gbColors.Text = "Channel Colors";
-            // 
-            // btnChColorMulti
-            // 
-            this.btnChColorMulti.Location = new System.Drawing.Point(87, 19);
-            this.btnChColorMulti.Name = "btnChColorMulti";
-            this.btnChColorMulti.Size = new System.Drawing.Size(75, 23);
-            this.btnChColorMulti.TabIndex = 1;
-            this.btnChColorMulti.Text = "Multi Color";
-            this.btnChColorMulti.UseVisualStyleBackColor = true;
-            // 
-            // btnChColorOne
-            // 
-            this.btnChColorOne.Location = new System.Drawing.Point(6, 19);
-            this.btnChColorOne.Name = "btnChColorOne";
-            this.btnChColorOne.Size = new System.Drawing.Size(75, 23);
-            this.btnChColorOne.TabIndex = 0;
-            this.btnChColorOne.Text = "One Color";
-            this.btnChColorOne.UseVisualStyleBackColor = true;
-            this.btnChColorOne.Click += new System.EventHandler(this.btnChColorOne_Click);
+            this.btnChGenOk.Click += new System.EventHandler(this.btnGeneratorButton_Click);
             // 
             // dgvChannels
             // 
@@ -850,11 +840,64 @@
             this.dgvChannels.RowHeadersWidth = 25;
             this.dgvChannels.Size = new System.Drawing.Size(566, 442);
             this.dgvChannels.TabIndex = 0;
+            this.dgvChannels.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvChannels_CellContentDoubleClick);
             this.dgvChannels.SelectionChanged += new System.EventHandler(this.dgvChannels_SelectionChanged);
             this.dgvChannels.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragDrop);
             this.dgvChannels.DragOver += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragOver);
             this.dgvChannels.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dataGridView1_MouseDown);
             this.dgvChannels.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dataGridView1_MouseMove);
+            // 
+            // ChannelEnabled
+            // 
+            this.ChannelEnabled.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ChannelEnabled.FillWeight = 1F;
+            this.ChannelEnabled.HeaderText = "Ch Enabled";
+            this.ChannelEnabled.MinimumWidth = 87;
+            this.ChannelEnabled.Name = "ChannelEnabled";
+            this.ChannelEnabled.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.ChannelEnabled.ToolTipText = "Is the channel outputing data";
+            this.ChannelEnabled.Width = 87;
+            // 
+            // ChannelNum
+            // 
+            this.ChannelNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ChannelNum.FillWeight = 1F;
+            this.ChannelNum.HeaderText = "Ch #";
+            this.ChannelNum.MinimumWidth = 80;
+            this.ChannelNum.Name = "ChannelNum";
+            this.ChannelNum.ReadOnly = true;
+            this.ChannelNum.ToolTipText = "Channel Number (Sequence Order)";
+            this.ChannelNum.Width = 80;
+            // 
+            // ChannelName
+            // 
+            this.ChannelName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ChannelName.FillWeight = 10F;
+            this.ChannelName.HeaderText = "Channel Name";
+            this.ChannelName.Name = "ChannelName";
+            this.ChannelName.ToolTipText = "Human Readable Name of the Channel";
+            // 
+            // OutputChannel
+            // 
+            this.OutputChannel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.OutputChannel.FillWeight = 1F;
+            this.OutputChannel.HeaderText = "Output Ch #";
+            this.OutputChannel.MinimumWidth = 90;
+            this.OutputChannel.Name = "OutputChannel";
+            this.OutputChannel.ReadOnly = true;
+            this.OutputChannel.ToolTipText = "Channel where the output goes (Physical controller)";
+            this.OutputChannel.Width = 90;
+            // 
+            // ChannelColor
+            // 
+            this.ChannelColor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ChannelColor.FillWeight = 1F;
+            this.ChannelColor.HeaderText = "Channel Color";
+            this.ChannelColor.MinimumWidth = 98;
+            this.ChannelColor.Name = "ChannelColor";
+            this.ChannelColor.ReadOnly = true;
+            this.ChannelColor.ToolTipText = "Sequencer Color of the Channel";
+            this.ChannelColor.Width = 98;
             // 
             // tpPlugins
             // 
@@ -982,58 +1025,7 @@
             this.btnCancel.TabIndex = 4;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            // 
-            // ChannelEnabled
-            // 
-            this.ChannelEnabled.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ChannelEnabled.FillWeight = 1F;
-            this.ChannelEnabled.HeaderText = "Ch Enabled";
-            this.ChannelEnabled.MinimumWidth = 87;
-            this.ChannelEnabled.Name = "ChannelEnabled";
-            this.ChannelEnabled.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.ChannelEnabled.ToolTipText = "Is the channel outputing data";
-            this.ChannelEnabled.Width = 87;
-            // 
-            // ChannelNum
-            // 
-            this.ChannelNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ChannelNum.FillWeight = 1F;
-            this.ChannelNum.HeaderText = "Ch #";
-            this.ChannelNum.MinimumWidth = 80;
-            this.ChannelNum.Name = "ChannelNum";
-            this.ChannelNum.ReadOnly = true;
-            this.ChannelNum.ToolTipText = "Channel Number (Sequence Order)";
-            this.ChannelNum.Width = 80;
-            // 
-            // ChannelName
-            // 
-            this.ChannelName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ChannelName.FillWeight = 10F;
-            this.ChannelName.HeaderText = "Channel Name";
-            this.ChannelName.Name = "ChannelName";
-            this.ChannelName.ToolTipText = "Human Readable Name of the Channel";
-            // 
-            // OutputChannel
-            // 
-            this.OutputChannel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.OutputChannel.FillWeight = 1F;
-            this.OutputChannel.HeaderText = "Output Ch #";
-            this.OutputChannel.MinimumWidth = 90;
-            this.OutputChannel.Name = "OutputChannel";
-            this.OutputChannel.ReadOnly = true;
-            this.OutputChannel.ToolTipText = "Channel where the output goes (Physical controller)";
-            this.OutputChannel.Width = 90;
-            // 
-            // ChannelColor
-            // 
-            this.ChannelColor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ChannelColor.FillWeight = 1F;
-            this.ChannelColor.HeaderText = "Channel Color";
-            this.ChannelColor.MinimumWidth = 98;
-            this.ChannelColor.Name = "ChannelColor";
-            this.ChannelColor.ReadOnly = true;
-            this.ChannelColor.ToolTipText = "Sequencer Color of the Channel";
-            this.ChannelColor.Width = 98;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // FrmProfileManager
             // 
@@ -1057,6 +1049,11 @@
             this.gbProfiles.ResumeLayout(false);
             this.tcProfile.ResumeLayout(false);
             this.tpChannels.ResumeLayout(false);
+            this.panelChButtons.ResumeLayout(false);
+            this.gbChannels.ResumeLayout(false);
+            this.gbExportImport.ResumeLayout(false);
+            this.gbEnable.ResumeLayout(false);
+            this.gbColors.ResumeLayout(false);
             this.panelChGenerator.ResumeLayout(false);
             this.panelChGenerator.PerformLayout();
             this.gbRules.ResumeLayout(false);
@@ -1074,11 +1071,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbRuleColor4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudChGenChannels)).EndInit();
-            this.panelChButtons.ResumeLayout(false);
-            this.gbChannels.ResumeLayout(false);
-            this.gbExportImport.ResumeLayout(false);
-            this.gbEnable.ResumeLayout(false);
-            this.gbColors.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvChannels)).EndInit();
             this.tpPlugins.ResumeLayout(false);
             this.tpGroups.ResumeLayout(false);
@@ -1123,7 +1115,6 @@
         private System.Windows.Forms.Button btnPiaButton;
         private System.Windows.Forms.Button btnGraButton;
         private System.Windows.Forms.Button btnNcaButton;
-        private System.Windows.Forms.Button btnChRename;
         private System.Windows.Forms.Button btnChDelete;
         private System.Windows.Forms.Panel panelChButtons;
         private System.Windows.Forms.Panel panelChGenerator;
