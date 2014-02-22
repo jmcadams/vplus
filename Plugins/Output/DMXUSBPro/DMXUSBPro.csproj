@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectType>local</ProjectType>
@@ -113,6 +113,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\VixenControls\Common.csproj">
+      <Project>{6B127E8D-35CC-409E-9E66-520FBA86E283}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Vixen\VixenPlus.csproj">
       <Project>{FA99E3F3-4783-485F-A37E-0E24F823E5AE}</Project>
       <Name>VixenPlus</Name>

@@ -4,6 +4,10 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
+using Common;
+
+using CommonControls;
+
 using FMOD;
 
 using VixenPlus.Properties;

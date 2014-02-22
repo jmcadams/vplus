@@ -2,6 +2,8 @@ using System;
 using System.Globalization;
 using System.Windows.Forms;
 
+using Common;
+
 using CommonControls;
 
 using VixenPlus.Properties;

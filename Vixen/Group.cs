@@ -11,6 +11,10 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 
+using Common;
+
+using CommonControls;
+
 using VixenPlus.Properties;
 
 namespace VixenPlus {

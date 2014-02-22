@@ -1,4 +1,4 @@
-﻿namespace CommonControls {
+﻿namespace Common {
     partial class TransparentLabel
     {
         /// <summary>

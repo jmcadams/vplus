@@ -1,12 +1,11 @@
-﻿//using CommonControls;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace CommonControls {
+namespace Common {
     public static class Utils {
         public const int IndexRowsOrHeight = 0;
         public const int IndexColsOrWidth = 1;

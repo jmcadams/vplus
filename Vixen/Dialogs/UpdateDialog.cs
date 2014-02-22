@@ -9,6 +9,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
+using Common;
+
 using CommonControls;
 
 namespace VixenPlus.Dialogs {

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Drawing;
 
-namespace CommonControls {
+using CommonControls;
+
+namespace Common {
     public static class HSVUtils {
         public static HSV ToHSV(this Color color) {
             var chromaMax = (float) Math.Max(color.R, Math.Max(color.G, color.B));

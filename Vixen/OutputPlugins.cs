@@ -5,6 +5,10 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 
+using Common;
+
+using CommonControls;
+
 namespace VixenPlus {
     internal static class OutputPlugins {
         private static IHardwarePlugin FindPlugin(string pluginName) {

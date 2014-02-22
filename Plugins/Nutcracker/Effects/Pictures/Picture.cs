@@ -6,6 +6,8 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
+using Common;
+
 using CommonControls;
 //TODO: Add support for movies
 using VixenPlus;

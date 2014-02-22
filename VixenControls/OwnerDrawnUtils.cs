@@ -1,7 +1,9 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace CommonControls {
+using CommonControls;
+
+namespace Common {
     public static class OwnerDrawnUtils {
         private static readonly SolidBrush GenericBrush = new SolidBrush(Color.Black);
         private const string Checkmark = "\u2714";

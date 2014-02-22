@@ -369,9 +369,7 @@
       <DependentUpon>OutputPlugInUIBase.cs</DependentUpon>
     </Compile>
     <Compile Include="OutputPort.cs" />
-    <Compile Include="Paths.cs" />
     <Compile Include="PlugInRouter.cs" />
-    <Compile Include="Preference2.cs" />
     <Compile Include="Profile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProgramChange.cs" />
@@ -412,7 +410,6 @@
     <Compile Include="UIBase.Designer.cs">
       <DependentUpon>UIBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vendor.cs" />
     <Compile Include="VixenPlusForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -557,9 +554,9 @@
       <Name>fmod</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\VixenControls\CommonControls.csproj">
+    <ProjectReference Include="..\VixenControls\Common.csproj">
       <Project>{6B127E8D-35CC-409E-9E66-520FBA86E283}</Project>
-      <Name>CommonControls</Name>
+      <Name>Common</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>

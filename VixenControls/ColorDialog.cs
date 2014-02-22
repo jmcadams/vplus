@@ -4,9 +4,9 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
-using CommonControls.Properties;
+using Common.Properties;
 
-namespace CommonControls {
+namespace Common {
     public partial class ColorDialog : Form {
 
         private const string ControlPb = "pbCustom";

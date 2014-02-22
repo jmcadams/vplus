@@ -11,6 +11,10 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 
+using Common;
+
+using CommonControls;
+
 using VixenPlus.Dialogs;
 using VixenPlus.Properties;
 

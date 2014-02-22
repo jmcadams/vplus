@@ -5,9 +5,15 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
+using Common;
+
+using CommonControls;
+
 using FMOD;
 
 using VixenPlus.Properties;
+
+using ColorDialog = System.Windows.Forms.ColorDialog;
 
 namespace VixenPlus.Dialogs {
     internal partial class PreferencesDialog : Form {

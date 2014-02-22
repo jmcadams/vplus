@@ -3,7 +3,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
-namespace VixenPlus {
+using CommonControls;
+
+namespace Common {
     public static class Paths {
         private static string _binaryPath = String.Empty;
 
@@ -106,7 +108,7 @@ namespace VixenPlus {
 
         public static string SequencePath {
             get {
-                var path = Host.Preferences.GetString("DefaultSequenceDirectory");
+                var path = Preference2.GetInstance().GetString("DefaultSequenceDirectory");
                 if ((path.Length > 0) && Directory.Exists(path)) {
                     return path;
                 }

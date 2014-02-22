@@ -11,6 +11,8 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 
+using Common;
+
 using CommonControls;
 
 using FMOD;

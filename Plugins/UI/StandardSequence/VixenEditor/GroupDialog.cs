@@ -5,6 +5,8 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
+using Common;
+
 using CommonControls;
 
 using VixenPlus;

@@ -3,6 +3,10 @@ using System.IO;
 using System.Text;
 using System.Xml;
 
+using Common;
+
+using CommonControls;
+
 namespace VixenPlus {
     internal class Timer : IComparable<Timer>
     {

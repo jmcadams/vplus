@@ -1,6 +1,8 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 
+using TabControl = Common.TabControl;
+
 namespace VixenPlus.Dialogs {
     internal partial class PreferencesDialog {
         private IContainer components;
@@ -112,7 +114,7 @@ namespace VixenPlus.Dialogs {
             this.label35 = new System.Windows.Forms.Label();
             this.numericUpDownHistoryImages = new System.Windows.Forms.NumericUpDown();
             this.label28 = new System.Windows.Forms.Label();
-            this.tabControl = new CommonControls.TabControl(this.components);
+            this.tabControl = new TabControl(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinimumLevel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumLevel)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -1266,7 +1268,7 @@ namespace VixenPlus.Dialogs {
         private Label label4;
         private TextBox textBoxMouseWheelVertical;
         private Label label3;
-        private global::CommonControls.TabControl tabControl;
+        private TabControl tabControl;
         private ComboBox cbUpdateFrequency;
         private CheckBox cbProfileErrors;
     }

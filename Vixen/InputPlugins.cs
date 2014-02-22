@@ -6,6 +6,10 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 
+using Common;
+
+using CommonControls;
+
 // ReSharper disable once ClassNeverInstantiated.Global
 namespace VixenPlus {
     internal class InputPlugins : HardwarePlugins

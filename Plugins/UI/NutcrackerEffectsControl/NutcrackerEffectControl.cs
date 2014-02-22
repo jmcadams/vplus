@@ -6,6 +6,8 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
+using Common;
+
 using CommonControls;
 
 using VixenPlus;

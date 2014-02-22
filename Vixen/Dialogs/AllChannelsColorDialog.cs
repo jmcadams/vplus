@@ -5,6 +5,10 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
+using Common;
+
+using CommonControls;
+
 using VixenPlus.Properties;
 
 namespace VixenPlus.Dialogs {

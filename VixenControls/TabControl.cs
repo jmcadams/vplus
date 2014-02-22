@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 using CommonControls.Annotations;
 
-namespace CommonControls {
+namespace Common {
     [ToolboxBitmap(typeof (System.Windows.Forms.TabControl))]
     public class TabControl : System.Windows.Forms.TabControl {
         private bool _hideTabs;

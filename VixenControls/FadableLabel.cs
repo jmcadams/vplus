@@ -1,7 +1,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace CommonControls {
+namespace Common {
     public partial class FadableLabel : Label {
         public FadableLabel() {
             InitializeComponent();

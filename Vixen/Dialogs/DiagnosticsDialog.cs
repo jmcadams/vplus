@@ -4,6 +4,10 @@ using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
+using Common;
+
+using CommonControls;
+
 using VixenPlus.Properties;
 
 //TODO Remove this and then we can remove the timers as well.

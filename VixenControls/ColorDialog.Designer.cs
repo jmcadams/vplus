@@ -1,6 +1,6 @@
-﻿using System.Security.AccessControl;
+﻿using CommonControls;
 
-namespace CommonControls {
+namespace Common {
     partial class ColorDialog {
         /// <summary>
         /// Required designer variable.

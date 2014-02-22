@@ -12,6 +12,10 @@ using System.Xml;
 
 using AdjustablePreview.Properties;
 
+using Common;
+
+using CommonControls;
+
 using VixenPlus;
 
 namespace Preview {

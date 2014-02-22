@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
-namespace CommonControls {
+namespace Common {
     public class MultiSelectTreeview : TreeView {
 
         private readonly List<TreeNode> _selectedNodes;

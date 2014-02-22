@@ -1,4 +1,6 @@
-﻿using CommonControls;
+﻿using Common;
+
+using CommonControls;
 
 namespace VixenEditor
 {

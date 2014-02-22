@@ -6,9 +6,9 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
-using CommonControls.Properties;
+using Common.Properties;
 
-namespace CommonControls {
+namespace Common {
     public partial class ColorPalette : UserControl {
 
         private const string PbPrefix = "pbRuleColor";

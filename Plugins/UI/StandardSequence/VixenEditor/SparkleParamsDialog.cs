@@ -4,6 +4,8 @@ using System.Globalization;
 using System.Timers;
 using System.Windows.Forms;
 
+using Common;
+
 using CommonControls;
 
 using Timer = System.Timers.Timer;

@@ -1,4 +1,6 @@
-﻿namespace VixenPlus.Dialogs
+﻿using Common;
+
+namespace VixenPlus.Dialogs
 {
     partial class FrmProfileManager
     {
@@ -37,7 +39,7 @@
             this.btnAddProfile = new System.Windows.Forms.Button();
             this.tcProfile = new System.Windows.Forms.TabControl();
             this.tpChannels = new System.Windows.Forms.TabPage();
-            this.tcControlArea = new CommonControls.TabControl(this.components);
+            this.tcControlArea = new TabControl(this.components);
             this.tpNormal = new System.Windows.Forms.TabPage();
             this.panelChButtons = new System.Windows.Forms.Panel();
             this.gbChannels = new System.Windows.Forms.GroupBox();
@@ -58,7 +60,7 @@
             this.btnChGenSaveTemplate = new System.Windows.Forms.Button();
             this.gbRules = new System.Windows.Forms.GroupBox();
             this.panelRuleEditor = new System.Windows.Forms.Panel();
-            this.colorPaletteMulti = new CommonControls.ColorPalette();
+            this.colorPaletteMulti = new ColorPalette();
             this.cbRuleEndNum = new System.Windows.Forms.CheckBox();
             this.nudRuleIncr = new System.Windows.Forms.NumericUpDown();
             this.nudRuleEnd = new System.Windows.Forms.NumericUpDown();
@@ -1084,10 +1086,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ChannelName;
         private System.Windows.Forms.DataGridViewTextBoxColumn OutputChannel;
         private System.Windows.Forms.DataGridViewTextBoxColumn ChannelColor;
-        private CommonControls.TabControl tcControlArea;
+        private TabControl tcControlArea;
         private System.Windows.Forms.TabPage tpMultiChannel;
         private System.Windows.Forms.TabPage tpNormal;
         private System.Windows.Forms.TabPage tpMultiColor;
-        private CommonControls.ColorPalette colorPaletteMulti;
+        private ColorPalette colorPaletteMulti;
     }
 }

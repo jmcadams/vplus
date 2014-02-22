@@ -7,7 +7,7 @@
     <ProjectGuid>{6B127E8D-35CC-409E-9E66-520FBA86E283}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <AssemblyName>VixenPlusControls</AssemblyName>
+    <AssemblyName>VixenPlusCommon</AssemblyName>
     <DefaultClientScript>JScript</DefaultClientScript>
     <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
@@ -82,7 +82,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup>
-    <RootNamespace>CommonControls</RootNamespace>
+    <RootNamespace>Common</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System">
@@ -141,6 +141,8 @@
     <Compile Include="MultiSelectTreeview.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Paths.cs" />
+    <Compile Include="Preference2.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -158,6 +160,7 @@
     </Compile>
     <Compile Include="OwnerDrawnUtils.cs" />
     <Compile Include="Utils.cs" />
+    <Compile Include="Vendor.cs" />
     <EmbeddedResource Include="ColorControl\ColorEditor.resx">
       <DependentUpon>ColorEditor.cs</DependentUpon>
     </EmbeddedResource>

@@ -3,6 +3,10 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 
+using Common;
+
+using CommonControls;
+
 namespace VixenPlus {
     internal class Routine : IDisposable {
 

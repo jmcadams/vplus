@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CommonControls.Properties {
+namespace Common.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace CommonControls.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CommonControls.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Common.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -107,6 +107,15 @@ namespace CommonControls.Properties {
             get {
                 object obj = ResourceManager.GetObject("palette_save", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lighting Control Software.
+        /// </summary>
+        internal static string ProductDescription {
+            get {
+                return ResourceManager.GetString("ProductDescription", resourceCulture);
             }
         }
     }

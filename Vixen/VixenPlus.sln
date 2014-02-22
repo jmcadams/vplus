@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VixenPlus", "VixenPlus.csproj", "{FA99E3F3-4783-485F-A37E-0E24F823E5AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonControls", "..\VixenControls\CommonControls.csproj", "{6B127E8D-35CC-409E-9E66-520FBA86E283}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "..\VixenControls\Common.csproj", "{6B127E8D-35CC-409E-9E66-520FBA86E283}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{BB0D1EA5-256B-4BCC-BD29-CB8A112B1E3D}"
 EndProject
@@ -1151,9 +1151,9 @@ Global
 		{64A53068-B235-4A1E-8E40-D9F39708EAEC} = {13830111-1E9A-4759-8475-E9B55B9B914E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_AssemblyInfoFilename = AssemblyInfo.cs
-		BuildVersion_UpdateFileVersion = True
-		BuildVersion_UpdateAssemblyVersion = True
 		BuildVersion_BuildVersioningStyle = None.None.Increment.TimeStamp
+		BuildVersion_UpdateAssemblyVersion = True
+		BuildVersion_UpdateFileVersion = True
+		BuildVersion_AssemblyInfoFilename = AssemblyInfo.cs
 	EndGlobalSection
 EndGlobal

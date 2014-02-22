@@ -10,11 +10,13 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 
+using Common;
+
 using CommonControls;
 
 using VixenPlus.Properties;
 
-using ColorDialog = CommonControls.ColorDialog;
+using ColorDialog = Common.ColorDialog;
  
 //todo some things I want to do, keep selected cells between refresh of dgv, refactor massively, compartmentalize controls/tabpages
 

@@ -3,6 +3,10 @@ using System.Net;
 using System.Text;
 using System.Windows.Forms;
 
+using Common;
+
+using CommonControls;
+
 namespace VixenPlus.Dialogs {
     public sealed partial class ReleaseNotesDialog : Form {
         public ReleaseNotesDialog() {

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 
+using Common;
+
 using CommonControls;
 
 namespace VixenPlus {

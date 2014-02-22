@@ -5,6 +5,10 @@ using System.IO;
 using System.Text;
 using System.Xml;
 
+using Common;
+
+using CommonControls;
+
 namespace VixenPlus {
     public class Profile : IExecutable {
         private readonly List<int> _channelOutputs;

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace CommonControls {
+namespace Common {
     public partial class TransparentLabel: Label
     {	
         public TransparentLabel()

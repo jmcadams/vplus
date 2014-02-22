@@ -6,7 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace VixenPlus {
+namespace Common {
     public class Preference2 {
         public delegate void OnPreferenceChange(string preferenceName);
 
