@@ -1,4 +1,4 @@
-﻿namespace Common {
+﻿namespace VixenPlusCommon {
     partial class TransparentLabel
     {
         /// <summary>

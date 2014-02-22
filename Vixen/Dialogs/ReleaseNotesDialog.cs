@@ -3,9 +3,9 @@ using System.Net;
 using System.Text;
 using System.Windows.Forms;
 
-using Common;
 
-using CommonControls;
+
+using VixenPlusCommon;
 
 namespace VixenPlus.Dialogs {
     public sealed partial class ReleaseNotesDialog : Form {

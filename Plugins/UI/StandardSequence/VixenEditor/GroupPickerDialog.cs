@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Windows.Forms;
 
-using Common;
 
-using CommonControls;
 
 using VixenPlus;
+
+using VixenPlusCommon;
 
 
 namespace VixenEditor {

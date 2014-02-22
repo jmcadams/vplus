@@ -1,9 +1,9 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 
-using Common;
 
-using CommonControls;
+
+using VixenPlusCommon;
 
 namespace VixenEditor{
 

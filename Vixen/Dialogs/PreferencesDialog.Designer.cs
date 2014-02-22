@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 
-using TabControl = Common.TabControl;
+using TabControl = VixenPlusCommon.TabControl;
 
 namespace VixenPlus.Dialogs {
     internal partial class PreferencesDialog {

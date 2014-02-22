@@ -6,9 +6,9 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Windows.Forms;
 
-using CommonControls.Annotations;
+using VixenPlusCommon.Properties;
 
-namespace CommonControls {
+namespace VixenPlusCommon {
     // Cyotek Color Picker controls library
     // Copyright © 2013 Cyotek. All Rights Reserved.
     // http://cyotek.com/blog/tag/colorpicker

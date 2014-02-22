@@ -3,9 +3,9 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 
-using Common;
 
-using CommonControls;
+
+using VixenPlusCommon;
 
 namespace VixenPlus {
     internal class Routine : IDisposable {

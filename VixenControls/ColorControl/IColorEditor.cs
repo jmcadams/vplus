@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace CommonControls {
+namespace VixenPlusCommon {
     // Cyotek Color Picker controls library
     // Copyright © 2013 Cyotek. All Rights Reserved.
     // http://cyotek.com/blog/tag/colorpicker

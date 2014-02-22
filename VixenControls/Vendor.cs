@@ -1,6 +1,6 @@
-using Common.Properties;
+using VixenPlusCommon.Properties;
 
-namespace Common {
+namespace VixenPlusCommon {
     public static class Vendor {
         public static readonly string ProductDescription = Resources.ProductDescription;
         public const string ProductName = "Vixen+ {Beta}";

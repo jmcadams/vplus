@@ -6,9 +6,9 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 
-using Common;
 
-using CommonControls;
+
+using VixenPlusCommon;
 
 // ReSharper disable once ClassNeverInstantiated.Global
 namespace VixenPlus {

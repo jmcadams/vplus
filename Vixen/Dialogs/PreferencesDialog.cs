@@ -5,13 +5,13 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-using Common;
 
-using CommonControls;
 
 using FMOD;
 
 using VixenPlus.Properties;
+
+using VixenPlusCommon;
 
 using ColorDialog = System.Windows.Forms.ColorDialog;
 

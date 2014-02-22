@@ -4,12 +4,10 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-using Common;
-
-using CommonControls;
-using CommonControls.Annotations;
-
 using VixenPlus;
+
+using VixenPlusCommon;
+using VixenPlusCommon.Properties;
 
 namespace Bars {
     [UsedImplicitly]

@@ -4,12 +4,12 @@ using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.Windows.Forms;
 
-using Common;
 
-using CommonControls;
 
 using VixenPlus;
 using VixenPlus.Properties;
+
+using VixenPlusCommon;
 
 namespace VixenEditor {
 

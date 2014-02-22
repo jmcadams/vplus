@@ -9,13 +9,13 @@ using System.Timers;
 using System.Windows.Forms;
 using System.Xml;
 
-using Common;
 
-using CommonControls;
 
 using FMOD;
 
 using VixenPlus.Properties;
+
+using VixenPlusCommon;
 
 namespace VixenPlus {
     internal sealed class Engine8 : IDisposable, IQueryable {

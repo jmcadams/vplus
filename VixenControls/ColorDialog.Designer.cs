@@ -1,6 +1,4 @@
-﻿using CommonControls;
-
-namespace Common {
+﻿namespace VixenPlusCommon {
     partial class ColorDialog {
         /// <summary>
         /// Required designer variable.
@@ -47,7 +45,7 @@ namespace Common {
             this.pbCustom2 = new System.Windows.Forms.PictureBox();
             this.pbCustom1 = new System.Windows.Forms.PictureBox();
             this.pbCustom0 = new System.Windows.Forms.PictureBox();
-            this.colorEditor1 = new CommonControls.ColorEditor();
+            this.colorEditor1 = new ColorEditor();
             ((System.ComponentModel.ISupportInitialize)(this.pbOriginalColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbNewColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCustomF)).BeginInit();

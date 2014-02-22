@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace CommonControls {
+namespace VixenPlusCommon {
     internal static class GdiMethods {
         [DllImport("gdi32.dll", EntryPoint = "LineTo", CallingConvention = CallingConvention.StdCall)]
         public static extern bool LineTo(IntPtr hdc, int x, int y);

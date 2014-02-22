@@ -1,11 +1,11 @@
 using System;
 using System.Windows.Forms;
 
-using Common;
 
-using CommonControls;
 
 using VixenPlus;
+
+using VixenPlusCommon;
 
 namespace VixenEditor {
     internal partial class DrawingIntensityDialog : Form {

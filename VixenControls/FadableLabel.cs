@@ -1,7 +1,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Common {
+namespace VixenPlusCommon {
     public partial class FadableLabel : Label {
         public FadableLabel() {
             InitializeComponent();

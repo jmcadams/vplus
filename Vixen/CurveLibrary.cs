@@ -6,9 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-using Common;
-
-using CommonControls;
+using VixenPlusCommon;
 
 namespace VixenPlus {
     public class CurveLibrary : IDisposable

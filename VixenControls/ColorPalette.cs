@@ -6,9 +6,9 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
-using Common.Properties;
+using VixenPlusCommon.Properties;
 
-namespace Common {
+namespace VixenPlusCommon {
     public partial class ColorPalette : UserControl {
 
         private const string PbPrefix = "pbRuleColor";

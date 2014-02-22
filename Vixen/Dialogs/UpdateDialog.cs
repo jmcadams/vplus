@@ -9,9 +9,9 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
-using Common;
 
-using CommonControls;
+
+using VixenPlusCommon;
 
 namespace VixenPlus.Dialogs {
     public sealed partial class UpdateDialog : Form {

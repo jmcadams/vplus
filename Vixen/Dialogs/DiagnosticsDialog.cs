@@ -4,13 +4,12 @@ using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
-using Common;
 
-using CommonControls;
 
 using VixenPlus.Properties;
-
 //TODO Remove this and then we can remove the timers as well.
+using VixenPlusCommon;
+
 namespace VixenPlus.Dialogs {
     internal partial class DiagnosticsDialog : Form {
         private readonly Timers _timers;

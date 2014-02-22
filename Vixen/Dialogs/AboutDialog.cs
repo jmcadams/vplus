@@ -4,11 +4,11 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-using Common;
 
-using CommonControls;
 
 using VixenPlus.Properties;
+
+using VixenPlusCommon;
 
 namespace VixenPlus.Dialogs {
     internal partial class AboutDialog : Form {

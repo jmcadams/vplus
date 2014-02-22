@@ -4,11 +4,11 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
-using Common;
 
-using CommonControls;
 
 using VixenPlus;
+
+using VixenPlusCommon;
 
 namespace VixenEditor {
     public partial class NutcrackerModelDialog : Form {

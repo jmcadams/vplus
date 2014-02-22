@@ -5,12 +5,12 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
-using Common;
 
-using CommonControls;
 
 using VixenPlus;
 using VixenPlus.Dialogs;
+
+using VixenPlusCommon;
 
 using ColorDialog = System.Windows.Forms.ColorDialog;
 

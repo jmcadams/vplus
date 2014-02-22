@@ -554,9 +554,9 @@
       <Name>fmod</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\VixenControls\Common.csproj">
+    <ProjectReference Include="..\VixenControls\VixenPlusCommon.csproj">
       <Project>{6B127E8D-35CC-409E-9E66-520FBA86E283}</Project>
-      <Name>Common</Name>
+      <Name>VixenPlusCommon</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>

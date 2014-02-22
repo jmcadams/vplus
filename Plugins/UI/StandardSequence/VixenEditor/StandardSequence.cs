@@ -11,9 +11,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 
-using Common;
 
-using CommonControls;
 
 using FMOD;
 
@@ -21,6 +19,8 @@ using VixenPlus;
 using VixenPlus.Dialogs;
 using VixenPlus.Properties;
 using VixenEditor.VixenPlus;
+
+using VixenPlusCommon;
 
 using Channel = VixenPlus.Channel;
 using SortOrder = VixenPlus.SortOrder;

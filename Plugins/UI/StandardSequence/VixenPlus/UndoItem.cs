@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Common;
 
-using CommonControls;
 
 using VixenPlus;
+
+using VixenPlusCommon;
 
 namespace VixenEditor.VixenPlus {
     internal class UndoItem {

@@ -5,9 +5,9 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 
-using Common;
 
-using CommonControls;
+
+using VixenPlusCommon;
 
 namespace VixenPlus {
     internal static class OutputPlugins {

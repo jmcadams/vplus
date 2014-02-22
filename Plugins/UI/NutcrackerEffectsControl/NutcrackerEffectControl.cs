@@ -6,11 +6,11 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
-using Common;
 
-using CommonControls;
 
 using VixenPlus;
+
+using VixenPlusCommon;
 
 namespace NutcrackerEffectsControl {
     public sealed partial class NutcrackerEffectControl : UserControl {

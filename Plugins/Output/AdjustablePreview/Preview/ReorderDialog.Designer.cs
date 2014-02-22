@@ -1,8 +1,8 @@
 using System.Windows.Forms;
 
-using Common;
 
-using CommonControls;
+
+using VixenPlusCommon;
 
 namespace Preview {
     internal partial class ReorderDialog {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 
-using Common;
 
-using CommonControls;
+
+using VixenPlusCommon;
 
 namespace VixenPlus {
     internal class EventSequenceStub : IDisposable {

@@ -5,7 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace Common {
+namespace VixenPlusCommon {
     public static class Utils {
         public const int IndexRowsOrHeight = 0;
         public const int IndexColsOrWidth = 1;

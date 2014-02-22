@@ -6,11 +6,11 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-using Common;
 
-using CommonControls;
 
 using VixenPlus.Properties;
+
+using VixenPlusCommon;
 
 namespace VixenPlus.Dialogs {
     internal partial class CurveFileImportExportDialog : Form {

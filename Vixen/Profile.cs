@@ -5,9 +5,9 @@ using System.IO;
 using System.Text;
 using System.Xml;
 
-using Common;
 
-using CommonControls;
+
+using VixenPlusCommon;
 
 namespace VixenPlus {
     public class Profile : IExecutable {

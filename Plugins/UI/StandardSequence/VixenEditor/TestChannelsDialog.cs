@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Forms;
 
-using Common;
 
-using CommonControls;
 
 using VixenPlus;
+
+using VixenPlusCommon;
 
 namespace VixenEditor {
 

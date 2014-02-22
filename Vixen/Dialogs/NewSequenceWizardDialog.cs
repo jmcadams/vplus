@@ -8,11 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using Common;
 
-using CommonControls;
 
 using VixenPlus.Properties;
+
+using VixenPlusCommon;
 
 namespace VixenPlus.Dialogs {
     public partial class NewSequenceWizardDialog : Form {

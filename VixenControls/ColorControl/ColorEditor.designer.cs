@@ -1,4 +1,6 @@
-﻿namespace CommonControls
+﻿using VixenPlusCommon;
+
+namespace VixenPlusCommon
 {
     sealed partial class ColorEditor
   {
@@ -36,9 +38,9 @@
         this.bNumericUpDown = new System.Windows.Forms.NumericUpDown();
         this.hexLabel = new System.Windows.Forms.Label();
         this.hexTextBox = new System.Windows.Forms.ComboBox();
-        this.bColorBar = new CommonControls.RgbaColorSlider();
-        this.gColorBar = new CommonControls.RgbaColorSlider();
-        this.rColorBar = new CommonControls.RgbaColorSlider();
+        this.bColorBar = new RgbaColorSlider();
+        this.gColorBar = new RgbaColorSlider();
+        this.rColorBar = new RgbaColorSlider();
         ((System.ComponentModel.ISupportInitialize)(this.rNumericUpDown)).BeginInit();
         ((System.ComponentModel.ISupportInitialize)(this.gNumericUpDown)).BeginInit();
         ((System.ComponentModel.ISupportInitialize)(this.bNumericUpDown)).BeginInit();
@@ -138,7 +140,7 @@
         // 
         // bColorBar
         // 
-        this.bColorBar.Channel = CommonControls.RgbaChannel.Blue;
+        this.bColorBar.Channel = RgbaChannel.Blue;
         this.bColorBar.Location = new System.Drawing.Point(27, 52);
         this.bColorBar.Name = "bColorBar";
         this.bColorBar.NubColor = System.Drawing.Color.Blue;
@@ -148,7 +150,7 @@
         // 
         // gColorBar
         // 
-        this.gColorBar.Channel = CommonControls.RgbaChannel.Green;
+        this.gColorBar.Channel = RgbaChannel.Green;
         this.gColorBar.Location = new System.Drawing.Point(27, 26);
         this.gColorBar.Name = "gColorBar";
         this.gColorBar.NubColor = System.Drawing.Color.Lime;

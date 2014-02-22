@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace Common {
+namespace VixenPlusCommon {
     public partial class TransparentLabel: Label
     {	
         public TransparentLabel()

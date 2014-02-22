@@ -3,9 +3,9 @@ using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 
-using Common;
 
-using CommonControls;
+
+using VixenPlusCommon;
 
 namespace VixenEditor {
 

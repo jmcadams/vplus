@@ -1,4 +1,4 @@
-﻿using Common;
+﻿using VixenPlusCommon;
 
 namespace VixenPlus.Dialogs
 {

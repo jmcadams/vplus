@@ -6,12 +6,12 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 
-using Common;
 
-using CommonControls;
 
 using VixenPlus;
 using VixenPlus.Properties;
+
+using VixenPlusCommon;
 
 namespace VixenEditor {
     internal static class ToolStripManager {

@@ -82,7 +82,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup>
-    <RootNamespace>Common</RootNamespace>
+    <RootNamespace>VixenPlusCommon</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System">

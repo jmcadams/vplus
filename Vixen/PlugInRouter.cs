@@ -6,11 +6,11 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 
-using Common;
 
-using CommonControls;
 
 using VixenPlus.Properties;
+
+using VixenPlusCommon;
 
 namespace VixenPlus {
     internal class PlugInRouter {

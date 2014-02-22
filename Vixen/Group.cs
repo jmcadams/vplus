@@ -11,11 +11,11 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 
-using Common;
 
-using CommonControls;
 
 using VixenPlus.Properties;
+
+using VixenPlusCommon;
 
 namespace VixenPlus {
     public class Group {

@@ -12,11 +12,11 @@ using System.Xml;
 
 using AdjustablePreview.Properties;
 
-using Common;
 
-using CommonControls;
 
 using VixenPlus;
+
+using VixenPlusCommon;
 
 namespace Preview {
     public partial class SetupDialog : Form {

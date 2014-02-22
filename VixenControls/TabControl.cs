@@ -2,9 +2,9 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-using CommonControls.Annotations;
+using VixenPlusCommon.Properties;
 
-namespace Common {
+namespace VixenPlusCommon {
     [ToolboxBitmap(typeof (System.Windows.Forms.TabControl))]
     public class TabControl : System.Windows.Forms.TabControl {
         private bool _hideTabs;

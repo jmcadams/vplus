@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-using CommonControls;
-
-namespace Common {
+namespace VixenPlusCommon {
     public static class HSVUtils {
         public static HSV ToHSV(this Color color) {
             var chromaMax = (float) Math.Max(color.R, Math.Max(color.G, color.B));

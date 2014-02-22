@@ -1,13 +1,13 @@
 using System;
 using System.Windows.Forms;
 
-using Common;
 
-using CommonControls;
 
 using FMOD;
 
 using VixenPlus.Properties;
+
+using VixenPlusCommon;
 
 namespace VixenPlus.Dialogs {
     internal partial class SoundDeviceDialog : Form {

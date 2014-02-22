@@ -1,9 +1,9 @@
 ﻿using System.Reflection;
 using System.Windows.Forms;
 
-using Common;
 
-using CommonControls;
+
+using VixenPlusCommon;
 
 namespace VixenPlus {
     public interface ISystem

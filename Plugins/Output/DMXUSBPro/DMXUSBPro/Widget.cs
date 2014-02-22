@@ -1,6 +1,6 @@
-﻿using Common;
+﻿
 
-using CommonControls;
+using VixenPlusCommon;
 
 namespace DMXUSBPro
 {

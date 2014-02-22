@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using Common;
 
-using CommonControls;
 
 using VixenPlus;
 using VixenPlus.Properties;
+
+using VixenPlusCommon;
 
 using ContentAlignment = System.Drawing.ContentAlignment;
 

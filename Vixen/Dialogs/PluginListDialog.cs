@@ -6,11 +6,11 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 
-using Common;
 
-using CommonControls;
 
 using VixenPlus.Properties;
+
+using VixenPlusCommon;
 
 namespace VixenPlus.Dialogs {
     public sealed partial class PluginListDialog : Form {
