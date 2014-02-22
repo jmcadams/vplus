@@ -1249,6 +1249,10 @@ namespace VixenPlus.Dialogs {
             nudRuleStart.Visible = false;
             nudRuleEnd.Visible = false;
             nudRuleIncr.Visible = false;
+            gbChannels.Visible = false;
+            gbColors.Visible = false;
+            gbEnable.Visible = false;
+            gbExportImport.Visible = false;
             DoButtonManagement();
         }
     }

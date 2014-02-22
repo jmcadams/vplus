@@ -106,6 +106,10 @@
             this.btnOkay = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.tcControlArea = new CommonControls.TabControl(this.components);
+            this.tpMultiChannel = new System.Windows.Forms.TabPage();
+            this.tpNormal = new System.Windows.Forms.TabPage();
+            this.tpMultiColor = new System.Windows.Forms.TabPage();
             this.gbProfiles.SuspendLayout();
             this.tcProfile.SuspendLayout();
             this.tpChannels.SuspendLayout();
@@ -134,6 +138,9 @@
             this.tpGroups.SuspendLayout();
             this.tpSortOrders.SuspendLayout();
             this.tpNutcracker.SuspendLayout();
+            this.tcControlArea.SuspendLayout();
+            this.tpMultiChannel.SuspendLayout();
+            this.tpNormal.SuspendLayout();
             this.SuspendLayout();
             // 
             // cbProfiles
@@ -220,8 +227,7 @@
             // 
             // tpChannels
             // 
-            this.tpChannels.Controls.Add(this.panelChButtons);
-            this.tpChannels.Controls.Add(this.panelChGenerator);
+            this.tpChannels.Controls.Add(this.tcControlArea);
             this.tpChannels.Controls.Add(this.dgvChannels);
             this.tpChannels.Location = new System.Drawing.Point(4, 22);
             this.tpChannels.Name = "tpChannels";
@@ -238,9 +244,9 @@
             this.panelChButtons.Controls.Add(this.gbExportImport);
             this.panelChButtons.Controls.Add(this.gbEnable);
             this.panelChButtons.Controls.Add(this.gbColors);
-            this.panelChButtons.Location = new System.Drawing.Point(575, 0);
+            this.panelChButtons.Location = new System.Drawing.Point(8, 0);
             this.panelChButtons.Name = "panelChButtons";
-            this.panelChButtons.Size = new System.Drawing.Size(174, 231);
+            this.panelChButtons.Size = new System.Drawing.Size(174, 232);
             this.panelChButtons.TabIndex = 16;
             // 
             // gbChannels
@@ -398,9 +404,9 @@
             this.panelChGenerator.Controls.Add(this.lblChGenTemplate);
             this.panelChGenerator.Controls.Add(this.btnChGrnCancel);
             this.panelChGenerator.Controls.Add(this.btnChGenOk);
-            this.panelChGenerator.Location = new System.Drawing.Point(575, 0);
+            this.panelChGenerator.Location = new System.Drawing.Point(8, 0);
             this.panelChGenerator.Name = "panelChGenerator";
-            this.panelChGenerator.Size = new System.Drawing.Size(174, 454);
+            this.panelChGenerator.Size = new System.Drawing.Size(174, 481);
             this.panelChGenerator.TabIndex = 17;
             this.panelChGenerator.Visible = false;
             // 
@@ -1027,6 +1033,50 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // tcControlArea
+            // 
+            this.tcControlArea.Controls.Add(this.tpNormal);
+            this.tcControlArea.Controls.Add(this.tpMultiChannel);
+            this.tcControlArea.Controls.Add(this.tpMultiColor);
+            this.tcControlArea.HideTabs = true;
+            this.tcControlArea.Location = new System.Drawing.Point(569, 0);
+            this.tcControlArea.Multiline = true;
+            this.tcControlArea.Name = "tcControlArea";
+            this.tcControlArea.OurMultiline = true;
+            this.tcControlArea.SelectedIndex = 0;
+            this.tcControlArea.Size = new System.Drawing.Size(187, 454);
+            this.tcControlArea.TabIndex = 18;
+            // 
+            // tpMultiChannel
+            // 
+            this.tpMultiChannel.Controls.Add(this.panelChGenerator);
+            this.tpMultiChannel.Location = new System.Drawing.Point(0, 0);
+            this.tpMultiChannel.Name = "tpMultiChannel";
+            this.tpMultiChannel.Padding = new System.Windows.Forms.Padding(3);
+            this.tpMultiChannel.Size = new System.Drawing.Size(187, 454);
+            this.tpMultiChannel.TabIndex = 1;
+            this.tpMultiChannel.Text = "MultiChannel";
+            this.tpMultiChannel.UseVisualStyleBackColor = true;
+            // 
+            // tpNormal
+            // 
+            this.tpNormal.Controls.Add(this.panelChButtons);
+            this.tpNormal.Location = new System.Drawing.Point(0, 0);
+            this.tpNormal.Name = "tpNormal";
+            this.tpNormal.Padding = new System.Windows.Forms.Padding(3);
+            this.tpNormal.Size = new System.Drawing.Size(187, 454);
+            this.tpNormal.TabIndex = 0;
+            this.tpNormal.Text = "Normal";
+            // 
+            // tpMultiColor
+            // 
+            this.tpMultiColor.Location = new System.Drawing.Point(0, 0);
+            this.tpMultiColor.Name = "tpMultiColor";
+            this.tpMultiColor.Size = new System.Drawing.Size(187, 454);
+            this.tpMultiColor.TabIndex = 2;
+            this.tpMultiColor.Text = "MutliColor";
+            this.tpMultiColor.UseVisualStyleBackColor = true;
+            // 
             // FrmProfileManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1076,6 +1126,9 @@
             this.tpGroups.ResumeLayout(false);
             this.tpSortOrders.ResumeLayout(false);
             this.tpNutcracker.ResumeLayout(false);
+            this.tcControlArea.ResumeLayout(false);
+            this.tpMultiChannel.ResumeLayout(false);
+            this.tpNormal.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1158,5 +1211,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ChannelName;
         private System.Windows.Forms.DataGridViewTextBoxColumn OutputChannel;
         private System.Windows.Forms.DataGridViewTextBoxColumn ChannelColor;
+        private CommonControls.TabControl tcControlArea;
+        private System.Windows.Forms.TabPage tpMultiChannel;
+        private System.Windows.Forms.TabPage tpNormal;
+        private System.Windows.Forms.TabPage tpMultiColor;
     }
 }
