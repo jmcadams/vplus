@@ -31,7 +31,6 @@ namespace VixenPlus.Dialogs {
         private readonly Size _borderSize = SystemInformation.BorderSize;
         private Profile _contextProfile;
 
-        private const string PbPrefix = "pbRuleColor";
 
         private const int ChannelEnabledCol = 0;
         private const int ChannelNumCol = 1;
@@ -311,16 +310,7 @@ namespace VixenPlus.Dialogs {
         #region Channel Generator
 
         private void btnChAddMulti_Click(object sender, EventArgs e) {
-            panelChButtons.Visible = false;
-            panelChGenerator.Visible = true;
-            lblRulePrompt.Text = "";
-            tbRuleWords.Visible = false;
-            lblRuleStartNum.Visible = false;
-            cbRuleEndNum.Visible = false;
-            lblRuleIncr.Visible = false;
-            nudRuleStart.Visible = false;
-            nudRuleEnd.Visible = false;
-            nudRuleIncr.Visible = false;
+            tcControlArea.SelectTab(1);
             LoadTemplates();
             DoButtonManagement();
             DoRuleButtons();
@@ -328,8 +318,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void btnGeneratorButton_Click(object sender, EventArgs e) {
-            panelChButtons.Visible = true;
-            panelChGenerator.Visible = false;
+            tcControlArea.SelectTab(1);
             if (((Button) sender).Text == btnChGenOk.Text) {
                 dgvChannels.Rows.Clear();
                 foreach (var c in GenerateChannels()) {
@@ -626,10 +615,7 @@ namespace VixenPlus.Dialogs {
         #endregion
 
         private void cbRuleColors_CheckedChanged(object sender, EventArgs e) {
-            var isVisible = cbRuleColors.Checked && cbRuleColors.Visible;
-            foreach (var c in GetAllPictureBoxes()) {
-                c.Visible = isVisible;
-            }
+            colorPaletteMulti.Visible = cbRuleColors.Checked && cbRuleColors.Visible;
         }
 
         #endregion
@@ -857,16 +843,13 @@ namespace VixenPlus.Dialogs {
                 rules.Add(rule.RuleData);
             }
 
-            var colors = new XElement("Colors");
+            var palette = new XElement(ColorPalette.PaletteElement);
             if (cbRuleColors.Checked) {
-                var count = 1;
-                foreach (var c in GetAllPictureBoxes()) {
-                    colors.Add(new XElement(String.Format("Color{0}", count++), c.BackColor.ToHTML()));
-                }
+                palette = colorPaletteMulti.Palette;
             }
 
             var template = new XElement("Template", new XElement("Channels", nudChGenChannels.Value),
-                new XElement("ChannelNameFormat", tbChGenNameFormat.Text), rules, colors);
+                new XElement("ChannelNameFormat", tbChGenNameFormat.Text), rules, palette);
 
             return template;
         }
@@ -885,20 +868,10 @@ namespace VixenPlus.Dialogs {
             element = template.Element("ChannelNameFormat");
             tbChGenNameFormat.Text = element != null ? element.Value : string.Empty;
 
-            element = template.Element("Colors");
+            element = template.Element(ColorPalette.PaletteElement);
             if (element != null && element.Elements().Any()) {
                 cbRuleColors.Checked = true;
-                for (var i = 1; i <= 8; i++) {
-                    var color = element.Element(String.Format("Color{0}", i));
-                    var control = Controls.Find(string.Format("{0}{1}", PbPrefix, i), true)[0];
-                    if (null != color) {
-                        FormatPaintBox(control, color);
-                    }
-                    else {
-                        FormatPaintBox(control, Color.Transparent);
-                    }
-
-                }
+                colorPaletteMulti.Palette = element;
             }
             else {
                 cbRuleColors.Checked = false;
@@ -936,22 +909,6 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private static void FormatPaintBox(Control pb, XElement color) {
-            if (color == null) {
-                return;
-            }
-
-            FormatPaintBox(pb, color.Value.FromHTML());
-        }
-
-
-        private static void FormatPaintBox(Control pb, Color color) {
-            pb.BackColor = color;
-            pb.BackgroundImage = color == Color.Transparent ? Resources.none1 : null;
-            pb.BackgroundImageLayout = ImageLayout.Center;
-        }
-
-
         private void PreviewChannels() {
             dgvChannels.SuspendLayout();
             dgvChannels.Rows.Clear();
@@ -983,7 +940,7 @@ namespace VixenPlus.Dialogs {
             var colors = new List<Color>();
 
             if (cbRuleColors.Checked) {
-                colors.AddRange(GetAllPictureBoxes().Where(c => c.BackColor != Color.Transparent).Select(c => c.BackColor));
+                colors.AddRange(colorPaletteMulti.Colors.Where(c => c != Color.Transparent).Select(c => c));
             }
 
             if (colors.Count == 0) {
@@ -991,21 +948,6 @@ namespace VixenPlus.Dialogs {
             }
 
             return colors;
-        }
-
-
-        // ReSharper disable PossibleMultipleEnumeration
-        private static IEnumerable<Control> GetAll(Control control, Type type) {
-            var controls = control.Controls.Cast<Control>();
-            return controls.SelectMany(ctrl => GetAll(ctrl, type)).Concat(controls).Where(c => c.GetType() == type);
-        }
-
-
-        // ReSharper restore PossibleMultipleEnumeration
-
-
-        private IEnumerable<Control> GetAllPictureBoxes() {
-            return GetAll(this, typeof (PictureBox)).Where(c => c.Name.StartsWith(PbPrefix)).OrderBy(c => c.Name);
         }
 
 
@@ -1038,19 +980,6 @@ namespace VixenPlus.Dialogs {
             }
 
             return names;
-        }
-
-
-        private void pbRuleColor_DoubleClick(object sender, EventArgs e) {
-            var pb = sender as PictureBox;
-            if (null == pb) {
-                return;
-            }
-
-            Color color;
-            if(GetColor(pb, pb.BackColor, out color)) {
-                FormatPaintBox(pb,color);
-            }
         }
 
 
@@ -1239,21 +1168,7 @@ namespace VixenPlus.Dialogs {
         }
 
         private void btnChColorMulti_Click(object sender, EventArgs e) {
-            panelChButtons.Visible = false;
-            panelChGenerator.Visible = true;
-            lblRulePrompt.Text = "";
-            tbRuleWords.Visible = false;
-            lblRuleStartNum.Visible = false;
-            cbRuleEndNum.Visible = false;
-            lblRuleIncr.Visible = false;
-            nudRuleStart.Visible = false;
-            nudRuleEnd.Visible = false;
-            nudRuleIncr.Visible = false;
-            gbChannels.Visible = false;
-            gbColors.Visible = false;
-            gbEnable.Visible = false;
-            gbExportImport.Visible = false;
-            DoButtonManagement();
+
         }
     }
 }

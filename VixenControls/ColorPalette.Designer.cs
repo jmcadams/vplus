@@ -51,6 +51,7 @@
             this.pbRuleColor8.Size = new System.Drawing.Size(20, 20);
             this.pbRuleColor8.TabIndex = 25;
             this.pbRuleColor8.TabStop = false;
+            this.pbRuleColor8.DoubleClick += new System.EventHandler(this.pbRuleColor_DoubleClick);
             // 
             // pbRuleColor7
             // 
@@ -62,6 +63,7 @@
             this.pbRuleColor7.Size = new System.Drawing.Size(20, 20);
             this.pbRuleColor7.TabIndex = 24;
             this.pbRuleColor7.TabStop = false;
+            this.pbRuleColor7.DoubleClick += new System.EventHandler(this.pbRuleColor_DoubleClick);
             // 
             // pbRuleColor6
             // 
@@ -73,6 +75,7 @@
             this.pbRuleColor6.Size = new System.Drawing.Size(20, 20);
             this.pbRuleColor6.TabIndex = 23;
             this.pbRuleColor6.TabStop = false;
+            this.pbRuleColor6.DoubleClick += new System.EventHandler(this.pbRuleColor_DoubleClick);
             // 
             // pbRuleColor5
             // 
@@ -84,6 +87,7 @@
             this.pbRuleColor5.Size = new System.Drawing.Size(20, 20);
             this.pbRuleColor5.TabIndex = 22;
             this.pbRuleColor5.TabStop = false;
+            this.pbRuleColor5.DoubleClick += new System.EventHandler(this.pbRuleColor_DoubleClick);
             // 
             // pbRuleColor4
             // 
@@ -96,6 +100,7 @@
             this.pbRuleColor4.Size = new System.Drawing.Size(20, 20);
             this.pbRuleColor4.TabIndex = 18;
             this.pbRuleColor4.TabStop = false;
+            this.pbRuleColor4.DoubleClick += new System.EventHandler(this.pbRuleColor_DoubleClick);
             // 
             // pbRuleColor3
             // 
@@ -106,6 +111,7 @@
             this.pbRuleColor3.Size = new System.Drawing.Size(20, 20);
             this.pbRuleColor3.TabIndex = 19;
             this.pbRuleColor3.TabStop = false;
+            this.pbRuleColor3.DoubleClick += new System.EventHandler(this.pbRuleColor_DoubleClick);
             // 
             // pbRuleColor2
             // 
@@ -116,6 +122,7 @@
             this.pbRuleColor2.Size = new System.Drawing.Size(20, 20);
             this.pbRuleColor2.TabIndex = 20;
             this.pbRuleColor2.TabStop = false;
+            this.pbRuleColor2.DoubleClick += new System.EventHandler(this.pbRuleColor_DoubleClick);
             // 
             // pbRuleColor1
             // 
@@ -126,6 +133,7 @@
             this.pbRuleColor1.Size = new System.Drawing.Size(20, 20);
             this.pbRuleColor1.TabIndex = 21;
             this.pbRuleColor1.TabStop = false;
+            this.pbRuleColor1.DoubleClick += new System.EventHandler(this.pbRuleColor_DoubleClick);
             // 
             // ColorPalette
             // 
