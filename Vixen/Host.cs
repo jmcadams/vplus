@@ -5,6 +5,8 @@ using System.IO;
 using System.Timers;
 using System.Windows.Forms;
 
+using CommonControls;
+
 using CommonUtils;
 
 using VixenPlus.Properties;

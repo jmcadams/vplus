@@ -4,6 +4,8 @@ using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 
+using CommonControls;
+
 using CommonUtils;
 
 using VixenPlus.Properties;

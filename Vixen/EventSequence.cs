@@ -7,6 +7,8 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 
+using CommonControls;
+
 using CommonUtils;
 
 using VixenPlus.Properties;

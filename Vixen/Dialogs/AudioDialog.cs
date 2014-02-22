@@ -6,6 +6,8 @@ using System.Threading;
 using System.Timers;
 using System.Windows.Forms;
 
+using CommonControls;
+
 using CommonUtils;
 
 using FMOD;

@@ -83,7 +83,6 @@
   <ItemGroup>
     <Compile Include="HSV.cs" />
     <Compile Include="HSVUtils.cs" />
-    <Compile Include="Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

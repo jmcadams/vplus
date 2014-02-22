@@ -7,6 +7,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
+using CommonControls;
+
 using CommonUtils;
 
 using NutcrackerEffectsControl;

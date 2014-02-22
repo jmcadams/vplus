@@ -156,6 +156,7 @@
       <DependentUpon>TransparentLabel.cs</DependentUpon>
     </Compile>
     <Compile Include="OwnerDrawnUtils.cs" />
+    <Compile Include="Utils.cs" />
     <EmbeddedResource Include="ColorControl\ColorEditor.resx">
       <DependentUpon>ColorEditor.cs</DependentUpon>
     </EmbeddedResource>

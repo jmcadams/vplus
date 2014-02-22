@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
+using CommonControls;
+
 using CommonUtils;
 
 using VixenPlus.Properties;

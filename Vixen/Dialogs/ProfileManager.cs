@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 
-using CommonUtils;
+using CommonControls;
 
 using VixenPlus.Properties;
 

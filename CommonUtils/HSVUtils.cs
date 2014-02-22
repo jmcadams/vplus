@@ -8,12 +8,13 @@ namespace CommonUtils {
             var chromaMin = (float) Math.Min(color.R, Math.Min(color.G, color.B));
 
             var hue = color.GetHue()/360;
-            var saturation = chromaMax.IsNearlyEqual(0) ? 0 : 1f - (1f*chromaMin/chromaMax);
+            //var saturation = chromaMax.IsNearlyEqual(0) ? 0 : 1f - (1f*chromaMin/chromaMax);
             var value = chromaMax/255f;
 
-            return new HSV(hue, saturation, value);
+            return new HSV(hue, 0 /*saturation*/, value);
         }
 
+        //todo undo the above.
 
         public static Color ToColor(this HSV inHsv) {
             var hue = inHsv.Hue*360;

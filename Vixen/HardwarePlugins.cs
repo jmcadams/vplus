@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
+using CommonControls;
+
 using CommonUtils;
 
 namespace VixenPlus {
