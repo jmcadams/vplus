@@ -23,6 +23,7 @@ using VixenPlusCommon;
 //Add tool tips to buttons
 //Implement Event when a colorpalette color changes
 //Add Key shortcuts to buttons
+//Move panels to thier own class
 
 namespace VixenPlus.Dialogs {
     public partial class FrmProfileManager : Form {
