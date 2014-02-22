@@ -21,12 +21,11 @@ using VixenPlusCommon;
 //Need to ask for export file name on export
 //Implement remember selected cell
 //Add tool tips to buttons
-//Implement Event when a colorpalette color changes
-//Add Key shortcuts to buttons
+//Implement Event when a colorpalette color changes (and the live view idea)
 //Move panels to thier own class
 
 namespace VixenPlus.Dialogs {
-    public partial class FrmProfileManager : Form {
+    public partial class VixenPlusRoadie : Form {
 
         #region ClassMembers
 
@@ -62,7 +61,7 @@ namespace VixenPlus.Dialogs {
 
         #region Constructor
 
-        public FrmProfileManager(IExecutable defaultProfile = null) {
+        public VixenPlusRoadie(IExecutable defaultProfile = null) {
             InitializeComponent();
             Icon = Resources.VixenPlus;
 
@@ -81,6 +80,7 @@ namespace VixenPlus.Dialogs {
             else {
                 cbProfiles.SelectedIndex = 0;
             }
+
         }
 
         #endregion
@@ -291,7 +291,6 @@ namespace VixenPlus.Dialogs {
 
 
         private void AddRows(IEnumerable<Channel> channels, int startCh = 1) {
-            Debug.Print(DateTime.Now + "");
             dgvChannels.SelectionChanged -= dgvChannels_SelectionChanged;
             dgvChannels.SuspendLayout();
             foreach (var ch in channels) {
@@ -299,7 +298,6 @@ namespace VixenPlus.Dialogs {
             }
             dgvChannels.ResumeLayout();
             dgvChannels.SelectionChanged += dgvChannels_SelectionChanged;
-            Debug.Print(DateTime.Now + "");
         }
 
 
@@ -1195,5 +1193,12 @@ namespace VixenPlus.Dialogs {
             }
             DoButtonManagement();
         }
+
+        private void dgvChannels_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
+            if (e.ColumnIndex == ChannelNameCol && ModifierKeys == Keys.Control) {
+                //TODO Add channel renaming templating.
+            }
+        }
+
     }
 }

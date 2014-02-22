@@ -1,8 +1,10 @@
-﻿using VixenPlusCommon;
+﻿// this.Text = Vendor.ProductName + " - " + Vendor.ModuleManager;
+
+using VixenPlusCommon;
 
 namespace VixenPlus.Dialogs
 {
-    partial class FrmProfileManager
+    partial class VixenPlusRoadie
     {
         /// <summary>
         /// Required designer variable.
@@ -106,7 +108,7 @@ namespace VixenPlus.Dialogs
             this.btnNcaButton = new System.Windows.Forms.Button();
             this.btnOkay = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.ttRoadie = new System.Windows.Forms.ToolTip(this.components);
             this.gbProfiles.SuspendLayout();
             this.tcProfile.SuspendLayout();
             this.tpChannels.SuspendLayout();
@@ -153,7 +155,7 @@ namespace VixenPlus.Dialogs
             this.gbProfiles.Location = new System.Drawing.Point(12, 12);
             this.gbProfiles.Name = "gbProfiles";
             this.gbProfiles.Size = new System.Drawing.Size(621, 52);
-            this.gbProfiles.TabIndex = 1;
+            this.gbProfiles.TabIndex = 0;
             this.gbProfiles.TabStop = false;
             this.gbProfiles.Text = "Profile";
             // 
@@ -164,6 +166,7 @@ namespace VixenPlus.Dialogs
             this.btnDeleteProfile.Size = new System.Drawing.Size(75, 23);
             this.btnDeleteProfile.TabIndex = 4;
             this.btnDeleteProfile.Text = "Delete";
+            this.ttRoadie.SetToolTip(this.btnDeleteProfile, "Delete current profile");
             this.btnDeleteProfile.UseVisualStyleBackColor = true;
             this.btnDeleteProfile.Click += new System.EventHandler(this.btnDeleteProfile_Click);
             // 
@@ -172,8 +175,9 @@ namespace VixenPlus.Dialogs
             this.btnRenameProfile.Location = new System.Drawing.Point(378, 19);
             this.btnRenameProfile.Name = "btnRenameProfile";
             this.btnRenameProfile.Size = new System.Drawing.Size(75, 23);
-            this.btnRenameProfile.TabIndex = 3;
+            this.btnRenameProfile.TabIndex = 2;
             this.btnRenameProfile.Text = "Rename";
+            this.ttRoadie.SetToolTip(this.btnRenameProfile, "Rename current profile");
             this.btnRenameProfile.UseVisualStyleBackColor = true;
             this.btnRenameProfile.Click += new System.EventHandler(this.btnRenameProfile_Click);
             // 
@@ -182,8 +186,9 @@ namespace VixenPlus.Dialogs
             this.btnCopyProfile.Location = new System.Drawing.Point(459, 19);
             this.btnCopyProfile.Name = "btnCopyProfile";
             this.btnCopyProfile.Size = new System.Drawing.Size(75, 23);
-            this.btnCopyProfile.TabIndex = 2;
+            this.btnCopyProfile.TabIndex = 3;
             this.btnCopyProfile.Text = "Copy";
+            this.ttRoadie.SetToolTip(this.btnCopyProfile, "Copy current profile");
             this.btnCopyProfile.UseVisualStyleBackColor = true;
             this.btnCopyProfile.Click += new System.EventHandler(this.btnCopyProfile_Click);
             // 
@@ -194,6 +199,7 @@ namespace VixenPlus.Dialogs
             this.btnAddProfile.Size = new System.Drawing.Size(75, 23);
             this.btnAddProfile.TabIndex = 1;
             this.btnAddProfile.Text = "Add";
+            this.ttRoadie.SetToolTip(this.btnAddProfile, "Add a new profile");
             this.btnAddProfile.UseVisualStyleBackColor = true;
             this.btnAddProfile.Click += new System.EventHandler(this.btnAddProfile_Click);
             // 
@@ -212,7 +218,8 @@ namespace VixenPlus.Dialogs
             this.tcProfile.Name = "tcProfile";
             this.tcProfile.SelectedIndex = 0;
             this.tcProfile.Size = new System.Drawing.Size(760, 480);
-            this.tcProfile.TabIndex = 2;
+            this.tcProfile.TabIndex = 3;
+            this.ttRoadie.SetToolTip(this.tcProfile, "Manage profile channels");
             this.tcProfile.SelectedIndexChanged += new System.EventHandler(this.tcProfile_SelectedIndexChanged);
             // 
             // tpChannels
@@ -261,7 +268,7 @@ namespace VixenPlus.Dialogs
             this.panelChButtons.Location = new System.Drawing.Point(8, 0);
             this.panelChButtons.Name = "panelChButtons";
             this.panelChButtons.Size = new System.Drawing.Size(174, 232);
-            this.panelChButtons.TabIndex = 16;
+            this.panelChButtons.TabIndex = 0;
             // 
             // gbChannels
             // 
@@ -272,17 +279,18 @@ namespace VixenPlus.Dialogs
             this.gbChannels.Location = new System.Drawing.Point(3, 6);
             this.gbChannels.Name = "gbChannels";
             this.gbChannels.Size = new System.Drawing.Size(168, 77);
-            this.gbChannels.TabIndex = 15;
+            this.gbChannels.TabIndex = 0;
             this.gbChannels.TabStop = false;
             this.gbChannels.Text = "Channels";
             // 
             // btnChDelete
             // 
-            this.btnChDelete.Location = new System.Drawing.Point(6, 48);
+            this.btnChDelete.Location = new System.Drawing.Point(87, 48);
             this.btnChDelete.Name = "btnChDelete";
             this.btnChDelete.Size = new System.Drawing.Size(75, 23);
             this.btnChDelete.TabIndex = 2;
             this.btnChDelete.Text = "Delete";
+            this.ttRoadie.SetToolTip(this.btnChDelete, "Delete selected channels");
             this.btnChDelete.UseVisualStyleBackColor = true;
             this.btnChDelete.Click += new System.EventHandler(this.btnChDelete_Click);
             // 
@@ -292,7 +300,8 @@ namespace VixenPlus.Dialogs
             this.btnChAddMulti.Name = "btnChAddMulti";
             this.btnChAddMulti.Size = new System.Drawing.Size(75, 23);
             this.btnChAddMulti.TabIndex = 1;
-            this.btnChAddMulti.Text = "Add Multiple";
+            this.btnChAddMulti.Text = "Add &Multiple";
+            this.ttRoadie.SetToolTip(this.btnChAddMulti, "Add multiple channels using a rule templete");
             this.btnChAddMulti.UseVisualStyleBackColor = true;
             this.btnChAddMulti.Click += new System.EventHandler(this.btnChAddMulti_Click);
             // 
@@ -302,7 +311,8 @@ namespace VixenPlus.Dialogs
             this.btnChAddOne.Name = "btnChAddOne";
             this.btnChAddOne.Size = new System.Drawing.Size(75, 23);
             this.btnChAddOne.TabIndex = 0;
-            this.btnChAddOne.Text = "Add One";
+            this.btnChAddOne.Text = "Add O&ne";
+            this.ttRoadie.SetToolTip(this.btnChAddOne, "Add a single white channel");
             this.btnChAddOne.UseVisualStyleBackColor = true;
             this.btnChAddOne.Click += new System.EventHandler(this.btnChAddOne_Click);
             // 
@@ -314,7 +324,7 @@ namespace VixenPlus.Dialogs
             this.gbExportImport.Location = new System.Drawing.Point(3, 179);
             this.gbExportImport.Name = "gbExportImport";
             this.gbExportImport.Size = new System.Drawing.Size(168, 48);
-            this.gbExportImport.TabIndex = 11;
+            this.gbExportImport.TabIndex = 3;
             this.gbExportImport.TabStop = false;
             this.gbExportImport.Text = "Export/Import Channel Data";
             // 
@@ -324,8 +334,9 @@ namespace VixenPlus.Dialogs
             this.btnChExport.Location = new System.Drawing.Point(6, 19);
             this.btnChExport.Name = "btnChExport";
             this.btnChExport.Size = new System.Drawing.Size(75, 23);
-            this.btnChExport.TabIndex = 8;
-            this.btnChExport.Text = "Export CSV";
+            this.btnChExport.TabIndex = 0;
+            this.btnChExport.Text = "E&xport CSV";
+            this.ttRoadie.SetToolTip(this.btnChExport, "Export channels to a CSV file");
             this.btnChExport.UseVisualStyleBackColor = true;
             this.btnChExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
@@ -335,8 +346,9 @@ namespace VixenPlus.Dialogs
             this.btnChImport.Location = new System.Drawing.Point(87, 19);
             this.btnChImport.Name = "btnChImport";
             this.btnChImport.Size = new System.Drawing.Size(75, 23);
-            this.btnChImport.TabIndex = 9;
-            this.btnChImport.Text = "Import CSV";
+            this.btnChImport.TabIndex = 1;
+            this.btnChImport.Text = "&Import CSV";
+            this.ttRoadie.SetToolTip(this.btnChImport, "Import channels from a CSV file");
             this.btnChImport.UseVisualStyleBackColor = true;
             this.btnChImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
@@ -348,7 +360,7 @@ namespace VixenPlus.Dialogs
             this.gbEnable.Location = new System.Drawing.Point(3, 131);
             this.gbEnable.Name = "gbEnable";
             this.gbEnable.Size = new System.Drawing.Size(168, 48);
-            this.gbEnable.TabIndex = 13;
+            this.gbEnable.TabIndex = 2;
             this.gbEnable.TabStop = false;
             this.gbEnable.Text = "Channel Enabling";
             // 
@@ -357,8 +369,9 @@ namespace VixenPlus.Dialogs
             this.btnChEnable.Location = new System.Drawing.Point(6, 19);
             this.btnChEnable.Name = "btnChEnable";
             this.btnChEnable.Size = new System.Drawing.Size(75, 23);
-            this.btnChEnable.TabIndex = 13;
-            this.btnChEnable.Text = "Enable";
+            this.btnChEnable.TabIndex = 0;
+            this.btnChEnable.Text = "&Enable";
+            this.ttRoadie.SetToolTip(this.btnChEnable, "Enable selected channels");
             this.btnChEnable.UseVisualStyleBackColor = true;
             this.btnChEnable.Click += new System.EventHandler(this.btnEnableDisable_Click);
             // 
@@ -367,8 +380,9 @@ namespace VixenPlus.Dialogs
             this.btnChDisable.Location = new System.Drawing.Point(87, 19);
             this.btnChDisable.Name = "btnChDisable";
             this.btnChDisable.Size = new System.Drawing.Size(75, 23);
-            this.btnChDisable.TabIndex = 12;
-            this.btnChDisable.Text = "Disable";
+            this.btnChDisable.TabIndex = 1;
+            this.btnChDisable.Text = "&Disable";
+            this.ttRoadie.SetToolTip(this.btnChDisable, "Disable selected channels");
             this.btnChDisable.UseVisualStyleBackColor = true;
             this.btnChDisable.Click += new System.EventHandler(this.btnEnableDisable_Click);
             // 
@@ -380,7 +394,7 @@ namespace VixenPlus.Dialogs
             this.gbColors.Location = new System.Drawing.Point(3, 83);
             this.gbColors.Name = "gbColors";
             this.gbColors.Size = new System.Drawing.Size(168, 48);
-            this.gbColors.TabIndex = 14;
+            this.gbColors.TabIndex = 1;
             this.gbColors.TabStop = false;
             this.gbColors.Text = "Channel Colors";
             // 
@@ -390,7 +404,8 @@ namespace VixenPlus.Dialogs
             this.btnChColorMulti.Name = "btnChColorMulti";
             this.btnChColorMulti.Size = new System.Drawing.Size(75, 23);
             this.btnChColorMulti.TabIndex = 1;
-            this.btnChColorMulti.Text = "Multi Color";
+            this.btnChColorMulti.Text = "Multi &Color";
+            this.ttRoadie.SetToolTip(this.btnChColorMulti, "Color selected channels with a palette");
             this.btnChColorMulti.UseVisualStyleBackColor = true;
             this.btnChColorMulti.Click += new System.EventHandler(this.btnChColorMulti_Click);
             // 
@@ -400,7 +415,8 @@ namespace VixenPlus.Dialogs
             this.btnChColorOne.Name = "btnChColorOne";
             this.btnChColorOne.Size = new System.Drawing.Size(75, 23);
             this.btnChColorOne.TabIndex = 0;
-            this.btnChColorOne.Text = "One Color";
+            this.btnChColorOne.Text = "&One Color";
+            this.ttRoadie.SetToolTip(this.btnChColorOne, "Color selected channels with a single color");
             this.btnChColorOne.UseVisualStyleBackColor = true;
             this.btnChColorOne.Click += new System.EventHandler(this.btnChColorOne_Click);
             // 
@@ -440,8 +456,8 @@ namespace VixenPlus.Dialogs
             this.btnChGenSaveTemplate.Location = new System.Drawing.Point(141, 21);
             this.btnChGenSaveTemplate.Name = "btnChGenSaveTemplate";
             this.btnChGenSaveTemplate.Size = new System.Drawing.Size(24, 24);
-            this.btnChGenSaveTemplate.TabIndex = 7;
-            this.toolTip1.SetToolTip(this.btnChGenSaveTemplate, "Save template");
+            this.btnChGenSaveTemplate.TabIndex = 1;
+            this.ttRoadie.SetToolTip(this.btnChGenSaveTemplate, "Save current template settings");
             this.btnChGenSaveTemplate.UseVisualStyleBackColor = true;
             this.btnChGenSaveTemplate.Click += new System.EventHandler(this.btnChGenSaveTemplate_Click);
             // 
@@ -483,7 +499,7 @@ namespace VixenPlus.Dialogs
             this.colorPaletteChannel.Location = new System.Drawing.Point(58, 98);
             this.colorPaletteChannel.Name = "colorPaletteChannel";
             this.colorPaletteChannel.Size = new System.Drawing.Size(103, 50);
-            this.colorPaletteChannel.TabIndex = 14;
+            this.colorPaletteChannel.TabIndex = 5;
             // 
             // cbRuleEndNum
             // 
@@ -491,8 +507,9 @@ namespace VixenPlus.Dialogs
             this.cbRuleEndNum.Location = new System.Drawing.Point(5, 47);
             this.cbRuleEndNum.Name = "cbRuleEndNum";
             this.cbRuleEndNum.Size = new System.Drawing.Size(58, 17);
-            this.cbRuleEndNum.TabIndex = 13;
+            this.cbRuleEndNum.TabIndex = 1;
             this.cbRuleEndNum.Text = "End #:";
+            this.ttRoadie.SetToolTip(this.cbRuleEndNum, "Generation numbering is limited");
             this.cbRuleEndNum.UseVisualStyleBackColor = true;
             this.cbRuleEndNum.CheckedChanged += new System.EventHandler(this.cbRuleEndNum_CheckedChanged);
             // 
@@ -506,8 +523,9 @@ namespace VixenPlus.Dialogs
             0});
             this.nudRuleIncr.Name = "nudRuleIncr";
             this.nudRuleIncr.Size = new System.Drawing.Size(92, 20);
-            this.nudRuleIncr.TabIndex = 12;
+            this.nudRuleIncr.TabIndex = 3;
             this.nudRuleIncr.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.ttRoadie.SetToolTip(this.nudRuleIncr, "Generation numbering increment");
             this.nudRuleIncr.Value = new decimal(new int[] {
             1,
             0,
@@ -525,8 +543,9 @@ namespace VixenPlus.Dialogs
             0});
             this.nudRuleEnd.Name = "nudRuleEnd";
             this.nudRuleEnd.Size = new System.Drawing.Size(92, 20);
-            this.nudRuleEnd.TabIndex = 11;
+            this.nudRuleEnd.TabIndex = 2;
             this.nudRuleEnd.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.ttRoadie.SetToolTip(this.nudRuleEnd, "Generation end number");
             this.nudRuleEnd.ValueChanged += new System.EventHandler(this.nudRuleEnd_ValueChanged);
             // 
             // nudRuleStart
@@ -539,8 +558,9 @@ namespace VixenPlus.Dialogs
             0});
             this.nudRuleStart.Name = "nudRuleStart";
             this.nudRuleStart.Size = new System.Drawing.Size(92, 20);
-            this.nudRuleStart.TabIndex = 10;
+            this.nudRuleStart.TabIndex = 0;
             this.nudRuleStart.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.ttRoadie.SetToolTip(this.nudRuleStart, "Generation start number");
             this.nudRuleStart.ValueChanged += new System.EventHandler(this.nudRuleStart_ValueChanged);
             // 
             // lblRuleIncr
@@ -590,6 +610,7 @@ namespace VixenPlus.Dialogs
             this.cbRuleColors.Size = new System.Drawing.Size(58, 17);
             this.cbRuleColors.TabIndex = 4;
             this.cbRuleColors.Text = "Colors:";
+            this.ttRoadie.SetToolTip(this.cbRuleColors, "Use color palette");
             this.cbRuleColors.UseVisualStyleBackColor = true;
             this.cbRuleColors.CheckedChanged += new System.EventHandler(this.cbRuleColors_CheckedChanged);
             // 
@@ -600,7 +621,7 @@ namespace VixenPlus.Dialogs
             this.btnRuleDelete.Name = "btnRuleDelete";
             this.btnRuleDelete.Size = new System.Drawing.Size(24, 24);
             this.btnRuleDelete.TabIndex = 5;
-            this.toolTip1.SetToolTip(this.btnRuleDelete, "Remove selected rule");
+            this.ttRoadie.SetToolTip(this.btnRuleDelete, "Remove selected rule");
             this.btnRuleDelete.UseVisualStyleBackColor = true;
             this.btnRuleDelete.Click += new System.EventHandler(this.btnRuleDelete_Click);
             // 
@@ -610,8 +631,8 @@ namespace VixenPlus.Dialogs
             this.btnRuleAdd.Location = new System.Drawing.Point(138, 17);
             this.btnRuleAdd.Name = "btnRuleAdd";
             this.btnRuleAdd.Size = new System.Drawing.Size(24, 24);
-            this.btnRuleAdd.TabIndex = 4;
-            this.toolTip1.SetToolTip(this.btnRuleAdd, "Add selected rule.");
+            this.btnRuleAdd.TabIndex = 1;
+            this.ttRoadie.SetToolTip(this.btnRuleAdd, "Add selected rule");
             this.btnRuleAdd.UseVisualStyleBackColor = true;
             this.btnRuleAdd.Click += new System.EventHandler(this.btnRuleAdd_Click);
             // 
@@ -625,7 +646,7 @@ namespace VixenPlus.Dialogs
             this.cbRuleRules.Location = new System.Drawing.Point(9, 19);
             this.cbRuleRules.Name = "cbRuleRules";
             this.cbRuleRules.Size = new System.Drawing.Size(123, 21);
-            this.cbRuleRules.TabIndex = 3;
+            this.cbRuleRules.TabIndex = 0;
             this.cbRuleRules.SelectedIndexChanged += new System.EventHandler(this.cbRuleRules_SelectedIndexChanged);
             // 
             // btnRuleDown
@@ -635,7 +656,7 @@ namespace VixenPlus.Dialogs
             this.btnRuleDown.Name = "btnRuleDown";
             this.btnRuleDown.Size = new System.Drawing.Size(24, 24);
             this.btnRuleDown.TabIndex = 2;
-            this.toolTip1.SetToolTip(this.btnRuleDown, "Move Rule Down");
+            this.ttRoadie.SetToolTip(this.btnRuleDown, "Move Rule Down");
             this.btnRuleDown.UseVisualStyleBackColor = true;
             this.btnRuleDown.Click += new System.EventHandler(this.btnRuleDown_Click);
             // 
@@ -646,7 +667,7 @@ namespace VixenPlus.Dialogs
             this.btnRuleUp.Name = "btnRuleUp";
             this.btnRuleUp.Size = new System.Drawing.Size(24, 24);
             this.btnRuleUp.TabIndex = 1;
-            this.toolTip1.SetToolTip(this.btnRuleUp, "Move rule up");
+            this.ttRoadie.SetToolTip(this.btnRuleUp, "Move rule up");
             this.btnRuleUp.UseVisualStyleBackColor = true;
             this.btnRuleUp.Click += new System.EventHandler(this.btnRuleUp_Click);
             // 
@@ -659,6 +680,7 @@ namespace VixenPlus.Dialogs
             this.lbRules.ScrollAlwaysVisible = true;
             this.lbRules.Size = new System.Drawing.Size(153, 69);
             this.lbRules.TabIndex = 0;
+            this.ttRoadie.SetToolTip(this.lbRules, "Channel naming rules");
             this.lbRules.SelectedIndexChanged += new System.EventHandler(this.lbRules_SelectedIndexChanged);
             this.lbRules.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lbRules_KeyDown);
             // 
@@ -679,6 +701,7 @@ namespace VixenPlus.Dialogs
             this.nudChGenChannels.Size = new System.Drawing.Size(79, 20);
             this.nudChGenChannels.TabIndex = 7;
             this.nudChGenChannels.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.ttRoadie.SetToolTip(this.nudChGenChannels, "Set maximum # of channels to generate");
             this.nudChGenChannels.Value = new decimal(new int[] {
             1,
             0,
@@ -699,7 +722,8 @@ namespace VixenPlus.Dialogs
             this.tbChGenNameFormat.Location = new System.Drawing.Point(9, 90);
             this.tbChGenNameFormat.Name = "tbChGenNameFormat";
             this.tbChGenNameFormat.Size = new System.Drawing.Size(155, 20);
-            this.tbChGenNameFormat.TabIndex = 5;
+            this.tbChGenNameFormat.TabIndex = 2;
+            this.ttRoadie.SetToolTip(this.tbChGenNameFormat, "How to format the generated channel names");
             this.tbChGenNameFormat.TextChanged += new System.EventHandler(this.tbChGenNameFormat_TextChanged);
             // 
             // cbChGenTemplate
@@ -712,7 +736,7 @@ namespace VixenPlus.Dialogs
             this.cbChGenTemplate.Location = new System.Drawing.Point(9, 24);
             this.cbChGenTemplate.Name = "cbChGenTemplate";
             this.cbChGenTemplate.Size = new System.Drawing.Size(125, 21);
-            this.cbChGenTemplate.TabIndex = 3;
+            this.cbChGenTemplate.TabIndex = 0;
             this.cbChGenTemplate.SelectedIndexChanged += new System.EventHandler(this.cbChGenTemplate_SelectedIndexChanged);
             // 
             // lblChGenNameFormat
@@ -739,8 +763,8 @@ namespace VixenPlus.Dialogs
             this.btnMultiChannelCancel.Location = new System.Drawing.Point(90, 425);
             this.btnMultiChannelCancel.Name = "btnMultiChannelCancel";
             this.btnMultiChannelCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnMultiChannelCancel.TabIndex = 1;
-            this.btnMultiChannelCancel.Text = "Cancel";
+            this.btnMultiChannelCancel.TabIndex = 4;
+            this.btnMultiChannelCancel.Text = "&Cancel";
             this.btnMultiChannelCancel.UseVisualStyleBackColor = true;
             this.btnMultiChannelCancel.Click += new System.EventHandler(this.btnMultiChannelButton_Click);
             // 
@@ -750,8 +774,8 @@ namespace VixenPlus.Dialogs
             this.btnMultiChannelOk.Location = new System.Drawing.Point(9, 425);
             this.btnMultiChannelOk.Name = "btnMultiChannelOk";
             this.btnMultiChannelOk.Size = new System.Drawing.Size(75, 23);
-            this.btnMultiChannelOk.TabIndex = 0;
-            this.btnMultiChannelOk.Text = "Generate";
+            this.btnMultiChannelOk.TabIndex = 3;
+            this.btnMultiChannelOk.Text = "&Generate";
             this.btnMultiChannelOk.UseVisualStyleBackColor = true;
             this.btnMultiChannelOk.Click += new System.EventHandler(this.btnMultiChannelButton_Click);
             // 
@@ -769,6 +793,7 @@ namespace VixenPlus.Dialogs
             // 
             // btnMultiColorOk
             // 
+            this.btnMultiColorOk.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnMultiColorOk.Location = new System.Drawing.Point(6, 62);
             this.btnMultiColorOk.Name = "btnMultiColorOk";
             this.btnMultiColorOk.Size = new System.Drawing.Size(75, 23);
@@ -779,6 +804,7 @@ namespace VixenPlus.Dialogs
             // 
             // btnMultiColorCancel
             // 
+            this.btnMultiColorCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnMultiColorCancel.Location = new System.Drawing.Point(100, 62);
             this.btnMultiColorCancel.Name = "btnMultiColorCancel";
             this.btnMultiColorCancel.Size = new System.Drawing.Size(75, 23);
@@ -816,6 +842,7 @@ namespace VixenPlus.Dialogs
             this.dgvChannels.Size = new System.Drawing.Size(566, 442);
             this.dgvChannels.TabIndex = 0;
             this.dgvChannels.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvChannels_CellContentDoubleClick);
+            this.dgvChannels.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvChannels_CellEndEdit);
             this.dgvChannels.SelectionChanged += new System.EventHandler(this.dgvChannels_SelectionChanged);
             this.dgvChannels.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragDrop);
             this.dgvChannels.DragOver += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragOver);
@@ -986,8 +1013,9 @@ namespace VixenPlus.Dialogs
             this.btnOkay.Location = new System.Drawing.Point(685, 12);
             this.btnOkay.Name = "btnOkay";
             this.btnOkay.Size = new System.Drawing.Size(75, 23);
-            this.btnOkay.TabIndex = 3;
+            this.btnOkay.TabIndex = 1;
             this.btnOkay.Text = "OK";
+            this.ttRoadie.SetToolTip(this.btnOkay, "Save all changes");
             this.btnOkay.UseVisualStyleBackColor = true;
             this.btnOkay.Click += new System.EventHandler(this.btnOkay_Click);
             // 
@@ -997,12 +1025,13 @@ namespace VixenPlus.Dialogs
             this.btnCancel.Location = new System.Drawing.Point(685, 41);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 4;
+            this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "Cancel";
+            this.ttRoadie.SetToolTip(this.btnCancel, "Cancel all changes");
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // FrmProfileManager
+            // VixenPlusRoadie
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1014,10 +1043,10 @@ namespace VixenPlus.Dialogs
             this.KeyPreview = true;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(800, 600);
-            this.Name = "FrmProfileManager";
+            this.Name = "VixenPlusRoadie";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "ProfileManager";
+            this.Text = "Vixen+ {Beta} - ";
             this.Shown += new System.EventHandler(this.FrmProfileManager_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmProfileManager_KeyDown);
             this.Resize += new System.EventHandler(this.frmProfileManager_Resize);
@@ -1105,7 +1134,7 @@ namespace VixenPlus.Dialogs
         private System.Windows.Forms.Label lblChGenTemplate;
         private System.Windows.Forms.Panel panelRuleEditor;
         private System.Windows.Forms.Button btnRuleDelete;
-        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ToolTip ttRoadie;
         private System.Windows.Forms.TextBox tbRuleWords;
         private System.Windows.Forms.Label lblRulePrompt;
         private System.Windows.Forms.CheckBox cbRuleColors;
