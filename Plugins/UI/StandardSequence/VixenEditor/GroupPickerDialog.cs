@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 
-using CommonUtils;
+using CommonControls;
 
 using VixenPlus;
 

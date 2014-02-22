@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 
-using CommonUtils;
+using CommonControls;
 
 namespace VixenPlus {
     public class Channel : IDisposable, IComparable<Channel> {

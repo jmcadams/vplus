@@ -88,12 +88,15 @@
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing">
       <Name>System.Drawing</Name>
     </Reference>
     <Reference Include="System.Windows.Forms">
       <Name>System.Windows.Forms</Name>
     </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs">
@@ -122,6 +125,12 @@
     <Compile Include="ColorDialog.Designer.cs">
       <DependentUpon>ColorDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="ColorPalette.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ColorPalette.Designer.cs">
+      <DependentUpon>ColorPalette.cs</DependentUpon>
+    </Compile>
     <Compile Include="FadableLabel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -146,11 +155,15 @@
     <Compile Include="TransparentLabel.Designer.cs">
       <DependentUpon>TransparentLabel.cs</DependentUpon>
     </Compile>
+    <Compile Include="OwnerDrawnUtils.cs" />
     <EmbeddedResource Include="ColorControl\ColorEditor.resx">
       <DependentUpon>ColorEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ColorDialog.resx">
       <DependentUpon>ColorDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorPalette.resx">
+      <DependentUpon>ColorPalette.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FadableLabel.resx">
       <DependentUpon>FadableLabel.cs</DependentUpon>
@@ -160,7 +173,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="VixenControls.Toolbox.resources" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -183,8 +195,15 @@
     <Content Include="Resources\cellbackground.png" />
     <Content Include="Resources\eyedropper.cur" />
     <Content Include="Resources\eyedropper.png" />
+    <None Include="Resources\none.png" />
     <Content Include="Resources\palette-load.png" />
     <Content Include="Resources\palette-save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CommonUtils\CommonUtils.csproj">
+      <Project>{43B2665C-A5AB-4908-8E6D-C08975513E12}</Project>
+      <Name>CommonUtils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
