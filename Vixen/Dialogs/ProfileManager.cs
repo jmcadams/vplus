@@ -10,22 +10,23 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 
-
-
 using VixenPlus.Properties;
 
 using VixenPlusCommon;
 
-using ColorDialog = VixenPlusCommon.ColorDialog;
- 
-//todo some things I want to do, keep selected cells between refresh of dgv, refactor massively, compartmentalize controls/tabpages
+//todo some things I want to do:
+//Check that DoButtonManagement is really needed everywhere it is used.
+//Refactor tab pages into their own controls.
+//Need to ask for import file name on import
+//Need to ask for export file name on export
+//Implement remember selected cell
+//Add tool tips to buttons
+//Implement Event when a colorpalette color changes
 
 namespace VixenPlus.Dialogs {
     public partial class FrmProfileManager : Form {
 
         #region ClassMembers
-
-        private readonly Preference2 _pref = Preference2.GetInstance();
 
         private readonly bool _suppressErrors;
         private readonly int _dgvWidthDiff;
@@ -45,6 +46,10 @@ namespace VixenPlus.Dialogs {
         private const int TabGroups = 2;
         private const int TabSorts = 3;
         private const int TabNutcracker = 4;
+
+        private const int ControlTabNormal = 0;
+        private const int ControlTabMultiChannel = 1;
+        private const int ControlTabMultiColor = 2;
 
         private const string Warning =
             "\n\nNOTE: While most functions can be undone by pressing cancel in the Profile Manager dialog, this one cannot.";
@@ -262,6 +267,7 @@ namespace VixenPlus.Dialogs {
 
         private void cbProfiles_SelectedIndexChanged(object sender, EventArgs e) {
             //todo need to save any changes before changing index
+            tcControlArea.SelectTab(ControlTabNormal);
             dgvChannels.Rows.Clear();
 
             dgvChannels.SuspendLayout();
@@ -312,22 +318,22 @@ namespace VixenPlus.Dialogs {
         #region Channel Generator
 
         private void btnChAddMulti_Click(object sender, EventArgs e) {
-            tcControlArea.SelectTab(1);
+            tcControlArea.SelectTab(ControlTabMultiChannel);
             LoadTemplates();
             DoButtonManagement();
             DoRuleButtons();
         }
 
 
-        private void btnGeneratorButton_Click(object sender, EventArgs e) {
-            tcControlArea.SelectTab(1);
-            if (((Button) sender).Text == btnChGenOk.Text) {
-                dgvChannels.Rows.Clear();
+        private void btnMultiChannelButton_Click(object sender, EventArgs e) {
+            tcControlArea.SelectTab(ControlTabNormal);
+            dgvChannels.Rows.Clear();
+            if (((Button) sender).Text == btnMultiChannelOk.Text) {
                 foreach (var c in GenerateChannels()) {
                     _contextProfile.AddChannelObject(c);
                 }
-                AddRows(_contextProfile.FullChannels);
             }
+            AddRows(_contextProfile.FullChannels);
             DoButtonManagement();
         }
 
@@ -380,9 +386,9 @@ namespace VixenPlus.Dialogs {
                 (from DataGridViewRow x in selectedRows where (!bool.Parse(x.Cells[ChannelEnabledCol].Value.ToString())) select x).Any();
 
             btnChAddMulti.Enabled = isProfileLoaded;
-            btnChAddOne.Enabled = isProfileLoaded; // todo
-            btnChColorMulti.Enabled = isProfileLoaded && !oneRowSelected; // todo
-            btnChColorOne.Enabled = isProfileLoaded && cellsSelected; // todo
+            btnChAddOne.Enabled = isProfileLoaded;
+            btnChColorMulti.Enabled = isProfileLoaded && !oneRowSelected;
+            btnChColorOne.Enabled = isProfileLoaded && cellsSelected;
             btnChDisable.Enabled = isProfileLoaded && cellsSelected && hasEnabledChannels;
             btnChEnable.Enabled = isProfileLoaded && cellsSelected && hasDisabledChannels;
             btnChDelete.Enabled = isProfileLoaded && cellsSelected;
@@ -506,6 +512,10 @@ namespace VixenPlus.Dialogs {
         #region Helper Methods
 
         private static void CopyFile(string originalFile, string newFile) {
+            if (!File.Exists(originalFile)) {
+                return;
+            }
+
             DeleteIfExists(newFile);
             File.Copy(originalFile, newFile);
         }
@@ -560,6 +570,10 @@ namespace VixenPlus.Dialogs {
 
 
         private static void RenameFile(string oldFile, string newFile) {
+            if (!File.Exists(oldFile)) {
+                return;
+            }
+
             DeleteIfExists(newFile);
             File.Move(oldFile, newFile);
         }
@@ -617,7 +631,7 @@ namespace VixenPlus.Dialogs {
         #endregion
 
         private void cbRuleColors_CheckedChanged(object sender, EventArgs e) {
-            colorPaletteMulti.Visible = cbRuleColors.Checked && cbRuleColors.Visible;
+            colorPaletteChannel.Visible = cbRuleColors.Checked && cbRuleColors.Visible;
         }
 
         #endregion
@@ -847,7 +861,7 @@ namespace VixenPlus.Dialogs {
 
             var palette = new XElement(ColorPalette.PaletteElement);
             if (cbRuleColors.Checked) {
-                palette = colorPaletteMulti.Palette;
+                palette = colorPaletteChannel.Palette;
             }
 
             var template = new XElement("Template", new XElement("Channels", nudChGenChannels.Value),
@@ -873,7 +887,7 @@ namespace VixenPlus.Dialogs {
             element = template.Element(ColorPalette.PaletteElement);
             if (element != null && element.Elements().Any()) {
                 cbRuleColors.Checked = true;
-                colorPaletteMulti.Palette = element;
+                colorPaletteChannel.Palette = element;
             }
             else {
                 cbRuleColors.Checked = false;
@@ -928,7 +942,7 @@ namespace VixenPlus.Dialogs {
             var generatedNames = GenerateNames(1, tbChGenNameFormat.Text, 0, (int) nudChGenChannels.Value).ToList();
             var generatedChannels = new List<Channel>();
             var startChannelNum = _contextProfile.FullChannels.Count();
-            var colors = GetColorList();
+            var colors = cbRuleColors.Checked ? GetColorList(colorPaletteChannel) : new List<Color> {Color.White};
 
             for (var count = 0; count < generatedNames.Count(); count++) {
                 generatedChannels.Add(new Channel(generatedNames[count], startChannelNum + count) {Color = colors[count % colors.Count]});
@@ -938,12 +952,8 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private List<Color> GetColorList() {
-            var colors = new List<Color>();
-
-            if (cbRuleColors.Checked) {
-                colors.AddRange(colorPaletteMulti.Colors.Where(c => c != Color.Transparent).Select(c => c));
-            }
+        private static List<Color> GetColorList(ColorPalette palette) {
+            var colors = new List<Color>(palette.Colors.Where(c => c != Color.Transparent).Select(c => c));
 
             if (colors.Count == 0) {
                 colors.Add(Color.White);
@@ -992,13 +1002,11 @@ namespace VixenPlus.Dialogs {
 
             var location = ctrl.PointToScreen(new Point(0, 0));
 
-            using (var dialog = new ColorDialog(initialColor, showNone)) {
+            using (var dialog = new ColorPicker(initialColor, showNone)) {
                 dialog.Location = new Point(Math.Max(_borderSize.Width * 4, location.X - dialog.Width - _borderSize.Width),
                     Math.Max(_borderSize.Height * 4, location.Y - dialog.Height - _borderSize.Height));
 
-                dialog.CustomColors = _pref.GetString(Preference2.CustomColorsPreference);
                 dialog.ShowDialog();
-                _pref.SetString(Preference2.CustomColorsPreference, dialog.CustomColors);
 
                 switch (dialog.DialogResult) {
                     case DialogResult.OK:
@@ -1089,8 +1097,6 @@ namespace VixenPlus.Dialogs {
 
 
         private void dataGridView1_DragDrop(object sender, DragEventArgs e) {
-            // The mouse locations are relative to the screen, so they must be 
-            // converted to client coordinates.
             var clientPoint = dgvChannels.PointToClient(new Point(e.X, e.Y));
 
             // Get the row index of the item the mouse is below. 
@@ -1139,7 +1145,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void dgvChannels_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e) {
-            if (e.ColumnIndex != ChannelColorCol) {
+            if (e.ColumnIndex != ChannelColorCol || e.RowIndex == 0) {
                 return;
             }
 
@@ -1170,7 +1176,22 @@ namespace VixenPlus.Dialogs {
         }
 
         private void btnChColorMulti_Click(object sender, EventArgs e) {
+            tcControlArea.SelectTab(ControlTabMultiColor);
+        }
 
+        private void btnMultiColor_Click(object sender, EventArgs e) {
+            tcControlArea.SelectTab(ControlTabNormal);
+            if (((Button)sender).Text == btnMultiColorOk.Text) {
+                var count = 0;
+                var colors = GetColorList(colorPaletteColor);
+                foreach (var row in GetSelectedRows().Reverse()) {
+                    var color = colors[count++ % colors.Count];
+                    row.Cells[ChannelColorCol].Value = color.ToHTML();
+                    row.DefaultCellStyle.BackColor = color;
+                    row.DefaultCellStyle.ForeColor = color.GetForeColor();
+                }
+            }
+            DoButtonManagement();
         }
     }
 }

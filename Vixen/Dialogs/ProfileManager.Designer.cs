@@ -39,7 +39,7 @@ namespace VixenPlus.Dialogs
             this.btnAddProfile = new System.Windows.Forms.Button();
             this.tcProfile = new System.Windows.Forms.TabControl();
             this.tpChannels = new System.Windows.Forms.TabPage();
-            this.tcControlArea = new TabControl(this.components);
+            this.tcControlArea = new VixenPlusCommon.TabControl(this.components);
             this.tpNormal = new System.Windows.Forms.TabPage();
             this.panelChButtons = new System.Windows.Forms.Panel();
             this.gbChannels = new System.Windows.Forms.GroupBox();
@@ -60,7 +60,7 @@ namespace VixenPlus.Dialogs
             this.btnChGenSaveTemplate = new System.Windows.Forms.Button();
             this.gbRules = new System.Windows.Forms.GroupBox();
             this.panelRuleEditor = new System.Windows.Forms.Panel();
-            this.colorPaletteMulti = new ColorPalette();
+            this.colorPaletteChannel = new VixenPlusCommon.ColorPalette();
             this.cbRuleEndNum = new System.Windows.Forms.CheckBox();
             this.nudRuleIncr = new System.Windows.Forms.NumericUpDown();
             this.nudRuleEnd = new System.Windows.Forms.NumericUpDown();
@@ -82,9 +82,12 @@ namespace VixenPlus.Dialogs
             this.cbChGenTemplate = new System.Windows.Forms.ComboBox();
             this.lblChGenNameFormat = new System.Windows.Forms.Label();
             this.lblChGenTemplate = new System.Windows.Forms.Label();
-            this.btnChGrnCancel = new System.Windows.Forms.Button();
-            this.btnChGenOk = new System.Windows.Forms.Button();
+            this.btnMultiChannelCancel = new System.Windows.Forms.Button();
+            this.btnMultiChannelOk = new System.Windows.Forms.Button();
             this.tpMultiColor = new System.Windows.Forms.TabPage();
+            this.btnMultiColorOk = new System.Windows.Forms.Button();
+            this.btnMultiColorCancel = new System.Windows.Forms.Button();
+            this.colorPaletteColor = new VixenPlusCommon.ColorPalette();
             this.dgvChannels = new System.Windows.Forms.DataGridView();
             this.ChannelEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.ChannelNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -122,6 +125,7 @@ namespace VixenPlus.Dialogs
             ((System.ComponentModel.ISupportInitialize)(this.nudRuleEnd)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRuleStart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudChGenChannels)).BeginInit();
+            this.tpMultiColor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvChannels)).BeginInit();
             this.tpPlugins.SuspendLayout();
             this.tpGroups.SuspendLayout();
@@ -423,8 +427,8 @@ namespace VixenPlus.Dialogs
             this.panelChGenerator.Controls.Add(this.cbChGenTemplate);
             this.panelChGenerator.Controls.Add(this.lblChGenNameFormat);
             this.panelChGenerator.Controls.Add(this.lblChGenTemplate);
-            this.panelChGenerator.Controls.Add(this.btnChGrnCancel);
-            this.panelChGenerator.Controls.Add(this.btnChGenOk);
+            this.panelChGenerator.Controls.Add(this.btnMultiChannelCancel);
+            this.panelChGenerator.Controls.Add(this.btnMultiChannelOk);
             this.panelChGenerator.Location = new System.Drawing.Point(8, 0);
             this.panelChGenerator.Name = "panelChGenerator";
             this.panelChGenerator.Size = new System.Drawing.Size(174, 481);
@@ -459,7 +463,7 @@ namespace VixenPlus.Dialogs
             // 
             // panelRuleEditor
             // 
-            this.panelRuleEditor.Controls.Add(this.colorPaletteMulti);
+            this.panelRuleEditor.Controls.Add(this.colorPaletteChannel);
             this.panelRuleEditor.Controls.Add(this.cbRuleEndNum);
             this.panelRuleEditor.Controls.Add(this.nudRuleIncr);
             this.panelRuleEditor.Controls.Add(this.nudRuleEnd);
@@ -474,12 +478,12 @@ namespace VixenPlus.Dialogs
             this.panelRuleEditor.Size = new System.Drawing.Size(168, 151);
             this.panelRuleEditor.TabIndex = 6;
             // 
-            // colorPaletteMulti
+            // colorPaletteChannel
             // 
-            this.colorPaletteMulti.Location = new System.Drawing.Point(58, 98);
-            this.colorPaletteMulti.Name = "colorPaletteMulti";
-            this.colorPaletteMulti.Size = new System.Drawing.Size(103, 50);
-            this.colorPaletteMulti.TabIndex = 14;
+            this.colorPaletteChannel.Location = new System.Drawing.Point(58, 98);
+            this.colorPaletteChannel.Name = "colorPaletteChannel";
+            this.colorPaletteChannel.Size = new System.Drawing.Size(103, 50);
+            this.colorPaletteChannel.TabIndex = 14;
             // 
             // cbRuleEndNum
             // 
@@ -729,36 +733,66 @@ namespace VixenPlus.Dialogs
             this.lblChGenTemplate.TabIndex = 2;
             this.lblChGenTemplate.Text = "Template:";
             // 
-            // btnChGrnCancel
+            // btnMultiChannelCancel
             // 
-            this.btnChGrnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnChGrnCancel.Location = new System.Drawing.Point(90, 425);
-            this.btnChGrnCancel.Name = "btnChGrnCancel";
-            this.btnChGrnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnChGrnCancel.TabIndex = 1;
-            this.btnChGrnCancel.Text = "Cancel";
-            this.btnChGrnCancel.UseVisualStyleBackColor = true;
-            this.btnChGrnCancel.Click += new System.EventHandler(this.btnGeneratorButton_Click);
+            this.btnMultiChannelCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMultiChannelCancel.Location = new System.Drawing.Point(90, 425);
+            this.btnMultiChannelCancel.Name = "btnMultiChannelCancel";
+            this.btnMultiChannelCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnMultiChannelCancel.TabIndex = 1;
+            this.btnMultiChannelCancel.Text = "Cancel";
+            this.btnMultiChannelCancel.UseVisualStyleBackColor = true;
+            this.btnMultiChannelCancel.Click += new System.EventHandler(this.btnMultiChannelButton_Click);
             // 
-            // btnChGenOk
+            // btnMultiChannelOk
             // 
-            this.btnChGenOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnChGenOk.Location = new System.Drawing.Point(9, 425);
-            this.btnChGenOk.Name = "btnChGenOk";
-            this.btnChGenOk.Size = new System.Drawing.Size(75, 23);
-            this.btnChGenOk.TabIndex = 0;
-            this.btnChGenOk.Text = "Generate";
-            this.btnChGenOk.UseVisualStyleBackColor = true;
-            this.btnChGenOk.Click += new System.EventHandler(this.btnGeneratorButton_Click);
+            this.btnMultiChannelOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMultiChannelOk.Location = new System.Drawing.Point(9, 425);
+            this.btnMultiChannelOk.Name = "btnMultiChannelOk";
+            this.btnMultiChannelOk.Size = new System.Drawing.Size(75, 23);
+            this.btnMultiChannelOk.TabIndex = 0;
+            this.btnMultiChannelOk.Text = "Generate";
+            this.btnMultiChannelOk.UseVisualStyleBackColor = true;
+            this.btnMultiChannelOk.Click += new System.EventHandler(this.btnMultiChannelButton_Click);
             // 
             // tpMultiColor
             // 
+            this.tpMultiColor.Controls.Add(this.btnMultiColorOk);
+            this.tpMultiColor.Controls.Add(this.btnMultiColorCancel);
+            this.tpMultiColor.Controls.Add(this.colorPaletteColor);
             this.tpMultiColor.Location = new System.Drawing.Point(0, 0);
             this.tpMultiColor.Name = "tpMultiColor";
             this.tpMultiColor.Size = new System.Drawing.Size(187, 454);
             this.tpMultiColor.TabIndex = 2;
             this.tpMultiColor.Text = "MutliColor";
             this.tpMultiColor.UseVisualStyleBackColor = true;
+            // 
+            // btnMultiColorOk
+            // 
+            this.btnMultiColorOk.Location = new System.Drawing.Point(6, 62);
+            this.btnMultiColorOk.Name = "btnMultiColorOk";
+            this.btnMultiColorOk.Size = new System.Drawing.Size(75, 23);
+            this.btnMultiColorOk.TabIndex = 2;
+            this.btnMultiColorOk.Text = "OK";
+            this.btnMultiColorOk.UseVisualStyleBackColor = true;
+            this.btnMultiColorOk.Click += new System.EventHandler(this.btnMultiColor_Click);
+            // 
+            // btnMultiColorCancel
+            // 
+            this.btnMultiColorCancel.Location = new System.Drawing.Point(100, 62);
+            this.btnMultiColorCancel.Name = "btnMultiColorCancel";
+            this.btnMultiColorCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnMultiColorCancel.TabIndex = 1;
+            this.btnMultiColorCancel.Text = "Cancel";
+            this.btnMultiColorCancel.UseVisualStyleBackColor = true;
+            this.btnMultiColorCancel.Click += new System.EventHandler(this.btnMultiColor_Click);
+            // 
+            // colorPaletteColor
+            // 
+            this.colorPaletteColor.Location = new System.Drawing.Point(6, 6);
+            this.colorPaletteColor.Name = "colorPaletteColor";
+            this.colorPaletteColor.Size = new System.Drawing.Size(110, 50);
+            this.colorPaletteColor.TabIndex = 0;
             // 
             // dgvChannels
             // 
@@ -1007,6 +1041,7 @@ namespace VixenPlus.Dialogs
             ((System.ComponentModel.ISupportInitialize)(this.nudRuleEnd)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRuleStart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudChGenChannels)).EndInit();
+            this.tpMultiColor.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvChannels)).EndInit();
             this.tpPlugins.ResumeLayout(false);
             this.tpGroups.ResumeLayout(false);
@@ -1054,8 +1089,8 @@ namespace VixenPlus.Dialogs
         private System.Windows.Forms.Button btnChDelete;
         private System.Windows.Forms.Panel panelChButtons;
         private System.Windows.Forms.Panel panelChGenerator;
-        private System.Windows.Forms.Button btnChGrnCancel;
-        private System.Windows.Forms.Button btnChGenOk;
+        private System.Windows.Forms.Button btnMultiChannelCancel;
+        private System.Windows.Forms.Button btnMultiChannelOk;
         private System.Windows.Forms.GroupBox gbRules;
         private System.Windows.Forms.Button btnRuleAdd;
         private System.Windows.Forms.ComboBox cbRuleRules;
@@ -1090,6 +1125,9 @@ namespace VixenPlus.Dialogs
         private System.Windows.Forms.TabPage tpMultiChannel;
         private System.Windows.Forms.TabPage tpNormal;
         private System.Windows.Forms.TabPage tpMultiColor;
-        private ColorPalette colorPaletteMulti;
+        private ColorPalette colorPaletteChannel;
+        private ColorPalette colorPaletteColor;
+        private System.Windows.Forms.Button btnMultiColorOk;
+        private System.Windows.Forms.Button btnMultiColorCancel;
     }
 }
