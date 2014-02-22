@@ -2,48 +2,44 @@
 using System.Drawing;
 using System.Windows.Forms;
 
+using CommonControls.Annotations;
+
 namespace CommonControls {
     [ToolboxBitmap(typeof (System.Windows.Forms.TabControl))]
-    public class TabControl : System.Windows.Forms.TabControl
-    {
+    public class TabControl : System.Windows.Forms.TabControl {
         private bool _hideTabs;
         private IContainer components;
 
-        public TabControl()
-        {
+
+        public TabControl() {
             _hideTabs = false;
             components = null;
             InitializeComponent();
         }
 
-        public TabControl(IContainer container)
-        {
+
+        public TabControl(IContainer container) {
             _hideTabs = false;
             components = null;
             container.Add(this);
             InitializeComponent();
         }
 
-        public override Rectangle DisplayRectangle
-        {
-            get
-            {
+
+        public override Rectangle DisplayRectangle {
+            get {
                 int num;
-                if (HideTabs)
-                {
+                if (HideTabs) {
                     return new Rectangle(0, 0, Width, Height);
                 }
                 var height = Alignment <= TabAlignment.Bottom ? ItemSize.Height : ItemSize.Width;
-                if (Appearance == TabAppearance.Normal)
-                {
-                    num = 5 + (height*RowCount);
+                if (Appearance == TabAppearance.Normal) {
+                    num = 5 + (height * RowCount);
                 }
-                else
-                {
-                    num = (3 + height)*RowCount;
+                else {
+                    num = (3 + height) * RowCount;
                 }
-                switch (Alignment)
-                {
+                switch (Alignment) {
                     case TabAlignment.Bottom:
                         return new Rectangle(4, 4, Width - 8, (Height - num) - 4);
 
@@ -57,18 +53,18 @@ namespace CommonControls {
             }
         }
 
-        [DefaultValue(false), RefreshProperties(RefreshProperties.All)]
-        public bool HideTabs
-        {
-            private get { return _hideTabs; }
-            set
-            {
+        [Category("Appearance")]
+        [DefaultValue(typeof (bool), "false")]
+        [RefreshProperties(RefreshProperties.All)]
+        public bool HideTabs {
+            [UsedImplicitly]
+            get { return _hideTabs; }
+            set {
                 if (_hideTabs == value) {
                     return;
                 }
                 _hideTabs = value;
-                if (value)
-                {
+                if (value) {
                     OurMultiline = true;
                 }
                 UpdateStyles();
@@ -76,22 +72,22 @@ namespace CommonControls {
         }
 
         [RefreshProperties(RefreshProperties.All)]
-        public bool OurMultiline
-        {
+        public bool OurMultiline {
+            [UsedImplicitly]
+            get { return Multiline; }
             set { Multiline = HideTabs || value; }
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
+
+        protected override void Dispose(bool disposing) {
+            if (disposing && (components != null)) {
                 components.Dispose();
             }
             base.Dispose(disposing);
         }
 
-        private void InitializeComponent()
-        {
+
+        private void InitializeComponent() {
             components = new Container();
         }
     }

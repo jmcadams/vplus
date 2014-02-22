@@ -74,6 +74,7 @@ namespace VixenPlus.Dialogs {
             this.label36 = new System.Windows.Forms.Label();
             this.cbToolbarAutoSave = new System.Windows.Forms.CheckBox();
             this.cbUpdateFrequency = new System.Windows.Forms.ComboBox();
+            this.cbProfileErrors = new System.Windows.Forms.CheckBox();
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -111,8 +112,7 @@ namespace VixenPlus.Dialogs {
             this.label35 = new System.Windows.Forms.Label();
             this.numericUpDownHistoryImages = new System.Windows.Forms.NumericUpDown();
             this.label28 = new System.Windows.Forms.Label();
-            this.tabControl = new global::CommonControls.TabControl(this.components);
-            this.cbProfileErrors = new System.Windows.Forms.CheckBox();
+            this.tabControl = new CommonControls.TabControl(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinimumLevel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumLevel)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -684,6 +684,18 @@ namespace VixenPlus.Dialogs {
             this.cbUpdateFrequency.TabIndex = 80;
             this.toolTip.SetToolTip(this.cbUpdateFrequency, "How often will Vixen+ check for updates.");
             // 
+            // cbProfileErrors
+            // 
+            this.cbProfileErrors.AutoSize = true;
+            this.cbProfileErrors.Location = new System.Drawing.Point(240, 64);
+            this.cbProfileErrors.Name = "cbProfileErrors";
+            this.cbProfileErrors.Size = new System.Drawing.Size(150, 17);
+            this.cbProfileErrors.TabIndex = 14;
+            this.cbProfileErrors.Text = "Silence profile editor errors";
+            this.toolTip.SetToolTip(this.cbProfileErrors, "The default behavior scrolls horizontally when Shift is down.\r\nSelect this to mak" +
+                    "e it scroll vertically when Shift is down.");
+            this.cbProfileErrors.UseVisualStyleBackColor = true;
+            // 
             // buttonOK
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -1016,9 +1028,9 @@ namespace VixenPlus.Dialogs {
             this.generalTab.BackColor = System.Drawing.Color.Transparent;
             this.generalTab.Controls.Add(this.groupBox3);
             this.generalTab.Controls.Add(this.groupBox2);
-            this.generalTab.Location = new System.Drawing.Point(4, 41);
+            this.generalTab.Location = new System.Drawing.Point(0, 0);
             this.generalTab.Name = "generalTab";
-            this.generalTab.Size = new System.Drawing.Size(438, 265);
+            this.generalTab.Size = new System.Drawing.Size(446, 310);
             this.generalTab.TabIndex = 3;
             this.generalTab.Text = "generalTab";
             // 
@@ -1101,6 +1113,7 @@ namespace VixenPlus.Dialogs {
             this.tabControl.Controls.Add(this.sequenceEditingTab);
             this.tabControl.Controls.Add(this.sequenceExecutionTab);
             this.tabControl.Controls.Add(this.backgroundItemsTab);
+            this.tabControl.HideTabs = true;
             this.tabControl.Location = new System.Drawing.Point(179, 12);
             this.tabControl.Multiline = true;
             this.tabControl.Name = "tabControl";
@@ -1110,18 +1123,6 @@ namespace VixenPlus.Dialogs {
             this.tabControl.TabIndex = 1;
             this.tabControl.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl_Selected);
             this.tabControl.Deselecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl_Deselecting);
-            // 
-            // cbProfileErrors
-            // 
-            this.cbProfileErrors.AutoSize = true;
-            this.cbProfileErrors.Location = new System.Drawing.Point(240, 64);
-            this.cbProfileErrors.Name = "cbProfileErrors";
-            this.cbProfileErrors.Size = new System.Drawing.Size(150, 17);
-            this.cbProfileErrors.TabIndex = 14;
-            this.cbProfileErrors.Text = "Silence profile editor errors";
-            this.toolTip.SetToolTip(this.cbProfileErrors, "The default behavior scrolls horizontally when Shift is down.\r\nSelect this to mak" +
-                    "e it scroll vertically when Shift is down.");
-            this.cbProfileErrors.UseVisualStyleBackColor = true;
             // 
             // PreferencesDialog
             // 
