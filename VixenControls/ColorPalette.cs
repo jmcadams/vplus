@@ -11,13 +11,18 @@ using VixenPlusCommon.Properties;
 namespace VixenPlusCommon {
     public partial class ColorPalette : UserControl {
 
-        private const string PbPrefix = "pbRuleColor";
         public const string PaletteElement = "Palette";
+
+        private const string PbPrefix = "pbRuleColor";
+        private readonly Size _borderSize = SystemInformation.BorderSize;
+
+        private PictureBox _currentPb;
 
 
         public ColorPalette() {
             InitializeComponent();
         }
+
 
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -45,6 +50,7 @@ namespace VixenPlusCommon {
             }
         }
 
+
         public IEnumerable<Color> Colors {
             get {
                 return GetAllPictureBoxes().Select(c => c.BackColor).ToList();
@@ -57,44 +63,40 @@ namespace VixenPlusCommon {
             if (null == pb) {
                 return;
             }
+            _currentPb = pb;
 
-            Color color;
-            if (GetColor(pb, pb.BackColor, out color)) {
-                FormatPaintBox(pb, color);
-            }
+            FormatPaintBox(pb, GetColor(pb, pb.BackColor));
         }
 
 
-        private readonly Size _borderSize = SystemInformation.BorderSize;
-
-        //todo refactor to take point instead of control for positioning.
-        private bool GetColor(Control ctrl, Color initialColor, out Color resultColor, bool showNone = true) {
-            var result = false;
-            resultColor = Color.Black;
+        private Color GetColor(Control ctrl, Color initialColor) {
+            var resultColor = initialColor;
 
             var location = ctrl.PointToScreen(new Point(0, 0));
 
-            using (var dialog = new ColorPicker(initialColor, showNone)) {
-                dialog.Location = new Point(Math.Max(_borderSize.Width * 4, location.X - dialog.Width - _borderSize.Width),
-                    Math.Max(_borderSize.Height * 4, location.Y - dialog.Height - _borderSize.Height));
+            using (var dialog = new ColorPicker(initialColor)) {
+                dialog.Location = new Point(Math.Max(_borderSize.Width * 4, location.X - dialog.Width - _borderSize.Width * 4),
+                    Math.Max(_borderSize.Height * 4, location.Y - dialog.Height - _borderSize.Height * 4));
 
-                //dialog.CustomColors = _pref.GetString(Preference2.CustomColorsPreference);
+                dialog.ColorEditorColorChanged += OnColorEditorColorChanged;
                 dialog.ShowDialog();
-                //_pref.SetString(Preference2.CustomColorsPreference, dialog.CustomColors);
+                dialog.ColorEditorColorChanged -= OnColorEditorColorChanged;
 
                 switch (dialog.DialogResult) {
                     case DialogResult.OK:
                         resultColor = dialog.GetColor();
-                        result = true;
                         break;
                     case DialogResult.No:
                         resultColor = Color.Transparent;
-                        result = true;
                         break;
                 }
             }
+            return resultColor;
+        }
 
-            return result;
+
+        private void OnColorEditorColorChanged(object sender, EventArgs e) {
+            FormatPaintBox(_currentPb, ((ColorEventArgs)e).Color);
         }
 
 
@@ -110,7 +112,6 @@ namespace VixenPlusCommon {
         private static void FormatPaintBox(Control pb, Color color) {
             pb.BackColor = color;
             pb.BackgroundImage = color == Color.Transparent ? Resources.none : null;
-            pb.BackgroundImageLayout = ImageLayout.Center;
         }
 
 
@@ -125,6 +126,5 @@ namespace VixenPlusCommon {
             return controls.SelectMany(ctrl => GetAll(ctrl, type)).Concat(controls).Where(c => c.GetType() == type);
             // ReSharper restore PossibleMultipleEnumeration
         }
-
     }
 }

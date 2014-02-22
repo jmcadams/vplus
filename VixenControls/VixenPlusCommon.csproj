@@ -109,6 +109,7 @@
     <Compile Include="ColorControl\ColorEditor.designer.cs">
       <DependentUpon>ColorEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ColorControl\ColorEventArgs.cs" />
     <Compile Include="ColorControl\ColorSlider.cs">
       <SubType>Component</SubType>
     </Compile>
