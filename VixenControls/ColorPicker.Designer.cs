@@ -1,5 +1,5 @@
 ﻿namespace VixenPlusCommon {
-    partial class ColorDialog {
+    partial class ColorPicker {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -45,7 +45,7 @@
             this.pbCustom2 = new System.Windows.Forms.PictureBox();
             this.pbCustom1 = new System.Windows.Forms.PictureBox();
             this.pbCustom0 = new System.Windows.Forms.PictureBox();
-            this.colorEditor1 = new ColorEditor();
+            this.colorEditor1 = new VixenPlusCommon.ColorEditor();
             ((System.ComponentModel.ISupportInitialize)(this.pbOriginalColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbNewColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCustomF)).BeginInit();
@@ -294,7 +294,7 @@
             this.colorEditor1.TabIndex = 1;
             this.colorEditor1.ColorChanged += new System.EventHandler(this.colorEditor1_ColorChanged);
             // 
-            // ColorDialog
+            // ColorPicker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -325,11 +325,13 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "ColorDialog";
+            this.Name = "ColorPicker";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Choose a color";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ColorPicker_FormClosing);
+            this.Shown += new System.EventHandler(this.ColorPicker_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.pbOriginalColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbNewColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCustomF)).EndInit();
