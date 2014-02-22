@@ -250,11 +250,11 @@
     <Compile Include="Dialogs\PreferencesDialog.Designer.cs">
       <DependentUpon>PreferencesDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\ProfileManager.cs">
+    <Compile Include="Dialogs\VixenPlusRoadie.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\ProfileManager.Designer.cs">
-      <DependentUpon>ProfileManager.cs</DependentUpon>
+    <Compile Include="Dialogs\VixenPlusRoadie.Designer.cs">
+      <DependentUpon>VixenPlusRoadie.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\ProfileManagerDialog.cs">
       <SubType>Form</SubType>
@@ -485,8 +485,8 @@
     <EmbeddedResource Include="Dialogs\PreferencesDialog.resx">
       <DependentUpon>PreferencesDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\ProfileManager.resx">
-      <DependentUpon>ProfileManager.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\VixenPlusRoadie.resx">
+      <DependentUpon>VixenPlusRoadie.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ProfileManagerDialog.resx">
       <DependentUpon>ProfileManagerDialog.cs</DependentUpon>

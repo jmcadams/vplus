@@ -47,6 +47,7 @@ namespace VixenPlus {
             Ensure(Paths.ImportExportPath);
             Ensure(Paths.AudioPath);
             Ensure(Paths.ProfilePath);
+            Ensure(Paths.ProfileExtras);
             Ensure(Paths.MapperPath);
             Ensure(Paths.NutcrackerDataPath);
             Ensure(Paths.RoutinePath);
@@ -541,7 +542,7 @@ namespace VixenPlus {
 
 
         private void manageToolStripMenuItem_Click(object sender, EventArgs e) {
-            using (var dialog = new FrmProfileManager()) {
+            using (var dialog = new VixenPlusRoadie()) {
             //using (var dialog = new ProfileManagerDialog(null)) {
                 if (dialog.ShowDialog() == DialogResult.OK) {
             //        NotifyAll(Notification.ProfileChange);

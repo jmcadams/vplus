@@ -96,6 +96,10 @@ namespace VixenPlusCommon {
             get { return Path.Combine(DataPath, "Profiles"); }
         }
 
+        public static string ProfileExtras {
+            get { return Path.Combine(ProfilePath, "Extras"); }
+        }
+
         public static string ProgramPath {
             get { return Path.Combine(DataPath, "Programs"); }
         }
