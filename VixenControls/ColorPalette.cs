@@ -74,7 +74,7 @@ namespace VixenPlusCommon {
 
             var location = ctrl.PointToScreen(new Point(0, 0));
 
-            using (var dialog = new ColorDialog(initialColor, showNone)) {
+            using (var dialog = new ColorPicker(initialColor, showNone)) {
                 dialog.Location = new Point(Math.Max(_borderSize.Width * 4, location.X - dialog.Width - _borderSize.Width),
                     Math.Max(_borderSize.Height * 4, location.Y - dialog.Height - _borderSize.Height));
 
