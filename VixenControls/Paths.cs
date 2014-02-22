@@ -100,6 +100,10 @@ namespace VixenPlusCommon {
             get { return Path.Combine(ProfilePath, "Extras"); }
         }
 
+        public static string ProfileGeneration {
+            get { return Path.Combine(ProfileExtras, "Templates"); }
+        }
+
         public static string ProgramPath {
             get { return Path.Combine(DataPath, "Programs"); }
         }

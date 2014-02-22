@@ -17,11 +17,8 @@ using VixenPlusCommon;
 //todo some things I want to do:
 //Check that DoButtonManagement is really needed everywhere it is used.
 //Refactor tab pages into their own controls.
-//Need to ask for import file name on import
-//Need to ask for export file name on export
 //Implement remember selected cell
-//Add tool tips to buttons
-//Implement Event when a colorpalette color changes (and the live view idea)
+//Finish Implementing Event when a colorpalette color changes (and the live view idea)
 //Move panels to thier own class
 
 namespace VixenPlus.Dialogs {
@@ -159,57 +156,77 @@ namespace VixenPlus.Dialogs {
         #region Import/Export Buttons
 
         private void btnImport_Click(object sender, EventArgs e) {
-            using (var file = File.OpenText(Paths.ProfilePath + "\\Testing.csv")) {
-                string line;
-                var count = 0;
-                var valid = true;
-                dgvChannels.SuspendLayout();
-                while ((line = file.ReadLine()) != null) {
-                    var cols = line.Replace("\"", "").Split(',');
-                    if (0 == count) {
-                        if (cols.Count() != dgvChannels.ColumnCount) {
-                            valid = false;
+            using (
+                var dialog = new OpenFileDialog {
+                    AddExtension = true, CheckFileExists = true, CheckPathExists = true, DefaultExt = Vendor.CsvExtension,
+                    Filter = "(CSV Files)|" + Vendor.All + Vendor.CsvExtension, InitialDirectory = Paths.ImportExportPath,
+                    Multiselect = false}) {
+
+                if (dialog.ShowDialog() != DialogResult.OK) {
+                    return;
+                }
+
+                using (var file = File.OpenText(dialog.FileName)) {
+                    string line;
+                    var count = 0;
+                    var valid = true;
+                    dgvChannels.SuspendLayout();
+                    while ((line = file.ReadLine()) != null) {
+                        var cols = line.Replace("\"", "").Split(',');
+                        if (0 == count) {
+                            if (cols.Count() != dgvChannels.ColumnCount) {
+                                valid = false;
+                            }
+                            else {
+                                for (var i = 0; i < dgvChannels.ColumnCount; i++) {
+                                    valid &= String.Compare(dgvChannels.Columns[i].Name, cols[i], StringComparison.OrdinalIgnoreCase) == 0;
+                                }
+                            }
+                            if (!valid) {
+                                MessageBox.Show("Import file not valid, cannot import.");
+                                break;
+                            }
+                            dgvChannels.Rows.Clear();
+                            count++;
                         }
                         else {
-                            for (var i = 0; i < dgvChannels.ColumnCount; i++) {
-                                valid &= String.Compare(dgvChannels.Columns[i].Name, cols[i], StringComparison.OrdinalIgnoreCase) == 0;
-                            }
+                            var row =
+                                dgvChannels.Rows.Add(new object[] {
+                                    cols[ChannelEnabledCol] == "True", cols[ChannelNumCol].ToInt(), cols[ChannelNameCol], cols[OutputChannelCol].ToInt(),
+                                    cols[ChannelColorCol]
+                                });
+                            dgvChannels.Rows[row].DefaultCellStyle.BackColor = cols[ChannelColorCol].FromHTML();
+                            dgvChannels.Rows[row].DefaultCellStyle.ForeColor = dgvChannels.Rows[row].DefaultCellStyle.BackColor.GetForeColor();
                         }
-                        if (!valid) {
-                            MessageBox.Show("Import file not valid, cannot import.");
-                            break;
-                        }
-                        dgvChannels.Rows.Clear();
-                        count++;
                     }
-                    else {
-                        var row =
-                            dgvChannels.Rows.Add(new object[] {
-                                cols[ChannelEnabledCol] == "True", cols[ChannelNumCol].ToInt(), cols[ChannelNameCol], cols[OutputChannelCol].ToInt(),
-                                cols[ChannelColorCol]
-                            });
-                        dgvChannels.Rows[row].DefaultCellStyle.BackColor = cols[ChannelColorCol].FromHTML();
-                        dgvChannels.Rows[row].DefaultCellStyle.ForeColor = dgvChannels.Rows[row].DefaultCellStyle.BackColor.GetForeColor();
-                    }
+                    dgvChannels.ResumeLayout();
                 }
-                dgvChannels.ResumeLayout();
             }
         }
 
 
         private void btnExport_Click(object sender, EventArgs e) {
-            using (var file = File.CreateText(Paths.ProfilePath + "\\Testing.csv")) {
-                var data = new StringBuilder();
-                foreach (DataGridViewColumn col in dgvChannels.Columns) {
-                    data.Append(col.Name).Append(",");
+            using (var dialog = new SaveFileDialog {
+                    InitialDirectory = Paths.ImportExportPath, Filter = "(CSV File)|" + Vendor.All + Vendor.CsvExtension, OverwritePrompt = true,
+                    DefaultExt = Vendor.CsvExtension}) {
+
+                if (dialog.ShowDialog() != DialogResult.OK) {
+                    return;
                 }
-                file.WriteLine(data.ToString(0, data.Length - 1));
-                foreach (DataGridViewRow row in dgvChannels.Rows) {
-                    data.Length = 0;
-                    for (var i = 0; i < dgvChannels.ColumnCount; i++) {
-                        data.Append(row.Cells[i].Value).Append(",");
+
+                using (var file = File.CreateText(dialog.FileName)) {
+                    var data = new StringBuilder();
+                    foreach (DataGridViewColumn col in dgvChannels.Columns) {
+                        data.Append(col.Name).Append(",");
                     }
                     file.WriteLine(data.ToString(0, data.Length - 1));
+                    foreach (DataGridViewRow row in dgvChannels.Rows) {
+                        data.Length = 0;
+                        for (var i = 0; i < dgvChannels.ColumnCount; i++) {
+                            data.Append(row.Cells[i].Value).Append(",");
+                        }
+                        file.WriteLine(data.ToString(0, data.Length - 1));
+                    }
                 }
             }
         }
@@ -341,7 +358,7 @@ namespace VixenPlus.Dialogs {
         private void LoadTemplates() {
             cbChGenTemplate.Items.Clear();
             foreach (var fileName in
-                Directory.GetFiles(Paths.ProfilePath, Vendor.All + Vendor.TemplateExtension).Where(file => file.EndsWith(Vendor.TemplateExtension))
+                Directory.GetFiles(Paths.ProfileGeneration, Vendor.All + Vendor.TemplateExtension).Where(file => file.EndsWith(Vendor.TemplateExtension))
                     .Select(Path.GetFileNameWithoutExtension)) {
                 cbChGenTemplate.Items.Add(fileName);
             }
@@ -800,13 +817,13 @@ namespace VixenPlus.Dialogs {
         private void btnChGenSaveTemplate_Click(object sender, EventArgs e) {
             var name = (cbChGenTemplate.SelectedIndex != -1) ? cbChGenTemplate.SelectedItem.ToString() : "";
 
-            var newName = GetFileName("Template", Paths.ProfilePath, new[] {Vendor.TemplateExtension}, name, "OK");
+            var newName = GetFileName("Template", Paths.ProfileGeneration, new[] {Vendor.TemplateExtension}, name, "OK");
 
             if (string.IsNullOrEmpty(newName)) {
                 return;
             }
 
-            CreateTemplate().Save(Path.Combine(Paths.ProfilePath, newName + Vendor.TemplateExtension));
+            CreateTemplate().Save(Path.Combine(Paths.ProfileGeneration, newName + Vendor.TemplateExtension));
             LoadTemplates();
             cbChGenTemplate.SelectedIndex = cbChGenTemplate.Items.IndexOf(newName);
         }
@@ -877,7 +894,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void cbChGenTemplate_SelectedIndexChanged(object sender, EventArgs e) {
-            var template = XElement.Load(Path.Combine(Paths.ProfilePath, cbChGenTemplate.SelectedItem + Vendor.TemplateExtension));
+            var template = XElement.Load(Path.Combine(Paths.ProfileGeneration, cbChGenTemplate.SelectedItem + Vendor.TemplateExtension));
             var element = template.Element("Channels");
             nudChGenChannels.Value = element != null ? int.Parse(element.Value) : 1;
 

@@ -72,7 +72,7 @@
             this.btnCancel.Location = new System.Drawing.Point(184, 227);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 2;
+            this.btnCancel.TabIndex = 4;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
@@ -92,7 +92,7 @@
             this.btnOkay.Location = new System.Drawing.Point(12, 227);
             this.btnOkay.Name = "btnOkay";
             this.btnOkay.Size = new System.Drawing.Size(75, 23);
-            this.btnOkay.TabIndex = 4;
+            this.btnOkay.TabIndex = 2;
             this.btnOkay.Text = "OK";
             this.btnOkay.UseVisualStyleBackColor = true;
             // 
@@ -120,7 +120,7 @@
             this.btnAddColor.Location = new System.Drawing.Point(141, 106);
             this.btnAddColor.Name = "btnAddColor";
             this.btnAddColor.Size = new System.Drawing.Size(118, 23);
-            this.btnAddColor.TabIndex = 8;
+            this.btnAddColor.TabIndex = 1;
             this.btnAddColor.Text = "Add Custom Color";
             this.btnAddColor.UseVisualStyleBackColor = true;
             this.btnAddColor.Click += new System.EventHandler(this.btnAddColor_Click);
@@ -132,7 +132,7 @@
             this.pbCustomF.Name = "pbCustomF";
             this.pbCustomF.Size = new System.Drawing.Size(20, 20);
             this.pbCustomF.TabIndex = 24;
-            this.pbCustomF.TabStop = false;
+            this.pbCustomF.TabStop = true;
             this.pbCustomF.Click += new System.EventHandler(this.pbCustom_Click);
             // 
             // pbCustomE
@@ -142,7 +142,7 @@
             this.pbCustomE.Name = "pbCustomE";
             this.pbCustomE.Size = new System.Drawing.Size(20, 20);
             this.pbCustomE.TabIndex = 23;
-            this.pbCustomE.TabStop = false;
+            this.pbCustomE.TabStop = true;
             this.pbCustomE.Click += new System.EventHandler(this.pbCustom_Click);
             // 
             // pbCustomD
@@ -152,7 +152,7 @@
             this.pbCustomD.Name = "pbCustomD";
             this.pbCustomD.Size = new System.Drawing.Size(20, 20);
             this.pbCustomD.TabIndex = 22;
-            this.pbCustomD.TabStop = false;
+            this.pbCustomD.TabStop = true;
             this.pbCustomD.Click += new System.EventHandler(this.pbCustom_Click);
             // 
             // pbCustomC
@@ -162,7 +162,7 @@
             this.pbCustomC.Name = "pbCustomC";
             this.pbCustomC.Size = new System.Drawing.Size(20, 20);
             this.pbCustomC.TabIndex = 21;
-            this.pbCustomC.TabStop = false;
+            this.pbCustomC.TabStop = true;
             this.pbCustomC.Click += new System.EventHandler(this.pbCustom_Click);
             // 
             // pbCustomB
@@ -172,7 +172,7 @@
             this.pbCustomB.Name = "pbCustomB";
             this.pbCustomB.Size = new System.Drawing.Size(20, 20);
             this.pbCustomB.TabIndex = 20;
-            this.pbCustomB.TabStop = false;
+            this.pbCustomB.TabStop = true;
             this.pbCustomB.Click += new System.EventHandler(this.pbCustom_Click);
             // 
             // pbCustomA
@@ -182,7 +182,7 @@
             this.pbCustomA.Name = "pbCustomA";
             this.pbCustomA.Size = new System.Drawing.Size(20, 20);
             this.pbCustomA.TabIndex = 19;
-            this.pbCustomA.TabStop = false;
+            this.pbCustomA.TabStop = true;
             this.pbCustomA.Click += new System.EventHandler(this.pbCustom_Click);
             // 
             // pbCustom9
@@ -192,7 +192,7 @@
             this.pbCustom9.Name = "pbCustom9";
             this.pbCustom9.Size = new System.Drawing.Size(20, 20);
             this.pbCustom9.TabIndex = 18;
-            this.pbCustom9.TabStop = false;
+            this.pbCustom9.TabStop = true;
             this.pbCustom9.Click += new System.EventHandler(this.pbCustom_Click);
             // 
             // pbCustom8
@@ -202,7 +202,7 @@
             this.pbCustom8.Name = "pbCustom8";
             this.pbCustom8.Size = new System.Drawing.Size(20, 20);
             this.pbCustom8.TabIndex = 17;
-            this.pbCustom8.TabStop = false;
+            this.pbCustom8.TabStop = true;
             this.pbCustom8.Click += new System.EventHandler(this.pbCustom_Click);
             // 
             // pbCustom7
@@ -212,7 +212,7 @@
             this.pbCustom7.Name = "pbCustom7";
             this.pbCustom7.Size = new System.Drawing.Size(20, 20);
             this.pbCustom7.TabIndex = 16;
-            this.pbCustom7.TabStop = false;
+            this.pbCustom7.TabStop = true;
             this.pbCustom7.Click += new System.EventHandler(this.pbCustom_Click);
             // 
             // pbCustom6
@@ -222,7 +222,7 @@
             this.pbCustom6.Name = "pbCustom6";
             this.pbCustom6.Size = new System.Drawing.Size(20, 20);
             this.pbCustom6.TabIndex = 15;
-            this.pbCustom6.TabStop = false;
+            this.pbCustom6.TabStop = true;
             this.pbCustom6.Click += new System.EventHandler(this.pbCustom_Click);
             // 
             // pbCustom5
@@ -232,7 +232,7 @@
             this.pbCustom5.Name = "pbCustom5";
             this.pbCustom5.Size = new System.Drawing.Size(20, 20);
             this.pbCustom5.TabIndex = 14;
-            this.pbCustom5.TabStop = false;
+            this.pbCustom5.TabStop = true;
             this.pbCustom5.Click += new System.EventHandler(this.pbCustom_Click);
             // 
             // pbCustom4
@@ -242,7 +242,7 @@
             this.pbCustom4.Name = "pbCustom4";
             this.pbCustom4.Size = new System.Drawing.Size(20, 20);
             this.pbCustom4.TabIndex = 13;
-            this.pbCustom4.TabStop = false;
+            this.pbCustom4.TabStop = true;
             this.pbCustom4.Click += new System.EventHandler(this.pbCustom_Click);
             // 
             // pbCustom3
@@ -252,7 +252,7 @@
             this.pbCustom3.Name = "pbCustom3";
             this.pbCustom3.Size = new System.Drawing.Size(20, 20);
             this.pbCustom3.TabIndex = 12;
-            this.pbCustom3.TabStop = false;
+            this.pbCustom3.TabStop = true;
             this.pbCustom3.Click += new System.EventHandler(this.pbCustom_Click);
             // 
             // pbCustom2
@@ -262,7 +262,7 @@
             this.pbCustom2.Name = "pbCustom2";
             this.pbCustom2.Size = new System.Drawing.Size(20, 20);
             this.pbCustom2.TabIndex = 11;
-            this.pbCustom2.TabStop = false;
+            this.pbCustom2.TabStop = true;
             this.pbCustom2.Click += new System.EventHandler(this.pbCustom_Click);
             // 
             // pbCustom1
@@ -272,7 +272,7 @@
             this.pbCustom1.Name = "pbCustom1";
             this.pbCustom1.Size = new System.Drawing.Size(20, 20);
             this.pbCustom1.TabIndex = 10;
-            this.pbCustom1.TabStop = false;
+            this.pbCustom1.TabStop = true;
             this.pbCustom1.Click += new System.EventHandler(this.pbCustom_Click);
             // 
             // pbCustom0
@@ -282,7 +282,7 @@
             this.pbCustom0.Name = "pbCustom0";
             this.pbCustom0.Size = new System.Drawing.Size(20, 20);
             this.pbCustom0.TabIndex = 9;
-            this.pbCustom0.TabStop = false;
+            this.pbCustom0.TabStop = true;
             this.pbCustom0.Click += new System.EventHandler(this.pbCustom_Click);
             // 
             // colorEditor1
@@ -291,7 +291,7 @@
             this.colorEditor1.Location = new System.Drawing.Point(12, 12);
             this.colorEditor1.Name = "colorEditor1";
             this.colorEditor1.Size = new System.Drawing.Size(247, 90);
-            this.colorEditor1.TabIndex = 1;
+            this.colorEditor1.TabIndex = 0;
             this.colorEditor1.ColorChanged += new System.EventHandler(this.colorEditor1_ColorChanged);
             // 
             // ColorPicker
