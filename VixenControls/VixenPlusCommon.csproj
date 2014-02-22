@@ -118,11 +118,11 @@
     <Compile Include="ColorControl\RgbaColorSlider.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ColorDialog.cs">
+    <Compile Include="ColorPicker.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ColorDialog.Designer.cs">
-      <DependentUpon>ColorDialog.cs</DependentUpon>
+    <Compile Include="ColorPicker.Designer.cs">
+      <DependentUpon>ColorPicker.cs</DependentUpon>
     </Compile>
     <Compile Include="ColorPalette.cs">
       <SubType>UserControl</SubType>
@@ -164,8 +164,8 @@
     <EmbeddedResource Include="ColorControl\ColorEditor.resx">
       <DependentUpon>ColorEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ColorDialog.resx">
-      <DependentUpon>ColorDialog.cs</DependentUpon>
+    <EmbeddedResource Include="ColorPicker.resx">
+      <DependentUpon>ColorPicker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ColorPalette.resx">
       <DependentUpon>ColorPalette.cs</DependentUpon>
