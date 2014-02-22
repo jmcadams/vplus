@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using VixenPlusCommon.Properties;
 
 namespace VixenPlusCommon {
+    [DefaultEvent("ControlChanged")]
     public partial class ColorPalette : UserControl {
 
         public const string PaletteElement = "Palette";
@@ -23,6 +24,16 @@ namespace VixenPlusCommon {
             InitializeComponent();
         }
 
+
+        [Annotations.UsedImplicitly]
+        public event EventHandler ControlChanged;
+
+        private void OnPaletteChanged() {
+            var handler = ControlChanged;
+            if (handler != null) {
+                handler(this, EventArgs.Empty);
+            }
+        }
 
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -66,6 +77,7 @@ namespace VixenPlusCommon {
             _currentPb = pb;
 
             FormatPaintBox(pb, GetColor(pb, pb.BackColor));
+            OnPaletteChanged();
         }
 
 

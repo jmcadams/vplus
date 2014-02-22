@@ -108,7 +108,7 @@
             // 
             // pbRuleColor3
             // 
-            this.pbRuleColor3.BackColor = System.Drawing.Color.Lime;
+            this.pbRuleColor3.BackColor = System.Drawing.Color.Blue;
             this.pbRuleColor3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pbRuleColor3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pbRuleColor3.Location = new System.Drawing.Point(55, 3);
@@ -120,7 +120,7 @@
             // 
             // pbRuleColor2
             // 
-            this.pbRuleColor2.BackColor = System.Drawing.Color.Blue;
+            this.pbRuleColor2.BackColor = System.Drawing.Color.Lime;
             this.pbRuleColor2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pbRuleColor2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pbRuleColor2.Location = new System.Drawing.Point(29, 3);

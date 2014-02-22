@@ -32,7 +32,6 @@ namespace VixenPlus.Dialogs {
         private readonly Size _borderSize = SystemInformation.BorderSize;
         private Profile _contextProfile;
 
-
         private const int ChannelEnabledCol = 0;
         private const int ChannelNumCol = 1;
         private const int ChannelNameCol = 2;
@@ -286,6 +285,7 @@ namespace VixenPlus.Dialogs {
 
         private void cbProfiles_SelectedIndexChanged(object sender, EventArgs e) {
             //todo need to save any changes before changing index
+            colorPaletteChannel.ControlChanged -= UpdateColors;
             tcControlArea.SelectTab(ControlTabNormal);
             dgvChannels.Rows.Clear();
 
@@ -298,12 +298,12 @@ namespace VixenPlus.Dialogs {
             }
 
             _contextProfile = (Profile) cbProfiles.SelectedItem;
-            DoButtonManagement();
 
             AddRows(_contextProfile.FullChannels);
 
             dgvChannels.ResumeLayout();
             dgvChannels.Focus();
+            DoButtonManagement();
         }
 
 
@@ -335,6 +335,7 @@ namespace VixenPlus.Dialogs {
         #region Channel Generator
 
         private void btnChAddMulti_Click(object sender, EventArgs e) {
+            colorPaletteChannel.ControlChanged += UpdateColors;
             tcControlArea.SelectTab(ControlTabMultiChannel);
             LoadTemplates();
             DoButtonManagement();
@@ -342,7 +343,13 @@ namespace VixenPlus.Dialogs {
         }
 
 
+        private void UpdateColors(object sender, EventArgs e) {
+            PreviewChannels();
+        }
+
+
         private void btnMultiChannelButton_Click(object sender, EventArgs e) {
+            colorPaletteChannel.ControlChanged -= UpdateColors;
             tcControlArea.SelectTab(ControlTabNormal);
             dgvChannels.Rows.Clear();
             if (((Button) sender).Text == btnMultiChannelOk.Text) {
@@ -714,27 +721,32 @@ namespace VixenPlus.Dialogs {
 
         private void nudRuleStart_ValueChanged(object sender, EventArgs e) {
             ((ProfileManagerNumbers) lbRules.SelectedItem).Start = (int) nudRuleStart.Value;
+            PreviewChannels();
         }
 
 
         private void nudRuleEnd_ValueChanged(object sender, EventArgs e) {
             ((ProfileManagerNumbers) lbRules.SelectedItem).End = (int) nudRuleEnd.Value;
+            PreviewChannels();
         }
 
 
         private void nudRuleIncr_ValueChanged(object sender, EventArgs e) {
             ((ProfileManagerNumbers) lbRules.SelectedItem).Increment = (int) nudRuleIncr.Value;
+            PreviewChannels();
         }
 
 
         private void cbRuleEndNum_CheckedChanged(object sender, EventArgs e) {
             ((ProfileManagerNumbers) lbRules.SelectedItem).IsLimited = cbRuleEndNum.Checked;
             nudRuleEnd.Enabled = cbRuleEndNum.Checked;
+            PreviewChannels();
         }
 
 
         private void tbRuleWords_TextChanged(object sender, EventArgs e) {
             ((ProfileManagerWords) lbRules.SelectedItem).Words = tbRuleWords.Text;
+            PreviewChannels();
         }
 
 
@@ -777,6 +789,7 @@ namespace VixenPlus.Dialogs {
             lbRules.DisplayMember = "";
             lbRules.DisplayMember = "Name";
             DoRuleButtons();
+            PreviewChannels();
         }
 
 
@@ -888,11 +901,6 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private void tbChGenNameFormat_TextChanged(object sender, EventArgs e) {
-            DoRuleButtons();
-        }
-
-
         private void cbChGenTemplate_SelectedIndexChanged(object sender, EventArgs e) {
             var template = XElement.Load(Path.Combine(Paths.ProfileGeneration, cbChGenTemplate.SelectedItem + Vendor.TemplateExtension));
             var element = template.Element("Channels");
@@ -943,10 +951,19 @@ namespace VixenPlus.Dialogs {
 
 
         private void PreviewChannels() {
-            dgvChannels.SuspendLayout();
-            dgvChannels.Rows.Clear();
-            AddRows(GenerateChannels(), _contextProfile.FullChannels.Count() + 1);
-            dgvChannels.ResumeLayout();
+            if (!cbPreview.Checked) {
+                return;
+            }
+
+            if (previewTimer.Enabled) {
+                previewTimer.Stop();
+            }
+            previewTimer.Start();
+
+            //dgvChannels.SuspendLayout();
+            //dgvChannels.Rows.Clear();
+            //AddRows(GenerateChannels(), _contextProfile.FullChannels.Count() + 1);
+            //dgvChannels.ResumeLayout();
         }
 
 
@@ -1197,6 +1214,7 @@ namespace VixenPlus.Dialogs {
         }
 
         private void btnMultiColor_Click(object sender, EventArgs e) {
+            colorPaletteChannel.ControlChanged -= UpdateColors;
             tcControlArea.SelectTab(ControlTabNormal);
             if (((Button)sender).Text == btnMultiColorOk.Text) {
                 var count = 0;
@@ -1217,5 +1235,16 @@ namespace VixenPlus.Dialogs {
             }
         }
 
+        private void PreviewChannelEvent(object sender, EventArgs e) {
+            PreviewChannels();
+        }
+
+        private void previewTimer_Tick(object sender, EventArgs e) {
+            previewTimer.Stop();
+            dgvChannels.SuspendLayout();
+            dgvChannels.Rows.Clear();
+            AddRows(GenerateChannels(), _contextProfile.FullChannels.Count() + 1);
+            dgvChannels.ResumeLayout();
+        }
     }
 }
