@@ -5,8 +5,6 @@ using System.Xml.Linq;
 
 using CommonControls.Properties;
 
-using CommonUtils;
-
 namespace CommonControls {
     public partial class ColorPalette : UserControl {
         public ColorPalette() {

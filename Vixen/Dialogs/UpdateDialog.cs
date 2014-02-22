@@ -11,8 +11,6 @@ using System.Xml.Linq;
 
 using CommonControls;
 
-using CommonUtils;
-
 namespace VixenPlus.Dialogs {
     public sealed partial class UpdateDialog : Form {
         private readonly Preference2 _preferences;

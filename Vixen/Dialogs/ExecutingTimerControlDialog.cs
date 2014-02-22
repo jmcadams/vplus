@@ -5,8 +5,6 @@ using System.Windows.Forms;
 
 using CommonControls;
 
-using CommonUtils;
-
 using VixenPlus.Properties;
 
 namespace VixenPlus.Dialogs {

@@ -6,8 +6,6 @@ using System.Reflection;
 
 using CommonControls;
 
-using CommonUtils;
-
 namespace VixenPlus {
     internal class HardwarePlugins {
         private static readonly Dictionary<string, IHardwarePlugin> PluginCache = new Dictionary<string, IHardwarePlugin>();

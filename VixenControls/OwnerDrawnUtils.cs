@@ -1,8 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-using CommonUtils;
-
 namespace CommonControls {
     public static class OwnerDrawnUtils {
         private static readonly SolidBrush GenericBrush = new SolidBrush(Color.Black);

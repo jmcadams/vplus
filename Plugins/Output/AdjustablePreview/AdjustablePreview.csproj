@@ -164,11 +164,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\CommonUtils\CommonUtils.csproj">
-      <Project>{43B2665C-A5AB-4908-8E6D-C08975513E12}</Project>
-      <Name>CommonUtils</Name>
-      <Private>False</Private>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\VixenControls\CommonControls.csproj">
       <Project>{6B127E8D-35CC-409E-9E66-520FBA86E283}</Project>
       <Name>CommonControls</Name>

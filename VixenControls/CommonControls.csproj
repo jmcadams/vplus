@@ -88,7 +88,6 @@
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing">
       <Name>System.Drawing</Name>
     </Reference>
@@ -137,6 +136,8 @@
     <Compile Include="FadableLabel.Designer.cs">
       <DependentUpon>FadableLabel.cs</DependentUpon>
     </Compile>
+    <Compile Include="HSV.cs" />
+    <Compile Include="HSVUtils.cs" />
     <Compile Include="MultiSelectTreeview.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -199,12 +200,6 @@
     <None Include="Resources\none.png" />
     <Content Include="Resources\palette-load.png" />
     <Content Include="Resources\palette-save.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CommonUtils\CommonUtils.csproj">
-      <Project>{43B2665C-A5AB-4908-8E6D-C08975513E12}</Project>
-      <Name>CommonUtils</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

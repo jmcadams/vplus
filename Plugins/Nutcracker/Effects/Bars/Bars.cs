@@ -5,12 +5,12 @@ using System.Linq;
 using System.Windows.Forms;
 
 using CommonControls;
-
-using CommonUtils;
+using CommonControls.Annotations;
 
 using VixenPlus;
 
 namespace Bars {
+    [UsedImplicitly]
     public partial class Bars : UserControl, INutcrackerEffect {
 
         private readonly bool _initializing = true;

@@ -3,8 +3,6 @@ using System.Linq;
 
 using CommonControls;
 
-using CommonUtils;
-
 using VixenPlus;
 
 namespace VixenEditor.VixenPlus {

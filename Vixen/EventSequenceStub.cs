@@ -3,8 +3,6 @@ using System.IO;
 
 using CommonControls;
 
-using CommonUtils;
-
 namespace VixenPlus {
     internal class EventSequenceStub : IDisposable {
         private int _length;

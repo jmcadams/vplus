@@ -6,8 +6,6 @@ using System.Linq;
 using System.Windows.Forms;
 
 using CommonControls;
-
-using CommonUtils;
 //TODO: Add support for:
 // Line1 and Line2 now individually controlled and can be rotated independently and colored independently
 //TODO: Fix calculating

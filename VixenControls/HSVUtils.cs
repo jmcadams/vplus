@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Drawing;
 
-namespace CommonUtils {
+namespace CommonControls {
     public static class HSVUtils {
         public static HSV ToHSV(this Color color) {
             var chromaMax = (float) Math.Max(color.R, Math.Max(color.G, color.B));
             var chromaMin = (float) Math.Min(color.R, Math.Min(color.G, color.B));
 
             var hue = color.GetHue()/360;
-            //var saturation = chromaMax.IsNearlyEqual(0) ? 0 : 1f - (1f*chromaMin/chromaMax);
+            var saturation = chromaMax.IsNearlyEqual(0) ? 0 : 1f - (1f*chromaMin/chromaMax);
             var value = chromaMax/255f;
 
-            return new HSV(hue, 0 /*saturation*/, value);
+            return new HSV(hue, saturation, value);
         }
-
-        //todo undo the above.
 
         public static Color ToColor(this HSV inHsv) {
             var hue = inHsv.Hue*360;
@@ -22,11 +20,11 @@ namespace CommonUtils {
             var value = inHsv.Value*255;
 
             var f = hue/60f - Math.Floor(hue/60f);
-            var v = Convert.ToInt32(value);
-            var p = Convert.ToInt32(value*(1 - saturation));
+            var v = Convert.ToInt32((int) value);
+            var p = Convert.ToInt32((int) (value*(1 - saturation)));
             var q = Convert.ToInt32(value*(1 - f*saturation));
             var t = Convert.ToInt32(value*(1 - (1 - f)*saturation));
-            switch (Convert.ToInt32(Math.Floor(hue/60)%6)) {
+            switch (Convert.ToInt32((int) (Math.Floor(hue/60)%6))) {
                 case 0:
                     return Color.FromArgb(255, v, t, p);
                 case 1:
