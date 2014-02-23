@@ -423,7 +423,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void SetGeneralButtons(bool isProfileLoaded) {
-            var isChannelPanel = panelChButtons.Visible;
+            var isChannelPanel = tcControlArea.SelectedTab == tpChannelControl;
             btnCancel.Enabled = isChannelPanel;
             btnOkay.Enabled = isChannelPanel;
             btnAddProfile.Enabled = isChannelPanel;
