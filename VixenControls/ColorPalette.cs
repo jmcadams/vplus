@@ -13,12 +13,8 @@ namespace VixenPlusCommon {
     public partial class ColorPalette : UserControl {
 
         public const string PaletteElement = "Palette";
-
         private const string PbPrefix = "pbRuleColor";
-        private readonly Size _borderSize = SystemInformation.BorderSize;
-
         private PictureBox _currentPb;
-
 
         public ColorPalette() {
             InitializeComponent();
@@ -83,13 +79,10 @@ namespace VixenPlusCommon {
 
         private Color GetColor(Control ctrl, Color initialColor) {
             var resultColor = initialColor;
-
-            var location = ctrl.PointToScreen(new Point(0, 0));
+            const int offset = 6;
 
             using (var dialog = new ColorPicker(initialColor)) {
-                dialog.Location = new Point(Math.Max(_borderSize.Width * 4, location.X - dialog.Width - _borderSize.Width * 4),
-                    Math.Max(_borderSize.Height * 4, location.Y - dialog.Height - _borderSize.Height * 4));
-
+                dialog.Location = dialog.GetBestLocation(ctrl.PointToScreen(new Point(0, 0)), offset);
                 dialog.ColorEditorColorChanged += OnColorEditorColorChanged;
                 dialog.ShowDialog();
                 dialog.ColorEditorColorChanged -= OnColorEditorColorChanged;
@@ -103,6 +96,7 @@ namespace VixenPlusCommon {
                         break;
                 }
             }
+
             return resultColor;
         }
 

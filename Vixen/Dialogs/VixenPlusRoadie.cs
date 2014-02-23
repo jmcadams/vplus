@@ -1031,24 +1031,13 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        //todo refactor to take point instead of control for positioning.
-        private bool GetColor(Control ctrl, Color initialColor, out Color resultColor, bool showNone = true) {
+        private static bool GetColor(Control ctrl, Color initialColor, out Color resultColor, bool showNone = true) {
             var result = false;
             resultColor = Color.Black;
-
-            var location = ctrl.PointToScreen(new Point(0, 0));
-
             const int offset = 6;
+
             using (var dialog = new ColorPicker(initialColor, showNone)) {
-                dialog.Location = new Point(location.X - dialog.Width - offset, location.Y - dialog.Height -offset);
-                var s = Screen.FromRectangle(dialog.Bounds).Bounds;
-                var d = dialog.Bounds;
-                if (!s.Contains(d)) {
-                    Debug.Print("Out of Bounds");
-                    var newX = d.X < s.X ? s.X + offset : d.X;
-                    var newY = d.Y < s.Y ? s.Y + offset : d.Y;
-                    dialog.Location = new Point(newX, newY);
-                }
+                dialog.Location = dialog.GetBestLocation(ctrl.PointToScreen(new Point(0, 0)), offset);
                 dialog.ShowDialog();
 
                 switch (dialog.DialogResult) {

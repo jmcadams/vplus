@@ -167,59 +167,14 @@ namespace VixenPlusCommon {
         }
 
 
-        //// For ComboBoxes
-        //public static void DrawItem(this DrawItemEventArgs e, string name, Color color, bool useCheckmark = false) {
-        //    e.DrawBackground();
-
-        //    var selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected ||
-        //                   (e.State & DrawItemState.ComboBoxEdit) == DrawItemState.ComboBoxEdit;
-        //    GenericBrush.Color = color;
-        //    e.Graphics.FillRectangle(selected && !useCheckmark ? SystemBrushes.Highlight : GenericBrush, e.Bounds);
-        //    var contrastingBrush = selected && !useCheckmark ? SystemBrushes.HighlightText : color.GetTextColor();
-        //    e.Graphics.DrawString(name, e.Font, contrastingBrush, new RectangleF(e.Bounds.Location, e.Bounds.Size));
-        //    if (selected && useCheckmark) {
-        //        e.Graphics.DrawString(Checkmark, e.Font, contrastingBrush, e.Bounds.Width - e.Bounds.Height, e.Bounds.Y);
-        //    }
-        //    e.DrawFocusRectangle();
-        //}
-
-
-        //public static void DrawItemWide(this DrawItemEventArgs e, string name, Color color, bool useCheckmark) {
-        //    e.DrawBackground();
-
-        //    var selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected ||
-        //                   (e.State & DrawItemState.ComboBoxEdit) == DrawItemState.ComboBoxEdit;
-        //    GenericBrush.Color = color;
-        //    e.Graphics.FillRectangle(selected && !useCheckmark ? SystemBrushes.Highlight : GenericBrush, e.Bounds);
-        //    var contrastingBrush = selected && !useCheckmark ? SystemBrushes.HighlightText : color.GetTextColor();
-        //    var loc = e.Bounds.Location;
-        //    if (useCheckmark) {
-        //        loc.Offset((int)e.Graphics.MeasureString(Checkmark, e.Font).Width + 2, 0);
-        //    }
-        //    e.Graphics.DrawString(name, e.Font, contrastingBrush, new RectangleF(loc, e.Graphics.MeasureString(name, e.Font)));
-        //    if (selected && useCheckmark) {
-        //        e.Graphics.DrawString(Checkmark, e.Font, contrastingBrush, 2, e.Bounds.Y);
-        //    }
-        //    e.DrawFocusRectangle();
-        //}
-
-
-        //// For List Boxes -- TODO Need to make this work with prefereneces for UseCheckmark
-        //public static void DrawItem(this DrawItemEventArgs e, string text, Color color, ListBox lb, bool useCheckmark) {
-        //    e.DrawBackground();
-
-        //    var selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
-        //    GenericBrush.Color = color;
-        //    e.Graphics.FillRectangle(selected && !useCheckmark ? SystemBrushes.Highlight : GenericBrush, e.Bounds);
-        //    var contrastingBrush = selected && !useCheckmark ? SystemBrushes.HighlightText : color.GetTextColor();
-        //    e.Graphics.DrawString(text, e.Font, contrastingBrush, lb.GetItemRectangle(e.Index).Location);
-
-        //    if (selected && useCheckmark) {
-        //        e.Graphics.DrawString(Checkmark, e.Font, contrastingBrush, e.Bounds.Width - e.Bounds.Height, e.Bounds.Y);
-        //    }
-
-        //    e.DrawFocusRectangle();
-        //}
+        public static Point GetBestLocation(this Form form, Point point, int offset) {
+            form.Location = new Point(point.X - form.Width - offset, point.Y - form.Height - offset);
+            var s = Screen.FromRectangle(form.Bounds).Bounds;
+            var d = form.Bounds;
+            var x = s.Contains(d) ? d.X : d.X < s.X ? s.X + offset : d.X;
+            var y = s.Contains(d) ? d.Y : d.Y < s.Y ? s.Y + offset : d.Y;
+            return new Point(x,y);
+        }
 
         public static bool IsWindows64BitOS() {
 #if __WIN64
@@ -228,5 +183,6 @@ namespace VixenPlusCommon {
             return false;
 #endif
         }
+
     }
 }
