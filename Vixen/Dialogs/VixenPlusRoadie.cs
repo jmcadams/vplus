@@ -29,7 +29,6 @@ namespace VixenPlus.Dialogs {
         private readonly bool _suppressErrors;
         private readonly int _dgvWidthDiff;
         private readonly int _dgvHeightDiff;
-        private readonly Size _borderSize = SystemInformation.BorderSize;
         private Profile _contextProfile;
 
         private const int ChannelEnabledCol = 0;
@@ -76,7 +75,6 @@ namespace VixenPlus.Dialogs {
             else {
                 cbProfiles.SelectedIndex = 0;
             }
-
         }
 
         #endregion
@@ -287,6 +285,7 @@ namespace VixenPlus.Dialogs {
             //todo need to save any changes before changing index
             colorPaletteChannel.ControlChanged -= UpdateColors;
             tcControlArea.SelectTab(ControlTabNormal);
+            tcProfile.TabPages[0].Text = "Channels";
             dgvChannels.Rows.Clear();
 
             dgvChannels.SuspendLayout();
@@ -337,6 +336,7 @@ namespace VixenPlus.Dialogs {
         private void btnChAddMulti_Click(object sender, EventArgs e) {
             colorPaletteChannel.ControlChanged += UpdateColors;
             tcControlArea.SelectTab(ControlTabMultiChannel);
+            tcProfile.TabPages[0].Text = "Preview";
             LoadTemplates();
             DoButtonManagement();
             DoRuleButtons();
@@ -351,6 +351,7 @@ namespace VixenPlus.Dialogs {
         private void btnMultiChannelButton_Click(object sender, EventArgs e) {
             colorPaletteChannel.ControlChanged -= UpdateColors;
             tcControlArea.SelectTab(ControlTabNormal);
+            tcProfile.TabPages[0].Text = "Channels";
             dgvChannels.Rows.Clear();
             if (((Button) sender).Text == btnMultiChannelOk.Text) {
                 foreach (var c in GenerateChannels()) {
@@ -656,6 +657,7 @@ namespace VixenPlus.Dialogs {
 
         private void cbRuleColors_CheckedChanged(object sender, EventArgs e) {
             colorPaletteChannel.Visible = cbRuleColors.Checked && cbRuleColors.Visible;
+            PreviewChannels();
         }
 
         #endregion
@@ -1036,10 +1038,17 @@ namespace VixenPlus.Dialogs {
 
             var location = ctrl.PointToScreen(new Point(0, 0));
 
+            const int offset = 6;
             using (var dialog = new ColorPicker(initialColor, showNone)) {
-                dialog.Location = new Point(Math.Max(_borderSize.Width * 4, location.X - dialog.Width - _borderSize.Width),
-                    Math.Max(_borderSize.Height * 4, location.Y - dialog.Height - _borderSize.Height));
-
+                dialog.Location = new Point(location.X - dialog.Width - offset, location.Y - dialog.Height -offset);
+                var s = Screen.FromRectangle(dialog.Bounds).Bounds;
+                var d = dialog.Bounds;
+                if (!s.Contains(d)) {
+                    Debug.Print("Out of Bounds");
+                    var newX = d.X < s.X ? s.X + offset : d.X;
+                    var newY = d.Y < s.Y ? s.Y + offset : d.Y;
+                    dialog.Location = new Point(newX, newY);
+                }
                 dialog.ShowDialog();
 
                 switch (dialog.DialogResult) {
@@ -1216,6 +1225,7 @@ namespace VixenPlus.Dialogs {
         private void btnMultiColor_Click(object sender, EventArgs e) {
             colorPaletteChannel.ControlChanged -= UpdateColors;
             tcControlArea.SelectTab(ControlTabNormal);
+            tcProfile.TabPages[0].Text = "Channels";
             if (((Button)sender).Text == btnMultiColorOk.Text) {
                 var count = 0;
                 var colors = GetColorList(colorPaletteColor);
