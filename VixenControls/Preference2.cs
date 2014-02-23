@@ -167,6 +167,18 @@ namespace VixenPlusCommon {
         }
 
 
+        public string GetStringDefault(string name) {
+            var value = string.Empty;
+            // ReSharper disable PossibleNullReferenceException
+            var node = _preferencesDoc.DocumentElement.SelectSingleNode(name);
+            if (node != null) {
+                value = node.Attributes["default"].Value;
+            }
+            // ReSharper restore PossibleNullReferenceException
+            return value;    
+        }
+
+
         public void Reload() {
             _preferencesDoc.Load(FileName);
         }

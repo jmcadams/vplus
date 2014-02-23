@@ -1179,7 +1179,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void dgvChannels_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e) {
-            if (e.ColumnIndex != ChannelColorCol || e.RowIndex == 0) {
+            if (e.ColumnIndex != ChannelColorCol || e.RowIndex == -1) {
                 return;
             }
 

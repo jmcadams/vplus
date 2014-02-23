@@ -13,6 +13,7 @@ namespace VixenPlusCommon {
     public partial class ColorPicker : Form {
 
         private const string ControlPb = "pbCustom";
+        private readonly Preference2 _pref = Preference2.GetInstance();
 
 
         public ColorPicker(Color color, bool showNone = true) {
@@ -93,7 +94,7 @@ namespace VixenPlusCommon {
         }
 
         private void ColorPicker_Shown(object sender, EventArgs e) {
-            var colors = Preference2.GetInstance().GetString(Preference2.CustomColorsPreference).Split(',');
+            var colors = GetDefaultOrCustomColors().Split(',');
             var colorCount = colors.Count() - 1;
             for (var i = 0; i < 16; i++) {
                 var control = Controls.Find(string.Format("pbCustom{0:X}", i), true)[0];
@@ -109,6 +110,16 @@ namespace VixenPlusCommon {
             }
         }
 
+
+        private string GetDefaultOrCustomColors() {
+            var def = _pref.GetStringDefault(Preference2.CustomColorsPreference);
+            var cust = _pref.GetString(Preference2.CustomColorsPreference);
+            const string basic ="255,65280,16711680,65535,16711935,16776960,16777215,0," + 
+                                "8421631,8454016,16744576,12648447,16761087,16777154,12632256,4210752";
+            return def == cust ? basic : cust;
+        }
+
+
         private void ColorPicker_FormClosing(object sender, FormClosingEventArgs e) {
             var colors = (from PictureBox c in
                               (from object c in Controls where c is PictureBox select c)
@@ -119,7 +130,8 @@ namespace VixenPlusCommon {
                 var raw = colors[i];
                 color[i] = (raw.R + (raw.G << 8) + (raw.B << 16)).ToString(CultureInfo.InvariantCulture);
             }
-            Preference2.GetInstance().SetString(Preference2.CustomColorsPreference,string.Join(",", color));
+            _pref.SetString(Preference2.CustomColorsPreference,string.Join(",", color));
+            _pref.SaveSettings();
         }
     }
 }
