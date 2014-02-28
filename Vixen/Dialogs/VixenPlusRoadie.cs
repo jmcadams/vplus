@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -59,6 +60,7 @@ namespace VixenPlus.Dialogs {
         public VixenPlusRoadie(IExecutable defaultProfile = null) {
             InitializeComponent();
             Icon = Resources.VixenPlus;
+            MinimumSize = Size;
 
             _suppressErrors = Preference2.GetInstance().GetBoolean("SilenceProfileErrors");
             _dgvWidthDiff = Width - dgvChannels.Width;
@@ -75,6 +77,12 @@ namespace VixenPlus.Dialogs {
             else {
                 cbProfiles.SelectedIndex = 0;
             }
+        }
+
+
+        public override sealed Size MinimumSize {
+            get { return base.MinimumSize; }
+            set { base.MinimumSize = value; }
         }
 
         #endregion
@@ -1144,6 +1152,7 @@ namespace VixenPlus.Dialogs {
                 return;
             }
 
+            //move the channels
             foreach (var row in rows) {
                 dgvChannels.Rows.RemoveAt(dgvChannels.Rows.IndexOf(row));
                 dgvChannels.Rows.Insert(rowIndexOfItemUnderMouseToDrop, row);
@@ -1235,7 +1244,10 @@ namespace VixenPlus.Dialogs {
         }
 
         private void PreviewChannelEvent(object sender, EventArgs e) {
-            PreviewChannels();
+            btnUpdatePreview.Enabled = !cbPreview.Checked;
+            if (cbPreview.Checked) {
+                PreviewChannels();
+            }
         }
 
         private void previewTimer_Tick(object sender, EventArgs e) {
@@ -1245,5 +1257,14 @@ namespace VixenPlus.Dialogs {
             AddRows(GenerateChannels(), _contextProfile.FullChannels.Count() + 1);
             dgvChannels.ResumeLayout();
         }
+
+        private void tbChGenNameFormat_KeyDown(object sender, KeyEventArgs e) {
+            e.SuppressKeyPress = e.KeyCode == Keys.Enter;
+        }
+
+        private void btnUpdatePreview_Click(object sender, EventArgs e) {
+            previewTimer_Tick(null, null);
+        }
+
     }
 }
