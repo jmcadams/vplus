@@ -518,13 +518,15 @@ namespace VixenPlus.Dialogs {
 
 
         private static void DoChannelPaste() {
-            if (Clipboard.ContainsData(DataFormats.Text)) {
-                var s = (string) Clipboard.GetData(DataFormats.Text);
-                Clipboard.SetData(DataFormats.Text, s);
-                var csv = s.Split(new[] {"\r\n"}, StringSplitOptions.None).ToList();
-                foreach (var cc in csv.SelectMany(c => c.Split('\t').ToList())) {
-                    Debug.Print("'" + cc + "'"); // TODO Need to paste the data.
-                }
+            if (!Clipboard.ContainsData(DataFormats.Text)) {
+                return;
+            }
+
+            var s = (string) Clipboard.GetData(DataFormats.Text);
+            Clipboard.SetData(DataFormats.Text, s);
+            var csv = s.Split(new[] {"\r\n"}, StringSplitOptions.None).ToList();
+            foreach (var cc in csv.SelectMany(c => c.Split('\t').ToList())) {
+                Debug.Print("'" + cc + "'"); // TODO Need to paste the data.
             }
         }
 
@@ -1328,7 +1330,7 @@ namespace VixenPlus.Dialogs {
         }
 
         private void dgvChannels_KeyDown(object sender, KeyEventArgs e) {
-            if (btnChDelete.Enabled && (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)) {
+            if (btnChDelete.Enabled && e.KeyCode == Keys.Delete) {
                 btnChDelete_Click(null, null);
             }
         }
