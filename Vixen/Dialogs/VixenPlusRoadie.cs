@@ -291,7 +291,6 @@ namespace VixenPlus.Dialogs {
 
 
         private void cbProfiles_SelectedIndexChanged(object sender, EventArgs e) {
-            //todo need to save any changes before changing index
             colorPaletteChannel.ControlChanged -= UpdateColors;
             tcControlArea.SelectTab(ControlTabNormal);
             tcProfile.TabPages[0].Text = "Channels";
@@ -1325,6 +1324,12 @@ namespace VixenPlus.Dialogs {
         private void SaveChangedProfiles() {
             foreach (var p in cbProfiles.Items.OfType<Profile>().Where(p => p.IsDirty)) {
                 p.SaveToFile();
+            }
+        }
+
+        private void dgvChannels_KeyDown(object sender, KeyEventArgs e) {
+            if (btnChDelete.Enabled && (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)) {
+                btnChDelete_Click(null, null);
             }
         }
     }

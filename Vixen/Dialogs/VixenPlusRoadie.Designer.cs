@@ -258,6 +258,7 @@ namespace VixenPlus.Dialogs
             this.dgvChannels.SelectionChanged += new System.EventHandler(this.dgvChannels_SelectionChanged);
             this.dgvChannels.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragDrop);
             this.dgvChannels.DragOver += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragOver);
+            this.dgvChannels.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvChannels_KeyDown);
             this.dgvChannels.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dataGridView1_MouseDown);
             this.dgvChannels.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dataGridView1_MouseMove);
             // 
