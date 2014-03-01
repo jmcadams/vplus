@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -135,7 +134,6 @@ namespace VixenPlus.Dialogs {
         #region Channel Tab Events
 
         private void dgvChannels_SelectionChanged(object sender, EventArgs e) {
-
             DoButtonManagement();
         }
 
@@ -151,6 +149,7 @@ namespace VixenPlus.Dialogs {
             foreach (var row in rows) {
                 row.Cells[ChannelEnabledCol].Value = enable;
             }
+            _contextProfile.IsDirty = true;
             DoButtonManagement();
         }
 
@@ -192,6 +191,7 @@ namespace VixenPlus.Dialogs {
                                 break;
                             }
                             dgvChannels.Rows.Clear();
+                            _contextProfile.IsDirty = true;
                             count++;
                         }
                         else {
@@ -280,6 +280,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void btnOkay_Click(object sender, EventArgs e) {
+            SaveChangedProfiles();
             DialogResult = DialogResult.OK;
         }
 
@@ -329,6 +330,7 @@ namespace VixenPlus.Dialogs {
             var row = dgvChannels.Rows.Add(new object[] { ch.Enabled, chNum, ch.Name, ch.OutputChannel + 1, ch.Color.ToHTML() });
             dgvChannels.Rows[row].DefaultCellStyle.BackColor = ch.Color;
             dgvChannels.Rows[row].DefaultCellStyle.ForeColor = ch.Color.GetForeColor();
+            _contextProfile.IsDirty = true;
         }
 
         #endregion
@@ -342,6 +344,7 @@ namespace VixenPlus.Dialogs {
         #region Channel Generator
 
         private void btnChAddMulti_Click(object sender, EventArgs e) {
+            dgvChannels.Rows.Clear();
             colorPaletteChannel.ControlChanged += UpdateColors;
             tcControlArea.SelectTab(ControlTabMultiChannel);
             tcProfile.TabPages[0].Text = "Preview";
@@ -367,6 +370,7 @@ namespace VixenPlus.Dialogs {
                 }
             }
             AddRows(_contextProfile.FullChannels);
+            SelectLastRow();
             DoButtonManagement();
         }
 
@@ -495,6 +499,7 @@ namespace VixenPlus.Dialogs {
                     }
 
                     DoChannelPaste();
+                    _contextProfile.IsDirty = true;
                     e.Handled = true;
                     break;
             }
@@ -519,7 +524,7 @@ namespace VixenPlus.Dialogs {
                 Clipboard.SetData(DataFormats.Text, s);
                 var csv = s.Split(new[] {"\r\n"}, StringSplitOptions.None).ToList();
                 foreach (var cc in csv.SelectMany(c => c.Split('\t').ToList())) {
-                    Debug.Print("'" + cc + "'");
+                    Debug.Print("'" + cc + "'"); // TODO Need to paste the data.
                 }
             }
         }
@@ -649,6 +654,7 @@ namespace VixenPlus.Dialogs {
             }
 
             _contextProfile.Name = newName;
+            _contextProfile.IsDirty = true;
 
             RefreshProfileComboBox(newName);
         }
@@ -969,11 +975,6 @@ namespace VixenPlus.Dialogs {
                 previewTimer.Stop();
             }
             previewTimer.Start();
-
-            //dgvChannels.SuspendLayout();
-            //dgvChannels.Rows.Clear();
-            //AddRows(GenerateChannels(), _contextProfile.FullChannels.Count() + 1);
-            //dgvChannels.ResumeLayout();
         }
 
 
@@ -1071,6 +1072,15 @@ namespace VixenPlus.Dialogs {
             var ch = new Channel(string.Format("Channel {0}", chNum + 1), Color.White, chNum);
             _contextProfile.AddChannelObject(ch);
             AddRow(_contextProfile.FullChannels[chNum], chNum + 1);
+            SelectLastRow();
+        }
+
+
+        private void SelectLastRow() {
+            dgvChannels.ClearSelection();
+            var lastRow = dgvChannels.RowCount - 1;
+            dgvChannels.Rows[lastRow].Selected = true;
+            dgvChannels.FirstDisplayedScrollingRowIndex = lastRow;
         }
 
 
@@ -1103,11 +1113,12 @@ namespace VixenPlus.Dialogs {
             }
 
             // If the mouse moves outside the rectangle, start the drag.
-            if (_dragDropBox != Rectangle.Empty && !_dragDropBox.Contains(e.X, e.Y)) {
-
-                // Proceed with the drag and drop, passing in the list item.                    
-                dgvChannels.DoDragDrop(GetSelectedRows(), DragDropEffects.Move);
+            if (_dragDropBox == Rectangle.Empty || _dragDropBox.Contains(e.X, e.Y)) {
+                return;
             }
+
+            // Proceed with the drag and drop, passing in the list item.                    
+            dgvChannels.DoDragDrop(GetSelectedRows(), DragDropEffects.Move);
         }
 
 
@@ -1132,31 +1143,51 @@ namespace VixenPlus.Dialogs {
 
 
         private void dataGridView1_DragOver(object sender, DragEventArgs e) {
-            e.Effect = DragDropEffects.Move;
+            // Check that it is a valid drag drop
+            var cols = (from DataGridViewCell c in dgvChannels.SelectedCells select c.ColumnIndex).Distinct().ToList();
+            e.Effect = (cols.Count() != 1 || cols[0] < ChannelNumCol || cols[0] > OutputChannelCol) ? DragDropEffects.None : DragDropEffects.Move;
         }
 
 
         private void dataGridView1_DragDrop(object sender, DragEventArgs e) {
-            var clientPoint = dgvChannels.PointToClient(new Point(e.X, e.Y));
-
-            // Get the row index of the item the mouse is below. 
-            var rowIndexOfItemUnderMouseToDrop = dgvChannels.HitTest(clientPoint.X, clientPoint.Y).RowIndex;
-
-            // If the drag operation was a move then remove and insert the row.
+            // If it is not a move, then exit since it is an invalid D&D
             if (e.Effect != DragDropEffects.Move) {
                 return;
             }
 
+            // If it is not the right type of data, exit.
             var rows = e.Data.GetData(typeof(HashSet<DataGridViewRow>)) as HashSet<DataGridViewRow>;
             if (rows == null) {
                 return;
             }
 
+            // It is a valid D&D, so where did the drop occur
+            var dropPoint = dgvChannels.PointToClient(new Point(e.X, e.Y));
+
+            // Get the row index of the item the mouse is below. 
+            var dropRowIndex = dgvChannels.HitTest(dropPoint.X, dropPoint.Y).RowIndex;
+
             //move the channels
             foreach (var row in rows) {
                 dgvChannels.Rows.RemoveAt(dgvChannels.Rows.IndexOf(row));
-                dgvChannels.Rows.Insert(rowIndexOfItemUnderMouseToDrop, row);
+                dgvChannels.Rows.Insert(dropRowIndex, row);
             }
+
+            // Select the cell where the data was dropped
+            var col = (from DataGridViewCell c in dgvChannels.SelectedCells select c.ColumnIndex).Distinct().ToList()[0];
+            dgvChannels.CurrentCell = dgvChannels.Rows[dropRowIndex].Cells[col];
+
+            // Renumber the appropriate column
+            switch (col) {
+                case ChannelNumCol:
+                    break;
+                case OutputChannelCol:
+                    break;
+                case ChannelNameCol:
+                    break;
+            }
+
+            _contextProfile.IsDirty = true;
         }
 
         private void btnChColorOne_Click(object sender, EventArgs e) {
@@ -1177,11 +1208,22 @@ namespace VixenPlus.Dialogs {
                 row.DefaultCellStyle.ForeColor = foreColor;
             }
             dgvChannels.ResumeLayout();
+            _contextProfile.IsDirty = true;
         }
 
         private void btnCancel_Click(object sender, EventArgs e) {
-            //todo check if there are changes and then warn if we're going to dump changes.
+            if (AnyDirtyProfiles()) {
+                if (MessageBox.Show("Changes will be lost? Exit anyway?", "Exit Anyway?", MessageBoxButtons.YesNo) == DialogResult.No) {
+                    return;
+                }
+            }
+
             DialogResult = DialogResult.Cancel;
+        }
+
+
+        private bool AnyDirtyProfiles() {
+            return cbProfiles.Items.OfType<Profile>().Any(p => p.IsDirty);
         }
 
 
@@ -1214,6 +1256,7 @@ namespace VixenPlus.Dialogs {
                 row.DefaultCellStyle.ForeColor = foreColor;
             }
             dgvChannels.ResumeLayout();
+            _contextProfile.IsDirty = true;
         }
 
         private void btnChColorMulti_Click(object sender, EventArgs e) {
@@ -1233,11 +1276,13 @@ namespace VixenPlus.Dialogs {
                     row.DefaultCellStyle.BackColor = color;
                     row.DefaultCellStyle.ForeColor = color.GetForeColor();
                 }
+                _contextProfile.IsDirty = true;
             }
             DoButtonManagement();
         }
 
         private void dgvChannels_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
+            _contextProfile.IsDirty = true;
             if (e.ColumnIndex == ChannelNameCol && ModifierKeys == Keys.Control) {
                 //TODO Add channel renaming templating.
             }
@@ -1266,5 +1311,21 @@ namespace VixenPlus.Dialogs {
             previewTimer_Tick(null, null);
         }
 
+        private void VixenPlusRoadie_FormClosing(object sender, FormClosingEventArgs e) {
+            if (!AnyDirtyProfiles()) {
+                return;
+            }
+
+            if (MessageBox.Show("Save changes before closing?", "Save Changes?", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+                SaveChangedProfiles();
+            }
+        }
+
+
+        private void SaveChangedProfiles() {
+            foreach (var p in cbProfiles.Items.OfType<Profile>().Where(p => p.IsDirty)) {
+                p.SaveToFile();
+            }
+        }
     }
 }
