@@ -435,10 +435,8 @@ namespace VixenPlus.Dialogs {
             var selectedRows = GetSelectedRows().ToList();
             var cellsSelected = selectedRows.Any();
             var oneRowSelected = selectedRows.Count() == 1;
-            var hasEnabledChannels =
-                (from DataGridViewRow x in selectedRows where (bool.Parse(x.Cells[ChannelEnabledCol].Value.ToString())) select x).Any();
-            var hasDisabledChannels =
-                (from DataGridViewRow x in selectedRows where (!bool.Parse(x.Cells[ChannelEnabledCol].Value.ToString())) select x).Any();
+            var hasEnabledChannels = selectedRows.Any(r => bool.Parse(r.Cells[ChannelEnabledCol].Value.ToString()));
+            var hasDisabledChannels = selectedRows.Any(r => !bool.Parse(r.Cells[ChannelEnabledCol].Value.ToString()));
 
             btnChAddMulti.Enabled = isProfileLoaded;
             btnChAddOne.Enabled = isProfileLoaded;
