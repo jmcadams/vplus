@@ -329,7 +329,6 @@ namespace VixenPlus.Dialogs {
             var row = dgvChannels.Rows.Add(new object[] { ch.Enabled, chNum, ch.Name, ch.OutputChannel + 1, ch.Color.ToHTML() });
             dgvChannels.Rows[row].DefaultCellStyle.BackColor = ch.Color;
             dgvChannels.Rows[row].DefaultCellStyle.ForeColor = ch.Color.GetForeColor();
-            _contextProfile.IsDirty = true;
         }
 
         #endregion
@@ -369,6 +368,7 @@ namespace VixenPlus.Dialogs {
                 }
             }
             AddRows(_contextProfile.FullChannels);
+            _contextProfile.IsDirty = true;
             SelectLastRow();
             DoButtonManagement();
         }
@@ -1073,6 +1073,7 @@ namespace VixenPlus.Dialogs {
             var ch = new Channel(string.Format("Channel {0}", chNum + 1), Color.White, chNum);
             _contextProfile.AddChannelObject(ch);
             AddRow(_contextProfile.FullChannels[chNum], chNum + 1);
+            _contextProfile.IsDirty = true;
             SelectLastRow();
         }
 
@@ -1088,6 +1089,8 @@ namespace VixenPlus.Dialogs {
         private void btnChDelete_Click(object sender, EventArgs e) {
             var rows = GetSelectedRows().ToList();
             var channels = rows.Select(row => _contextProfile.FullChannels[int.Parse(row.Cells[ChannelNumCol].Value.ToString()) - 1]).ToList();
+
+            _contextProfile.IsDirty = true;
 
             foreach (var c in channels) {
                 _contextProfile.RemoveChannel(c);
@@ -1157,7 +1160,7 @@ namespace VixenPlus.Dialogs {
             }
 
             // If it is not the right type of data, exit.
-            var rows = e.Data.GetData(typeof(HashSet<DataGridViewRow>)) as HashSet<DataGridViewRow>;
+            var rows = e.Data.GetData(typeof (HashSet<DataGridViewRow>)) as HashSet<DataGridViewRow>;
             if (rows == null) {
                 return;
             }
@@ -1165,31 +1168,58 @@ namespace VixenPlus.Dialogs {
             // It is a valid D&D, so where did the drop occur
             var dropPoint = dgvChannels.PointToClient(new Point(e.X, e.Y));
 
-            // Get the row index of the item the mouse is below. 
+            // Get the row index of the item the mouse is over. 
             var dropRowIndex = dgvChannels.HitTest(dropPoint.X, dropPoint.Y).RowIndex;
 
-            //move the channels
+            // Get the column the D&D impacts
+            var dropColumn = (from DataGridViewCell c in dgvChannels.SelectedCells select c.ColumnIndex).Distinct().ToList()[0];
+            
+            // If it is the Channel Name column, do the channel number first and the the Output Number second
+            var valueColumn = dropColumn == ChannelNameCol ? ChannelNumCol : dropColumn;
+            
+            // Get the data for that column on the dropped row
+            var initialValue = int.Parse(dgvChannels.Rows[dropRowIndex].Cells[valueColumn].Value.ToString());
+
+            // Number of rows impacted, first row impacted and last row impacted
+            var impactedRowCount = rows.Count - 1;
+            var firstRow = Math.Min(initialValue, rows.Min(r => int.Parse(r.Cells[valueColumn].Value.ToString())));
+            var lastRow = Math.Max(initialValue, rows.Max(r => int.Parse(r.Cells[valueColumn].Value.ToString())));
+
+            Debug.Print("First: {0} - Last: {1}", firstRow, lastRow);
+
+            //move the channels and renumber the appropriate column
             foreach (var row in rows) {
                 dgvChannels.Rows.RemoveAt(dgvChannels.Rows.IndexOf(row));
+                row.Cells[valueColumn].Value = firstRow + impactedRowCount--;
                 dgvChannels.Rows.Insert(dropRowIndex, row);
             }
 
-            // Select the cell where the data was dropped
-            var col = (from DataGridViewCell c in dgvChannels.SelectedCells select c.ColumnIndex).Distinct().ToList()[0];
-            dgvChannels.CurrentCell = dgvChannels.Rows[dropRowIndex].Cells[col];
-
             // Renumber the appropriate column
-            switch (col) {
-                case ChannelNumCol:
-                    break;
-                case OutputChannelCol:
-                    break;
-                case ChannelNameCol:
-                    break;
+            RenumberChannels(rows, firstRow, lastRow, valueColumn);
+
+            // If it is the name column, do the output channel column renumbering now, passing an empty list.
+            if (dropColumn == ChannelNameCol) {
+                RenumberChannels(new List<DataGridViewRow>(), firstRow, lastRow, OutputChannelCol);
             }
 
             _contextProfile.IsDirty = true;
+
+            // Select the cell where the data was dropped
+            dgvChannels.CurrentCell = dgvChannels.Rows[dropRowIndex].Cells[dropColumn];
         }
+
+
+        private void RenumberChannels(ICollection<DataGridViewRow> rows, int firstRow, int lastRow, int col) {
+            var rowCounter = rows.Count;
+
+            foreach (var row in from DataGridViewRow row in dgvChannels.Rows 
+                                let channelNum = int.Parse(row.Cells[col].Value.ToString()) 
+                                where channelNum >= firstRow && channelNum <= lastRow && !rows.Contains(row)
+                                select row) {
+                row.Cells[col].Value = firstRow + rowCounter++;
+            }
+        }
+
 
         private void btnChColorOne_Click(object sender, EventArgs e) {
             var rows = GetSelectedRows().ToList();
@@ -1283,10 +1313,10 @@ namespace VixenPlus.Dialogs {
         }
 
         private void dgvChannels_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
-            _contextProfile.IsDirty = true;
-            if (e.ColumnIndex == ChannelNameCol && ModifierKeys == Keys.Control) {
-                //TODO Add channel renaming templating.
-            }
+            //_contextProfile.IsDirty = true;
+            //if (e.ColumnIndex == ChannelNameCol && ModifierKeys == Keys.Control) {
+            //    //TODO Add channel renaming templating.
+            //}
         }
 
         private void PreviewChannelEvent(object sender, EventArgs e) {
@@ -1313,7 +1343,7 @@ namespace VixenPlus.Dialogs {
         }
 
         private void VixenPlusRoadie_FormClosing(object sender, FormClosingEventArgs e) {
-            if (!AnyDirtyProfiles()) {
+            if (e.CloseReason != CloseReason.UserClosing || !AnyDirtyProfiles()) {
                 return;
             }
 
