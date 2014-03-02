@@ -209,12 +209,17 @@ namespace VixenPlus {
         }
 
 
+        public void ClearChannels() {
+            _channelObjects.Clear();
+            _channelOutputs.Clear();
+        }
+
+
         public void Reload() {
             var document = new XmlDocument();
             document.Load(FileName);
             XmlNode documentElement = document.DocumentElement;
-            _channelObjects.Clear();
-            _channelOutputs.Clear();
+            ClearChannels();
             if (documentElement != null) {
                 var channelObjectsNode = documentElement.SelectNodes("ChannelObjects/*");
                 if (channelObjectsNode != null) {
