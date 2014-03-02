@@ -14,14 +14,51 @@ namespace VixenPlusCommon {
 
         private const string ControlPb = "pbCustom";
         private readonly Preference2 _pref = Preference2.GetInstance();
-
+        private readonly Timer _clickTimer;
+        private int _clickCount;
+        private PictureBox _control;
 
         public ColorPicker(Color color, bool showNone = true) {
             InitializeComponent();
+
+            _clickTimer = new Timer {Interval = SystemInformation.DoubleClickTime};
+            _clickTimer.Tick += ResetClickTimer;
+            
             ControlBox = false; // Workaround: If this is set to false in the designer.cs, it renders wrong.
             btnNone.Visible = showNone;
             SetColorOrImage(pbOriginalColor, color);
             SetEditorColor(color);
+        }
+
+
+        private void pbCustom_MouseDown(object sender, MouseEventArgs e) {
+            _control = sender as PictureBox;
+            if (null == _control) {
+                return;
+            }
+
+            _clickTimer.Start();
+            _clickCount++;
+
+            SetEditorColor(_control.BackColor);
+            pbNewColor.BackColor = _control.BackColor;
+
+            if (_clickCount == 1) {
+                foreach (var c in
+                    from PictureBox c in (from object c in Controls where c is PictureBox select c) where c.Name.StartsWith(ControlPb) select c) {
+                    c.BorderStyle = c == sender ? BorderStyle.Fixed3D : BorderStyle.FixedSingle;
+                }
+            }
+            else {
+                _clickTimer.Stop();
+                DialogResult = DialogResult.OK;
+            }
+        }
+
+
+        private void ResetClickTimer(object sender, EventArgs e) {
+            _clickTimer.Stop();
+            _clickCount = 0;
         }
 
 
@@ -56,21 +93,6 @@ namespace VixenPlusCommon {
         private static void SetColorOrImage(Control pb, Color color) {
             pb.BackColor = color;
             pb.BackgroundImage = color == Color.Transparent ? Resources.cellbackground : null;
-        }
-
-
-        private void pbCustom_Click(object sender, EventArgs e) {
-            var control = sender as PictureBox;
-            if (null == control) {
-                return;
-            }
-
-            SetEditorColor(control.BackColor);
-            pbNewColor.BackColor = control.BackColor;
-
-            foreach (var c in from PictureBox c in (from object c in Controls where c is PictureBox select c) where c.Name.StartsWith(ControlPb) select c) {
-                c.BorderStyle = c == sender ? BorderStyle.Fixed3D : BorderStyle.FixedSingle;
-            }
         }
 
 
@@ -132,6 +154,9 @@ namespace VixenPlusCommon {
             }
             _pref.SetString(Preference2.CustomColorsPreference,string.Join(",", color));
             _pref.SaveSettings();
+            _clickTimer.Tick -= ResetClickTimer;
+            _clickTimer.Dispose();
         }
+
     }
 }
