@@ -206,6 +206,7 @@ namespace VixenPlus.Dialogs {
                         }
                     }
                     dgvChannels.ResumeLayout();
+                    SetGeneralButtons();
                 }
             }
         }
@@ -450,7 +451,7 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private void SetGeneralButtons(bool isProfileLoaded) {
+        private void SetGeneralButtons(bool isProfileLoaded = true) {
             var isChannelPanel = tcControlArea.SelectedTab == tpChannelControl;
             btnCancel.Enabled = isChannelPanel;
             btnOkay.Enabled = isChannelPanel;
@@ -1297,7 +1298,7 @@ namespace VixenPlus.Dialogs {
                 row.DefaultCellStyle.ForeColor = foreColor;
             }
             dgvChannels.ResumeLayout();
-            SetGeneralButtons(true);
+            SetGeneralButtons();
             _contextProfile.IsDirty = true;
         }
 
