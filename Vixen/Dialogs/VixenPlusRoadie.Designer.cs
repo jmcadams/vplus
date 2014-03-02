@@ -35,10 +35,11 @@ namespace VixenPlus.Dialogs
             this.components = new System.ComponentModel.Container();
             this.cbProfiles = new System.Windows.Forms.ComboBox();
             this.gbProfiles = new System.Windows.Forms.GroupBox();
-            this.btnDeleteProfile = new System.Windows.Forms.Button();
-            this.btnRenameProfile = new System.Windows.Forms.Button();
-            this.btnCopyProfile = new System.Windows.Forms.Button();
-            this.btnAddProfile = new System.Windows.Forms.Button();
+            this.btnProfileSave = new System.Windows.Forms.Button();
+            this.btnProfileDelete = new System.Windows.Forms.Button();
+            this.btnProfileRename = new System.Windows.Forms.Button();
+            this.btnProfileCopy = new System.Windows.Forms.Button();
+            this.btnProfileAdd = new System.Windows.Forms.Button();
             this.tcProfile = new System.Windows.Forms.TabControl();
             this.tpChannels = new System.Windows.Forms.TabPage();
             this.dgvChannels = new System.Windows.Forms.DataGridView();
@@ -49,54 +50,58 @@ namespace VixenPlus.Dialogs
             this.ChannelColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tpPlugins = new System.Windows.Forms.TabPage();
             this.btnPiaButton = new System.Windows.Forms.Button();
-            this.tpGroups = new System.Windows.Forms.TabPage();
-            this.btnGraButton = new System.Windows.Forms.Button();
             this.tpSortOrders = new System.Windows.Forms.TabPage();
             this.btnSrtDelete = new System.Windows.Forms.Button();
             this.btnSrtSave = new System.Windows.Forms.Button();
             this.cbSrtOrders = new System.Windows.Forms.ComboBox();
+            this.tpGroups = new System.Windows.Forms.TabPage();
+            this.btnGraButton = new System.Windows.Forms.Button();
             this.tpNutcracker = new System.Windows.Forms.TabPage();
             this.btnNcaButton = new System.Windows.Forms.Button();
-            this.tcControlArea = new VixenPlusCommon.TabControl(this.components);
-            this.tpChannelControl = new System.Windows.Forms.TabPage();
-            this.gbExportImport = new System.Windows.Forms.GroupBox();
+            this.btnOkay = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.ttRoadie = new System.Windows.Forms.ToolTip(this.components);
             this.btnChExport = new System.Windows.Forms.Button();
             this.btnChImport = new System.Windows.Forms.Button();
-            this.gbChannels = new System.Windows.Forms.GroupBox();
             this.btnChDelete = new System.Windows.Forms.Button();
             this.btnChAddMulti = new System.Windows.Forms.Button();
             this.btnChAddOne = new System.Windows.Forms.Button();
-            this.gbEnable = new System.Windows.Forms.GroupBox();
             this.btnChEnable = new System.Windows.Forms.Button();
             this.btnChDisable = new System.Windows.Forms.Button();
-            this.gbColors = new System.Windows.Forms.GroupBox();
             this.btnChColorMulti = new System.Windows.Forms.Button();
             this.btnChColorOne = new System.Windows.Forms.Button();
-            this.tpMultiChannel = new System.Windows.Forms.TabPage();
-            this.btnUpdatePreview = new System.Windows.Forms.Button();
-            this.btnMultiChannelCancel = new System.Windows.Forms.Button();
-            this.gbRules = new System.Windows.Forms.GroupBox();
             this.btnRuleDelete = new System.Windows.Forms.Button();
             this.btnRuleAdd = new System.Windows.Forms.Button();
-            this.cbRuleRules = new System.Windows.Forms.ComboBox();
             this.btnRuleDown = new System.Windows.Forms.Button();
             this.btnRuleUp = new System.Windows.Forms.Button();
             this.lbRules = new System.Windows.Forms.ListBox();
-            this.panelRuleEditor = new System.Windows.Forms.Panel();
-            this.colorPaletteChannel = new VixenPlusCommon.ColorPalette();
             this.cbRuleEndNum = new System.Windows.Forms.CheckBox();
             this.nudRuleIncr = new System.Windows.Forms.NumericUpDown();
             this.nudRuleEnd = new System.Windows.Forms.NumericUpDown();
             this.nudRuleStart = new System.Windows.Forms.NumericUpDown();
+            this.cbRuleColors = new System.Windows.Forms.CheckBox();
+            this.btnChGenSaveTemplate = new System.Windows.Forms.Button();
+            this.tbChGenNameFormat = new System.Windows.Forms.TextBox();
+            this.nudChGenChannels = new System.Windows.Forms.NumericUpDown();
+            this.previewTimer = new System.Windows.Forms.Timer(this.components);
+            this.tcControlArea = new VixenPlusCommon.TabControl(this.components);
+            this.tpChannelControl = new System.Windows.Forms.TabPage();
+            this.gbExportImport = new System.Windows.Forms.GroupBox();
+            this.gbChannels = new System.Windows.Forms.GroupBox();
+            this.gbEnable = new System.Windows.Forms.GroupBox();
+            this.gbColors = new System.Windows.Forms.GroupBox();
+            this.tpMultiChannel = new System.Windows.Forms.TabPage();
+            this.btnUpdatePreview = new System.Windows.Forms.Button();
+            this.btnMultiChannelCancel = new System.Windows.Forms.Button();
+            this.gbRules = new System.Windows.Forms.GroupBox();
+            this.cbRuleRules = new System.Windows.Forms.ComboBox();
+            this.panelRuleEditor = new System.Windows.Forms.Panel();
+            this.colorPaletteChannel = new VixenPlusCommon.ColorPalette();
             this.lblRuleIncr = new System.Windows.Forms.Label();
             this.lblRuleStartNum = new System.Windows.Forms.Label();
             this.tbRuleWords = new System.Windows.Forms.TextBox();
             this.lblRulePrompt = new System.Windows.Forms.Label();
-            this.cbRuleColors = new System.Windows.Forms.CheckBox();
             this.btnMultiChannelOk = new System.Windows.Forms.Button();
-            this.btnChGenSaveTemplate = new System.Windows.Forms.Button();
-            this.tbChGenNameFormat = new System.Windows.Forms.TextBox();
-            this.nudChGenChannels = new System.Windows.Forms.NumericUpDown();
             this.lblChGenNameFormat = new System.Windows.Forms.Label();
             this.cbPreview = new System.Windows.Forms.CheckBox();
             this.lblChGenCount = new System.Windows.Forms.Label();
@@ -106,18 +111,18 @@ namespace VixenPlus.Dialogs
             this.btnMultiColorOk = new System.Windows.Forms.Button();
             this.btnMultiColorCancel = new System.Windows.Forms.Button();
             this.colorPaletteColor = new VixenPlusCommon.ColorPalette();
-            this.btnOkay = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.ttRoadie = new System.Windows.Forms.ToolTip(this.components);
-            this.previewTimer = new System.Windows.Forms.Timer(this.components);
             this.gbProfiles.SuspendLayout();
             this.tcProfile.SuspendLayout();
             this.tpChannels.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvChannels)).BeginInit();
             this.tpPlugins.SuspendLayout();
-            this.tpGroups.SuspendLayout();
             this.tpSortOrders.SuspendLayout();
+            this.tpGroups.SuspendLayout();
             this.tpNutcracker.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRuleIncr)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRuleEnd)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRuleStart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudChGenChannels)).BeginInit();
             this.tcControlArea.SuspendLayout();
             this.tpChannelControl.SuspendLayout();
             this.gbExportImport.SuspendLayout();
@@ -127,10 +132,6 @@ namespace VixenPlus.Dialogs
             this.tpMultiChannel.SuspendLayout();
             this.gbRules.SuspendLayout();
             this.panelRuleEditor.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudRuleIncr)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudRuleEnd)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudRuleStart)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudChGenChannels)).BeginInit();
             this.tpMultiColor.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -146,61 +147,73 @@ namespace VixenPlus.Dialogs
             // 
             // gbProfiles
             // 
-            this.gbProfiles.Controls.Add(this.btnDeleteProfile);
-            this.gbProfiles.Controls.Add(this.btnRenameProfile);
-            this.gbProfiles.Controls.Add(this.btnCopyProfile);
-            this.gbProfiles.Controls.Add(this.btnAddProfile);
+            this.gbProfiles.Controls.Add(this.btnProfileSave);
+            this.gbProfiles.Controls.Add(this.btnProfileDelete);
+            this.gbProfiles.Controls.Add(this.btnProfileRename);
+            this.gbProfiles.Controls.Add(this.btnProfileCopy);
+            this.gbProfiles.Controls.Add(this.btnProfileAdd);
             this.gbProfiles.Controls.Add(this.cbProfiles);
             this.gbProfiles.Location = new System.Drawing.Point(12, 12);
             this.gbProfiles.Name = "gbProfiles";
-            this.gbProfiles.Size = new System.Drawing.Size(621, 52);
+            this.gbProfiles.Size = new System.Drawing.Size(704, 52);
             this.gbProfiles.TabIndex = 0;
             this.gbProfiles.TabStop = false;
             this.gbProfiles.Text = "Profile";
             // 
-            // btnDeleteProfile
+            // btnProfileSave
             // 
-            this.btnDeleteProfile.Location = new System.Drawing.Point(540, 19);
-            this.btnDeleteProfile.Name = "btnDeleteProfile";
-            this.btnDeleteProfile.Size = new System.Drawing.Size(75, 23);
-            this.btnDeleteProfile.TabIndex = 4;
-            this.btnDeleteProfile.Text = "Delete";
-            this.ttRoadie.SetToolTip(this.btnDeleteProfile, "Delete current profile");
-            this.btnDeleteProfile.UseVisualStyleBackColor = true;
-            this.btnDeleteProfile.Click += new System.EventHandler(this.btnDeleteProfile_Click);
+            this.btnProfileSave.Location = new System.Drawing.Point(621, 19);
+            this.btnProfileSave.Name = "btnProfileSave";
+            this.btnProfileSave.Size = new System.Drawing.Size(75, 23);
+            this.btnProfileSave.TabIndex = 5;
+            this.btnProfileSave.Text = "&Save";
+            this.ttRoadie.SetToolTip(this.btnProfileSave, "Delete current profile");
+            this.btnProfileSave.UseVisualStyleBackColor = true;
+            this.btnProfileSave.Click += new System.EventHandler(this.btnProfileSave_Click);
             // 
-            // btnRenameProfile
+            // btnProfileDelete
             // 
-            this.btnRenameProfile.Location = new System.Drawing.Point(378, 19);
-            this.btnRenameProfile.Name = "btnRenameProfile";
-            this.btnRenameProfile.Size = new System.Drawing.Size(75, 23);
-            this.btnRenameProfile.TabIndex = 2;
-            this.btnRenameProfile.Text = "Rename";
-            this.ttRoadie.SetToolTip(this.btnRenameProfile, "Rename current profile");
-            this.btnRenameProfile.UseVisualStyleBackColor = true;
-            this.btnRenameProfile.Click += new System.EventHandler(this.btnRenameProfile_Click);
+            this.btnProfileDelete.Location = new System.Drawing.Point(540, 19);
+            this.btnProfileDelete.Name = "btnProfileDelete";
+            this.btnProfileDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnProfileDelete.TabIndex = 4;
+            this.btnProfileDelete.Text = "Delete";
+            this.ttRoadie.SetToolTip(this.btnProfileDelete, "Delete current profile");
+            this.btnProfileDelete.UseVisualStyleBackColor = true;
+            this.btnProfileDelete.Click += new System.EventHandler(this.btnProfileDelete_Click);
             // 
-            // btnCopyProfile
+            // btnProfileRename
             // 
-            this.btnCopyProfile.Location = new System.Drawing.Point(459, 19);
-            this.btnCopyProfile.Name = "btnCopyProfile";
-            this.btnCopyProfile.Size = new System.Drawing.Size(75, 23);
-            this.btnCopyProfile.TabIndex = 3;
-            this.btnCopyProfile.Text = "Copy";
-            this.ttRoadie.SetToolTip(this.btnCopyProfile, "Copy current profile");
-            this.btnCopyProfile.UseVisualStyleBackColor = true;
-            this.btnCopyProfile.Click += new System.EventHandler(this.btnCopyProfile_Click);
+            this.btnProfileRename.Location = new System.Drawing.Point(378, 19);
+            this.btnProfileRename.Name = "btnProfileRename";
+            this.btnProfileRename.Size = new System.Drawing.Size(75, 23);
+            this.btnProfileRename.TabIndex = 2;
+            this.btnProfileRename.Text = "Rename";
+            this.ttRoadie.SetToolTip(this.btnProfileRename, "Rename current profile");
+            this.btnProfileRename.UseVisualStyleBackColor = true;
+            this.btnProfileRename.Click += new System.EventHandler(this.btnProfileRename_Click);
             // 
-            // btnAddProfile
+            // btnProfileCopy
             // 
-            this.btnAddProfile.Location = new System.Drawing.Point(297, 19);
-            this.btnAddProfile.Name = "btnAddProfile";
-            this.btnAddProfile.Size = new System.Drawing.Size(75, 23);
-            this.btnAddProfile.TabIndex = 1;
-            this.btnAddProfile.Text = "Add";
-            this.ttRoadie.SetToolTip(this.btnAddProfile, "Add a new profile");
-            this.btnAddProfile.UseVisualStyleBackColor = true;
-            this.btnAddProfile.Click += new System.EventHandler(this.btnAddProfile_Click);
+            this.btnProfileCopy.Location = new System.Drawing.Point(459, 19);
+            this.btnProfileCopy.Name = "btnProfileCopy";
+            this.btnProfileCopy.Size = new System.Drawing.Size(75, 23);
+            this.btnProfileCopy.TabIndex = 3;
+            this.btnProfileCopy.Text = "Copy";
+            this.ttRoadie.SetToolTip(this.btnProfileCopy, "Copy current profile");
+            this.btnProfileCopy.UseVisualStyleBackColor = true;
+            this.btnProfileCopy.Click += new System.EventHandler(this.btnProfileCopy_Click);
+            // 
+            // btnProfileAdd
+            // 
+            this.btnProfileAdd.Location = new System.Drawing.Point(297, 19);
+            this.btnProfileAdd.Name = "btnProfileAdd";
+            this.btnProfileAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnProfileAdd.TabIndex = 1;
+            this.btnProfileAdd.Text = "Add";
+            this.ttRoadie.SetToolTip(this.btnProfileAdd, "Add a new profile");
+            this.btnProfileAdd.UseVisualStyleBackColor = true;
+            this.btnProfileAdd.Click += new System.EventHandler(this.btnProfileAdd_Click);
             // 
             // tcProfile
             // 
@@ -254,7 +267,7 @@ namespace VixenPlus.Dialogs
             this.dgvChannels.Size = new System.Drawing.Size(700, 580);
             this.dgvChannels.TabIndex = 0;
             this.dgvChannels.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvChannels_CellContentDoubleClick);
-            this.dgvChannels.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvChannels_CellEndEdit);
+            this.dgvChannels.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvChannels_CellValueChanged);
             this.dgvChannels.SelectionChanged += new System.EventHandler(this.dgvChannels_SelectionChanged);
             this.dgvChannels.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragDrop);
             this.dgvChannels.DragOver += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragOver);
@@ -328,32 +341,12 @@ namespace VixenPlus.Dialogs
             // btnPiaButton
             // 
             this.btnPiaButton.Enabled = false;
-            this.btnPiaButton.Location = new System.Drawing.Point(674, 428);
+            this.btnPiaButton.Location = new System.Drawing.Point(622, 551);
             this.btnPiaButton.Name = "btnPiaButton";
             this.btnPiaButton.Size = new System.Drawing.Size(75, 23);
             this.btnPiaButton.TabIndex = 0;
             this.btnPiaButton.Text = "A Button";
             this.btnPiaButton.UseVisualStyleBackColor = true;
-            // 
-            // tpGroups
-            // 
-            this.tpGroups.Controls.Add(this.btnGraButton);
-            this.tpGroups.Location = new System.Drawing.Point(4, 22);
-            this.tpGroups.Name = "tpGroups";
-            this.tpGroups.Size = new System.Drawing.Size(976, 580);
-            this.tpGroups.TabIndex = 2;
-            this.tpGroups.Text = "Groups";
-            this.tpGroups.UseVisualStyleBackColor = true;
-            // 
-            // btnGraButton
-            // 
-            this.btnGraButton.Enabled = false;
-            this.btnGraButton.Location = new System.Drawing.Point(674, 428);
-            this.btnGraButton.Name = "btnGraButton";
-            this.btnGraButton.Size = new System.Drawing.Size(75, 23);
-            this.btnGraButton.TabIndex = 1;
-            this.btnGraButton.Text = "A Button";
-            this.btnGraButton.UseVisualStyleBackColor = true;
             // 
             // tpSortOrders
             // 
@@ -400,6 +393,26 @@ namespace VixenPlus.Dialogs
             this.cbSrtOrders.Size = new System.Drawing.Size(121, 21);
             this.cbSrtOrders.TabIndex = 63;
             // 
+            // tpGroups
+            // 
+            this.tpGroups.Controls.Add(this.btnGraButton);
+            this.tpGroups.Location = new System.Drawing.Point(4, 22);
+            this.tpGroups.Name = "tpGroups";
+            this.tpGroups.Size = new System.Drawing.Size(976, 580);
+            this.tpGroups.TabIndex = 2;
+            this.tpGroups.Text = "Groups";
+            this.tpGroups.UseVisualStyleBackColor = true;
+            // 
+            // btnGraButton
+            // 
+            this.btnGraButton.Enabled = false;
+            this.btnGraButton.Location = new System.Drawing.Point(674, 428);
+            this.btnGraButton.Name = "btnGraButton";
+            this.btnGraButton.Size = new System.Drawing.Size(75, 23);
+            this.btnGraButton.TabIndex = 1;
+            this.btnGraButton.Text = "A Button";
+            this.btnGraButton.UseVisualStyleBackColor = true;
+            // 
             // tpNutcracker
             // 
             this.tpNutcracker.Controls.Add(this.btnNcaButton);
@@ -420,47 +433,29 @@ namespace VixenPlus.Dialogs
             this.btnNcaButton.Text = "A Button";
             this.btnNcaButton.UseVisualStyleBackColor = true;
             // 
-            // tcControlArea
+            // btnOkay
             // 
-            this.tcControlArea.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tcControlArea.Controls.Add(this.tpChannelControl);
-            this.tcControlArea.Controls.Add(this.tpMultiChannel);
-            this.tcControlArea.Controls.Add(this.tpMultiColor);
-            this.tcControlArea.HideTabs = true;
-            this.tcControlArea.Location = new System.Drawing.Point(719, 139);
-            this.tcControlArea.Multiline = true;
-            this.tcControlArea.Name = "tcControlArea";
-            this.tcControlArea.OurMultiline = true;
-            this.tcControlArea.SelectedIndex = 0;
-            this.tcControlArea.Size = new System.Drawing.Size(273, 580);
-            this.tcControlArea.TabIndex = 18;
+            this.btnOkay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOkay.Location = new System.Drawing.Point(830, 31);
+            this.btnOkay.Name = "btnOkay";
+            this.btnOkay.Size = new System.Drawing.Size(75, 23);
+            this.btnOkay.TabIndex = 1;
+            this.btnOkay.Text = "OK";
+            this.ttRoadie.SetToolTip(this.btnOkay, "Save all changes");
+            this.btnOkay.UseVisualStyleBackColor = true;
+            this.btnOkay.Click += new System.EventHandler(this.btnOkay_Click);
             // 
-            // tpChannelControl
+            // btnCancel
             // 
-            this.tpChannelControl.BackColor = System.Drawing.Color.Transparent;
-            this.tpChannelControl.Controls.Add(this.gbExportImport);
-            this.tpChannelControl.Controls.Add(this.gbChannels);
-            this.tpChannelControl.Controls.Add(this.gbEnable);
-            this.tpChannelControl.Controls.Add(this.gbColors);
-            this.tpChannelControl.Location = new System.Drawing.Point(0, 0);
-            this.tpChannelControl.Name = "tpChannelControl";
-            this.tpChannelControl.Padding = new System.Windows.Forms.Padding(3);
-            this.tpChannelControl.Size = new System.Drawing.Size(273, 580);
-            this.tpChannelControl.TabIndex = 0;
-            this.tpChannelControl.Text = "Normal";
-            this.tpChannelControl.UseVisualStyleBackColor = true;
-            // 
-            // gbExportImport
-            // 
-            this.gbExportImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbExportImport.Controls.Add(this.btnChExport);
-            this.gbExportImport.Controls.Add(this.btnChImport);
-            this.gbExportImport.Location = new System.Drawing.Point(6, 168);
-            this.gbExportImport.Name = "gbExportImport";
-            this.gbExportImport.Size = new System.Drawing.Size(250, 48);
-            this.gbExportImport.TabIndex = 3;
-            this.gbExportImport.TabStop = false;
-            this.gbExportImport.Text = "Export/Import Channel Data";
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.Location = new System.Drawing.Point(911, 31);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 2;
+            this.btnCancel.Text = "Cancel";
+            this.ttRoadie.SetToolTip(this.btnCancel, "Cancel all changes");
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnChExport
             // 
@@ -485,19 +480,6 @@ namespace VixenPlus.Dialogs
             this.ttRoadie.SetToolTip(this.btnChImport, "Import channels from a CSV file");
             this.btnChImport.UseVisualStyleBackColor = true;
             this.btnChImport.Click += new System.EventHandler(this.btnImport_Click);
-            // 
-            // gbChannels
-            // 
-            this.gbChannels.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbChannels.Controls.Add(this.btnChDelete);
-            this.gbChannels.Controls.Add(this.btnChAddMulti);
-            this.gbChannels.Controls.Add(this.btnChAddOne);
-            this.gbChannels.Location = new System.Drawing.Point(6, 6);
-            this.gbChannels.Name = "gbChannels";
-            this.gbChannels.Size = new System.Drawing.Size(250, 48);
-            this.gbChannels.TabIndex = 0;
-            this.gbChannels.TabStop = false;
-            this.gbChannels.Text = "Channels";
             // 
             // btnChDelete
             // 
@@ -532,18 +514,6 @@ namespace VixenPlus.Dialogs
             this.btnChAddOne.UseVisualStyleBackColor = true;
             this.btnChAddOne.Click += new System.EventHandler(this.btnChAddOne_Click);
             // 
-            // gbEnable
-            // 
-            this.gbEnable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbEnable.Controls.Add(this.btnChEnable);
-            this.gbEnable.Controls.Add(this.btnChDisable);
-            this.gbEnable.Location = new System.Drawing.Point(6, 114);
-            this.gbEnable.Name = "gbEnable";
-            this.gbEnable.Size = new System.Drawing.Size(250, 48);
-            this.gbEnable.TabIndex = 2;
-            this.gbEnable.TabStop = false;
-            this.gbEnable.Text = "Channel Enabling";
-            // 
             // btnChEnable
             // 
             this.btnChEnable.Location = new System.Drawing.Point(6, 19);
@@ -565,18 +535,6 @@ namespace VixenPlus.Dialogs
             this.ttRoadie.SetToolTip(this.btnChDisable, "Disable selected channels");
             this.btnChDisable.UseVisualStyleBackColor = true;
             this.btnChDisable.Click += new System.EventHandler(this.btnEnableDisable_Click);
-            // 
-            // gbColors
-            // 
-            this.gbColors.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbColors.Controls.Add(this.btnChColorMulti);
-            this.gbColors.Controls.Add(this.btnChColorOne);
-            this.gbColors.Location = new System.Drawing.Point(6, 60);
-            this.gbColors.Name = "gbColors";
-            this.gbColors.Size = new System.Drawing.Size(250, 48);
-            this.gbColors.TabIndex = 1;
-            this.gbColors.TabStop = false;
-            this.gbColors.Text = "Channel Colors";
             // 
             // btnChColorMulti
             // 
@@ -600,66 +558,6 @@ namespace VixenPlus.Dialogs
             this.btnChColorOne.UseVisualStyleBackColor = true;
             this.btnChColorOne.Click += new System.EventHandler(this.btnChColorOne_Click);
             // 
-            // tpMultiChannel
-            // 
-            this.tpMultiChannel.Controls.Add(this.btnUpdatePreview);
-            this.tpMultiChannel.Controls.Add(this.btnMultiChannelCancel);
-            this.tpMultiChannel.Controls.Add(this.gbRules);
-            this.tpMultiChannel.Controls.Add(this.btnMultiChannelOk);
-            this.tpMultiChannel.Controls.Add(this.btnChGenSaveTemplate);
-            this.tpMultiChannel.Controls.Add(this.tbChGenNameFormat);
-            this.tpMultiChannel.Controls.Add(this.nudChGenChannels);
-            this.tpMultiChannel.Controls.Add(this.lblChGenNameFormat);
-            this.tpMultiChannel.Controls.Add(this.cbPreview);
-            this.tpMultiChannel.Controls.Add(this.lblChGenCount);
-            this.tpMultiChannel.Controls.Add(this.lblChGenTemplate);
-            this.tpMultiChannel.Controls.Add(this.cbChGenTemplate);
-            this.tpMultiChannel.Location = new System.Drawing.Point(0, 0);
-            this.tpMultiChannel.Name = "tpMultiChannel";
-            this.tpMultiChannel.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMultiChannel.Size = new System.Drawing.Size(273, 580);
-            this.tpMultiChannel.TabIndex = 1;
-            this.tpMultiChannel.Text = "MultiChannel";
-            this.tpMultiChannel.UseVisualStyleBackColor = true;
-            // 
-            // btnUpdatePreview
-            // 
-            this.btnUpdatePreview.Enabled = false;
-            this.btnUpdatePreview.Location = new System.Drawing.Point(160, 6);
-            this.btnUpdatePreview.Name = "btnUpdatePreview";
-            this.btnUpdatePreview.Size = new System.Drawing.Size(99, 23);
-            this.btnUpdatePreview.TabIndex = 10;
-            this.btnUpdatePreview.Text = "&Update Preview";
-            this.btnUpdatePreview.UseVisualStyleBackColor = true;
-            this.btnUpdatePreview.Click += new System.EventHandler(this.btnUpdatePreview_Click);
-            // 
-            // btnMultiChannelCancel
-            // 
-            this.btnMultiChannelCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMultiChannelCancel.Location = new System.Drawing.Point(192, 551);
-            this.btnMultiChannelCancel.Name = "btnMultiChannelCancel";
-            this.btnMultiChannelCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnMultiChannelCancel.TabIndex = 4;
-            this.btnMultiChannelCancel.Text = "&Cancel";
-            this.btnMultiChannelCancel.UseVisualStyleBackColor = true;
-            this.btnMultiChannelCancel.Click += new System.EventHandler(this.btnMultiChannelButton_Click);
-            // 
-            // gbRules
-            // 
-            this.gbRules.Controls.Add(this.btnRuleDelete);
-            this.gbRules.Controls.Add(this.btnRuleAdd);
-            this.gbRules.Controls.Add(this.cbRuleRules);
-            this.gbRules.Controls.Add(this.btnRuleDown);
-            this.gbRules.Controls.Add(this.btnRuleUp);
-            this.gbRules.Controls.Add(this.lbRules);
-            this.gbRules.Controls.Add(this.panelRuleEditor);
-            this.gbRules.Location = new System.Drawing.Point(6, 165);
-            this.gbRules.Name = "gbRules";
-            this.gbRules.Size = new System.Drawing.Size(261, 303);
-            this.gbRules.TabIndex = 8;
-            this.gbRules.TabStop = false;
-            this.gbRules.Text = "Channel Generation Rules";
-            // 
             // btnRuleDelete
             // 
             this.btnRuleDelete.Image = global::VixenPlus.Properties.Resources.list_remove;
@@ -681,19 +579,6 @@ namespace VixenPlus.Dialogs
             this.ttRoadie.SetToolTip(this.btnRuleAdd, "Add selected rule");
             this.btnRuleAdd.UseVisualStyleBackColor = true;
             this.btnRuleAdd.Click += new System.EventHandler(this.btnRuleAdd_Click);
-            // 
-            // cbRuleRules
-            // 
-            this.cbRuleRules.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbRuleRules.FormattingEnabled = true;
-            this.cbRuleRules.Items.AddRange(new object[] {
-            "Numbers",
-            "Words"});
-            this.cbRuleRules.Location = new System.Drawing.Point(6, 19);
-            this.cbRuleRules.Name = "cbRuleRules";
-            this.cbRuleRules.Size = new System.Drawing.Size(219, 21);
-            this.cbRuleRules.TabIndex = 0;
-            this.cbRuleRules.SelectedIndexChanged += new System.EventHandler(this.cbRuleRules_SelectedIndexChanged);
             // 
             // btnRuleDown
             // 
@@ -729,30 +614,6 @@ namespace VixenPlus.Dialogs
             this.ttRoadie.SetToolTip(this.lbRules, "Channel naming rules");
             this.lbRules.SelectedIndexChanged += new System.EventHandler(this.lbRules_SelectedIndexChanged);
             this.lbRules.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lbRules_KeyDown);
-            // 
-            // panelRuleEditor
-            // 
-            this.panelRuleEditor.Controls.Add(this.colorPaletteChannel);
-            this.panelRuleEditor.Controls.Add(this.cbRuleEndNum);
-            this.panelRuleEditor.Controls.Add(this.nudRuleIncr);
-            this.panelRuleEditor.Controls.Add(this.nudRuleEnd);
-            this.panelRuleEditor.Controls.Add(this.nudRuleStart);
-            this.panelRuleEditor.Controls.Add(this.lblRuleIncr);
-            this.panelRuleEditor.Controls.Add(this.lblRuleStartNum);
-            this.panelRuleEditor.Controls.Add(this.tbRuleWords);
-            this.panelRuleEditor.Controls.Add(this.lblRulePrompt);
-            this.panelRuleEditor.Controls.Add(this.cbRuleColors);
-            this.panelRuleEditor.Location = new System.Drawing.Point(0, 152);
-            this.panelRuleEditor.Name = "panelRuleEditor";
-            this.panelRuleEditor.Size = new System.Drawing.Size(253, 151);
-            this.panelRuleEditor.TabIndex = 6;
-            // 
-            // colorPaletteChannel
-            // 
-            this.colorPaletteChannel.Location = new System.Drawing.Point(147, 95);
-            this.colorPaletteChannel.Name = "colorPaletteChannel";
-            this.colorPaletteChannel.Size = new System.Drawing.Size(103, 50);
-            this.colorPaletteChannel.TabIndex = 5;
             // 
             // cbRuleEndNum
             // 
@@ -816,43 +677,6 @@ namespace VixenPlus.Dialogs
             this.ttRoadie.SetToolTip(this.nudRuleStart, "Generation start number");
             this.nudRuleStart.ValueChanged += new System.EventHandler(this.nudRuleStart_ValueChanged);
             // 
-            // lblRuleIncr
-            // 
-            this.lblRuleIncr.AutoSize = true;
-            this.lblRuleIncr.Location = new System.Drawing.Point(122, 74);
-            this.lblRuleIncr.Name = "lblRuleIncr";
-            this.lblRuleIncr.Size = new System.Drawing.Size(57, 13);
-            this.lblRuleIncr.TabIndex = 9;
-            this.lblRuleIncr.Text = "Increment:";
-            // 
-            // lblRuleStartNum
-            // 
-            this.lblRuleStartNum.AutoSize = true;
-            this.lblRuleStartNum.Location = new System.Drawing.Point(93, 22);
-            this.lblRuleStartNum.Name = "lblRuleStartNum";
-            this.lblRuleStartNum.Size = new System.Drawing.Size(86, 13);
-            this.lblRuleStartNum.TabIndex = 7;
-            this.lblRuleStartNum.Text = "Starting Number:";
-            // 
-            // tbRuleWords
-            // 
-            this.tbRuleWords.Location = new System.Drawing.Point(6, 21);
-            this.tbRuleWords.Multiline = true;
-            this.tbRuleWords.Name = "tbRuleWords";
-            this.tbRuleWords.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbRuleWords.Size = new System.Drawing.Size(244, 71);
-            this.tbRuleWords.TabIndex = 6;
-            this.tbRuleWords.TextChanged += new System.EventHandler(this.tbRuleWords_TextChanged);
-            // 
-            // lblRulePrompt
-            // 
-            this.lblRulePrompt.AutoSize = true;
-            this.lblRulePrompt.Location = new System.Drawing.Point(6, 4);
-            this.lblRulePrompt.Name = "lblRulePrompt";
-            this.lblRulePrompt.Size = new System.Drawing.Size(109, 13);
-            this.lblRulePrompt.TabIndex = 5;
-            this.lblRulePrompt.Text = "Words (One Per Line)";
-            // 
             // cbRuleColors
             // 
             this.cbRuleColors.AutoSize = true;
@@ -866,17 +690,6 @@ namespace VixenPlus.Dialogs
             this.ttRoadie.SetToolTip(this.cbRuleColors, "Use color palette");
             this.cbRuleColors.UseVisualStyleBackColor = true;
             this.cbRuleColors.CheckedChanged += new System.EventHandler(this.cbRuleColors_CheckedChanged);
-            // 
-            // btnMultiChannelOk
-            // 
-            this.btnMultiChannelOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMultiChannelOk.Location = new System.Drawing.Point(6, 551);
-            this.btnMultiChannelOk.Name = "btnMultiChannelOk";
-            this.btnMultiChannelOk.Size = new System.Drawing.Size(141, 23);
-            this.btnMultiChannelOk.TabIndex = 3;
-            this.btnMultiChannelOk.Text = "&Add Channels to Profile";
-            this.btnMultiChannelOk.UseVisualStyleBackColor = true;
-            this.btnMultiChannelOk.Click += new System.EventHandler(this.btnMultiChannelButton_Click);
             // 
             // btnChGenSaveTemplate
             // 
@@ -925,6 +738,235 @@ namespace VixenPlus.Dialogs
             0,
             0});
             this.nudChGenChannels.ValueChanged += new System.EventHandler(this.PreviewChannelEvent);
+            // 
+            // previewTimer
+            // 
+            this.previewTimer.Interval = 200;
+            this.previewTimer.Tick += new System.EventHandler(this.previewTimer_Tick);
+            // 
+            // tcControlArea
+            // 
+            this.tcControlArea.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tcControlArea.Controls.Add(this.tpChannelControl);
+            this.tcControlArea.Controls.Add(this.tpMultiChannel);
+            this.tcControlArea.Controls.Add(this.tpMultiColor);
+            this.tcControlArea.HideTabs = true;
+            this.tcControlArea.Location = new System.Drawing.Point(719, 139);
+            this.tcControlArea.Multiline = true;
+            this.tcControlArea.Name = "tcControlArea";
+            this.tcControlArea.OurMultiline = true;
+            this.tcControlArea.SelectedIndex = 0;
+            this.tcControlArea.Size = new System.Drawing.Size(273, 580);
+            this.tcControlArea.TabIndex = 18;
+            // 
+            // tpChannelControl
+            // 
+            this.tpChannelControl.BackColor = System.Drawing.Color.Transparent;
+            this.tpChannelControl.Controls.Add(this.gbExportImport);
+            this.tpChannelControl.Controls.Add(this.gbChannels);
+            this.tpChannelControl.Controls.Add(this.gbEnable);
+            this.tpChannelControl.Controls.Add(this.gbColors);
+            this.tpChannelControl.Location = new System.Drawing.Point(0, 0);
+            this.tpChannelControl.Name = "tpChannelControl";
+            this.tpChannelControl.Padding = new System.Windows.Forms.Padding(3);
+            this.tpChannelControl.Size = new System.Drawing.Size(273, 580);
+            this.tpChannelControl.TabIndex = 0;
+            this.tpChannelControl.Text = "Normal";
+            this.tpChannelControl.UseVisualStyleBackColor = true;
+            // 
+            // gbExportImport
+            // 
+            this.gbExportImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbExportImport.Controls.Add(this.btnChExport);
+            this.gbExportImport.Controls.Add(this.btnChImport);
+            this.gbExportImport.Location = new System.Drawing.Point(6, 168);
+            this.gbExportImport.Name = "gbExportImport";
+            this.gbExportImport.Size = new System.Drawing.Size(250, 48);
+            this.gbExportImport.TabIndex = 3;
+            this.gbExportImport.TabStop = false;
+            this.gbExportImport.Text = "Export/Import Channel Data";
+            // 
+            // gbChannels
+            // 
+            this.gbChannels.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbChannels.Controls.Add(this.btnChDelete);
+            this.gbChannels.Controls.Add(this.btnChAddMulti);
+            this.gbChannels.Controls.Add(this.btnChAddOne);
+            this.gbChannels.Location = new System.Drawing.Point(6, 6);
+            this.gbChannels.Name = "gbChannels";
+            this.gbChannels.Size = new System.Drawing.Size(250, 48);
+            this.gbChannels.TabIndex = 0;
+            this.gbChannels.TabStop = false;
+            this.gbChannels.Text = "Channels";
+            // 
+            // gbEnable
+            // 
+            this.gbEnable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbEnable.Controls.Add(this.btnChEnable);
+            this.gbEnable.Controls.Add(this.btnChDisable);
+            this.gbEnable.Location = new System.Drawing.Point(6, 114);
+            this.gbEnable.Name = "gbEnable";
+            this.gbEnable.Size = new System.Drawing.Size(250, 48);
+            this.gbEnable.TabIndex = 2;
+            this.gbEnable.TabStop = false;
+            this.gbEnable.Text = "Channel Enabling";
+            // 
+            // gbColors
+            // 
+            this.gbColors.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbColors.Controls.Add(this.btnChColorMulti);
+            this.gbColors.Controls.Add(this.btnChColorOne);
+            this.gbColors.Location = new System.Drawing.Point(6, 60);
+            this.gbColors.Name = "gbColors";
+            this.gbColors.Size = new System.Drawing.Size(250, 48);
+            this.gbColors.TabIndex = 1;
+            this.gbColors.TabStop = false;
+            this.gbColors.Text = "Channel Colors";
+            // 
+            // tpMultiChannel
+            // 
+            this.tpMultiChannel.Controls.Add(this.btnUpdatePreview);
+            this.tpMultiChannel.Controls.Add(this.btnMultiChannelCancel);
+            this.tpMultiChannel.Controls.Add(this.gbRules);
+            this.tpMultiChannel.Controls.Add(this.btnMultiChannelOk);
+            this.tpMultiChannel.Controls.Add(this.btnChGenSaveTemplate);
+            this.tpMultiChannel.Controls.Add(this.tbChGenNameFormat);
+            this.tpMultiChannel.Controls.Add(this.nudChGenChannels);
+            this.tpMultiChannel.Controls.Add(this.lblChGenNameFormat);
+            this.tpMultiChannel.Controls.Add(this.cbPreview);
+            this.tpMultiChannel.Controls.Add(this.lblChGenCount);
+            this.tpMultiChannel.Controls.Add(this.lblChGenTemplate);
+            this.tpMultiChannel.Controls.Add(this.cbChGenTemplate);
+            this.tpMultiChannel.Location = new System.Drawing.Point(0, 0);
+            this.tpMultiChannel.Name = "tpMultiChannel";
+            this.tpMultiChannel.Padding = new System.Windows.Forms.Padding(3);
+            this.tpMultiChannel.Size = new System.Drawing.Size(273, 580);
+            this.tpMultiChannel.TabIndex = 1;
+            this.tpMultiChannel.Text = "MultiChannel";
+            this.tpMultiChannel.UseVisualStyleBackColor = true;
+            // 
+            // btnUpdatePreview
+            // 
+            this.btnUpdatePreview.Enabled = false;
+            this.btnUpdatePreview.Location = new System.Drawing.Point(160, 6);
+            this.btnUpdatePreview.Name = "btnUpdatePreview";
+            this.btnUpdatePreview.Size = new System.Drawing.Size(99, 23);
+            this.btnUpdatePreview.TabIndex = 10;
+            this.btnUpdatePreview.Text = "&Update Preview";
+            this.btnUpdatePreview.UseVisualStyleBackColor = true;
+            this.btnUpdatePreview.Click += new System.EventHandler(this.btnUpdatePreview_Click);
+            // 
+            // btnMultiChannelCancel
+            // 
+            this.btnMultiChannelCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMultiChannelCancel.Location = new System.Drawing.Point(192, 551);
+            this.btnMultiChannelCancel.Name = "btnMultiChannelCancel";
+            this.btnMultiChannelCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnMultiChannelCancel.TabIndex = 4;
+            this.btnMultiChannelCancel.Text = "&Cancel";
+            this.btnMultiChannelCancel.UseVisualStyleBackColor = true;
+            this.btnMultiChannelCancel.Click += new System.EventHandler(this.btnMultiChannelButton_Click);
+            // 
+            // gbRules
+            // 
+            this.gbRules.Controls.Add(this.btnRuleDelete);
+            this.gbRules.Controls.Add(this.btnRuleAdd);
+            this.gbRules.Controls.Add(this.cbRuleRules);
+            this.gbRules.Controls.Add(this.btnRuleDown);
+            this.gbRules.Controls.Add(this.btnRuleUp);
+            this.gbRules.Controls.Add(this.lbRules);
+            this.gbRules.Controls.Add(this.panelRuleEditor);
+            this.gbRules.Location = new System.Drawing.Point(6, 165);
+            this.gbRules.Name = "gbRules";
+            this.gbRules.Size = new System.Drawing.Size(261, 303);
+            this.gbRules.TabIndex = 8;
+            this.gbRules.TabStop = false;
+            this.gbRules.Text = "Channel Generation Rules";
+            // 
+            // cbRuleRules
+            // 
+            this.cbRuleRules.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbRuleRules.FormattingEnabled = true;
+            this.cbRuleRules.Items.AddRange(new object[] {
+            "Numbers",
+            "Words"});
+            this.cbRuleRules.Location = new System.Drawing.Point(6, 19);
+            this.cbRuleRules.Name = "cbRuleRules";
+            this.cbRuleRules.Size = new System.Drawing.Size(219, 21);
+            this.cbRuleRules.TabIndex = 0;
+            this.cbRuleRules.SelectedIndexChanged += new System.EventHandler(this.cbRuleRules_SelectedIndexChanged);
+            // 
+            // panelRuleEditor
+            // 
+            this.panelRuleEditor.Controls.Add(this.colorPaletteChannel);
+            this.panelRuleEditor.Controls.Add(this.cbRuleEndNum);
+            this.panelRuleEditor.Controls.Add(this.nudRuleIncr);
+            this.panelRuleEditor.Controls.Add(this.nudRuleEnd);
+            this.panelRuleEditor.Controls.Add(this.nudRuleStart);
+            this.panelRuleEditor.Controls.Add(this.lblRuleIncr);
+            this.panelRuleEditor.Controls.Add(this.lblRuleStartNum);
+            this.panelRuleEditor.Controls.Add(this.tbRuleWords);
+            this.panelRuleEditor.Controls.Add(this.lblRulePrompt);
+            this.panelRuleEditor.Controls.Add(this.cbRuleColors);
+            this.panelRuleEditor.Location = new System.Drawing.Point(0, 152);
+            this.panelRuleEditor.Name = "panelRuleEditor";
+            this.panelRuleEditor.Size = new System.Drawing.Size(253, 151);
+            this.panelRuleEditor.TabIndex = 6;
+            // 
+            // colorPaletteChannel
+            // 
+            this.colorPaletteChannel.Location = new System.Drawing.Point(147, 95);
+            this.colorPaletteChannel.Name = "colorPaletteChannel";
+            this.colorPaletteChannel.Size = new System.Drawing.Size(103, 50);
+            this.colorPaletteChannel.TabIndex = 5;
+            // 
+            // lblRuleIncr
+            // 
+            this.lblRuleIncr.AutoSize = true;
+            this.lblRuleIncr.Location = new System.Drawing.Point(122, 74);
+            this.lblRuleIncr.Name = "lblRuleIncr";
+            this.lblRuleIncr.Size = new System.Drawing.Size(57, 13);
+            this.lblRuleIncr.TabIndex = 9;
+            this.lblRuleIncr.Text = "Increment:";
+            // 
+            // lblRuleStartNum
+            // 
+            this.lblRuleStartNum.AutoSize = true;
+            this.lblRuleStartNum.Location = new System.Drawing.Point(93, 22);
+            this.lblRuleStartNum.Name = "lblRuleStartNum";
+            this.lblRuleStartNum.Size = new System.Drawing.Size(86, 13);
+            this.lblRuleStartNum.TabIndex = 7;
+            this.lblRuleStartNum.Text = "Starting Number:";
+            // 
+            // tbRuleWords
+            // 
+            this.tbRuleWords.Location = new System.Drawing.Point(6, 21);
+            this.tbRuleWords.Multiline = true;
+            this.tbRuleWords.Name = "tbRuleWords";
+            this.tbRuleWords.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbRuleWords.Size = new System.Drawing.Size(244, 71);
+            this.tbRuleWords.TabIndex = 6;
+            this.tbRuleWords.TextChanged += new System.EventHandler(this.tbRuleWords_TextChanged);
+            // 
+            // lblRulePrompt
+            // 
+            this.lblRulePrompt.AutoSize = true;
+            this.lblRulePrompt.Location = new System.Drawing.Point(6, 4);
+            this.lblRulePrompt.Name = "lblRulePrompt";
+            this.lblRulePrompt.Size = new System.Drawing.Size(109, 13);
+            this.lblRulePrompt.TabIndex = 5;
+            this.lblRulePrompt.Text = "Words (One Per Line)";
+            // 
+            // btnMultiChannelOk
+            // 
+            this.btnMultiChannelOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMultiChannelOk.Location = new System.Drawing.Point(6, 551);
+            this.btnMultiChannelOk.Name = "btnMultiChannelOk";
+            this.btnMultiChannelOk.Size = new System.Drawing.Size(141, 23);
+            this.btnMultiChannelOk.TabIndex = 3;
+            this.btnMultiChannelOk.Text = "&Add Channels to Profile";
+            this.btnMultiChannelOk.UseVisualStyleBackColor = true;
+            this.btnMultiChannelOk.Click += new System.EventHandler(this.btnMultiChannelButton_Click);
             // 
             // lblChGenNameFormat
             // 
@@ -1018,35 +1060,6 @@ namespace VixenPlus.Dialogs
             this.colorPaletteColor.Size = new System.Drawing.Size(104, 50);
             this.colorPaletteColor.TabIndex = 0;
             // 
-            // btnOkay
-            // 
-            this.btnOkay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOkay.Location = new System.Drawing.Point(725, 31);
-            this.btnOkay.Name = "btnOkay";
-            this.btnOkay.Size = new System.Drawing.Size(75, 23);
-            this.btnOkay.TabIndex = 1;
-            this.btnOkay.Text = "OK";
-            this.ttRoadie.SetToolTip(this.btnOkay, "Save all changes");
-            this.btnOkay.UseVisualStyleBackColor = true;
-            this.btnOkay.Click += new System.EventHandler(this.btnOkay_Click);
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(911, 31);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 2;
-            this.btnCancel.Text = "Cancel";
-            this.ttRoadie.SetToolTip(this.btnCancel, "Cancel all changes");
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // previewTimer
-            // 
-            this.previewTimer.Interval = 200;
-            this.previewTimer.Tick += new System.EventHandler(this.previewTimer_Tick);
-            // 
             // VixenPlusRoadie
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1072,9 +1085,13 @@ namespace VixenPlus.Dialogs
             this.tpChannels.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvChannels)).EndInit();
             this.tpPlugins.ResumeLayout(false);
-            this.tpGroups.ResumeLayout(false);
             this.tpSortOrders.ResumeLayout(false);
+            this.tpGroups.ResumeLayout(false);
             this.tpNutcracker.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.nudRuleIncr)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRuleEnd)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRuleStart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudChGenChannels)).EndInit();
             this.tcControlArea.ResumeLayout(false);
             this.tpChannelControl.ResumeLayout(false);
             this.gbExportImport.ResumeLayout(false);
@@ -1086,10 +1103,6 @@ namespace VixenPlus.Dialogs
             this.gbRules.ResumeLayout(false);
             this.panelRuleEditor.ResumeLayout(false);
             this.panelRuleEditor.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudRuleIncr)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudRuleEnd)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudRuleStart)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudChGenChannels)).EndInit();
             this.tpMultiColor.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -1099,10 +1112,10 @@ namespace VixenPlus.Dialogs
 
         private System.Windows.Forms.ComboBox cbProfiles;
         private System.Windows.Forms.GroupBox gbProfiles;
-        private System.Windows.Forms.Button btnDeleteProfile;
-        private System.Windows.Forms.Button btnRenameProfile;
-        private System.Windows.Forms.Button btnCopyProfile;
-        private System.Windows.Forms.Button btnAddProfile;
+        private System.Windows.Forms.Button btnProfileDelete;
+        private System.Windows.Forms.Button btnProfileRename;
+        private System.Windows.Forms.Button btnProfileCopy;
+        private System.Windows.Forms.Button btnProfileAdd;
         private System.Windows.Forms.TabControl tcProfile;
         private System.Windows.Forms.TabPage tpChannels;
         private System.Windows.Forms.TabPage tpPlugins;
@@ -1174,5 +1187,6 @@ namespace VixenPlus.Dialogs
         private System.Windows.Forms.CheckBox cbPreview;
         private System.Windows.Forms.Timer previewTimer;
         private System.Windows.Forms.Button btnUpdatePreview;
+        private System.Windows.Forms.Button btnProfileSave;
     }
 }

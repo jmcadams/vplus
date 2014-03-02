@@ -144,11 +144,12 @@ namespace VixenPlus.Dialogs {
                 return;
             }
 
-            var enable = button.Text.Equals("Enable");
+            var enable = button.Text.Equals(btnChEnable.Text);
             var rows = GetSelectedRows().ToList();
-            foreach (var row in rows) {
+            foreach (var row in rows.Where(r => bool.Parse(r.Cells[ChannelEnabledCol].Value.ToString()) != enable)) {
                 row.Cells[ChannelEnabledCol].Value = enable;
             }
+            dgvChannels.Refresh();
             _contextProfile.IsDirty = true;
             DoButtonManagement();
         }
@@ -240,7 +241,7 @@ namespace VixenPlus.Dialogs {
 
         #region Profile Group Box Events
 
-        private void btnAddProfile_Click(object sender, EventArgs e) {
+        private void btnProfileAdd_Click(object sender, EventArgs e) {
             var newName = GetFileName("Profile/Group Name", Paths.ProfilePath, new[] {Vendor.ProfileExtension, Vendor.GroupExtension}, "", "Create");
 
             if (string.Empty == newName) {
@@ -259,12 +260,12 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private void btnCopyProfile_Click(object sender, EventArgs e) {
+        private void btnProfileCopy_Click(object sender, EventArgs e) {
             RenameOrCopyProfile(false);
         }
 
 
-        private void btnDeleteProfile_Click(object sender, EventArgs e) {
+        private void btnProfileDelete_Click(object sender, EventArgs e) {
             if (
                 MessageBox.Show("Are you sure you want to delete this profile and group, if one exists?" + Warning, "Delete Profile",
                     MessageBoxButtons.YesNo) != DialogResult.Yes) {
@@ -285,12 +286,13 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private void btnRenameProfile_Click(object sender, EventArgs e) {
+        private void btnProfileRename_Click(object sender, EventArgs e) {
             RenameOrCopyProfile(true);
         }
 
 
         private void cbProfiles_SelectedIndexChanged(object sender, EventArgs e) {
+            SaveProfileFromRows();
             colorPaletteChannel.ControlChanged -= UpdateColors;
             tcControlArea.SelectTab(ControlTabNormal);
             tcProfile.TabPages[0].Text = "Channels";
@@ -311,6 +313,23 @@ namespace VixenPlus.Dialogs {
             dgvChannels.ResumeLayout();
             dgvChannels.Focus();
             DoButtonManagement();
+        }
+
+
+        private void SaveProfileFromRows() {
+            if (null == _contextProfile) {
+                return;
+            }
+
+            _contextProfile.ClearChannels();
+            foreach (var ch in from DataGridViewRow row in dgvChannels.Rows
+                select
+                    new Channel(row.Cells[ChannelNameCol].Value.ToString(), row.DefaultCellStyle.BackColor,
+                        int.Parse(row.Cells[OutputChannelCol].Value.ToString())) 
+                        {Enabled = bool.Parse(row.Cells[ChannelEnabledCol].Value.ToString())}
+                ) {
+                _contextProfile.AddChannelObject(ch);
+            }
         }
 
 
@@ -437,10 +456,11 @@ namespace VixenPlus.Dialogs {
             var isChannelPanel = tcControlArea.SelectedTab == tpChannelControl;
             btnCancel.Enabled = isChannelPanel;
             btnOkay.Enabled = isChannelPanel;
-            btnAddProfile.Enabled = isChannelPanel;
-            btnCopyProfile.Enabled = isProfileLoaded && isChannelPanel;
-            btnDeleteProfile.Enabled = isProfileLoaded && isChannelPanel;
-            btnRenameProfile.Enabled = isProfileLoaded && isChannelPanel;
+            btnProfileAdd.Enabled = isChannelPanel;
+            btnProfileCopy.Enabled = isProfileLoaded && isChannelPanel;
+            btnProfileDelete.Enabled = isProfileLoaded && isChannelPanel;
+            btnProfileRename.Enabled = isProfileLoaded && isChannelPanel;
+            btnProfileSave.Enabled = _contextProfile != null && _contextProfile.IsDirty;
         }
 
 
@@ -1244,9 +1264,7 @@ namespace VixenPlus.Dialogs {
 
         private void btnCancel_Click(object sender, EventArgs e) {
             if (AnyDirtyProfiles()) {
-                if (MessageBox.Show("Changes will be lost? Exit anyway?", "Exit Anyway?", MessageBoxButtons.YesNo) == DialogResult.No) {
-                    return;
-                }
+                QuerySaveChanges();
             }
 
             DialogResult = DialogResult.Cancel;
@@ -1312,12 +1330,12 @@ namespace VixenPlus.Dialogs {
             DoButtonManagement();
         }
 
-        private void dgvChannels_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
-            //_contextProfile.IsDirty = true;
-            //if (e.ColumnIndex == ChannelNameCol && ModifierKeys == Keys.Control) {
-            //    //TODO Add channel renaming templating.
-            //}
-        }
+        //private void dgvChannels_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
+        //    //_contextProfile.IsDirty = true;
+        //    //if (e.ColumnIndex == ChannelNameCol && ModifierKeys == Keys.Control) {
+        //    //    //TODO Add channel renaming templating.
+        //    //}
+        //}
 
         private void PreviewChannelEvent(object sender, EventArgs e) {
             btnUpdatePreview.Enabled = !cbPreview.Checked;
@@ -1342,18 +1360,24 @@ namespace VixenPlus.Dialogs {
             previewTimer_Tick(null, null);
         }
 
+
         private void VixenPlusRoadie_FormClosing(object sender, FormClosingEventArgs e) {
             if (e.CloseReason != CloseReason.UserClosing || !AnyDirtyProfiles()) {
                 return;
             }
 
-            if (MessageBox.Show("Save changes before closing?", "Save Changes?", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+            QuerySaveChanges();
+        }
+
+
+        private void QuerySaveChanges() {
+            if (MessageBox.Show("Save changes before closing?", "Save Changes?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
                 SaveChangedProfiles();
             }
         }
 
-
         private void SaveChangedProfiles() {
+            SaveProfileFromRows();
             foreach (var p in cbProfiles.Items.OfType<Profile>().Where(p => p.IsDirty)) {
                 p.SaveToFile();
             }
@@ -1363,6 +1387,19 @@ namespace VixenPlus.Dialogs {
             if (btnChDelete.Enabled && e.KeyCode == Keys.Delete) {
                 btnChDelete_Click(null, null);
             }
+        }
+        
+        private void dgvChannels_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
+            if (e.RowIndex == -1 || e.ColumnIndex == -1) {
+                return;
+            }
+            _contextProfile.IsDirty = true;
+        }
+
+        private void btnProfileSave_Click(object sender, EventArgs e) {
+            SaveProfileFromRows();
+            _contextProfile.SaveToFile();
+            btnProfileSave.Enabled = false;
         }
     }
 }
