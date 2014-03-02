@@ -588,7 +588,7 @@ namespace VixenPlus.Dialogs {
         private IEnumerable<DataGridViewRow> GetSelectedRows() {
             var hashSet = new HashSet<DataGridViewRow>();
             foreach (var cell in
-                from DataGridViewCell x in dgvChannels.SelectedCells where !hashSet.Contains(x.OwningRow) select x) {
+                from DataGridViewCell cell in dgvChannels.SelectedCells where !hashSet.Contains(cell.OwningRow) select cell) {
                 hashSet.Add(cell.OwningRow);
             }
 
@@ -1247,17 +1247,7 @@ namespace VixenPlus.Dialogs {
                 return;
             }
 
-            var htmlColor = color.ToHTML();
-            var foreColor = color.GetForeColor();
-
-            dgvChannels.SuspendLayout();
-            foreach (var row in rows) {
-                row.Cells[ChannelColorCol].Value = htmlColor;
-                row.DefaultCellStyle.BackColor = color;
-                row.DefaultCellStyle.ForeColor = foreColor;
-            }
-            dgvChannels.ResumeLayout();
-            _contextProfile.IsDirty = true;
+            SetSingleColor(color, rows);
         }
 
         private void btnCancel_Click(object sender, EventArgs e) {
@@ -1292,24 +1282,31 @@ namespace VixenPlus.Dialogs {
             finally {
                 dgvChannels.Controls.Remove(cc);
             }
+            SetSingleColor(color, rows);
+        }
 
+
+        private void SetSingleColor(Color color, IEnumerable<DataGridViewRow> rows ) {
             var htmlColor = color.ToHTML();
             var foreColor = color.GetForeColor();
 
             dgvChannels.SuspendLayout();
-            foreach (var row in rows) {
+            foreach (var row in rows.Where(r => r.Cells[ChannelColorCol].Value.ToString() != htmlColor)) {
                 row.Cells[ChannelColorCol].Value = htmlColor;
                 row.DefaultCellStyle.BackColor = color;
                 row.DefaultCellStyle.ForeColor = foreColor;
             }
             dgvChannels.ResumeLayout();
+            SetGeneralButtons(true);
             _contextProfile.IsDirty = true;
         }
 
+        
         private void btnChColorMulti_Click(object sender, EventArgs e) {
             tcControlArea.SelectTab(ControlTabMultiColor);
         }
 
+        
         private void btnMultiColor_Click(object sender, EventArgs e) {
             colorPaletteChannel.ControlChanged -= UpdateColors;
             tcControlArea.SelectTab(ControlTabNormal);
