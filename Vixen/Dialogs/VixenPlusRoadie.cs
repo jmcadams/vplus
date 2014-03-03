@@ -39,8 +39,8 @@ namespace VixenPlus.Dialogs {
 
         private const int TabChannels = 0;
         private const int TabPlugins = 1;
-        private const int TabGroups = 2;
-        private const int TabSorts = 3;
+        private const int TabSorts = 2;
+        private const int TabGroups = 3;
         private const int TabNutcracker = 4;
 
         private const int ControlTabNormal = 0;
@@ -58,6 +58,7 @@ namespace VixenPlus.Dialogs {
 
         public VixenPlusRoadie(IExecutable defaultProfile = null) {
             InitializeComponent();
+            Text = Vendor.ProductName + " - " + Vendor.ModuleManager;
             Icon = Resources.VixenPlus;
             MinimumSize = Size;
 
@@ -66,8 +67,8 @@ namespace VixenPlus.Dialogs {
             _dgvHeightDiff = Height - dgvChannels.Height;
             InitializeControls();
 
-            for (var i = TabPlugins; i <= TabNutcracker; i++) {
-                tcProfile.TabPages.Remove(tcProfile.TabPages[1]);
+            for (var i = TabGroups; i <= TabNutcracker; i++) {
+                tcProfile.TabPages.Remove(tcProfile.TabPages[TabGroups]);
             }
 
             if (null != defaultProfile) {
@@ -76,6 +77,12 @@ namespace VixenPlus.Dialogs {
             else {
                 cbProfiles.SelectedIndex = 0;
             }
+        }
+
+
+        public override sealed string Text {
+            get { return base.Text; }
+            set { base.Text = value; }
         }
 
 
