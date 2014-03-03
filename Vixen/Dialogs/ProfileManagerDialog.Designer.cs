@@ -38,8 +38,13 @@ namespace VixenPlus.Dialogs{
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonDone = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.btnChannelColors = new System.Windows.Forms.Button();
+            this.btnChannelMask = new System.Windows.Forms.Button();
+            this.btnChannelOutputs = new System.Windows.Forms.Button();
+            this.btnDeleteChannelOrder = new System.Windows.Forms.Button();
+            this.btnSaveChannelOrder = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.tabControl = new global::VixenPlusCommon.TabControl(this.components);
+            this.tabControl = new VixenPlusCommon.TabControl(this.components);
             this.tabProfiles = new System.Windows.Forms.TabPage();
             this.btnRemoveProfile = new System.Windows.Forms.Button();
             this.btnEditProfile = new System.Windows.Forms.Button();
@@ -48,11 +53,6 @@ namespace VixenPlus.Dialogs{
             this.label1 = new System.Windows.Forms.Label();
             this.tabEditProfile = new System.Windows.Forms.TabPage();
             this.btnReturnToProfiles = new System.Windows.Forms.Button();
-            this.btnChannelColors = new System.Windows.Forms.Button();
-            this.btnChannelMask = new System.Windows.Forms.Button();
-            this.btnChannelOutputs = new System.Windows.Forms.Button();
-            this.btnDeleteChannelOrder = new System.Windows.Forms.Button();
-            this.btnSaveChannelOrder = new System.Windows.Forms.Button();
             this.comboBoxChannelOrder = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.buttonPlugins = new System.Windows.Forms.Button();
@@ -77,7 +77,7 @@ namespace VixenPlus.Dialogs{
             this.panel1.Controls.Add(this.buttonCancel);
             this.panel1.Controls.Add(this.buttonDone);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 424);
+            this.panel1.Location = new System.Drawing.Point(0, 829);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(598, 40);
             this.panel1.TabIndex = 1;
@@ -105,15 +105,75 @@ namespace VixenPlus.Dialogs{
             this.buttonDone.UseVisualStyleBackColor = true;
             this.buttonDone.Click += new System.EventHandler(this.buttonDone_Click);
             // 
+            // btnChannelColors
+            // 
+            this.btnChannelColors.Location = new System.Drawing.Point(28, 114);
+            this.btnChannelColors.Name = "btnChannelColors";
+            this.btnChannelColors.Size = new System.Drawing.Size(75, 23);
+            this.btnChannelColors.TabIndex = 43;
+            this.btnChannelColors.Text = "Ch. Colors";
+            this.toolTip.SetToolTip(this.btnChannelColors, "Set all channel colors");
+            this.btnChannelColors.UseVisualStyleBackColor = true;
+            this.btnChannelColors.Click += new System.EventHandler(this.pictureBoxProfileChannelColors_Click);
+            // 
+            // btnChannelMask
+            // 
+            this.btnChannelMask.Location = new System.Drawing.Point(28, 84);
+            this.btnChannelMask.Name = "btnChannelMask";
+            this.btnChannelMask.Size = new System.Drawing.Size(75, 23);
+            this.btnChannelMask.TabIndex = 42;
+            this.btnChannelMask.Text = "Ch. Mask";
+            this.toolTip.SetToolTip(this.btnChannelMask, "Enable/disable channels for this profile");
+            this.btnChannelMask.UseVisualStyleBackColor = true;
+            this.btnChannelMask.Click += new System.EventHandler(this.pictureBoxProfileChannelOutputMask_Click);
+            // 
+            // btnChannelOutputs
+            // 
+            this.btnChannelOutputs.Location = new System.Drawing.Point(28, 54);
+            this.btnChannelOutputs.Name = "btnChannelOutputs";
+            this.btnChannelOutputs.Size = new System.Drawing.Size(75, 23);
+            this.btnChannelOutputs.TabIndex = 41;
+            this.btnChannelOutputs.Text = "Ch. Outputs";
+            this.toolTip.SetToolTip(this.btnChannelOutputs, "Change the channel outputs");
+            this.btnChannelOutputs.UseVisualStyleBackColor = true;
+            this.btnChannelOutputs.Click += new System.EventHandler(this.pictureBoxProfileChannelOutputs_Click);
+            // 
+            // btnDeleteChannelOrder
+            // 
+            this.btnDeleteChannelOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDeleteChannelOrder.Location = new System.Drawing.Point(484, 253);
+            this.btnDeleteChannelOrder.Name = "btnDeleteChannelOrder";
+            this.btnDeleteChannelOrder.Size = new System.Drawing.Size(75, 23);
+            this.btnDeleteChannelOrder.TabIndex = 40;
+            this.btnDeleteChannelOrder.Text = "Delete Order";
+            this.toolTip.SetToolTip(this.btnDeleteChannelOrder, "Delete the current channel order");
+            this.btnDeleteChannelOrder.UseVisualStyleBackColor = true;
+            this.btnDeleteChannelOrder.Click += new System.EventHandler(this.pictureBoxProfileDeleteChannelOrder_Click);
+            // 
+            // btnSaveChannelOrder
+            // 
+            this.btnSaveChannelOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveChannelOrder.Location = new System.Drawing.Point(484, 224);
+            this.btnSaveChannelOrder.Name = "btnSaveChannelOrder";
+            this.btnSaveChannelOrder.Size = new System.Drawing.Size(75, 23);
+            this.btnSaveChannelOrder.TabIndex = 39;
+            this.btnSaveChannelOrder.Text = "Save Order";
+            this.toolTip.SetToolTip(this.btnSaveChannelOrder, "Save the current channel order");
+            this.btnSaveChannelOrder.UseVisualStyleBackColor = true;
+            this.btnSaveChannelOrder.Click += new System.EventHandler(this.pictureBoxProfileSaveChannelOrder_Click);
+            // 
             // tabControl
             // 
             this.tabControl.Controls.Add(this.tabProfiles);
             this.tabControl.Controls.Add(this.tabEditProfile);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl.HideTabs = true;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
+            this.tabControl.Multiline = true;
             this.tabControl.Name = "tabControl";
+            this.tabControl.OurMultiline = true;
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(598, 424);
+            this.tabControl.Size = new System.Drawing.Size(598, 829);
             this.tabControl.TabIndex = 2;
             // 
             // tabProfiles
@@ -136,7 +196,7 @@ namespace VixenPlus.Dialogs{
             // 
             this.btnRemoveProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRemoveProfile.Enabled = false;
-            this.btnRemoveProfile.Location = new System.Drawing.Point(383, 118);
+            this.btnRemoveProfile.Location = new System.Drawing.Point(391, 118);
             this.btnRemoveProfile.Name = "btnRemoveProfile";
             this.btnRemoveProfile.Size = new System.Drawing.Size(75, 23);
             this.btnRemoveProfile.TabIndex = 9;
@@ -148,7 +208,7 @@ namespace VixenPlus.Dialogs{
             // 
             this.btnEditProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEditProfile.Enabled = false;
-            this.btnEditProfile.Location = new System.Drawing.Point(383, 88);
+            this.btnEditProfile.Location = new System.Drawing.Point(391, 88);
             this.btnEditProfile.Name = "btnEditProfile";
             this.btnEditProfile.Size = new System.Drawing.Size(75, 23);
             this.btnEditProfile.TabIndex = 8;
@@ -159,7 +219,7 @@ namespace VixenPlus.Dialogs{
             // btnAddProfile
             // 
             this.btnAddProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddProfile.Location = new System.Drawing.Point(382, 58);
+            this.btnAddProfile.Location = new System.Drawing.Point(390, 58);
             this.btnAddProfile.Name = "btnAddProfile";
             this.btnAddProfile.Size = new System.Drawing.Size(75, 23);
             this.btnAddProfile.TabIndex = 7;
@@ -175,7 +235,7 @@ namespace VixenPlus.Dialogs{
             this.listBoxProfiles.FormattingEnabled = true;
             this.listBoxProfiles.Location = new System.Drawing.Point(222, 58);
             this.listBoxProfiles.Name = "listBoxProfiles";
-            this.listBoxProfiles.Size = new System.Drawing.Size(154, 264);
+            this.listBoxProfiles.Size = new System.Drawing.Size(162, 290);
             this.listBoxProfiles.TabIndex = 2;
             this.listBoxProfiles.SelectedIndexChanged += new System.EventHandler(this.listBoxProfiles_SelectedIndexChanged);
             this.listBoxProfiles.DoubleClick += new System.EventHandler(this.listBoxProfiles_DoubleClick);
@@ -215,7 +275,7 @@ namespace VixenPlus.Dialogs{
             this.tabEditProfile.Controls.Add(this.label4);
             this.tabEditProfile.Location = new System.Drawing.Point(0, 0);
             this.tabEditProfile.Name = "tabEditProfile";
-            this.tabEditProfile.Size = new System.Drawing.Size(598, 424);
+            this.tabEditProfile.Size = new System.Drawing.Size(598, 829);
             this.tabEditProfile.TabIndex = 2;
             this.tabEditProfile.Text = "tabEditProfile";
             this.tabEditProfile.UseVisualStyleBackColor = true;
@@ -223,70 +283,13 @@ namespace VixenPlus.Dialogs{
             // btnReturnToProfiles
             // 
             this.btnReturnToProfiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnReturnToProfiles.Location = new System.Drawing.Point(12, 395);
+            this.btnReturnToProfiles.Location = new System.Drawing.Point(12, 827);
             this.btnReturnToProfiles.Name = "btnReturnToProfiles";
             this.btnReturnToProfiles.Size = new System.Drawing.Size(139, 23);
             this.btnReturnToProfiles.TabIndex = 44;
             this.btnReturnToProfiles.Text = "Back to Profile Selection";
             this.btnReturnToProfiles.UseVisualStyleBackColor = true;
             this.btnReturnToProfiles.Click += new System.EventHandler(this.pictureBoxReturnFromChannelGroupEdit_Click);
-            // 
-            // btnChannelColors
-            // 
-            this.btnChannelColors.Location = new System.Drawing.Point(28, 114);
-            this.btnChannelColors.Name = "btnChannelColors";
-            this.btnChannelColors.Size = new System.Drawing.Size(75, 23);
-            this.btnChannelColors.TabIndex = 43;
-            this.btnChannelColors.Text = "Ch. Colors";
-            this.toolTip.SetToolTip(this.btnChannelColors, "Set all channel colors");
-            this.btnChannelColors.UseVisualStyleBackColor = true;
-            this.btnChannelColors.Click += new System.EventHandler(this.pictureBoxProfileChannelColors_Click);
-            // 
-            // btnChannelMask
-            // 
-            this.btnChannelMask.Location = new System.Drawing.Point(28, 84);
-            this.btnChannelMask.Name = "btnChannelMask";
-            this.btnChannelMask.Size = new System.Drawing.Size(75, 23);
-            this.btnChannelMask.TabIndex = 42;
-            this.btnChannelMask.Text = "Ch. Mask";
-            this.toolTip.SetToolTip(this.btnChannelMask, "Enable/disable channels for this profile");
-            this.btnChannelMask.UseVisualStyleBackColor = true;
-            this.btnChannelMask.Click += new System.EventHandler(this.pictureBoxProfileChannelOutputMask_Click);
-            // 
-            // btnChannelOutputs
-            // 
-            this.btnChannelOutputs.Location = new System.Drawing.Point(28, 54);
-            this.btnChannelOutputs.Name = "btnChannelOutputs";
-            this.btnChannelOutputs.Size = new System.Drawing.Size(75, 23);
-            this.btnChannelOutputs.TabIndex = 41;
-            this.btnChannelOutputs.Text = "Ch. Outputs";
-            this.toolTip.SetToolTip(this.btnChannelOutputs, "Change the channel outputs");
-            this.btnChannelOutputs.UseVisualStyleBackColor = true;
-            this.btnChannelOutputs.Click += new System.EventHandler(this.pictureBoxProfileChannelOutputs_Click);
-            // 
-            // btnDeleteChannelOrder
-            // 
-            this.btnDeleteChannelOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDeleteChannelOrder.Location = new System.Drawing.Point(476, 253);
-            this.btnDeleteChannelOrder.Name = "btnDeleteChannelOrder";
-            this.btnDeleteChannelOrder.Size = new System.Drawing.Size(75, 23);
-            this.btnDeleteChannelOrder.TabIndex = 40;
-            this.btnDeleteChannelOrder.Text = "Delete Order";
-            this.toolTip.SetToolTip(this.btnDeleteChannelOrder, "Delete the current channel order");
-            this.btnDeleteChannelOrder.UseVisualStyleBackColor = true;
-            this.btnDeleteChannelOrder.Click += new System.EventHandler(this.pictureBoxProfileDeleteChannelOrder_Click);
-            // 
-            // btnSaveChannelOrder
-            // 
-            this.btnSaveChannelOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSaveChannelOrder.Location = new System.Drawing.Point(476, 224);
-            this.btnSaveChannelOrder.Name = "btnSaveChannelOrder";
-            this.btnSaveChannelOrder.Size = new System.Drawing.Size(75, 23);
-            this.btnSaveChannelOrder.TabIndex = 39;
-            this.btnSaveChannelOrder.Text = "Save Order";
-            this.toolTip.SetToolTip(this.btnSaveChannelOrder, "Save the current channel order");
-            this.btnSaveChannelOrder.UseVisualStyleBackColor = true;
-            this.btnSaveChannelOrder.Click += new System.EventHandler(this.pictureBoxProfileSaveChannelOrder_Click);
             // 
             // comboBoxChannelOrder
             // 
@@ -296,7 +299,7 @@ namespace VixenPlus.Dialogs{
             this.comboBoxChannelOrder.Items.AddRange(new object[] {
             "Define new order...",
             "Restore natural order..."});
-            this.comboBoxChannelOrder.Location = new System.Drawing.Point(349, 226);
+            this.comboBoxChannelOrder.Location = new System.Drawing.Point(357, 226);
             this.comboBoxChannelOrder.Name = "comboBoxChannelOrder";
             this.comboBoxChannelOrder.Size = new System.Drawing.Size(121, 21);
             this.comboBoxChannelOrder.TabIndex = 23;
@@ -306,7 +309,7 @@ namespace VixenPlus.Dialogs{
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(346, 210);
+            this.label7.Location = new System.Drawing.Point(354, 210);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(73, 13);
             this.label7.TabIndex = 22;
@@ -315,7 +318,7 @@ namespace VixenPlus.Dialogs{
             // buttonPlugins
             // 
             this.buttonPlugins.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonPlugins.Location = new System.Drawing.Point(349, 365);
+            this.buttonPlugins.Location = new System.Drawing.Point(357, 365);
             this.buttonPlugins.Name = "buttonPlugins";
             this.buttonPlugins.Size = new System.Drawing.Size(111, 23);
             this.buttonPlugins.TabIndex = 29;
@@ -331,7 +334,7 @@ namespace VixenPlus.Dialogs{
             this.treeViewProfile.DrawMode = System.Windows.Forms.TreeViewDrawMode.OwnerDrawText;
             this.treeViewProfile.Location = new System.Drawing.Point(109, 53);
             this.treeViewProfile.Name = "treeViewProfile";
-            this.treeViewProfile.Size = new System.Drawing.Size(230, 335);
+            this.treeViewProfile.Size = new System.Drawing.Size(238, 767);
             this.treeViewProfile.TabIndex = 27;
             this.treeViewProfile.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.treeViewProfile_DrawNode);
             this.treeViewProfile.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewProfile_AfterSelect);
@@ -341,7 +344,7 @@ namespace VixenPlus.Dialogs{
             // buttonChangeProfileName
             // 
             this.buttonChangeProfileName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonChangeProfileName.Location = new System.Drawing.Point(349, 70);
+            this.buttonChangeProfileName.Location = new System.Drawing.Point(357, 70);
             this.buttonChangeProfileName.Name = "buttonChangeProfileName";
             this.buttonChangeProfileName.Size = new System.Drawing.Size(111, 23);
             this.buttonChangeProfileName.TabIndex = 26;
@@ -354,7 +357,7 @@ namespace VixenPlus.Dialogs{
             this.labelProfileName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelProfileName.AutoSize = true;
             this.labelProfileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelProfileName.Location = new System.Drawing.Point(390, 54);
+            this.labelProfileName.Location = new System.Drawing.Point(398, 54);
             this.labelProfileName.Name = "labelProfileName";
             this.labelProfileName.Size = new System.Drawing.Size(75, 13);
             this.labelProfileName.TabIndex = 25;
@@ -364,7 +367,7 @@ namespace VixenPlus.Dialogs{
             // 
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(346, 54);
+            this.label8.Location = new System.Drawing.Point(354, 54);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(38, 13);
             this.label8.TabIndex = 24;
@@ -373,7 +376,7 @@ namespace VixenPlus.Dialogs{
             // buttonAddProfileChannel
             // 
             this.buttonAddProfileChannel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAddProfileChannel.Location = new System.Drawing.Point(349, 126);
+            this.buttonAddProfileChannel.Location = new System.Drawing.Point(357, 126);
             this.buttonAddProfileChannel.Name = "buttonAddProfileChannel";
             this.buttonAddProfileChannel.Size = new System.Drawing.Size(111, 23);
             this.buttonAddProfileChannel.TabIndex = 17;
@@ -385,7 +388,7 @@ namespace VixenPlus.Dialogs{
             // 
             this.buttonRemoveProfileChannels.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRemoveProfileChannels.Enabled = false;
-            this.buttonRemoveProfileChannels.Location = new System.Drawing.Point(349, 184);
+            this.buttonRemoveProfileChannels.Location = new System.Drawing.Point(357, 184);
             this.buttonRemoveProfileChannels.Name = "buttonRemoveProfileChannels";
             this.buttonRemoveProfileChannels.Size = new System.Drawing.Size(111, 23);
             this.buttonRemoveProfileChannels.TabIndex = 21;
@@ -397,7 +400,7 @@ namespace VixenPlus.Dialogs{
             // 
             this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(456, 160);
+            this.label9.Location = new System.Drawing.Point(464, 160);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(50, 13);
             this.label9.TabIndex = 20;
@@ -406,7 +409,7 @@ namespace VixenPlus.Dialogs{
             // textBoxProfileChannelCount
             // 
             this.textBoxProfileChannelCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxProfileChannelCount.Location = new System.Drawing.Point(412, 157);
+            this.textBoxProfileChannelCount.Location = new System.Drawing.Point(420, 157);
             this.textBoxProfileChannelCount.Name = "textBoxProfileChannelCount";
             this.textBoxProfileChannelCount.Size = new System.Drawing.Size(38, 20);
             this.textBoxProfileChannelCount.TabIndex = 19;
@@ -415,7 +418,7 @@ namespace VixenPlus.Dialogs{
             // buttonAddMultipleProfileChannels
             // 
             this.buttonAddMultipleProfileChannels.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAddMultipleProfileChannels.Location = new System.Drawing.Point(349, 155);
+            this.buttonAddMultipleProfileChannels.Location = new System.Drawing.Point(357, 155);
             this.buttonAddMultipleProfileChannels.Name = "buttonAddMultipleProfileChannels";
             this.buttonAddMultipleProfileChannels.Size = new System.Drawing.Size(57, 23);
             this.buttonAddMultipleProfileChannels.TabIndex = 18;
@@ -438,7 +441,7 @@ namespace VixenPlus.Dialogs{
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonDone;
-            this.ClientSize = new System.Drawing.Size(598, 464);
+            this.ClientSize = new System.Drawing.Size(598, 869);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.panel1);
             this.MinimumSize = new System.Drawing.Size(614, 502);

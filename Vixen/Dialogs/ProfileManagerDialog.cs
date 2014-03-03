@@ -23,8 +23,6 @@ namespace VixenPlus.Dialogs {
 
         public ProfileManagerDialog(object objectInContext) {
             InitializeComponent();
-            tabControl.HideTabs = true;
-            tabControl.Multiline = true;
             Icon = Resources.VixenPlus;
             tabControl.OurMultiline = true;
             foreach (var str in Directory.GetFiles(Paths.ProfilePath, Vendor.All + Vendor.ProfileExtension)) {
