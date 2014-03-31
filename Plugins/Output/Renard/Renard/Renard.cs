@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
 using VixenPlus;
+using VixenPlus.Annotations;
 
 namespace Renard {
     using System;
@@ -10,6 +11,7 @@ namespace Renard {
     using System.Windows.Forms;
     using System.Xml;
 
+    [UsedImplicitly]
     public class Renard : IEventDrivenOutputPlugIn {
         private byte[] _channelValues;
         private AutoResetEvent _eventTrigger;
