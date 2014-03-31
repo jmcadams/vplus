@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace VixenPlusCommon {
@@ -174,6 +175,11 @@ namespace VixenPlusCommon {
             var x = s.Contains(d) ? d.X : d.X < s.X ? s.X + offset : d.X;
             var y = s.Contains(d) ? d.Y : d.Y < s.Y ? s.Y + offset : d.Y;
             return new Point(x,y);
+        }
+
+
+        public static bool SupportsLivePreview(this object clazz) {
+            return clazz.GetType().GetMethod("SupportsPreview") != null;
         }
 
         public static bool IsWindows64BitOS() {

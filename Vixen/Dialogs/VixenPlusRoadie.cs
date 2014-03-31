@@ -1501,7 +1501,14 @@ namespace VixenPlus.Dialogs {
 
 
         private void checkedListBoxSequencePlugins_DoubleClick(object sender, EventArgs e) {
-            if (checkedListBoxSequencePlugins.SelectedIndex != -1) {
+            if (checkedListBoxSequencePlugins.SelectedIndex == -1) {
+                return;
+            }
+
+            if (_sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex].SupportsLivePreview()) {
+                MessageBox.Show("Yup");
+            }
+            else {
                 PluginSetup();
             }
         }

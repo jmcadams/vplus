@@ -191,6 +191,11 @@ namespace Renard {
         }
 
 
+        public bool SupportsPreview() {
+            return true;
+        }
+
+
         public HardwareMap[] HardwareMap {
             get { return new[] {new HardwareMap("Serial", int.Parse(_selectedPort.PortName.Substring(3)))}; }
         }
