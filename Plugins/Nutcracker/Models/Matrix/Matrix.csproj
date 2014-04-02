@@ -64,19 +64,8 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Matrix.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Matrix.Designer.cs">
-      <DependentUpon>Matrix.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Matrix.resx">
-      <DependentUpon>Matrix.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Vixen\VixenPlus.csproj">

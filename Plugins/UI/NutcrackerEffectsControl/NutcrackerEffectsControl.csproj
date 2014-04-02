@@ -84,11 +84,143 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Effects\Bars.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Effects\Bars.Designer.cs">
+      <DependentUpon>Bars.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Effects\Butterfly.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Effects\Butterfly.Designer.cs">
+      <DependentUpon>Butterfly.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Effects\ColorWash.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Effects\ColorWash.Designer.cs">
+      <DependentUpon>ColorWash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Effects\Fire.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Effects\Fire.Designer.cs">
+      <DependentUpon>Fire.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Effects\Fireworks.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Effects\Fireworks.Designer.cs">
+      <DependentUpon>Fireworks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Effects\Garlands.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Effects\Garlands.Designer.cs">
+      <DependentUpon>Garlands.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Effects\Life.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Effects\Life.Designer.cs">
+      <DependentUpon>Life.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Effects\Meteors.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Effects\Meteors.Designer.cs">
+      <DependentUpon>Meteors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Effects\Picture.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Effects\Picture.Designer.cs">
+      <DependentUpon>Picture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Effects\Snowflakes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Effects\Snowflakes.Designer.cs">
+      <DependentUpon>Snowflakes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Effects\Snowstorm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Effects\Snowstorm.Designer.cs">
+      <DependentUpon>Snowstorm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Effects\Spirals.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Effects\Spirals.Designer.cs">
+      <DependentUpon>Spirals.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Effects\Spirograph.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Effects\Spirograph.Designer.cs">
+      <DependentUpon>Spirograph.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Effects\Text.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Effects\Text.Designer.cs">
+      <DependentUpon>Text.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Effects\Tree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Effects\Tree.Designer.cs">
+      <DependentUpon>Tree.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Effects\Twinkle.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Effects\Twinkle.Designer.cs">
+      <DependentUpon>Twinkle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Arch.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Models\Arch.Designer.cs">
+      <DependentUpon>Arch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Matrix.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Models\Matrix.Designer.cs">
+      <DependentUpon>Matrix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Models\Tree.Designer.cs">
+      <DependentUpon>Tree.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WindowFrame.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Models\WindowFrame.Designer.cs">
+      <DependentUpon>WindowFrame.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NutcrackerControlDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NutcrackerControlDialog.Designer.cs">
+      <DependentUpon>NutcrackerControlDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="NutcrackerEffectControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="NutcrackerEffectControl.Designer.cs">
       <DependentUpon>NutcrackerEffectControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NutcrackerModelDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NutcrackerModelDialog.Designer.cs">
+      <DependentUpon>NutcrackerModelDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="NutcrackerPaletteManager.cs">
       <SubType>Form</SubType>
@@ -101,9 +233,75 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Effects\Bars.resx">
+      <DependentUpon>Bars.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Effects\Butterfly.resx">
+      <DependentUpon>Butterfly.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Effects\ColorWash.resx">
+      <DependentUpon>ColorWash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Effects\Fire.resx">
+      <DependentUpon>Fire.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Effects\Fireworks.resx">
+      <DependentUpon>Fireworks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Effects\Garlands.resx">
+      <DependentUpon>Garlands.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Effects\Life.resx">
+      <DependentUpon>Life.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Effects\Meteors.resx">
+      <DependentUpon>Meteors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Effects\Picture.resx">
+      <DependentUpon>Picture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Effects\Snowflakes.resx">
+      <DependentUpon>Snowflakes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Effects\Snowstorm.resx">
+      <DependentUpon>Snowstorm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Effects\Spirals.resx">
+      <DependentUpon>Spirals.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Effects\Spirograph.resx">
+      <DependentUpon>Spirograph.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Effects\Text.resx">
+      <DependentUpon>Text.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Effects\Tree.resx">
+      <DependentUpon>Tree.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Effects\Twinkle.resx">
+      <DependentUpon>Twinkle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Arch.resx">
+      <DependentUpon>Arch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Matrix.resx">
+      <DependentUpon>Matrix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Tree.resx">
+      <DependentUpon>Tree.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\WindowFrame.resx">
+      <DependentUpon>WindowFrame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NutcrackerControlDialog.resx">
+      <DependentUpon>NutcrackerControlDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="NutcrackerEffectControl.resx">
       <DependentUpon>NutcrackerEffectControl.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NutcrackerModelDialog.resx">
+      <DependentUpon>NutcrackerModelDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NutcrackerPaletteManager.resx">
       <DependentUpon>NutcrackerPaletteManager.cs</DependentUpon>
