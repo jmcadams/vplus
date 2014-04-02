@@ -217,7 +217,7 @@ namespace NutcrackerEffectsControl {
         }
 
         private void palette_Click(object sender, EventArgs e) {
-            using (var colorDialog = new System.Windows.Forms.ColorDialog {AllowFullOpen = true, AnyColor = true, FullOpen = true}) {
+            using (var colorDialog = new ColorDialog {AllowFullOpen = true, AnyColor = true, FullOpen = true}) {
                 colorDialog.CustomColors = Preference2.GetInstance().CustomColors;
                 if (colorDialog.ShowDialog() != DialogResult.OK) {
                     return;
