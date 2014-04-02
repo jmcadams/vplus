@@ -3376,10 +3376,10 @@ namespace VixenEditor {
                     keyEvent.Handled = true;
                     break;
 
-                //case Keys.N:
-                //    tsbNutcracker_Click(null, null);
-                //    keyEvent.Handled = true;
-                //    break;
+                case Keys.N:
+                    tsbNutcracker_Click(null, null);
+                    keyEvent.Handled = true;
+                    break;
 
                 case Keys.R:
                     if (keyEvent.Shift) {
@@ -4962,11 +4962,11 @@ namespace VixenEditor {
 
         private void tsbNutcracker_Click(object sender, EventArgs e) {
             // disabled!
-            /*
+            /* 
             if (!tsbNutcracker.Enabled) {
                 return;
             }
-
+            */
             using (var nce = new NutcrackerControlDialog(_sequence, _selectedRange)) {
                 if (nce.ShowDialog() != DialogResult.OK) {
                     return;
@@ -4988,7 +4988,7 @@ namespace VixenEditor {
                 }
                 pictureBoxGrid.Invalidate();
             }
-             */
+             /* */
         }
 
         private void tsbNutcracker_DoubleClick(object sender, EventArgs e) {

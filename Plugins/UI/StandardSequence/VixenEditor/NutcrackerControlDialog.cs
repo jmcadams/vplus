@@ -50,18 +50,18 @@ namespace VixenEditor {
 
         private Layers EffectLayer { get; set; }
 
-        private enum RenderTo {
+        public enum RenderTo {
             Routine,
             CurrentSelection,
             SpecificPoint,
             Clipboard
         }
 
-        private RenderTo RenderType { get; set; }
-        private byte[,] RenderData { get; set; }
-        private int RenderEvents { get; set; }
-        private int RenderRows { get; set; }
-        private int RenderCols { get; set; }
+        public RenderTo RenderType { get; set; }
+        public byte[,] RenderData { get; set; }
+        public int RenderEvents { get; set; }
+        public int RenderRows { get; set; }
+        public int RenderCols { get; set; }
 
         #endregion
 
