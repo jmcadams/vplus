@@ -40,6 +40,8 @@ namespace NutcrackerEffectsControl {
         }
 
         private void LoadEffects() {
+            if (DesignMode) return;
+
             foreach (var str in Directory.GetFiles(Paths.NutcrackerEffectsPath, Vendor.All + Vendor.AppExtension)) {
                 var assembly = Assembly.LoadFile(str);
                 foreach (var type in assembly.GetExportedTypes()) {
