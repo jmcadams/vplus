@@ -276,6 +276,7 @@ namespace NutcrackerEffectsControl
             this.Controls.Add(this.lblSpeed);
             this.Name = "NutcrackerEffectControl";
             this.Size = new System.Drawing.Size(371, 225);
+            this.Load += new System.EventHandler(this.NutcrackerEffectControl_Load);
             ((System.ComponentModel.ISupportInitialize)(this.tbSpeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

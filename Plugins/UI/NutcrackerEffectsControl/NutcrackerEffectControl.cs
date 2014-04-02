@@ -6,10 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
-
-
 using VixenPlus;
-
 using VixenPlusCommon;
 
 namespace NutcrackerEffectsControl {
@@ -28,8 +25,17 @@ namespace NutcrackerEffectsControl {
             }
         }
 
+
         public NutcrackerEffectControl() {
             InitializeComponent();
+        }
+
+
+        private void NutcrackerEffectControl_Load(object sender, EventArgs e) {
+            if (DesignMode) {
+                return;
+            }
+
             LoadEffects();
             PopulateEffects();
         }
@@ -42,7 +48,7 @@ namespace NutcrackerEffectsControl {
         private void LoadEffects() {
             if (DesignMode) return;
 
-            foreach (var str in Directory.GetFiles(Paths.NutcrackerEffectsPath, Vendor.All + Vendor.AppExtension)) {
+            foreach (var str in Directory.GetFiles(Paths.UIPluginPath, Vendor.All + Vendor.AppExtension)) {
                 var assembly = Assembly.LoadFile(str);
                 foreach (var type in assembly.GetExportedTypes()) {
                     foreach (var type2 in type.GetInterfaces()) {
@@ -60,6 +66,9 @@ namespace NutcrackerEffectsControl {
         }
 
         private void PopulateEffects() {
+            if (DesignMode) return;
+
+
             cbEffects.Items.Add("None");
             foreach (var nutcrackerEffect in _effectCache) {
                 cbEffects.Items.Add(nutcrackerEffect.Value.EffectName);
@@ -306,5 +315,6 @@ namespace NutcrackerEffectsControl {
                 pm.ShowDialog();
             }
         }
+
     }
 }

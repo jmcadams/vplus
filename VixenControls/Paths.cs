@@ -68,14 +68,6 @@ namespace VixenPlusCommon {
             get { return Environment.GetFolderPath(Environment.SpecialFolder.Personal); }
         }
 
-        public static string NutcrackerEffectsPath {
-            get { return Path.Combine(PluginBasePath, @"Nutcracker\Effects"); }
-        }
-
-        public static string NutcrackerModelsPath {
-            get { return Path.Combine(PluginBasePath, @"Nutcracker\Models"); }
-        }
-
         public static string NutcrackerDataPath {
             get { return Path.Combine(DataPath, "Nutcracker"); }
         }
