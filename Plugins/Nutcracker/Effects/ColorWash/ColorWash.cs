@@ -9,8 +9,10 @@ using System.Windows.Forms;
 using VixenPlus;
 
 using VixenPlusCommon;
+using VixenPlusCommon.Annotations;
 
 namespace ColorWash {
+    [UsedImplicitly]
     public partial class ColorWash : UserControl, INutcrackerEffect {
 
         private const string ColorwashCount = "ID_SLIDER_ColorWash{0}_Count";

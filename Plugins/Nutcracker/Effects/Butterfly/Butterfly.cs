@@ -7,8 +7,10 @@ using System.Windows.Forms;
 using VixenPlus;
 
 using VixenPlusCommon;
+using VixenPlusCommon.Annotations;
 
 namespace Butterfly {
+    [UsedImplicitly]
     public partial class Butterfly : UserControl, INutcrackerEffect {
 
         private readonly bool _initializing = true;

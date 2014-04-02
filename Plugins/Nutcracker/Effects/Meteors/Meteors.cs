@@ -9,10 +9,11 @@ using System.Windows.Forms;
 using VixenPlus;
 
 using VixenPlusCommon;
+using VixenPlusCommon.Annotations;
 
 
 namespace Meteors {
-    // ReSharper disable once UnusedMember.Global
+    [UsedImplicitly]
     public partial class Meteors : UserControl, INutcrackerEffect {
 
         private readonly bool _initializing = true;

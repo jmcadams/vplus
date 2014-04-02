@@ -9,8 +9,10 @@ using System.Windows.Forms;
 using VixenPlus;
 
 using VixenPlusCommon;
+using VixenPlusCommon.Annotations;
 
 namespace Spirograph {
+    [UsedImplicitly]
     public partial class Spirograph : UserControl, INutcrackerEffect {
 
         private const string SpirographOuterR = "ID_SLIDER_Spirograph{0}_R";

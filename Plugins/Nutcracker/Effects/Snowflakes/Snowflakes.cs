@@ -9,8 +9,10 @@ using System.Windows.Forms;
 using VixenPlus;
 
 using VixenPlusCommon;
+using VixenPlusCommon.Annotations;
 
 namespace Snowflakes {
+    [UsedImplicitly]
     public partial class Snowflakes : UserControl, INutcrackerEffect {
 
         private const string SnowflakesCount = "ID_SLIDER_Snowflakes{0}_Count";

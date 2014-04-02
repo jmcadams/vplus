@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using VixenPlus;
 
 using VixenPlusCommon;
-using VixenPlusCommon.Properties;
+using VixenPlusCommon.Annotations;
 
 namespace Bars {
     [UsedImplicitly]

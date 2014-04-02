@@ -9,8 +9,10 @@ using System.Windows.Forms;
 using VixenPlus;
 
 using VixenPlusCommon;
+using VixenPlusCommon.Annotations;
 
 namespace Tree {
+    [UsedImplicitly]
     public partial class Tree : UserControl, INutcrackerEffect {
 
         private const string TreeBrachCount = "ID_SLIDER_Tree{0}_Branches";

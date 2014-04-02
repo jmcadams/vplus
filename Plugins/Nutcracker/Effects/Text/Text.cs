@@ -12,8 +12,10 @@ using System.Windows.Forms;
 using VixenPlus;
 
 using VixenPlusCommon;
+using VixenPlusCommon.Annotations;
 
 namespace Text {
+    [UsedImplicitly]
     public partial class Text : UserControl, INutcrackerEffect {
 
         private readonly bool _initializing = true;

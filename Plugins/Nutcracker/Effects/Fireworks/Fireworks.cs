@@ -9,9 +9,10 @@ using System.Windows.Forms;
 using VixenPlus;
 
 using VixenPlusCommon;
+using VixenPlusCommon.Annotations;
 
 namespace Fireworks {
-    // ReSharper disable once UnusedMember.Global
+    [UsedImplicitly]
     public partial class Fireworks : UserControl, INutcrackerEffect {
 
         private const string FireworksExplosions = "ID_SLIDER_Fireworks{0}_Number_Explosions";

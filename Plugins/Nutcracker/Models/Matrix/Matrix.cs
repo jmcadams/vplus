@@ -3,9 +3,10 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using VixenPlus;
+using VixenPlus.Annotations;
 
 namespace Matrix2 {
-    // ReSharper disable once UnusedMember.Global
+    [UsedImplicitly]
     public partial class Matrix : UserControl, INutcrackerModel {
 
         private int _rows;

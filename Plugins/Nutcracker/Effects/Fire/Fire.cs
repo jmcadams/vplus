@@ -9,8 +9,10 @@ using System.Windows.Forms;
 using VixenPlus;
 
 using VixenPlusCommon;
+using VixenPlusCommon.Annotations;
 
 namespace Fire {
+    [UsedImplicitly]
     public partial class Fire : UserControl, INutcrackerEffect {
 
         private const string FireHeight = "ID_SLIDER_Fire{0}_Height";

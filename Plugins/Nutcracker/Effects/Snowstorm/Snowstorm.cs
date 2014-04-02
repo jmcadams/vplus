@@ -9,8 +9,10 @@ using System.Windows.Forms;
 using VixenPlus;
 
 using VixenPlusCommon;
+using VixenPlusCommon.Annotations;
 
 namespace Snowstorm {
+    [UsedImplicitly]
     public partial class Snowstorm : UserControl, INutcrackerEffect {
 
         private const string SnowstormCount = "ID_SLIDER_Snowstorm{0}_Count";

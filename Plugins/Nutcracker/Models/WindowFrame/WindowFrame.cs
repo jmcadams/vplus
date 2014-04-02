@@ -3,9 +3,10 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using VixenPlus;
+using VixenPlus.Annotations;
 
 namespace WindowFrame {
-    // ReSharper disable once UnusedMember.Global
+    [UsedImplicitly]
     public partial class WindowFrame : UserControl, INutcrackerModel {
 
         private int _rows;

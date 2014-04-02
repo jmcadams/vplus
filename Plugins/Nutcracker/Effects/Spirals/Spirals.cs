@@ -9,8 +9,10 @@ using System.Windows.Forms;
 using VixenPlus;
 
 using VixenPlusCommon;
+using VixenPlusCommon.Annotations;
 
 namespace Spirals {
+    [UsedImplicitly]
     public partial class Spirals : UserControl, INutcrackerEffect {
 
         private const string SpiralsCount = "ID_SLIDER_Spirals{0}_Count";

@@ -9,8 +9,10 @@ using System.Windows.Forms;
 using VixenPlus;
 
 using VixenPlusCommon;
+using VixenPlusCommon.Annotations;
 
 namespace Life {
+    [UsedImplicitly]
     public partial class Life : UserControl, INutcrackerEffect {
 
         private const string LifeCount = "ID_SLIDER_Life{0}_Count";

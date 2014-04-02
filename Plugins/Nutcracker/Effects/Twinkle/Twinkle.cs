@@ -9,8 +9,10 @@ using System.Windows.Forms;
 using VixenPlus;
 
 using VixenPlusCommon;
+using VixenPlusCommon.Annotations;
 
 namespace Twinkle {
+    [UsedImplicitly]
     public partial class Twinkle : UserControl, INutcrackerEffect {
 
         private const string TwinkleCount = "ID_SLIDER_Twinkle{0}_Count";

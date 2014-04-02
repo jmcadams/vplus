@@ -3,9 +3,10 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using VixenPlus;
+using VixenPlus.Annotations;
 
 namespace Tree {
-    // ReSharper disable once UnusedMember.Global
+    [UsedImplicitly]
     public partial class Tree : UserControl, INutcrackerModel {
 
         private int _rows;
