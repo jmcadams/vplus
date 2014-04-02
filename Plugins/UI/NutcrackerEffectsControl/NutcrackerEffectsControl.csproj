@@ -120,6 +120,7 @@
     <Compile Include="Effects\Garlands.Designer.cs">
       <DependentUpon>Garlands.cs</DependentUpon>
     </Compile>
+    <Compile Include="Effects\INutcrackerEffect.cs" />
     <Compile Include="Effects\Life.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -186,6 +187,7 @@
     <Compile Include="Models\Arch.Designer.cs">
       <DependentUpon>Arch.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\INutcrackerModel.cs" />
     <Compile Include="Models\Matrix.cs">
       <SubType>UserControl</SubType>
     </Compile>

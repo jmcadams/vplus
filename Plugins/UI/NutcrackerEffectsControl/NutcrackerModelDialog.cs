@@ -4,6 +4,8 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
+using NutcrackerEffectsControl.Models;
+
 using VixenPlus;
 
 using VixenPlusCommon;

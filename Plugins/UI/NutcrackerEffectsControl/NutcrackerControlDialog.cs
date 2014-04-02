@@ -7,6 +7,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
+using NutcrackerEffectsControl.Effects;
+
 using VixenPlus;
 using VixenPlus.Dialogs;
 
@@ -53,11 +55,11 @@ namespace NutcrackerEffectsControl {
             Clipboard
         }
 
-        public RenderTo RenderType { get; set; }
-        public byte[,] RenderData { get; set; }
-        public int RenderEvents { get; set; }
-        public int RenderRows { get; set; }
-        public int RenderCols { get; set; }
+        public RenderTo RenderType { get; private set; }
+        public byte[,] RenderData { get; private set; }
+        public int RenderEvents { get; private set; }
+        public int RenderRows { get; private set; }
+        public int RenderCols { get; private set; }
 
         #endregion
 

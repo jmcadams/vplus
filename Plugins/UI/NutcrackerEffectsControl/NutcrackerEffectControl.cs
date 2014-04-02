@@ -6,7 +6,8 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
-using VixenPlus;
+using NutcrackerEffectsControl.Effects;
+
 using VixenPlusCommon;
 
 namespace NutcrackerEffectsControl {

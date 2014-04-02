@@ -339,8 +339,6 @@
     <Compile Include="InputPlugin.cs" />
     <Compile Include="InputPlugins.cs" />
     <Compile Include="Interfaces.cs" />
-    <Compile Include="INutcrackerEffect.cs" />
-    <Compile Include="INutcrackerModel.cs" />
     <Compile Include="IOutputPlugIn.cs" />
     <Compile Include="IPlugIn.cs" />
     <Compile Include="IQueryable.cs" />

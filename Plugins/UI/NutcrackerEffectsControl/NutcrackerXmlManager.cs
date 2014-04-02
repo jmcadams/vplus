@@ -5,10 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
-
-
-using VixenPlus;
-
 using VixenPlusCommon;
 
 namespace NutcrackerEffectsControl {

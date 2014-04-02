@@ -4,11 +4,11 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-using VixenPlus;
-
 using VixenPlusCommon;
+using VixenPlusCommon.Annotations;
 
 namespace NutcrackerEffectsControl.Effects {
+    [UsedImplicitly]
     public partial class Garlands : UserControl, INutcrackerEffect {
 
         private const string GarlandsType = "ID_SLIDER_Garlands{0}_Type";
