@@ -32,8 +32,8 @@ namespace VixenPlus.Dialogs
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Output", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Input", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Output", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Input", System.Windows.Forms.HorizontalAlignment.Left);
             this.cbProfiles = new System.Windows.Forms.ComboBox();
             this.gbProfiles = new System.Windows.Forms.GroupBox();
             this.btnProfileSave = new System.Windows.Forms.Button();
@@ -99,6 +99,29 @@ namespace VixenPlus.Dialogs
             this.btnMultiColorCancel = new System.Windows.Forms.Button();
             this.colorPaletteColor = new VixenPlusCommon.ColorPalette();
             this.tpPlugins = new System.Windows.Forms.TabPage();
+            this.listViewPlugins = new System.Windows.Forms.ListView();
+            this.pluginName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.buttonInput = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.pictureBoxMinus = new System.Windows.Forms.PictureBox();
+            this.pictureBoxPlus = new System.Windows.Forms.PictureBox();
+            this.buttonRemove = new System.Windows.Forms.Button();
+            this.buttonUse = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.listViewOutputPorts = new System.Windows.Forms.ListView();
+            this.columnHeaderPortTypeName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderPortTypeIndex = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderExpandButton = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderPluginName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.checkedListBoxSequencePlugins = new System.Windows.Forms.CheckedListBox();
+            this.buttonCancel = new System.Windows.Forms.Button();
+            this.buttonOK = new System.Windows.Forms.Button();
+            this.buttonPluginSetup = new System.Windows.Forms.Button();
+            this.textBoxChannelTo = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBoxChannelFrom = new System.Windows.Forms.TextBox();
             this.tpSortOrders = new System.Windows.Forms.TabPage();
             this.btnSrtDelete = new System.Windows.Forms.Button();
             this.btnSrtSave = new System.Windows.Forms.Button();
@@ -111,29 +134,7 @@ namespace VixenPlus.Dialogs
             this.btnCancel = new System.Windows.Forms.Button();
             this.ttRoadie = new System.Windows.Forms.ToolTip(this.components);
             this.previewTimer = new System.Windows.Forms.Timer(this.components);
-            this.listViewPlugins = new System.Windows.Forms.ListView();
-            this.pluginName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderExpandButton = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.buttonInput = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.columnHeaderPluginName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderPortTypeIndex = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.pictureBoxMinus = new System.Windows.Forms.PictureBox();
-            this.pictureBoxPlus = new System.Windows.Forms.PictureBox();
-            this.buttonRemove = new System.Windows.Forms.Button();
-            this.buttonUse = new System.Windows.Forms.Button();
-            this.columnHeaderPortTypeName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.listViewOutputPorts = new System.Windows.Forms.ListView();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.checkedListBoxSequencePlugins = new System.Windows.Forms.CheckedListBox();
-            this.buttonCancel = new System.Windows.Forms.Button();
-            this.buttonOK = new System.Windows.Forms.Button();
-            this.buttonPluginSetup = new System.Windows.Forms.Button();
-            this.textBoxChannelTo = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBoxChannelFrom = new System.Windows.Forms.TextBox();
+            this.gbSetup = new System.Windows.Forms.GroupBox();
             this.gbProfiles.SuspendLayout();
             this.tcProfile.SuspendLayout();
             this.tpChannels.SuspendLayout();
@@ -153,12 +154,12 @@ namespace VixenPlus.Dialogs
             ((System.ComponentModel.ISupportInitialize)(this.nudChGenChannels)).BeginInit();
             this.tpMultiColor.SuspendLayout();
             this.tpPlugins.SuspendLayout();
-            this.tpSortOrders.SuspendLayout();
-            this.tpGroups.SuspendLayout();
-            this.tpNutcracker.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMinus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlus)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.tpSortOrders.SuspendLayout();
+            this.tpGroups.SuspendLayout();
+            this.tpNutcracker.SuspendLayout();
             this.SuspendLayout();
             // 
             // cbProfiles
@@ -954,6 +955,7 @@ namespace VixenPlus.Dialogs
             // 
             // tpPlugins
             // 
+            this.tpPlugins.Controls.Add(this.gbSetup);
             this.tpPlugins.Controls.Add(this.listViewPlugins);
             this.tpPlugins.Controls.Add(this.buttonInput);
             this.tpPlugins.Controls.Add(this.label4);
@@ -980,6 +982,239 @@ namespace VixenPlus.Dialogs
             this.tpPlugins.UseVisualStyleBackColor = true;
             this.tpPlugins.Enter += new System.EventHandler(this.PluginListDialog_Load);
             this.tpPlugins.Leave += new System.EventHandler(this.PluginListDialog_FormClosing);
+            // 
+            // listViewPlugins
+            // 
+            this.listViewPlugins.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.pluginName});
+            listViewGroup1.Header = "Output";
+            listViewGroup1.Name = "listViewGroupOutput";
+            listViewGroup2.Header = "Input";
+            listViewGroup2.Name = "listViewGroupInput";
+            this.listViewPlugins.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
+            listViewGroup1,
+            listViewGroup2});
+            this.listViewPlugins.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.listViewPlugins.HideSelection = false;
+            this.listViewPlugins.Location = new System.Drawing.Point(6, 24);
+            this.listViewPlugins.MultiSelect = false;
+            this.listViewPlugins.Name = "listViewPlugins";
+            this.listViewPlugins.Size = new System.Drawing.Size(196, 139);
+            this.listViewPlugins.TabIndex = 32;
+            this.listViewPlugins.UseCompatibleStateImageBehavior = false;
+            this.listViewPlugins.View = System.Windows.Forms.View.Details;
+            this.listViewPlugins.SelectedIndexChanged += new System.EventHandler(this.listViewPlugins_SelectedIndexChanged);
+            this.listViewPlugins.DoubleClick += new System.EventHandler(this.listViewPlugins_DoubleClick);
+            // 
+            // buttonInput
+            // 
+            this.buttonInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonInput.Enabled = false;
+            this.buttonInput.Location = new System.Drawing.Point(496, 141);
+            this.buttonInput.Name = "buttonInput";
+            this.buttonInput.Size = new System.Drawing.Size(75, 23);
+            this.buttonInput.TabIndex = 26;
+            this.buttonInput.Text = "Inputs";
+            this.buttonInput.UseVisualStyleBackColor = true;
+            this.buttonInput.Click += new System.EventHandler(this.buttonInput_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(289, 4);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(74, 13);
+            this.label4.TabIndex = 19;
+            this.label4.Text = "Plugins in Use";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 3);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(87, 13);
+            this.label3.TabIndex = 16;
+            this.label3.Text = "Available Plugins";
+            // 
+            // pictureBoxMinus
+            // 
+            this.pictureBoxMinus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBoxMinus.BackColor = System.Drawing.Color.Black;
+            this.pictureBoxMinus.Location = new System.Drawing.Point(507, 117);
+            this.pictureBoxMinus.Name = "pictureBoxMinus";
+            this.pictureBoxMinus.Size = new System.Drawing.Size(9, 9);
+            this.pictureBoxMinus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBoxMinus.TabIndex = 30;
+            this.pictureBoxMinus.TabStop = false;
+            this.pictureBoxMinus.Visible = false;
+            // 
+            // pictureBoxPlus
+            // 
+            this.pictureBoxPlus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBoxPlus.BackColor = System.Drawing.Color.White;
+            this.pictureBoxPlus.Location = new System.Drawing.Point(492, 117);
+            this.pictureBoxPlus.Name = "pictureBoxPlus";
+            this.pictureBoxPlus.Size = new System.Drawing.Size(9, 9);
+            this.pictureBoxPlus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBoxPlus.TabIndex = 27;
+            this.pictureBoxPlus.TabStop = false;
+            this.pictureBoxPlus.Visible = false;
+            // 
+            // buttonRemove
+            // 
+            this.buttonRemove.Enabled = false;
+            this.buttonRemove.Location = new System.Drawing.Point(208, 142);
+            this.buttonRemove.Name = "buttonRemove";
+            this.buttonRemove.Size = new System.Drawing.Size(75, 23);
+            this.buttonRemove.TabIndex = 18;
+            this.buttonRemove.Text = "Remove";
+            this.buttonRemove.UseVisualStyleBackColor = true;
+            this.buttonRemove.Click += new System.EventHandler(this.buttonRemove_Click);
+            // 
+            // buttonUse
+            // 
+            this.buttonUse.Enabled = false;
+            this.buttonUse.Location = new System.Drawing.Point(208, 113);
+            this.buttonUse.Name = "buttonUse";
+            this.buttonUse.Size = new System.Drawing.Size(75, 23);
+            this.buttonUse.TabIndex = 17;
+            this.buttonUse.Text = "--- Use -->";
+            this.buttonUse.UseVisualStyleBackColor = true;
+            this.buttonUse.Click += new System.EventHandler(this.buttonUse_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.listViewOutputPorts);
+            this.groupBox1.Location = new System.Drawing.Point(6, 400);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(964, 145);
+            this.groupBox1.TabIndex = 28;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Port Configurations";
+            // 
+            // listViewOutputPorts
+            // 
+            this.listViewOutputPorts.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderPortTypeName,
+            this.columnHeaderPortTypeIndex,
+            this.columnHeaderExpandButton,
+            this.columnHeaderPluginName});
+            this.listViewOutputPorts.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.listViewOutputPorts.Location = new System.Drawing.Point(6, 19);
+            this.listViewOutputPorts.Name = "listViewOutputPorts";
+            this.listViewOutputPorts.OwnerDraw = true;
+            this.listViewOutputPorts.Size = new System.Drawing.Size(952, 120);
+            this.listViewOutputPorts.TabIndex = 0;
+            this.listViewOutputPorts.UseCompatibleStateImageBehavior = false;
+            this.listViewOutputPorts.View = System.Windows.Forms.View.Details;
+            this.listViewOutputPorts.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.listViewOutputPorts_DrawItem);
+            this.listViewOutputPorts.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.listViewOutputPorts_DrawSubItem);
+            this.listViewOutputPorts.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listViewOutputPorts_MouseDown);
+            // 
+            // columnHeaderPortTypeName
+            // 
+            this.columnHeaderPortTypeName.Text = "PortTypeName";
+            this.columnHeaderPortTypeName.Width = 55;
+            // 
+            // columnHeaderPortTypeIndex
+            // 
+            this.columnHeaderPortTypeIndex.Text = "PortTypeIndex";
+            this.columnHeaderPortTypeIndex.Width = 41;
+            // 
+            // columnHeaderExpandButton
+            // 
+            this.columnHeaderExpandButton.Text = "";
+            this.columnHeaderExpandButton.Width = 41;
+            // 
+            // columnHeaderPluginName
+            // 
+            this.columnHeaderPluginName.Text = "PluginName";
+            this.columnHeaderPluginName.Width = 251;
+            // 
+            // checkedListBoxSequencePlugins
+            // 
+            this.checkedListBoxSequencePlugins.FormattingEnabled = true;
+            this.checkedListBoxSequencePlugins.Location = new System.Drawing.Point(292, 25);
+            this.checkedListBoxSequencePlugins.Name = "checkedListBoxSequencePlugins";
+            this.checkedListBoxSequencePlugins.Size = new System.Drawing.Size(171, 139);
+            this.checkedListBoxSequencePlugins.TabIndex = 20;
+            this.checkedListBoxSequencePlugins.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxSequencePlugins_ItemCheck);
+            this.checkedListBoxSequencePlugins.SelectedIndexChanged += new System.EventHandler(this.listBoxSequencePlugins_SelectedIndexChanged);
+            this.checkedListBoxSequencePlugins.DoubleClick += new System.EventHandler(this.checkedListBoxSequencePlugins_DoubleClick);
+            this.checkedListBoxSequencePlugins.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBoxSequencePlugins_KeyDown);
+            // 
+            // buttonCancel
+            // 
+            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonCancel.Location = new System.Drawing.Point(814, 551);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancel.TabIndex = 29;
+            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Visible = false;
+            // 
+            // buttonOK
+            // 
+            this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.buttonOK.Location = new System.Drawing.Point(895, 551);
+            this.buttonOK.Name = "buttonOK";
+            this.buttonOK.Size = new System.Drawing.Size(75, 23);
+            this.buttonOK.TabIndex = 31;
+            this.buttonOK.Text = "Done";
+            this.buttonOK.UseVisualStyleBackColor = true;
+            // 
+            // buttonPluginSetup
+            // 
+            this.buttonPluginSetup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonPluginSetup.Enabled = false;
+            this.buttonPluginSetup.Location = new System.Drawing.Point(496, 76);
+            this.buttonPluginSetup.Name = "buttonPluginSetup";
+            this.buttonPluginSetup.Size = new System.Drawing.Size(75, 23);
+            this.buttonPluginSetup.TabIndex = 25;
+            this.buttonPluginSetup.Text = "Plugin Setup";
+            this.buttonPluginSetup.UseVisualStyleBackColor = true;
+            this.buttonPluginSetup.Click += new System.EventHandler(this.buttonPluginSetup_Click);
+            // 
+            // textBoxChannelTo
+            // 
+            this.textBoxChannelTo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxChannelTo.Location = new System.Drawing.Point(546, 50);
+            this.textBoxChannelTo.MaxLength = 4;
+            this.textBoxChannelTo.Name = "textBoxChannelTo";
+            this.textBoxChannelTo.Size = new System.Drawing.Size(34, 20);
+            this.textBoxChannelTo.TabIndex = 24;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(524, 53);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(16, 13);
+            this.label2.TabIndex = 23;
+            this.label2.Text = "to";
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(507, 24);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(51, 13);
+            this.label1.TabIndex = 21;
+            this.label1.Text = "Channels";
+            // 
+            // textBoxChannelFrom
+            // 
+            this.textBoxChannelFrom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxChannelFrom.Location = new System.Drawing.Point(484, 50);
+            this.textBoxChannelFrom.MaxLength = 4;
+            this.textBoxChannelFrom.Name = "textBoxChannelFrom";
+            this.textBoxChannelFrom.Size = new System.Drawing.Size(34, 20);
+            this.textBoxChannelFrom.TabIndex = 22;
             // 
             // tpSortOrders
             // 
@@ -1095,238 +1330,14 @@ namespace VixenPlus.Dialogs
             this.previewTimer.Interval = 200;
             this.previewTimer.Tick += new System.EventHandler(this.previewTimer_Tick);
             // 
-            // listViewPlugins
+            // gbSetup
             // 
-            this.listViewPlugins.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.pluginName});
-            listViewGroup3.Header = "Output";
-            listViewGroup3.Name = "listViewGroupOutput";
-            listViewGroup4.Header = "Input";
-            listViewGroup4.Name = "listViewGroupInput";
-            this.listViewPlugins.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup3,
-            listViewGroup4});
-            this.listViewPlugins.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.listViewPlugins.HideSelection = false;
-            this.listViewPlugins.Location = new System.Drawing.Point(6, 24);
-            this.listViewPlugins.MultiSelect = false;
-            this.listViewPlugins.Name = "listViewPlugins";
-            this.listViewPlugins.Size = new System.Drawing.Size(196, 139);
-            this.listViewPlugins.TabIndex = 32;
-            this.listViewPlugins.UseCompatibleStateImageBehavior = false;
-            this.listViewPlugins.View = System.Windows.Forms.View.Details;
-            this.listViewPlugins.SelectedIndexChanged += new System.EventHandler(this.listViewPlugins_SelectedIndexChanged);
-            this.listViewPlugins.DoubleClick += new System.EventHandler(this.listViewPlugins_DoubleClick);
-            // 
-            // columnHeaderExpandButton
-            // 
-            this.columnHeaderExpandButton.Text = "";
-            this.columnHeaderExpandButton.Width = 41;
-            // 
-            // buttonInput
-            // 
-            this.buttonInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonInput.Enabled = false;
-            this.buttonInput.Location = new System.Drawing.Point(496, 141);
-            this.buttonInput.Name = "buttonInput";
-            this.buttonInput.Size = new System.Drawing.Size(75, 23);
-            this.buttonInput.TabIndex = 26;
-            this.buttonInput.Text = "Inputs";
-            this.buttonInput.UseVisualStyleBackColor = true;
-            this.buttonInput.Click += new System.EventHandler(this.buttonInput_Click);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(289, 4);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(74, 13);
-            this.label4.TabIndex = 19;
-            this.label4.Text = "Plugins in Use";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 3);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(87, 13);
-            this.label3.TabIndex = 16;
-            this.label3.Text = "Available Plugins";
-            // 
-            // columnHeaderPluginName
-            // 
-            this.columnHeaderPluginName.Text = "PluginName";
-            this.columnHeaderPluginName.Width = 251;
-            // 
-            // columnHeaderPortTypeIndex
-            // 
-            this.columnHeaderPortTypeIndex.Text = "PortTypeIndex";
-            this.columnHeaderPortTypeIndex.Width = 41;
-            // 
-            // pictureBoxMinus
-            // 
-            this.pictureBoxMinus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBoxMinus.BackColor = System.Drawing.Color.Black;
-            this.pictureBoxMinus.Location = new System.Drawing.Point(507, 117);
-            this.pictureBoxMinus.Name = "pictureBoxMinus";
-            this.pictureBoxMinus.Size = new System.Drawing.Size(9, 9);
-            this.pictureBoxMinus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBoxMinus.TabIndex = 30;
-            this.pictureBoxMinus.TabStop = false;
-            this.pictureBoxMinus.Visible = false;
-            // 
-            // pictureBoxPlus
-            // 
-            this.pictureBoxPlus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBoxPlus.BackColor = System.Drawing.Color.White;
-            this.pictureBoxPlus.Location = new System.Drawing.Point(492, 117);
-            this.pictureBoxPlus.Name = "pictureBoxPlus";
-            this.pictureBoxPlus.Size = new System.Drawing.Size(9, 9);
-            this.pictureBoxPlus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBoxPlus.TabIndex = 27;
-            this.pictureBoxPlus.TabStop = false;
-            this.pictureBoxPlus.Visible = false;
-            // 
-            // buttonRemove
-            // 
-            this.buttonRemove.Enabled = false;
-            this.buttonRemove.Location = new System.Drawing.Point(208, 142);
-            this.buttonRemove.Name = "buttonRemove";
-            this.buttonRemove.Size = new System.Drawing.Size(75, 23);
-            this.buttonRemove.TabIndex = 18;
-            this.buttonRemove.Text = "Remove";
-            this.buttonRemove.UseVisualStyleBackColor = true;
-            this.buttonRemove.Click += new System.EventHandler(this.buttonRemove_Click);
-            // 
-            // buttonUse
-            // 
-            this.buttonUse.Enabled = false;
-            this.buttonUse.Location = new System.Drawing.Point(208, 113);
-            this.buttonUse.Name = "buttonUse";
-            this.buttonUse.Size = new System.Drawing.Size(75, 23);
-            this.buttonUse.TabIndex = 17;
-            this.buttonUse.Text = "--- Use -->";
-            this.buttonUse.UseVisualStyleBackColor = true;
-            this.buttonUse.Click += new System.EventHandler(this.buttonUse_Click);
-            // 
-            // columnHeaderPortTypeName
-            // 
-            this.columnHeaderPortTypeName.Text = "PortTypeName";
-            this.columnHeaderPortTypeName.Width = 55;
-            // 
-            // listViewOutputPorts
-            // 
-            this.listViewOutputPorts.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeaderPortTypeName,
-            this.columnHeaderPortTypeIndex,
-            this.columnHeaderExpandButton,
-            this.columnHeaderPluginName});
-            this.listViewOutputPorts.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.listViewOutputPorts.Location = new System.Drawing.Point(6, 19);
-            this.listViewOutputPorts.Name = "listViewOutputPorts";
-            this.listViewOutputPorts.OwnerDraw = true;
-            this.listViewOutputPorts.Size = new System.Drawing.Size(445, 93);
-            this.listViewOutputPorts.TabIndex = 0;
-            this.listViewOutputPorts.UseCompatibleStateImageBehavior = false;
-            this.listViewOutputPorts.View = System.Windows.Forms.View.Details;
-            this.listViewOutputPorts.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.listViewOutputPorts_DrawItem);
-            this.listViewOutputPorts.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.listViewOutputPorts_DrawSubItem);
-            this.listViewOutputPorts.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listViewOutputPorts_MouseDown);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.listViewOutputPorts);
-            this.groupBox1.Location = new System.Drawing.Point(6, 170);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(457, 118);
-            this.groupBox1.TabIndex = 28;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Port Configurations";
-            // 
-            // checkedListBoxSequencePlugins
-            // 
-            this.checkedListBoxSequencePlugins.FormattingEnabled = true;
-            this.checkedListBoxSequencePlugins.Location = new System.Drawing.Point(292, 25);
-            this.checkedListBoxSequencePlugins.Name = "checkedListBoxSequencePlugins";
-            this.checkedListBoxSequencePlugins.Size = new System.Drawing.Size(171, 139);
-            this.checkedListBoxSequencePlugins.TabIndex = 20;
-            this.checkedListBoxSequencePlugins.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxSequencePlugins_ItemCheck);
-            this.checkedListBoxSequencePlugins.SelectedIndexChanged += new System.EventHandler(this.listBoxSequencePlugins_SelectedIndexChanged);
-            this.checkedListBoxSequencePlugins.DoubleClick += new System.EventHandler(this.checkedListBoxSequencePlugins_DoubleClick);
-            this.checkedListBoxSequencePlugins.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBoxSequencePlugins_KeyDown);
-            // 
-            // buttonCancel
-            // 
-            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(501, 236);
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-            this.buttonCancel.TabIndex = 29;
-            this.buttonCancel.Text = "Cancel";
-            this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Visible = false;
-            // 
-            // buttonOK
-            // 
-            this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(501, 265);
-            this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(75, 23);
-            this.buttonOK.TabIndex = 31;
-            this.buttonOK.Text = "Done";
-            this.buttonOK.UseVisualStyleBackColor = true;
-            // 
-            // buttonPluginSetup
-            // 
-            this.buttonPluginSetup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonPluginSetup.Enabled = false;
-            this.buttonPluginSetup.Location = new System.Drawing.Point(496, 76);
-            this.buttonPluginSetup.Name = "buttonPluginSetup";
-            this.buttonPluginSetup.Size = new System.Drawing.Size(75, 23);
-            this.buttonPluginSetup.TabIndex = 25;
-            this.buttonPluginSetup.Text = "Plugin Setup";
-            this.buttonPluginSetup.UseVisualStyleBackColor = true;
-            this.buttonPluginSetup.Click += new System.EventHandler(this.buttonPluginSetup_Click);
-            // 
-            // textBoxChannelTo
-            // 
-            this.textBoxChannelTo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxChannelTo.Location = new System.Drawing.Point(546, 50);
-            this.textBoxChannelTo.MaxLength = 4;
-            this.textBoxChannelTo.Name = "textBoxChannelTo";
-            this.textBoxChannelTo.Size = new System.Drawing.Size(34, 20);
-            this.textBoxChannelTo.TabIndex = 24;
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(524, 53);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(16, 13);
-            this.label2.TabIndex = 23;
-            this.label2.Text = "to";
-            // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(507, 24);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(51, 13);
-            this.label1.TabIndex = 21;
-            this.label1.Text = "Channels";
-            // 
-            // textBoxChannelFrom
-            // 
-            this.textBoxChannelFrom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxChannelFrom.Location = new System.Drawing.Point(484, 50);
-            this.textBoxChannelFrom.MaxLength = 4;
-            this.textBoxChannelFrom.Name = "textBoxChannelFrom";
-            this.textBoxChannelFrom.Size = new System.Drawing.Size(34, 20);
-            this.textBoxChannelFrom.TabIndex = 22;
+            this.gbSetup.Location = new System.Drawing.Point(6, 169);
+            this.gbSetup.Name = "gbSetup";
+            this.gbSetup.Size = new System.Drawing.Size(958, 225);
+            this.gbSetup.TabIndex = 33;
+            this.gbSetup.TabStop = false;
+            this.gbSetup.Text = "Plugin Setup";
             // 
             // VixenPlusRoadie
             // 
@@ -1369,12 +1380,12 @@ namespace VixenPlus.Dialogs
             this.tpMultiColor.ResumeLayout(false);
             this.tpPlugins.ResumeLayout(false);
             this.tpPlugins.PerformLayout();
-            this.tpSortOrders.ResumeLayout(false);
-            this.tpGroups.ResumeLayout(false);
-            this.tpNutcracker.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMinus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlus)).EndInit();
             this.groupBox1.ResumeLayout(false);
+            this.tpSortOrders.ResumeLayout(false);
+            this.tpGroups.ResumeLayout(false);
+            this.tpNutcracker.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1481,5 +1492,6 @@ namespace VixenPlus.Dialogs
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBoxChannelFrom;
+        private System.Windows.Forms.GroupBox gbSetup;
     }
 }
