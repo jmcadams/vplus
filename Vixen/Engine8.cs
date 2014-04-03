@@ -86,6 +86,7 @@ namespace VixenPlus {
             get { return _secondaryEngine != null ? _secondaryEngine.IsRunning : _isRunning; }
         }
 
+/*
         public string LoadedProgram {
             get {
                 if (Mode == EngineMode.Asynchronous) {
@@ -94,7 +95,9 @@ namespace VixenPlus {
                 return CurrentObject == null ? string.Empty : CurrentObject.Name;
             }
         }
+*/
 
+/*
         public string LoadedSequence {
             get {
                 if (Mode == EngineMode.Asynchronous) {
@@ -103,11 +106,13 @@ namespace VixenPlus {
                 return _engineContexts[_primaryContext].CurrentSequence == null ? string.Empty : _engineContexts[_primaryContext].CurrentSequence.Name;
             }
         }
+*/
 
         public bool IsLooping { private get; set; }
 
         private EngineMode Mode { get; set; }
 
+/*
         public int ObjectPosition {
             get {
                 var context = _engineContexts[_primaryContext];
@@ -118,6 +123,7 @@ namespace VixenPlus {
                 return tickCount;
             }
         }
+*/
 
         public int Position {
             get { return _engineContexts[_primaryContext].TickCount; }

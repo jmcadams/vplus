@@ -5,8 +5,10 @@ using System.Windows.Forms;
 using System.Xml;
 
 using VixenPlus;
+using VixenPlus.Annotations;
 
 namespace GenericSerial {
+    [UsedImplicitly]
     public class GenericSerial : IEventDrivenOutputPlugIn {
         private byte[] _footer;
         private byte[] _header;
@@ -84,10 +86,12 @@ namespace GenericSerial {
         }
 
 
+        [UsedImplicitly]
         public string Author {
             get { return "Vixen and VixenPlus Developers"; }
         }
 
+        [UsedImplicitly]
         public string Description {
             get { return "Generic serial output plugin"; }
         }

@@ -21,6 +21,7 @@ using VixenPlusCommon;
 //Implement remember selected cell
 //Finish Implementing Event when a colorpalette color changes (and the live view idea)
 //Move panels to thier own class
+using VixenPlusCommon.Annotations;
 
 namespace VixenPlus.Dialogs {
     public partial class VixenPlusRoadie : Form {
@@ -1466,6 +1467,7 @@ namespace VixenPlus.Dialogs {
 
 
         // Used in Standard Sequence to get all mapped plugins - move?
+        [UsedImplicitly]
         public IEnumerable<object> MappedPluginList {
             get {
                 return (from XmlNode node in _setupData.GetAllPluginData()

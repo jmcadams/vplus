@@ -5,9 +5,9 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyVersion("0.2.303.0928")]
+[assembly: AssemblyVersion("0.2.303.1202")]
 [assembly: CompilationRelaxations(8)]
-[assembly: AssemblyFileVersion("0.2.303.0928")]
+[assembly: AssemblyFileVersion("0.2.303.1202")]
 [assembly:
     Debuggable(
         DebuggableAttribute.DebuggingModes.DisableOptimizations | DebuggableAttribute.DebuggingModes.EnableEditAndContinue |

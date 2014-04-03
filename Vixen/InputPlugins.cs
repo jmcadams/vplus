@@ -10,9 +10,10 @@ using System.Xml;
 
 using VixenPlusCommon;
 
-// ReSharper disable once ClassNeverInstantiated.Global
 namespace VixenPlus {
+// ReSharper disable ClassNeverInstantiated.Global
     internal class InputPlugins : HardwarePlugins
+// ReSharper restore ClassNeverInstantiated.Global
     {
         private static IHardwarePlugin FindPlugin(string pluginName)
         {

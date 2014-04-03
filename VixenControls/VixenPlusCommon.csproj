@@ -19,6 +19,7 @@
     <OldToolsVersion>0.0</OldToolsVersion>
     <UpgradeBackupLocation />
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -33,7 +34,6 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>..\Build\Libraries\Vixen+\</OutputPath>
@@ -114,7 +114,6 @@
     <Compile Include="ColorControl\ColorSlider.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ColorControl\GdiMethods.cs" />
     <Compile Include="ColorControl\RgbaChannel.cs" />
     <Compile Include="ColorControl\RgbaColorSlider.cs">
       <SubType>Component</SubType>

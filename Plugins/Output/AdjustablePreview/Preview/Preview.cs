@@ -10,8 +10,10 @@ using AdjustablePreview.Properties;
 using VixenPlus;
 
 using VixenPlusCommon;
+using VixenPlusCommon.Annotations;
 
 namespace Preview {
+    [UsedImplicitly]
     public class Preview : IEventDrivenOutputPlugIn {
         private readonly List<Channel> _channels;
         private PreviewDialog _previewDialog;

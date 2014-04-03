@@ -156,8 +156,9 @@ namespace VixenEditor {
 
 
         // Not true since this is called via reflection.
-        // ReSharper disable once MemberCanBePrivate.Global
+// ReSharper disable MemberCanBePrivate.Global
         public StandardSequence() {
+// ReSharper restore MemberCanBePrivate.Global
             object obj2;
             _executionInterface = null;
             _systemInterface = null;

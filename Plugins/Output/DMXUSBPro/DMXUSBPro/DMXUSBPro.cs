@@ -1,6 +1,8 @@
 using VixenPlus;
 using VixenPlus.Dialogs;
 
+using VixenPlusCommon.Annotations;
+
 namespace DMXUSBPro
 {
     using System;
@@ -9,6 +11,7 @@ namespace DMXUSBPro
     using System.Windows.Forms;
     using System.Xml;
 
+    [UsedImplicitly]
     public class DmxusbPro : IEventDrivenOutputPlugIn
     {
         private SerialPort _serialPort;
@@ -76,6 +79,8 @@ namespace DMXUSBPro
             return Name;
         }
 
+
+        [UsedImplicitly]
         public string Author
         {
             get
@@ -84,6 +89,7 @@ namespace DMXUSBPro
             }
         }
 
+        [UsedImplicitly]
         public string Description
         {
             get

@@ -84,10 +84,6 @@ namespace VixenPlus {
             }
         }
 
-        public bool ExecutePlay(int contextHandle, bool logAudio) {
-            return ExecutePlay(contextHandle, 0, 0, logAudio);
-        }
-
 
         public bool ExecutePlay(int contextHandle, int millisecondStart, int millisecondCount) {
             return ExecutePlay(contextHandle, millisecondStart, millisecondCount, _preferences.GetBoolean("LogAudioManual"));
@@ -180,31 +176,6 @@ namespace VixenPlus {
             return 0f;
         }
 
-        public int GetObjectPosition(int contextHandle) {
-            ExecutionContext context;
-            if (!_registeredContexts.TryGetValue(contextHandle, out context)) {
-                return 0;
-            }
-            return context.SynchronousEngineInstance == null ? 0 : context.SynchronousEngineInstance.ObjectPosition;
-        }
-
-
-        public string LoadedProgram(int contextHandle) {
-            ExecutionContext context;
-            if (!_registeredContexts.TryGetValue(contextHandle, out context)) {
-                return string.Empty;
-            }
-            return context.SynchronousEngineInstance == null ? string.Empty : context.SynchronousEngineInstance.LoadedProgram;
-        }
-
-
-        public string LoadedSequence(int contextHandle) {
-            ExecutionContext context;
-            if (!_registeredContexts.TryGetValue(contextHandle, out context)) {
-                return string.Empty;
-            }
-            return context.SynchronousEngineInstance == null ? string.Empty : context.SynchronousEngineInstance.LoadedSequence;
-        }
 
         public void ReleaseContext(int contextHandle) {
             if (!_registeredContexts.ContainsKey(contextHandle)) {
@@ -388,15 +359,6 @@ namespace VixenPlus {
         }
 
 
-        public void SetSynchronousProgramChangeHandler(int contextHandle, ProgramChangeHandler programChangeHandler) {
-            ExecutionContext context;
-            if (_registeredContexts.TryGetValue(contextHandle, out context)) {
-                context.SynchronousProgramChangeHandler += programChangeHandler;
-            }
-        }
-
-
-    
         //TODO can probably be removed
         private static void AsyncInit(ExecutionContext context) {
             context.AsynchronousEngineInstance.Initialize(context.Object);

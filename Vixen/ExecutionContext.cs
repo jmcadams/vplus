@@ -34,17 +34,19 @@ namespace VixenPlus {
             }
         }
 
+// ReSharper disable ConvertToAutoProperty
         public Engine8 SynchronousEngineInstance
+// ReSharper restore ConvertToAutoProperty
         {
             get { return _synchronousEngineInstance; }
             set
             {
                 _synchronousEngineInstance = value;
-                if (value == null) {
-                    return;
-                }
-                _synchronousEngineInstance.ProgramEnd += SynchronousEngineProgramEndHandler;
-                _synchronousEngineInstance.SequenceChange += SynchronousEngineProgramChangeHandler;
+                //if (value == null) {
+                //    return;
+                //}
+                //_synchronousEngineInstance.ProgramEnd += SynchronousEngineProgramEndHandler;
+                //_synchronousEngineInstance.SequenceChange += SynchronousEngineProgramChangeHandler;
             }
         }
 
@@ -57,7 +59,7 @@ namespace VixenPlus {
         }
 
 
-        public event ProgramChangeHandler SynchronousProgramChangeHandler;
+        //public event ProgramChangeHandler SynchronousProgramChangeHandler;
 
         private void AsynchronousEngineProgramChangeHandler()
         {
@@ -92,20 +94,20 @@ namespace VixenPlus {
             SynchronousEngineInstance = null;
         }
 
-        private void SynchronousEngineProgramChangeHandler()
-        {
-            if (SynchronousProgramChangeHandler != null)
-            {
-                SynchronousProgramChangeHandler(ProgramChange.SequenceChange);
-            }
-        }
+        //private void SynchronousEngineProgramChangeHandler()
+        //{
+        //    if (SynchronousProgramChangeHandler != null)
+        //    {
+        //        SynchronousProgramChangeHandler(ProgramChange.SequenceChange);
+        //    }
+        //}
 
-        private void SynchronousEngineProgramEndHandler()
-        {
-            if (SynchronousProgramChangeHandler != null)
-            {
-                SynchronousProgramChangeHandler(ProgramChange.End);
-            }
-        }
+        //private void SynchronousEngineProgramEndHandler()
+        //{
+        //    if (SynchronousProgramChangeHandler != null)
+        //    {
+        //        SynchronousProgramChangeHandler(ProgramChange.End);
+        //    }
+        //}
     }
 }

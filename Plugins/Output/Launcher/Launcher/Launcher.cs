@@ -10,8 +10,10 @@ using System.Xml;
 using VixenPlus;
 
 using VixenPlusCommon;
+using VixenPlusCommon.Annotations;
 
 namespace Launcher {
+    [UsedImplicitly]
     public class Launcher : IEventDrivenOutputPlugIn {
         private XmlNode _setupNode;
         private readonly Dictionary<byte, string[]> _targets = new Dictionary<byte, string[]>();
@@ -99,10 +101,12 @@ namespace Launcher {
         }
 
 
+        [UsedImplicitly]
         public string Author {
             get { return "Vixen and VixenPlus Developers"; }
         }
 
+        [UsedImplicitly]
         public string Description {
             get { return "External program launcher"; }
         }

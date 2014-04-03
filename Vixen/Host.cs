@@ -73,9 +73,11 @@ namespace VixenPlus {
             get { return _musicPlayer; }
         }
 
+/*
         public static Preference2 Preferences {
             get { return Preference2; }
         }
+*/
 
         public static PlugInRouter Router { get; private set; }
 

@@ -196,12 +196,6 @@
     <Compile Include="Dialogs\EventAverageDialog.Designer.cs">
       <DependentUpon>EventAverageDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\ExecutingTimerControlDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\ExecutingTimerControlDialog.Designer.cs">
-      <DependentUpon>ExecutingTimerControlDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Dialogs\FirstRunPathDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -371,8 +365,6 @@
     <Compile Include="PlugInRouter.cs" />
     <Compile Include="Profile.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="ProgramChange.cs" />
-    <Compile Include="ProgramChangeHandler.cs" />
     <Compile Include="ProgressDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -399,8 +391,6 @@
       <DependentUpon>Splash.cs</DependentUpon>
     </Compile>
     <Compile Include="Timer.cs" />
-    <Compile Include="TimerContext.cs" />
-    <Compile Include="TimerExecutor.cs" />
     <Compile Include="Timers.cs" />
     <Compile Include="UIBase.cs">
       <SubType>Form</SubType>
@@ -455,9 +445,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\EventAverageDialog.resx">
       <DependentUpon>EventAverageDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\ExecutingTimerControlDialog.resx">
-      <DependentUpon>ExecutingTimerControlDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\FirstRunPathDialog.resx">
       <DependentUpon>FirstRunPathDialog.cs</DependentUpon>

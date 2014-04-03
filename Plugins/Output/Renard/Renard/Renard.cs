@@ -191,6 +191,7 @@ namespace Renard {
         }
 
 
+        [UsedImplicitly]
         public bool SupportsPreview() {
             return true;
         }

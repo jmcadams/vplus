@@ -9,6 +9,7 @@ using System.Xml;
 using VixenPlus.Properties;
 
 using VixenPlusCommon;
+using VixenPlusCommon.Annotations;
 
 namespace VixenPlus {
     public class SequenceProgram : IScheduledObject {
@@ -16,7 +17,8 @@ namespace VixenPlus {
         private byte[][] _mask;
         private Profile _profile;
 
-
+        //TODO: Check that this is still being called.
+        [UsedImplicitly]
         public SequenceProgram(string fileName) {
             Loop = false;
             _profile = null;

@@ -117,21 +117,23 @@ namespace VixenPlus {
             get { return (StartTime + TimerLength); }
         }
 
-        public bool IsExecuting { get; set; }
+        public bool IsExecuting { get; private set; }
 
-        public DateTime LastExecution { get; set; }
+        public DateTime LastExecution { get; private set; }
 
-        public DateTime NotValidUntil { get; set; }
+        public DateTime NotValidUntil { get; private set; }
 
         public TimeSpan ObjectLength
         {
             get { return _objectLength; }
         }
 
+/*
         public ObjectType ObjectType
         {
             get { return _objectType; }
         }
+*/
 
         public string ProgramFileName
         {

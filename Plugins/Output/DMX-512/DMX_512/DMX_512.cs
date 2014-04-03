@@ -1,4 +1,5 @@
 using VixenPlus;
+using VixenPlus.Annotations;
 
 namespace DMX_512
 {
@@ -6,6 +7,7 @@ namespace DMX_512
     using System.Xml;
     using IDMX;
 
+    [UsedImplicitly]
     public class Dmx512 : IEventDrivenOutputPlugIn
     {
         private readonly Idmx _dmxInterface;
@@ -50,6 +52,8 @@ namespace DMX_512
             return Name;
         }
 
+
+        [UsedImplicitly]
         public string Author
         {
             get
@@ -58,6 +62,7 @@ namespace DMX_512
             }
         }
 
+        [UsedImplicitly]
         public string Description
         {
             get
