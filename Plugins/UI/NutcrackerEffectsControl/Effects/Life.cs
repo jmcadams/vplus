@@ -4,8 +4,9 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
+using VixenPlus.Annotations;
+
 using VixenPlusCommon;
-using VixenPlusCommon.Annotations;
 
 namespace NutcrackerEffects.Effects {
     [UsedImplicitly]

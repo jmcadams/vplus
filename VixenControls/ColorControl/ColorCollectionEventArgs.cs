@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-using VixenPlusCommon.Properties;
+using VixenPlusCommon.Annotations;
 
 namespace VixenPlusCommon {
     // Cyotek Color Picker controls library
@@ -42,9 +42,7 @@ namespace VixenPlusCommon {
         /// </summary>
         /// <value>The color that raised the event.</value>
         // ReSharper disable once MemberCanBePrivate.Global
-        public Color Color {
-            [UsedImplicitly]
-            get;
+        public Color Color { [UsedImplicitly] get;
             protected set;
         }
 
@@ -53,9 +51,7 @@ namespace VixenPlusCommon {
         /// </summary>
         /// <value>The color index that raised the event.</value>
         // ReSharper disable once MemberCanBePrivate.Global
-        public int Index {
-            [UsedImplicitly]
-            get;
+        public int Index { [UsedImplicitly] get;
             protected set;
         }
 

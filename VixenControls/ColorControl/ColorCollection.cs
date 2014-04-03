@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 
-using VixenPlusCommon.Properties;
+using VixenPlusCommon.Annotations;
 
 namespace VixenPlusCommon {
     // Cyotek Color Picker controls library

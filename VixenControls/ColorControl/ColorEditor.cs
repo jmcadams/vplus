@@ -18,7 +18,7 @@ namespace VixenPlusCommon {
     /// </summary>
     [DefaultProperty("Color")]
     [DefaultEvent("ColorChanged")]
-    public partial class ColorEditor : UserControl, IColorEditor {
+    public partial class ColorEditor : UserControl {
         #region Instance Fields
 
         private Color _color = Color.Black;

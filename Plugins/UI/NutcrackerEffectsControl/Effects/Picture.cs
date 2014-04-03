@@ -7,8 +7,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
+using VixenPlus.Annotations;
+
 using VixenPlusCommon;
-using VixenPlusCommon.Annotations;
 
 namespace NutcrackerEffects.Effects {
     [UsedImplicitly]

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace VixenPlusCommon.Properties {
+namespace VixenPlusCommon.Annotations {
     using System;
     
     

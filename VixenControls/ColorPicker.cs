@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
-using VixenPlusCommon.Properties;
+using VixenPlusCommon.Annotations;
 
 namespace VixenPlusCommon {
     [DefaultProperty("Color")]

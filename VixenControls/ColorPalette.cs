@@ -6,7 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
-using VixenPlusCommon.Properties;
+using VixenPlusCommon.Annotations;
 
 namespace VixenPlusCommon {
     [DefaultEvent("ControlChanged")]
@@ -21,7 +21,7 @@ namespace VixenPlusCommon {
         }
 
 
-        [Annotations.UsedImplicitly]
+        [UsedImplicitly]
         public event EventHandler ControlChanged;
 
         private void OnPaletteChanged() {

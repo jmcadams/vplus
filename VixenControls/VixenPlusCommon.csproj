@@ -98,6 +98,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Annotations\Annotations.cs" />
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -113,7 +114,6 @@
     <Compile Include="ColorControl\ColorSlider.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ColorControl\IColorEditor.cs" />
     <Compile Include="ColorControl\GdiMethods.cs" />
     <Compile Include="ColorControl\RgbaChannel.cs" />
     <Compile Include="ColorControl\RgbaColorSlider.cs">
@@ -144,8 +144,6 @@
     </Compile>
     <Compile Include="Paths.cs" />
     <Compile Include="Preference2.cs" />
-    <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Properties\Annotations1.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

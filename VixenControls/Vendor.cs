@@ -1,4 +1,4 @@
-using VixenPlusCommon.Properties;
+using VixenPlusCommon.Annotations;
 
 namespace VixenPlusCommon {
     public static class Vendor {

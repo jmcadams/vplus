@@ -6,7 +6,7 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Windows.Forms;
 
-using VixenPlusCommon.Properties;
+using VixenPlusCommon.Annotations;
 
 namespace VixenPlusCommon {
     // Cyotek Color Picker controls library
@@ -503,8 +503,8 @@ namespace VixenPlusCommon {
         [Category("Appearance")]
         [DefaultValue(typeof (Color), "Black")]
         // ReSharper disable once VirtualMemberNeverOverriden.Global
-        public virtual Color NubColor {
-            // ReSharper disable once MemberCanBeProtected.Global
+        public Color NubColor {
+            // ReSharper disable once MemberCanBePrivate.Global
             get { return _nubColor; }
             set {
                 if (NubColor == value) {

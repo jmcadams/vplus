@@ -5,7 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
 
-using VixenPlusCommon.Properties;
+using VixenPlusCommon.Annotations;
 
 namespace VixenPlusCommon {
     // Cyotek Color Picker controls library
@@ -46,13 +46,15 @@ namespace VixenPlusCommon {
         ///     Occurs when the Channel property value changes
         /// </summary>
         [Category("Property Changed")]
-        public event EventHandler ChannelChanged;
+        // ReSharper disable once EventNeverSubscribedTo.Global
+        public event EventHandler ChannelChanged; // todo Keep or remove>
 
         /// <summary>
         ///     Occurs when the Color property value changes
         /// </summary>
         [Category("Property Changed")]
-        public event EventHandler ColorChanged;
+        // ReSharper disable once EventNeverSubscribedTo.Global
+        public event EventHandler ColorChanged; // todo Keep or remove?
 
         #endregion
 
@@ -133,26 +135,29 @@ namespace VixenPlusCommon {
         [Category("Appearance")]
         [DefaultValue(typeof (RgbaChannel), "Red")]
         public RgbaChannel Channel {
+// ReSharper disable once MemberCanBePrivate.Global
             get { return _channel; }
             set {
-                if (Channel != value) {
-                    _channel = value;
-
-                    OnChannelChanged(EventArgs.Empty);
+                if (Channel == value) {
+                    return;
                 }
+
+                _channel = value;
+                OnChannelChanged(EventArgs.Empty);
             }
         }
 
         [Category("Appearance")]
         [DefaultValue(typeof (Color), "Black")]
         public Color Color {
-            get { return _color; }
+            private get { return _color; }
             set {
-                if (Color != value) {
-                    _color = value;
-
-                    OnColorChanged(EventArgs.Empty);
+                if (Color == value) {
+                    return;
                 }
+
+                _color = value;
+                OnColorChanged(EventArgs.Empty);
             }
         }
 
@@ -163,10 +168,12 @@ namespace VixenPlusCommon {
         private void CreateScale() {
             CustomColors =
                 new ColorCollection(
-                    Enumerable.Range(0, 254).Select(
-                        i =>
-                            Color.FromArgb(Channel == RgbaChannel.Alpha ? i : Color.A, Channel == RgbaChannel.Red ? i : Color.R,
-                                Channel == RgbaChannel.Green ? i : Color.G, Channel == RgbaChannel.Blue ? i : Color.B)));
+                    Enumerable.Range(0, 254)
+                        .Select(
+                            i =>
+                                Color.FromArgb(Channel == RgbaChannel.Alpha ? i : Color.A,
+                                    Channel == RgbaChannel.Red ? i : Color.R, Channel == RgbaChannel.Green ? i : Color.G,
+                                    Channel == RgbaChannel.Blue ? i : Color.B)));
         }
 
 

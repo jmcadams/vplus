@@ -1,15 +1,13 @@
 ﻿using System;
-
 #pragma warning disable 1591
 // ReSharper disable UnusedMember.Global
-// ReSharper disable UnusedParameter.Local
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 // ReSharper disable IntroduceOptionalParameters.Global
 // ReSharper disable MemberCanBeProtected.Global
 // ReSharper disable InconsistentNaming
 
-namespace VixenPlus.Annotations
+namespace VixenPlusCommon.Annotations
 {
   /// <summary>
   /// Indicates that the value of the marked element could be <c>null</c> sometimes,
@@ -405,42 +403,6 @@ namespace VixenPlus.Annotations
 
   // ASP.NET MVC attributes
 
-  [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
-  public sealed class AspMvcAreaMasterLocationFormatAttribute : Attribute
-  {
-    public AspMvcAreaMasterLocationFormatAttribute(string format) { }
-  }
-
-  [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
-  public sealed class AspMvcAreaPartialViewLocationFormatAttribute : Attribute
-  {
-    public AspMvcAreaPartialViewLocationFormatAttribute(string format) { }
-  }
-
-  [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
-  public sealed class AspMvcAreaViewLocationFormatAttribute : Attribute
-  {
-    public AspMvcAreaViewLocationFormatAttribute(string format) { }
-  }
-
-  [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
-  public sealed class AspMvcMasterLocationFormatAttribute : Attribute
-  {
-    public AspMvcMasterLocationFormatAttribute(string format) { }
-  }
-
-  [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
-  public sealed class AspMvcPartialViewLocationFormatAttribute : Attribute
-  {
-    public AspMvcPartialViewLocationFormatAttribute(string format) { }
-  }
-
-  [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
-  public sealed class AspMvcViewLocationFormatAttribute : Attribute
-  {
-    public AspMvcViewLocationFormatAttribute(string format) { }
-  }
-  
   /// <summary>
   /// ASP.NET MVC attribute. If applied to a parameter, indicates that the parameter
   /// is an MVC action. If applied to a method, the MVC action name is calculated
