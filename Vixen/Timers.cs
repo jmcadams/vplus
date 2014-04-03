@@ -9,6 +9,7 @@ using VixenPlus.Annotations;
 using VixenPlusCommon;
 
 namespace VixenPlus {
+    //todo: if we eliminate the diagnotics we can lose the timers as well.
     internal class Timers : IQueryable {
         private Timer[] _timers = new Timer[0];
 
