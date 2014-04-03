@@ -7,14 +7,14 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
-using NutcrackerEffectsControl.Effects;
+using NutcrackerEffects.Effects;
 
 using VixenPlus;
 using VixenPlus.Dialogs;
 
 using VixenPlusCommon;
 
-namespace NutcrackerEffectsControl {
+namespace NutcrackerEffects {
     public partial class NutcrackerControlDialog : Form {
 
         #region Class Members and Accessors

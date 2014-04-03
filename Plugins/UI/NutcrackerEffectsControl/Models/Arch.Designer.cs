@@ -1,4 +1,4 @@
-﻿namespace NutcrackerEffectsControl.Models {
+﻿namespace NutcrackerEffects.Models {
     partial class Arch {
         /// <summary>
         /// Required designer variable.

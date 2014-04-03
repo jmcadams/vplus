@@ -1,4 +1,4 @@
-namespace NutcrackerEffectsControl.Effects {
+namespace NutcrackerEffects.Effects {
     partial class Twinkle {
         /// <summary>
         /// Required designer variable.

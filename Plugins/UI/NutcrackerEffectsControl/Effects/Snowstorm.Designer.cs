@@ -1,4 +1,4 @@
-namespace NutcrackerEffectsControl.Effects {
+namespace NutcrackerEffects.Effects {
     partial class Snowstorm {
         /// <summary>
         /// Required designer variable.

@@ -1,4 +1,4 @@
-﻿namespace NutcrackerEffectsControl.Models {
+﻿namespace NutcrackerEffects.Models {
     public interface INutcrackerModel {
         string EffectName { get; }
         string Notes { get; }

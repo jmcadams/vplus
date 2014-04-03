@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>NutcrackerEffectsControl</AssemblyName>
+    <AssemblyName>NutcrackerEffects</AssemblyName>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -10,7 +10,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <ProjectGuid>{C792440D-580E-4313-A48F-F2EEE85BE98C}</ProjectGuid>
-    <RootNamespace>NutcrackerEffectsControl</RootNamespace>
+    <RootNamespace>NutcrackerEffects</RootNamespace>
     <SchemaVersion>2.0</SchemaVersion>
     <TargetFrameworkProfile />
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
@@ -212,11 +212,11 @@
     <Compile Include="NutcrackerControlDialog.Designer.cs">
       <DependentUpon>NutcrackerControlDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="NutcrackerEffectControl.cs">
+    <Compile Include="NutcrackerEffect.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="NutcrackerEffectControl.Designer.cs">
-      <DependentUpon>NutcrackerEffectControl.cs</DependentUpon>
+    <Compile Include="NutcrackerEffect.Designer.cs">
+      <DependentUpon>NutcrackerEffect.cs</DependentUpon>
     </Compile>
     <Compile Include="NutcrackerModelDialog.cs">
       <SubType>Form</SubType>
@@ -298,8 +298,8 @@
     <EmbeddedResource Include="NutcrackerControlDialog.resx">
       <DependentUpon>NutcrackerControlDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NutcrackerEffectControl.resx">
-      <DependentUpon>NutcrackerEffectControl.cs</DependentUpon>
+    <EmbeddedResource Include="NutcrackerEffect.resx">
+      <DependentUpon>NutcrackerEffect.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="NutcrackerModelDialog.resx">

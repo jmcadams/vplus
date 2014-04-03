@@ -1,4 +1,4 @@
-﻿namespace NutcrackerEffectsControl {
+﻿namespace NutcrackerEffects {
     partial class NutcrackerPaletteManager {
         /// <summary>
         /// Required designer variable.

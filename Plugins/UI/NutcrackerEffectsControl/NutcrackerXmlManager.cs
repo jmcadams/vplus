@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 using VixenPlusCommon;
 
-namespace NutcrackerEffectsControl {
+namespace NutcrackerEffects {
     public class NutcrackerXmlManager {
 
         private readonly XElement _doc;

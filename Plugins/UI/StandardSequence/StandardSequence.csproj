@@ -341,9 +341,9 @@
       <Name>VixenPlus</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\NutcrackerEffectsControl\NutcrackerEffectsControl.csproj">
+    <ProjectReference Include="..\NutcrackerEffectsControl\NutcrackerEffects.csproj">
       <Project>{C792440D-580E-4313-A48F-F2EEE85BE98C}</Project>
-      <Name>NutcrackerEffectsControl</Name>
+      <Name>NutcrackerEffects</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

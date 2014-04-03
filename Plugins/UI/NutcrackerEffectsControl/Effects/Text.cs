@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using VixenPlusCommon;
 using VixenPlusCommon.Annotations;
 
-namespace NutcrackerEffectsControl.Effects {
+namespace NutcrackerEffects.Effects {
     [UsedImplicitly]
     public partial class Text : UserControl, INutcrackerEffect {
 

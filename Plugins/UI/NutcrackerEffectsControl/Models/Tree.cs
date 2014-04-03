@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using VixenPlus;
 using VixenPlus.Annotations;
 
-namespace NutcrackerEffectsControl.Models {
+namespace NutcrackerEffects.Models {
     [UsedImplicitly]
     public partial class Tree : UserControl, INutcrackerModel {
 

@@ -15,7 +15,7 @@ using System.Xml;
 
 using FMOD;
 
-using NutcrackerEffectsControl;
+using NutcrackerEffects;
 
 using VixenPlus;
 using VixenPlus.Dialogs;

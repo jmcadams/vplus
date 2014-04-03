@@ -4,13 +4,13 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
-using NutcrackerEffectsControl.Models;
+using NutcrackerEffects.Models;
 
 using VixenPlus;
 
 using VixenPlusCommon;
 
-namespace NutcrackerEffectsControl {
+namespace NutcrackerEffects {
     public partial class NutcrackerModelDialog : Form {
         private readonly EventSequence _sequence;
         private int _lastGroupSelected;

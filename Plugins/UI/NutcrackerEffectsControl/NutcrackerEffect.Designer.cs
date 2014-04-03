@@ -1,4 +1,4 @@
-namespace NutcrackerEffectsControl
+namespace NutcrackerEffects
 {
     sealed partial class NutcrackerEffectControl
     {

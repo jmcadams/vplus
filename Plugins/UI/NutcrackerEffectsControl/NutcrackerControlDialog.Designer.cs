@@ -1,6 +1,6 @@
 using System.Windows.Forms;
 
-namespace NutcrackerEffectsControl
+namespace NutcrackerEffects
 {
     partial class NutcrackerControlDialog
     {
@@ -78,8 +78,8 @@ namespace NutcrackerEffectsControl
             this.btnCancel = new System.Windows.Forms.Button();
             this.timerRender = new System.Windows.Forms.Timer(this.components);
             this.cbEffectsPresets = new System.Windows.Forms.ComboBox();
-            this.nutcrackerEffectControl1 = new NutcrackerEffectsControl.NutcrackerEffectControl();
-            this.nutcrackerEffectControl2 = new NutcrackerEffectsControl.NutcrackerEffectControl();
+            this.nutcrackerEffectControl1 = new NutcrackerEffectControl();
+            this.nutcrackerEffectControl2 = new NutcrackerEffectControl();
             this.lblPresets = new System.Windows.Forms.Label();
             this.gbEffect2.SuspendLayout();
             this.gbEffect1.SuspendLayout();
@@ -634,7 +634,7 @@ namespace NutcrackerEffectsControl
             this.nutcrackerEffectControl1.Size = new System.Drawing.Size(371, 225);
             this.nutcrackerEffectControl1.Speed = 1;
             this.nutcrackerEffectControl1.TabIndex = 0;
-            this.nutcrackerEffectControl1.ControlChanged += new NutcrackerEffectsControl.NutcrackerEffectControl.ControlChangedHandler(this.ControlChanged1);
+            this.nutcrackerEffectControl1.ControlChanged += new NutcrackerEffectControl.ControlChangedHandler(this.ControlChanged1);
             // 
             // nutcrackerEffectControl2
             // 
@@ -643,7 +643,7 @@ namespace NutcrackerEffectsControl
             this.nutcrackerEffectControl2.Size = new System.Drawing.Size(371, 225);
             this.nutcrackerEffectControl2.Speed = 1;
             this.nutcrackerEffectControl2.TabIndex = 0;
-            this.nutcrackerEffectControl2.ControlChanged += new NutcrackerEffectsControl.NutcrackerEffectControl.ControlChangedHandler(this.ControlChanged2);
+            this.nutcrackerEffectControl2.ControlChanged += new NutcrackerEffectControl.ControlChangedHandler(this.ControlChanged2);
             // 
             // lblPresets
             // 

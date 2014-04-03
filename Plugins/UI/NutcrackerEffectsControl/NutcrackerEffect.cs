@@ -6,11 +6,11 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
-using NutcrackerEffectsControl.Effects;
+using NutcrackerEffects.Effects;
 
 using VixenPlusCommon;
 
-namespace NutcrackerEffectsControl {
+namespace NutcrackerEffects {
     public sealed partial class NutcrackerEffectControl : UserControl {
         private readonly Dictionary<string, INutcrackerEffect> _effectCache = new Dictionary<string, INutcrackerEffect>();
 

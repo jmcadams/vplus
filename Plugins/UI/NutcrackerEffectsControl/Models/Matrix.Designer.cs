@@ -1,4 +1,4 @@
-﻿namespace NutcrackerEffectsControl.Models {
+﻿namespace NutcrackerEffects.Models {
     partial class Matrix {
         /// <summary>
         /// Required designer variable.

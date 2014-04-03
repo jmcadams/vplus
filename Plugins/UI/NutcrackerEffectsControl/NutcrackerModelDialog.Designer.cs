@@ -1,4 +1,4 @@
-﻿namespace NutcrackerEffectsControl {
+﻿namespace NutcrackerEffects {
     partial class NutcrackerModelDialog {
         /// <summary>
         /// Required designer variable.
