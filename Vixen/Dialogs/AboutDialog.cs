@@ -4,10 +4,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-
-
 using VixenPlus.Properties;
-
 using VixenPlusCommon;
 
 namespace VixenPlus.Dialogs {
@@ -32,7 +29,7 @@ namespace VixenPlus.Dialogs {
 
             lblName.Text = Vendor.ProductName;
             lblDescription.Text = Vendor.ProductDescription;
-            lblVersion.Text = string.Format(Resources.FormattedVersion, Utils.GetVersion());
+            lblVersion.Text = string.Format(Resources.FormattedVersion, Utils.GetVersion(GetType()));
             llblURL.Text = Vendor.ProductURL;
         }
 

@@ -96,12 +96,12 @@ namespace VixenPlus.Dialogs {
         /// If an error occurs or the update dialog can't connect, a value indicating an error is returned 
         /// </summary>
         /// <returns>string with default or latest version value</returns>
-        private static string GetAvailableVersion() {
+        private string GetAvailableVersion() {
             Log("GetAvailableVersion start");
             var result = ErrorIndicatorVersion;
             using (var client = new WebClient()) {
                 try {
-                    var response = client.DownloadData(Vendor.UpdateURL + Vendor.UpdateFile + "?ver=" + Utils.GetVersion());
+                    var response = client.DownloadData(Vendor.UpdateURL + Vendor.UpdateFile + "?ver=" + Utils.GetVersion(GetType()));
                     var xml = XDocument.Parse(Encoding.ASCII.GetString(response));
                     var rev = (from r in xml.Descendants("version") where r.Attribute("format") != null select r.Attribute("rev")).SingleOrDefault();
                     if (null != rev) {
@@ -144,6 +144,7 @@ namespace VixenPlus.Dialogs {
         private void CheckForUpdate() {
             Log("Check for update start");
             _version = GetAvailableVersion();
+            var thisVersion = Utils.GetVersion(GetType());
             if (_version != ErrorIndicatorVersion) {
                 _preferences.SetString(LastChecked, DateTime.Now.ToString(CultureInfo.InvariantCulture));
                 _preferences.SaveSettings();
@@ -152,21 +153,21 @@ namespace VixenPlus.Dialogs {
                     DialogResult = DialogResult.No;
                     return;
                 }
-                if (String.Compare(_version, Utils.GetVersion(), StringComparison.Ordinal) < 0) {
-                    Log(string.Format("current: {1}, new: {0}", _version, Utils.GetVersion()));
+                if (String.Compare(_version, thisVersion, StringComparison.Ordinal) < 0) {
+                    Log(string.Format("current: {1}, new: {0}", _version, thisVersion));
                     SetupDialogShowHide(true);
                     pbDownload.Visible = false;
                     Text = "New update available";
                     lblPrompt.Text =
                         string.Format(
                             "Version {0} of {1} is available would you like to download and install this version?\n\nYou are running version {2}",
-                            _version, Vendor.ProductName, Utils.GetVersion());
+                            _version, Vendor.ProductName, thisVersion);
                 }
                 else if (!_isInStartup) {
                     Log("Up to date NOT in startup");
                     SetupDialogForOkay();
                     Text = "You're up to date";
-                    lblPrompt.Text = string.Format("You have version {0}, which is the latest version of {1} ", Utils.GetVersion(), Vendor.ProductName);
+                    lblPrompt.Text = string.Format("You have version {0}, which is the latest version of {1} ", thisVersion, Vendor.ProductName);
                 }
                 else {
                     Log("Up to date in startup");

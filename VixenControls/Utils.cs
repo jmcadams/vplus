@@ -41,8 +41,9 @@ namespace VixenPlusCommon {
         }
 
 
-        public static string GetVersion() {
-            return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        public static string GetVersion(Type t) {
+            return Assembly.GetAssembly(t).GetName().Version.ToString();
+            //return Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
         public static Color GetForeColor(this Color backgroundColor) {
