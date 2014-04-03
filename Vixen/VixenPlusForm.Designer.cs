@@ -11,7 +11,6 @@ namespace VixenPlus {
         private ToolStripMenuItem cascadeToolStripMenuItem;
         private ToolStripMenuItem channelDimmingCurvesToolStripMenuItem;
         private ToolStripMenuItem checkForUpdatesToolStripMenuItem;
-        private ToolStripMenuItem diagnosticsToolStripMenuItem;
         private HelpProvider helpProvider;
         private ToolStripMenuItem helpToolStripMenuItem;
         private MenuStrip menuStrip1;
@@ -64,7 +63,6 @@ namespace VixenPlus {
             this.utilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setSoundDeviceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.musicPlayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.diagnosticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -220,7 +218,6 @@ namespace VixenPlus {
             this.utilityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.setSoundDeviceToolStripMenuItem,
             this.musicPlayerToolStripMenuItem,
-            this.diagnosticsToolStripMenuItem,
             this.toolStripMenuItem1,
             this.preferencesToolStripMenuItem});
             this.utilityToolStripMenuItem.Name = "utilityToolStripMenuItem";
@@ -240,13 +237,6 @@ namespace VixenPlus {
             this.musicPlayerToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
             this.musicPlayerToolStripMenuItem.Text = "Music player";
             this.musicPlayerToolStripMenuItem.Click += new System.EventHandler(this.musicPlayerToolStripMenuItem_Click);
-            // 
-            // diagnosticsToolStripMenuItem
-            // 
-            this.diagnosticsToolStripMenuItem.Name = "diagnosticsToolStripMenuItem";
-            this.diagnosticsToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
-            this.diagnosticsToolStripMenuItem.Text = "Diagnostics";
-            this.diagnosticsToolStripMenuItem.Click += new System.EventHandler(this.diagnosticsToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 

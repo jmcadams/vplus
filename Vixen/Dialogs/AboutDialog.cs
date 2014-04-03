@@ -9,7 +9,7 @@ using VixenPlusCommon;
 
 namespace VixenPlus.Dialogs {
     internal partial class AboutDialog : Form {
-        private readonly System.Windows.Forms.Timer _timer = new System.Windows.Forms.Timer {Interval = 25};
+        private readonly Timer _timer = new Timer {Interval = 25};
         private int _creditsTop;
         private const int CreditsMargin = 5;
         private const int CreditScollSize = 1;

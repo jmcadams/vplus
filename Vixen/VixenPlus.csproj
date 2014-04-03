@@ -178,23 +178,11 @@
     <Compile Include="Dialogs\CurveLibraryRecordEditDialog.Designer.cs">
       <DependentUpon>CurveLibraryRecordEditDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\DiagnosticsDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\DiagnosticsDialog.Designer.cs">
-      <DependentUpon>DiagnosticsDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Dialogs\DimmingCurveDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dialogs\DimmingCurveDialog.Designer.cs">
       <DependentUpon>DimmingCurveDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\EventAverageDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\EventAverageDialog.Designer.cs">
-      <DependentUpon>EventAverageDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\FirstRunPathDialog.cs">
       <SubType>Form</SubType>
@@ -352,7 +340,6 @@
     <Compile Include="MusicPlayer.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="NutcrackerNodes.cs" />
-    <Compile Include="ObjectType.cs" />
     <Compile Include="OnEngineError.cs" />
     <Compile Include="OutputPlugins.cs" />
     <Compile Include="OutputPlugInUIBase.cs">
@@ -376,7 +363,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="RecurrenceType.cs" />
     <Compile Include="RouterContext.cs" />
     <Compile Include="Routine.cs" />
     <Compile Include="SequenceExtensions.cs" />
@@ -390,8 +376,6 @@
     <Compile Include="Splash.Designer.cs">
       <DependentUpon>Splash.cs</DependentUpon>
     </Compile>
-    <Compile Include="Timer.cs" />
-    <Compile Include="Timers.cs" />
     <Compile Include="UIBase.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -437,14 +421,8 @@
     <EmbeddedResource Include="Dialogs\CurveLibraryRecordEditDialog.resx">
       <DependentUpon>CurveLibraryRecordEditDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\DiagnosticsDialog.resx">
-      <DependentUpon>DiagnosticsDialog.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\DimmingCurveDialog.resx">
       <DependentUpon>DimmingCurveDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\EventAverageDialog.resx">
-      <DependentUpon>EventAverageDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\FirstRunPathDialog.resx">
       <DependentUpon>FirstRunPathDialog.cs</DependentUpon>

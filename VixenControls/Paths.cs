@@ -114,10 +114,6 @@ namespace VixenPlusCommon {
             }
         }
 
-        public static string TimerTraceFilePath {
-            get { return Path.Combine(DataPath, "timers.trace"); }
-        }
-
         public static string UIPluginPath {
             get { return Path.Combine(PluginBasePath, "UI"); }
         }

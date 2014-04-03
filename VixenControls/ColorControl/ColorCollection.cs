@@ -102,8 +102,9 @@ namespace VixenPlusCommon {
 
         /// <summary>Adds the elements of the specified collection to the end of the <see cref="ColorCollection" />.</summary>
         /// <param name="colors">The collection whose elements should be added to the end of the <see cref="ColorCollection" />.</param>
-        // ReSharper disable once MemberCanBePrivate.Global
+// ReSharper disable MemberCanBePrivate.Global
         public void AddRange(IEnumerable<Color> colors) {
+// ReSharper restore MemberCanBePrivate.Global
             foreach (var color in colors) {
                 Add(color);
             }

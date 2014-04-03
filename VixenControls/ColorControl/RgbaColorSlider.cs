@@ -135,8 +135,9 @@ namespace VixenPlusCommon {
         [Category("Appearance")]
         [DefaultValue(typeof (RgbaChannel), "Red")]
         public RgbaChannel Channel {
-// ReSharper disable once MemberCanBePrivate.Global
+// ReSharper disable MemberCanBePrivate.Global
             get { return _channel; }
+// ReSharper restore MemberCanBePrivate.Global
             set {
                 if (Channel == value) {
                     return;

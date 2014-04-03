@@ -41,8 +41,9 @@ namespace VixenPlusCommon {
         ///     Gets the color that raised the event.
         /// </summary>
         /// <value>The color that raised the event.</value>
-        // ReSharper disable once MemberCanBePrivate.Global
+// ReSharper disable MemberCanBePrivate.Global
         public Color Color { [UsedImplicitly] get;
+// ReSharper restore MemberCanBePrivate.Global
             protected set;
         }
 
@@ -50,8 +51,9 @@ namespace VixenPlusCommon {
         ///     Gets the color index that raised the event.
         /// </summary>
         /// <value>The color index that raised the event.</value>
-        // ReSharper disable once MemberCanBePrivate.Global
+// ReSharper disable MemberCanBePrivate.Global
         public int Index { [UsedImplicitly] get;
+// ReSharper restore MemberCanBePrivate.Global
             protected set;
         }
 

@@ -35,9 +35,6 @@ namespace VixenPlus {
 
         private readonly Preference2 _preferences;
 
-        private readonly Timers _timers;
-
-
         public VixenPlusForm(IEnumerable<string> args) {
             var startupArgs = args as IList<string> ?? args.ToList();
             SetDataPath();
@@ -67,7 +64,6 @@ namespace VixenPlus {
                 Icon = Resources.VixenPlus;
                 SetVendorData();
                 _registeredFileTypes = new Dictionary<string, IUIPlugIn>();
-                var timersPath = Path.Combine(Paths.DataPath, "timers");
                 _preferences.PreferenceChange += PreferencesPreferenceChange;
                 _host = new Host(this);
                 //_loadables = new Dictionary<string, List<LoadedObject>>();
@@ -87,10 +83,6 @@ namespace VixenPlus {
                 }
                 finally {
                     Cursor = Cursors.Default;
-                }
-                _timers = new Timers();
-                if (File.Exists(timersPath)) {
-                    _timers.LoadFromXml(Xml.LoadDocument(timersPath));
                 }
                 if (_preferences.GetBoolean("EnableBackgroundSequence")) {
                     _host.BackgroundSequenceName = _preferences.GetString("BackgroundSequence");
@@ -316,11 +308,6 @@ namespace VixenPlus {
             if (CheckForUpdates(Preference2.GetScreen(_preferences.GetString("PrimaryDisplay")), false)) {
                 Close();
             }
-        }
-
-
-        private void diagnosticsToolStripMenuItem_Click(object sender, EventArgs e) {
-            new DiagnosticsDialog(_timers).ShowDialog();
         }
 
 

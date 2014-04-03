@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Timers;
 using System.Windows.Forms;
@@ -107,30 +106,6 @@ namespace VixenPlus {
         }
 
 
-        public static void DumpTimer(StreamWriter writer, Timer timer) {
-            writer.WriteLine("[Timer for {0}]", Path.GetFileName(timer.ProgramFileName));
-            writer.WriteLine("Executing? " + timer.IsExecuting);
-            writer.WriteLine("Last execution: " + timer.LastExecution.ToString(CultureInfo.InvariantCulture));
-            writer.WriteLine("Not valid until: " + timer.NotValidUntil.ToString(CultureInfo.InvariantCulture));
-            writer.WriteLine("Object length: " + timer.ObjectLength);
-            writer.WriteLine("Recurrence: {0} ({1})", timer.Recurrence, timer.RecurrenceData);
-            writer.WriteLine("Recurrence start: " + timer.RecurrenceStart.ToString(CultureInfo.InvariantCulture));
-            writer.WriteLine("Recurrence start date/time: " + timer.RecurrenceStartDateTime.ToString(CultureInfo.InvariantCulture));
-            writer.WriteLine("Recurrence span: " + timer.RecurrenceSpan);
-            writer.WriteLine("Recurrence end: " + timer.RecurrenceEnd.ToString(CultureInfo.InvariantCulture));
-            writer.WriteLine("Recurrence end date/time: " + timer.RecurrenceEndDateTime.ToString(CultureInfo.InvariantCulture));
-            writer.WriteLine("Repeat interval: " + timer.RepeatInterval.ToString(CultureInfo.InvariantCulture));
-            writer.WriteLine("Start date: " + timer.StartDate.ToString(CultureInfo.InvariantCulture));
-            writer.WriteLine("Start time: " + timer.StartTime);
-            writer.WriteLine("Start date/time: " + timer.StartDateTime.ToString(CultureInfo.InvariantCulture));
-            writer.WriteLine("Timer length: " + timer.TimerLength);
-            writer.WriteLine("End date: " + timer.EndDate.ToString(CultureInfo.InvariantCulture));
-            writer.WriteLine("End time: " + timer.EndTime);
-            writer.WriteLine("End date/time: " + timer.EndDateTime.ToString(CultureInfo.InvariantCulture));
-            writer.WriteLine();
-        }
-
-
         private void ExecuteBackgroundSequence() {
             if ((((_executionInterface != null) && (_backgroundExecutionContextHandle != 0)) && (_backgroundSequence != null)) &&
                 !_executionInterface.ExecutePlay(_backgroundExecutionContextHandle, 0, 0, Preference2.GetBoolean("LogAudioScheduled"))) {
@@ -196,11 +171,6 @@ namespace VixenPlus {
         }
 
 
-        public static void LogTo(string filePath, string message) {
-            File.AppendAllText(filePath, message + @"\n");
-        }
-
-
         private void BackgroundMusicDelayTimerElapsed(object sender, ElapsedEventArgs e) {
             _backgroundMusicDelayTimer.Enabled = false;
             _hostForm.BeginInvoke(new MethodInvoker(ShowBackgroundMusicThumbSucker));
@@ -217,18 +187,6 @@ namespace VixenPlus {
 
         private void MusicPlayerSongChange(string songName) {
             _backgroundMusicLabel.Text = songName;
-        }
-
-
-        public static void ResetDebugValue(string name) {
-            if (Properties.ContainsKey(name)) {
-                Properties.Remove(name);
-            }
-        }
-
-
-        public static void SetDebugValue(string name) {
-            Properties[name] = string.Empty;
         }
 
 
