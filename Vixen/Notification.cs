@@ -1,5 +1,4 @@
-﻿//todo add group change as well
-namespace VixenPlus {
+﻿namespace VixenPlus {
     public enum Notification
     {
         PreferenceChange,
