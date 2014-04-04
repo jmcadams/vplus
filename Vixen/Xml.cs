@@ -132,14 +132,13 @@ namespace VixenPlus {
         }
 
 
-        public static XmlNode SetValue(XmlNode contextNode, string nodeName, string nodeValue) {
+        public static void SetValue(XmlNode contextNode, string nodeName, string nodeValue) {
             var newChild = contextNode.SelectSingleNode(nodeName);
             if (newChild == null) {
                 newChild = (contextNode.OwnerDocument ?? ((XmlDocument) contextNode)).CreateElement(nodeName);
                 contextNode.AppendChild(newChild);
             }
             newChild.InnerText = nodeValue;
-            return newChild;
         }
     }
 }

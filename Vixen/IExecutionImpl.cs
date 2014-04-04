@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
-
-
 
 using VixenPlusCommon;
 
@@ -90,7 +87,7 @@ namespace VixenPlus {
         }
 
 
-        public bool ExecutePlay(int contextHandle, int startMillisecond, int endMillisecond, bool logAudio) {
+        private bool ExecutePlay(int contextHandle, int startMillisecond, int endMillisecond, bool logAudio) {
             ExecutionContext context;
             if (!_registeredContexts.TryGetValue(contextHandle, out context)) {
                 return false;
@@ -148,23 +145,6 @@ namespace VixenPlus {
             catch (Exception exception) {
                 LogError("ExecuteStop", exception);
             }
-        }
-
-
-        public int FindExecutionContextHandle(object uniqueReference) {
-            if (uniqueReference is IOutputPlugIn) {
-                return FindOutputPlugIn(uniqueReference);
-            }
-            if (uniqueReference is IExecutable) {
-                return FindExecutableObject(uniqueReference);
-            }
-            if (uniqueReference is Engine8) {
-                return FindEngine(uniqueReference);
-            }
-            if (uniqueReference is OutputPlugInUIBase) {
-                return FindOutputPlugInUI(uniqueReference);
-            }
-            return 0;
         }
 
 
@@ -362,47 +342,6 @@ namespace VixenPlus {
         // Async context means it is not synced with any music (e.g. channel testing)
         private static void AsyncInit(ExecutionContext context) {
             context.AsynchronousEngineInstance.Initialize(context.Object);
-        }
-
-
-        private int FindEngine(object uniqueReference) {
-            foreach (var num in _registeredContexts.Keys) {
-                var context = _registeredContexts[num];
-                if (context.AsynchronousEngineInstance == uniqueReference) {
-                    return num;
-                }
-                if (context.SynchronousEngineInstance == uniqueReference) {
-                    return num;
-                }
-            }
-            return 0;
-        }
-
-
-        private int FindExecutableObject(object uniqueReference) {
-            return _registeredContexts.Keys.FirstOrDefault(num => _registeredContexts[num].Object == uniqueReference);
-        }
-
-
-        private int FindOutputPlugIn(object uniqueReference) {
-            foreach (var num in _registeredContexts.Keys) {
-                var context = _registeredContexts[num];
-                if ((context.AsynchronousEngineInstance != null) && context.AsynchronousEngineInstance.UsesObject(uniqueReference)) {
-                    return num;
-                }
-                if ((context.SynchronousEngineInstance != null) && context.SynchronousEngineInstance.UsesObject(uniqueReference)) {
-                    return num;
-                }
-            }
-            return 0;
-        }
-
-
-        private int FindOutputPlugInUI(object uniqueReference) {
-            return (from num in _registeredContexts.Keys
-                from form in _registeredContexts[num].OutputPlugInForms
-                where form == uniqueReference
-                select num).FirstOrDefault();
         }
 
 

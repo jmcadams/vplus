@@ -327,12 +327,6 @@
     <Compile Include="PlugInRouter.cs" />
     <Compile Include="Profile.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="ProgressDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ProgressDialog.Designer.cs">
-      <DependentUpon>ProgressDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -447,9 +441,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="OutputPlugInUIBase.resx">
       <DependentUpon>OutputPlugInUIBase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ProgressDialog.resx">
-      <DependentUpon>ProgressDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

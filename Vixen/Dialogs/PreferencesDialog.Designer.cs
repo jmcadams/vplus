@@ -625,9 +625,9 @@ namespace VixenPlus.Dialogs {
             // 
             this.sequenceExecutionTab.BackColor = System.Drawing.Color.Transparent;
             this.sequenceExecutionTab.Controls.Add(this.groupBox4);
-            this.sequenceExecutionTab.Location = new System.Drawing.Point(0, 0);
+            this.sequenceExecutionTab.Location = new System.Drawing.Point(4, 41);
             this.sequenceExecutionTab.Name = "sequenceExecutionTab";
-            this.sequenceExecutionTab.Size = new System.Drawing.Size(446, 310);
+            this.sequenceExecutionTab.Size = new System.Drawing.Size(438, 265);
             this.sequenceExecutionTab.TabIndex = 2;
             this.sequenceExecutionTab.Text = "sequenceExecutionTab";
             // 
@@ -648,9 +648,9 @@ namespace VixenPlus.Dialogs {
             // 
             this.sequenceEditingTab.BackColor = System.Drawing.Color.Transparent;
             this.sequenceEditingTab.Controls.Add(this.groupBox5);
-            this.sequenceEditingTab.Location = new System.Drawing.Point(0, 0);
+            this.sequenceEditingTab.Location = new System.Drawing.Point(4, 41);
             this.sequenceEditingTab.Name = "sequenceEditingTab";
-            this.sequenceEditingTab.Size = new System.Drawing.Size(446, 310);
+            this.sequenceEditingTab.Size = new System.Drawing.Size(438, 265);
             this.sequenceEditingTab.TabIndex = 1;
             this.sequenceEditingTab.Text = "sequenceEditingTab";
             // 
@@ -705,9 +705,9 @@ namespace VixenPlus.Dialogs {
             this.newSequenceSettingsTab.Controls.Add(this.groupBox12);
             this.newSequenceSettingsTab.Controls.Add(this.groupBox8);
             this.newSequenceSettingsTab.Controls.Add(this.checkBoxWizardForNewSequences);
-            this.newSequenceSettingsTab.Location = new System.Drawing.Point(0, 0);
+            this.newSequenceSettingsTab.Location = new System.Drawing.Point(4, 41);
             this.newSequenceSettingsTab.Name = "newSequenceSettingsTab";
-            this.newSequenceSettingsTab.Size = new System.Drawing.Size(446, 310);
+            this.newSequenceSettingsTab.Size = new System.Drawing.Size(438, 265);
             this.newSequenceSettingsTab.TabIndex = 0;
             this.newSequenceSettingsTab.Text = "newSequenceSettingsTab";
             // 
@@ -755,9 +755,9 @@ namespace VixenPlus.Dialogs {
             this.screenTab.Controls.Add(this.gbColors);
             this.screenTab.Controls.Add(this.lblPrimaryScreen);
             this.screenTab.Controls.Add(this.cbScreens);
-            this.screenTab.Location = new System.Drawing.Point(0, 0);
+            this.screenTab.Location = new System.Drawing.Point(4, 41);
             this.screenTab.Name = "screenTab";
-            this.screenTab.Size = new System.Drawing.Size(446, 310);
+            this.screenTab.Size = new System.Drawing.Size(438, 265);
             this.screenTab.TabIndex = 7;
             this.screenTab.Text = "screenTab";
             this.screenTab.UseVisualStyleBackColor = true;
@@ -847,9 +847,9 @@ namespace VixenPlus.Dialogs {
             this.generalTab.BackColor = System.Drawing.Color.Transparent;
             this.generalTab.Controls.Add(this.groupBox3);
             this.generalTab.Controls.Add(this.groupBox2);
-            this.generalTab.Location = new System.Drawing.Point(4, 41);
+            this.generalTab.Location = new System.Drawing.Point(0, 0);
             this.generalTab.Name = "generalTab";
-            this.generalTab.Size = new System.Drawing.Size(438, 265);
+            this.generalTab.Size = new System.Drawing.Size(446, 310);
             this.generalTab.TabIndex = 3;
             this.generalTab.Text = "generalTab";
             // 
@@ -931,6 +931,7 @@ namespace VixenPlus.Dialogs {
             this.tabControl.Controls.Add(this.newSequenceSettingsTab);
             this.tabControl.Controls.Add(this.sequenceEditingTab);
             this.tabControl.Controls.Add(this.sequenceExecutionTab);
+            this.tabControl.HideTabs = true;
             this.tabControl.Location = new System.Drawing.Point(179, 12);
             this.tabControl.Multiline = true;
             this.tabControl.Name = "tabControl";

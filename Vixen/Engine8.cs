@@ -254,16 +254,6 @@ namespace VixenPlus {
         }
 
 
-        private bool FindEventSequence(object uniqueReference) {
-            return CurrentObject.EventSequences.Any(stub => stub.Sequence == uniqueReference);
-        }
-
-
-        private bool FindOutputPlugIn(object uniqueReference) {
-            return _engineContexts[_primaryContext].RouterContext.OutputPluginList.Any(outputPlugIn => outputPlugIn.PlugIn == uniqueReference);
-        }
-
-
         private void FireEvent(EngineContext context, int index) {
             if ((!context.Timekeeper.IsRunning || !_eventTimer.Enabled) || _isStopping) {
                 return;
@@ -827,17 +817,6 @@ namespace VixenPlus {
                 context.LastIndex = num;
                 FireEvent(context, context.LastIndex);
             }
-        }
-
-
-        public bool UsesObject(object uniqueReference) {
-            if (uniqueReference is EventSequence) {
-                return FindEventSequence(uniqueReference);
-            }
-            if (uniqueReference is SequenceProgram) {
-                return (uniqueReference == CurrentObject);
-            }
-            return ((uniqueReference is IOutputPlugIn) && FindOutputPlugIn(uniqueReference));
         }
 
 
