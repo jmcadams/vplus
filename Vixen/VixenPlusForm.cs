@@ -61,7 +61,6 @@ namespace VixenPlus {
                 SetVendorData();
                 _registeredFileTypes = new Dictionary<string, IUIPlugIn>();
                 _preferences.PreferenceChange += PreferencesPreferenceChange;
-                //_loadables = new Dictionary<string, List<LoadedObject>>();
                 Interfaces.Available["ISystem"] = this;
                 Interfaces.Available["IExecution"] = new ExecutionImpl(new Host(this));
                 _newMenuItemClick = NewMenuItemClick;

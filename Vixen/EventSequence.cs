@@ -7,8 +7,6 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 
-
-
 using VixenPlus.Properties;
 
 using VixenPlusCommon;
@@ -107,7 +105,7 @@ namespace VixenPlus {
 
         public int ChannelWidth { get; private set; }
         public Audio Audio { get; set; }
-        public EngineType EngineType { get; private set; }
+        private EngineType EngineType { get; set; }
 
         public int EventPeriod {
             get { return _eventPeriod; }

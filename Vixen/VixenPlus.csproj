@@ -289,9 +289,7 @@
     <Compile Include="GroupTagData.cs" />
     <Compile Include="HardwareMap.cs" />
     <Compile Include="HardwarePlugins.cs" />
-    <Compile Include="HardwareUpdateDelegate.cs" />
     <Compile Include="Host.cs" />
-    <Compile Include="IEngine.cs" />
     <Compile Include="IEventDrivenOutputPlugIn.cs" />
     <Compile Include="IEventlessOutputPlugIn.cs" />
     <Compile Include="IExecutable.cs" />
@@ -315,7 +313,6 @@
     <Compile Include="MappedOutputPlugIn.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="NutcrackerNodes.cs" />
-    <Compile Include="OnEngineError.cs" />
     <Compile Include="OutputPlugins.cs" />
     <Compile Include="OutputPlugInUIBase.cs">
       <SubType>Form</SubType>

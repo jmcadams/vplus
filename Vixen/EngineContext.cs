@@ -13,7 +13,6 @@ namespace VixenPlus {
         public byte[] LastPeriod;
         public int MaxEvent = 2147483647;
         public RouterContext RouterContext;
-        public int SequenceIndex;
         public int SequenceTickLength;
         public SoundChannel SoundChannel;
         public int StartOffset;
