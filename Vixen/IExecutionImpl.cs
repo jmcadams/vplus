@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using VixenPlusCommon;
 
 namespace VixenPlus {
-    internal class ExecutionImpl : IExecution, IQueryable {
+    internal class ExecutionImpl : IExecution {
         private readonly string _errorLog;
         private readonly Host _host;
         private readonly Preference2 _preferences;

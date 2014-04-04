@@ -7,7 +7,7 @@ using VixenPlus.Properties;
 using VixenPlusCommon;
 
 namespace VixenPlus {
-    internal class Host : IQueryable {
+    internal class Host {
         public static byte[,] Clipboard;
         internal static readonly Dictionary<string, object> Communication = new Dictionary<string, object>();
         private static ulong _lastKey;

@@ -298,7 +298,6 @@
     <Compile Include="Interfaces.cs" />
     <Compile Include="IOutputPlugIn.cs" />
     <Compile Include="IPlugIn.cs" />
-    <Compile Include="IQueryable.cs" />
     <Compile Include="ISetup.cs" />
     <Compile Include="ISystem.cs" />
     <Compile Include="IUIPlugIn.cs" />

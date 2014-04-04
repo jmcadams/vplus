@@ -14,7 +14,7 @@ using VixenPlus.Properties;
 using VixenPlusCommon;
 
 namespace VixenPlus {
-    internal sealed class Engine8 : IDisposable, IQueryable {
+    internal sealed class Engine8 : IDisposable {
         public delegate void ProgramEndDelegate();
 
         public delegate void SequenceChangeDelegate();
