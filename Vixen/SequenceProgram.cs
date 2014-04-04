@@ -25,7 +25,6 @@ namespace VixenPlus {
             UseSequencePluginData = false;
             TreatAsLocal = false;
             UserData = null;
-            CrossFadeLength = 0;
             _key = Host.GetUniqueKey();
             _mask = null;
             FileName = fileName;
@@ -41,7 +40,6 @@ namespace VixenPlus {
             UseSequencePluginData = false;
             TreatAsLocal = false;
             UserData = null;
-            CrossFadeLength = 0;
             _key = Host.GetUniqueKey();
             _mask = null;
             FileName = sequence.FileName;
@@ -50,8 +48,6 @@ namespace VixenPlus {
             EventSequences.Add(new EventSequenceStub(sequence));
         }
 
-
-        public int CrossFadeLength { get; private set; }
 
         internal List<EventSequenceStub> EventSequences { get; private set; }
 
@@ -198,16 +194,17 @@ namespace VixenPlus {
                     }
                 }
             }
-            if (node != null) {
-                var node3 = node.SelectSingleNode("Profile");
-                if (node3 == null) {
-                    LoadEmbeddedData(node);
-                }
-                else {
-                    AttachToProfile(node3.InnerText);
-                }
+            if (node == null) {
+                return;
             }
-            CrossFadeLength = int.Parse(Xml.GetNodeAlways(node, "CrossFadeLength", "0").InnerText);
+
+            var node3 = node.SelectSingleNode("Profile");
+            if (node3 == null) {
+                LoadEmbeddedData(node);
+            }
+            else {
+                AttachToProfile(node3.InnerText);
+            }
         }
 
         private void ReloadProfile() {

@@ -9,7 +9,6 @@ namespace VixenPlus {
         public byte[] ChannelMask;
         public EventSequence CurrentSequence;
         public byte[,] Data;
-        public int FadeStartTickCount;
         public int LastIndex = -1;
         public byte[] LastPeriod;
         public int MaxEvent = Int32.MaxValue;

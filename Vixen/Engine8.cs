@@ -271,20 +271,8 @@ namespace VixenPlus {
                 context.TickCount = 0;
                 context.LastIndex = -1;
                 context.SequenceTickLength = executableObject.Time;
-                context.FadeStartTickCount = ((CurrentObject.CrossFadeLength == 0) || (CurrentObject.EventSequences.Count == 1))
-                    ? 0
-                    : ((IsLooping || (CurrentObject.EventSequences.Count > (sequenceIndex + 1)))
-                        ? (executableObject.Time - (CurrentObject.CrossFadeLength * 1000)) : 0);
                 context.StartOffset = 0;
                 context.SoundChannel = executableObject.Audio != null ? _fmod.LoadSound(Path.Combine(Paths.AudioPath, executableObject.Audio.FileName), context.SoundChannel) : _fmod.LoadSound(null);
-                if ((CurrentObject.CrossFadeLength != 0) && (context.SoundChannel != null)) {
-                    if (IsLooping || (sequenceIndex > 0)) {
-                        context.SoundChannel.SetEntryFade(CurrentObject.CrossFadeLength);
-                    }
-                    if (IsLooping || (CurrentObject.EventSequences.Count > (sequenceIndex + 1))) {
-                        context.SoundChannel.SetExitFade(CurrentObject.CrossFadeLength);
-                    }
-                }
                 context.CurrentSequence = executableObject;
                 context.MaxEvent = context.CurrentSequence.TotalEventPeriods;
                 context.LastPeriod = new byte[context.CurrentSequence.FullChannels.Count];
@@ -550,12 +538,6 @@ namespace VixenPlus {
             context.TickCount = (context.SoundChannel != null) && context.SoundChannel.IsPlaying
                 ? (int) context.SoundChannel.Position : context.StartOffset + ((int) context.Timekeeper.ElapsedMilliseconds);
             var num = context.TickCount / context.CurrentSequence.EventPeriod;
-            if (((context.FadeStartTickCount != 0) && (context.TickCount >= context.FadeStartTickCount))) {
-                _eventTimer.Enabled = false;
-                Host.Communication["CurrentObject"] = CurrentObject;
-                Host.Communication["CurrentObject"] = null;
-                _eventTimer.Enabled = true;
-            }
             if ((context.TickCount >= context.SequenceTickLength) || (num >= context.MaxEvent)) {
                 _fmod.Stop(context.SoundChannel);
                 context.Timekeeper.Stop();
