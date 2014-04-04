@@ -6,8 +6,6 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 
-
-
 using VixenPlus.Properties;
 
 using VixenPlusCommon;
@@ -38,23 +36,14 @@ namespace VixenPlus.Dialogs {
             try {
                 listViewPlugins.Columns[0].Width = listViewPlugins.Width - 25;
                 var group = listViewPlugins.Groups["listViewGroupOutput"];
-                //var group2 = listViewPlugins.Groups["listViewGroupInput"];
                 var list = OutputPlugins.LoadPlugins();
                 if (list != null) {
                     foreach (var item in list.Select(plugin => new ListViewItem(plugin.Name, @group) {Tag = plugin})) {
                         listViewPlugins.Items.Add(item);
                     }
                 }
-                //list = InputPlugins.LoadPlugins();
-                //if (list != null) {
-                //    foreach (var plugin in list) {
-                //        item = new ListViewItem(plugin.Name, group2) {Tag = plugin};
-                //        listViewPlugins.Items.Add(item);
-                //    }
-                //}
                 listViewPlugins.Enabled = listViewPlugins.Items.Count > 0;
                 OutputPlugins.VerifyPlugIns(_executableObject);
-                //InputPlugins.VerifyPlugIns(_executableObject);
                 _collapsedRelativeBounds = new Rectangle(listViewOutputPorts.Columns[2].Width - (pictureBoxPlus.Width * 2),
                                                          (14 - pictureBoxPlus.Height) / 2, pictureBoxPlus.Width, pictureBoxPlus.Height);
                 _expandedRelativeBounds = new Rectangle(listViewOutputPorts.Columns[2].Width - (pictureBoxMinus.Width * 2),
@@ -111,27 +100,10 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        //ComponentResourceManager manager = new ComponentResourceManager(typeof(PluginListDialog));
-        //this.pictureBoxPlus.Image = (Image)manager.GetObject("pictureBoxPlus.Image");
-        //this.pictureBoxMinus.Image = (Image)manager.GetObject("pictureBoxMinus.Image");
-
-
         private void InitializePlugin(IHardwarePlugin plugin, XmlNode setupNode) {
             var eventDrivenOutputPlugIn = plugin as IEventDrivenOutputPlugIn;
             if (eventDrivenOutputPlugIn != null) {
                 eventDrivenOutputPlugIn.Initialize(_executableObject, _setupData, setupNode);
-            }
-            else {
-                var eventlessOutputPlugIn = plugin as IEventlessOutputPlugIn;
-                if (eventlessOutputPlugIn != null) {
-                    eventlessOutputPlugIn.Initialize(_executableObject, _setupData, setupNode, null);
-                }
-                //else {
-                //    var inputPlugin = plugin as IInputPlugin;
-                //    if (inputPlugin != null) {
-                //        ((InputPlugin) plugin).InitializeInternal(_setupData, setupNode);
-                //    }
-                //}
             }
         }
 

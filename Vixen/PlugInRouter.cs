@@ -35,8 +35,8 @@ namespace VixenPlus {
         }
 
 
-        public RouterContext CreateContext(byte[] engineBuffer, SetupData pluginData, IExecutable executableObject, ITickSource tickSource) {
-            var item = new RouterContext(engineBuffer, pluginData, executableObject, tickSource);
+        public RouterContext CreateContext(byte[] engineBuffer, SetupData pluginData, IExecutable executableObject) {
+            var item = new RouterContext(engineBuffer, pluginData, executableObject);
             var newSize = Math.Max((_data == null) ? 0 : _data.Length, item.EngineBuffer.Length);
             if (_data == null) {
                 _data = new byte[newSize];
@@ -151,10 +151,10 @@ namespace VixenPlus {
                     if (eventDrivenOutputPlugIn != null) {
                         eventDrivenOutputPlugIn.Initialize(routerContext.ExecutableObject, routerContext.PluginData, outputPlugIn.SetupDataNode);
                     }
-                    else {
-                        ((IEventlessOutputPlugIn) outputPlugIn.PlugIn).Initialize(routerContext.ExecutableObject, routerContext.PluginData,
-                            outputPlugIn.SetupDataNode, routerContext.TickSource);
-                    }
+                    //else {
+                    //    ((IEventlessOutputPlugIn) outputPlugIn.PlugIn).Initialize(routerContext.ExecutableObject, routerContext.PluginData,
+                    //        outputPlugIn.SetupDataNode, routerContext.TickSource);
+                    //}
                 }
                 var executable = (IExecutable) Host.Communication["CurrentObject"];
                 var str2 = string.Empty;

@@ -279,7 +279,6 @@
     </Compile>
     <Compile Include="Engine8.cs" />
     <Compile Include="EngineContext.cs" />
-    <Compile Include="EngineTimer.cs" />
     <Compile Include="EngineType.cs" />
     <Compile Include="EventSequence.cs" />
     <Compile Include="EventSequenceStub.cs" />
@@ -291,7 +290,6 @@
     <Compile Include="HardwarePlugins.cs" />
     <Compile Include="Host.cs" />
     <Compile Include="IEventDrivenOutputPlugIn.cs" />
-    <Compile Include="IEventlessOutputPlugIn.cs" />
     <Compile Include="IExecutable.cs" />
     <Compile Include="IExecution.cs" />
     <Compile Include="IExecutionImpl.cs" />
@@ -303,7 +301,6 @@
     <Compile Include="IQueryable.cs" />
     <Compile Include="ISetup.cs" />
     <Compile Include="ISystem.cs" />
-    <Compile Include="ITickSource.cs" />
     <Compile Include="IUIPlugIn.cs" />
     <Compile Include="IVixenMDI.cs" />
     <Compile Include="ListViewItemSorter.cs" />

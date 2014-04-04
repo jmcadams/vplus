@@ -1,35 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
 
 namespace VixenPlus {
-    internal class RouterContext : ITickSource
+    internal class RouterContext
     {
         public readonly byte[] EngineBuffer;
         public readonly IExecutable ExecutableObject;
         private bool _isInitialized;
         public readonly List<MappedOutputPlugIn> OutputPluginList;
         public readonly SetupData PluginData;
-        public readonly ITickSource TickSource;
 
-        public RouterContext(byte[] engineBuffer, SetupData pluginData, IExecutable executableObject, ITickSource tickSource)
-        {
+
+        public RouterContext(byte[] engineBuffer, SetupData pluginData, IExecutable executableObject) {
             EngineBuffer = engineBuffer;
             PluginData = pluginData;
             ExecutableObject = executableObject;
             OutputPluginList = new List<MappedOutputPlugIn>();
-            TickSource = tickSource ?? this;
-            foreach (XmlNode node in PluginData.GetAllPluginData(SetupData.PluginType.Output, true))
-            {
-                if (node.Attributes == null) {
-                    continue;
-                }
-                var item = new MappedOutputPlugIn((IOutputPlugIn) OutputPlugins.FindPlugin(node.Attributes["name"].Value, true),
-                    Convert.ToInt32(node.Attributes["from"].Value),
-                    Convert.ToInt32(node.Attributes["to"].Value), node);
+            foreach (var item in from XmlNode node in PluginData.GetAllPluginData(SetupData.PluginType.Output, true)
+                where node.Attributes != null
+                select
+                    new MappedOutputPlugIn((IOutputPlugIn) OutputPlugins.FindPlugin(node.Attributes["name"].Value, true),
+                        Convert.ToInt32(node.Attributes["from"].Value), Convert.ToInt32(node.Attributes["to"].Value), node)) {
                 OutputPluginList.Add(item);
             }
         }
+
 
         public bool Initialized
         {

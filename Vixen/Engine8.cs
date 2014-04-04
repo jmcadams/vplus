@@ -28,7 +28,6 @@ namespace VixenPlus {
         private bool _isLoggingEnabled;
         private bool _isStopping;
         private PlugInRouter _plugInRouter;
-        private EngineTimer _surfacedTimer;
         private bool _useSequencePluginData;
 
 
@@ -94,10 +93,6 @@ namespace VixenPlus {
                     MessageBox.Show(Resources.engineShutDownError + exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 }
             }
-            if (_surfacedTimer != null) {
-                _surfacedTimer.Dispose();
-                _surfacedTimer = null;
-            }
             ProgramEnd = null;
             SequenceChange = null;
             if (CurrentObject != null) {
@@ -131,22 +126,13 @@ namespace VixenPlus {
                 _eventTimer = new System.Timers.Timer(1.0);
                 _eventTimer.Elapsed += EventTimerElapsed;
                 _fmod = fmod.GetInstance(audioDeviceIndex);
-                _surfacedTimer = (Mode == EngineMode.Synchronous) ? new EngineTimer(CurrentTime) : null;
             }
             else {
                 _eventTimer = null;
                 _fmod = null;
-                _surfacedTimer = null;
             }
             _engineContext = new EngineContext();
             InstanceList.Add(this);
-        }
-
-
-        private int CurrentTime() {
-            return (_engineContext.SoundChannel != null) && _engineContext.SoundChannel.IsPlaying
-                ? (int) _engineContext.SoundChannel.Position
-                : _engineContext.StartOffset + ((int) _engineContext.Timekeeper.ElapsedMilliseconds);
         }
 
 
@@ -263,7 +249,7 @@ namespace VixenPlus {
                 if (context.RouterContext == null) {
                     context.RouterContext = _plugInRouter.CreateContext(new byte[executableObject.FullChannelCount],
                         _useSequencePluginData ? executableObject.PlugInData : CurrentObject.SetupData,
-                        executableObject, _surfacedTimer);
+                        executableObject);
                 }
                 if (CurrentObject.Mask.Length > sequenceIndex) {
                     context.ChannelMask = CurrentObject.Mask[sequenceIndex];
@@ -349,7 +335,7 @@ namespace VixenPlus {
                 _plugInRouter.Shutdown(_engineContext.RouterContext);
             }
             _engineContext.RouterContext = _plugInRouter.CreateContext(new byte[channels.Count], executableObject.PlugInData,
-                executableObject, null);
+                executableObject);
             _engineContext.ChannelMask = executableObject.Mask[0];
             Host.Communication["CurrentObject"] = CurrentObject;
             _plugInRouter.Startup(_engineContext.RouterContext);
