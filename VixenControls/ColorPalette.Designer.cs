@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ColorPalette));
             this.pbRuleColor8 = new System.Windows.Forms.PictureBox();
             this.pbRuleColor7 = new System.Windows.Forms.PictureBox();
             this.pbRuleColor6 = new System.Windows.Forms.PictureBox();
@@ -44,7 +45,7 @@
             // pbRuleColor8
             // 
             this.pbRuleColor8.BackColor = System.Drawing.Color.Transparent;
-            this.pbRuleColor8.BackgroundImage = global::VixenPlusCommon.Annotations.Resources.none;
+            this.pbRuleColor8.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pbRuleColor8.BackgroundImage")));
             this.pbRuleColor8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pbRuleColor8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pbRuleColor8.Location = new System.Drawing.Point(81, 29);
@@ -57,7 +58,7 @@
             // pbRuleColor7
             // 
             this.pbRuleColor7.BackColor = System.Drawing.Color.Transparent;
-            this.pbRuleColor7.BackgroundImage = global::VixenPlusCommon.Annotations.Resources.none;
+            this.pbRuleColor7.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pbRuleColor7.BackgroundImage")));
             this.pbRuleColor7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pbRuleColor7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pbRuleColor7.Location = new System.Drawing.Point(55, 29);
@@ -70,7 +71,7 @@
             // pbRuleColor6
             // 
             this.pbRuleColor6.BackColor = System.Drawing.Color.Transparent;
-            this.pbRuleColor6.BackgroundImage = global::VixenPlusCommon.Annotations.Resources.none;
+            this.pbRuleColor6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pbRuleColor6.BackgroundImage")));
             this.pbRuleColor6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pbRuleColor6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pbRuleColor6.Location = new System.Drawing.Point(29, 29);
@@ -83,7 +84,7 @@
             // pbRuleColor5
             // 
             this.pbRuleColor5.BackColor = System.Drawing.Color.Transparent;
-            this.pbRuleColor5.BackgroundImage = global::VixenPlusCommon.Annotations.Resources.none;
+            this.pbRuleColor5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pbRuleColor5.BackgroundImage")));
             this.pbRuleColor5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pbRuleColor5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pbRuleColor5.Location = new System.Drawing.Point(3, 29);
@@ -96,7 +97,7 @@
             // pbRuleColor4
             // 
             this.pbRuleColor4.BackColor = System.Drawing.Color.Transparent;
-            this.pbRuleColor4.BackgroundImage = global::VixenPlusCommon.Annotations.Resources.none;
+            this.pbRuleColor4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pbRuleColor5.BackgroundImage")));
             this.pbRuleColor4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pbRuleColor4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pbRuleColor4.Location = new System.Drawing.Point(81, 3);
