@@ -58,10 +58,6 @@ namespace VixenPlus.Dialogs {
         private bool _back;
         private bool _skip;
 
-        //ComponentResourceManager manager = new ComponentResourceManager(typeof(NewSequenceWizardDialog));
-        //this.label2.Text = manager.GetString("label2.Text");
-        //this.label13.Text = manager.GetString("label13.Text");
-
         public NewSequenceWizardDialog(Preference2 preferences) {
             InitializeComponent();
             Icon = Resources.VixenPlus;
