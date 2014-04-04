@@ -83,14 +83,6 @@ namespace VixenPlusCommon {
             isDirty |= CreateIfMissing("SavePlugInDialogPositions", true);
             isDirty |= CreateIfMissing("ClearAtEndOfSequence", true);
 
-            //Background
-            isDirty |= CreateIfMissing("EnableBackgroundSequence", false);
-            isDirty |= CreateIfMissing("BackgroundSequenceDelay", 10);
-            isDirty |= CreateIfMissing("EnableBackgroundMusic", false);
-            isDirty |= CreateIfMissing("BackgroundMusicDelay", 10);
-            isDirty |= CreateIfMissing("EnableMusicFade", false);
-            isDirty |= CreateIfMissing("MusicFadeDuration", 5);
-
             //Set in various Application classes
             isDirty |= CreateIfMissing(CustomColorsPreference,
                 "16777215,16777215,16777215,16777215,16777215,16777215,16777215,16777215,16777215,16777215,16777215,16777215,16777215,16777215,16777215,16777215");

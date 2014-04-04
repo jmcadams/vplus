@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Timers;
 using System.Windows.Forms;
 
-
-
 using VixenPlus.Properties;
-
 using VixenPlusCommon;
 
 namespace VixenPlus {
@@ -15,86 +11,21 @@ namespace VixenPlus {
         public static byte[,] Clipboard;
         internal static readonly Dictionary<string, object> Communication = new Dictionary<string, object>();
         private static ulong _lastKey;
-        private static readonly Preference2 Preference2 = Preference2.GetInstance();
         private static readonly Dictionary<string, string> Properties = new Dictionary<string, string>();
-        private readonly System.Timers.Timer _backgroundMusicDelayTimer;
-        private readonly ToolStripLabel _backgroundMusicLabel;
-        private readonly ToolStripProgressBar _backgroundProgressBar;
-        private readonly System.Timers.Timer _backgroundSequenceDelayTimer;
         private readonly Form _hostForm;
-        private readonly MusicPlayer _musicPlayer;
-        private int _backgroundExecutionContextHandle;
-        private EventSequence _backgroundSequence;
-        private IExecution _executionInterface;
 
 
         public Host(Form hostForm) {
             _hostForm = hostForm;
             Router = PlugInRouter.GetInstance();
-            _backgroundSequenceDelayTimer = new System.Timers.Timer();
-            _backgroundSequenceDelayTimer.Elapsed += BackgroundSequenceDelayTimerElapsed;
-            _backgroundMusicDelayTimer = new System.Timers.Timer();
-            _backgroundMusicDelayTimer.Elapsed += BackgroundMusicDelayTimerElapsed;
-            var strip = (StatusStrip) _hostForm.Controls.Find("statusStrip", true)[0];
-            _backgroundProgressBar = (ToolStripProgressBar) strip.Items.Find("toolStripProgressBarBackgroundSequenceRunning", false)[0];
-            _backgroundMusicLabel = (ToolStripLabel) strip.Items.Find("toolStripStatusLabelMusic", false)[0];
-            _musicPlayer = new MusicPlayer();
-            _musicPlayer.SongChange += MusicPlayerSongChange;
         }
 
-
-        public string BackgroundSequenceName {
-            set {
-                StopBackgroundSequence();
-                if (string.IsNullOrEmpty(value)) {
-                    if (_backgroundSequence == null) {
-                        return;
-                    }
-                    _backgroundSequence.Dispose();
-                    _backgroundSequence = null;
-                }
-                else if (!File.Exists(value)) {
-                    if (Preference2.GetBoolean("EnableBackgroundSequence")) {
-                        MessageBox.Show(Resources.Host_BackgroundSequenceName, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                    }
-                }
-                else {
-                    _backgroundSequence = new EventSequence(value);
-                }
-            }
-        }
 
         public static bool InvokeRequired {
             get { return Application.OpenForms.Count > 0 && Application.OpenForms[0].InvokeRequired; }
         }
 
-        public MusicPlayer MusicPlayer {
-            get { return _musicPlayer; }
-        }
-
-/*
-        public static Preference2 Preferences {
-            get { return Preference2; }
-        }
-*/
-
         public static PlugInRouter Router { get; private set; }
-
-        public static void BeginInvoke(Delegate method, params object[] args) {
-            Application.OpenForms[0].BeginInvoke(method, args);
-        }
-
-        private void CreateBackgroundContext() {
-            if (_executionInterface == null) {
-                _executionInterface = (IExecution) Interfaces.Available["IExecution"];
-            }
-            if (_backgroundExecutionContextHandle != 0) {
-                return;
-            }
-            _backgroundExecutionContextHandle = _executionInterface.RequestContext(true, false, null);
-            _executionInterface.SetSynchronousContext(_backgroundExecutionContextHandle, _backgroundSequence);
-        }
-
 
         public void DelegateNullMethod(MethodInvoker method) {
             if (_hostForm.InvokeRequired) {
@@ -102,14 +33,6 @@ namespace VixenPlus {
             }
             else {
                 method();
-            }
-        }
-
-
-        private void ExecuteBackgroundSequence() {
-            if ((((_executionInterface != null) && (_backgroundExecutionContextHandle != 0)) && (_backgroundSequence != null)) &&
-                !_executionInterface.ExecutePlay(_backgroundExecutionContextHandle, 0, 0, Preference2.GetBoolean("LogAudioScheduled"))) {
-                MessageBox.Show(Resources.Host_StartingBackgroundSequenceFailed, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
@@ -132,12 +55,6 @@ namespace VixenPlus {
 
         public static void Invoke(Delegate method, params object[] args) {
             Application.OpenForms[0].Invoke(method, args);
-        }
-
-
-        public bool IsBackgroundExecutionEngineInstance(Engine8 engine) {
-            return (((_executionInterface != null) && (_backgroundExecutionContextHandle != 0)) &&
-                    (_executionInterface.FindExecutionContextHandle(engine) == _backgroundExecutionContextHandle));
         }
 
 
@@ -171,115 +88,8 @@ namespace VixenPlus {
         }
 
 
-        private void BackgroundMusicDelayTimerElapsed(object sender, ElapsedEventArgs e) {
-            _backgroundMusicDelayTimer.Enabled = false;
-            _hostForm.BeginInvoke(new MethodInvoker(ShowBackgroundMusicThumbSucker));
-            _hostForm.BeginInvoke(new MethodInvoker(_musicPlayer.Start));
-        }
-
-
-        private void BackgroundSequenceDelayTimerElapsed(object sender, ElapsedEventArgs e) {
-            _backgroundSequenceDelayTimer.Enabled = false;
-            _hostForm.BeginInvoke(new MethodInvoker(ShowBackgroundSequenceThumbSucker));
-            ExecuteBackgroundSequence();
-        }
-
-
-        private void MusicPlayerSongChange(string songName) {
-            _backgroundMusicLabel.Text = songName;
-        }
-
-
         public static void SetDebugValue(string name, string value) {
             Properties[name] = value;
-        }
-
-
-        private void ShowBackgroundMusicThumbSucker() {
-            if (_backgroundMusicLabel.Visible) {
-                return;
-            }
-            _backgroundMusicLabel.Text = string.Empty;
-            _backgroundMusicLabel.Visible = true;
-        }
-
-
-        private void ShowBackgroundSequenceThumbSucker() {
-            if (_backgroundProgressBar.Visible) {
-                return;
-            }
-            _backgroundProgressBar.ToolTipText = _backgroundSequence.Name + Resources.Host_isRunning;
-            _backgroundProgressBar.Visible = true;
-            _backgroundProgressBar.Enabled = true;
-        }
-
-
-        public void StartBackgroundMusic() {
-            if ((_musicPlayer.SongCount == 0) || !Preference2.GetBoolean("EnableBackgroundMusic")) {
-                return;
-            }
-            _backgroundMusicDelayTimer.Interval = Preference2.GetInteger("BackgroundMusicDelay") * 0x3e8;
-            _backgroundMusicDelayTimer.Enabled = true;
-        }
-
-
-        public void StartBackgroundObjects() {
-            StartBackgroundSequence();
-            StartBackgroundMusic();
-        }
-
-
-        public void StartBackgroundSequence() {
-            if ((_backgroundSequence == null) || !Preference2.GetBoolean("EnableBackgroundSequence")) {
-                return;
-            }
-            CreateBackgroundContext();
-            if (_executionInterface.EngineStatus(_backgroundExecutionContextHandle) != Utils.ExecutionStopped) {
-                return;
-            }
-            _backgroundSequenceDelayTimer.Interval = Preference2.GetInteger("BackgroundSequenceDelay") * 1000;
-            _backgroundSequenceDelayTimer.Enabled = true;
-        }
-
-
-        public void StopBackgroundMusic() {
-            _musicPlayer.Stop();
-            _backgroundMusicDelayTimer.Enabled = false;
-            _backgroundMusicLabel.Visible = false;
-        }
-
-
-        public void StopBackgroundObjects() {
-            StopBackgroundSequence();
-            StopBackgroundMusic();
-        }
-
-
-        public void StopBackgroundSequence() {
-            StopBackgroundSequenceUI();
-            StopBackgroundSequenceExecution();
-        }
-
-
-        private void StopBackgroundSequenceExecution() {
-            if (_backgroundExecutionContextHandle == 0) {
-                return;
-            }
-            _executionInterface.ExecuteStop(_backgroundExecutionContextHandle);
-            _executionInterface.ReleaseContext(_backgroundExecutionContextHandle);
-            _backgroundExecutionContextHandle = 0;
-        }
-
-
-        public void StopBackgroundSequenceUI() {
-            if (InvokeRequired) {
-                BeginInvoke(new MethodInvoker(StopBackgroundSequenceUI), new object[0]);
-            }
-            else {
-                _backgroundSequenceDelayTimer.Enabled = false;
-                _backgroundProgressBar.Visible = false;
-                _backgroundProgressBar.Enabled = false;
-            }
         }
     }
 }

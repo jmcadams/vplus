@@ -9,8 +9,6 @@ using System.Timers;
 using System.Windows.Forms;
 using System.Xml;
 
-
-
 using FMOD;
 
 using VixenPlus.Properties;
@@ -86,44 +84,9 @@ namespace VixenPlus {
             get { return _secondaryEngine != null ? _secondaryEngine.IsRunning : _isRunning; }
         }
 
-/*
-        public string LoadedProgram {
-            get {
-                if (Mode == EngineMode.Asynchronous) {
-                    return string.Empty;
-                }
-                return CurrentObject == null ? string.Empty : CurrentObject.Name;
-            }
-        }
-*/
-
-/*
-        public string LoadedSequence {
-            get {
-                if (Mode == EngineMode.Asynchronous) {
-                    return string.Empty;
-                }
-                return _engineContexts[_primaryContext].CurrentSequence == null ? string.Empty : _engineContexts[_primaryContext].CurrentSequence.Name;
-            }
-        }
-*/
-
         public bool IsLooping { private get; set; }
 
         private EngineMode Mode { get; set; }
-
-/*
-        public int ObjectPosition {
-            get {
-                var context = _engineContexts[_primaryContext];
-                var tickCount = context.TickCount;
-                for (var i = 0; i < context.SequenceIndex; i++) {
-                    tickCount += CurrentObject.EventSequences[i].Length;
-                }
-                return tickCount;
-            }
-        }
-*/
 
         public int Position {
             get { return _engineContexts[_primaryContext].TickCount; }
@@ -259,7 +222,7 @@ namespace VixenPlus {
             else if ((_isRunning || IsPaused) && _plugInRouter != null) {
                 StopExecution();
                 _engineContexts[_primaryContext].CurrentSequence = null;
-                OnProgramEnd(true);
+                OnProgramEnd();
             }
             _isStopping = false;
         }
@@ -313,11 +276,6 @@ namespace VixenPlus {
         }
 
 
-        //public void HardwareUpdate(byte[] values) {
-        //    HardwareUpdate(values, -1);
-        //}
-
-
         public void HardwareUpdate(byte[] values) {
             if (!_isRunning || _isStopping) {
                 return;
@@ -333,7 +291,6 @@ namespace VixenPlus {
                 var engineBuffer = context.RouterContext.EngineBuffer;
                 values.CopyTo(engineBuffer, 0);
                 _plugInRouter.BeginUpdate();
-                //_plugInRouter.GetSequenceInputs(context.RouterContext.ExecutableObject, engineBuffer, true, false);
                 var flag = context.LastPeriod == null;
                 for (num = 0; (num < engineBuffer.Length) && !flag; num++) {
                     flag |= engineBuffer[num] != context.LastPeriod[num];
@@ -363,19 +320,6 @@ namespace VixenPlus {
                         StopExecution();
                     }
                 }
-                //if ((_isStopping || !_isRunning) || (eventIndex == -1)) {
-                //    return;
-                //}
-
-                //engineBuffer = new byte[engineBuffer.Length];
-                //var num3 = context.CurrentSequence.FullChannels.Count;
-                //var eventValues = context.CurrentSequence.EventValues;
-                //if (!_plugInRouter.GetSequenceInputs(context.RouterContext.ExecutableObject, engineBuffer, false, true)) {
-                //    return;
-                //}
-                //for (var i = 0; i < num3; i++) {
-                //    eventValues[i, eventIndex] = Math.Max(eventValues[i, eventIndex], engineBuffer[i]);
-                //}
             }
         }
 
@@ -489,7 +433,6 @@ namespace VixenPlus {
                 }
                 CurrentObject = program;
                 _useSequencePluginData = CurrentObject.UseSequencePluginData;
-                //EventSequence sequence = _sequenceProgram.EventSequences[0].Sequence;
                 if (CurrentObject.EventSequences.Count > 1) {
                     if (_engineContexts[_secondaryContext] == null) {
                         _engineContexts[_secondaryContext] = new EngineContext();
@@ -572,16 +515,13 @@ namespace VixenPlus {
         }
 
 
-        private void OnProgramEnd(bool restartBackgroundObjects) {
+        private void OnProgramEnd() {
             if (ProgramEnd != null) {
                 _host.DelegateNullMethod(ProgramEnd.Invoke);
             }
             var key = CurrentObject.Key.ToString(CultureInfo.InvariantCulture);
             Host.Communication.Remove("KeyInterceptor_" + key);
             Host.Communication.Remove("ExecutionContext_" + key);
-            if (restartBackgroundObjects) {
-                RestartBackgroundObjects();
-            }
         }
 
 
@@ -630,7 +570,6 @@ namespace VixenPlus {
                 if (_eventTimer.Enabled) {
                     return false;
                 }
-                StopBackgroundObjects();
                 CreateScriptEngine(CurrentObject.EventSequences[0].Sequence);
                 if (_secondaryEngine != null) {
                     if (IsPaused) {
@@ -725,19 +664,9 @@ namespace VixenPlus {
         }
 
 
-        private void RestartBackgroundObjects() {
-            var engine = InstanceList.FirstOrDefault(engine2 => engine2.IsRunning);
-            if (engine == null) {
-                _host.StartBackgroundObjects();
-            }
-        }
-
 
         private void SecondaryEngineError(string message, string stackTrace) {
             Stop();
-            if (_host.IsBackgroundExecutionEngineInstance(this)) {
-                _host.StopBackgroundSequence();
-            }
             MessageBox.Show(message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
@@ -752,13 +681,10 @@ namespace VixenPlus {
                 _secondaryEngine.Play();
             }
             else {
-                var flag = _host.IsBackgroundExecutionEngineInstance(this);
-                if (flag) {
-                    _host.StopBackgroundSequenceUI();
-                }
+
                 FinalizeEngineContext(_engineContexts[_primaryContext]);
                 FinalizeEngineContext(_engineContexts[_secondaryContext]);
-                OnProgramEnd(!flag);
+                OnProgramEnd();
             }
         }
 
@@ -819,13 +745,6 @@ namespace VixenPlus {
                     _isRunning = false;
                 }
                 _isStopping = false;
-            }
-        }
-
-
-        private void StopBackgroundObjects() {
-            if (!_host.IsBackgroundExecutionEngineInstance(this)) {
-                _host.StopBackgroundObjects();
             }
         }
 

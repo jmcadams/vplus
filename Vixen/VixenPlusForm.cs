@@ -11,8 +11,6 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 
-
-
 using VixenPlus.Dialogs;
 using VixenPlus.Properties;
 
@@ -30,8 +28,6 @@ namespace VixenPlus {
 
         private EventHandler _historyItemClick;
         private EventHandler _newMenuItemClick;
-
-        private readonly Host _host;
 
         private readonly Preference2 _preferences;
 
@@ -65,10 +61,9 @@ namespace VixenPlus {
                 SetVendorData();
                 _registeredFileTypes = new Dictionary<string, IUIPlugIn>();
                 _preferences.PreferenceChange += PreferencesPreferenceChange;
-                _host = new Host(this);
                 //_loadables = new Dictionary<string, List<LoadedObject>>();
                 Interfaces.Available["ISystem"] = this;
-                Interfaces.Available["IExecution"] = new ExecutionImpl(_host);
+                Interfaces.Available["IExecution"] = new ExecutionImpl(new Host(this));
                 _newMenuItemClick = NewMenuItemClick;
                 _historyItemClick = HistoryItemClick;
                 LoadHistory();
@@ -84,10 +79,6 @@ namespace VixenPlus {
                 finally {
                     Cursor = Cursors.Default;
                 }
-                if (_preferences.GetBoolean("EnableBackgroundSequence")) {
-                    _host.BackgroundSequenceName = _preferences.GetString("BackgroundSequence");
-                }
-                _host.StartBackgroundObjects();
                 SetShutdownTime(_preferences.GetString("ShutdownTime"));
 
                 splash.FadeOut();
@@ -333,8 +324,6 @@ namespace VixenPlus {
                 return;
             }
 
-            _host.StopBackgroundObjects();
-            _host.BackgroundSequenceName = null;
             _preferences.SaveSettings();
             _historyItemClick = null;
             _newMenuItemClick = null;
@@ -484,41 +473,10 @@ namespace VixenPlus {
 
         private void PreferencesPreferenceChange(string preferenceName) {
             switch (preferenceName) {
-                case "EnableBackgroundSequence":
-                    if (!_preferences.GetBoolean("EnableBackgroundSequence")) {
-                        _host.StopBackgroundSequence();
-                        break;
-                    }
-                    _host.BackgroundSequenceName = _preferences.GetString("BackgroundSequence");
-                    _host.StartBackgroundSequence();
-                    break;
-
-                case "EnableBackgroundMusic":
-                    if (!_preferences.GetBoolean("EnableBackgroundMusic")) {
-                        _host.StopBackgroundMusic();
-                        break;
-                    }
-                    _host.StartBackgroundMusic();
-                    break;
-
                 case "EventPeriod":
                     if (_preferences.GetInteger("EventPeriod") < 25) {
                         _preferences.SetInteger("EventPeriod", 25);
                         MessageBox.Show(Resources.VixenPlusForm_EventPeriodMin, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                    }
-                    break;
-
-                case "BackgroundMusicDelay":
-                    if (_preferences.GetInteger("BackgroundMusicDelay") < 1) {
-                        MessageBox.Show(Resources.VixenPlusForm_DelayPeriodMin, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                        _preferences.SetInteger("BackgroundMusicDelay", 1);
-                    }
-                    break;
-
-                case "BackgroundSequenceDelay":
-                    if (_preferences.GetInteger("BackgroundSequenceDelay") < 1) {
-                        MessageBox.Show(Resources.VixenPlusForm_DelayPeriodMin, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                        _preferences.SetInteger("BackgroundSequenceDelay", 1);
                     }
                     break;
 
@@ -541,10 +499,6 @@ namespace VixenPlus {
 
         public void InvokeGroupChange(object data) {
             NotifyAll(Notification.GroupChange, data);
-        }
-
-        private void musicPlayerToolStripMenuItem_Click(object sender, EventArgs e) {
-            _host.MusicPlayer.ShowDialog();
         }
 
 

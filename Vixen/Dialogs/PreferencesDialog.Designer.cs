@@ -24,18 +24,8 @@ namespace VixenPlus.Dialogs {
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("New Sequence Settings");
             System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Sequence Editing");
             System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Sequence Execution");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Background Items");
             this.treeView = new System.Windows.Forms.TreeView();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.checkBoxEnableBackgroundSequence = new System.Windows.Forms.CheckBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.textBoxBackgroundSequenceDelay = new System.Windows.Forms.TextBox();
-            this.checkBoxEnableBackgroundMusic = new System.Windows.Forms.CheckBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.textBoxBackgroundMusicDelay = new System.Windows.Forms.TextBox();
-            this.checkBoxEnableMusicFade = new System.Windows.Forms.CheckBox();
-            this.label21 = new System.Windows.Forms.Label();
-            this.textBoxMusicFadeDuration = new System.Windows.Forms.TextBox();
             this.checkBoxAutoScrolling = new System.Windows.Forms.CheckBox();
             this.checkBoxSavePlugInDialogPositions = new System.Windows.Forms.CheckBox();
             this.checkBoxShowPositionMarker = new System.Windows.Forms.CheckBox();
@@ -83,12 +73,6 @@ namespace VixenPlus.Dialogs {
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.btnSetDataFolder = new System.Windows.Forms.Button();
-            this.backgroundItemsTab = new System.Windows.Forms.TabPage();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.label9 = new System.Windows.Forms.Label();
             this.sequenceExecutionTab = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.sequenceEditingTab = new System.Windows.Forms.TabPage();
@@ -114,13 +98,10 @@ namespace VixenPlus.Dialogs {
             this.label35 = new System.Windows.Forms.Label();
             this.numericUpDownHistoryImages = new System.Windows.Forms.NumericUpDown();
             this.label28 = new System.Windows.Forms.Label();
-            this.tabControl = new TabControl(this.components);
+            this.tabControl = new VixenPlusCommon.TabControl(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinimumLevel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumLevel)).BeginInit();
             this.groupBox2.SuspendLayout();
-            this.backgroundItemsTab.SuspendLayout();
-            this.groupBox7.SuspendLayout();
-            this.groupBox6.SuspendLayout();
             this.sequenceExecutionTab.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.sequenceEditingTab.SuspendLayout();
@@ -154,111 +135,15 @@ namespace VixenPlus.Dialogs {
             treeNode4.Text = "Sequence Editing";
             treeNode5.Name = "nodeSequenceExecution";
             treeNode5.Text = "Sequence Execution";
-            treeNode6.Name = "nodeBackgroundItems";
-            treeNode6.Text = "Background Items";
             this.treeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode2,
             treeNode3,
             treeNode4,
-            treeNode5,
-            treeNode6});
+            treeNode5});
             this.treeView.Size = new System.Drawing.Size(161, 310);
             this.treeView.TabIndex = 0;
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
-            // 
-            // checkBoxEnableBackgroundSequence
-            // 
-            this.checkBoxEnableBackgroundSequence.AutoSize = true;
-            this.checkBoxEnableBackgroundSequence.Location = new System.Drawing.Point(6, 19);
-            this.checkBoxEnableBackgroundSequence.Name = "checkBoxEnableBackgroundSequence";
-            this.checkBoxEnableBackgroundSequence.Size = new System.Drawing.Size(169, 17);
-            this.checkBoxEnableBackgroundSequence.TabIndex = 0;
-            this.checkBoxEnableBackgroundSequence.Text = "Enable background sequence";
-            this.toolTip.SetToolTip(this.checkBoxEnableBackgroundSequence, "Enable the playing of a scripted background sequence while no sequences or progra" +
-                    "ms are playing");
-            this.checkBoxEnableBackgroundSequence.UseVisualStyleBackColor = true;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 39);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(143, 13);
-            this.label8.TabIndex = 1;
-            this.label8.Text = "Background sequence delay";
-            this.toolTip.SetToolTip(this.label8, "How long (in seconds) the background sequence will wait before starting after seq" +
-                    "uence or program execution stops");
-            // 
-            // textBoxBackgroundSequenceDelay
-            // 
-            this.textBoxBackgroundSequenceDelay.Location = new System.Drawing.Point(181, 36);
-            this.textBoxBackgroundSequenceDelay.Name = "textBoxBackgroundSequenceDelay";
-            this.textBoxBackgroundSequenceDelay.Size = new System.Drawing.Size(50, 20);
-            this.textBoxBackgroundSequenceDelay.TabIndex = 2;
-            this.toolTip.SetToolTip(this.textBoxBackgroundSequenceDelay, "How long (in seconds) the background sequence will wait before starting after seq" +
-                    "uence or program execution stops");
-            // 
-            // checkBoxEnableBackgroundMusic
-            // 
-            this.checkBoxEnableBackgroundMusic.AutoSize = true;
-            this.checkBoxEnableBackgroundMusic.Location = new System.Drawing.Point(6, 19);
-            this.checkBoxEnableBackgroundMusic.Name = "checkBoxEnableBackgroundMusic";
-            this.checkBoxEnableBackgroundMusic.Size = new System.Drawing.Size(149, 17);
-            this.checkBoxEnableBackgroundMusic.TabIndex = 4;
-            this.checkBoxEnableBackgroundMusic.Text = "Enable background music";
-            this.toolTip.SetToolTip(this.checkBoxEnableBackgroundMusic, "Enable the playing of background music while no sequences or programs are playing" +
-                    "");
-            this.checkBoxEnableBackgroundMusic.UseVisualStyleBackColor = true;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 39);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(146, 13);
-            this.label11.TabIndex = 5;
-            this.label11.Text = "Background music start delay";
-            this.toolTip.SetToolTip(this.label11, "How long (in seconds) the background music will wait before starting after sequen" +
-                    "ce or program execution stops");
-            // 
-            // textBoxBackgroundMusicDelay
-            // 
-            this.textBoxBackgroundMusicDelay.Location = new System.Drawing.Point(181, 36);
-            this.textBoxBackgroundMusicDelay.Name = "textBoxBackgroundMusicDelay";
-            this.textBoxBackgroundMusicDelay.Size = new System.Drawing.Size(50, 20);
-            this.textBoxBackgroundMusicDelay.TabIndex = 6;
-            this.toolTip.SetToolTip(this.textBoxBackgroundMusicDelay, "How long (in seconds) the background sequence will wait before starting after seq" +
-                    "uence or program execution stops");
-            // 
-            // checkBoxEnableMusicFade
-            // 
-            this.checkBoxEnableMusicFade.AutoSize = true;
-            this.checkBoxEnableMusicFade.Location = new System.Drawing.Point(6, 64);
-            this.checkBoxEnableMusicFade.Name = "checkBoxEnableMusicFade";
-            this.checkBoxEnableMusicFade.Size = new System.Drawing.Size(113, 17);
-            this.checkBoxEnableMusicFade.TabIndex = 8;
-            this.checkBoxEnableMusicFade.Text = "Enable music fade";
-            this.toolTip.SetToolTip(this.checkBoxEnableMusicFade, "Enable the fading of the background music when it\'s stopped");
-            this.checkBoxEnableMusicFade.UseVisualStyleBackColor = true;
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(6, 84);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(118, 13);
-            this.label21.TabIndex = 9;
-            this.label21.Text = "Music fade out duration";
-            this.toolTip.SetToolTip(this.label21, "How long (in seconds) it will take the background music to fade out");
-            // 
-            // textBoxMusicFadeDuration
-            // 
-            this.textBoxMusicFadeDuration.Location = new System.Drawing.Point(181, 81);
-            this.textBoxMusicFadeDuration.Name = "textBoxMusicFadeDuration";
-            this.textBoxMusicFadeDuration.Size = new System.Drawing.Size(50, 20);
-            this.textBoxMusicFadeDuration.TabIndex = 10;
-            this.toolTip.SetToolTip(this.textBoxMusicFadeDuration, "How long (in seconds) it will take the background music to fade out");
             // 
             // checkBoxAutoScrolling
             // 
@@ -736,81 +621,13 @@ namespace VixenPlus.Dialogs {
             this.btnSetDataFolder.UseVisualStyleBackColor = true;
             this.btnSetDataFolder.Click += new System.EventHandler(this.btnSetDataFolder_Click);
             // 
-            // backgroundItemsTab
-            // 
-            this.backgroundItemsTab.BackColor = System.Drawing.Color.Transparent;
-            this.backgroundItemsTab.Controls.Add(this.groupBox7);
-            this.backgroundItemsTab.Controls.Add(this.groupBox6);
-            this.backgroundItemsTab.Location = new System.Drawing.Point(4, 41);
-            this.backgroundItemsTab.Name = "backgroundItemsTab";
-            this.backgroundItemsTab.Size = new System.Drawing.Size(438, 265);
-            this.backgroundItemsTab.TabIndex = 4;
-            this.backgroundItemsTab.Text = "backgroundItemsTab";
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.label20);
-            this.groupBox7.Controls.Add(this.textBoxMusicFadeDuration);
-            this.groupBox7.Controls.Add(this.label21);
-            this.groupBox7.Controls.Add(this.checkBoxEnableMusicFade);
-            this.groupBox7.Controls.Add(this.label10);
-            this.groupBox7.Controls.Add(this.textBoxBackgroundMusicDelay);
-            this.groupBox7.Controls.Add(this.label11);
-            this.groupBox7.Controls.Add(this.checkBoxEnableBackgroundMusic);
-            this.groupBox7.Location = new System.Drawing.Point(3, 76);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(432, 115);
-            this.groupBox7.TabIndex = 1;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Music";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(237, 84);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(47, 13);
-            this.label20.TabIndex = 11;
-            this.label20.Text = "seconds";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(237, 39);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(47, 13);
-            this.label10.TabIndex = 7;
-            this.label10.Text = "seconds";
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.label9);
-            this.groupBox6.Controls.Add(this.textBoxBackgroundSequenceDelay);
-            this.groupBox6.Controls.Add(this.label8);
-            this.groupBox6.Controls.Add(this.checkBoxEnableBackgroundSequence);
-            this.groupBox6.Location = new System.Drawing.Point(3, 3);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(432, 67);
-            this.groupBox6.TabIndex = 0;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Sequence";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(237, 39);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(47, 13);
-            this.label9.TabIndex = 3;
-            this.label9.Text = "seconds";
-            // 
             // sequenceExecutionTab
             // 
             this.sequenceExecutionTab.BackColor = System.Drawing.Color.Transparent;
             this.sequenceExecutionTab.Controls.Add(this.groupBox4);
-            this.sequenceExecutionTab.Location = new System.Drawing.Point(4, 41);
+            this.sequenceExecutionTab.Location = new System.Drawing.Point(0, 0);
             this.sequenceExecutionTab.Name = "sequenceExecutionTab";
-            this.sequenceExecutionTab.Size = new System.Drawing.Size(438, 265);
+            this.sequenceExecutionTab.Size = new System.Drawing.Size(446, 310);
             this.sequenceExecutionTab.TabIndex = 2;
             this.sequenceExecutionTab.Text = "sequenceExecutionTab";
             // 
@@ -831,9 +648,9 @@ namespace VixenPlus.Dialogs {
             // 
             this.sequenceEditingTab.BackColor = System.Drawing.Color.Transparent;
             this.sequenceEditingTab.Controls.Add(this.groupBox5);
-            this.sequenceEditingTab.Location = new System.Drawing.Point(4, 41);
+            this.sequenceEditingTab.Location = new System.Drawing.Point(0, 0);
             this.sequenceEditingTab.Name = "sequenceEditingTab";
-            this.sequenceEditingTab.Size = new System.Drawing.Size(438, 265);
+            this.sequenceEditingTab.Size = new System.Drawing.Size(446, 310);
             this.sequenceEditingTab.TabIndex = 1;
             this.sequenceEditingTab.Text = "sequenceEditingTab";
             // 
@@ -888,9 +705,9 @@ namespace VixenPlus.Dialogs {
             this.newSequenceSettingsTab.Controls.Add(this.groupBox12);
             this.newSequenceSettingsTab.Controls.Add(this.groupBox8);
             this.newSequenceSettingsTab.Controls.Add(this.checkBoxWizardForNewSequences);
-            this.newSequenceSettingsTab.Location = new System.Drawing.Point(4, 41);
+            this.newSequenceSettingsTab.Location = new System.Drawing.Point(0, 0);
             this.newSequenceSettingsTab.Name = "newSequenceSettingsTab";
-            this.newSequenceSettingsTab.Size = new System.Drawing.Size(438, 265);
+            this.newSequenceSettingsTab.Size = new System.Drawing.Size(446, 310);
             this.newSequenceSettingsTab.TabIndex = 0;
             this.newSequenceSettingsTab.Text = "newSequenceSettingsTab";
             // 
@@ -938,9 +755,9 @@ namespace VixenPlus.Dialogs {
             this.screenTab.Controls.Add(this.gbColors);
             this.screenTab.Controls.Add(this.lblPrimaryScreen);
             this.screenTab.Controls.Add(this.cbScreens);
-            this.screenTab.Location = new System.Drawing.Point(4, 41);
+            this.screenTab.Location = new System.Drawing.Point(0, 0);
             this.screenTab.Name = "screenTab";
-            this.screenTab.Size = new System.Drawing.Size(438, 265);
+            this.screenTab.Size = new System.Drawing.Size(446, 310);
             this.screenTab.TabIndex = 7;
             this.screenTab.Text = "screenTab";
             this.screenTab.UseVisualStyleBackColor = true;
@@ -1030,9 +847,9 @@ namespace VixenPlus.Dialogs {
             this.generalTab.BackColor = System.Drawing.Color.Transparent;
             this.generalTab.Controls.Add(this.groupBox3);
             this.generalTab.Controls.Add(this.groupBox2);
-            this.generalTab.Location = new System.Drawing.Point(0, 0);
+            this.generalTab.Location = new System.Drawing.Point(4, 41);
             this.generalTab.Name = "generalTab";
-            this.generalTab.Size = new System.Drawing.Size(446, 310);
+            this.generalTab.Size = new System.Drawing.Size(438, 265);
             this.generalTab.TabIndex = 3;
             this.generalTab.Text = "generalTab";
             // 
@@ -1114,11 +931,10 @@ namespace VixenPlus.Dialogs {
             this.tabControl.Controls.Add(this.newSequenceSettingsTab);
             this.tabControl.Controls.Add(this.sequenceEditingTab);
             this.tabControl.Controls.Add(this.sequenceExecutionTab);
-            this.tabControl.Controls.Add(this.backgroundItemsTab);
-            this.tabControl.HideTabs = true;
             this.tabControl.Location = new System.Drawing.Point(179, 12);
             this.tabControl.Multiline = true;
             this.tabControl.Name = "tabControl";
+            this.tabControl.OurMultiline = true;
             this.tabControl.SelectedIndex = 0;
             this.tabControl.ShowToolTips = true;
             this.tabControl.Size = new System.Drawing.Size(446, 310);
@@ -1147,11 +963,6 @@ namespace VixenPlus.Dialogs {
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumLevel)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.backgroundItemsTab.ResumeLayout(false);
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
             this.sequenceExecutionTab.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
@@ -1189,21 +1000,6 @@ namespace VixenPlus.Dialogs {
         }
         private ColorDialog colorDialog1;
         private Button btnSetDataFolder;
-        private TabPage backgroundItemsTab;
-        private GroupBox groupBox7;
-        private Label label20;
-        private TextBox textBoxMusicFadeDuration;
-        private Label label21;
-        private CheckBox checkBoxEnableMusicFade;
-        private Label label10;
-        private TextBox textBoxBackgroundMusicDelay;
-        private Label label11;
-        private CheckBox checkBoxEnableBackgroundMusic;
-        private GroupBox groupBox6;
-        private Label label9;
-        private TextBox textBoxBackgroundSequenceDelay;
-        private Label label8;
-        private CheckBox checkBoxEnableBackgroundSequence;
         private TabPage sequenceExecutionTab;
         private GroupBox groupBox4;
         private CheckBox checkBoxClearAtEndOfSequence;

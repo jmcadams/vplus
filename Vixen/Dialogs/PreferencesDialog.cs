@@ -25,8 +25,7 @@ namespace VixenPlus.Dialogs {
             ScreenAndColor,
             NewSequence,
             SequenceEditing,
-            SequenceExecution,
-            Background,
+            SequenceExecution
         }
 
 
@@ -43,7 +42,6 @@ namespace VixenPlus.Dialogs {
             treeView.Nodes["nodeNewSequenceSettings"].Tag = newSequenceSettingsTab;
             treeView.Nodes["nodeSequenceEditing"].Tag = sequenceEditingTab;
             treeView.Nodes["nodeSequenceExecution"].Tag = sequenceExecutionTab;
-            treeView.Nodes["nodeBackgroundItems"].Tag = backgroundItemsTab;
             tabControl.SelectedTab = generalTab;
             ReadPreferences(tabControl.TabPages.IndexOf(generalTab));
             PopulateProfileLists();
@@ -95,10 +93,6 @@ namespace VixenPlus.Dialogs {
                 }
                 case (int) RootNodes.SequenceExecution:
                     WriteSequenceExecutionNodes();
-                    return;
-
-                case (int) RootNodes.Background:
-                    WirteBackgroundNodes();
                     return;
             }
         }
@@ -165,16 +159,6 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private void WirteBackgroundNodes() {
-            _preferences.SetBoolean("EnableBackgroundSequence", checkBoxEnableBackgroundSequence.Checked);
-            _preferences.SetString("BackgroundSequenceDelay", textBoxBackgroundSequenceDelay.Text);
-            _preferences.SetBoolean("EnableBackgroundMusic", checkBoxEnableBackgroundMusic.Checked);
-            _preferences.SetString("BackgroundMusicDelay", textBoxBackgroundMusicDelay.Text);
-            _preferences.SetBoolean("EnableMusicFade", checkBoxEnableMusicFade.Checked);
-            _preferences.SetString("MusicFadeDuration", textBoxMusicFadeDuration.Text);
-        }
-
-
         private void PopulateProfileLists() {
             var boxArray = new[] {comboBoxDefaultProfile};
             foreach (var box in boxArray) {
@@ -236,10 +220,6 @@ namespace VixenPlus.Dialogs {
 
                 case (int) RootNodes.SequenceExecution:
                     ReadSequenceExecutionNodes();
-                    return;
-
-                case (int) RootNodes.Background:
-                    ReadBackgroundNodes();
                     return;
             }
         }
@@ -317,16 +297,6 @@ namespace VixenPlus.Dialogs {
             checkBoxAutoScrolling.Checked = _preferences.GetBoolean("AutoScrolling");
             checkBoxSavePlugInDialogPositions.Checked = _preferences.GetBoolean("SavePlugInDialogPositions");
             checkBoxClearAtEndOfSequence.Checked = _preferences.GetBoolean("ClearAtEndOfSequence");
-        }
-
-
-        private void ReadBackgroundNodes() {
-            checkBoxEnableBackgroundSequence.Checked = _preferences.GetBoolean("EnableBackgroundSequence");
-            textBoxBackgroundSequenceDelay.Text = _preferences.GetString("BackgroundSequenceDelay");
-            checkBoxEnableBackgroundMusic.Checked = _preferences.GetBoolean("EnableBackgroundMusic");
-            textBoxBackgroundMusicDelay.Text = _preferences.GetString("BackgroundMusicDelay");
-            checkBoxEnableMusicFade.Checked = _preferences.GetBoolean("EnableMusicFade");
-            textBoxMusicFadeDuration.Text = _preferences.GetString("MusicFadeDuration");
         }
 
 

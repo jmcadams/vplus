@@ -14,7 +14,6 @@ namespace VixenPlus {
         private HelpProvider helpProvider;
         private ToolStripMenuItem helpToolStripMenuItem;
         private MenuStrip menuStrip1;
-        private ToolStripMenuItem musicPlayerToolStripMenuItem;
         private ToolStripMenuItem newLightingProgramToolStripMenuItem;
         private ToolStripMenuItem onlineSupportForumToolStripMenuItem;
         private ToolStripMenuItem openALightingProgramToolStripMenuItem;
@@ -60,7 +59,6 @@ namespace VixenPlus {
             this.manageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.utilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setSoundDeviceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.musicPlayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -206,7 +204,6 @@ namespace VixenPlus {
             // 
             this.utilityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.setSoundDeviceToolStripMenuItem,
-            this.musicPlayerToolStripMenuItem,
             this.toolStripMenuItem1,
             this.preferencesToolStripMenuItem});
             this.utilityToolStripMenuItem.Name = "utilityToolStripMenuItem";
@@ -219,13 +216,6 @@ namespace VixenPlus {
             this.setSoundDeviceToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
             this.setSoundDeviceToolStripMenuItem.Text = "Set application default audio device";
             this.setSoundDeviceToolStripMenuItem.Click += new System.EventHandler(this.setSoundDeviceToolStripMenuItem_Click);
-            // 
-            // musicPlayerToolStripMenuItem
-            // 
-            this.musicPlayerToolStripMenuItem.Name = "musicPlayerToolStripMenuItem";
-            this.musicPlayerToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
-            this.musicPlayerToolStripMenuItem.Text = "Music player";
-            this.musicPlayerToolStripMenuItem.Click += new System.EventHandler(this.musicPlayerToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 

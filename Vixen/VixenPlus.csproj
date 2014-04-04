@@ -197,12 +197,6 @@
     <Compile Include="Dialogs\Lutefisk.Designer.cs">
       <DependentUpon>Lutefisk.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\MusicPlayerDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\MusicPlayerDialog.Designer.cs">
-      <DependentUpon>MusicPlayerDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Dialogs\NewSequenceWizardDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -319,7 +313,6 @@
     <Compile Include="ListViewSortIcons.cs" />
     <Compile Include="LoadableData.cs" />
     <Compile Include="MappedOutputPlugIn.cs" />
-    <Compile Include="MusicPlayer.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="NutcrackerNodes.cs" />
     <Compile Include="OnEngineError.cs" />
@@ -411,9 +404,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\Lutefisk.resx">
       <DependentUpon>Lutefisk.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\MusicPlayerDialog.resx">
-      <DependentUpon>MusicPlayerDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\NewSequenceWizardDialog.resx">
       <DependentUpon>NewSequenceWizardDialog.cs</DependentUpon>
