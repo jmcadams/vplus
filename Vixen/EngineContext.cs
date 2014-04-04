@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 
 using FMOD;
 
@@ -11,7 +12,7 @@ namespace VixenPlus {
         public int FadeStartTickCount;
         public int LastIndex = -1;
         public byte[] LastPeriod;
-        public int MaxEvent = 2147483647;
+        public int MaxEvent = Int32.MaxValue;
         public RouterContext RouterContext;
         public int SequenceTickLength;
         public SoundChannel SoundChannel;
