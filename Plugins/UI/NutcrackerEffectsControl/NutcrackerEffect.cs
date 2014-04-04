@@ -10,7 +10,7 @@ using NutcrackerEffects.Effects;
 
 using VixenPlusCommon;
 
-namespace NutcrackerEffects {
+namespace Nutcracker {
     public sealed partial class NutcrackerEffectControl : UserControl {
         private readonly Dictionary<string, INutcrackerEffect> _effectCache = new Dictionary<string, INutcrackerEffect>();
 

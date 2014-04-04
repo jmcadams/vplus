@@ -11,11 +11,9 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 
-
-
 using FMOD;
 
-using NutcrackerEffects;
+using Nutcracker;
 
 using VixenPlus;
 using VixenPlus.Dialogs;

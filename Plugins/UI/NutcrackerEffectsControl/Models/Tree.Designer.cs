@@ -1,4 +1,4 @@
-﻿namespace NutcrackerEffects.Models {
+﻿namespace Nutcracker.Models {
     partial class Tree {
         /// <summary>
         /// Required designer variable.

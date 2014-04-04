@@ -307,7 +307,6 @@
     <Compile Include="LoadableData.cs" />
     <Compile Include="MappedOutputPlugIn.cs" />
     <Compile Include="Notification.cs" />
-    <Compile Include="NutcrackerNodes.cs" />
     <Compile Include="OutputPlugins.cs" />
     <Compile Include="OutputPlugInUIBase.cs">
       <SubType>Form</SubType>

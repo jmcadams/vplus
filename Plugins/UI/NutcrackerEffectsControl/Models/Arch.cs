@@ -2,10 +2,13 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-using VixenPlus;
+using Nutcracker.Effects;
+
+using NutcrackerEffects.Models;
+
 using VixenPlus.Annotations;
 
-namespace NutcrackerEffects.Models {
+namespace Nutcracker.Models {
     [UsedImplicitly]
     public partial class Arch : UserControl, INutcrackerModel {
 

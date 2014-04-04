@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace VixenPlus {
+namespace Nutcracker.Effects {
     public class NutcrackerNodes {
         public Color PixelColor { get; set; }
         public Point Model { get; set; }

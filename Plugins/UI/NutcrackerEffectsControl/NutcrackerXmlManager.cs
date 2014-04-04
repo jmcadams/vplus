@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -7,7 +6,7 @@ using System.Xml.Linq;
 
 using VixenPlusCommon;
 
-namespace NutcrackerEffects {
+namespace Nutcracker {
     public class NutcrackerXmlManager {
 
         private readonly XElement _doc;

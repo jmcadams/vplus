@@ -1,6 +1,6 @@
 using System.Windows.Forms;
 
-namespace NutcrackerEffects
+namespace Nutcracker
 {
     partial class NutcrackerControlDialog
     {

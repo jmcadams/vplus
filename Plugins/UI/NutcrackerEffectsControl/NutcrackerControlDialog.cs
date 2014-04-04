@@ -7,6 +7,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
+using Nutcracker.Effects;
+
 using NutcrackerEffects.Effects;
 
 using VixenPlus;
@@ -14,7 +16,7 @@ using VixenPlus.Dialogs;
 
 using VixenPlusCommon;
 
-namespace NutcrackerEffects {
+namespace Nutcracker {
     public partial class NutcrackerControlDialog : Form {
 
         #region Class Members and Accessors

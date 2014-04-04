@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 using VixenPlus.Dialogs;
 
-namespace NutcrackerEffects {
+namespace Nutcracker {
     public partial class NutcrackerPaletteManager : Form {
 
         private readonly Action<Color[]> _setPalette;

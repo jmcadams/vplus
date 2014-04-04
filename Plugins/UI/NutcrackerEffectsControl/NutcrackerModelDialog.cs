@@ -10,7 +10,7 @@ using VixenPlus;
 
 using VixenPlusCommon;
 
-namespace NutcrackerEffects {
+namespace Nutcracker {
     public partial class NutcrackerModelDialog : Form {
         private readonly EventSequence _sequence;
         private int _lastGroupSelected;

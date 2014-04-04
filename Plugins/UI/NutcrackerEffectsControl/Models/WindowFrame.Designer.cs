@@ -1,4 +1,4 @@
-﻿namespace NutcrackerEffects.Models {
+﻿namespace Nutcracker.Models {
     partial class WindowFrame {
         /// <summary> 
         /// Required designer variable.
