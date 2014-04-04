@@ -301,7 +301,6 @@
     <Compile Include="IOutputPlugIn.cs" />
     <Compile Include="IPlugIn.cs" />
     <Compile Include="IQueryable.cs" />
-    <Compile Include="IScheduledObject.cs" />
     <Compile Include="ISetup.cs" />
     <Compile Include="ISystem.cs" />
     <Compile Include="ITickSource.cs" />

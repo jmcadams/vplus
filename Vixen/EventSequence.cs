@@ -12,7 +12,7 @@ using VixenPlus.Properties;
 using VixenPlusCommon;
 
 namespace VixenPlus {
-    public class EventSequence : IScheduledObject {
+    public class EventSequence : IExecutable {
         private List<Channel> _fullChannels;
         private int _eventPeriod;
         private Profile _profile;
@@ -67,7 +67,6 @@ namespace VixenPlus {
             _fullChannels = new List<Channel>();
             Channels = new List<Channel>();
             PlugInData = new SetupData();
-            //LoadableData = new LoadableData();
             _sortOrders = new SortOrders();
             Extensions = new SequenceExtensions();
             if (preferences != null) {

@@ -12,7 +12,7 @@ using VixenPlusCommon;
 using VixenPlusCommon.Annotations;
 
 namespace VixenPlus {
-    public class SequenceProgram : IScheduledObject {
+    public class SequenceProgram : IExecutable {
         private readonly ulong _key;
         private byte[][] _mask;
         private Profile _profile;
