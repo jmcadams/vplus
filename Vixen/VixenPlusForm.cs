@@ -739,19 +739,6 @@ namespace VixenPlus {
             Save((UIBase) ActiveMdiChild);
         }
 
-        //TODO this can be removed, for now yes. (1/26/2014)
-        private void setBackgroundSequenceToolStripMenuItem_Click(object sender, EventArgs e) {
-            using (var backgroundSequenceDialog = new BackgroundSequenceDialog(_preferences.GetString("BackgroundSequence"), Paths.SequencePath)) {
-                if (backgroundSequenceDialog.ShowDialog() != DialogResult.OK) {
-                    return;
-                }
-
-                _preferences.SetString("BackgroundSequence", backgroundSequenceDialog.BackgroundSequenceFileName);
-                _host.BackgroundSequenceName = backgroundSequenceDialog.BackgroundSequenceFileName;
-            }
-        }
-
-
 
         private static void SetDataPath() {
             CheckIfFirstRun();

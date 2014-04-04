@@ -26,7 +26,6 @@ namespace VixenPlus {
         private ToolStripMenuItem saveAsToolStripMenuItem;
         private SaveFileDialog saveFileDialog1;
         private ToolStripMenuItem saveToolStripMenuItem;
-        private ToolStripMenuItem setBackgroundSequenceToolStripMenuItem;
         private ToolStripMenuItem setSoundDeviceToolStripMenuItem;
         private System.Windows.Forms.Timer shutdownTimer;
         private StatusStrip statusStrip;
@@ -53,7 +52,6 @@ namespace VixenPlus {
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
-            this.setBackgroundSequenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.channelDimmingCurvesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
             this.recentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -109,7 +107,6 @@ namespace VixenPlus {
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
             this.toolStripMenuItem8,
-            this.setBackgroundSequenceToolStripMenuItem,
             this.channelDimmingCurvesToolStripMenuItem,
             this.toolStripMenuItem6,
             this.recentToolStripMenuItem});
@@ -121,28 +118,28 @@ namespace VixenPlus {
             // newLightingProgramToolStripMenuItem
             // 
             this.newLightingProgramToolStripMenuItem.Name = "newLightingProgramToolStripMenuItem";
-            this.newLightingProgramToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.newLightingProgramToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.newLightingProgramToolStripMenuItem.Text = "New sequence";
             // 
             // openALightingProgramToolStripMenuItem
             // 
             this.openALightingProgramToolStripMenuItem.Name = "openALightingProgramToolStripMenuItem";
             this.openALightingProgramToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openALightingProgramToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.openALightingProgramToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.openALightingProgramToolStripMenuItem.Text = "&Open a sequence";
             this.openALightingProgramToolStripMenuItem.Click += new System.EventHandler(this.openALightingProgramToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(207, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(205, 6);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Enabled = false;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.saveToolStripMenuItem.Text = "&Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -152,27 +149,19 @@ namespace VixenPlus {
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
             this.saveAsToolStripMenuItem.ShortcutKeyDisplayString = "";
             this.saveAsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.saveAsToolStripMenuItem.Text = "Save &As";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // toolStripMenuItem8
             // 
             this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(207, 6);
-            // 
-            // setBackgroundSequenceToolStripMenuItem
-            // 
-            this.setBackgroundSequenceToolStripMenuItem.Name = "setBackgroundSequenceToolStripMenuItem";
-            this.setBackgroundSequenceToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
-            this.setBackgroundSequenceToolStripMenuItem.Text = "Set background sequence";
-            this.setBackgroundSequenceToolStripMenuItem.Visible = false;
-            this.setBackgroundSequenceToolStripMenuItem.Click += new System.EventHandler(this.setBackgroundSequenceToolStripMenuItem_Click);
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(205, 6);
             // 
             // channelDimmingCurvesToolStripMenuItem
             // 
             this.channelDimmingCurvesToolStripMenuItem.Name = "channelDimmingCurvesToolStripMenuItem";
-            this.channelDimmingCurvesToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.channelDimmingCurvesToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.channelDimmingCurvesToolStripMenuItem.Text = "Channel dimming curves";
             this.channelDimmingCurvesToolStripMenuItem.Visible = false;
             this.channelDimmingCurvesToolStripMenuItem.Click += new System.EventHandler(this.channelDimmingCurvesToolStripMenuItem_Click);
@@ -180,13 +169,13 @@ namespace VixenPlus {
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(207, 6);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(205, 6);
             this.toolStripMenuItem6.Visible = false;
             // 
             // recentToolStripMenuItem
             // 
             this.recentToolStripMenuItem.Name = "recentToolStripMenuItem";
-            this.recentToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.recentToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.recentToolStripMenuItem.Text = "Recent";
             // 
             // viewToolStripMenuItem
