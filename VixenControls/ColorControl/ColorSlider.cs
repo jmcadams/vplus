@@ -502,9 +502,9 @@ namespace VixenPlusCommon {
         /// <value>The color of the nub.</value>
         [Category("Appearance")]
         [DefaultValue(typeof (Color), "Black")]
-        // ReSharper disable once VirtualMemberNeverOverriden.Global
+        // ReSharper disable MemberCanBePrivate.Global
         public Color NubColor {
-            // ReSharper disable once MemberCanBePrivate.Global
+            // ReSharper restore MemberCanBePrivate.Global
             get { return _nubColor; }
             set {
                 if (NubColor == value) {

@@ -193,7 +193,7 @@ namespace VixenPlus {
 
         public void VerifySequenceHardwarePlugins(EventSequence sequence) {
             OutputPlugins.VerifyPlugIns(sequence);
-            InputPlugins.VerifyPlugIns(sequence);
+            //InputPlugins.VerifyPlugIns(sequence);
         }
 
 

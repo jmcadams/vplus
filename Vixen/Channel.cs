@@ -100,7 +100,9 @@ namespace VixenPlus {
 
         public bool Enabled { get; set; }
 
-        public ulong Id { get; private set; }
+        // ReSharper disable MemberCanBePrivate.Global
+        public ulong Id { get; private set; } //TODO can this be removed?
+        // ReSharper restore MemberCanBePrivate.Global
 
         public bool CanDoDimming { get; private set; }
 

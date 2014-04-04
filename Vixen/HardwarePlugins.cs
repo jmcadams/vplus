@@ -9,7 +9,7 @@ using System.Reflection;
 using VixenPlusCommon;
 
 namespace VixenPlus {
-    internal class HardwarePlugins {
+    internal static class HardwarePlugins {
         private static readonly Dictionary<string, IHardwarePlugin> PluginCache = new Dictionary<string, IHardwarePlugin>();
 
 

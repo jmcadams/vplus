@@ -52,10 +52,6 @@ namespace VixenPlusCommon {
             get { return Path.Combine(DataPath, "Imports and Exports"); }
         }
 
-        public static string InputPluginPath {
-            get { return Path.Combine(PluginBasePath, "Input"); }
-        }
-
         private static string LibraryPath {
             get { return Path.Combine(DataPath, "Libraries"); }
         }

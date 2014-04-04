@@ -20,7 +20,9 @@ namespace VixenPlus {
             return HardwarePlugins.FindPlugin(pluginName, uniqueInstance, Paths.OutputPluginPath, "IOutputPlugIn");
         }
 
+        // ReSharper disable ReturnTypeCanBeEnumerable.Global
         public static List<IHardwarePlugin> LoadPlugins() {
+            // ReSharper restore ReturnTypeCanBeEnumerable.Global
             return HardwarePlugins.LoadPlugins(Paths.OutputPluginPath, "IOutputPlugIn");
         }
 

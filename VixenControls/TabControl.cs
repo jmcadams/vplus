@@ -56,9 +56,12 @@ namespace VixenPlusCommon {
         [Category("Appearance")]
         [DefaultValue(typeof (bool), "false")]
         [RefreshProperties(RefreshProperties.All)]
+        // ReSharper disable MemberCanBePrivate.Global
         public bool HideTabs {
+            // ReSharper restore MemberCanBePrivate.Global
             [UsedImplicitly]
             get { return _hideTabs; }
+            [UsedImplicitly]
             set {
                 if (_hideTabs == value) {
                     return;

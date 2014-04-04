@@ -136,12 +136,6 @@
     <Compile Include="Dialogs\AudioDialog.Designer.cs">
       <DependentUpon>AudioDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\BackgroundSequenceDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\BackgroundSequenceDialog.Designer.cs">
-      <DependentUpon>BackgroundSequenceDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Dialogs\ChannelOrderDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -310,11 +304,7 @@
     <Compile Include="IExecution.cs" />
     <Compile Include="IExecutionImpl.cs" />
     <Compile Include="IHardwarePlugin.cs" />
-    <Compile Include="IInputPlugin.cs" />
     <Compile Include="IMaskable.cs" />
-    <Compile Include="Input.cs" />
-    <Compile Include="InputPlugin.cs" />
-    <Compile Include="InputPlugins.cs" />
     <Compile Include="Interfaces.cs" />
     <Compile Include="IOutputPlugIn.cs" />
     <Compile Include="IPlugIn.cs" />
@@ -329,8 +319,6 @@
     <Compile Include="ListViewSortIcons.cs" />
     <Compile Include="LoadableData.cs" />
     <Compile Include="MappedOutputPlugIn.cs" />
-    <Compile Include="MappingSet.cs" />
-    <Compile Include="MappingSets.cs" />
     <Compile Include="MusicPlayer.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="NutcrackerNodes.cs" />
@@ -393,9 +381,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\AudioDialog.resx">
       <DependentUpon>AudioDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\BackgroundSequenceDialog.resx">
-      <DependentUpon>BackgroundSequenceDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ChannelOrderDialog.resx">
       <DependentUpon>ChannelOrderDialog.cs</DependentUpon>

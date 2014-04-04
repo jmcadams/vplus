@@ -46,15 +46,17 @@ namespace VixenPlusCommon {
         ///     Occurs when the Channel property value changes
         /// </summary>
         [Category("Property Changed")]
-        // ReSharper disable once EventNeverSubscribedTo.Global
+        // ReSharper disable EventNeverSubscribedTo.Global
         public event EventHandler ChannelChanged; // todo Keep or remove>
+        // ReSharper restore EventNeverSubscribedTo.Global
 
         /// <summary>
         ///     Occurs when the Color property value changes
         /// </summary>
         [Category("Property Changed")]
-        // ReSharper disable once EventNeverSubscribedTo.Global
+        // ReSharper disable EventNeverSubscribedTo.Global
         public event EventHandler ColorChanged; // todo Keep or remove?
+        // ReSharper restore EventNeverSubscribedTo.Global
 
         #endregion
 
@@ -134,10 +136,11 @@ namespace VixenPlusCommon {
 
         [Category("Appearance")]
         [DefaultValue(typeof (RgbaChannel), "Red")]
+        // ReSharper disable MemberCanBePrivate.Global
         public RgbaChannel Channel {
-// ReSharper disable MemberCanBePrivate.Global
+            // ReSharper restore MemberCanBePrivate.Global
             get { return _channel; }
-// ReSharper restore MemberCanBePrivate.Global
+            [UsedImplicitly]
             set {
                 if (Channel == value) {
                     return;
@@ -150,7 +153,9 @@ namespace VixenPlusCommon {
 
         [Category("Appearance")]
         [DefaultValue(typeof (Color), "Black")]
+        // ReSharper disable MemberCanBePrivate.Global
         public Color Color {
+            // ReSharper restore MemberCanBePrivate.Global
             private get { return _color; }
             set {
                 if (Color == value) {

@@ -17,10 +17,10 @@ namespace VixenPlus {
             Xml.SetAttribute(node, "key", plugIn.Name.GetHashCode().ToString(CultureInfo.InvariantCulture));
             Xml.SetAttribute(node, "id", (GetAllPluginData().Count - 1).ToString(CultureInfo.InvariantCulture));
             Xml.SetAttribute(node, "enabled", bool.TrueString);
-            if (plugIn is IInputPlugin) {
-                Xml.SetAttribute(node, "type", PluginType.Input.ToString());
-                return node;
-            }
+            //if (plugIn is IInputPlugin) {
+            //    Xml.SetAttribute(node, "type", PluginType.Input.ToString());
+            //    return node;
+            //}
             if (!(plugIn is IOutputPlugIn)) {
                 return node;
             }

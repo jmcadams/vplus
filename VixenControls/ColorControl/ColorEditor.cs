@@ -209,35 +209,37 @@ namespace VixenPlusCommon {
         /// </summary>
         /// <param name="userAction">if set to <c>true</c> the update is due to user interaction.</param>
         private void UpdateFields(bool userAction) {
-            if (!LockUpdates) {
-                try {
-                    LockUpdates = true;
+            if (LockUpdates) {
+                return;
+            }
 
-                    // RGB
-                    if (!(userAction && rNumericUpDown.Focused)) {
-                        rNumericUpDown.Value = Color.R;
-                    }
-                    if (!(userAction && gNumericUpDown.Focused)) {
-                        gNumericUpDown.Value = Color.G;
-                    }
-                    if (!(userAction && bNumericUpDown.Focused)) {
-                        bNumericUpDown.Value = Color.B;
-                    }
-                    rColorBar.Value = Color.R;
-                    rColorBar.Color = Color;
-                    gColorBar.Value = Color.G;
-                    gColorBar.Color = Color;
-                    bColorBar.Value = Color.B;
-                    bColorBar.Color = Color;
+            try {
+                LockUpdates = true;
 
-                    // HTML
-                    if (!(userAction && hexTextBox.Focused)) {
-                        hexTextBox.Text = string.Format("{0:X2}{1:X2}{2:X2}", Color.R, Color.G, Color.B);
-                    }
+                // RGB
+                if (!(userAction && rNumericUpDown.Focused)) {
+                    rNumericUpDown.Value = Color.R;
                 }
-                finally {
-                    LockUpdates = false;
+                if (!(userAction && gNumericUpDown.Focused)) {
+                    gNumericUpDown.Value = Color.G;
                 }
+                if (!(userAction && bNumericUpDown.Focused)) {
+                    bNumericUpDown.Value = Color.B;
+                }
+                rColorBar.Value = Color.R;
+                rColorBar.Color = Color;
+                gColorBar.Value = Color.G;
+                gColorBar.Color = Color;
+                bColorBar.Value = Color.B;
+                bColorBar.Color = Color;
+
+                // HTML
+                if (!(userAction && hexTextBox.Focused)) {
+                    hexTextBox.Text = string.Format("{0:X2}{1:X2}{2:X2}", Color.R, Color.G, Color.B);
+                }
+            }
+            finally {
+                LockUpdates = false;
             }
         }
 

@@ -309,16 +309,16 @@ namespace VixenPlus {
             for (var i = 0; i < context.CurrentSequence.FullChannels.Count; i++) {
                 context.RouterContext.EngineBuffer[i] = context.Data[i, index];
             }
-            HardwareUpdate(context.RouterContext.EngineBuffer, index);
+            HardwareUpdate(context.RouterContext.EngineBuffer);
         }
+
+
+        //public void HardwareUpdate(byte[] values) {
+        //    HardwareUpdate(values, -1);
+        //}
 
 
         public void HardwareUpdate(byte[] values) {
-            HardwareUpdate(values, -1);
-        }
-
-
-        private void HardwareUpdate(byte[] values, int eventIndex) {
             if (!_isRunning || _isStopping) {
                 return;
             }
@@ -333,7 +333,7 @@ namespace VixenPlus {
                 var engineBuffer = context.RouterContext.EngineBuffer;
                 values.CopyTo(engineBuffer, 0);
                 _plugInRouter.BeginUpdate();
-                _plugInRouter.GetSequenceInputs(context.RouterContext.ExecutableObject, engineBuffer, true, false);
+                //_plugInRouter.GetSequenceInputs(context.RouterContext.ExecutableObject, engineBuffer, true, false);
                 var flag = context.LastPeriod == null;
                 for (num = 0; (num < engineBuffer.Length) && !flag; num++) {
                     flag |= engineBuffer[num] != context.LastPeriod[num];
@@ -363,19 +363,19 @@ namespace VixenPlus {
                         StopExecution();
                     }
                 }
-                if ((_isStopping || !_isRunning) || (eventIndex == -1)) {
-                    return;
-                }
+                //if ((_isStopping || !_isRunning) || (eventIndex == -1)) {
+                //    return;
+                //}
 
-                engineBuffer = new byte[engineBuffer.Length];
-                var num3 = context.CurrentSequence.FullChannels.Count;
-                var eventValues = context.CurrentSequence.EventValues;
-                if (!_plugInRouter.GetSequenceInputs(context.RouterContext.ExecutableObject, engineBuffer, false, true)) {
-                    return;
-                }
-                for (var i = 0; i < num3; i++) {
-                    eventValues[i, eventIndex] = Math.Max(eventValues[i, eventIndex], engineBuffer[i]);
-                }
+                //engineBuffer = new byte[engineBuffer.Length];
+                //var num3 = context.CurrentSequence.FullChannels.Count;
+                //var eventValues = context.CurrentSequence.EventValues;
+                //if (!_plugInRouter.GetSequenceInputs(context.RouterContext.ExecutableObject, engineBuffer, false, true)) {
+                //    return;
+                //}
+                //for (var i = 0; i < num3; i++) {
+                //    eventValues[i, eventIndex] = Math.Max(eventValues[i, eventIndex], engineBuffer[i]);
+                //}
             }
         }
 

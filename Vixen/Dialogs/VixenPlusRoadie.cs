@@ -1434,27 +1434,25 @@ namespace VixenPlus.Dialogs {
             _outputPorts = new Dictionary<string, Dictionary<int, OutputPort>>();
             Cursor = Cursors.WaitCursor;
             try {
-                ListViewItem item;
                 listViewPlugins.Columns[0].Width = listViewPlugins.Width - 25;
                 var group = listViewPlugins.Groups["listViewGroupOutput"];
-                var group2 = listViewPlugins.Groups["listViewGroupInput"];
+                //var group2 = listViewPlugins.Groups["listViewGroupInput"];
                 var list = OutputPlugins.LoadPlugins();
                 if (list != null) {
-                    foreach (var plugin in list) {
-                        item = new ListViewItem(plugin.Name, group) {Tag = plugin};
+                    foreach (var item in list.Select(plugin => new ListViewItem(plugin.Name, @group) {Tag = plugin})) {
                         listViewPlugins.Items.Add(item);
                     }
                 }
-                list = InputPlugins.LoadPlugins();
-                if (list != null) {
-                    foreach (var plugin in list) {
-                        item = new ListViewItem(plugin.Name, group2) {Tag = plugin};
-                        listViewPlugins.Items.Add(item);
-                    }
-                }
+                //list = InputPlugins.LoadPlugins();
+                //if (list != null) {
+                //    foreach (var plugin in list) {
+                //        item = new ListViewItem(plugin.Name, group2) {Tag = plugin};
+                //        listViewPlugins.Items.Add(item);
+                //    }
+                //}
                 listViewPlugins.Enabled = listViewPlugins.Items.Count > 0;
                 OutputPlugins.VerifyPlugIns(_executableObject);
-                InputPlugins.VerifyPlugIns(_executableObject);
+                //InputPlugins.VerifyPlugIns(_executableObject);
                 _collapsedRelativeBounds = new Rectangle(listViewOutputPorts.Columns[2].Width - (pictureBoxPlus.Width * 2),
                                                          (14 - pictureBoxPlus.Height) / 2, pictureBoxPlus.Width, pictureBoxPlus.Height);
                 _expandedRelativeBounds = new Rectangle(listViewOutputPorts.Columns[2].Width - (pictureBoxMinus.Width * 2),
@@ -1637,7 +1635,7 @@ namespace VixenPlus.Dialogs {
                 // ReSharper disable PossibleNullReferenceException
                 foreach (XmlNode node in _setupData.GetAllPluginData()) {
                     var plugin = (node.Attributes["type"] != null && node.Attributes["type"].Value == SetupData.PluginType.Input.ToString())
-                                     ? InputPlugins.FindPlugin(node.Attributes["name"].Value, true)
+                                     ? null //InputPlugins.FindPlugin(node.Attributes["name"].Value, true)
                                      : OutputPlugins.FindPlugin(node.Attributes["name"].Value, true);
 
                     if (plugin != null) {
