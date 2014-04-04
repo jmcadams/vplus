@@ -592,7 +592,6 @@ namespace VixenPlus {
 
         private void OpenSequence(string fileName) {
             IUIPlugIn plugInInterface;
-            //new XmlDocument();
             var extension = Path.GetExtension(fileName);
             if (extension != null && _registeredFileTypes.TryGetValue(extension.ToLower(), out plugInInterface)) {
                 AddToFileHistory(fileName);

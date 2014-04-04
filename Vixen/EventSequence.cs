@@ -95,12 +95,8 @@ namespace VixenPlus {
         #region nonChannelStuff
 
         private int ExtentOfAudio() {
-            if (Audio != null) {
-                return Audio.Duration;
-            }
-            return -2147483648;
+            return Audio != null ? Audio.Duration : Int32.MinValue;
         }
-
 
 
         public int ChannelWidth { get; private set; }

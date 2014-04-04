@@ -11,7 +11,6 @@ namespace VixenPlus {
         public static byte[,] Clipboard;
         internal static readonly Dictionary<string, object> Communication = new Dictionary<string, object>();
         private static ulong _lastKey;
-        private static readonly Dictionary<string, string> Properties = new Dictionary<string, string>();
         private readonly Form _hostForm;
 
 
@@ -34,13 +33,6 @@ namespace VixenPlus {
             else {
                 method();
             }
-        }
-
-
-        public static string GetDebugValue(string name) {
-            string str;
-            Properties.TryGetValue(name, out str);
-            return str;
         }
 
 
@@ -85,11 +77,6 @@ namespace VixenPlus {
                             exception.Message), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
-        }
-
-
-        public static void SetDebugValue(string name, string value) {
-            Properties[name] = value;
         }
     }
 }

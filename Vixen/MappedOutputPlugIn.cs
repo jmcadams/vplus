@@ -9,7 +9,6 @@ namespace VixenPlus {
         public readonly IOutputPlugIn PlugIn;
         public readonly XmlNode SetupDataNode;
         public readonly int To;
-        public object UserData;
 
         public MappedOutputPlugIn(IOutputPlugIn plugin, int from, int to, XmlNode setupDataNode)
         {
