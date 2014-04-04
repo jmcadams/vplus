@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-//using System.Reflection;
 using System.Threading;
 using System.Timers;
 using System.Windows.Forms;
@@ -142,19 +141,6 @@ namespace VixenPlus {
             _engineContext = new EngineContext();
             InstanceList.Add(this);
         }
-
-
-        //private void CreateScriptEngine(EventSequence sequence) {
-        //    if ((sequence.EngineType != EngineType.Procedural) ) {
-        //        return;
-        //    }
-
-        //    var secondaryEnginePath = Path.GetFileName(((ISystem) Interfaces.Available["ISystem"]).UserPreferences.GetString("SecondaryEngine"));
-
-        //    if (secondaryEnginePath != null) {
-        //        LoadSecondaryEngine(Path.Combine(Paths.BinaryPath, secondaryEnginePath));
-        //    }
-        //}
 
 
         private int CurrentTime() {
@@ -384,33 +370,6 @@ namespace VixenPlus {
         }
 
 
-/*
-        private void LoadSecondaryEngine(string enginePath) {
-            if (Mode == EngineMode.Asynchronous) {
-                return;
-            }
-            if (enginePath == null) {
-                return;
-            }
-            IEngine engine = null;
-            try {
-                var assembly = Assembly.LoadFile(enginePath);
-                foreach (var type in assembly.GetExportedTypes()) {
-                    if (type.GetInterfaces().Any(type2 => type2.Name == "IEngine")) {
-                        engine = (IEngine) Activator.CreateInstance(type);
-                    }
-                    if (engine != null) {
-                        break; // TODO: What is this doing since there is not a secondary context anymore?
-                    }
-                }
-            }
-            catch {
-                MessageBox.Show(Path.GetFileName(enginePath) + Resources.EngineMissingOrInvalid);
-            }
-        }
-*/
-
-
         private void LogAudio(EventSequence sequence) {
             if (_isLoggingEnabled && (sequence.Audio != null)) {
                 Host.LogAudio("Sequence", sequence.Name, sequence.Audio.FileName, sequence.Audio.Duration);
@@ -463,7 +422,6 @@ namespace VixenPlus {
                 if (_eventTimer.Enabled) {
                     return false;
                 }
-                //CreateScriptEngine(CurrentObject.EventSequences[0].Sequence);
                 if (!IsPaused) {
                     InitEngineContext(ref _engineContext, CalcContainingSequence(startMillisecond));
                     LogAudio(_engineContext.CurrentSequence);
