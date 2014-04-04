@@ -359,7 +359,7 @@ namespace VixenPlus {
         }
 
 
-        //TODO can probably be removed
+        // Async context means it is not synced with any music (e.g. channel testing)
         private static void AsyncInit(ExecutionContext context) {
             context.AsynchronousEngineInstance.Initialize(context.Object);
         }

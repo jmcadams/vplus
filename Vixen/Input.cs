@@ -82,7 +82,7 @@ namespace VixenPlus {
             return Name;
         }
 
-        //TODO This can go to linq for easier readability
+        //TODO This can go to linq for easier readability - hold until we have input plugins
         public void WriteData(XmlNode parentNode)
         {
             var node = Xml.SetNewValue(parentNode, "Input", "");

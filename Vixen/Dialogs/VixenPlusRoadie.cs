@@ -1478,15 +1478,6 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private void buttonInput_Click(object sender, EventArgs e) {
-            var plugin = (InputPlugin) _sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex];
-            InitializePlugin(plugin, _setupData.GetPlugInData(checkedListBoxSequencePlugins.SelectedIndex.ToString(CultureInfo.InvariantCulture)));
-            var dialog = new InputPluginDialog(plugin, (EventSequence) _executableObject);
-            dialog.ShowDialog();
-            dialog.Dispose();
-        }
-
-
         private void buttonPluginSetup_Click(object sender, EventArgs e) {
             PluginSetup();
         }
@@ -1539,12 +1530,12 @@ namespace VixenPlus.Dialogs {
                 if (eventlessOutputPlugIn != null) {
                     eventlessOutputPlugIn.Initialize(_executableObject, _setupData, setupNode, null);
                 }
-                else {
-                    var inputPlugin = plugin as IInputPlugin;
-                    if (inputPlugin != null) {
-                        ((InputPlugin) plugin).InitializeInternal(_setupData, setupNode);
-                    }
-                }
+                //else {
+                //    var inputPlugin = plugin as IInputPlugin;
+                //    if (inputPlugin != null) {
+                //        ((InputPlugin) plugin).InitializeInternal(_setupData, setupNode);
+                //    }
+                //}
             }
         }
 
@@ -1570,8 +1561,6 @@ namespace VixenPlus.Dialogs {
                     textBoxChannelTo.Text = plugInData.Attributes["to"].Value;
                 }
             }
-            buttonInput.Enabled = ((checkedListBoxSequencePlugins.SelectedIndex != -1) && (_executableObject is EventSequence)) &&
-                                  (_sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex] is IInputPlugin);
             _lastIndex = selectedIndex;
         }
 

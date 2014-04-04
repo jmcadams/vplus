@@ -99,9 +99,9 @@ namespace VixenPlus.Dialogs
             this.btnMultiColorCancel = new System.Windows.Forms.Button();
             this.colorPaletteColor = new VixenPlusCommon.ColorPalette();
             this.tpPlugins = new System.Windows.Forms.TabPage();
+            this.gbSetup = new System.Windows.Forms.GroupBox();
             this.listViewPlugins = new System.Windows.Forms.ListView();
             this.pluginName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.buttonInput = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBoxMinus = new System.Windows.Forms.PictureBox();
@@ -134,7 +134,6 @@ namespace VixenPlus.Dialogs
             this.btnCancel = new System.Windows.Forms.Button();
             this.ttRoadie = new System.Windows.Forms.ToolTip(this.components);
             this.previewTimer = new System.Windows.Forms.Timer(this.components);
-            this.gbSetup = new System.Windows.Forms.GroupBox();
             this.gbProfiles.SuspendLayout();
             this.tcProfile.SuspendLayout();
             this.tpChannels.SuspendLayout();
@@ -957,7 +956,6 @@ namespace VixenPlus.Dialogs
             // 
             this.tpPlugins.Controls.Add(this.gbSetup);
             this.tpPlugins.Controls.Add(this.listViewPlugins);
-            this.tpPlugins.Controls.Add(this.buttonInput);
             this.tpPlugins.Controls.Add(this.label4);
             this.tpPlugins.Controls.Add(this.label3);
             this.tpPlugins.Controls.Add(this.pictureBoxMinus);
@@ -983,6 +981,15 @@ namespace VixenPlus.Dialogs
             this.tpPlugins.Enter += new System.EventHandler(this.PluginListDialog_Load);
             this.tpPlugins.Leave += new System.EventHandler(this.PluginListDialog_FormClosing);
             // 
+            // gbSetup
+            // 
+            this.gbSetup.Location = new System.Drawing.Point(6, 169);
+            this.gbSetup.Name = "gbSetup";
+            this.gbSetup.Size = new System.Drawing.Size(958, 225);
+            this.gbSetup.TabIndex = 33;
+            this.gbSetup.TabStop = false;
+            this.gbSetup.Text = "Plugin Setup";
+            // 
             // listViewPlugins
             // 
             this.listViewPlugins.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -1005,18 +1012,6 @@ namespace VixenPlus.Dialogs
             this.listViewPlugins.View = System.Windows.Forms.View.Details;
             this.listViewPlugins.SelectedIndexChanged += new System.EventHandler(this.listViewPlugins_SelectedIndexChanged);
             this.listViewPlugins.DoubleClick += new System.EventHandler(this.listViewPlugins_DoubleClick);
-            // 
-            // buttonInput
-            // 
-            this.buttonInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonInput.Enabled = false;
-            this.buttonInput.Location = new System.Drawing.Point(496, 141);
-            this.buttonInput.Name = "buttonInput";
-            this.buttonInput.Size = new System.Drawing.Size(75, 23);
-            this.buttonInput.TabIndex = 26;
-            this.buttonInput.Text = "Inputs";
-            this.buttonInput.UseVisualStyleBackColor = true;
-            this.buttonInput.Click += new System.EventHandler(this.buttonInput_Click);
             // 
             // label4
             // 
@@ -1330,15 +1325,6 @@ namespace VixenPlus.Dialogs
             this.previewTimer.Interval = 200;
             this.previewTimer.Tick += new System.EventHandler(this.previewTimer_Tick);
             // 
-            // gbSetup
-            // 
-            this.gbSetup.Location = new System.Drawing.Point(6, 169);
-            this.gbSetup.Name = "gbSetup";
-            this.gbSetup.Size = new System.Drawing.Size(958, 225);
-            this.gbSetup.TabIndex = 33;
-            this.gbSetup.TabStop = false;
-            this.gbSetup.Text = "Plugin Setup";
-            // 
             // VixenPlusRoadie
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1471,7 +1457,6 @@ namespace VixenPlus.Dialogs
         private System.Windows.Forms.Button btnProfileSave;
         private System.Windows.Forms.ListView listViewPlugins;
         private System.Windows.Forms.ColumnHeader pluginName;
-        private System.Windows.Forms.Button buttonInput;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox pictureBoxMinus;
