@@ -1613,9 +1613,8 @@ namespace VixenPlus.Dialogs {
                 _internalUpdate = true;
                 // ReSharper disable PossibleNullReferenceException
                 foreach (XmlNode node in _setupData.GetAllPluginData()) {
-                    var plugin = (node.Attributes["type"] != null && node.Attributes["type"].Value == SetupData.PluginType.Input.ToString())
-                                     ? null //InputPlugins.FindPlugin(node.Attributes["name"].Value, true)
-                                     : OutputPlugins.FindPlugin(node.Attributes["name"].Value, true);
+                    var plugin = (node.Attributes["type"] != null && node.Attributes["type"].Value == SetupData.PluginType.Output.ToString())
+                        ?  OutputPlugins.FindPlugin(node.Attributes["name"].Value, true) : null;
 
                     if (plugin != null) {
                         InitializePlugin(plugin, node);
