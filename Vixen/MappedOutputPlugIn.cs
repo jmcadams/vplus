@@ -6,11 +6,11 @@ namespace VixenPlus {
         public readonly byte[] Buffer;
         public bool ContextInitialized;
         public readonly int From;
-        public readonly IOutputPlugIn PlugIn;
+        public readonly IHardwarePlugin PlugIn;
         public readonly XmlNode SetupDataNode;
         public readonly int To;
 
-        public MappedOutputPlugIn(IOutputPlugIn plugin, int from, int to, XmlNode setupDataNode)
+        public MappedOutputPlugIn(IHardwarePlugin plugin, int from, int to, XmlNode setupDataNode)
         {
             PlugIn = plugin;
             From = from;

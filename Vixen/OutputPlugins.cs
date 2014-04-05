@@ -5,25 +5,26 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 
-
-
 using VixenPlusCommon;
 
 namespace VixenPlus {
     internal static class OutputPlugins {
+
+        private const string OutputPluginInterface = "IHardwarePlugin"; //"IOutputPlugIn";
+
         private static IHardwarePlugin FindPlugin(string pluginName) {
-            return HardwarePlugins.FindPlugin(pluginName, Paths.OutputPluginPath, "IOutputPlugIn");
+            return HardwarePlugins.FindPlugin(pluginName, Paths.OutputPluginPath, OutputPluginInterface);
         }
 
 
         public static IHardwarePlugin FindPlugin(string pluginName, bool uniqueInstance) {
-            return HardwarePlugins.FindPlugin(pluginName, uniqueInstance, Paths.OutputPluginPath, "IOutputPlugIn");
+            return HardwarePlugins.FindPlugin(pluginName, uniqueInstance, Paths.OutputPluginPath, OutputPluginInterface);
         }
 
         // ReSharper disable ReturnTypeCanBeEnumerable.Global
         public static List<IHardwarePlugin> LoadPlugins() {
             // ReSharper restore ReturnTypeCanBeEnumerable.Global
-            return HardwarePlugins.LoadPlugins(Paths.OutputPluginPath, "IOutputPlugIn");
+            return HardwarePlugins.LoadPlugins(Paths.OutputPluginPath, OutputPluginInterface);
         }
 
 

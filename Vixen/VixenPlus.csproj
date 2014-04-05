@@ -296,7 +296,6 @@
     <Compile Include="IHardwarePlugin.cs" />
     <Compile Include="IMaskable.cs" />
     <Compile Include="Interfaces.cs" />
-    <Compile Include="IOutputPlugIn.cs" />
     <Compile Include="IPlugIn.cs" />
     <Compile Include="ISetup.cs" />
     <Compile Include="ISystem.cs" />

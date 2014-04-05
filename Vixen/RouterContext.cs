@@ -21,7 +21,7 @@ namespace VixenPlus {
             foreach (var item in from XmlNode node in PluginData.GetAllPluginData(SetupData.PluginType.Output, true)
                 where node.Attributes != null
                 select
-                    new MappedOutputPlugIn((IOutputPlugIn) OutputPlugins.FindPlugin(node.Attributes["name"].Value, true),
+                    new MappedOutputPlugIn(OutputPlugins.FindPlugin(node.Attributes["name"].Value, true),
                         Convert.ToInt32(node.Attributes["from"].Value), Convert.ToInt32(node.Attributes["to"].Value), node)) {
                 OutputPluginList.Add(item);
             }
