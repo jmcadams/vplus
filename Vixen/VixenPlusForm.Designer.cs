@@ -9,7 +9,6 @@ namespace VixenPlus {
 
         private ToolStripMenuItem aboutToolStripMenuItem1;
         private ToolStripMenuItem cascadeToolStripMenuItem;
-        private ToolStripMenuItem channelDimmingCurvesToolStripMenuItem;
         private ToolStripMenuItem checkForUpdatesToolStripMenuItem;
         private HelpProvider helpProvider;
         private ToolStripMenuItem helpToolStripMenuItem;
@@ -33,7 +32,6 @@ namespace VixenPlus {
         private ToolStripSeparator toolStripMenuItem2;
         private ToolStripSeparator toolStripMenuItem3;
         private ToolStripSeparator toolStripMenuItem6;
-        private ToolStripSeparator toolStripMenuItem8;
         private ToolStripProgressBar toolStripProgressBarBackgroundSequenceRunning;
         private ToolStripStatusLabel toolStripStatusLabelMusic;
         private ToolStripMenuItem utilityToolStripMenuItem;
@@ -50,8 +48,6 @@ namespace VixenPlus {
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
-            this.channelDimmingCurvesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
             this.recentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -104,8 +100,6 @@ namespace VixenPlus {
             this.toolStripMenuItem2,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
-            this.toolStripMenuItem8,
-            this.channelDimmingCurvesToolStripMenuItem,
             this.toolStripMenuItem6,
             this.recentToolStripMenuItem});
             this.programToolStripMenuItem.Name = "programToolStripMenuItem";
@@ -150,19 +144,6 @@ namespace VixenPlus {
             this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.saveAsToolStripMenuItem.Text = "Save &As";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem8
-            // 
-            this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(205, 6);
-            // 
-            // channelDimmingCurvesToolStripMenuItem
-            // 
-            this.channelDimmingCurvesToolStripMenuItem.Name = "channelDimmingCurvesToolStripMenuItem";
-            this.channelDimmingCurvesToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
-            this.channelDimmingCurvesToolStripMenuItem.Text = "Channel dimming curves";
-            this.channelDimmingCurvesToolStripMenuItem.Visible = false;
-            this.channelDimmingCurvesToolStripMenuItem.Click += new System.EventHandler(this.channelDimmingCurvesToolStripMenuItem_Click);
             // 
             // toolStripMenuItem6
             // 

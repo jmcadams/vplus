@@ -281,18 +281,6 @@ namespace VixenPlus {
         }
 
 
-        private void channelDimmingCurvesToolStripMenuItem_Click(object sender, EventArgs e) {
-            var activeMdiChild = ActiveMdiChild as IUIPlugIn;
-            if (activeMdiChild == null) {
-                return;
-            }
-            var dialog = new DimmingCurveDialog(activeMdiChild.Sequence, null);
-            if (dialog.ShowDialog() == DialogResult.OK) {
-                activeMdiChild.IsDirty = true;
-            }
-        }
-
-
         private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e) {
             if (CheckForUpdates(Preference2.GetScreen(_preferences.GetString("PrimaryDisplay")), false)) {
                 Close();
@@ -632,17 +620,11 @@ namespace VixenPlus {
 
 
         private void programToolStripMenuItem_DropDownOpening(object sender, EventArgs e) {
+            saveToolStripMenuItem.Text = Resources.VixenPlusForm_Save;
+            
             var plugIn = ActiveMdiChild as IUIPlugIn;
-            if (plugIn != null) {
-                var activeMdiChild = plugIn;
-                saveToolStripMenuItem.Text = !string.IsNullOrEmpty(activeMdiChild.Sequence.Name)
-                    ? string.Format("{0} ({1})", Resources.VixenPlusForm_Save, activeMdiChild.Sequence.Name)
-                    : Resources.VixenPlusForm_Save;
-                channelDimmingCurvesToolStripMenuItem.Enabled = true;
-            }
-            else {
-                saveToolStripMenuItem.Text = Resources.VixenPlusForm_Save;
-                channelDimmingCurvesToolStripMenuItem.Enabled = false;
+            if (plugIn != null && !string.IsNullOrEmpty(plugIn.Sequence.Name)) {
+                saveToolStripMenuItem.Text += string.Format(" ({0})", plugIn.Sequence.Name);
             }
         }
 
