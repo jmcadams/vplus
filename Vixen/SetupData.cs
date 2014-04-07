@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Linq;
 using System.Xml;
 
 namespace VixenPlus {
@@ -53,11 +54,10 @@ namespace VixenPlus {
         public void RemovePlugInData(string pluginId) {
             RootNode.RemoveChild(GetPlugInData(pluginId));
             var num = 0;
-            foreach (XmlNode node in GetAllPluginData()) {
-                if (node.Attributes == null) {
-                    continue;
-                }
+            foreach (var node in GetAllPluginData().Cast<XmlNode>().Where(node => node.Attributes != null)) {
+// ReSharper disable PossibleNullReferenceException
                 node.Attributes["id"].Value = num.ToString(CultureInfo.InvariantCulture);
+// ReSharper restore PossibleNullReferenceException
                 num++;
             }
         }
