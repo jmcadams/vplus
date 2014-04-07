@@ -179,7 +179,8 @@ namespace VixenPlusCommon {
 
 
         public static bool SupportsLivePreview(this object clazz) {
-            return clazz.GetType().GetMethod("SupportsPreview") != null;
+            var method = clazz.GetType().GetMethod("SupportsPreview");
+            return method != null && (bool) method.Invoke(clazz, null);
         }
 
         public static bool IsWindows64BitOS() {

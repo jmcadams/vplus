@@ -1419,8 +1419,8 @@ namespace VixenPlus.Dialogs {
         private  Dictionary<string, Dictionary<int, OutputPort>> _outputPorts;
         private  List<IHardwarePlugin> _sequencePlugins;
         private  SetupData _setupData;
-        private Rectangle _collapsedRelativeBounds;
-        private Rectangle _expandedRelativeBounds;
+        //private Rectangle _collapsedRelativeBounds;
+        //private Rectangle _expandedRelativeBounds;
         private bool _internalUpdate;
         private int _itemAffectedIndex;
         private int _lastIndex = -1;
@@ -1444,10 +1444,10 @@ namespace VixenPlus.Dialogs {
                 }
                 listViewPlugins.Enabled = listViewPlugins.Items.Count > 0;
                 OutputPlugins.VerifyPlugIns(_executableObject);
-                _collapsedRelativeBounds = new Rectangle(listViewOutputPorts.Columns[2].Width - (pictureBoxPlus.Width * 2),
-                                                         (14 - pictureBoxPlus.Height) / 2, pictureBoxPlus.Width, pictureBoxPlus.Height);
-                _expandedRelativeBounds = new Rectangle(listViewOutputPorts.Columns[2].Width - (pictureBoxMinus.Width * 2),
-                                                        (14 - pictureBoxMinus.Height) / 2, pictureBoxMinus.Width, pictureBoxMinus.Height);
+                //_collapsedRelativeBounds = new Rectangle(listViewOutputPorts.Columns[2].Width - (pictureBoxPlus.Width * 2),
+                //                                         (14 - pictureBoxPlus.Height) / 2, pictureBoxPlus.Width, pictureBoxPlus.Height);
+                //_expandedRelativeBounds = new Rectangle(listViewOutputPorts.Columns[2].Width - (pictureBoxMinus.Width * 2),
+                //                                        (14 - pictureBoxMinus.Height) / 2, pictureBoxMinus.Width, pictureBoxMinus.Height);
             }
             finally {
                 Cursor = Cursors.Default;
@@ -1501,9 +1501,9 @@ namespace VixenPlus.Dialogs {
                 return;
             }
 
-            var pluginData = _setupData.GetPlugInData(e.Index.ToString(CultureInfo.InvariantCulture)).Attributes;
-            if (pluginData != null) {
-                pluginData["enabled"].Value = (e.NewValue == CheckState.Checked).ToString();
+            var pluginData = _setupData.GetPlugInData(e.Index.ToString(CultureInfo.InvariantCulture));
+            if (pluginData != null && pluginData.Attributes != null) {
+                    pluginData.Attributes["enabled"].Value = (e.NewValue == CheckState.Checked).ToString();
             }
             UpdateDictionary();
         }
@@ -1533,7 +1533,7 @@ namespace VixenPlus.Dialogs {
             buttonRemove.Enabled = selectedIndex != -1;
             if (selectedIndex != -1) {
                 var plugInData = _setupData.GetPlugInData(selectedIndex.ToString(CultureInfo.InvariantCulture));
-                if (plugInData.Attributes != null) {
+                if (plugInData != null && plugInData.Attributes != null) {
                     textBoxChannelFrom.Text = plugInData.Attributes["from"].Value;
                     textBoxChannelTo.Text = plugInData.Attributes["to"].Value;
                 }
@@ -1575,17 +1575,17 @@ namespace VixenPlus.Dialogs {
             var pt = new Point(e.Location.X, e.Location.Y);
             pt.Offset(-info.SubItem.Bounds.Location.X, -info.SubItem.Bounds.Location.Y);
             _itemAffectedIndex = info.Item.Index;
-            if (tag.IsExpanded) {
-                if (!_expandedRelativeBounds.Contains(pt)) {
-                    return;
-                }
-                tag.IsExpanded = false;
-                UpdateConfigDisplay();
-            }
-            else if (_collapsedRelativeBounds.Contains(pt)) {
-                tag.IsExpanded = true;
-                UpdateConfigDisplay();
-            }
+            //if (tag.IsExpanded) {
+            //    if (!_expandedRelativeBounds.Contains(pt)) {
+            //        return;
+            //    }
+            //    tag.IsExpanded = false;
+            //    UpdateConfigDisplay();
+            //}
+            //else if (_collapsedRelativeBounds.Contains(pt)) {
+            //    tag.IsExpanded = true;
+            //    UpdateConfigDisplay();
+            //}
         }
 
 
@@ -1611,6 +1611,7 @@ namespace VixenPlus.Dialogs {
             Cursor = Cursors.WaitCursor;
             try {
                 _internalUpdate = true;
+                checkedListBoxSequencePlugins.Items.Clear();
                 // ReSharper disable PossibleNullReferenceException
                 foreach (XmlNode node in _setupData.GetAllPluginData()) {
                     var plugin = (node.Attributes["type"] != null && node.Attributes["type"].Value == SetupData.PluginType.Output.ToString())
@@ -1711,8 +1712,8 @@ namespace VixenPlus.Dialogs {
             _outputPorts.Clear();
             var num = 0;
             foreach (var plugin in _sequencePlugins) {
-                var pluginData = _setupData.GetPlugInData(num.ToString(CultureInfo.InvariantCulture)).Attributes;
-                if (pluginData != null && bool.Parse(pluginData["enabled"].Value)) {
+                var pluginData = _setupData.GetPlugInData(num.ToString(CultureInfo.InvariantCulture));
+                if (pluginData != null && pluginData["enabled"] != null && bool.Parse(pluginData["enabled"].Value)) {
                     foreach (var map in plugin.HardwareMap) {
                         Dictionary<int, OutputPort> dictionary;
                         OutputPort port;
@@ -1737,6 +1738,8 @@ namespace VixenPlus.Dialogs {
         private void UpdatePlugInNodeChannelRanges(string pluginID) {
             int count;
             var plugInData = _setupData.GetPlugInData(pluginID);
+            if (plugInData == null) return;
+
             try {
                 count = Convert.ToInt32(textBoxChannelFrom.Text);
             }

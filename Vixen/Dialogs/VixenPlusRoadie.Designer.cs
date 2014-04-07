@@ -104,8 +104,6 @@ namespace VixenPlus.Dialogs
             this.pluginName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.pictureBoxMinus = new System.Windows.Forms.PictureBox();
-            this.pictureBoxPlus = new System.Windows.Forms.PictureBox();
             this.buttonRemove = new System.Windows.Forms.Button();
             this.buttonUse = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -153,8 +151,6 @@ namespace VixenPlus.Dialogs
             ((System.ComponentModel.ISupportInitialize)(this.nudChGenChannels)).BeginInit();
             this.tpMultiColor.SuspendLayout();
             this.tpPlugins.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMinus)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlus)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.tpSortOrders.SuspendLayout();
             this.tpGroups.SuspendLayout();
@@ -243,9 +239,9 @@ namespace VixenPlus.Dialogs
             // 
             // tcProfile
             // 
-            this.tcProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tcProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tcProfile.Controls.Add(this.tpChannels);
             this.tcProfile.Controls.Add(this.tpPlugins);
             this.tcProfile.Controls.Add(this.tpSortOrders);
@@ -958,8 +954,6 @@ namespace VixenPlus.Dialogs
             this.tpPlugins.Controls.Add(this.listViewPlugins);
             this.tpPlugins.Controls.Add(this.label4);
             this.tpPlugins.Controls.Add(this.label3);
-            this.tpPlugins.Controls.Add(this.pictureBoxMinus);
-            this.tpPlugins.Controls.Add(this.pictureBoxPlus);
             this.tpPlugins.Controls.Add(this.buttonRemove);
             this.tpPlugins.Controls.Add(this.buttonUse);
             this.tpPlugins.Controls.Add(this.groupBox1);
@@ -1030,30 +1024,6 @@ namespace VixenPlus.Dialogs
             this.label3.Size = new System.Drawing.Size(87, 13);
             this.label3.TabIndex = 16;
             this.label3.Text = "Available Plugins";
-            // 
-            // pictureBoxMinus
-            // 
-            this.pictureBoxMinus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBoxMinus.BackColor = System.Drawing.Color.Black;
-            this.pictureBoxMinus.Location = new System.Drawing.Point(507, 117);
-            this.pictureBoxMinus.Name = "pictureBoxMinus";
-            this.pictureBoxMinus.Size = new System.Drawing.Size(9, 9);
-            this.pictureBoxMinus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBoxMinus.TabIndex = 30;
-            this.pictureBoxMinus.TabStop = false;
-            this.pictureBoxMinus.Visible = false;
-            // 
-            // pictureBoxPlus
-            // 
-            this.pictureBoxPlus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBoxPlus.BackColor = System.Drawing.Color.White;
-            this.pictureBoxPlus.Location = new System.Drawing.Point(492, 117);
-            this.pictureBoxPlus.Name = "pictureBoxPlus";
-            this.pictureBoxPlus.Size = new System.Drawing.Size(9, 9);
-            this.pictureBoxPlus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBoxPlus.TabIndex = 27;
-            this.pictureBoxPlus.TabStop = false;
-            this.pictureBoxPlus.Visible = false;
             // 
             // buttonRemove
             // 
@@ -1165,7 +1135,7 @@ namespace VixenPlus.Dialogs
             // 
             this.buttonPluginSetup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonPluginSetup.Enabled = false;
-            this.buttonPluginSetup.Location = new System.Drawing.Point(496, 76);
+            this.buttonPluginSetup.Location = new System.Drawing.Point(886, 60);
             this.buttonPluginSetup.Name = "buttonPluginSetup";
             this.buttonPluginSetup.Size = new System.Drawing.Size(75, 23);
             this.buttonPluginSetup.TabIndex = 25;
@@ -1176,7 +1146,7 @@ namespace VixenPlus.Dialogs
             // textBoxChannelTo
             // 
             this.textBoxChannelTo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxChannelTo.Location = new System.Drawing.Point(546, 50);
+            this.textBoxChannelTo.Location = new System.Drawing.Point(936, 34);
             this.textBoxChannelTo.MaxLength = 4;
             this.textBoxChannelTo.Name = "textBoxChannelTo";
             this.textBoxChannelTo.Size = new System.Drawing.Size(34, 20);
@@ -1186,7 +1156,7 @@ namespace VixenPlus.Dialogs
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(524, 53);
+            this.label2.Location = new System.Drawing.Point(914, 37);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(16, 13);
             this.label2.TabIndex = 23;
@@ -1196,7 +1166,7 @@ namespace VixenPlus.Dialogs
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(507, 24);
+            this.label1.Location = new System.Drawing.Point(897, 8);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(51, 13);
             this.label1.TabIndex = 21;
@@ -1205,7 +1175,7 @@ namespace VixenPlus.Dialogs
             // textBoxChannelFrom
             // 
             this.textBoxChannelFrom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxChannelFrom.Location = new System.Drawing.Point(484, 50);
+            this.textBoxChannelFrom.Location = new System.Drawing.Point(874, 34);
             this.textBoxChannelFrom.MaxLength = 4;
             this.textBoxChannelFrom.Name = "textBoxChannelFrom";
             this.textBoxChannelFrom.Size = new System.Drawing.Size(34, 20);
@@ -1366,8 +1336,6 @@ namespace VixenPlus.Dialogs
             this.tpMultiColor.ResumeLayout(false);
             this.tpPlugins.ResumeLayout(false);
             this.tpPlugins.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMinus)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlus)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.tpSortOrders.ResumeLayout(false);
             this.tpGroups.ResumeLayout(false);
@@ -1459,8 +1427,6 @@ namespace VixenPlus.Dialogs
         private System.Windows.Forms.ColumnHeader pluginName;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.PictureBox pictureBoxMinus;
-        private System.Windows.Forms.PictureBox pictureBoxPlus;
         private System.Windows.Forms.Button buttonRemove;
         private System.Windows.Forms.Button buttonUse;
         private System.Windows.Forms.GroupBox groupBox1;
