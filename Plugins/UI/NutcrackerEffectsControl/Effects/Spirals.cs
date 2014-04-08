@@ -8,7 +8,7 @@ using VixenPlus.Annotations;
 
 using VixenPlusCommon;
 
-namespace NutcrackerEffects.Effects {
+namespace Nutcracker.Effects {
     [UsedImplicitly]
     public partial class Spirals : UserControl, INutcrackerEffect {
 

@@ -4,8 +4,6 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-using NutcrackerEffects.Effects;
-
 using VixenPlus.Annotations;
 
 using VixenPlusCommon;

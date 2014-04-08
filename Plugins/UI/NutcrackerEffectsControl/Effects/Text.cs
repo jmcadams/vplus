@@ -1,6 +1,7 @@
 ﻿//TODO: Add support for:
 // Line1 and Line2 now individually controlled and can be rotated independently and colored independently
 //TODO: Fix calculating
+
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -12,7 +13,7 @@ using VixenPlus.Annotations;
 
 using VixenPlusCommon;
 
-namespace NutcrackerEffects.Effects {
+namespace Nutcracker.Effects {
     [UsedImplicitly]
     public partial class Text : UserControl, INutcrackerEffect {
 

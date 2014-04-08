@@ -139,7 +139,7 @@ namespace VixenPlusCommon {
         // ReSharper disable MemberCanBePrivate.Global
         public RgbaChannel Channel {
             // ReSharper restore MemberCanBePrivate.Global
-            get { return _channel; }
+            private get { return _channel; }
             [UsedImplicitly]
             set {
                 if (Channel == value) {

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace NutcrackerEffects.Effects {
+namespace Nutcracker.Effects {
     public interface INutcrackerEffect {
         event EventHandler OnControlChanged;
         string EffectName { get; }

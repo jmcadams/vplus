@@ -1,4 +1,5 @@
 ﻿//TODO: Add support for movies
+
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,7 +12,7 @@ using VixenPlus.Annotations;
 
 using VixenPlusCommon;
 
-namespace NutcrackerEffects.Effects {
+namespace Nutcracker.Effects {
     [UsedImplicitly]
     public partial class Picture : UserControl, INutcrackerEffect {
 
