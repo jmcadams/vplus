@@ -8,7 +8,7 @@ using System.Xml;
 using VixenPlusCommon;
 
 namespace VixenPlus {
-    public class Channel : IDisposable, IComparable<Channel> {
+    public class Channel : IDisposable {//, IComparable<Channel> {
         private Color _color;
 
 
@@ -31,7 +31,7 @@ namespace VixenPlus {
                 elementName = "output";
                 OutputChannel = Convert.ToInt32(channelNode.Attributes[elementName].Value);
                 elementName = "id";
-                Id = ulong.Parse(channelNode.Attributes[elementName].Value);
+                //Id = ulong.Parse(channelNode.Attributes[elementName].Value);
                 elementName = "enabled";
                 Enabled = bool.Parse(channelNode.Attributes[elementName].Value);
             }
@@ -67,7 +67,7 @@ namespace VixenPlus {
             Enabled = true;
             DimmingCurve = null;
             Color = Color.FromArgb(-1);
-            Id = Host.GetUniqueKey();
+            //Id = Host.GetUniqueKey();
         }
 
 
@@ -77,12 +77,12 @@ namespace VixenPlus {
 
 
         public Channel(string name, int outputChannel, bool ensureUniqueId) : this(name, outputChannel) {
-            if (ensureUniqueId) {
-                var ticks = DateTime.Now.Ticks;
-                // ReSharper disable once LoopVariableIsNeverChangedInsideLoop
-                while (ticks == DateTime.Now.Ticks) {}
-            }
-            Id = Host.GetUniqueKey();
+            //if (ensureUniqueId) {
+            //    var ticks = DateTime.Now.Ticks;
+            //    // ReSharper disable once LoopVariableIsNeverChangedInsideLoop
+            //    while (ticks == DateTime.Now.Ticks) {}
+            //}
+            //Id = Host.GetUniqueKey();
         }
 
         public Color Color {
@@ -101,7 +101,7 @@ namespace VixenPlus {
         public bool Enabled { get; set; }
 
         // ReSharper disable MemberCanBePrivate.Global
-        public ulong Id { get; private set; } //TODO can this be removed?
+        //public ulong Id { get; private set; } //TODO can this be removed?
         // ReSharper restore MemberCanBePrivate.Global
 
         public bool CanDoDimming { get; private set; }
@@ -110,9 +110,9 @@ namespace VixenPlus {
 
         public int OutputChannel { get; set; }
 
-        public int CompareTo(Channel other) {
-            return Id.CompareTo(other.Id);
-        }
+        //public int CompareTo(Channel other) {
+        //    return Id.CompareTo(other.Id);
+        //}
 
 
         public void Dispose() {
@@ -146,7 +146,7 @@ namespace VixenPlus {
             }
             Xml.SetAttribute(node, "color", Color.ToArgb().ToString(CultureInfo.InvariantCulture));
             Xml.SetAttribute(node, "output", OutputChannel.ToString(CultureInfo.InvariantCulture));
-            Xml.SetAttribute(node, "id", Id.ToString(CultureInfo.InvariantCulture));
+            //Xml.SetAttribute(node, "id", Id.ToString(CultureInfo.InvariantCulture));
             Xml.SetAttribute(node, "enabled", Enabled.ToString());
             if (DimmingCurve != null) {
                 Xml.SetValue(node, "Curve", string.Join(",", DimmingCurve.Select(num => num.ToString(CultureInfo.InvariantCulture)).ToArray()));
