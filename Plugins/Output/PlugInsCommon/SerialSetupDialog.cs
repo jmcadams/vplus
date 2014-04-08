@@ -4,13 +4,9 @@ using System.IO.Ports;
 using System.Text;
 using System.Windows.Forms;
 
+using PlugInsCommon.Properties;
 
-
-using VixenPlus.Properties;
-
-using VixenPlusCommon;
-
-namespace VixenPlus.Dialogs {
+namespace PlugInsCommon {
     public partial class SerialSetupDialog : Form {
 
         private const int BaudRate115200 = 6;
@@ -18,7 +14,6 @@ namespace VixenPlus.Dialogs {
         public SerialSetupDialog(SerialPort serialPort) {
             components = null;
             InitializeComponent();
-            Icon = Resources.VixenPlus;
             comboBoxPortName.Items.AddRange(SerialPort.GetPortNames());
             Init(serialPort);
         }
@@ -51,7 +46,7 @@ namespace VixenPlus.Dialogs {
                 builder.AppendLine(Resources.Serial_StopBitsError);
             }
             if (builder.Length > 0) {
-                MessageBox.Show(Resources.Serial_Resolve + builder, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                MessageBox.Show(Resources.Serial_Resolve + builder, "Vixen+", MessageBoxButtons.OK, MessageBoxIcon.Hand);
             }
             else {
                 DialogResult = DialogResult.OK;

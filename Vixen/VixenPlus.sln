@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DMXUSBPro", "..\Plugins\Out
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E131_VixenPlugin", "..\Plugins\Output\E131_VixenPlugin\E131_VixenPlugin.csproj", "{3D42FC86-9EA6-4D6B-8E4A-1F4EE1A1D8B5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlugInsCommon", "..\Plugins\Output\PlugInsCommon\PlugInsCommon.csproj", "{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		debug_32|Any CPU = debug_32|Any CPU
@@ -461,6 +463,36 @@ Global
 		{3D42FC86-9EA6-4D6B-8E4A-1F4EE1A1D8B5}.Release32|Mixed Platforms.ActiveCfg = Release32|Any CPU
 		{3D42FC86-9EA6-4D6B-8E4A-1F4EE1A1D8B5}.Release32|Mixed Platforms.Build.0 = Release32|Any CPU
 		{3D42FC86-9EA6-4D6B-8E4A-1F4EE1A1D8B5}.Release32|x86.ActiveCfg = Release32|Any CPU
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.debug_32|Any CPU.ActiveCfg = Debug|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.debug_32|Mixed Platforms.ActiveCfg = Debug|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.debug_32|Mixed Platforms.Build.0 = Debug|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.debug_32|x86.ActiveCfg = Debug|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.debug_32|x86.Build.0 = Debug|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.Debug|x86.ActiveCfg = Debug|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.Debug|x86.Build.0 = Debug|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.debug32|Any CPU.ActiveCfg = Debug|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.debug32|Mixed Platforms.ActiveCfg = Debug|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.debug32|Mixed Platforms.Build.0 = Debug|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.debug32|x86.ActiveCfg = Debug|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.debug32|x86.Build.0 = Debug|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.Release_x86|Any CPU.ActiveCfg = Release|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.Release_x86|Mixed Platforms.ActiveCfg = Release|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.Release_x86|Mixed Platforms.Build.0 = Release|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.Release_x86|x86.ActiveCfg = Release|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.Release_x86|x86.Build.0 = Release|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.Release|Any CPU.ActiveCfg = Release|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.Release|Mixed Platforms.Build.0 = Release|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.Release|x86.ActiveCfg = Release|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.Release|x86.Build.0 = Release|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.Release32|Any CPU.ActiveCfg = Release|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.Release32|Mixed Platforms.ActiveCfg = Release|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.Release32|Mixed Platforms.Build.0 = Release|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.Release32|x86.ActiveCfg = Release|x86
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}.Release32|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -478,14 +510,15 @@ Global
 		{D3216F6C-56C1-48D0-B926-19CB452B6C82} = {0ECD4638-0634-4009-8D81-B3F7BF15465F}
 		{60F5E77C-5AB6-4B1D-AAC3-07D96E990D64} = {0ECD4638-0634-4009-8D81-B3F7BF15465F}
 		{3D42FC86-9EA6-4D6B-8E4A-1F4EE1A1D8B5} = {0ECD4638-0634-4009-8D81-B3F7BF15465F}
+		{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591} = {0ECD4638-0634-4009-8D81-B3F7BF15465F}
 		{718CA82A-D7C4-440C-953F-DD3CC2ADC99D} = {CC4DA2F3-FB84-42A0-B620-315B4A18B97A}
 		{C792440D-580E-4313-A48F-F2EEE85BE98C} = {CC4DA2F3-FB84-42A0-B620-315B4A18B97A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_BuildVersioningStyle = None.None.DeltaBaseDate.TimeStamp
-		BuildVersion_UpdateAssemblyVersion = True
-		BuildVersion_UpdateFileVersion = True
-		BuildVersion_AssemblyInfoFilename = AssemblyInfo.cs
 		BuildVersion_StartDate = 2013/12/31
+		BuildVersion_AssemblyInfoFilename = AssemblyInfo.cs
+		BuildVersion_UpdateFileVersion = True
+		BuildVersion_UpdateAssemblyVersion = True
+		BuildVersion_BuildVersioningStyle = None.None.DeltaBaseDate.TimeStamp
 	EndGlobalSection
 EndGlobal

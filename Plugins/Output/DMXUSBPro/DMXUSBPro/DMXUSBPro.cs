@@ -1,5 +1,6 @@
+using PlugInsCommon;
+
 using VixenPlus;
-using VixenPlus.Dialogs;
 
 using VixenPlusCommon.Annotations;
 

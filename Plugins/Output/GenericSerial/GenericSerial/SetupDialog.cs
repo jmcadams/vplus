@@ -5,7 +5,6 @@ using System.Windows.Forms;
 using System.Xml;
 
 using VixenPlus;
-using VixenPlus.Properties;
 
 namespace GenericSerial {
     internal partial class DialogSerialSetup : Form {
@@ -71,7 +70,10 @@ namespace GenericSerial {
         }
 
         private void cbBaud_SelectedIndexChanged(object sender, EventArgs e) {
-            lblWarn.Text = cbBaud.SelectedIndex > BaudRate115200 ? Resources.HighBaudRateSupport : "";
+            lblWarn.Text = cbBaud.SelectedIndex > BaudRate115200 ? @"Selected baud rate might not be supported by your hardware." : "";
         }
     }
 }
+
+
+//

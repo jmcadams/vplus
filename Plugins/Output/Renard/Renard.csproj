@@ -138,6 +138,10 @@
       <Name>VixenPlus</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\PlugInsCommon\PlugInsCommon.csproj">
+      <Project>{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}</Project>
+      <Name>PlugInsCommon</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

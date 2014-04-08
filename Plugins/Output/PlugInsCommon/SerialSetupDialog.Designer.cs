@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace VixenPlus.Dialogs {
+namespace PlugInsCommon {
     public partial class SerialSetupDialog {
         private IContainer components;
 

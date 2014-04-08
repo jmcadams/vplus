@@ -249,26 +249,6 @@ The error was:
 
 Do you wish to do this?</value>
   </data>
-  <data name="Serial_PortError" xml:space="preserve">
-    <value>* Port name has not been selected.</value>
-  </data>
-  <data name="Serial_BaudError" xml:space="preserve">
-    <value>* Baud rate has not been selected.</value>
-  </data>
-  <data name="Serial_ParityError" xml:space="preserve">
-    <value>* Parity has not been selected.</value>
-  </data>
-  <data name="Serial_DataBitsError" xml:space="preserve">
-    <value>* Invalid numeric value for data bits.</value>
-  </data>
-  <data name="Serial_StopBitsError" xml:space="preserve">
-    <value>* Stop bits have not been selected.</value>
-  </data>
-  <data name="Serial_Resolve" xml:space="preserve">
-    <value>The following items need to be resolved:
-
-</value>
-  </data>
   <data name="DumpFileWritten" xml:space="preserve">
     <value>Dump file written to </value>
   </data>
@@ -1041,9 +1021,6 @@ Press OK to continue or Cancel to quit {1} and log this error to the crash.log.<
   </data>
   <data name="AllChannels" xml:space="preserve">
     <value>All Channels</value>
-  </data>
-  <data name="HighBaudRateSupport" xml:space="preserve">
-    <value>Selected baud rate might not be supported by your hardware.</value>
   </data>
   <data name="FirstRunPrompt" xml:space="preserve">
     <value>Welcome to {0}! Thank you for choosing our program. It looks like this is the first time you have run {0} (or maybe you are setting up a new instance.) {0} needs to know where to store your data, so please choose from the following options, which can be changed in Tools..Preferences later:</value>
