@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Controllers</RootNamespace>
+    <AssemblyName>Controllers</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\Build\Plugins\Output\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\Release\Plugins\Output\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\SerialSetupDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\SerialSetupDialog.Designer.cs">
+      <DependentUpon>SerialSetupDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DMXUSBPro\DMXUSBPro.cs" />
+    <Compile Include="DMXUSBPro\Message.cs" />
+    <Compile Include="DMXUSBPro\MessageType.cs" />
+    <Compile Include="DMXUSBPro\Widget.cs" />
+    <Compile Include="DMX_512\DMX_512.cs" />
+    <Compile Include="E131\AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="E131\AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="E131\Controls\DataGridViewNumbered.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="E131\Controls\IPTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="E131\E131.cs" />
+    <Compile Include="E131\Help.cs" />
+    <Compile Include="E131\J1Sys\J1MsgBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="E131\J1Sys\MessageBeepClass.cs" />
+    <Compile Include="E131\OutputPlugin.cs" />
+    <Compile Include="E131\SetupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="E131\SetupForm.Designer.cs">
+      <DependentUpon>SetupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GenericSerial\GenericSerial.cs" />
+    <Compile Include="GenericSerial\SetupDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GenericSerial\SetupDialog.Designer.cs">
+      <DependentUpon>SetupDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IDMX\FTD2XX.cs" />
+    <Compile Include="IDMX\IDMX.cs" />
+    <Compile Include="Launcher\Launcher.cs" />
+    <Compile Include="Launcher\SetupDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Launcher\SetupDialog.Designer.cs">
+      <DependentUpon>SetupDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Renard\Renard.cs" />
+    <Compile Include="Renard\SetupDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Renard\SetupDialog.Designer.cs">
+      <DependentUpon>SetupDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs" />
+    <Compile Include="Properties\Settings.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\VixenControls\VixenPlusCommon.csproj">
+      <Project>{6B127E8D-35CC-409E-9E66-520FBA86E283}</Project>
+      <Name>VixenPlusCommon</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Vixen\VixenPlus.csproj">
+      <Project>{FA99E3F3-4783-485F-A37E-0E24F823E5AE}</Project>
+      <Name>VixenPlus</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common\SerialSetupDialog.resx">
+      <DependentUpon>SerialSetupDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="E131\AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="E131\SetupForm.resx">
+      <DependentUpon>SetupForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GenericSerial\SetupDialog.resx">
+      <DependentUpon>SetupDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Launcher\SetupDialog.resx">
+      <DependentUpon>SetupDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Renard\SetupDialog.resx">
+      <DependentUpon>SetupDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="E131\J1Sys\MessageBoxIcons\exclamation.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="E131\J1Sys\MessageBoxIcons\stop.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="E131\J1Sys\MessageBoxIcons\information.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="E131\J1Sys\MessageBoxIcons\question.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Settings.settings" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

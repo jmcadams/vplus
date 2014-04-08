@@ -87,47 +87,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="E131.cs">
-    </Compile>
-    <Compile Include="AboutBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AboutBox.Designer.cs">
-      <DependentUpon>AboutBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\DataGridViewNumbered.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Help.cs" />
-    <Compile Include="J1Sys\MessageBeepClass.cs" />
-    <Compile Include="Controls\IPTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="J1Sys\J1MsgBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="OutputPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SetupForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SetupForm.Designer.cs">
-      <DependentUpon>SetupForm.cs</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="AboutBox.resx">
-      <DependentUpon>AboutBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SetupForm.resx">
-      <DependentUpon>SetupForm.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="J1Sys\MessageBoxIcons\exclamation.ico" />
-    <EmbeddedResource Include="J1Sys\MessageBoxIcons\information.ico" />
-    <EmbeddedResource Include="J1Sys\MessageBoxIcons\question.ico" />
-    <EmbeddedResource Include="J1Sys\MessageBoxIcons\stop.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Vixen\VixenPlus.csproj">
@@ -152,6 +112,10 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\" />
+    <Folder Include="J1Sys\MessageBoxIcons\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

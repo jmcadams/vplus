@@ -102,18 +102,6 @@
     <Compile Include="Global.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Renard\Renard.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Renard\SetupDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Renard\SetupDialog.Designer.cs">
-      <DependentUpon>SetupDialog.cs</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="Renard\SetupDialog.resx">
-      <DependentUpon>SetupDialog.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -142,6 +130,9 @@
       <Project>{D8E4C5F6-7C3F-4B6D-81D4-A8E39D74D591}</Project>
       <Name>PlugInsCommon</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Renard\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

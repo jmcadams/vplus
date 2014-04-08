@@ -1614,7 +1614,7 @@ namespace VixenPlus.Dialogs {
                 checkedListBoxSequencePlugins.Items.Clear();
                 // ReSharper disable PossibleNullReferenceException
                 foreach (XmlNode node in _setupData.GetAllPluginData()) {
-                    var plugin = (node.Attributes["type"] != null && node.Attributes["type"].Value == SetupData.PluginType.Output.ToString())
+                    var plugin = (node.Attributes["name"] != null)
                         ?  OutputPlugins.FindPlugin(node.Attributes["name"].Value, true) : null;
 
                     if (plugin != null) {

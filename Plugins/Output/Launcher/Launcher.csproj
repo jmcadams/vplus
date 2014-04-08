@@ -102,18 +102,6 @@
     <Compile Include="Global.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Launcher\Launcher.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Launcher\SetupDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Launcher\SetupDialog.Designer.cs">
-      <DependentUpon>SetupDialog.cs</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="Launcher\SetupDialog.resx">
-      <DependentUpon>SetupDialog.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -143,6 +131,9 @@
       <Name>VixenPlus</Name>
       <Private>False</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Launcher\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
