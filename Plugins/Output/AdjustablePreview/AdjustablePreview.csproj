@@ -107,7 +107,7 @@
     <Compile Include="Global.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Preview\Preview.cs">
+    <Compile Include="Preview\AdjustablePreview.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Preview\PreviewDialog.cs">

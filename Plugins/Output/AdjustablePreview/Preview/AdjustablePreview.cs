@@ -14,7 +14,7 @@ using VixenPlusCommon.Annotations;
 
 namespace Preview {
     [UsedImplicitly]
-    public class Preview : IEventDrivenOutputPlugIn {
+    public class AdjustablePreview : IEventDrivenOutputPlugIn {
         private readonly List<Channel> _channels;
         private PreviewDialog _previewDialog;
         private SetupData _setupData;
@@ -23,7 +23,7 @@ namespace Preview {
         private int _startChannel;
 
 
-        public Preview() {
+        public AdjustablePreview() {
             _channels = new List<Channel>();
         }
 

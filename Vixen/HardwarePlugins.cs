@@ -42,7 +42,6 @@ namespace VixenPlus {
                         }
                     }
                 }
-                    //ReSharper disable once EmptyGeneralCatchClause
                 catch (Exception e) {
                     e.ToString().CrashLog();
                 }
@@ -60,28 +59,22 @@ namespace VixenPlus {
 
             foreach (var str in
                 Directory.GetFiles(directory, Vendor.All + Vendor.AppExtension, SearchOption.TopDirectoryOnly)) {
-                IHardwarePlugin plugin;
-
-                if (PluginCache.TryGetValue(str, out plugin)) {
-                    list.Add(plugin);
-                }
-                else {
-                    try {
-                        var assembly = Assembly.LoadFile(str);
-                        foreach (var type in from type in assembly.GetExportedTypes()
-                            from type2 in type.GetInterfaces()
-                            where type2.Name == interfaceName
-                            select type) {
+                try {
+                    var assembly = Assembly.LoadFile(str);
+                    foreach (var type in from type in assembly.GetExportedTypes()
+                        from type2 in type.GetInterfaces()
+                        where type2.Name == interfaceName
+                        select type) {
+                        IHardwarePlugin plugin;
+                        if (!PluginCache.TryGetValue(type.Name, out plugin)) {
                             plugin = (IHardwarePlugin) Activator.CreateInstance(type);
-                            PluginCache[plugin.Name] = plugin;
-                            list.Add(plugin);
+                            PluginCache[type.Name] = plugin;
                         }
+                        list.Add(plugin);
                     }
-                    // ReSharper disable EmptyGeneralCatchClause
-                    catch {
-                        // ReSharper restore EmptyGeneralCatchClause
-                        // We want to eat this error
-                    }
+                }
+                catch (Exception e) {
+                    e.ToString().CrashLog();
                 }
             }
             return list;

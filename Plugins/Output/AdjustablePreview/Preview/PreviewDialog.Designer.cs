@@ -36,7 +36,7 @@ namespace Preview {
             this.Name = "PreviewDialog";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Sequence Preview";
+            this.Text = "Sequence AdjustablePreview";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PreviewDialog_FormClosing);
             ((System.ComponentModel.ISupportInitialize) (this.pictureBoxShowGrid)).EndInit();
             this.ResumeLayout(false);
