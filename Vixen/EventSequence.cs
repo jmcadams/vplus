@@ -242,7 +242,7 @@ namespace VixenPlus {
             foreach (var channel in _fullChannels.Where(channel => channel.OutputChannel >= outputChannel)) {
                 channel.OutputChannel++;
             }
-            _fullChannels.Insert(count, new Channel(Resources.Channel + " " + (_fullChannels.Count + 1), outputChannel, true));
+            _fullChannels.Insert(count, new Channel(Resources.Channel + " " + (_fullChannels.Count + 1), outputChannel));
             var newEventValues = new byte[_fullChannels.Count,TotalEventPeriods];
             for (var row = 0; row < Rows; row++) {
                 var rowOffset = (row >= count) ? (row + 1) : row;
@@ -601,7 +601,7 @@ namespace VixenPlus {
                     _fullChannels.RemoveAt(value);
                 }
                 for (var i = _fullChannels.Count + 1; _fullChannels.Count < value; i++) {
-                    _fullChannels.Add(new Channel(Resources.Channel + @" " + i.ToString(CultureInfo.InvariantCulture), i - 1, true));
+                    _fullChannels.Add(new Channel(Resources.Channel + @" " + i.ToString(CultureInfo.InvariantCulture), i - 1));
                 }
                 UpdateEventValueArray();
                 _sortOrders.UpdateChannelCounts(value);

@@ -10,7 +10,7 @@ using VixenPlusCommon;
 namespace VixenPlus {
     public class Channel : IDisposable {//, IComparable<Channel> {
         private Color _color;
-
+        private static Boolean _useCheckmark = Preference2.GetInstance().GetBoolean("UseCheckmark");
 
         public Channel(XmlNode channelNode) {
             OutputChannel = 0;
@@ -76,15 +76,6 @@ namespace VixenPlus {
         }
 
 
-        public Channel(string name, int outputChannel, bool ensureUniqueId) : this(name, outputChannel) {
-            //if (ensureUniqueId) {
-            //    var ticks = DateTime.Now.Ticks;
-            //    // ReSharper disable once LoopVariableIsNeverChangedInsideLoop
-            //    while (ticks == DateTime.Now.Ticks) {}
-            //}
-            //Id = Host.GetUniqueKey();
-        }
-
         public Color Color {
             get { return _color; }
             set {
@@ -100,20 +91,11 @@ namespace VixenPlus {
 
         public bool Enabled { get; set; }
 
-        // ReSharper disable MemberCanBePrivate.Global
-        //public ulong Id { get; private set; } //TODO can this be removed?
-        // ReSharper restore MemberCanBePrivate.Global
-
         public bool CanDoDimming { get; private set; }
 
         public string Name { get; set; }
 
         public int OutputChannel { get; set; }
-
-        //public int CompareTo(Channel other) {
-        //    return Id.CompareTo(other.Id);
-        //}
-
 
         public void Dispose() {
             GC.SuppressFinalize(this);
@@ -146,7 +128,7 @@ namespace VixenPlus {
             }
             Xml.SetAttribute(node, "color", Color.ToArgb().ToString(CultureInfo.InvariantCulture));
             Xml.SetAttribute(node, "output", OutputChannel.ToString(CultureInfo.InvariantCulture));
-            //Xml.SetAttribute(node, "id", Id.ToString(CultureInfo.InvariantCulture));
+            //Xml.SetAttribute(node, "id", Id.ToString(CultureInfo.InvariantCulture)); //TODO need to do this for 2.x
             Xml.SetAttribute(node, "enabled", Enabled.ToString());
             if (DimmingCurve != null) {
                 Xml.SetValue(node, "Curve", string.Join(",", DimmingCurve.Select(num => num.ToString(CultureInfo.InvariantCulture)).ToArray()));
@@ -160,8 +142,8 @@ namespace VixenPlus {
         }
 
 
-        public static void DrawItem(ListBox lb, DrawItemEventArgs e, Channel channel) {
-            e.DrawItem(channel.Name, channel.Color, lb, Preference2.GetInstance().GetBoolean("UseCheckmark"));
+        public static void DrawItem(DrawItemEventArgs e, Channel c, ListBox lb) {
+            e.DrawItem(c.Name, c.Color, lb, _useCheckmark);
         }
 
 

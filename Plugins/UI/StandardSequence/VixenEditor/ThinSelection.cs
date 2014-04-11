@@ -32,7 +32,7 @@ namespace VixenEditor {
                 return;
             }
 
-            Channel.DrawItem(lb, e, _channels[e.Index]);
+            Channel.DrawItem(e, _channels[e.Index], lb);
         }
 
 

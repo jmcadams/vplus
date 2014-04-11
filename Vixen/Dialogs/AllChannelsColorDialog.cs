@@ -103,7 +103,7 @@ namespace VixenPlus.Dialogs {
                 return;
             }
 
-            Channel.DrawItem(listBox, e, (Channel) listBoxChannels.Items[e.Index]);
+            Channel.DrawItem(e, (Channel) listBoxChannels.Items[e.Index], listBox);
         }
 
 
