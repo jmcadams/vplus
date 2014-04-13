@@ -173,10 +173,8 @@ namespace Controllers.Common {
             // 
             // SerialSetupDialog
             // 
-            this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(326, 360);
             this.Controls.Add(this.lblPort);
             this.Controls.Add(this.lblWarn);
@@ -191,10 +189,7 @@ namespace Controllers.Common {
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label5);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "SerialSetupDialog";
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Setup";
             this.ResumeLayout(false);
             this.PerformLayout();

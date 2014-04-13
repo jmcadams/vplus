@@ -15,9 +15,10 @@ namespace Controllers.Renard {
 
         private void buttonSerialSetup_Click(object sender, EventArgs e) {
             using (var dialog = new SerialSetupDialog(SelectedPort)) {
-                if (dialog.ShowDialog() == DialogResult.OK) {
-                    SelectedPort = dialog.SelectedPort;
-                }
+                dialog.Show();
+                //if (dialog.Show() == DialogResult.OK) {
+                //    SelectedPort = dialog.SelectedPort;
+                //}
             }
         }
 

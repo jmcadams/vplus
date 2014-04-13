@@ -44,9 +44,10 @@ namespace Controllers.DMXUSBPro
 
         public void Setup() {
             using (var dialog = new SerialSetupDialog(_serialPort)) {
-                if (dialog.ShowDialog() != DialogResult.OK) {
-                    return;
-                }
+                dialog.Show();
+                //if (dialog.ShowDialog() != DialogResult.OK) {
+                //    return;
+                //}
                 _serialPort = dialog.SelectedPort;
                 _serialPort.Handshake = Handshake.None;
                 _serialPort.Encoding = Encoding.UTF8;
