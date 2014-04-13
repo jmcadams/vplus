@@ -8,9 +8,9 @@ using System.Xml;
 using VixenPlusCommon;
 
 namespace VixenPlus {
-    public class Channel : IDisposable {//, IComparable<Channel> {
+    public class Channel : IDisposable {
         private Color _color;
-        private static Boolean _useCheckmark = Preference2.GetInstance().GetBoolean("UseCheckmark");
+        private static readonly Boolean UseCheckmark = Preference2.GetInstance().GetBoolean("UseCheckmark");
 
         public Channel(XmlNode channelNode) {
             OutputChannel = 0;
@@ -67,7 +67,6 @@ namespace VixenPlus {
             Enabled = true;
             DimmingCurve = null;
             Color = Color.FromArgb(-1);
-            //Id = Host.GetUniqueKey();
         }
 
 
@@ -143,7 +142,7 @@ namespace VixenPlus {
 
 
         public static void DrawItem(DrawItemEventArgs e, Channel c, ListBox lb) {
-            e.DrawItem(c.Name, c.Color, lb, _useCheckmark);
+            e.DrawItem(c.Name, c.Color, lb, UseCheckmark);
         }
 
 
