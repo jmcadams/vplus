@@ -10,19 +10,22 @@ using Controllers.Properties;
 namespace Controllers.Common {
     public partial class SerialSetupDialog : Form {
 
-        private const int BaudRate115200 = 6;
+        private const int BaudRateWarningLevel = 6;
+
+        private const string DefaultComPort = "COM1";
+        private const int DefaultBaudRate = 57600;
+        private const int DefaultDataBits = 8;
 
         public SerialSetupDialog(SerialPort serialPort) {
             components = null;
             InitializeComponent();
-            comboBoxPortName.Items.AddRange(SerialPort.GetPortNames());
             Init(serialPort);
         }
 
         public SerialPort SelectedPort {
             get {
-                return new SerialPort(comboBoxPortName.SelectedItem.ToString(), int.Parse(comboBoxBaudRate.SelectedItem.ToString()),
-                                      (Parity) comboBoxParity.SelectedItem, int.Parse(textBoxData.Text), (StopBits) comboBoxStop.SelectedItem);
+                return new SerialPort(cbPortName.SelectedItem.ToString(), int.Parse(cbBaudRate.SelectedItem.ToString()),
+                                      (Parity) cbParity.SelectedItem, int.Parse(cbDataBits.SelectedItem.ToString()), (StopBits) cbStopBits.SelectedItem);
             }
         }
 
@@ -30,20 +33,20 @@ namespace Controllers.Common {
         private void buttonOK_Click(object sender, EventArgs e) {
             DialogResult = DialogResult.None;
             var builder = new StringBuilder();
-            if (comboBoxPortName.SelectedIndex == -1) {
+            if (cbPortName.SelectedIndex == -1) {
                 builder.AppendLine(Resources.Serial_PortError);
             }
-            if (comboBoxBaudRate.SelectedIndex == -1) {
+            if (cbBaudRate.SelectedIndex == -1) {
                 builder.AppendLine(Resources.Serial_BaudError);
             }
-            if (comboBoxParity.SelectedIndex == -1) {
+            if (cbParity.SelectedIndex == -1) {
                 builder.AppendLine(Resources.Serial_ParityError);
             }
             int result;
-            if (!int.TryParse(textBoxData.Text, out result)) {
+            if (!int.TryParse(cbDataBits.SelectedItem.ToString(), out result)) {
                 builder.AppendLine(Resources.Serial_DataBitsError);
             }
-            if (comboBoxStop.SelectedIndex == -1) {
+            if (cbStopBits.SelectedIndex == -1) {
                 builder.AppendLine(Resources.Serial_StopBitsError);
             }
             if (builder.Length > 0) {
@@ -56,27 +59,32 @@ namespace Controllers.Common {
 
 
         private void Init(SerialPort serialPort) {
-            comboBoxParity.Items.Add(Parity.Even);
-            comboBoxParity.Items.Add(Parity.Mark);
-            comboBoxParity.Items.Add(Parity.None);
-            comboBoxParity.Items.Add(Parity.Odd);
-            comboBoxParity.Items.Add(Parity.Space);
-            comboBoxStop.Items.Add(StopBits.One);
-            comboBoxStop.Items.Add(StopBits.OnePointFive);
-            comboBoxStop.Items.Add(StopBits.Two);
+            cbPortName.Items.AddRange(SerialPort.GetPortNames());
+
+            cbParity.Items.Add(Parity.Even);
+            cbParity.Items.Add(Parity.Mark);
+            cbParity.Items.Add(Parity.None);
+            cbParity.Items.Add(Parity.Odd);
+            cbParity.Items.Add(Parity.Space);
+
+            cbStopBits.Items.Add(StopBits.One);
+            cbStopBits.Items.Add(StopBits.OnePointFive);
+            cbStopBits.Items.Add(StopBits.Two);
+
             if (serialPort == null) {
-                serialPort = new SerialPort("COM1", 38400, Parity.None, 8, StopBits.One);
+                serialPort = new SerialPort(DefaultComPort, DefaultBaudRate, Parity.None, DefaultDataBits, StopBits.One);
             }
-            comboBoxPortName.SelectedIndex = comboBoxPortName.Items.IndexOf(serialPort.PortName);
-            comboBoxBaudRate.SelectedItem = serialPort.BaudRate.ToString(CultureInfo.InvariantCulture);
-            comboBoxParity.SelectedItem = serialPort.Parity;
-            textBoxData.Text = serialPort.DataBits.ToString(CultureInfo.InvariantCulture);
-            comboBoxStop.SelectedItem = serialPort.StopBits;
+
+            cbPortName.SelectedIndex = cbPortName.Items.IndexOf(serialPort.PortName);
+            cbBaudRate.SelectedItem = serialPort.BaudRate.ToString(CultureInfo.InvariantCulture);
+            cbParity.SelectedItem = serialPort.Parity;
+            cbDataBits.SelectedItem = serialPort.DataBits.ToString(CultureInfo.InvariantCulture);
+            cbStopBits.SelectedItem = serialPort.StopBits;
         }
 
         private void comboBoxBaudRate_SelectedIndexChanged(object sender, EventArgs e) {
-            // If baud rate is faster than 115200, warn that it may not work.
-            lblWarn.Text = comboBoxBaudRate.SelectedIndex > BaudRate115200 ? Resources.HighBaudRateSupport : "";
+            // If baud rate is > BaudRateWarningLevel, warn that it may not work.
+            lblWarn.Text = cbBaudRate.SelectedIndex > BaudRateWarningLevel ? Resources.HighBaudRateSupport : "";
         }
     }
 }
