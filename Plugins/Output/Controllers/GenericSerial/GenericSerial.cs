@@ -57,12 +57,14 @@ namespace Controllers.GenericSerial {
         }
 
 
-        public void Setup() {
+        public Control Setup() {
             using (var dialog = new DialogSerialSetup(_setupNode)) {
                 if (dialog.ShowDialog() == DialogResult.OK) {
                     SetPort();
                 }
             }
+
+            return null;
         }
 
 

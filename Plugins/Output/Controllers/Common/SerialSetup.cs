@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.IO.Ports;
 //using System.Text;
+using System.Text;
 using System.Windows.Forms;
 
 using Controllers.Properties;
@@ -39,9 +40,9 @@ namespace Controllers.Common {
         }
 
 
-/*
-        private void buttonOK_Click(object sender, EventArgs e) {
-            DialogResult = DialogResult.None;
+        public bool ValidateSettings() {
+            var isValid = true;
+
             var builder = new StringBuilder();
             if (cbPortName.SelectedIndex == -1) {
                 builder.AppendLine(Resources.Serial_PortError);
@@ -61,12 +62,11 @@ namespace Controllers.Common {
             }
             if (builder.Length > 0) {
                 MessageBox.Show(Resources.Serial_Resolve + builder, "Vixen+", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                isValid = false;
             }
-            else {
-                DialogResult = DialogResult.OK;
-            }
+
+            return isValid;
         }
-*/
 
 
 

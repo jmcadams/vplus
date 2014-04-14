@@ -28,9 +28,11 @@ namespace Controllers.DMX_512
         {
         }
 
-        public void Setup()
+        public Control Setup()
         {
             MessageBox.Show(@"This plugin only supports a single universe.\nNothing to setup.", @"DMX-512", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            
+            return null;
         }
 
         public void Shutdown()

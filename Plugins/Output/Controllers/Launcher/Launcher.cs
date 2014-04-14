@@ -38,10 +38,10 @@ namespace Controllers.Launcher {
         }
 
 
-        public void Setup() {
+        public Control Setup() {
             var programList = _setupNode.SelectNodes("Programs/Program");
             if (programList == null) {
-                return;
+                return null;
             }
 
             var num = 0;
@@ -56,12 +56,12 @@ namespace Controllers.Launcher {
             }
             var dialog = new SetupDialog(programs);
             if (dialog.ShowDialog() != DialogResult.OK) {
-                return;
+                return null;
             }
 
             var contextNode = _setupNode.SelectSingleNode("Programs");
             if (contextNode == null) {
-                return;
+                return null;
             }
             contextNode.RemoveAll();
             foreach (var parameters in dialog.Programs) {
@@ -69,6 +69,8 @@ namespace Controllers.Launcher {
                 Xml.SetAttribute(programNode, "params", parameters[1]);
                 Xml.SetAttribute(programNode, "trigger", parameters[2]);
             }
+
+            return null;
         }
 
 

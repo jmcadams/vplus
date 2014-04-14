@@ -1,6 +1,8 @@
-﻿namespace VixenPlus {
+﻿using System.Windows.Forms;
+
+namespace VixenPlus {
     public interface ISetup
     {
-        void Setup();
+        Control Setup();
     }
 }

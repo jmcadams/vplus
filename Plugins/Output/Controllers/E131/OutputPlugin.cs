@@ -479,7 +479,7 @@ namespace Controllers.E131 {
         //
         //-------------------------------------------------------------
 
-        public void Setup() {
+        public Control Setup() {
             // define/create objects
             using (var setupForm = new SetupForm()) {
 
@@ -501,7 +501,7 @@ namespace Controllers.E131 {
                 setupForm.EventRepeatCount = _eventRepeatCount;
 
                 if (setupForm.ShowDialog() != DialogResult.OK) {
-                    return;
+                    return null;
                 }
                 // first get rid of our old children
                 while (_setupNode.ChildNodes.Count > 0) {
@@ -555,6 +555,8 @@ namespace Controllers.E131 {
                 // update in memory table to match xml
                 LoadSetupNodeInfo();
             }
+
+            return null;
         }
 
 

@@ -16,6 +16,7 @@ namespace Controllers.Renard {
         private AutoResetEvent _eventTrigger;
         private bool _holdPort;
         private byte[] _p1Packet = new byte[1];
+        private Control _dialog;
         private SerialPort _selectedPort;
         private SetupData _setupData;
         private XmlNode _setupNode;
@@ -133,21 +134,24 @@ namespace Controllers.Renard {
         }
 
 
-        public void Setup() {
-            using (var dialog = new SetupDialog(_selectedPort, _holdPort)) {
-                if (dialog.ShowDialog() != DialogResult.OK) {
-                    return;
-                }
+        public Control Setup() {
+            return _dialog ?? (_dialog = new SetupDialog(_selectedPort, _holdPort));
 
-                _selectedPort = dialog.SelectedPort;
-                _setupData.SetString(_setupNode, "name", _selectedPort.PortName);
-                _setupData.SetInteger(_setupNode, "baud", _selectedPort.BaudRate);
-                _setupData.SetString(_setupNode, "parity", _selectedPort.Parity.ToString());
-                _setupData.SetInteger(_setupNode, "data", _selectedPort.DataBits);
-                _setupData.SetString(_setupNode, "stop", _selectedPort.StopBits.ToString());
-                _holdPort = dialog.HoldPort;
-                _setupData.SetBoolean(_setupNode, "HoldPort", _holdPort);
-            }
+            //using (var dialog = new SetupDialog(_selectedPort, _holdPort)) {
+            //    if (dialog.ShowDialog() != DialogResult.OK) {
+            //        return;
+            //    }
+
+            //    _selectedPort = dialog.SelectedPort;
+            //    _holdPort = dialog.HoldPort;
+
+            //    _setupData.SetString(_setupNode, "name", _selectedPort.PortName);
+            //    _setupData.SetInteger(_setupNode, "baud", _selectedPort.BaudRate);
+            //    _setupData.SetString(_setupNode, "parity", _selectedPort.Parity.ToString());
+            //    _setupData.SetInteger(_setupNode, "data", _selectedPort.DataBits);
+            //    _setupData.SetString(_setupNode, "stop", _selectedPort.StopBits.ToString());
+            //    _setupData.SetBoolean(_setupNode, "HoldPort", _holdPort);
+            //}
         }
 
 

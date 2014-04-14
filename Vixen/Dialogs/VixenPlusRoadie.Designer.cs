@@ -32,8 +32,6 @@ namespace VixenPlus.Dialogs
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Output", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Input", System.Windows.Forms.HorizontalAlignment.Left);
             this.cbProfiles = new System.Windows.Forms.ComboBox();
             this.gbProfiles = new System.Windows.Forms.GroupBox();
             this.btnProfileSave = new System.Windows.Forms.Button();
@@ -101,7 +99,6 @@ namespace VixenPlus.Dialogs
             this.tpPlugins = new System.Windows.Forms.TabPage();
             this.gbSetup = new System.Windows.Forms.GroupBox();
             this.listViewPlugins = new System.Windows.Forms.ListView();
-            this.pluginName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.buttonRemove = new System.Windows.Forms.Button();
@@ -132,6 +129,8 @@ namespace VixenPlus.Dialogs
             this.btnCancel = new System.Windows.Forms.Button();
             this.ttRoadie = new System.Windows.Forms.ToolTip(this.components);
             this.previewTimer = new System.Windows.Forms.Timer(this.components);
+            this.pSetup = new System.Windows.Forms.Panel();
+            this.plugInName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gbProfiles.SuspendLayout();
             this.tcProfile.SuspendLayout();
             this.tpChannels.SuspendLayout();
@@ -151,6 +150,7 @@ namespace VixenPlus.Dialogs
             ((System.ComponentModel.ISupportInitialize)(this.nudChGenChannels)).BeginInit();
             this.tpMultiColor.SuspendLayout();
             this.tpPlugins.SuspendLayout();
+            this.gbSetup.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tpSortOrders.SuspendLayout();
             this.tpGroups.SuspendLayout();
@@ -239,9 +239,9 @@ namespace VixenPlus.Dialogs
             // 
             // tcProfile
             // 
-            this.tcProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tcProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tcProfile.Controls.Add(this.tpChannels);
             this.tcProfile.Controls.Add(this.tpPlugins);
             this.tcProfile.Controls.Add(this.tpSortOrders);
@@ -977,6 +977,7 @@ namespace VixenPlus.Dialogs
             // 
             // gbSetup
             // 
+            this.gbSetup.Controls.Add(this.pSetup);
             this.gbSetup.Location = new System.Drawing.Point(6, 169);
             this.gbSetup.Name = "gbSetup";
             this.gbSetup.Size = new System.Drawing.Size(958, 225);
@@ -987,16 +988,8 @@ namespace VixenPlus.Dialogs
             // listViewPlugins
             // 
             this.listViewPlugins.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.pluginName});
-            listViewGroup1.Header = "Output";
-            listViewGroup1.Name = "listViewGroupOutput";
-            listViewGroup2.Header = "Input";
-            listViewGroup2.Name = "listViewGroupInput";
-            this.listViewPlugins.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup1,
-            listViewGroup2});
+            this.plugInName});
             this.listViewPlugins.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.listViewPlugins.HideSelection = false;
             this.listViewPlugins.Location = new System.Drawing.Point(6, 24);
             this.listViewPlugins.MultiSelect = false;
             this.listViewPlugins.Name = "listViewPlugins";
@@ -1295,6 +1288,13 @@ namespace VixenPlus.Dialogs
             this.previewTimer.Interval = 200;
             this.previewTimer.Tick += new System.EventHandler(this.previewTimer_Tick);
             // 
+            // pSetup
+            // 
+            this.pSetup.Location = new System.Drawing.Point(0, 19);
+            this.pSetup.Name = "pSetup";
+            this.pSetup.Size = new System.Drawing.Size(958, 200);
+            this.pSetup.TabIndex = 0;
+            // 
             // VixenPlusRoadie
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1336,6 +1336,7 @@ namespace VixenPlus.Dialogs
             this.tpMultiColor.ResumeLayout(false);
             this.tpPlugins.ResumeLayout(false);
             this.tpPlugins.PerformLayout();
+            this.gbSetup.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.tpSortOrders.ResumeLayout(false);
             this.tpGroups.ResumeLayout(false);
@@ -1424,7 +1425,6 @@ namespace VixenPlus.Dialogs
         private System.Windows.Forms.Button btnUpdatePreview;
         private System.Windows.Forms.Button btnProfileSave;
         private System.Windows.Forms.ListView listViewPlugins;
-        private System.Windows.Forms.ColumnHeader pluginName;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button buttonRemove;
@@ -1444,5 +1444,7 @@ namespace VixenPlus.Dialogs
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBoxChannelFrom;
         private System.Windows.Forms.GroupBox gbSetup;
+        private System.Windows.Forms.Panel pSetup;
+        private System.Windows.Forms.ColumnHeader plugInName;
     }
 }

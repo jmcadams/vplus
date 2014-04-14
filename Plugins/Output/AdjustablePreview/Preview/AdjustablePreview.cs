@@ -47,7 +47,7 @@ namespace Preview {
         }
 
 
-        public void Setup() {
+        public Control Setup() {
             if (_channels.Count == 0) {
                 MessageBox.Show(Resources.NoChannelsInProfile, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
             }
@@ -56,6 +56,8 @@ namespace Preview {
                 _setupDialog.ShowDialog();
                 _setupDialog.Dispose();
             }
+
+            return null;
         }
 
 

@@ -42,7 +42,7 @@ namespace Controllers.DMXUSBPro
         }
 
 
-        public void Setup() {
+        public Control Setup() {
             using (var dialog = new SerialSetupDialog(_serialPort)) {
                 dialog.Show();
                 //if (dialog.ShowDialog() != DialogResult.OK) {
@@ -57,6 +57,8 @@ namespace Controllers.DMXUSBPro
                 _setupData.SetInteger(_setupNode, "Data", _serialPort.DataBits);
                 _setupData.SetString(_setupNode, "Stop", _serialPort.StopBits.ToString());
             }
+
+            return null;
         }
 
 

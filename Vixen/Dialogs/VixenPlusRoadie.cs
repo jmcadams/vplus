@@ -1435,19 +1435,14 @@ namespace VixenPlus.Dialogs {
             Cursor = Cursors.WaitCursor;
             try {
                 listViewPlugins.Columns[0].Width = listViewPlugins.Width - 25;
-                var group = listViewPlugins.Groups["listViewGroupOutput"];
                 var list = OutputPlugins.LoadPlugins();
                 if (list != null) {
-                    foreach (var item in list.Select(plugin => new ListViewItem(plugin.Name, @group) {Tag = plugin})) {
+                    foreach (var item in list.Select(plugin => new ListViewItem(plugin.Name) {Tag = plugin})) {
                         listViewPlugins.Items.Add(item);
                     }
                 }
                 listViewPlugins.Enabled = listViewPlugins.Items.Count > 0;
                 OutputPlugins.VerifyPlugIns(_executableObject);
-                //_collapsedRelativeBounds = new Rectangle(listViewOutputPorts.Columns[2].Width - (pictureBoxPlus.Width * 2),
-                //                                         (14 - pictureBoxPlus.Height) / 2, pictureBoxPlus.Width, pictureBoxPlus.Height);
-                //_expandedRelativeBounds = new Rectangle(listViewOutputPorts.Columns[2].Width - (pictureBoxMinus.Width * 2),
-                //                                        (14 - pictureBoxMinus.Height) / 2, pictureBoxMinus.Width, pictureBoxMinus.Height);
             }
             finally {
                 Cursor = Cursors.Default;
@@ -1639,7 +1634,10 @@ namespace VixenPlus.Dialogs {
             }
             UpdatePlugInNodeChannelRanges(checkedListBoxSequencePlugins.SelectedIndex.ToString(CultureInfo.InvariantCulture));
             try {
-                _sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex].Setup();
+                pSetup.Controls.Clear();
+                var setup = _sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex].Setup();
+                pSetup.Controls.Add(setup);
+                setup.Show();
                 UpdateDictionary();
             }
             catch (Exception exception) {
