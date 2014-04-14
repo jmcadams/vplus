@@ -35,6 +35,22 @@ namespace Controllers.DMX_512
             return null;
         }
 
+
+        public SetupData GetSetup() {
+            throw new System.NotImplementedException();
+        }
+
+
+        public void CloseSetup() {
+            throw new System.NotImplementedException();
+        }
+
+
+        public bool SupportsPreview() {
+            return false;
+        }
+
+
         public void Shutdown()
         {
             if (!_dmxRunning || (_dmxInterface == null)) {

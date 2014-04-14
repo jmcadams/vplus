@@ -68,6 +68,21 @@ namespace Controllers.GenericSerial {
         }
 
 
+        public SetupData GetSetup() {
+            throw new NotImplementedException();
+        }
+
+
+        public void CloseSetup() {
+            throw new NotImplementedException();
+        }
+
+
+        public bool SupportsPreview() {
+            return false;
+        }
+
+
         public void Shutdown() {
             if (_serialPort.IsOpen) {
                 _serialPort.Close();

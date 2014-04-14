@@ -62,6 +62,21 @@ namespace Controllers.DMXUSBPro
         }
 
 
+        public SetupData GetSetup() {
+            throw new NotImplementedException();
+        }
+
+
+        public void CloseSetup() {
+            throw new NotImplementedException();
+        }
+
+
+        public bool SupportsPreview() {
+            return false;
+        }
+
+
         public void Shutdown()
         {
             _widget.Stop();

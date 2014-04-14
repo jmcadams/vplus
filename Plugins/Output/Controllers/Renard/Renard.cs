@@ -155,6 +155,27 @@ namespace Controllers.Renard {
         }
 
 
+        public SetupData GetSetup() {
+            _setupData.SetString(_setupNode, "name", _selectedPort.PortName);
+            _setupData.SetInteger(_setupNode, "baud", _selectedPort.BaudRate);
+            _setupData.SetString(_setupNode, "parity", _selectedPort.Parity.ToString());
+            _setupData.SetInteger(_setupNode, "data", _selectedPort.DataBits);
+            _setupData.SetString(_setupNode, "stop", _selectedPort.StopBits.ToString());
+            _setupData.SetBoolean(_setupNode, "HoldPort", _holdPort);
+            return _setupData;
+        }
+
+
+        public void CloseSetup() {
+            if (_dialog == null) {
+                return;
+            }
+
+            _dialog.Dispose();
+            _dialog = null;
+        }
+
+
         public void Shutdown() {
             if (State != RunState.Running) {
                 return;

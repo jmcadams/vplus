@@ -112,7 +112,6 @@ namespace VixenPlus.Dialogs
             this.checkedListBoxSequencePlugins = new System.Windows.Forms.CheckedListBox();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonOK = new System.Windows.Forms.Button();
-            this.buttonPluginSetup = new System.Windows.Forms.Button();
             this.textBoxChannelTo = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -960,7 +959,6 @@ namespace VixenPlus.Dialogs
             this.tpPlugins.Controls.Add(this.checkedListBoxSequencePlugins);
             this.tpPlugins.Controls.Add(this.buttonCancel);
             this.tpPlugins.Controls.Add(this.buttonOK);
-            this.tpPlugins.Controls.Add(this.buttonPluginSetup);
             this.tpPlugins.Controls.Add(this.textBoxChannelTo);
             this.tpPlugins.Controls.Add(this.label2);
             this.tpPlugins.Controls.Add(this.label1);
@@ -1098,7 +1096,6 @@ namespace VixenPlus.Dialogs
             this.checkedListBoxSequencePlugins.TabIndex = 20;
             this.checkedListBoxSequencePlugins.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxSequencePlugins_ItemCheck);
             this.checkedListBoxSequencePlugins.SelectedIndexChanged += new System.EventHandler(this.listBoxSequencePlugins_SelectedIndexChanged);
-            this.checkedListBoxSequencePlugins.DoubleClick += new System.EventHandler(this.checkedListBoxSequencePlugins_DoubleClick);
             this.checkedListBoxSequencePlugins.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBoxSequencePlugins_KeyDown);
             // 
             // buttonCancel
@@ -1123,18 +1120,6 @@ namespace VixenPlus.Dialogs
             this.buttonOK.TabIndex = 31;
             this.buttonOK.Text = "Done";
             this.buttonOK.UseVisualStyleBackColor = true;
-            // 
-            // buttonPluginSetup
-            // 
-            this.buttonPluginSetup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonPluginSetup.Enabled = false;
-            this.buttonPluginSetup.Location = new System.Drawing.Point(886, 60);
-            this.buttonPluginSetup.Name = "buttonPluginSetup";
-            this.buttonPluginSetup.Size = new System.Drawing.Size(75, 23);
-            this.buttonPluginSetup.TabIndex = 25;
-            this.buttonPluginSetup.Text = "Plugin Setup";
-            this.buttonPluginSetup.UseVisualStyleBackColor = true;
-            this.buttonPluginSetup.Click += new System.EventHandler(this.buttonPluginSetup_Click);
             // 
             // textBoxChannelTo
             // 
@@ -1438,7 +1423,6 @@ namespace VixenPlus.Dialogs
         private System.Windows.Forms.CheckedListBox checkedListBoxSequencePlugins;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonOK;
-        private System.Windows.Forms.Button buttonPluginSetup;
         private System.Windows.Forms.TextBox textBoxChannelTo;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;

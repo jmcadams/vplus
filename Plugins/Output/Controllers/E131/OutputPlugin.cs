@@ -560,6 +560,21 @@ namespace Controllers.E131 {
         }
 
 
+        public SetupData GetSetup() {
+            throw new NotImplementedException();
+        }
+
+
+        public void CloseSetup() {
+            throw new NotImplementedException();
+        }
+
+
+        public bool SupportsPreview() {
+            return false;
+        }
+
+
         //-------------------------------------------------------------
         //
         //	Shutdown() - called when execution is stopped or the

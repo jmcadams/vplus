@@ -31,6 +31,8 @@ namespace VixenPlus.Dialogs {
         private readonly bool _suppressErrors;
         private readonly int _dgvWidthDiff;
         private readonly int _dgvHeightDiff;
+
+        private IHardwarePlugin _currentPlugin;
         private Profile _contextProfile;
 
         private const int ChannelEnabledCol = 0;
@@ -1462,11 +1464,6 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private void buttonPluginSetup_Click(object sender, EventArgs e) {
-            PluginSetup();
-        }
-
-
         private void buttonRemove_Click(object sender, EventArgs e) {
             RemoveSelectedPlugIn();
         }
@@ -1477,18 +1474,18 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private void checkedListBoxSequencePlugins_DoubleClick(object sender, EventArgs e) {
-            if (checkedListBoxSequencePlugins.SelectedIndex == -1) {
-                return;
-            }
+        //private void checkedListBoxSequencePlugins_DoubleClick(object sender, EventArgs e) {
+        //    if (checkedListBoxSequencePlugins.SelectedIndex == -1) {
+        //        return;
+        //    }
 
-            if (_sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex].SupportsLivePreview()) {
-                MessageBox.Show("Yup");
-            }
-            else {
-                PluginSetup();
-            }
-        }
+        //    if (_sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex].SupportsLivePreview()) {
+        //        MessageBox.Show("Yup");
+        //    }
+        //    else {
+        //        PluginSetup();
+        //    }
+        //}
 
 
         private void checkedListBoxSequencePlugins_ItemCheck(object sender, ItemCheckEventArgs e) {
@@ -1524,7 +1521,6 @@ namespace VixenPlus.Dialogs {
                 UpdatePlugInNodeChannelRanges(_lastIndex.ToString(CultureInfo.InvariantCulture));
             }
             var selectedIndex = checkedListBoxSequencePlugins.SelectedIndex;
-            buttonPluginSetup.Enabled = selectedIndex != -1;
             buttonRemove.Enabled = selectedIndex != -1;
             if (selectedIndex != -1) {
                 var plugInData = _setupData.GetPlugInData(selectedIndex.ToString(CultureInfo.InvariantCulture));
@@ -1532,6 +1528,7 @@ namespace VixenPlus.Dialogs {
                     textBoxChannelFrom.Text = plugInData.Attributes["from"].Value;
                     textBoxChannelTo.Text = plugInData.Attributes["to"].Value;
                 }
+                PluginSetup();
             }
             _lastIndex = selectedIndex;
         }
@@ -1634,15 +1631,37 @@ namespace VixenPlus.Dialogs {
             }
             UpdatePlugInNodeChannelRanges(checkedListBoxSequencePlugins.SelectedIndex.ToString(CultureInfo.InvariantCulture));
             try {
-                pSetup.Controls.Clear();
-                var setup = _sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex].Setup();
-                pSetup.Controls.Add(setup);
-                setup.Show();
-                UpdateDictionary();
+                if (_currentPlugin != null && _currentPlugin.SupportsLivePreview()) {
+                    SaveAndClear();
+                }
+
+                _currentPlugin = _sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex];
+                
+                if (_currentPlugin.SupportsLivePreview()) {
+                    var setup = _currentPlugin.Setup();
+                    pSetup.Controls.Add(setup);
+                    setup.Show();
+                }
+                else {
+                    _currentPlugin.Setup();
+                    UpdateDictionary();
+                }
             }
             catch (Exception exception) {
                 MessageBox.Show(Resources.PluginInitError + exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
+        }
+
+
+        private void SaveAndClear() {
+            if (null == _currentPlugin) {
+                return;
+            }
+            _setupData = _currentPlugin.GetSetup();
+            _currentPlugin.CloseSetup();
+            _currentPlugin = null;
+            pSetup.Controls.Clear();
+            UpdateDictionary();
         }
 
 

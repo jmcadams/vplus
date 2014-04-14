@@ -4,5 +4,8 @@ namespace VixenPlus {
     public interface ISetup
     {
         Control Setup();
+        SetupData GetSetup();
+        void CloseSetup();
+        bool SupportsPreview();
     }
 }

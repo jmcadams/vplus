@@ -61,6 +61,21 @@ namespace Preview {
         }
 
 
+        public SetupData GetSetup() {
+            throw new NotImplementedException();
+        }
+
+
+        public void CloseSetup() {
+            throw new NotImplementedException();
+        }
+
+
+        public bool SupportsPreview() {
+            return false;
+        }
+
+
         public void Shutdown() {
             if (_previewDialog != null) {
                 if (_previewDialog.InvokeRequired) {
