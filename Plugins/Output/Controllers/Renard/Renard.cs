@@ -156,6 +156,8 @@ namespace Controllers.Renard {
 
 
         public SetupData GetSetup() {
+            _selectedPort = ((SetupDialog) _dialog).SelectedPort;
+
             _setupData.SetString(_setupNode, "name", _selectedPort.PortName);
             _setupData.SetInteger(_setupNode, "baud", _selectedPort.BaudRate);
             _setupData.SetString(_setupNode, "parity", _selectedPort.Parity.ToString());
