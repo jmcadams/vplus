@@ -7,5 +7,6 @@ namespace VixenPlus {
         SetupData GetSetup();
         void CloseSetup();
         bool SupportsPreview();
+        bool ValidateSettings();
     }
 }

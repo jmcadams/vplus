@@ -89,6 +89,11 @@ namespace Controllers.Launcher {
         }
 
 
+        public bool ValidateSettings() {
+            throw new NotImplementedException();
+        }
+
+
         public void Shutdown() {}
 
 

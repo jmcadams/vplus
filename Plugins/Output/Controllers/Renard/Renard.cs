@@ -223,6 +223,11 @@ namespace Controllers.Renard {
         }
 
 
+        public bool ValidateSettings() {
+            return ((SetupDialog) _dialog).ValidateSettings();
+        }
+
+
         public HardwareMap[] HardwareMap {
             get { return new[] {new HardwareMap("Serial", int.Parse(_selectedPort.PortName.Substring(3)))}; }
         }

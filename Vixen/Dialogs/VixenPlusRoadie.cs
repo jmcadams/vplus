@@ -1657,11 +1657,16 @@ namespace VixenPlus.Dialogs {
             if (null == _currentPlugin) {
                 return;
             }
-            _setupData = _currentPlugin.GetSetup();
-            _currentPlugin.CloseSetup();
-            _currentPlugin = null;
-            pSetup.Controls.Clear();
-            UpdateDictionary();
+            if (_currentPlugin.ValidateSettings()) {
+                _setupData = _currentPlugin.GetSetup();
+                _currentPlugin.CloseSetup();
+                _currentPlugin = null;
+                pSetup.Controls.Clear();
+                UpdateDictionary();
+            }
+            else {
+                MessageBox.Show("Nope!");
+            }
         }
 
 
@@ -1730,7 +1735,10 @@ namespace VixenPlus.Dialogs {
             var num = 0;
             foreach (var plugin in _sequencePlugins) {
                 var pluginData = _setupData.GetPlugInData(num.ToString(CultureInfo.InvariantCulture));
-                if (pluginData != null && pluginData["enabled"] != null && bool.Parse(pluginData["enabled"].Value)) {
+                if (pluginData != null && 
+                    pluginData.Attributes != null && 
+                    pluginData.Attributes["enabled"] != null &&
+                    bool.Parse(pluginData.Attributes["enabled"].Value)) {
                     foreach (var map in plugin.HardwareMap) {
                         Dictionary<int, OutputPort> dictionary;
                         OutputPort port;

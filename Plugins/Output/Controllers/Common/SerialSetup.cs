@@ -17,7 +17,7 @@ namespace Controllers.Common {
         private const int DefaultBaudRate = 57600;
         private const int DefaultDataBits = 8;
 
-        private readonly SerialPort _serialPort;
+        private SerialPort _serialPort;
 
 
         public SerialSetup() {
@@ -37,6 +37,7 @@ namespace Controllers.Common {
                 return new SerialPort(cbPortName.SelectedItem.ToString(), int.Parse(cbBaudRate.SelectedItem.ToString()),
                                       (Parity)cbParity.SelectedItem, int.Parse(cbDataBits.SelectedItem.ToString()), (StopBits)cbStopBits.SelectedItem);
             }
+            set { _serialPort = value; }
         }
 
 

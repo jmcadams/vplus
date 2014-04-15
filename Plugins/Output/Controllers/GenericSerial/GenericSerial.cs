@@ -83,6 +83,11 @@ namespace Controllers.GenericSerial {
         }
 
 
+        public bool ValidateSettings() {
+            throw new NotImplementedException();
+        }
+
+
         public void Shutdown() {
             if (_serialPort.IsOpen) {
                 _serialPort.Close();

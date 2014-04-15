@@ -575,6 +575,11 @@ namespace Controllers.E131 {
         }
 
 
+        public bool ValidateSettings() {
+            throw new NotImplementedException();
+        }
+
+
         //-------------------------------------------------------------
         //
         //	Shutdown() - called when execution is stopped or the

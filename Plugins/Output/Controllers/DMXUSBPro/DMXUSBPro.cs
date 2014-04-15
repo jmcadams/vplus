@@ -77,6 +77,11 @@ namespace Controllers.DMXUSBPro
         }
 
 
+        public bool ValidateSettings() {
+            throw new NotImplementedException();
+        }
+
+
         public void Shutdown()
         {
             _widget.Stop();

@@ -15,6 +15,14 @@ namespace Controllers.Renard {
         }
 
 
-        public SerialPort SelectedPort { get; private set; }
+        public SerialPort SelectedPort {
+            get { return serialSetup1.SelectedPort; }
+            private set { serialSetup1.SelectedPort = value; }
+        }
+
+
+        public bool ValidateSettings() {
+            return serialSetup1.ValidateSettings();
+        }
     }
 }
