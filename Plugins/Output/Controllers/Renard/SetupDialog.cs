@@ -3,21 +3,14 @@ using System.Windows.Forms;
 
 namespace Controllers.Renard {
     public partial class SetupDialog : UserControl {
-        public SetupDialog(SerialPort selectedPort, bool holdPort) {
+        public SetupDialog() {
             InitializeComponent();
-            SelectedPort = selectedPort;
-            checkBoxHoldPort.Checked = holdPort;
-        }
-
-
-        public bool HoldPort {
-            get { return checkBoxHoldPort.Checked; }
         }
 
 
         public SerialPort SelectedPort {
-            get { return serialSetup1.SelectedPort; }
-            private set { serialSetup1.SelectedPort = value; }
+            get { return serialSetup1.SelectedPorts; }
+            set { serialSetup1.SelectedPorts = value; }
         }
 
 

@@ -305,6 +305,8 @@ namespace VixenPlus.Dialogs {
 
         private void cbProfiles_SelectedIndexChanged(object sender, EventArgs e) {
             SaveProfileFromRows();
+
+            //todo only need to update the tab we're on at first and let the tab load it's own data when it gets focus.
             colorPaletteChannel.ControlChanged -= UpdateColors;
             tcControlArea.SelectTab(ControlTabNormal);
             tcProfile.TabPages[0].Text = "Channels";
@@ -324,6 +326,7 @@ namespace VixenPlus.Dialogs {
 
             dgvChannels.ResumeLayout();
             dgvChannels.Focus();
+            PluginListDialog_Load(null, null);
             DoButtonManagement();
         }
 
@@ -1425,7 +1428,6 @@ namespace VixenPlus.Dialogs {
         //private Rectangle _expandedRelativeBounds;
         private bool _internalUpdate;
         private int _itemAffectedIndex;
-        private int _lastIndex = -1;
 
 
         private void PluginListDialog(IExecutable executableObject) {
@@ -1516,21 +1518,71 @@ namespace VixenPlus.Dialogs {
         }
 
 
+        private bool _inhibitIndexChange;
+        private int _lastIndex = -1;
+
         private void listBoxSequencePlugins_SelectedIndexChanged(object sender, EventArgs e) {
+            if (_inhibitIndexChange) return;
+
             if ((_lastIndex != -1) && (checkedListBoxSequencePlugins.SelectedIndex != -1)) {
-                UpdatePlugInNodeChannelRanges(_lastIndex.ToString(CultureInfo.InvariantCulture));
+                if (SavedValidData()) {
+                    UpdatePlugInNodeChannelRanges(_lastIndex.ToString(CultureInfo.InvariantCulture));
+                }
+                else {
+                    _inhibitIndexChange = true;
+                    checkedListBoxSequencePlugins.SelectedIndex = _lastIndex;
+                    _inhibitIndexChange = false;
+                    return;
+                }
             }
             var selectedIndex = checkedListBoxSequencePlugins.SelectedIndex;
+
             buttonRemove.Enabled = selectedIndex != -1;
             if (selectedIndex != -1) {
+                _currentPlugin = _sequencePlugins[selectedIndex];
                 var plugInData = _setupData.GetPlugInData(selectedIndex.ToString(CultureInfo.InvariantCulture));
                 if (plugInData != null && plugInData.Attributes != null) {
                     textBoxChannelFrom.Text = plugInData.Attributes["from"].Value;
                     textBoxChannelTo.Text = plugInData.Attributes["to"].Value;
                 }
-                PluginSetup();
+                var isLiveSetup = _currentPlugin.SupportsLiveSetup();
+                EnablePlugInSetup(isLiveSetup);
+                if (isLiveSetup) {
+                    SetupLivePlugIn();
+                }
             }
             _lastIndex = selectedIndex;
+        }
+
+
+        private void EnablePlugInSetup(bool isLiveSetup) {
+            btnSetup.Visible = !isLiveSetup;
+            gbSetup.Visible = isLiveSetup;
+            
+        }
+
+
+        private bool SavedValidData() {
+            if (null == _currentPlugin) {
+                return true;
+            } 
+            
+            var isValid = true;
+
+            if (_currentPlugin.SupportsLiveSetup()) {
+                isValid = _currentPlugin.SettingsValid();
+
+                if (isValid) {
+                    _setupData = _currentPlugin.GetSetup();
+                    _currentPlugin.CloseSetup();
+                    _currentPlugin = null;
+                    pSetup.Controls.Clear();
+                }
+            }
+
+            UpdateDictionary();
+
+            return isValid;
         }
 
 
@@ -1604,9 +1656,8 @@ namespace VixenPlus.Dialogs {
             try {
                 _internalUpdate = true;
                 checkedListBoxSequencePlugins.Items.Clear();
-                // ReSharper disable PossibleNullReferenceException
                 foreach (XmlNode node in _setupData.GetAllPluginData()) {
-                    var plugin = (node.Attributes["name"] != null)
+                    var plugin = node.Attributes != null && (node.Attributes["name"] != null)
                         ?  OutputPlugins.FindPlugin(node.Attributes["name"].Value, true) : null;
 
                     if (plugin != null) {
@@ -1617,7 +1668,6 @@ namespace VixenPlus.Dialogs {
                     _internalUpdate = false;
                     UpdateDictionary();
                 }
-                // ReSharper restore PossibleNullReferenceException
             }
             finally {
                 Cursor = Cursors.Default;
@@ -1625,49 +1675,46 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private void PluginSetup() {
+        private void checkedListBoxSequencePlugins_DoubleClick(object sender, EventArgs e) {
+            if (_currentPlugin.SupportsLiveSetup()) {
+                return;
+            }
+
+            btnSetup_Click(null, null);
+        }
+
+
+        private void btnSetup_Click(object sender, EventArgs e) {
+            try {
+                _currentPlugin.Setup();
+                UpdateDictionary();
+            }
+            catch (Exception exception) {
+                ShowSetupError(exception);
+            }
+        }
+
+
+        private void SetupLivePlugIn() {
             if (checkedListBoxSequencePlugins.SelectedItem == null) {
                 return;
             }
             UpdatePlugInNodeChannelRanges(checkedListBoxSequencePlugins.SelectedIndex.ToString(CultureInfo.InvariantCulture));
             try {
-                if (_currentPlugin != null && _currentPlugin.SupportsLivePreview()) {
-                    SaveAndClear();
-                }
-
-                _currentPlugin = _sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex];
-                
-                if (_currentPlugin.SupportsLivePreview()) {
-                    var setup = _currentPlugin.Setup();
-                    pSetup.Controls.Add(setup);
-                    setup.Show();
-                }
-                else {
-                    _currentPlugin.Setup();
-                    UpdateDictionary();
-                }
+                var setup = _currentPlugin.Setup();
+                pSetup.Controls.Add(setup);
+                setup.Show();
             }
             catch (Exception exception) {
-                MessageBox.Show(Resources.PluginInitError + exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                ShowSetupError(exception);
             }
         }
 
 
-        private void SaveAndClear() {
-            if (null == _currentPlugin) {
-                return;
-            }
-            if (_currentPlugin.ValidateSettings()) {
-                _setupData = _currentPlugin.GetSetup();
-                _currentPlugin.CloseSetup();
-                _currentPlugin = null;
-                pSetup.Controls.Clear();
-                UpdateDictionary();
-            }
-            else {
-                MessageBox.Show("Nope!");
-            }
+        private static void ShowSetupError(Exception exception) {
+            MessageBox.Show(Resources.PluginInitError + exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
+
 
 
         private void RemoveSelectedPlugIn() {
@@ -1809,5 +1856,6 @@ namespace VixenPlus.Dialogs {
             _sequencePlugins.Add(plugIn);
         }
         #endregion
+
     }
 }

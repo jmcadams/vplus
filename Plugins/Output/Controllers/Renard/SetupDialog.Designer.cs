@@ -6,66 +6,26 @@ namespace Controllers.Renard {
 
         #region Windows Form Designer generated code
 
-        private CheckBox checkBoxHoldPort;
-        private ComboBox comboBoxProtocolVersion;
-        private Label label6;
 
 
         private void InitializeComponent() {
-            this.label6 = new System.Windows.Forms.Label();
-            this.comboBoxProtocolVersion = new System.Windows.Forms.ComboBox();
-            this.checkBoxHoldPort = new System.Windows.Forms.CheckBox();
             this.serialSetup1 = new Controllers.Common.SerialSetup();
             this.SuspendLayout();
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(168, 19);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(87, 13);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "Protocol Version:";
-            // 
-            // comboBoxProtocolVersion
-            // 
-            this.comboBoxProtocolVersion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxProtocolVersion.FormattingEnabled = true;
-            this.comboBoxProtocolVersion.Items.AddRange(new object[] {
-            "1",
-            "2"});
-            this.comboBoxProtocolVersion.Location = new System.Drawing.Point(261, 16);
-            this.comboBoxProtocolVersion.Name = "comboBoxProtocolVersion";
-            this.comboBoxProtocolVersion.Size = new System.Drawing.Size(57, 21);
-            this.comboBoxProtocolVersion.TabIndex = 1;
-            // 
-            // checkBoxHoldPort
-            // 
-            this.checkBoxHoldPort.Location = new System.Drawing.Point(12, 144);
-            this.checkBoxHoldPort.Name = "checkBoxHoldPort";
-            this.checkBoxHoldPort.Size = new System.Drawing.Size(331, 22);
-            this.checkBoxHoldPort.TabIndex = 2;
-            this.checkBoxHoldPort.Text = "Hold port open during the duration of the sequence execution.";
-            this.checkBoxHoldPort.UseVisualStyleBackColor = true;
             // 
             // serialSetup1
             // 
             this.serialSetup1.Location = new System.Drawing.Point(13, 13);
             this.serialSetup1.Name = "serialSetup1";
-            this.serialSetup1.Size = new System.Drawing.Size(308, 125);
+            this.serialSetup1.Size = new System.Drawing.Size(303, 144);
             this.serialSetup1.TabIndex = 3;
             // 
             // SetupDialog
             // 
             this.BackColor = System.Drawing.Color.Transparent;
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.checkBoxHoldPort);
-            this.Controls.Add(this.comboBoxProtocolVersion);
             this.Controls.Add(this.serialSetup1);
             this.Name = "SetupDialog";
-            this.Size = new System.Drawing.Size(366, 200);
+            this.Size = new System.Drawing.Size(366, 252);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

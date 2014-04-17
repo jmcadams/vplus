@@ -98,7 +98,9 @@ namespace VixenPlus.Dialogs
             this.colorPaletteColor = new VixenPlusCommon.ColorPalette();
             this.tpPlugins = new System.Windows.Forms.TabPage();
             this.gbSetup = new System.Windows.Forms.GroupBox();
+            this.pSetup = new System.Windows.Forms.Panel();
             this.listViewPlugins = new System.Windows.Forms.ListView();
+            this.plugInName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.buttonRemove = new System.Windows.Forms.Button();
@@ -128,8 +130,7 @@ namespace VixenPlus.Dialogs
             this.btnCancel = new System.Windows.Forms.Button();
             this.ttRoadie = new System.Windows.Forms.ToolTip(this.components);
             this.previewTimer = new System.Windows.Forms.Timer(this.components);
-            this.pSetup = new System.Windows.Forms.Panel();
-            this.plugInName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnSetup = new System.Windows.Forms.Button();
             this.gbProfiles.SuspendLayout();
             this.tcProfile.SuspendLayout();
             this.tpChannels.SuspendLayout();
@@ -238,9 +239,9 @@ namespace VixenPlus.Dialogs
             // 
             // tcProfile
             // 
-            this.tcProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tcProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tcProfile.Controls.Add(this.tpChannels);
             this.tcProfile.Controls.Add(this.tpPlugins);
             this.tcProfile.Controls.Add(this.tpSortOrders);
@@ -949,6 +950,7 @@ namespace VixenPlus.Dialogs
             // 
             // tpPlugins
             // 
+            this.tpPlugins.Controls.Add(this.btnSetup);
             this.tpPlugins.Controls.Add(this.gbSetup);
             this.tpPlugins.Controls.Add(this.listViewPlugins);
             this.tpPlugins.Controls.Add(this.label4);
@@ -983,6 +985,13 @@ namespace VixenPlus.Dialogs
             this.gbSetup.TabStop = false;
             this.gbSetup.Text = "Plugin Setup";
             // 
+            // pSetup
+            // 
+            this.pSetup.Location = new System.Drawing.Point(0, 19);
+            this.pSetup.Name = "pSetup";
+            this.pSetup.Size = new System.Drawing.Size(958, 200);
+            this.pSetup.TabIndex = 0;
+            // 
             // listViewPlugins
             // 
             this.listViewPlugins.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -1001,7 +1010,7 @@ namespace VixenPlus.Dialogs
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(289, 4);
+            this.label4.Location = new System.Drawing.Point(286, 3);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(74, 13);
             this.label4.TabIndex = 19;
@@ -1090,12 +1099,13 @@ namespace VixenPlus.Dialogs
             // checkedListBoxSequencePlugins
             // 
             this.checkedListBoxSequencePlugins.FormattingEnabled = true;
-            this.checkedListBoxSequencePlugins.Location = new System.Drawing.Point(292, 25);
+            this.checkedListBoxSequencePlugins.Location = new System.Drawing.Point(289, 26);
             this.checkedListBoxSequencePlugins.Name = "checkedListBoxSequencePlugins";
             this.checkedListBoxSequencePlugins.Size = new System.Drawing.Size(171, 139);
             this.checkedListBoxSequencePlugins.TabIndex = 20;
             this.checkedListBoxSequencePlugins.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxSequencePlugins_ItemCheck);
             this.checkedListBoxSequencePlugins.SelectedIndexChanged += new System.EventHandler(this.listBoxSequencePlugins_SelectedIndexChanged);
+            this.checkedListBoxSequencePlugins.DoubleClick += new System.EventHandler(this.checkedListBoxSequencePlugins_DoubleClick);
             this.checkedListBoxSequencePlugins.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBoxSequencePlugins_KeyDown);
             // 
             // buttonCancel
@@ -1273,12 +1283,16 @@ namespace VixenPlus.Dialogs
             this.previewTimer.Interval = 200;
             this.previewTimer.Tick += new System.EventHandler(this.previewTimer_Tick);
             // 
-            // pSetup
+            // btnSetup
             // 
-            this.pSetup.Location = new System.Drawing.Point(0, 19);
-            this.pSetup.Name = "pSetup";
-            this.pSetup.Size = new System.Drawing.Size(958, 200);
-            this.pSetup.TabIndex = 0;
+            this.btnSetup.Location = new System.Drawing.Point(208, 53);
+            this.btnSetup.Name = "btnSetup";
+            this.btnSetup.Size = new System.Drawing.Size(75, 23);
+            this.btnSetup.TabIndex = 34;
+            this.btnSetup.Text = "Setup";
+            this.btnSetup.UseVisualStyleBackColor = true;
+            this.btnSetup.Visible = false;
+            this.btnSetup.Click += new System.EventHandler(this.btnSetup_Click);
             // 
             // VixenPlusRoadie
             // 
@@ -1430,5 +1444,6 @@ namespace VixenPlus.Dialogs
         private System.Windows.Forms.GroupBox gbSetup;
         private System.Windows.Forms.Panel pSetup;
         private System.Windows.Forms.ColumnHeader plugInName;
+        private System.Windows.Forms.Button btnSetup;
     }
 }

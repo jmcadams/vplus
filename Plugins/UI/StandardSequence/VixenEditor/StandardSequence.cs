@@ -684,7 +684,7 @@ namespace VixenEditor {
             objectInContext.InheritChannelsFrom(_sequence);
             objectInContext.InheritPlugInDataFrom(_sequence);
             objectInContext.InheritSortsFrom(_sequence);
-            using (var dialog = new ProfileManagerDialog(objectInContext)) {
+            using (var dialog = new VixenPlusRoadie(objectInContext)) {
                 if ((dialog.ShowDialog() == DialogResult.OK) &&
                     (MessageBox.Show(Resources.AttachToNewProfile, Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
                      DialogResult.Yes)) {
@@ -4865,7 +4865,7 @@ namespace VixenEditor {
             objectInContext.InheritChannelsFrom(_sequence);
             objectInContext.InheritPlugInDataFrom(_sequence);
             objectInContext.InheritSortsFrom(_sequence);
-            using (var dialog = new ProfileManagerDialog(objectInContext)) {
+            using (var dialog = new VixenPlusRoadie(objectInContext)) {
                 if ((dialog.ShowDialog() != DialogResult.OK)) {
                     return;
                 }

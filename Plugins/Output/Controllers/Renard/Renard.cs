@@ -135,23 +135,7 @@ namespace Controllers.Renard {
 
 
         public Control Setup() {
-            return _dialog ?? (_dialog = new SetupDialog(_selectedPort, _holdPort));
-
-            //using (var dialog = new SetupDialog(_selectedPort, _holdPort)) {
-            //    if (dialog.ShowDialog() != DialogResult.OK) {
-            //        return;
-            //    }
-
-            //    _selectedPort = dialog.SelectedPort;
-            //    _holdPort = dialog.HoldPort;
-
-            //    _setupData.SetString(_setupNode, "name", _selectedPort.PortName);
-            //    _setupData.SetInteger(_setupNode, "baud", _selectedPort.BaudRate);
-            //    _setupData.SetString(_setupNode, "parity", _selectedPort.Parity.ToString());
-            //    _setupData.SetInteger(_setupNode, "data", _selectedPort.DataBits);
-            //    _setupData.SetString(_setupNode, "stop", _selectedPort.StopBits.ToString());
-            //    _setupData.SetBoolean(_setupNode, "HoldPort", _holdPort);
-            //}
+            return _dialog ?? (_dialog = new SetupDialog {SelectedPort = _selectedPort});
         }
 
 
@@ -218,18 +202,21 @@ namespace Controllers.Renard {
 
 
         [UsedImplicitly]
-        public bool SupportsPreview() {
+        public bool SupportsLiveSetup() {
             return true;
         }
 
 
-        public bool ValidateSettings() {
+        public bool SettingsValid() {
             return ((SetupDialog) _dialog).ValidateSettings();
         }
 
 
         public HardwareMap[] HardwareMap {
-            get { return new[] {new HardwareMap("Serial", int.Parse(_selectedPort.PortName.Substring(3)))}; }
+            get {
+                int port;
+                return int.TryParse(_selectedPort.PortName.Substring(3), out port) ? new[] {new HardwareMap("Serial", port)} : new[] {new HardwareMap("None", 0)};
+            }
         }
 
         public string Name {

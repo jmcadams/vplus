@@ -39,7 +39,7 @@
             // lblPort
             // 
             this.lblPort.AutoSize = true;
-            this.lblPort.Location = new System.Drawing.Point(3, 6);
+            this.lblPort.Location = new System.Drawing.Point(2, 6);
             this.lblPort.Name = "lblPort";
             this.lblPort.Size = new System.Drawing.Size(50, 13);
             this.lblPort.TabIndex = 21;
@@ -47,9 +47,9 @@
             // 
             // lblWarn
             // 
-            this.lblWarn.Location = new System.Drawing.Point(3, 79);
+            this.lblWarn.Location = new System.Drawing.Point(159, 6);
             this.lblWarn.Name = "lblWarn";
-            this.lblWarn.Size = new System.Drawing.Size(302, 43);
+            this.lblWarn.Size = new System.Drawing.Size(146, 125);
             this.lblWarn.TabIndex = 15;
             this.lblWarn.Text = "Warning";
             // 
@@ -60,7 +60,7 @@
             this.cbDataBits.Items.AddRange(new object[] {
             "7",
             "8"});
-            this.cbDataBits.Location = new System.Drawing.Point(210, 30);
+            this.cbDataBits.Location = new System.Drawing.Point(58, 83);
             this.cbDataBits.Name = "cbDataBits";
             this.cbDataBits.Size = new System.Drawing.Size(95, 21);
             this.cbDataBits.TabIndex = 20;
@@ -69,9 +69,9 @@
             // 
             this.cbPortName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbPortName.FormattingEnabled = true;
-            this.cbPortName.Location = new System.Drawing.Point(62, 3);
+            this.cbPortName.Location = new System.Drawing.Point(58, 3);
             this.cbPortName.Name = "cbPortName";
-            this.cbPortName.Size = new System.Drawing.Size(75, 21);
+            this.cbPortName.Size = new System.Drawing.Size(95, 21);
             this.cbPortName.TabIndex = 11;
             // 
             // cbBaudRate
@@ -89,9 +89,9 @@
             "230400",
             "460800",
             "921600"});
-            this.cbBaudRate.Location = new System.Drawing.Point(62, 30);
+            this.cbBaudRate.Location = new System.Drawing.Point(58, 29);
             this.cbBaudRate.Name = "cbBaudRate";
-            this.cbBaudRate.Size = new System.Drawing.Size(75, 21);
+            this.cbBaudRate.Size = new System.Drawing.Size(95, 21);
             this.cbBaudRate.TabIndex = 13;
             this.cbBaudRate.SelectedIndexChanged += new System.EventHandler(this.comboBoxBaudRate_SelectedIndexChanged);
             // 
@@ -99,7 +99,7 @@
             // 
             this.cbStopBits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbStopBits.FormattingEnabled = true;
-            this.cbStopBits.Location = new System.Drawing.Point(210, 55);
+            this.cbStopBits.Location = new System.Drawing.Point(58, 110);
             this.cbStopBits.Name = "cbStopBits";
             this.cbStopBits.Size = new System.Drawing.Size(95, 21);
             this.cbStopBits.TabIndex = 19;
@@ -108,15 +108,15 @@
             // 
             this.cbParity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbParity.FormattingEnabled = true;
-            this.cbParity.Location = new System.Drawing.Point(62, 55);
+            this.cbParity.Location = new System.Drawing.Point(58, 56);
             this.cbParity.Name = "cbParity";
-            this.cbParity.Size = new System.Drawing.Size(75, 21);
+            this.cbParity.Size = new System.Drawing.Size(95, 21);
             this.cbParity.TabIndex = 16;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(156, 59);
+            this.label4.Location = new System.Drawing.Point(4, 113);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(48, 13);
             this.label4.TabIndex = 18;
@@ -125,7 +125,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 33);
+            this.label2.Location = new System.Drawing.Point(-1, 32);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 13);
             this.label2.TabIndex = 12;
@@ -134,7 +134,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(155, 33);
+            this.label3.Location = new System.Drawing.Point(3, 86);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(49, 13);
             this.label3.TabIndex = 17;
@@ -143,7 +143,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 59);
+            this.label5.Location = new System.Drawing.Point(19, 59);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(33, 13);
             this.label5.TabIndex = 14;
@@ -165,7 +165,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label5);
             this.Name = "SerialSetup";
-            this.Size = new System.Drawing.Size(308, 125);
+            this.Size = new System.Drawing.Size(308, 140);
             this.Load += new System.EventHandler(this.SerialSetup_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

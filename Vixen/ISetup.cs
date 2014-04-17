@@ -6,7 +6,7 @@ namespace VixenPlus {
         Control Setup();
         SetupData GetSetup();
         void CloseSetup();
-        bool SupportsPreview();
-        bool ValidateSettings();
+        bool SupportsLiveSetup();
+        bool SettingsValid();
     }
 }

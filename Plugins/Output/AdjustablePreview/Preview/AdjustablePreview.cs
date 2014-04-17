@@ -71,12 +71,12 @@ namespace Preview {
         }
 
 
-        public bool SupportsPreview() {
+        public bool SupportsLiveSetup() {
             return false;
         }
 
 
-        public bool ValidateSettings() {
+        public bool SettingsValid() {
             throw new NotImplementedException();
         }
 

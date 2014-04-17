@@ -177,12 +177,6 @@ namespace VixenPlusCommon {
             return new Point(x,y);
         }
 
-
-        public static bool SupportsLivePreview(this object clazz) {
-            var method = clazz.GetType().GetMethod("SupportsPreview");
-            return method != null && (bool) method.Invoke(clazz, null);
-        }
-
         public static bool IsWindows64BitOS() {
 #if __WIN64
             return true;

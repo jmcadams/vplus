@@ -138,7 +138,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void buttonProfileManager_Click(object sender, EventArgs e) {
-            using (var dialog = new ProfileManagerDialog(null)) {
+            using (var dialog = new VixenPlusRoadie()) {
                 if (dialog.ShowDialog() == DialogResult.OK) {
                     PopulateProfileList();
                 }

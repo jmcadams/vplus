@@ -26,15 +26,9 @@ namespace Controllers.Common {
             InitializeComponent();
         }
 
-        public SerialSetup(SerialPort serialPort) {
-            components = null;
-            _serialPort = serialPort;
-            InitializeComponent();
-        }
-
-        public SerialPort SelectedPort {
+        public SerialPort SelectedPorts {
             get {
-                return new SerialPort(cbPortName.SelectedItem.ToString(), int.Parse(cbBaudRate.SelectedItem.ToString()),
+                return DesignMode ? null : new SerialPort(cbPortName.SelectedItem.ToString(), int.Parse(cbBaudRate.SelectedItem.ToString()),
                                       (Parity)cbParity.SelectedItem, int.Parse(cbDataBits.SelectedItem.ToString()), (StopBits)cbStopBits.SelectedItem);
             }
             set { _serialPort = value; }
@@ -72,6 +66,7 @@ namespace Controllers.Common {
 
 
         private void Init(SerialPort serialPort) {
+            cbPortName.Items.Add("None");
             cbPortName.Items.AddRange(SerialPort.GetPortNames());
 
             cbParity.Items.Add(Parity.Even);
