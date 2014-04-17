@@ -7,6 +7,8 @@ using System.Windows.Forms;
 
 using Controllers.Properties;
 
+using VixenPlusCommon;
+
 
 namespace Controllers.Common {
     public partial class SerialSetup : UserControl {
@@ -36,8 +38,6 @@ namespace Controllers.Common {
 
 
         public bool ValidateSettings() {
-            var isValid = true;
-
             var builder = new StringBuilder();
             if (cbPortName.SelectedIndex == -1) {
                 builder.AppendLine(Resources.Serial_PortError);
@@ -55,12 +55,13 @@ namespace Controllers.Common {
             if (cbStopBits.SelectedIndex == -1) {
                 builder.AppendLine(Resources.Serial_StopBitsError);
             }
-            if (builder.Length > 0) {
-                MessageBox.Show(Resources.Serial_Resolve + builder, "Vixen+", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                isValid = false;
+            if (builder.Length <= 0) {
+                return true;
             }
 
-            return isValid;
+            MessageBox.Show(Resources.Serial_Resolve + builder, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+
+            return false;
         }
 
 
