@@ -32,7 +32,7 @@ namespace VixenPlus.Dialogs {
         private readonly int _dgvWidthDiff;
         private readonly int _dgvHeightDiff;
 
-        private IHardwarePlugin _currentPlugin;
+        //private IHardwarePlugin _currentPlugin;
         private Profile _contextProfile;
 
         private const int ChannelEnabledCol = 0;
@@ -71,6 +71,7 @@ namespace VixenPlus.Dialogs {
             _dgvHeightDiff = Height - dgvChannels.Height;
             InitializeControls();
 
+            // For Now hide tabs >= Groups
             for (var i = TabGroups; i <= TabNutcracker; i++) {
                 tcProfile.TabPages.Remove(tcProfile.TabPages[TabGroups]);
             }
@@ -133,9 +134,9 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private void FrmProfileManager_Shown(object sender, EventArgs e) {
-            DoButtonManagement();
-        }
+        //private void FrmProfileManager_Shown(object sender, EventArgs e) {
+        //    DoButtonManagement();
+        //}
 
 
         private void tcProfile_SelectedIndexChanged(object sender, EventArgs e) {
@@ -287,7 +288,7 @@ namespace VixenPlus.Dialogs {
             DeleteIfExists(_contextProfile.FileName);
             DeleteIfExists(Path.Combine(Path.GetDirectoryName(_contextProfile.FileName) ?? Paths.ProfilePath,
                 _contextProfile.Name + Vendor.GroupExtension));
-            InitializeChannelTab();
+            InitializeProfiles();
             cbProfiles.SelectedIndex = 0;
         }
 
@@ -305,28 +306,7 @@ namespace VixenPlus.Dialogs {
 
         private void cbProfiles_SelectedIndexChanged(object sender, EventArgs e) {
             SaveProfileFromRows();
-
-            //todo only need to update the tab we're on at first and let the tab load it's own data when it gets focus.
             colorPaletteChannel.ControlChanged -= UpdateColors;
-            tcControlArea.SelectTab(ControlTabNormal);
-            tcProfile.TabPages[0].Text = "Channels";
-            dgvChannels.Rows.Clear();
-
-            dgvChannels.SuspendLayout();
-
-            if (0 == cbProfiles.SelectedIndex) {
-                _contextProfile = null;
-                DoButtonManagement();
-                return;
-            }
-
-            _contextProfile = (Profile) cbProfiles.SelectedItem;
-
-            AddRows(_contextProfile.FullChannels);
-
-            dgvChannels.ResumeLayout();
-            dgvChannels.Focus();
-            PluginListDialog_Load(null, null);
             DoButtonManagement();
         }
 
@@ -428,9 +408,11 @@ namespace VixenPlus.Dialogs {
 
             switch (tcProfile.SelectedIndex) {
                 case TabChannels:
+                    InitializeChannelTab();
                     SetChannelTabButtons(isProfileLoaded);
                     break;
                 case TabPlugins:
+                    InitializePlugInTab();
                     SetPluginsTabButtons(isProfileLoaded);
                     break;
                 case TabGroups:
@@ -445,6 +427,26 @@ namespace VixenPlus.Dialogs {
             }
         }
 
+
+        private void InitializeChannelTab() {
+            tcControlArea.SelectTab(ControlTabNormal);
+            tcProfile.TabPages[0].Text = "Channels";
+            dgvChannels.Rows.Clear();
+
+            dgvChannels.SuspendLayout();
+
+            if (0 == cbProfiles.SelectedIndex) {
+                _contextProfile = null;
+                return;
+            }
+
+            _contextProfile = (Profile)cbProfiles.SelectedItem;
+
+            AddRows(_contextProfile.FullChannels);
+
+            dgvChannels.ResumeLayout();
+            dgvChannels.Focus();
+        }
 
         private void SetChannelTabButtons(bool isProfileLoaded) {
             var selectedRows = GetSelectedRows().ToList();
@@ -466,7 +468,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void SetGeneralButtons(bool isProfileLoaded = true) {
-            tcProfile.Visible = isProfileLoaded;
+            //tcProfile.Visible = isProfileLoaded;
             var isChannelPanel = tcControlArea.SelectedTab == tpChannelControl;
             btnCancel.Enabled = isChannelPanel;
             btnOkay.Enabled = isChannelPanel;
@@ -614,11 +616,11 @@ namespace VixenPlus.Dialogs {
 
 
         private void InitializeControls() {
-            InitializeChannelTab();
+            InitializeProfiles();
         }
 
 
-        private void InitializeChannelTab(bool reload = false) {
+        private void InitializeProfiles(bool reload = false) {
             var errors = new StringBuilder();
             cbProfiles.Items.Clear();
             cbProfiles.Items.Add("Select or add a profile");
@@ -654,7 +656,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void RefreshProfileComboBox(string newName) {
-            InitializeChannelTab(true);
+            InitializeProfiles(true);
             SetProfileIndex(newName);
         }
 
@@ -1419,37 +1421,41 @@ namespace VixenPlus.Dialogs {
 
         #region Plugins tab - initial cut
 
-        private  List<Channel> _channels;
+        //private  List<Channel> _channels;
         private  IExecutable _executableObject;
         private  Dictionary<string, Dictionary<int, OutputPort>> _outputPorts;
         private  List<IHardwarePlugin> _sequencePlugins;
         private  SetupData _setupData;
-        //private Rectangle _collapsedRelativeBounds;
-        //private Rectangle _expandedRelativeBounds;
         private bool _internalUpdate;
-        private int _itemAffectedIndex;
 
 
         private void PluginListDialog(IExecutable executableObject) {
             _setupData = executableObject.PlugInData;
             _executableObject = executableObject;
-            _channels = executableObject.Channels;
-            _sequencePlugins = new List<IHardwarePlugin>();
-            _outputPorts = new Dictionary<string, Dictionary<int, OutputPort>>();
+
             Cursor = Cursors.WaitCursor;
+
+            List<IHardwarePlugin> hardwarePlugins;
             try {
-                listViewPlugins.Columns[0].Width = listViewPlugins.Width - 25;
-                var list = OutputPlugins.LoadPlugins();
-                if (list != null) {
-                    foreach (var item in list.Select(plugin => new ListViewItem(plugin.Name) {Tag = plugin})) {
-                        listViewPlugins.Items.Add(item);
-                    }
-                }
-                listViewPlugins.Enabled = listViewPlugins.Items.Count > 0;
+                hardwarePlugins = OutputPlugins.LoadPlugins();
                 OutputPlugins.VerifyPlugIns(_executableObject);
             }
             finally {
                 Cursor = Cursors.Default;
+            }
+
+            //_channels = executableObject.Channels;
+            _sequencePlugins = new List<IHardwarePlugin>();
+            _outputPorts = new Dictionary<string, Dictionary<int, OutputPort>>();
+            
+            if (cbAvailablePlugIns.Items.Count > 0 || null == hardwarePlugins) {
+                return;
+            }
+
+            cbAvailablePlugIns.Items.Clear();
+            cbAvailablePlugIns.Items.Add("Please select a plug in");
+            foreach (var plugin in hardwarePlugins) {
+                cbAvailablePlugIns.Items.Add(plugin.Name);
             }
         }
 
@@ -1476,31 +1482,17 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        //private void checkedListBoxSequencePlugins_DoubleClick(object sender, EventArgs e) {
-        //    if (checkedListBoxSequencePlugins.SelectedIndex == -1) {
+        //private void checkedListBoxSequencePlugins_ItemCheck(object sender, ItemCheckEventArgs e) {
+        //    if (e.Index == -1) {
         //        return;
         //    }
 
-        //    if (_sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex].SupportsLivePreview()) {
-        //        MessageBox.Show("Yup");
+        //    var pluginData = _setupData.GetPlugInData(e.Index.ToString(CultureInfo.InvariantCulture));
+        //    if (pluginData != null && pluginData.Attributes != null) {
+        //            pluginData.Attributes["enabled"].Value = (e.NewValue == CheckState.Checked).ToString();
         //    }
-        //    else {
-        //        PluginSetup();
-        //    }
+        //    UpdateDictionary();
         //}
-
-
-        private void checkedListBoxSequencePlugins_ItemCheck(object sender, ItemCheckEventArgs e) {
-            if (e.Index == -1) {
-                return;
-            }
-
-            var pluginData = _setupData.GetPlugInData(e.Index.ToString(CultureInfo.InvariantCulture));
-            if (pluginData != null && pluginData.Attributes != null) {
-                    pluginData.Attributes["enabled"].Value = (e.NewValue == CheckState.Checked).ToString();
-            }
-            UpdateDictionary();
-        }
 
 
         private void InitializePlugin(IHardwarePlugin plugin, XmlNode setupNode) {
@@ -1511,16 +1503,17 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private void listBoxSequencePlugins_KeyDown(object sender, KeyEventArgs e) {
-            if (e.KeyCode == Keys.Delete) {
-                RemoveSelectedPlugIn();
-            }
-        }
+        //private void listBoxSequencePlugins_KeyDown(object sender, KeyEventArgs e) {
+        //    if (e.KeyCode == Keys.Delete) {
+        //        RemoveSelectedPlugIn();
+        //    }
+        //}
 
 
-        private bool _inhibitIndexChange;
-        private int _lastIndex = -1;
+        //private bool _inhibitIndexChange;
+        //private int _lastIndex = -1;
 
+/*
         private void listBoxSequencePlugins_SelectedIndexChanged(object sender, EventArgs e) {
             if (_inhibitIndexChange) return;
 
@@ -1537,7 +1530,7 @@ namespace VixenPlus.Dialogs {
             }
             var selectedIndex = checkedListBoxSequencePlugins.SelectedIndex;
 
-            buttonRemove.Enabled = selectedIndex != -1;
+            btnRemovePlugIn.Enabled = selectedIndex != -1;
             if (selectedIndex != -1) {
                 _currentPlugin = _sequencePlugins[selectedIndex];
                 var plugInData = _setupData.GetPlugInData(selectedIndex.ToString(CultureInfo.InvariantCulture));
@@ -1553,15 +1546,19 @@ namespace VixenPlus.Dialogs {
             }
             _lastIndex = selectedIndex;
         }
+*/
 
 
+/*
         private void EnablePlugInSetup(bool isLiveSetup) {
             btnSetup.Visible = !isLiveSetup;
             gbSetup.Visible = isLiveSetup;
             
         }
+*/
 
 
+/*
         private bool SavedValidData() {
             if (null == _currentPlugin) {
                 return true;
@@ -1584,85 +1581,43 @@ namespace VixenPlus.Dialogs {
 
             return isValid;
         }
+*/
 
 
-        private void listViewOutputPorts_DrawItem(object sender, DrawListViewItemEventArgs e) {
-            e.DrawDefault = false;
-        }
-
-
-        private void listViewOutputPorts_DrawSubItem(object sender, DrawListViewSubItemEventArgs e) {
-            if ((e.ColumnIndex == 2) && (e.Item.Tag != null)) {
-                var tag = (OutputPort) e.Item.Tag;
-                if (tag.ReferencingPlugins.Count > 1) {
-                    //Image image = tag.IsExpanded ? pictureBoxMinus.Image : pictureBoxPlus.Image;
-                    //var point = new Point(e.Bounds.Location.X, e.Bounds.Location.Y);
-                    //point.Offset(tag.IsExpanded ? _expandedRelativeBounds.Location : _collapsedRelativeBounds.Location);
-                    //e.Graphics.DrawImage(image, point);
-                }
-            }
-            else if (e.ColumnIndex != 0) {
-                e.DrawDefault = true;
-            }
-        }
-
-
-        private void listViewOutputPorts_MouseDown(object sender, MouseEventArgs e) {
-            var info = listViewOutputPorts.HitTest(e.Location);
-            if ((info.Item == null) || (info.Item.Tag == null)) {
-                return;
-            }
-            var tag = (OutputPort) info.Item.Tag;
-            if ((tag.ReferencingPlugins.Count <= 1) || (info.Item.SubItems.IndexOf(info.SubItem) != 2)) {
-                return;
-            }
-            var pt = new Point(e.Location.X, e.Location.Y);
-            pt.Offset(-info.SubItem.Bounds.Location.X, -info.SubItem.Bounds.Location.Y);
-            _itemAffectedIndex = info.Item.Index;
-            //if (tag.IsExpanded) {
-            //    if (!_expandedRelativeBounds.Contains(pt)) {
-            //        return;
-            //    }
-            //    tag.IsExpanded = false;
-            //    UpdateConfigDisplay();
-            //}
-            //else if (_collapsedRelativeBounds.Contains(pt)) {
-            //    tag.IsExpanded = true;
-            //    UpdateConfigDisplay();
-            //}
-        }
-
-
+/*
         private void listViewPlugins_DoubleClick(object sender, EventArgs e) {
             if (listViewPlugins.SelectedItems.Count > 0) {
                 UsePlugin();
             }
         }
+*/
 
 
+/*
         private void listViewPlugins_SelectedIndexChanged(object sender, EventArgs e) {
-            buttonUse.Enabled = listViewPlugins.SelectedItems.Count > 0;
+            btnAddPlugIn.Enabled = listViewPlugins.SelectedItems.Count > 0;
         }
+*/
 
 
-        private void PluginListDialog_FormClosing(object sender, EventArgs e) {
-            listBoxSequencePlugins_SelectedIndexChanged(null, null);
-        }
+        //private void PluginListDialog_FormClosing(object sender, EventArgs e) {
+        //    listBoxSequencePlugins_SelectedIndexChanged(null, null);
+        //}
 
 
-        private void PluginListDialog_Load(object sender, EventArgs e) {
+        private void InitializePlugInTab() {
             PluginListDialog(_contextProfile);
             Cursor = Cursors.WaitCursor;
             try {
                 _internalUpdate = true;
-                checkedListBoxSequencePlugins.Items.Clear();
+                dgvPlugIns.Rows.Clear();
                 foreach (XmlNode node in _setupData.GetAllPluginData()) {
                     var plugin = node.Attributes != null && (node.Attributes["name"] != null)
                         ?  OutputPlugins.FindPlugin(node.Attributes["name"].Value, true) : null;
 
                     if (plugin != null) {
                         InitializePlugin(plugin, node);
-                        checkedListBoxSequencePlugins.Items.Add(plugin.Name, bool.Parse(node.Attributes["enabled"].Value));
+                        //checkedListBoxSequencePlugins.Items.Add(plugin.Name, bool.Parse(node.Attributes["enabled"].Value));
                         _sequencePlugins.Add(plugin);
                     }
                     _internalUpdate = false;
@@ -1675,6 +1630,7 @@ namespace VixenPlus.Dialogs {
         }
 
 
+/*
         private void checkedListBoxSequencePlugins_DoubleClick(object sender, EventArgs e) {
             if (_currentPlugin.SupportsLiveSetup()) {
                 return;
@@ -1682,8 +1638,10 @@ namespace VixenPlus.Dialogs {
 
             btnSetup_Click(null, null);
         }
+*/
 
 
+/*
         private void btnSetup_Click(object sender, EventArgs e) {
             try {
                 _currentPlugin.Setup();
@@ -1693,8 +1651,10 @@ namespace VixenPlus.Dialogs {
                 ShowSetupError(exception);
             }
         }
+*/
 
 
+/*
         private void SetupLivePlugIn() {
             if (checkedListBoxSequencePlugins.SelectedItem == null) {
                 return;
@@ -1709,68 +1669,71 @@ namespace VixenPlus.Dialogs {
                 ShowSetupError(exception);
             }
         }
+*/
 
 
+/*
         private static void ShowSetupError(Exception exception) {
             MessageBox.Show(Resources.PluginInitError + exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
+*/
 
 
 
         private void RemoveSelectedPlugIn() {
-            if ((_sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex] == null) || (checkedListBoxSequencePlugins.SelectedIndex == -1)) {
-                return;
-            }
-            _setupData.RemovePlugInData(checkedListBoxSequencePlugins.SelectedIndex.ToString(CultureInfo.InvariantCulture));
-            _sequencePlugins.RemoveAt(checkedListBoxSequencePlugins.SelectedIndex);
-            checkedListBoxSequencePlugins.Items.RemoveAt(checkedListBoxSequencePlugins.SelectedIndex);
-            buttonRemove.Enabled = checkedListBoxSequencePlugins.SelectedIndex != -1;
-            UpdateDictionary();
+            //if ((_sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex] == null) || (checkedListBoxSequencePlugins.SelectedIndex == -1)) {
+            //    return;
+            //}
+            //_setupData.RemovePlugInData(checkedListBoxSequencePlugins.SelectedIndex.ToString(CultureInfo.InvariantCulture));
+            //_sequencePlugins.RemoveAt(checkedListBoxSequencePlugins.SelectedIndex);
+            //checkedListBoxSequencePlugins.Items.RemoveAt(checkedListBoxSequencePlugins.SelectedIndex);
+            //btnRemovePlugIn.Enabled = checkedListBoxSequencePlugins.SelectedIndex != -1;
+            //UpdateDictionary();
         }
 
 
         private void UpdateConfigDisplay() {
-            listViewOutputPorts.BeginUpdate();
-            listViewOutputPorts.Items.Clear();
-            var list = new List<int>();
-            foreach (var str in _outputPorts.Keys) {
-                var group = listViewOutputPorts.Groups.Add(str, str);
-                var dictionary = _outputPorts[str];
-                list.Clear();
-                list.AddRange(dictionary.Keys);
-                list.Sort();
-                foreach (var num in list) {
-                    ListViewItem item;
-                    var port = dictionary[num];
-                    if (port.ReferencingPlugins.Count == 1) {
-                        item =
-                            new ListViewItem(
-                                new[] {string.Empty, port.Index.ToString("d"), string.Empty, port.ReferencingPlugins[0].Name}, group);
-                    }
-                    else if (port.IsExpanded) {
-                        item = new ListViewItem(new[] {string.Empty, port.Index.ToString("d"), string.Empty, Resources.Multiple}, group);
-                        item.SubItems[3].ForeColor = Color.Pink;
-                    }
-                    else {
-                        item = new ListViewItem(new[] {string.Empty, port.Index.ToString("d"), string.Empty, Resources.Multiple}, group);
-                        item.SubItems[3].ForeColor = Color.Red;
-                    }
-                    item.Tag = port;
-                    listViewOutputPorts.Items.Add(item);
-                    if (!port.IsExpanded) {
-                        continue;
-                    }
-                    foreach (var plugin in port.ReferencingPlugins) {
-                        listViewOutputPorts.Items.Add(new ListViewItem(new[] {string.Empty, string.Empty, string.Empty, plugin.Name}, @group));
-                    }
-                }
-            }
-            listViewOutputPorts.EndUpdate();
-            if (listViewOutputPorts.Items.Count <= 0) {
-                return;
-            }
-            listViewOutputPorts.EnsureVisible(listViewOutputPorts.Items.Count - 1);
-            listViewOutputPorts.EnsureVisible(_itemAffectedIndex);
+            //listViewOutputPorts.BeginUpdate();
+            //listViewOutputPorts.Items.Clear();
+            //var list = new List<int>();
+            //foreach (var str in _outputPorts.Keys) {
+            //    var group = listViewOutputPorts.Groups.Add(str, str);
+            //    var dictionary = _outputPorts[str];
+            //    list.Clear();
+            //    list.AddRange(dictionary.Keys);
+            //    list.Sort();
+            //    foreach (var num in list) {
+            //        ListViewItem item;
+            //        var port = dictionary[num];
+            //        if (port.ReferencingPlugins.Count == 1) {
+            //            item =
+            //                new ListViewItem(
+            //                    new[] {string.Empty, port.Index.ToString("d"), string.Empty, port.ReferencingPlugins[0].Name}, group);
+            //        }
+            //        else if (port.IsExpanded) {
+            //            item = new ListViewItem(new[] {string.Empty, port.Index.ToString("d"), string.Empty, Resources.Multiple}, group);
+            //            item.SubItems[3].ForeColor = Color.Pink;
+            //        }
+            //        else {
+            //            item = new ListViewItem(new[] {string.Empty, port.Index.ToString("d"), string.Empty, Resources.Multiple}, group);
+            //            item.SubItems[3].ForeColor = Color.Red;
+            //        }
+            //        item.Tag = port;
+            //        listViewOutputPorts.Items.Add(item);
+            //        if (!port.IsExpanded) {
+            //            continue;
+            //        }
+            //        foreach (var plugin in port.ReferencingPlugins) {
+            //            listViewOutputPorts.Items.Add(new ListViewItem(new[] {string.Empty, string.Empty, string.Empty, plugin.Name}, @group));
+            //        }
+            //    }
+            //}
+            //listViewOutputPorts.EndUpdate();
+            //if (listViewOutputPorts.Items.Count <= 0) {
+            //    return;
+            //}
+            //listViewOutputPorts.EnsureVisible(listViewOutputPorts.Items.Count - 1);
+            //listViewOutputPorts.EnsureVisible(_itemAffectedIndex);
         }
 
 
@@ -1802,11 +1765,11 @@ namespace VixenPlus.Dialogs {
                 }
                 num++;
             }
-            _itemAffectedIndex = 0;
             UpdateConfigDisplay();
         }
 
 
+/*
         private void UpdatePlugInNodeChannelRanges(string pluginID) {
             int count;
             var plugInData = _setupData.GetPlugInData(pluginID);
@@ -1831,29 +1794,30 @@ namespace VixenPlus.Dialogs {
                 plugInData.Attributes["to"].Value = count.ToString(CultureInfo.InvariantCulture);
             }
         }
+*/
 
 
         private void UsePlugin() {
-            if (listViewPlugins.SelectedItems.Count == 0) {
-                return;
-            }
-            var plugIn = OutputPlugins.FindPlugin(((IHardwarePlugin) listViewPlugins.SelectedItems[0].Tag).Name, true);
-            var node = _setupData.CreatePlugInData(plugIn);
-            Xml.SetAttribute(node, "from", "1");
-            Xml.SetAttribute(node, "to", _channels.Count.ToString(CultureInfo.InvariantCulture));
-            Cursor = Cursors.WaitCursor;
-            try {
-                InitializePlugin(plugIn, node);
-            }
-            catch (Exception exception) {
-                MessageBox.Show(string.Format(Resources.PluginSetupErrorInvalidStatePossible, exception.Message), Vendor.ProductName,
-                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            finally {
-                Cursor = Cursors.Default;
-            }
-            checkedListBoxSequencePlugins.Items.Add(plugIn.Name, true);
-            _sequencePlugins.Add(plugIn);
+            //if (listViewPlugins.SelectedItems.Count == 0) {
+            //    return;
+            //}
+            //var plugIn = OutputPlugins.FindPlugin(((IHardwarePlugin) listViewPlugins.SelectedItems[0].Tag).Name, true);
+            //var node = _setupData.CreatePlugInData(plugIn);
+            //Xml.SetAttribute(node, "from", "1");
+            //Xml.SetAttribute(node, "to", _channels.Count.ToString(CultureInfo.InvariantCulture));
+            //Cursor = Cursors.WaitCursor;
+            //try {
+            //    InitializePlugin(plugIn, node);
+            //}
+            //catch (Exception exception) {
+            //    MessageBox.Show(string.Format(Resources.PluginSetupErrorInvalidStatePossible, exception.Message), Vendor.ProductName,
+            //                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            //}
+            //finally {
+            //    Cursor = Cursors.Default;
+            //}
+            //checkedListBoxSequencePlugins.Items.Add(plugIn.Name, true);
+            //_sequencePlugins.Add(plugIn);
         }
         #endregion
 
