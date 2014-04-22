@@ -308,6 +308,7 @@ namespace VixenPlus.Dialogs {
             SaveProfileFromRows();
             colorPaletteChannel.ControlChanged -= UpdateColors;
             DoButtonManagement();
+            tcProfile.Visible = cbProfiles.SelectedIndex > 0;
         }
 
 
@@ -1421,7 +1422,7 @@ namespace VixenPlus.Dialogs {
 
         #region Plugins tab - initial cut
 
-        //private  List<Channel> _channels;
+        private List<Channel> _channels;
         private  IExecutable _executableObject;
         private  Dictionary<string, Dictionary<int, OutputPort>> _outputPorts;
         private  List<IHardwarePlugin> _sequencePlugins;
@@ -1444,7 +1445,7 @@ namespace VixenPlus.Dialogs {
                 Cursor = Cursors.Default;
             }
 
-            //_channels = executableObject.Channels;
+            _channels = executableObject.Channels;
             _sequencePlugins = new List<IHardwarePlugin>();
             _outputPorts = new Dictionary<string, Dictionary<int, OutputPort>>();
             
@@ -1457,6 +1458,7 @@ namespace VixenPlus.Dialogs {
             foreach (var plugin in hardwarePlugins) {
                 cbAvailablePlugIns.Items.Add(plugin.Name);
             }
+            cbAvailablePlugIns.SelectedIndex = 0;
         }
 
 
@@ -1617,7 +1619,8 @@ namespace VixenPlus.Dialogs {
 
                     if (plugin != null) {
                         InitializePlugin(plugin, node);
-                        //checkedListBoxSequencePlugins.Items.Add(plugin.Name, bool.Parse(node.Attributes["enabled"].Value));
+                        AddPlugInRow(node, plugin);
+                        
                         _sequencePlugins.Add(plugin);
                     }
                     _internalUpdate = false;
@@ -1672,12 +1675,10 @@ namespace VixenPlus.Dialogs {
 */
 
 
-/*
         private static void ShowSetupError(Exception exception) {
-            MessageBox.Show(Resources.PluginInitError + exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            MessageBox.Show(Resources.PluginInitError + exception.Message, Vendor.ProductName, MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation);
         }
-*/
-
 
 
         private void RemoveSelectedPlugIn() {
@@ -1769,57 +1770,91 @@ namespace VixenPlus.Dialogs {
         }
 
 
-/*
-        private void UpdatePlugInNodeChannelRanges(string pluginID) {
-            int count;
-            var plugInData = _setupData.GetPlugInData(pluginID);
-            if (plugInData == null) return;
-
-            try {
-                count = Convert.ToInt32(textBoxChannelFrom.Text);
-            }
-            catch {
-                count = 1;
-            }
-            if (plugInData.Attributes != null) {
-                plugInData.Attributes["from"].Value = count.ToString(CultureInfo.InvariantCulture);
-            }
-            try {
-                count = Convert.ToInt32(textBoxChannelTo.Text);
-            }
-            catch {
-                count = _channels.Count;
-            }
-            if (plugInData.Attributes != null) {
-                plugInData.Attributes["to"].Value = count.ToString(CultureInfo.InvariantCulture);
-            }
-        }
-*/
-
-
         private void UsePlugin() {
-            //if (listViewPlugins.SelectedItems.Count == 0) {
-            //    return;
-            //}
-            //var plugIn = OutputPlugins.FindPlugin(((IHardwarePlugin) listViewPlugins.SelectedItems[0].Tag).Name, true);
-            //var node = _setupData.CreatePlugInData(plugIn);
-            //Xml.SetAttribute(node, "from", "1");
-            //Xml.SetAttribute(node, "to", _channels.Count.ToString(CultureInfo.InvariantCulture));
-            //Cursor = Cursors.WaitCursor;
-            //try {
-            //    InitializePlugin(plugIn, node);
-            //}
-            //catch (Exception exception) {
-            //    MessageBox.Show(string.Format(Resources.PluginSetupErrorInvalidStatePossible, exception.Message), Vendor.ProductName,
-            //                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            //}
-            //finally {
-            //    Cursor = Cursors.Default;
-            //}
+            if (cbAvailablePlugIns.SelectedIndex <= 0) {
+                return;
+            }
+
+            var plugIn = OutputPlugins.FindPlugin(cbAvailablePlugIns.SelectedItem.ToString(), true);
+            var node = _setupData.CreatePlugInData(plugIn);
+            Xml.SetAttribute(node, "from", "1");
+            Xml.SetAttribute(node, "to", _channels.Count.ToString(CultureInfo.InvariantCulture));
+            Cursor = Cursors.WaitCursor;
+            try {
+                InitializePlugin(plugIn, node);
+            } catch (Exception exception) {
+                MessageBox.Show(string.Format(Resources.PluginSetupErrorInvalidStatePossible, exception.Message), Vendor.ProductName,
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            } finally {
+                Cursor = Cursors.Default;
+            }
+            AddPlugInRow(node, plugIn);
             //checkedListBoxSequencePlugins.Items.Add(plugIn.Name, true);
-            //_sequencePlugins.Add(plugIn);
+            _sequencePlugins.Add(plugIn);
         }
+
+
+        private void AddPlugInRow(XmlNode n, IHardwarePlugin p) {
+            // ReSharper disable PossibleNullReferenceException
+            dgvPlugIns.SuspendLayout();
+            var row = dgvPlugIns.Rows.Add(new object[] {
+                    n.Attributes["name"].Value, n.Attributes["enabled"].Value == "True", n.Attributes["from"].Value,
+                    n.Attributes["to"].Value,
+                    p.HardwareMap.Any() ? p.HardwareMap[0].PortTypeName + " " + p.HardwareMap[0].PortTypeIndex : "n/a",
+                    p.SupportsLiveSetup() ? "Live Setup" : "Setup..."
+                });
+            // ReSharper restore PossibleNullReferenceException
+
+            dgvPlugIns.Rows[row].Tag = dgvPlugIns.Rows.Count - 1;
+
+            if (p.SupportsLiveSetup()) {
+                ((DataGridViewDisableButtonCell) dgvPlugIns.Rows[row].Cells["colPlugInSetup"]).Visible = false;
+            }
+
+            dgvPlugIns.ResumeLayout();
+        }
+
+        private void dgvPlugIns_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
+            if (e.RowIndex == -1 || e.ColumnIndex == -1) return;
+
+            var cell = dgvPlugIns.Rows[e.RowIndex].Cells[e.ColumnIndex];
+            var value = cell.Value.ToString();
+            int res;
+
+            switch (cell.OwningColumn.Name) {
+                case "colPlugInStartChannel":
+                    if (!int.TryParse(value, out res) || res < 1) {
+                        res = 1;
+                        cell.Value = res;
+                    }
+                    break;
+                case "colPlugInEndChannel":
+                    if (!int.TryParse(value, out res) || res > _channels.Count) {
+                        res = _channels.Count;
+                        cell.Value = res;
+                    }
+                    break;
+            }
+        }
+
         #endregion
+
+        private void dgvPlugIns_RowEnter(object sender, DataGridViewCellEventArgs e) {
+            if (_internalUpdate || e.RowIndex == -1 || e.ColumnIndex == -1) return;
+
+            var item = int.Parse(dgvPlugIns.Rows[e.RowIndex].Tag.ToString());
+            if (!_sequencePlugins[item].SupportsLiveSetup()) {
+                return;
+            }
+
+            try {
+                var setup = _sequencePlugins[item].Setup();
+                pSetup.Controls.Add(setup);
+                setup.Show();
+            } catch (Exception exception) {
+                ShowSetupError(exception);
+            }
+        }
 
     }
 }

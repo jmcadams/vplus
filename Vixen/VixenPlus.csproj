@@ -172,6 +172,8 @@
     <Compile Include="Dialogs\CurveLibraryRecordEditDialog.Designer.cs">
       <DependentUpon>CurveLibraryRecordEditDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\DataGridViewDisableButtonCell.cs" />
+    <Compile Include="Dialogs\DataGridViewDisableButtonColumn.cs" />
     <Compile Include="Dialogs\DimmingCurveDialog.cs">
       <SubType>Form</SubType>
     </Compile>

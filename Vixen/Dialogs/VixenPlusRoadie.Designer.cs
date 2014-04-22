@@ -102,6 +102,12 @@ namespace VixenPlus.Dialogs
             this.btnRemovePlugIn = new System.Windows.Forms.Button();
             this.btnAddPlugIn = new System.Windows.Forms.Button();
             this.dgvPlugIns = new System.Windows.Forms.DataGridView();
+            this.colPlugInName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPlugInEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colPlugInStartChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPlugInEndChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPlugInConfiguration = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPlugInSetup = new VixenPlus.Dialogs.DataGridViewDisableButtonColumn();
             this.gbSetup = new System.Windows.Forms.GroupBox();
             this.pSetup = new System.Windows.Forms.Panel();
             this.tpSortOrders = new System.Windows.Forms.TabPage();
@@ -116,12 +122,6 @@ namespace VixenPlus.Dialogs
             this.btnCancel = new System.Windows.Forms.Button();
             this.ttRoadie = new System.Windows.Forms.ToolTip(this.components);
             this.previewTimer = new System.Windows.Forms.Timer(this.components);
-            this.colPlugInName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPlugInEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colPlugInStartChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPlugInEndChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPlugInConfiguration = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPlugInSetup = new System.Windows.Forms.DataGridViewButtonColumn();
             this.gbProfiles.SuspendLayout();
             this.tcProfile.SuspendLayout();
             this.tpChannels.SuspendLayout();
@@ -230,9 +230,9 @@ namespace VixenPlus.Dialogs
             // 
             // tcProfile
             // 
-            this.tcProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tcProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tcProfile.Controls.Add(this.tpChannels);
             this.tcProfile.Controls.Add(this.tpPlugins);
             this.tcProfile.Controls.Add(this.tpSortOrders);
@@ -245,6 +245,7 @@ namespace VixenPlus.Dialogs
             this.tcProfile.Size = new System.Drawing.Size(984, 648);
             this.tcProfile.TabIndex = 3;
             this.ttRoadie.SetToolTip(this.tcProfile, "Manage profile channels");
+            this.tcProfile.Visible = false;
             this.tcProfile.SelectedIndexChanged += new System.EventHandler(this.tcProfile_SelectedIndexChanged);
             // 
             // tpChannels
@@ -538,7 +539,7 @@ namespace VixenPlus.Dialogs
             this.tpMultiChannel.Location = new System.Drawing.Point(0, 0);
             this.tpMultiChannel.Name = "tpMultiChannel";
             this.tpMultiChannel.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMultiChannel.Size = new System.Drawing.Size(273, 580);
+            this.tpMultiChannel.Size = new System.Drawing.Size(273, 616);
             this.tpMultiChannel.TabIndex = 1;
             this.tpMultiChannel.Text = "MultiChannel";
             this.tpMultiChannel.UseVisualStyleBackColor = true;
@@ -907,7 +908,7 @@ namespace VixenPlus.Dialogs
             this.tpMultiColor.Controls.Add(this.colorPaletteColor);
             this.tpMultiColor.Location = new System.Drawing.Point(0, 0);
             this.tpMultiColor.Name = "tpMultiColor";
-            this.tpMultiColor.Size = new System.Drawing.Size(273, 580);
+            this.tpMultiColor.Size = new System.Drawing.Size(273, 616);
             this.tpMultiColor.TabIndex = 2;
             this.tpMultiColor.Text = "MutliColor";
             this.tpMultiColor.UseVisualStyleBackColor = true;
@@ -964,7 +965,6 @@ namespace VixenPlus.Dialogs
             // 
             // btnRemovePlugIn
             // 
-            this.btnRemovePlugIn.Enabled = false;
             this.btnRemovePlugIn.Location = new System.Drawing.Point(617, 326);
             this.btnRemovePlugIn.Name = "btnRemovePlugIn";
             this.btnRemovePlugIn.Size = new System.Drawing.Size(75, 23);
@@ -975,7 +975,6 @@ namespace VixenPlus.Dialogs
             // 
             // btnAddPlugIn
             // 
-            this.btnAddPlugIn.Enabled = false;
             this.btnAddPlugIn.Location = new System.Drawing.Point(293, 326);
             this.btnAddPlugIn.Name = "btnAddPlugIn";
             this.btnAddPlugIn.Size = new System.Drawing.Size(75, 23);
@@ -988,6 +987,8 @@ namespace VixenPlus.Dialogs
             // 
             this.dgvPlugIns.AllowUserToAddRows = false;
             this.dgvPlugIns.AllowUserToDeleteRows = false;
+            this.dgvPlugIns.AllowUserToOrderColumns = true;
+            this.dgvPlugIns.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dgvPlugIns.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPlugIns.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colPlugInName,
@@ -997,9 +998,55 @@ namespace VixenPlus.Dialogs
             this.colPlugInConfiguration,
             this.colPlugInSetup});
             this.dgvPlugIns.Location = new System.Drawing.Point(3, 6);
+            this.dgvPlugIns.MultiSelect = false;
             this.dgvPlugIns.Name = "dgvPlugIns";
+            this.dgvPlugIns.RowHeadersVisible = false;
             this.dgvPlugIns.Size = new System.Drawing.Size(967, 314);
             this.dgvPlugIns.TabIndex = 35;
+            this.dgvPlugIns.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPlugIns_CellValueChanged);
+            this.dgvPlugIns.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPlugIns_RowEnter);
+            // 
+            // colPlugInName
+            // 
+            this.colPlugInName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.colPlugInName.FillWeight = 150F;
+            this.colPlugInName.HeaderText = "Plug In Name";
+            this.colPlugInName.Name = "colPlugInName";
+            this.colPlugInName.ReadOnly = true;
+            this.colPlugInName.Width = 88;
+            // 
+            // colPlugInEnabled
+            // 
+            this.colPlugInEnabled.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.colPlugInEnabled.HeaderText = "Enabled";
+            this.colPlugInEnabled.Name = "colPlugInEnabled";
+            this.colPlugInEnabled.Width = 52;
+            // 
+            // colPlugInStartChannel
+            // 
+            this.colPlugInStartChannel.HeaderText = "Start Channel";
+            this.colPlugInStartChannel.Name = "colPlugInStartChannel";
+            // 
+            // colPlugInEndChannel
+            // 
+            this.colPlugInEndChannel.HeaderText = "End Channel";
+            this.colPlugInEndChannel.Name = "colPlugInEndChannel";
+            // 
+            // colPlugInConfiguration
+            // 
+            this.colPlugInConfiguration.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colPlugInConfiguration.DefaultCellStyle = dataGridViewCellStyle1;
+            this.colPlugInConfiguration.HeaderText = "Current Configuration";
+            this.colPlugInConfiguration.Name = "colPlugInConfiguration";
+            this.colPlugInConfiguration.ReadOnly = true;
+            // 
+            // colPlugInSetup
+            // 
+            this.colPlugInSetup.HeaderText = "Setup";
+            this.colPlugInSetup.Name = "colPlugInSetup";
+            this.colPlugInSetup.ReadOnly = true;
+            this.colPlugInSetup.Text = "Setup";
             // 
             // gbSetup
             // 
@@ -1025,7 +1072,7 @@ namespace VixenPlus.Dialogs
             this.tpSortOrders.Controls.Add(this.cbSrtOrders);
             this.tpSortOrders.Location = new System.Drawing.Point(4, 22);
             this.tpSortOrders.Name = "tpSortOrders";
-            this.tpSortOrders.Size = new System.Drawing.Size(976, 580);
+            this.tpSortOrders.Size = new System.Drawing.Size(976, 622);
             this.tpSortOrders.TabIndex = 3;
             this.tpSortOrders.Text = "Sort Orders";
             this.tpSortOrders.UseVisualStyleBackColor = true;
@@ -1068,7 +1115,7 @@ namespace VixenPlus.Dialogs
             this.tpGroups.Controls.Add(this.btnGraButton);
             this.tpGroups.Location = new System.Drawing.Point(4, 22);
             this.tpGroups.Name = "tpGroups";
-            this.tpGroups.Size = new System.Drawing.Size(976, 580);
+            this.tpGroups.Size = new System.Drawing.Size(976, 622);
             this.tpGroups.TabIndex = 2;
             this.tpGroups.Text = "Groups";
             this.tpGroups.UseVisualStyleBackColor = true;
@@ -1088,7 +1135,7 @@ namespace VixenPlus.Dialogs
             this.tpNutcracker.Controls.Add(this.btnNcaButton);
             this.tpNutcracker.Location = new System.Drawing.Point(4, 22);
             this.tpNutcracker.Name = "tpNutcracker";
-            this.tpNutcracker.Size = new System.Drawing.Size(976, 580);
+            this.tpNutcracker.Size = new System.Drawing.Size(976, 622);
             this.tpNutcracker.TabIndex = 4;
             this.tpNutcracker.Text = "Nutcracker Models";
             this.tpNutcracker.UseVisualStyleBackColor = true;
@@ -1132,48 +1179,6 @@ namespace VixenPlus.Dialogs
             this.previewTimer.Interval = 200;
             this.previewTimer.Tick += new System.EventHandler(this.previewTimer_Tick);
             // 
-            // colPlugInName
-            // 
-            this.colPlugInName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.colPlugInName.FillWeight = 150F;
-            this.colPlugInName.HeaderText = "Plug In Name";
-            this.colPlugInName.Name = "colPlugInName";
-            this.colPlugInName.ReadOnly = true;
-            this.colPlugInName.Width = 96;
-            // 
-            // colPlugInEnabled
-            // 
-            this.colPlugInEnabled.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.colPlugInEnabled.HeaderText = "Enabled";
-            this.colPlugInEnabled.Name = "colPlugInEnabled";
-            this.colPlugInEnabled.Width = 52;
-            // 
-            // colPlugInStartChannel
-            // 
-            this.colPlugInStartChannel.HeaderText = "Start Channel";
-            this.colPlugInStartChannel.Name = "colPlugInStartChannel";
-            // 
-            // colPlugInEndChannel
-            // 
-            this.colPlugInEndChannel.HeaderText = "End Channel";
-            this.colPlugInEndChannel.Name = "colPlugInEndChannel";
-            // 
-            // colPlugInConfiguration
-            // 
-            this.colPlugInConfiguration.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colPlugInConfiguration.DefaultCellStyle = dataGridViewCellStyle1;
-            this.colPlugInConfiguration.HeaderText = "Current Configuration";
-            this.colPlugInConfiguration.Name = "colPlugInConfiguration";
-            this.colPlugInConfiguration.ReadOnly = true;
-            // 
-            // colPlugInSetup
-            // 
-            this.colPlugInSetup.HeaderText = "Setup";
-            this.colPlugInSetup.Name = "colPlugInSetup";
-            this.colPlugInSetup.ReadOnly = true;
-            this.colPlugInSetup.Text = "Setup";
-            // 
             // VixenPlusRoadie
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1190,7 +1195,6 @@ namespace VixenPlus.Dialogs
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Vixen+ {Beta} - ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.VixenPlusRoadie_FormClosing);
-            //this.Shown += new System.EventHandler(this.FrmProfileManager_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmProfileManager_KeyDown);
             this.Resize += new System.EventHandler(this.frmProfileManager_Resize);
             this.gbProfiles.ResumeLayout(false);
@@ -1313,6 +1317,6 @@ namespace VixenPlus.Dialogs
         private System.Windows.Forms.DataGridViewTextBoxColumn colPlugInStartChannel;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPlugInEndChannel;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPlugInConfiguration;
-        private System.Windows.Forms.DataGridViewButtonColumn colPlugInSetup;
+        private DataGridViewDisableButtonColumn colPlugInSetup;
     }
 }
