@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.IO.Ports;
-//using System.Text;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -9,7 +9,7 @@ using Controllers.Properties;
 
 using VixenPlusCommon;
 
-
+//TODO want to add events to these, so when they change, we can update the live setup screen.
 namespace Controllers.Common {
     public partial class SerialSetup : UserControl {
 
@@ -67,7 +67,16 @@ namespace Controllers.Common {
 
 
         private void Init(SerialPort serialPort) {
+            if (serialPort == null) {
+                serialPort = new SerialPort(DefaultComPort, DefaultBaudRate, Parity.None, DefaultDataBits, StopBits.One);
+            }
+
             cbPortName.Items.Add("None");
+
+            if (!SerialPort.GetPortNames().Contains(serialPort.PortName)) {
+                cbPortName.Items.Add(serialPort.PortName);
+            }
+
             cbPortName.Items.AddRange(SerialPort.GetPortNames());
 
             cbParity.Items.Add(Parity.Even);
@@ -79,10 +88,6 @@ namespace Controllers.Common {
             cbStopBits.Items.Add(StopBits.One);
             cbStopBits.Items.Add(StopBits.OnePointFive);
             cbStopBits.Items.Add(StopBits.Two);
-
-            if (serialPort == null) {
-                serialPort = new SerialPort(DefaultComPort, DefaultBaudRate, Parity.None, DefaultDataBits, StopBits.One);
-            }
 
             cbPortName.SelectedIndex = cbPortName.Items.IndexOf(serialPort.PortName);
             cbBaudRate.SelectedItem = serialPort.BaudRate.ToString(CultureInfo.InvariantCulture);

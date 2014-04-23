@@ -175,9 +175,14 @@ namespace VixenPlus.Dialogs {
         private void btnImport_Click(object sender, EventArgs e) {
             using (
                 var dialog = new OpenFileDialog {
-                    AddExtension = true, CheckFileExists = true, CheckPathExists = true, DefaultExt = Vendor.CsvExtension,
-                    Filter = "(CSV Files)|" + Vendor.All + Vendor.CsvExtension, InitialDirectory = Paths.ImportExportPath,
-                    Multiselect = false}) {
+                    AddExtension = true,
+                    CheckFileExists = true,
+                    CheckPathExists = true,
+                    DefaultExt = Vendor.CsvExtension,
+                    Filter = "(CSV Files)|" + Vendor.All + Vendor.CsvExtension,
+                    InitialDirectory = Paths.ImportExportPath,
+                    Multiselect = false
+                }) {
 
                 if (dialog.ShowDialog() != DialogResult.OK) {
                     return;
@@ -196,7 +201,9 @@ namespace VixenPlus.Dialogs {
                             }
                             else {
                                 for (var i = 0; i < dgvChannels.ColumnCount; i++) {
-                                    valid &= String.Compare(dgvChannels.Columns[i].Name, cols[i], StringComparison.OrdinalIgnoreCase) == 0;
+                                    valid &=
+                                        String.Compare(dgvChannels.Columns[i].Name, cols[i],
+                                            StringComparison.OrdinalIgnoreCase) == 0;
                                 }
                             }
                             if (!valid) {
@@ -210,11 +217,12 @@ namespace VixenPlus.Dialogs {
                         else {
                             var row =
                                 dgvChannels.Rows.Add(new object[] {
-                                    cols[ChannelEnabledCol] == "True", cols[ChannelNumCol].ToInt(), cols[ChannelNameCol], cols[OutputChannelCol].ToInt(),
-                                    cols[ChannelColorCol]
+                                    cols[ChannelEnabledCol] == "True", cols[ChannelNumCol].ToInt(), cols[ChannelNameCol],
+                                    cols[OutputChannelCol].ToInt(), cols[ChannelColorCol]
                                 });
                             dgvChannels.Rows[row].DefaultCellStyle.BackColor = cols[ChannelColorCol].FromHTML();
-                            dgvChannels.Rows[row].DefaultCellStyle.ForeColor = dgvChannels.Rows[row].DefaultCellStyle.BackColor.GetForeColor();
+                            dgvChannels.Rows[row].DefaultCellStyle.ForeColor =
+                                dgvChannels.Rows[row].DefaultCellStyle.BackColor.GetForeColor();
                         }
                     }
                     dgvChannels.ResumeLayout();
@@ -225,9 +233,13 @@ namespace VixenPlus.Dialogs {
 
 
         private void btnExport_Click(object sender, EventArgs e) {
-            using (var dialog = new SaveFileDialog {
-                    InitialDirectory = Paths.ImportExportPath, Filter = "(CSV File)|" + Vendor.All + Vendor.CsvExtension, OverwritePrompt = true,
-                    DefaultExt = Vendor.CsvExtension}) {
+            using (
+                var dialog = new SaveFileDialog {
+                    InitialDirectory = Paths.ImportExportPath,
+                    Filter = "(CSV File)|" + Vendor.All + Vendor.CsvExtension,
+                    OverwritePrompt = true,
+                    DefaultExt = Vendor.CsvExtension
+                }) {
 
                 if (dialog.ShowDialog() != DialogResult.OK) {
                     return;
@@ -255,7 +267,8 @@ namespace VixenPlus.Dialogs {
         #region Profile Group Box Events
 
         private void btnProfileAdd_Click(object sender, EventArgs e) {
-            var newName = GetFileName("Profile/Group Name", Paths.ProfilePath, new[] {Vendor.ProfileExtension, Vendor.GroupExtension}, "", "Create");
+            var newName = GetFileName("Profile/Group Name", Paths.ProfilePath,
+                new[] {Vendor.ProfileExtension, Vendor.GroupExtension}, "", "Create");
 
             if (string.Empty == newName) {
                 return;
@@ -280,8 +293,8 @@ namespace VixenPlus.Dialogs {
 
         private void btnProfileDelete_Click(object sender, EventArgs e) {
             if (
-                MessageBox.Show("Are you sure you want to delete this profile and group, if one exists?" + Warning, "Delete Profile",
-                    MessageBoxButtons.YesNo) != DialogResult.Yes) {
+                MessageBox.Show("Are you sure you want to delete this profile and group, if one exists?" + Warning,
+                    "Delete Profile", MessageBoxButtons.YesNo) != DialogResult.Yes) {
                 return;
             }
 
@@ -321,9 +334,9 @@ namespace VixenPlus.Dialogs {
             foreach (var ch in from DataGridViewRow row in dgvChannels.Rows
                 select
                     new Channel(row.Cells[ChannelNameCol].Value.ToString(), row.DefaultCellStyle.BackColor,
-                        int.Parse(row.Cells[OutputChannelCol].Value.ToString())) 
-                        {Enabled = bool.Parse(row.Cells[ChannelEnabledCol].Value.ToString())}
-                ) {
+                        int.Parse(row.Cells[OutputChannelCol].Value.ToString())) {
+                            Enabled = bool.Parse(row.Cells[ChannelEnabledCol].Value.ToString())
+                        }) {
                 _contextProfile.AddChannelObject(ch);
             }
         }
@@ -341,7 +354,8 @@ namespace VixenPlus.Dialogs {
 
 
         private void AddRow(Channel ch, int chNum) {
-            var row = dgvChannels.Rows.Add(new object[] { ch.Enabled, chNum, ch.Name, ch.OutputChannel + 1, ch.Color.ToHTML() });
+            var row =
+                dgvChannels.Rows.Add(new object[] {ch.Enabled, chNum, ch.Name, ch.OutputChannel + 1, ch.Color.ToHTML()});
             dgvChannels.Rows[row].DefaultCellStyle.BackColor = ch.Color;
             dgvChannels.Rows[row].DefaultCellStyle.ForeColor = ch.Color.GetForeColor();
         }
@@ -392,7 +406,8 @@ namespace VixenPlus.Dialogs {
         private void LoadTemplates() {
             cbChGenTemplate.Items.Clear();
             foreach (var fileName in
-                Directory.GetFiles(Paths.ProfileGeneration, Vendor.All + Vendor.TemplateExtension).Where(file => file.EndsWith(Vendor.TemplateExtension))
+                Directory.GetFiles(Paths.ProfileGeneration, Vendor.All + Vendor.TemplateExtension)
+                    .Where(file => file.EndsWith(Vendor.TemplateExtension))
                     .Select(Path.GetFileNameWithoutExtension)) {
                 cbChGenTemplate.Items.Add(fileName);
             }
@@ -441,13 +456,14 @@ namespace VixenPlus.Dialogs {
                 return;
             }
 
-            _contextProfile = (Profile)cbProfiles.SelectedItem;
+            _contextProfile = (Profile) cbProfiles.SelectedItem;
 
             AddRows(_contextProfile.FullChannels);
 
             dgvChannels.ResumeLayout();
             dgvChannels.Focus();
         }
+
 
         private void SetChannelTabButtons(bool isProfileLoaded) {
             var selectedRows = GetSelectedRows().ToList();
@@ -608,7 +624,9 @@ namespace VixenPlus.Dialogs {
         private IEnumerable<DataGridViewRow> GetSelectedRows() {
             var hashSet = new HashSet<DataGridViewRow>();
             foreach (var cell in
-                from DataGridViewCell cell in dgvChannels.SelectedCells where !hashSet.Contains(cell.OwningRow) select cell) {
+                from DataGridViewCell cell in dgvChannels.SelectedCells
+                where !hashSet.Contains(cell.OwningRow)
+                select cell) {
                 hashSet.Add(cell.OwningRow);
             }
 
@@ -626,8 +644,8 @@ namespace VixenPlus.Dialogs {
             cbProfiles.Items.Clear();
             cbProfiles.Items.Add("Select or add a profile");
             foreach (var profileFile in
-                Directory.GetFiles(Paths.ProfilePath, Vendor.All + Vendor.ProfileExtension).Where(
-                    profileFile => Path.GetExtension(profileFile) == Vendor.ProfileExtension)) {
+                Directory.GetFiles(Paths.ProfilePath, Vendor.All + Vendor.ProfileExtension)
+                    .Where(profileFile => Path.GetExtension(profileFile) == Vendor.ProfileExtension)) {
                 try {
                     cbProfiles.Items.Add(new Profile(profileFile));
                 }
@@ -663,8 +681,8 @@ namespace VixenPlus.Dialogs {
 
 
         private void RenameOrCopyProfile(bool isRename) {
-            var newName = GetFileName("Profile/Group Name", Paths.ProfilePath, new[] {Vendor.ProfileExtension, Vendor.GroupExtension}, "",
-                isRename ? "Rename" : "Copy");
+            var newName = GetFileName("Profile/Group Name", Paths.ProfilePath,
+                new[] {Vendor.ProfileExtension, Vendor.GroupExtension}, "", isRename ? "Rename" : "Copy");
 
             if (String.Empty == newName) {
                 return;
@@ -897,7 +915,8 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private static string GetFileName(string fileType, string filePath, IList<string> extension, string defaultResponse, string buttonText) {
+        private static string GetFileName(string fileType, string filePath, IList<string> extension,
+            string defaultResponse, string buttonText) {
             var newName = string.Empty;
             var caption = string.Format("{0} name", fileType);
             var query = string.Format("What would you like to name this {0}?", fileType);
@@ -909,12 +928,15 @@ namespace VixenPlus.Dialogs {
                         newName = dialog.Response;
                         showDialog = false;
 
-                        if (!extension.Aggregate(false, (current, ext) => current | File.Exists(Path.Combine(filePath, newName + ext)))) {
+                        if (
+                            !extension.Aggregate(false,
+                                (current, ext) => current | File.Exists(Path.Combine(filePath, newName + ext)))) {
                             continue;
                         }
 
                         var msg = String.Format("{0} with the name {1} exists.  Overwrite this {0}?", fileType, newName);
-                        var overwriteResult = MessageBox.Show(msg, "Overwrite?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                        var overwriteResult = MessageBox.Show(msg, "Overwrite?", MessageBoxButtons.YesNoCancel,
+                            MessageBoxIcon.Question);
 
                         switch (overwriteResult) {
                             case DialogResult.Yes:
@@ -957,7 +979,9 @@ namespace VixenPlus.Dialogs {
 
 
         private void cbChGenTemplate_SelectedIndexChanged(object sender, EventArgs e) {
-            var template = XElement.Load(Path.Combine(Paths.ProfileGeneration, cbChGenTemplate.SelectedItem + Vendor.TemplateExtension));
+            var template =
+                XElement.Load(Path.Combine(Paths.ProfileGeneration,
+                    cbChGenTemplate.SelectedItem + Vendor.TemplateExtension));
             var element = template.Element("Channels");
             nudChGenChannels.Value = element != null ? int.Parse(element.Value) : 1;
 
@@ -1029,7 +1053,9 @@ namespace VixenPlus.Dialogs {
             var colors = cbRuleColors.Checked ? GetColorList(colorPaletteChannel) : new List<Color> {Color.White};
 
             for (var count = 0; count < generatedNames.Count(); count++) {
-                generatedChannels.Add(new Channel(generatedNames[count], startChannelNum + count) {Color = colors[count % colors.Count]});
+                generatedChannels.Add(new Channel(generatedNames[count], startChannelNum + count) {
+                    Color = colors[count%colors.Count]
+                });
             }
 
             return generatedChannels;
@@ -1057,21 +1083,27 @@ namespace VixenPlus.Dialogs {
             var ruleEngine = _ruleEngines[ruleNum - 1];
             var generatedNames = new List<string>(ruleEngine.GenerateNames());
 
-            for (var i = 0; (i < ruleEngine.Iterations || ruleEngine.IsUnlimited) && currentChannel + names.Count < totalChannels; i++) {
+            for (var i = 0;
+                (i < ruleEngine.Iterations || ruleEngine.IsUnlimited) && currentChannel + names.Count < totalChannels;
+                i++) {
                 var parts = new Regex("{" + (ruleNum - 1) + "[:]?[a-zA-Z0-9]*}").Match(nameFormat).ToString().Split(':');
                 var format = parts.Count() == 2 ? "{0:" + parts[1] : "{0}";
                 var replace = parts.Count() == 2 ? "{" + (ruleNum - 1) + ":" + parts[1] : "{" + (ruleNum - 1) + "}";
                 var replacementValue = ruleEngine.IsUnlimited ? ruleEngine.GenerateName(i) : generatedNames[i];
                 int numericReplacement;
                 var formattingResult = nameFormat.Replace(replace,
-                    int.TryParse(replacementValue, out numericReplacement) ? string.Format(format, numericReplacement) : replacementValue);
+                    int.TryParse(replacementValue, out numericReplacement)
+                        ? string.Format(format, numericReplacement)
+                        : replacementValue);
 
                 // Is this the last rule?
                 if (ruleNum >= _ruleEngines.Count) {
                     names.Add(formattingResult);
                 }
                 else {
-                    names.AddRange(GenerateNames(ruleNum + 1, formattingResult, currentChannel + names.Count, totalChannels).ToList());
+                    names.AddRange(
+                        GenerateNames(ruleNum + 1, formattingResult, currentChannel + names.Count, totalChannels)
+                            .ToList());
                 }
             }
 
@@ -1127,7 +1159,10 @@ namespace VixenPlus.Dialogs {
 
         private void btnChDelete_Click(object sender, EventArgs e) {
             var rows = GetSelectedRows().ToList();
-            var channels = rows.Select(row => _contextProfile.FullChannels[int.Parse(row.Cells[ChannelNumCol].Value.ToString()) - 1]).ToList();
+            var channels =
+                rows.Select(
+                    row => _contextProfile.FullChannels[int.Parse(row.Cells[ChannelNumCol].Value.ToString()) - 1])
+                    .ToList();
 
             _contextProfile.IsDirty = true;
 
@@ -1176,7 +1211,7 @@ namespace VixenPlus.Dialogs {
 
                 // Create a rectangle using the DragSize, with the mouse position being
                 // at the center of the rectangle.
-                _dragDropBox = new Rectangle(new Point(e.X - (dragSize.Width / 2), e.Y - (dragSize.Height / 2)), dragSize);
+                _dragDropBox = new Rectangle(new Point(e.X - (dragSize.Width/2), e.Y - (dragSize.Height/2)), dragSize);
             }
             else {
                 // Reset the rectangle if the mouse is not over an item in the ListBox.
@@ -1188,7 +1223,9 @@ namespace VixenPlus.Dialogs {
         private void dataGridView1_DragOver(object sender, DragEventArgs e) {
             // Check that it is a valid drag drop
             var cols = (from DataGridViewCell c in dgvChannels.SelectedCells select c.ColumnIndex).Distinct().ToList();
-            e.Effect = (cols.Count() != 1 || cols[0] < ChannelNumCol || cols[0] > OutputChannelCol) ? DragDropEffects.None : DragDropEffects.Move;
+            e.Effect = (cols.Count() != 1 || cols[0] < ChannelNumCol || cols[0] > OutputChannelCol)
+                ? DragDropEffects.None
+                : DragDropEffects.Move;
         }
 
 
@@ -1211,11 +1248,12 @@ namespace VixenPlus.Dialogs {
             var dropRowIndex = dgvChannels.HitTest(dropPoint.X, dropPoint.Y).RowIndex;
 
             // Get the column the D&D impacts
-            var dropColumn = (from DataGridViewCell c in dgvChannels.SelectedCells select c.ColumnIndex).Distinct().ToList()[0];
-            
+            var dropColumn =
+                (from DataGridViewCell c in dgvChannels.SelectedCells select c.ColumnIndex).Distinct().ToList()[0];
+
             // If it is the Channel Name column, do the channel number first and the the Output Number second
             var valueColumn = dropColumn == ChannelNameCol ? ChannelNumCol : dropColumn;
-            
+
             // Get the data for that column on the dropped row
             var initialValue = int.Parse(dgvChannels.Rows[dropRowIndex].Cells[valueColumn].Value.ToString());
 
@@ -1251,10 +1289,10 @@ namespace VixenPlus.Dialogs {
         private void RenumberChannels(ICollection<DataGridViewRow> rows, int firstRow, int lastRow, int col) {
             var rowCounter = rows.Count;
 
-            foreach (var row in from DataGridViewRow row in dgvChannels.Rows 
-                                let channelNum = int.Parse(row.Cells[col].Value.ToString()) 
-                                where channelNum >= firstRow && channelNum <= lastRow && !rows.Contains(row)
-                                select row) {
+            foreach (var row in from DataGridViewRow row in dgvChannels.Rows
+                let channelNum = int.Parse(row.Cells[col].Value.ToString())
+                where channelNum >= firstRow && channelNum <= lastRow && !rows.Contains(row)
+                select row) {
                 row.Cells[col].Value = firstRow + rowCounter++;
             }
         }
@@ -1263,13 +1301,14 @@ namespace VixenPlus.Dialogs {
         private void btnChColorOne_Click(object sender, EventArgs e) {
             var rows = GetSelectedRows().ToList();
             var color = rows.First().Cells[ChannelColorCol].Value.ToString().FromHTML();
-            
+
             if (!GetColor(sender as Button, color, out color, false)) {
                 return;
             }
 
             SetSingleColor(color, rows);
         }
+
 
         private void btnCancel_Click(object sender, EventArgs e) {
             if (AnyDirtyProfiles()) {
@@ -1307,7 +1346,7 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private void SetSingleColor(Color color, IEnumerable<DataGridViewRow> rows ) {
+        private void SetSingleColor(Color color, IEnumerable<DataGridViewRow> rows) {
             var htmlColor = color.ToHTML();
             var foreColor = color.GetForeColor();
 
@@ -1322,21 +1361,21 @@ namespace VixenPlus.Dialogs {
             _contextProfile.IsDirty = true;
         }
 
-        
+
         private void btnChColorMulti_Click(object sender, EventArgs e) {
             tcControlArea.SelectTab(ControlTabMultiColor);
         }
 
-        
+
         private void btnMultiColor_Click(object sender, EventArgs e) {
             colorPaletteChannel.ControlChanged -= UpdateColors;
             tcControlArea.SelectTab(ControlTabNormal);
             tcProfile.TabPages[0].Text = "Channels";
-            if (((Button)sender).Text == btnMultiColorOk.Text) {
+            if (((Button) sender).Text == btnMultiColorOk.Text) {
                 var count = 0;
                 var colors = GetColorList(colorPaletteColor);
                 foreach (var row in GetSelectedRows().Reverse()) {
-                    var color = colors[count++ % colors.Count];
+                    var color = colors[count++%colors.Count];
                     row.Cells[ChannelColorCol].Value = color.ToHTML();
                     row.DefaultCellStyle.BackColor = color;
                     row.DefaultCellStyle.ForeColor = color.GetForeColor();
@@ -1345,6 +1384,7 @@ namespace VixenPlus.Dialogs {
             }
             DoButtonManagement();
         }
+
 
         //private void dgvChannels_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
         //    //_contextProfile.IsDirty = true;
@@ -1360,6 +1400,7 @@ namespace VixenPlus.Dialogs {
             }
         }
 
+
         private void previewTimer_Tick(object sender, EventArgs e) {
             previewTimer.Stop();
             dgvChannels.SuspendLayout();
@@ -1368,9 +1409,11 @@ namespace VixenPlus.Dialogs {
             dgvChannels.ResumeLayout();
         }
 
+
         private void tbChGenNameFormat_KeyDown(object sender, KeyEventArgs e) {
             e.SuppressKeyPress = e.KeyCode == Keys.Enter;
         }
+
 
         private void btnUpdatePreview_Click(object sender, EventArgs e) {
             previewTimer_Tick(null, null);
@@ -1387,10 +1430,13 @@ namespace VixenPlus.Dialogs {
 
 
         private void QuerySaveChanges() {
-            if (MessageBox.Show("Save changes before closing?", "Save Changes?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
+            if (
+                MessageBox.Show("Save changes before closing?", "Save Changes?", MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question) == DialogResult.Yes) {
                 SaveChangedProfiles();
             }
         }
+
 
         private void SaveChangedProfiles() {
             SaveProfileFromRows();
@@ -1399,12 +1445,14 @@ namespace VixenPlus.Dialogs {
             }
         }
 
+
         private void dgvChannels_KeyDown(object sender, KeyEventArgs e) {
             if (btnChDelete.Enabled && e.KeyCode == Keys.Delete) {
                 btnChDelete_Click(null, null);
             }
         }
-        
+
+
         private void dgvChannels_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
             if (e.RowIndex == -1 || e.ColumnIndex == -1) {
                 return;
@@ -1412,21 +1460,22 @@ namespace VixenPlus.Dialogs {
             _contextProfile.IsDirty = true;
         }
 
+
         private void btnProfileSave_Click(object sender, EventArgs e) {
             SaveProfileFromRows();
             _contextProfile.SaveToFile();
             btnProfileSave.Enabled = false;
         }
 
-#endregion
+        #endregion
 
         #region Plugins tab - initial cut
 
         private List<Channel> _channels;
-        private  IExecutable _executableObject;
-        private  Dictionary<string, Dictionary<int, OutputPort>> _outputPorts;
-        private  List<IHardwarePlugin> _sequencePlugins;
-        private  SetupData _setupData;
+        private IExecutable _executableObject;
+        private Dictionary<string, Dictionary<int, OutputPort>> _outputPorts;
+        private List<IHardwarePlugin> _sequencePlugins;
+        private SetupData _setupData;
         private bool _internalUpdate;
 
 
@@ -1448,7 +1497,7 @@ namespace VixenPlus.Dialogs {
             _channels = executableObject.Channels;
             _sequencePlugins = new List<IHardwarePlugin>();
             _outputPorts = new Dictionary<string, Dictionary<int, OutputPort>>();
-            
+
             if (cbAvailablePlugIns.Items.Count > 0 || null == hardwarePlugins) {
                 return;
             }
@@ -1467,9 +1516,15 @@ namespace VixenPlus.Dialogs {
         public IEnumerable<object> MappedPluginList {
             get {
                 return (from XmlNode node in _setupData.GetAllPluginData()
-                        let attributes = node.Attributes
-                        where attributes != null
-                        select new object[] {string.Format("{0} ({1}-{2})", attributes["name"].Value, attributes["from"].Value, attributes["to"].Value), bool.Parse(attributes["enabled"].Value), Convert.ToInt32(attributes["id"].Value)}).ToArray();
+                    let attributes = node.Attributes
+                    where attributes != null
+                    select
+                        new object[] {
+                            string.Format("{0} ({1}-{2})", attributes["name"].Value, attributes["from"].Value,
+                                attributes["to"].Value),
+                            bool.Parse(attributes["enabled"].Value),
+                            Convert.ToInt32(attributes["id"].Value)
+                        }).ToArray();
             }
         }
 
@@ -1615,12 +1670,13 @@ namespace VixenPlus.Dialogs {
                 dgvPlugIns.Rows.Clear();
                 foreach (XmlNode node in _setupData.GetAllPluginData()) {
                     var plugin = node.Attributes != null && (node.Attributes["name"] != null)
-                        ?  OutputPlugins.FindPlugin(node.Attributes["name"].Value, true) : null;
+                        ? OutputPlugins.FindPlugin(node.Attributes["name"].Value, true)
+                        : null;
 
                     if (plugin != null) {
                         InitializePlugin(plugin, node);
                         AddPlugInRow(node, plugin);
-                        
+
                         _sequencePlugins.Add(plugin);
                     }
                     _internalUpdate = false;
@@ -1746,9 +1802,7 @@ namespace VixenPlus.Dialogs {
             var num = 0;
             foreach (var plugin in _sequencePlugins) {
                 var pluginData = _setupData.GetPlugInData(num.ToString(CultureInfo.InvariantCulture));
-                if (pluginData != null && 
-                    pluginData.Attributes != null && 
-                    pluginData.Attributes["enabled"] != null &&
+                if (pluginData != null && pluginData.Attributes != null && pluginData.Attributes["enabled"] != null &&
                     bool.Parse(pluginData.Attributes["enabled"].Value)) {
                     foreach (var map in plugin.HardwareMap) {
                         Dictionary<int, OutputPort> dictionary;
@@ -1782,14 +1836,15 @@ namespace VixenPlus.Dialogs {
             Cursor = Cursors.WaitCursor;
             try {
                 InitializePlugin(plugIn, node);
-            } catch (Exception exception) {
-                MessageBox.Show(string.Format(Resources.PluginSetupErrorInvalidStatePossible, exception.Message), Vendor.ProductName,
-                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            } finally {
+            }
+            catch (Exception exception) {
+                MessageBox.Show(string.Format(Resources.PluginSetupErrorInvalidStatePossible, exception.Message),
+                    Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            finally {
                 Cursor = Cursors.Default;
             }
             AddPlugInRow(node, plugIn);
-            //checkedListBoxSequencePlugins.Items.Add(plugIn.Name, true);
             _sequencePlugins.Add(plugIn);
         }
 
@@ -1797,7 +1852,8 @@ namespace VixenPlus.Dialogs {
         private void AddPlugInRow(XmlNode n, IHardwarePlugin p) {
             // ReSharper disable PossibleNullReferenceException
             dgvPlugIns.SuspendLayout();
-            var row = dgvPlugIns.Rows.Add(new object[] {
+            var row =
+                dgvPlugIns.Rows.Add(new object[] {
                     n.Attributes["name"].Value, n.Attributes["enabled"].Value == "True", n.Attributes["from"].Value,
                     n.Attributes["to"].Value,
                     p.HardwareMap.Any() ? p.HardwareMap[0].PortTypeName + " " + p.HardwareMap[0].PortTypeIndex : "n/a",
@@ -1813,6 +1869,7 @@ namespace VixenPlus.Dialogs {
 
             dgvPlugIns.ResumeLayout();
         }
+
 
         private void dgvPlugIns_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
             if (e.RowIndex == -1 || e.ColumnIndex == -1) return;
@@ -1837,24 +1894,55 @@ namespace VixenPlus.Dialogs {
             }
         }
 
-        #endregion
-
         private void dgvPlugIns_RowEnter(object sender, DataGridViewCellEventArgs e) {
-            if (_internalUpdate || e.RowIndex == -1 || e.ColumnIndex == -1) return;
+            if (_internalUpdate || e.RowIndex == -1 || e.ColumnIndex == -1) {
+                return;
+            }
 
-            var item = int.Parse(dgvPlugIns.Rows[e.RowIndex].Tag.ToString());
-            if (!_sequencePlugins[item].SupportsLiveSetup()) {
+            var index = int.Parse(dgvPlugIns.Rows[e.RowIndex].Tag.ToString());
+            if (!_sequencePlugins[index].SupportsLiveSetup()) {
                 return;
             }
 
             try {
-                var setup = _sequencePlugins[item].Setup();
+                var setup = _sequencePlugins[index].Setup();
                 pSetup.Controls.Add(setup);
                 setup.Show();
+            }
+            catch (Exception exception) {
+                ShowSetupError(exception);
+            }
+        }
+
+
+        private void dgvPlugIns_CellClick(object sender, DataGridViewCellEventArgs e) {
+            if (_internalUpdate || e.RowIndex == -1 || e.ColumnIndex == -1) {
+                return;
+            }
+
+
+            if (dgvPlugIns.Columns[e.ColumnIndex].Name != "colPlugInSetup" ||
+                !((DataGridViewDisableButtonCell) dgvPlugIns.Rows[e.RowIndex].Cells["colPlugInSetup"]).Visible) {
+                return;
+            }
+
+            try {
+                var index = int.Parse(dgvPlugIns.Rows[e.RowIndex].Tag.ToString());
+                _sequencePlugins[index].Setup();
             } catch (Exception exception) {
                 ShowSetupError(exception);
             }
         }
 
+        private void dgvPlugIns_RowLeave(object sender, DataGridViewCellEventArgs e) {
+            if (pSetup.Controls.Count > 0 && e.RowIndex != -1 &&  e.ColumnIndex != -1) {
+                var row = dgvPlugIns.Rows[e.RowIndex];
+                var index = int.Parse(row.Tag.ToString());
+                row.Cells["colPlugInConfiguration"].Value = _sequencePlugins[index].HardwareMap[0].ToString();
+                pSetup.Controls.Clear();
+            }
+        }
+
+        #endregion
     }
 }

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -6,7 +7,7 @@ namespace VixenPlus.Dialogs {
         private bool _visible;
 
         public new bool Visible {
-            private get { return _visible; }
+            get { return _visible; }
             set { _visible = value; }
         }
 
@@ -30,15 +31,14 @@ namespace VixenPlus.Dialogs {
             DataGridViewPaintParts paintParts) {
 
             if (_visible) {
-                // Llet the base class handle the painting. 
+                // Let the base class handle the painting. 
                 base.Paint(g, clipBounds, cellBounds, rowIndex, elementState, value, formattedValue, errorText,
                     cellStyle, advancedBorderStyle, paintParts);
             }
             else {
-
                 // Draw the cell background, if specified. 
                 if ((paintParts & DataGridViewPaintParts.Background) == DataGridViewPaintParts.Background) {
-                    using (var cellBackground = new SolidBrush(cellStyle.BackColor)) {
+                    using (var cellBackground = new SolidBrush((elementState & DataGridViewElementStates.Selected) == DataGridViewElementStates.Selected ? cellStyle.SelectionBackColor : cellStyle.BackColor)) {
                         g.FillRectangle(cellBackground, cellBounds);
                     }
                 }
