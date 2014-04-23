@@ -1894,18 +1894,24 @@ namespace VixenPlus.Dialogs {
             }
         }
 
+
         private void dgvPlugIns_RowEnter(object sender, DataGridViewCellEventArgs e) {
             if (_internalUpdate || e.RowIndex == -1 || e.ColumnIndex == -1) {
                 return;
             }
 
-            var index = int.Parse(dgvPlugIns.Rows[e.RowIndex].Tag.ToString());
-            if (!_sequencePlugins[index].SupportsLiveSetup()) {
+            if (pSetup.Controls.Count > 0) {
+                pSetup.Controls.Clear();
+            }
+
+            var plugIn = GetPluginForIndex(e.RowIndex);
+            
+            if (!plugIn.SupportsLiveSetup()) {
                 return;
             }
 
             try {
-                var setup = _sequencePlugins[index].Setup();
+                var setup = plugIn.Setup();
                 pSetup.Controls.Add(setup);
                 setup.Show();
             }
@@ -1920,27 +1926,40 @@ namespace VixenPlus.Dialogs {
                 return;
             }
 
-
             if (dgvPlugIns.Columns[e.ColumnIndex].Name != "colPlugInSetup" ||
                 !((DataGridViewDisableButtonCell) dgvPlugIns.Rows[e.RowIndex].Cells["colPlugInSetup"]).Visible) {
                 return;
             }
 
             try {
-                var index = int.Parse(dgvPlugIns.Rows[e.RowIndex].Tag.ToString());
-                _sequencePlugins[index].Setup();
+                GetPluginForIndex(e.RowIndex).Setup();
+                UpdateRowConfig(e.RowIndex);
             } catch (Exception exception) {
                 ShowSetupError(exception);
             }
         }
 
         private void dgvPlugIns_RowLeave(object sender, DataGridViewCellEventArgs e) {
-            if (pSetup.Controls.Count > 0 && e.RowIndex != -1 &&  e.ColumnIndex != -1) {
-                var row = dgvPlugIns.Rows[e.RowIndex];
-                var index = int.Parse(row.Tag.ToString());
-                row.Cells["colPlugInConfiguration"].Value = _sequencePlugins[index].HardwareMap[0].ToString();
-                pSetup.Controls.Clear();
+            if (e.RowIndex == -1 || e.ColumnIndex == -1) {
+                return;
             }
+
+            UpdateRowConfig(e.RowIndex);
+        }
+
+
+        private IHardwarePlugin GetPluginForIndex(int index) {
+            return _sequencePlugins[int.Parse(dgvPlugIns.Rows[index].Tag.ToString())];
+        }
+
+
+        private void UpdateRowConfig(int rowIndex) {
+            var row = dgvPlugIns.Rows[rowIndex];
+            var p = GetPluginForIndex(rowIndex);
+            //todo I don't know if the check needs to be made or not...
+
+            _setupData = p.SupportsLiveSetup() ? p.GetSetup() : null;
+            row.Cells["colPlugInConfiguration"].Value = p.HardwareMap.Any() ? p.HardwareMap[0].PortTypeName + " " + p.HardwareMap[0].PortTypeIndex : "n/a";
         }
 
         #endregion
