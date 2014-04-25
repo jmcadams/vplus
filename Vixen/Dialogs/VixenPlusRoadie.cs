@@ -1664,19 +1664,31 @@ namespace VixenPlus.Dialogs {
             int res;
 
             switch (cell.OwningColumn.Name) {
+                case "colPlugInEnabled":
+                    var enabled = dgvPlugIns.Rows[e.RowIndex].Cells["colPlugInEnabled"].Value.ToString();
+                    SetPlugInData(e.RowIndex, "enabled", enabled);
+                    break;
                 case "colPlugInStartChannel":
                     if (!int.TryParse(value, out res) || res < 1) {
                         res = 1;
                         cell.Value = res;
                     }
+                    SetPlugInData(e.RowIndex, "from", res.ToString(CultureInfo.InvariantCulture));
                     break;
                 case "colPlugInEndChannel":
                     if (!int.TryParse(value, out res) || res > _channels.Count) {
                         res = _channels.Count;
                         cell.Value = res;
                     }
+                    SetPlugInData(e.RowIndex, "to", res.ToString(CultureInfo.InvariantCulture));
                     break;
             }
+        }
+
+
+        private void SetPlugInData(int index, string key, string value) {
+            var node = _setupData.GetPlugInData(GetTagForRow(index).ToString(CultureInfo.InvariantCulture));
+            Xml.SetAttribute(node, key, value);
         }
 
 
