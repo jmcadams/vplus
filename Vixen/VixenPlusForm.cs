@@ -477,7 +477,7 @@ namespace VixenPlus {
             using (var dialog = new VixenPlusRoadie()) {
             //using (var dialog = new ProfileManagerDialog(null)) {
                 if (dialog.ShowDialog() == DialogResult.OK) {
-            //        NotifyAll(Notification.ProfileChange);
+                    NotifyAll(Notification.ProfileChange);
                 }
             }
         }

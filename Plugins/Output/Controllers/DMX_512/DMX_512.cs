@@ -36,8 +36,7 @@ namespace Controllers.DMX_512
         }
 
 
-        public SetupData GetSetup() {
-            throw new System.NotImplementedException();
+        public void GetSetup() {
         }
 
 

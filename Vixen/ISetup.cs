@@ -4,7 +4,7 @@ namespace VixenPlus {
     public interface ISetup
     {
         Control Setup();
-        SetupData GetSetup();
+        void GetSetup();
         void CloseSetup();
         bool SupportsLiveSetup();
         bool SettingsValid();

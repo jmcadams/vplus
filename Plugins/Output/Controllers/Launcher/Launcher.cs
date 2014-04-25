@@ -74,7 +74,7 @@ namespace Controllers.Launcher {
         }
 
 
-        public SetupData GetSetup() {
+        public void GetSetup() {
             throw new NotImplementedException();
         }
 

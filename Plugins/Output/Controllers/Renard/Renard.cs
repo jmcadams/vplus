@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO.Ports;
 using System.Text;
 using System.Threading;
@@ -139,16 +140,32 @@ namespace Controllers.Renard {
         }
 
 
-        public SetupData GetSetup() {
-            _selectedPort = ((SetupDialog) _dialog).SelectedPort;
+        public void GetSetup() {
+            if (null != _dialog) {
+                _selectedPort = ((SetupDialog) _dialog).SelectedPort;
+            }
 
-            _setupData.SetString(_setupNode, "name", _selectedPort.PortName);
-            _setupData.SetInteger(_setupNode, "baud", _selectedPort.BaudRate);
-            _setupData.SetString(_setupNode, "parity", _selectedPort.Parity.ToString());
-            _setupData.SetInteger(_setupNode, "data", _selectedPort.DataBits);
-            _setupData.SetString(_setupNode, "stop", _selectedPort.StopBits.ToString());
-            _setupData.SetBoolean(_setupNode, "HoldPort", _holdPort);
-            return _setupData;
+            while (_setupNode.ChildNodes.Count > 0) {
+                _setupNode.RemoveChild(_setupNode.ChildNodes[0]);
+            }
+
+            AppendChild("name", _selectedPort.PortName);
+            AppendChild("baud", _selectedPort.BaudRate.ToString(CultureInfo.InvariantCulture));
+            AppendChild("parity", _selectedPort.Parity.ToString());
+            AppendChild("data", _selectedPort.DataBits.ToString(CultureInfo.InvariantCulture));
+            AppendChild("stop", _selectedPort.StopBits.ToString());
+            AppendChild("HoldPort", _holdPort.ToString());
+        }
+
+
+        private void AppendChild(string key, string value) {
+            if (_setupNode.OwnerDocument == null) {
+                return;
+            }
+
+            var newChild = _setupNode.OwnerDocument.CreateElement(key);
+            newChild.InnerXml = value;
+            _setupNode.AppendChild(newChild);
         }
 
 
@@ -215,7 +232,14 @@ namespace Controllers.Renard {
         public HardwareMap[] HardwareMap {
             get {
                 int port;
-                return int.TryParse(_selectedPort.PortName.Substring(3), out port) ? new[] {new HardwareMap("Serial", port)} : new[] {new HardwareMap("None", 0)};
+                return int.TryParse(_selectedPort.PortName.Substring(3), out port) 
+                    ? new[] {new HardwareMap(String.Format("Serial: {0}, {1}, {2}, {3}, {4}",
+                        _selectedPort.PortName, 
+                        _selectedPort.BaudRate, 
+                        _selectedPort.DataBits,
+                        _selectedPort.Parity.ToString(),
+                        _selectedPort.StopBits), port)} 
+                    : new[] {new HardwareMap("None", 0)};
             }
         }
 

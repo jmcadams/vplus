@@ -62,8 +62,7 @@ namespace Controllers.DMXUSBPro
         }
 
 
-        public SetupData GetSetup() {
-            throw new NotImplementedException();
+        public void GetSetup() {
         }
 
 

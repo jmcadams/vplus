@@ -560,13 +560,11 @@ namespace Controllers.E131 {
         }
 
 
-        public SetupData GetSetup() {
-            throw new NotImplementedException();
+        public void GetSetup() {
         }
 
 
         public void CloseSetup() {
-            throw new NotImplementedException();
         }
 
 
@@ -576,7 +574,7 @@ namespace Controllers.E131 {
 
 
         public bool SettingsValid() {
-            throw new NotImplementedException();
+            return true;
         }
 
 

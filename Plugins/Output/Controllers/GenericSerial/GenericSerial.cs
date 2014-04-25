@@ -68,8 +68,7 @@ namespace Controllers.GenericSerial {
         }
 
 
-        public SetupData GetSetup() {
-            throw new NotImplementedException();
+        public void GetSetup() {
         }
 
 

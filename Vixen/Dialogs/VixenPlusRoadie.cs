@@ -32,7 +32,6 @@ namespace VixenPlus.Dialogs {
         private readonly int _dgvWidthDiff;
         private readonly int _dgvHeightDiff;
 
-        //private IHardwarePlugin _currentPlugin;
         private Profile _contextProfile;
 
         private const int ChannelEnabledCol = 0;
@@ -134,12 +133,8 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        //private void FrmProfileManager_Shown(object sender, EventArgs e) {
-        //    DoButtonManagement();
-        //}
-
-
         private void tcProfile_SelectedIndexChanged(object sender, EventArgs e) {
+            InitializeTabData();
             DoButtonManagement();
         }
 
@@ -307,6 +302,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void btnOkay_Click(object sender, EventArgs e) {
+            ClearSetup();
             SaveChangedProfiles();
             DialogResult = DialogResult.OK;
         }
@@ -320,8 +316,35 @@ namespace VixenPlus.Dialogs {
         private void cbProfiles_SelectedIndexChanged(object sender, EventArgs e) {
             SaveProfileFromRows();
             colorPaletteChannel.ControlChanged -= UpdateColors;
-            DoButtonManagement();
             tcProfile.Visible = cbProfiles.SelectedIndex > 0;
+
+            if (0 == cbProfiles.SelectedIndex) {
+                _contextProfile = null;
+                return;
+            }
+            
+            _contextProfile = (Profile) cbProfiles.SelectedItem;
+
+            InitializeTabData();
+            DoButtonManagement();
+        }
+
+
+        private void InitializeTabData() {
+            switch (tcProfile.SelectedIndex) {
+                case TabChannels:
+                    InitializeChannelTab();
+                    break;
+                case TabPlugins:
+                    InitializePlugInTab();
+                    break;
+                case TabGroups:
+                    break;
+                case TabSorts:
+                    break;
+                case TabNutcracker:
+                    break;
+            }
         }
 
 
@@ -424,11 +447,9 @@ namespace VixenPlus.Dialogs {
 
             switch (tcProfile.SelectedIndex) {
                 case TabChannels:
-                    InitializeChannelTab();
                     SetChannelTabButtons(isProfileLoaded);
                     break;
                 case TabPlugins:
-                    InitializePlugInTab();
                     SetPluginsTabButtons(isProfileLoaded);
                     break;
                 case TabGroups:
@@ -447,16 +468,9 @@ namespace VixenPlus.Dialogs {
         private void InitializeChannelTab() {
             tcControlArea.SelectTab(ControlTabNormal);
             tcProfile.TabPages[0].Text = "Channels";
+
             dgvChannels.Rows.Clear();
 
-            dgvChannels.SuspendLayout();
-
-            if (0 == cbProfiles.SelectedIndex) {
-                _contextProfile = null;
-                return;
-            }
-
-            _contextProfile = (Profile) cbProfiles.SelectedItem;
 
             AddRows(_contextProfile.FullChannels);
 
@@ -485,7 +499,6 @@ namespace VixenPlus.Dialogs {
 
 
         private void SetGeneralButtons(bool isProfileLoaded = true) {
-            //tcProfile.Visible = isProfileLoaded;
             var isChannelPanel = tcControlArea.SelectedTab == tpChannelControl;
             btnCancel.Enabled = isChannelPanel;
             btnOkay.Enabled = isChannelPanel;
@@ -1262,8 +1275,6 @@ namespace VixenPlus.Dialogs {
             var firstRow = Math.Min(initialValue, rows.Min(r => int.Parse(r.Cells[valueColumn].Value.ToString())));
             var lastRow = Math.Max(initialValue, rows.Max(r => int.Parse(r.Cells[valueColumn].Value.ToString())));
 
-            Debug.Print("First: {0} - Last: {1}", firstRow, lastRow);
-
             //move the channels and renumber the appropriate column
             foreach (var row in rows) {
                 dgvChannels.Rows.RemoveAt(dgvChannels.Rows.IndexOf(row));
@@ -1311,6 +1322,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void btnCancel_Click(object sender, EventArgs e) {
+            ClearSetup();
             if (AnyDirtyProfiles()) {
                 QuerySaveChanges();
             }
@@ -1421,6 +1433,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void VixenPlusRoadie_FormClosing(object sender, FormClosingEventArgs e) {
+            ClearSetup();
             if (e.CloseReason != CloseReason.UserClosing || !AnyDirtyProfiles()) {
                 return;
             }
@@ -1473,7 +1486,6 @@ namespace VixenPlus.Dialogs {
 
         private List<Channel> _channels;
         private IExecutable _executableObject;
-        private Dictionary<string, Dictionary<int, OutputPort>> _outputPorts;
         private List<IHardwarePlugin> _sequencePlugins;
         private SetupData _setupData;
         private bool _internalUpdate;
@@ -1496,7 +1508,6 @@ namespace VixenPlus.Dialogs {
 
             _channels = executableObject.Channels;
             _sequencePlugins = new List<IHardwarePlugin>();
-            _outputPorts = new Dictionary<string, Dictionary<int, OutputPort>>();
 
             if (cbAvailablePlugIns.Items.Count > 0 || null == hardwarePlugins) {
                 return;
@@ -1539,127 +1550,12 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        //private void checkedListBoxSequencePlugins_ItemCheck(object sender, ItemCheckEventArgs e) {
-        //    if (e.Index == -1) {
-        //        return;
-        //    }
-
-        //    var pluginData = _setupData.GetPlugInData(e.Index.ToString(CultureInfo.InvariantCulture));
-        //    if (pluginData != null && pluginData.Attributes != null) {
-        //            pluginData.Attributes["enabled"].Value = (e.NewValue == CheckState.Checked).ToString();
-        //    }
-        //    UpdateDictionary();
-        //}
-
-
         private void InitializePlugin(IHardwarePlugin plugin, XmlNode setupNode) {
             var eventDrivenOutputPlugIn = plugin as IEventDrivenOutputPlugIn;
             if (eventDrivenOutputPlugIn != null) {
                 eventDrivenOutputPlugIn.Initialize(_executableObject, _setupData, setupNode);
             }
         }
-
-
-        //private void listBoxSequencePlugins_KeyDown(object sender, KeyEventArgs e) {
-        //    if (e.KeyCode == Keys.Delete) {
-        //        RemoveSelectedPlugIn();
-        //    }
-        //}
-
-
-        //private bool _inhibitIndexChange;
-        //private int _lastIndex = -1;
-
-/*
-        private void listBoxSequencePlugins_SelectedIndexChanged(object sender, EventArgs e) {
-            if (_inhibitIndexChange) return;
-
-            if ((_lastIndex != -1) && (checkedListBoxSequencePlugins.SelectedIndex != -1)) {
-                if (SavedValidData()) {
-                    UpdatePlugInNodeChannelRanges(_lastIndex.ToString(CultureInfo.InvariantCulture));
-                }
-                else {
-                    _inhibitIndexChange = true;
-                    checkedListBoxSequencePlugins.SelectedIndex = _lastIndex;
-                    _inhibitIndexChange = false;
-                    return;
-                }
-            }
-            var selectedIndex = checkedListBoxSequencePlugins.SelectedIndex;
-
-            btnRemovePlugIn.Enabled = selectedIndex != -1;
-            if (selectedIndex != -1) {
-                _currentPlugin = _sequencePlugins[selectedIndex];
-                var plugInData = _setupData.GetPlugInData(selectedIndex.ToString(CultureInfo.InvariantCulture));
-                if (plugInData != null && plugInData.Attributes != null) {
-                    textBoxChannelFrom.Text = plugInData.Attributes["from"].Value;
-                    textBoxChannelTo.Text = plugInData.Attributes["to"].Value;
-                }
-                var isLiveSetup = _currentPlugin.SupportsLiveSetup();
-                EnablePlugInSetup(isLiveSetup);
-                if (isLiveSetup) {
-                    SetupLivePlugIn();
-                }
-            }
-            _lastIndex = selectedIndex;
-        }
-*/
-
-
-/*
-        private void EnablePlugInSetup(bool isLiveSetup) {
-            btnSetup.Visible = !isLiveSetup;
-            gbSetup.Visible = isLiveSetup;
-            
-        }
-*/
-
-
-/*
-        private bool SavedValidData() {
-            if (null == _currentPlugin) {
-                return true;
-            } 
-            
-            var isValid = true;
-
-            if (_currentPlugin.SupportsLiveSetup()) {
-                isValid = _currentPlugin.SettingsValid();
-
-                if (isValid) {
-                    _setupData = _currentPlugin.GetSetup();
-                    _currentPlugin.CloseSetup();
-                    _currentPlugin = null;
-                    pSetup.Controls.Clear();
-                }
-            }
-
-            UpdateDictionary();
-
-            return isValid;
-        }
-*/
-
-
-/*
-        private void listViewPlugins_DoubleClick(object sender, EventArgs e) {
-            if (listViewPlugins.SelectedItems.Count > 0) {
-                UsePlugin();
-            }
-        }
-*/
-
-
-/*
-        private void listViewPlugins_SelectedIndexChanged(object sender, EventArgs e) {
-            btnAddPlugIn.Enabled = listViewPlugins.SelectedItems.Count > 0;
-        }
-*/
-
-
-        //private void PluginListDialog_FormClosing(object sender, EventArgs e) {
-        //    listBoxSequencePlugins_SelectedIndexChanged(null, null);
-        //}
 
 
         private void InitializePlugInTab() {
@@ -1676,59 +1572,15 @@ namespace VixenPlus.Dialogs {
                     if (plugin != null) {
                         InitializePlugin(plugin, node);
                         AddPlugInRow(node, plugin);
-
-                        _sequencePlugins.Add(plugin);
                     }
                     _internalUpdate = false;
-                    UpdateDictionary();
                 }
             }
             finally {
                 Cursor = Cursors.Default;
+                dgvPlugIns.Focus();
             }
         }
-
-
-/*
-        private void checkedListBoxSequencePlugins_DoubleClick(object sender, EventArgs e) {
-            if (_currentPlugin.SupportsLiveSetup()) {
-                return;
-            }
-
-            btnSetup_Click(null, null);
-        }
-*/
-
-
-/*
-        private void btnSetup_Click(object sender, EventArgs e) {
-            try {
-                _currentPlugin.Setup();
-                UpdateDictionary();
-            }
-            catch (Exception exception) {
-                ShowSetupError(exception);
-            }
-        }
-*/
-
-
-/*
-        private void SetupLivePlugIn() {
-            if (checkedListBoxSequencePlugins.SelectedItem == null) {
-                return;
-            }
-            UpdatePlugInNodeChannelRanges(checkedListBoxSequencePlugins.SelectedIndex.ToString(CultureInfo.InvariantCulture));
-            try {
-                var setup = _currentPlugin.Setup();
-                pSetup.Controls.Add(setup);
-                setup.Show();
-            }
-            catch (Exception exception) {
-                ShowSetupError(exception);
-            }
-        }
-*/
 
 
         private static void ShowSetupError(Exception exception) {
@@ -1738,89 +1590,20 @@ namespace VixenPlus.Dialogs {
 
 
         private void RemoveSelectedPlugIn() {
-            //if ((_sequencePlugins[checkedListBoxSequencePlugins.SelectedIndex] == null) || (checkedListBoxSequencePlugins.SelectedIndex == -1)) {
-            //    return;
-            //}
-            //_setupData.RemovePlugInData(checkedListBoxSequencePlugins.SelectedIndex.ToString(CultureInfo.InvariantCulture));
-            //_sequencePlugins.RemoveAt(checkedListBoxSequencePlugins.SelectedIndex);
-            //checkedListBoxSequencePlugins.Items.RemoveAt(checkedListBoxSequencePlugins.SelectedIndex);
-            //btnRemovePlugIn.Enabled = checkedListBoxSequencePlugins.SelectedIndex != -1;
-            //UpdateDictionary();
-        }
-
-
-        private void UpdateConfigDisplay() {
-            //listViewOutputPorts.BeginUpdate();
-            //listViewOutputPorts.Items.Clear();
-            //var list = new List<int>();
-            //foreach (var str in _outputPorts.Keys) {
-            //    var group = listViewOutputPorts.Groups.Add(str, str);
-            //    var dictionary = _outputPorts[str];
-            //    list.Clear();
-            //    list.AddRange(dictionary.Keys);
-            //    list.Sort();
-            //    foreach (var num in list) {
-            //        ListViewItem item;
-            //        var port = dictionary[num];
-            //        if (port.ReferencingPlugins.Count == 1) {
-            //            item =
-            //                new ListViewItem(
-            //                    new[] {string.Empty, port.Index.ToString("d"), string.Empty, port.ReferencingPlugins[0].Name}, group);
-            //        }
-            //        else if (port.IsExpanded) {
-            //            item = new ListViewItem(new[] {string.Empty, port.Index.ToString("d"), string.Empty, Resources.Multiple}, group);
-            //            item.SubItems[3].ForeColor = Color.Pink;
-            //        }
-            //        else {
-            //            item = new ListViewItem(new[] {string.Empty, port.Index.ToString("d"), string.Empty, Resources.Multiple}, group);
-            //            item.SubItems[3].ForeColor = Color.Red;
-            //        }
-            //        item.Tag = port;
-            //        listViewOutputPorts.Items.Add(item);
-            //        if (!port.IsExpanded) {
-            //            continue;
-            //        }
-            //        foreach (var plugin in port.ReferencingPlugins) {
-            //            listViewOutputPorts.Items.Add(new ListViewItem(new[] {string.Empty, string.Empty, string.Empty, plugin.Name}, @group));
-            //        }
-            //    }
-            //}
-            //listViewOutputPorts.EndUpdate();
-            //if (listViewOutputPorts.Items.Count <= 0) {
-            //    return;
-            //}
-            //listViewOutputPorts.EnsureVisible(listViewOutputPorts.Items.Count - 1);
-            //listViewOutputPorts.EnsureVisible(_itemAffectedIndex);
-        }
-
-
-        private void UpdateDictionary() {
-            if (_internalUpdate) {
+            if (dgvPlugIns.SelectedCells.Count == 0) {
                 return;
             }
-            _outputPorts.Clear();
-            var num = 0;
-            foreach (var plugin in _sequencePlugins) {
-                var pluginData = _setupData.GetPlugInData(num.ToString(CultureInfo.InvariantCulture));
-                if (pluginData != null && pluginData.Attributes != null && pluginData.Attributes["enabled"] != null &&
-                    bool.Parse(pluginData.Attributes["enabled"].Value)) {
-                    foreach (var map in plugin.HardwareMap) {
-                        Dictionary<int, OutputPort> dictionary;
-                        OutputPort port;
-                        var key = map.PortTypeName.ToLower().Trim();
-                        key = char.ToUpper(key[0]) + key.Substring(1);
-                        if (!_outputPorts.TryGetValue(key, out dictionary)) {
-                            _outputPorts[key] = dictionary = new Dictionary<int, OutputPort>();
-                        }
-                        if (!dictionary.TryGetValue(map.PortTypeIndex, out port)) {
-                            dictionary[map.PortTypeIndex] = port = new OutputPort(map.PortTypeIndex);
-                        }
-                        port.ReferencingPlugins.Add(plugin);
-                    }
-                }
-                num++;
-            }
-            UpdateConfigDisplay();
+
+            ClearSetup();
+
+            var index = GetTagForRow(dgvPlugIns.SelectedCells[0].RowIndex);
+            
+            _setupData.RemovePlugInData(index.ToString(CultureInfo.InvariantCulture));
+            _sequencePlugins.RemoveAt(index);
+            _internalUpdate = true;
+            dgvPlugIns.Rows.RemoveAt(index);
+            _internalUpdate = false;
+            _lastRow = -1;
         }
 
 
@@ -1845,27 +1628,29 @@ namespace VixenPlus.Dialogs {
                 Cursor = Cursors.Default;
             }
             AddPlugInRow(node, plugIn);
-            _sequencePlugins.Add(plugIn);
         }
 
 
         private void AddPlugInRow(XmlNode n, IHardwarePlugin p) {
             // ReSharper disable PossibleNullReferenceException
             dgvPlugIns.SuspendLayout();
+
+            var index = dgvPlugIns.Rows.Count;
+            
             var row =
                 dgvPlugIns.Rows.Add(new object[] {
                     n.Attributes["name"].Value, n.Attributes["enabled"].Value == "True", n.Attributes["from"].Value,
                     n.Attributes["to"].Value,
-                    p.HardwareMap.Any() ? p.HardwareMap[0].PortTypeName + " " + p.HardwareMap[0].PortTypeIndex : "n/a",
+                    "unknown",
                     p.SupportsLiveSetup() ? "Live Setup" : "Setup..."
                 });
             // ReSharper restore PossibleNullReferenceException
 
-            dgvPlugIns.Rows[row].Tag = dgvPlugIns.Rows.Count - 1;
+            ((DataGridViewDisableButtonCell)dgvPlugIns.Rows[row].Cells["colPlugInSetup"]).Visible = !p.SupportsLiveSetup();
 
-            if (p.SupportsLiveSetup()) {
-                ((DataGridViewDisableButtonCell) dgvPlugIns.Rows[row].Cells["colPlugInSetup"]).Visible = false;
-            }
+            dgvPlugIns.Rows[row].Tag = index;
+            _sequencePlugins.Add(p);
+            UpdateRowConfig(index);
 
             dgvPlugIns.ResumeLayout();
         }
@@ -1895,16 +1680,17 @@ namespace VixenPlus.Dialogs {
         }
 
 
+        private int _lastRow = -1;
+
         private void dgvPlugIns_RowEnter(object sender, DataGridViewCellEventArgs e) {
             if (_internalUpdate || e.RowIndex == -1 || e.ColumnIndex == -1) {
                 return;
             }
 
-            if (pSetup.Controls.Count > 0) {
-                pSetup.Controls.Clear();
-            }
+            ClearSetup();
 
             var plugIn = GetPluginForIndex(e.RowIndex);
+            _lastRow = GetTagForRow(e.RowIndex);
             
             if (!plugIn.SupportsLiveSetup()) {
                 return;
@@ -1918,6 +1704,21 @@ namespace VixenPlus.Dialogs {
             catch (Exception exception) {
                 ShowSetupError(exception);
             }
+        }
+
+
+        private void ClearSetup() {
+            if (pSetup.Controls.Count <= 0) {
+                return;
+            }
+
+            if (_lastRow != -1) {
+                var lastPlugIn = GetPluginForIndex(_lastRow);
+                lastPlugIn.GetSetup();
+                lastPlugIn.CloseSetup();
+            }
+
+            pSetup.Controls.Clear();
         }
 
 
@@ -1940,7 +1741,7 @@ namespace VixenPlus.Dialogs {
         }
 
         private void dgvPlugIns_RowLeave(object sender, DataGridViewCellEventArgs e) {
-            if (e.RowIndex == -1 || e.ColumnIndex == -1) {
+            if (e.RowIndex == -1 || e.ColumnIndex == -1 || _internalUpdate) {
                 return;
             }
 
@@ -1949,17 +1750,26 @@ namespace VixenPlus.Dialogs {
 
 
         private IHardwarePlugin GetPluginForIndex(int index) {
-            return _sequencePlugins[int.Parse(dgvPlugIns.Rows[index].Tag.ToString())];
+            return _sequencePlugins[GetTagForRow(index)];
+        }
+
+
+        private int GetTagForRow(int index) {
+            return int.Parse(dgvPlugIns.Rows[index].Tag.ToString());
         }
 
 
         private void UpdateRowConfig(int rowIndex) {
             var row = dgvPlugIns.Rows[rowIndex];
             var p = GetPluginForIndex(rowIndex);
-            //todo I don't know if the check needs to be made or not...
+            var config = "n/a";
 
-            _setupData = p.SupportsLiveSetup() ? p.GetSetup() : null;
-            row.Cells["colPlugInConfiguration"].Value = p.HardwareMap.Any() ? p.HardwareMap[0].PortTypeName + " " + p.HardwareMap[0].PortTypeIndex : "n/a";
+            if (p.HardwareMap.Any()) {
+                config = p.HardwareMap.Aggregate("", (current, h) => current + (h.PortTypeName + Environment.NewLine));
+                config = config.Substring(0, config.Length - Environment.NewLine.Length);
+            }
+
+            row.Cells["colPlugInConfiguration"].Value = config;
         }
 
         #endregion
