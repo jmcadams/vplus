@@ -21,6 +21,12 @@ namespace Controllers.DMXUSBPro
         private XmlNode _setupNode;
         private Widget _widget;
 
+        private const string PortNode = "Name";
+        private const string BaudNode = "Baud";
+        private const string ParityNode = "Partity";
+        private const string DataNode = "Data";
+        private const string StopNode = "Stop";
+
         public void Event(byte[] channelValues)
         {
             _widget.OutputDMXPacket(channelValues);
@@ -38,10 +44,10 @@ namespace Controllers.DMXUSBPro
             if ((_serialPort != null) && _serialPort.IsOpen) {
                 _serialPort.Close();
             }
-            _serialPort = new SerialPort(_setupData.GetString(_setupNode, "Name", "COM1"), _setupData.GetInteger(_setupNode, "Baud", 57600),
-                (Parity) Enum.Parse(typeof (Parity), _setupData.GetString(_setupNode, "Parity", Parity.None.ToString())),
-                _setupData.GetInteger(_setupNode, "Data", 8),
-                (StopBits) Enum.Parse(typeof (StopBits), _setupData.GetString(_setupNode, "Stop", StopBits.One.ToString())))
+            _serialPort = new SerialPort(_setupData.GetString(_setupNode, PortNode, "COM1"), _setupData.GetInteger(_setupNode, BaudNode, 19200),
+                (Parity)Enum.Parse(typeof(Parity), _setupData.GetString(_setupNode, ParityNode, Parity.None.ToString())),
+                _setupData.GetInteger(_setupNode, DataNode, 8),
+                (StopBits)Enum.Parse(typeof(StopBits), _setupData.GetString(_setupNode, StopNode, StopBits.One.ToString())))
                     {Handshake = Handshake.None, Encoding = Encoding.UTF8};
         }
 
@@ -77,11 +83,11 @@ namespace Controllers.DMXUSBPro
                 _setupNode.RemoveChild(_setupNode.ChildNodes[0]);
             }
 
-            AppendChild("name", _serialPort.PortName);
-            AppendChild("baud", _serialPort.BaudRate.ToString(CultureInfo.InvariantCulture));
-            AppendChild("parity", _serialPort.Parity.ToString());
-            AppendChild("data", _serialPort.DataBits.ToString(CultureInfo.InvariantCulture));
-            AppendChild("stop", _serialPort.StopBits.ToString());
+            AppendChild(PortNode, _serialPort.PortName);
+            AppendChild(BaudNode, _serialPort.BaudRate.ToString(CultureInfo.InvariantCulture));
+            AppendChild(ParityNode, _serialPort.Parity.ToString());
+            AppendChild(DataNode, _serialPort.DataBits.ToString(CultureInfo.InvariantCulture));
+            AppendChild(StopNode, _serialPort.StopBits.ToString());
         }
 
 

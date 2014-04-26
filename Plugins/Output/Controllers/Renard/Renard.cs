@@ -32,6 +32,13 @@ namespace Controllers.Renard {
         private const byte PacketEndValue = 0x7f;
         private const byte PacketStartValue = 0x80;
 
+        private const string PortNode = "name";
+        private const string BaudNode = "baud";
+        private const string ParityNode = "partity";
+        private const string DataNode = "data";
+        private const string StopNode = "stop";
+        private const string HoldNode = "HoldPort";
+
         public Renard() {
             _p1Packet[0] = StreamStartValue;
         }
@@ -87,16 +94,11 @@ namespace Controllers.Renard {
         public void Initialize(IExecutable executableObject, SetupData setupData, XmlNode setupNode) {
             _setupData = setupData;
             _setupNode = setupNode;
-            _serialPort = new SerialPort(_setupData.GetString(_setupNode, "name", "COM1"),
-                                           _setupData.GetInteger(_setupNode, "baud", 19200),
-                                           (Parity)
-                                           Enum.Parse(typeof (Parity),
-                                                      _setupData.GetString(_setupNode, "parity", Parity.None.ToString())),
-                                           _setupData.GetInteger(_setupNode, "data", 8),
-                                           (StopBits)
-                                           Enum.Parse(typeof (StopBits),
-                                                      _setupData.GetString(_setupNode, "stop", StopBits.One.ToString())));
-            _holdPort = _setupData.GetBoolean(_setupNode, "HoldPort", true);
+            _serialPort = new SerialPort(_setupData.GetString(_setupNode, PortNode, "COM1"), _setupData.GetInteger(_setupNode, BaudNode, 19200),
+                (Parity) Enum.Parse(typeof (Parity), _setupData.GetString(_setupNode, ParityNode, Parity.None.ToString())),
+                _setupData.GetInteger(_setupNode, DataNode, 8),
+                (StopBits) Enum.Parse(typeof (StopBits), _setupData.GetString(_setupNode, StopNode, StopBits.One.ToString())));
+            _holdPort = _setupData.GetBoolean(_setupNode, HoldNode, true);
             _serialPort.WriteTimeout = 500;
         }
 
@@ -151,12 +153,12 @@ namespace Controllers.Renard {
                 _setupNode.RemoveChild(_setupNode.ChildNodes[0]);
             }
 
-            AppendChild("name", _serialPort.PortName);
-            AppendChild("baud", _serialPort.BaudRate.ToString(CultureInfo.InvariantCulture));
-            AppendChild("parity", _serialPort.Parity.ToString());
-            AppendChild("data", _serialPort.DataBits.ToString(CultureInfo.InvariantCulture));
-            AppendChild("stop", _serialPort.StopBits.ToString());
-            AppendChild("HoldPort", _holdPort.ToString());
+            AppendChild(PortNode, _serialPort.PortName);
+            AppendChild(BaudNode, _serialPort.BaudRate.ToString(CultureInfo.InvariantCulture));
+            AppendChild(ParityNode, _serialPort.Parity.ToString());
+            AppendChild(DataNode, _serialPort.DataBits.ToString(CultureInfo.InvariantCulture));
+            AppendChild(StopNode, _serialPort.StopBits.ToString());
+            AppendChild(HoldNode, _holdPort.ToString());
         }
 
 
