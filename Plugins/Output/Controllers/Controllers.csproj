@@ -67,6 +67,12 @@
     <Compile Include="Common\SerialSetupDialog.Designer.cs">
       <DependentUpon>SerialSetupDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Common\SetupDialog.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Common\SetupDialog.Designer.cs">
+      <DependentUpon>SetupDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="DMXUSBPro\DMXUSBPro.cs" />
     <Compile Include="DMXUSBPro\Message.cs" />
     <Compile Include="DMXUSBPro\MessageType.cs" />
@@ -120,12 +126,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Renard\Renard.cs" />
-    <Compile Include="Renard\SetupDialog.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Renard\SetupDialog.Designer.cs">
-      <DependentUpon>SetupDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +143,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Common\SerialSetup.resx">
       <DependentUpon>SerialSetup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\SetupDialog.resx">
+      <DependentUpon>SetupDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>
@@ -162,9 +165,6 @@
       <DependentUpon>SetupDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Launcher\SetupDialog.resx">
-      <DependentUpon>SetupDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Renard\SetupDialog.resx">
       <DependentUpon>SetupDialog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

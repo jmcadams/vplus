@@ -1,6 +1,4 @@
-using System.Windows.Forms;
-
-namespace Controllers.Renard {
+namespace Controllers.Common {
     public partial class SetupDialog {
         private System.ComponentModel.IContainer components = null;
 

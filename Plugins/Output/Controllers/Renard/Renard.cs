@@ -7,6 +7,8 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 
+using Controllers.Common;
+
 using VixenPlus;
 using VixenPlus.Annotations;
 
@@ -18,7 +20,7 @@ namespace Controllers.Renard {
         private bool _holdPort;
         private byte[] _p1Packet = new byte[1];
         private Control _dialog;
-        private SerialPort _selectedPort;
+        private SerialPort _serialPort;
         private SetupData _setupData;
         private XmlNode _setupNode;
         private RunState _state = RunState.Stopped;
@@ -41,11 +43,11 @@ namespace Controllers.Renard {
                 _eventTrigger.Set();
             }
             else {
-                if (!_selectedPort.IsOpen) {
-                    _selectedPort.Open();
+                if (!_serialPort.IsOpen) {
+                    _serialPort.Open();
                 }
                 FireEvent();
-                _selectedPort.Close();
+                _serialPort.Close();
             }
         }
 
@@ -85,7 +87,7 @@ namespace Controllers.Renard {
         public void Initialize(IExecutable executableObject, SetupData setupData, XmlNode setupNode) {
             _setupData = setupData;
             _setupNode = setupNode;
-            _selectedPort = new SerialPort(_setupData.GetString(_setupNode, "name", "COM1"),
+            _serialPort = new SerialPort(_setupData.GetString(_setupNode, "name", "COM1"),
                                            _setupData.GetInteger(_setupNode, "baud", 19200),
                                            (Parity)
                                            Enum.Parse(typeof (Parity),
@@ -95,7 +97,7 @@ namespace Controllers.Renard {
                                            Enum.Parse(typeof (StopBits),
                                                       _setupData.GetString(_setupNode, "stop", StopBits.One.ToString())));
             _holdPort = _setupData.GetBoolean(_setupNode, "HoldPort", true);
-            _selectedPort.WriteTimeout = 500;
+            _serialPort.WriteTimeout = 500;
         }
 
 
@@ -128,32 +130,32 @@ namespace Controllers.Renard {
                     _p1Packet[count++] = PacketIgnoreValue;
                 }
             }
-            while ((_selectedPort.WriteBufferSize - _selectedPort.BytesToWrite) <= count) {
+            while ((_serialPort.WriteBufferSize - _serialPort.BytesToWrite) <= count) {
                 Thread.Sleep(5);
             }
-            _selectedPort.Write(_p1Packet, 0, count);
+            _serialPort.Write(_p1Packet, 0, count);
         }
 
 
         public Control Setup() {
-            return _dialog ?? (_dialog = new SetupDialog {SelectedPort = _selectedPort});
+            return _dialog ?? (_dialog = new SetupDialog {SelectedPort = _serialPort});
         }
 
 
         public void GetSetup() {
             if (null != _dialog) {
-                _selectedPort = ((SetupDialog) _dialog).SelectedPort;
+                _serialPort = ((SetupDialog) _dialog).SelectedPort;
             }
 
             while (_setupNode.ChildNodes.Count > 0) {
                 _setupNode.RemoveChild(_setupNode.ChildNodes[0]);
             }
 
-            AppendChild("name", _selectedPort.PortName);
-            AppendChild("baud", _selectedPort.BaudRate.ToString(CultureInfo.InvariantCulture));
-            AppendChild("parity", _selectedPort.Parity.ToString());
-            AppendChild("data", _selectedPort.DataBits.ToString(CultureInfo.InvariantCulture));
-            AppendChild("stop", _selectedPort.StopBits.ToString());
+            AppendChild("name", _serialPort.PortName);
+            AppendChild("baud", _serialPort.BaudRate.ToString(CultureInfo.InvariantCulture));
+            AppendChild("parity", _serialPort.Parity.ToString());
+            AppendChild("data", _serialPort.DataBits.ToString(CultureInfo.InvariantCulture));
+            AppendChild("stop", _serialPort.StopBits.ToString());
             AppendChild("HoldPort", _holdPort.ToString());
         }
 
@@ -188,20 +190,20 @@ namespace Controllers.Renard {
             while (State != RunState.Stopped) {
                 Thread.Sleep(5);
             }
-            if (_selectedPort.IsOpen) {
-                _selectedPort.Close();
+            if (_serialPort.IsOpen) {
+                _serialPort.Close();
             }
         }
 
 
         public void Startup() {
-            if (!(!_holdPort || _selectedPort.IsOpen)) {
-                _selectedPort.Open();
+            if (!(!_holdPort || _serialPort.IsOpen)) {
+                _serialPort.Open();
             }
-            _selectedPort.Handshake = Handshake.None;
-            _selectedPort.Encoding = Encoding.UTF8;
-            _selectedPort.RtsEnable = true;
-            _selectedPort.DtrEnable = true;
+            _serialPort.Handshake = Handshake.None;
+            _serialPort.Encoding = Encoding.UTF8;
+            _serialPort.RtsEnable = true;
+            _serialPort.DtrEnable = true;
             if (!_holdPort) {
                 return;
             }
@@ -232,13 +234,13 @@ namespace Controllers.Renard {
         public HardwareMap[] HardwareMap {
             get {
                 int port;
-                return int.TryParse(_selectedPort.PortName.Substring(3), out port) 
+                return int.TryParse(_serialPort.PortName.Substring(3), out port) 
                     ? new[] {new HardwareMap(String.Format("Serial: {0}, {1}, {2}, {3}, {4}",
-                        _selectedPort.PortName, 
-                        _selectedPort.BaudRate, 
-                        _selectedPort.DataBits,
-                        _selectedPort.Parity.ToString(),
-                        _selectedPort.StopBits), port)} 
+                        _serialPort.PortName, 
+                        _serialPort.BaudRate, 
+                        _serialPort.DataBits,
+                        _serialPort.Parity,
+                        _serialPort.StopBits), port)} 
                     : new[] {new HardwareMap("None", 0)};
             }
         }

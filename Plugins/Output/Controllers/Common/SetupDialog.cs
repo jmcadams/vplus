@@ -1,7 +1,7 @@
 using System.IO.Ports;
 using System.Windows.Forms;
 
-namespace Controllers.Renard {
+namespace Controllers.Common {
     public partial class SetupDialog : UserControl {
         public SetupDialog() {
             InitializeComponent();

@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.IO.Ports;
 using System.Text;
 using System.Windows.Forms;
@@ -14,6 +15,7 @@ namespace Controllers.DMXUSBPro
     [UsedImplicitly]
     public class DmxusbPro : IEventDrivenOutputPlugIn
     {
+        private Control _dialog;
         private SerialPort _serialPort;
         private SetupData _setupData;
         private XmlNode _setupNode;
@@ -31,48 +33,81 @@ namespace Controllers.DMXUSBPro
             SetPort();
         }
 
-        private void SetPort()
-        {
-            if ((_serialPort != null) && _serialPort.IsOpen)
-            {
+
+        private void SetPort() {
+            if ((_serialPort != null) && _serialPort.IsOpen) {
                 _serialPort.Close();
             }
-            _serialPort = new SerialPort(_setupData.GetString(_setupNode, "Name", "COM1"), _setupData.GetInteger(_setupNode, "Baud", 0xe100), (Parity) Enum.Parse(typeof(Parity), _setupData.GetString(_setupNode, "Parity", "None")), _setupData.GetInteger(_setupNode, "Data", 8), (StopBits) Enum.Parse(typeof(StopBits), _setupData.GetString(_setupNode, "Stop", "One")))
-            {Handshake = Handshake.None, Encoding = Encoding.UTF8};
+            _serialPort = new SerialPort(_setupData.GetString(_setupNode, "Name", "COM1"), _setupData.GetInteger(_setupNode, "Baud", 57600),
+                (Parity) Enum.Parse(typeof (Parity), _setupData.GetString(_setupNode, "Parity", Parity.None.ToString())),
+                _setupData.GetInteger(_setupNode, "Data", 8),
+                (StopBits) Enum.Parse(typeof (StopBits), _setupData.GetString(_setupNode, "Stop", StopBits.One.ToString())))
+                    {Handshake = Handshake.None, Encoding = Encoding.UTF8};
         }
 
 
         public Control Setup() {
-            using (var dialog = new SerialSetupDialog(_serialPort)) {
-                dialog.Show();
-                //if (dialog.ShowDialog() != DialogResult.OK) {
-                //    return;
-                //}
-                _serialPort = dialog.SelectedPort;
-                _serialPort.Handshake = Handshake.None;
-                _serialPort.Encoding = Encoding.UTF8;
-                _setupData.SetString(_setupNode, "Name", _serialPort.PortName);
-                _setupData.SetInteger(_setupNode, "Baud", _serialPort.BaudRate);
-                _setupData.SetString(_setupNode, "Parity", _serialPort.Parity.ToString());
-                _setupData.SetInteger(_setupNode, "Data", _serialPort.DataBits);
-                _setupData.SetString(_setupNode, "Stop", _serialPort.StopBits.ToString());
-            }
+            return _dialog ?? (_dialog = new SetupDialog { SelectedPort = _serialPort });
 
-            return null;
+            //using (var dialog = new SerialSetupDialog(_serialPort)) {
+            //    dialog.Show();
+            //    //if (dialog.ShowDialog() != DialogResult.OK) {
+            //    //    return;
+            //    //}
+            //    _serialPort = dialog.SelectedPort;
+            //    _serialPort.Handshake = Handshake.None;
+            //    _serialPort.Encoding = Encoding.UTF8;
+            //    _setupData.SetString(_setupNode, "Name", _serialPort.PortName);
+            //    _setupData.SetInteger(_setupNode, "Baud", _serialPort.BaudRate);
+            //    _setupData.SetString(_setupNode, "Parity", _serialPort.Parity.ToString());
+            //    _setupData.SetInteger(_setupNode, "Data", _serialPort.DataBits);
+            //    _setupData.SetString(_setupNode, "Stop", _serialPort.StopBits.ToString());
+            //}
+
+            //return null;
         }
 
 
         public void GetSetup() {
+            if (null != _dialog) {
+                _serialPort = ((SetupDialog)_dialog).SelectedPort;
+            }
+
+            while (_setupNode.ChildNodes.Count > 0) {
+                _setupNode.RemoveChild(_setupNode.ChildNodes[0]);
+            }
+
+            AppendChild("name", _serialPort.PortName);
+            AppendChild("baud", _serialPort.BaudRate.ToString(CultureInfo.InvariantCulture));
+            AppendChild("parity", _serialPort.Parity.ToString());
+            AppendChild("data", _serialPort.DataBits.ToString(CultureInfo.InvariantCulture));
+            AppendChild("stop", _serialPort.StopBits.ToString());
         }
 
 
+
+        private void AppendChild(string key, string value) {
+            if (_setupNode.OwnerDocument == null) {
+                return;
+            }
+
+            var newChild = _setupNode.OwnerDocument.CreateElement(key);
+            newChild.InnerXml = value;
+            _setupNode.AppendChild(newChild);
+        }
+
         public void CloseSetup() {
-            throw new NotImplementedException();
+            if (_dialog == null) {
+                return;
+            }
+
+            _dialog.Dispose();
+            _dialog = null;
         }
 
 
         public bool SupportsLiveSetup() {
-            return false;
+            return true;
         }
 
 
@@ -122,9 +157,16 @@ namespace Controllers.DMXUSBPro
 
         public HardwareMap[] HardwareMap
         {
-            get
-            {
-                return new[] { new HardwareMap("Serial", int.Parse(_serialPort.PortName.Substring(3))) };
+            get {
+                int port;
+                return int.TryParse(_serialPort.PortName.Substring(3), out port)
+                    ? new[] {new HardwareMap(String.Format("Serial: {0}, {1}, {2}, {3}, {4}",
+                        _serialPort.PortName, 
+                        _serialPort.BaudRate, 
+                        _serialPort.DataBits,
+                        _serialPort.Parity,
+                        _serialPort.StopBits), port)}
+                    : new[] { new HardwareMap("None", 0) };
             }
         }
 
