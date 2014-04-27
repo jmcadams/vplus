@@ -14,7 +14,8 @@ namespace Controllers.Common {
             // 
             this.serialSetup1.Location = new System.Drawing.Point(13, 13);
             this.serialSetup1.Name = "serialSetup1";
-            this.serialSetup1.Size = new System.Drawing.Size(303, 144);
+            this.serialSetup1.SelectedPorts = null;
+            this.serialSetup1.Size = new System.Drawing.Size(306, 144);
             this.serialSetup1.TabIndex = 3;
             // 
             // SetupDialog
@@ -22,7 +23,7 @@ namespace Controllers.Common {
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.serialSetup1);
             this.Name = "SetupDialog";
-            this.Size = new System.Drawing.Size(366, 252);
+            this.Size = new System.Drawing.Size(335, 164);
             this.ResumeLayout(false);
 
         }

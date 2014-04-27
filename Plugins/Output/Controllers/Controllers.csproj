@@ -47,6 +47,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Controllers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -60,12 +61,6 @@
     </Compile>
     <Compile Include="Common\SerialSetup.Designer.cs">
       <DependentUpon>SerialSetup.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Common\SerialSetupDialog.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Common\SerialSetupDialog.Designer.cs">
-      <DependentUpon>SerialSetupDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Common\SetupDialog.cs">
       <SubType>UserControl</SubType>
@@ -104,11 +99,11 @@
       <DependentUpon>SetupForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GenericSerial\GenericSerial.cs" />
-    <Compile Include="GenericSerial\SetupDialog.cs">
-      <SubType>Form</SubType>
+    <Compile Include="GenericSerial\GenericSerialSetupDialog.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GenericSerial\SetupDialog.Designer.cs">
-      <DependentUpon>SetupDialog.cs</DependentUpon>
+    <Compile Include="GenericSerial\GenericSerialSetupDialog.Designer.cs">
+      <DependentUpon>GenericSerialSetupDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="IDMX\FTD2XX.cs" />
     <Compile Include="IDMX\IDMX.cs" />
@@ -152,17 +147,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Common\SerialSetupDialog.resx">
-      <DependentUpon>SerialSetupDialog.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="E131\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="E131\SetupForm.resx">
       <DependentUpon>SetupForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GenericSerial\SetupDialog.resx">
-      <DependentUpon>SetupDialog.cs</DependentUpon>
+    <EmbeddedResource Include="GenericSerial\GenericSerialSetupDialog.resx">
+      <DependentUpon>GenericSerialSetupDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Launcher\SetupDialog.resx">
       <DependentUpon>SetupDialog.cs</DependentUpon>

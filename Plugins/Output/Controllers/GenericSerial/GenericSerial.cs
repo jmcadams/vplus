@@ -13,10 +13,18 @@ namespace Controllers.GenericSerial {
         private byte[] _footer;
         private byte[] _header;
         private byte[] _packet;
+
+        private Control _dialog;
+
         private SerialPort _serialPort;
         private SetupData _setupData;
         private XmlNode _setupNode;
 
+        private const string PortNode = "name";
+        private const string BaudNode = "baud";
+        private const string ParityNode = "partity";
+        private const string DataNode = "data";
+        private const string StopNode = "stop";
 
         public void Event(byte[] channelValues) {
             channelValues.CopyTo(_packet, _header.Length);
@@ -58,13 +66,15 @@ namespace Controllers.GenericSerial {
 
 
         public Control Setup() {
-            using (var dialog = new DialogSerialSetup(_setupNode)) {
-                if (dialog.ShowDialog() == DialogResult.OK) {
-                    SetPort();
-                }
-            }
+            return _dialog ?? (_dialog = new GenericSerialSetupDialog { SelectedPort = _serialPort });
 
-            return null;
+            //using (var dialog = new DialogSerialSetup(_setupNode)) {
+            //    if (dialog.ShowDialog() == DialogResult.OK) {
+            //        SetPort();
+            //    }
+            //}
+
+            //return null;
         }
 
 
