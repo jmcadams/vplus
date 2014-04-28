@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.IO.Ports;
 using System.Text;
 using System.Windows.Forms;
@@ -14,7 +15,10 @@ namespace Controllers.GenericSerial {
         private byte[] _header;
         private byte[] _packet;
 
-        private Control _dialog;
+        private bool _headerChecked;
+        private bool _footerChecked;
+
+        private GenericSerialSetupDialog _dialog;
 
         private SerialPort _serialPort;
         private SetupData _setupData;
@@ -32,6 +36,7 @@ namespace Controllers.GenericSerial {
         }
 
 
+/*
         private byte[] GetBytes(string nodeName) {
             var nodeAlways = Xml.GetNodeAlways(_setupNode, nodeName);
             if (nodeAlways.Attributes != null &&
@@ -40,6 +45,7 @@ namespace Controllers.GenericSerial {
             }
             return new byte[0];
         }
+*/
 
 
         public void Initialize(IExecutable executableObject, SetupData setupData, XmlNode setupNode) {
@@ -60,35 +66,94 @@ namespace Controllers.GenericSerial {
                 StopBits = (StopBits) Enum.Parse(typeof (StopBits), _setupData.GetString(_setupNode, "StopBits", StopBits.One.ToString())),
                 Handshake = Handshake.None, Encoding = Encoding.UTF8
             };
-            _header = GetBytes("Header");
-            _footer = GetBytes("Footer");
+            var nodeAlways = Xml.GetNodeAlways(_setupNode, "Header");
+            _headerChecked = (nodeAlways.Attributes != null &&
+                              ((nodeAlways.Attributes["checked"] != null) &&
+                               (nodeAlways.Attributes["checked"].Value == bool.TrueString)));
+
+            _header = Encoding.ASCII.GetBytes(nodeAlways.InnerText);
+
+            nodeAlways = Xml.GetNodeAlways(_setupNode, "Footer");
+
+            _footerChecked = (nodeAlways.Attributes != null &&
+                              ((nodeAlways.Attributes["checked"] != null) &&
+                               (nodeAlways.Attributes["checked"].Value == bool.TrueString)));
+
+            _footer = Encoding.ASCII.GetBytes(nodeAlways.InnerText);
+
+            //_header = GetBytes("Header");
+            //_footer = GetBytes("Footer");
         }
 
 
         public Control Setup() {
-            return _dialog ?? (_dialog = new GenericSerialSetupDialog { SelectedPort = _serialPort });
-
-            //using (var dialog = new DialogSerialSetup(_setupNode)) {
-            //    if (dialog.ShowDialog() == DialogResult.OK) {
-            //        SetPort();
-            //    }
-            //}
-
-            //return null;
+            return _dialog ?? 
+                   (_dialog =
+                       new GenericSerialSetupDialog {
+                           SelectedPort = _serialPort,
+                           HeaderEnabled = _headerChecked,
+                           HeaderText = Encoding.Default.GetString(_header),
+                           FooterEnabled = _footerChecked,
+                           FooterText = Encoding.Default.GetString(_footer)
+                       });
         }
 
 
         public void GetSetup() {
+            if (null != _dialog) {
+                _serialPort = _dialog.SelectedPort;
+            }
+
+            while (_setupNode.ChildNodes.Count > 0) {
+                _setupNode.RemoveChild(_setupNode.ChildNodes[0]);
+            }
+
+            AppendChild(PortNode, _serialPort.PortName);
+            AppendChild(BaudNode, _serialPort.BaudRate.ToString(CultureInfo.InvariantCulture));
+            AppendChild(ParityNode, _serialPort.Parity.ToString());
+            AppendChild(DataNode, _serialPort.DataBits.ToString(CultureInfo.InvariantCulture));
+            AppendChild(StopNode, _serialPort.StopBits.ToString());
+
+            if (null == _dialog) {
+                return;
+            }
+
+            _headerChecked = _dialog.HeaderEnabled;
+            _header = Encoding.ASCII.GetBytes(_dialog.HeaderText);
+
+            _footerChecked = _dialog.FooterEnabled;
+            _footer = Encoding.ASCII.GetBytes(_dialog.FooterText);
+
+            Xml.SetAttribute(_setupNode, "Header", "checked", _headerChecked.ToString()).InnerText =
+                _dialog.HeaderText;
+            Xml.SetAttribute(_setupNode, "Footer", "checked", _footerChecked.ToString()).InnerText =
+                _dialog.FooterText;
         }
 
 
+
+        private void AppendChild(string key, string value) {
+            if (_setupNode.OwnerDocument == null) {
+                return;
+            }
+
+            var newChild = _setupNode.OwnerDocument.CreateElement(key);
+            newChild.InnerXml = value;
+            _setupNode.AppendChild(newChild);
+        }
+
         public void CloseSetup() {
-            throw new NotImplementedException();
+            if (_dialog == null) {
+                return;
+            }
+
+            _dialog.Dispose();
+            _dialog = null;
         }
 
 
         public bool SupportsLiveSetup() {
-            return false;
+            return true;
         }
 
 
@@ -128,7 +193,27 @@ namespace Controllers.GenericSerial {
         }
 
         public HardwareMap[] HardwareMap {
-            get { return new[] {new HardwareMap("Serial", int.Parse(_serialPort.PortName.Substring(3)))}; }
+            get {
+                int port;
+                var map = new StringBuilder();
+
+                if (int.TryParse(_serialPort.PortName.Substring(3), out port)) {
+
+                    map.Append(String.Format("Serial: {0}, {1}, {2}, {3}, {4}", _serialPort.PortName,
+                        _serialPort.BaudRate, _serialPort.DataBits, _serialPort.Parity, _serialPort.StopBits));
+                    if (_headerChecked) {
+                        map.Append("\nHeader: " + Encoding.Default.GetString(_header));
+                    }
+                    if (_footerChecked) {
+                        map.Append("\nFooter: " + Encoding.Default.GetString(_footer));
+                    }
+                }
+                else {
+                    map.Append("none");
+                }
+                
+                return new[] {new HardwareMap(map.ToString(), port)};
+            }
         }
 
         public string Name {

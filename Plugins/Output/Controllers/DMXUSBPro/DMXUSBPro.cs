@@ -15,7 +15,7 @@ namespace Controllers.DMXUSBPro
     [UsedImplicitly]
     public class DmxusbPro : IEventDrivenOutputPlugIn
     {
-        private Control _dialog;
+        private SetupDialog _dialog;
         private SerialPort _serialPort;
         private SetupData _setupData;
         private XmlNode _setupNode;
@@ -76,7 +76,7 @@ namespace Controllers.DMXUSBPro
 
         public void GetSetup() {
             if (null != _dialog) {
-                _serialPort = ((SetupDialog)_dialog).SelectedPort;
+                _serialPort = _dialog.SelectedPort;
             }
 
             while (_setupNode.ChildNodes.Count > 0) {

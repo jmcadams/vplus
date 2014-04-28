@@ -107,6 +107,7 @@ namespace VixenPlus.Dialogs
             this.colPlugInStartChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPlugInEndChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPlugInConfiguration = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPlugInSetup = new VixenPlus.Dialogs.DataGridViewDisableButtonColumn();
             this.gbSetup = new System.Windows.Forms.GroupBox();
             this.pSetup = new System.Windows.Forms.Panel();
             this.tpSortOrders = new System.Windows.Forms.TabPage();
@@ -122,7 +123,6 @@ namespace VixenPlus.Dialogs
             this.ttRoadie = new System.Windows.Forms.ToolTip(this.components);
             this.previewTimer = new System.Windows.Forms.Timer(this.components);
             this.dataGridViewDisableButtonColumn1 = new VixenPlus.Dialogs.DataGridViewDisableButtonColumn();
-            this.colPlugInSetup = new VixenPlus.Dialogs.DataGridViewDisableButtonColumn();
             this.gbProfiles.SuspendLayout();
             this.tcProfile.SuspendLayout();
             this.tpChannels.SuspendLayout();
@@ -958,6 +958,7 @@ namespace VixenPlus.Dialogs
             // 
             // cbAvailablePlugIns
             // 
+            this.cbAvailablePlugIns.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbAvailablePlugIns.FormattingEnabled = true;
             this.cbAvailablePlugIns.Location = new System.Drawing.Point(7, 328);
             this.cbAvailablePlugIns.Name = "cbAvailablePlugIns";
@@ -1016,7 +1017,7 @@ namespace VixenPlus.Dialogs
             this.colPlugInName.HeaderText = "Plug In Name";
             this.colPlugInName.Name = "colPlugInName";
             this.colPlugInName.ReadOnly = true;
-            this.colPlugInName.Width = 96;
+            this.colPlugInName.Width = 88;
             // 
             // colPlugInEnabled
             // 
@@ -1043,6 +1044,13 @@ namespace VixenPlus.Dialogs
             this.colPlugInConfiguration.HeaderText = "Current Configuration";
             this.colPlugInConfiguration.Name = "colPlugInConfiguration";
             this.colPlugInConfiguration.ReadOnly = true;
+            // 
+            // colPlugInSetup
+            // 
+            this.colPlugInSetup.HeaderText = "Setup";
+            this.colPlugInSetup.Name = "colPlugInSetup";
+            this.colPlugInSetup.ReadOnly = true;
+            this.colPlugInSetup.Text = "Setup";
             // 
             // gbSetup
             // 
@@ -1181,13 +1189,6 @@ namespace VixenPlus.Dialogs
             this.dataGridViewDisableButtonColumn1.Name = "dataGridViewDisableButtonColumn1";
             this.dataGridViewDisableButtonColumn1.ReadOnly = true;
             this.dataGridViewDisableButtonColumn1.Text = "Setup";
-            // 
-            // colPlugInSetup
-            // 
-            this.colPlugInSetup.HeaderText = "Setup";
-            this.colPlugInSetup.Name = "colPlugInSetup";
-            this.colPlugInSetup.ReadOnly = true;
-            this.colPlugInSetup.Text = "Setup";
             // 
             // VixenPlusRoadie
             // 
