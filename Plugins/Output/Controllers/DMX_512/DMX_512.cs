@@ -30,7 +30,7 @@ namespace Controllers.DMX_512
 
         public Control Setup()
         {
-            MessageBox.Show(@"This plugin only supports a single universe.\nNothing to setup.", @"DMX-512", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            //MessageBox.Show(@"This plugin only supports a single universe.\nNothing to setup.", @"DMX-512", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             
             return null;
         }
@@ -41,12 +41,11 @@ namespace Controllers.DMX_512
 
 
         public void CloseSetup() {
-            throw new System.NotImplementedException();
         }
 
 
         public bool SupportsLiveSetup() {
-            return false;
+            return true;
         }
 
 
@@ -96,10 +95,7 @@ namespace Controllers.DMX_512
 
         public HardwareMap[] HardwareMap
         {
-            get
-            {
-                return new HardwareMap[0];
-            }
+            get { return new[] { new HardwareMap(@"Only supports a single universe. Nothing to setup.", 0) }; }
         }
 
         public string Name

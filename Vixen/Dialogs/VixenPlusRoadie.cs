@@ -1710,6 +1710,10 @@ namespace VixenPlus.Dialogs {
 
             try {
                 var setup = plugIn.Setup();
+                if (null == setup) {
+                    return;
+                }
+
                 pSetup.Controls.Add(setup);
                 setup.Show();
             }
