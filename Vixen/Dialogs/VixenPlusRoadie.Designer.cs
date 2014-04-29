@@ -958,6 +958,7 @@ namespace VixenPlus.Dialogs
             // 
             // cbAvailablePlugIns
             // 
+            this.cbAvailablePlugIns.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbAvailablePlugIns.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbAvailablePlugIns.FormattingEnabled = true;
             this.cbAvailablePlugIns.Location = new System.Drawing.Point(7, 328);
@@ -967,6 +968,7 @@ namespace VixenPlus.Dialogs
             // 
             // btnRemovePlugIn
             // 
+            this.btnRemovePlugIn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnRemovePlugIn.Location = new System.Drawing.Point(617, 326);
             this.btnRemovePlugIn.Name = "btnRemovePlugIn";
             this.btnRemovePlugIn.Size = new System.Drawing.Size(75, 23);
@@ -977,6 +979,7 @@ namespace VixenPlus.Dialogs
             // 
             // btnAddPlugIn
             // 
+            this.btnAddPlugIn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnAddPlugIn.Location = new System.Drawing.Point(293, 326);
             this.btnAddPlugIn.Name = "btnAddPlugIn";
             this.btnAddPlugIn.Size = new System.Drawing.Size(75, 23);
@@ -990,6 +993,9 @@ namespace VixenPlus.Dialogs
             this.dgvPlugIns.AllowUserToAddRows = false;
             this.dgvPlugIns.AllowUserToDeleteRows = false;
             this.dgvPlugIns.AllowUserToOrderColumns = true;
+            this.dgvPlugIns.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvPlugIns.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dgvPlugIns.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPlugIns.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1054,16 +1060,20 @@ namespace VixenPlus.Dialogs
             // 
             // gbSetup
             // 
+            this.gbSetup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gbSetup.Controls.Add(this.pSetup);
             this.gbSetup.Location = new System.Drawing.Point(6, 355);
             this.gbSetup.Name = "gbSetup";
             this.gbSetup.Size = new System.Drawing.Size(958, 261);
             this.gbSetup.TabIndex = 33;
             this.gbSetup.TabStop = false;
-            this.gbSetup.Text = "Live Setup";
+            this.gbSetup.Text = "Inline Setup";
             // 
             // pSetup
             // 
+            this.pSetup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pSetup.Location = new System.Drawing.Point(0, 19);
             this.pSetup.Name = "pSetup";
             this.pSetup.Size = new System.Drawing.Size(958, 236);

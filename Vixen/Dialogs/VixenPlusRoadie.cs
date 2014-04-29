@@ -1642,7 +1642,7 @@ namespace VixenPlus.Dialogs {
                     n.Attributes["name"].Value, n.Attributes["enabled"].Value == "True", n.Attributes["from"].Value,
                     n.Attributes["to"].Value,
                     "unknown",
-                    p.SupportsLiveSetup() ? "Live Setup" : "Setup..."
+                    p.SupportsLiveSetup() ? "Inline Setup" : "Setup..."
                 });
             // ReSharper restore PossibleNullReferenceException
 
