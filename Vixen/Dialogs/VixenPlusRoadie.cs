@@ -212,7 +212,7 @@ namespace VixenPlus.Dialogs {
                         else {
                             var row =
                                 dgvChannels.Rows.Add(new object[] {
-                                    cols[ChannelEnabledCol] == "True", cols[ChannelNumCol].ToInt(), cols[ChannelNameCol],
+                                    cols[ChannelEnabledCol] == bool.TrueString, cols[ChannelNumCol].ToInt(), cols[ChannelNameCol],
                                     cols[OutputChannelCol].ToInt(), cols[ChannelColorCol]
                                 });
                             dgvChannels.Rows[row].DefaultCellStyle.BackColor = cols[ChannelColorCol].FromHTML();
@@ -322,7 +322,7 @@ namespace VixenPlus.Dialogs {
                 _contextProfile = null;
                 return;
             }
-            
+
             _contextProfile = (Profile) cbProfiles.SelectedItem;
 
             InitializeTabData();
@@ -1490,6 +1490,21 @@ namespace VixenPlus.Dialogs {
         private SetupData _setupData;
         private bool _internalUpdate;
 
+        private const string PlugInColSetup = "colPlugInSetup";
+        private const string PlugInColEnabled = "colPlugInEnabled";
+        private const string PlugInColStartCh = "colPlugInStartChannel";
+        private const string PlugInColEndCh = "colPlugInEndChannel";
+        private const string PlugInColConfig = "colPlugInConfiguration";
+
+        private const string PlugInAttrStartCh = "from";
+        private const string PlugInAttrEndCh = "to";
+        private const string PlugInAttrName = "name";
+        private const string PlugInAttrEnabled = "enabled";
+        private const string PlugInAttrId = "id";
+
+        private const string DefaultConfig = "n/a";
+        private const int DefaultChannel = 1;
+
 
         private void PluginListDialog(IExecutable executableObject) {
             _setupData = executableObject.PlugInData;
@@ -1514,7 +1529,7 @@ namespace VixenPlus.Dialogs {
             }
 
             cbAvailablePlugIns.Items.Clear();
-            cbAvailablePlugIns.Items.Add("Please select a plug in");
+            cbAvailablePlugIns.Items.Add("Please select a plug in to add");
             foreach (var plugin in hardwarePlugins) {
                 cbAvailablePlugIns.Items.Add(plugin.Name);
             }
@@ -1531,10 +1546,10 @@ namespace VixenPlus.Dialogs {
                     where attributes != null
                     select
                         new object[] {
-                            string.Format("{0} ({1}-{2})", attributes["name"].Value, attributes["from"].Value,
-                                attributes["to"].Value),
-                            bool.Parse(attributes["enabled"].Value),
-                            Convert.ToInt32(attributes["id"].Value)
+                            string.Format("{0} ({1}-{2})", attributes[PlugInAttrName].Value,
+                                attributes[PlugInAttrStartCh].Value, attributes[PlugInAttrEndCh].Value),
+                            bool.Parse(attributes[PlugInAttrEnabled].Value),
+                            Convert.ToInt32(attributes[PlugInAttrId].Value)
                         }).ToArray();
             }
         }
@@ -1565,8 +1580,8 @@ namespace VixenPlus.Dialogs {
                 _internalUpdate = true;
                 dgvPlugIns.Rows.Clear();
                 foreach (XmlNode node in _setupData.GetAllPluginData()) {
-                    var plugin = node.Attributes != null && (node.Attributes["name"] != null)
-                        ? OutputPlugins.FindPlugin(node.Attributes["name"].Value, true)
+                    var plugin = node.Attributes != null && (node.Attributes[PlugInAttrName] != null)
+                        ? OutputPlugins.FindPlugin(node.Attributes[PlugInAttrName].Value, true)
                         : null;
 
                     if (plugin != null) {
@@ -1597,7 +1612,7 @@ namespace VixenPlus.Dialogs {
             ClearSetup();
 
             var index = GetTagForRow(dgvPlugIns.SelectedCells[0].RowIndex);
-            
+
             _setupData.RemovePlugInData(index.ToString(CultureInfo.InvariantCulture));
             _sequencePlugins.RemoveAt(index);
             _internalUpdate = true;
@@ -1614,8 +1629,8 @@ namespace VixenPlus.Dialogs {
 
             var plugIn = OutputPlugins.FindPlugin(cbAvailablePlugIns.SelectedItem.ToString(), true);
             var node = _setupData.CreatePlugInData(plugIn);
-            Xml.SetAttribute(node, "from", "1");
-            Xml.SetAttribute(node, "to", _channels.Count.ToString(CultureInfo.InvariantCulture));
+            Xml.SetAttribute(node, PlugInAttrStartCh, DefaultChannel.ToString(CultureInfo.InvariantCulture));
+            Xml.SetAttribute(node, PlugInAttrEndCh, _channels.Count.ToString(CultureInfo.InvariantCulture));
             Cursor = Cursors.WaitCursor;
             try {
                 InitializePlugin(plugIn, node);
@@ -1636,17 +1651,17 @@ namespace VixenPlus.Dialogs {
             dgvPlugIns.SuspendLayout();
 
             var index = dgvPlugIns.Rows.Count;
-            
+
             var row =
                 dgvPlugIns.Rows.Add(new object[] {
-                    n.Attributes["name"].Value, n.Attributes["enabled"].Value == "True", n.Attributes["from"].Value,
-                    n.Attributes["to"].Value,
-                    "unknown",
+                    n.Attributes[PlugInAttrName].Value, n.Attributes[PlugInAttrEnabled].Value == bool.TrueString,
+                    n.Attributes[PlugInAttrStartCh].Value, n.Attributes[PlugInAttrEndCh].Value, DefaultConfig,
                     p.SupportsLiveSetup() ? "Inline Setup" : "Setup..."
                 });
             // ReSharper restore PossibleNullReferenceException
 
-            ((DataGridViewDisableButtonCell)dgvPlugIns.Rows[row].Cells["colPlugInSetup"]).Visible = !p.SupportsLiveSetup();
+            ((DataGridViewDisableButtonCell) dgvPlugIns.Rows[row].Cells[PlugInColSetup]).Visible =
+                !p.SupportsLiveSetup();
 
             dgvPlugIns.Rows[row].Tag = index;
             _sequencePlugins.Add(p);
@@ -1661,26 +1676,26 @@ namespace VixenPlus.Dialogs {
 
             var cell = dgvPlugIns.Rows[e.RowIndex].Cells[e.ColumnIndex];
             var value = cell.Value.ToString();
-            int res;
+            int channel;
 
             switch (cell.OwningColumn.Name) {
-                case "colPlugInEnabled":
-                    var enabled = dgvPlugIns.Rows[e.RowIndex].Cells["colPlugInEnabled"].Value.ToString();
-                    SetPlugInData(e.RowIndex, "enabled", enabled);
+                case PlugInColEnabled:
+                    var enabled = dgvPlugIns.Rows[e.RowIndex].Cells[PlugInColEnabled].Value.ToString();
+                    SetPlugInData(e.RowIndex, PlugInAttrEnabled, enabled);
                     break;
-                case "colPlugInStartChannel":
-                    if (!int.TryParse(value, out res) || res < 1) {
-                        res = 1;
-                        cell.Value = res;
+                case PlugInColStartCh:
+                    if (!int.TryParse(value, out channel) || channel < DefaultChannel) {
+                        channel = DefaultChannel;
+                        cell.Value = channel;
                     }
-                    SetPlugInData(e.RowIndex, "from", res.ToString(CultureInfo.InvariantCulture));
+                    SetPlugInData(e.RowIndex, PlugInAttrStartCh, channel.ToString(CultureInfo.InvariantCulture));
                     break;
-                case "colPlugInEndChannel":
-                    if (!int.TryParse(value, out res) || res > _channels.Count) {
-                        res = _channels.Count;
-                        cell.Value = res;
+                case PlugInColEndCh:
+                    if (!int.TryParse(value, out channel) || channel > _channels.Count) {
+                        channel = _channels.Count;
+                        cell.Value = channel;
                     }
-                    SetPlugInData(e.RowIndex, "to", res.ToString(CultureInfo.InvariantCulture));
+                    SetPlugInData(e.RowIndex, PlugInAttrEndCh, channel.ToString(CultureInfo.InvariantCulture));
                     break;
             }
         }
@@ -1694,6 +1709,7 @@ namespace VixenPlus.Dialogs {
 
         private int _lastRow = -1;
 
+
         private void dgvPlugIns_RowEnter(object sender, DataGridViewCellEventArgs e) {
             if (_internalUpdate || e.RowIndex == -1 || e.ColumnIndex == -1) {
                 return;
@@ -1703,7 +1719,7 @@ namespace VixenPlus.Dialogs {
 
             var plugIn = GetPluginForIndex(e.RowIndex);
             _lastRow = GetTagForRow(e.RowIndex);
-            
+
             if (!plugIn.SupportsLiveSetup()) {
                 return;
             }
@@ -1743,18 +1759,20 @@ namespace VixenPlus.Dialogs {
                 return;
             }
 
-            if (dgvPlugIns.Columns[e.ColumnIndex].Name != "colPlugInSetup" ||
-                !((DataGridViewDisableButtonCell) dgvPlugIns.Rows[e.RowIndex].Cells["colPlugInSetup"]).Visible) {
+            if (dgvPlugIns.Columns[e.ColumnIndex].Name != PlugInColSetup ||
+                !((DataGridViewDisableButtonCell) dgvPlugIns.Rows[e.RowIndex].Cells[PlugInColSetup]).Visible) {
                 return;
             }
 
             try {
                 GetPluginForIndex(e.RowIndex).Setup();
                 UpdateRowConfig(e.RowIndex);
-            } catch (Exception exception) {
+            }
+            catch (Exception exception) {
                 ShowSetupError(exception);
             }
         }
+
 
         private void dgvPlugIns_RowLeave(object sender, DataGridViewCellEventArgs e) {
             if (e.RowIndex == -1 || e.ColumnIndex == -1 || _internalUpdate) {
@@ -1778,14 +1796,14 @@ namespace VixenPlus.Dialogs {
         private void UpdateRowConfig(int rowIndex) {
             var row = dgvPlugIns.Rows[rowIndex];
             var p = GetPluginForIndex(rowIndex);
-            var config = "n/a";
+            var config = DefaultConfig;
 
             if (p.HardwareMap.Any()) {
                 config = p.HardwareMap.Aggregate("", (current, h) => current + (h.PortTypeName + Environment.NewLine));
                 config = config.Substring(0, config.Length - Environment.NewLine.Length);
             }
 
-            row.Cells["colPlugInConfiguration"].Value = config;
+            row.Cells[PlugInColConfig].Value = config;
         }
 
         #endregion

@@ -32,7 +32,7 @@ namespace VixenPlus.Dialogs
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.cbProfiles = new System.Windows.Forms.ComboBox();
             this.gbProfiles = new System.Windows.Forms.GroupBox();
             this.btnProfileSave = new System.Windows.Forms.Button();
@@ -958,18 +958,16 @@ namespace VixenPlus.Dialogs
             // 
             // cbAvailablePlugIns
             // 
-            this.cbAvailablePlugIns.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbAvailablePlugIns.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbAvailablePlugIns.FormattingEnabled = true;
-            this.cbAvailablePlugIns.Location = new System.Drawing.Point(7, 328);
+            this.cbAvailablePlugIns.Location = new System.Drawing.Point(7, 6);
             this.cbAvailablePlugIns.Name = "cbAvailablePlugIns";
             this.cbAvailablePlugIns.Size = new System.Drawing.Size(280, 21);
             this.cbAvailablePlugIns.TabIndex = 36;
             // 
             // btnRemovePlugIn
             // 
-            this.btnRemovePlugIn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnRemovePlugIn.Location = new System.Drawing.Point(617, 326);
+            this.btnRemovePlugIn.Location = new System.Drawing.Point(536, 5);
             this.btnRemovePlugIn.Name = "btnRemovePlugIn";
             this.btnRemovePlugIn.Size = new System.Drawing.Size(75, 23);
             this.btnRemovePlugIn.TabIndex = 18;
@@ -979,8 +977,7 @@ namespace VixenPlus.Dialogs
             // 
             // btnAddPlugIn
             // 
-            this.btnAddPlugIn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAddPlugIn.Location = new System.Drawing.Point(293, 326);
+            this.btnAddPlugIn.Location = new System.Drawing.Point(293, 5);
             this.btnAddPlugIn.Name = "btnAddPlugIn";
             this.btnAddPlugIn.Size = new System.Drawing.Size(75, 23);
             this.btnAddPlugIn.TabIndex = 17;
@@ -1005,11 +1002,11 @@ namespace VixenPlus.Dialogs
             this.colPlugInEndChannel,
             this.colPlugInConfiguration,
             this.colPlugInSetup});
-            this.dgvPlugIns.Location = new System.Drawing.Point(3, 6);
+            this.dgvPlugIns.Location = new System.Drawing.Point(6, 35);
             this.dgvPlugIns.MultiSelect = false;
             this.dgvPlugIns.Name = "dgvPlugIns";
             this.dgvPlugIns.RowHeadersVisible = false;
-            this.dgvPlugIns.Size = new System.Drawing.Size(967, 314);
+            this.dgvPlugIns.Size = new System.Drawing.Size(964, 314);
             this.dgvPlugIns.TabIndex = 35;
             this.dgvPlugIns.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPlugIns_CellClick);
             this.dgvPlugIns.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPlugIns_CellValueChanged);
@@ -1045,8 +1042,8 @@ namespace VixenPlus.Dialogs
             // colPlugInConfiguration
             // 
             this.colPlugInConfiguration.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colPlugInConfiguration.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colPlugInConfiguration.DefaultCellStyle = dataGridViewCellStyle2;
             this.colPlugInConfiguration.HeaderText = "Current Configuration";
             this.colPlugInConfiguration.Name = "colPlugInConfiguration";
             this.colPlugInConfiguration.ReadOnly = true;
@@ -1065,7 +1062,7 @@ namespace VixenPlus.Dialogs
             this.gbSetup.Controls.Add(this.pSetup);
             this.gbSetup.Location = new System.Drawing.Point(6, 355);
             this.gbSetup.Name = "gbSetup";
-            this.gbSetup.Size = new System.Drawing.Size(958, 261);
+            this.gbSetup.Size = new System.Drawing.Size(964, 261);
             this.gbSetup.TabIndex = 33;
             this.gbSetup.TabStop = false;
             this.gbSetup.Text = "Inline Setup";
@@ -1074,9 +1071,9 @@ namespace VixenPlus.Dialogs
             // 
             this.pSetup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pSetup.Location = new System.Drawing.Point(0, 19);
+            this.pSetup.Location = new System.Drawing.Point(6, 19);
             this.pSetup.Name = "pSetup";
-            this.pSetup.Size = new System.Drawing.Size(958, 236);
+            this.pSetup.Size = new System.Drawing.Size(952, 236);
             this.pSetup.TabIndex = 0;
             // 
             // tpSortOrders
