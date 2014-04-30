@@ -11,6 +11,7 @@
 //
 //		version 1.0.0.1 - 2 june 2010
 //      version 1.1.0.0 - 1 July 2013 - John McAdams for Vixen+
+//      version 1.2.0.0 - 1 May 2014 - John McAdams, fixed for Inline setup.
 //
 //=====================================================================
 
