@@ -108,7 +108,7 @@
     <Compile Include="IDMX\IDMX.cs" />
     <Compile Include="Launcher\Launcher.cs" />
     <Compile Include="Launcher\SetupDialog.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Launcher\SetupDialog.Designer.cs">
       <DependentUpon>SetupDialog.cs</DependentUpon>

@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Controllers.Launcher {
-    public partial class SetupDialog : Form {
+    public partial class SetupDialog : UserControl {
         private int _selectedIndex = -1;
-        
+
         private const int ColumnMargin = 8;
         private const int FileDialogWidth = 40;
         private const int TopMargin = 2;
 
-        private enum Cols {
-            Path = 0,
-            Params = 1,
-            Trigger = 2
-        }
+        private const int ColPath = 0;
+        private const int ColParams = 1;
+        private const int ColTrigger = 2;
+
 
         public SetupDialog(IEnumerable<string[]> programs) {
             InitializeComponent();
@@ -46,9 +45,9 @@ namespace Controllers.Launcher {
 
 
         private void listViewPrograms_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e) {
-            textBoxPath.Width = (listViewPrograms.Columns[(int)Cols.Path].Width - FileDialogWidth) + ColumnMargin;
-            textBoxParameters.Width = listViewPrograms.Columns[(int)Cols.Params].Width - ColumnMargin;
-            textBoxTriggerValue.Width = listViewPrograms.Columns[(int)Cols.Trigger].Width - ColumnMargin;
+            textBoxPath.Width = (listViewPrograms.Columns[ColPath].Width - FileDialogWidth) + ColumnMargin;
+            textBoxParameters.Width = listViewPrograms.Columns[ColParams].Width - ColumnMargin;
+            textBoxTriggerValue.Width = listViewPrograms.Columns[ColTrigger].Width - ColumnMargin;
         }
 
 
@@ -80,32 +79,41 @@ namespace Controllers.Launcher {
 
         private void SelectIndex(int index) {
             if (_selectedIndex != -1) {
-                listViewPrograms.Items[_selectedIndex].SubItems[(int)Cols.Path].Text = textBoxPath.Text;
-                listViewPrograms.Items[_selectedIndex].SubItems[(int)Cols.Params].Text = textBoxParameters.Text;
-                listViewPrograms.Items[_selectedIndex].SubItems[(int)Cols.Trigger].Text = textBoxTriggerValue.Text;
+                listViewPrograms.Items[_selectedIndex].SubItems[ColPath].Text = textBoxPath.Text;
+                listViewPrograms.Items[_selectedIndex].SubItems[ColParams].Text = textBoxParameters.Text;
+                listViewPrograms.Items[_selectedIndex].SubItems[ColTrigger].Text = textBoxTriggerValue.Text;
             }
+
             _selectedIndex = index;
+
             if (index >= 0) {
                 listViewPrograms.RedrawItems(index, index, false);
                 var item = listViewPrograms.Items[_selectedIndex];
+
                 buttonFileDialog.Top = item.Position.Y + listViewPrograms.Top;
                 buttonFileDialog.Visible = true;
+
                 textBoxPath.Top = TopMargin + buttonFileDialog.Top;
-                textBoxPath.Width = ((listViewPrograms.Columns[(int)Cols.Path].Width - FileDialogWidth) + ColumnMargin) + ColumnMargin / 2;
+                textBoxPath.Width = ((listViewPrograms.Columns[ColPath].Width - FileDialogWidth) + ColumnMargin) +
+                                    ColumnMargin/2;
                 textBoxPath.Left = buttonFileDialog.Right;
-                textBoxPath.Text = item.SubItems[(int)Cols.Path].Text;
+                textBoxPath.Text = item.SubItems[ColPath].Text;
                 textBoxPath.Visible = true;
+
                 textBoxParameters.Top = textBoxPath.Top;
-                textBoxParameters.Width = listViewPrograms.Columns[(int)Cols.Params].Width - ColumnMargin;
-                textBoxParameters.Left = (ColumnMargin + listViewPrograms.Columns[(int)Cols.Path].Width) + listViewPrograms.Left;
-                textBoxParameters.Text = item.SubItems[(int)Cols.Params].Text;
+                textBoxParameters.Width = listViewPrograms.Columns[ColParams].Width - ColumnMargin;
+                textBoxParameters.Left = (ColumnMargin + listViewPrograms.Columns[ColPath].Width) +
+                                         listViewPrograms.Left;
+                textBoxParameters.Text = item.SubItems[ColParams].Text;
                 textBoxParameters.Visible = true;
+
                 textBoxTriggerValue.Top = textBoxParameters.Top;
-                textBoxTriggerValue.Width = listViewPrograms.Columns[(int)Cols.Trigger].Width - ColumnMargin;
-                textBoxTriggerValue.Left = ((ColumnMargin + listViewPrograms.Columns[(int)Cols.Path].Width) + listViewPrograms.Columns[(int)Cols.Params].Width) +
-                                           listViewPrograms.Left;
-                textBoxTriggerValue.Text = item.SubItems[(int)Cols.Trigger].Text;
+                textBoxTriggerValue.Width = listViewPrograms.Columns[ColTrigger].Width - ColumnMargin;
+                textBoxTriggerValue.Left = ((ColumnMargin + listViewPrograms.Columns[ColPath].Width) +
+                                            listViewPrograms.Columns[ColParams].Width) + listViewPrograms.Left;
+                textBoxTriggerValue.Text = item.SubItems[ColTrigger].Text;
                 textBoxTriggerValue.Visible = true;
+
                 buttonRemove.Enabled = true;
             }
             else {
@@ -137,7 +145,8 @@ namespace Controllers.Launcher {
                 var strArray = new string[listViewPrograms.Items.Count][];
                 var index = 0;
                 foreach (ListViewItem item in listViewPrograms.Items) {
-                    strArray[index] = new[] { item.SubItems[(int)Cols.Path].Text, item.SubItems[(int)Cols.Params].Text, item.SubItems[(int)Cols.Trigger].Text };
+                    strArray[index] = new[]
+                    {item.SubItems[ColPath].Text, item.SubItems[ColParams].Text, item.SubItems[ColTrigger].Text};
                     index++;
                 }
                 return strArray;

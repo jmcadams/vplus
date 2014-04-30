@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -11,8 +13,11 @@ using VixenPlusCommon;
 using VixenPlusCommon.Annotations;
 
 namespace Controllers.Launcher {
+
     [UsedImplicitly]
     public class Launcher : IEventDrivenOutputPlugIn {
+        private SetupDialog _dialog;
+
         private XmlNode _setupNode;
         private readonly Dictionary<byte, string[]> _targets = new Dictionary<byte, string[]>();
 
@@ -46,46 +51,51 @@ namespace Controllers.Launcher {
 
             var num = 0;
             var programs = new string[programList.Count][];
-            foreach (XmlNode node in programList) {
-                if (node.Attributes == null) {
-                    continue;
-                }
-
+            foreach (var node in programList.Cast<XmlNode>().Where(node => node.Attributes != null)) {
+                // Already checked in the LINQ
+                // ReSharper disable PossibleNullReferenceException
                 programs[num++] = new[]
-                {node.InnerText, node.Attributes["params"].Value, node.Attributes["trigger"].Value};
-            }
-            var dialog = new SetupDialog(programs);
-            if (dialog.ShowDialog() != DialogResult.OK) {
-                return null;
+                    {node.InnerText, node.Attributes["params"].Value, node.Attributes["trigger"].Value};
+                // ReSharper restore PossibleNullReferenceException
             }
 
-            var contextNode = _setupNode.SelectSingleNode("Programs");
-            if (contextNode == null) {
-                return null;
-            }
-            contextNode.RemoveAll();
-            foreach (var parameters in dialog.Programs) {
-                var programNode = Xml.SetNewValue(contextNode, "Program", parameters[0]);
-                Xml.SetAttribute(programNode, "params", parameters[1]);
-                Xml.SetAttribute(programNode, "trigger", parameters[2]);
-            }
+            _dialog = new SetupDialog(programs);
 
-            return null;
+            return _dialog;
         }
 
 
         public void GetSetup() {
-            throw new NotImplementedException();
+            if (null == _dialog) {
+                return;
+            }
+
+            var contextNode = _setupNode.SelectSingleNode("Programs");
+            if (contextNode == null) {
+                return;
+            }
+
+            contextNode.RemoveAll();
+            foreach (var parameters in _dialog.Programs) {
+                var programNode = Xml.SetNewValue(contextNode, "Program", parameters[0]);
+                Xml.SetAttribute(programNode, "params", parameters[1]);
+                Xml.SetAttribute(programNode, "trigger", parameters[2]);
+            }
         }
 
 
         public void CloseSetup() {
-            throw new NotImplementedException();
+            if (_dialog == null) {
+                return;
+            }
+
+            _dialog.Dispose();
+            _dialog = null;
         }
 
 
         public bool SupportsLiveSetup() {
-            return false;
+            return true;
         }
 
 
@@ -132,7 +142,26 @@ namespace Controllers.Launcher {
         }
 
         public HardwareMap[] HardwareMap {
-            get { return new HardwareMap[0]; }
+            get {
+                var res = new HardwareMap[0];
+                var programList = _setupNode.SelectNodes("Programs/Program");
+
+                if (null != programList) {
+                    var config = new StringBuilder();
+                    foreach (var node in programList.Cast<XmlNode>().Where(node => node.Attributes != null)) {
+                        // Already checked in the LINQ
+                        // ReSharper disable PossibleNullReferenceException
+                        config.Append(string.Format("Launch '{0}' with '{1}' at {2}%", node.InnerText,
+                            node.Attributes["params"].Value, node.Attributes["trigger"].Value))
+                            .Append(Environment.NewLine);
+                        // ReSharper restore PossibleNullReferenceException
+                    }
+
+                    res = new[] {new HardwareMap(config.ToString(), 0)};
+                }
+
+                return res;
+            }
         }
 
         public string Name {
