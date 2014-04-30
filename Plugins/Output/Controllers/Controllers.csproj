@@ -91,11 +91,11 @@
     </Compile>
     <Compile Include="E131\J1Sys\MessageBeepClass.cs" />
     <Compile Include="E131\OutputPlugin.cs" />
-    <Compile Include="E131\SetupForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="E131\E131SetupForm.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="E131\SetupForm.Designer.cs">
-      <DependentUpon>SetupForm.cs</DependentUpon>
+    <Compile Include="E131\E131SetupForm.Designer.cs">
+      <DependentUpon>E131SetupForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GenericSerial\GenericSerial.cs" />
     <Compile Include="GenericSerial\GenericSerialSetupDialog.cs">
@@ -149,8 +149,8 @@
     <EmbeddedResource Include="E131\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="E131\SetupForm.resx">
-      <DependentUpon>SetupForm.cs</DependentUpon>
+    <EmbeddedResource Include="E131\E131SetupForm.resx">
+      <DependentUpon>E131SetupForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GenericSerial\GenericSerialSetupDialog.resx">
       <DependentUpon>GenericSerialSetupDialog.cs</DependentUpon>

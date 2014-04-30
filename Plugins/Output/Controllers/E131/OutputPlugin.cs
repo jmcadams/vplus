@@ -96,6 +96,8 @@ namespace Controllers.E131 {
         public Int64 SlotCount; // slot count
 
 
+
+
         public UniverseEntry(int rowNum, bool active, int universe, int start, int size, string unicast, string multicast, int ttl) {
             RowNum = rowNum;
             Active = active;
@@ -205,6 +207,9 @@ namespace Controllers.E131 {
         // plugin information supplied by vixen (by xml)
         private int _pluginChannelsFrom;
         private int _pluginChannelsTo;
+
+        // there are for the Inline plugin architechure for Vixen+
+        private E131SetupForm _dialog;
 
         public OutputPlugin() {}
 
@@ -482,95 +487,102 @@ namespace Controllers.E131 {
 
         public Control Setup() {
             // define/create objects
-            using (var setupForm = new SetupForm()) {
+            _dialog = new E131SetupForm();
 
-                // reload all of our xml into working objects
-                LoadSetupNodeInfo();
+            // reload all of our xml into working objects
+            LoadSetupNodeInfo();
 
-                // if our channels from/to are setup then tell the setupForm
-                if (_pluginChannelsFrom != 0 && _pluginChannelsTo != 0) {
-                    setupForm.PluginChannelCount = _pluginChannelsTo - _pluginChannelsFrom + 1;
-                }
-
-                // for each universe add it to setup form
-                foreach (var uE in _universeTable) {
-                    setupForm.UniverseAdd(uE.Active, uE.Universe, uE.Start + 1, uE.Size, uE.Unicast, uE.Multicast, uE.Ttl);
-                }
-
-                setupForm.WarningsOption = _warningsOption;
-                setupForm.StatisticsOption = _statisticsOption;
-                setupForm.EventRepeatCount = _eventRepeatCount;
-
-                if (setupForm.ShowDialog() != DialogResult.OK) {
-                    return null;
-                }
-                // first get rid of our old children
-                while (_setupNode.ChildNodes.Count > 0) {
-                    _setupNode.RemoveChild(_setupNode.ChildNodes[0]);
-                }
-
-                // add the Guid child
-                if (_setupNode.OwnerDocument != null) {
-                    var newChild = _setupNode.OwnerDocument.CreateElement("Guid");
-                    newChild.SetAttribute("id", _guid.ToString());
-                    _setupNode.AppendChild(newChild);
-
-                    // add the Options child
-                    // ReSharper disable PossibleNullReferenceException
-                    newChild = _setupNode.OwnerDocument.CreateElement("Options");
-                    // ReSharper restore PossibleNullReferenceException
-                    newChild.SetAttribute("warnings", setupForm.WarningsOption.ToString());
-                    newChild.SetAttribute("statistics", setupForm.StatisticsOption.ToString());
-                    newChild.SetAttribute("eventRepeatCount", setupForm.EventRepeatCount.ToString(CultureInfo.InvariantCulture));
-                    _setupNode.AppendChild(newChild);
-
-                    // add each of the universes as a child
-                    for (var i = 0; i < setupForm.UniverseCount; i++) {
-                        var active = true;
-                        var universe = 0;
-                        var start = 0;
-                        var size = 0;
-                        var unicast = string.Empty;
-                        var multicast = string.Empty;
-                        var ttl = 0;
-
-                        if (!setupForm.UniverseGet(i, ref active, ref universe, ref start, ref size, ref unicast, ref multicast, ref ttl)) {
-                            continue;
-                        }
-                        // ReSharper disable PossibleNullReferenceException
-                        newChild = _setupNode.OwnerDocument.CreateElement("Universe");
-                        // ReSharper restore PossibleNullReferenceException
-
-                        newChild.SetAttribute("active", active.ToString());
-                        newChild.SetAttribute("number", universe.ToString(CultureInfo.InvariantCulture));
-                        newChild.SetAttribute("start", start.ToString(CultureInfo.InvariantCulture));
-                        newChild.SetAttribute("size", size.ToString(CultureInfo.InvariantCulture));
-                        if (unicast != null) newChild.SetAttribute("unicast", unicast);
-                        else if (multicast != null) newChild.SetAttribute("multicast", multicast);
-                        newChild.SetAttribute("ttl", ttl.ToString(CultureInfo.InvariantCulture));
-
-                        _setupNode.AppendChild(newChild);
-                    }
-                }
-
-                // update in memory table to match xml
-                LoadSetupNodeInfo();
+            // if our channels from/to are setup then tell the setupForm
+            if (_pluginChannelsFrom != 0 && _pluginChannelsTo != 0) {
+                _dialog.PluginChannelCount = _pluginChannelsTo - _pluginChannelsFrom + 1;
             }
 
-            return null;
+            // for each universe add it to setup form
+            foreach (var uE in _universeTable) {
+                _dialog.UniverseAdd(uE.Active, uE.Universe, uE.Start + 1, uE.Size, uE.Unicast, uE.Multicast, uE.Ttl);
+            }
+
+            _dialog.WarningsOption = _warningsOption;
+            _dialog.StatisticsOption = _statisticsOption;
+            _dialog.EventRepeatCount = _eventRepeatCount;
+
+
+            return _dialog;
         }
 
 
         public void GetSetup() {
+            // first get rid of our old children
+            while (_setupNode.ChildNodes.Count > 0) {
+                _setupNode.RemoveChild(_setupNode.ChildNodes[0]);
+            }
+
+            // add the Guid child
+            if (_setupNode.OwnerDocument != null) {
+                var newChild = _setupNode.OwnerDocument.CreateElement("Guid");
+                newChild.SetAttribute("id", _guid.ToString());
+                _setupNode.AppendChild(newChild);
+
+                // add the Options child
+                // ReSharper disable PossibleNullReferenceException
+                newChild = _setupNode.OwnerDocument.CreateElement("Options");
+                // ReSharper restore PossibleNullReferenceException
+                newChild.SetAttribute("warnings", _dialog.WarningsOption.ToString());
+                newChild.SetAttribute("statistics", _dialog.StatisticsOption.ToString());
+                newChild.SetAttribute("eventRepeatCount",
+                    _dialog.EventRepeatCount.ToString(CultureInfo.InvariantCulture));
+                _setupNode.AppendChild(newChild);
+
+                // add each of the universes as a child
+                for (var i = 0; i < _dialog.UniverseCount; i++) {
+                    var active = true;
+                    var universe = 0;
+                    var start = 0;
+                    var size = 0;
+                    var unicast = string.Empty;
+                    var multicast = string.Empty;
+                    var ttl = 0;
+
+                    if (
+                        !_dialog.UniverseGet(i, ref active, ref universe, ref start, ref size, ref unicast,
+                            ref multicast, ref ttl)) {
+                        continue;
+                    }
+                    // ReSharper disable PossibleNullReferenceException
+                    newChild = _setupNode.OwnerDocument.CreateElement("Universe");
+                    // ReSharper restore PossibleNullReferenceException
+
+                    newChild.SetAttribute("active", active.ToString());
+                    newChild.SetAttribute("number", universe.ToString(CultureInfo.InvariantCulture));
+                    newChild.SetAttribute("start", start.ToString(CultureInfo.InvariantCulture));
+                    newChild.SetAttribute("size", size.ToString(CultureInfo.InvariantCulture));
+                    if (unicast != null)
+                        newChild.SetAttribute("unicast", unicast);
+                    else if (multicast != null)
+                        newChild.SetAttribute("multicast", multicast);
+                    newChild.SetAttribute("ttl", ttl.ToString(CultureInfo.InvariantCulture));
+
+                    _setupNode.AppendChild(newChild);
+                }
+            }
+
+            // update in memory table to match xml
+            LoadSetupNodeInfo();
         }
 
 
         public void CloseSetup() {
+            if (_dialog == null) {
+                return;
+            }
+
+            _dialog.Dispose();
+            _dialog = null;
         }
 
 
         public bool SupportsLiveSetup() {
-            return false;
+            return true;
         }
 
 

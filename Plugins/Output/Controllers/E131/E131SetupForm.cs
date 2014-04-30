@@ -1,6 +1,6 @@
 ﻿//=====================================================================
 //
-//	SetupForm.cs - the setup dialog form
+//	E131SetupForm.cs - the setup dialog form
 //
 //		version 1.0.0.1 - 2 june 2010
 //
@@ -51,7 +51,7 @@ using Controllers.E131.Controls;
 using Controllers.E131.J1Sys;
 
 namespace Controllers.E131 {
-    public partial class SetupForm : Form {
+    public partial class E131SetupForm : UserControl {
         // column indexes - must be changed if column addrange code is changed
         // could refactor to a variable and initialize it at column add time
         // but then it wouldn't work well with switch/case code
@@ -82,13 +82,13 @@ namespace Controllers.E131 {
 
         //-------------------------------------------------------------
         //
-        //	SetupForm() - our constructor
+        //	E131SetupForm() - our constructor
         //
         //		build some nic tables and initialize the component
         //
         //-------------------------------------------------------------
 
-        public SetupForm() {
+        public E131SetupForm() {
             // first build some sorted lists and dictionaries for the nics
 
             // get all the nics
@@ -112,18 +112,17 @@ namespace Controllers.E131 {
 
             InitializeComponent();
             okButton.Location = new Point(ClientSize.Width / 2 - okButton.Width - 10, ClientSize.Height - okButton.Height - 25);
-            cancelButton.Location = new Point(ClientSize.Width / 2 + 10, ClientSize.Height - cancelButton.Height - 25);
             rowManipulationContextMenuStrip.Items.Add("Insert Row", null, new EventHandler(univDGVN_InsertRow));
             rowManipulationContextMenuStrip.Items.Add("Delete Row", null, new EventHandler(univDGVN_DeleteRow));
             rowManipulationContextMenuStrip.Items.Add("-");
             rowManipulationContextMenuStrip.Items.Add("Move Row Up", null, new EventHandler(univDGVN_MoveRowUp));
             rowManipulationContextMenuStrip.Items.Add("Move Row Down", null, new EventHandler(univDGVN_MoveRowDown)); var mIHelpAbout = new MenuItem("&About J1Sys E1.31...", Help.AboutClick);
-            var mIHelpShowSys = new MenuItem("&Show System Info", Help.ShowSysClick);
-            var mIHelp = new MenuItem("&Help", new[] {mIHelpAbout, mIHelpShowSys});
+            //var mIHelpShowSys = new MenuItem("&Show System Info", Help.ShowSysClick);
+            //var mIHelp = new MenuItem("&Help", new[] {mIHelpAbout, mIHelpShowSys});
 
-            var mainMenu = new MainMenu(new[] {mIHelp});
+            //var mainMenu = new MainMenu(new[] {mIHelp});
 
-            Menu = mainMenu;
+            //Menu = mainMenu;
             SetDestinations();
         }
 
@@ -404,8 +403,8 @@ namespace Controllers.E131 {
             if (!valid) {
                 return;
             }
-            DialogResult = DialogResult.OK;
-            Close();
+            //DialogResult = DialogResult.OK;
+            //Close();
         }
 
 
@@ -870,6 +869,14 @@ namespace Controllers.E131 {
 
                 Application.DoEvents();
             }
+        }
+
+        private void btnAbout_Click(object sender, EventArgs e) {
+            Help.AboutClick(sender, e);
+        }
+
+        private void btnSysInfo_Click(object sender, EventArgs e) {
+            Help.ShowSysClick(sender, e);
         }
     }
 }
