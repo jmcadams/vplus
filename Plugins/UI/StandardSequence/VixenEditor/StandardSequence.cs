@@ -4962,12 +4962,6 @@ namespace VixenEditor {
         }
 
         private void tsbNutcracker_Click(object sender, EventArgs e) {
-            // disabled!
-            /* 
-            if (!tsbNutcracker.Enabled) {
-                return;
-            }
-            */
             using (var nce = new NutcrackerControlDialog(_sequence, _selectedRange)) {
                 if (nce.ShowDialog() != DialogResult.OK) {
                     return;
@@ -4990,10 +4984,6 @@ namespace VixenEditor {
                 pictureBoxGrid.Invalidate();
             }
              /* */
-        }
-
-        private void tsbNutcracker_DoubleClick(object sender, EventArgs e) {
-            //MessageBox.Show(@"Patience Grasshopper!\nClara is fine.");
         }
 
 

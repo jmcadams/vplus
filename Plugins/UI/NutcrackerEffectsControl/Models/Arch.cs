@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -131,21 +132,25 @@ namespace Nutcracker.Models {
         private void SetArchCoord() {
             var nodeCount = _cols * _rows;
 
+            const double radius = 50;
+            const double twoPi = Math.PI*2;
+            var angleStep = 0.5d/(_rows - 1);
+
+            var centerX = pbPreview.Size.Width/2;
+            var centerY = pbPreview.Size.Height/2;
+
             //var idx = IsLtoR ? 0 : nodeCount - 1;
             //SetRenderSize(parm2,NodeCount*2);
-            double midpt = _rows;
             var angleIncr = Math.PI / _rows;
-            for (var ns = 0; ns < _cols; ns++) {
-                var angle = -1.0 * Math.PI / 2.0;
-                var xoffset = ns * _rows * 2 - nodeCount;
-                for (var x = 0; x < _rows; x++) {
-                    var ptX = xoffset + (int)Math.Floor(midpt * Math.Sin(angle) + midpt) + nodeCount;
-                    var ptY = (int) Math.Floor(midpt * Math.Cos(angle) + 0.5);
-                    //System.Diagnostics.Debug.Print("X:{0}, Y:{1}", ptX, ptY);
-                    _nodes[x, ns].Model = new Point(ptX, ptY);
-                    angle += angleIncr;
-                    //idx+=incr;
-                }
+            for (var ns = 0; ns < _rows; ns++) {
+                var angle = 0.5d + ns * angleStep;
+                //var xoffset = ns * _rows * 2 - nodeCount;
+                //for (var x = 0; x < _rows; x++) {
+                    var ptX = centerX + (int)Math.Floor(Math.Cos(angle * twoPi) * radius);
+                    var ptY = centerY + (int)Math.Floor(Math.Sin(angle * twoPi) * radius);
+                    _nodes[ns, 0].Model = new Point(ptX, ptY);
+                    //angle += angleIncr;
+                //}
             }
         }
 

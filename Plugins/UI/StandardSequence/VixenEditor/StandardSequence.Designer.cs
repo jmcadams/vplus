@@ -831,8 +831,8 @@ namespace VixenEditor{
             // insertPasteToolStripMenuItem
             // 
             this.insertPasteToolStripMenuItem.Name = "insertPasteToolStripMenuItem";
-            this.insertPasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
-                        | System.Windows.Forms.Keys.V)));
+            this.insertPasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.V)));
             this.insertPasteToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.insertPasteToolStripMenuItem.ToolTipText = "Insert paste (Ctrl-Shift-V)";
             this.insertPasteToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonInsertPaste_Click);
@@ -968,8 +968,8 @@ namespace VixenEditor{
             // clearAllToolStripMenuItem
             // 
             this.clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
-            this.clearAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
-                        | System.Windows.Forms.Keys.A)));
+            this.clearAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.A)));
             this.clearAllToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.clearAllToolStripMenuItem.Text = "Clear all";
             this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearAllToolStripMenuItem_Click);
@@ -1285,11 +1285,11 @@ namespace VixenEditor{
             // toolStripContainer1.ContentPanel
             // 
             this.toolStripContainer1.ContentPanel.Controls.Add(this.splitContainer1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(976, 219);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(976, 243);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStripContainer1.Location = new System.Drawing.Point(0, 24);
+            this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(976, 515);
+            this.toolStripContainer1.Size = new System.Drawing.Size(976, 539);
             this.toolStripContainer1.TabIndex = 1;
             this.toolStripContainer1.Text = "toolStripContainer1";
             // 
@@ -1318,7 +1318,7 @@ namespace VixenEditor{
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(976, 219);
+            this.splitContainer1.Size = new System.Drawing.Size(976, 243);
             this.splitContainer1.SplitterDistance = 175;
             this.splitContainer1.TabIndex = 20;
             this.splitContainer1.SplitterMoving += new System.Windows.Forms.SplitterCancelEventHandler(this.splitContainer1_SplitterMoving);
@@ -1337,8 +1337,8 @@ namespace VixenEditor{
             // 
             // labelPosition
             // 
-            this.labelPosition.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelPosition.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labelPosition.BackColor = System.Drawing.Color.Transparent;
             this.labelPosition.Location = new System.Drawing.Point(12, 9);
             this.labelPosition.Name = "labelPosition";
@@ -1353,7 +1353,7 @@ namespace VixenEditor{
             this.pictureBoxChannels.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxChannels.Location = new System.Drawing.Point(0, 0);
             this.pictureBoxChannels.Name = "pictureBoxChannels";
-            this.pictureBoxChannels.Size = new System.Drawing.Size(175, 219);
+            this.pictureBoxChannels.Size = new System.Drawing.Size(175, 243);
             this.pictureBoxChannels.TabIndex = 11;
             this.pictureBoxChannels.TabStop = false;
             this.pictureBoxChannels.DragDrop += new System.Windows.Forms.DragEventHandler(this.pictureBoxChannels_DragDrop);
@@ -1489,7 +1489,7 @@ namespace VixenEditor{
             this.splitContainer2.Panel2.Controls.Add(this.pictureBoxGrid);
             this.splitContainer2.Panel2.Controls.Add(this.vScrollBar1);
             this.splitContainer2.Panel2.Controls.Add(this.hScrollBar1);
-            this.splitContainer2.Size = new System.Drawing.Size(797, 219);
+            this.splitContainer2.Size = new System.Drawing.Size(797, 243);
             this.splitContainer2.SplitterDistance = 60;
             this.splitContainer2.TabIndex = 5;
             this.splitContainer2.TabStop = false;
@@ -1559,7 +1559,7 @@ namespace VixenEditor{
             this.pictureBoxGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxGrid.Location = new System.Drawing.Point(0, 0);
             this.pictureBoxGrid.Name = "pictureBoxGrid";
-            this.pictureBoxGrid.Size = new System.Drawing.Size(780, 138);
+            this.pictureBoxGrid.Size = new System.Drawing.Size(780, 162);
             this.pictureBoxGrid.TabIndex = 5;
             this.pictureBoxGrid.TabStop = false;
             this.pictureBoxGrid.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxGrid_Paint);
@@ -1921,14 +1921,14 @@ namespace VixenEditor{
             this.vScrollBar1.Dock = System.Windows.Forms.DockStyle.Right;
             this.vScrollBar1.Location = new System.Drawing.Point(780, 0);
             this.vScrollBar1.Name = "vScrollBar1";
-            this.vScrollBar1.Size = new System.Drawing.Size(17, 138);
+            this.vScrollBar1.Size = new System.Drawing.Size(17, 162);
             this.vScrollBar1.TabIndex = 4;
             this.vScrollBar1.ValueChanged += new System.EventHandler(this.vScrollBar1_ValueChanged);
             // 
             // hScrollBar1
             // 
             this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.hScrollBar1.Location = new System.Drawing.Point(0, 138);
+            this.hScrollBar1.Location = new System.Drawing.Point(0, 162);
             this.hScrollBar1.Name = "hScrollBar1";
             this.hScrollBar1.Size = new System.Drawing.Size(797, 17);
             this.hScrollBar1.TabIndex = 3;
@@ -2293,7 +2293,7 @@ namespace VixenEditor{
             this.toolStripButtonChangeIntensity});
             this.toolStripEffect.Location = new System.Drawing.Point(3, 110);
             this.toolStripEffect.Name = "toolStripEffect";
-            this.toolStripEffect.Size = new System.Drawing.Size(954, 55);
+            this.toolStripEffect.Size = new System.Drawing.Size(973, 55);
             this.toolStripEffect.TabIndex = 3;
             this.toolStripEffect.Text = "Effects";
             // 
@@ -2441,14 +2441,12 @@ namespace VixenEditor{
             // 
             this.tsbNutcracker.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tsbNutcracker.DoubleClickEnabled = true;
-            this.tsbNutcracker.Enabled = false;
             this.tsbNutcracker.Image = ((System.Drawing.Image)(resources.GetObject("tsbNutcracker.Image")));
             this.tsbNutcracker.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbNutcracker.Name = "tsbNutcracker";
             this.tsbNutcracker.Size = new System.Drawing.Size(52, 52);
             this.tsbNutcracker.ToolTipText = "Nutcracker (N)";
             this.tsbNutcracker.Click += new System.EventHandler(this.tsbNutcracker_Click);
-            this.tsbNutcracker.DoubleClick += new System.EventHandler(this.tsbNutcracker_DoubleClick);
             // 
             // toolStripSeparator16
             // 
