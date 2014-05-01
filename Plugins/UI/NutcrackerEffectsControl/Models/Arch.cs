@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -16,7 +15,7 @@ namespace Nutcracker.Models {
         private int _rows;
         private int _cols; 
         private NutcrackerNodes[,] _nodes;
-        private const int XyOffset = 5; 
+        private const int XyOffset = 2; 
 
         public Arch() {
             InitializeComponent();
@@ -28,7 +27,7 @@ namespace Nutcracker.Models {
         }
 
         public string Notes {
-            get { return "Broken! WILL CAUSE A CRASH!"; }
+            get { return "Define up to 10 arches"; }
         }
 
 /*
@@ -46,10 +45,10 @@ namespace Nutcracker.Models {
         public bool IsLtoR { private get; set; }
 
 
-        private void DrawPreview() {
-            using (var g = pbPreview.CreateGraphics()) {
+        private void DrawPreview(Control ctrl) {
+            using (var g = ctrl.CreateGraphics()) {
                 g.Clear(Color.Black);
-                var b = new Bitmap(pbPreview.Width, pbPreview.Height, g);
+                var b = new Bitmap(ctrl.Width, ctrl.Height, g);
                 for (var row = 0; row < _rows; row++) {
                     for (var col = 0; col < _cols; col++) {
                         b.SetPixel(_nodes[row, col].Model.X, _nodes[row, col].Model.Y, Color.White);
@@ -129,28 +128,25 @@ namespace Nutcracker.Models {
 //
 
         // Set screen coordinates for arches
-        private void SetArchCoord() {
-            var nodeCount = _cols * _rows;
+        private void SetArchCoord(Control ctrl) {
+            var radius = ((ctrl.Size.Width / 2) - (XyOffset * 2)) / _cols;
+            const double twoPi = Math.PI * 2;
+            var angleStep = 0.5d / (_rows - 1);
 
-            const double radius = 50;
-            const double twoPi = Math.PI*2;
-            var angleStep = 0.5d/(_rows - 1);
+            var centerX = radius;
+            var centerY = ctrl.Size.Height - (radius / 2) + XyOffset;
 
-            var centerX = pbPreview.Size.Width/2;
-            var centerY = pbPreview.Size.Height/2;
-
-            //var idx = IsLtoR ? 0 : nodeCount - 1;
+            //var idx = IsLtoR ? 1 : -1;
             //SetRenderSize(parm2,NodeCount*2);
-            var angleIncr = Math.PI / _rows;
-            for (var ns = 0; ns < _rows; ns++) {
-                var angle = 0.5d + ns * angleStep;
-                //var xoffset = ns * _rows * 2 - nodeCount;
-                //for (var x = 0; x < _rows; x++) {
-                    var ptX = centerX + (int)Math.Floor(Math.Cos(angle * twoPi) * radius);
-                    var ptY = centerY + (int)Math.Floor(Math.Sin(angle * twoPi) * radius);
-                    _nodes[ns, 0].Model = new Point(ptX, ptY);
-                    //angle += angleIncr;
-                //}
+            for (var c = 0; c < _cols; c++) {
+                for (var ns = 0; ns < _rows; ns++) {
+                    var angle = 0.5d + ns * angleStep;
+                    var ptX = centerX + (int) Math.Floor(Math.Cos(angle * twoPi) * radius);
+                    var ptY = centerY + (int) Math.Floor(Math.Sin(angle * twoPi) * radius);
+                    //Debug.Print("X:{0:000} Y:{1:000} A:{2}", ptX, ptY, angle);
+                    _nodes[ns, c].Model = new Point(ptX, ptY);
+                }
+                centerX += radius * 2;
             }
         }
 
@@ -158,8 +154,8 @@ namespace Nutcracker.Models {
         private void control_ValueChanged(object sender, EventArgs e)
         {
             ResetNodes();
-            SetArchCoord();
-            DrawPreview();
+            SetArchCoord(pbPreview);
+            DrawPreview(pbPreview);
         }
     }
 }

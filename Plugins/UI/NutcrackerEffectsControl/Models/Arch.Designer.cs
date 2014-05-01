@@ -68,6 +68,11 @@
             // nudArchCount
             // 
             this.nudArchCount.Location = new System.Drawing.Point(276, 20);
+            this.nudArchCount.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             this.nudArchCount.Minimum = new decimal(new int[] {
             1,
             0,
