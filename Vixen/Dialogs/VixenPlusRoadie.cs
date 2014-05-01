@@ -1794,16 +1794,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void UpdateRowConfig(int rowIndex) {
-            var row = dgvPlugIns.Rows[rowIndex];
-            var p = GetPluginForIndex(rowIndex);
-            var config = DefaultConfig;
-
-            if (p.HardwareMap.Any()) {
-                config = p.HardwareMap.Aggregate("", (current, h) => current + (h.PortTypeName + Environment.NewLine));
-                config = config.Substring(0, config.Length - Environment.NewLine.Length);
-            }
-
-            row.Cells[PlugInColConfig].Value = config;
+            dgvPlugIns.Rows[rowIndex].Cells[PlugInColConfig].Value = GetPluginForIndex(rowIndex).HardwareMap ?? DefaultConfig;
         }
 
         #endregion

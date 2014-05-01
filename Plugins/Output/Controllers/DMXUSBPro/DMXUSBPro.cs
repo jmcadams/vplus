@@ -161,18 +161,17 @@ namespace Controllers.DMXUSBPro
             }
         }
 
-        public HardwareMap[] HardwareMap
+        public string HardwareMap
         {
             get {
                 int port;
                 return int.TryParse(_serialPort.PortName.Substring(3), out port)
-                    ? new[] {new HardwareMap(String.Format("Serial: {0}, {1}, {2}, {3}, {4}",
+                    ? String.Format("Serial: {0}, {1}, {2}, {3}, {4}",
                         _serialPort.PortName, 
                         _serialPort.BaudRate, 
                         _serialPort.DataBits,
                         _serialPort.Parity,
-                        _serialPort.StopBits), port)}
-                    : new[] { new HardwareMap("None", 0) };
+                        _serialPort.StopBits) : null;
             }
         }
 

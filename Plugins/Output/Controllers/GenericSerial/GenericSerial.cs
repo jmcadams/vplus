@@ -192,7 +192,7 @@ namespace Controllers.GenericSerial {
             get { return "Generic serial output plugin"; }
         }
 
-        public HardwareMap[] HardwareMap {
+        public string HardwareMap {
             get {
                 int port;
                 var map = new StringBuilder();
@@ -211,8 +211,8 @@ namespace Controllers.GenericSerial {
                 else {
                     map.Append("none");
                 }
-                
-                return new[] {new HardwareMap(map.ToString(), port)};
+
+                return map.ToString();
             }
         }
 

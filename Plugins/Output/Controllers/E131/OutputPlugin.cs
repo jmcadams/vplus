@@ -444,24 +444,15 @@ namespace Controllers.E131 {
         //
         //-------------------------------------------------------------
 
-        public HardwareMap[] HardwareMap {
+        public string HardwareMap {
             get {
-                // define objects
-                var activeCnt = _universeTable.Where(uE => uE.Active).Count(uE => uE.Unicast != null || uE.Multicast != null);
-
-                // find how many active universes we have
-
-                // create a HardwareMap array to match active count
-                var hardwareMap = new HardwareMap[activeCnt];
-
-                // reset count to use as an index
-                activeCnt = 0;
+                var hardwareMap = new StringBuilder();
 
                 // build the table for each active universe
                 foreach (var uE in _universeTable.Where(uE => uE.Active)) {
                     // unicast is pretty straight forward
                     if (uE.Unicast != null) {
-                        hardwareMap[activeCnt++] = new HardwareMap("Universes (E1.31) Unicast >> " + uE.Unicast, uE.Universe);
+                        hardwareMap.Append("Universes (E1.31) Unicast >> " + uE.Unicast);
                     }
 
                         // multicast has to check for valid nic Id in case hardware has changed
@@ -470,11 +461,12 @@ namespace Controllers.E131 {
 
                         if (_nicTable.ContainsKey(uE.Multicast)) nicName = _nicTable[uE.Multicast].Name;
 
-                        hardwareMap[activeCnt++] = new HardwareMap("Universes (E1.31) Multicast >> " + nicName, uE.Universe);
+                        hardwareMap.Append("Universes (E1.31) Multicast >> " + nicName);
                     }
+                    hardwareMap.Append(Environment.NewLine);
                 }
 
-                return hardwareMap;
+                return hardwareMap.ToString(0,hardwareMap.Length - Environment.NewLine.Length);
             }
         }
 

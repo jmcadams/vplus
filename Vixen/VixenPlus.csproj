@@ -276,7 +276,6 @@
     <Compile Include="Group.cs" />
     <Compile Include="GroupData.cs" />
     <Compile Include="GroupTagData.cs" />
-    <Compile Include="HardwareMap.cs" />
     <Compile Include="HardwarePlugins.cs" />
     <Compile Include="Host.cs" />
     <Compile Include="IEventDrivenOutputPlugIn.cs" />

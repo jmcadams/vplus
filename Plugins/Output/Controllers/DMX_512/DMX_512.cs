@@ -93,9 +93,9 @@ namespace Controllers.DMX_512
             }
         }
 
-        public HardwareMap[] HardwareMap
+        public string HardwareMap
         {
-            get { return new[] { new HardwareMap(@"Only supports a single universe. Nothing to setup.", 0) }; }
+            get { return "Only supports a single universe. Nothing to setup."; }
         }
 
         public string Name

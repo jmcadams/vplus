@@ -5,8 +5,6 @@ using System.Xml;
 
 using AdjustablePreview.Properties;
 
-
-
 using VixenPlus;
 
 using VixenPlusCommon;
@@ -111,8 +109,9 @@ namespace Preview {
             return Name;
         }
 
-        public HardwareMap[] HardwareMap {
-            get { return new HardwareMap[0]; }
+
+        public string HardwareMap {
+            get { return null; }
         }
 
         public string Name {

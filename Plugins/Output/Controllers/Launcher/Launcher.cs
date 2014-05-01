@@ -141,9 +141,9 @@ namespace Controllers.Launcher {
             get { return "External program launcher"; }
         }
 
-        public HardwareMap[] HardwareMap {
+        public string HardwareMap {
             get {
-                var res = new HardwareMap[0];
+                string res = null;
                 var programList = _setupNode.SelectNodes("Programs/Program");
 
                 if (null != programList) {
@@ -157,7 +157,7 @@ namespace Controllers.Launcher {
                         // ReSharper restore PossibleNullReferenceException
                     }
 
-                    res = new[] {new HardwareMap(config.ToString(), 0)};
+                    res = config.ToString();
                 }
 
                 return res;

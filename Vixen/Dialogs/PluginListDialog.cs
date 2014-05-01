@@ -294,6 +294,7 @@ namespace VixenPlus.Dialogs {
         }
 
 
+        //todo can this go away?
         private void UpdateDictionary() {
             if (_internalUpdate) {
                 return;
@@ -303,19 +304,19 @@ namespace VixenPlus.Dialogs {
             foreach (var plugin in _sequencePlugins) {
                 var pluginData = _setupData.GetPlugInData(num.ToString(CultureInfo.InvariantCulture)).Attributes;
                 if (pluginData != null && bool.Parse(pluginData["enabled"].Value)) {
-                    foreach (var map in plugin.HardwareMap) {
-                        Dictionary<int, OutputPort> dictionary;
-                        OutputPort port;
-                        var key = map.PortTypeName.ToLower().Trim();
-                        key = char.ToUpper(key[0]) + key.Substring(1);
-                        if (!_outputPorts.TryGetValue(key, out dictionary)) {
-                            _outputPorts[key] = dictionary = new Dictionary<int, OutputPort>();
-                        }
-                        if (!dictionary.TryGetValue(map.PortTypeIndex, out port)) {
-                            dictionary[map.PortTypeIndex] = port = new OutputPort(map.PortTypeIndex);
-                        }
-                        port.ReferencingPlugins.Add(plugin);
-                    }
+                    //foreach (var map in plugin.HardwareMap) {
+                    //    Dictionary<int, OutputPort> dictionary;
+                    //    OutputPort port;
+                    //    //var key = map.PortTypeName.ToLower().Trim();
+                    //    //key = char.ToUpper(key[0]) + key.Substring(1);
+                    //    //if (!_outputPorts.TryGetValue(key, out dictionary)) {
+                    //    //    _outputPorts[key] = dictionary = new Dictionary<int, OutputPort>();
+                    //    //}
+                    //    //if (!dictionary.TryGetValue(map.PortTypeIndex, out port)) {
+                    //    //    dictionary[map.PortTypeIndex] = port = new OutputPort(map.PortTypeIndex);
+                    //    //}
+                    //    port.ReferencingPlugins.Add(plugin);
+                    //}
                 }
                 num++;
             }
