@@ -33,6 +33,10 @@ namespace VixenPlusCommon {
             get { return Path.Combine(LibraryPath, "Curves"); }
         }
 
+        public static string DataFolder {
+            get { return @"\" + "Data"; }
+        }
+
         public static string DataPath {
             get { return _dataPath; }
             set {
@@ -44,20 +48,20 @@ namespace VixenPlusCommon {
             }
         }
 
-        public static string DataFolder {
-            get { return @"\" + "Data"; }
+        public static string ExtrasPath {
+            get { return Path.Combine(DataPath, "Extras"); }
         }
 
         public static string ImportExportPath {
-            get { return Path.Combine(DataPath, "Imports and Exports"); }
+            get { return Path.Combine(ExtrasPath, "Imports and Exports"); }
         }
 
         private static string LibraryPath {
-            get { return Path.Combine(DataPath, "Libraries"); }
+            get { return Path.Combine(ExtrasPath, "Libraries"); }
         }
 
         public static string MapperPath {
-            get { return Path.Combine(ProfilePath, "Mapper"); }
+            get { return Path.Combine(ExtrasPath, "Mapper"); }
         }
 
         public static string MyDocutments {
@@ -65,7 +69,7 @@ namespace VixenPlusCommon {
         }
 
         public static string NutcrackerDataPath {
-            get { return Path.Combine(DataPath, "Nutcracker"); }
+            get { return Path.Combine(ExtrasPath, "Nutcracker"); }
         }
 
         public static string NutcrackerDataFile {
@@ -84,12 +88,8 @@ namespace VixenPlusCommon {
             get { return Path.Combine(DataPath, "Profiles"); }
         }
 
-        public static string ProfileExtras {
-            get { return Path.Combine(ProfilePath, "Extras"); }
-        }
-
         public static string ProfileGeneration {
-            get { return Path.Combine(ProfileExtras, "Templates"); }
+            get { return Path.Combine(ExtrasPath, "Templates"); }
         }
 
         public static string ProgramPath {
@@ -97,7 +97,7 @@ namespace VixenPlusCommon {
         }
 
         public static string RoutinePath {
-            get { return Path.Combine(DataPath, "Routines"); }
+            get { return Path.Combine(ExtrasPath, "Routines"); }
         }
 
         public static string SequencePath {

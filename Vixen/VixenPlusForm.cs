@@ -40,7 +40,7 @@ namespace VixenPlus {
             Ensure(Paths.ImportExportPath);
             Ensure(Paths.AudioPath);
             Ensure(Paths.ProfilePath);
-            Ensure(Paths.ProfileExtras);
+            Ensure(Paths.ExtrasPath);
             Ensure(Paths.ProfileGeneration);
             Ensure(Paths.MapperPath);
             Ensure(Paths.NutcrackerDataPath);
