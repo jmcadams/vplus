@@ -48,20 +48,16 @@ namespace VixenPlusCommon {
             }
         }
 
-        public static string ExtrasPath {
-            get { return Path.Combine(DataPath, "Extras"); }
-        }
-
         public static string ImportExportPath {
-            get { return Path.Combine(ExtrasPath, "Imports and Exports"); }
+            get { return Path.Combine(SupportingFilesPath, "Imports and Exports"); }
         }
 
         private static string LibraryPath {
-            get { return Path.Combine(ExtrasPath, "Libraries"); }
+            get { return Path.Combine(SupportingFilesPath, "Libraries"); }
         }
 
         public static string MapperPath {
-            get { return Path.Combine(ExtrasPath, "Mapper"); }
+            get { return Path.Combine(SupportingFilesPath, "Mapper"); }
         }
 
         public static string MyDocutments {
@@ -69,7 +65,7 @@ namespace VixenPlusCommon {
         }
 
         public static string NutcrackerDataPath {
-            get { return Path.Combine(ExtrasPath, "Nutcracker"); }
+            get { return Path.Combine(SupportingFilesPath, "Nutcracker"); }
         }
 
         public static string NutcrackerDataFile {
@@ -89,15 +85,15 @@ namespace VixenPlusCommon {
         }
 
         public static string ProfileGeneration {
-            get { return Path.Combine(ExtrasPath, "Templates"); }
+            get { return Path.Combine(SupportingFilesPath, "Templates"); }
         }
 
-        public static string ProgramPath {
-            get { return Path.Combine(DataPath, "Programs"); }
-        }
+        //public static string ProgramPath {
+        //    get { return Path.Combine(DataPath, "Programs"); }
+        //}
 
         public static string RoutinePath {
-            get { return Path.Combine(ExtrasPath, "Routines"); }
+            get { return Path.Combine(SupportingFilesPath, "Routines"); }
         }
 
         public static string SequencePath {
@@ -108,6 +104,10 @@ namespace VixenPlusCommon {
                 }
                 return Path.Combine(DataPath, "Sequences");
             }
+        }
+
+        public static string SupportingFilesPath {
+            get { return Path.Combine(DataPath, "Support"); }
         }
 
         public static string UIPluginPath {

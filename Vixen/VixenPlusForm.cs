@@ -36,11 +36,11 @@ namespace VixenPlus {
             SetDataPath();
             Ensure(Paths.DataPath);
             Ensure(Paths.SequencePath);
-            Ensure(Paths.ProgramPath);
+            //Ensure(Paths.ProgramPath);
             Ensure(Paths.ImportExportPath);
             Ensure(Paths.AudioPath);
             Ensure(Paths.ProfilePath);
-            Ensure(Paths.ExtrasPath);
+            Ensure(Paths.SupportingFilesPath);
             Ensure(Paths.ProfileGeneration);
             Ensure(Paths.MapperPath);
             Ensure(Paths.NutcrackerDataPath);
