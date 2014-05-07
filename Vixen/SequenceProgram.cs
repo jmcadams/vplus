@@ -18,20 +18,20 @@ namespace VixenPlus {
         private Profile _profile;
 
         //TODO: Check that this is still being called.
-        [UsedImplicitly]
-        public SequenceProgram(string fileName) {
-            Loop = false;
-            _profile = null;
-            UseSequencePluginData = false;
-            TreatAsLocal = false;
-            UserData = null;
-            _key = Host.GetUniqueKey();
-            _mask = null;
-            FileName = fileName;
-            ConstructUsing();
-            SetupData = new SetupData();
-            LoadFromXml(Xml.LoadDocument(Path.Combine(Paths.ProgramPath, fileName)));
-        }
+        //[UsedImplicitly]
+        //public SequenceProgram(string fileName) {
+        //    Loop = false;
+        //    _profile = null;
+        //    UseSequencePluginData = false;
+        //    TreatAsLocal = false;
+        //    UserData = null;
+        //    _key = Host.GetUniqueKey();
+        //    _mask = null;
+        //    FileName = fileName;
+        //    ConstructUsing();
+        //    SetupData = new SetupData();
+        //    LoadFromXml(Xml.LoadDocument(Path.Combine(Paths.ProgramPath, fileName)));
+        //}
 
 
         public SequenceProgram(EventSequence sequence) {
