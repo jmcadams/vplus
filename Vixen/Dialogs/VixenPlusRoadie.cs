@@ -1199,11 +1199,11 @@ namespace VixenPlus.Dialogs {
 
 
         private void dataGridView1_MouseMove(object sender, MouseEventArgs e) {
-            if ((e.Button & MouseButtons.Right) != MouseButtons.Right) {
+            if ((e.Button & MouseButtons.Right) != MouseButtons.Right || _dragCanceled) {
                 return;
             }
 
-            // If the mouse moves outside the rectangle, start the drag.
+            // Start the drag when it moves outside of the initial rectangle.
             if (_dragDropBox == Rectangle.Empty || _dragDropBox.Contains(e.X, e.Y)) {
                 return;
             }
@@ -1225,6 +1225,7 @@ namespace VixenPlus.Dialogs {
                 // Create a rectangle using the DragSize, with the mouse position being
                 // at the center of the rectangle.
                 _dragDropBox = new Rectangle(new Point(e.X - (dragSize.Width/2), e.Y - (dragSize.Height/2)), dragSize);
+                _dragCanceled = false;
             }
             else {
                 // Reset the rectangle if the mouse is not over an item in the ListBox.
@@ -1233,18 +1234,39 @@ namespace VixenPlus.Dialogs {
         }
 
 
+        private DateTime _lastUpdate = DateTime.Now;
+        private const int DragDropScrollSpeed = 35; // mills
+        private bool _dragCanceled;
+
         private void dataGridView1_DragOver(object sender, DragEventArgs e) {
+            if (_dragCanceled) return;
+
             // Check that it is a valid drag drop
-            var cols = (from DataGridViewCell c in dgvChannels.SelectedCells select c.ColumnIndex).Distinct().ToList();
-            e.Effect = (cols.Count() != 1 || cols[0] < ChannelNumCol || cols[0] > OutputChannelCol)
-                ? DragDropEffects.None
-                : DragDropEffects.Move;
+            var r = dgvChannels.Bounds;
+            var m = dgvChannels.PointToClient(Cursor.Position);
+
+            e.Effect = r.Contains(m.X, m.Y) ? DragDropEffects.Move : DragDropEffects.None;
+            var delayTime = DateTime.Now - _lastUpdate;
+
+            // We don't want to scroll too fast, so is it time to scroll again?
+            if (delayTime.Milliseconds <= DragDropScrollSpeed) {
+                return;
+            }
+
+            _lastUpdate = DateTime.Now;
+            var rect = Rectangle.Inflate(r, 0, -dgvChannels.Rows[0].Height);
+            var firstRowIndex = dgvChannels.FirstDisplayedScrollingRowIndex;
+            if (m.Y < rect.Top && firstRowIndex > 0) {
+                dgvChannels.FirstDisplayedScrollingRowIndex--;
+            } else if (m.Y > rect.Bottom && firstRowIndex + dgvChannels.DisplayedRowCount(false) < dgvChannels.RowCount) {
+                dgvChannels.FirstDisplayedScrollingRowIndex++;
+            }
         }
 
 
         private void dataGridView1_DragDrop(object sender, DragEventArgs e) {
             // If it is not a move, then exit since it is an invalid D&D
-            if (e.Effect != DragDropEffects.Move) {
+            if (_dragCanceled || e.Effect != DragDropEffects.Move) {
                 return;
             }
 
@@ -1259,6 +1281,9 @@ namespace VixenPlus.Dialogs {
 
             // Get the row index of the item the mouse is over. 
             var dropRowIndex = dgvChannels.HitTest(dropPoint.X, dropPoint.Y).RowIndex;
+            if (dropRowIndex < 0) {
+                dropRowIndex = 0;
+            }
 
             // Get the column the D&D impacts
             var dropColumn =
@@ -1296,6 +1321,14 @@ namespace VixenPlus.Dialogs {
             dgvChannels.CurrentCell = dgvChannels.Rows[dropRowIndex].Cells[dropColumn];
         }
 
+        private void dgvChannels_QueryContinueDrag(object sender, QueryContinueDragEventArgs e) {
+            if (!e.EscapePressed) {
+                return;
+            }
+
+            e.Action = DragAction.Cancel;
+            _dragCanceled = true;
+        }
 
         private void RenumberChannels(ICollection<DataGridViewRow> rows, int firstRow, int lastRow, int col) {
             var rowCounter = rows.Count;
@@ -1798,5 +1831,6 @@ namespace VixenPlus.Dialogs {
         }
 
         #endregion
+
     }
 }

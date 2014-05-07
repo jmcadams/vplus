@@ -32,7 +32,7 @@ namespace VixenPlus.Dialogs
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.cbProfiles = new System.Windows.Forms.ComboBox();
             this.gbProfiles = new System.Windows.Forms.GroupBox();
             this.btnProfileSave = new System.Windows.Forms.Button();
@@ -287,6 +287,7 @@ namespace VixenPlus.Dialogs
             this.dgvChannels.SelectionChanged += new System.EventHandler(this.dgvChannels_SelectionChanged);
             this.dgvChannels.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragDrop);
             this.dgvChannels.DragOver += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragOver);
+            this.dgvChannels.QueryContinueDrag += new System.Windows.Forms.QueryContinueDragEventHandler(this.dgvChannels_QueryContinueDrag);
             this.dgvChannels.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvChannels_KeyDown);
             this.dgvChannels.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dataGridView1_MouseDown);
             this.dgvChannels.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dataGridView1_MouseMove);
@@ -1042,8 +1043,8 @@ namespace VixenPlus.Dialogs
             // colPlugInConfiguration
             // 
             this.colPlugInConfiguration.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colPlugInConfiguration.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colPlugInConfiguration.DefaultCellStyle = dataGridViewCellStyle1;
             this.colPlugInConfiguration.HeaderText = "Current Configuration";
             this.colPlugInConfiguration.Name = "colPlugInConfiguration";
             this.colPlugInConfiguration.ReadOnly = true;
