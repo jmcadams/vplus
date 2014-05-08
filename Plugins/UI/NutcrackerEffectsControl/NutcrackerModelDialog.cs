@@ -6,29 +6,27 @@ using System.Windows.Forms;
 
 using NutcrackerEffects.Models;
 
-using VixenPlus;
-
 using VixenPlusCommon;
 
 namespace Nutcracker {
     public partial class NutcrackerModelDialog : Form {
-        private readonly EventSequence _sequence;
-        private int _lastGroupSelected;
-        private int _lastChannelSelected;
+        //private readonly EventSequence _sequence;
+        //private int _lastGroupSelected;
+        //private int _lastChannelSelected;
         private readonly Dictionary<string, INutcrackerModel> _modelCache = new Dictionary<string, INutcrackerModel>();
-        private readonly bool _useCheckmark = Preference2.GetInstance().GetBoolean("UseCheckmark");
+        //private readonly bool _useCheckmark = Preference2.GetInstance().GetBoolean("UseCheckmark");
         private const string DefaultModel = "Tree";
 
-        public NutcrackerModelDialog(EventSequence sequence) {
+        public NutcrackerModelDialog() {
             InitializeComponent();
             cbColorLayout.SelectedIndex = 0;
-            _sequence = sequence;
-            LoadGroups();
-            LoadModels();
-            PopulateModels();
+            //_sequence = sequence;
+            //LoadGroups();
+            LoadModelsTypes();
+            PopulateModelTypeDropDown();
         }
 
-
+/*
         private void LoadGroups() {
             if (_sequence.Groups != null) {
                 cbGroups.Items.Clear();
@@ -87,7 +85,8 @@ namespace Nutcracker {
             }
         }
 
-        private void LoadModels() {
+ */
+        private void LoadModelsTypes() {
             foreach (var str in Directory.GetFiles(Paths.UIPluginPath, Vendor.All + Vendor.AppExtension)) {
                 var assembly = Assembly.LoadFile(str);
                 foreach (var type in assembly.GetExportedTypes()) {
@@ -106,7 +105,7 @@ namespace Nutcracker {
         }
 
 
-        private void PopulateModels() {
+        private void PopulateModelTypeDropDown() {
             foreach (var nutcrackerEffect in _modelCache) {
                 cbPreviewAs.Items.Add(nutcrackerEffect.Value.EffectName);
             }

@@ -83,7 +83,7 @@
             this.chkBoxUseGroup.TabIndex = 3;
             this.chkBoxUseGroup.Text = "Use Group";
             this.chkBoxUseGroup.UseVisualStyleBackColor = true;
-            this.chkBoxUseGroup.CheckedChanged += new System.EventHandler(this.chkBoxUseGroup_CheckedChanged);
+            this.chkBoxUseGroup.Visible = false;
             // 
             // cbGroups
             // 
@@ -94,8 +94,7 @@
             this.cbGroups.Name = "cbGroups";
             this.cbGroups.Size = new System.Drawing.Size(171, 21);
             this.cbGroups.TabIndex = 4;
-            this.cbGroups.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbGroups_DrawItem);
-            this.cbGroups.SelectedIndexChanged += new System.EventHandler(this.cbGroups_SelectedIndexChanged);
+            this.cbGroups.Visible = false;
             // 
             // btnCancel
             // 
@@ -166,6 +165,7 @@
             this.lblStartChannel.Size = new System.Drawing.Size(83, 13);
             this.lblStartChannel.TabIndex = 12;
             this.lblStartChannel.Text = "Start Channel or";
+            this.lblStartChannel.Visible = false;
             // 
             // lblDirection
             // 

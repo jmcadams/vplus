@@ -136,7 +136,7 @@ namespace Nutcracker {
             foreach (var nameAttr in models.Select(m => m.Attribute("name")).Where(name => name != null)) {
                 cbModels.Items.Add(nameAttr.Value);
             }
-            cbModels.Items.Add("Manage Models");
+            cbModels.Items.Add("Add a New Model");
 
             const int degrees = 180;
             if (RenderCols < 2) return;
@@ -307,7 +307,7 @@ namespace Nutcracker {
             if (cbModels.SelectedIndex != cbModels.Items.Count - 1) {
                 return;
             }
-            using (var modelDialog = new NutcrackerModelDialog(_sequence)) {
+            using (var modelDialog = new NutcrackerModelDialog()) {
                 modelDialog.ShowDialog();
             }
         }
@@ -636,7 +636,7 @@ namespace Nutcracker {
                 return;
             }
             if (cbEffectsPresets.SelectedIndex == cbEffectsPresets.Items.Count - 1) {
-                using (var modelDialog = new NutcrackerModelDialog(_sequence)) {
+                using (var modelDialog = new NutcrackerModelDialog()) {
                     modelDialog.ShowDialog();
                 }
             }
