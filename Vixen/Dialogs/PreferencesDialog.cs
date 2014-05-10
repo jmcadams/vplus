@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 using FMOD;
 
-using VixenPlus.Properties;
+using VixenPlusCommon.Properties;
 
 using VixenPlusCommon;
 

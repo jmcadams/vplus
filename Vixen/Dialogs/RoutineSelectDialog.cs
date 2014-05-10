@@ -3,9 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-
-
-using VixenPlus.Properties;
+using VixenPlusCommon.Properties;
 
 using VixenPlusCommon;
 

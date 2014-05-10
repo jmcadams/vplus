@@ -4,9 +4,8 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
 
-
-
 using VixenPlus.Properties;
+using common = VixenPlusCommon.Properties;
 
 using VixenPlusCommon;
 
@@ -56,7 +55,7 @@ namespace VixenPlus.Dialogs {
             _availableValues = 256f;
             components = null;
             InitializeComponent();
-            Icon = Resources.VixenPlus;
+            Icon = common.Resources.VixenPlus;
             if (sequence != null) {
                 Action<Channel> action = c => comboBoxChannels.Items.Add(c.Clone());
                 sequence.Channels.ForEach(action);

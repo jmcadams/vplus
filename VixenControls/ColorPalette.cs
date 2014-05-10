@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 
 using VixenPlusCommon.Annotations;
+using VixenPlusCommon.Properties;
 
 namespace VixenPlusCommon {
     [DefaultEvent("ControlChanged")]

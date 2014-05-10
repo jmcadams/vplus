@@ -2,9 +2,8 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-
-
 using VixenPlus.Properties;
+using common = VixenPlusCommon.Properties;
 
 using VixenPlusCommon;
 
@@ -18,7 +17,7 @@ namespace VixenPlus.Dialogs
         public CurveLibraryRecordEditDialog(CurveLibraryRecord clr)
         {
             InitializeComponent();
-            Icon = Resources.VixenPlus;
+            Icon = common.Resources.VixenPlus;
             LibraryRecord = clr;
             _curveLibrary = new CurveLibrary();
             textBoxManufacturer.AutoCompleteCustomSource.AddRange(_curveLibrary.GetAllManufacturers());

@@ -2,9 +2,8 @@ using System;
 using System.Globalization;
 using System.Windows.Forms;
 
-
-
 using VixenPlus.Properties;
+using common = VixenPlusCommon.Properties;
 
 using VixenPlusCommon;
 
@@ -15,7 +14,7 @@ namespace VixenPlus.Dialogs {
 
         public SequenceSettingsDialog(EventSequence sequence) {
             InitializeComponent();
-            Icon = Resources.VixenPlus;
+            Icon = common.Resources.VixenPlus;
             _eventSequence = sequence;
             numericUpDownMinimum.Value = sequence.MinimumLevel;
             numericUpDownMaximum.Value = sequence.MaximumLevel;

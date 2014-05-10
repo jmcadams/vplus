@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-using VixenPlus.Properties;
+using VixenPlusCommon.Properties;
 
 namespace VixenPlus {
     public partial class UIBase : Form, IUIPlugIn {

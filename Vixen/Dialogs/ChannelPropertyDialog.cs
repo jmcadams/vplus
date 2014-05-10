@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Forms;
 
-
-
-using VixenPlus.Properties;
+using VixenPlusCommon.Properties;
 
 using VixenPlusCommon;
 

@@ -155,7 +155,7 @@ namespace Preview {
             this.Controls.Add(this.comboBoxTo);
             this.Controls.Add(this.label3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = global::VixenPlus.Properties.Resources.VixenPlus;
+            this.Icon = global::VixenPlusCommon.Properties.Resources.VixenPlus;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ReorderDialog";

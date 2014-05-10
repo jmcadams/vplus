@@ -8,9 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-
-
 using VixenPlus.Properties;
+using common = VixenPlusCommon.Properties;
 
 using VixenPlusCommon;
 
@@ -60,7 +59,7 @@ namespace VixenPlus.Dialogs {
 
         public NewSequenceWizardDialog(Preference2 preferences) {
             InitializeComponent();
-            Icon = Resources.VixenPlus;
+            Icon = common.Resources.VixenPlus;
             openFileDialog.InitialDirectory = Paths.SequencePath;
             tabControl.SelectedIndex = 0;
             _preferences = preferences;

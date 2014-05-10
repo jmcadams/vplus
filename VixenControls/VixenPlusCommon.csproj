@@ -151,6 +151,12 @@
     <Compile Include="TabControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="TextQueryDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TextQueryDialog.Designer.cs">
+      <DependentUpon>TextQueryDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="TransparentLabel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -174,9 +180,12 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextQueryDialog.resx">
+      <DependentUpon>TextQueryDialog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -200,6 +209,7 @@
     <Content Include="Resources\cellbackground.png" />
     <Content Include="Resources\eyedropper.cur" />
     <Content Include="Resources\eyedropper.png" />
+    <None Include="Resources\VixenPlus.ico" />
     <None Include="Resources\none.png" />
     <Content Include="Resources\palette-load.png" />
     <Content Include="Resources\palette-save.png" />

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 
 using VixenPlusCommon.Annotations;
+using VixenPlusCommon.Properties;
 
 namespace VixenPlusCommon {
     // Cyotek Color Picker controls library

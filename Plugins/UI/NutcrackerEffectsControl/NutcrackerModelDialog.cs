@@ -59,5 +59,16 @@ namespace Nutcracker {
             newControl.IsLtoR = rbLtoR.Checked;
             lblNotes.Text = newControl.Notes;
         }
+
+        private void btnOk_Click(object sender, EventArgs e) {
+            if (cbModelName.SelectedIndex != -1) {
+                return;
+            }
+
+            using (var modelName = new TextQueryDialog("Model Name", "What would you like to name this model", "")) {
+                modelName.ShowDialog();
+
+            }
+        }
     }
 }

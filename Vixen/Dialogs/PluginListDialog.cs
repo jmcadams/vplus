@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Xml;
 
 using VixenPlus.Properties;
+using common = VixenPlusCommon.Properties;
 
 using VixenPlusCommon;
 
@@ -29,7 +30,7 @@ namespace VixenPlus.Dialogs {
             _executableObject = executableObject;
             _channels = executableObject.Channels;
             InitializeComponent();
-            Icon = Resources.VixenPlus;
+            Icon = common.Resources.VixenPlus;
             _sequencePlugins = new List<IHardwarePlugin>();
             _outputPorts = new Dictionary<string, Dictionary<int, OutputPort>>();
             Cursor = Cursors.WaitCursor;

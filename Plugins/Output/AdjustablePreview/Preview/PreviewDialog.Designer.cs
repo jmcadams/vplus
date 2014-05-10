@@ -32,7 +32,7 @@ namespace Preview {
             this.ClientSize = new System.Drawing.Size(576, 286);
             this.ControlBox = false;
             this.Controls.Add(this.pictureBoxShowGrid);
-            this.Icon = global::VixenPlus.Properties.Resources.VixenPlus;
+            this.Icon = global::VixenPlusCommon.Properties.Resources.VixenPlus;
             this.Name = "PreviewDialog";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;

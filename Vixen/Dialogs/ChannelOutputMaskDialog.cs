@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-using VixenPlus.Properties;
+using VixenPlusCommon.Properties;
 
 namespace VixenPlus.Dialogs {
     public partial class ChannelOutputMaskDialog : Form {

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 
 using VixenPlus.Properties;
+using common = VixenPlusCommon.Properties;
 
 using VixenPlusCommon;
 
@@ -19,7 +20,7 @@ namespace VixenPlus.Dialogs {
 
         public AllChannelsColorDialog(List<Channel> channels) {
             InitializeComponent();
-            Icon = Resources.VixenPlus;
+            Icon = common.Resources.VixenPlus;
 
             foreach (var channel in channels) {
                 listBoxChannels.Items.Add(channel.Clone());

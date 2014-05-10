@@ -1,6 +1,6 @@
 using System.Windows.Forms;
 
-namespace VixenPlus.Dialogs{
+namespace VixenPlusCommon{
     public partial class TextQueryDialog{
         private System.ComponentModel.IContainer components = null;
 

@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using FMOD;
 
 using VixenPlus.Properties;
+using common = VixenPlusCommon.Properties;
 
 using VixenPlusCommon;
 
@@ -35,7 +36,7 @@ namespace VixenPlus.Dialogs {
 
         public AudioDialog(EventSequence sequence, bool autoSize, int deviceIndex) {
             InitializeComponent();
-            Icon = Resources.VixenPlus;
+            Icon = common.Resources.VixenPlus;
             _fmod = (deviceIndex > 0) ? fmod.GetInstance(deviceIndex) : fmod.GetInstance(-1);
             _timer = new System.Timers.Timer(10.0);
             _timer.Elapsed += TimerElapsed;

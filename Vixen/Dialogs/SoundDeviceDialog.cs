@@ -1,11 +1,10 @@
 using System;
 using System.Windows.Forms;
 
-
-
 using FMOD;
 
 using VixenPlus.Properties;
+using common = VixenPlusCommon.Properties;
 
 using VixenPlusCommon;
 
@@ -18,7 +17,7 @@ namespace VixenPlus.Dialogs {
 
         public SoundDeviceDialog(Preference2 preferences) {
             InitializeComponent();
-            Icon = Resources.VixenPlus;
+            Icon = common.Resources.VixenPlus;
             _preferences = preferences;
         }
 

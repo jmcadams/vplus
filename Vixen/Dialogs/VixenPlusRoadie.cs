@@ -12,6 +12,7 @@ using System.Xml;
 using System.Xml.Linq;
 
 using VixenPlus.Properties;
+using common = VixenPlusCommon.Properties;
 
 using VixenPlusCommon;
 
@@ -62,7 +63,7 @@ namespace VixenPlus.Dialogs {
         public VixenPlusRoadie(IExecutable defaultProfile = null) {
             InitializeComponent();
             Text = Vendor.ProductName + " - " + Vendor.ModuleManager;
-            Icon = Resources.VixenPlus;
+            Icon = common.Resources.VixenPlus;
             MinimumSize = Size;
 
             _suppressErrors = Preference2.GetInstance().GetBoolean("SilenceProfileErrors");

@@ -1,8 +1,8 @@
 using System.Windows.Forms;
 
-using VixenPlus.Properties;
+using VixenPlusCommon.Properties;
 
-namespace VixenPlus.Dialogs
+namespace VixenPlusCommon
 {
     public partial class TextQueryDialog : Form
     {

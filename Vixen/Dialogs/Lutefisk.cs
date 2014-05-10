@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-using VixenPlus.Properties;
+using VixenPlusCommon.Properties;
 
 namespace VixenPlus.Dialogs
 {

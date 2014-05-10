@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using VixenPlus.Properties;
+using common = VixenPlusCommon.Properties;
 using VixenPlusCommon;
 
 namespace VixenPlus.Dialogs {
@@ -17,7 +18,7 @@ namespace VixenPlus.Dialogs {
 
         public AboutDialog() {
             InitializeComponent();
-            pbIcon.Image = new Icon(Resources.VixenPlus, new Size(64,64)).ToBitmap();
+            pbIcon.Image = new Icon(common.Resources.VixenPlus, new Size(64,64)).ToBitmap();
 
             // Make sure the okay button is always on top since it may get covered by the credits.
             Controls.SetChildIndex(btnOkay, 0);

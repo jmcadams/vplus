@@ -13,6 +13,7 @@ using System.Xml;
 
 using VixenPlus.Dialogs;
 using VixenPlus.Properties;
+using common = VixenPlusCommon.Properties;
 
 using VixenPlusCommon;
 
@@ -57,7 +58,7 @@ namespace VixenPlus {
                 } 
                 
                 InitializeComponent();
-                Icon = Resources.VixenPlus;
+                Icon = common.Resources.VixenPlus;
                 SetVendorData();
                 _registeredFileTypes = new Dictionary<string, IUIPlugIn>();
                 _preferences.PreferenceChange += PreferencesPreferenceChange;

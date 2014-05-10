@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 
 
+using common = VixenPlusCommon.Properties;
 
 using VixenPlus.Properties;
 
@@ -13,7 +14,7 @@ namespace VixenPlus.Dialogs {
     public partial class FirstRunPathDialog : Form {
         public FirstRunPathDialog(bool isFirstRun) {
             InitializeComponent();
-            Icon = Resources.VixenPlus;
+            Icon = common.Resources.VixenPlus;
             tbPrompt.Text = string.Format(isFirstRun ? Resources.FirstRunPrompt : Resources.LocationChangePrompt, Vendor.ProductName);
             if (isFirstRun) {
                 btnOk.Location = btnCancel.Location;
@@ -21,7 +22,7 @@ namespace VixenPlus.Dialogs {
             else {
                 btnCancel.Visible = true;
             }
-            pbIcon.Image = new Icon(Resources.VixenPlus, new Size(64, 64)).ToBitmap();
+            pbIcon.Image = new Icon(common.Resources.VixenPlus, new Size(64, 64)).ToBitmap();
             lblAppDir.Text = Paths.BinaryPath + Paths.DataFolder;
             lblMyDocs.Text = Paths.MyDocutments + Paths.DataFolder;
             lblCustom.Text = Paths.DataFolder;
