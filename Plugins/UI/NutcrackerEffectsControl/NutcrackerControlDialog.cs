@@ -10,7 +10,6 @@ using System.Xml.Linq;
 using Nutcracker.Effects;
 
 using VixenPlus;
-using VixenPlus.Dialogs;
 
 using VixenPlusCommon;
 

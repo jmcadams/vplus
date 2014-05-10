@@ -8,7 +8,6 @@ using System.Windows.Forms;
 
 
 using VixenPlus;
-using VixenPlus.Dialogs;
 
 using VixenPlusCommon;
 

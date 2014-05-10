@@ -1,6 +1,4 @@
-﻿using VixenPlusCommon;
-
-namespace VixenPlusCommon
+﻿namespace VixenPlusCommon
 {
     sealed partial class ColorEditor
   {

@@ -9,7 +9,6 @@ using System.Xml;
 using VixenPlus.Properties;
 
 using VixenPlusCommon;
-using VixenPlusCommon.Annotations;
 
 namespace VixenPlus {
     public class SequenceProgram : IExecutable {

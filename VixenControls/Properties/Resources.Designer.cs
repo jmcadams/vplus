@@ -9,9 +9,6 @@
 //------------------------------------------------------------------------------
 
 namespace VixenPlusCommon.Properties {
-    using System;
-    
-    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
