@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 using VixenPlus.Annotations;
 
@@ -14,6 +15,23 @@ namespace Nutcracker.Models {
         public override string EffectName {
             get { return "Matrix"; }
         }
+
+        public override XDocument Settings {
+            get {
+                return
+                    new XDocument(
+                        new XElement(TypeName,
+                            new XElement(EffectName,
+                                new XAttribute("Strings", nudStringCount.Value),
+                                new XAttribute("Nodes", nudNodeCount.Value),
+                                new XAttribute("Strands", nudStrandCount.Value),
+                                new XAttribute("Vertical", rbVertical.Checked)
+                            )
+                        )
+                    );
+            }
+        }
+
 
         private void InitMatrix() {
             var strandsPerString = (int)nudStrandCount.Value;

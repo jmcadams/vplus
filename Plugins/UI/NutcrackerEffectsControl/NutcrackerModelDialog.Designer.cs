@@ -36,11 +36,11 @@
             this.lblStartChannel = new System.Windows.Forms.Label();
             this.lblDirection = new System.Windows.Forms.Label();
             this.lblModelName = new System.Windows.Forms.Label();
-            this.cbModelName = new System.Windows.Forms.ComboBox();
             this.cbPreviewAs = new System.Windows.Forms.ComboBox();
             this.lblPreviewAs = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblNotes = new System.Windows.Forms.Label();
+            this.lblModelNameValue = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -128,6 +128,7 @@
             this.chkBoxDisplay.TabIndex = 7;
             this.chkBoxDisplay.Text = "Part of my display";
             this.chkBoxDisplay.UseVisualStyleBackColor = true;
+            this.chkBoxDisplay.Visible = false;
             // 
             // rbLtoR
             // 
@@ -186,15 +187,6 @@
             this.lblModelName.TabIndex = 10;
             this.lblModelName.Text = "Model Name";
             // 
-            // cbModelName
-            // 
-            this.cbModelName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbModelName.FormattingEnabled = true;
-            this.cbModelName.Location = new System.Drawing.Point(192, 9);
-            this.cbModelName.Name = "cbModelName";
-            this.cbModelName.Size = new System.Drawing.Size(171, 21);
-            this.cbModelName.TabIndex = 0;
-            // 
             // cbPreviewAs
             // 
             this.cbPreviewAs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -231,17 +223,26 @@
             this.lblNotes.Size = new System.Drawing.Size(101, 48);
             this.lblNotes.TabIndex = 14;
             // 
+            // lblModelNameValue
+            // 
+            this.lblModelNameValue.AutoSize = true;
+            this.lblModelNameValue.Location = new System.Drawing.Point(192, 12);
+            this.lblModelNameValue.Name = "lblModelNameValue";
+            this.lblModelNameValue.Size = new System.Drawing.Size(35, 13);
+            this.lblModelNameValue.TabIndex = 15;
+            this.lblModelNameValue.Text = "label1";
+            // 
             // NutcrackerModelDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(375, 454);
             this.ControlBox = false;
+            this.Controls.Add(this.lblModelNameValue);
             this.Controls.Add(this.lblNotes);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.cbPreviewAs);
             this.Controls.Add(this.lblPreviewAs);
-            this.Controls.Add(this.cbModelName);
             this.Controls.Add(this.lblModelName);
             this.Controls.Add(this.lblStartChannel);
             this.Controls.Add(this.panel1);
@@ -281,10 +282,10 @@
         private System.Windows.Forms.Label lblStartChannel;
         private System.Windows.Forms.Label lblDirection;
         private System.Windows.Forms.Label lblModelName;
-        private System.Windows.Forms.ComboBox cbModelName;
         private System.Windows.Forms.ComboBox cbPreviewAs;
         private System.Windows.Forms.Label lblPreviewAs;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label lblNotes;
+        private System.Windows.Forms.Label lblModelNameValue;
     }
 }

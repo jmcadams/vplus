@@ -303,10 +303,16 @@ namespace Nutcracker {
 
 
         private void cbModels_SelectedIndexChanged(object sender, EventArgs e) {
-            if (cbModels.SelectedIndex != cbModels.Items.Count - 1) {
+            if (cbModels.SelectedIndex == -1) {
                 return;
             }
-            using (var modelDialog = new NutcrackerModelDialog()) {
+
+            var selected = string.Empty;
+            if (cbModels.SelectedIndex != cbModels.Items.Count - 1) {
+                selected = cbModels.SelectedText;
+            }
+
+            using (var modelDialog = new NutcrackerModelDialog(selected)) {
                 modelDialog.ShowDialog();
             }
         }
@@ -634,8 +640,9 @@ namespace Nutcracker {
                 }
                 return;
             }
+            //todo why the heck is this here?
             if (cbEffectsPresets.SelectedIndex == cbEffectsPresets.Items.Count - 1) {
-                using (var modelDialog = new NutcrackerModelDialog()) {
+                using (var modelDialog = new NutcrackerModelDialog(string.Empty)) {
                     modelDialog.ShowDialog();
                 }
             }

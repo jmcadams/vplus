@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Linq;
 
 using Nutcracker.Models;
 
@@ -13,10 +15,11 @@ namespace Nutcracker {
     public partial class NutcrackerModelDialog : Form {
         private readonly Dictionary<string, NutcrackerModelBase> _modelCache = new Dictionary<string, NutcrackerModelBase>();
         private const string DefaultModel = "Tree";
+        private string _modelName;
 
-
-        public NutcrackerModelDialog() {
+        public NutcrackerModelDialog(string modelName) {
             InitializeComponent();
+            _modelName = modelName;
             cbColorLayout.SelectedIndex = 0;
             LoadModelsTypes();
             PopulateModelTypeDropDown();
@@ -61,14 +64,36 @@ namespace Nutcracker {
         }
 
         private void btnOk_Click(object sender, EventArgs e) {
-            if (cbModelName.SelectedIndex != -1) {
-                return;
+            if (string.IsNullOrEmpty(_modelName)) {
+                using (var modelName = new TextQueryDialog("Model Name", "What would you like to name this model", "")) {
+                    modelName.ShowDialog();
+                    if (modelName.DialogResult != DialogResult.OK) {
+                        return;
+                    }
+                    _modelName = modelName.Response;
+                }
             }
 
-            using (var modelName = new TextQueryDialog("Model Name", "What would you like to name this model", "")) {
-                modelName.ShowDialog();
+            SaveModel();
+        }
 
+
+        private void SaveModel() {
+            var control = _modelCache[cbPreviewAs.SelectedItem.ToString()];
+            
+            var settings = control.Settings;
+            var root = settings.Element(NutcrackerModelBase.TypeName);
+
+            if (root == null) {
+                throw new XmlException("Base settings not returned from model properly");
             }
+
+            root.Add(new XElement("ModelCommon",
+                        new XAttribute("LtoR", rbLtoR.Checked),
+                        new XAttribute("ColorOrder", cbColorLayout.SelectedItem)
+                    ));
+
+            settings.Save(Path.Combine(Paths.NutcrackerDataPath, _modelName + Vendor.NutcrakerModelExtension));
         }
     }
 }

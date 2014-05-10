@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Linq;
 
 using Nutcracker.Effects;
 using Nutcracker.Properties;
@@ -10,6 +12,8 @@ using VixenPlus.Annotations;
 namespace Nutcracker.Models {
     [UsedImplicitly]
     public partial class WindowFrame : NutcrackerModelBase {
+        private bool _isLinked = true;
+
         public WindowFrame() {
             InitializeComponent();
         }
@@ -18,6 +22,24 @@ namespace Nutcracker.Models {
             get { return "Window Frame"; }
         }
 
+        public override XDocument Settings {
+            get {
+                return
+                    new XDocument(
+                        new XElement(TypeName,
+                            // ReSharper disable AssignNullToNotNullAttribute
+                            new XElement(XmlConvert.EncodeName(EffectName),
+                                // ReSharper restore AssignNullToNotNullAttribute
+                                new XAttribute("Top", nudTopCount.Value),
+                                new XAttribute("Bottom", nudBottomCount.Value),
+                                new XAttribute("Sides", nudSideCount.Value),
+                                new XAttribute("Linked", _isLinked)
+                            )
+                        )
+                    );
+            }
+        }
+        //todo need to figure out why this doesnt draw right when the offset == 1
         private void InitFrame() {
             var top = (int)nudTopCount.Value;
             var sides = (int)nudSideCount.Value;
@@ -87,7 +109,7 @@ namespace Nutcracker.Models {
         }
 
         private void control_ValueChanged(object sender, EventArgs e) {
-            if (pbLink.BackgroundImage == Resources.Link) {
+            if (_isLinked) {
                 var c = sender as NumericUpDown;
                 if (c != null && (c.Name == nudTopCount.Name || c.Name == nudBottomCount.Name)) {
                     if (c.Name == nudTopCount.Name) {
@@ -111,7 +133,8 @@ namespace Nutcracker.Models {
         }
 
         private void pbLink_Click(object sender, EventArgs e) {
-            pbLink.BackgroundImage = pbLink.BackgroundImage == Resources.Unlink ? Resources.Link : Resources.Unlink;
+            _isLinked = !_isLinked;
+            pbLink.BackgroundImage = _isLinked ? Resources.Link : Resources.Unlink;
         }
     }
 }

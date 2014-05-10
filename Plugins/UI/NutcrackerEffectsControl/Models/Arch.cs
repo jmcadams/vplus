@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 using VixenPlus.Annotations;
 
@@ -14,6 +15,22 @@ namespace Nutcracker.Models {
         public override string EffectName {
             get { return "Arch"; }
         }
+
+
+        public override XDocument Settings {
+            get {
+                return
+                    new XDocument(
+                        new XElement(TypeName,
+                            new XElement(EffectName, 
+                                new XAttribute("Arches", nudArchCount.Value), 
+                                new XAttribute("Nodes", nudNodeCount.Value)
+                            )
+                        )
+                    );
+            }
+        }
+
 
         public override string Notes {
             get { return "Define up to 10 arches"; }

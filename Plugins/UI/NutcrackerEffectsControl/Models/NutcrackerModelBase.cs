@@ -1,18 +1,20 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 using Nutcracker.Effects;
 
 namespace Nutcracker.Models {
     public class NutcrackerModelBase : UserControl {
         public const string TypeName = "NutcrackerModelBase";
-        protected const int XyOffset = 2;
+        protected const int XyOffset = 3;
 
         public virtual string EffectName {
             get { return string.Empty; }
         }
 
         public virtual string Notes { get { return string.Empty; } }
+        public virtual XDocument Settings { get { return new XDocument();}}
         public bool IsLtoR { protected get; set; }
 
         internal int Rows;

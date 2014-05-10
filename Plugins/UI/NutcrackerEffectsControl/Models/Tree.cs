@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 using VixenPlus.Annotations;
 
@@ -16,13 +17,32 @@ namespace Nutcracker.Models {
             get { return "Tree"; }
         }
 
+
+        public override XDocument Settings {
+            get {
+                return new XDocument(
+                    new XElement(TypeName,
+                        new XElement(EffectName,
+                            new XAttribute("Strings", nudStringCount.Value),
+                            new XAttribute("Nodes", nudNodeCount.Value),
+                            new XAttribute("Strands", nudStrandCount.Value),
+                            new XAttribute("Degrees", Degrees))
+                    )
+                );
+            }
+        }
+
+        private int Degrees {
+            get { return rb360.Checked ? 360 : rb270.Checked ? 270 : rb180.Checked ? 180 : 90; }
+        }
+
+
         private void InitializePreview(Rectangle previewRect) {
             InitMatrix();
-            var degrees = rb360.Checked ? 360 : rb270.Checked ? 270 : rb180.Checked ? 180 : 90;
             if (Cols < 2 || Rows < 1) return;
             var factor = previewRect.Height / Rows;
             var renderWi = previewRect.Width / 2;
-            var radians = 2.0 * Math.PI * degrees / 360.0;
+            var radians = 2.0 * Math.PI * Degrees / 360.0;
             var radius = renderWi * 0.8;
             var startAngle = -radians / 2.0;
             var angleIncr = radians / (Cols - 1);
