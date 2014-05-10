@@ -188,7 +188,9 @@
     <Compile Include="Models\Arch.Designer.cs">
       <DependentUpon>Arch.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\INutcrackerModel.cs" />
+    <Compile Include="Models\NutcrackerModelBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Models\Matrix.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -233,6 +235,11 @@
     </Compile>
     <Compile Include="NutcrackerXmlManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
@@ -293,11 +300,9 @@
     <EmbeddedResource Include="Models\Tree.resx">
       <DependentUpon>Tree.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Models\WindowFrame.resx">
-      <DependentUpon>WindowFrame.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="NutcrackerControlDialog.resx">
       <DependentUpon>NutcrackerControlDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="NutcrackerEffect.resx">
       <DependentUpon>NutcrackerEffect.cs</DependentUpon>
@@ -308,6 +313,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="NutcrackerPaletteManager.resx">
       <DependentUpon>NutcrackerPaletteManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -338,6 +347,18 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Link.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LinkBottom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LinkTop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Unlink.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

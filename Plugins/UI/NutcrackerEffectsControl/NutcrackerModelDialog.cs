@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
-using NutcrackerEffects.Models;
+using Nutcracker.Models;
 
 using VixenPlusCommon;
 
@@ -13,7 +14,7 @@ namespace Nutcracker {
         //private readonly EventSequence _sequence;
         //private int _lastGroupSelected;
         //private int _lastChannelSelected;
-        private readonly Dictionary<string, INutcrackerModel> _modelCache = new Dictionary<string, INutcrackerModel>();
+        private readonly Dictionary<string, NutcrackerModelBase> _modelCache = new Dictionary<string, NutcrackerModelBase>();
         //private readonly bool _useCheckmark = Preference2.GetInstance().GetBoolean("UseCheckmark");
         private const string DefaultModel = "Tree";
 
@@ -89,16 +90,11 @@ namespace Nutcracker {
         private void LoadModelsTypes() {
             foreach (var str in Directory.GetFiles(Paths.UIPluginPath, Vendor.All + Vendor.AppExtension)) {
                 var assembly = Assembly.LoadFile(str);
-                foreach (var type in assembly.GetExportedTypes()) {
-                    foreach (var type2 in type.GetInterfaces()) {
-                        if (type2.Name != "INutcrackerModel") {
-                            continue;
-                        }
-                        var plugin = (INutcrackerModel)Activator.CreateInstance(type);
-                        var key = plugin.EffectName;
-                        if (!_modelCache.ContainsKey(key)) {
-                            _modelCache[key] = plugin;
-                        }
+                foreach (var type in assembly.GetExportedTypes().Where(t => t.BaseType !=null && t.BaseType.Name == NutcrackerModelBase.TypeName)) {
+                    var plugin = (NutcrackerModelBase)Activator.CreateInstance(type);
+                    var key = plugin.EffectName;
+                    if (!_modelCache.ContainsKey(key)) {
+                        _modelCache[key] = plugin;
                     }
                 }
             }
@@ -123,7 +119,7 @@ namespace Nutcracker {
             }
 
             var newControl = _modelCache[cbPreviewAs.SelectedItem.ToString()];
-            panel1.Controls.Add((UserControl)newControl);
+            panel1.Controls.Add(newControl);
             newControl.IsLtoR = rbLtoR.Checked;
             lblNotes.Text = newControl.Notes;
         }

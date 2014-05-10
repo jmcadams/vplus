@@ -105,6 +105,7 @@
             this.pbPreview.Size = new System.Drawing.Size(172, 244);
             this.pbPreview.TabIndex = 23;
             this.pbPreview.TabStop = false;
+            this.pbPreview.Paint += new System.Windows.Forms.PaintEventHandler(this.pbPreview_Paint);
             // 
             // Arch
             // 
