@@ -77,8 +77,8 @@ namespace Nutcracker {
 
         private void InitializeControls() {
             _playText = btnPlayStop.Text;
-            RenderRows = (int) nudRows.Value;
-            RenderCols = (int) nudColumns.Value;
+            RenderRows = 0;
+            RenderCols = 0;
             _nodes = new NutcrackerNodes[RenderRows,RenderCols];
             _effectBuffers = new[] {new Color[RenderRows,RenderCols], new Color[RenderRows,RenderCols]};
             _effectControls = new[] {nutcrackerEffectControl1, nutcrackerEffectControl2};
@@ -143,23 +143,23 @@ namespace Nutcracker {
             }
             cbModels.Items.Add("Add a New Model");
 
-            const int degrees = 180;
-            if (RenderCols < 2) return;
-            var factor = pbPreview.Height / RenderRows;
-            var renderWi = pbPreview.Width / 2;
-            const double radians = 2.0 * Math.PI * degrees / 360.0;
-            var radius = renderWi * 0.8;
-            const double startAngle = -radians / 2.0;
-            var angleIncr = radians / (RenderCols - 1);
-            for (var row = 0; row < RenderRows; row++) {
-                for (var col = 0; col < RenderCols; col++) {
-                    var angle = startAngle + _nodes[RenderRows - 1 - row, col].BufX * angleIncr;
-                    var x0 = radius * Math.Sin(angle);
-                    var x = (int) Math.Floor(x0 * (1.0 - (double) (_nodes[row, col].BufY) / RenderRows) + 0.5) + renderWi;
-                    var y = _nodes[RenderRows - 1 - row, col].BufY * factor;
-                    _nodes[RenderRows - 1 - row, col].Model = new Point(x, y);
-                }
-            }
+            //const int degrees = 180;
+            //if (RenderCols < 2) return;
+            //var factor = pbPreview.Height / RenderRows;
+            //var renderWi = pbPreview.Width / 2;
+            //const double radians = 2.0 * Math.PI * degrees / 360.0;
+            //var radius = renderWi * 0.8;
+            //const double startAngle = -radians / 2.0;
+            //var angleIncr = radians / (RenderCols - 1);
+            //for (var row = 0; row < RenderRows; row++) {
+            //    for (var col = 0; col < RenderCols; col++) {
+            //        var angle = startAngle + _nodes[RenderRows - 1 - row, col].BufX * angleIncr;
+            //        var x0 = radius * Math.Sin(angle);
+            //        var x = (int) Math.Floor(x0 * (1.0 - (double) (_nodes[row, col].BufY) / RenderRows) + 0.5) + renderWi;
+            //        var y = _nodes[RenderRows - 1 - row, col].BufY * factor;
+            //        _nodes[RenderRows - 1 - row, col].Model = new Point(x, y);
+            //    }
+            //}
         }
 
 
@@ -196,15 +196,11 @@ namespace Nutcracker {
 
 
         private void SetupForPlaying() {
-            RenderRows = (int) nudRows.Value;
-            RenderCols = (int) nudColumns.Value;
             if (RenderRows <= 0 || RenderCols <= 0) {
                 return;
             }
 
             ResetPreview();
-            nudRows.Enabled = false;
-            nudColumns.Enabled = false;
             _effectBuffers = new[] {new Color[RenderRows,RenderCols], new Color[RenderRows,RenderCols]};
             _eventToRender = new[] {0, 0};
             _isRendering = new[] {false, false};
@@ -226,8 +222,6 @@ namespace Nutcracker {
 
         private void TearDownPlaying() {
             timerRender.Stop();
-            nudRows.Enabled = true;
-            nudColumns.Enabled = true;
         }
 
         #endregion
@@ -287,11 +281,6 @@ namespace Nutcracker {
         }
 
 
-        private void RowOrCol_ValueChanged(object sender, EventArgs e) {
-            InitializeControls();
-        }
-
-
         private void btnOK_Click(object sender, EventArgs e) {
             RenderFinalResults();
         }
@@ -323,6 +312,7 @@ namespace Nutcracker {
             if (cbModels.SelectedIndex != cbModels.Items.Count - 1) {
                 btnModelRemove.Visible = true;
                 btnModelEdit.Visible = true;
+                EditModel(GetFilePath(), false);
                 return;
             }
 
@@ -330,16 +320,24 @@ namespace Nutcracker {
         }
 
 
-        private void EditModel(string selected) {
+        private void EditModel(string selected, bool show = true) {
             using (var modelDialog = new NutcrackerModelDialog(selected)) {
-                modelDialog.ShowDialog();
-                _ignoreIndexChange = true;
-                InitializeModels();
-                cbModels.SelectedIndex = cbModels.FindStringExact(modelDialog.ModelName);
-                _ignoreIndexChange = false;
+                if (show) {
+                    modelDialog.ShowDialog();
+                    _ignoreIndexChange = true;
+                    InitializeModels();
+                    cbModels.SelectedIndex = cbModels.FindStringExact(modelDialog.ModelName);
+                    _ignoreIndexChange = false;
+                }
+                modelDialog.PreviewRectangle = pbPreview.Bounds;
+                RenderRows = modelDialog.Rows;
+                RenderCols = modelDialog.Cols;
+                _nodes = modelDialog.Nodes;
                 btnModelEdit.Visible = true;
                 btnModelRemove.Visible = true;
-            }   
+            }
+            UpdateSummary();
+   
         }
 
         #endregion
@@ -413,7 +411,7 @@ namespace Nutcracker {
                 if (chkBoxEnableRawPreview.Checked) {
                     raw.DrawImage(rawBitmap, new Point((pbRawPreview.Width - RenderCols) / 2, (pbRawPreview.Height - RenderRows) / 2));
                 }
-                preview.DrawImage(previewBitmap, 0, 0);
+                preview.DrawImage(previewBitmap, 2, 2);
             }
         }
 
@@ -595,6 +593,7 @@ namespace Nutcracker {
             var msg = (channelCount > _sequence.FullChannelCount) ? "(Too Large for your current channel count)" : string.Empty;
 
             tbSummary.Text = String.Format("From {0} thru {1} on {2} channels {3}", startTime, endTime, channelCount, msg);
+            btnOK.Enabled = msg == string.Empty;
         }
 
         #endregion
@@ -751,12 +750,17 @@ namespace Nutcracker {
                 return;
             }
 
-            File.Delete(Path.Combine(Paths.NutcrackerDataPath, cbModels.SelectedItem + Vendor.NutcrakerModelExtension));
+            File.Delete(GetFilePath());
             InitializeModels();
         }
 
         private void btnModelEdit_Click(object sender, EventArgs e) {
-            EditModel(Path.Combine(Paths.NutcrackerDataPath, cbModels.SelectedItem + Vendor.NutcrakerModelExtension));
+            EditModel(GetFilePath());
+        }
+
+
+        private string GetFilePath() {
+            return Path.Combine(Paths.NutcrackerDataPath, cbModels.SelectedItem + Vendor.NutcrakerModelExtension);
         }
     }
 }

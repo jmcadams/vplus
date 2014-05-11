@@ -11,6 +11,11 @@ namespace Nutcracker.Models {
         public const string TypeName = "NutcrackerModelBase";
         protected const int XyOffset = 3;
 
+        protected const string XmlAttrType = "Type";
+        protected const string XmlAttrNodes = "Nodes";
+        protected const string XmlAttrStrings = "Strings";
+        protected const string XmlAttrStrands = "Strands";
+
         public virtual string EffectName {
             get { return string.Empty; }
         }
@@ -22,6 +27,10 @@ namespace Nutcracker.Models {
             set { throw new NotImplementedException(); }
         }
 
+
+        public virtual void InitializePreview(Rectangle r) {
+            throw new NotImplementedException();
+        }
 
         internal static string FindAttribute(XElement e, string attribute) {
             var xAttribute = e.Attribute(attribute);
@@ -36,8 +45,8 @@ namespace Nutcracker.Models {
 
         public bool IsLtoR { protected get; set; }
 
-        internal int Rows;
-        internal int Cols;
+        internal int Rows { get; set; }
+        internal int Cols { get; set; }
         internal NutcrackerNodes[,] Nodes;
 
         internal virtual void ResetNodes() {

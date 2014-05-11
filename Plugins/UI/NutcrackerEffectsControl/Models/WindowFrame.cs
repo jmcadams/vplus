@@ -14,6 +14,11 @@ namespace Nutcracker.Models {
     public partial class WindowFrame : NutcrackerModelBase {
         private bool _isLinked = true;
 
+        private const string XmlAttrTop = "Top";
+        private const string XmlAttrSide = "Sides";
+        private const string XmlAttrBottom = "Bottom";
+        private const string XmlAttrLink = "Linked";
+
         public WindowFrame() {
             InitializeComponent();
         }
@@ -28,12 +33,12 @@ namespace Nutcracker.Models {
                     new XDocument(
                         new XElement(TypeName,
                             // ReSharper disable AssignNullToNotNullAttribute
-                            new XAttribute("Type", XmlConvert.EncodeName(EffectName)),
-                                // ReSharper restore AssignNullToNotNullAttribute
-                            new XAttribute("Top", nudTopCount.Value),
-                            new XAttribute("Bottom", nudBottomCount.Value),
-                            new XAttribute("Sides", nudSideCount.Value),
-                            new XAttribute("Linked", _isLinked)
+                            new XAttribute(XmlAttrType, XmlConvert.EncodeName(EffectName)),
+                            // ReSharper restore AssignNullToNotNullAttribute
+                            new XAttribute(XmlAttrTop, nudTopCount.Value),
+                            new XAttribute(XmlAttrBottom, nudBottomCount.Value),
+                            new XAttribute(XmlAttrSide, nudSideCount.Value),
+                            new XAttribute(XmlAttrLink, _isLinked)
                         )
                     );
             }
@@ -43,15 +48,16 @@ namespace Nutcracker.Models {
                 }
 
                 var root = value.Element(TypeName);
-                nudTopCount.Value = int.Parse(FindAttribute(root, "Top"));
-                nudBottomCount.Value = int.Parse(FindAttribute(root, "Bottom"));
-                nudSideCount.Value = int.Parse(FindAttribute(root, "Sides"));
-                _isLinked = bool.Parse(FindAttribute(root, "Linked"));
+                nudTopCount.Value = int.Parse(FindAttribute(root, XmlAttrTop));
+                nudBottomCount.Value = int.Parse(FindAttribute(root, XmlAttrBottom));
+                nudSideCount.Value = int.Parse(FindAttribute(root, XmlAttrSide));
+                _isLinked = bool.Parse(FindAttribute(root, XmlAttrLink));
                 pbLink.BackgroundImage = _isLinked ? Resources.Link : Resources.Unlink;
             }
         }
         //todo need to figure out why this doesnt draw right when the offset == 1
-        private void InitFrame() {
+        //TODO implement rect centering;
+        public override void InitializePreview(Rectangle rect) {
             var top = (int)nudTopCount.Value;
             var sides = (int)nudSideCount.Value;
             var bottom = (int)nudBottomCount.Value;
@@ -131,13 +137,13 @@ namespace Nutcracker.Models {
                     }
                 }
             }
-            InitFrame();
+            InitializePreview(pbPreview.Bounds);
             pbPreview.Invalidate();
         }
 
         private void pbPreview_Paint(object sender, PaintEventArgs e) {
             if (Rows == 0 || Cols == 0) {
-                InitFrame();
+                InitializePreview(pbPreview.Bounds);
             }
 
             Draw(pbPreview, e.Graphics);

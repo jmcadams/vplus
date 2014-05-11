@@ -8,6 +8,8 @@ using VixenPlus.Annotations;
 namespace Nutcracker.Models {
     [UsedImplicitly]
     public partial class Arch : NutcrackerModelBase {
+        private const string XmlAttrArches = "Arches";
+
         public Arch() {
             InitializeComponent();
         }
@@ -22,9 +24,9 @@ namespace Nutcracker.Models {
                 return
                     new XDocument(
                         new XElement(TypeName,
-                            new XAttribute("Type", EffectName), 
-                            new XAttribute("Arches", nudArchCount.Value), 
-                            new XAttribute("Nodes", nudNodeCount.Value)
+                            new XAttribute(XmlAttrType, EffectName),
+                            new XAttribute(XmlAttrArches, nudArchCount.Value),
+                            new XAttribute(XmlAttrNodes, nudNodeCount.Value)
                         )
                     );
             }
@@ -34,8 +36,8 @@ namespace Nutcracker.Models {
                 }
 
                 var root = value.Element(TypeName);
-                nudArchCount.Value = int.Parse(FindAttribute(root, "Arches"));
-                nudNodeCount.Value = int.Parse(FindAttribute(root, "Nodes"));
+                nudArchCount.Value = int.Parse(FindAttribute(root, XmlAttrArches));
+                nudNodeCount.Value = int.Parse(FindAttribute(root, XmlAttrNodes));
             }
         }
 
@@ -45,7 +47,6 @@ namespace Nutcracker.Models {
         }
 
         private void control_ValueChanged(object sender, EventArgs e) {
-            ResetNodes();
             InitializePreview(pbPreview.Bounds);
             pbPreview.Invalidate();
         }
@@ -56,7 +57,8 @@ namespace Nutcracker.Models {
             base.ResetNodes();
         }
 
-        private void InitializePreview(Rectangle previewRect) {
+        public override void InitializePreview(Rectangle previewRect) {
+            ResetNodes();
             var radius = ((previewRect.Size.Width / 2) - (XyOffset * 2)) / Cols;
             const double twoPi = Math.PI * 2;
             var angleStep = 0.5d / (Rows - 1);
@@ -77,7 +79,6 @@ namespace Nutcracker.Models {
 
         private void pbPreview_Paint(object sender, PaintEventArgs e) {
             if (Rows == 0 || Cols == 0) {
-                ResetNodes();
                 InitializePreview(pbPreview.Bounds);
             }
 

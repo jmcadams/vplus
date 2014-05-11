@@ -83,8 +83,8 @@ namespace Nutcracker.Effects {
             var bufferWidth = buffer.GetLength(Utils.IndexColsOrWidth);
             var colorcnt = palette.Length;
 
-            var halfWidth = bufferWidth / 2;
-            var halfHeight = bufferHeight / 2;
+            var halfWidth = Math.Max(1, bufferWidth / 2);
+            var halfHeight = Math.Max(1, bufferHeight / 2);
             var outterR = (float) (halfWidth * (tbOuterR.Value / 100.0));
             var innerR = (float) (halfWidth * (tbInnerR.Value / 100.0));
             if (innerR > outterR) innerR = outterR;

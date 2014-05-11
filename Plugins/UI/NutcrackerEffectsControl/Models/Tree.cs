@@ -8,6 +8,8 @@ using VixenPlus.Annotations;
 namespace Nutcracker.Models {
     [UsedImplicitly]
     public partial class Tree : NutcrackerModelBase {
+        private const string XmlAttrDegrees = "Degrees";
+
         public Tree() {
             InitializeComponent();
         }
@@ -22,11 +24,11 @@ namespace Nutcracker.Models {
             get {
                 return new XDocument(
                     new XElement(TypeName,
-                        new XAttribute("Type",EffectName),
-                        new XAttribute("Strings", nudStringCount.Value),
-                        new XAttribute("Nodes", nudNodeCount.Value),
-                        new XAttribute("Strands", nudStrandCount.Value),
-                        new XAttribute("Degrees", Degrees))
+                        new XAttribute(XmlAttrType, EffectName),
+                        new XAttribute(XmlAttrStrings, nudStringCount.Value),
+                        new XAttribute(XmlAttrNodes, nudNodeCount.Value),
+                        new XAttribute(XmlAttrStrands, nudStrandCount.Value),
+                        new XAttribute(XmlAttrDegrees, Degrees))
                 );
             }
 
@@ -36,10 +38,12 @@ namespace Nutcracker.Models {
                 }
 
                 var root = value.Element(TypeName);
-                nudStringCount.Value = int.Parse(FindAttribute(root, "Strings"));
-                nudNodeCount.Value = int.Parse(FindAttribute(root, "Nodes"));
-                nudStrandCount.Value = int.Parse(FindAttribute(root, "Strands"));
-                Degrees = int.Parse(FindAttribute(root,"Degrees"));
+                nudStringCount.Value = int.Parse(FindAttribute(root, XmlAttrStrings));
+                nudNodeCount.Value = int.Parse(FindAttribute(root, XmlAttrNodes));
+                nudStrandCount.Value = int.Parse(FindAttribute(root, XmlAttrStrands));
+                Degrees = int.Parse(FindAttribute(root, XmlAttrDegrees));
+                ResetNodes();
+                InitializePreview(pbPreview.Bounds);
             }
         }
 
@@ -64,7 +68,7 @@ namespace Nutcracker.Models {
         }
 
 
-        private void InitializePreview(Rectangle previewRect) {
+        public override void InitializePreview(Rectangle previewRect) {
             InitMatrix();
             if (Cols < 2 || Rows < 1) return;
             var factor = previewRect.Height / Rows;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -7,6 +8,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 
+using Nutcracker.Effects;
 using Nutcracker.Models;
 
 using VixenPlusCommon;
@@ -34,6 +36,23 @@ namespace Nutcracker {
             }
         }
 
+
+        public int Rows {
+            get { return _modelCache[cbPreviewAs.SelectedItem.ToString()].Rows; }
+        }
+
+        public int Cols {
+            get { return _modelCache[cbPreviewAs.SelectedItem.ToString()].Cols; }
+        }
+
+        public Rectangle PreviewRectangle { private get; set; }
+
+        public NutcrackerNodes[,] Nodes {
+            get {
+                _modelCache[cbPreviewAs.SelectedItem.ToString()].InitializePreview(PreviewRectangle);
+                return _modelCache[cbPreviewAs.SelectedItem.ToString()].Nodes;
+            }
+        }
 
         private void LoadModelsTypes() {
             foreach (var str in Directory.GetFiles(Paths.UIPluginPath, Vendor.All + Vendor.AppExtension)) {

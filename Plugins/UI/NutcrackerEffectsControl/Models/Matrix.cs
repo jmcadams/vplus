@@ -8,6 +8,8 @@ using VixenPlus.Annotations;
 namespace Nutcracker.Models {
     [UsedImplicitly]
     public partial class Matrix : NutcrackerModelBase {
+        private const string XmlAttrVertical = "Vertical";
+
         public Matrix() {
             InitializeComponent();
         }
@@ -19,9 +21,13 @@ namespace Nutcracker.Models {
         public override XDocument Settings {
             get {
                 return
-                    new XDocument(new XElement(TypeName, new XAttribute("Type", EffectName), new XAttribute("Strings", nudStringCount.Value),
-                        new XAttribute("Nodes", nudNodeCount.Value), new XAttribute("Strands", nudStrandCount.Value),
-                        new XAttribute("Vertical", rbVertical.Checked)));
+                    new XDocument(
+                        new XElement(TypeName, 
+                            new XAttribute(XmlAttrType, EffectName), 
+                            new XAttribute(XmlAttrStrings, nudStringCount.Value),
+                            new XAttribute(XmlAttrNodes, nudNodeCount.Value), 
+                            new XAttribute(XmlAttrStrands, nudStrandCount.Value),
+                            new XAttribute(XmlAttrVertical, rbVertical.Checked)));
             }
             set {
                 if (null == value) {
@@ -29,11 +35,11 @@ namespace Nutcracker.Models {
                 }
 
                 var root = value.Element(TypeName);
-                nudStringCount.Value = int.Parse(FindAttribute(root, "Strings"));
-                nudNodeCount.Value = int.Parse(FindAttribute(root, "Nodes"));
-                nudStrandCount.Value = int.Parse(FindAttribute(root, "Strands"));
+                nudStringCount.Value = int.Parse(FindAttribute(root, XmlAttrStrings));
+                nudNodeCount.Value = int.Parse(FindAttribute(root, XmlAttrNodes));
+                nudStrandCount.Value = int.Parse(FindAttribute(root, XmlAttrStrands));
 
-                if (bool.Parse(FindAttribute(root, "Vertical"))) {
+                if (bool.Parse(FindAttribute(root, XmlAttrVertical))) {
                     rbVertical.Checked = true;
                 }
                 else {
@@ -43,13 +49,13 @@ namespace Nutcracker.Models {
         }
 
 
-        private void InitMatrix() {
+        public override void InitializePreview(Rectangle rect) {
             var strandsPerString = (int)nudStrandCount.Value;
 
             var numStrands = Cols;
             var pixelsPerStrand = Rows;
-            var xFactor = (pbPreview.Width - (XyOffset * 2)) / Cols;
-            var yFactor = (pbPreview.Height - (XyOffset * 2)) / Rows;
+            var xFactor = (rect.Width - (XyOffset * 2)) / Cols;
+            var yFactor = (rect.Height - (XyOffset * 2)) / Rows;
             var index = 0;
             for (var strand = 0; strand < numStrands; strand++) {
                 var segmentnum = strand % strandsPerString;
@@ -67,7 +73,7 @@ namespace Nutcracker.Models {
 
         private void control_ValueChanged(object sender, EventArgs e) {
             ResetNodes();
-            InitMatrix();
+            InitializePreview(pbPreview.Bounds);
             pbPreview.Invalidate();
         }
 
@@ -85,7 +91,7 @@ namespace Nutcracker.Models {
         private void pbPreview_Paint(object sender, PaintEventArgs e) {
             if (Rows == 0 || Cols == 0) {
                 ResetNodes();
-                InitMatrix();
+                InitializePreview(pbPreview.Bounds);
             }
 
             Draw(pbPreview, e.Graphics);
