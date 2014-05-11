@@ -15,7 +15,7 @@ using VixenPlus;
 using VixenPlusCommon;
 
 namespace Nutcracker {
-    public partial class NutcrackerControlDialog : Form {
+    public sealed partial class NutcrackerControlDialog : Form {
 
         #region Class Members and Accessors
 
@@ -69,6 +69,8 @@ namespace Nutcracker {
             _sequence = sequence;
             _selectedRange = selectedRange;
             InitializeComponent();
+            MaximumSize = Size;
+            MinimumSize = Size;
             InitializeControls();
         }
 
@@ -132,6 +134,8 @@ namespace Nutcracker {
 
         private void InitializeModels() {
             cbModels.Items.Clear();
+            btnModelRemove.Visible = false;
+            btnModelEdit.Visible = false;
             foreach (var nameAttr in Directory.GetFiles(Paths.NutcrackerDataPath, Vendor.All + Vendor.NutcrakerModelExtension)) {
                 // ReSharper disable AssignNullToNotNullAttribute
                 cbModels.Items.Add(Path.GetFileNameWithoutExtension(nameAttr));
@@ -304,19 +308,38 @@ namespace Nutcracker {
         }
 
 
+        private bool _ignoreIndexChange;
+
         private void cbModels_SelectedIndexChanged(object sender, EventArgs e) {
+            if (_ignoreIndexChange) return;
+
+            btnModelRemove.Visible = false;
+            btnModelEdit.Visible = true;
             if (cbModels.SelectedIndex == -1) {
                 return;
             }
 
             var selected = string.Empty;
             if (cbModels.SelectedIndex != cbModels.Items.Count - 1) {
-                selected = Path.Combine(Paths.NutcrackerDataPath, cbModels.SelectedItem + Vendor.NutcrakerModelExtension);
+                btnModelRemove.Visible = true;
+                btnModelEdit.Visible = true;
+                return;
             }
 
+            EditModel(selected);
+        }
+
+
+        private void EditModel(string selected) {
             using (var modelDialog = new NutcrackerModelDialog(selected)) {
                 modelDialog.ShowDialog();
-            }
+                _ignoreIndexChange = true;
+                InitializeModels();
+                cbModels.SelectedIndex = cbModels.FindStringExact(modelDialog.ModelName);
+                _ignoreIndexChange = false;
+                btnModelEdit.Visible = true;
+                btnModelRemove.Visible = true;
+            }   
         }
 
         #endregion
@@ -720,6 +743,20 @@ namespace Nutcracker {
             settingString.Remove(settingString.Length - 1, 1);
 
             _nutcrackerData.AddPreset(new XElement("effect", new XAttribute("name", presetName), new XAttribute("settings", settingString)));
+        }
+
+        private void btnModelRemove_Click(object sender, EventArgs e) {
+            if (MessageBox.Show("Are you sure you want to delete this model?", "Delete Model?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) !=
+                DialogResult.Yes) {
+                return;
+            }
+
+            File.Delete(Path.Combine(Paths.NutcrackerDataPath, cbModels.SelectedItem + Vendor.NutcrakerModelExtension));
+            InitializeModels();
+        }
+
+        private void btnModelEdit_Click(object sender, EventArgs e) {
+            EditModel(Path.Combine(Paths.NutcrackerDataPath, cbModels.SelectedItem + Vendor.NutcrakerModelExtension));
         }
     }
 }

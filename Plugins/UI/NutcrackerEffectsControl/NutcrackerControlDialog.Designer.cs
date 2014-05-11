@@ -2,7 +2,7 @@ using System.Windows.Forms;
 
 namespace Nutcracker
 {
-    partial class NutcrackerControlDialog
+    sealed partial class NutcrackerControlDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -33,11 +33,24 @@ namespace Nutcracker
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NutcrackerControlDialog));
             this.gbEffect2 = new System.Windows.Forms.GroupBox();
+            this.nutcrackerEffectControl2 = new Nutcracker.NutcrackerEffectControl();
             this.gbEffect1 = new System.Windows.Forms.GroupBox();
+            this.nutcrackerEffectControl1 = new Nutcracker.NutcrackerEffectControl();
             this.pbPreview = new System.Windows.Forms.PictureBox();
             this.gbSettings = new System.Windows.Forms.GroupBox();
+            this.gbModel = new System.Windows.Forms.GroupBox();
+            this.btnModelEdit = new System.Windows.Forms.Button();
+            this.btnModelRemove = new System.Windows.Forms.Button();
+            this.tbSummary = new System.Windows.Forms.TextBox();
+            this.nudRows = new System.Windows.Forms.NumericUpDown();
+            this.nudColumns = new System.Windows.Forms.NumericUpDown();
             this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.lblRows = new System.Windows.Forms.Label();
             this.lblRenderInfo = new System.Windows.Forms.Label();
+            this.lblColumns = new System.Windows.Forms.Label();
+            this.cbModels = new System.Windows.Forms.ComboBox();
+            this.lblPresets = new System.Windows.Forms.Label();
+            this.cbEffectsPresets = new System.Windows.Forms.ComboBox();
             this.tbSparkles = new System.Windows.Forms.TrackBar();
             this.lblSparkles = new System.Windows.Forms.Label();
             this.lblStatsMs = new System.Windows.Forms.Label();
@@ -50,9 +63,7 @@ namespace Nutcracker
             this.rbMask1 = new System.Windows.Forms.RadioButton();
             this.rbEffect2 = new System.Windows.Forms.RadioButton();
             this.rbEffect1 = new System.Windows.Forms.RadioButton();
-            this.tbSummary = new System.Windows.Forms.TextBox();
             this.btnOK = new System.Windows.Forms.Button();
-            this.lblModels = new System.Windows.Forms.Label();
             this.btnPlayStop = new System.Windows.Forms.Button();
             this.lblStatsFps = new System.Windows.Forms.Label();
             this.gbRenderTo = new System.Windows.Forms.GroupBox();
@@ -66,33 +77,26 @@ namespace Nutcracker
             this.rbCurrentSelection = new System.Windows.Forms.RadioButton();
             this.rbRoutine = new System.Windows.Forms.RadioButton();
             this.rbClipboard = new System.Windows.Forms.RadioButton();
-            this.cbModels = new System.Windows.Forms.ComboBox();
             this.chkBoxEnableRawPreview = new System.Windows.Forms.CheckBox();
             this.pbRawPreview = new System.Windows.Forms.PictureBox();
             this.btnLightsOff = new System.Windows.Forms.Button();
             this.cbRender = new System.Windows.Forms.CheckBox();
-            this.lblColumns = new System.Windows.Forms.Label();
-            this.lblRows = new System.Windows.Forms.Label();
-            this.nudColumns = new System.Windows.Forms.NumericUpDown();
-            this.nudRows = new System.Windows.Forms.NumericUpDown();
             this.btnCancel = new System.Windows.Forms.Button();
             this.timerRender = new System.Windows.Forms.Timer(this.components);
-            this.cbEffectsPresets = new System.Windows.Forms.ComboBox();
-            this.nutcrackerEffectControl1 = new NutcrackerEffectControl();
-            this.nutcrackerEffectControl2 = new NutcrackerEffectControl();
-            this.lblPresets = new System.Windows.Forms.Label();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.gbEffect2.SuspendLayout();
             this.gbEffect1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
             this.gbSettings.SuspendLayout();
+            this.gbModel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRows)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudColumns)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSparkles)).BeginInit();
             this.gbLayer.SuspendLayout();
             this.gbRenderTo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudStartEvent)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudEventCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbRawPreview)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudColumns)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudRows)).BeginInit();
             this.SuspendLayout();
             // 
             // gbEffect2
@@ -105,6 +109,15 @@ namespace Nutcracker
             this.gbEffect2.TabStop = false;
             this.gbEffect2.Text = "Effect 2";
             // 
+            // nutcrackerEffectControl2
+            // 
+            this.nutcrackerEffectControl2.Location = new System.Drawing.Point(7, 20);
+            this.nutcrackerEffectControl2.Name = "nutcrackerEffectControl2";
+            this.nutcrackerEffectControl2.Size = new System.Drawing.Size(371, 225);
+            this.nutcrackerEffectControl2.Speed = 1;
+            this.nutcrackerEffectControl2.TabIndex = 0;
+            this.nutcrackerEffectControl2.ControlChanged += new Nutcracker.NutcrackerEffectControl.ControlChangedHandler(this.ControlChanged2);
+            // 
             // gbEffect1
             // 
             this.gbEffect1.Controls.Add(this.nutcrackerEffectControl1);
@@ -114,6 +127,15 @@ namespace Nutcracker
             this.gbEffect1.TabIndex = 1;
             this.gbEffect1.TabStop = false;
             this.gbEffect1.Text = "Effect 1";
+            // 
+            // nutcrackerEffectControl1
+            // 
+            this.nutcrackerEffectControl1.Location = new System.Drawing.Point(7, 20);
+            this.nutcrackerEffectControl1.Name = "nutcrackerEffectControl1";
+            this.nutcrackerEffectControl1.Size = new System.Drawing.Size(371, 225);
+            this.nutcrackerEffectControl1.Speed = 1;
+            this.nutcrackerEffectControl1.TabIndex = 0;
+            this.nutcrackerEffectControl1.ControlChanged += new Nutcracker.NutcrackerEffectControl.ControlChangedHandler(this.ControlChanged1);
             // 
             // pbPreview
             // 
@@ -126,29 +148,21 @@ namespace Nutcracker
             // 
             // gbSettings
             // 
+            this.gbSettings.Controls.Add(this.gbModel);
             this.gbSettings.Controls.Add(this.lblPresets);
             this.gbSettings.Controls.Add(this.cbEffectsPresets);
-            this.gbSettings.Controls.Add(this.progressBar);
-            this.gbSettings.Controls.Add(this.lblRenderInfo);
             this.gbSettings.Controls.Add(this.tbSparkles);
             this.gbSettings.Controls.Add(this.lblSparkles);
             this.gbSettings.Controls.Add(this.lblStatsMs);
             this.gbSettings.Controls.Add(this.gbLayer);
-            this.gbSettings.Controls.Add(this.tbSummary);
             this.gbSettings.Controls.Add(this.btnOK);
-            this.gbSettings.Controls.Add(this.lblModels);
             this.gbSettings.Controls.Add(this.btnPlayStop);
             this.gbSettings.Controls.Add(this.lblStatsFps);
             this.gbSettings.Controls.Add(this.gbRenderTo);
-            this.gbSettings.Controls.Add(this.cbModels);
             this.gbSettings.Controls.Add(this.chkBoxEnableRawPreview);
             this.gbSettings.Controls.Add(this.pbRawPreview);
             this.gbSettings.Controls.Add(this.btnLightsOff);
             this.gbSettings.Controls.Add(this.cbRender);
-            this.gbSettings.Controls.Add(this.lblColumns);
-            this.gbSettings.Controls.Add(this.lblRows);
-            this.gbSettings.Controls.Add(this.nudColumns);
-            this.gbSettings.Controls.Add(this.nudRows);
             this.gbSettings.Controls.Add(this.btnCancel);
             this.gbSettings.Location = new System.Drawing.Point(398, 12);
             this.gbSettings.Name = "gbSettings";
@@ -157,22 +171,163 @@ namespace Nutcracker
             this.gbSettings.TabStop = false;
             this.gbSettings.Text = "Nutcracker Settings  -  Original Concept by: Sean Meighan and Matt Brown";
             // 
+            // gbModel
+            // 
+            this.gbModel.Controls.Add(this.btnModelEdit);
+            this.gbModel.Controls.Add(this.btnModelRemove);
+            this.gbModel.Controls.Add(this.tbSummary);
+            this.gbModel.Controls.Add(this.nudRows);
+            this.gbModel.Controls.Add(this.nudColumns);
+            this.gbModel.Controls.Add(this.progressBar);
+            this.gbModel.Controls.Add(this.lblRows);
+            this.gbModel.Controls.Add(this.lblRenderInfo);
+            this.gbModel.Controls.Add(this.lblColumns);
+            this.gbModel.Controls.Add(this.cbModels);
+            this.gbModel.Location = new System.Drawing.Point(6, 19);
+            this.gbModel.Name = "gbModel";
+            this.gbModel.Size = new System.Drawing.Size(239, 232);
+            this.gbModel.TabIndex = 25;
+            this.gbModel.TabStop = false;
+            this.gbModel.Text = "Models";
+            // 
+            // btnModelEdit
+            // 
+            this.btnModelEdit.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnModelEdit.BackgroundImage")));
+            this.btnModelEdit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnModelEdit.Location = new System.Drawing.Point(181, 18);
+            this.btnModelEdit.Name = "btnModelEdit";
+            this.btnModelEdit.Size = new System.Drawing.Size(23, 23);
+            this.btnModelEdit.TabIndex = 25;
+            this.toolTip.SetToolTip(this.btnModelEdit, "Edit Model");
+            this.btnModelEdit.UseVisualStyleBackColor = true;
+            this.btnModelEdit.Visible = false;
+            this.btnModelEdit.Click += new System.EventHandler(this.btnModelEdit_Click);
+            // 
+            // btnModelRemove
+            // 
+            this.btnModelRemove.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnModelRemove.BackgroundImage")));
+            this.btnModelRemove.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnModelRemove.Location = new System.Drawing.Point(210, 18);
+            this.btnModelRemove.Name = "btnModelRemove";
+            this.btnModelRemove.Size = new System.Drawing.Size(23, 23);
+            this.btnModelRemove.TabIndex = 24;
+            this.toolTip.SetToolTip(this.btnModelRemove, "Delete Model");
+            this.btnModelRemove.UseVisualStyleBackColor = true;
+            this.btnModelRemove.Visible = false;
+            this.btnModelRemove.Click += new System.EventHandler(this.btnModelRemove_Click);
+            // 
+            // tbSummary
+            // 
+            this.tbSummary.Location = new System.Drawing.Point(6, 122);
+            this.tbSummary.Multiline = true;
+            this.tbSummary.Name = "tbSummary";
+            this.tbSummary.Size = new System.Drawing.Size(227, 78);
+            this.tbSummary.TabIndex = 16;
+            // 
+            // nudRows
+            // 
+            this.nudRows.Location = new System.Drawing.Point(6, 83);
+            this.nudRows.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudRows.Name = "nudRows";
+            this.nudRows.Size = new System.Drawing.Size(45, 20);
+            this.nudRows.TabIndex = 1;
+            this.nudRows.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.nudRows.ValueChanged += new System.EventHandler(this.RowOrCol_ValueChanged);
+            // 
+            // nudColumns
+            // 
+            this.nudColumns.Location = new System.Drawing.Point(5, 57);
+            this.nudColumns.Maximum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.nudColumns.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudColumns.Name = "nudColumns";
+            this.nudColumns.Size = new System.Drawing.Size(46, 20);
+            this.nudColumns.TabIndex = 0;
+            this.nudColumns.Value = new decimal(new int[] {
+            16,
+            0,
+            0,
+            0});
+            this.nudColumns.ValueChanged += new System.EventHandler(this.RowOrCol_ValueChanged);
+            // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(7, 215);
+            this.progressBar.Location = new System.Drawing.Point(6, 203);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(201, 23);
+            this.progressBar.Size = new System.Drawing.Size(227, 23);
             this.progressBar.TabIndex = 17;
             this.progressBar.Visible = false;
+            // 
+            // lblRows
+            // 
+            this.lblRows.AutoSize = true;
+            this.lblRows.Location = new System.Drawing.Point(57, 85);
+            this.lblRows.Name = "lblRows";
+            this.lblRows.Size = new System.Drawing.Size(82, 13);
+            this.lblRows.TabIndex = 14;
+            this.lblRows.Text = "Pixels per String";
             // 
             // lblRenderInfo
             // 
             this.lblRenderInfo.AutoSize = true;
-            this.lblRenderInfo.Location = new System.Drawing.Point(6, 109);
+            this.lblRenderInfo.Location = new System.Drawing.Point(6, 106);
             this.lblRenderInfo.Name = "lblRenderInfo";
             this.lblRenderInfo.Size = new System.Drawing.Size(114, 13);
             this.lblRenderInfo.TabIndex = 15;
             this.lblRenderInfo.Text = "Rendering Information:";
+            // 
+            // lblColumns
+            // 
+            this.lblColumns.AutoSize = true;
+            this.lblColumns.Location = new System.Drawing.Point(57, 59);
+            this.lblColumns.Name = "lblColumns";
+            this.lblColumns.Size = new System.Drawing.Size(39, 13);
+            this.lblColumns.TabIndex = 13;
+            this.lblColumns.Text = "Strings";
+            // 
+            // cbModels
+            // 
+            this.cbModels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbModels.FormattingEnabled = true;
+            this.cbModels.Location = new System.Drawing.Point(6, 19);
+            this.cbModels.Name = "cbModels";
+            this.cbModels.Size = new System.Drawing.Size(169, 21);
+            this.cbModels.TabIndex = 2;
+            this.cbModels.SelectedIndexChanged += new System.EventHandler(this.cbModels_SelectedIndexChanged);
+            // 
+            // lblPresets
+            // 
+            this.lblPresets.AutoSize = true;
+            this.lblPresets.Location = new System.Drawing.Point(360, 262);
+            this.lblPresets.Name = "lblPresets";
+            this.lblPresets.Size = new System.Drawing.Size(76, 13);
+            this.lblPresets.TabIndex = 23;
+            this.lblPresets.Text = "Effect Presets:";
+            // 
+            // cbEffectsPresets
+            // 
+            this.cbEffectsPresets.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbEffectsPresets.FormattingEnabled = true;
+            this.cbEffectsPresets.Location = new System.Drawing.Point(442, 259);
+            this.cbEffectsPresets.Name = "cbEffectsPresets";
+            this.cbEffectsPresets.Size = new System.Drawing.Size(164, 21);
+            this.cbEffectsPresets.TabIndex = 22;
+            this.cbEffectsPresets.SelectedIndexChanged += new System.EventHandler(this.cbEffectsPresets_SelectedIndexChanged);
             // 
             // tbSparkles
             // 
@@ -309,14 +464,6 @@ namespace Nutcracker
             this.rbEffect1.UseVisualStyleBackColor = true;
             this.rbEffect1.CheckedChanged += new System.EventHandler(this.EffectLayerChanged);
             // 
-            // tbSummary
-            // 
-            this.tbSummary.Location = new System.Drawing.Point(5, 130);
-            this.tbSummary.Multiline = true;
-            this.tbSummary.Name = "tbSummary";
-            this.tbSummary.Size = new System.Drawing.Size(202, 78);
-            this.tbSummary.TabIndex = 16;
-            // 
             // btnOK
             // 
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -327,15 +474,6 @@ namespace Nutcracker
             this.btnOK.Text = "Okay";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            // 
-            // lblModels
-            // 
-            this.lblModels.AutoSize = true;
-            this.lblModels.Location = new System.Drawing.Point(40, 22);
-            this.lblModels.Name = "lblModels";
-            this.lblModels.Size = new System.Drawing.Size(41, 13);
-            this.lblModels.TabIndex = 21;
-            this.lblModels.Text = "Models";
             // 
             // btnPlayStop
             // 
@@ -368,12 +506,12 @@ namespace Nutcracker
             this.gbRenderTo.Controls.Add(this.rbCurrentSelection);
             this.gbRenderTo.Controls.Add(this.rbRoutine);
             this.gbRenderTo.Controls.Add(this.rbClipboard);
-            this.gbRenderTo.Location = new System.Drawing.Point(214, 19);
+            this.gbRenderTo.Location = new System.Drawing.Point(251, 19);
             this.gbRenderTo.Name = "gbRenderTo";
-            this.gbRenderTo.Size = new System.Drawing.Size(266, 232);
+            this.gbRenderTo.Size = new System.Drawing.Size(229, 232);
             this.gbRenderTo.TabIndex = 11;
             this.gbRenderTo.TabStop = false;
-            this.gbRenderTo.Text = "Render Effects To:";
+            this.gbRenderTo.Text = "Render Effects To";
             // 
             // lblStartEventTime
             // 
@@ -489,16 +627,6 @@ namespace Nutcracker
             this.rbClipboard.UseVisualStyleBackColor = true;
             this.rbClipboard.CheckedChanged += new System.EventHandler(this.RenderToChanged);
             // 
-            // cbModels
-            // 
-            this.cbModels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbModels.FormattingEnabled = true;
-            this.cbModels.Location = new System.Drawing.Point(87, 19);
-            this.cbModels.Name = "cbModels";
-            this.cbModels.Size = new System.Drawing.Size(121, 21);
-            this.cbModels.TabIndex = 2;
-            this.cbModels.SelectedIndexChanged += new System.EventHandler(this.cbModels_SelectedIndexChanged);
-            // 
             // chkBoxEnableRawPreview
             // 
             this.chkBoxEnableRawPreview.AutoSize = true;
@@ -543,65 +671,6 @@ namespace Nutcracker
             this.cbRender.UseVisualStyleBackColor = true;
             this.cbRender.Visible = false;
             // 
-            // lblColumns
-            // 
-            this.lblColumns.AutoSize = true;
-            this.lblColumns.Location = new System.Drawing.Point(57, 60);
-            this.lblColumns.Name = "lblColumns";
-            this.lblColumns.Size = new System.Drawing.Size(39, 13);
-            this.lblColumns.TabIndex = 13;
-            this.lblColumns.Text = "Strings";
-            // 
-            // lblRows
-            // 
-            this.lblRows.AutoSize = true;
-            this.lblRows.Location = new System.Drawing.Point(57, 86);
-            this.lblRows.Name = "lblRows";
-            this.lblRows.Size = new System.Drawing.Size(82, 13);
-            this.lblRows.TabIndex = 14;
-            this.lblRows.Text = "Pixels per String";
-            // 
-            // nudColumns
-            // 
-            this.nudColumns.Location = new System.Drawing.Point(5, 58);
-            this.nudColumns.Maximum = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            this.nudColumns.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudColumns.Name = "nudColumns";
-            this.nudColumns.Size = new System.Drawing.Size(46, 20);
-            this.nudColumns.TabIndex = 0;
-            this.nudColumns.Value = new decimal(new int[] {
-            16,
-            0,
-            0,
-            0});
-            this.nudColumns.ValueChanged += new System.EventHandler(this.RowOrCol_ValueChanged);
-            // 
-            // nudRows
-            // 
-            this.nudRows.Location = new System.Drawing.Point(6, 84);
-            this.nudRows.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudRows.Name = "nudRows";
-            this.nudRows.Size = new System.Drawing.Size(45, 20);
-            this.nudRows.TabIndex = 1;
-            this.nudRows.Value = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.nudRows.ValueChanged += new System.EventHandler(this.RowOrCol_ValueChanged);
-            // 
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -616,43 +685,6 @@ namespace Nutcracker
             // 
             this.timerRender.Interval = 50;
             this.timerRender.Tick += new System.EventHandler(this.timerRender_Tick);
-            // 
-            // cbEffectsPresets
-            // 
-            this.cbEffectsPresets.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbEffectsPresets.FormattingEnabled = true;
-            this.cbEffectsPresets.Location = new System.Drawing.Point(442, 259);
-            this.cbEffectsPresets.Name = "cbEffectsPresets";
-            this.cbEffectsPresets.Size = new System.Drawing.Size(164, 21);
-            this.cbEffectsPresets.TabIndex = 22;
-            this.cbEffectsPresets.SelectedIndexChanged += new System.EventHandler(this.cbEffectsPresets_SelectedIndexChanged);
-            // 
-            // nutcrackerEffectControl1
-            // 
-            this.nutcrackerEffectControl1.Location = new System.Drawing.Point(7, 20);
-            this.nutcrackerEffectControl1.Name = "nutcrackerEffectControl1";
-            this.nutcrackerEffectControl1.Size = new System.Drawing.Size(371, 225);
-            this.nutcrackerEffectControl1.Speed = 1;
-            this.nutcrackerEffectControl1.TabIndex = 0;
-            this.nutcrackerEffectControl1.ControlChanged += new NutcrackerEffectControl.ControlChangedHandler(this.ControlChanged1);
-            // 
-            // nutcrackerEffectControl2
-            // 
-            this.nutcrackerEffectControl2.Location = new System.Drawing.Point(7, 20);
-            this.nutcrackerEffectControl2.Name = "nutcrackerEffectControl2";
-            this.nutcrackerEffectControl2.Size = new System.Drawing.Size(371, 225);
-            this.nutcrackerEffectControl2.Speed = 1;
-            this.nutcrackerEffectControl2.TabIndex = 0;
-            this.nutcrackerEffectControl2.ControlChanged += new NutcrackerEffectControl.ControlChangedHandler(this.ControlChanged2);
-            // 
-            // lblPresets
-            // 
-            this.lblPresets.AutoSize = true;
-            this.lblPresets.Location = new System.Drawing.Point(360, 262);
-            this.lblPresets.Name = "lblPresets";
-            this.lblPresets.Size = new System.Drawing.Size(76, 13);
-            this.lblPresets.TabIndex = 23;
-            this.lblPresets.Text = "Effect Presets:";
             // 
             // NutcrackerControlDialog
             // 
@@ -676,6 +708,10 @@ namespace Nutcracker
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();
             this.gbSettings.ResumeLayout(false);
             this.gbSettings.PerformLayout();
+            this.gbModel.ResumeLayout(false);
+            this.gbModel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRows)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudColumns)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSparkles)).EndInit();
             this.gbLayer.ResumeLayout(false);
             this.gbLayer.PerformLayout();
@@ -684,8 +720,6 @@ namespace Nutcracker
             ((System.ComponentModel.ISupportInitialize)(this.nudStartEvent)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudEventCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbRawPreview)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudColumns)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudRows)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -732,7 +766,6 @@ namespace Nutcracker
         private Label lblStartEventTime;
         private NumericUpDown nudStartEvent;
         private Label lblStartEvent;
-        private Label lblModels;
         private TextBox tbSummary;
         private Label lblStatsMs;
         private TrackBar tbSparkles;
@@ -741,5 +774,9 @@ namespace Nutcracker
         private ProgressBar progressBar;
         private ComboBox cbEffectsPresets;
         private Label lblPresets;
+        private Button btnModelRemove;
+        private GroupBox gbModel;
+        private Button btnModelEdit;
+        private ToolTip toolTip;
     }
 }

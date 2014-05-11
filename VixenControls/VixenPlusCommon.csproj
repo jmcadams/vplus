@@ -207,6 +207,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\cellbackground.png" />
+    <None Include="Resources\edit.png" />
     <Content Include="Resources\eyedropper.cur" />
     <Content Include="Resources\eyedropper.png" />
     <None Include="Resources\VixenPlus.ico" />

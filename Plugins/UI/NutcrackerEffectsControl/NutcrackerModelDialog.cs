@@ -26,6 +26,11 @@ namespace Nutcracker {
             PopulateModelTypeDropDown();
             if (!string.IsNullOrEmpty(_modelPath)) {
                 LoadXml();
+                lblPreviewAs.Visible = false;
+                cbPreviewAs.Visible = false;
+            }
+            else {
+                lblModelNameValue.Text = "none";
             }
         }
 
@@ -51,6 +56,12 @@ namespace Nutcracker {
             cbPreviewAs.SelectedIndex = cbPreviewAs.Items.Contains(DefaultModel) ? cbPreviewAs.Items.IndexOf(DefaultModel) : 0;
         }
 
+
+        public string ModelName {
+            get {
+                return string.IsNullOrEmpty(_modelPath) ? "none" : Path.GetFileNameWithoutExtension(_modelPath);
+            }
+        }
 
         private void LoadXml() {
             lblModelNameValue.Text = Path.GetFileNameWithoutExtension(_modelPath);
@@ -97,11 +108,27 @@ namespace Nutcracker {
         private void btnOk_Click(object sender, EventArgs e) {
             if (string.IsNullOrEmpty(_modelPath)) {
                 using (var modelName = new TextQueryDialog("Model Name", "What would you like to name this model", "")) {
-                    modelName.ShowDialog();
-                    if (modelName.DialogResult != DialogResult.OK) {
-                        return;
-                    }
-                    _modelPath = Path.Combine(Paths.NutcrackerDataPath, modelName.Response + Vendor.NutcrakerModelExtension);
+                    var isDone = false;
+                    do {
+                        modelName.ShowDialog();
+                        if (modelName.DialogResult != DialogResult.OK) {
+                            return;
+                        }
+                        var tempModelPath = Path.Combine(Paths.NutcrackerDataPath, modelName.Response + Vendor.NutcrakerModelExtension);
+                        if (File.Exists(tempModelPath)) {
+                            if (
+                                MessageBox.Show("That model exists, do you want to overwrite the existing model?", "Overwrite?",
+                                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes) {
+                                continue;
+                            }
+                            _modelPath = tempModelPath;
+                            isDone = true;
+                        }
+                        else {
+                            _modelPath = tempModelPath;
+                            isDone = true;
+                        }
+                    } while (!isDone);
                 }
             }
 
