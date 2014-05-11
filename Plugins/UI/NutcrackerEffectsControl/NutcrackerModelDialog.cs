@@ -15,14 +15,18 @@ namespace Nutcracker {
     public partial class NutcrackerModelDialog : Form {
         private readonly Dictionary<string, NutcrackerModelBase> _modelCache = new Dictionary<string, NutcrackerModelBase>();
         private const string DefaultModel = "Tree";
-        private string _modelName;
+        private string _modelPath;
+        private XDocument _doc;
 
-        public NutcrackerModelDialog(string modelName) {
+        public NutcrackerModelDialog(string path) {
             InitializeComponent();
-            _modelName = modelName;
+            _modelPath = path;
             cbColorLayout.SelectedIndex = 0;
             LoadModelsTypes();
             PopulateModelTypeDropDown();
+            if (!string.IsNullOrEmpty(_modelPath)) {
+                LoadXml();
+            }
         }
 
 
@@ -48,6 +52,33 @@ namespace Nutcracker {
         }
 
 
+        private void LoadXml() {
+            lblModelNameValue.Text = Path.GetFileNameWithoutExtension(_modelPath);
+
+            _doc = XDocument.Load(_modelPath);
+            var root = _doc.Element(NutcrackerModelBase.TypeName);
+            if (null == root) {
+                return;
+            }
+
+            cbPreviewAs.SelectedIndex = cbPreviewAs.FindStringExact(XmlConvert.DecodeName(NutcrackerModelBase.FindAttribute(root, "Type")));
+            _modelCache[cbPreviewAs.SelectedItem.ToString()].Settings = _doc;
+
+            var common = root.Element("ModelCommon");
+
+            if (null == common) {
+                return;
+            }
+
+            var lToR = bool.Parse(NutcrackerModelBase.FindAttribute(common, "LtoR"));
+            _modelCache[cbPreviewAs.SelectedItem.ToString()].IsLtoR = lToR;
+            rbLtoR.Checked = lToR;
+            rbRtoL.Checked = !lToR;
+
+            cbColorLayout.SelectedIndex = cbColorLayout.FindStringExact(NutcrackerModelBase.FindAttribute(common, "ColorOrder"));
+        }
+
+
         private void cbPreviewAs_SelectedIndexChanged(object sender, EventArgs e) {
             foreach (Control control in panel1.Controls) {
                 panel1.Controls.Remove(control);
@@ -59,18 +90,18 @@ namespace Nutcracker {
 
             var newControl = _modelCache[cbPreviewAs.SelectedItem.ToString()];
             panel1.Controls.Add(newControl);
-            newControl.IsLtoR = rbLtoR.Checked;
+            //newControl.Settings = _doc;
             lblNotes.Text = newControl.Notes;
         }
 
         private void btnOk_Click(object sender, EventArgs e) {
-            if (string.IsNullOrEmpty(_modelName)) {
+            if (string.IsNullOrEmpty(_modelPath)) {
                 using (var modelName = new TextQueryDialog("Model Name", "What would you like to name this model", "")) {
                     modelName.ShowDialog();
                     if (modelName.DialogResult != DialogResult.OK) {
                         return;
                     }
-                    _modelName = modelName.Response;
+                    _modelPath = Path.Combine(Paths.NutcrackerDataPath, modelName.Response + Vendor.NutcrakerModelExtension);
                 }
             }
 
@@ -93,7 +124,7 @@ namespace Nutcracker {
                         new XAttribute("ColorOrder", cbColorLayout.SelectedItem)
                     ));
 
-            settings.Save(Path.Combine(Paths.NutcrackerDataPath, _modelName + Vendor.NutcrakerModelExtension));
+            settings.Save(_modelPath);
         }
     }
 }

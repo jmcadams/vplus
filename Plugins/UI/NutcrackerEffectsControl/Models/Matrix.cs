@@ -19,16 +19,26 @@ namespace Nutcracker.Models {
         public override XDocument Settings {
             get {
                 return
-                    new XDocument(
-                        new XElement(TypeName,
-                            new XElement(EffectName,
-                                new XAttribute("Strings", nudStringCount.Value),
-                                new XAttribute("Nodes", nudNodeCount.Value),
-                                new XAttribute("Strands", nudStrandCount.Value),
-                                new XAttribute("Vertical", rbVertical.Checked)
-                            )
-                        )
-                    );
+                    new XDocument(new XElement(TypeName, new XAttribute("Type", EffectName), new XAttribute("Strings", nudStringCount.Value),
+                        new XAttribute("Nodes", nudNodeCount.Value), new XAttribute("Strands", nudStrandCount.Value),
+                        new XAttribute("Vertical", rbVertical.Checked)));
+            }
+            set {
+                if (null == value) {
+                    return;
+                }
+
+                var root = value.Element(TypeName);
+                nudStringCount.Value = int.Parse(FindAttribute(root, "Strings"));
+                nudNodeCount.Value = int.Parse(FindAttribute(root, "Nodes"));
+                nudStrandCount.Value = int.Parse(FindAttribute(root, "Strands"));
+
+                if (bool.Parse(FindAttribute(root, "Vertical"))) {
+                    rbVertical.Checked = true;
+                }
+                else {
+                    rbHorizontal.Checked = true;
+                }
             }
         }
 

@@ -1,5 +1,7 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
+using System.Xml;
 using System.Xml.Linq;
 
 using Nutcracker.Effects;
@@ -14,7 +16,24 @@ namespace Nutcracker.Models {
         }
 
         public virtual string Notes { get { return string.Empty; } }
-        public virtual XDocument Settings { get { return new XDocument();}}
+
+        public virtual XDocument Settings {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+
+        internal static string FindAttribute(XElement e, string attribute) {
+            var xAttribute = e.Attribute(attribute);
+
+            if (xAttribute != null) {
+                return xAttribute.Value;
+            }
+
+            throw new XmlException(string.Format("Missing {0} attribute", attribute));
+        }
+
+
         public bool IsLtoR { protected get; set; }
 
         internal int Rows;

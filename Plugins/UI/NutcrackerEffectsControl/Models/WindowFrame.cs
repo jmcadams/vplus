@@ -28,15 +28,26 @@ namespace Nutcracker.Models {
                     new XDocument(
                         new XElement(TypeName,
                             // ReSharper disable AssignNullToNotNullAttribute
-                            new XElement(XmlConvert.EncodeName(EffectName),
+                            new XAttribute("Type", XmlConvert.EncodeName(EffectName)),
                                 // ReSharper restore AssignNullToNotNullAttribute
-                                new XAttribute("Top", nudTopCount.Value),
-                                new XAttribute("Bottom", nudBottomCount.Value),
-                                new XAttribute("Sides", nudSideCount.Value),
-                                new XAttribute("Linked", _isLinked)
-                            )
+                            new XAttribute("Top", nudTopCount.Value),
+                            new XAttribute("Bottom", nudBottomCount.Value),
+                            new XAttribute("Sides", nudSideCount.Value),
+                            new XAttribute("Linked", _isLinked)
                         )
                     );
+            }
+            set {
+                if (null == value) {
+                    return;
+                }
+
+                var root = value.Element(TypeName);
+                nudTopCount.Value = int.Parse(FindAttribute(root, "Top"));
+                nudBottomCount.Value = int.Parse(FindAttribute(root, "Bottom"));
+                nudSideCount.Value = int.Parse(FindAttribute(root, "Sides"));
+                _isLinked = bool.Parse(FindAttribute(root, "Linked"));
+                pbLink.BackgroundImage = _isLinked ? Resources.Link : Resources.Unlink;
             }
         }
         //todo need to figure out why this doesnt draw right when the offset == 1

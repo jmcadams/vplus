@@ -22,18 +22,45 @@ namespace Nutcracker.Models {
             get {
                 return new XDocument(
                     new XElement(TypeName,
-                        new XElement(EffectName,
-                            new XAttribute("Strings", nudStringCount.Value),
-                            new XAttribute("Nodes", nudNodeCount.Value),
-                            new XAttribute("Strands", nudStrandCount.Value),
-                            new XAttribute("Degrees", Degrees))
-                    )
+                        new XAttribute("Type",EffectName),
+                        new XAttribute("Strings", nudStringCount.Value),
+                        new XAttribute("Nodes", nudNodeCount.Value),
+                        new XAttribute("Strands", nudStrandCount.Value),
+                        new XAttribute("Degrees", Degrees))
                 );
+            }
+
+            set {
+                if (null == value) {
+                    return;
+                }
+
+                var root = value.Element(TypeName);
+                nudStringCount.Value = int.Parse(FindAttribute(root, "Strings"));
+                nudNodeCount.Value = int.Parse(FindAttribute(root, "Nodes"));
+                nudStrandCount.Value = int.Parse(FindAttribute(root, "Strands"));
+                Degrees = int.Parse(FindAttribute(root,"Degrees"));
             }
         }
 
         private int Degrees {
             get { return rb360.Checked ? 360 : rb270.Checked ? 270 : rb180.Checked ? 180 : 90; }
+            set {
+                switch (value) {
+                    case 360:
+                        rb360.Checked = true;
+                        break;
+                    case 270:
+                        rb270.Checked = true;
+                        break;
+                    case 180:
+                        rb180.Checked = true;
+                        break;
+                    case 90:
+                        rb90.Checked = true;
+                        break;
+                }
+            }
         }
 
 

@@ -22,12 +22,20 @@ namespace Nutcracker.Models {
                 return
                     new XDocument(
                         new XElement(TypeName,
-                            new XElement(EffectName, 
-                                new XAttribute("Arches", nudArchCount.Value), 
-                                new XAttribute("Nodes", nudNodeCount.Value)
-                            )
+                            new XAttribute("Type", EffectName), 
+                            new XAttribute("Arches", nudArchCount.Value), 
+                            new XAttribute("Nodes", nudNodeCount.Value)
                         )
                     );
+            }
+            set {
+                if (null == value) {
+                    return;
+                }
+
+                var root = value.Element(TypeName);
+                nudArchCount.Value = int.Parse(FindAttribute(root, "Arches"));
+                nudNodeCount.Value = int.Parse(FindAttribute(root, "Nodes"));
             }
         }
 

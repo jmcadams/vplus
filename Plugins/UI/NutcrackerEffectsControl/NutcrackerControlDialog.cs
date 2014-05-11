@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -131,9 +132,10 @@ namespace Nutcracker {
 
         private void InitializeModels() {
             cbModels.Items.Clear();
-            var models = _nutcrackerData.GetModels();
-            foreach (var nameAttr in models.Select(m => m.Attribute("name")).Where(name => name != null)) {
-                cbModels.Items.Add(nameAttr.Value);
+            foreach (var nameAttr in Directory.GetFiles(Paths.NutcrackerDataPath, Vendor.All + Vendor.NutcrakerModelExtension)) {
+                // ReSharper disable AssignNullToNotNullAttribute
+                cbModels.Items.Add(Path.GetFileNameWithoutExtension(nameAttr));
+                // ReSharper restore AssignNullToNotNullAttribute
             }
             cbModels.Items.Add("Add a New Model");
 
@@ -309,7 +311,7 @@ namespace Nutcracker {
 
             var selected = string.Empty;
             if (cbModels.SelectedIndex != cbModels.Items.Count - 1) {
-                selected = cbModels.SelectedText;
+                selected = Path.Combine(Paths.NutcrackerDataPath, cbModels.SelectedItem + Vendor.NutcrakerModelExtension);
             }
 
             using (var modelDialog = new NutcrackerModelDialog(selected)) {

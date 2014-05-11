@@ -64,11 +64,6 @@ namespace Nutcracker {
             return palette;
         }
 
-        public IEnumerable<XElement> GetModels() {
-            return _doc.Descendants("models").Descendants("model").ToList();
-        }
-
-
         public List<XElement> GetPresets() {
             return _doc.Descendants("effects").Descendants("effect").ToList();
         }
