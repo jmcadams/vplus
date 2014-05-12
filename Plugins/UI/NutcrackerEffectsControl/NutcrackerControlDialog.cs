@@ -282,6 +282,7 @@ namespace Nutcracker {
                 modelDialog.PreviewRectangle = _previewRectangle;
                 RenderRows = modelDialog.Rows;
                 RenderCols = modelDialog.Cols;
+                _effectBuffers = new[] { new Color[RenderRows, RenderCols], new Color[RenderRows, RenderCols] };
                 _nodes = modelDialog.Nodes;
                 btnModelEdit.Visible = true;
                 btnModelRemove.Visible = true;
@@ -478,9 +479,11 @@ namespace Nutcracker {
                 for (var i = 0; i < MaxEffects; i++) {
                     _eventToRender[i] += _effectControls[i].Speed;
                 }
-                progressBar.Value = renderEvent;
-                progressBar.Text = string.Format("{0:d3}%", renderEvent / RenderEvents);
-                Application.DoEvents();
+                var val = renderEvent;
+                Invoke((MethodInvoker) delegate {
+                    progressBar.Value = val;
+                    progressBar.Text = string.Format("{0:d3}%", val / RenderEvents);
+                });
             }
             progressBar.Visible = false;
         }

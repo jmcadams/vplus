@@ -182,7 +182,7 @@ namespace FMOD
         {
             while (this.m_fadeTimer.Enabled)
             {
-                Thread.Sleep(100);
+                Thread.Sleep(100); //todo replace with Task.Delay() when using 4.5
             }
         }
 

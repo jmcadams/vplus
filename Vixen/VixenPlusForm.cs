@@ -739,7 +739,7 @@ namespace VixenPlus {
             }
             shutdownTimer.Stop();
             Process.Start("shutdown", string.Format("/s /d P:4:1 /c \"Automatic shutdown by {0}\"", Vendor.ProductName));
-            Thread.Sleep(1000);
+            Thread.Sleep(1000); //todo replace with Task.Delay() when using 4.5
             new ShutdownDialog().Show();
         }
 

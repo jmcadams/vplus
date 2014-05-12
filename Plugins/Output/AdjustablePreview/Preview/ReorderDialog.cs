@@ -66,12 +66,16 @@ namespace Preview {
         }
 
 
+        //todo figure out why the invoke doesn't update the forecolor. Probably Delay.Task in .Net 4.5 instead of sleep
         private void timerFade_Tick(object sender, EventArgs e) {
             timerFade.Stop();
             for (var i = 15; i > 0; i--) {
-                lblChannelCopied.ForeColor = Color.FromArgb(i * 16, Color.FromKnownColor(KnownColor.ControlText));
-                Application.DoEvents();
-                Thread.Sleep(33);
+                var color = Color.FromArgb(i * 16, Color.FromKnownColor(KnownColor.ControlText));
+                //Invoke((MethodInvoker) delegate {
+                    lblChannelCopied.ForeColor = color;
+                    Application.DoEvents(); // this is one of those times where doevents is proper and the only thing that worked.
+                //});
+                    Thread.Sleep(33); //todo replace with Task.Delay() when using 4.5
             }
             ResetLabel();
         }

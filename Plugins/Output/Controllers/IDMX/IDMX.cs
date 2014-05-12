@@ -29,7 +29,7 @@ namespace Controllers.IDMX
                     Running = ThreadState.StopRequested;
                     while (Running != ThreadState.Stopped)
                     {
-                        Thread.Sleep(1);
+                        Thread.Sleep(1); //todo replace with Task.Delay() when using 4.5
                     }
                 }
                 _thread = null;
@@ -96,7 +96,7 @@ namespace Controllers.IDMX
             while (Running == ThreadState.Running)
             {
                 FTD2XX.FT_SetBreakOn(_ftd2XxHandle);
-                Thread.Sleep(1);
+                Thread.Sleep(1); //todo replace with Task.Delay() when using 4.5
                 FTD2XX.FT_SetBreakOff(_ftd2XxHandle);
                 if ((_data != null) && (Running == ThreadState.Running))
                 {
@@ -105,7 +105,7 @@ namespace Controllers.IDMX
                         FTD2XX.FT_Write(_ftd2XxHandle, _data, (uint) _data.Length, ref bytesWritten);
                     }
                 }
-                Thread.Sleep(2);
+                Thread.Sleep(2); //todo replace with Task.Delay() when using 4.5
             }
             Running = ThreadState.Stopped;
         }

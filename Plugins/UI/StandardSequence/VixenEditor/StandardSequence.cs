@@ -1675,12 +1675,12 @@ namespace VixenEditor {
             if (vScrollBar1.Enabled) {
                 if ((vScrollBar1.Value > vScrollBar1.Minimum) && ((lineIndexAt - vScrollBar1.Value) < 2)) {
                     vScrollBar1.Value--;
-                    Thread.Sleep(delay);
+                    Thread.Sleep(delay); //todo replace with Task.Delay() when using 4.5
                     lineIndexAt = GetLineIndexAt(point);
                 }
                 else if ((vScrollBar1.Value < vScrollBar1.Maximum) && ((lineIndexAt - vScrollBar1.Value) > (_visibleRowCount - 2))) {
                     vScrollBar1.Value++;
-                    Thread.Sleep(delay);
+                    Thread.Sleep(delay); //todo replace with Task.Delay() when using 4.5
                     lineIndexAt = GetLineIndexAt(point);
                 }
             }

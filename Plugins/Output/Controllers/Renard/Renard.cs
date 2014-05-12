@@ -133,7 +133,7 @@ namespace Controllers.Renard {
                 }
             }
             while ((_serialPort.WriteBufferSize - _serialPort.BytesToWrite) <= count) {
-                Thread.Sleep(5);
+                Thread.Sleep(5); //todo replace with Task.Delay() when using 4.5
             }
             _serialPort.Write(_p1Packet, 0, count);
         }
@@ -190,7 +190,7 @@ namespace Controllers.Renard {
 
             State = RunState.Stopping;
             while (State != RunState.Stopped) {
-                Thread.Sleep(5);
+                Thread.Sleep(5);//todo replace with Task.Delay() when using 4.5
             }
             if (_serialPort.IsOpen) {
                 _serialPort.Close();
@@ -212,7 +212,7 @@ namespace Controllers.Renard {
 
             new Thread(EventThread).Start();
             while (State != RunState.Running) {
-                Thread.Sleep(1);
+                Thread.Sleep(1);//todo replace with Task.Delay() when using 4.5
             }
         }
 

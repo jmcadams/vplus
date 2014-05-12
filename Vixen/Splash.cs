@@ -25,7 +25,7 @@ namespace VixenPlus {
             for (var opacity = 0d; opacity <= 1d; opacity += 0.1d) {
                 Opacity = opacity;
                 Refresh();
-                Thread.Sleep(FadeMS);
+                Thread.Sleep(FadeMS);//todo replace with Task.Delay() when using 4.5
             }
         }
 
@@ -33,7 +33,7 @@ namespace VixenPlus {
             for (var opacity = 1d; opacity > 0d; opacity -= 0.1d) {
                 Opacity = opacity;
                 Refresh();
-                Thread.Sleep(FadeMS);
+                Thread.Sleep(FadeMS);//todo replace with Task.Delay() when using 4.5
             }
             if (Visible) Hide();
         }

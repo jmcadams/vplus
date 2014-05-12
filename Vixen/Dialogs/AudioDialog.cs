@@ -338,7 +338,7 @@ namespace VixenPlus.Dialogs {
             }
             else {
                 _timer.Stop();
-                Thread.Sleep((int) _timer.Interval);
+                Thread.Sleep((int) _timer.Interval); //todo replace with Task.Delay() when using 4.5
                 if (_soundChannel != null) {
                     _fmod.Stop(_soundChannel);
                 }

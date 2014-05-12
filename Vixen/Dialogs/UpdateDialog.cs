@@ -126,8 +126,8 @@ namespace VixenPlus.Dialogs {
             Log("Dialog being shown start");
             lblPrompt.Text = _isInStartup ? string.Format("Performing {0} update check.  You can change the frequency of these update checks in preferences.",
                 _preferences.GetString(CheckFrequency)) : "Checking for updates.";
-            SetupDialogShowHide(false);
-            Application.DoEvents();
+            Invoke((MethodInvoker) (() => SetupDialogShowHide(false)));
+            //Application.DoEvents();
 
             CheckForUpdate();
             Log("Dialog being shown end");
