@@ -88,9 +88,7 @@ namespace Nutcracker {
 
             InitializeEffectBuffer(0);
             InitializeEffectBuffer(1);
-            //InitializeNodes();
             InitializeFromSequence();
-            //InitMatrix();
             InitializeModels();
             InitializePresets();
             SetEffectLayer();
@@ -105,18 +103,6 @@ namespace Nutcracker {
                 }
             }
         }
-
-
-/*
-        private void InitializeNodes() {
-            for (var row = 0; row < RenderRows; row++) {
-                for (var col = 0; col < RenderCols; col++) {
-                    _nodes[row, col] = new NutcrackerNodes
-                    {PixelColor = Color.Black, Sparkle = _random.Next() % 5000, Model = new Point(col, RenderRows - 1 - row)};
-                }
-            }
-        }
-*/
 
 
         private void InitializeFromSequence() {
@@ -158,30 +144,6 @@ namespace Nutcracker {
             cbEffectsPresets.Items.Add("Save current settings...");
             cbEffectsPresets.Items.Add("Manage Effect Presets...");
         }
-
-
-/*
-        private void InitMatrix() {
-            var stringCount = RenderCols;
-            var nodesPerString = RenderRows;
-            const int strandsPerString = 1;
-
-            var numStrands = stringCount * strandsPerString;
-            var pixelsPerStrand = nodesPerString / strandsPerString;
-            var index = 0;
-            for (var strand = 0; strand < numStrands; strand++) {
-                var segmentnum = strand % strandsPerString;
-                for (var pixel = 0; pixel < pixelsPerStrand; pixel++) {
-                    var y = index % RenderRows;
-                    var x = index / RenderRows;
-                    _nodes[y, x].BufX = strand;
-                    _nodes[y, x].BufY = (segmentnum % 2 != 0) ? pixel : pixelsPerStrand - pixel - 1;
-                    index++;
-                }
-            }
-        }
-*/
-
 
         private void SetupForPlaying() {
             if (RenderRows <= 0 || RenderCols <= 0) {
@@ -396,7 +358,7 @@ namespace Nutcracker {
                             continue;
                         }
                         rawBitmap.SetPixel(column, RenderRows - 1 - row, node.PixelColor);
-                        previewBitmap.SetPixel(node.Model.X, node.Model.Y, node.PixelColor == Color.Transparent ? Color.Black : node.PixelColor);
+                        previewBitmap.SetPixel(node.Model.X, node.Model.Y, node.PixelColor);
                     }
                 }
                 if (chkBoxEnableRawPreview.Checked) {
@@ -408,11 +370,9 @@ namespace Nutcracker {
                         g.InterpolationMode = InterpolationMode.High;
                         g.FillRectangle(Brushes.Black, new Rectangle(Point.Empty, scaled.Size));
                         g.DrawImage(previewBitmap, new Rectangle(Point.Empty, scaled.Size));
-                        //pbPreview.Image = scaled;
                         preview.DrawImage(scaled, 5, 5);
                     }
                 }
-                //preview.DrawImage(previewBitmap, 2, 2);
             }
         }
 
@@ -600,8 +560,6 @@ namespace Nutcracker {
         }
 
         #endregion
-
-        //private void btnManagePresets_Click(object sender, EventArgs e) {}
 
 
         private void SetPreset(string effectData) {

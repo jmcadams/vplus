@@ -54,10 +54,7 @@
             "GRB",
             "GBR",
             "BRG",
-            "BGR",
-            "Static - Red Values",
-            "Static - Green Values",
-            "Static - Blue Values"});
+            "BGR"});
             this.cbColorLayout.Location = new System.Drawing.Point(192, 346);
             this.cbColorLayout.Name = "cbColorLayout";
             this.cbColorLayout.Size = new System.Drawing.Size(171, 21);
@@ -228,9 +225,9 @@
             this.lblModelNameValue.AutoSize = true;
             this.lblModelNameValue.Location = new System.Drawing.Point(192, 12);
             this.lblModelNameValue.Name = "lblModelNameValue";
-            this.lblModelNameValue.Size = new System.Drawing.Size(35, 13);
+            this.lblModelNameValue.Size = new System.Drawing.Size(106, 13);
             this.lblModelNameValue.TabIndex = 15;
-            this.lblModelNameValue.Text = "label1";
+            this.lblModelNameValue.Text = "Nothing here rat king";
             // 
             // NutcrackerModelDialog
             // 
