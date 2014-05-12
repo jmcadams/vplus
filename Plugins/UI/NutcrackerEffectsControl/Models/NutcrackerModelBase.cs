@@ -63,7 +63,10 @@ namespace Nutcracker.Models {
             var b = new Bitmap(c.Width, c.Height, g);
             for (var row = 0; row < Rows; row++) {
                 for (var col = 0; col < Cols; col++) {
-                    b.SetPixel(Nodes[row, col].Model.X, Nodes[row, col].Model.Y, Color.White);
+                    var node = Nodes[row, col].Model;
+                    if (node.X >= 0 && node.Y >= 0) {
+                        b.SetPixel(node.X, node.Y, Color.White);
+                    }
                 }
             }
             g.DrawImage(b, XyOffset, XyOffset);

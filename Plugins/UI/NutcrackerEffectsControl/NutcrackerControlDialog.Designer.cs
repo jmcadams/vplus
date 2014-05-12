@@ -33,9 +33,7 @@ namespace Nutcracker
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NutcrackerControlDialog));
             this.gbEffect2 = new System.Windows.Forms.GroupBox();
-            this.nutcrackerEffectControl2 = new Nutcracker.NutcrackerEffectControl();
             this.gbEffect1 = new System.Windows.Forms.GroupBox();
-            this.nutcrackerEffectControl1 = new Nutcracker.NutcrackerEffectControl();
             this.pbPreview = new System.Windows.Forms.PictureBox();
             this.gbSettings = new System.Windows.Forms.GroupBox();
             this.gbModel = new System.Windows.Forms.GroupBox();
@@ -43,9 +41,7 @@ namespace Nutcracker
             this.btnModelRemove = new System.Windows.Forms.Button();
             this.tbSummary = new System.Windows.Forms.TextBox();
             this.progressBar = new System.Windows.Forms.ProgressBar();
-            this.lblRows = new System.Windows.Forms.Label();
             this.lblRenderInfo = new System.Windows.Forms.Label();
-            this.lblColumns = new System.Windows.Forms.Label();
             this.cbModels = new System.Windows.Forms.ComboBox();
             this.lblPresets = new System.Windows.Forms.Label();
             this.cbEffectsPresets = new System.Windows.Forms.ComboBox();
@@ -82,6 +78,8 @@ namespace Nutcracker
             this.btnCancel = new System.Windows.Forms.Button();
             this.timerRender = new System.Windows.Forms.Timer(this.components);
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.nutcrackerEffectControl1 = new Nutcracker.NutcrackerEffectControl();
+            this.nutcrackerEffectControl2 = new Nutcracker.NutcrackerEffectControl();
             this.gbEffect2.SuspendLayout();
             this.gbEffect1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
@@ -105,15 +103,6 @@ namespace Nutcracker
             this.gbEffect2.TabStop = false;
             this.gbEffect2.Text = "Effect 2";
             // 
-            // nutcrackerEffectControl2
-            // 
-            this.nutcrackerEffectControl2.Location = new System.Drawing.Point(7, 20);
-            this.nutcrackerEffectControl2.Name = "nutcrackerEffectControl2";
-            this.nutcrackerEffectControl2.Size = new System.Drawing.Size(371, 225);
-            this.nutcrackerEffectControl2.Speed = 1;
-            this.nutcrackerEffectControl2.TabIndex = 0;
-            this.nutcrackerEffectControl2.ControlChanged += new Nutcracker.NutcrackerEffectControl.ControlChangedHandler(this.ControlChanged2);
-            // 
             // gbEffect1
             // 
             this.gbEffect1.Controls.Add(this.nutcrackerEffectControl1);
@@ -124,21 +113,13 @@ namespace Nutcracker
             this.gbEffect1.TabStop = false;
             this.gbEffect1.Text = "Effect 1";
             // 
-            // nutcrackerEffectControl1
-            // 
-            this.nutcrackerEffectControl1.Location = new System.Drawing.Point(7, 20);
-            this.nutcrackerEffectControl1.Name = "nutcrackerEffectControl1";
-            this.nutcrackerEffectControl1.Size = new System.Drawing.Size(371, 225);
-            this.nutcrackerEffectControl1.Speed = 1;
-            this.nutcrackerEffectControl1.TabIndex = 0;
-            this.nutcrackerEffectControl1.ControlChanged += new Nutcracker.NutcrackerEffectControl.ControlChangedHandler(this.ControlChanged1);
-            // 
             // pbPreview
             // 
             this.pbPreview.BackColor = System.Drawing.Color.Black;
             this.pbPreview.Location = new System.Drawing.Point(12, 12);
             this.pbPreview.Name = "pbPreview";
             this.pbPreview.Size = new System.Drawing.Size(380, 538);
+            this.pbPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbPreview.TabIndex = 2;
             this.pbPreview.TabStop = false;
             // 
@@ -173,9 +154,7 @@ namespace Nutcracker
             this.gbModel.Controls.Add(this.btnModelRemove);
             this.gbModel.Controls.Add(this.tbSummary);
             this.gbModel.Controls.Add(this.progressBar);
-            this.gbModel.Controls.Add(this.lblRows);
             this.gbModel.Controls.Add(this.lblRenderInfo);
-            this.gbModel.Controls.Add(this.lblColumns);
             this.gbModel.Controls.Add(this.cbModels);
             this.gbModel.Location = new System.Drawing.Point(6, 19);
             this.gbModel.Name = "gbModel";
@@ -212,10 +191,10 @@ namespace Nutcracker
             // 
             // tbSummary
             // 
-            this.tbSummary.Location = new System.Drawing.Point(6, 122);
+            this.tbSummary.Location = new System.Drawing.Point(6, 62);
             this.tbSummary.Multiline = true;
             this.tbSummary.Name = "tbSummary";
-            this.tbSummary.Size = new System.Drawing.Size(227, 78);
+            this.tbSummary.Size = new System.Drawing.Size(227, 133);
             this.tbSummary.TabIndex = 16;
             // 
             // progressBar
@@ -226,32 +205,14 @@ namespace Nutcracker
             this.progressBar.TabIndex = 17;
             this.progressBar.Visible = false;
             // 
-            // lblRows
-            // 
-            this.lblRows.AutoSize = true;
-            this.lblRows.Location = new System.Drawing.Point(6, 63);
-            this.lblRows.Name = "lblRows";
-            this.lblRows.Size = new System.Drawing.Size(86, 13);
-            this.lblRows.TabIndex = 14;
-            this.lblRows.Text = "Nodes per String";
-            // 
             // lblRenderInfo
             // 
             this.lblRenderInfo.AutoSize = true;
-            this.lblRenderInfo.Location = new System.Drawing.Point(6, 106);
+            this.lblRenderInfo.Location = new System.Drawing.Point(6, 46);
             this.lblRenderInfo.Name = "lblRenderInfo";
             this.lblRenderInfo.Size = new System.Drawing.Size(114, 13);
             this.lblRenderInfo.TabIndex = 15;
             this.lblRenderInfo.Text = "Rendering Information:";
-            // 
-            // lblColumns
-            // 
-            this.lblColumns.AutoSize = true;
-            this.lblColumns.Location = new System.Drawing.Point(6, 46);
-            this.lblColumns.Name = "lblColumns";
-            this.lblColumns.Size = new System.Drawing.Size(39, 13);
-            this.lblColumns.TabIndex = 13;
-            this.lblColumns.Text = "Strings";
             // 
             // cbModels
             // 
@@ -639,6 +600,24 @@ namespace Nutcracker
             this.timerRender.Interval = 50;
             this.timerRender.Tick += new System.EventHandler(this.timerRender_Tick);
             // 
+            // nutcrackerEffectControl1
+            // 
+            this.nutcrackerEffectControl1.Location = new System.Drawing.Point(7, 20);
+            this.nutcrackerEffectControl1.Name = "nutcrackerEffectControl1";
+            this.nutcrackerEffectControl1.Size = new System.Drawing.Size(371, 225);
+            this.nutcrackerEffectControl1.Speed = 1;
+            this.nutcrackerEffectControl1.TabIndex = 0;
+            this.nutcrackerEffectControl1.ControlChanged += new Nutcracker.NutcrackerEffectControl.ControlChangedHandler(this.ControlChanged1);
+            // 
+            // nutcrackerEffectControl2
+            // 
+            this.nutcrackerEffectControl2.Location = new System.Drawing.Point(7, 20);
+            this.nutcrackerEffectControl2.Name = "nutcrackerEffectControl2";
+            this.nutcrackerEffectControl2.Size = new System.Drawing.Size(371, 225);
+            this.nutcrackerEffectControl2.Speed = 1;
+            this.nutcrackerEffectControl2.TabIndex = 0;
+            this.nutcrackerEffectControl2.ControlChanged += new Nutcracker.NutcrackerEffectControl.ControlChangedHandler(this.ControlChanged2);
+            // 
             // NutcrackerControlDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -684,8 +663,6 @@ namespace Nutcracker
         private Button btnOK;
         private Button btnCancel;
         private CheckBox cbRender;
-        private Label lblColumns;
-        private Label lblRows;
         private NutcrackerEffectControl nutcrackerEffectControl2;
         private NutcrackerEffectControl nutcrackerEffectControl1;
         private GroupBox gbLayer;

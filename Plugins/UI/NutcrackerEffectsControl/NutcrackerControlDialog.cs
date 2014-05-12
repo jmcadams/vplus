@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -39,11 +40,11 @@ namespace Nutcracker {
         private string _playText;
         private const string StopText = "Stop";
 
-        private readonly Random _random = new Random();
+        //private readonly Random _random = new Random();
         private readonly Rectangle _selectedRange;
         private readonly EventSequence _sequence;
         private readonly Stopwatch _sw = new Stopwatch();
-
+        private Rectangle _previewRectangle;
         private const int MaxEffects = 2;
 
         private Layers EffectLayer { get; set; }
@@ -79,6 +80,7 @@ namespace Nutcracker {
             _playText = btnPlayStop.Text;
             RenderRows = 0;
             RenderCols = 0;
+            _previewRectangle = new Rectangle(0, 0, pbPreview.Size.Width / 2, pbPreview.Height / 2);
             _nodes = new NutcrackerNodes[RenderRows,RenderCols];
             _effectBuffers = new[] {new Color[RenderRows,RenderCols], new Color[RenderRows,RenderCols]};
             _effectControls = new[] {nutcrackerEffectControl1, nutcrackerEffectControl2};
@@ -86,9 +88,9 @@ namespace Nutcracker {
 
             InitializeEffectBuffer(0);
             InitializeEffectBuffer(1);
-            InitializeNodes();
+            //InitializeNodes();
             InitializeFromSequence();
-            InitMatrix();
+            //InitMatrix();
             InitializeModels();
             InitializePresets();
             SetEffectLayer();
@@ -105,6 +107,7 @@ namespace Nutcracker {
         }
 
 
+/*
         private void InitializeNodes() {
             for (var row = 0; row < RenderRows; row++) {
                 for (var col = 0; col < RenderCols; col++) {
@@ -113,6 +116,7 @@ namespace Nutcracker {
                 }
             }
         }
+*/
 
 
         private void InitializeFromSequence() {
@@ -142,24 +146,6 @@ namespace Nutcracker {
                 // ReSharper restore AssignNullToNotNullAttribute
             }
             cbModels.Items.Add("Add a New Model");
-
-            //const int degrees = 180;
-            //if (RenderCols < 2) return;
-            //var factor = pbPreview.Height / RenderRows;
-            //var renderWi = pbPreview.Width / 2;
-            //const double radians = 2.0 * Math.PI * degrees / 360.0;
-            //var radius = renderWi * 0.8;
-            //const double startAngle = -radians / 2.0;
-            //var angleIncr = radians / (RenderCols - 1);
-            //for (var row = 0; row < RenderRows; row++) {
-            //    for (var col = 0; col < RenderCols; col++) {
-            //        var angle = startAngle + _nodes[RenderRows - 1 - row, col].BufX * angleIncr;
-            //        var x0 = radius * Math.Sin(angle);
-            //        var x = (int) Math.Floor(x0 * (1.0 - (double) (_nodes[row, col].BufY) / RenderRows) + 0.5) + renderWi;
-            //        var y = _nodes[RenderRows - 1 - row, col].BufY * factor;
-            //        _nodes[RenderRows - 1 - row, col].Model = new Point(x, y);
-            //    }
-            //}
         }
 
 
@@ -174,13 +160,14 @@ namespace Nutcracker {
         }
 
 
+/*
         private void InitMatrix() {
-            var stringCount = RenderCols; // 32
-            var nodesPerString = RenderRows; // 50
+            var stringCount = RenderCols;
+            var nodesPerString = RenderRows;
             const int strandsPerString = 1;
 
-            var numStrands = stringCount * strandsPerString; // 64
-            var pixelsPerStrand = nodesPerString / strandsPerString; // 25
+            var numStrands = stringCount * strandsPerString;
+            var pixelsPerStrand = nodesPerString / strandsPerString;
             var index = 0;
             for (var strand = 0; strand < numStrands; strand++) {
                 var segmentnum = strand % strandsPerString;
@@ -193,6 +180,7 @@ namespace Nutcracker {
                 }
             }
         }
+*/
 
 
         private void SetupForPlaying() {
@@ -329,7 +317,7 @@ namespace Nutcracker {
                     cbModels.SelectedIndex = cbModels.FindStringExact(modelDialog.ModelName);
                     _ignoreIndexChange = false;
                 }
-                modelDialog.PreviewRectangle = pbPreview.Bounds;
+                modelDialog.PreviewRectangle = _previewRectangle;
                 RenderRows = modelDialog.Rows;
                 RenderCols = modelDialog.Cols;
                 _nodes = modelDialog.Nodes;
@@ -400,18 +388,31 @@ namespace Nutcracker {
             using (var raw = pbRawPreview.CreateGraphics())
             using (var preview = pbPreview.CreateGraphics()) {
                 var rawBitmap = new Bitmap(RenderCols, RenderRows, raw);
-                var previewBitmap = new Bitmap(pbPreview.Width, pbPreview.Height, preview);
+                var previewBitmap = new Bitmap(_previewRectangle.Width, _previewRectangle.Height, preview);
                 for (var row = 0; row < RenderRows; row++) {
                     for (var column = 0; column < RenderCols; column++) {
                         var node = _nodes[row, column];
+                        if (node.Model.X < 0 || node.Model.Y < 0) {
+                            continue;
+                        }
                         rawBitmap.SetPixel(column, RenderRows - 1 - row, node.PixelColor);
-                        previewBitmap.SetPixel(node.Model.X, node.Model.Y, node.PixelColor);
+                        previewBitmap.SetPixel(node.Model.X, node.Model.Y, node.PixelColor == Color.Transparent ? Color.Black : node.PixelColor);
                     }
                 }
                 if (chkBoxEnableRawPreview.Checked) {
                     raw.DrawImage(rawBitmap, new Point((pbRawPreview.Width - RenderCols) / 2, (pbRawPreview.Height - RenderRows) / 2));
                 }
-                preview.DrawImage(previewBitmap, 2, 2);
+                using (previewBitmap) {
+                    var scaled = new Bitmap(pbPreview.Width - 10, pbPreview.Height - 10);
+                    using (var g = Graphics.FromImage(scaled)) {
+                        g.InterpolationMode = InterpolationMode.High;
+                        g.FillRectangle(Brushes.Black, new Rectangle(Point.Empty, scaled.Size));
+                        g.DrawImage(previewBitmap, new Rectangle(Point.Empty, scaled.Size));
+                        //pbPreview.Image = scaled;
+                        preview.DrawImage(scaled, 5, 5);
+                    }
+                }
+                //preview.DrawImage(previewBitmap, 2, 2);
             }
         }
 
@@ -549,6 +550,7 @@ namespace Nutcracker {
             if (rbClipboard.Checked) RenderType = RenderTo.Clipboard;
 
             UpdateRenderToControls();
+            UpdateSummary();
         }
 
 
@@ -592,8 +594,9 @@ namespace Nutcracker {
             var channelCount = RenderRows * RenderCols * 3;
             var msg = (channelCount > _sequence.FullChannelCount) ? "(Too Large for your current channel count)" : string.Empty;
 
-            tbSummary.Text = String.Format("From {0} thru {1} on {2} channels {3}", startTime, endTime, channelCount, msg);
-            btnOK.Enabled = msg == string.Empty;
+            tbSummary.Text = String.Format("Strings: {4}{6}Nodes per string: {5}{6}Channels: {2}{6}Position: From {0} thru {1}{6}{3}", startTime, endTime,
+                channelCount, msg, RenderRows, RenderCols, Environment.NewLine);
+            btnOK.Enabled = (msg == string.Empty || rbClipboard.Checked || rbRoutine.Checked);
         }
 
         #endregion

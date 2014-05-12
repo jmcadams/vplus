@@ -38,14 +38,31 @@ namespace Nutcracker {
 
 
         public int Rows {
-            get { return _modelCache[cbPreviewAs.SelectedItem.ToString()].Rows; }
+            get {
+                var cache = _modelCache[cbPreviewAs.SelectedItem.ToString()];
+                if (cache.Rows < 1) {
+                    cache.InitializePreview(PreviewRectangle);
+                }
+                return cache.Rows;
+            }
         }
 
         public int Cols {
-            get { return _modelCache[cbPreviewAs.SelectedItem.ToString()].Cols; }
+            get {
+                var cache = _modelCache[cbPreviewAs.SelectedItem.ToString()];
+                if (cache.Cols < 1) {
+                    cache.InitializePreview(PreviewRectangle);
+                }
+                return cache.Cols;
+            }
         }
 
-        public Rectangle PreviewRectangle { private get; set; }
+        private Rectangle _prevRect;
+
+        public Rectangle PreviewRectangle {
+            private get { return _prevRect.IsEmpty ? _prevRect = new Rectangle(0, 0, 100, 100) : _prevRect; }
+            set { _prevRect = value; }
+        }
 
         public NutcrackerNodes[,] Nodes {
             get {

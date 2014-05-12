@@ -300,6 +300,9 @@
     <EmbeddedResource Include="Models\Tree.resx">
       <DependentUpon>Tree.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Models\WindowFrame.resx">
+      <DependentUpon>WindowFrame.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="NutcrackerControlDialog.resx">
       <DependentUpon>NutcrackerControlDialog.cs</DependentUpon>
       <SubType>Designer</SubType>

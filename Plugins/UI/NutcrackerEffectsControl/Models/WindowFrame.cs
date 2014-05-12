@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
@@ -25,6 +26,12 @@ namespace Nutcracker.Models {
 
         public override string EffectName {
             get { return "Window Frame"; }
+        }
+
+        public override string Notes {
+            get {
+                return "Treated as for string, top/bottom/left/right.";
+            }
         }
 
         public override XDocument Settings {
@@ -55,73 +62,55 @@ namespace Nutcracker.Models {
                 pbLink.BackgroundImage = _isLinked ? Resources.Link : Resources.Unlink;
             }
         }
-        //todo need to figure out why this doesnt draw right when the offset == 1
-        //TODO implement rect centering;
         public override void InitializePreview(Rectangle rect) {
             var top = (int)nudTopCount.Value;
             var sides = (int)nudSideCount.Value;
             var bottom = (int)nudBottomCount.Value;
 
-            Cols = Math.Max(top, bottom) + 2;
-            Rows = sides;
+            Cols = Math.Max(Math.Max(top, bottom),sides);
+            Rows = 4;
             Nodes = new NutcrackerNodes[Rows, Cols];
             for (var row = 0; row < Rows; row++) {
                 for (var col = 0; col < Cols; col++) {
-                    Nodes[row, col] = new NutcrackerNodes();
+                    Nodes[row, col] = new NutcrackerNodes() {Model = new Point(-1,-1)};
                 }
             }
 
-            int x,y;
-            //SetNodeCount(top+2*sides+bottom);
-            if (top >= bottom) {
-                // first node is bottom left and we count up the left side, across the top, down the right and then across the bottom
-                var frameWidth = top + 2; // allow for left/right columns
+            var spacing = Math.Min(rect.Width, rect.Height);
+            var maxWidth = Math.Max(top, bottom);
 
-                // up side 1
-                x = IsLtoR ? 0 : frameWidth - 1;
-                for (y = 0; y < sides; y++) {
-                    Nodes[y, x].Model = new Point(x, y);
-                }
-                // across top
-                y = sides - 1;
-                for (x = 0; x < top; x++) {
-                    Nodes[y, x].Model = new Point(IsLtoR ? x + 1 : top - x, y);
-                }
-                // down side 2
-                x = IsLtoR ? frameWidth - 1 : 0;
-                for (y = sides - 1; y >= 0; y--) {
-                    Nodes[y, x].Model = new Point(x, y);
-                }
-                // across bottom
-                y = 0;
-                for (x = 0; x < bottom; x++) {
-                    Nodes[y, x].Model = new Point(IsLtoR ? top - x : x + 1, y);
-                }
+            var xSpacing = spacing / (maxWidth + 2);
+            var ySpacing = spacing / (sides + 2);
+
+            var xOffset = (rect.Width - (xSpacing * (maxWidth + 3))) / 2;
+            var yOffset = (rect.Height - (ySpacing * (sides + 3))) / 2;
+            int x, y;
+
+            // x = left to right
+            // y = top to bottom
+
+            // Starts at bottom left with the left side - should be the left most/bottom most pixel.
+            for (y = sides - 1; y >= 0; y--) {
+                Nodes[0, y].Model = new Point(xSpacing + xOffset, (y + 2) * ySpacing + yOffset);
             }
-            else {
-                // first node is top left and we count down the left side, across the bottom, up the right and then across the top
-                var frameWidth = bottom + 2;
+            
+            // Now top from left to right
+            for (x = 0; x < top; x++) {
+                Nodes[1, x].Model = new Point((x + 1) * xSpacing + xOffset, ySpacing + yOffset);
+            }
 
-                // down side 1
-                x = IsLtoR ? 0 : frameWidth - 1;
-                for (y = sides - 1; y >= 0; y--) {
-                    Nodes[y, x].Model = new Point(x, y);
-                }
-                // across bottom
-                y = 0;
-                for (x = 0; x < bottom; x++) {
-                    Nodes[y, x].Model = new Point(IsLtoR ? x + 1 : bottom - x, y);
-                }
-                // up side 2
-                x = IsLtoR ? frameWidth - 1 : 0;
-                for (y = 0; y < sides; y++) {
-                    Nodes[y, x].Model = new Point(x, y);
-                }
-                // across top
-                y = sides - 1;
-                for (x = 0; x < top; x++) {
-                    Nodes[y, x].Model = new Point(IsLtoR ? bottom - x : x + 1, y);
-                }
+            // Now top right to bottom right
+            x = (maxWidth + 1) * xSpacing + xOffset;
+            for (y = 0; y < sides; y++) {
+                Nodes[2, y].Model = new Point(x, (y + 1) * ySpacing + yOffset);
+            }
+
+            // Finally, finish along bottom
+            y = (sides + 1) * ySpacing + yOffset;
+            var margin = top <= bottom ? 0 : top - bottom;
+            for (x = bottom - 1; x >= 0; x--) {
+                Nodes[3, x].Model = new Point((x + 2 + margin) * xSpacing + xOffset, y);
+
             }
         }
 

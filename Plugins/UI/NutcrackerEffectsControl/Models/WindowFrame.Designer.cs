@@ -47,7 +47,7 @@ namespace Nutcracker.Models {
             // pbLink
             // 
             this.pbLink.BackColor = System.Drawing.Color.Transparent;
-            this.pbLink.BackgroundImage = Resources.Link;
+            this.pbLink.BackgroundImage = global::Nutcracker.Properties.Resources.Link;
             this.pbLink.InitialImage = null;
             this.pbLink.Location = new System.Drawing.Point(330, 35);
             this.pbLink.Name = "pbLink";
@@ -68,7 +68,7 @@ namespace Nutcracker.Models {
             this.nudBottomCount.Size = new System.Drawing.Size(71, 20);
             this.nudBottomCount.TabIndex = 10;
             this.nudBottomCount.Value = new decimal(new int[] {
-            1,
+            25,
             0,
             0,
             0});
@@ -91,7 +91,7 @@ namespace Nutcracker.Models {
             this.nudSideCount.Size = new System.Drawing.Size(71, 20);
             this.nudSideCount.TabIndex = 9;
             this.nudSideCount.Value = new decimal(new int[] {
-            50,
+            25,
             0,
             0,
             0});
@@ -127,7 +127,7 @@ namespace Nutcracker.Models {
             this.nudTopCount.Size = new System.Drawing.Size(71, 20);
             this.nudTopCount.TabIndex = 8;
             this.nudTopCount.Value = new decimal(new int[] {
-            1,
+            25,
             0,
             0,
             0});
@@ -155,7 +155,7 @@ namespace Nutcracker.Models {
             // pbLinkBottom
             // 
             this.pbLinkBottom.BackColor = System.Drawing.Color.Transparent;
-            this.pbLinkBottom.BackgroundImage = Resources.LinkBottom;
+            this.pbLinkBottom.BackgroundImage = global::Nutcracker.Properties.Resources.LinkBottom;
             this.pbLinkBottom.Location = new System.Drawing.Point(330, 67);
             this.pbLinkBottom.Name = "pbLinkBottom";
             this.pbLinkBottom.Size = new System.Drawing.Size(5, 4);
@@ -165,7 +165,7 @@ namespace Nutcracker.Models {
             // pbLinkTop
             // 
             this.pbLinkTop.BackColor = System.Drawing.Color.Transparent;
-            this.pbLinkTop.BackgroundImage = Resources.LinkTop;
+            this.pbLinkTop.BackgroundImage = global::Nutcracker.Properties.Resources.LinkTop;
             this.pbLinkTop.Location = new System.Drawing.Point(330, 28);
             this.pbLinkTop.Name = "pbLinkTop";
             this.pbLinkTop.Size = new System.Drawing.Size(5, 4);
