@@ -15,7 +15,16 @@ using VixenPlus;
 
 using VixenPlusCommon;
 
+// todo Enable the ability to pass group channels or full channels to this
 namespace Nutcracker {
+
+    public enum RenderTo {
+        Routine,
+        CurrentSelection,
+        SpecificPoint,
+        Clipboard
+    }
+
     public sealed partial class NutcrackerControlDialog : Form {
 
         #region Class Members and Accessors
@@ -49,18 +58,26 @@ namespace Nutcracker {
 
         private Layers EffectLayer { get; set; }
 
-        public enum RenderTo {
-            Routine,
-            CurrentSelection,
-            SpecificPoint,
-            Clipboard
-        }
+        //public enum RenderTo {
+        //    Routine,
+        //    CurrentSelection,
+        //    SpecificPoint,
+        //    Clipboard
+        //}
 
         public RenderTo RenderType { get; private set; }
-        public byte[,] RenderData { get; private set; }
-        public int RenderEvents { get; private set; }
+        public byte[,] RenderEventData { get; private set; }
+        public int RenderEventCount { get; private set; }
         public int RenderRows { get; private set; }
         public int RenderCols { get; private set; }
+
+        public int RenderChannel {
+            get { return cbChannels.SelectedIndex; }
+        }
+
+        public int RenderStartEvent {
+            get { return (int) nudStartEvent.Value; }
+        }
 
         #endregion
 
@@ -109,12 +126,19 @@ namespace Nutcracker {
             nudStartEvent.Maximum = _sequence.TotalEventPeriods;
             nudStartEvent.Value = _selectedRange.Left;
             nudEventCount.Maximum = _sequence.TotalEventPeriods - nudStartEvent.Value;
-            if (_selectedRange.Width > 0) {
-                nudEventCount.Value = _selectedRange.Width;
-                rbCurrentSelection.Checked = true;
+
+            foreach (var c in _sequence.Channels) {
+                cbChannels.Items.Add(c);
+            }
+            
+            if (_selectedRange.IsEmpty) {
+                rbCurrentSelection.Enabled = false;
+
             }
             else {
-                rbCurrentSelection.Enabled = false;
+                cbChannels.SelectedIndex = cbChannels.FindStringExact(_sequence.Channels[_selectedRange.Y].Name);
+                nudEventCount.Value = _selectedRange.Width;
+                rbCurrentSelection.Checked = true;
             }
 
             UpdateRenderToControls();
@@ -451,26 +475,26 @@ namespace Nutcracker {
 
         private void RenderFinalResults() {
             // Trees and matrix render rows, cols the other render as 1 x num pixles x (arch count | 1 if windows)
-            RenderEvents = (int) nudEventCount.Value;
-            RenderData = new byte[RenderCols * RenderRows * 3,RenderEvents];
+            RenderEventCount = (int) nudEventCount.Value;
+            RenderEventData = new byte[RenderCols * RenderRows * 3,RenderEventCount];
             for (var i = 0; i < MaxEffects; i++) {
                 _eventToRender[i] = 0;
             }
 
             progressBar.Minimum = 0;
-            progressBar.Maximum = RenderEvents;
+            progressBar.Maximum = RenderEventCount;
             progressBar.Visible = true;
 
-            for (var renderEvent = 0; renderEvent < RenderEvents; renderEvent++) {
+            for (var renderEvent = 0; renderEvent < RenderEventCount; renderEvent++) {
 
                 RenderEffects();
                 var nodeRow = 0;
                 var eventRow = 0;
                 for (var row = 0; row < RenderRows * 3; row += 3) {
                     for (var col = 0; col < RenderCols; col++) {
-                        RenderData[eventRow, renderEvent] = _nodes[nodeRow, col].PixelColor.R;
-                        RenderData[eventRow + 1, renderEvent] = _nodes[nodeRow, col].PixelColor.B;
-                        RenderData[eventRow + 2, renderEvent] = _nodes[nodeRow, col].PixelColor.G;
+                        RenderEventData[eventRow, renderEvent] = _nodes[nodeRow, col].PixelColor.R;
+                        RenderEventData[eventRow + 1, renderEvent] = _nodes[nodeRow, col].PixelColor.B;
+                        RenderEventData[eventRow + 2, renderEvent] = _nodes[nodeRow, col].PixelColor.G;
                         eventRow += 3;
                     }
                     nodeRow++;
@@ -482,7 +506,7 @@ namespace Nutcracker {
                 var val = renderEvent;
                 Invoke((MethodInvoker) delegate {
                     progressBar.Value = val;
-                    progressBar.Text = string.Format("{0:d3}%", val / RenderEvents);
+                    progressBar.Text = string.Format("{0:d3}%", val / RenderEventCount);
                 });
             }
             progressBar.Visible = false;
@@ -542,6 +566,12 @@ namespace Nutcracker {
             lblEventCount.Visible = eventCountVisible;
             lblEventCountTime.Visible = eventCountVisible;
             nudEventCount.Visible = eventCountVisible;
+
+            // Resharper false positive.
+            // ReSharper disable ConditionIsAlwaysTrueOrFalse
+            lblChannels.Visible = (startEventVisible && eventCountVisible);
+            cbChannels.Visible = (startEventVisible && eventCountVisible);
+            // ReSharper restore ConditionIsAlwaysTrueOrFalse
         }
 
 
@@ -555,7 +585,7 @@ namespace Nutcracker {
             lblEventCountTime.Text = elapsedTime;
 
             var channelCount = RenderRows * RenderCols * 3;
-            var msg = (channelCount > _sequence.FullChannelCount) ? "(Too Large for your current channel count)" : string.Empty;
+            var msg = (channelCount > _sequence.ChannelCount) ? "(Too Large for your current channel count)" : string.Empty;
 
             tbSummary.Text = String.Format("Strings: {4}{6}Nodes per string: {5}{6}Channels: {2}{6}Position: From {0} thru {1}{6}{3}", startTime, endTime,
                 channelCount, msg, RenderRows, RenderCols, Environment.NewLine);
@@ -725,6 +755,14 @@ namespace Nutcracker {
 
         private string GetFilePath() {
             return Path.Combine(Paths.NutcrackerDataPath, cbModels.SelectedItem + Vendor.NutcrakerModelExtension);
+        }
+
+        private void cbChannels_DrawItem(object sender, DrawItemEventArgs e) {
+            if (e.Index < 0 || e.Index > _sequence.ChannelCount) {
+                return;
+            }
+
+            Channel.DrawItem(e, (Channel)cbChannels.Items[e.Index]);
         }
     }
 }

@@ -2596,7 +2596,11 @@ namespace VixenEditor {
 
 
         private void saveAsARoutineToolStripMenuItem_Click(object sender, EventArgs e) {
-            DialogResult result;
+            SaveRoutine(CellsToArray());
+        }
+
+        private static void SaveRoutine(byte[,] buffer){
+        DialogResult result;
             var path = string.Empty;
             using (var dialog = new TextQueryDialog(Vendor.ProductName, Resources.RoutineNamePrompt, string.Empty)) {
                 do {
@@ -2618,7 +2622,6 @@ namespace VixenEditor {
             }
 
             using (var writer = new StreamWriter(path)) {
-                var buffer = CellsToArray();
                 var rows = buffer.GetLength(Utils.IndexRowsOrHeight);
                 var cols = buffer.GetLength(Utils.IndexColsOrWidth);
                 for (var row = 0; row < rows; row++) {
@@ -4962,30 +4965,52 @@ namespace VixenEditor {
         }
 
         private void tsbNutcracker_Click(object sender, EventArgs e) {
-            using (var nce = new NutcrackerControlDialog(_sequence, _selectedRange)) {
+            using (var nce = new NutcrackerControlDialog(_sequence, _selectedCells)) {
                 if (nce.ShowDialog() != DialogResult.OK) {
                     return;
                 }
-                var ncData = nce.RenderData;
-                var ncType = nce.RenderType;
-                var ncEvents = nce.RenderEvents;
-                var ncRows = nce.RenderRows;
-                var ncCols = nce.RenderCols;
 
-                var cells = new Rectangle(0, 0, ncEvents, ncCols * ncRows * 3);
-                AddUndoItem(cells, UndoOriginalBehavior.Overwrite, "Nutcracker " + ncType);
-                for (var row = 0; row < ncCols * ncRows * 3; row++) {
-                    var channel = GetEventFromChannelNumber(row);
-                    for (var col = 0; col < ncEvents; col++) {
-                        var eventData = ncData[row, col];
-                        _sequence.EventValues[channel, col] = eventData;
-                    }
+                switch (nce.RenderType) {
+                    case RenderTo.Clipboard:
+                        _systemInterface.Clipboard = nce.RenderEventData;
+                        break;
+                    case RenderTo.CurrentSelection:
+                        NutcrackerToSequence(
+                            _selectedCells.X, 
+                            _selectedCells.Y, 
+                            nce.RenderEventCount, 
+                            nce.RenderCols, 
+                            nce.RenderRows, 
+                            nce.RenderEventData);
+                        break;
+                    case RenderTo.Routine:
+                        SaveRoutine(nce.RenderEventData);
+                        break;
+                    case RenderTo.SpecificPoint:
+                        NutcrackerToSequence(
+                            nce.RenderStartEvent, 
+                            nce.RenderChannel, 
+                            nce.RenderEventCount, 
+                            nce.RenderCols, 
+                            nce.RenderRows,
+                            nce.RenderEventData);
+                        break;
                 }
-                pictureBoxGrid.Invalidate();
             }
-             /* */
         }
 
+
+        private void NutcrackerToSequence(int startCol, int startRow, int eventCount, int cols, int rows, byte[,] eventData) {
+            var cells = new Rectangle(startCol, startRow, eventCount, cols * rows * 3);
+            AddUndoItem(cells, UndoOriginalBehavior.Overwrite, "Nutcracker Effects");
+            for (var row = startRow; row < _sequence.ChannelCount && row < rows * 3; row++) {
+                var channel = GetEventFromChannelNumber(row - startRow);
+                for (var col = startCol; col < eventCount + startCol && col < _sequence.TotalEventPeriods; col++) {
+                    _sequence.EventValues[channel, col] = eventData[row - startRow, col - startCol];
+                }
+            }
+            pictureBoxGrid.Invalidate();
+        }
 
         private void textBoxProgramLength_KeyPress(object sender, KeyPressEventArgs e) {
             if (e.KeyChar != '\r') {

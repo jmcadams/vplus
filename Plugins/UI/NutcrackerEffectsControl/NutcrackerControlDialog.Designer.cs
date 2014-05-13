@@ -78,6 +78,8 @@ namespace Nutcracker
             this.btnCancel = new System.Windows.Forms.Button();
             this.timerRender = new System.Windows.Forms.Timer(this.components);
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.lblChannels = new System.Windows.Forms.Label();
+            this.cbChannels = new System.Windows.Forms.ComboBox();
             this.nutcrackerEffectControl1 = new Nutcracker.NutcrackerEffectControl();
             this.nutcrackerEffectControl2 = new Nutcracker.NutcrackerEffectControl();
             this.gbEffect2.SuspendLayout();
@@ -410,6 +412,8 @@ namespace Nutcracker
             // 
             // gbRenderTo
             // 
+            this.gbRenderTo.Controls.Add(this.cbChannels);
+            this.gbRenderTo.Controls.Add(this.lblChannels);
             this.gbRenderTo.Controls.Add(this.lblStartEventTime);
             this.gbRenderTo.Controls.Add(this.nudStartEvent);
             this.gbRenderTo.Controls.Add(this.lblStartEvent);
@@ -600,6 +604,26 @@ namespace Nutcracker
             this.timerRender.Interval = 50;
             this.timerRender.Tick += new System.EventHandler(this.timerRender_Tick);
             // 
+            // lblChannels
+            // 
+            this.lblChannels.AutoSize = true;
+            this.lblChannels.Location = new System.Drawing.Point(7, 141);
+            this.lblChannels.Name = "lblChannels";
+            this.lblChannels.Size = new System.Drawing.Size(46, 13);
+            this.lblChannels.TabIndex = 10;
+            this.lblChannels.Text = "Channel";
+            // 
+            // cbChannels
+            // 
+            this.cbChannels.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbChannels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbChannels.FormattingEnabled = true;
+            this.cbChannels.Location = new System.Drawing.Point(59, 138);
+            this.cbChannels.Name = "cbChannels";
+            this.cbChannels.Size = new System.Drawing.Size(164, 21);
+            this.cbChannels.TabIndex = 11;
+            this.cbChannels.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbChannels_DrawItem);
+            // 
             // nutcrackerEffectControl1
             // 
             this.nutcrackerEffectControl1.Location = new System.Drawing.Point(7, 20);
@@ -704,5 +728,7 @@ namespace Nutcracker
         private GroupBox gbModel;
         private Button btnModelEdit;
         private ToolTip toolTip;
+        private ComboBox cbChannels;
+        private Label lblChannels;
     }
 }
