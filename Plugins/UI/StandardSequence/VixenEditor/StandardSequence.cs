@@ -675,7 +675,7 @@ namespace VixenEditor {
 
 
         private void copyChannelToolStripMenuItem_Click(object sender, EventArgs e) {
-            new ChannelCopyDialog(AffectGrid, _sequence, _selectedChannel, (ModifierKeys & Keys.Shift) == Keys.Shift).Show();
+            new ChannelCopyDialog(AffectGrid, _sequence, _selectedChannel, IsShiftPressed()).Show();
         }
 
 
@@ -1206,6 +1206,10 @@ namespace VixenEditor {
             pictureBoxGrid.Update();
         }
 
+
+        private static bool IsShiftPressed() {
+            return (ModifierKeys & Keys.Shift) == Keys.Shift;
+        }
 
         private void loadARoutineToolStripMenuItem_Click(object sender, EventArgs e) {
             var routine = GetRoutine();
@@ -2968,7 +2972,7 @@ namespace VixenEditor {
 
 
         private void ShowChannelProperties() {
-            var channelsToShow = (ModifierKeys & Keys.Shift) == Keys.Shift ? _sequence.Channels : _sequence.FullChannels;
+            var channelsToShow = IsShiftPressed() ? _sequence.Channels : _sequence.FullChannels;
             using (var dialog = new ChannelPropertyDialog(channelsToShow, SelectedChannel, true)) {
                 dialog.ShowDialog();
             }
@@ -4173,7 +4177,7 @@ namespace VixenEditor {
 
         private void toolStripButtonTestChannels_Click(object sender, EventArgs e) {
             try {
-                new TestChannelsDialog(_sequence, _executionInterface, (ModifierKeys & Keys.Shift) == Keys.Shift).ShowDialog();
+                new TestChannelsDialog(_sequence, _executionInterface, IsShiftPressed()).ShowDialog();
             }
             catch (Exception exception) {
                 MessageBox.Show(exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -4183,7 +4187,7 @@ namespace VixenEditor {
 
         private void toolStripButtonTestConsole_Click(object sender, EventArgs e) {
             try {
-                new TestConsoleDialog(_sequence, _executionInterface, (ModifierKeys & Keys.Shift) == Keys.Shift).ShowDialog();
+                new TestConsoleDialog(_sequence, _executionInterface, IsShiftPressed()).ShowDialog();
             }
             catch (Exception exception) {
                 MessageBox.Show(exception.Message, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -4965,7 +4969,7 @@ namespace VixenEditor {
         }
 
         private void tsbNutcracker_Click(object sender, EventArgs e) {
-            using (var nce = new NutcrackerControlDialog(_sequence, _selectedCells)) {
+            using (var nce = new NutcrackerControlDialog(_sequence, _selectedCells, IsShiftPressed())) {
                 if (nce.ShowDialog() != DialogResult.OK) {
                     return;
                 }
