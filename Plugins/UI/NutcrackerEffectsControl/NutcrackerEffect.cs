@@ -12,6 +12,7 @@ using VixenPlusCommon;
 
 namespace Nutcracker {
     public sealed partial class NutcrackerEffectControl : UserControl {
+        private const string EmptyEffect = "None";
         private readonly Dictionary<string, INutcrackerEffect> _effectCache = new Dictionary<string, INutcrackerEffect>();
 
         public delegate void ControlChangedHandler(object sender, EventArgs e);
@@ -70,7 +71,7 @@ namespace Nutcracker {
             if (DesignMode) return;
 
 
-            cbEffects.Items.Add("None");
+            cbEffects.Items.Add(EmptyEffect);
             foreach (var nutcrackerEffect in _effectCache) {
                 cbEffects.Items.Add(nutcrackerEffect.Value.EffectName);
             }
@@ -95,11 +96,13 @@ namespace Nutcracker {
 
         public string GetEffect(bool isFirst) {
             var effectSettings = new StringBuilder();
-            foreach (var e in _effectCache[cbEffects.SelectedItem.ToString()].Settings) {
-                effectSettings.Append(e.Replace("{0}", isFirst ? "1" : "2")).Append(",");
+            var effectName = cbEffects.SelectedItem.ToString();
+            if (effectName != EmptyEffect) {
+                foreach (var e in _effectCache[cbEffects.SelectedItem.ToString()].Settings) {
+                    effectSettings.Append(e.Replace("{0}", isFirst ? "1" : "2")).Append(",");
+                }
+                effectSettings.Remove(effectSettings.Length - 1, 1);
             }
-            effectSettings.Remove(effectSettings.Length - 1, 1);
-
             return effectSettings.ToString();
         }
 

@@ -653,7 +653,11 @@ namespace Nutcracker {
 
 
         private void cbEffectsPresets_SelectedIndexChanged(object sender, EventArgs e) {
-            if (cbEffectsPresets.SelectedIndex < cbEffectsPresets.Items.Count - 1) {
+            if (_ignoreIndexChange) return;
+
+            var effectsCount = cbEffectsPresets.Items.Count;
+
+            if (cbEffectsPresets.SelectedIndex < effectsCount - 1) {
                 var effectData = _nutcrackerData.GetDataForEffect(cbEffectsPresets.SelectedItem.ToString());
                 if (effectData != null) {
                     SetPreset(effectData);
@@ -661,19 +665,17 @@ namespace Nutcracker {
                 return;
             }
 
-            if (cbEffectsPresets.SelectedIndex != cbEffectsPresets.Items.Count - 1) {
-                return;
-            }
-
+            //todo: there is some work here to do.
             while (true)
                 using (var textDialog = new TextQueryDialog("Preset name", "What do you want to name this preset?", "")) {
                     if (textDialog.ShowDialog() != DialogResult.OK) {
                         return;
                     }
                     var presetName = textDialog.Response;
-                    if (cbEffectsPresets.Items.Contains(presetName)) {
-                        continue;
-                    }
+                    cbEffectsPresets.Items.Insert(effectsCount - 1, presetName);
+                    _ignoreIndexChange = true;
+                    cbEffectsPresets.SelectedIndex = cbEffectsPresets.FindStringExact(presetName);
+                    _ignoreIndexChange = false;
                     SavePreset(presetName);
                     return;
                 }
