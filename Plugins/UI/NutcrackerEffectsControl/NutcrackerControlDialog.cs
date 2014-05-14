@@ -15,9 +15,7 @@ using VixenPlus;
 
 using VixenPlusCommon;
 
-// todo Enable the ability to pass group channels or full channels to this
 namespace Nutcracker {
-
     public enum RenderTo {
         Routine,
         CurrentSelection,
@@ -55,6 +53,7 @@ namespace Nutcracker {
         private readonly Stopwatch _sw = new Stopwatch();
         private Rectangle _previewRectangle;
         private const int MaxEffects = 2;
+        private readonly List<Channel> _channels; 
 
         private Layers EffectLayer { get; set; }
 
@@ -83,9 +82,11 @@ namespace Nutcracker {
 
         #region initialization
 
-        public NutcrackerControlDialog(EventSequence sequence, Rectangle selectedRange) {
+        public NutcrackerControlDialog(EventSequence sequence, Rectangle selectedRange, bool constrainToGroup) {
             _sequence = sequence;
             _selectedRange = selectedRange;
+
+            _channels = constrainToGroup ? _sequence.Channels : _sequence.FullChannels;
             InitializeComponent();
             MaximumSize = Size;
             MinimumSize = Size;
@@ -127,7 +128,7 @@ namespace Nutcracker {
             nudStartEvent.Value = _selectedRange.Left;
             nudEventCount.Maximum = _sequence.TotalEventPeriods - nudStartEvent.Value;
 
-            foreach (var c in _sequence.Channels) {
+            foreach (var c in _channels) {
                 cbChannels.Items.Add(c);
             }
             
@@ -136,7 +137,7 @@ namespace Nutcracker {
 
             }
             else {
-                cbChannels.SelectedIndex = cbChannels.FindStringExact(_sequence.Channels[_selectedRange.Y].Name);
+                cbChannels.SelectedIndex = cbChannels.FindStringExact(_channels[_selectedRange.Y].Name);
                 nudEventCount.Value = _selectedRange.Width;
                 rbCurrentSelection.Checked = true;
             }
@@ -166,7 +167,6 @@ namespace Nutcracker {
                 cbEffectsPresets.Items.Add(nameAttr.Value);
             }
             cbEffectsPresets.Items.Add("Save current settings...");
-            cbEffectsPresets.Items.Add("Manage Effect Presets...");
         }
 
         private void SetupForPlaying() {
@@ -585,9 +585,11 @@ namespace Nutcracker {
             lblEventCountTime.Text = elapsedTime;
 
             var channelCount = RenderRows * RenderCols * 3;
-            var msg = (channelCount > _sequence.ChannelCount) ? "(Too Large for your current channel count)" : string.Empty;
+            var msg = (channelCount > _channels.Count)
+                ? string.Format("Too Large for your current channel count.{0}You may still render to the clipboard or a routine.", Environment.NewLine)
+                : string.Empty;
 
-            tbSummary.Text = String.Format("Strings: {4}{6}Nodes per string: {5}{6}Channels: {2}{6}Position: From {0} thru {1}{6}{3}", startTime, endTime,
+            tbSummary.Text = String.Format("Strings: {4}{6}Nodes per string: {5}{6}Channels: {2}{6}Position: From {0} thru {1}{6}{6}{3}", startTime, endTime,
                 channelCount, msg, RenderRows, RenderCols, Environment.NewLine);
             btnOK.Enabled = (msg == string.Empty || rbClipboard.Checked || rbRoutine.Checked);
         }
@@ -651,34 +653,30 @@ namespace Nutcracker {
 
 
         private void cbEffectsPresets_SelectedIndexChanged(object sender, EventArgs e) {
-            if (cbEffectsPresets.SelectedIndex < cbEffectsPresets.Items.Count - 2) {
+            if (cbEffectsPresets.SelectedIndex < cbEffectsPresets.Items.Count - 1) {
                 var effectData = _nutcrackerData.GetDataForEffect(cbEffectsPresets.SelectedItem.ToString());
                 if (effectData != null) {
                     SetPreset(effectData);
                 }
                 return;
             }
-            //todo why the heck is this here?
-            if (cbEffectsPresets.SelectedIndex == cbEffectsPresets.Items.Count - 1) {
-                using (var modelDialog = new NutcrackerModelDialog(string.Empty)) {
-                    modelDialog.ShowDialog();
-                }
+
+            if (cbEffectsPresets.SelectedIndex != cbEffectsPresets.Items.Count - 1) {
+                return;
             }
-            else if (cbEffectsPresets.SelectedIndex == cbEffectsPresets.Items.Count - 2) {
-                var isValid = false;
-                while (!isValid)
-                    using (var textDialog = new TextQueryDialog("Preset name", "What do you want to name this preset?", "")) {
-                        if (textDialog.ShowDialog() != DialogResult.OK) {
-                            return;
-                        }
-                        var presetName = textDialog.Response;
-                        if (cbEffectsPresets.Items.Contains(presetName)) {
-                            continue;
-                        }
-                        isValid = true;
-                        SavePreset(presetName);
+
+            while (true)
+                using (var textDialog = new TextQueryDialog("Preset name", "What do you want to name this preset?", "")) {
+                    if (textDialog.ShowDialog() != DialogResult.OK) {
+                        return;
                     }
-            }
+                    var presetName = textDialog.Response;
+                    if (cbEffectsPresets.Items.Contains(presetName)) {
+                        continue;
+                    }
+                    SavePreset(presetName);
+                    return;
+                }
         }
 
 
@@ -758,7 +756,7 @@ namespace Nutcracker {
         }
 
         private void cbChannels_DrawItem(object sender, DrawItemEventArgs e) {
-            if (e.Index < 0 || e.Index > _sequence.ChannelCount) {
+            if (e.Index < 0 || e.Index > _channels.Count) {
                 return;
             }
 
