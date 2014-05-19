@@ -5004,17 +5004,28 @@ namespace VixenEditor {
         }
 
 
-        private void NutcrackerToSequence(int startCol, int startRow, int eventCount, int cols, int rows, byte[,] eventData) {
-            var cells = new Rectangle(startCol, startRow, eventCount, cols * rows * 3);
-            AddUndoItem(cells, UndoOriginalBehavior.Overwrite, "Nutcracker Effects");
-            for (var row = startRow; row < _sequence.ChannelCount && row < rows * 3; row++) {
-                var channel = GetEventFromChannelNumber(row - startRow);
+        private void NutcrackerToSequence(
+                        int startCol, 
+                        int startRow, 
+                        int eventCount, 
+                        int strings, 
+                        int nodesPerString,
+                        byte[,] eventData) {
+
+            var totalNodes = strings * nodesPerString * 3;
+            var undoCells = new Rectangle(startCol, startRow, eventCount, totalNodes);
+            AddUndoItem(undoCells, UndoOriginalBehavior.Overwrite, "Nutcracker Effects");
+
+            for (var row = startRow; row < _sequence.ChannelCount && row < totalNodes + startRow; row++) {
+                var channel = GetEventFromChannelNumber(row);
                 for (var col = startCol; col < eventCount + startCol && col < _sequence.TotalEventPeriods; col++) {
                     _sequence.EventValues[channel, col] = eventData[row - startRow, col - startCol];
                 }
             }
+
             pictureBoxGrid.Invalidate();
         }
+
 
         private void textBoxProgramLength_KeyPress(object sender, KeyPressEventArgs e) {
             if (e.KeyChar != '\r') {
