@@ -466,7 +466,7 @@ namespace Controllers.E131 {
                     hardwareMap.Append(Environment.NewLine);
                 }
 
-                return hardwareMap.ToString(0,hardwareMap.Length - Environment.NewLine.Length);
+                return hardwareMap.ToString(0, hardwareMap.Length > Environment.NewLine.Length ? hardwareMap.Length - Environment.NewLine.Length : 0 );
             }
         }
 

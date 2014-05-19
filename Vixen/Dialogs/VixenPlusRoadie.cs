@@ -1622,8 +1622,8 @@ namespace VixenPlus.Dialogs {
                         InitializePlugin(plugin, node);
                         AddPlugInRow(node, plugin);
                     }
-                    _internalUpdate = false;
                 }
+                _internalUpdate = false;
             }
             finally {
                 Cursor = Cursors.Default;
@@ -1684,6 +1684,7 @@ namespace VixenPlus.Dialogs {
             // ReSharper disable PossibleNullReferenceException
             dgvPlugIns.SuspendLayout();
 
+            _internalUpdate = true;
             var index = dgvPlugIns.Rows.Count;
 
             var row =
@@ -1699,6 +1700,7 @@ namespace VixenPlus.Dialogs {
 
             dgvPlugIns.Rows[row].Tag = index;
             _sequencePlugins.Add(p);
+            _internalUpdate = false;
             UpdateRowConfig(index);
 
             dgvPlugIns.ResumeLayout();
