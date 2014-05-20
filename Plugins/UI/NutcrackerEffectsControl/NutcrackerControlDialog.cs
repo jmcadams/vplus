@@ -225,16 +225,23 @@ namespace Nutcracker {
 
 
         private void timerRender_Tick(object sender, EventArgs e) {
-            _sw.Start();
-            RenderEffects();
-            Render();
-            _sw.Stop();
+            try {
+                _sw.Start();
+                RenderEffects();
+                Render();
+                _sw.Stop();
 
-            var mills = _sw.ElapsedMilliseconds;
-            lblStatsMs.Text = String.Format("{0} ms", mills);
-            lblStatsFps.Text = string.Format(@"{0:F2} FPS", mills > 0 ? Utils.MillsPerSecond / (float) mills : 0f);
-            _sw.Reset();
+                var mills = _sw.ElapsedMilliseconds;
+                lblStatsMs.Text = String.Format("{0} ms", mills);
+                lblStatsFps.Text = string.Format(@"{0:F2} FPS", mills > 0 ? Utils.MillsPerSecond / (float) mills : 0f);
+                _sw.Reset();
+            }
+            catch (Exception ex) {
+                btnPlayStop_Click(null, null);
+                ex.InformException();
+            }
         }
+
 
 
         private void NutcrackerControlDialog_FormClosing(object sender, FormClosingEventArgs e) {
@@ -320,32 +327,38 @@ namespace Nutcracker {
         #region Rendering Support
 
         private void RenderEffects() {
-            var effects = GetEffects();
-            var isDataUpdated = false;
-            for (var i = 0; i < MaxEffects; i++) {
-                // Initialize the buffer, if it is not rendering, since the rendering routine depends on it.
-                if (!_isRendering[i]) {
-                    _isRendering[i] = true;
-                    InitializeEffectBuffer(i);
-                }
+            try {
+                var effects = GetEffects();
+                var isDataUpdated = false;
+                for (var i = 0; i < MaxEffects; i++) {
+                    // Initialize the buffer, if it is not rendering, since the rendering routine depends on it.
+                    if (!_isRendering[i]) {
+                        _isRendering[i] = true;
+                        InitializeEffectBuffer(i);
+                    }
 
-                if (effects[i] == null) {
+                    if (effects[i] == null) {
+                        _isRendering[i] = false;
+                        continue;
+                    }
+
+                    isDataUpdated = true;
+                    _effectBuffers[i] = effects[i].RenderEffect(_effectBuffers[i], _effectControls[i].GetPalette(),
+                        _eventToRender[i]);
+
+                    _eventToRender[i] += _effectControls[i].Speed;
                     _isRendering[i] = false;
-                    continue;
                 }
 
-                isDataUpdated = true;
-                _effectBuffers[i] = effects[i].RenderEffect(_effectBuffers[i], _effectControls[i].GetPalette(), _eventToRender[i]);
+                if (!isDataUpdated) {
+                    return;
+                }
 
-                _eventToRender[i] += _effectControls[i].Speed;
-                _isRendering[i] = false;
+                SetPixelColors();
             }
-
-            if (!isDataUpdated) {
-                return;
+            catch (Exception ex) {
+                throw new ExecutionEngineException("Nutcracker fail in render", ex);
             }
-
-            SetPixelColors();
         }
 
 
@@ -475,41 +488,49 @@ namespace Nutcracker {
 
         private void RenderFinalResults() {
             // Trees and matrix render rows, cols the other render as 1 x num pixles x (arch count | 1 if windows)
-            RenderEventCount = (int) nudEventCount.Value;
-            RenderEventData = new byte[RenderCols * RenderRows * 3,RenderEventCount];
-            for (var i = 0; i < MaxEffects; i++) {
-                _eventToRender[i] = 0;
-            }
-
-            progressBar.Minimum = 0;
-            progressBar.Maximum = RenderEventCount;
-            progressBar.Visible = true;
-
-            for (var renderEvent = 0; renderEvent < RenderEventCount; renderEvent++) {
-
-                RenderEffects();
-                var nodeRow = 0;
-                var eventRow = 0;
-                for (var row = 0; row < RenderRows * 3; row += 3) {
-                    for (var col = 0; col < RenderCols; col++) {
-                        RenderEventData[eventRow, renderEvent] = _nodes[nodeRow, col].PixelColor.R;
-                        RenderEventData[eventRow + 1, renderEvent] = _nodes[nodeRow, col].PixelColor.B;
-                        RenderEventData[eventRow + 2, renderEvent] = _nodes[nodeRow, col].PixelColor.G;
-                        eventRow += 3;
-                    }
-                    nodeRow++;
-                }
-
+            try {
+                RenderEventCount = (int) nudEventCount.Value;
+                RenderEventData = new byte[RenderCols * RenderRows * 3, RenderEventCount];
                 for (var i = 0; i < MaxEffects; i++) {
-                    _eventToRender[i] += _effectControls[i].Speed;
+                    _eventToRender[i] = 0;
                 }
-                var val = renderEvent;
-                Invoke((MethodInvoker) delegate {
-                    progressBar.Value = val;
-                    progressBar.Text = string.Format("{0:d3}%", val / RenderEventCount);
-                });
+
+                progressBar.Minimum = 0;
+                progressBar.Maximum = RenderEventCount;
+                progressBar.Visible = true;
+
+                for (var renderEvent = 0; renderEvent < RenderEventCount; renderEvent++) {
+
+                    RenderEffects();
+                    var nodeRow = 0;
+                    var eventRow = 0;
+                    for (var row = 0; row < RenderRows * 3; row += 3) {
+                        for (var col = 0; col < RenderCols; col++) {
+                            RenderEventData[eventRow, renderEvent] = _nodes[nodeRow, col].PixelColor.R;
+                            RenderEventData[eventRow + 1, renderEvent] = _nodes[nodeRow, col].PixelColor.B;
+                            RenderEventData[eventRow + 2, renderEvent] = _nodes[nodeRow, col].PixelColor.G;
+                            eventRow += 3;
+                        }
+                        nodeRow++;
+                    }
+
+                    for (var i = 0; i < MaxEffects; i++) {
+                        _eventToRender[i] += _effectControls[i].Speed;
+                    }
+                    var val = renderEvent;
+                    Invoke((MethodInvoker) delegate {
+                        progressBar.Value = val;
+                        progressBar.Text = string.Format("{0:d3}%", val / RenderEventCount);
+                    });
+                }
+                progressBar.Visible = false;
             }
-            progressBar.Visible = false;
+
+
+            catch (Exception ex) {
+                ex.InformException();
+                DialogResult = DialogResult.Cancel;
+            }
         }
 
         #endregion
