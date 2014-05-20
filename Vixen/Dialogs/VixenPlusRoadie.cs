@@ -1797,6 +1797,7 @@ namespace VixenPlus.Dialogs {
 
             if (dgvPlugIns.Columns[e.ColumnIndex].Name != PlugInColSetup ||
                 !((DataGridViewDisableButtonCell) dgvPlugIns.Rows[e.RowIndex].Cells[PlugInColSetup]).Visible) {
+                UpdateRowConfig(e.RowIndex);
                 return;
             }
 
