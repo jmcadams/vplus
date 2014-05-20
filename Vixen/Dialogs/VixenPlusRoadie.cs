@@ -1591,13 +1591,20 @@ namespace VixenPlus.Dialogs {
 
         private void buttonRemove_Click(object sender, EventArgs e) {
             RemoveSelectedPlugIn();
+            UpdatePlugInButtons();
         }
 
 
         private void buttonUse_Click(object sender, EventArgs e) {
             UsePlugin();
+            UpdatePlugInButtons();
         }
 
+
+        private void UpdatePlugInButtons() {
+            btnRemovePlugIn.Enabled = dgvPlugIns.Rows.Count > 0;
+            btnAddPlugIn.Enabled = cbAvailablePlugIns.SelectedIndex > 0;
+        }
 
         private void InitializePlugin(IHardwarePlugin plugin, XmlNode setupNode) {
             var eventDrivenOutputPlugIn = plugin as IEventDrivenOutputPlugIn;
@@ -1628,6 +1635,7 @@ namespace VixenPlus.Dialogs {
             finally {
                 Cursor = Cursors.Default;
                 dgvPlugIns.Focus();
+                UpdatePlugInButtons();
             }
         }
 
@@ -1651,6 +1659,12 @@ namespace VixenPlus.Dialogs {
             _sequencePlugins.RemoveAt(index);
             _internalUpdate = true;
             dgvPlugIns.Rows.RemoveAt(index);
+            foreach (DataGridViewRow row in dgvPlugIns.Rows) {
+                var tag = row.Parse();
+                if (tag > index) {
+                    row.Tag = --tag;//.ToString(CultureInfo.InvariantCulture);
+                }
+            }
             _internalUpdate = false;
             _lastRow = -1;
         }
@@ -1826,7 +1840,7 @@ namespace VixenPlus.Dialogs {
 
 
         private int GetTagForRow(int index) {
-            return int.Parse(dgvPlugIns.Rows[index].Tag.ToString());
+            return dgvPlugIns.Rows[index].Parse();
         }
 
 
@@ -1835,6 +1849,10 @@ namespace VixenPlus.Dialogs {
         }
 
         #endregion
+
+        private void cbAvailablePlugIns_SelectedIndexChanged(object sender, EventArgs e) {
+            UpdatePlugInButtons();
+        }
 
     }
 }
