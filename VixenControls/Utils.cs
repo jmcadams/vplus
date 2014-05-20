@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.IO;
-using System.Linq.Expressions;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -30,8 +29,8 @@ namespace VixenPlusCommon {
         public const double UpdateMonthly = 730.5;    // 1/3 Quarterly
         public const double UpdateQuarterly = 2191.5; // 1/4 Annual
         public const double UpdateAnnually = 8766;    // (365.25 * 24)
-    
-        public const string LogFileName = "crash.log";
+
+        private const string LogFileName = "crash.log";
         private const string UpdateLogFileName = "update.log";
 
         private static readonly string LogFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), LogFileName);
@@ -212,6 +211,11 @@ namespace VixenPlusCommon {
             var msg = string.Format(Resources.InformOnError, LogFileName, ex.Message, ex.StackTrace, Vendor.ProductName);
 
             MessageBox.Show(msg, Resources.ErrorLogCreated, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+
+        public static int Parse(this DataGridViewRow row) {
+            return int.Parse(row.Tag.ToString());
         }
 
         private static void ShowException(this Exception exception, bool isTerminating) {
