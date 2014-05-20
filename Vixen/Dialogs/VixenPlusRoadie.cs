@@ -606,7 +606,24 @@ namespace VixenPlus.Dialogs {
 
 
         private void DoPluginsKeys(KeyEventArgs e) {
-            Debug.Print(e.KeyCode.ToString());
+            switch (e.KeyCode) {
+                case Keys.Delete:
+                    buttonRemove_Click(null, null) ;
+                    e.Handled = true;
+                    break;
+                case Keys.Home:
+                    if (dgvPlugIns.Rows.Count > 0 && dgvPlugIns.SelectedCells.Count > 0) {
+                        dgvPlugIns.CurrentCell = dgvPlugIns.Rows[0].Cells[dgvPlugIns.SelectedCells[0].ColumnIndex];
+                        e.Handled = true;
+                    }
+                    break;
+                case Keys.End:
+                    if (dgvPlugIns.Rows.Count > 0 && dgvPlugIns.SelectedCells.Count > 0) {
+                        dgvPlugIns.CurrentCell = dgvPlugIns.Rows[dgvPlugIns.Rows.Count - 1].Cells[dgvPlugIns.SelectedCells[0].ColumnIndex];
+                        e.Handled = true;
+                    }
+                    break;
+            }
         }
 
 
@@ -1661,6 +1678,8 @@ namespace VixenPlus.Dialogs {
                     row.Tag = --tag;
                 }
             }
+            _contextProfile.IsDirty = true;
+
             _internalUpdate = false;
             _lastRow = -1;
         }
@@ -1712,6 +1731,7 @@ namespace VixenPlus.Dialogs {
             _sequencePlugins.Add(p);
             _internalUpdate = false;
             UpdateRowConfig(index);
+            _contextProfile.IsDirty = true;
 
             dgvPlugIns.ResumeLayout();
         }
@@ -1794,6 +1814,7 @@ namespace VixenPlus.Dialogs {
                 var lastPlugIn = GetPluginForIndex(_lastRow);
                 lastPlugIn.GetSetup();
                 lastPlugIn.CloseSetup();
+                _contextProfile.IsDirty = true; //todo make sure it changed before setting to true;
             }
 
             pSetup.Controls.Clear();
