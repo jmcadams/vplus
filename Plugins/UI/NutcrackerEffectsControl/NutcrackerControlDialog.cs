@@ -236,7 +236,7 @@ namespace Nutcracker {
                 lblStatsFps.Text = string.Format(@"{0:F2} FPS", mills > 0 ? Utils.MillsPerSecond / (float) mills : 0f);
                 _sw.Reset();
             }
-            catch (Exception ex) {
+            catch (NutcrackerException ex) {
                 btnPlayStop_Click(null, null);
                 ex.InformException();
             }
@@ -357,7 +357,7 @@ namespace Nutcracker {
                 SetPixelColors();
             }
             catch (Exception ex) {
-                throw new ExecutionEngineException("Nutcracker fail in render", ex);
+                throw new NutcrackerException("Nutcracker Error in Rendering (see log for details)", ex);
             }
         }
 
@@ -525,9 +525,7 @@ namespace Nutcracker {
                 }
                 progressBar.Visible = false;
             }
-
-
-            catch (Exception ex) {
+            catch (NutcrackerException ex) {
                 ex.InformException();
                 DialogResult = DialogResult.Cancel;
             }
