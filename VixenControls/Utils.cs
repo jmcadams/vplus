@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Globalization;
 using System.IO;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Windows.Forms;
+
+using VixenPlusCommon.Properties;
 
 namespace VixenPlusCommon {
     public static class Utils {
@@ -180,21 +183,50 @@ namespace VixenPlusCommon {
 
         private delegate void SetPropertyThreadSafeDelegate<TResult>(Control @this, Expression<Func<TResult>> property, TResult value);
 
-        public static void SetPropertyThreadSafe<TResult>(this Control @this, Expression<Func<TResult>> property, TResult value) {
-            var propertyInfo = (property.Body as MemberExpression).Member as PropertyInfo;
+        //public static void SetPropertyThreadSafe<TResult>(this Control @this, Expression<Func<TResult>> property, TResult value) {
+        //    var propertyInfo = (property.Body as MemberExpression).Member as PropertyInfo;
 
-            if (propertyInfo == null ||
-                !@this.GetType().IsSubclassOf(propertyInfo.ReflectedType) ||
-                @this.GetType().GetProperty(propertyInfo.Name, propertyInfo.PropertyType) == null) {
-                throw new ArgumentException("The lambda expression 'property' must reference a valid property on this Control.");
-            }
+        //    if (propertyInfo == null ||
+        //        !@this.GetType().IsSubclassOf(propertyInfo.ReflectedType) ||
+        //        @this.GetType().GetProperty(propertyInfo.Name, propertyInfo.PropertyType) == null) {
+        //        throw new ArgumentException("The lambda expression 'property' must reference a valid property on this Control.");
+        //    }
 
-            if (@this.InvokeRequired) {
-                @this.Invoke(new SetPropertyThreadSafeDelegate<TResult>(SetPropertyThreadSafe), new object[] { @this, property, value });
+        //    if (@this.InvokeRequired) {
+        //        @this.Invoke(new SetPropertyThreadSafeDelegate<TResult>(SetPropertyThreadSafe), new object[] { @this, property, value });
+        //    }
+        //    else {
+        //        @this.GetType().InvokeMember(propertyInfo.Name, BindingFlags.SetProperty, null, @this, new object[] { value });
+        //    }
+        //}
+
+
+
+        public static void ProcessException(this Exception ex, bool isTerminating) {
+            ex.LogException(isTerminating);
+            ex.ShowException(isTerminating);
+        }
+
+
+        private static void ShowException(this Exception exception, bool isTerminating) {
+            var msgFormat = isTerminating ? Resources.CriticalErrorOccurred : Resources.SoftErrorOccured;
+            var msg = string.Format(msgFormat, LogFileName, exception.Message, exception.StackTrace, Vendor.ProductName);
+            var btns = isTerminating ? MessageBoxButtons.OK : MessageBoxButtons.YesNo;
+            var icon = isTerminating ? MessageBoxIcon.Error : MessageBoxIcon.Question;
+
+            var res = MessageBox.Show(msg, Resources.ErrorLogCreated, btns, icon);
+            if (res == DialogResult.No || res == DialogResult.OK) {
+                Application.Exit();
             }
-            else {
-                @this.GetType().InvokeMember(propertyInfo.Name, BindingFlags.SetProperty, null, @this, new object[] { value });
-            }
+        }
+
+
+        private static void LogException(this Exception exception, bool isTerminating) {
+            string.Format(Resources.FormattedVersion, Assembly.GetExecutingAssembly().GetName().Version).CrashLog();
+            DateTime.Now.ToString(CultureInfo.InvariantCulture).CrashLog();
+            string.Format("Is Terminating? {0}", isTerminating).CrashLog();
+            exception.Message.CrashLog();
+            exception.StackTrace.CrashLog();
         }
 
         public static bool IsWindows64BitOS() {

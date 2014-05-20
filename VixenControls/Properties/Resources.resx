@@ -139,8 +139,35 @@
   <data name="VixenPlus" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\VixenPlus.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="edit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\edit.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CriticalErrorOccurred" xml:space="preserve">
+    <value>{3} has had a critical error and is closing.
+
+This issue was written to {0}, please e-mail this log, your sequence and profile (if applicable) with any support request.
+
+{1}
+
+{2}</value>
+  </data>
+  <data name="ErrorLogCreated" xml:space="preserve">
+    <value>Error Log Created</value>
+  </data>
+  <data name="FormattedVersion" xml:space="preserve">
+    <value>Version {0}</value>
+  </data>
+  <data name="SoftErrorOccured" xml:space="preserve">
+    <value>{3} has had a non-critical error and may be able to continue.
+
+If you continue, please save any open work and restart {3}.
+
+This issue was written to {0}, please e-mail this log, your sequence and profile (if applicable) with any support request.
+
+{1}
+
+{2}
+
+Do you wish to continue?</value>
   </data>
 </root>

@@ -993,18 +993,6 @@ and will cause your undo history to be deleted.  Proceed?</value>
   <data name="InsertChannelConfirmation" xml:space="preserve">
     <value>Insert Channel?</value>
   </data>
-  <data name="ErrorLogCreated" xml:space="preserve">
-    <value>Error Log Created</value>
-  </data>
-  <data name="CriticalErrorOccurred" xml:space="preserve">
-    <value>{3} has had a critical error and is closing.
-
-This issue was written to {0}, please e-mail this log, your sequence and profile (if applicable) with any support request.
-
-{1}
-
-{2}</value>
-  </data>
   <data name="ErrorLoadingGroup" xml:space="preserve">
     <value>An error occured processing the group file {0}. As a result, one or more groups may not be available. You should check {0} for proper formatting or recreate your groups.
 
@@ -1058,9 +1046,6 @@ Accept new channel count?</value>
   <data name="ValidNumber" xml:space="preserve">
     <value>Please enter a valid number.</value>
   </data>
-  <data name="FormattedVersion" xml:space="preserve">
-    <value>Version {0}</value>
-  </data>
   <data name="arrow_down" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\arrow-down.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -1078,5 +1063,8 @@ Accept new channel count?</value>
   </data>
   <data name="saveSm" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\saveSm.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FormattedVersion" xml:space="preserve">
+    <value>Version {0}</value>
   </data>
 </root>
