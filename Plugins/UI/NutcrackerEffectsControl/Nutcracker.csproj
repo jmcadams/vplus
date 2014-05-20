@@ -221,6 +221,7 @@
     <Compile Include="NutcrackerEffect.Designer.cs">
       <DependentUpon>NutcrackerEffect.cs</DependentUpon>
     </Compile>
+    <Compile Include="NutcrackerException.cs" />
     <Compile Include="NutcrackerModelDialog.cs">
       <SubType>Form</SubType>
     </Compile>
