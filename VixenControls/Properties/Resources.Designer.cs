@@ -114,6 +114,23 @@ namespace VixenPlusCommon.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to {3} has had a non-critical error and may be able to continue.
+        ///
+        ///If you continue, please save any open work and restart {3}.
+        ///
+        ///This issue was written to {0}, please e-mail this log, your sequence and profile (if applicable) with any support request.
+        ///
+        ///{1}
+        ///
+        ///{2}.
+        /// </summary>
+        public static string InformOnError {
+            get {
+                return ResourceManager.GetString("InformOnError", resourceCulture);
+            }
+        }
+        
         public static System.Drawing.Bitmap none {
             get {
                 object obj = ResourceManager.GetObject("none", resourceCulture);

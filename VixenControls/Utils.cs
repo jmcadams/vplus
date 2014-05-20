@@ -181,7 +181,7 @@ namespace VixenPlusCommon {
             return new Point(x,y);
         }
 
-        private delegate void SetPropertyThreadSafeDelegate<TResult>(Control @this, Expression<Func<TResult>> property, TResult value);
+        //private delegate void SetPropertyThreadSafeDelegate<TResult>(Control @this, Expression<Func<TResult>> property, TResult value);
 
         //public static void SetPropertyThreadSafe<TResult>(this Control @this, Expression<Func<TResult>> property, TResult value) {
         //    var propertyInfo = (property.Body as MemberExpression).Member as PropertyInfo;
@@ -207,6 +207,12 @@ namespace VixenPlusCommon {
             ex.ShowException(isTerminating);
         }
 
+
+        public static void InformException(this Exception ex) {
+            var msg = string.Format(Resources.InformOnError, LogFileName, ex.Message, ex.StackTrace, Vendor.ProductName);
+
+            MessageBox.Show(msg, Resources.ErrorLogCreated, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
 
         private static void ShowException(this Exception exception, bool isTerminating) {
             var msgFormat = isTerminating ? Resources.CriticalErrorOccurred : Resources.SoftErrorOccured;
