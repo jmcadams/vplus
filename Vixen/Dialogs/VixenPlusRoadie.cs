@@ -1651,6 +1651,14 @@ namespace VixenPlus.Dialogs {
             _sequencePlugins.RemoveAt(index);
             _internalUpdate = true;
             dgvPlugIns.Rows.RemoveAt(index);
+            foreach (DataGridViewRow row in dgvPlugIns.Rows) {
+                var tag = int.Parse(row.Tag.ToString());
+                if (tag < index) {
+                    continue;
+                }
+                tag--;
+                row.Tag = tag.ToString(CultureInfo.InvariantCulture);
+            }
             _internalUpdate = false;
             _lastRow = -1;
         }
