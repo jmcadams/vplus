@@ -4968,38 +4968,35 @@ namespace VixenEditor {
             ((HandledMouseEventArgs) e).Handled = !((ComboBox)sender).DroppedDown;
         }
 
-        private void tsbNutcracker_Click(object sender, EventArgs e) {
-            using (var nce = new NutcrackerControlDialog(_sequence, _selectedCells, IsShiftPressed())) {
-                if (nce.ShowDialog() != DialogResult.OK) {
-                    return;
-                }
 
-                switch (nce.RenderType) {
-                    case RenderTo.Clipboard:
-                        _systemInterface.Clipboard = nce.RenderEventData;
-                        break;
-                    case RenderTo.CurrentSelection:
-                        NutcrackerToSequence(
-                            _selectedCells.X, 
-                            _selectedCells.Y, 
-                            nce.RenderEventCount, 
-                            nce.RenderCols, 
-                            nce.RenderRows, 
-                            nce.RenderEventData);
-                        break;
-                    case RenderTo.Routine:
-                        SaveRoutine(nce.RenderEventData);
-                        break;
-                    case RenderTo.SpecificPoint:
-                        NutcrackerToSequence(
-                            nce.RenderStartEvent, 
-                            nce.RenderChannel, 
-                            nce.RenderEventCount, 
-                            nce.RenderCols, 
-                            nce.RenderRows,
-                            nce.RenderEventData);
-                        break;
+        private void tsbNutcracker_Click(object sender, EventArgs e) {
+            try {
+                using (var nce = new NutcrackerControlDialog(_sequence, _selectedCells, IsShiftPressed())) {
+                    if (nce.ShowDialog() != DialogResult.OK) {
+                        return;
+                    }
+
+                    switch (nce.RenderType) {
+                        case RenderTo.Clipboard:
+                            _systemInterface.Clipboard = nce.RenderEventData;
+                            break;
+                        case RenderTo.CurrentSelection:
+                            NutcrackerToSequence(_selectedCells.X, _selectedCells.Y, nce.RenderEventCount,
+                                nce.RenderCols, nce.RenderRows, nce.RenderEventData);
+                            break;
+                        case RenderTo.Routine:
+                            SaveRoutine(nce.RenderEventData);
+                            break;
+                        case RenderTo.SpecificPoint:
+                            NutcrackerToSequence(nce.RenderStartEvent, nce.RenderChannel, nce.RenderEventCount,
+                                nce.RenderCols, nce.RenderRows, nce.RenderEventData);
+                            break;
+                    }
                 }
+            }
+            catch (Exception ex) {
+                var myEx = new ExecutionEngineException("Nutcracker General Exception.", ex);
+                myEx.ProcessException(false);
             }
         }
 
