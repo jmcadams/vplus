@@ -451,7 +451,7 @@ namespace VixenPlus.Dialogs {
                     SetChannelTabButtons(isProfileLoaded);
                     break;
                 case TabPlugins:
-                    SetPluginsTabButtons(isProfileLoaded);
+                    SetPluginsTabButtons();
                     break;
                 case TabGroups:
                     SetGroupTabButtons(isProfileLoaded);
@@ -516,9 +516,9 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private void SetPluginsTabButtons(bool isProfileLoaded) {
-            Debug.Print(isProfileLoaded.ToString());
-            //todo Implement
+        private void SetPluginsTabButtons() {
+            btnRemovePlugIn.Enabled = dgvPlugIns.Rows.Count > 0;
+            btnAddPlugIn.Enabled = cbAvailablePlugIns.SelectedIndex > 0;
         }
 
 
@@ -1591,19 +1591,13 @@ namespace VixenPlus.Dialogs {
 
         private void buttonRemove_Click(object sender, EventArgs e) {
             RemoveSelectedPlugIn();
-            UpdatePlugInButtons();
+            SetPluginsTabButtons();
         }
 
 
         private void buttonUse_Click(object sender, EventArgs e) {
             UsePlugin();
-            UpdatePlugInButtons();
-        }
-
-
-        private void UpdatePlugInButtons() {
-            btnRemovePlugIn.Enabled = dgvPlugIns.Rows.Count > 0;
-            btnAddPlugIn.Enabled = cbAvailablePlugIns.SelectedIndex > 0;
+            SetPluginsTabButtons();
         }
 
         private void InitializePlugin(IHardwarePlugin plugin, XmlNode setupNode) {
@@ -1625,17 +1619,19 @@ namespace VixenPlus.Dialogs {
                         ? OutputPlugins.FindPlugin(node.Attributes[PlugInAttrName].Value, true)
                         : null;
 
-                    if (plugin != null) {
-                        InitializePlugin(plugin, node);
-                        AddPlugInRow(node, plugin);
+                    if (plugin == null) {
+                        continue;
                     }
+
+                    InitializePlugin(plugin, node);
+                    AddPlugInRow(node, plugin);
                 }
                 _internalUpdate = false;
             }
             finally {
                 Cursor = Cursors.Default;
                 dgvPlugIns.Focus();
-                UpdatePlugInButtons();
+                SetPluginsTabButtons();
             }
         }
 
@@ -1662,7 +1658,7 @@ namespace VixenPlus.Dialogs {
             foreach (DataGridViewRow row in dgvPlugIns.Rows) {
                 var tag = row.Parse();
                 if (tag > index) {
-                    row.Tag = --tag;//.ToString(CultureInfo.InvariantCulture);
+                    row.Tag = --tag;
                 }
             }
             _internalUpdate = false;
@@ -1851,7 +1847,7 @@ namespace VixenPlus.Dialogs {
         #endregion
 
         private void cbAvailablePlugIns_SelectedIndexChanged(object sender, EventArgs e) {
-            UpdatePlugInButtons();
+            SetPluginsTabButtons();
         }
 
     }
