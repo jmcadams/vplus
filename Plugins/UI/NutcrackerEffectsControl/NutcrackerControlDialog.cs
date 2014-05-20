@@ -506,6 +506,7 @@ namespace Nutcracker {
                     var eventRow = 0;
                     for (var row = 0; row < RenderRows * 3; row += 3) {
                         for (var col = 0; col < RenderCols; col++) {
+                            // TODO: Need to add the color order here
                             RenderEventData[eventRow, renderEvent] = _nodes[nodeRow, col].PixelColor.R;
                             RenderEventData[eventRow + 1, renderEvent] = _nodes[nodeRow, col].PixelColor.B;
                             RenderEventData[eventRow + 2, renderEvent] = _nodes[nodeRow, col].PixelColor.G;
