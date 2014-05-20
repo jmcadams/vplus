@@ -143,21 +143,26 @@ namespace Controllers.Launcher {
 
         public string HardwareMap {
             get {
-                string res = null;
+                var res = "Nothing Setup Yet";
                 var programList = _setupNode.SelectNodes("Programs/Program");
 
-                if (null != programList) {
-                    var config = new StringBuilder();
-                    foreach (var node in programList.Cast<XmlNode>().Where(node => node.Attributes != null)) {
-                        // Already checked in the LINQ
-                        // ReSharper disable PossibleNullReferenceException
-                        config.Append(string.Format("Launch '{0}' with '{1}' at {2}%", node.InnerText,
-                            node.Attributes["params"].Value, node.Attributes["trigger"].Value))
-                            .Append(Environment.NewLine);
-                        // ReSharper restore PossibleNullReferenceException
-                    }
+                if (null == programList) {
+                    return res;
+                }
 
-                    res = config.ToString();
+                var config = new StringBuilder();
+                foreach (var node in programList.Cast<XmlNode>().Where(node => node.Attributes != null)) {
+                    // Already checked in the LINQ
+                    // ReSharper disable PossibleNullReferenceException
+                    config.Append(string.Format("Launch '{0}' with '{1}' at {2}%", node.InnerText,
+                        node.Attributes["params"].Value, node.Attributes["trigger"].Value))
+                        .Append(Environment.NewLine);
+                    // ReSharper restore PossibleNullReferenceException
+                }
+
+                res = config.ToString();
+                if (res.Length >= Environment.NewLine.Length) {
+                    res = res.Substring(0, res.Length - Environment.NewLine.Length);
                 }
 
                 return res;
