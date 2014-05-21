@@ -57,6 +57,10 @@ namespace Nutcracker {
             }
         }
 
+        public string ColorLayout {
+            get { return cbColorLayout.SelectedItem.ToString(); }
+        }
+
         private Rectangle _prevRect;
 
         public Rectangle PreviewRectangle {
