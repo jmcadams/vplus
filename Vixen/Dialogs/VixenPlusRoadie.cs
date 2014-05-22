@@ -451,7 +451,7 @@ namespace VixenPlus.Dialogs {
                     SetChannelTabButtons(isProfileLoaded);
                     break;
                 case TabPlugins:
-                    SetPluginsTabButtons(isProfileLoaded);
+                    SetPluginsTabButtons();
                     break;
                 case TabGroups:
                     SetGroupTabButtons(isProfileLoaded);
@@ -516,9 +516,9 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private void SetPluginsTabButtons(bool isProfileLoaded) {
-            Debug.Print(isProfileLoaded.ToString());
-            //todo Implement
+        private void SetPluginsTabButtons() {
+            btnRemovePlugIn.Enabled = dgvPlugIns.Rows.Count > 0;
+            btnAddPlugIn.Enabled = cbAvailablePlugIns.SelectedIndex > 0;
         }
 
 
@@ -606,7 +606,24 @@ namespace VixenPlus.Dialogs {
 
 
         private void DoPluginsKeys(KeyEventArgs e) {
-            Debug.Print(e.KeyCode.ToString());
+            switch (e.KeyCode) {
+                case Keys.Delete:
+                    buttonRemove_Click(null, null) ;
+                    e.Handled = true;
+                    break;
+                case Keys.Home:
+                    if (dgvPlugIns.Rows.Count > 0 && dgvPlugIns.SelectedCells.Count > 0) {
+                        dgvPlugIns.CurrentCell = dgvPlugIns.Rows[0].Cells[dgvPlugIns.SelectedCells[0].ColumnIndex];
+                        e.Handled = true;
+                    }
+                    break;
+                case Keys.End:
+                    if (dgvPlugIns.Rows.Count > 0 && dgvPlugIns.SelectedCells.Count > 0) {
+                        dgvPlugIns.CurrentCell = dgvPlugIns.Rows[dgvPlugIns.Rows.Count - 1].Cells[dgvPlugIns.SelectedCells[0].ColumnIndex];
+                        e.Handled = true;
+                    }
+                    break;
+            }
         }
 
 
@@ -1591,13 +1608,14 @@ namespace VixenPlus.Dialogs {
 
         private void buttonRemove_Click(object sender, EventArgs e) {
             RemoveSelectedPlugIn();
+            SetPluginsTabButtons();
         }
 
 
         private void buttonUse_Click(object sender, EventArgs e) {
             UsePlugin();
+            SetPluginsTabButtons();
         }
-
 
         private void InitializePlugin(IHardwarePlugin plugin, XmlNode setupNode) {
             var eventDrivenOutputPlugIn = plugin as IEventDrivenOutputPlugIn;
@@ -1618,16 +1636,19 @@ namespace VixenPlus.Dialogs {
                         ? OutputPlugins.FindPlugin(node.Attributes[PlugInAttrName].Value, true)
                         : null;
 
-                    if (plugin != null) {
-                        InitializePlugin(plugin, node);
-                        AddPlugInRow(node, plugin);
+                    if (plugin == null) {
+                        continue;
                     }
+
+                    InitializePlugin(plugin, node);
+                    AddPlugInRow(node, plugin);
                 }
                 _internalUpdate = false;
             }
             finally {
                 Cursor = Cursors.Default;
                 dgvPlugIns.Focus();
+                SetPluginsTabButtons();
             }
         }
 
@@ -1652,13 +1673,13 @@ namespace VixenPlus.Dialogs {
             _internalUpdate = true;
             dgvPlugIns.Rows.RemoveAt(index);
             foreach (DataGridViewRow row in dgvPlugIns.Rows) {
-                var tag = int.Parse(row.Tag.ToString());
-                if (tag < index) {
-                    continue;
+                var tag = row.Parse();
+                if (tag > index) {
+                    row.Tag = --tag;
                 }
-                tag--;
-                row.Tag = tag.ToString(CultureInfo.InvariantCulture);
             }
+            _contextProfile.IsDirty = true;
+
             _internalUpdate = false;
             _lastRow = -1;
         }
@@ -1710,6 +1731,7 @@ namespace VixenPlus.Dialogs {
             _sequencePlugins.Add(p);
             _internalUpdate = false;
             UpdateRowConfig(index);
+            _contextProfile.IsDirty = true;
 
             dgvPlugIns.ResumeLayout();
         }
@@ -1792,6 +1814,7 @@ namespace VixenPlus.Dialogs {
                 var lastPlugIn = GetPluginForIndex(_lastRow);
                 lastPlugIn.GetSetup();
                 lastPlugIn.CloseSetup();
+                _contextProfile.IsDirty = true; //todo make sure it changed before setting to true;
             }
 
             pSetup.Controls.Clear();
@@ -1834,7 +1857,7 @@ namespace VixenPlus.Dialogs {
 
 
         private int GetTagForRow(int index) {
-            return int.Parse(dgvPlugIns.Rows[index].Tag.ToString());
+            return dgvPlugIns.Rows[index].Parse();
         }
 
 
@@ -1843,6 +1866,10 @@ namespace VixenPlus.Dialogs {
         }
 
         #endregion
+
+        private void cbAvailablePlugIns_SelectedIndexChanged(object sender, EventArgs e) {
+            SetPluginsTabButtons();
+        }
 
     }
 }

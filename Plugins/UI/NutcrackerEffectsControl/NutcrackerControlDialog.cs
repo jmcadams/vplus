@@ -45,6 +45,7 @@ namespace Nutcracker {
         private NutcrackerEffectControl[] _effectControls;
         private NutcrackerXmlManager _nutcrackerData;
         private string _playText;
+        private string _colorSpace;
         private const string StopText = "Stop";
 
         //private readonly Random _random = new Random();
@@ -315,6 +316,7 @@ namespace Nutcracker {
                 RenderCols = modelDialog.Cols;
                 _effectBuffers = new[] { new Color[RenderRows, RenderCols], new Color[RenderRows, RenderCols] };
                 _nodes = modelDialog.Nodes;
+                _colorSpace = modelDialog.ColorLayout;
                 btnModelEdit.Visible = true;
                 btnModelRemove.Visible = true;
             }
@@ -485,7 +487,7 @@ namespace Nutcracker {
             return Color.FromArgb((color1.A + color2.A) / 255, (color1.R + color2.R) / 255, (color1.G + color2.G) / 255, (color1.B + color2.B) / 255);
         }
 
-
+        //TODO this should go in a background worker thread.
         private void RenderFinalResults() {
             // Trees and matrix render rows, cols the other render as 1 x num pixles x (arch count | 1 if windows)
             try {
@@ -499,17 +501,21 @@ namespace Nutcracker {
                 progressBar.Maximum = RenderEventCount;
                 progressBar.Visible = true;
 
+                var colorMask = GetColorMaskFromSettings();
+                var colorShift = GetColorShiftFromMask(colorMask);
                 for (var renderEvent = 0; renderEvent < RenderEventCount; renderEvent++) {
 
                     RenderEffects();
                     var nodeRow = 0;
                     var eventRow = 0;
-                    for (var row = 0; row < RenderRows * 3; row += 3) {
+                    const int colorSpaceBytes = 3;
+                    for (var row = 0; row < RenderRows * colorSpaceBytes; row += colorSpaceBytes) {
                         for (var col = 0; col < RenderCols; col++) {
-                            RenderEventData[eventRow, renderEvent] = _nodes[nodeRow, col].PixelColor.R;
-                            RenderEventData[eventRow + 1, renderEvent] = _nodes[nodeRow, col].PixelColor.B;
-                            RenderEventData[eventRow + 2, renderEvent] = _nodes[nodeRow, col].PixelColor.G;
-                            eventRow += 3;
+                            for (var i = 0; i < colorSpaceBytes; i++) {
+                                RenderEventData[eventRow + i, renderEvent] = 
+                                    (byte)((_nodes[nodeRow, col].PixelColor.ToArgb() & colorMask[i]) >> colorShift[i]);
+                            }
+                            eventRow += colorSpaceBytes;
                         }
                         nodeRow++;
                     }
@@ -520,7 +526,6 @@ namespace Nutcracker {
                     var val = renderEvent;
                     Invoke((MethodInvoker) delegate {
                         progressBar.Value = val;
-                        progressBar.Text = string.Format("{0:d3}%", val / RenderEventCount);
                     });
                 }
                 progressBar.Visible = false;
@@ -529,6 +534,55 @@ namespace Nutcracker {
                 ex.InformException();
                 DialogResult = DialogResult.Cancel;
             }
+        }
+
+
+        private const int Red = 0xFF0000;
+        private const int Green = 0xFF00;
+        private const int Blue = 0xFF;
+
+        private int[] GetColorMaskFromSettings() {
+            var mask = new int[3];
+
+            for (var i = 0; i < 3; i++) {
+                switch (_colorSpace.Substring(i, 1)) {
+                    case "R":
+                        mask[i] = Red;
+                        break;
+                    case "G":
+                        mask[i] = Green;
+                        break;
+                    case "B":
+                        mask[i] = Blue;
+                        break;
+                }
+            }
+
+            return mask;
+        }
+
+        private const int RedShift = 16;
+        private const int GreenShift = 8;
+        private const int BlueShift = 0;
+
+        private static int[] GetColorShiftFromMask(IList<int> mask) {
+            var shift = new int[3];
+            
+            for (var i = 0; i < 3; i++) {
+                switch (mask[i]) {
+                    case Red:
+                        shift[i] = RedShift;
+                        break;
+                    case Green:
+                        shift[1] = GreenShift;
+                        break;
+                    case Blue:
+                        shift[i] = BlueShift;
+                        break;
+                }
+            }
+
+            return shift;
         }
 
         #endregion
@@ -595,22 +649,32 @@ namespace Nutcracker {
 
 
         private void UpdateSummary() {
-            var eventPeriod = _sequence.EventPeriod;
-            var startTime = ((int) (nudStartEvent.Value * eventPeriod)).FormatFull();
-            var elapsedTime = ((int) (nudEventCount.Value * eventPeriod)).FormatFull();
-            var endTime = ((int) (nudStartEvent.Value + nudEventCount.Value - 1) * eventPeriod).FormatFull();
+            if (cbModels.SelectedIndex > -1) {
+                var eventPeriod = _sequence.EventPeriod;
+                var startTime = ((int) (nudStartEvent.Value * eventPeriod)).FormatFull();
+                var elapsedTime = ((int) (nudEventCount.Value * eventPeriod)).FormatFull();
+                var endTime = ((int) (nudStartEvent.Value + nudEventCount.Value - 1) * eventPeriod).FormatFull();
 
-            lblStartEventTime.Text = startTime;
-            lblEventCountTime.Text = elapsedTime;
+                lblStartEventTime.Text = startTime;
+                lblEventCountTime.Text = elapsedTime;
 
-            var channelCount = RenderRows * RenderCols * 3;
-            var msg = (channelCount > _channels.Count)
-                ? string.Format("Too Large for your current channel count.{0}You may still render to the clipboard or a routine.", Environment.NewLine)
-                : string.Empty;
+                var channelCount = RenderRows * RenderCols * 3;
+                var msg = (channelCount > _channels.Count)
+                    ? string.Format(
+                        "Too Large for your current channel count.{0}You may still render to the clipboard or a routine.",
+                        Environment.NewLine)
+                    : string.Empty;
 
-            tbSummary.Text = String.Format("Strings: {4}{6}Nodes per string: {5}{6}Channels: {2}{6}Position: From {0} thru {1}{6}{6}{3}", startTime, endTime,
-                channelCount, msg, RenderRows, RenderCols, Environment.NewLine);
-            btnOK.Enabled = (msg == string.Empty || rbClipboard.Checked || rbRoutine.Checked);
+                tbSummary.Text =
+                    String.Format(
+                        "Strings: {4}{6}Nodes per string: {5}{6}Channels: {2}{6}Position: From {0} thru {1}{6}Using {7} color space{6}{6}{3}",
+                        startTime, endTime, channelCount, msg, RenderRows, RenderCols, Environment.NewLine, _colorSpace);
+                btnOK.Enabled = (msg == string.Empty || rbClipboard.Checked || rbRoutine.Checked);
+            }
+            else {
+                tbSummary.Text = "Please select a model";
+                btnOK.Enabled = false;
+            }
         }
 
         #endregion

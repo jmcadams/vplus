@@ -4995,7 +4995,7 @@ namespace VixenEditor {
                 }
             }
             catch (Exception ex) {
-                var myEx = new ExecutionEngineException("Nutcracker General Exception.", ex);
+                var myEx = new NutcrackerException("Nutcracker General Exception.", ex);
                 myEx.ProcessException(false);
             }
         }

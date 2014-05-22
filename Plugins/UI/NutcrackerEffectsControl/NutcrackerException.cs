@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 
 namespace Nutcracker {
-    internal class NutcrackerException : Exception {
+    public class NutcrackerException : Exception {
         // Constructors
         public NutcrackerException(string message) : base(message) {}
         public NutcrackerException(string message, Exception ex) : base(message, ex) {}

@@ -965,9 +965,11 @@ namespace VixenPlus.Dialogs
             this.cbAvailablePlugIns.Name = "cbAvailablePlugIns";
             this.cbAvailablePlugIns.Size = new System.Drawing.Size(280, 21);
             this.cbAvailablePlugIns.TabIndex = 36;
+            this.cbAvailablePlugIns.SelectedIndexChanged += new System.EventHandler(this.cbAvailablePlugIns_SelectedIndexChanged);
             // 
             // btnRemovePlugIn
             // 
+            this.btnRemovePlugIn.Enabled = false;
             this.btnRemovePlugIn.Location = new System.Drawing.Point(536, 5);
             this.btnRemovePlugIn.Name = "btnRemovePlugIn";
             this.btnRemovePlugIn.Size = new System.Drawing.Size(75, 23);
@@ -978,6 +980,7 @@ namespace VixenPlus.Dialogs
             // 
             // btnAddPlugIn
             // 
+            this.btnAddPlugIn.Enabled = false;
             this.btnAddPlugIn.Location = new System.Drawing.Point(293, 5);
             this.btnAddPlugIn.Name = "btnAddPlugIn";
             this.btnAddPlugIn.Size = new System.Drawing.Size(75, 23);
