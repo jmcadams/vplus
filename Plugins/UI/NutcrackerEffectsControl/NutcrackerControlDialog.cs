@@ -649,22 +649,32 @@ namespace Nutcracker {
 
 
         private void UpdateSummary() {
-            var eventPeriod = _sequence.EventPeriod;
-            var startTime = ((int) (nudStartEvent.Value * eventPeriod)).FormatFull();
-            var elapsedTime = ((int) (nudEventCount.Value * eventPeriod)).FormatFull();
-            var endTime = ((int) (nudStartEvent.Value + nudEventCount.Value - 1) * eventPeriod).FormatFull();
+            if (cbModels.SelectedIndex > -1) {
+                var eventPeriod = _sequence.EventPeriod;
+                var startTime = ((int) (nudStartEvent.Value * eventPeriod)).FormatFull();
+                var elapsedTime = ((int) (nudEventCount.Value * eventPeriod)).FormatFull();
+                var endTime = ((int) (nudStartEvent.Value + nudEventCount.Value - 1) * eventPeriod).FormatFull();
 
-            lblStartEventTime.Text = startTime;
-            lblEventCountTime.Text = elapsedTime;
+                lblStartEventTime.Text = startTime;
+                lblEventCountTime.Text = elapsedTime;
 
-            var channelCount = RenderRows * RenderCols * 3;
-            var msg = (channelCount > _channels.Count)
-                ? string.Format("Too Large for your current channel count.{0}You may still render to the clipboard or a routine.", Environment.NewLine)
-                : string.Empty;
+                var channelCount = RenderRows * RenderCols * 3;
+                var msg = (channelCount > _channels.Count)
+                    ? string.Format(
+                        "Too Large for your current channel count.{0}You may still render to the clipboard or a routine.",
+                        Environment.NewLine)
+                    : string.Empty;
 
-            tbSummary.Text = String.Format("Strings: {4}{6}Nodes per string: {5}{6}Channels: {2}{6}Position: From {0} thru {1}{6}Using {7} color space{6}{6}{3}", startTime, endTime,
-                channelCount, msg, RenderRows, RenderCols, Environment.NewLine, _colorSpace);
-            btnOK.Enabled = (msg == string.Empty || rbClipboard.Checked || rbRoutine.Checked);
+                tbSummary.Text =
+                    String.Format(
+                        "Strings: {4}{6}Nodes per string: {5}{6}Channels: {2}{6}Position: From {0} thru {1}{6}Using {7} color space{6}{6}{3}",
+                        startTime, endTime, channelCount, msg, RenderRows, RenderCols, Environment.NewLine, _colorSpace);
+                btnOK.Enabled = (msg == string.Empty || rbClipboard.Checked || rbRoutine.Checked);
+            }
+            else {
+                tbSummary.Text = "Please select a model";
+                btnOK.Enabled = false;
+            }
         }
 
         #endregion
