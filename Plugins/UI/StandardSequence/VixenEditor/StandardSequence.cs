@@ -4876,7 +4876,7 @@ namespace VixenEditor {
                 if ((dialog.ShowDialog() != DialogResult.OK)) {
                     return;
                 }
-                objectInContext.SaveToFile();
+                objectInContext.SaveToFile(); // TODO need to grab the data from Roadie before closing.
                 SetProfile(objectInContext);
             }
         }

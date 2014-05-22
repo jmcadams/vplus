@@ -1630,6 +1630,7 @@ namespace VixenPlus.Dialogs {
             Cursor = Cursors.WaitCursor;
             try {
                 _internalUpdate = true;
+                _lastRow = NoRow;
                 dgvPlugIns.Rows.Clear();
                 foreach (XmlNode node in _setupData.GetAllPluginData()) {
                     var plugin = node.Attributes != null && (node.Attributes[PlugInAttrName] != null)
@@ -1647,7 +1648,9 @@ namespace VixenPlus.Dialogs {
             }
             finally {
                 Cursor = Cursors.Default;
+                _internalUpdate = true;
                 dgvPlugIns.Focus();
+                _internalUpdate = false;
                 SetPluginsTabButtons();
             }
         }
@@ -1681,7 +1684,7 @@ namespace VixenPlus.Dialogs {
             _contextProfile.IsDirty = true;
 
             _internalUpdate = false;
-            _lastRow = -1;
+            _lastRow = NoRow;
         }
 
 
@@ -1773,7 +1776,8 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private int _lastRow = -1;
+        private const int NoRow = -1;
+        private int _lastRow = NoRow;
 
 
         private void dgvPlugIns_RowEnter(object sender, DataGridViewCellEventArgs e) {
@@ -1810,7 +1814,7 @@ namespace VixenPlus.Dialogs {
                 return;
             }
 
-            if (_lastRow != -1) {
+            if (_lastRow != NoRow) {
                 var lastPlugIn = GetPluginForIndex(_lastRow);
                 lastPlugIn.GetSetup();
                 lastPlugIn.CloseSetup();
