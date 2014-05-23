@@ -60,7 +60,7 @@ namespace VixenPlus.Dialogs {
 
         #region Constructor
 
-        public VixenPlusRoadie(IExecutable defaultProfile = null) {
+        public VixenPlusRoadie(Profile defaultProfile = null) {
             InitializeComponent();
             Text = Vendor.ProductName + " - " + Vendor.ModuleManager;
             Icon = common.Resources.VixenPlus;
@@ -69,6 +69,11 @@ namespace VixenPlus.Dialogs {
             _suppressErrors = Preference2.GetInstance().GetBoolean("SilenceProfileErrors");
             _dgvWidthDiff = Width - dgvChannels.Width;
             _dgvHeightDiff = Height - dgvChannels.Height;
+
+            if (null != defaultProfile && string.IsNullOrEmpty(defaultProfile.Name)) {
+                AddProfile(defaultProfile);
+            }
+
             InitializeControls();
 
             // For Now hide tabs >= Groups
@@ -94,6 +99,10 @@ namespace VixenPlus.Dialogs {
         public override sealed Size MinimumSize {
             get { return base.MinimumSize; }
             set { base.MinimumSize = value; }
+        }
+
+        public string ProfileFileName {
+            get { return _contextProfile == null ? null : _contextProfile.FileName; }
         }
 
         #endregion
@@ -263,8 +272,18 @@ namespace VixenPlus.Dialogs {
         #region Profile Group Box Events
 
         private void btnProfileAdd_Click(object sender, EventArgs e) {
-            var newName = GetFileName("Profile/Group Name", Paths.ProfilePath,
-                new[] {Vendor.ProfileExtension, Vendor.GroupExtension}, "", "Create");
+            AddProfile();
+        }
+
+
+        private void AddProfile(Profile profileData = null) {
+            var isNew = profileData == null;
+            var typePrompt = isNew ? "Profile Name" : "Profile/Group Name";
+            var extensions = isNew
+                ? new[] {Vendor.ProfileExtension}
+                : new[] {Vendor.ProfileExtension, Vendor.GroupExtension};
+
+            var newName = GetFileName(typePrompt, Paths.ProfilePath, extensions, "", "Create");
 
             if (string.Empty == newName) {
                 return;
@@ -276,8 +295,10 @@ namespace VixenPlus.Dialogs {
                 DeleteIfExists(Path.Combine(root, newName + Vendor.ProfileExtension));
             }
 
-            var pro = new Profile {Name = newName};
-            pro.SaveToFile();
+            var profile = isNew ? new Profile() : profileData;
+            profile.Name = newName;
+            profile.SaveToFile();
+
             RefreshProfileComboBox(newName);
         }
 

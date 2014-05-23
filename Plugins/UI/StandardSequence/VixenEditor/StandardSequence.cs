@@ -688,7 +688,7 @@ namespace VixenEditor {
                 if ((dialog.ShowDialog() == DialogResult.OK) &&
                     (MessageBox.Show(Resources.AttachToNewProfile, Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
                      DialogResult.Yes)) {
-                    SetProfile(objectInContext);
+                    SetProfile(dialog.ProfileFileName);
                 }
             }
         }
@@ -2912,7 +2912,7 @@ namespace VixenEditor {
 
         private void SetProfile(string filePath) {
             if (filePath != null) {
-                SetProfile(new Profile(openFileDialog1.FileName));
+                SetProfile(new Profile(filePath));
             }
             else {
                 SetProfile((Profile) null);
@@ -4876,8 +4876,8 @@ namespace VixenEditor {
                 if ((dialog.ShowDialog() != DialogResult.OK)) {
                     return;
                 }
-                objectInContext.SaveToFile(); // TODO need to grab the data from Roadie before closing.
-                SetProfile(objectInContext);
+                //objectInContext.SaveToFile(); // TODO need to grab the data from Roadie before closing.
+                SetProfile(_sequence.Profile.FileName);
             }
         }
 
