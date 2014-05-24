@@ -239,8 +239,8 @@ Global
 		{C792440D-580E-4313-A48F-F2EEE85BE98C}.Release32|Mixed Platforms.ActiveCfg = Release32|Any CPU
 		{C792440D-580E-4313-A48F-F2EEE85BE98C}.Release32|Mixed Platforms.Build.0 = Release32|Any CPU
 		{C792440D-580E-4313-A48F-F2EEE85BE98C}.Release32|x86.ActiveCfg = Release|Any CPU
-		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.debug_32|Any CPU.ActiveCfg = Debug|Any CPU
-		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.debug_32|Any CPU.Build.0 = Debug|Any CPU
+		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.debug_32|Any CPU.ActiveCfg = debug_32|Any CPU
+		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.debug_32|Any CPU.Build.0 = debug_32|Any CPU
 		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.debug_32|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.debug_32|Mixed Platforms.Build.0 = Debug|Any CPU
 		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.debug_32|x86.ActiveCfg = Debug|Any CPU
@@ -249,13 +249,13 @@ Global
 		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.debug32|Any CPU.ActiveCfg = Debug|Any CPU
-		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.debug32|Any CPU.Build.0 = Debug|Any CPU
+		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.debug32|Any CPU.ActiveCfg = debug_32|Any CPU
+		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.debug32|Any CPU.Build.0 = debug_32|Any CPU
 		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.debug32|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.debug32|Mixed Platforms.Build.0 = Debug|Any CPU
 		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.debug32|x86.ActiveCfg = Debug|Any CPU
-		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.Release_x86|Any CPU.ActiveCfg = Release|Any CPU
-		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.Release_x86|Any CPU.Build.0 = Release|Any CPU
+		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.Release_x86|Any CPU.ActiveCfg = Release32|Any CPU
+		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.Release_x86|Any CPU.Build.0 = Release32|Any CPU
 		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.Release_x86|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.Release_x86|Mixed Platforms.Build.0 = Release|Any CPU
 		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.Release_x86|x86.ActiveCfg = Release|Any CPU
@@ -264,8 +264,8 @@ Global
 		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.Release|x86.ActiveCfg = Release|Any CPU
-		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.Release32|Any CPU.ActiveCfg = Release|Any CPU
-		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.Release32|Any CPU.Build.0 = Release|Any CPU
+		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.Release32|Any CPU.ActiveCfg = Release32|Any CPU
+		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.Release32|Any CPU.Build.0 = Release32|Any CPU
 		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.Release32|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.Release32|Mixed Platforms.Build.0 = Release|Any CPU
 		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B}.Release32|x86.ActiveCfg = Release|Any CPU
@@ -284,10 +284,10 @@ Global
 		{C792440D-580E-4313-A48F-F2EEE85BE98C} = {CC4DA2F3-FB84-42A0-B620-315B4A18B97A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_StartDate = 2013/12/31
-		BuildVersion_AssemblyInfoFilename = AssemblyInfo.cs
-		BuildVersion_UpdateFileVersion = True
-		BuildVersion_UpdateAssemblyVersion = True
 		BuildVersion_BuildVersioningStyle = None.None.DeltaBaseDate.TimeStamp
+		BuildVersion_UpdateAssemblyVersion = True
+		BuildVersion_UpdateFileVersion = True
+		BuildVersion_AssemblyInfoFilename = AssemblyInfo.cs
+		BuildVersion_StartDate = 2013/12/31
 	EndGlobalSection
 EndGlobal
