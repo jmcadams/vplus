@@ -146,7 +146,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void buttonSetupPlugins_Click(object sender, EventArgs e) {
-            using (var dialog = new PluginListDialog(_eventSequence)) {
+            using (var dialog = new VixenPlusRoadie(_eventSequence, true)) {
                 dialog.ShowDialog();
             }
         }

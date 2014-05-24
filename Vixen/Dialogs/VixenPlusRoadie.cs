@@ -32,8 +32,9 @@ namespace VixenPlus.Dialogs {
         private readonly bool _suppressErrors;
         private readonly int _dgvWidthDiff;
         private readonly int _dgvHeightDiff;
+        private bool _isPluginsOnly;
 
-        private Profile _contextProfile;
+        private IExecutable _contextProfile;
 
         private const int ChannelEnabledCol = 0;
         private const int ChannelNumCol = 1;
@@ -41,11 +42,11 @@ namespace VixenPlus.Dialogs {
         private const int OutputChannelCol = 3;
         private const int ChannelColorCol = 4;
 
-        private const int TabChannels = 0;
-        private const int TabPlugins = 1;
-        private const int TabSorts = 2;
-        private const int TabGroups = 3;
-        private const int TabNutcracker = 4;
+        private const string TabChannels = "tpChannels";
+        private const string TabPlugins = "tpPlugins";
+        private const string TabSorts = "tpSortOrders";
+        private const string TabGroups = "tpGroups";
+        private const string TabNutcracker = "tpNutcracker";
 
         private const int ControlTabNormal = 0;
         private const int ControlTabMultiChannel = 1;
@@ -60,7 +61,7 @@ namespace VixenPlus.Dialogs {
 
         #region Constructor
 
-        public VixenPlusRoadie(Profile defaultProfile = null) {
+        public VixenPlusRoadie(IExecutable defaultProfile = null, bool pluginsOnly = false) {
             InitializeComponent();
             Text = Vendor.ProductName + " - " + Vendor.ModuleManager;
             Icon = common.Resources.VixenPlus;
@@ -69,19 +70,26 @@ namespace VixenPlus.Dialogs {
             _suppressErrors = Preference2.GetInstance().GetBoolean("SilenceProfileErrors");
             _dgvWidthDiff = Width - dgvChannels.Width;
             _dgvHeightDiff = Height - dgvChannels.Height;
+            _isPluginsOnly = pluginsOnly;
 
-            if (null != defaultProfile && string.IsNullOrEmpty(defaultProfile.Name)) {
-                AddProfile(defaultProfile);
+            if (!_isPluginsOnly && null != defaultProfile && string.IsNullOrEmpty(defaultProfile.Name)) {
+                AddProfile((Profile)defaultProfile);
             }
 
             InitializeControls();
 
-            // For Now hide tabs >= Groups
-            for (var i = TabGroups; i <= TabNutcracker; i++) {
-                tcProfile.TabPages.Remove(tcProfile.TabPages[TabGroups]);
+            // For Now hide tabs
+            tcProfile.TabPages.RemoveByKey(TabSorts);
+            tcProfile.TabPages.RemoveByKey(TabGroups);
+            tcProfile.TabPages.RemoveByKey(TabNutcracker);
+
+            if (_isPluginsOnly) {
+                tcProfile.TabPages.RemoveByKey(TabChannels);
+                _contextProfile = defaultProfile;
+                gbProfiles.Visible = false;
             }
 
-            if (null != defaultProfile) {
+            if (null != defaultProfile && !_isPluginsOnly) {
                 SetProfileIndex(defaultProfile.Name);
             }
             else {
@@ -112,7 +120,7 @@ namespace VixenPlus.Dialogs {
         #region "Generic" Events
 
         private void FrmProfileManager_KeyDown(object sender, KeyEventArgs e) {
-            switch (tcProfile.SelectedIndex) {
+            switch (tcProfile.SelectedTab.Name) {
                 case TabChannels:
                     DoChannelKeys(e);
                     break;
@@ -167,7 +175,7 @@ namespace VixenPlus.Dialogs {
                 row.Cells[ChannelEnabledCol].Value = enable;
             }
             dgvChannels.Refresh();
-            _contextProfile.IsDirty = true;
+            SetContextDirtyFlag(true);
             DoButtonManagement();
         }
 
@@ -216,7 +224,7 @@ namespace VixenPlus.Dialogs {
                                 break;
                             }
                             dgvChannels.Rows.Clear();
-                            _contextProfile.IsDirty = true;
+                            SetContextDirtyFlag(true);
                             count++;
                         }
                         else {
@@ -338,14 +346,17 @@ namespace VixenPlus.Dialogs {
         private void cbProfiles_SelectedIndexChanged(object sender, EventArgs e) {
             SaveProfileFromRows();
             colorPaletteChannel.ControlChanged -= UpdateColors;
-            tcProfile.Visible = cbProfiles.SelectedIndex > 0;
+            tcProfile.Visible = cbProfiles.SelectedIndex > 0 || _isPluginsOnly;
 
-            if (0 == cbProfiles.SelectedIndex) {
+            if (0 == cbProfiles.SelectedIndex && !_isPluginsOnly) {
                 _contextProfile = null;
+                _isPluginsOnly = false;
                 return;
             }
 
-            _contextProfile = (Profile) cbProfiles.SelectedItem;
+            if (!_isPluginsOnly) {
+                _contextProfile = (Profile) cbProfiles.SelectedItem;
+            }
 
             InitializeTabData();
             DoButtonManagement();
@@ -353,7 +364,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void InitializeTabData() {
-            switch (tcProfile.SelectedIndex) {
+            switch (tcProfile.SelectedTab.Name) {
                 case TabChannels:
                     InitializeChannelTab();
                     break;
@@ -371,18 +382,19 @@ namespace VixenPlus.Dialogs {
 
 
         private void SaveProfileFromRows() {
-            if (null == _contextProfile) {
+            var cp = _contextProfile as Profile;
+            if (null == cp) {
                 return;
             }
 
-            _contextProfile.ClearChannels();
+            cp.ClearChannels();
             foreach (var ch in from DataGridViewRow row in dgvChannels.Rows
                 select
                     new Channel(row.Cells[ChannelNameCol].Value.ToString(), row.DefaultCellStyle.BackColor,
                         int.Parse(row.Cells[OutputChannelCol].Value.ToString())) {
                             Enabled = bool.Parse(row.Cells[ChannelEnabledCol].Value.ToString())
                         }) {
-                _contextProfile.AddChannelObject(ch);
+                cp.AddChannelObject(ch);
             }
         }
 
@@ -436,13 +448,14 @@ namespace VixenPlus.Dialogs {
             tcControlArea.SelectTab(ControlTabNormal);
             tcProfile.TabPages[0].Text = "Channels";
             dgvChannels.Rows.Clear();
-            if (((Button) sender).Text == btnMultiChannelOk.Text) {
+            var cp = _contextProfile as Profile;
+            if (null != cp && ((Button) sender).Text == btnMultiChannelOk.Text) {
                 foreach (var c in GenerateChannels()) {
-                    _contextProfile.AddChannelObject(c);
+                    cp.AddChannelObject(c);
                 }
             }
             AddRows(_contextProfile.FullChannels);
-            _contextProfile.IsDirty = true;
+            SetContextDirtyFlag(true);
             SelectLastRow();
             DoButtonManagement();
         }
@@ -467,7 +480,7 @@ namespace VixenPlus.Dialogs {
             var isProfileLoaded = _contextProfile != null;
             SetGeneralButtons(isProfileLoaded);
 
-            switch (tcProfile.SelectedIndex) {
+            switch (tcProfile.SelectedTab.Name) {
                 case TabChannels:
                     SetChannelTabButtons(isProfileLoaded);
                     break;
@@ -528,7 +541,7 @@ namespace VixenPlus.Dialogs {
             btnProfileCopy.Enabled = isProfileLoaded && isChannelPanel;
             btnProfileDelete.Enabled = isProfileLoaded && isChannelPanel;
             btnProfileRename.Enabled = isProfileLoaded && isChannelPanel;
-            btnProfileSave.Enabled = _contextProfile != null && _contextProfile.IsDirty;
+            btnProfileSave.Enabled = !_isPluginsOnly && _contextProfile != null && ((Profile)_contextProfile).IsDirty;
         }
 
 
@@ -587,7 +600,7 @@ namespace VixenPlus.Dialogs {
                     }
 
                     DoChannelPaste();
-                    _contextProfile.IsDirty = true;
+                    SetContextDirtyFlag(true);
                     e.Handled = true;
                     break;
             }
@@ -762,8 +775,8 @@ namespace VixenPlus.Dialogs {
                 CopyFile(oldProfile, newProfile);
             }
 
-            _contextProfile.Name = newName;
-            _contextProfile.IsDirty = true;
+            ((Profile)_contextProfile).Name = newName;
+            SetContextDirtyFlag(true);
 
             RefreshProfileComboBox(newName);
         }
@@ -1194,9 +1207,9 @@ namespace VixenPlus.Dialogs {
         private void btnChAddOne_Click(object sender, EventArgs e) {
             var chNum = _contextProfile.FullChannels.Count;
             var ch = new Channel(string.Format("Channel {0}", chNum + 1), Color.White, chNum);
-            _contextProfile.AddChannelObject(ch);
+            ((Profile)_contextProfile).AddChannelObject(ch);
             AddRow(_contextProfile.FullChannels[chNum], chNum + 1);
-            _contextProfile.IsDirty = true;
+            SetContextDirtyFlag(true);
             SelectLastRow();
         }
 
@@ -1216,10 +1229,13 @@ namespace VixenPlus.Dialogs {
                     row => _contextProfile.FullChannels[int.Parse(row.Cells[ChannelNumCol].Value.ToString()) - 1])
                     .ToList();
 
-            _contextProfile.IsDirty = true;
+            SetContextDirtyFlag(true);
 
-            foreach (var c in channels) {
-                _contextProfile.RemoveChannel(c);
+            var cp = _contextProfile as Profile;
+            if (null != cp) {
+                foreach (var c in channels) {
+                    cp.RemoveChannel(c);
+                }
             }
 
             foreach (var r in rows) {
@@ -1354,7 +1370,7 @@ namespace VixenPlus.Dialogs {
                 RenumberChannels(new List<DataGridViewRow>(), firstRow, lastRow, OutputChannelCol);
             }
 
-            _contextProfile.IsDirty = true;
+            SetContextDirtyFlag(true);
 
             // Select the cell where the data was dropped
             dgvChannels.CurrentCell = dgvChannels.Rows[dropRowIndex].Cells[dropColumn];
@@ -1442,7 +1458,7 @@ namespace VixenPlus.Dialogs {
             }
             dgvChannels.ResumeLayout();
             SetGeneralButtons();
-            _contextProfile.IsDirty = true;
+            SetContextDirtyFlag(true);
         }
 
 
@@ -1464,14 +1480,14 @@ namespace VixenPlus.Dialogs {
                     row.DefaultCellStyle.BackColor = color;
                     row.DefaultCellStyle.ForeColor = color.GetForeColor();
                 }
-                _contextProfile.IsDirty = true;
+                SetContextDirtyFlag(true);
             }
             DoButtonManagement();
         }
 
 
         //private void dgvChannels_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
-        //    //_contextProfile.IsDirty = true;
+        //    //SetContextDirtyFlag(true);
         //    //if (e.ColumnIndex == ChannelNameCol && ModifierKeys == Keys.Control) {
         //    //    //TODO Add channel renaming templating.
         //    //}
@@ -1542,13 +1558,13 @@ namespace VixenPlus.Dialogs {
             if (e.RowIndex == -1 || e.ColumnIndex == -1) {
                 return;
             }
-            _contextProfile.IsDirty = true;
+            SetContextDirtyFlag(true);
         }
 
 
         private void btnProfileSave_Click(object sender, EventArgs e) {
             SaveProfileFromRows();
-            _contextProfile.SaveToFile();
+            ((Profile)_contextProfile).SaveToFile();
             btnProfileSave.Enabled = false;
         }
 
@@ -1702,7 +1718,7 @@ namespace VixenPlus.Dialogs {
                     row.Tag = --tag;
                 }
             }
-            _contextProfile.IsDirty = true;
+            SetContextDirtyFlag(true);
 
             _internalUpdate = false;
             _lastRow = NoRow;
@@ -1755,7 +1771,7 @@ namespace VixenPlus.Dialogs {
             _sequencePlugins.Add(p);
             _internalUpdate = false;
             UpdateRowConfig(index);
-            _contextProfile.IsDirty = true;
+            SetContextDirtyFlag(true);
 
             dgvPlugIns.ResumeLayout();
         }
@@ -1839,7 +1855,7 @@ namespace VixenPlus.Dialogs {
                 var lastPlugIn = GetPluginForIndex(_lastRow);
                 lastPlugIn.GetSetup();
                 lastPlugIn.CloseSetup();
-                _contextProfile.IsDirty = true; //todo make sure it changed before setting to true;
+                SetContextDirtyFlag(true); //todo make sure it changed before setting to true;
             }
 
             pSetup.Controls.Clear();
@@ -1896,5 +1912,11 @@ namespace VixenPlus.Dialogs {
             SetPluginsTabButtons();
         }
 
+
+        private void SetContextDirtyFlag(bool value) {
+            if (!_isPluginsOnly) {
+                ((Profile) _contextProfile).IsDirty = value;
+            }
+        }
     }
 }

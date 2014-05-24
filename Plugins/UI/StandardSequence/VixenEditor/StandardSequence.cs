@@ -4372,7 +4372,7 @@ namespace VixenEditor {
 
 
         private void toolStripDropDownButtonPlugins_Click(object sender, EventArgs e) {
-            using (var dialog = new PluginListDialog(_sequence)) {
+            using (var dialog = new VixenPlusRoadie(_sequence, true)) {
                 if (dialog.ShowDialog() != DialogResult.OK) {
                     return;
                 }
@@ -4876,7 +4876,6 @@ namespace VixenEditor {
                 if ((dialog.ShowDialog() != DialogResult.OK)) {
                     return;
                 }
-                //objectInContext.SaveToFile(); // TODO need to grab the data from Roadie before closing.
                 SetProfile(_sequence.Profile.FileName);
             }
         }
