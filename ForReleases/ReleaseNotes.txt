@@ -1,10 +1,11 @@
 NOTE: For items prefixed with VIX-, you can view more details on https://vixenplus.atlassian.net
 
-XX APR 2014 - V 0.2.XX.1
+24 MAY 2014 - V 0.2.144.1
    VIX-5 - New profile editor, plugin editor, sort editor, group editor and nutcracker model editor.
    NO JIRA - Consolidated Nutcracker into one DLL instead of many to keep the version and such in sync.
    NO JIRA - Removed the diagnostics and timer routines since they were not necessary and were a hold over from version 2.x
    NO JIRA - Fixed some pesky design time errors that have been plaguing me for a year!
+   NO JIRA - Lots and lots of internal clean up
 
 10 FEB 2014 - V 0.2.41.1
    VIX-14 - Fixed - Creating a profile from a sequence cause a hard crash.
