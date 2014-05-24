@@ -157,11 +157,6 @@ namespace Controllers.GenericSerial {
         }
 
 
-        public bool SettingsValid() {
-            throw new NotImplementedException();
-        }
-
-
         public void Shutdown() {
             if (_serialPort.IsOpen) {
                 _serialPort.Close();

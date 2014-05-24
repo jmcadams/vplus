@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
@@ -72,7 +71,7 @@ namespace Nutcracker.Models {
             Nodes = new NutcrackerNodes[Rows, Cols];
             for (var row = 0; row < Rows; row++) {
                 for (var col = 0; col < Cols; col++) {
-                    Nodes[row, col] = new NutcrackerNodes() {Model = new Point(-1,-1)};
+                    Nodes[row, col] = new NutcrackerNodes {Model = new Point(-1,-1)};
                 }
             }
 

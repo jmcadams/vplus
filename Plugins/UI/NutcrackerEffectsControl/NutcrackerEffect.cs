@@ -97,12 +97,16 @@ namespace Nutcracker {
         public string GetEffect(bool isFirst) {
             var effectSettings = new StringBuilder();
             var effectName = cbEffects.SelectedItem.ToString();
-            if (effectName != EmptyEffect) {
-                foreach (var e in _effectCache[cbEffects.SelectedItem.ToString()].Settings) {
-                    effectSettings.Append(e.Replace("{0}", isFirst ? "1" : "2")).Append(",");
-                }
-                effectSettings.Remove(effectSettings.Length - 1, 1);
+
+            if (effectName == EmptyEffect) {
+                return effectSettings.ToString();
             }
+
+            foreach (var e in _effectCache[cbEffects.SelectedItem.ToString()].Settings) {
+                effectSettings.Append(e.Replace("{0}", isFirst ? "1" : "2")).Append(",");
+            }
+            effectSettings.Remove(effectSettings.Length - 1, 1);
+            
             return effectSettings.ToString();
         }
 

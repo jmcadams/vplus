@@ -28,6 +28,7 @@ namespace VixenPlus {
         }
 
 
+/*
         public EventSequenceStub(string fileName, bool referenceSequence) {
             FileName = string.Empty;
             _length = 0;
@@ -50,6 +51,7 @@ namespace VixenPlus {
                 sequence.Dispose();
             }
         }
+*/
 
 
         // ReSharper disable UnusedAutoPropertyAccessor.Local

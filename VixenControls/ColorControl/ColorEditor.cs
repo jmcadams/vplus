@@ -122,7 +122,9 @@ namespace VixenPlusCommon {
         /// <value>The component color.</value>
         [Category("Appearance")]
         [DefaultValue(typeof (Color), "0, 0, 0")]
+        // ReSharper disable MemberCanBePrivate.Global
         public Color Color {
+            // ReSharper restore MemberCanBePrivate.Global
             get { return _color; }
             set {
                 if (value == _color) {

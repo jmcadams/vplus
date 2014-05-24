@@ -69,10 +69,12 @@ namespace VixenPlus {
         }
 
 
+/*
         public static string GetOptionalNodeValue(XmlNode contextNode, string nodeName) {
             var node = contextNode.SelectSingleNode(nodeName);
             return node == null ? string.Empty : node.InnerText;
         }
+*/
 
 
         public static XmlNode GetRequiredNode(XmlNode contextNode, string nodeName) {

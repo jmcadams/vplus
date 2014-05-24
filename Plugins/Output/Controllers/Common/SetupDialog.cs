@@ -12,10 +12,5 @@ namespace Controllers.Common {
             get { return serialSetup1.SelectedPorts; }
             set { serialSetup1.SelectedPorts = value; }
         }
-
-
-        public bool ValidateSettings() {
-            return serialSetup1.ValidateSettings();
-        }
     }
 }

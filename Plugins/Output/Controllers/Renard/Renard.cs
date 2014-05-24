@@ -228,11 +228,6 @@ namespace Controllers.Renard {
         }
 
 
-        public bool SettingsValid() {
-            return _dialog.ValidateSettings();
-        }
-
-
         public string HardwareMap {
             get {
                 int port;

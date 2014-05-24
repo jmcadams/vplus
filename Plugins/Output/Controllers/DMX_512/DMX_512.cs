@@ -49,11 +49,6 @@ namespace Controllers.DMX_512
         }
 
 
-        public bool SettingsValid() {
-            throw new System.NotImplementedException();
-        }
-
-
         public void Shutdown()
         {
             if (!_dmxRunning || (_dmxInterface == null)) {

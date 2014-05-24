@@ -104,7 +104,8 @@ namespace VixenPlus {
             newChild.InnerText = Convert.ToBase64String(value);
         }
 
-        public void SetInteger(XmlNode setupDataNode, string childNode, int value)
+
+        private void SetInteger(XmlNode setupDataNode, string childNode, int value)
         {
             var newChild = setupDataNode.SelectSingleNode(childNode);
             if (newChild == null)
@@ -115,7 +116,8 @@ namespace VixenPlus {
             newChild.InnerText = value.ToString(CultureInfo.InvariantCulture);
         }
 
-        public void SetString(XmlNode setupDataNode, string childNode, string value)
+
+        private void SetString(XmlNode setupDataNode, string childNode, string value)
         {
             var newChild = setupDataNode.SelectSingleNode(childNode);
             if (newChild == null)

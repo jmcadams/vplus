@@ -38,6 +38,7 @@ namespace VixenPlus {
         }
 
 
+/*
         public int LastSort {
             get { return Sorts.LastSort; }
             set {
@@ -45,6 +46,7 @@ namespace VixenPlus {
                 IsDirty = true;
             }
         }
+*/
 
         public SortOrders Sorts { get; private set; }
 
@@ -107,7 +109,7 @@ namespace VixenPlus {
             // ReSharper restore AssignNullToNotNullAttribute
         }
 
-        public List<Channel> OutputChannels {
+        private List<Channel> OutputChannels {
             get {
                 if (_isFrozen) {
                     return _frozenOutputChannelList;
@@ -118,12 +120,14 @@ namespace VixenPlus {
                 }
                 return channelOutputs;
             }
+/*
             set {
                 for (var i = 0; i < Channels.Count; i++) {
                     _channelOutputs[i] = value.IndexOf(Channels[i]);
                 }
                 IsDirty = true;
             }
+*/
         }
 
         public SetupData PlugInData { get; private set; }

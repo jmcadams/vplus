@@ -139,8 +139,8 @@ namespace VixenPlusCommon {
         [DefaultValue(typeof (RgbaChannel), "Red")]
         // ReSharper disable MemberCanBePrivate.Global
         public RgbaChannel Channel {
+            get { return _channel; }
             // ReSharper restore MemberCanBePrivate.Global
-            private get { return _channel; }
             [UsedImplicitly]
             set {
                 if (Channel == value) {

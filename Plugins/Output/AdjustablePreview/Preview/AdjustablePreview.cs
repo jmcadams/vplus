@@ -73,11 +73,6 @@ namespace Preview {
         }
 
 
-        public bool SettingsValid() {
-            throw new NotImplementedException();
-        }
-
-
         public void Shutdown() {
             if (_previewDialog != null) {
                 if (_previewDialog.InvokeRequired) {

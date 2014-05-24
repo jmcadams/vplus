@@ -7,6 +7,5 @@ namespace VixenPlus {
         void GetSetup();
         void CloseSetup();
         bool SupportsLiveSetup();
-        bool SettingsValid();
     }
 }

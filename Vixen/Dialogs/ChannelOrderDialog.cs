@@ -37,9 +37,11 @@ namespace VixenPlus.Dialogs {
         }
 
 
+/*
         public ChannelOrderDialog(IList<Channel> channelList, IEnumerable<int> channelOrder, string caption) : this(channelList, channelOrder) {
             Text = caption;
         }
+*/
 
 
         public override sealed string Text {

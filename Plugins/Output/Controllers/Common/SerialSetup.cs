@@ -2,12 +2,9 @@
 using System.Globalization;
 using System.IO.Ports;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 using Controllers.Properties;
-
-using VixenPlusCommon;
 
 //TODO want to add events to these, so when they change, we can update the live setup screen.
 namespace Controllers.Common {
@@ -37,6 +34,7 @@ namespace Controllers.Common {
         }
 
 
+/*
         public bool ValidateSettings() {
             var builder = new StringBuilder();
             if (cbPortName.SelectedIndex == -1) {
@@ -63,6 +61,7 @@ namespace Controllers.Common {
 
             return false;
         }
+*/
 
 
 
