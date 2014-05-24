@@ -205,12 +205,6 @@
     <Compile Include="Dialogs\NewSequenceWizardDialog.Designer.cs">
       <DependentUpon>NewSequenceWizardDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\PluginListDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\PluginListDialog.Designer.cs">
-      <DependentUpon>PluginListDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Dialogs\PreferencesDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -374,9 +368,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\NewSequenceWizardDialog.resx">
       <DependentUpon>NewSequenceWizardDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\PluginListDialog.resx">
-      <DependentUpon>PluginListDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\PreferencesDialog.resx">
       <DependentUpon>PreferencesDialog.cs</DependentUpon>
