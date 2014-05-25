@@ -11,8 +11,6 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 
-
-
 using VixenPlus.Properties;
 
 using VixenPlusCommon;

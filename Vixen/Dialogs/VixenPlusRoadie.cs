@@ -372,6 +372,7 @@ namespace VixenPlus.Dialogs {
                     InitializePlugInTab();
                     break;
                 case TabGroups:
+                    InitializeGroupsTab();
                     break;
                 case TabSorts:
                     break;
@@ -1917,6 +1918,11 @@ namespace VixenPlus.Dialogs {
             if (!_isPluginsOnly) {
                 ((Profile) _contextProfile).IsDirty = value;
             }
+        }
+
+
+        private void InitializeGroupsTab() {
+            
         }
     }
 }
