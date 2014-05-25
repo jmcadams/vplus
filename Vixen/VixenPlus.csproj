@@ -263,6 +263,24 @@
     <Compile Include="ExecutionContext.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="GroupData.cs" />
+    <Compile Include="Dialogs\GroupDialog.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Dialogs\GroupDialog.designer.cs">
+      <DependentUpon>GroupDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\GroupDialogMultiAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\GroupDialogMultiAdd.designer.cs">
+      <DependentUpon>GroupDialogMultiAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\GroupPickerDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\GroupPickerDialog.designer.cs">
+      <DependentUpon>GroupPickerDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="GroupTagData.cs" />
     <Compile Include="HardwarePlugins.cs" />
     <Compile Include="Host.cs" />
@@ -392,6 +410,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\UpdateDialog.resx">
       <DependentUpon>UpdateDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\GroupDialog.resx">
+      <DependentUpon>GroupDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\GroupDialogMultiAdd.resx">
+      <DependentUpon>GroupDialogMultiAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\GroupPickerDialog.resx">
+      <DependentUpon>GroupPickerDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OutputPlugInUIBase.resx">
       <DependentUpon>OutputPlugInUIBase.cs</DependentUpon>

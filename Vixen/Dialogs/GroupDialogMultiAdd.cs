@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-using VixenPlus;
-
-namespace VixenEditor {
+namespace VixenPlus.Dialogs {
     public partial class GroupDialogMultiAdd : Form {
         public GroupDialogMultiAdd() {
             InitializeComponent();

@@ -117,18 +117,6 @@
     <Compile Include="Global.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VixenEditor\GroupDialogMultiAdd.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VixenEditor\GroupDialogMultiAdd.Designer.cs">
-      <DependentUpon>GroupDialogMultiAdd.cs</DependentUpon>
-    </Compile>
-    <Compile Include="VixenEditor\GroupDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VixenEditor\GroupDialog.Designer.cs">
-      <DependentUpon>GroupDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="VixenEditor\AffectGridDelegate.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -176,12 +164,6 @@
     </Compile>
     <Compile Include="VixenEditor\FrequencyEffectGenerator.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="VixenEditor\GroupPickerDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VixenEditor\GroupPickerDialog.Designer.cs">
-      <DependentUpon>GroupPickerDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="VixenEditor\IntensityAdjustDialog.cs">
       <SubType>Form</SubType>
@@ -269,15 +251,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\FindAndReplaceDialog.resx">
       <DependentUpon>FindAndReplaceDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VixenEditor\GroupDialog.resx">
-      <DependentUpon>GroupDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VixenEditor\GroupDialogMultiAdd.resx">
-      <DependentUpon>GroupDialogMultiAdd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VixenEditor\GroupPickerDialog.resx">
-      <DependentUpon>GroupPickerDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VixenEditor\IntensityAdjustDialog.resx">
       <DependentUpon>IntensityAdjustDialog.cs</DependentUpon>

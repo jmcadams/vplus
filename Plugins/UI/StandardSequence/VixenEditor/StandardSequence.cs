@@ -3617,7 +3617,7 @@ namespace VixenEditor {
                     cbGroups.Items.Add(g.Key);
                 }
             }
-            cbGroups.Items.Add(Group.ManageGroups);
+            //cbGroups.Items.Add(Group.ManageGroups);
             if (resetIndex) {
                 cbGroups.SelectedIndex = 0;
             }
@@ -4896,10 +4896,10 @@ namespace VixenEditor {
 
 
         private void cbGroups_SelectedIndexChanged(object sender, EventArgs e) {
-            if (cbGroups.Items.Count > 1 && cbGroups.SelectedIndex == cbGroups.Items.Count - 1) {
-                if (!GroupChanged()) return;
-                Group.SaveGroups(_sequence.Groups, _sequence.Profile != null ? _sequence.Profile.FileName : _sequence.FileName);
-            }
+            //if (cbGroups.Items.Count > 1 && cbGroups.SelectedIndex == cbGroups.Items.Count - 1) {
+            //    if (!GroupChanged()) return;
+            //    Group.SaveGroups(_sequence.Groups, _sequence.Profile != null ? _sequence.Profile.FileName : _sequence.FileName);
+            //}
             _lastGroupIndex = cbGroups.SelectedIndex;
             _sequence.CurrentGroup = cbGroups.SelectedItem.ToString();
             if (_selectedCells.Top + _selectedCells.Height > _sequence.ChannelCount) {
@@ -4921,6 +4921,7 @@ namespace VixenEditor {
         }
 
 
+/*
         private bool GroupChanged() {
             cbGroups.SelectedIndex = _lastGroupIndex;
             using (var groupDialog = new GroupDialog(_sequence, false)) {
@@ -4931,6 +4932,7 @@ namespace VixenEditor {
             }
             return true;
         }
+*/
 
 
         private void UpdateAndSetIndex(string currentGroup) {

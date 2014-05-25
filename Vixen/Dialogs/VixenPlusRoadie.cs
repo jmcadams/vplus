@@ -80,7 +80,7 @@ namespace VixenPlus.Dialogs {
 
             // For Now hide tabs
             tcProfile.TabPages.RemoveByKey(TabSorts);
-            tcProfile.TabPages.RemoveByKey(TabGroups);
+            //tcProfile.TabPages.RemoveByKey(TabGroups);
             tcProfile.TabPages.RemoveByKey(TabNutcracker);
 
             if (_isPluginsOnly) {
@@ -148,6 +148,10 @@ namespace VixenPlus.Dialogs {
             // not the same issue but found it here: http://stackoverflow.com/questions/296418/datagridview-column-resize-problem
             dgvChannels.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
             dgvChannels.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            pGroups.Size = tcProfile.ClientSize;
+            foreach (Control c in pGroups.Controls) {
+                c.Size = pGroups.Size;
+            }
         }
 
 
@@ -547,7 +551,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void SetGroupTabButtons(bool isProfileLoaded) {
-            btnGraButton.Enabled = isProfileLoaded;
+            //btnGraButton.Enabled = isProfileLoaded;
         }
 
 
@@ -1922,7 +1926,9 @@ namespace VixenPlus.Dialogs {
 
 
         private void InitializeGroupsTab() {
-            
+            pGroups.Controls.Clear();
+            var g = new GroupDialog(((Profile) _contextProfile), false) {Size = pGroups.Size};
+            pGroups.Controls.Add(g);
         }
     }
 }

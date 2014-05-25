@@ -2,14 +2,9 @@
 using System.Linq;
 using System.Windows.Forms;
 
-
-
-using VixenPlus;
-
 using VixenPlusCommon;
 
-
-namespace VixenEditor {
+namespace VixenPlus.Dialogs {
     public partial class GroupPickerDialog : Form {
 
         private readonly List<TreeNode> _nodes;

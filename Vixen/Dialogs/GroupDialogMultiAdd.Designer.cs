@@ -1,4 +1,4 @@
-﻿namespace VixenEditor {
+﻿namespace VixenPlus.Dialogs {
     partial class GroupDialogMultiAdd {
         /// <summary>
         /// Required designer variable.

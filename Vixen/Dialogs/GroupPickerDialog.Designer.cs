@@ -1,4 +1,4 @@
-﻿namespace VixenEditor {
+﻿namespace VixenPlus.Dialogs {
     partial class GroupPickerDialog {
         /// <summary>
         /// Required designer variable.

@@ -115,7 +115,6 @@ namespace VixenPlus.Dialogs
             this.btnSrtSave = new System.Windows.Forms.Button();
             this.cbSrtOrders = new System.Windows.Forms.ComboBox();
             this.tpGroups = new System.Windows.Forms.TabPage();
-            this.btnGraButton = new System.Windows.Forms.Button();
             this.tpNutcracker = new System.Windows.Forms.TabPage();
             this.btnNcaButton = new System.Windows.Forms.Button();
             this.btnOkay = new System.Windows.Forms.Button();
@@ -123,6 +122,7 @@ namespace VixenPlus.Dialogs
             this.ttRoadie = new System.Windows.Forms.ToolTip(this.components);
             this.previewTimer = new System.Windows.Forms.Timer(this.components);
             this.dataGridViewDisableButtonColumn1 = new VixenPlus.Dialogs.DataGridViewDisableButtonColumn();
+            this.pGroups = new System.Windows.Forms.Panel();
             this.gbProfiles.SuspendLayout();
             this.tcProfile.SuspendLayout();
             this.tpChannels.SuspendLayout();
@@ -231,9 +231,9 @@ namespace VixenPlus.Dialogs
             // 
             // tcProfile
             // 
-            this.tcProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tcProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tcProfile.Controls.Add(this.tpChannels);
             this.tcProfile.Controls.Add(this.tpPlugins);
             this.tcProfile.Controls.Add(this.tpSortOrders);
@@ -994,9 +994,9 @@ namespace VixenPlus.Dialogs
             this.dgvPlugIns.AllowUserToAddRows = false;
             this.dgvPlugIns.AllowUserToDeleteRows = false;
             this.dgvPlugIns.AllowUserToOrderColumns = true;
-            this.dgvPlugIns.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvPlugIns.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvPlugIns.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dgvPlugIns.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPlugIns.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1061,8 +1061,8 @@ namespace VixenPlus.Dialogs
             // 
             // gbSetup
             // 
-            this.gbSetup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbSetup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.gbSetup.Controls.Add(this.pSetup);
             this.gbSetup.Location = new System.Drawing.Point(6, 355);
             this.gbSetup.Name = "gbSetup";
@@ -1073,8 +1073,8 @@ namespace VixenPlus.Dialogs
             // 
             // pSetup
             // 
-            this.pSetup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pSetup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.pSetup.Location = new System.Drawing.Point(6, 19);
             this.pSetup.Name = "pSetup";
             this.pSetup.Size = new System.Drawing.Size(952, 236);
@@ -1127,23 +1127,13 @@ namespace VixenPlus.Dialogs
             // 
             // tpGroups
             // 
-            this.tpGroups.Controls.Add(this.btnGraButton);
+            this.tpGroups.Controls.Add(this.pGroups);
             this.tpGroups.Location = new System.Drawing.Point(4, 22);
             this.tpGroups.Name = "tpGroups";
             this.tpGroups.Size = new System.Drawing.Size(976, 622);
             this.tpGroups.TabIndex = 2;
             this.tpGroups.Text = "Groups";
             this.tpGroups.UseVisualStyleBackColor = true;
-            // 
-            // btnGraButton
-            // 
-            this.btnGraButton.Enabled = false;
-            this.btnGraButton.Location = new System.Drawing.Point(674, 428);
-            this.btnGraButton.Name = "btnGraButton";
-            this.btnGraButton.Size = new System.Drawing.Size(75, 23);
-            this.btnGraButton.TabIndex = 1;
-            this.btnGraButton.Text = "A Button";
-            this.btnGraButton.UseVisualStyleBackColor = true;
             // 
             // tpNutcracker
             // 
@@ -1200,6 +1190,13 @@ namespace VixenPlus.Dialogs
             this.dataGridViewDisableButtonColumn1.Name = "dataGridViewDisableButtonColumn1";
             this.dataGridViewDisableButtonColumn1.ReadOnly = true;
             this.dataGridViewDisableButtonColumn1.Text = "Setup";
+            // 
+            // pGroups
+            // 
+            this.pGroups.Location = new System.Drawing.Point(0, 0);
+            this.pGroups.Name = "pGroups";
+            this.pGroups.Size = new System.Drawing.Size(976, 622);
+            this.pGroups.TabIndex = 2;
             // 
             // VixenPlusRoadie
             // 
@@ -1281,7 +1278,6 @@ namespace VixenPlus.Dialogs
         private System.Windows.Forms.GroupBox gbChannels;
         private System.Windows.Forms.Button btnChAddMulti;
         private System.Windows.Forms.Button btnChAddOne;
-        private System.Windows.Forms.Button btnGraButton;
         private System.Windows.Forms.Button btnNcaButton;
         private System.Windows.Forms.Button btnChDelete;
         private System.Windows.Forms.Button btnMultiChannelCancel;
@@ -1341,5 +1337,6 @@ namespace VixenPlus.Dialogs
         private System.Windows.Forms.DataGridViewTextBoxColumn colPlugInConfiguration;
         private DataGridViewDisableButtonColumn colPlugInSetup;
         private DataGridViewDisableButtonColumn dataGridViewDisableButtonColumn1;
+        private System.Windows.Forms.Panel pGroups;
     }
 }

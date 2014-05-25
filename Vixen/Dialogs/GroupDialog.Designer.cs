@@ -2,7 +2,7 @@
 
 using VixenPlusCommon;
 
-namespace VixenEditor
+namespace VixenPlus.Dialogs
 {
     sealed partial class GroupDialog
     {
@@ -32,9 +32,6 @@ namespace VixenEditor
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GroupDialog));
-            this.btnOK = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
             this.lbChannels = new System.Windows.Forms.ListBox();
             this.btnAddRoot = new System.Windows.Forms.Button();
             this.btnRemoveGroup = new System.Windows.Forms.Button();
@@ -49,33 +46,11 @@ namespace VixenEditor
             this.btnAddChild = new System.Windows.Forms.Button();
             this.btnExpand = new System.Windows.Forms.Button();
             this.btnCollapse = new System.Windows.Forms.Button();
-            this.tvGroups = new MultiSelectTreeview();
+            this.tvGroups = new VixenPlusCommon.MultiSelectTreeview();
             this.cbSort = new System.Windows.Forms.ComboBox();
             this.btnAddMutli = new System.Windows.Forms.Button();
             this.lblStats = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // btnOK
-            // 
-            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(605, 406);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 12;
-            this.btnOK.Text = "O&K";
-            this.btnOK.UseVisualStyleBackColor = true;
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(605, 435);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 11;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
             // 
             // lbChannels
             // 
@@ -284,9 +259,6 @@ namespace VixenEditor
             // 
             // GroupDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(692, 470);
             this.Controls.Add(this.lblStats);
             this.Controls.Add(this.btnAddMutli);
             this.Controls.Add(this.cbSort);
@@ -305,16 +277,8 @@ namespace VixenEditor
             this.Controls.Add(this.btnAddRoot);
             this.Controls.Add(this.tvGroups);
             this.Controls.Add(this.lbChannels);
-            this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnOK);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.KeyPreview = true;
-            this.MinimizeBox = false;
             this.Name = "GroupDialog";
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "GroupDialog";
-            this.ResizeEnd += new System.EventHandler(this.GroupDialog_ResizeEnd);
+            this.Size = new System.Drawing.Size(692, 470);
             this.SizeChanged += new System.EventHandler(this.GroupDialog_SizeChanged);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -323,8 +287,6 @@ namespace VixenEditor
 
         #endregion
 
-        private System.Windows.Forms.Button btnOK;
-        private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.ListBox lbChannels;
         private System.Windows.Forms.Button btnAddRoot;
         private System.Windows.Forms.Button btnRemoveGroup;

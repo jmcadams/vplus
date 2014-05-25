@@ -80,7 +80,9 @@ namespace VixenPlus {
         } 
 
         public string FileName { get; set; }
-        
+
+        public Dictionary<string, GroupData> Groups { get; set; }
+
         public bool IsDirty { get; set; }
 
         public ulong Key { get; private set; }

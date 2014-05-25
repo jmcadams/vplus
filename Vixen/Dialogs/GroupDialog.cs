@@ -5,16 +5,12 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
-using VixenPlus;
-
 using VixenPlusCommon;
 
-using ColorDialog = System.Windows.Forms.ColorDialog;
+namespace VixenPlus.Dialogs {
+    public sealed partial class GroupDialog : UserControl {
 
-namespace VixenEditor {
-    public sealed partial class GroupDialog : Form {
-
-        private readonly EventSequence _seq;
+        private readonly Profile _profile;
         private List<Channel> _channels = new List<Channel>();
         public TreeView GetResults { get { return tvGroups; } }
         private readonly bool _useCheckmark = Preference2.GetInstance().GetBoolean("UseCheckmark");
@@ -27,20 +23,20 @@ namespace VixenEditor {
             ChannelNameThenColor
         }
 
-        public GroupDialog(EventSequence sequence, bool constrainToGroup) {
+        public GroupDialog(Profile profile, bool constrainToGroup) {
             InitializeComponent();
             MinimumSize = Size;
-            _seq = sequence;
-            foreach (var c in constrainToGroup ? _seq.Channels : _seq.FullChannels) {
+            _profile = profile;
+            foreach (var c in constrainToGroup ? _profile.Channels : _profile.FullChannels) {
                 lbChannels.Items.Add(c.Name);
                 _channels.Add(c);
             }
             cbSort.SelectedItem = cbSort.Items[0];
             SetButtons();
-            if (sequence.Groups == null) {
+            if (profile.Groups == null) {
                 return;
             }
-            foreach (var g in sequence.Groups) {
+            foreach (var g in profile.Groups) {
                 var thisNode = tvGroups.Nodes.Add(g.Key);
                 AddSubNodes(g.Value.GroupChannels, thisNode);
                 thisNode.Name = g.Key;
@@ -57,14 +53,14 @@ namespace VixenEditor {
                     var thisNode = parentNode.Nodes.Add(groupNode);
                     thisNode.Name = groupNode;
                     thisNode.Tag = new GroupTagData {
-                        NodeColor = _seq.Groups[groupNode].GroupColor,
+                        NodeColor = _profile.Groups[groupNode].GroupColor,
                         IsLeafNode = false,
                         Zoom = "100%"
                     };
-                    AddSubNodes(_seq.Groups[groupNode].GroupChannels, thisNode);
+                    AddSubNodes(_profile.Groups[groupNode].GroupChannels, thisNode);
                 }
                 else {
-                    var channel = _seq.FullChannels[int.Parse(node)];
+                    var channel = _profile.FullChannels[int.Parse(node)];
                     var thisNode = parentNode.Nodes.Add(channel.Name);
                     thisNode.Name = channel.Name;
                     thisNode.Tag = new GroupTagData { NodeColor = channel.Color, IsLeafNode = true, UnderlyingChannel = node };
@@ -408,7 +404,7 @@ namespace VixenEditor {
                     newNode.Tag = new GroupTagData {
                         IsLeafNode = true,
                         NodeColor = channel.Color,
-                        UnderlyingChannel = _seq.FullChannels.IndexOf(channel).ToString(CultureInfo.InvariantCulture)
+                        UnderlyingChannel = _profile.FullChannels.IndexOf(channel).ToString(CultureInfo.InvariantCulture)
                     };
                     newNode.Name = channel.Name;
                     AddReferencedNode(newNode);
@@ -458,10 +454,10 @@ namespace VixenEditor {
         }
 
 
-        private void GroupDialog_ResizeEnd(object sender, EventArgs e) {
-            lbChannels.Refresh();
-            tvGroups.Refresh();
-        }
+        //private void GroupDialog_ResizeEnd(object sender, EventArgs e) {
+        //    lbChannels.Refresh();
+        //    tvGroups.Refresh();
+        //}
 
         private void btnUp_Click(object sender, EventArgs e) {
             SwapNodes(-1);
