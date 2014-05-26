@@ -322,8 +322,6 @@ namespace VixenPlus.Dialogs {
             }
 
             DeleteIfExists(_contextProfile.FileName);
-            //DeleteIfExists(Path.Combine(Path.GetDirectoryName(_contextProfile.FileName) ?? Paths.ProfilePath,
-            //    _contextProfile.Name + Vendor.GroupExtension));
             InitializeProfiles();
             cbProfiles.SelectedIndex = 0;
         }
@@ -493,7 +491,6 @@ namespace VixenPlus.Dialogs {
                     SetPluginsTabButtons();
                     break;
                 case TabGroups:
-                    SetGroupTabButtons();
                     break;
                 case TabSorts:
                     SetSortsTabButtons(isProfileLoaded);
@@ -547,10 +544,6 @@ namespace VixenPlus.Dialogs {
             btnProfileDelete.Enabled = isProfileLoaded && isChannelPanel;
             btnProfileRename.Enabled = isProfileLoaded && isChannelPanel;
             btnProfileSave.Enabled = !_isPluginsOnly && _contextProfile != null && ((Profile)_contextProfile).IsDirty;
-        }
-
-
-        private void SetGroupTabButtons() {
         }
 
 
@@ -758,17 +751,6 @@ namespace VixenPlus.Dialogs {
             }
 
             var root = Path.GetDirectoryName(_contextProfile.FileName) ?? Paths.ProfilePath;
-
-            //var oldGroup = Path.Combine(root, _contextProfile.Name + Vendor.GroupExtension);
-            //var newGroup = Path.Combine(root, newName + Vendor.GroupExtension);
-
-            //if (isRename) {
-            //    RenameFile(oldGroup, newGroup);
-            //}
-            //else {
-            //    CopyFile(oldGroup, newGroup);
-            //}
-
             var oldProfile = Path.Combine(root, _contextProfile.Name + Vendor.ProfileExtension);
             var newProfile = Path.Combine(root, newName + Vendor.ProfileExtension);
 

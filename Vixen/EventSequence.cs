@@ -582,10 +582,6 @@ namespace VixenPlus {
             PlugInData.LoadFromXml(contextNode);
             _sortOrders = new SortOrders(); //TODO: Need to embed group into sorts and be able to load it too.
             _sortOrders.LoadFromXml(contextNode);
-            //var groupFile = Path.Combine(Paths.SequencePath, Path.GetFileNameWithoutExtension(FileName) + Vendor.GroupExtension);
-            //if (File.Exists(groupFile)) {
-            //    Groups = Group.LoadGroups(groupFile);
-            //}
         }
 
 
@@ -719,10 +715,6 @@ namespace VixenPlus {
             if (File.Exists(path)) {
                 AttachToProfile(new Profile(path));
                 Groups = _profile.Groups;
-                //var groupFile = Path.Combine(Paths.ProfilePath, Path.GetFileNameWithoutExtension(_profile.FileName) + Vendor.GroupExtension);
-                //if (File.Exists(groupFile)) {
-                //    Groups = Group.LoadGroups(groupFile);
-                //}
             }
             else {
                 LoadEmbeddedData(FileName);

@@ -451,12 +451,6 @@ namespace VixenPlus.Dialogs {
             }
         }
 
-
-        //private void GroupDialog_ResizeEnd(object sender, EventArgs e) {
-        //    lbChannels.Refresh();
-        //    tvGroups.Refresh();
-        //}
-
         private void btnUp_Click(object sender, EventArgs e) {
             SwapNodes(-1);
         }

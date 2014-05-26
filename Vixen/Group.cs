@@ -2,9 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security;
@@ -24,11 +22,6 @@ namespace VixenPlus {
         public const string GroupTextDivider = "~";
 
         private readonly List<Channel> _currentList = new List<Channel>();
-
-        //public static Dictionary<string, GroupData> LoadGroups(string groupFile) {
-        //    return ParseGroups(Xml.LoadDocument(groupFile).DocumentElement);
-        //}
-
 
         private static Dictionary<string, GroupData> ParseGroups(XmlNode doc){
             Dictionary<string, GroupData> groups = null;
@@ -81,22 +74,6 @@ namespace VixenPlus {
         }
 
 
-        //public static void SaveGroups(Dictionary<string, GroupData> groups, string filename) {
-        //    var doc = new XElement("Groups");
-        //    foreach (var node in groups) {
-        //        var nodeData = node.Value;
-        //        var thisNode = new XElement("Group");
-        //        thisNode.Add(new XAttribute("Name", nodeData.Name), new XAttribute("Zoom", nodeData.Zoom),
-        //            new XAttribute("Color", nodeData.GroupColor.ToArgb()), new XAttribute("IsSortOrder", nodeData.IsSortOrder));
-        //        AddInnerText(nodeData.GroupChannels, thisNode);
-        //        doc.Add(thisNode);
-        //    }
-        //    // ReSharper disable once AssignNullToNotNullAttribute
-        //    var groupFilename = (Path.Combine(Path.GetDirectoryName(filename), Path.GetFileNameWithoutExtension(filename) + Vendor.GroupExtension));
-        //    doc.Save(groupFilename);
-        //}
-
-
         private static void AddInnerText(string nodeData, XContainer thisNode) {
             var previousType = String.Empty;
             var treeData = new StringBuilder();
@@ -139,20 +116,6 @@ namespace VixenPlus {
                 node.Add(new XAttribute("Name", val.Name), new XAttribute("Zoom", val.Zoom),
                     new XAttribute("Color", val.GroupColor.ToArgb()), new XAttribute("IsSortOrder", val.IsSortOrder));
                 AddInnerText(val.GroupChannels, node);
-                groupsNode.Add(node);
-            }
-            ImportXElementToXml(contextNode, groupsNode);
-        }
-
-
-        public static void SaveSortsToXml(XmlNode contextNode, IEnumerable<SortOrder> sorts) {
-            var groupsNode = new XElement("Groups");
-            foreach (var val in sorts) {
-                XContainer node = new XElement("Group");
-                node.Add(new XAttribute("Name", val.Name), new XAttribute("Zoom", "100%"), new XAttribute("Color", Color.Black.ToArgb()),
-                    new XAttribute("IsSortOrder", "True"));
-                var channels = String.Join(",", val.ChannelIndexes.Select(i => i.ToString(CultureInfo.InvariantCulture)).ToArray());
-                AddInnerText(channels, node);
                 groupsNode.Add(node);
             }
             ImportXElementToXml(contextNode, groupsNode);
@@ -259,8 +222,6 @@ namespace VixenPlus {
                     AddNodeToGroup(baseNode, groupNode, groups);
                 }
             }
-
-            
 
             return groups.Count > 0 ? groups : null;
         }

@@ -39,16 +39,6 @@ namespace VixenPlus {
         }
 
 
-/*
-        public int LastSort {
-            get { return Sorts.LastSort; }
-            set {
-                Sorts.LastSort = value;
-                IsDirty = true;
-            }
-        }
-*/
-
         public SortOrders Sorts { get; private set; }
 
         public int AudioDeviceIndex {
@@ -123,14 +113,6 @@ namespace VixenPlus {
                 }
                 return channelOutputs;
             }
-/*
-            set {
-                for (var i = 0; i < Channels.Count; i++) {
-                    _channelOutputs[i] = value.IndexOf(Channels[i]);
-                }
-                IsDirty = true;
-            }
-*/
         }
 
         public SetupData PlugInData { get; private set; }
@@ -243,7 +225,6 @@ namespace VixenPlus {
                 }
             }
             PlugInData.LoadFromXml(documentElement);
-            //Sorts.LoadFromXml(documentElement);
             Groups = Group.LoadFromXml(documentElement);
             IsDirty = Group.LoadFromFile(documentElement, Groups);
             if (documentElement != null) {
@@ -302,9 +283,7 @@ namespace VixenPlus {
             
             if (profile != null) {
                 profile.AppendChild(doc.ImportNode(PlugInData.RootNode, true));
-                //Sorts.SaveToXml(profile);
                 Group.SaveToXml(profile, Groups);
-                //SaveSortsAsGroups(profile);
             }
             
             var disabledChannels = new List<string>();
@@ -317,11 +296,6 @@ namespace VixenPlus {
 
             IsDirty = false;
             return profile;
-        }
-
-
-        private void SaveSortsAsGroups(XmlNode profile) {
-            Group.SaveSortsToXml(profile, Sorts);
         }
 
 

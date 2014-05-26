@@ -285,10 +285,6 @@ namespace VixenPlus.Dialogs {
                                                  ? null : new Profile(Path.Combine(Paths.ProfilePath, comboBoxProfiles.SelectedItem + ".pro"));
                     if (_eventSequence.Profile != null) {
                         _eventSequence.Groups = _eventSequence.Profile.Groups;
-                        //var groupFile = Path.Combine(Paths.ProfilePath, comboBoxProfiles.SelectedItem + Vendor.GroupExtension);
-                        //if (File.Exists(groupFile)) {
-                        //    _eventSequence.Groups = Group.LoadGroups(groupFile);
-                        //}
                     }
                     goto Label_0339;
 
