@@ -40,7 +40,7 @@ namespace VixenPlus.Dialogs {
                 var thisNode = tvGroups.Nodes.Add(g.Key);
                 AddSubNodes(g.Value.GroupChannels, thisNode);
                 thisNode.Name = g.Key;
-                thisNode.Tag = new GroupTagData {NodeColor = g.Value.GroupColor, IsLeafNode = false, Zoom = g.Value.Zoom};
+                thisNode.Tag = new GroupTagData {NodeColor = g.Value.GroupColor, IsLeafNode = false, Zoom = g.Value.Zoom, IsSortOrder = g.Value.IsSortOrder};
             }
             UpdateStats();
         }
@@ -55,7 +55,8 @@ namespace VixenPlus.Dialogs {
                     thisNode.Tag = new GroupTagData {
                         NodeColor = _profile.Groups[groupNode].GroupColor,
                         IsLeafNode = false,
-                        Zoom = "100%"
+                        Zoom = "100%",
+                        IsSortOrder = false
                     };
                     AddSubNodes(_profile.Groups[groupNode].GroupChannels, thisNode);
                 }
@@ -63,7 +64,7 @@ namespace VixenPlus.Dialogs {
                     var channel = _profile.FullChannels[int.Parse(node)];
                     var thisNode = parentNode.Nodes.Add(channel.Name);
                     thisNode.Name = channel.Name;
-                    thisNode.Tag = new GroupTagData { NodeColor = channel.Color, IsLeafNode = true, UnderlyingChannel = node };
+                    thisNode.Tag = new GroupTagData { NodeColor = channel.Color, IsLeafNode = true, UnderlyingChannel = node, IsSortOrder = false};
                 }
             }
         }
@@ -123,9 +124,6 @@ namespace VixenPlus.Dialogs {
             var treeView = sender as MultiSelectTreeview;
             e.DrawItem(((GroupTagData)e.Node.Tag).NodeColor, treeView, _useCheckmark);
         }
-
-
-
 
 
         private void btnGroupColor_Click(object sender, EventArgs e) {
@@ -229,7 +227,7 @@ namespace VixenPlus.Dialogs {
 
         private void CreateGroup(string groupName) {
             var thisNode = tvGroups.Nodes.Add(groupName);
-            thisNode.Tag = new GroupTagData {IsLeafNode = false, NodeColor = Color.White, Zoom = "100%"};
+            thisNode.Tag = new GroupTagData {IsLeafNode = false, NodeColor = Color.White, Zoom = "100%", IsSortOrder = false};
             thisNode.Name = groupName;
             thisNode.EnsureVisible();
         }
