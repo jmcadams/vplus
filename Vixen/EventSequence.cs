@@ -268,7 +268,7 @@ namespace VixenPlus {
                 }
             }
 
-            _sortOrders.InsertChannel(count, sortedIndex);
+            //_sortOrders.InsertChannel(count, sortedIndex);
             return count;
         }
 
@@ -582,6 +582,7 @@ namespace VixenPlus {
             PlugInData.LoadFromXml(contextNode);
             _sortOrders = new SortOrders(); //TODO: Need to embed group into sorts and be able to load it too.
             _sortOrders.LoadFromXml(contextNode);
+            Groups = Group.LoadFromXml(contextNode);
         }
 
 

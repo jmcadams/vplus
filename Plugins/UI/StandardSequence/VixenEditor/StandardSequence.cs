@@ -923,6 +923,7 @@ namespace VixenEditor {
             list.AddRange(flattenedProfile.Channels);
             _sequence.FullChannels = list;
             _sequence.Sorts.LoadFrom(flattenedProfile.Sorts);
+            _sequence.Groups = flattenedProfile.Groups;
             _sequence.PlugInData.LoadFromXml(flattenedProfile.PlugInData.RootNode.ParentNode);
             IsDirty = true;
             ReactToProfileAssignment();
@@ -2474,7 +2475,9 @@ namespace VixenEditor {
             pictureBoxGrid.Refresh();
             LoadSequenceSorts();
             LoadSequencePlugins();
-            _sequence.Groups = isProfile ? _sequence.Profile.Groups : null;
+            if (isProfile) {
+                _sequence.Groups = _sequence.Profile.Groups;
+            }
         }
 
 
@@ -3548,6 +3551,9 @@ namespace VixenEditor {
 
 
         private void StandardSequence_Load(object sender, EventArgs e) {
+            // Fixed the issue where the icon does not show on load without setting it here (See Answer from Tom)
+            // See: http://stackoverflow.com/questions/888865/problem-with-icon-on-creating-new-maximized-mdi-child-form-in-net
+            Icon = Icon.Clone() as Icon;
             ToolStripManager.LoadSettings(this, _preferences.XmlDoc.DocumentElement);
             ToolStripManager.SaveSettings(this, _preferences.XmlDoc.DocumentElement, "reset");
             _preferences.SaveSettings();
@@ -4926,10 +4932,6 @@ namespace VixenEditor {
 
             if (e.Index == 0) {
                 e.DrawItem(Group.AllChannels, Color.White);
-                return;
-            }
-            if (e.Index == cbGroups.Items.Count - 1) {
-                e.DrawItem(Group.ManageGroups, Color.White);
                 return;
             }
             var indexItem = _sequence.Groups[cbGroups.Items[e.Index].ToString()];
