@@ -18,7 +18,6 @@ using VixenPlusCommon;
 namespace VixenPlus {
     public class Group {
         public static readonly string AllChannels = Resources.AllChannels;
-        public const string ManageGroups = "Manage Groups";
         public const string GroupTextDivider = "~";
 
         private readonly List<Channel> _currentList = new List<Channel>();

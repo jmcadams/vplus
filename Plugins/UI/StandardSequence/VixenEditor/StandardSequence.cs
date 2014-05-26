@@ -3610,9 +3610,6 @@ namespace VixenEditor {
                     cbGroups.Items.Add(g.Key);
                 }
             }
-            if (null == _sequence.Profile) {
-                cbGroups.Items.Add(Group.ManageGroups);
-            }
             if (resetIndex) {
                 cbGroups.SelectedIndex = 0;
             }
@@ -4943,10 +4940,6 @@ namespace VixenEditor {
 
             if (e.Index == 0) {
                 e.DrawItem(Group.AllChannels, Color.White);
-                return;
-            }
-            if (_sequence.Groups.Count < e.Index && e.Index == cbGroups.Items.Count - 1) {
-                e.DrawItem(Group.ManageGroups, Color.White);
                 return;
             }
             var indexItem = _sequence.Groups[cbGroups.Items[e.Index].ToString()];
