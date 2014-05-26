@@ -9,7 +9,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
-using System.Xml;
 
 using FMOD;
 
@@ -45,7 +44,7 @@ namespace VixenEditor {
         
         private readonly Dictionary<string, ToolStrip> _toolStrips;
 
-        private EventHandler _pluginCheckHandler;
+        //private EventHandler _pluginCheckHandler;
         private readonly EventHandler _toolStripCheckStateChangeHandler;
         
         private EventSequence _sequence;
@@ -1118,7 +1117,7 @@ namespace VixenEditor {
             _gridGraphics = pictureBoxGrid.CreateGraphics();
             _intensityAdjustDialog = new IntensityAdjustDialog(_actualLevels);
             _intensityAdjustDialog.VisibleChanged += IntensityAdjustDialogVisibleChanged;
-            _pluginCheckHandler = plugInItem_CheckedChanged;
+            //_pluginCheckHandler = plugInItem_CheckedChanged;
             _channelOrderMapping = new List<int>();
             for (var i = 0; i < _sequence.ChannelCount; i++) {
                 _channelOrderMapping.Add(i);
@@ -1231,32 +1230,32 @@ namespace VixenEditor {
         }
 
 
-        private void LoadSequencePlugins() {
-            _systemInterface.VerifySequenceHardwarePlugins(_sequence);
-            var count = 0;
-            toolStripDropDownButtonPlugins.DropDownItems.Clear();
-            foreach (XmlNode node in _sequence.PlugInData.GetAllPluginData()) {
-                if (node.Attributes == null) {
-                    continue;
-                }
+        //private void LoadSequencePlugins() {
+        //    _systemInterface.VerifySequenceHardwarePlugins(_sequence);
+        //    var count = 0;
+        //    toolStripDropDownButtonPlugins.DropDownItems.Clear();
+        //    foreach (XmlNode node in _sequence.PlugInData.GetAllPluginData()) {
+        //        if (node.Attributes == null) {
+        //            continue;
+        //        }
 
-                var menuText = string.Format("{0} ({1}-{2})", node.Attributes["name"].Value, node.Attributes["from"].Value,
-                                             node.Attributes["to"].Value);
-                var item = new ToolStripMenuItem(menuText)
-                {Checked = bool.Parse(node.Attributes["enabled"].Value), CheckOnClick = true, Tag = count.ToString(CultureInfo.InvariantCulture)};
-                item.CheckedChanged += _pluginCheckHandler;
-                count++;
-                toolStripDropDownButtonPlugins.DropDownItems.Add(item);
-            }
+        //        var menuText = string.Format("{0} ({1}-{2})", node.Attributes["name"].Value, node.Attributes["from"].Value,
+        //                                     node.Attributes["to"].Value);
+        //        var item = new ToolStripMenuItem(menuText)
+        //        {Checked = bool.Parse(node.Attributes["enabled"].Value), CheckOnClick = true, Tag = count.ToString(CultureInfo.InvariantCulture)};
+        //        item.CheckedChanged += _pluginCheckHandler;
+        //        count++;
+        //        toolStripDropDownButtonPlugins.DropDownItems.Add(item);
+        //    }
 
-            if (count <= 0) {
-                return;
-            }
+        //    if (count <= 0) {
+        //        return;
+        //    }
 
-            toolStripDropDownButtonPlugins.DropDownItems.Add("-");
-            toolStripDropDownButtonPlugins.DropDownItems.Add(Resources.SelectAll, null, selectAllToolStripMenuItem_Click);
-            toolStripDropDownButtonPlugins.DropDownItems.Add(Resources.UnselectAll, null, unselectAllToolStripMenuItem_Click);
-        }
+        //    toolStripDropDownButtonPlugins.DropDownItems.Add("-");
+        //    toolStripDropDownButtonPlugins.DropDownItems.Add(Resources.SelectAll, null, selectAllToolStripMenuItem_Click);
+        //    toolStripDropDownButtonPlugins.DropDownItems.Add(Resources.UnselectAll, null, unselectAllToolStripMenuItem_Click);
+        //}
 
 
         private void LoadSequenceSorts() {
@@ -2391,14 +2390,14 @@ namespace VixenEditor {
         }
 
 
-        private void plugInItem_CheckedChanged(object sender, EventArgs e) {
-            var item = (ToolStripMenuItem) sender;
-            var attributes = _sequence.PlugInData.GetPlugInData((string) item.Tag).Attributes;
-            if (attributes != null) {
-                attributes["enabled"].Value = item.Checked.ToString();
-            }
-            IsDirty = true;
-        }
+        //private void plugInItem_CheckedChanged(object sender, EventArgs e) {
+        //    var item = (ToolStripMenuItem) sender;
+        //    var attributes = _sequence.PlugInData.GetPlugInData((string) item.Tag).Attributes;
+        //    if (attributes != null) {
+        //        attributes["enabled"].Value = item.Checked.ToString();
+        //    }
+        //    IsDirty = true;
+        //}
 
 
         private void ProgramEnded() {
@@ -2452,7 +2451,6 @@ namespace VixenEditor {
         private void ReactEditingStateToProfileAssignment() {
             var flag = _sequence.Profile != null;
             textBoxChannelCount.ReadOnly = flag;
-            toolStripDropDownButtonPlugins.Enabled = !flag;
             toolStripButtonSaveOrder.Enabled = !flag;
             toolStripButtonChannelOutputMask.Enabled = !flag;
         }
@@ -2462,8 +2460,8 @@ namespace VixenEditor {
             var isProfile = _sequence.Profile != null;
             profileToolStripLabel.Text = isProfile ? _sequence.Profile.Name : "Embedded";
             mapperTsb.Enabled = isProfile;
-            profileToolStripLabel.Visible = isProfile;
-            toolStripDropDownButtonPlugins.Visible = !isProfile;
+            profileToolStripLabel.Visible = true;
+            //toolStripDropDownButtonPlugins.Visible = !isProfile;
             flattenProfileIntoSequenceToolStripMenuItem.Enabled = isProfile;
             detachSequenceFromItsProfileToolStripMenuItem.Enabled = isProfile;
             channelOutputMaskToolStripMenuItem.Enabled = !isProfile;
@@ -2474,7 +2472,7 @@ namespace VixenEditor {
             pictureBoxChannels.Refresh();
             pictureBoxGrid.Refresh();
             LoadSequenceSorts();
-            LoadSequencePlugins();
+            //LoadSequencePlugins();
             if (isProfile) {
                 _sequence.Groups = _sequence.Profile.Groups;
             }
@@ -2730,11 +2728,11 @@ namespace VixenEditor {
         }
 
 
-        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e) {
-            foreach (var item in toolStripDropDownButtonPlugins.DropDownItems.Cast<ToolStripItem>().TakeWhile(item => item is ToolStripMenuItem)) {
-                ((ToolStripMenuItem) item).Checked = true;
-            }
-        }
+        //private void selectAllToolStripMenuItem_Click(object sender, EventArgs e) {
+        //    foreach (var item in toolStripDropDownButtonPlugins.DropDownItems.Cast<ToolStripItem>().TakeWhile(item => item is ToolStripMenuItem)) {
+        //        ((ToolStripMenuItem) item).Checked = true;
+        //    }
+        //}
 
 
         private Rectangle SelectionToRectangle() {
@@ -2883,7 +2881,7 @@ namespace VixenEditor {
             toolStripEditing.Enabled = state;
             toolStripEffect.Enabled = state;
             toolStripSequenceSettings.Enabled = state;
-            toolStripDropDownButtonPlugins.Enabled = state;
+            //toolStripDropDownButtonPlugins.Enabled = state;
             toolStripDisplaySettings.Enabled = state;
             tsbLoop.Enabled = state;
             SpeedQtrTsb.Enabled = state;
@@ -3570,10 +3568,13 @@ namespace VixenEditor {
 
             //this populates the toolstrip menu with the attached toolstrips
             var position = toolbarsToolStripMenuItem.DropDownItems.IndexOf(toolStripSeparator7);
-            foreach (var menuItem in list.Select(str => new ToolStripMenuItem(str) {Tag = _toolStrips[str], Checked = _toolStrips[str].Visible, CheckOnClick = true})) {
+            foreach (
+                var menuItem in
+                    list.Select(str => new ToolStripMenuItem(str) {Tag = _toolStrips[str], Checked = _toolStrips[str].Visible, CheckOnClick = true})) {
                 menuItem.CheckStateChanged += _toolStripCheckStateChangeHandler;
                 toolbarsToolStripMenuItem.DropDownItems.Insert(position++, menuItem);
             }
+
             _actualLevels = _preferences.GetBoolean("ActualLevels");
             if (_actualLevels) {
                 toolStripButtonToggleLevels.Image = Resources.Percent;
@@ -3609,7 +3610,9 @@ namespace VixenEditor {
                     cbGroups.Items.Add(g.Key);
                 }
             }
-            //cbGroups.Items.Add(Group.ManageGroups);
+            if (null == _sequence.Profile) {
+                cbGroups.Items.Add(Group.ManageGroups);
+            }
             if (resetIndex) {
                 cbGroups.SelectedIndex = 0;
             }
@@ -4363,34 +4366,34 @@ namespace VixenEditor {
         }
 
 
-        private void toolStripDropDownButtonPlugins_Click(object sender, EventArgs e) {
-            using (var dialog = new VixenPlusRoadie(_sequence, true)) {
-                if (dialog.ShowDialog() != DialogResult.OK) {
-                    return;
-                }
+        //private void toolStripDropDownButtonPlugins_Click(object sender, EventArgs e) {
+        //    using (var dialog = new VixenPlusRoadie(_sequence, true)) {
+        //        if (dialog.ShowDialog() != DialogResult.OK) {
+        //            return;
+        //        }
 
-                toolStripDropDownButtonPlugins.DropDownItems.Clear();
-                var tagValue = 0;
-                var allPlugins = dialog.MappedPluginList;
-                foreach (object[] objArray in allPlugins) { 
-                //for (var i = 0; i < allPlugins.GetLength(0); i++) {
-                    var item = new ToolStripMenuItem((string) objArray[0]) {
-                        Checked = (bool) objArray[1],
-                        CheckOnClick = true,
-                        Tag = tagValue.ToString(CultureInfo.InvariantCulture)
-                    };
-                    item.CheckedChanged += plugInItem_CheckedChanged;
-                    tagValue++;
-                    toolStripDropDownButtonPlugins.DropDownItems.Add(item);
-                }
-                if (toolStripDropDownButtonPlugins.DropDownItems.Count > 0) {
-                    toolStripDropDownButtonPlugins.DropDownItems.Add("-");
-                    toolStripDropDownButtonPlugins.DropDownItems.Add(Resources.SelectAll, null, selectAllToolStripMenuItem_Click);
-                    toolStripDropDownButtonPlugins.DropDownItems.Add(Resources.UnselectAll, null, unselectAllToolStripMenuItem_Click);
-                }
-                IsDirty = true;
-            }
-        }
+        //        toolStripDropDownButtonPlugins.DropDownItems.Clear();
+        //        var tagValue = 0;
+        //        var allPlugins = dialog.MappedPluginList;
+        //        foreach (object[] objArray in allPlugins) { 
+        //        //for (var i = 0; i < allPlugins.GetLength(0); i++) {
+        //            var item = new ToolStripMenuItem((string) objArray[0]) {
+        //                Checked = (bool) objArray[1],
+        //                CheckOnClick = true,
+        //                Tag = tagValue.ToString(CultureInfo.InvariantCulture)
+        //            };
+        //            item.CheckedChanged += plugInItem_CheckedChanged;
+        //            tagValue++;
+        //            toolStripDropDownButtonPlugins.DropDownItems.Add(item);
+        //        }
+        //        if (toolStripDropDownButtonPlugins.DropDownItems.Count > 0) {
+        //            toolStripDropDownButtonPlugins.DropDownItems.Add("-");
+        //            toolStripDropDownButtonPlugins.DropDownItems.Add(Resources.SelectAll, null, selectAllToolStripMenuItem_Click);
+        //            toolStripDropDownButtonPlugins.DropDownItems.Add(Resources.UnselectAll, null, unselectAllToolStripMenuItem_Click);
+        //        }
+        //        IsDirty = true;
+        //    }
+        //}
 
 
         private static void toolStripItem_CheckStateChanged(object sender, EventArgs e) {
@@ -4481,11 +4484,11 @@ namespace VixenEditor {
         }
 
 
-        private void unselectAllToolStripMenuItem_Click(object sender, EventArgs e) {
-            foreach (var item in toolStripDropDownButtonPlugins.DropDownItems.Cast<ToolStripItem>().TakeWhile(item => item is ToolStripMenuItem)) {
-                ((ToolStripMenuItem) item).Checked = false;
-            }
-        }
+        //private void unselectAllToolStripMenuItem_Click(object sender, EventArgs e) {
+        //    foreach (var item in toolStripDropDownButtonPlugins.DropDownItems.Cast<ToolStripItem>().TakeWhile(item => item is ToolStripMenuItem)) {
+        //        ((ToolStripMenuItem) item).Checked = false;
+        //    }
+        //}
 
 
         private void UpdateColumnWidth() {
@@ -4857,18 +4860,26 @@ namespace VixenEditor {
 
 
         private void profileToolStripLabel_Click(object sender, EventArgs e) {
-            if (_sequence.Profile == null) {
-                return;
-            }
-            var objectInContext = new Profile {FileName = _sequence.Profile.FileName};
-            objectInContext.InheritChannelsFrom(_sequence);
-            objectInContext.InheritPlugInDataFrom(_sequence);
-            objectInContext.InheritSortsFrom(_sequence);
-            using (var dialog = new VixenPlusRoadie(objectInContext)) {
-                if ((dialog.ShowDialog() != DialogResult.OK)) {
-                    return;
+            if (_sequence.Profile != null) {
+                var objectInContext = new Profile {FileName = _sequence.Profile.FileName};
+                objectInContext.InheritChannelsFrom(_sequence);
+                objectInContext.InheritPlugInDataFrom(_sequence);
+                objectInContext.InheritSortsFrom(_sequence);
+                using (var dialog = new VixenPlusRoadie(objectInContext)) {
+                    if ((dialog.ShowDialog() != DialogResult.OK)) {
+                        return;
+                    }
+                    SetProfile(_sequence.Profile.FileName);
                 }
-                SetProfile(_sequence.Profile.FileName);
+            }
+            else {
+                using (var dialog = new VixenPlusRoadie(_sequence, true)) {
+                    if ((dialog.ShowDialog() != DialogResult.OK)) {
+                        return;
+                    }
+                    UpdateGroups();
+                    IsDirty = true;
+                }
             }
         }
 
@@ -4888,10 +4899,10 @@ namespace VixenEditor {
 
 
         private void cbGroups_SelectedIndexChanged(object sender, EventArgs e) {
-            //if (cbGroups.Items.Count > 1 && cbGroups.SelectedIndex == cbGroups.Items.Count - 1) {
-            //    if (!GroupChanged()) return;
-            //    Group.SaveGroups(_sequence.Groups, _sequence.Profile != null ? _sequence.Profile.FileName : _sequence.FileName);
-            //}
+            if (cbGroups.SelectedIndex > _sequence.Groups.Count && cbGroups.SelectedIndex == cbGroups.Items.Count - 1) {
+                MessageBox.Show("Bring up dialog here...");
+                return; // todo this is only for now
+            }
             _lastGroupIndex = cbGroups.SelectedIndex;
             _sequence.CurrentGroup = cbGroups.SelectedItem.ToString();
             if (_selectedCells.Top + _selectedCells.Height > _sequence.ChannelCount) {
@@ -4932,6 +4943,10 @@ namespace VixenEditor {
 
             if (e.Index == 0) {
                 e.DrawItem(Group.AllChannels, Color.White);
+                return;
+            }
+            if (_sequence.Groups.Count < e.Index && e.Index == cbGroups.Items.Count - 1) {
+                e.DrawItem(Group.ManageGroups, Color.White);
                 return;
             }
             var indexItem = _sequence.Groups[cbGroups.Items[e.Index].ToString()];

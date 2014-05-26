@@ -10,7 +10,9 @@ using VixenPlusCommon;
 namespace VixenPlus.Dialogs {
     public sealed partial class GroupDialog : UserControl {
 
-        private readonly Profile _profile;
+        //private readonly IExecutable _profile;
+        private readonly Dictionary<string, GroupData> _groups;
+        private readonly List<Channel> _fullChannels;
         private List<Channel> _channels = new List<Channel>();
         public TreeView GetResults { get { return tvGroups; } }
         private readonly bool _useCheckmark = Preference2.GetInstance().GetBoolean("UseCheckmark");
@@ -23,20 +25,37 @@ namespace VixenPlus.Dialogs {
             ChannelNameThenColor
         }
 
-        public GroupDialog(Profile profile, bool constrainToGroup) {
+        public GroupDialog(IExecutable iExecutable, bool constrainToGroup) {
+            List<Channel> channelSubset;
             InitializeComponent();
             MinimumSize = Size;
-            _profile = profile;
-            foreach (var c in constrainToGroup ? _profile.Channels : _profile.FullChannels) {
+
+            if (iExecutable is Profile) {
+                var type = iExecutable as Profile;
+                _groups = type.Groups;
+                _fullChannels = type.FullChannels;
+                channelSubset = type.Channels;
+            }
+            else if (iExecutable is EventSequence) {
+                var type = iExecutable as EventSequence;
+                _groups = type.Groups;
+                _fullChannels = type.FullChannels;
+                channelSubset = type.Channels;
+            }
+            else {
+                throw new ArgumentException("Did not pass a valid IExecutable type to Group Dialog");
+            }
+
+            foreach (var c in constrainToGroup ? channelSubset : _fullChannels) {
                 lbChannels.Items.Add(c.Name);
                 _channels.Add(c);
             }
             cbSort.SelectedItem = cbSort.Items[0];
             SetButtons();
-            if (profile.Groups == null) {
+            if (_groups == null) {
                 return;
             }
-            foreach (var g in profile.Groups) {
+            foreach (var g in _groups) {
                 var thisNode = tvGroups.Nodes.Add(g.Key);
                 AddSubNodes(g.Value.GroupChannels, thisNode);
                 thisNode.Name = g.Key;
@@ -53,15 +72,15 @@ namespace VixenPlus.Dialogs {
                     var thisNode = parentNode.Nodes.Add(groupNode);
                     thisNode.Name = groupNode;
                     thisNode.Tag = new GroupTagData {
-                        NodeColor = _profile.Groups[groupNode].GroupColor,
+                        NodeColor = _groups[groupNode].GroupColor,
                         IsLeafNode = false,
                         Zoom = "100%",
                         IsSortOrder = false
                     };
-                    AddSubNodes(_profile.Groups[groupNode].GroupChannels, thisNode);
+                    AddSubNodes(_groups[groupNode].GroupChannels, thisNode);
                 }
                 else {
-                    var channel = _profile.FullChannels[int.Parse(node)];
+                    var channel = _fullChannels[int.Parse(node)];
                     var thisNode = parentNode.Nodes.Add(channel.Name);
                     thisNode.Name = channel.Name;
                     thisNode.Tag = new GroupTagData { NodeColor = channel.Color, IsLeafNode = true, UnderlyingChannel = node, IsSortOrder = false};
@@ -402,7 +421,7 @@ namespace VixenPlus.Dialogs {
                     newNode.Tag = new GroupTagData {
                         IsLeafNode = true,
                         NodeColor = channel.Color,
-                        UnderlyingChannel = _profile.FullChannels.IndexOf(channel).ToString(CultureInfo.InvariantCulture)
+                        UnderlyingChannel = _fullChannels.IndexOf(channel).ToString(CultureInfo.InvariantCulture)
                     };
                     newNode.Name = channel.Name;
                     AddReferencedNode(newNode);

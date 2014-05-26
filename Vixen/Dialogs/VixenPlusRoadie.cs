@@ -379,6 +379,18 @@ namespace VixenPlus.Dialogs {
 
 
         private void PersistProfileInfo() {
+            if (_isPluginsOnly) {
+                var pro = _contextProfile as EventSequence;
+                if (pro == null) {
+                    return;
+                }
+
+                foreach (var dialog in pGroups.Controls.OfType<GroupDialog>()) {
+                    pro.Groups = Group.GetGroups(dialog.GetResults);
+                }
+                return;
+            }
+
             var cp = _contextProfile as Profile;
             if (null == cp) {
                 return;
@@ -1926,7 +1938,7 @@ namespace VixenPlus.Dialogs {
 
         private void InitializeGroupsTab() {
             pGroups.Controls.Clear();
-            var g = new GroupDialog(((Profile) _contextProfile), false) {Size = pGroups.Size};
+            var g = new GroupDialog(_contextProfile, false) {Size = pGroups.Size};
             pGroups.Controls.Add(g);
         }
     }

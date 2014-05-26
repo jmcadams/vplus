@@ -331,7 +331,8 @@ namespace VixenPlus {
             if (emptyNodeAlways.OwnerDocument != null) {
                 emptyNodeAlways.AppendChild(emptyNodeAlways.OwnerDocument.ImportNode(PlugInData.RootNode, true));
             }
-            _sortOrders.SaveToXml(emptyNodeAlways);
+            //_sortOrders.SaveToXml(emptyNodeAlways);
+            Group.SaveToXml(emptyNodeAlways, Groups);
             if (_profile != null) {
                 Xml.SetValue(emptyNodeAlways, "Profile", _profile.Name);
             }
