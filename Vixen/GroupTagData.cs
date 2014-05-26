@@ -22,5 +22,10 @@ namespace VixenPlus {
         /// What is the zoom setting for this tag
         /// </summary>
         public string Zoom { get; set; }
+
+        /// <summary>
+        /// Was this originally a SortOrder?
+        /// </summary>
+        public bool IsSortOrder { get; set; }
     }
 }

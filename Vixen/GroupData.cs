@@ -25,5 +25,11 @@ namespace VixenPlus {
         /// The zoom level to show when this group is rendered
         /// </summary>
         public string Zoom { get; set; }
+
+        /// <summary>
+        /// When sort orders are brought over, this flag is set to repersist as a sort order in Vixen 2.x
+        /// </summary>
+        public bool IsSortOrder { get; set; }
+
     }
 }
