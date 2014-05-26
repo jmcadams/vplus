@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml;
 
@@ -236,26 +237,23 @@ namespace VixenPlus {
 
                 var outputNodes = documentElement.SelectSingleNode("Outputs");
                 if (outputNodes != null) {
-                    foreach (var outputChannel in outputNodes.InnerText.Split(new[] {','})) {
-                        if (outputChannel.Length > 0) {
-                            _channelOutputs.Add(Convert.ToInt32(outputChannel));
-                        }
+                    foreach (var outputChannel in outputNodes.InnerText.Split(new[] {','}).Where(outputChannel => outputChannel.Length > 0)) {
+                        _channelOutputs.Add(Convert.ToInt32(outputChannel));
                     }
                 }
             }
             PlugInData.LoadFromXml(documentElement);
-            Sorts.LoadFromXml(documentElement);
+            //Sorts.LoadFromXml(documentElement);
+            Groups = Group.LoadFromXml(documentElement);
+            IsDirty = Group.LoadFromFile(documentElement, Groups);
             if (documentElement != null) {
                 var disabledChannelsNode = documentElement.SelectSingleNode("DisabledChannels");
                 if (disabledChannelsNode != null) {
-                    foreach (var disabledChannel in disabledChannelsNode.InnerText.Split(new[] {','})) {
-                        if (disabledChannel != string.Empty) {
-                            Channels[Convert.ToInt32(disabledChannel)].Enabled = false;
-                        }
+                    foreach (var disabledChannel in disabledChannelsNode.InnerText.Split(new[] {','}).Where(disabledChannel => disabledChannel != string.Empty)) {
+                        Channels[Convert.ToInt32(disabledChannel)].Enabled = false;
                     }
                 }
             }
-            IsDirty = false;
             if (!_isFrozen) {
                 return;
             }
@@ -304,7 +302,9 @@ namespace VixenPlus {
             
             if (profile != null) {
                 profile.AppendChild(doc.ImportNode(PlugInData.RootNode, true));
-                Sorts.SaveToXml(profile);
+                //Sorts.SaveToXml(profile);
+                Group.SaveToXml(profile, Groups);
+                //SaveSortsAsGroups(profile);
             }
             
             var disabledChannels = new List<string>();
@@ -317,6 +317,11 @@ namespace VixenPlus {
 
             IsDirty = false;
             return profile;
+        }
+
+
+        private void SaveSortsAsGroups(XmlNode profile) {
+            Group.SaveSortsToXml(profile, Sorts);
         }
 
 

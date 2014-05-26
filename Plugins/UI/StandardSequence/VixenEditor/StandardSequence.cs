@@ -1410,7 +1410,7 @@ namespace VixenEditor {
 
                 case Notification.GroupChange:
                     var currentGroup = cbGroups.Items[_lastGroupIndex].ToString();
-                    _sequence.Groups = Group.ParseDialogResults((TreeView) data);
+                    _sequence.Groups = Group.GetGroups((TreeView) data);
                     UpdateAndSetIndex(currentGroup);
                     break;
             }
@@ -2474,9 +2474,9 @@ namespace VixenEditor {
             pictureBoxGrid.Refresh();
             LoadSequenceSorts();
             LoadSequencePlugins();
-            if (null != _sequence.Groups) {
-                Group.SaveGroups(_sequence.Groups, _sequence.Profile != null ? _sequence.Profile.FileName : _sequence.FileName);
-            }
+            //if (null != _sequence.Groups) {
+            //    Group.SaveGroups(_sequence.Groups, _sequence.Profile != null ? _sequence.Profile.FileName : _sequence.FileName);
+            //}
         }
 
 
@@ -2922,16 +2922,17 @@ namespace VixenEditor {
 
         private void SetProfile(Profile profile) {
             _sequence.Profile = profile;
+            _sequence.Groups = profile.Groups;
 
-            if (null != profile) {
-                var groupFile = Path.Combine(Paths.ProfilePath, Path.GetFileNameWithoutExtension(_sequence.Profile.FileName) + Vendor.GroupExtension);
-                if (File.Exists(groupFile)) {
-                    _sequence.Groups = Group.LoadGroups(groupFile);
-                }
-            }
-            else {
-                _sequence.Groups = null;
-            }
+            //if (null != profile) {
+            //    var groupFile = Path.Combine(Paths.ProfilePath, Path.GetFileNameWithoutExtension(_sequence.Profile.FileName) + Vendor.GroupExtension);
+            //    if (File.Exists(groupFile)) {
+            //        _sequence.Groups = Group.LoadGroups(groupFile);
+            //    }
+            //}
+            //else {
+            //    _sequence.Groups = null;
+            //}
             UpdateGroups();
             ReactToProfileAssignment();
             IsDirty = true;
@@ -3031,9 +3032,9 @@ namespace VixenEditor {
                 if (_executionInterface.EngineStatus(_executionContextHandle) != Utils.ExecutionStopped) {
                     toolStripButtonStop_Click(null, null);
                 }
-                if (_sequence.Groups != null) {
-                    Group.SaveGroups(_sequence.Groups, _sequence.Profile != null ? _sequence.Profile.FileName : _sequence.FileName);
-                }
+                //if (_sequence.Groups != null) {
+                //    Group.SaveGroups(_sequence.Groups, _sequence.Profile != null ? _sequence.Profile.FileName : _sequence.FileName);
+                //}
                 ToolbarAutoSave();
                 if (_preferences.GetBoolean("SaveZoomLevels")) {
                     if (!_zoomChangedByGroup) {

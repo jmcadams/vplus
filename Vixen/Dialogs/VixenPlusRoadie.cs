@@ -80,7 +80,6 @@ namespace VixenPlus.Dialogs {
 
             // For Now hide tabs
             tcProfile.TabPages.RemoveByKey(TabSorts);
-            //tcProfile.TabPages.RemoveByKey(TabGroups);
             tcProfile.TabPages.RemoveByKey(TabNutcracker);
 
             if (_isPluginsOnly) {
@@ -290,12 +289,8 @@ namespace VixenPlus.Dialogs {
 
         private void AddProfile(Profile profileData = null) {
             var isNew = profileData == null;
-            var typePrompt = isNew ? "Profile Name" : "Profile/Group Name";
-            var extensions = isNew
-                ? new[] {Vendor.ProfileExtension}
-                : new[] {Vendor.ProfileExtension, Vendor.GroupExtension};
 
-            var newName = GetFileName(typePrompt, Paths.ProfilePath, extensions, "", "Create");
+            var newName = GetFileName("Profile Name", Paths.ProfilePath, new[] { Vendor.ProfileExtension }, "", "Create");
 
             if (string.Empty == newName) {
                 return;
@@ -303,7 +298,6 @@ namespace VixenPlus.Dialogs {
 
             if (null != _contextProfile) {
                 var root = Path.GetDirectoryName(_contextProfile.FileName) ?? Paths.ProfilePath;
-                DeleteIfExists(Path.Combine(root, newName + Vendor.GroupExtension));
                 DeleteIfExists(Path.Combine(root, newName + Vendor.ProfileExtension));
             }
 
@@ -322,14 +316,14 @@ namespace VixenPlus.Dialogs {
 
         private void btnProfileDelete_Click(object sender, EventArgs e) {
             if (
-                MessageBox.Show("Are you sure you want to delete this profile and group, if one exists?" + Warning,
+                MessageBox.Show("Are you sure you want to delete this profile?" + Warning,
                     "Delete Profile", MessageBoxButtons.YesNo) != DialogResult.Yes) {
                 return;
             }
 
             DeleteIfExists(_contextProfile.FileName);
-            DeleteIfExists(Path.Combine(Path.GetDirectoryName(_contextProfile.FileName) ?? Paths.ProfilePath,
-                _contextProfile.Name + Vendor.GroupExtension));
+            //DeleteIfExists(Path.Combine(Path.GetDirectoryName(_contextProfile.FileName) ?? Paths.ProfilePath,
+            //    _contextProfile.Name + Vendor.GroupExtension));
             InitializeProfiles();
             cbProfiles.SelectedIndex = 0;
         }
@@ -348,7 +342,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void cbProfiles_SelectedIndexChanged(object sender, EventArgs e) {
-            SaveProfileFromRows();
+            PersistProfileInfo();
             colorPaletteChannel.ControlChanged -= UpdateColors;
             tcProfile.Visible = cbProfiles.SelectedIndex > 0 || _isPluginsOnly;
 
@@ -386,12 +380,13 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private void SaveProfileFromRows() {
+        private void PersistProfileInfo() {
             var cp = _contextProfile as Profile;
             if (null == cp) {
                 return;
             }
 
+            // Process channels
             cp.ClearChannels();
             foreach (var ch in from DataGridViewRow row in dgvChannels.Rows
                 select
@@ -400,6 +395,11 @@ namespace VixenPlus.Dialogs {
                             Enabled = bool.Parse(row.Cells[ChannelEnabledCol].Value.ToString())
                         }) {
                 cp.AddChannelObject(ch);
+            }
+
+            // Process Groups
+            foreach (var dialog in pGroups.Controls.OfType<GroupDialog>()) {
+                cp.Groups = Group.GetGroups(dialog.GetResults);
             }
         }
 
@@ -493,7 +493,7 @@ namespace VixenPlus.Dialogs {
                     SetPluginsTabButtons();
                     break;
                 case TabGroups:
-                    SetGroupTabButtons(isProfileLoaded);
+                    SetGroupTabButtons();
                     break;
                 case TabSorts:
                     SetSortsTabButtons(isProfileLoaded);
@@ -550,8 +550,7 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private void SetGroupTabButtons(bool isProfileLoaded) {
-            //btnGraButton.Enabled = isProfileLoaded;
+        private void SetGroupTabButtons() {
         }
 
 
@@ -751,8 +750,8 @@ namespace VixenPlus.Dialogs {
 
 
         private void RenameOrCopyProfile(bool isRename) {
-            var newName = GetFileName("Profile/Group Name", Paths.ProfilePath,
-                new[] {Vendor.ProfileExtension, Vendor.GroupExtension}, "", isRename ? "Rename" : "Copy");
+            var newName = GetFileName("Profile", Paths.ProfilePath,
+                new[] {Vendor.ProfileExtension}, "", isRename ? "Rename" : "Copy");
 
             if (String.Empty == newName) {
                 return;
@@ -760,15 +759,15 @@ namespace VixenPlus.Dialogs {
 
             var root = Path.GetDirectoryName(_contextProfile.FileName) ?? Paths.ProfilePath;
 
-            var oldGroup = Path.Combine(root, _contextProfile.Name + Vendor.GroupExtension);
-            var newGroup = Path.Combine(root, newName + Vendor.GroupExtension);
+            //var oldGroup = Path.Combine(root, _contextProfile.Name + Vendor.GroupExtension);
+            //var newGroup = Path.Combine(root, newName + Vendor.GroupExtension);
 
-            if (isRename) {
-                RenameFile(oldGroup, newGroup);
-            }
-            else {
-                CopyFile(oldGroup, newGroup);
-            }
+            //if (isRename) {
+            //    RenameFile(oldGroup, newGroup);
+            //}
+            //else {
+            //    CopyFile(oldGroup, newGroup);
+            //}
 
             var oldProfile = Path.Combine(root, _contextProfile.Name + Vendor.ProfileExtension);
             var newProfile = Path.Combine(root, newName + Vendor.ProfileExtension);
@@ -1536,16 +1535,34 @@ namespace VixenPlus.Dialogs {
 
 
         private void QuerySaveChanges() {
-            if (
-                MessageBox.Show("Save changes before closing?", "Save Changes?", MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question) == DialogResult.Yes) {
+            var result = MessageBox.Show("Save changes before closing?", "Save Changes?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if ( result == DialogResult.Yes) {
                 SaveChangedProfiles();
+                RestoreOrDeleteGroupFile(true);
+                return;
+            }
+
+            RestoreOrDeleteGroupFile();
+        }
+
+        private void RestoreOrDeleteGroupFile(bool isDelete = false) {
+            foreach (var baseName in from p in cbProfiles.Items.OfType<Profile>().Where(p => p.IsDirty)
+                let file = Path.GetFileNameWithoutExtension(p.FileName)
+                let path = Path.GetDirectoryName(p.FileName)
+                select Path.Combine(path, file + Vendor.GroupExtension)) {
+                
+                if (isDelete) {
+                    File.Delete(baseName + Vendor.DeletedExtension);
+                }
+                else {
+                    File.Move(baseName + Vendor.DeletedExtension, baseName);
+                }
             }
         }
 
 
         private void SaveChangedProfiles() {
-            SaveProfileFromRows();
+            PersistProfileInfo();
             foreach (var p in cbProfiles.Items.OfType<Profile>().Where(p => p.IsDirty)) {
                 p.SaveToFile();
             }
@@ -1568,7 +1585,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void btnProfileSave_Click(object sender, EventArgs e) {
-            SaveProfileFromRows();
+            PersistProfileInfo();
             ((Profile)_contextProfile).SaveToFile();
             btnProfileSave.Enabled = false;
         }

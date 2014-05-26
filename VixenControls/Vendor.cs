@@ -14,6 +14,7 @@ namespace VixenPlusCommon {
 
         public const string AppExtension = ".dll";
         //public const string DataExtension = ".vda";
+        public const string DeletedExtension = ".x";
         public const string CsvExtension = ".csv";
         public const string GroupExtension = ".vgr";
         public const string MapperExtension = ".vmap";
