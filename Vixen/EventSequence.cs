@@ -18,8 +18,9 @@ namespace VixenPlus {
         private Profile _profile;
         private SortOrders _sortOrders;
         private string _currentGroup = "";
-
+        
         public Dictionary<string, GroupData> Groups { get; set; }
+        public bool IsDirty { get; set;}
 
         #region Constructors
 
@@ -583,7 +584,8 @@ namespace VixenPlus {
             PlugInData.LoadFromXml(contextNode);
             _sortOrders = new SortOrders(); //TODO: Need to embed group into sorts and be able to load it too.
             _sortOrders.LoadFromXml(contextNode);
-            Groups = Group.LoadFromXml(contextNode);
+            Groups = Group.LoadFromXml(contextNode) ?? new Dictionary<string, GroupData>();
+            IsDirty = Group.LoadFromFile(contextNode, Groups);
         }
 
 

@@ -1471,6 +1471,7 @@ namespace VixenEditor {
 
         public override EventSequence Open(string filePath) {
             _sequence = new EventSequence(filePath);
+            IsDirty = _sequence.IsDirty;
             Text = _sequence.Name;
             _preferences = _systemInterface.UserPreferences;
             Init();
