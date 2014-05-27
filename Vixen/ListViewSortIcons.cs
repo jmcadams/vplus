@@ -11,7 +11,7 @@ namespace VixenPlus {
         [DllImport("user32.dll", EntryPoint = "SendMessage")]
         private static extern IntPtr SendMessageLVCOLUMN(IntPtr hWnd, int msg, IntPtr wParam, ref Lvcolumn lPlvcolumn);
 
-        public static void SetSortIcon(ListView listViewControl, int columnIndex, System.Windows.Forms.SortOrder order)
+        public static void SetSortIcon(ListView listViewControl, int columnIndex, SortOrder order)
         {
             var hWnd = SendMessage(listViewControl.Handle, 0x101f, IntPtr.Zero, IntPtr.Zero);
             for (var i = 0; i <= (listViewControl.Columns.Count - 1); i++)
@@ -19,16 +19,16 @@ namespace VixenPlus {
                 var wParam = new IntPtr(i);
                 var lPlvcolumn = new Lvcolumn {mask = 4};
                 SendMessageLVCOLUMN(hWnd, 0x120b, wParam, ref lPlvcolumn);
-                if ((order != System.Windows.Forms.SortOrder.None) && (i == columnIndex))
+                if ((order != SortOrder.None) && (i == columnIndex))
                 {
                     switch (order)
                     {
-                        case System.Windows.Forms.SortOrder.Ascending:
+                        case SortOrder.Ascending:
                             lPlvcolumn.fmt &= -513;
                             lPlvcolumn.fmt |= 0x400;
                             goto Label_00DE;
 
-                        case System.Windows.Forms.SortOrder.Descending:
+                        case SortOrder.Descending:
                             lPlvcolumn.fmt &= -1025;
                             lPlvcolumn.fmt |= 0x200;
                             goto Label_00DE;
@@ -36,7 +36,7 @@ namespace VixenPlus {
                 }
                 else
                 {
-                    lPlvcolumn.fmt &= -1537;
+                    lPlvcolumn.fmt &= -0x601;
                 }
                 Label_00DE:
                 SendMessageLVCOLUMN(hWnd, 0x120c, wParam, ref lPlvcolumn);

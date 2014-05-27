@@ -37,7 +37,6 @@ namespace VixenPlus {
             SetDataPath();
             Ensure(Paths.DataPath);
             Ensure(Paths.SequencePath);
-            //Ensure(Paths.ProgramPath);
             Ensure(Paths.ImportExportPath);
             Ensure(Paths.AudioPath);
             Ensure(Paths.ProfilePath);
@@ -182,9 +181,9 @@ namespace VixenPlus {
         }
 
 
-        public void VerifySequenceHardwarePlugins(EventSequence sequence) {
-            OutputPlugins.VerifyPlugIns(sequence);
-        }
+        //public void VerifySequenceHardwarePlugins(EventSequence sequence) {
+        //    OutputPlugins.VerifyPlugIns(sequence);
+        //}
 
 
         public void InvokeNew(object sender) {
@@ -484,9 +483,9 @@ namespace VixenPlus {
         }
 
 
-        public void InvokeGroupChange(object data) {
-            NotifyAll(Notification.GroupChange, data);
-        }
+        //public void InvokeGroupChange(object data) {
+        //    NotifyAll(Notification.GroupChange, data);
+        //}
 
 
         private void NewMenuItemClick(object sender, EventArgs e) {

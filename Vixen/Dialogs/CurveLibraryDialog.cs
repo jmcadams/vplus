@@ -32,7 +32,7 @@ namespace VixenPlus.Dialogs
             _isInternal = false;
             comboBoxSource.SelectedIndex = 0;
             listViewRecords.ListViewItemSorter = new ListViewItemSorter();
-            ListViewSortIcons.SetSortIcon(listViewRecords, 0, System.Windows.Forms.SortOrder.Ascending);
+            ListViewSortIcons.SetSortIcon(listViewRecords, 0, SortOrder.Ascending);
         }
 
 
@@ -114,19 +114,19 @@ namespace VixenPlus.Dialogs
         private void listViewRecords_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             if ((listViewRecords.Columns[e.Column].Tag == null) ||
-                (((System.Windows.Forms.SortOrder) listViewRecords.Columns[e.Column].Tag) ==
-                 System.Windows.Forms.SortOrder.Descending))
+                (((SortOrder) listViewRecords.Columns[e.Column].Tag) ==
+                 SortOrder.Descending))
             {
-                ListViewSortIcons.SetSortIcon(listViewRecords, e.Column, System.Windows.Forms.SortOrder.Ascending);
-                listViewRecords.Columns[e.Column].Tag = System.Windows.Forms.SortOrder.Ascending;
+                ListViewSortIcons.SetSortIcon(listViewRecords, e.Column, SortOrder.Ascending);
+                listViewRecords.Columns[e.Column].Tag = SortOrder.Ascending;
                 _curveLibrary.SortOrder = new CurveLibrary.Sort(listViewRecords.Columns[e.Column].Name,
                                                                 CurveLibrary.Sort.Direction.Asc);
                 LoadRecords();
             }
             else
             {
-                ListViewSortIcons.SetSortIcon(listViewRecords, e.Column, System.Windows.Forms.SortOrder.Descending);
-                listViewRecords.Columns[e.Column].Tag = System.Windows.Forms.SortOrder.Descending;
+                ListViewSortIcons.SetSortIcon(listViewRecords, e.Column, SortOrder.Descending);
+                listViewRecords.Columns[e.Column].Tag = SortOrder.Descending;
                 _curveLibrary.SortOrder = new CurveLibrary.Sort(listViewRecords.Columns[e.Column].Name,
                                                                 CurveLibrary.Sort.Direction.Desc);
                 LoadRecords();

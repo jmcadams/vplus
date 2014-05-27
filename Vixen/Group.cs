@@ -216,7 +216,9 @@ namespace VixenPlus {
 
             // Get the Groups node or exit
             baseNode = contextNode.SelectSingleNode("Groups");
+            // ReSharper disable InvertIf
             if (null != baseNode) {
+                // ReSharper enable InvertIf
                 foreach (XmlNode groupNode in baseNode) {
                     AddNodeToGroup(baseNode, groupNode, groups);
                 }

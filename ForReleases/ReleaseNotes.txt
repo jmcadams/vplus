@@ -6,7 +6,7 @@ NOTE: For items prefixed with VIX-, you can view more details on https://vixenpl
    NO JIRA - Removed the diagnostics and timer routines since they were not necessary and were a hold over from version 2.x
    NO JIRA - Fixed some pesky design time errors that have been plaguing me for a year!
    NO JIRA - Lots and lots of internal clean up
-   VIX-19  - Removed 10 & 15% from zoom levels
+   VIX-19  - Removed 10 & 15% from zoom levels, default to 20% if those values are in Preferences or Group Zoom Levels.
    NO JIRA - Removed the evil that was Sort Orders and converted them to groups.  Added a value in the profil that indicates they are sort orders so that when Save As... it will work.
 
 10 FEB 2014 - V 0.2.41.1
