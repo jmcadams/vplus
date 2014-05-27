@@ -66,7 +66,12 @@ namespace VixenPlus {
 
         public string FileName { get; set; }
 
-        public Dictionary<string, GroupData> Groups { get; set; }
+        private Dictionary<string, GroupData> _groups;
+
+        public Dictionary<string, GroupData> Groups {
+            get { return _groups ?? new Dictionary<string, GroupData>(); }
+            set { _groups = value; }
+        }
 
         public bool IsDirty { get; set; }
 
