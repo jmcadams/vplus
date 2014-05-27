@@ -683,6 +683,7 @@ namespace VixenEditor {
             objectInContext.InheritChannelsFrom(_sequence);
             objectInContext.InheritPlugInDataFrom(_sequence);
             objectInContext.InheritSortsFrom(_sequence);
+            objectInContext.Groups = _sequence.Groups;
             using (var dialog = new VixenPlusRoadie(objectInContext)) {
                 if ((dialog.ShowDialog() == DialogResult.OK) &&
                     (MessageBox.Show(Resources.AttachToNewProfile, Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
@@ -1471,10 +1472,11 @@ namespace VixenEditor {
 
         public override EventSequence Open(string filePath) {
             _sequence = new EventSequence(filePath);
-            IsDirty = _sequence.IsDirty;
+            var dirtyHold = _sequence.IsDirty;
             Text = _sequence.Name;
             _preferences = _systemInterface.UserPreferences;
             Init();
+            IsDirty = dirtyHold;    
             return _sequence;
         }
 

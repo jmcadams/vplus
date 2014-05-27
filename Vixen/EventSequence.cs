@@ -20,7 +20,7 @@ namespace VixenPlus {
         private string _currentGroup = "";
         
         public Dictionary<string, GroupData> Groups { get; set; }
-        public bool IsDirty { get; set;}
+        public bool IsDirty { get; private set;}
 
         #region Constructors
 
@@ -293,9 +293,6 @@ namespace VixenPlus {
 
         }
 
-
-
-
         public void ReloadProfile() {
             if (_profile == null) {
                 return;
@@ -325,15 +322,22 @@ namespace VixenPlus {
             Xml.SetValue(emptyNodeAlways, "MaximumLevel", MaximumLevel.ToString(CultureInfo.InvariantCulture));
             Xml.SetValue(emptyNodeAlways, "AudioDevice", AudioDeviceIndex.ToString(CultureInfo.InvariantCulture));
             Xml.SetValue(emptyNodeAlways, "AudioVolume", AudioDeviceVolume.ToString(CultureInfo.InvariantCulture));
-            var node2 = Xml.GetEmptyNodeAlways(emptyNodeAlways, "Channels");
-            foreach (var channel in _fullChannels) {
-                node2.AppendChild(channel.SaveToXml(doc));
+
+            if (_profile == null) {
+                //Channels
+                var node2 = Xml.GetEmptyNodeAlways(emptyNodeAlways, "Channels");
+                foreach (var channel in _fullChannels) {
+                    node2.AppendChild(channel.SaveToXml(doc));
+                } 
+                
+                //Plugins
+                if (emptyNodeAlways.OwnerDocument != null) {
+                    emptyNodeAlways.AppendChild(emptyNodeAlways.OwnerDocument.ImportNode(PlugInData.RootNode, true));
+                }
+
+                //Groups
+                Group.SaveToXml(emptyNodeAlways, Groups);
             }
-            if (emptyNodeAlways.OwnerDocument != null) {
-                emptyNodeAlways.AppendChild(emptyNodeAlways.OwnerDocument.ImportNode(PlugInData.RootNode, true));
-            }
-            //_sortOrders.SaveToXml(emptyNodeAlways);
-            Group.SaveToXml(emptyNodeAlways, Groups);
             if (_profile != null) {
                 Xml.SetValue(emptyNodeAlways, "Profile", _profile.Name);
             }
