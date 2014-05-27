@@ -127,3 +127,6 @@ thiscomputerBase.DotSettings
 /images/house2.JPG
 /deploy.ftp
 /deploy.bat
+
+deployAlpha.bat
+deployAlpha.ftp

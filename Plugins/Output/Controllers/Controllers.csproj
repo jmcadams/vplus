@@ -74,7 +74,8 @@
     <DebugType>none</DebugType>
     <ErrorReport>prompt</ErrorReport>
     <UseVSHostingProcess>false</UseVSHostingProcess>
-  </PropertyGroup>  <ItemGroup>
+  </PropertyGroup>
+  <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -148,7 +149,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Renard\Renard.cs" />
-    <Compile Include="Properties\Settings.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\VixenControls\VixenPlusCommon.csproj">
@@ -198,9 +198,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="E131\J1Sys\MessageBoxIcons\question.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\Settings.settings" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
