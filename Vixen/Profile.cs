@@ -6,8 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
-
-
 using VixenPlusCommon;
 
 namespace VixenPlus {
@@ -29,7 +27,6 @@ namespace VixenPlus {
             _channelObjects = new List<Channel>();
             _channelOutputs = new List<int>();
             PlugInData = new SetupData();
-            //Sorts = new SortOrders();
             IsDirty = false;
         }
 
@@ -37,9 +34,6 @@ namespace VixenPlus {
         public Profile(string fileName) : this() {
             ReloadFrom(fileName);
         }
-
-
-        //public SortOrders Sorts { get; private set; }
 
         public int AudioDeviceIndex {
             get { return -1; }
@@ -126,7 +120,6 @@ namespace VixenPlus {
         public void AddChannelObject(Channel channelObject) {
             _channelObjects.Add(channelObject);
             _channelOutputs.Add(_channelOutputs.Count);
-            //Sorts.UpdateChannelCounts(Channels.Count);
             IsDirty = true;
         }
 
@@ -171,12 +164,6 @@ namespace VixenPlus {
             PlugInData.LoadFromXml(sequence.PlugInData.RootNode.ParentNode);
         }
 
-
-        //public void InheritSortsFrom(EventSequence sequence) {
-        //    Sorts = (sequence.Sorts == null) ? null : sequence.Sorts.Clone();
-        //    IsDirty = true;
-        //}
-
         public void RemoveChannel(Channel channelObject) {
             //Find where the associated channel info is
             var objectIndex = _channelObjects.IndexOf(channelObject);
@@ -193,7 +180,6 @@ namespace VixenPlus {
                 }
             }
 
-            //Sorts.UpdateChannelCounts(Channels.Count);
             IsDirty = true;
         }
 
@@ -225,7 +211,7 @@ namespace VixenPlus {
                 }
             }
             PlugInData.LoadFromXml(documentElement);
-            Groups = Group.LoadFromXml(documentElement);
+            Groups = Group.LoadFromXml(documentElement) ?? new Dictionary<string, GroupData>();
             IsDirty = Group.LoadFromFile(documentElement, Groups);
             if (documentElement != null) {
                 var disabledChannelsNode = documentElement.SelectSingleNode("DisabledChannels");
@@ -234,6 +220,10 @@ namespace VixenPlus {
                         Channels[Convert.ToInt32(disabledChannel)].Enabled = false;
                     }
                 }
+            }
+            if (IsDirty) {
+                SaveToFile();
+                IsDirty = false;
             }
             if (!_isFrozen) {
                 return;

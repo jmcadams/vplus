@@ -202,7 +202,7 @@ namespace VixenPlus {
                             continue;
                         }
                         XContainer node = new XElement("Group");
-                        node.Add(new XAttribute("Name", so.Attributes["name"].Value), new XAttribute("Zoom", "100%"),
+                        node.Add(new XAttribute("Name", so.Attributes["name"].Value + " (Sort Order)"), new XAttribute("Zoom", "100%"),
                             new XAttribute("Color", Color.Black.ToArgb()), new XAttribute("IsSortOrder", "True"));
                         var channels = so.InnerText;
                         AddInnerText(channels, node);
@@ -251,6 +251,10 @@ namespace VixenPlus {
                         AddNodeToGroup(doc, node, groups);
                     }
                 }
+            }
+
+            if (File.Exists(file + Vendor.DeletedExtension)) {
+                File.Delete(file + Vendor.DeletedExtension);
             }
 
             File.Move(file, file + Vendor.DeletedExtension);

@@ -10,11 +10,14 @@ using VixenPlusCommon;
 namespace VixenPlus.Dialogs {
     public sealed partial class GroupDialog : UserControl {
 
-        //private readonly IExecutable _profile;
         private readonly Dictionary<string, GroupData> _groups;
         private readonly List<Channel> _fullChannels;
         private List<Channel> _channels = new List<Channel>();
-        public TreeView GetResults { get { return tvGroups; } }
+
+        public TreeView GetResults {
+            get { return tvGroups; }
+        }
+
         private readonly bool _useCheckmark = Preference2.GetInstance().GetBoolean("UseCheckmark");
 
         private enum Sorts {
@@ -24,6 +27,7 @@ namespace VixenPlus.Dialogs {
             ChannelColorThenName,
             ChannelNameThenColor
         }
+
 
         public GroupDialog(IExecutable iExecutable, bool constrainToGroup) {
             List<Channel> channelSubset;
@@ -59,7 +63,8 @@ namespace VixenPlus.Dialogs {
                 var thisNode = tvGroups.Nodes.Add(g.Key);
                 AddSubNodes(g.Value.GroupChannels, thisNode);
                 thisNode.Name = g.Key;
-                thisNode.Tag = new GroupTagData {NodeColor = g.Value.GroupColor, IsLeafNode = false, Zoom = g.Value.Zoom, IsSortOrder = g.Value.IsSortOrder};
+                thisNode.Tag = new GroupTagData
+                {NodeColor = g.Value.GroupColor, IsLeafNode = false, Zoom = g.Value.Zoom, IsSortOrder = g.Value.IsSortOrder};
             }
             UpdateStats();
         }
@@ -71,19 +76,15 @@ namespace VixenPlus.Dialogs {
                     var groupNode = node.TrimStart(Group.GroupTextDivider.ToCharArray());
                     var thisNode = parentNode.Nodes.Add(groupNode);
                     thisNode.Name = groupNode;
-                    thisNode.Tag = new GroupTagData {
-                        NodeColor = _groups[groupNode].GroupColor,
-                        IsLeafNode = false,
-                        Zoom = "100%",
-                        IsSortOrder = false
-                    };
+                    thisNode.Tag = new GroupTagData
+                    {NodeColor = _groups[groupNode].GroupColor, IsLeafNode = false, Zoom = "100%", IsSortOrder = false};
                     AddSubNodes(_groups[groupNode].GroupChannels, thisNode);
                 }
                 else {
                     var channel = _fullChannels[int.Parse(node)];
                     var thisNode = parentNode.Nodes.Add(channel.Name);
                     thisNode.Name = channel.Name;
-                    thisNode.Tag = new GroupTagData { NodeColor = channel.Color, IsLeafNode = true, UnderlyingChannel = node, IsSortOrder = false};
+                    thisNode.Tag = new GroupTagData {NodeColor = channel.Color, IsLeafNode = true, UnderlyingChannel = node, IsSortOrder = false};
                 }
             }
         }
@@ -94,11 +95,13 @@ namespace VixenPlus.Dialogs {
             var isNodeActive = activeNode != null;
             var isSingleNode = tvGroups.SelectedNodes.Count == 1;
             var isRootNode = isNodeActive && activeNode.Parent == null;
-            var isLeafNode = isNodeActive && ((GroupTagData)activeNode.Tag).IsLeafNode;
+            var isLeafNode = isNodeActive && ((GroupTagData) activeNode.Tag).IsLeafNode;
             var isChannelSelected = lbChannels.SelectedItems.Count > 0;
 
             var topNode = isNodeActive && tvGroups.SelectedNode.Index == 0;
-            var bottomNode = isNodeActive && tvGroups.SelectedNode.Index == (isRootNode ? tvGroups.GetNodeCount(false) : tvGroups.SelectedNode.Parent.GetNodeCount(false)) - 1;
+            var bottomNode = isNodeActive &&
+                             tvGroups.SelectedNode.Index ==
+                             (isRootNode ? tvGroups.GetNodeCount(false) : tvGroups.SelectedNode.Parent.GetNodeCount(false)) - 1;
 
             var isOnlyLeafNodes = true;
             var isOnlyNonLeafNodes = true;
@@ -113,7 +116,7 @@ namespace VixenPlus.Dialogs {
 
 
             btnAddChild.Enabled = isRootNode && isSingleNode;
-            btnRemoveGroup.Enabled = isNodeActive && !isLeafNode && isEditable; 
+            btnRemoveGroup.Enabled = isNodeActive && !isLeafNode && isEditable;
             btnRenameGroup.Enabled = isRootNode && isSingleNode;
             btnColorGroup.Enabled = isRootNode;
             btnUp.Enabled = isNodeActive && !topNode && isSingleNode && isParentAtRoot;
@@ -129,8 +132,8 @@ namespace VixenPlus.Dialogs {
             var groupSuffix = groupCount != 1 ? "s" : "";
             var subNodeSuffix = subNodeCount != 1 ? "s" : "";
             var groupPrefix = groupCount != 1 ? "those" : "that";
-            lblStats.Text = String.Format("{0} group{1} && {2} channel{3}/sub-group{3} in {4} group{1}", groupCount, groupSuffix, subNodeCount, subNodeSuffix,
-                                          groupPrefix);
+            lblStats.Text = String.Format("{0} group{1} && {2} channel{3}/sub-group{3} in {4} group{1}", groupCount, groupSuffix, subNodeCount,
+                subNodeSuffix, groupPrefix);
         }
 
 
@@ -141,12 +144,12 @@ namespace VixenPlus.Dialogs {
 
         private void tvGroups_DrawNode(object sender, DrawTreeNodeEventArgs e) {
             var treeView = sender as MultiSelectTreeview;
-            e.DrawItem(((GroupTagData)e.Node.Tag).NodeColor, treeView, _useCheckmark);
+            e.DrawItem(((GroupTagData) e.Node.Tag).NodeColor, treeView, _useCheckmark);
         }
 
 
         private void btnGroupColor_Click(object sender, EventArgs e) {
-            using (var color = new ColorDialog{AllowFullOpen = true, AnyColor = true, FullOpen = true}) {
+            using (var color = new ColorDialog {AllowFullOpen = true, AnyColor = true, FullOpen = true}) {
                 color.CustomColors = Preference2.GetInstance().CustomColors;
 
                 if (color.ShowDialog() != DialogResult.OK) {
@@ -167,12 +170,12 @@ namespace VixenPlus.Dialogs {
 
 
         private void SetColorByName(TreeNode treeNode, Color color, String name) {
-            if (treeNode.Text == name && !((GroupTagData)treeNode.Tag).IsLeafNode) {
+            if (treeNode.Text == name && !((GroupTagData) treeNode.Tag).IsLeafNode) {
                 SetNodeColor(treeNode, color);
             }
 
             foreach (TreeNode node in treeNode.Nodes) {
-                if (node.Text == name && !((GroupTagData)treeNode.Tag).IsLeafNode) {
+                if (node.Text == name && !((GroupTagData) treeNode.Tag).IsLeafNode) {
                     SetNodeColor(node, color);
                 }
                 SetColorByName(node, color, name);
@@ -181,7 +184,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void SetNodeColor(TreeNode node, Color color) {
-            ((GroupTagData)node.Tag).NodeColor = color;
+            ((GroupTagData) node.Tag).NodeColor = color;
             tvGroups.InvalidateNode(node);
         }
 
@@ -214,7 +217,7 @@ namespace VixenPlus.Dialogs {
             const int allButtonAndMarginWidths = 208;
             const double channelPct = 0.4;
             var availableArea = Size.Width - allButtonAndMarginWidths;
-            lbChannels.Width = (int)(availableArea * channelPct);
+            lbChannels.Width = (int) (availableArea * channelPct);
 
             const int defaultMargin = 6;
             var channelButtonX = lbChannels.Location.X + lbChannels.Width + defaultMargin;
@@ -304,12 +307,12 @@ namespace VixenPlus.Dialogs {
                     var msg = string.Empty;
                     if (string.IsNullOrEmpty(response)) {
                         msg = "A group must have a unique name and cannot be blank.";
-                    } else if (tvGroups.Nodes.Cast<TreeNode>().Any(n => n.Text == response)) {
-                        msg = String.Format("A group with the name {0} already exists and group names must be unique.",
-                                            response);
-                    } else if (response.Contains(Group.GroupTextDivider) || response.Contains(",")) {
-                        msg = string.Format("A group name can not contain a {0} or a ,",
-                                            Group.GroupTextDivider);
+                    }
+                    else if (tvGroups.Nodes.Cast<TreeNode>().Any(n => n.Text == response)) {
+                        msg = String.Format("A group with the name {0} already exists and group names must be unique.", response);
+                    }
+                    else if (response.Contains(Group.GroupTextDivider) || response.Contains(",")) {
+                        msg = string.Format("A group name can not contain a {0} or a ,", Group.GroupTextDivider);
                     }
 
                     if (msg != String.Empty) {
@@ -345,16 +348,14 @@ namespace VixenPlus.Dialogs {
                 }
                 var items = child.SelectedItems;
                 var excludedItems = (from item in items
-                                     let node = tvGroups.Nodes.Find(item, false)[0]
-                                     let excluded = GetAllNodesFor(node)
-                                     from exclude in excluded
-                                     where item != exclude && items.Contains(exclude)
-                                     select exclude).ToList();
+                    let node = tvGroups.Nodes.Find(item, false)[0]
+                    let excluded = GetAllNodesFor(node)
+                    from exclude in excluded
+                    where item != exclude && items.Contains(exclude)
+                    select exclude).ToList();
                 var rootNode = tvGroups.Nodes.Find(tvGroups.SelectedNode.Name, false)[0];
-                foreach (var node in from item in items
-                                     where !excludedItems.Contains(item)
-                                     select tvGroups.Nodes.Find(item, false)[0]) {
-                    rootNode.Nodes.Insert(rootNode.GetNodeCount(false), (TreeNode)node.Clone());
+                foreach (var node in from item in items where !excludedItems.Contains(item) select tvGroups.Nodes.Find(item, false)[0]) {
+                    rootNode.Nodes.Insert(rootNode.GetNodeCount(false), (TreeNode) node.Clone());
                 }
             }
             UpdateStats();
@@ -370,15 +371,16 @@ namespace VixenPlus.Dialogs {
             return result;
         }
 
+
         private static void AddChildren(ICollection<string> nodeList, TreeNode node) {
             if (!((GroupTagData) node.Tag).IsLeafNode) {
                 nodeList.Add(node.Name);
             }
-            foreach (TreeNode n in node.Nodes)
-            {
+            foreach (TreeNode n in node.Nodes) {
                 AddChildren(nodeList, n);
             }
         }
+
 
         private void btnRemoveGroup_Click(object sender, EventArgs e) {
             tvGroups.BeginUpdate();
@@ -398,6 +400,7 @@ namespace VixenPlus.Dialogs {
             tvGroups.Refresh();
         }
 
+
         private static void RemoveNode(TreeNode treeNode, String name) {
             foreach (TreeNode node in treeNode.Nodes) {
                 if (node.GetNodeCount(false) > 0) {
@@ -414,13 +417,11 @@ namespace VixenPlus.Dialogs {
             tvGroups.BeginUpdate();
             foreach (int index in lbChannels.SelectedIndices) {
                 var channel = _channels[index];
-                foreach (
-                    var newNode in
-                        tvGroups.SelectedNodes.Select(node => node.Nodes.Add(channel.Name))
-                                .Where(newNode => newNode.Nodes.Find(channel.Name, false).Length == 0)) {
+                foreach (var newNode in
+                    tvGroups.SelectedNodes.Select(node => node.Nodes.Add(channel.Name)).Where(
+                        newNode => newNode.Nodes.Find(channel.Name, false).Length == 0)) {
                     newNode.Tag = new GroupTagData {
-                        IsLeafNode = true,
-                        NodeColor = channel.Color,
+                        IsLeafNode = true, NodeColor = channel.Color,
                         UnderlyingChannel = _fullChannels.IndexOf(channel).ToString(CultureInfo.InvariantCulture)
                     };
                     newNode.Name = channel.Name;
@@ -434,11 +435,11 @@ namespace VixenPlus.Dialogs {
 
 
         private void AddReferencedNode(TreeNode newNode) {
-            foreach (var node in tvGroups.Nodes.Find(newNode.Parent.Name, true)
-                                         .Where(
-                                             node =>
-                                             node.Parent != null && node.Name == newNode.Parent.Name &&
-                                             node.Parent != newNode.Parent).Where(node => node.Nodes.Find(newNode.Name, false).Length == 0)) {
+            foreach (
+                var node in
+                    tvGroups.Nodes.Find(newNode.Parent.Name, true).Where(
+                        node => node.Parent != null && node.Name == newNode.Parent.Name && node.Parent != newNode.Parent).Where(
+                            node => node.Nodes.Find(newNode.Name, false).Length == 0)) {
                 node.Nodes.Add((TreeNode) newNode.Clone());
             }
         }
@@ -459,24 +460,27 @@ namespace VixenPlus.Dialogs {
 
 
         private void RemoveReferencedNodes(TreeNode parent, TreeNode nodeToRemove) {
-            foreach (var node in from node in tvGroups.Nodes
-                                                      .Find(nodeToRemove.Name, true)
-                                                      .Where(node => node.Parent != null && node.Parent.Name == parent.Name)
-                                 let nodeRemoveTag = nodeToRemove.Tag as GroupTagData
-                                 let nodeTag = node.Tag as GroupTagData
-                                 where nodeRemoveTag != null && (nodeTag != null && nodeTag.UnderlyingChannel.Equals(nodeRemoveTag.UnderlyingChannel))
-                                 select node) {
+            foreach (
+                var node in
+                    from node in tvGroups.Nodes.Find(nodeToRemove.Name, true).Where(node => node.Parent != null && node.Parent.Name == parent.Name)
+                    let nodeRemoveTag = nodeToRemove.Tag as GroupTagData
+                    let nodeTag = node.Tag as GroupTagData
+                    where nodeRemoveTag != null && (nodeTag != null && nodeTag.UnderlyingChannel.Equals(nodeRemoveTag.UnderlyingChannel))
+                    select node) {
                 node.Remove();
             }
         }
+
 
         private void btnUp_Click(object sender, EventArgs e) {
             SwapNodes(-1);
         }
 
+
         private void btnDown_Click(object sender, EventArgs e) {
             SwapNodes(1);
         }
+
 
         private void SwapNodes(int direction) {
             var root = tvGroups.SelectedNode.Parent == null ? tvGroups.Nodes : tvGroups.SelectedNode.Parent.Nodes;
@@ -489,16 +493,17 @@ namespace VixenPlus.Dialogs {
             SetButtons();
         }
 
+
         private void cbSort_SelectedIndexChanged(object sender, EventArgs e) {
             // reset to natural order first otherwise the other sorts don't seem
             // to work right, since it sorts on the last sort result
             var result = _channels.OrderBy(x => x.OutputChannel);
             _channels = result.ToList();
 
-            switch ((Sorts)cbSort.SelectedIndex) {
+            switch ((Sorts) cbSort.SelectedIndex) {
                 case Sorts.ChannelColor:
                     result = _channels.OrderBy(x => x.Color.ToArgb());
-                    break;                
+                    break;
                 case Sorts.ChannelName:
                     result = _channels.OrderBy(x => x.Name);
                     break;
@@ -511,7 +516,7 @@ namespace VixenPlus.Dialogs {
             }
 
             lbChannels.Items.Clear();
-            if ((Sorts)cbSort.SelectedIndex != Sorts.Natural ) _channels = result.ToList();
+            if ((Sorts) cbSort.SelectedIndex != Sorts.Natural) _channels = result.ToList();
             foreach (var c in _channels) {
                 lbChannels.Items.Add(c.Name);
             }
@@ -540,7 +545,7 @@ namespace VixenPlus.Dialogs {
             tvGroups.Refresh();
             UpdateStats();
         }
-        
+
 
         private void lbChannels_MouseDown(object sender, MouseEventArgs e) {
             if (e.Button != MouseButtons.Right || !btnAddChannels.Enabled)
@@ -554,9 +559,11 @@ namespace VixenPlus.Dialogs {
             btnAddChannels_Click(null, null);
         }
 
+
         private void tvGroups_DragOver(object sender, DragEventArgs e) {
             e.Effect = DragDropEffects.Copy;
         }
+
 
         private void tvGroups_DragEnter(object sender, DragEventArgs e) {
             e.Effect = DragDropEffects.Copy;

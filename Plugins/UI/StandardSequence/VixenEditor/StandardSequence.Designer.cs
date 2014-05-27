@@ -2762,7 +2762,7 @@ namespace VixenEditor{
             this.toolStripSeparator6});
             this.toolStripDisplaySettings.Location = new System.Drawing.Point(3, 220);
             this.toolStripDisplaySettings.Name = "toolStripDisplaySettings";
-            this.toolStripDisplaySettings.Size = new System.Drawing.Size(357, 51);
+            this.toolStripDisplaySettings.Size = new System.Drawing.Size(359, 51);
             this.toolStripDisplaySettings.TabIndex = 5;
             this.toolStripDisplaySettings.Text = "Display settings";
             // 
@@ -2793,8 +2793,6 @@ namespace VixenEditor{
             this.toolStripComboBoxColumnZoom.DropDownWidth = 55;
             this.toolStripComboBoxColumnZoom.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.toolStripComboBoxColumnZoom.Items.AddRange(new object[] {
-            "10%",
-            "15%",
             "20%",
             "25%",
             "30%",
@@ -2830,8 +2828,6 @@ namespace VixenEditor{
             this.toolStripComboBoxRowZoom.DropDownWidth = 55;
             this.toolStripComboBoxRowZoom.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.toolStripComboBoxRowZoom.Items.AddRange(new object[] {
-            "10%",
-            "15%",
             "20%",
             "25%",
             "30%",
