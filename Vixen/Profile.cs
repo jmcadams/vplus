@@ -29,7 +29,7 @@ namespace VixenPlus {
             _channelObjects = new List<Channel>();
             _channelOutputs = new List<int>();
             PlugInData = new SetupData();
-            Sorts = new SortOrders();
+            //Sorts = new SortOrders();
             IsDirty = false;
         }
 
@@ -39,7 +39,7 @@ namespace VixenPlus {
         }
 
 
-        public SortOrders Sorts { get; private set; }
+        //public SortOrders Sorts { get; private set; }
 
         public int AudioDeviceIndex {
             get { return -1; }
@@ -126,7 +126,7 @@ namespace VixenPlus {
         public void AddChannelObject(Channel channelObject) {
             _channelObjects.Add(channelObject);
             _channelOutputs.Add(_channelOutputs.Count);
-            Sorts.UpdateChannelCounts(Channels.Count);
+            //Sorts.UpdateChannelCounts(Channels.Count);
             IsDirty = true;
         }
 
@@ -162,7 +162,7 @@ namespace VixenPlus {
             foreach (var channel in sequence.FullChannels) {
                 _channelOutputs.Add(channel.OutputChannel);
             }
-            Sorts.UpdateChannelCounts(Channels.Count);
+            //Sorts.UpdateChannelCounts(Channels.Count);
             IsDirty = true;
         }
 
@@ -172,10 +172,10 @@ namespace VixenPlus {
         }
 
 
-        public void InheritSortsFrom(EventSequence sequence) {
-            Sorts = (sequence.Sorts == null) ? null : sequence.Sorts.Clone();
-            IsDirty = true;
-        }
+        //public void InheritSortsFrom(EventSequence sequence) {
+        //    Sorts = (sequence.Sorts == null) ? null : sequence.Sorts.Clone();
+        //    IsDirty = true;
+        //}
 
         public void RemoveChannel(Channel channelObject) {
             //Find where the associated channel info is
@@ -193,7 +193,7 @@ namespace VixenPlus {
                 }
             }
 
-            Sorts.UpdateChannelCounts(Channels.Count);
+            //Sorts.UpdateChannelCounts(Channels.Count);
             IsDirty = true;
         }
 

@@ -16,7 +16,7 @@ namespace VixenPlus {
         private List<Channel> _fullChannels;
         private int _eventPeriod;
         private Profile _profile;
-        private SortOrders _sortOrders;
+        //private SortOrders _sortOrders;
         private string _currentGroup = "";
         
         public Dictionary<string, GroupData> Groups { get; set; }
@@ -68,7 +68,7 @@ namespace VixenPlus {
             _fullChannels = new List<Channel>();
             Channels = new List<Channel>();
             PlugInData = new SetupData();
-            _sortOrders = new SortOrders();
+            //_sortOrders = new SortOrders();
             Extensions = new SequenceExtensions();
             if (preferences != null) {
                 _eventPeriod = preferences.GetInteger("EventPeriod");
@@ -231,14 +231,8 @@ namespace VixenPlus {
         }
 
 
-        public int InsertChannel(int sortedIndex) {
-            var count = LastSort >= 0 ? _fullChannels.Count : sortedIndex;
-            if (count > _fullChannels.Count) {
-                count = _fullChannels.Count;
-            }
-            if (sortedIndex > _fullChannels.Count) {
-                sortedIndex = _fullChannels.Count;
-            }
+        public void InsertChannel() {
+            var count = _fullChannels.Count;
             var outputChannel = count;
             foreach (var channel in _fullChannels.Where(channel => channel.OutputChannel >= outputChannel)) {
                 channel.OutputChannel++;
@@ -253,24 +247,23 @@ namespace VixenPlus {
             }
             EventValues = newEventValues;
 
-            if (Groups != null) {
-                foreach (var group in Groups) {
-                    var newChannels = new List<string>();
-                    foreach (var channel in group.Value.GroupChannels.Split(new[] {','})) {
-                        var newChannel = channel;
-                        int res;
-                        if (int.TryParse(channel, out res)) {
-                            if (res >= count) res++;
-                            newChannel = res.ToString(CultureInfo.InvariantCulture);
-                        }
-                        newChannels.Add(newChannel);
-                    }
-                    group.Value.GroupChannels = string.Join(",", newChannels.ToArray());
-                }
+            if (Groups == null) {
+                return;
             }
 
-            //_sortOrders.InsertChannel(count, sortedIndex);
-            return count;
+            foreach (var g in Groups) {
+                var newChannels = new List<string>();
+                foreach (var channel in g.Value.GroupChannels.Split(new[] {','})) {
+                    var newChannel = channel;
+                    int res;
+                    if (int.TryParse(channel, out res)) {
+                        if (res >= count) res++;
+                        newChannel = res.ToString(CultureInfo.InvariantCulture);
+                    }
+                    newChannels.Add(newChannel);
+                }
+                g.Value.GroupChannels = string.Join(",", newChannels.ToArray());
+            }
         }
 
 
@@ -441,7 +434,7 @@ namespace VixenPlus {
 
             TotalEventPeriods = Cols;
             ResetOutputPlugins(channels, height);
-            ApplyGroupAndSort();
+            ApplyGroup();
         }
 
 
@@ -484,7 +477,7 @@ namespace VixenPlus {
             PlugInData = new SetupData();
             LoadableData = new LoadableData();
             Extensions = new SequenceExtensions();
-            _sortOrders = new SortOrders();
+            //_sortOrders = new SortOrders();
             var timeNode = requiredNode.SelectSingleNode("Time");
             if (timeNode != null) {
                 Time = Convert.ToInt32(timeNode.InnerText);
@@ -572,7 +565,7 @@ namespace VixenPlus {
             LoadableData.LoadFromXml(requiredNode);
             Extensions.LoadFromXml(requiredNode);
 
-            ApplyGroupAndSort();
+            ApplyGroup();
         }
 
 
@@ -586,8 +579,8 @@ namespace VixenPlus {
             }
             PlugInData = new SetupData();
             PlugInData.LoadFromXml(contextNode);
-            _sortOrders = new SortOrders(); //TODO: Need to embed group into sorts and be able to load it too.
-            _sortOrders.LoadFromXml(contextNode);
+            //_sortOrders = new SortOrders(); //TODO: Need to embed group into sorts and be able to load it too.
+            //_sortOrders.LoadFromXml(contextNode);
             Groups = Group.LoadFromXml(contextNode) ?? new Dictionary<string, GroupData>();
             IsDirty = Group.LoadFromFile(contextNode, Groups);
         }
@@ -608,23 +601,23 @@ namespace VixenPlus {
                     _fullChannels.Add(new Channel(Resources.Channel + @" " + i.ToString(CultureInfo.InvariantCulture), i - 1));
                 }
                 UpdateEventValueArray();
-                _sortOrders.UpdateChannelCounts(value);
+                //_sortOrders.UpdateChannelCounts(value);
             }
         }
 
 
-        public int LastSort {
-            get { return _profile == null ? _sortOrders.LastSort : _profile.Sorts.LastSort; }
-            set {
-                if (_profile == null) {
-                    _sortOrders.LastSort = value;
-                }
-                else {
-                    _profile.Sorts.LastSort = value;
-                }
-                ApplyGroupAndSort();
-            }
-        }
+        //public int LastSort {
+        //    get { return _profile == null ? _sortOrders.LastSort : _profile.Sorts.LastSort; }
+        //    set {
+        //        if (_profile == null) {
+        //            _sortOrders.LastSort = value;
+        //        }
+        //        else {
+        //            _profile.Sorts.LastSort = value;
+        //        }
+        //        ApplyGroupAndSort();
+        //    }
+        //}
 
 
         public Profile Profile {
@@ -640,21 +633,21 @@ namespace VixenPlus {
         }
 
 
-        public SortOrders Sorts {
-            get { return _profile == null ? _sortOrders : _profile.Sorts; }
-        }
+        //public SortOrders Sorts {
+        //    get { return _profile == null ? _sortOrders : _profile.Sorts; }
+        //}
 
 
         public string CurrentGroup {
             get { return _currentGroup; }
             set {
                 _currentGroup = value;
-                ApplyGroupAndSort();
+                ApplyGroup();
             }
         }
 
 
-        public void ApplyGroupAndSort() {
+        public void ApplyGroup() {
             Channels = new List<Channel>();
 
             if (_currentGroup != Group.AllChannels && _currentGroup != "") {
@@ -664,25 +657,25 @@ namespace VixenPlus {
                 Channels = FullChannels;
             }
 
-            if (LastSort == -1) {
-                return;
-            }
+            //if (LastSort == -1) {
+            //    return;
+            //}
 
-            var currentOrder = Sorts.CurrentOrder;
+            //var currentOrder = Sorts.CurrentOrder;
 
-            if (currentOrder == null || FullChannelCount !=currentOrder.ChannelIndexes.Count) {
-                var msg = currentOrder == null
-                    ? "The sort order referenced does not exist.\n" +
-                      "Please edit your sequnce or profile to make sure you have the correct number of sort orders defined."
-                    : "The selected channel order channel count does not match the sequence channel count and cannot be used.\n" +
-                      "Your sequence channels will not be sorted using this channel order.";
-                MessageBox.Show(msg, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            //if (currentOrder == null || FullChannelCount !=currentOrder.ChannelIndexes.Count) {
+            //    var msg = currentOrder == null
+            //        ? "The sort order referenced does not exist.\n" +
+            //          "Please edit your sequnce or profile to make sure you have the correct number of sort orders defined."
+            //        : "The selected channel order channel count does not match the sequence channel count and cannot be used.\n" +
+            //          "Your sequence channels will not be sorted using this channel order.";
+            //    MessageBox.Show(msg, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
+            //}
 
-            Channels = (from channel in currentOrder.ChannelIndexes
-                where Channels.Contains(FullChannels[channel])
-                select FullChannels[channel]).ToList();
+            //Channels = (from channel in currentOrder.ChannelIndexes
+            //    where Channels.Contains(FullChannels[channel])
+            //    select FullChannels[channel]).ToList();
         }
 
 
@@ -693,7 +686,7 @@ namespace VixenPlus {
             get { return _profile == null ? _fullChannels : _profile.Channels; }
             set {
                 AssignChannelArray(value);
-                ApplyGroupAndSort();
+                ApplyGroup();
             }
         }
 
@@ -714,7 +707,7 @@ namespace VixenPlus {
             if (_fullChannels.Count != Rows) {
                 UpdateEventValueArray(true);
             }
-            _sortOrders.UpdateChannelCounts(_fullChannels.Count);
+            //_sortOrders.UpdateChannelCounts(_fullChannels.Count);
         }
 
 
@@ -767,26 +760,28 @@ namespace VixenPlus {
             }
             EventValues = buffer;
 
-            if (Groups != null) {
-                foreach (var group in Groups) {
-                    var newChannels = new List<string>();
-                    foreach (var channel in group.Value.GroupChannels.Split(new[] { ',' })) {
-                        int res;
-                        if (int.TryParse(channel, out res)) {
-                            if (res == index) {
-                                continue;
-                            }
-                            if (res >= index) res--;
-                            newChannels.Add(res.ToString(CultureInfo.InvariantCulture));
-                        }
-                        else {
-                            newChannels.Add(channel);
-                        }
-                    }
-                    group.Value.GroupChannels = string.Join(",", newChannels.ToArray());
-                }
+            if (Groups == null) {
+                return;
             }
-            _sortOrders.DeleteChannel(index);
+
+            foreach (var g in Groups) {
+                var newChannels = new List<string>();
+                foreach (var channel in g.Value.GroupChannels.Split(new[] { ',' })) {
+                    int res;
+                    if (int.TryParse(channel, out res)) {
+                        if (res == index) {
+                            continue;
+                        }
+                        if (res >= index) res--;
+                        newChannels.Add(res.ToString(CultureInfo.InvariantCulture));
+                    }
+                    else {
+                        newChannels.Add(channel);
+                    }
+                }
+                g.Value.GroupChannels = string.Join(",", newChannels.ToArray());
+            }
+            //_sortOrders.DeleteChannel(index);
         }
 
 
