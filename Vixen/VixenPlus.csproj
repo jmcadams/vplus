@@ -322,8 +322,6 @@
     <Compile Include="SequenceExtensions.cs" />
     <Compile Include="SequenceProgram.cs" />
     <Compile Include="SetupData.cs" />
-    <Compile Include="SortOrder.cs" />
-    <Compile Include="SortOrders.cs" />
     <Compile Include="Splash.cs">
       <SubType>Form</SubType>
     </Compile>
