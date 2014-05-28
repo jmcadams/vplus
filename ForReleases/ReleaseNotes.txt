@@ -1,5 +1,10 @@
 NOTE: For items prefixed with VIX-, you can view more details on https://vixenplus.atlassian.net
 
+28 MAY 2014 - V 0.2.148.1
+   VIX-33 - Fixed crash on add multiple in Roadie.
+   VIX-30 - Launch crash fixed. Was trying to use an object that had not been initialized.
+   VIX-29 - Build error caused a couple of 3rd party libraries not to be included and would cause an Engine8 crash.
+
 26 MAY 2014 - V 0.2.146.1
    VIX-5 - New profile editor, plugin editor, sort editor, group editor and nutcracker model editor.
    NO JIRA - Consolidated Nutcracker into one DLL instead of many to keep the version and such in sync.
