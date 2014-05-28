@@ -296,12 +296,15 @@ namespace VixenPlus.Dialogs {
                 return;
             }
 
-            if (null != _contextProfile) {
-                var root = Path.GetDirectoryName(_contextProfile.FileName) ?? Paths.ProfilePath;
-                DeleteIfExists(Path.Combine(root, newName + Vendor.ProfileExtension));
-            }
+            var root = (null != _contextProfile && _contextProfile.FileName != null) 
+                ? Path.GetDirectoryName(_contextProfile.FileName) ?? Paths.ProfilePath : Paths.ProfilePath;
+
+            var newFileName = Path.Combine(root, newName + Vendor.ProfileExtension);
+
+            DeleteIfExists(newFileName);
 
             var profile = isNew ? new Profile() : profileData;
+            profile.FileName = newFileName;
             profile.Name = newName;
             profile.SaveToFile();
 
@@ -1215,6 +1218,9 @@ namespace VixenPlus.Dialogs {
         private void SelectLastRow() {
             dgvChannels.ClearSelection();
             var lastRow = dgvChannels.RowCount - 1;
+            if (lastRow < 0) {
+                return;
+            }
             dgvChannels.Rows[lastRow].Selected = true;
             dgvChannels.FirstDisplayedScrollingRowIndex = lastRow;
         }
@@ -1546,10 +1552,12 @@ namespace VixenPlus.Dialogs {
                 select Path.Combine(path, file + Vendor.GroupExtension)) {
                 
                 if (isDelete) {
-                    File.Delete(baseName + Vendor.DeletedExtension);
+                    DeleteIfExists(baseName + Vendor.DeletedExtension);
                 }
                 else {
-                    File.Move(baseName + Vendor.DeletedExtension, baseName);
+                    if (File.Exists(baseName + Vendor.DeletedExtension)) {
+                        File.Move(baseName + Vendor.DeletedExtension, baseName);
+                    }
                 }
             }
         }
