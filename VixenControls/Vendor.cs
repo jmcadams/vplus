@@ -28,7 +28,7 @@ namespace VixenPlusCommon {
 
         public const string SupportURL = "http://www.diychristmas.org/vb1/forumdisplay.php?19-VixenPlus";
 
-        public const string UpdateURL = "http://www.vixenplus.com/Current/";
+        public const string UpdateURL = "http://www.vixenplus.com/alpha/";
         public const string UpdateFile = "version.php";
         public const string UpdateReleaseNote = "ReleaseNotes.txt";
         public const string UpdateFileURL = UpdateURL + "Release";
