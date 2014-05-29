@@ -1,5 +1,8 @@
 NOTE: For items prefixed with VIX-, you can view more details on https://vixenplus.atlassian.net
 
+30 MAY 2014 - V 0.2.150.1
+   NO JIRA - Turned auto-update back on.
+
 28 MAY 2014 - V 0.2.148.1
    VIX-33 - Fixed crash on add multiple in Roadie.
    VIX-30 - Launch crash fixed. Was trying to use an object that had not been initialized.
