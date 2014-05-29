@@ -204,45 +204,50 @@ namespace VixenPlus.Dialogs {
                     return;
                 }
 
-                using (var file = File.OpenText(dialog.FileName)) {
-                    string line;
-                    var count = 0;
-                    var valid = true;
-                    dgvChannels.SuspendLayout();
-                    while ((line = file.ReadLine()) != null) {
-                        var cols = line.Replace("\"", "").Split(',');
-                        if (0 == count) {
-                            if (cols.Count() != dgvChannels.ColumnCount) {
-                                valid = false;
+                try {
+                    using (var file = File.OpenText(dialog.FileName)) {
+                        string line;
+                        var count = 0;
+                        var valid = true;
+                        dgvChannels.SuspendLayout();
+                        while ((line = file.ReadLine()) != null) {
+                            var cols = line.Replace("\"", "").Split(',');
+                            if (0 == count) {
+                                if (cols.Count() != dgvChannels.ColumnCount) {
+                                    valid = false;
+                                }
+                                else {
+                                    for (var i = 0; i < dgvChannels.ColumnCount; i++) {
+                                        valid &=
+                                            String.Compare(dgvChannels.Columns[i].Name, cols[i],
+                                                StringComparison.OrdinalIgnoreCase) == 0;
+                                    }
+                                }
+                                if (!valid) {
+                                    MessageBox.Show("Import file not valid, cannot import.");
+                                    break;
+                                }
+                                dgvChannels.Rows.Clear();
+                                SetContextDirtyFlag(true);
+                                count++;
                             }
                             else {
-                                for (var i = 0; i < dgvChannels.ColumnCount; i++) {
-                                    valid &=
-                                        String.Compare(dgvChannels.Columns[i].Name, cols[i],
-                                            StringComparison.OrdinalIgnoreCase) == 0;
-                                }
+                                var row =
+                                    dgvChannels.Rows.Add(new object[] {
+                                        cols[ChannelEnabledCol] == bool.TrueString, cols[ChannelNumCol].ToInt(),
+                                        cols[ChannelNameCol], cols[OutputChannelCol].ToInt(), cols[ChannelColorCol]
+                                    });
+                                dgvChannels.Rows[row].DefaultCellStyle.BackColor = cols[ChannelColorCol].FromHTML();
+                                dgvChannels.Rows[row].DefaultCellStyle.ForeColor =
+                                    dgvChannels.Rows[row].DefaultCellStyle.BackColor.GetForeColor();
                             }
-                            if (!valid) {
-                                MessageBox.Show("Import file not valid, cannot import.");
-                                break;
-                            }
-                            dgvChannels.Rows.Clear();
-                            SetContextDirtyFlag(true);
-                            count++;
                         }
-                        else {
-                            var row =
-                                dgvChannels.Rows.Add(new object[] {
-                                    cols[ChannelEnabledCol] == bool.TrueString, cols[ChannelNumCol].ToInt(), cols[ChannelNameCol],
-                                    cols[OutputChannelCol].ToInt(), cols[ChannelColorCol]
-                                });
-                            dgvChannels.Rows[row].DefaultCellStyle.BackColor = cols[ChannelColorCol].FromHTML();
-                            dgvChannels.Rows[row].DefaultCellStyle.ForeColor =
-                                dgvChannels.Rows[row].DefaultCellStyle.BackColor.GetForeColor();
-                        }
+                        dgvChannels.ResumeLayout();
+                        SetGeneralButtons();
                     }
-                    dgvChannels.ResumeLayout();
-                    SetGeneralButtons();
+                }
+                catch (IOException ioe) {
+                    ShowIoError(ioe.Message, "Error importing file");
                 }
             }
         }
@@ -261,21 +266,35 @@ namespace VixenPlus.Dialogs {
                     return;
                 }
 
-                using (var file = File.CreateText(dialog.FileName)) {
-                    var data = new StringBuilder();
-                    foreach (DataGridViewColumn col in dgvChannels.Columns) {
-                        data.Append(col.Name).Append(",");
-                    }
-                    file.WriteLine(data.ToString(0, data.Length - 1));
-                    foreach (DataGridViewRow row in dgvChannels.Rows) {
-                        data.Length = 0;
-                        for (var i = 0; i < dgvChannels.ColumnCount; i++) {
-                            data.Append(row.Cells[i].Value).Append(",");
+
+                try {
+                    using (var file = File.CreateText(dialog.FileName)) {
+                        var data = new StringBuilder();
+                        foreach (DataGridViewColumn col in dgvChannels.Columns) {
+                            data.Append(col.Name).Append(",");
                         }
                         file.WriteLine(data.ToString(0, data.Length - 1));
-                    }
+                        foreach (DataGridViewRow row in dgvChannels.Rows) {
+                            data.Length = 0;
+                            for (var i = 0; i < dgvChannels.ColumnCount; i++) {
+                                data.Append(row.Cells[i].Value).Append(",");
+                            }
+                            file.WriteLine(data.ToString(0, data.Length - 1));
+                        }
+                    }     
+                }
+                catch (IOException ioe) {
+                    ShowIoError(ioe.Message, "Error exporting file");
                 }
             }
+        }
+
+
+        private static void ShowIoError(string message, string caption) {
+            MessageBox.Show(message + " Please try again later.",
+                caption,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);            
         }
 
         #endregion
@@ -687,13 +706,25 @@ namespace VixenPlus.Dialogs {
             }
 
             DeleteIfExists(newFile);
-            File.Copy(originalFile, newFile);
+            try {
+                File.Copy(originalFile, newFile);
+            }
+            catch (Exception e) {
+                ShowIoError(e.Message, "Error copying file");
+            }
         }
 
 
         private static void DeleteIfExists(string fileName) {
-            if (File.Exists(fileName)) {
+            if (!File.Exists(fileName)) {
+                return;
+            }
+
+            try {
                 File.Delete(fileName);
+            }
+            catch (Exception e) {
+                ShowIoError(e.Message, "Error deleting file");
             }
         }
 
@@ -747,7 +778,12 @@ namespace VixenPlus.Dialogs {
             }
 
             DeleteIfExists(newFile);
-            File.Move(oldFile, newFile);
+            try {
+                File.Move(oldFile, newFile);
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message, "Error renaming file");
+            }
         }
 
 
@@ -1555,8 +1591,15 @@ namespace VixenPlus.Dialogs {
                     DeleteIfExists(baseName + Vendor.DeletedExtension);
                 }
                 else {
-                    if (File.Exists(baseName + Vendor.DeletedExtension)) {
+                    if (!File.Exists(baseName + Vendor.DeletedExtension)) {
+                        continue;
+                    }
+
+                    try {
                         File.Move(baseName + Vendor.DeletedExtension, baseName);
+                    }
+                    catch (Exception e) {
+                        Console.WriteLine(e.Message, "Error restoring file");
                     }
                 }
             }
