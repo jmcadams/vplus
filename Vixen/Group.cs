@@ -178,7 +178,7 @@ namespace VixenPlus {
                     }
                     else {
                         int channel;
-                        if (Int32.TryParse(node, out channel) && !_currentList.Contains(fullChannelList[channel])) {
+                        if (Int32.TryParse(node, out channel) && channel < fullChannelList.Count && !_currentList.Contains(fullChannelList[channel])) {
                             _currentList.Add(fullChannelList[channel]);
                         }
                     }
