@@ -1,10 +1,15 @@
 ﻿using System.Collections;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Collections.Generic;
 using System;
+
+using FMOD;
+
+using VixenPlusCommon;
 
 namespace VixenEditor {
     internal class ChannelMapperProfile {
@@ -75,10 +80,15 @@ namespace VixenEditor {
                     }
                 }
 
-                _channels[channelNum].Enabled = enabled;
-                _channels[channelNum].Name = holdName;
-                _channels[channelNum].Color = holdColor.ToArgb();
-                _channels[channelNum].Location = currentNode++;
+                if (channelNum < _channelCount) {
+                    _channels[channelNum].Enabled = enabled;
+                    _channels[channelNum].Name = holdName;
+                    _channels[channelNum].Color = holdColor.ToArgb();
+                    _channels[channelNum].Location = currentNode++;
+                }
+                else {
+                    String.Format("Enabled: {0} Name: {1} Color: {2} Location {3}", enabled, holdName, holdColor.ToArgb(), currentNode ).CrashLog();
+                }
             }
         }
 
