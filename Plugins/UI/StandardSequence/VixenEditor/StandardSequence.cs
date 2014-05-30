@@ -1700,7 +1700,7 @@ namespace VixenEditor {
             const int largeAddtion = 3;
 
             var clipBounds = e.Graphics.ClipBounds;
-            e.Graphics.FillRectangle(_channelBackBrush, clipBounds);
+            e.Graphics.FillRectangle(_inPlayback && _doChannelHighlight ? _gridBackBrush : _channelBackBrush, clipBounds);
             if ((int) clipBounds.X != 0 || (int) clipBounds.Width != CaretSize) {
                 var height = pictureBoxTime.Height + splitContainer2.SplitterWidth;
 
