@@ -822,8 +822,8 @@ namespace VixenEditor{
             // insertPasteToolStripMenuItem
             // 
             this.insertPasteToolStripMenuItem.Name = "insertPasteToolStripMenuItem";
-            this.insertPasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.V)));
+            this.insertPasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.V)));
             this.insertPasteToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.insertPasteToolStripMenuItem.ToolTipText = "Insert paste (Ctrl-Shift-V)";
             this.insertPasteToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonInsertPaste_Click);
@@ -959,8 +959,8 @@ namespace VixenEditor{
             // clearAllToolStripMenuItem
             // 
             this.clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
-            this.clearAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.A)));
+            this.clearAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.A)));
             this.clearAllToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.clearAllToolStripMenuItem.Text = "Clear all";
             this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearAllToolStripMenuItem_Click);
@@ -1328,8 +1328,8 @@ namespace VixenEditor{
             // 
             // labelPosition
             // 
-            this.labelPosition.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelPosition.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.labelPosition.BackColor = System.Drawing.Color.Transparent;
             this.labelPosition.Location = new System.Drawing.Point(12, 9);
             this.labelPosition.Name = "labelPosition";
@@ -2488,7 +2488,7 @@ namespace VixenEditor{
             this.toolStripButtonRedo});
             this.toolStripEditing.Location = new System.Drawing.Point(3, 165);
             this.toolStripEditing.Name = "toolStripEditing";
-            this.toolStripEditing.Size = new System.Drawing.Size(825, 55);
+            this.toolStripEditing.Size = new System.Drawing.Size(856, 55);
             this.toolStripEditing.TabIndex = 6;
             this.toolStripEditing.Text = "Editing";
             // 
@@ -2672,6 +2672,7 @@ namespace VixenEditor{
             this.tsPreviewLabel.Name = "tsPreviewLabel";
             this.tsPreviewLabel.Size = new System.Drawing.Size(82, 52);
             this.tsPreviewLabel.Text = "Paste Preview:";
+            this.tsPreviewLabel.ToolTipText = "Paste Preview (F3)";
             // 
             // cbPastePreview
             // 
@@ -2694,7 +2695,7 @@ namespace VixenEditor{
             "Insert"});
             this.cbPastePreview.Name = "cbPastePreview";
             this.cbPastePreview.Size = new System.Drawing.Size(121, 55);
-            this.cbPastePreview.ToolTipText = "Selects paste preview";
+            this.cbPastePreview.ToolTipText = "Selects paste preview (F3)";
             this.cbPastePreview.SelectedIndexChanged += new System.EventHandler(this.pastePreviewItemChanged_Click);
             // 
             // toolStripButtonRemoveCells
@@ -2995,6 +2996,7 @@ namespace VixenEditor{
             // StandardSequence
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(976, 539);
             this.Controls.Add(this.toolStripContainer1);
             this.Controls.Add(this.menuStrip);
