@@ -1,5 +1,10 @@
 NOTE: For items prefixed with VIX-, you can view more details on https://vixenplus.atlassian.net
 
+30 MAY 2014 - V 0.2.150.2
+   VIX-1   - Fixed Resolution Error (DPI 125% tested and all is well, not tested with > 125%)
+   NO JIRA - Fixed a couple of edge case index errors.
+   NO JIRA - Added Tool Tips to paste preview (since I forgot the hotkey, others might have too)
+
 30 MAY 2014 - V 0.2.150.1
    NO JIRA - Turned auto-update back on.
    VIX-34  - All file handling in Roadie now handles exceptions gracefully.
