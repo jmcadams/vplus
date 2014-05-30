@@ -22,7 +22,6 @@ namespace VixenPlus {
             FileName = string.Empty;
             _isFrozen = false;
             TreatAsLocal = false;
-            UserData = null;
             Key = Host.GetUniqueKey();
             _channelObjects = new List<Channel>();
             _channelOutputs = new List<int>();
@@ -117,10 +116,6 @@ namespace VixenPlus {
         public SetupData PlugInData { get; private set; }
 
         public bool TreatAsLocal { get; private set; }
-
-        // ReSharper disable once UnusedAutoPropertyAccessor.Local
-        private object UserData { get; set; }
-
 
         public void AddChannelObject(Channel channelObject) {
             _channelObjects.Add(channelObject);

@@ -9,11 +9,9 @@ namespace VixenPlus {
         private readonly Profile _profile;
 
         public SequenceProgram(EventSequence sequence) {
-            Loop = false;
             _profile = null;
             UseSequencePluginData = false;
             TreatAsLocal = false;
-            UserData = null;
             _key = Host.GetUniqueKey();
             _mask = null;
             FileName = sequence.FileName;
@@ -24,9 +22,6 @@ namespace VixenPlus {
 
 
         internal List<EventSequenceStub> EventSequences { get; private set; }
-
-        // ReSharper disable once UnusedAutoPropertyAccessor.Local
-        private bool Loop { get; set; }
 
         public SetupData SetupData { get; private set; }
 
@@ -96,28 +91,6 @@ namespace VixenPlus {
 
         public bool TreatAsLocal { get; private set; }
 
-        // ReSharper disable once UnusedAutoPropertyAccessor.Local
-        private object UserData { get; set; }
-
-
-        //private void AttachToProfile(string profileName) {
-        //    var path = Path.Combine(Paths.ProfilePath, profileName + ".pro");
-        //    if (File.Exists(path)) {
-        //        AttachToProfile(new Profile(path));
-        //    }
-        //    else {
-        //        MessageBox.Show(Name + Resources.ProfileNotFound, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-        //        LoadEmbeddedData(FileName);
-        //    }
-        //}
-
-
-        //private void AttachToProfile(Profile profile) {
-        //    _profile = profile;
-        //    ReloadProfile();
-        //}
-
-
         private void ConstructUsing() {
             EventSequences = new List<EventSequenceStub>();
         }
@@ -129,61 +102,9 @@ namespace VixenPlus {
             GC.SuppressFinalize(this);
         }
 
-
         ~SequenceProgram() {
             Dispose();
         }
-
-
-        //private void LoadEmbeddedData(string fileName) {
-        //    var document = new XmlDocument();
-        //    document.Load(fileName);
-        //    LoadEmbeddedData(document.SelectSingleNode("//Program"));
-        //}
-
-
-        //private void LoadEmbeddedData(XmlNode contextNode) {
-        //    SetupData = new SetupData();
-        //    SetupData.LoadFromXml(contextNode);
-        //}
-
-
-        //private void LoadFromXml(XmlNode contextNode) {
-        //    var node = contextNode.SelectSingleNode("Program");
-        //    if (node != null && node.Attributes != null && node.Attributes["useSequencePluginData"] != null) {
-        //        UseSequencePluginData = bool.Parse(node.Attributes["useSequencePluginData"].Value);
-        //    }
-        //    EventSequences.Clear();
-        //    if (node != null) {
-        //        var sequenceNode = node.SelectNodes("Sequence");
-        //        if (sequenceNode != null) {
-        //            foreach (XmlNode node2 in sequenceNode) {
-        //                var path = Path.Combine(Paths.SequencePath, node2.InnerText);
-        //                if (File.Exists(path)) {
-        //                    EventSequences.Add(new EventSequenceStub(path, true));
-        //                }
-        //                else {
-        //                    node.RemoveChild(node2);
-        //                }
-        //            }
-        //        }
-        //    }
-        //    if (node == null) {
-        //        return;
-        //    }
-
-        //    var node3 = node.SelectSingleNode("Profile");
-        //    if (node3 == null) {
-        //        LoadEmbeddedData(node);
-        //    }
-        //    else {
-        //        AttachToProfile(node3.InnerText);
-        //    }
-        //}
-
-        //private void ReloadProfile() {
-        //    SetupData = _profile.PlugInData;
-        //}
 
         public override string ToString() {
             return Name;

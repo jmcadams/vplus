@@ -38,7 +38,6 @@ namespace VixenPlus {
             TreatAsLocal = false;
             AudioDeviceIndex = -1;
             AudioDeviceVolume = 0;
-            UserData = null;
             Key = Host.GetUniqueKey();
             var contextNode = new XmlDocument();
             contextNode.Load(fileName);
@@ -62,7 +61,6 @@ namespace VixenPlus {
             TreatAsLocal = false;
             AudioDeviceIndex = -1;
             AudioDeviceVolume = 0;
-            UserData = null;
             Key = Host.GetUniqueKey();
             _fullChannels = new List<Channel>();
             Channels = new List<Channel>();
@@ -212,10 +210,6 @@ namespace VixenPlus {
         public SetupData PlugInData { get; private set; }
 
         public bool TreatAsLocal { get; private set; }
-
-        // ReSharper disable once UnusedAutoPropertyAccessor.Local
-        private object UserData { get; set; }
-
 
         private bool HasData() {
             for (var row = 0; row < Rows; row++) {
