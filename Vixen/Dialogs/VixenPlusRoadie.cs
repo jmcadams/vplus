@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -44,9 +43,7 @@ namespace VixenPlus.Dialogs {
 
         private const string TabChannels = "tpChannels";
         private const string TabPlugins = "tpPlugins";
-        private const string TabSorts = "tpSortOrders";
         private const string TabGroups = "tpGroups";
-        private const string TabNutcracker = "tpNutcracker";
 
         private const int ControlTabNormal = 0;
         private const int ControlTabMultiChannel = 1;
@@ -77,10 +74,6 @@ namespace VixenPlus.Dialogs {
             }
 
             InitializeControls();
-
-            // For Now hide tabs
-            tcProfile.TabPages.RemoveByKey(TabSorts);
-            tcProfile.TabPages.RemoveByKey(TabNutcracker);
 
             if (_isPluginsOnly) {
                 tcProfile.TabPages.RemoveByKey(TabChannels);
@@ -127,13 +120,7 @@ namespace VixenPlus.Dialogs {
                     DoPluginsKeys(e);
                     break;
                 case TabGroups:
-                    DoGroupKeys(e);
-                    break;
-                case TabSorts:
-                    DoSortsKeys(e);
-                    break;
-                case TabNutcracker:
-                    DoNutcrackerKeys(e);
+                    //DoGroupKeys(e);
                     break;
             }
         }
@@ -392,10 +379,6 @@ namespace VixenPlus.Dialogs {
                 case TabGroups:
                     InitializeGroupsTab();
                     break;
-                case TabSorts:
-                    break;
-                case TabNutcracker:
-                    break;
             }
         }
 
@@ -526,12 +509,6 @@ namespace VixenPlus.Dialogs {
                     break;
                 case TabGroups:
                     break;
-                case TabSorts:
-                    SetSortsTabButtons(isProfileLoaded);
-                    break;
-                case TabNutcracker:
-                    SetNutcrackerTabButtons(isProfileLoaded);
-                    break;
             }
         }
 
@@ -586,18 +563,6 @@ namespace VixenPlus.Dialogs {
             btnAddPlugIn.Enabled = cbAvailablePlugIns.SelectedIndex > 0;
         }
 
-
-        private void SetNutcrackerTabButtons(bool isProfileLoaded) {
-            btnNcaButton.Enabled = isProfileLoaded;
-        }
-
-
-        private void SetSortsTabButtons(bool isProfileLoaded) {
-            btnSrtDelete.Enabled = isProfileLoaded;
-            btnSrtSave.Enabled = isProfileLoaded;
-            cbSrtOrders.Enabled = isProfileLoaded;
-        }
-
         #endregion
 
         #endregion
@@ -606,9 +571,9 @@ namespace VixenPlus.Dialogs {
 
         #region Group Key Management
 
-        private void DoGroupKeys(KeyEventArgs e) {
-            Debug.Print(e.KeyCode.ToString());
-        }
+        //private void DoGroupKeys(KeyEventArgs e) {
+        //    Debug.Print(e.KeyCode.ToString());
+        //}
 
         #endregion
 
@@ -657,18 +622,13 @@ namespace VixenPlus.Dialogs {
 
             var s = (string) Clipboard.GetData(DataFormats.Text);
             Clipboard.SetData(DataFormats.Text, s);
-            var csv = s.Split(new[] {"\r\n"}, StringSplitOptions.None).ToList();
-            foreach (var cc in csv.SelectMany(c => c.Split('\t').ToList())) {
-                Debug.Print("'" + cc + "'"); // TODO Need to paste the data.
-            }
+            //var csv = s.Split(new[] {"\r\n"}, StringSplitOptions.None).ToList();
+            //foreach (var cc in csv.SelectMany(c => c.Split('\t').ToList())) {
+            //    Debug.Print("'" + cc + "'"); // TODO Need to paste the data.
+            //}
         }
 
         #endregion
-
-        private void DoNutcrackerKeys(KeyEventArgs e) {
-            Debug.Print(e.KeyCode.ToString());
-        }
-
 
         private void DoPluginsKeys(KeyEventArgs e) {
             switch (e.KeyCode) {
@@ -689,11 +649,6 @@ namespace VixenPlus.Dialogs {
                     }
                     break;
             }
-        }
-
-
-        private void DoSortsKeys(KeyEventArgs e) {
-            Debug.Print(e.KeyCode.ToString());
         }
 
         #endregion
@@ -1988,6 +1943,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void InitializeGroupsTab() {
+            pGroups.Size = tcProfile.ClientSize;
             pGroups.Controls.Clear();
             var g = new GroupDialog(_contextProfile, false) {Size = pGroups.Size};
             pGroups.Controls.Add(g);

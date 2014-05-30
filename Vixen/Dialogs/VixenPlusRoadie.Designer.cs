@@ -48,6 +48,26 @@ namespace VixenPlus.Dialogs
             this.ChannelName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OutputChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ChannelColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tpPlugins = new System.Windows.Forms.TabPage();
+            this.cbAvailablePlugIns = new System.Windows.Forms.ComboBox();
+            this.btnRemovePlugIn = new System.Windows.Forms.Button();
+            this.btnAddPlugIn = new System.Windows.Forms.Button();
+            this.dgvPlugIns = new System.Windows.Forms.DataGridView();
+            this.colPlugInName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPlugInEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colPlugInStartChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPlugInEndChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPlugInConfiguration = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gbSetup = new System.Windows.Forms.GroupBox();
+            this.pSetup = new System.Windows.Forms.Panel();
+            this.tpGroups = new System.Windows.Forms.TabPage();
+            this.pGroups = new System.Windows.Forms.Panel();
+            this.btnOkay = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.ttRoadie = new System.Windows.Forms.ToolTip(this.components);
+            this.previewTimer = new System.Windows.Forms.Timer(this.components);
+            this.dataGridViewDisableButtonColumn1 = new VixenPlus.Dialogs.DataGridViewDisableButtonColumn();
+            this.dataGridViewDisableButtonColumn2 = new VixenPlus.Dialogs.DataGridViewDisableButtonColumn();
             this.tcControlArea = new VixenPlusCommon.TabControl(this.components);
             this.tpChannelControl = new System.Windows.Forms.TabPage();
             this.gbExportImport = new System.Windows.Forms.GroupBox();
@@ -97,36 +117,16 @@ namespace VixenPlus.Dialogs
             this.btnMultiColorOk = new System.Windows.Forms.Button();
             this.btnMultiColorCancel = new System.Windows.Forms.Button();
             this.colorPaletteColor = new VixenPlusCommon.ColorPalette();
-            this.tpPlugins = new System.Windows.Forms.TabPage();
-            this.cbAvailablePlugIns = new System.Windows.Forms.ComboBox();
-            this.btnRemovePlugIn = new System.Windows.Forms.Button();
-            this.btnAddPlugIn = new System.Windows.Forms.Button();
-            this.dgvPlugIns = new System.Windows.Forms.DataGridView();
-            this.colPlugInName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPlugInEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colPlugInStartChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPlugInEndChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPlugInConfiguration = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewDisableButtonColumn3 = new VixenPlus.Dialogs.DataGridViewDisableButtonColumn();
             this.colPlugInSetup = new VixenPlus.Dialogs.DataGridViewDisableButtonColumn();
-            this.gbSetup = new System.Windows.Forms.GroupBox();
-            this.pSetup = new System.Windows.Forms.Panel();
-            this.tpSortOrders = new System.Windows.Forms.TabPage();
-            this.btnSrtDelete = new System.Windows.Forms.Button();
-            this.btnSrtSave = new System.Windows.Forms.Button();
-            this.cbSrtOrders = new System.Windows.Forms.ComboBox();
-            this.tpGroups = new System.Windows.Forms.TabPage();
-            this.tpNutcracker = new System.Windows.Forms.TabPage();
-            this.btnNcaButton = new System.Windows.Forms.Button();
-            this.btnOkay = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.ttRoadie = new System.Windows.Forms.ToolTip(this.components);
-            this.previewTimer = new System.Windows.Forms.Timer(this.components);
-            this.dataGridViewDisableButtonColumn1 = new VixenPlus.Dialogs.DataGridViewDisableButtonColumn();
-            this.pGroups = new System.Windows.Forms.Panel();
             this.gbProfiles.SuspendLayout();
             this.tcProfile.SuspendLayout();
             this.tpChannels.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvChannels)).BeginInit();
+            this.tpPlugins.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPlugIns)).BeginInit();
+            this.gbSetup.SuspendLayout();
+            this.tpGroups.SuspendLayout();
             this.tcControlArea.SuspendLayout();
             this.tpChannelControl.SuspendLayout();
             this.gbExportImport.SuspendLayout();
@@ -141,12 +141,6 @@ namespace VixenPlus.Dialogs
             ((System.ComponentModel.ISupportInitialize)(this.nudRuleStart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudChGenChannels)).BeginInit();
             this.tpMultiColor.SuspendLayout();
-            this.tpPlugins.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPlugIns)).BeginInit();
-            this.gbSetup.SuspendLayout();
-            this.tpSortOrders.SuspendLayout();
-            this.tpGroups.SuspendLayout();
-            this.tpNutcracker.SuspendLayout();
             this.SuspendLayout();
             // 
             // cbProfiles
@@ -236,14 +230,12 @@ namespace VixenPlus.Dialogs
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.tcProfile.Controls.Add(this.tpChannels);
             this.tcProfile.Controls.Add(this.tpPlugins);
-            this.tcProfile.Controls.Add(this.tpSortOrders);
             this.tcProfile.Controls.Add(this.tpGroups);
-            this.tcProfile.Controls.Add(this.tpNutcracker);
             this.tcProfile.HotTrack = true;
             this.tcProfile.Location = new System.Drawing.Point(12, 70);
             this.tcProfile.Name = "tcProfile";
             this.tcProfile.SelectedIndex = 0;
-            this.tcProfile.Size = new System.Drawing.Size(984, 648);
+            this.tcProfile.Size = new System.Drawing.Size(984, 561);
             this.tcProfile.TabIndex = 3;
             this.ttRoadie.SetToolTip(this.tcProfile, "Manage profile channels");
             this.tcProfile.Visible = false;
@@ -256,7 +248,7 @@ namespace VixenPlus.Dialogs
             this.tpChannels.Location = new System.Drawing.Point(4, 22);
             this.tpChannels.Name = "tpChannels";
             this.tpChannels.Padding = new System.Windows.Forms.Padding(3);
-            this.tpChannels.Size = new System.Drawing.Size(976, 622);
+            this.tpChannels.Size = new System.Drawing.Size(976, 535);
             this.tpChannels.TabIndex = 0;
             this.tpChannels.Text = "Channels";
             this.tpChannels.UseVisualStyleBackColor = true;
@@ -280,7 +272,7 @@ namespace VixenPlus.Dialogs
             this.dgvChannels.Location = new System.Drawing.Point(0, 0);
             this.dgvChannels.Name = "dgvChannels";
             this.dgvChannels.RowHeadersWidth = 25;
-            this.dgvChannels.Size = new System.Drawing.Size(700, 616);
+            this.dgvChannels.Size = new System.Drawing.Size(700, 535);
             this.dgvChannels.TabIndex = 0;
             this.dgvChannels.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvChannels_CellContentDoubleClick);
             this.dgvChannels.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvChannels_CellValueChanged);
@@ -344,6 +336,197 @@ namespace VixenPlus.Dialogs
             this.ChannelColor.ToolTipText = "Sequencer Color of the Channel";
             this.ChannelColor.Width = 98;
             // 
+            // tpPlugins
+            // 
+            this.tpPlugins.Controls.Add(this.cbAvailablePlugIns);
+            this.tpPlugins.Controls.Add(this.btnRemovePlugIn);
+            this.tpPlugins.Controls.Add(this.btnAddPlugIn);
+            this.tpPlugins.Controls.Add(this.dgvPlugIns);
+            this.tpPlugins.Controls.Add(this.gbSetup);
+            this.tpPlugins.Location = new System.Drawing.Point(4, 22);
+            this.tpPlugins.Name = "tpPlugins";
+            this.tpPlugins.Padding = new System.Windows.Forms.Padding(3);
+            this.tpPlugins.Size = new System.Drawing.Size(976, 535);
+            this.tpPlugins.TabIndex = 1;
+            this.tpPlugins.Text = "Plugins";
+            this.tpPlugins.UseVisualStyleBackColor = true;
+            // 
+            // cbAvailablePlugIns
+            // 
+            this.cbAvailablePlugIns.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbAvailablePlugIns.FormattingEnabled = true;
+            this.cbAvailablePlugIns.Location = new System.Drawing.Point(7, 6);
+            this.cbAvailablePlugIns.Name = "cbAvailablePlugIns";
+            this.cbAvailablePlugIns.Size = new System.Drawing.Size(280, 21);
+            this.cbAvailablePlugIns.TabIndex = 36;
+            this.cbAvailablePlugIns.SelectedIndexChanged += new System.EventHandler(this.cbAvailablePlugIns_SelectedIndexChanged);
+            // 
+            // btnRemovePlugIn
+            // 
+            this.btnRemovePlugIn.Enabled = false;
+            this.btnRemovePlugIn.Location = new System.Drawing.Point(536, 5);
+            this.btnRemovePlugIn.Name = "btnRemovePlugIn";
+            this.btnRemovePlugIn.Size = new System.Drawing.Size(75, 23);
+            this.btnRemovePlugIn.TabIndex = 18;
+            this.btnRemovePlugIn.Text = "Remove";
+            this.btnRemovePlugIn.UseVisualStyleBackColor = true;
+            this.btnRemovePlugIn.Click += new System.EventHandler(this.buttonRemove_Click);
+            // 
+            // btnAddPlugIn
+            // 
+            this.btnAddPlugIn.Enabled = false;
+            this.btnAddPlugIn.Location = new System.Drawing.Point(293, 5);
+            this.btnAddPlugIn.Name = "btnAddPlugIn";
+            this.btnAddPlugIn.Size = new System.Drawing.Size(75, 23);
+            this.btnAddPlugIn.TabIndex = 17;
+            this.btnAddPlugIn.Text = "Add";
+            this.btnAddPlugIn.UseVisualStyleBackColor = true;
+            this.btnAddPlugIn.Click += new System.EventHandler(this.buttonUse_Click);
+            // 
+            // dgvPlugIns
+            // 
+            this.dgvPlugIns.AllowUserToAddRows = false;
+            this.dgvPlugIns.AllowUserToDeleteRows = false;
+            this.dgvPlugIns.AllowUserToOrderColumns = true;
+            this.dgvPlugIns.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvPlugIns.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.dgvPlugIns.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPlugIns.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colPlugInName,
+            this.colPlugInEnabled,
+            this.colPlugInStartChannel,
+            this.colPlugInEndChannel,
+            this.colPlugInConfiguration,
+            this.colPlugInSetup});
+            this.dgvPlugIns.Location = new System.Drawing.Point(6, 35);
+            this.dgvPlugIns.MultiSelect = false;
+            this.dgvPlugIns.Name = "dgvPlugIns";
+            this.dgvPlugIns.RowHeadersVisible = false;
+            this.dgvPlugIns.Size = new System.Drawing.Size(964, 228);
+            this.dgvPlugIns.TabIndex = 35;
+            this.dgvPlugIns.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPlugIns_CellClick);
+            this.dgvPlugIns.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPlugIns_CellValueChanged);
+            this.dgvPlugIns.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPlugIns_RowEnter);
+            this.dgvPlugIns.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPlugIns_RowLeave);
+            // 
+            // colPlugInName
+            // 
+            this.colPlugInName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.colPlugInName.FillWeight = 150F;
+            this.colPlugInName.HeaderText = "Plug In Name";
+            this.colPlugInName.Name = "colPlugInName";
+            this.colPlugInName.ReadOnly = true;
+            this.colPlugInName.Width = 96;
+            // 
+            // colPlugInEnabled
+            // 
+            this.colPlugInEnabled.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.colPlugInEnabled.HeaderText = "Enabled";
+            this.colPlugInEnabled.Name = "colPlugInEnabled";
+            this.colPlugInEnabled.Width = 52;
+            // 
+            // colPlugInStartChannel
+            // 
+            this.colPlugInStartChannel.HeaderText = "Start Channel";
+            this.colPlugInStartChannel.Name = "colPlugInStartChannel";
+            // 
+            // colPlugInEndChannel
+            // 
+            this.colPlugInEndChannel.HeaderText = "End Channel";
+            this.colPlugInEndChannel.Name = "colPlugInEndChannel";
+            // 
+            // colPlugInConfiguration
+            // 
+            this.colPlugInConfiguration.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colPlugInConfiguration.DefaultCellStyle = dataGridViewCellStyle1;
+            this.colPlugInConfiguration.HeaderText = "Current Configuration";
+            this.colPlugInConfiguration.Name = "colPlugInConfiguration";
+            this.colPlugInConfiguration.ReadOnly = true;
+            // 
+            // gbSetup
+            // 
+            this.gbSetup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbSetup.Controls.Add(this.pSetup);
+            this.gbSetup.Location = new System.Drawing.Point(6, 269);
+            this.gbSetup.Name = "gbSetup";
+            this.gbSetup.Size = new System.Drawing.Size(964, 261);
+            this.gbSetup.TabIndex = 33;
+            this.gbSetup.TabStop = false;
+            this.gbSetup.Text = "Inline Setup";
+            // 
+            // pSetup
+            // 
+            this.pSetup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pSetup.Location = new System.Drawing.Point(6, 19);
+            this.pSetup.Name = "pSetup";
+            this.pSetup.Size = new System.Drawing.Size(952, 236);
+            this.pSetup.TabIndex = 0;
+            // 
+            // tpGroups
+            // 
+            this.tpGroups.Controls.Add(this.pGroups);
+            this.tpGroups.Location = new System.Drawing.Point(4, 22);
+            this.tpGroups.Name = "tpGroups";
+            this.tpGroups.Size = new System.Drawing.Size(976, 535);
+            this.tpGroups.TabIndex = 2;
+            this.tpGroups.Text = "Groups";
+            this.tpGroups.UseVisualStyleBackColor = true;
+            // 
+            // pGroups
+            // 
+            this.pGroups.Location = new System.Drawing.Point(0, 0);
+            this.pGroups.Name = "pGroups";
+            this.pGroups.Size = new System.Drawing.Size(976, 535);
+            this.pGroups.TabIndex = 2;
+            // 
+            // btnOkay
+            // 
+            this.btnOkay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOkay.Location = new System.Drawing.Point(830, 31);
+            this.btnOkay.Name = "btnOkay";
+            this.btnOkay.Size = new System.Drawing.Size(75, 23);
+            this.btnOkay.TabIndex = 1;
+            this.btnOkay.Text = "OK";
+            this.ttRoadie.SetToolTip(this.btnOkay, "Save all changes");
+            this.btnOkay.UseVisualStyleBackColor = true;
+            this.btnOkay.Click += new System.EventHandler(this.btnOkay_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.Location = new System.Drawing.Point(911, 31);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 2;
+            this.btnCancel.Text = "Cancel";
+            this.ttRoadie.SetToolTip(this.btnCancel, "Cancel all changes");
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // previewTimer
+            // 
+            this.previewTimer.Interval = 200;
+            this.previewTimer.Tick += new System.EventHandler(this.previewTimer_Tick);
+            // 
+            // dataGridViewDisableButtonColumn1
+            // 
+            this.dataGridViewDisableButtonColumn1.HeaderText = "Setup";
+            this.dataGridViewDisableButtonColumn1.Name = "dataGridViewDisableButtonColumn1";
+            this.dataGridViewDisableButtonColumn1.ReadOnly = true;
+            this.dataGridViewDisableButtonColumn1.Text = "Setup";
+            // 
+            // dataGridViewDisableButtonColumn2
+            // 
+            this.dataGridViewDisableButtonColumn2.HeaderText = "Setup";
+            this.dataGridViewDisableButtonColumn2.Name = "dataGridViewDisableButtonColumn2";
+            this.dataGridViewDisableButtonColumn2.ReadOnly = true;
+            this.dataGridViewDisableButtonColumn2.Text = "Setup";
+            // 
             // tcControlArea
             // 
             this.tcControlArea.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -356,7 +539,7 @@ namespace VixenPlus.Dialogs
             this.tcControlArea.Name = "tcControlArea";
             this.tcControlArea.OurMultiline = true;
             this.tcControlArea.SelectedIndex = 0;
-            this.tcControlArea.Size = new System.Drawing.Size(273, 616);
+            this.tcControlArea.Size = new System.Drawing.Size(273, 535);
             this.tcControlArea.TabIndex = 18;
             // 
             // tpChannelControl
@@ -369,7 +552,7 @@ namespace VixenPlus.Dialogs
             this.tpChannelControl.Location = new System.Drawing.Point(0, 0);
             this.tpChannelControl.Name = "tpChannelControl";
             this.tpChannelControl.Padding = new System.Windows.Forms.Padding(3);
-            this.tpChannelControl.Size = new System.Drawing.Size(273, 616);
+            this.tpChannelControl.Size = new System.Drawing.Size(273, 535);
             this.tpChannelControl.TabIndex = 0;
             this.tpChannelControl.Text = "Normal";
             this.tpChannelControl.UseVisualStyleBackColor = true;
@@ -541,7 +724,7 @@ namespace VixenPlus.Dialogs
             this.tpMultiChannel.Location = new System.Drawing.Point(0, 0);
             this.tpMultiChannel.Name = "tpMultiChannel";
             this.tpMultiChannel.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMultiChannel.Size = new System.Drawing.Size(273, 616);
+            this.tpMultiChannel.Size = new System.Drawing.Size(273, 535);
             this.tpMultiChannel.TabIndex = 1;
             this.tpMultiChannel.Text = "MultiChannel";
             this.tpMultiChannel.UseVisualStyleBackColor = true;
@@ -560,7 +743,7 @@ namespace VixenPlus.Dialogs
             // btnMultiChannelCancel
             // 
             this.btnMultiChannelCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMultiChannelCancel.Location = new System.Drawing.Point(192, 551);
+            this.btnMultiChannelCancel.Location = new System.Drawing.Point(192, 474);
             this.btnMultiChannelCancel.Name = "btnMultiChannelCancel";
             this.btnMultiChannelCancel.Size = new System.Drawing.Size(75, 23);
             this.btnMultiChannelCancel.TabIndex = 4;
@@ -794,7 +977,7 @@ namespace VixenPlus.Dialogs
             // btnMultiChannelOk
             // 
             this.btnMultiChannelOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMultiChannelOk.Location = new System.Drawing.Point(6, 551);
+            this.btnMultiChannelOk.Location = new System.Drawing.Point(6, 474);
             this.btnMultiChannelOk.Name = "btnMultiChannelOk";
             this.btnMultiChannelOk.Size = new System.Drawing.Size(141, 23);
             this.btnMultiChannelOk.TabIndex = 3;
@@ -910,7 +1093,7 @@ namespace VixenPlus.Dialogs
             this.tpMultiColor.Controls.Add(this.colorPaletteColor);
             this.tpMultiColor.Location = new System.Drawing.Point(0, 0);
             this.tpMultiColor.Name = "tpMultiColor";
-            this.tpMultiColor.Size = new System.Drawing.Size(273, 616);
+            this.tpMultiColor.Size = new System.Drawing.Size(273, 535);
             this.tpMultiColor.TabIndex = 2;
             this.tpMultiColor.Text = "MutliColor";
             this.tpMultiColor.UseVisualStyleBackColor = true;
@@ -942,115 +1125,12 @@ namespace VixenPlus.Dialogs
             this.colorPaletteColor.Size = new System.Drawing.Size(104, 50);
             this.colorPaletteColor.TabIndex = 0;
             // 
-            // tpPlugins
+            // dataGridViewDisableButtonColumn3
             // 
-            this.tpPlugins.Controls.Add(this.cbAvailablePlugIns);
-            this.tpPlugins.Controls.Add(this.btnRemovePlugIn);
-            this.tpPlugins.Controls.Add(this.btnAddPlugIn);
-            this.tpPlugins.Controls.Add(this.dgvPlugIns);
-            this.tpPlugins.Controls.Add(this.gbSetup);
-            this.tpPlugins.Location = new System.Drawing.Point(4, 22);
-            this.tpPlugins.Name = "tpPlugins";
-            this.tpPlugins.Padding = new System.Windows.Forms.Padding(3);
-            this.tpPlugins.Size = new System.Drawing.Size(976, 622);
-            this.tpPlugins.TabIndex = 1;
-            this.tpPlugins.Text = "Plugins";
-            this.tpPlugins.UseVisualStyleBackColor = true;
-            // 
-            // cbAvailablePlugIns
-            // 
-            this.cbAvailablePlugIns.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbAvailablePlugIns.FormattingEnabled = true;
-            this.cbAvailablePlugIns.Location = new System.Drawing.Point(7, 6);
-            this.cbAvailablePlugIns.Name = "cbAvailablePlugIns";
-            this.cbAvailablePlugIns.Size = new System.Drawing.Size(280, 21);
-            this.cbAvailablePlugIns.TabIndex = 36;
-            this.cbAvailablePlugIns.SelectedIndexChanged += new System.EventHandler(this.cbAvailablePlugIns_SelectedIndexChanged);
-            // 
-            // btnRemovePlugIn
-            // 
-            this.btnRemovePlugIn.Enabled = false;
-            this.btnRemovePlugIn.Location = new System.Drawing.Point(536, 5);
-            this.btnRemovePlugIn.Name = "btnRemovePlugIn";
-            this.btnRemovePlugIn.Size = new System.Drawing.Size(75, 23);
-            this.btnRemovePlugIn.TabIndex = 18;
-            this.btnRemovePlugIn.Text = "Remove";
-            this.btnRemovePlugIn.UseVisualStyleBackColor = true;
-            this.btnRemovePlugIn.Click += new System.EventHandler(this.buttonRemove_Click);
-            // 
-            // btnAddPlugIn
-            // 
-            this.btnAddPlugIn.Enabled = false;
-            this.btnAddPlugIn.Location = new System.Drawing.Point(293, 5);
-            this.btnAddPlugIn.Name = "btnAddPlugIn";
-            this.btnAddPlugIn.Size = new System.Drawing.Size(75, 23);
-            this.btnAddPlugIn.TabIndex = 17;
-            this.btnAddPlugIn.Text = "Add";
-            this.btnAddPlugIn.UseVisualStyleBackColor = true;
-            this.btnAddPlugIn.Click += new System.EventHandler(this.buttonUse_Click);
-            // 
-            // dgvPlugIns
-            // 
-            this.dgvPlugIns.AllowUserToAddRows = false;
-            this.dgvPlugIns.AllowUserToDeleteRows = false;
-            this.dgvPlugIns.AllowUserToOrderColumns = true;
-            this.dgvPlugIns.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvPlugIns.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
-            this.dgvPlugIns.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPlugIns.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colPlugInName,
-            this.colPlugInEnabled,
-            this.colPlugInStartChannel,
-            this.colPlugInEndChannel,
-            this.colPlugInConfiguration,
-            this.colPlugInSetup});
-            this.dgvPlugIns.Location = new System.Drawing.Point(6, 35);
-            this.dgvPlugIns.MultiSelect = false;
-            this.dgvPlugIns.Name = "dgvPlugIns";
-            this.dgvPlugIns.RowHeadersVisible = false;
-            this.dgvPlugIns.Size = new System.Drawing.Size(964, 314);
-            this.dgvPlugIns.TabIndex = 35;
-            this.dgvPlugIns.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPlugIns_CellClick);
-            this.dgvPlugIns.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPlugIns_CellValueChanged);
-            this.dgvPlugIns.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPlugIns_RowEnter);
-            this.dgvPlugIns.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPlugIns_RowLeave);
-            // 
-            // colPlugInName
-            // 
-            this.colPlugInName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.colPlugInName.FillWeight = 150F;
-            this.colPlugInName.HeaderText = "Plug In Name";
-            this.colPlugInName.Name = "colPlugInName";
-            this.colPlugInName.ReadOnly = true;
-            this.colPlugInName.Width = 88;
-            // 
-            // colPlugInEnabled
-            // 
-            this.colPlugInEnabled.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.colPlugInEnabled.HeaderText = "Enabled";
-            this.colPlugInEnabled.Name = "colPlugInEnabled";
-            this.colPlugInEnabled.Width = 52;
-            // 
-            // colPlugInStartChannel
-            // 
-            this.colPlugInStartChannel.HeaderText = "Start Channel";
-            this.colPlugInStartChannel.Name = "colPlugInStartChannel";
-            // 
-            // colPlugInEndChannel
-            // 
-            this.colPlugInEndChannel.HeaderText = "End Channel";
-            this.colPlugInEndChannel.Name = "colPlugInEndChannel";
-            // 
-            // colPlugInConfiguration
-            // 
-            this.colPlugInConfiguration.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colPlugInConfiguration.DefaultCellStyle = dataGridViewCellStyle1;
-            this.colPlugInConfiguration.HeaderText = "Current Configuration";
-            this.colPlugInConfiguration.Name = "colPlugInConfiguration";
-            this.colPlugInConfiguration.ReadOnly = true;
+            this.dataGridViewDisableButtonColumn3.HeaderText = "Setup";
+            this.dataGridViewDisableButtonColumn3.Name = "dataGridViewDisableButtonColumn3";
+            this.dataGridViewDisableButtonColumn3.ReadOnly = true;
+            this.dataGridViewDisableButtonColumn3.Text = "Setup";
             // 
             // colPlugInSetup
             // 
@@ -1059,150 +1139,11 @@ namespace VixenPlus.Dialogs
             this.colPlugInSetup.ReadOnly = true;
             this.colPlugInSetup.Text = "Setup";
             // 
-            // gbSetup
-            // 
-            this.gbSetup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbSetup.Controls.Add(this.pSetup);
-            this.gbSetup.Location = new System.Drawing.Point(6, 355);
-            this.gbSetup.Name = "gbSetup";
-            this.gbSetup.Size = new System.Drawing.Size(964, 261);
-            this.gbSetup.TabIndex = 33;
-            this.gbSetup.TabStop = false;
-            this.gbSetup.Text = "Inline Setup";
-            // 
-            // pSetup
-            // 
-            this.pSetup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.pSetup.Location = new System.Drawing.Point(6, 19);
-            this.pSetup.Name = "pSetup";
-            this.pSetup.Size = new System.Drawing.Size(952, 236);
-            this.pSetup.TabIndex = 0;
-            // 
-            // tpSortOrders
-            // 
-            this.tpSortOrders.Controls.Add(this.btnSrtDelete);
-            this.tpSortOrders.Controls.Add(this.btnSrtSave);
-            this.tpSortOrders.Controls.Add(this.cbSrtOrders);
-            this.tpSortOrders.Location = new System.Drawing.Point(4, 22);
-            this.tpSortOrders.Name = "tpSortOrders";
-            this.tpSortOrders.Size = new System.Drawing.Size(976, 622);
-            this.tpSortOrders.TabIndex = 3;
-            this.tpSortOrders.Text = "Sort Orders";
-            this.tpSortOrders.UseVisualStyleBackColor = true;
-            // 
-            // btnSrtDelete
-            // 
-            this.btnSrtDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSrtDelete.Location = new System.Drawing.Point(674, 32);
-            this.btnSrtDelete.Name = "btnSrtDelete";
-            this.btnSrtDelete.Size = new System.Drawing.Size(75, 23);
-            this.btnSrtDelete.TabIndex = 65;
-            this.btnSrtDelete.Text = "Delete Order";
-            this.btnSrtDelete.UseVisualStyleBackColor = true;
-            // 
-            // btnSrtSave
-            // 
-            this.btnSrtSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSrtSave.Location = new System.Drawing.Point(674, 3);
-            this.btnSrtSave.Name = "btnSrtSave";
-            this.btnSrtSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSrtSave.TabIndex = 64;
-            this.btnSrtSave.Text = "Save Order";
-            this.btnSrtSave.UseVisualStyleBackColor = true;
-            // 
-            // cbSrtOrders
-            // 
-            this.cbSrtOrders.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbSrtOrders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbSrtOrders.FormattingEnabled = true;
-            this.cbSrtOrders.Items.AddRange(new object[] {
-            "Define new order...",
-            "Restore natural order..."});
-            this.cbSrtOrders.Location = new System.Drawing.Point(547, 5);
-            this.cbSrtOrders.Name = "cbSrtOrders";
-            this.cbSrtOrders.Size = new System.Drawing.Size(121, 21);
-            this.cbSrtOrders.TabIndex = 63;
-            // 
-            // tpGroups
-            // 
-            this.tpGroups.Controls.Add(this.pGroups);
-            this.tpGroups.Location = new System.Drawing.Point(4, 22);
-            this.tpGroups.Name = "tpGroups";
-            this.tpGroups.Size = new System.Drawing.Size(976, 622);
-            this.tpGroups.TabIndex = 2;
-            this.tpGroups.Text = "Groups";
-            this.tpGroups.UseVisualStyleBackColor = true;
-            // 
-            // tpNutcracker
-            // 
-            this.tpNutcracker.Controls.Add(this.btnNcaButton);
-            this.tpNutcracker.Location = new System.Drawing.Point(4, 22);
-            this.tpNutcracker.Name = "tpNutcracker";
-            this.tpNutcracker.Size = new System.Drawing.Size(976, 622);
-            this.tpNutcracker.TabIndex = 4;
-            this.tpNutcracker.Text = "Nutcracker Models";
-            this.tpNutcracker.UseVisualStyleBackColor = true;
-            // 
-            // btnNcaButton
-            // 
-            this.btnNcaButton.Enabled = false;
-            this.btnNcaButton.Location = new System.Drawing.Point(674, 428);
-            this.btnNcaButton.Name = "btnNcaButton";
-            this.btnNcaButton.Size = new System.Drawing.Size(75, 23);
-            this.btnNcaButton.TabIndex = 1;
-            this.btnNcaButton.Text = "A Button";
-            this.btnNcaButton.UseVisualStyleBackColor = true;
-            // 
-            // btnOkay
-            // 
-            this.btnOkay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOkay.Location = new System.Drawing.Point(830, 31);
-            this.btnOkay.Name = "btnOkay";
-            this.btnOkay.Size = new System.Drawing.Size(75, 23);
-            this.btnOkay.TabIndex = 1;
-            this.btnOkay.Text = "OK";
-            this.ttRoadie.SetToolTip(this.btnOkay, "Save all changes");
-            this.btnOkay.UseVisualStyleBackColor = true;
-            this.btnOkay.Click += new System.EventHandler(this.btnOkay_Click);
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(911, 31);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 2;
-            this.btnCancel.Text = "Cancel";
-            this.ttRoadie.SetToolTip(this.btnCancel, "Cancel all changes");
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // previewTimer
-            // 
-            this.previewTimer.Interval = 200;
-            this.previewTimer.Tick += new System.EventHandler(this.previewTimer_Tick);
-            // 
-            // dataGridViewDisableButtonColumn1
-            // 
-            this.dataGridViewDisableButtonColumn1.HeaderText = "Setup";
-            this.dataGridViewDisableButtonColumn1.Name = "dataGridViewDisableButtonColumn1";
-            this.dataGridViewDisableButtonColumn1.ReadOnly = true;
-            this.dataGridViewDisableButtonColumn1.Text = "Setup";
-            // 
-            // pGroups
-            // 
-            this.pGroups.Location = new System.Drawing.Point(0, 0);
-            this.pGroups.Name = "pGroups";
-            this.pGroups.Size = new System.Drawing.Size(976, 622);
-            this.pGroups.TabIndex = 2;
-            // 
             // VixenPlusRoadie
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1008, 730);
+            this.ClientSize = new System.Drawing.Size(1008, 643);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOkay);
             this.Controls.Add(this.tcProfile);
@@ -1220,6 +1161,10 @@ namespace VixenPlus.Dialogs
             this.tcProfile.ResumeLayout(false);
             this.tpChannels.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvChannels)).EndInit();
+            this.tpPlugins.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPlugIns)).EndInit();
+            this.gbSetup.ResumeLayout(false);
+            this.tpGroups.ResumeLayout(false);
             this.tcControlArea.ResumeLayout(false);
             this.tpChannelControl.ResumeLayout(false);
             this.gbExportImport.ResumeLayout(false);
@@ -1236,12 +1181,6 @@ namespace VixenPlus.Dialogs
             ((System.ComponentModel.ISupportInitialize)(this.nudRuleStart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudChGenChannels)).EndInit();
             this.tpMultiColor.ResumeLayout(false);
-            this.tpPlugins.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPlugIns)).EndInit();
-            this.gbSetup.ResumeLayout(false);
-            this.tpSortOrders.ResumeLayout(false);
-            this.tpGroups.ResumeLayout(false);
-            this.tpNutcracker.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1263,12 +1202,7 @@ namespace VixenPlus.Dialogs
         private System.Windows.Forms.Button btnChImport;
         private System.Windows.Forms.Button btnChExport;
         private System.Windows.Forms.TabPage tpGroups;
-        private System.Windows.Forms.TabPage tpSortOrders;
-        private System.Windows.Forms.Button btnSrtDelete;
-        private System.Windows.Forms.Button btnSrtSave;
-        private System.Windows.Forms.ComboBox cbSrtOrders;
         private System.Windows.Forms.GroupBox gbExportImport;
-        private System.Windows.Forms.TabPage tpNutcracker;
         private System.Windows.Forms.GroupBox gbEnable;
         private System.Windows.Forms.Button btnChEnable;
         private System.Windows.Forms.Button btnChDisable;
@@ -1278,7 +1212,6 @@ namespace VixenPlus.Dialogs
         private System.Windows.Forms.GroupBox gbChannels;
         private System.Windows.Forms.Button btnChAddMulti;
         private System.Windows.Forms.Button btnChAddOne;
-        private System.Windows.Forms.Button btnNcaButton;
         private System.Windows.Forms.Button btnChDelete;
         private System.Windows.Forms.Button btnMultiChannelCancel;
         private System.Windows.Forms.Button btnMultiChannelOk;
@@ -1338,5 +1271,7 @@ namespace VixenPlus.Dialogs
         private DataGridViewDisableButtonColumn colPlugInSetup;
         private DataGridViewDisableButtonColumn dataGridViewDisableButtonColumn1;
         private System.Windows.Forms.Panel pGroups;
+        private DataGridViewDisableButtonColumn dataGridViewDisableButtonColumn2;
+        private DataGridViewDisableButtonColumn dataGridViewDisableButtonColumn3;
     }
 }
