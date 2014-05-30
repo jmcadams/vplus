@@ -153,7 +153,7 @@ namespace VixenPlus.Dialogs {
                     DialogResult = DialogResult.No;
                     return;
                 }
-                if (String.Compare(_version, thisVersion, StringComparison.Ordinal) < 0) {
+                if (IsNewerVersionAvailable(_version, thisVersion)) {
                     Log(string.Format("current: {1}, new: {0}", _version, thisVersion));
                     SetupDialogShowHide(true);
                     pbDownload.Visible = false;
@@ -182,6 +182,19 @@ namespace VixenPlus.Dialogs {
             }
         }
 
+
+        private static bool IsNewerVersionAvailable(string newVersion, string currentVersion) {
+            var newV = newVersion.Split('.');
+            var curV = currentVersion.Split('.');
+
+            var isGreater = false;
+
+            for (var i = 0; i < newV.Length && i < curV.Length; i++) {
+                isGreater |= int.Parse(newV[i]) > int.Parse(curV[i]);
+            }
+
+            return isGreater;
+        }
 
         /// <summary>
         /// Launch the batch file that performs the install
