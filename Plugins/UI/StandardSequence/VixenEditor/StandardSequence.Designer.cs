@@ -822,8 +822,8 @@ namespace VixenEditor{
             // insertPasteToolStripMenuItem
             // 
             this.insertPasteToolStripMenuItem.Name = "insertPasteToolStripMenuItem";
-            this.insertPasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
-                        | System.Windows.Forms.Keys.V)));
+            this.insertPasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.V)));
             this.insertPasteToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.insertPasteToolStripMenuItem.ToolTipText = "Insert paste (Ctrl-Shift-V)";
             this.insertPasteToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonInsertPaste_Click);
@@ -959,8 +959,8 @@ namespace VixenEditor{
             // clearAllToolStripMenuItem
             // 
             this.clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
-            this.clearAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
-                        | System.Windows.Forms.Keys.A)));
+            this.clearAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.A)));
             this.clearAllToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.clearAllToolStripMenuItem.Text = "Clear all";
             this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearAllToolStripMenuItem_Click);
@@ -1328,8 +1328,8 @@ namespace VixenEditor{
             // 
             // labelPosition
             // 
-            this.labelPosition.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelPosition.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labelPosition.BackColor = System.Drawing.Color.Transparent;
             this.labelPosition.Location = new System.Drawing.Point(12, 9);
             this.labelPosition.Name = "labelPosition";
@@ -2762,7 +2762,7 @@ namespace VixenEditor{
             this.toolStripSeparator6});
             this.toolStripDisplaySettings.Location = new System.Drawing.Point(3, 220);
             this.toolStripDisplaySettings.Name = "toolStripDisplaySettings";
-            this.toolStripDisplaySettings.Size = new System.Drawing.Size(359, 51);
+            this.toolStripDisplaySettings.Size = new System.Drawing.Size(326, 51);
             this.toolStripDisplaySettings.TabIndex = 5;
             this.toolStripDisplaySettings.Text = "Display settings";
             // 

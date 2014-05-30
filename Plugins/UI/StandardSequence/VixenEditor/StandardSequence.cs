@@ -27,7 +27,9 @@ namespace VixenEditor {
     public partial class StandardSequence : UIBase {
         private bool _actualLevels;
         private bool _autoScrolling;
+        private bool _doChannelHighlight;
         private bool _initializing;
+        private bool _inPlayback;
         private bool _mouseDownInGrid;
         private bool _showCellText;
         private bool _showPositionMarker;
@@ -211,6 +213,7 @@ namespace VixenEditor {
             }
             _toolStrips = new Dictionary<string, ToolStrip>();
             _toolStripCheckStateChangeHandler = toolStripItem_CheckStateChanged;
+            _inPlayback = false;
         }
 
 
@@ -1105,6 +1108,7 @@ namespace VixenEditor {
             _intensityLargeDelta = _preferences.GetInteger("IntensityLargeDelta");
             _showingGradient = !_preferences.GetBoolean("BarLevels");
             _showWaveformZeroLine = _preferences.GetBoolean("ShowWaveformZeroLine");
+            _doChannelHighlight = _preferences.GetBoolean("ChannelHighlight");
 
             SetColorPreferences();
 
@@ -1260,6 +1264,12 @@ namespace VixenEditor {
             _previousPosition = _position;
             _position = currentPosition;
 
+            PositionAndUpdate();
+            HighlightChannels();
+        }
+
+
+        private void PositionAndUpdate() {
             if ((_position < hScrollBar1.Value) || (_position > (hScrollBar1.Value + _visibleEventPeriods))) {
                 if (_autoScrolling) {
                     if (_position == -1) {
@@ -1271,20 +1281,23 @@ namespace VixenEditor {
                     if (_position >= hScrollBar1.Minimum && _position <= hScrollBar1.Maximum) {
                         hScrollBar1.Value = _position;
                     }
-                    toolStripLabelExecutionPoint.Text = executionPosition.FormatNoMills();
-                }
-                else {
+                    //toolStripLabelExecutionPoint.Text = executionPosition.FormatNoMills();
+                } else {
                     UpdateProgress();
                 }
-            }
-            else if (_showPositionMarker) {
+            } else if (_showPositionMarker) {
                 UpdateProgress();
             }
-            else {
-                toolStripLabelExecutionPoint.Text = executionPosition.FormatNoMills();
-            }
+            //else {
+            //    toolStripLabelExecutionPoint.Text = executionPosition.FormatNoMills();
+            //}    
         }
 
+
+        private void HighlightChannels() {
+            //TODO Implement
+            pictureBoxChannels.Invalidate();
+        }
 
         private void maxToolStripMenuItem_Click(object sender, EventArgs e) {
             ArithmeticPaste(ArithmeticOperation.Max);
@@ -1327,6 +1340,7 @@ namespace VixenEditor {
                     _mouseWheelHorizontalDelta = _preferences.GetInteger("MouseWheelHorizontalDelta");
                     _intensityLargeDelta = _preferences.GetInteger("IntensityLargeDelta");
                     _showWaveformZeroLine = _preferences.GetBoolean("ShowWaveformZeroLine");
+                    _doChannelHighlight = _preferences.GetBoolean("ChannelHighlight");
 
                     SetColorPreferences();
 
@@ -1702,8 +1716,13 @@ namespace VixenEditor {
                         var channel = _sequence.Channels[channelOffset];
                         var isChannelSelected = channel == SelectedChannel;
 
-                        brush.Color = isChannelSelected ? ((SolidBrush) SystemBrushes.Highlight).Color : channel.Color;
-                        var textBrush = isChannelSelected ? SystemBrushes.HighlightText : channel.Color.GetTextColor();
+                        var alpha = (_inPlayback && _doChannelHighlight) ?
+                            _sequence.EventValues[_sequence.FullChannels.IndexOf(channel), _position] : 255;
+                        
+                        //if (alpha == 0) alpha = 255;
+
+                        brush.Color = isChannelSelected ? ((SolidBrush) SystemBrushes.Highlight).Color : Color.FromArgb(alpha, channel.Color);
+                        var textBrush = isChannelSelected ? SystemBrushes.HighlightText : brush.Color.GetTextColor();
 
                         e.Graphics.FillRectangle(brush, 0, height, pictureBoxChannels.Width, _gridRowHeight);
 
@@ -2798,12 +2817,13 @@ namespace VixenEditor {
             toolStripSequenceSettings.Enabled = state;
             toolStripDisplaySettings.Enabled = state;
             tsbLoop.Enabled = state;
-            SpeedQtrTsb.Enabled = state;
-            SpeedHalfTsb.Enabled = state;
-            SpeedThreeQtrTsb.Enabled = state;
-            SpeedNormalTsb.Enabled = state;
-            SpeedVariableTsb.Enabled = state;
+            SpeedQtrTsb.Enabled = state && _sequence.Audio != null;
+            SpeedHalfTsb.Enabled = state && _sequence.Audio != null;
+            SpeedThreeQtrTsb.Enabled = state && _sequence.Audio != null;
+            SpeedNormalTsb.Enabled = state && _sequence.Audio != null;
+            SpeedVariableTsb.Enabled = state && _sequence.Audio != null;
             ReactEditingStateToProfileAssignment();
+            _inPlayback = !state;
         }
 
 
@@ -3507,6 +3527,7 @@ namespace VixenEditor {
             UpdateLevelDisplay();
             _sequence.CurrentGroup = Group.AllChannels;
             UpdateGroups();
+            SetEditingState(true);
         }
 
 
@@ -3533,6 +3554,7 @@ namespace VixenEditor {
         private void SyncAudioButton() {
             tsbAudio.Checked = _sequence.Audio != null;
             tsbAudio.ToolTipText = (_sequence.Audio != null) ? _sequence.Audio.Name : Resources.AudioButtonAddText;
+            SetEditingState(!_inPlayback);
         }
 
 
@@ -3829,6 +3851,7 @@ namespace VixenEditor {
             ProgramEnded();
             _executionInterface.ExecuteStop(_executionContextHandle);
             SetEditingState(true);
+            pictureBoxChannels.Invalidate();
         }
 
 

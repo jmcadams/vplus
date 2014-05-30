@@ -82,6 +82,7 @@ namespace VixenPlusCommon {
             isDirty |= CreateIfMissing("AutoScrolling", true);
             isDirty |= CreateIfMissing("SavePlugInDialogPositions", true);
             isDirty |= CreateIfMissing("ClearAtEndOfSequence", true);
+            isDirty |= CreateIfMissing("ChannelHighlight", false);
 
             //Set in various Application classes
             isDirty |= CreateIfMissing(CustomColorsPreference,

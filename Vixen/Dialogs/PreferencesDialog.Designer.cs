@@ -99,6 +99,7 @@ namespace VixenPlus.Dialogs {
             this.numericUpDownHistoryImages = new System.Windows.Forms.NumericUpDown();
             this.label28 = new System.Windows.Forms.Label();
             this.tabControl = new VixenPlusCommon.TabControl(this.components);
+            this.cbChannelHighlight = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinimumLevel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumLevel)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -121,8 +122,8 @@ namespace VixenPlus.Dialogs {
             // 
             // treeView
             // 
-            this.treeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.treeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.treeView.Location = new System.Drawing.Point(12, 12);
             this.treeView.Name = "treeView";
             treeNode1.Name = "nodeGeneral";
@@ -154,7 +155,7 @@ namespace VixenPlus.Dialogs {
             this.checkBoxAutoScrolling.TabIndex = 1;
             this.checkBoxAutoScrolling.Text = "Auto scrolling";
             this.toolTip.SetToolTip(this.checkBoxAutoScrolling, "Automatically scroll the editing display during execution so that the current poi" +
-                    "nt of execution is always visible");
+        "nt of execution is always visible");
             this.checkBoxAutoScrolling.UseVisualStyleBackColor = true;
             // 
             // checkBoxSavePlugInDialogPositions
@@ -166,7 +167,7 @@ namespace VixenPlus.Dialogs {
             this.checkBoxSavePlugInDialogPositions.TabIndex = 2;
             this.checkBoxSavePlugInDialogPositions.Text = "Save plugin dialog positions";
             this.toolTip.SetToolTip(this.checkBoxSavePlugInDialogPositions, "Save the positions of any windows created and displayed by plugins during executi" +
-                    "on");
+        "on");
             this.checkBoxSavePlugInDialogPositions.UseVisualStyleBackColor = true;
             // 
             // checkBoxShowPositionMarker
@@ -189,7 +190,7 @@ namespace VixenPlus.Dialogs {
             this.checkBoxClearAtEndOfSequence.TabIndex = 3;
             this.checkBoxClearAtEndOfSequence.Text = "Reset controller at end of sequences";
             this.toolTip.SetToolTip(this.checkBoxClearAtEndOfSequence, "Sends a blank event to the plugins at the end of a sequence.\r\nUseful for parallel" +
-                    " port-based controllers.  Does not affect every\r\ncontroller type.");
+        " port-based controllers.  Does not affect every\r\ncontroller type.");
             this.checkBoxClearAtEndOfSequence.UseVisualStyleBackColor = true;
             // 
             // label6
@@ -299,7 +300,7 @@ namespace VixenPlus.Dialogs {
             this.checkBoxFlipMouseScroll.TabIndex = 10;
             this.checkBoxFlipMouseScroll.Text = "Flip mouse scroll + Shift behavior";
             this.toolTip.SetToolTip(this.checkBoxFlipMouseScroll, "The default behavior scrolls horizontally when Shift is down.\r\nSelect this to mak" +
-                    "e it scroll vertically when Shift is down.");
+        "e it scroll vertically when Shift is down.");
             this.checkBoxFlipMouseScroll.UseVisualStyleBackColor = true;
             // 
             // textBoxDefaultSequenceSaveDirectory
@@ -319,7 +320,7 @@ namespace VixenPlus.Dialogs {
             this.checkBoxWizardForNewSequences.TabIndex = 2;
             this.checkBoxWizardForNewSequences.Text = "Use the sequence wizard for new sequences, when available";
             this.toolTip.SetToolTip(this.checkBoxWizardForNewSequences, "Use the sequence wizard for new sequences, when the editor allows for a wizard to" +
-                    " be used");
+        " be used");
             this.checkBoxWizardForNewSequences.UseVisualStyleBackColor = true;
             // 
             // label12
@@ -504,7 +505,7 @@ namespace VixenPlus.Dialogs {
             this.labelAutoShutdownTime.TabIndex = 69;
             this.labelAutoShutdownTime.Text = "Auto shutdown";
             this.toolTip.SetToolTip(this.labelAutoShutdownTime, "If the application is running, it can shut down your computer at a time you speci" +
-                    "fy");
+        "fy");
             // 
             // dateTimePickerAutoShutdownTime
             // 
@@ -518,7 +519,7 @@ namespace VixenPlus.Dialogs {
             this.dateTimePickerAutoShutdownTime.Size = new System.Drawing.Size(117, 20);
             this.dateTimePickerAutoShutdownTime.TabIndex = 71;
             this.toolTip.SetToolTip(this.dateTimePickerAutoShutdownTime, "If the application is running, it can shut down your computer at a time you speci" +
-                    "fy");
+        "fy");
             this.dateTimePickerAutoShutdownTime.Value = new System.DateTime(2014, 2, 2, 23, 0, 0, 0);
             // 
             // label26
@@ -540,7 +541,7 @@ namespace VixenPlus.Dialogs {
             this.label36.TabIndex = 78;
             this.label36.Text = "Auto save toolbars";
             this.toolTip.SetToolTip(this.label36, "Sends a blank event to the plugins in the default plugin setup.\r\nUseful for paral" +
-                    "lel port-based controllers.  Does not affect every\r\ncontroller type.");
+        "lel port-based controllers.  Does not affect every\r\ncontroller type.");
             // 
             // cbToolbarAutoSave
             // 
@@ -550,7 +551,7 @@ namespace VixenPlus.Dialogs {
             this.cbToolbarAutoSave.Size = new System.Drawing.Size(15, 14);
             this.cbToolbarAutoSave.TabIndex = 79;
             this.toolTip.SetToolTip(this.cbToolbarAutoSave, "Sends a blank event to the plugins in the default plugin setup.\r\nUseful for paral" +
-                    "lel port-based controllers.  Does not affect every\r\ncontroller type.");
+        "lel port-based controllers.  Does not affect every\r\ncontroller type.");
             this.cbToolbarAutoSave.UseVisualStyleBackColor = true;
             // 
             // cbUpdateFrequency
@@ -580,7 +581,7 @@ namespace VixenPlus.Dialogs {
             this.cbProfileErrors.TabIndex = 14;
             this.cbProfileErrors.Text = "Silence profile editor errors";
             this.toolTip.SetToolTip(this.cbProfileErrors, "The default behavior scrolls horizontally when Shift is down.\r\nSelect this to mak" +
-                    "e it scroll vertically when Shift is down.");
+        "e it scroll vertically when Shift is down.");
             this.cbProfileErrors.UseVisualStyleBackColor = true;
             // 
             // buttonOK
@@ -625,21 +626,22 @@ namespace VixenPlus.Dialogs {
             // 
             this.sequenceExecutionTab.BackColor = System.Drawing.Color.Transparent;
             this.sequenceExecutionTab.Controls.Add(this.groupBox4);
-            this.sequenceExecutionTab.Location = new System.Drawing.Point(4, 41);
+            this.sequenceExecutionTab.Location = new System.Drawing.Point(0, 0);
             this.sequenceExecutionTab.Name = "sequenceExecutionTab";
-            this.sequenceExecutionTab.Size = new System.Drawing.Size(438, 265);
+            this.sequenceExecutionTab.Size = new System.Drawing.Size(446, 310);
             this.sequenceExecutionTab.TabIndex = 2;
             this.sequenceExecutionTab.Text = "sequenceExecutionTab";
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.cbChannelHighlight);
             this.groupBox4.Controls.Add(this.checkBoxClearAtEndOfSequence);
             this.groupBox4.Controls.Add(this.checkBoxShowPositionMarker);
             this.groupBox4.Controls.Add(this.checkBoxSavePlugInDialogPositions);
             this.groupBox4.Controls.Add(this.checkBoxAutoScrolling);
             this.groupBox4.Location = new System.Drawing.Point(3, 3);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(432, 126);
+            this.groupBox4.Size = new System.Drawing.Size(432, 147);
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Sequence Execution";
@@ -648,16 +650,16 @@ namespace VixenPlus.Dialogs {
             // 
             this.sequenceEditingTab.BackColor = System.Drawing.Color.Transparent;
             this.sequenceEditingTab.Controls.Add(this.groupBox5);
-            this.sequenceEditingTab.Location = new System.Drawing.Point(4, 41);
+            this.sequenceEditingTab.Location = new System.Drawing.Point(0, 0);
             this.sequenceEditingTab.Name = "sequenceEditingTab";
-            this.sequenceEditingTab.Size = new System.Drawing.Size(438, 265);
+            this.sequenceEditingTab.Size = new System.Drawing.Size(446, 310);
             this.sequenceEditingTab.TabIndex = 1;
             this.sequenceEditingTab.Text = "sequenceEditingTab";
             // 
             // groupBox5
             // 
-            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox5.Controls.Add(this.cbProfileErrors);
             this.groupBox5.Controls.Add(this.cbWavefromZeroLine);
             this.groupBox5.Controls.Add(this.textBoxDefaultSequenceSaveDirectory);
@@ -705,9 +707,9 @@ namespace VixenPlus.Dialogs {
             this.newSequenceSettingsTab.Controls.Add(this.groupBox12);
             this.newSequenceSettingsTab.Controls.Add(this.groupBox8);
             this.newSequenceSettingsTab.Controls.Add(this.checkBoxWizardForNewSequences);
-            this.newSequenceSettingsTab.Location = new System.Drawing.Point(4, 41);
+            this.newSequenceSettingsTab.Location = new System.Drawing.Point(0, 0);
             this.newSequenceSettingsTab.Name = "newSequenceSettingsTab";
-            this.newSequenceSettingsTab.Size = new System.Drawing.Size(438, 265);
+            this.newSequenceSettingsTab.Size = new System.Drawing.Size(446, 310);
             this.newSequenceSettingsTab.TabIndex = 0;
             this.newSequenceSettingsTab.Text = "newSequenceSettingsTab";
             // 
@@ -755,9 +757,9 @@ namespace VixenPlus.Dialogs {
             this.screenTab.Controls.Add(this.gbColors);
             this.screenTab.Controls.Add(this.lblPrimaryScreen);
             this.screenTab.Controls.Add(this.cbScreens);
-            this.screenTab.Location = new System.Drawing.Point(4, 41);
+            this.screenTab.Location = new System.Drawing.Point(0, 0);
             this.screenTab.Name = "screenTab";
-            this.screenTab.Size = new System.Drawing.Size(438, 265);
+            this.screenTab.Size = new System.Drawing.Size(446, 310);
             this.screenTab.TabIndex = 7;
             this.screenTab.Text = "screenTab";
             this.screenTab.UseVisualStyleBackColor = true;
@@ -923,9 +925,9 @@ namespace VixenPlus.Dialogs {
             // 
             // tabControl
             // 
-            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl.Controls.Add(this.generalTab);
             this.tabControl.Controls.Add(this.screenTab);
             this.tabControl.Controls.Add(this.newSequenceSettingsTab);
@@ -942,6 +944,17 @@ namespace VixenPlus.Dialogs {
             this.tabControl.TabIndex = 1;
             this.tabControl.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl_Selected);
             this.tabControl.Deselecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl_Deselecting);
+            // 
+            // cbChannelHighlight
+            // 
+            this.cbChannelHighlight.AutoSize = true;
+            this.cbChannelHighlight.Location = new System.Drawing.Point(26, 119);
+            this.cbChannelHighlight.Name = "cbChannelHighlight";
+            this.cbChannelHighlight.Size = new System.Drawing.Size(145, 17);
+            this.cbChannelHighlight.TabIndex = 4;
+            this.cbChannelHighlight.Text = "Enable Channel Highlight";
+            this.toolTip.SetToolTip(this.cbChannelHighlight, "Channels are highlighted upon playback in the editor.");
+            this.cbChannelHighlight.UseVisualStyleBackColor = true;
             // 
             // PreferencesDialog
             // 
@@ -1068,5 +1081,6 @@ namespace VixenPlus.Dialogs {
         private TabControl tabControl;
         private ComboBox cbUpdateFrequency;
         private CheckBox cbProfileErrors;
+        private CheckBox cbChannelHighlight;
     }
 }

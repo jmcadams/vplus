@@ -4,6 +4,9 @@ NOTE: For items prefixed with VIX-, you can view more details on https://vixenpl
    NO JIRA - Turned auto-update back on.
    VIX-34  - All file handling in Roadie now handles exceptions gracefully.
    NO JIRA - Fixed spelling errors in this file.
+   VIX-22  - Trapped error when closing where Vixen+ throws an ObjectDisposedException.  Now logging it to crash.log
+   VIX-16  - Added Channel Highlight on Playback, default to off in preferences.
+   VIX-35  - Hide speed controls if there is not any audio attached to a sequence.
 
 28 MAY 2014 - V 0.2.148.1
    VIX-33 - Fixed crash on add multiple in Roadie.

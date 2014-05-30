@@ -57,7 +57,12 @@ namespace VixenPlus {
                 return;
             }
             if (Host.InvokeRequired) {
-                Host.Invoke(_methodInvoker, new object[0]);
+                try {
+                    Host.Invoke(_methodInvoker, new object[0]);
+                }
+                catch (ObjectDisposedException e) {
+                    e.Message.CrashLog();
+                }
             }
             else {
                 if (_refCount == 0) {

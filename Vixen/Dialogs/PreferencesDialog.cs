@@ -5,8 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-
-
 using FMOD;
 
 using VixenPlusCommon.Properties;
@@ -156,6 +154,7 @@ namespace VixenPlus.Dialogs {
             _preferences.SetBoolean("AutoScrolling", checkBoxAutoScrolling.Checked);
             _preferences.SetBoolean("SavePlugInDialogPositions", checkBoxSavePlugInDialogPositions.Checked);
             _preferences.SetBoolean("ClearAtEndOfSequence", checkBoxClearAtEndOfSequence.Checked);
+            _preferences.SetBoolean("ChannelHighlight", cbChannelHighlight.Checked);
         }
 
 
@@ -297,6 +296,7 @@ namespace VixenPlus.Dialogs {
             checkBoxAutoScrolling.Checked = _preferences.GetBoolean("AutoScrolling");
             checkBoxSavePlugInDialogPositions.Checked = _preferences.GetBoolean("SavePlugInDialogPositions");
             checkBoxClearAtEndOfSequence.Checked = _preferences.GetBoolean("ClearAtEndOfSequence");
+            cbChannelHighlight.Checked = _preferences.GetBoolean("ChannelHighlight");
         }
 
 

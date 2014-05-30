@@ -39,7 +39,7 @@ namespace VixenPlusCommon {
 
         // see: http://en.wikipedia.org/wiki/YIQ
         public static Brush GetTextColor(this Color backgroundColor) {
-            return ((backgroundColor.R * 299) + (backgroundColor.G * 587) + (backgroundColor.B * 114)) / 1000 >= 128 ? Brushes.Black : Brushes.White;
+            return (((backgroundColor.R * 299) + (backgroundColor.G * 587) + (backgroundColor.B * 114)) / 1000 >= 128 || backgroundColor.A < 11) ? Brushes.Black : Brushes.White;
         }
 
 
