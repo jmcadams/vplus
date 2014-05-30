@@ -1,13 +1,13 @@
+using System;
 using System.Globalization;
+using System.Timers;
+using System.Windows.Forms;
 
 using VixenPlus.Properties;
 
-namespace VixenEditor {
-    using System;
-    using System.Drawing;
-    using System.Timers;
-    using System.Windows.Forms;
+using VixenPlusCommon;
 
+namespace VixenEditor {
     internal partial class EffectFrequencyDialog : Form {
 
         private readonly System.Timers.Timer _drawTimer;
@@ -16,7 +16,6 @@ namespace VixenEditor {
         private int _frequency;
         private readonly int _maxColumn;
         private int _tickCount;
-        private readonly Point[][] _treePoints = new Point[4][];
 
 
         public EffectFrequencyDialog(string effectName, int maxFrequency, FrequencyEffectGenerator effectGenerator) {
@@ -30,10 +29,6 @@ namespace VixenEditor {
             _maxColumn = _effectValues.GetLength(1);
             effectGenerator(_effectValues, new[] {1});
             _tickCount = 0;
-            _treePoints[0] = new[] {new Point(22, 36), new Point(37, 91), new Point(7, 91)};
-            _treePoints[1] = new[] {new Point(67, 36), new Point(82, 91), new Point(52, 91)};
-            _treePoints[2] = new[] {new Point(112, 36), new Point(127, 91), new Point(97, 91)};
-            _treePoints[3] = new[] {new Point(157, 36), new Point(172, 91), new Point(142, 91)};
             _drawTimer = new System.Timers.Timer(100.0);
             _drawTimer.Elapsed += DrawTimerElapsed;
             _drawTimer.Start();
@@ -68,16 +63,8 @@ namespace VixenEditor {
             if (!_drawTimer.Enabled) {
                 return;
             }
-            using (var solidBrush = new SolidBrush(Color.Black)) {
-                solidBrush.Color = Color.FromArgb(_effectValues[0, _tickCount], Color.Red);
-                e.Graphics.FillPolygon(solidBrush, _treePoints[0]);
-                solidBrush.Color = Color.FromArgb(_effectValues[1, _tickCount], Color.Green);
-                e.Graphics.FillPolygon(solidBrush, _treePoints[1]);
-                solidBrush.Color = Color.FromArgb(_effectValues[2, _tickCount], Color.Blue);
-                e.Graphics.FillPolygon(solidBrush, _treePoints[2]);
-                solidBrush.Color = Color.FromArgb(_effectValues[3, _tickCount], Color.White);
-                e.Graphics.FillPolygon(solidBrush, _treePoints[3]);
-            }
+
+            SparkleTree.DrawTrees(e.Graphics, _effectValues, _tickCount);
         }
 
 
