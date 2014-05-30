@@ -90,6 +90,9 @@
   <PropertyGroup>
     <RootNamespace>VixenPlus</RootNamespace>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System">
       <Name>System</Name>
@@ -463,6 +466,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="app.manifest" />
     <None Include="Resources\VixenPlusSplash.png" />
   </ItemGroup>
   <ItemGroup>
