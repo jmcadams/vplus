@@ -8,6 +8,7 @@ namespace VixenPlusCommon {
 
         // For ComboBoxes
         public static void DrawItem(this DrawItemEventArgs e, string name, Color color, bool useCheckmark = false) {
+            //TODO: Dupe from below
             e.DrawBackground();
 
             var selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected ||
@@ -15,6 +16,7 @@ namespace VixenPlusCommon {
             GenericBrush.Color = color;
             e.Graphics.FillRectangle(selected && !useCheckmark ? SystemBrushes.Highlight : GenericBrush, e.Bounds);
             var contrastingBrush = selected && !useCheckmark ? SystemBrushes.HighlightText : color.GetTextColor();
+            // End Dupe
             e.Graphics.DrawString(name, e.Font, contrastingBrush, new RectangleF(e.Bounds.Location, e.Bounds.Size));
             if (selected && useCheckmark) {
                 e.Graphics.DrawString(Checkmark, e.Font, contrastingBrush, e.Bounds.Width - e.Bounds.Height, e.Bounds.Y);
@@ -24,6 +26,7 @@ namespace VixenPlusCommon {
 
 
         public static void DrawItemWide(this DrawItemEventArgs e, string name, Color color, bool useCheckmark) {
+            //TODO: Dupe from above
             e.DrawBackground();
 
             var selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected ||
@@ -31,6 +34,8 @@ namespace VixenPlusCommon {
             GenericBrush.Color = color;
             e.Graphics.FillRectangle(selected && !useCheckmark ? SystemBrushes.Highlight : GenericBrush, e.Bounds);
             var contrastingBrush = selected && !useCheckmark ? SystemBrushes.HighlightText : color.GetTextColor();
+            // End Dupe
+            
             var loc = e.Bounds.Location;
             if (useCheckmark) {
                 loc.Offset((int)e.Graphics.MeasureString(Checkmark, e.Font).Width + 2, 0);

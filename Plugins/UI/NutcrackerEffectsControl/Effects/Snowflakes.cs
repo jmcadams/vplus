@@ -96,11 +96,7 @@ namespace Nutcracker.Effects {
                         if (y < 1) y += 1;
                         if (x > _bufferWidth - 2) x -= 1;
                         if (y > _bufferHeight - 2) y -= 1;
-                        SetTempPixel(x, y, color1);
-                        SetTempPixel(x - 1, y, color2);
-                        SetTempPixel(x + 1, y, color2);
-                        SetTempPixel(x, y - 1, color2);
-                        SetTempPixel(x, y + 1, color2);
+                        SetSquare(x, y, color1, color2);
                         break;
                     case 2:
                         if (x < 1) x += 1;
@@ -135,11 +131,7 @@ namespace Nutcracker.Effects {
                         if (y < 2) y += 2;
                         if (x > _bufferWidth - 3) x -= 2;
                         if (y > _bufferHeight - 3) y -= 2;
-                        SetTempPixel(x, y, color1);
-                        SetTempPixel(x - 1, y, color2);
-                        SetTempPixel(x + 1, y, color2);
-                        SetTempPixel(x, y - 1, color2);
-                        SetTempPixel(x, y + 1, color2);
+                        SetSquare(x, y, color1, color2);
 
                         SetTempPixel(x - 1, y + 2, color2);
                         SetTempPixel(x + 1, y + 2, color2);
@@ -152,6 +144,15 @@ namespace Nutcracker.Effects {
                         break;
                 }
             }
+        }
+
+
+        private void SetSquare(int x, int y, Color color1, Color color2) {
+            SetTempPixel(x, y, color1);
+            SetTempPixel(x - 1, y, color2);
+            SetTempPixel(x + 1, y, color2);
+            SetTempPixel(x, y - 1, color2);
+            SetTempPixel(x, y + 1, color2);
         }
 
 

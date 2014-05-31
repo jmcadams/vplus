@@ -133,13 +133,8 @@ namespace Controllers.E131 {
 
         public string InfoToText {
             get {
-                var text = new StringBuilder();
+                var text = new StringBuilder(RowUnivToText);
 
-                text.Append("Row ");
-                text.Append(RowNum.ToString(CultureInfo.InvariantCulture));
-                text.Append(":");
-                text.Append(" Univ=");
-                text.Append(Universe.ToString(CultureInfo.InvariantCulture));
                 text.Append(" Start=");
                 text.Append((Start + 1).ToString(CultureInfo.InvariantCulture));
                 text.Append(" Size=");
@@ -154,13 +149,8 @@ namespace Controllers.E131 {
 
         public string StatsToText {
             get {
-                var text = new StringBuilder();
+                var text = new StringBuilder(RowUnivToText);
 
-                text.Append("Row ");
-                text.Append(RowNum.ToString(CultureInfo.InvariantCulture));
-                text.Append(":");
-                text.Append(" Univ=");
-                text.Append(Universe.ToString(CultureInfo.InvariantCulture));
                 text.Append("  Packets=");
                 text.Append(PktCount.ToString(CultureInfo.InvariantCulture));
                 text.Append("  Slots=");

@@ -29,7 +29,7 @@ namespace VixenPlus {
 
         #region Constructors
 
-        public EventSequence(string fileName) {
+        private EventSequence() {
             EventValues = null;
             _eventPeriod = 100;
             MinimumLevel = 0;
@@ -45,6 +45,9 @@ namespace VixenPlus {
             AudioDeviceIndex = -1;
             AudioDeviceVolume = 0;
             Key = Host.GetUniqueKey();
+        }
+
+        public EventSequence(string fileName) : this() {
             var contextNode = new XmlDocument();
             contextNode.Load(fileName);
             FileName = fileName;
@@ -52,22 +55,7 @@ namespace VixenPlus {
         }
 
 
-        public EventSequence(Preference2 preferences) {
-            EventValues = null;
-            _eventPeriod = 100;
-            MinimumLevel = 0;
-            MaximumLevel = 255;
-            Audio = null;
-            TotalEventPeriods = 0;
-            WindowWidth = 0;
-            WindowHeight = 0;
-            ChannelWidth = 0;
-            EngineType = EngineType.Standard;
-            _profile = null;
-            TreatAsLocal = false;
-            AudioDeviceIndex = -1;
-            AudioDeviceVolume = 0;
-            Key = Host.GetUniqueKey();
+        public EventSequence(Preference2 preferences) : this() {
             _fullChannels = new List<Channel>();
             Channels = new List<Channel>();
             PlugInData = new SetupData();

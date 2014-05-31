@@ -53,9 +53,7 @@ namespace VixenPlus {
         public static void LogAudio(string source, string sourceNote, string audioFileName, int lengthInMilliseconds) {
             var path = ((ISystem) Interfaces.Available["ISystem"]).UserPreferences.GetString("AudioLogFilePath");
             if (path.Trim().Length == 0) {
-                ((ISystem) Interfaces.Available["ISystem"]).UserPreferences.SetBoolean("LogAudioManual", false);
-                ((ISystem) Interfaces.Available["ISystem"]).UserPreferences.SetBoolean("LogAudioScheduled", false);
-                ((ISystem) Interfaces.Available["ISystem"]).UserPreferences.SetBoolean("LogAudioMusicPlayer", false);
+                SetInterfacePrefs();
                 MessageBox.Show(Resources.Host_LogAudioFailed, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else {
@@ -68,15 +66,20 @@ namespace VixenPlus {
                     File.AppendAllText(path, str2);
                 }
                 catch (Exception exception) {
-                    ((ISystem) Interfaces.Available["ISystem"]).UserPreferences.SetBoolean("LogAudioManual", false);
-                    ((ISystem) Interfaces.Available["ISystem"]).UserPreferences.SetBoolean("LogAudioScheduled", false);
-                    ((ISystem) Interfaces.Available["ISystem"]).UserPreferences.SetBoolean("LogAudioMusicPlayer", false);
+                    SetInterfacePrefs();
                     MessageBox.Show(
                         string.Format(
                             "An exception occurred when trying to log the use of an audio file:\n\n{0}\n\nAudio logging has been turned off.",
                             exception.Message), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
+        }
+
+
+        private static void SetInterfacePrefs() {
+            ((ISystem) Interfaces.Available["ISystem"]).UserPreferences.SetBoolean("LogAudioManual", false);
+            ((ISystem) Interfaces.Available["ISystem"]).UserPreferences.SetBoolean("LogAudioScheduled", false);
+            ((ISystem) Interfaces.Available["ISystem"]).UserPreferences.SetBoolean("LogAudioMusicPlayer", false);
         }
     }
 }

@@ -35,19 +35,6 @@ namespace Controllers.GenericSerial {
             _serialPort.Write(_packet, 0, _packet.Length);
         }
 
-
-/*
-        private byte[] GetBytes(string nodeName) {
-            var nodeAlways = Xml.GetNodeAlways(_setupNode, nodeName);
-            if (nodeAlways.Attributes != null &&
-                ((nodeAlways.Attributes["checked"] != null) && (nodeAlways.Attributes["checked"].Value == bool.TrueString))) {
-                return Encoding.ASCII.GetBytes(nodeAlways.InnerText);
-            }
-            return new byte[0];
-        }
-*/
-
-
         public void Initialize(IExecutable executableObject, SetupData setupData, XmlNode setupNode) {
             _setupData = setupData;
             _setupNode = setupNode;
@@ -80,9 +67,6 @@ namespace Controllers.GenericSerial {
                                (nodeAlways.Attributes["checked"].Value == bool.TrueString)));
 
             _footer = Encoding.ASCII.GetBytes(nodeAlways.InnerText);
-
-            //_header = GetBytes("Header");
-            //_footer = GetBytes("Footer");
         }
 
 
