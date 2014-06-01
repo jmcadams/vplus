@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO.Ports;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -18,6 +19,7 @@ namespace Controllers.Renard {
         private byte[] _channelValues;
         private AutoResetEvent _eventTrigger;
         private bool _holdPort;
+        private bool _isValidPort = false;
         private byte[] _p1Packet = new byte[1];
         private SetupDialog _dialog;
         private SerialPort _serialPort;
@@ -104,6 +106,8 @@ namespace Controllers.Renard {
 
 
         private void DoEvent(IList<byte> channelValues) {
+            if (!_isValidPort) return;
+
             var length = channelValues.Count;
             var count = ProtocolHeaderSize;
             var desiredPacketLength = (ProtocolHeaderSize + length);
@@ -199,20 +203,26 @@ namespace Controllers.Renard {
 
 
         public void Startup() {
-            if (!(!_holdPort || _serialPort.IsOpen)) {
-                _serialPort.Open();
+            _isValidPort = SerialPort.GetPortNames().Contains(_serialPort.PortName);
+            if (_isValidPort) {
+                if (!(!_holdPort || _serialPort.IsOpen)) {
+                    _serialPort.Open();
+                }
+                _serialPort.Handshake = Handshake.None;
+                _serialPort.Encoding = Encoding.UTF8;
+                _serialPort.RtsEnable = true;
+                _serialPort.DtrEnable = true;
+                if (!_holdPort) {
+                    return;
+                }
             }
-            _serialPort.Handshake = Handshake.None;
-            _serialPort.Encoding = Encoding.UTF8;
-            _serialPort.RtsEnable = true;
-            _serialPort.DtrEnable = true;
-            if (!_holdPort) {
-                return;
+            else {
+                MessageBox.Show(String.Format("{0} does not exist for {1}", _serialPort.PortName, Name));
             }
 
             new Thread(EventThread).Start();
             while (State != RunState.Running) {
-                Thread.Sleep(1);//todo replace with Task.Delay() when using 4.5
+                Thread.Sleep(1); //todo replace with Task.Delay() when using 4.5
             }
         }
 
