@@ -668,7 +668,7 @@ namespace Nutcracker {
                 tbSummary.Text =
                     String.Format(
                         "Strings: {4}{6}Nodes per string: {5}{6}Channels: {2}{6}Position: From {0} thru {1}{6}Using {7} color space{6}{6}{3}",
-                        startTime, endTime, channelCount, msg, RenderRows, RenderCols, Environment.NewLine, _colorSpace);
+                        startTime, endTime, channelCount, msg, RenderCols, RenderRows, Environment.NewLine, _colorSpace);
                 btnOK.Enabled = (msg == string.Empty || rbClipboard.Checked || rbRoutine.Checked);
             }
             else {
