@@ -39,9 +39,16 @@ namespace VixenPlusCommon {
 
         // see: http://en.wikipedia.org/wiki/YIQ
         public static Brush GetTextColor(this Color backgroundColor) {
-            return (((backgroundColor.R * 299) + (backgroundColor.G * 587) + (backgroundColor.B * 114)) / 1000 >= 128 || backgroundColor.A < 11) ? Brushes.Black : Brushes.White;
+            return (((backgroundColor.R * 299) + (backgroundColor.G * 587) + (backgroundColor.B * 114)) / 1000 >= 128) ? Brushes.Black : Brushes.White;
         }
 
+
+        public static Brush GetAlphaTextColor(this Color bg, Color bc) {
+            var a1 = bg.A / 255.0;
+            var a2 = 1 - a1;
+            var c = Color.FromArgb(255, (int) (bg.R * a1 + bc.R * a2), (int) (bg.G * a1 + bc.G * a2), (int) (bg.B * a1 + bc.B * a2));
+            return c.GetTextColor();
+        }
 
         public static string GetVersion(Type t) {
             return Assembly.GetAssembly(t).GetName().Version.ToString();

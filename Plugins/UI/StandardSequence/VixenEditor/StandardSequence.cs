@@ -1270,34 +1270,36 @@ namespace VixenEditor {
 
 
         private void PositionAndUpdate() {
+            if (_position >= _sequence.TotalEventPeriods) {
+                _previousPosition = _position = _sequence.TotalEventPeriods - 1;
+            }
+
             if ((_position < hScrollBar1.Value) || (_position > (hScrollBar1.Value + _visibleEventPeriods))) {
                 if (_autoScrolling) {
                     if (_position == -1) {
                         return;
                     }
-                    if (_position >= _sequence.TotalEventPeriods) {
-                        _previousPosition = _position = _sequence.TotalEventPeriods - 1;
-                    }
+                   
                     if (_position >= hScrollBar1.Minimum && _position <= hScrollBar1.Maximum) {
                         hScrollBar1.Value = _position;
                     }
-                    //toolStripLabelExecutionPoint.Text = executionPosition.FormatNoMills();
-                } else {
+                }
+                else {
                     UpdateProgress();
                 }
-            } else if (_showPositionMarker) {
+            }
+            else if (_showPositionMarker) {
                 UpdateProgress();
             }
-            //else {
-            //    toolStripLabelExecutionPoint.Text = executionPosition.FormatNoMills();
-            //}    
         }
 
 
         private void HighlightChannels() {
-            //TODO Implement
-            pictureBoxChannels.Invalidate();
+            if (_doChannelHighlight && _inPlayback) {
+                pictureBoxChannels.Invalidate();
+            }
         }
+
 
         private void maxToolStripMenuItem_Click(object sender, EventArgs e) {
             ArithmeticPaste(ArithmeticOperation.Max);
@@ -1700,7 +1702,8 @@ namespace VixenEditor {
             const int largeAddtion = 3;
 
             var clipBounds = e.Graphics.ClipBounds;
-            e.Graphics.FillRectangle(_inPlayback && _doChannelHighlight ? _gridBackBrush : _channelBackBrush, clipBounds);
+            var bc = _inPlayback && _doChannelHighlight ? _gridBackBrush : _channelBackBrush;
+            e.Graphics.FillRectangle(bc, clipBounds);
             if ((int) clipBounds.X != 0 || (int) clipBounds.Width != CaretSize) {
                 var height = pictureBoxTime.Height + splitContainer2.SplitterWidth;
 
@@ -1718,11 +1721,9 @@ namespace VixenEditor {
 
                         var alpha = (_inPlayback && _doChannelHighlight) ?
                             _sequence.EventValues[_sequence.FullChannels.IndexOf(channel), _position] : 255;
-                        
-                        //if (alpha == 0) alpha = 255;
 
                         brush.Color = isChannelSelected ? ((SolidBrush) SystemBrushes.Highlight).Color : Color.FromArgb(alpha, channel.Color);
-                        var textBrush = isChannelSelected ? SystemBrushes.HighlightText : brush.Color.GetTextColor();
+                        var textBrush = isChannelSelected ? SystemBrushes.HighlightText : brush.Color.GetAlphaTextColor(bc.Color);
 
                         e.Graphics.FillRectangle(brush, 0, height, pictureBoxChannels.Width, _gridRowHeight);
 
@@ -2350,6 +2351,7 @@ namespace VixenEditor {
             SetEditingState(true);
             UpdatePlayButtons(PlayControl.Nothing);
             pictureBoxGrid.Refresh();
+            pictureBoxChannels.Refresh();
         }
 
 
@@ -2824,6 +2826,8 @@ namespace VixenEditor {
             SpeedVariableTsb.Enabled = state && _sequence.Audio != null;
             ReactEditingStateToProfileAssignment();
             _inPlayback = !state;
+            labelPosition.BackColor = _inPlayback ?  _gridBackBrush.Color : _channelBackBrush.Color;
+            labelPosition.ForeColor = labelPosition.BackColor.GetForeColor();
         }
 
 
@@ -4420,11 +4424,12 @@ namespace VixenEditor {
             lblFollowMouse.Location = position;
         }
 
-
-        private void UpdateProgress() {
+        // todo remove magic numbers
+        private void UpdateProgress() { 
             var x = (_previousPosition - hScrollBar1.Value) * _gridColWidth;
-            pictureBoxTime.Invalidate(new Rectangle(x, pictureBoxTime.Height - 35, _gridColWidth + _gridColWidth, 15));
-            pictureBoxGrid.Invalidate(new Rectangle(x, 0, _gridColWidth + _gridColWidth, pictureBoxGrid.Height));
+            var width = _gridColWidth * 2;
+            pictureBoxTime.Invalidate(new Rectangle(x, pictureBoxTime.Height - 35, width, 15));
+            pictureBoxGrid.Invalidate(new Rectangle(x, 0, width, pictureBoxGrid.Height));
         }
 
 
