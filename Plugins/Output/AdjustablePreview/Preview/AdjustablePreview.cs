@@ -64,7 +64,6 @@ namespace Preview {
 
 
         public void CloseSetup() {
-            throw new NotImplementedException();
         }
 
 
