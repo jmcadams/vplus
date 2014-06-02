@@ -1264,16 +1264,17 @@ namespace VixenEditor {
             _previousPosition = _position;
             _position = currentPosition;
 
-            PositionAndUpdate();
-            HighlightChannels();
-        }
-
-
-        private void PositionAndUpdate() {
+            // Bounds check
             if (_position >= _sequence.TotalEventPeriods) {
                 _previousPosition = _position = _sequence.TotalEventPeriods - 1;
             }
 
+            PositionHorzScrollOrUpdateProgress();
+            HighlightChannels();
+        }
+
+
+        private void PositionHorzScrollOrUpdateProgress() {
             if ((_position < hScrollBar1.Value) || (_position > (hScrollBar1.Value + _visibleEventPeriods))) {
                 if (_autoScrolling) {
                     if (_position == -1) {
