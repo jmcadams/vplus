@@ -16,7 +16,7 @@ using VixenPlusCommon;
 namespace VixenPlus.Dialogs {
     public sealed partial class UpdateDialog : Form {
         private readonly Preference2 _preferences;
-        private string _version;
+        private string _newVersion;
         private readonly bool _isInStartup;
         private DialogResult _result;
         private string _updateFile;
@@ -143,25 +143,25 @@ namespace VixenPlus.Dialogs {
         /// </summary>
         private void CheckForUpdate() {
             Log("Check for update start");
-            _version = GetAvailableVersion();
+            _newVersion = GetAvailableVersion();
             var thisVersion = Utils.GetVersion(GetType());
-            if (_version != ErrorIndicatorVersion) {
+            if (_newVersion != ErrorIndicatorVersion) {
                 _preferences.SetString(LastChecked, DateTime.Now.ToString(CultureInfo.InvariantCulture));
                 _preferences.SaveSettings();
-                if (_version == _preferences.GetString(SkippedVersion)) {
+                if (_newVersion == _preferences.GetString(SkippedVersion)) {
                     Log("Version skipped");
                     DialogResult = DialogResult.No;
                     return;
                 }
-                if (IsNewerVersionAvailable(_version, thisVersion)) {
-                    Log(string.Format("current: {1}, new: {0}", _version, thisVersion));
+                if (new Version(_newVersion) > new Version(thisVersion)) {
+                    Log(string.Format("current: {1}, new: {0}", _newVersion, thisVersion));
                     SetupDialogShowHide(true);
                     pbDownload.Visible = false;
                     Text = "New update available";
                     lblPrompt.Text =
                         string.Format(
                             "Version {0} of {1} is available would you like to download and install this version?\n\nYou are running version {2}",
-                            _version, Vendor.ProductName, thisVersion);
+                            _newVersion, Vendor.ProductName, thisVersion);
                 }
                 else if (!_isInStartup) {
                     Log("Up to date NOT in startup");
@@ -182,19 +182,6 @@ namespace VixenPlus.Dialogs {
             }
         }
 
-
-        private static bool IsNewerVersionAvailable(string newVersion, string currentVersion) {
-            var newV = newVersion.Split('.');
-            var curV = currentVersion.Split('.');
-
-            var isGreater = false;
-
-            for (var i = 0; i < newV.Length && i < curV.Length; i++) {
-                isGreater |= int.Parse(newV[i]) > int.Parse(curV[i]);
-            }
-
-            return isGreater;
-        }
 
         /// <summary>
         /// Launch the batch file that performs the install
@@ -240,8 +227,8 @@ namespace VixenPlus.Dialogs {
 
 
         private void btnSkipVersion_Click(object sender, EventArgs e) {
-            Log("Skipping version " + _version);
-            _preferences.SetString(SkippedVersion, _version);
+            Log("Skipping version " + _newVersion);
+            _preferences.SetString(SkippedVersion, _newVersion);
             _preferences.SaveSettings();
             DialogResult = DialogResult.No;
         }
@@ -293,7 +280,7 @@ namespace VixenPlus.Dialogs {
 
         private void DoAsyncDownload(string path) {
             Log("Starting Async download");
-            _updateFile = Path.Combine(path, Vendor.ProductName + "." + _version + Vendor.UpdateFileExtension);
+            _updateFile = Path.Combine(path, Vendor.ProductName + "." + _newVersion + Vendor.UpdateFileExtension);
             var url = Vendor.UpdateFileURL + (Utils.IsWindows64BitOS() ? "64" : "32") + Vendor.UpdateFileExtension;
             var client = new WebClient();
             client.DownloadProgressChanged += client_DownloadProgressChanged;
