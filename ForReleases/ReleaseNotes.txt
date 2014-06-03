@@ -1,6 +1,6 @@
 NOTE: For items prefixed with VIX-, you can view more details on https://vixenplus.atlassian.net
 
-31 MAY 2014 - V 0.2.151.1
+3 JNE 2014 - V 0.2.154.1
    NO JIRA - Removed some duplicate code.
    NO JIRA - Nutcracker rendering info was not displaying properly
    NO JIRA - Version would try to update even though the user had a later version

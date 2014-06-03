@@ -19,7 +19,7 @@ namespace Controllers.Renard {
         private byte[] _channelValues;
         private AutoResetEvent _eventTrigger;
         private bool _holdPort;
-        private bool _isValidPort = false;
+        private bool _isValidPort;
         private byte[] _p1Packet = new byte[1];
         private SetupDialog _dialog;
         private SerialPort _serialPort;
