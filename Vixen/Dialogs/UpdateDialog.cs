@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -85,9 +86,10 @@ namespace VixenPlus.Dialogs {
 
             // Finally, calculate elapsed time in seconds and return result
             var lastChecked = DateTime.Parse(_preferences.GetString(LastChecked), CultureInfo.InvariantCulture);
-            var elapsedSeconds = (DateTime.Now - lastChecked).TotalHours;
-            Log("IsTimeToCheckForUpdate normal: " + (elapsedSeconds >= waitHours));
-            return elapsedSeconds >= waitHours;
+            var hours = (DateTime.Now - lastChecked).TotalHours;
+            Log("IsTimeToCheckForUpdate normal: " + (hours >= waitHours));
+            Log("Elapsed hours since last check: " + hours);
+            return hours >= waitHours;
         }
 
 
@@ -131,6 +133,7 @@ namespace VixenPlus.Dialogs {
 
             CheckForUpdate();
             Log("Dialog being shown end");
+            Log("===============");
         }
 
 
@@ -145,11 +148,12 @@ namespace VixenPlus.Dialogs {
             Log("Check for update start");
             _newVersion = GetAvailableVersion();
             var thisVersion = Utils.GetVersion(GetType());
+            Log("This version " + thisVersion);
             if (_newVersion != ErrorIndicatorVersion) {
-                _preferences.SetString(LastChecked, DateTime.Now.ToString(CultureInfo.InvariantCulture));
+                _preferences.SetString(LastChecked, DateTime.Parse(DateTime.Now.ToString("s"), CultureInfo.InvariantCulture).ToString("s"));
                 _preferences.SaveSettings();
                 if (_newVersion == _preferences.GetString(SkippedVersion)) {
-                    Log("Version skipped");
+                    Log("Version skipped: " + _newVersion);
                     DialogResult = DialogResult.No;
                     return;
                 }
@@ -323,7 +327,7 @@ namespace VixenPlus.Dialogs {
 
 
         private static void Log(string message) {
-            string.Format("{0:} {1}", DateTime.Now, message).UpdateLog();
+            string.Format("{0:s} {1}", DateTime.Now, message).UpdateLog();
         }
     }
 }
