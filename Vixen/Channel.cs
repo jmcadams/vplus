@@ -126,7 +126,7 @@ namespace VixenPlus {
                 node.InnerText = Name;
             }
             Xml.SetAttribute(node, "color", Color.ToArgb().ToString(CultureInfo.InvariantCulture));
-            Xml.SetAttribute(node, "output", OutputChannel.ToString(CultureInfo.InvariantCulture));
+            Xml.SetAttribute(node, "output", (OutputChannel - 1).ToString(CultureInfo.InvariantCulture));
             //Xml.SetAttribute(node, "id", Id.ToString(CultureInfo.InvariantCulture)); //TODO need to do this for 2.x
             Xml.SetAttribute(node, "enabled", Enabled.ToString());
             if (DimmingCurve != null) {
