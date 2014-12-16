@@ -270,6 +270,7 @@ namespace VixenPlus.Dialogs {
                         num = Convert.ToInt32(textBoxEventPeriod.Text);
                         if (num < Vendor.MinimumEventPeriod) {
                             text = String.Format(Resources.EventPeriodTooShort, Vendor.MinimumEventPeriod);
+                            textBoxEventPeriod.Text = Vendor.MinimumEventPeriod.ToString(CultureInfo.InvariantCulture);
                             goto Label_0339;
                         }
                     }
