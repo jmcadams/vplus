@@ -4656,7 +4656,7 @@ namespace VixenEditor {
 
 
         private void tsbSaveAs_Click(object sender, EventArgs e) {
-            SendKeys.Send("^a");
+            SendKeys.Send("^(+s)");
         }
 
 
@@ -4946,6 +4946,25 @@ namespace VixenEditor {
 
             _selectedCells.Y = _selectedLineIndex;
             _selectedCells.Height = 1;
+            pictureBoxGrid.Invalidate();
+        }
+
+        /// <summary>
+        /// Select all event periods in scope menu item click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void selectAlltoolStripMenuItem_Click(object sender, EventArgs e) {
+            SelectEventPeriodsInScope();
+        }
+
+
+        private void SelectEventPeriodsInScope() {
+            _selectedCells.X = 0;
+            _selectedCells.Width = _sequence.TotalEventPeriods;
+
+            _selectedCells.Y = 0;
+            _selectedCells.Height = _sequence.ChannelCount;
             pictureBoxGrid.Invalidate();
         }
     }
