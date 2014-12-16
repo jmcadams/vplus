@@ -2,7 +2,7 @@ using VixenPlusCommon.Properties;
 
 namespace VixenPlusCommon {
     public static class Vendor {
-        public const int MinimumEventPeriod = 25;
+        public const int MinimumEventPeriod = 10;
 
         public static readonly string ProductDescription = Resources.ProductDescription;
         public const string ProductName = "Vixen+ {Beta}";

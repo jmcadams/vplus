@@ -2536,8 +2536,8 @@ namespace VixenPlus.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The event period length cannot be less than {0} milliseconds.
-        ///The length has been reset to {0} milliseconds..
+        ///   Looks up a localized string similar to The event period length cannot be less than {0} milliseconds and
+        ///will be set to {0} milliseconds..
         /// </summary>
         public static string VixenPlusForm_EventPeriodMin {
             get {
