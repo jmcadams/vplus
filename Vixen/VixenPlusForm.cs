@@ -460,9 +460,9 @@ namespace VixenPlus {
         private void PreferencesPreferenceChange(string preferenceName) {
             switch (preferenceName) {
                 case "EventPeriod":
-                    if (_preferences.GetInteger("EventPeriod") < 25) {
-                        _preferences.SetInteger("EventPeriod", 25);
-                        MessageBox.Show(Resources.VixenPlusForm_EventPeriodMin, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                    if (_preferences.GetInteger("EventPeriod") < Vendor.MinimumEventPeriod) {
+                        _preferences.SetInteger("EventPeriod", Vendor.MinimumEventPeriod);
+                        MessageBox.Show(String.Format(Resources.VixenPlusForm_EventPeriodMin, Vendor.MinimumEventPeriod), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
                     }
                     break;
 

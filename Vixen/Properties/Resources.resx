@@ -145,8 +145,8 @@ A blank sequence will be created for you.</value>
     <value>Schedule is currently disabled.</value>
   </data>
   <data name="VixenPlusForm_EventPeriodMin" xml:space="preserve">
-    <value>The event period length cannot be less than 25 milliseconds.
-The length has been reset to 25 milliseconds.</value>
+    <value>The event period length cannot be less than {0} milliseconds.
+The length has been reset to {0} milliseconds.</value>
   </data>
   <data name="VixenPlusForm_NoOpenSequence" xml:space="preserve">
     <value>There is no sequence open, nor is there a default profile set.
@@ -379,7 +379,7 @@ Seconds.Milliseconds
 Minutes:Seconds.Milliseconds</value>
   </data>
   <data name="EventPeriodTooShort" xml:space="preserve">
-    <value>While possible, event periods less than 25 ms are not supported.</value>
+    <value>While possible, event periods less than {0}ms are not supported.</value>
   </data>
   <data name="EventPeriodInvalid" xml:space="preserve">
     <value> is not a valid number for the event period length</value>

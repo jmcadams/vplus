@@ -268,8 +268,8 @@ namespace VixenPlus.Dialogs {
                     int num;
                     try {
                         num = Convert.ToInt32(textBoxEventPeriod.Text);
-                        if (num < 25) {
-                            text = Resources.EventPeriodTooShort;
+                        if (num < Vendor.MinimumEventPeriod) {
+                            text = String.Format(Resources.EventPeriodTooShort, Vendor.MinimumEventPeriod);
                             goto Label_0339;
                         }
                     }
