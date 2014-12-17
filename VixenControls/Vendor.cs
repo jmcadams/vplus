@@ -6,6 +6,7 @@ namespace VixenPlusCommon {
         public const string ProductName = "Vixen+ {Beta}";
         public const string ProductURL = "http://www.vixenplus.com/";
         public const string All = "*";
+        public const string SeqFileIO = "SeqIOHelpers";
         
         public const string ModuleAuthoring = "Artisan";
         //public const string ModulePreview = "Rehersal";
@@ -38,5 +39,9 @@ namespace VixenPlusCommon {
         // ReSharper restore InconsistentNaming
         public const string UpdateSupportBatchProtected = "_update.bat";
         public const string UpdateSupportBatchReal = "update.bat";
+
+        public const int Vixen25 = 25;
+        public const int Vixen21 = 21;
+        public const int VixenPlus = 1;
     }
 }
