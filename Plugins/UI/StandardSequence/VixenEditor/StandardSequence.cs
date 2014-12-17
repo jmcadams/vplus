@@ -2585,6 +2585,7 @@ namespace VixenEditor {
 
 
         public override void SaveTo(string filePath) {
+            FileHelper.
             _sequence.SaveTo(filePath);
             IsDirty = false;
         }
