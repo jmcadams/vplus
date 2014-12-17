@@ -263,7 +263,7 @@ namespace VixenPlus {
 
             var emptyNodeAlways = Xml.GetEmptyNodeAlways(profile, "ChannelObjects");
             foreach (var channel in _channelObjects) {
-                emptyNodeAlways.AppendChild(channel.SaveToXml(doc));
+                emptyNodeAlways.AppendChild(channel.SaveToXml(doc, Vendor.VixenPlus));
             }
             var builder = new StringBuilder();
             foreach (var num in _channelOutputs) {

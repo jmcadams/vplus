@@ -17,6 +17,7 @@ namespace VixenPlus {
         private int _eventPeriod;
         private Profile _profile;
         private string _currentGroup = "";
+        private ISeqIOHandler _fileIOHandler;
 
         private Dictionary<string, GroupData> _groups;
 
@@ -305,7 +306,7 @@ namespace VixenPlus {
                 //Channels
                 var node2 = Xml.GetEmptyNodeAlways(emptyNodeAlways, "Channels");
                 foreach (var channel in _fullChannels) {
-                    node2.AppendChild(channel.SaveToXml(doc));
+                    node2.AppendChild(channel.SaveToXml(doc, Vendor.VixenPlus));
                 }
 
                 //Plugins

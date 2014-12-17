@@ -641,6 +641,11 @@ namespace VixenPlus {
 
 
         private bool Save(IUIPlugIn pluginInstance) {
+            var p = SequenceFileIOHelper.GetFileIOPlugins();
+            foreach (var fio in p) {
+                Console.WriteLine(fio.Value.DialogFilterList());
+            }
+
             if (pluginInstance == null) {
                 return false;
             }

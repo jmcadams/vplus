@@ -295,6 +295,7 @@
     <Compile Include="IMaskable.cs" />
     <Compile Include="Interfaces.cs" />
     <Compile Include="IPlugIn.cs" />
+    <Compile Include="ISeqIOHandler.cs" />
     <Compile Include="ISetup.cs" />
     <Compile Include="ISystem.cs" />
     <Compile Include="IUIPlugIn.cs" />
@@ -323,6 +324,7 @@
     <Compile Include="RouterContext.cs" />
     <Compile Include="Routine.cs" />
     <Compile Include="SequenceExtensions.cs" />
+    <Compile Include="SequenceFileIOHelper.cs" />
     <Compile Include="SequenceProgram.cs" />
     <Compile Include="SetupData.cs" />
     <Compile Include="Splash.cs">

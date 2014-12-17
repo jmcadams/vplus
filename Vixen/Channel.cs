@@ -31,7 +31,7 @@ namespace VixenPlus {
                 elementName = "output";
                 OutputChannel = Convert.ToInt32(channelNode.Attributes[elementName].Value);
                 elementName = "id";
-                //Id = ulong.Parse(channelNode.Attributes[elementName].Value);
+                Id = ulong.Parse(channelNode.Attributes[elementName].Value);
                 elementName = "enabled";
                 Enabled = bool.Parse(channelNode.Attributes[elementName].Value);
             }
@@ -96,6 +96,8 @@ namespace VixenPlus {
 
         public int OutputChannel { get; set; }
 
+        public ulong Id { get; set; }
+
         public void Dispose() {
             GC.SuppressFinalize(this);
         }
@@ -117,7 +119,7 @@ namespace VixenPlus {
         }
 
 
-        public XmlNode SaveToXml(XmlDocument doc) {
+        public XmlNode SaveToXml(XmlDocument doc, int seqIOHandlerVersion) {
             XmlNode node = doc.CreateElement("Channel");
             if (CanDoDimming) {
                 Xml.SetAttribute(node, "name", Name);
@@ -127,7 +129,7 @@ namespace VixenPlus {
             }
             Xml.SetAttribute(node, "color", Color.ToArgb().ToString(CultureInfo.InvariantCulture));
             Xml.SetAttribute(node, "output", (OutputChannel - 1).ToString(CultureInfo.InvariantCulture));
-            //Xml.SetAttribute(node, "id", Id.ToString(CultureInfo.InvariantCulture)); //TODO need to do this for 2.x
+            Xml.SetAttribute(node, "id", Id.ToString(CultureInfo.InvariantCulture)); //TODO need to do this for 2.x
             Xml.SetAttribute(node, "enabled", Enabled.ToString());
             if (DimmingCurve != null) {
                 Xml.SetValue(node, "Curve", string.Join(",", DimmingCurve.Select(num => num.ToString(CultureInfo.InvariantCulture)).ToArray()));
