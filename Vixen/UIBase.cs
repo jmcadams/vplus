@@ -39,7 +39,7 @@ namespace VixenPlus {
         }
 
 
-        public virtual void SaveTo(string filePath) {
+        public virtual void SaveTo() {
             throw new NotImplementedException();
         }
 

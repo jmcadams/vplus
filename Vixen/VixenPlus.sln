@@ -39,8 +39,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controllers", "..\Plugins\O
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeqIOHelpers", "..\Plugins\Output\SeqIOHelpers\SeqIOHelpers.csproj", "{5220945F-A0A3-4211-AE3E-86847EE5A037}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileHelper", "..\Plugins\Output\FileHelper\FileHelper.csproj", "{7BE4B7A1-A1FB-4483-B5BA-54B5F3DD6A64}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -174,21 +172,6 @@ Global
 		{5220945F-A0A3-4211-AE3E-86847EE5A037}.Release32|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{5220945F-A0A3-4211-AE3E-86847EE5A037}.Release32|Mixed Platforms.Build.0 = Release|Any CPU
 		{5220945F-A0A3-4211-AE3E-86847EE5A037}.Release32|x86.ActiveCfg = Release|Any CPU
-		{7BE4B7A1-A1FB-4483-B5BA-54B5F3DD6A64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7BE4B7A1-A1FB-4483-B5BA-54B5F3DD6A64}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7BE4B7A1-A1FB-4483-B5BA-54B5F3DD6A64}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{7BE4B7A1-A1FB-4483-B5BA-54B5F3DD6A64}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{7BE4B7A1-A1FB-4483-B5BA-54B5F3DD6A64}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{7BE4B7A1-A1FB-4483-B5BA-54B5F3DD6A64}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7BE4B7A1-A1FB-4483-B5BA-54B5F3DD6A64}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7BE4B7A1-A1FB-4483-B5BA-54B5F3DD6A64}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{7BE4B7A1-A1FB-4483-B5BA-54B5F3DD6A64}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{7BE4B7A1-A1FB-4483-B5BA-54B5F3DD6A64}.Release|x86.ActiveCfg = Release|Any CPU
-		{7BE4B7A1-A1FB-4483-B5BA-54B5F3DD6A64}.Release32|Any CPU.ActiveCfg = Release|Any CPU
-		{7BE4B7A1-A1FB-4483-B5BA-54B5F3DD6A64}.Release32|Any CPU.Build.0 = Release|Any CPU
-		{7BE4B7A1-A1FB-4483-B5BA-54B5F3DD6A64}.Release32|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{7BE4B7A1-A1FB-4483-B5BA-54B5F3DD6A64}.Release32|Mixed Platforms.Build.0 = Release|Any CPU
-		{7BE4B7A1-A1FB-4483-B5BA-54B5F3DD6A64}.Release32|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -201,15 +184,14 @@ Global
 		{65F4107B-BF8A-4192-9FB1-7B998087639D} = {0ECD4638-0634-4009-8D81-B3F7BF15465F}
 		{E28C87F9-80EB-4645-82AB-F7B7FBAE668B} = {0ECD4638-0634-4009-8D81-B3F7BF15465F}
 		{5220945F-A0A3-4211-AE3E-86847EE5A037} = {0ECD4638-0634-4009-8D81-B3F7BF15465F}
-		{7BE4B7A1-A1FB-4483-B5BA-54B5F3DD6A64} = {0ECD4638-0634-4009-8D81-B3F7BF15465F}
 		{718CA82A-D7C4-440C-953F-DD3CC2ADC99D} = {CC4DA2F3-FB84-42A0-B620-315B4A18B97A}
 		{C792440D-580E-4313-A48F-F2EEE85BE98C} = {CC4DA2F3-FB84-42A0-B620-315B4A18B97A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_StartDate = 2013/12/31
-		BuildVersion_AssemblyInfoFilename = AssemblyInfo.cs
-		BuildVersion_UpdateFileVersion = True
-		BuildVersion_UpdateAssemblyVersion = True
 		BuildVersion_BuildVersioningStyle = None.None.DeltaBaseDate.TimeStamp
+		BuildVersion_UpdateAssemblyVersion = True
+		BuildVersion_UpdateFileVersion = True
+		BuildVersion_AssemblyInfoFilename = AssemblyInfo.cs
+		BuildVersion_StartDate = 2013/12/31
 	EndGlobalSection
 EndGlobal

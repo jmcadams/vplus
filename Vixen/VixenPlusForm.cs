@@ -363,12 +363,24 @@ namespace VixenPlus {
 
 
         private bool GetNewName(IUIPlugIn pluginInstance) {
-            saveFileDialog1.Filter = string.Format("{0}|*{1}", pluginInstance.FileTypeDescription, pluginInstance.FileExtension);
+            var filter = SequenceFileIOHelper.GetFileIOPlugins()
+                .Select(v => v.Value).Where(v => v.CanSave()).OrderBy(handler => handler.PreferredOrder()).ToArray();
+
+            var sb = new StringBuilder();
+            foreach (var f in filter) {
+                sb.Append(f.DialogFilterList()).Append("|");
+            }
+            sb.Remove(sb.Length - 1, 1);
+            saveFileDialog1.Filter = sb.ToString();
+            
             saveFileDialog1.InitialDirectory = Paths.SequencePath;
             saveFileDialog1.FileName = string.Empty;
             if (saveFileDialog1.ShowDialog() != DialogResult.OK) {
                 return false;
             }
+
+            pluginInstance.Sequence.SeqIOHandler = filter[saveFileDialog1.FilterIndex - 1];
+
             ChangeSequenceName(pluginInstance, saveFileDialog1.FileName);
             return true;
         }
@@ -639,26 +651,38 @@ namespace VixenPlus {
             return true;
         }
 
-
+        /// <summary>
+        /// Save the file, routed to the appropriate plugin
+        /// </summary>
+        /// <param name="pluginInstance"></param>
+        /// <returns>If a save action was performed</returns>
         private bool Save(IUIPlugIn pluginInstance) {
-            var p = SequenceFileIOHelper.GetFileIOPlugins();
-            foreach (var fio in p) {
-                Console.WriteLine(fio.Value.DialogFilterList());
-            }
-
+            
             if (pluginInstance == null) {
                 return false;
             }
+
             var plugInInterface = pluginInstance;
             if ((plugInInterface.IsDirty && string.IsNullOrEmpty(plugInInterface.Sequence.Name)) && !GetNewName(pluginInstance)) {
                 return false;
             }
+            
             UpdateHistoryImages(plugInInterface.Sequence.FileName);
-            plugInInterface.SaveTo(plugInInterface.Sequence.FileName);
+
+            // If the sequenceType is not set, set it to Vixen Plus
+            if (plugInInterface.Sequence.SeqIOHandler == null) {
+                plugInInterface.Sequence.SeqIOHandler = SequenceFileIOHelper.GetFileIOPlugins()
+                    .Select(keyValuePair => keyValuePair.Value).Where(v=>v.CanSave()).First(fio => fio.VendorId() == Vendor.VixenPlus);
+            }
+
+            plugInInterface.SaveTo();
+            
             AddToFileHistory(plugInInterface.Sequence.FileName);
+
             if (_preferences.GetBoolean("ShowSaveConfirmation")) {
                 MessageBox.Show(Resources.VixenPlusForm_SequenceSaved, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
+
             return true;
         }
 

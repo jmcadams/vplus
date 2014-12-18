@@ -25,8 +25,7 @@ namespace VixenPlus {
 
         public static Dictionary<string, ISeqIOHandler> GetFileIOPlugins() {
             return PluginCache;
-        } 
-
+        }
 
         private static void LoadPlugins() {
             foreach (var dllFile in Directory.GetFiles(Paths.OutputPluginPath, Vendor.SeqFileIO + Vendor.AppExtension, SearchOption.TopDirectoryOnly)) {

@@ -15,7 +15,7 @@ namespace VixenPlus {
         EventSequence New(EventSequence seedSequence);
         EventSequence Open(string filePath);
         DialogResult RunWizard(ref EventSequence resultSequence);
-        void SaveTo(string filePath);
+        void SaveTo();
         void Show();
     }
 }

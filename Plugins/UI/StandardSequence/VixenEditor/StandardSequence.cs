@@ -2584,8 +2584,9 @@ namespace VixenEditor {
         }
 
 
-        public override void SaveTo(string filePath) {
-            _sequence.SaveTo(filePath);
+        public override void SaveTo() {
+            _sequence.SeqIOHandler.Save(_sequence);
+            _sequence.UpdateMetrics(Width, Height, splitContainer1.SplitterDistance);
             IsDirty = false;
         }
 

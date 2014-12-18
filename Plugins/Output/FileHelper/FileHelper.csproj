@@ -40,18 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="ISeqFileIO.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Vixen2x\Vixen2XSeqFileIO.cs" />
-    <Compile Include="VixenPlus\VPlusSeqFileIO.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\VixenControls\VixenPlusCommon.csproj">
       <Project>{6B127E8D-35CC-409E-9E66-520FBA86E283}</Project>
       <Name>VixenPlusCommon</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Vixen2x\" />
+    <Folder Include="VixenPlus\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

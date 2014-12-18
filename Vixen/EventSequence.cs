@@ -17,7 +17,6 @@ namespace VixenPlus {
         private int _eventPeriod;
         private Profile _profile;
         private string _currentGroup = "";
-        private ISeqIOHandler _fileIOHandler;
 
         private Dictionary<string, GroupData> _groups;
 
@@ -92,7 +91,7 @@ namespace VixenPlus {
 
         public int ChannelWidth { get; private set; }
         public Audio Audio { get; set; }
-        private EngineType EngineType { get; set; }
+        public EngineType EngineType { get; private set; }
 
         public int EventPeriod {
             get { return _eventPeriod; }
@@ -120,8 +119,8 @@ namespace VixenPlus {
             get { return EventValues.GetLength(Utils.IndexColsOrWidth); }
         }
 
-        private SequenceExtensions Extensions { get; set; }
-        private LoadableData LoadableData { get; set; }
+        public SequenceExtensions Extensions { get; private set; }
+        public LoadableData LoadableData { get; private set; }
 
         public byte MaximumLevel { get; set; }
 
@@ -154,9 +153,11 @@ namespace VixenPlus {
 
         public string FileName { get; private set; }
 
+        public ISeqIOHandler SeqIOHandler { get; set; }
+
         public ulong Key { get; private set; }
 
-        private int Length { get; set; }
+        public int Length { get; private set; }
 
         public byte[][] Mask {
             get {
@@ -282,67 +283,64 @@ namespace VixenPlus {
 
 
         //TODO Need to ask if this is a 2.1 or 2.5 format before saving.
-        public void SaveTo(string fileName, bool setSequenceFileName = true) {
-            var contextNode = Xml.CreateXmlDocument();
-            SaveToXml(contextNode);
-            if (setSequenceFileName) {
-                FileName = fileName;
-            }
-            contextNode.Save(fileName);
-        }
+        //public void SaveTo() {
+        //    var contextNode = Xml.CreateXmlDocument();
+        //    SaveToXml(contextNode);
+        //    contextNode.Save(FileName);
+        //}
 
 
-        private void SaveToXml(XmlNode contextNode) {
-            var doc = contextNode.OwnerDocument ?? ((XmlDocument) contextNode);
-            var emptyNodeAlways = Xml.GetEmptyNodeAlways(contextNode, "Program");
-            Xml.SetValue(emptyNodeAlways, "Time", Length.ToString(CultureInfo.InvariantCulture));
-            Xml.SetValue(emptyNodeAlways, "EventPeriodInMilliseconds", _eventPeriod.ToString(CultureInfo.InvariantCulture));
-            Xml.SetValue(emptyNodeAlways, "MinimumLevel", MinimumLevel.ToString(CultureInfo.InvariantCulture));
-            Xml.SetValue(emptyNodeAlways, "MaximumLevel", MaximumLevel.ToString(CultureInfo.InvariantCulture));
-            Xml.SetValue(emptyNodeAlways, "AudioDevice", AudioDeviceIndex.ToString(CultureInfo.InvariantCulture));
-            Xml.SetValue(emptyNodeAlways, "AudioVolume", AudioDeviceVolume.ToString(CultureInfo.InvariantCulture));
+        //private void SaveToXml(XmlNode contextNode) {
+        //    var doc = contextNode.OwnerDocument ?? ((XmlDocument) contextNode);
+        //    var emptyNodeAlways = Xml.GetEmptyNodeAlways(contextNode, "Program");
+        //    Xml.SetValue(emptyNodeAlways, "Time", Length.ToString(CultureInfo.InvariantCulture));
+        //    Xml.SetValue(emptyNodeAlways, "EventPeriodInMilliseconds", _eventPeriod.ToString(CultureInfo.InvariantCulture));
+        //    Xml.SetValue(emptyNodeAlways, "MinimumLevel", MinimumLevel.ToString(CultureInfo.InvariantCulture));
+        //    Xml.SetValue(emptyNodeAlways, "MaximumLevel", MaximumLevel.ToString(CultureInfo.InvariantCulture));
+        //    Xml.SetValue(emptyNodeAlways, "AudioDevice", AudioDeviceIndex.ToString(CultureInfo.InvariantCulture));
+        //    Xml.SetValue(emptyNodeAlways, "AudioVolume", AudioDeviceVolume.ToString(CultureInfo.InvariantCulture));
 
-            if (_profile == null) {
-                //Channels
-                var node2 = Xml.GetEmptyNodeAlways(emptyNodeAlways, "Channels");
-                foreach (var channel in _fullChannels) {
-                    node2.AppendChild(channel.SaveToXml(doc, Vendor.VixenPlus));
-                }
+        //    if (_profile == null) {
+        //        //Channels
+        //        var node2 = Xml.GetEmptyNodeAlways(emptyNodeAlways, "Channels");
+        //        foreach (var channel in _fullChannels) {
+        //            node2.AppendChild(channel.SaveToXml(doc, Vendor.VixenPlus));
+        //        }
 
-                //Plugins
-                if (emptyNodeAlways.OwnerDocument != null) {
-                    emptyNodeAlways.AppendChild(emptyNodeAlways.OwnerDocument.ImportNode(PlugInData.RootNode, true));
-                }
+        //        //Plugins
+        //        if (emptyNodeAlways.OwnerDocument != null) {
+        //            emptyNodeAlways.AppendChild(emptyNodeAlways.OwnerDocument.ImportNode(PlugInData.RootNode, true));
+        //        }
 
-                //Groups
-                Group.SaveToXml(emptyNodeAlways, Groups);
-            }
-            if (_profile != null) {
-                Xml.SetValue(emptyNodeAlways, "Profile", _profile.Name);
-            }
-            if (Audio != null) {
-                var node = Xml.SetNewValue(emptyNodeAlways, "Audio", Audio.Name);
-                Xml.SetAttribute(node, "filename", Audio.FileName);
-                Xml.SetAttribute(node, "duration", Audio.Duration.ToString(CultureInfo.InvariantCulture));
-            }
-            var count = FullChannels.Count;
-            var totalEventPeriods = TotalEventPeriods;
-            var inArray = new byte[count * totalEventPeriods];
-            var num4 = 0;
-            for (var i = 0; i < count; i++) {
-                for (var j = 0; j < totalEventPeriods; j++) {
-                    inArray[num4++] = EventValues[i, j];
-                }
-            }
-            Xml.GetNodeAlways(emptyNodeAlways, "EventValues").InnerText = Convert.ToBase64String(inArray);
-            if (emptyNodeAlways.OwnerDocument != null && LoadableData != null) {
-                emptyNodeAlways.AppendChild(emptyNodeAlways.OwnerDocument.ImportNode(LoadableData.RootNode, true));
-            }
-            Xml.SetValue(emptyNodeAlways, "EngineType", EngineType.ToString());
-            if (emptyNodeAlways.OwnerDocument != null) {
-                emptyNodeAlways.AppendChild(emptyNodeAlways.OwnerDocument.ImportNode(Extensions.RootNode, true));
-            }
-        }
+        //        //Groups
+        //        Group.SaveToXml(emptyNodeAlways, Groups);
+        //    }
+        //    if (_profile != null) {
+        //        Xml.SetValue(emptyNodeAlways, "Profile", _profile.Name);
+        //    }
+        //    if (Audio != null) {
+        //        var node = Xml.SetNewValue(emptyNodeAlways, "Audio", Audio.Name);
+        //        Xml.SetAttribute(node, "filename", Audio.FileName);
+        //        Xml.SetAttribute(node, "duration", Audio.Duration.ToString(CultureInfo.InvariantCulture));
+        //    }
+        //    var count = FullChannels.Count;
+        //    var totalEventPeriods = TotalEventPeriods;
+        //    var inArray = new byte[count * totalEventPeriods];
+        //    var num4 = 0;
+        //    for (var i = 0; i < count; i++) {
+        //        for (var j = 0; j < totalEventPeriods; j++) {
+        //            inArray[num4++] = EventValues[i, j];
+        //        }
+        //    }
+        //    Xml.GetNodeAlways(emptyNodeAlways, "EventValues").InnerText = Convert.ToBase64String(inArray);
+        //    if (emptyNodeAlways.OwnerDocument != null && LoadableData != null) {
+        //        emptyNodeAlways.AppendChild(emptyNodeAlways.OwnerDocument.ImportNode(LoadableData.RootNode, true));
+        //    }
+        //    Xml.SetValue(emptyNodeAlways, "EngineType", EngineType.ToString());
+        //    if (emptyNodeAlways.OwnerDocument != null) {
+        //        emptyNodeAlways.AppendChild(emptyNodeAlways.OwnerDocument.ImportNode(Extensions.RootNode, true));
+        //    }
+        //}
 
 
         private void SetTime(int milliseconds) {

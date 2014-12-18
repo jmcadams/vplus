@@ -4,10 +4,13 @@ namespace VixenPlus {
     public interface ISeqIOHandler {
 
         string DialogFilterList();
-        int Version();
+        int VendorId();
         int PreferredOrder();
+        long VGUID();
         bool IsNativeToVixenPlus();
-        void Save(Delegate seqDataDelegate);
-        void Load(Delegate seqDataDelegate);
+        bool CanSave();
+        void Save(EventSequence eventSequence);
+        bool CanLoad();
+        void Load();
     }
 }
