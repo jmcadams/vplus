@@ -348,7 +348,7 @@ namespace VixenPlus.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clear all events in the sequence?.
+        ///   Looks up a localized string similar to Clear all of the cells in this sequence?.
         /// </summary>
         public static string ClearAllEventsInSequencePrompt {
             get {

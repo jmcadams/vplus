@@ -672,7 +672,7 @@ Lutefisk for all!</value>
     <value>..\Resources\open.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ClearAllEventsInSequencePrompt" xml:space="preserve">
-    <value>Clear all events in the sequence?</value>
+    <value>Clear all of the cells in this sequence?</value>
   </data>
   <data name="AttachToNewProfile" xml:space="preserve">
     <value>Do you want to attach this sequence to the new profile?</value>
