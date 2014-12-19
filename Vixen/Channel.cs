@@ -31,7 +31,7 @@ namespace VixenPlus {
                 elementName = "output";
                 OutputChannel = Convert.ToInt32(channelNode.Attributes[elementName].Value);
                 elementName = "id";
-                Id = ulong.Parse(channelNode.Attributes[elementName].Value);
+                Id =  channelNode.Attributes[elementName] == null ? ulong.MaxValue : ulong.Parse(channelNode.Attributes[elementName].Value);
                 elementName = "enabled";
                 Enabled = bool.Parse(channelNode.Attributes[elementName].Value);
             }

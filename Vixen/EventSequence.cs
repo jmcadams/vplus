@@ -89,9 +89,9 @@ namespace VixenPlus {
         }
 
 
-        public int ChannelWidth { get; private set; }
+        public int ChannelWidth { get; set; }
         public Audio Audio { get; set; }
-        public EngineType EngineType { get; private set; }
+        public EngineType EngineType { get; set; }
 
         public int EventPeriod {
             get { return _eventPeriod; }
@@ -119,8 +119,8 @@ namespace VixenPlus {
             get { return EventValues.GetLength(Utils.IndexColsOrWidth); }
         }
 
-        public SequenceExtensions Extensions { get; private set; }
-        public LoadableData LoadableData { get; private set; }
+        public SequenceExtensions Extensions { get; set; }
+        public LoadableData LoadableData { get; set; }
 
         public byte MaximumLevel { get; set; }
 
@@ -133,9 +133,9 @@ namespace VixenPlus {
 
         public int TotalEventPeriods { get; private set; }
 
-        public int WindowHeight { get; private set; }
+        public int WindowHeight { get; set; }
 
-        public int WindowWidth { get; private set; }
+        public int WindowWidth { get; set; }
 
 
         public void Dispose() {
@@ -145,7 +145,7 @@ namespace VixenPlus {
 
         public int AudioDeviceIndex { get; set; }
 
-        public int AudioDeviceVolume { get; private set; }
+        public int AudioDeviceVolume { get; set; }
 
         public bool CanBePlayed {
             get { return true; }
@@ -203,7 +203,7 @@ namespace VixenPlus {
             }
         }
 
-        public SetupData PlugInData { get; private set; }
+        public SetupData PlugInData { get; set; }
 
         public bool TreatAsLocal { get; private set; }
 
@@ -360,7 +360,7 @@ namespace VixenPlus {
         }
 
 
-        private void UpdateEventValueArray(bool dataExtrapolation = false) {
+        public void UpdateEventValueArray(bool dataExtrapolation = false) {
             var height = 0;
             var channels = (_profile == null) ? _fullChannels : _profile.Channels;
             if (EventValues != null) {
@@ -552,7 +552,7 @@ namespace VixenPlus {
         }
 
 
-        private void LoadEmbeddedData(XmlNode contextNode) {
+        public void LoadEmbeddedData(XmlNode contextNode) {
             _fullChannels.Clear();
             var xmlNodeList = contextNode.SelectNodes("Channels/Channel");
             if (xmlNodeList != null) {
@@ -620,7 +620,7 @@ namespace VixenPlus {
         }
 
 
-        public List<Channel> Channels { get; private set; }
+        public List<Channel> Channels { get; set; }
 
 
         public List<Channel> FullChannels {
@@ -651,7 +651,7 @@ namespace VixenPlus {
         }
 
 
-        private void AttachToProfile(string profileName) {
+        public void AttachToProfile(string profileName) {
             var path = Path.Combine(Paths.ProfilePath, profileName + Vendor.ProfileExtension);
             if (File.Exists(path)) {
                 AttachToProfile(new Profile(path));

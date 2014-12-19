@@ -1,5 +1,6 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using System.Globalization;
+using System.Linq;
+using System.Xml;
 
 using VixenPlus;
 using VixenPlus.Annotations;
@@ -8,50 +9,63 @@ using VixenPlusCommon;
 
 namespace SeqIOHelpers {
     [UsedImplicitly]
-    public class Vixen25SeqIO : ISeqIOHandler {
+    public class Vixen25SeqIO : SeqIOBase {
 
-        public string DialogFilterList() {
+        public override string DialogFilterList() {
             return "Vixen 2.5 format (*.vix)|*.vix";
         }
 
 
-        public int VendorId() {
+        public override int VendorId() {
             return Vendor.Vixen25;
         }
 
 
-        public int PreferredOrder() {
+        public override int PreferredOrder() {
             return 2;
         }
 
 
-        public long VGUID() {
+        public override long VGUID() {
             return 25L;
         }
 
 
-        public bool IsNativeToVixenPlus() {
+        public override bool IsNativeToVixenPlus() {
             return false;
         }
 
 
-        public bool CanSave() {
+        public override bool CanSave() {
             return true;
         }
 
 
-        public void Save(EventSequence eventSequence) {
-            MessageBox.Show("Vixen2.5");
+        public override void Save(EventSequence eventSequence) {
+            var contextNode = Xml.CreateXmlDocument();
+            BaseSave(contextNode, eventSequence, FormatChannel);
+            contextNode.Save(eventSequence.FileName);
         }
 
 
-        public bool CanLoad() {
+        private static XmlNode FormatChannel(XmlDocument doc, Channel ch) {
+            XmlNode node = doc.CreateElement("Channel");
+            Xml.SetAttribute(node, "name", ch.Name);
+            Xml.SetAttribute(node, "color", ch.Color.ToArgb().ToString(CultureInfo.InvariantCulture));
+            Xml.SetAttribute(node, "output", (ch.OutputChannel - 1).ToString(CultureInfo.InvariantCulture));
+            Xml.SetAttribute(node, "id", ch.Id.ToString(CultureInfo.InvariantCulture));
+            Xml.SetAttribute(node, "enabled", ch.Enabled.ToString());
+
+            if (ch.DimmingCurve != null) {
+                Xml.SetValue(node, "Curve", string.Join(",", ch.DimmingCurve.Select(num => num.ToString(CultureInfo.InvariantCulture)).ToArray()));
+            }
+
+            return node;
+        }
+
+
+        public override bool CanLoad() {
             return true;
-        }
-
-
-        public void Load() {
-            throw new NotImplementedException();
         }
     }
 }

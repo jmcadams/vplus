@@ -4652,12 +4652,12 @@ namespace VixenEditor {
 
 
         private void openSequenceTsb_Click(object sender, EventArgs e) {
-            SendKeys.Send("^o");
+            SendKeys.Send("^o");  // TODO: Need to clean up this hack - new architecture?
         }
 
 
         private void tsbSaveAs_Click(object sender, EventArgs e) {
-            SendKeys.Send("^(+s)");
+            _systemInterface.InvokeSaveAs(this);
         }
 
 

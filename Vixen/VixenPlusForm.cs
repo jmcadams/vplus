@@ -181,9 +181,9 @@ namespace VixenPlus {
         }
 
 
-        //public void VerifySequenceHardwarePlugins(EventSequence sequence) {
-        //    OutputPlugins.VerifyPlugIns(sequence);
-        //}
+        public void InvokeSaveAs(UIBase pluginInstance) {
+            SaveAs(pluginInstance);
+        }
 
 
         public void InvokeNew(object sender) {

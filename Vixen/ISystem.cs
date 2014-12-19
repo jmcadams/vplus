@@ -10,8 +10,10 @@ namespace VixenPlus {
         Preference2 UserPreferences { get; }
         Form InstantiateForm(ConstructorInfo constructorInfo, params object[] parameters);
         void InvokeSave(UIBase pluginInstance);
+        void InvokeSaveAs(UIBase pluginInstance);
+        void InvokeNew(object sender);
+
         //void InvokeGroupChange(object data);
         //void VerifySequenceHardwarePlugins(EventSequence sequence);
-        void InvokeNew(object sender);
     }
 }

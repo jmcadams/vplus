@@ -12,11 +12,6 @@ namespace SeqIOHelpers {
     [UsedImplicitly]
     public class VixenPlusSeqIO : SeqIOBase {
 
-        public override string DialogFilterList() {
-            return "Vixen Plus format (*.vix)|*.vix";
-        }
-
-
         public override int VendorId() {
             return Vendor.VixenPlus;
         }
@@ -44,34 +39,16 @@ namespace SeqIOHelpers {
 
         public override void Save(EventSequence eventSequence) {
             var contextNode = Xml.CreateXmlDocument();
-            SaveCommon(contextNode, eventSequence);
-            SaveSpecific(contextNode,eventSequence);
-            contextNode.Save(eventSequence.FileName);
-        }
 
+            BaseSave(contextNode, eventSequence, FormatChannel);
 
-
-        private static void SaveSpecific(XmlNode contextNode, EventSequence eventSequence) {
-            var doc = contextNode.OwnerDocument ?? ((XmlDocument)contextNode);
             var programNode = Xml.GetNodeAlways(contextNode, "Program");
 
             if (eventSequence.Profile == null) {
-                //Channels
-                var channelNodes = Xml.GetEmptyNodeAlways(programNode, "Channels");
-                foreach (var channel in eventSequence.FullChannels) {
-                    channelNodes.AppendChild(FormatChannel(doc, channel));
-                }
-
-                //Plugins
-                if (programNode.OwnerDocument != null) {
-                    programNode.AppendChild(programNode.OwnerDocument.ImportNode(eventSequence.PlugInData.RootNode, true));
-                }
-
-                //Groups
                 Group.SaveToXml(programNode, eventSequence.Groups);
-            } else  {
-                Xml.SetValue(programNode, "Profile", eventSequence.Profile.Name);
             }
+
+            contextNode.Save(eventSequence.FileName);
         }
 
 
@@ -92,11 +69,6 @@ namespace SeqIOHelpers {
 
         public override bool CanLoad() {
             return true;
-        }
-
-
-        public override void Load() {
-            throw new NotImplementedException();
         }
     }
 }

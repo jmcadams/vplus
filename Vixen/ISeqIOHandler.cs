@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Xml;
 
 namespace VixenPlus {
     public interface ISeqIOHandler {
@@ -11,6 +11,6 @@ namespace VixenPlus {
         bool CanSave();
         void Save(EventSequence eventSequence);
         bool CanLoad();
-        void Load();
+        void Load(XmlNode contextNode, EventSequence eventSequence);
     }
 }
