@@ -2522,6 +2522,7 @@ namespace VixenEditor {
         private void resetAllToolbarsToolStripMenuItem_Click(object sender, EventArgs e) {
             ToolStripManager.LoadSettings(this, _preferences.XmlDoc.DocumentElement, "reset");
             foreach (ToolStripItem item in toolbarsToolStripMenuItem.DropDownItems) {
+                // ReSharper disable once CanBeReplacedWithTryCastAndCheckForNull
                 if ((item is ToolStripMenuItem) && (item.Tag != null)) {
                     ((ToolStripMenuItem) item).Checked = true;
                 }

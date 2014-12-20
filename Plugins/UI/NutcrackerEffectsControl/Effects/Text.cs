@@ -17,7 +17,7 @@ namespace Nutcracker.Effects {
     [UsedImplicitly]
     public partial class Text : UserControl, INutcrackerEffect {
 
-        private readonly bool _initializing = true;
+        private readonly bool _initializing;
 
         private const string TextLine1 = "ID_TEXTCTRL_Text{0}_Line1";
         private const string TextFont1 = "ID_TEXTCTRL_Text{0}_1_Font";
@@ -32,6 +32,7 @@ namespace Nutcracker.Effects {
         private const string TextRotation2 = "ID_SLIDER_Text{0}_2_TextRotation";
 
         public Text() {
+            _initializing = true;
             InitializeComponent();
             cbDirection.SelectedIndex = 0;
             _initializing = false;
@@ -192,7 +193,8 @@ namespace Nutcracker.Effects {
         }
 
         private void Text_ControlChanged(object sender, EventArgs e) {
-            if (_initializing) return;
+            if (_initializing || OnControlChanged == null) return;
+
             OnControlChanged(this, e);
         }
 

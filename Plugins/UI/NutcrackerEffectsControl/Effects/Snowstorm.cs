@@ -252,6 +252,8 @@ namespace Nutcracker.Effects {
 
 
         private void SnowStorm_ControlChanged(object sender, EventArgs e) {
+            if (OnControlChanged == null) return;
+
             OnControlChanged(this, e);
         }
     }

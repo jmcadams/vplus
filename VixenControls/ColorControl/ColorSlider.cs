@@ -505,7 +505,7 @@ namespace VixenPlusCommon {
         // ReSharper disable MemberCanBePrivate.Global
         public Color NubColor {
             // ReSharper restore MemberCanBePrivate.Global
-            get { return _nubColor; }
+            private get { return _nubColor; }
             set {
                 if (NubColor == value) {
                     return;

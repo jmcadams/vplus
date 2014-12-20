@@ -210,6 +210,8 @@ namespace Nutcracker.Effects {
 
         private void Snowflakes_ControlChanged(object sender, EventArgs e) {
             InitializeSnowflakes();
+            if (OnControlChanged == null) return;
+
             OnControlChanged(this, new EventArgs());
         }
     }

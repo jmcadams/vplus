@@ -110,6 +110,8 @@ namespace Nutcracker.Effects {
 
 
         private void Spirograph_ControlChanged(object sender, EventArgs e) {
+            if (OnControlChanged == null) return;
+
             OnControlChanged(this, e);
         }
     }

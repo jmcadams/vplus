@@ -49,7 +49,7 @@ namespace VixenEditor {
             if (trackBar == null || trackBar.SelectedTextIndex <= 0) {
                 return;
             }
-            UpdateChannelFrom(sender as ConsoleTrackBar);
+            UpdateChannelFrom((ConsoleTrackBar) sender);
             UpdateOutput();
         }
 

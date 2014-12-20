@@ -14,7 +14,7 @@ namespace VixenEditor {
         private int _decay;
         private int _frequency;
         private int _min;
-        private int _max = 100;
+        private int _max;
         private int _tickCount;
 
         private readonly bool _actualLevels;
@@ -28,6 +28,7 @@ namespace VixenEditor {
                                    byte currentDrawingIntensity, bool actualLevels) {
             InitializeComponent();
             _actualLevels = actualLevels;
+            _max = 100;
             trackBarFrequency.Maximum = maxFrequency;
             _effectGenerator = effectGenerator;
             m_refreshInvoker = pictureBoxExample.Refresh;

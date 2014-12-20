@@ -124,6 +124,8 @@ namespace Nutcracker.Effects {
         }
 
         private void Spirals_ControlChanged(object sender, EventArgs e) {
+            if (OnControlChanged == null) return;
+
             OnControlChanged(this, e);
         }
     }

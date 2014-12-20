@@ -136,6 +136,7 @@ namespace VixenEditor {
                     _isDirty = true;
                 }
             }
+            // ReSharper disable once CanBeReplacedWithTryCastAndCheckForNull
             else if ((sender is TextBox) && (k == Keys.Tab || k == Keys.Enter)) {
                 HandleEnterTabKeys(((TextBox)sender).Name);
             }

@@ -101,6 +101,8 @@ namespace Nutcracker.Effects {
 
 
         private void Twinkle_ControlChanged(object sender, EventArgs e) {
+            if (OnControlChanged == null) return;
+
             OnControlChanged(this, e);
         }
     }

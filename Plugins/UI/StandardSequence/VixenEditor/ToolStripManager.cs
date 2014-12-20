@@ -173,18 +173,13 @@ namespace VixenEditor {
                 list2.Clear();
                 list2.AddRange(row.Controls);
                 list2.Sort(delegate(Control control1, Control control2) {
-                    if (control1.Location.Y < control2.Location.Y) {
-                        return -1;
-                    }
-                    if (control2.Location.Y >= control1.Location.Y) {
-                        if (control1.Location.X == control2.Location.X) {
-                            return 0;
-                        }
-                        if (control1.Location.X < control2.Location.X) {
-                            return -1;
-                        }
-                    }
-                    return 1;
+                    var x1 = control1.Location.X;
+                    var y1 = control1.Location.Y;
+
+                    var x2 = control2.Location.X;
+                    var y2 = control2.Location.Y;
+
+                    return y1 == y2 ? x1.CompareTo(x2) : y1.CompareTo(y2);
                 });
                 list.AddRange(list2.Cast<ToolStrip>());
             }

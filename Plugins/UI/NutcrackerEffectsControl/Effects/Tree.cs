@@ -114,6 +114,8 @@ namespace Nutcracker.Effects {
 
 
         private void Tree_ControlChanged(object sender, EventArgs e) {
+            if (OnControlChanged == null) return;
+
             OnControlChanged(this, e);
         }
     }
