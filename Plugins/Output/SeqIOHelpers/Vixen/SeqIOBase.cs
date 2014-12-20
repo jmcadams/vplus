@@ -18,18 +18,8 @@ namespace SeqIOHelpers {
         }
 
 
-        public virtual int VendorId() {
-            return int.MinValue;
-        }
-
-
         public virtual int PreferredOrder() {
             return int.MaxValue;
-        }
-
-
-        public virtual long VGUID() {
-            throw new NotImplementedException();
         }
 
 
@@ -48,12 +38,12 @@ namespace SeqIOHelpers {
         }
 
 
-        public virtual bool CanLoad() {
+        public virtual bool CanOpen() {
             return false;
         }
 
 
-        public virtual void Load(XmlNode contextNode, EventSequence es) {
+        public virtual void Open(XmlNode contextNode, EventSequence es) {
             var requiredNode = Xml.GetRequiredNode(contextNode, "Program");
             es.FullChannels = new List<Channel>();
             es.Channels = new List<Channel>();
@@ -70,11 +60,11 @@ namespace SeqIOHelpers {
             }
             var minLevelNode = requiredNode.SelectSingleNode("MinimumLevel");
             if (minLevelNode != null) {
-                es.MinimumLevel = (byte)Convert.ToInt32(minLevelNode.InnerText);
+                es.MinimumLevel = (byte) Convert.ToInt32(minLevelNode.InnerText);
             }
             var mnaxLevelNode = requiredNode.SelectSingleNode("MaximumLevel");
             if (mnaxLevelNode != null) {
-                es.MaximumLevel = (byte)Convert.ToInt32(mnaxLevelNode.InnerText);
+                es.MaximumLevel = (byte) Convert.ToInt32(mnaxLevelNode.InnerText);
             }
             var audioDeviceNode = requiredNode.SelectSingleNode("AudioDevice");
             if (audioDeviceNode != null) {
@@ -137,12 +127,12 @@ namespace SeqIOHelpers {
             var node6 = requiredNode.SelectSingleNode("EngineType");
             if (node6 != null) {
                 try {
-                    es.EngineType = (EngineType)Enum.Parse(typeof(EngineType), node6.InnerText);
+                    es.EngineType = (EngineType) Enum.Parse(typeof (EngineType), node6.InnerText);
                 }
-                // ReSharper disable EmptyGeneralCatchClause
+                    // ReSharper disable EmptyGeneralCatchClause
                 catch
                     // ReSharper restore EmptyGeneralCatchClause
-                { }
+                {}
             }
             es.LoadableData.LoadFromXml(requiredNode);
             es.Extensions.LoadFromXml(requiredNode);
@@ -152,6 +142,7 @@ namespace SeqIOHelpers {
 
 
         protected delegate XmlNode FormatChannel(XmlDocument doc, Channel ch);
+
 
         protected static void BaseSave(XmlDocument contextNode, EventSequence eventSequence, FormatChannel fc) {
             var programNode = Xml.GetEmptyNodeAlways(contextNode, "Program");
@@ -208,7 +199,5 @@ namespace SeqIOHelpers {
                 programNode.AppendChild(programNode.OwnerDocument.ImportNode(eventSequence.Extensions.RootNode, true));
             }
         }
-
-
     }
 }

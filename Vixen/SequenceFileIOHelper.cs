@@ -12,20 +12,8 @@ namespace VixenPlus {
 
         private static readonly Dictionary<string, ISeqIOHandler> PluginCache = new Dictionary<string, ISeqIOHandler>();
 
-
         static SequenceFileIOHelper() {
             LoadPlugins();
-        }
-
-
-        //public static void RefreshPlugins() {
-        //    PluginCache.Clear();
-        //    LoadPlugins();
-        //}
-
-
-        public static Dictionary<string, ISeqIOHandler> GetFileIOPlugins() {
-            return PluginCache;
         }
 
         private static void LoadPlugins() {
@@ -55,7 +43,7 @@ namespace VixenPlus {
 
 
         public static string GetOpenFilters() {
-            var filter = PluginCache.Select(v => v.Value).Where(v => v.CanLoad()).OrderBy(handler => handler.PreferredOrder()).ToArray();
+            var filter = PluginCache.Select(v => v.Value).Where(v => v.CanOpen()).OrderBy(handler => handler.PreferredOrder()).ToArray();
 
             var sb = new StringBuilder();
             foreach (var f in filter) {
@@ -80,6 +68,11 @@ namespace VixenPlus {
 
         public static ISeqIOHandler GetHelperByName(string s) {
             return PluginCache.First(v => v.Value.DialogFilterList().StartsWith(s)).Value;
+        }
+
+
+        public static ISeqIOHandler GetNativeHelper() {
+            return PluginCache.First(fio => fio.Value.IsNativeToVixenPlus()).Value;
         }
     }
 }

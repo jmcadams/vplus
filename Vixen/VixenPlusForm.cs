@@ -269,7 +269,7 @@ namespace VixenPlus {
         }
 
 
-        //TODO: File Interoperability may impact this
+        //TODO: File Interoperability WILL impact this
         private void ChangeSequenceName(IUIPlugIn pluginInstance, string newName) {
             var fileExt = pluginInstance.Sequence.SeqIOHandler.FileExtension();
             if (!newName.EndsWith(fileExt)) {
@@ -642,8 +642,7 @@ namespace VixenPlus {
 
             // If the sequenceType is not set, set it to Vixen Plus
             if (plugInInterface.Sequence.SeqIOHandler == null) {
-                plugInInterface.Sequence.SeqIOHandler = SequenceFileIOHelper.GetFileIOPlugins()
-                    .Select(keyValuePair => keyValuePair.Value).Where(v=>v.CanSave()).First(fio => fio.VendorId() == Vendor.VixenPlus);
+                plugInInterface.Sequence.SeqIOHandler = SequenceFileIOHelper.GetNativeHelper();
             }
 
             plugInInterface.SaveTo();

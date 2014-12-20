@@ -5,24 +5,12 @@ using System.Xml;
 using VixenPlus;
 using VixenPlus.Annotations;
 
-using VixenPlusCommon;
-
 namespace SeqIOHelpers {
     [UsedImplicitly]
     public class VixenPlusSeqIO : SeqIOBase {
 
-        public override int VendorId() {
-            return Vendor.VixenPlus;
-        }
-
-
         public override int PreferredOrder() {
             return 0;
-        }
-
-
-        public override long VGUID() {
-            return 2271965L;
         }
 
 
@@ -66,7 +54,7 @@ namespace SeqIOHelpers {
             return node;
         }
 
-        public override bool CanLoad() {
+        public override bool CanOpen() {
             return true;
         }
     }

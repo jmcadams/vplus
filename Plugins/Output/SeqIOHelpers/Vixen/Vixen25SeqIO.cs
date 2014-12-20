@@ -5,8 +5,6 @@ using System.Xml;
 using VixenPlus;
 using VixenPlus.Annotations;
 
-using VixenPlusCommon;
-
 namespace SeqIOHelpers {
     [UsedImplicitly]
     public class Vixen25SeqIO : SeqIOBase {
@@ -15,26 +13,9 @@ namespace SeqIOHelpers {
             return string.Format("Vixen 2.5 Sequence (*{0})|*{0}", FileExtension());
         }
 
-
-        public override int VendorId() {
-            return Vendor.Vixen25;
-        }
-
-
         public override int PreferredOrder() {
             return 2;
         }
-
-
-        public override long VGUID() {
-            return 25L;
-        }
-
-
-        public override bool IsNativeToVixenPlus() {
-            return false;
-        }
-
 
         public override bool CanSave() {
             return true;
@@ -64,7 +45,7 @@ namespace SeqIOHelpers {
         }
 
 
-        public override bool CanLoad() {
+        public override bool CanOpen() {
             return true;
         }
     }
