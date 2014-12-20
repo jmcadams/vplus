@@ -27,7 +27,7 @@ namespace VixenEditor {
             m_refreshInvoker = pictureBoxExample.Refresh;
             _effectValues = new byte[4,maxFrequency * 5];
             _maxColumn = _effectValues.GetLength(1);
-            effectGenerator(_effectValues, new[] {1});
+            effectGenerator(_effectValues, 1);
             _tickCount = 0;
             _drawTimer = new System.Timers.Timer(100.0);
             _drawTimer.Elapsed += DrawTimerElapsed;
@@ -74,7 +74,7 @@ namespace VixenEditor {
             }
 
             _drawTimer.Stop();
-            _effectGenerator(_effectValues, new[] {_frequency});
+            _effectGenerator(_effectValues, _frequency);
             _tickCount = 0;
             _drawTimer.Start();
         }

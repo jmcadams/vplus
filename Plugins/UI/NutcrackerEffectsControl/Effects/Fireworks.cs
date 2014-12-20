@@ -68,7 +68,7 @@ namespace Nutcracker.Effects {
             var fireworksVelocity = string.Format(FireworksVelocity, effectNum);
             var fireworksMultiColor = string.Format(FireworksMultiColor, effectNum);
 
-            foreach (var keyValue in settings.Select(s => s.Split(new[] {'='}))) {
+            foreach (var keyValue in settings.Select(s => s.Split('='))) {
                 if (keyValue[0].Equals(fireworksCount)) {
                     tbExplosionCount.Value = keyValue[1].ToInt();
                 }

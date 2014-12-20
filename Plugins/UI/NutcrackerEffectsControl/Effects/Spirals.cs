@@ -66,7 +66,7 @@ namespace Nutcracker.Effects {
             var spiralsRotation = string.Format(SpiralsRotation, effectNum);
             var spiralsThickness = string.Format(SpiralsThickness, effectNum);
 
-            foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
+            foreach (var keyValue in settings.Select(s => s.Split('='))) {
                 if (keyValue[0].Equals(spirals3D)) {
                     chkBox3D.Checked = keyValue[1].Equals("1");
                 }

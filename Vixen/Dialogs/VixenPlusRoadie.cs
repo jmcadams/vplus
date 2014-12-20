@@ -220,10 +220,7 @@ namespace VixenPlus.Dialogs {
                             }
                             else {
                                 var row =
-                                    dgvChannels.Rows.Add(new object[] {
-                                        cols[ChannelEnabledCol] == bool.TrueString, cols[ChannelNumCol].ToInt(),
-                                        cols[ChannelNameCol], cols[OutputChannelCol].ToInt(), cols[ChannelColorCol]
-                                    });
+                                    dgvChannels.Rows.Add(cols[ChannelEnabledCol] == bool.TrueString, cols[ChannelNumCol].ToInt(), cols[ChannelNameCol], cols[OutputChannelCol].ToInt(), cols[ChannelColorCol]);
                                 dgvChannels.Rows[row].DefaultCellStyle.BackColor = cols[ChannelColorCol].FromHTML();
                                 dgvChannels.Rows[row].DefaultCellStyle.ForeColor =
                                     dgvChannels.Rows[row].DefaultCellStyle.BackColor.GetForeColor();
@@ -432,7 +429,7 @@ namespace VixenPlus.Dialogs {
 
         private void AddRow(Channel ch, int chNum) {
             var row =
-                dgvChannels.Rows.Add(new object[] {ch.Enabled, chNum, ch.Name, ch.OutputChannel + 1, ch.Color.ToHTML()});
+                dgvChannels.Rows.Add(ch.Enabled, chNum, ch.Name, ch.OutputChannel + 1, ch.Color.ToHTML());
             dgvChannels.Rows[row].DefaultCellStyle.BackColor = ch.Color;
             dgvChannels.Rows[row].DefaultCellStyle.ForeColor = ch.Color.GetForeColor();
         }
@@ -1779,11 +1776,7 @@ namespace VixenPlus.Dialogs {
             var index = dgvPlugIns.Rows.Count;
 
             var row =
-                dgvPlugIns.Rows.Add(new object[] {
-                    n.Attributes[PlugInAttrName].Value, n.Attributes[PlugInAttrEnabled].Value == bool.TrueString,
-                    n.Attributes[PlugInAttrStartCh].Value, n.Attributes[PlugInAttrEndCh].Value, DefaultConfig,
-                    p.SupportsLiveSetup() ? "Inline Setup" : "Setup..."
-                });
+                dgvPlugIns.Rows.Add(n.Attributes[PlugInAttrName].Value, n.Attributes[PlugInAttrEnabled].Value == bool.TrueString, n.Attributes[PlugInAttrStartCh].Value, n.Attributes[PlugInAttrEndCh].Value, DefaultConfig, p.SupportsLiveSetup() ? "Inline Setup" : "Setup...");
             // ReSharper restore PossibleNullReferenceException
 
             ((DataGridViewDisableButtonCell) dgvPlugIns.Rows[row].Cells[PlugInColSetup]).Visible =

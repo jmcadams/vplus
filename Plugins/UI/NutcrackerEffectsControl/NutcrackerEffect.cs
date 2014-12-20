@@ -157,7 +157,7 @@ namespace Nutcracker {
             var speedPrefix = "ID_SLIDER_Speed" + panelNum;
 
             foreach (var s in setupData) {
-                var keyValue = s.Split(new[] {'='});
+                var keyValue = s.Split('=');
                 if (s.StartsWith(chkBoxPrefix)) {
                     var index = keyValue[0].Substring(keyValue[0].Length - 1, 1).ToInt() - 1;
                     if (index >= 0) {

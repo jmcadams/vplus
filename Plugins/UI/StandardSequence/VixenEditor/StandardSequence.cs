@@ -994,7 +994,7 @@ namespace VixenEditor {
                 using (var sr = new StreamReader(dialog.SelectedRoutine)) {
                     string line;
                     while ((line = sr.ReadLine()) != null) {
-                        list.Add(line.Trim().Split(new[] {' '}));
+                        list.Add(line.Trim().Split(' '));
                     }
                 }
                 var length = list[0].Length;
@@ -2783,7 +2783,7 @@ namespace VixenEditor {
             if (_sequence.FullChannelCount <= newCount) return;
 
             foreach (var group in _sequence.Groups) {
-                var channels = group.Value.GroupChannels.Split(new[] {','});
+                var channels = group.Value.GroupChannels.Split(',');
                 var newChannels = new List<string>();
                 foreach (var channel in channels) {
                     int res;
@@ -4021,7 +4021,7 @@ namespace VixenEditor {
                 AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, Resources.UndoText_Shimmer);
 
                 var values = new byte[_selectedCells.Height, _selectedCells.Width];
-                DimmingShimmerGenerator(values, new[] {dialog.Frequency});
+                DimmingShimmerGenerator(values, dialog.Frequency);
                 CopyToEventValues(_selectedCells.Left, _selectedCells.Top, values);
                 _selectionRectangle.Width = 0;
                 pictureBoxGrid.Invalidate(SelectionToRectangle());
@@ -4041,7 +4041,7 @@ namespace VixenEditor {
                 AddUndoItem(_selectedCells, UndoOriginalBehavior.Overwrite, Resources.UndoText_Sparkle);
 
                 var values = new byte[_selectedCells.Height, _selectedCells.Width];
-                SparkleGenerator(values, new[] {dialog.Frequency, dialog.DecayTime, dialog.MinimumIntensity, dialog.MaximumIntensity});
+                SparkleGenerator(values, dialog.Frequency, dialog.DecayTime, dialog.MinimumIntensity, dialog.MaximumIntensity);
                 CopyToEventValues(_selectedCells.Left, _selectedCells.Top, values);
                 _selectionRectangle.Width = 0;
                 pictureBoxGrid.Invalidate(SelectionToRectangle());
@@ -4811,12 +4811,12 @@ namespace VixenEditor {
             var secs = 0;
             var mils = 0;
 
-            var split = textBoxProgramLength.Text.Split(new[] {':'});
+            var split = textBoxProgramLength.Text.Split(':');
             if (split.Length >= 1) {
                 int.TryParse(split[0], out mins);
             }
             if (split.Length == 2) {
-                var splitSecsMils = split[1].Split(new[] {'.'});
+                var splitSecsMils = split[1].Split('.');
                 if (splitSecsMils.Length >= 1) {
                     int.TryParse(splitSecsMils[0], out secs);
                 }

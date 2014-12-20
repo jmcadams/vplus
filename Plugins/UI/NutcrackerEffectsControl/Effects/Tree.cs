@@ -54,7 +54,7 @@ namespace Nutcracker.Effects {
             var treeBrachCount = string.Format(TreeBrachCount, effectNum);
             var treeGralandCount = string.Format(TreeGarlandCount, effectNum);
 
-            foreach (var keyValue in settings.Select(s => s.Split(new[] {'='}))) {
+            foreach (var keyValue in settings.Select(s => s.Split('='))) {
 
                 if (keyValue[0].Equals(treeBrachCount)) {
                     tbBranchCount.Value = keyValue[1].ToInt();

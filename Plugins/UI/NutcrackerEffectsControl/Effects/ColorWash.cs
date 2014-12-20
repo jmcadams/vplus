@@ -57,7 +57,7 @@ namespace Nutcracker.Effects {
             var colorwashHorzFade = string.Format(ColorwashHorzFade, effectNum);
             var colorwashVertFade = string.Format(ColorwashVertFade, effectNum);
 
-            foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
+            foreach (var keyValue in settings.Select(s => s.Split('='))) {
                 if (keyValue[0].Equals(colorwashCount)) {
                     tbCount.Value = keyValue[1].ToInt();
                 }

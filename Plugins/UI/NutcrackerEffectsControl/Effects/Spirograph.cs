@@ -61,7 +61,7 @@ namespace Nutcracker.Effects {
             var spirographInnerR = string.Format(SpirographInnerR, effectNum);
             var spirographOuterR = string.Format(SpirographOuterR, effectNum);
 
-            foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
+            foreach (var keyValue in settings.Select(s => s.Split('='))) {
                 if (keyValue[0].Equals(spirographAnimate)) {
                     chkBoxAnimate.Checked = keyValue[1].Equals("1");
                 }

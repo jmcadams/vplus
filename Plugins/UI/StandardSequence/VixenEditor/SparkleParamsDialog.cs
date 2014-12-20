@@ -86,7 +86,7 @@ namespace VixenEditor {
 
 
         private void Regenerate() {
-            _effectGenerator(_effectValues, new[] {_frequency, _decay, _min, _max});
+            _effectGenerator(_effectValues, _frequency, _decay, _min, _max);
             _tickCount = 0;
         }
 

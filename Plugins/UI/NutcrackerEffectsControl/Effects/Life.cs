@@ -56,7 +56,7 @@ namespace Nutcracker.Effects {
             var lifeCount = string.Format(LifeCount, effectNum);
             var lifeSeed = string.Format(LifeSeed, effectNum);
 
-            foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
+            foreach (var keyValue in settings.Select(s => s.Split('='))) {
                 if (keyValue[0].Equals(lifeCount)) {
                     tbCellsToStart.Value = keyValue[1].ToInt();
                 }

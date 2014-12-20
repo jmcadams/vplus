@@ -58,7 +58,7 @@ namespace Nutcracker.Effects {
             var snowstormCount = string.Format(SnowstormCount, effectNum);
             var snowstormLength = string.Format(SnowstormLength, effectNum);
 
-            foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
+            foreach (var keyValue in settings.Select(s => s.Split('='))) {
                 if (keyValue[0].Equals(snowstormCount)) {
                     tbMaxFlakes.Value = keyValue[1].ToInt();
                 }

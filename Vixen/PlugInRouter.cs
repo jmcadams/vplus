@@ -45,7 +45,9 @@ namespace VixenPlus {
                 Array.Resize(ref _data, newSize);
             }
             foreach (var outputPlugIn in item.OutputPluginList) {
-                _outputPlugins.Add(outputPlugIn);
+                lock (_outputPlugins) {
+                    _outputPlugins.Add(outputPlugIn);
+                }
             }
             _instances.Add(item);
             return item;
@@ -58,7 +60,7 @@ namespace VixenPlus {
             }
             if (Host.InvokeRequired) {
                 try {
-                    Host.Invoke(_methodInvoker, new object[0]);
+                    Host.Invoke(_methodInvoker);
                 }
                 catch (ObjectDisposedException e) {
                     e.Message.CrashLog();

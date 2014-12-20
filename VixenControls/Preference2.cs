@@ -306,7 +306,7 @@ namespace VixenPlusCommon {
         //TODO Refactor this when we move all color dialogs to our own.
         public int[] CustomColors {
             get {
-                var loadCustomColors = GetString(CustomColorsPreference).Split(new[] { ',' });
+                var loadCustomColors = GetString(CustomColorsPreference).Split(',');
                 var numArray = new int[loadCustomColors.Length];
                 for (var i = 0; i < loadCustomColors.Length; i++) {
                     numArray[i] = int.Parse(loadCustomColors[i]);

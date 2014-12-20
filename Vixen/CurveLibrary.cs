@@ -155,12 +155,7 @@ namespace VixenPlus {
                 return sb.ToString();
             }
             _delimiter = "'";
-            Action<Filter> action = f => sb.AppendFormat(" {0} {1} {2} {3}",
-                new object[]
-                {
-                    Filter.JoinOperator, f.ColumnName, OperatorString(f.ComparisonOperator),
-                    FormatValue(f.Value, f.ColumnType)
-                });
+            Action<Filter> action = f => sb.AppendFormat(" {0} {1} {2} {3}", Filter.JoinOperator, f.ColumnName, OperatorString(f.ComparisonOperator), FormatValue(f.Value, f.ColumnType));
             Array.ForEach(filters, action);
             return sb.ToString();
         }
@@ -209,12 +204,7 @@ namespace VixenPlus {
 
         private static string GetSelectString(string manufacturer, string lightCount, int color, string controller)
         {
-            return string.Format("{0} = '{1}' and {2} = {3} and {4} = {5} and {6} = '{7}'",
-                new object[]
-                {
-                    "Manufacturer", manufacturer, "LightCount", lightCount, "Color", color, "Controller",
-                    controller
-                });
+            return string.Format("{0} = '{1}' and {2} = {3} and {4} = {5} and {6} = '{7}'", "Manufacturer", manufacturer, "LightCount", lightCount, "Color", color, "Controller", controller);
         }
 
 

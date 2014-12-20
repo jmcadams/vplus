@@ -111,7 +111,7 @@ namespace SeqIOHelpers {
             }
             var node5 = requiredNode.SelectSingleNode("WindowSize");
             if (node5 != null) {
-                var strArray = node5.InnerText.Split(new[] { ',' });
+                var strArray = node5.InnerText.Split(',');
                 try {
                     es.WindowWidth = Convert.ToInt32(strArray[0]);
                 }

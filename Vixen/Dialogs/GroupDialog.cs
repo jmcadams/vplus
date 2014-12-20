@@ -34,20 +34,22 @@ namespace VixenPlus.Dialogs {
             InitializeComponent();
             MinimumSize = Size;
 
-            if (iExecutable is Profile) {
-                var type = iExecutable as Profile;
-                _groups = type.Groups;
-                _fullChannels = type.FullChannels;
-                channelSubset = type.Channels;
-            }
-            else if (iExecutable is EventSequence) {
-                var type = iExecutable as EventSequence;
-                _groups = type.Groups;
-                _fullChannels = type.FullChannels;
-                channelSubset = type.Channels;
+            var profile = iExecutable as Profile;
+            if (profile != null) {
+                _groups = profile.Groups;
+                _fullChannels = profile.FullChannels;
+                channelSubset = profile.Channels;
             }
             else {
-                throw new ArgumentException("Did not pass a valid IExecutable type to Group Dialog");
+                var sequence = iExecutable as EventSequence;
+                if (sequence != null) {
+                    _groups = sequence.Groups;
+                    _fullChannels = sequence.FullChannels;
+                    channelSubset = sequence.Channels;
+                }
+                else {
+                    throw new ArgumentException("Did not pass a valid IExecutable type to Group Dialog");
+                }
             }
 
             foreach (var c in constrainToGroup ? channelSubset : _fullChannels) {
@@ -71,7 +73,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void AddSubNodes(string nodeData, TreeNode parentNode) {
-            foreach (var node in nodeData.Split(new[] {','}).Where(node => node != "")) {
+            foreach (var node in nodeData.Split(',').Where(node => node != "")) {
                 if (node.StartsWith(Group.GroupTextDivider)) {
                     var groupNode = node.TrimStart(Group.GroupTextDivider.ToCharArray());
                     var thisNode = parentNode.Nodes.Add(groupNode);
@@ -90,6 +92,7 @@ namespace VixenPlus.Dialogs {
         }
 
 
+        // ReSharper disable once FunctionComplexityOverflow
         private void SetButtons() {
             var activeNode = tvGroups.SelectedNode;
             var isNodeActive = activeNode != null;
@@ -111,7 +114,7 @@ namespace VixenPlus.Dialogs {
                 isOnlyLeafNodes &= ((GroupTagData) n.Tag).IsLeafNode;
                 isOnlyNonLeafNodes &= !((GroupTagData) n.Tag).IsLeafNode;
                 isParentAtRoot &= (n.Parent == null || !n.Parent.FullPath.Contains("\\"));
-                isEditable &= n.FullPath.Split(new[] {'\\'}).Length - 1 < 2;
+                isEditable &= n.FullPath.Split('\\').Length - 1 < 2;
             }
 
 

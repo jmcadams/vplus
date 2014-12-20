@@ -8,6 +8,29 @@
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/GeneratedFilesAndFolders/=D3216F6C_002D56C1_002D48D0_002DB926_002D19CB452B6C82_002Fd_003AIDMX/@EntryIndexedValue">D3216F6C-56C1-48D0-B926-19CB452B6C82/d:IDMX</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/GeneratedFilesAndFolders/=E28C87F9_002D80EB_002D4645_002D82AB_002DF7B7FBAE668B_002Fd_003AE131/@EntryIndexedValue">E28C87F9-80EB-4645-82AB-F7B7FBAE668B/d:E131</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/GeneratedFilesAndFolders/=E28C87F9_002D80EB_002D4645_002D82AB_002DF7B7FBAE668B_002Fd_003AIDMX/@EntryIndexedValue">E28C87F9-80EB-4645-82AB-F7B7FBAE668B/d:IDMX</s:String>
+	<s:String x:Key="/Default/CodeInspection/GeneratedCode/GeneratedCodeRegions/=_002A_002Eappxmanifest/@EntryIndexedValue">*.appxmanifest</s:String>
+	<s:String x:Key="/Default/CodeInspection/GeneratedCode/GeneratedCodeRegions/=_002A_002Edebug_002Ejs/@EntryIndexedValue">*.debug.js</s:String>
+	<s:String x:Key="/Default/CodeInspection/GeneratedCode/GeneratedCodeRegions/=_002A_002EDesigner_002Ecs/@EntryIndexedValue">*.Designer.cs</s:String>
+	<s:String x:Key="/Default/CodeInspection/GeneratedCode/GeneratedCodeRegions/=_002A_002EDesigner_002Evb/@EntryIndexedValue">*.Designer.vb</s:String>
+	<s:String x:Key="/Default/CodeInspection/GeneratedCode/GeneratedCodeRegions/=_002A_002EGenerated_002Ecs/@EntryIndexedValue">*.Generated.cs</s:String>
+	<s:String x:Key="/Default/CodeInspection/GeneratedCode/GeneratedCodeRegions/=_002A_002EGenerated_002Evb/@EntryIndexedValue">*.Generated.vb</s:String>
+	<s:String x:Key="/Default/CodeInspection/GeneratedCode/GeneratedCodeRegions/=_002A_002Eintellisense_002Ejs/@EntryIndexedValue">*.intellisense.js</s:String>
+	<s:String x:Key="/Default/CodeInspection/GeneratedCode/GeneratedCodeRegions/=_002A_002Emin_002Ecss/@EntryIndexedValue">*.min.css</s:String>
+	<s:String x:Key="/Default/CodeInspection/GeneratedCode/GeneratedCodeRegions/=_002A_002Emin_002Ejs/@EntryIndexedValue">*.min.js</s:String>
+	<s:String x:Key="/Default/CodeInspection/GeneratedCode/GeneratedCodeRegions/=_002A_002EStoreAssociation_002Exml/@EntryIndexedValue">*.StoreAssociation.xml</s:String>
+	<s:String x:Key="/Default/CodeInspection/GeneratedCode/GeneratedCodeRegions/=_002Avsdoc_002Ejs/@EntryIndexedValue">*vsdoc.js</s:String>
+	<s:String x:Key="/Default/CodeInspection/GeneratedCode/GeneratedCodeRegions/=Annotations_002Ecs/@EntryIndexedValue">Annotations.cs</s:String>
+	<s:String x:Key="/Default/CodeInspection/GeneratedCode/GeneratedCodeRegions/=Component_0020Designer_0020generated_0020code/@EntryIndexedValue"></s:String>
+	<s:Boolean x:Key="/Default/CodeInspection/GeneratedCode/GeneratedCodeRegions/=Component_0020Designer_0020generated_0020code/@EntryIndexRemoved">True</s:Boolean>
+	<s:String x:Key="/Default/CodeInspection/GeneratedCode/GeneratedCodeRegions/=Designer_0020generated_0020code/@EntryIndexedValue"></s:String>
+	<s:Boolean x:Key="/Default/CodeInspection/GeneratedCode/GeneratedCodeRegions/=Designer_0020generated_0020code/@EntryIndexRemoved">True</s:Boolean>
+	<s:String x:Key="/Default/CodeInspection/GeneratedCode/GeneratedCodeRegions/=lib_002Ed_002Ets/@EntryIndexedValue">lib.d.ts</s:String>
+	<s:String x:Key="/Default/CodeInspection/GeneratedCode/GeneratedCodeRegions/=Reference_002Evb/@EntryIndexedValue">Reference.vb</s:String>
+	<s:String x:Key="/Default/CodeInspection/GeneratedCode/GeneratedCodeRegions/=Web_0020Form_0020Designer_0020generated_0020code/@EntryIndexedValue"></s:String>
+	<s:Boolean x:Key="/Default/CodeInspection/GeneratedCode/GeneratedCodeRegions/=Web_0020Form_0020Designer_0020generated_0020code/@EntryIndexRemoved">True</s:Boolean>
+	<s:String x:Key="/Default/CodeInspection/GeneratedCode/GeneratedCodeRegions/=Windows_0020Form_0020Designer_0020generated_0020code/@EntryIndexedValue"></s:String>
+	<s:Boolean x:Key="/Default/CodeInspection/GeneratedCode/GeneratedCodeRegions/=Windows_0020Form_0020Designer_0020generated_0020code/@EntryIndexRemoved">True</s:Boolean>
+	<s:String x:Key="/Default/CodeInspection/GeneratedCode/GeneratedFileMasks/=Annotations_002Ecs/@EntryIndexedValue">Annotations.cs</s:String>
 	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=LocalizableElement/@EntryIndexedValue">DO_NOT_SHOW</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=DMX/@EntryIndexedValue">DMX</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=HTML/@EntryIndexedValue">HTML</s:String>

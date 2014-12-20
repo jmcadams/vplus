@@ -17,7 +17,7 @@ namespace VixenPlus.Dialogs
             SetStyle(ControlStyles.UserPaint, true);
             SetStyle(ControlStyles.DoubleBuffer, true);
             var graphics = CreateGraphics();
-            _helpText = helpText.Split(new[] {'\n'});
+            _helpText = helpText.Split('\n');
             _lineHeight = (int) graphics.MeasureString("Mg", Font).Height;
             var num = _helpText.Select(str => (int) graphics.MeasureString(str, Font).Width).Concat(new[] {0}).Max();
             Size = new Size((50 + num) + 50, (90 + (_helpText.Length*_lineHeight)) + 50);

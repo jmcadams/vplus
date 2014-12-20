@@ -90,7 +90,7 @@ namespace Nutcracker.Effects {
             var textPosition2 = string.Format(TextPosition2, effectNum);
             var textRotation2 = string.Format(TextRotation2, effectNum);
 
-            foreach (var keyValue in settings.Select(s => s.Split(new[] {'='}))) {
+            foreach (var keyValue in settings.Select(s => s.Split('='))) {
 
                 if (keyValue[0].Equals(textLine1)) {
                     txtBoxLine1.Text = keyValue[1];

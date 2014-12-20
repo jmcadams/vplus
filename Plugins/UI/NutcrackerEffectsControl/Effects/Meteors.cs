@@ -63,7 +63,7 @@ namespace Nutcracker.Effects {
             var meteorsLength = string.Format(MeteorsLength, effectNum);
             var meteorsType = string.Format(MeteorsType, effectNum);
 
-            foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
+            foreach (var keyValue in settings.Select(s => s.Split('='))) {
                 if (keyValue[0].Equals(meteorsCount)) {
                     tbCount.Value = keyValue[1].ToInt();
                 }

@@ -57,7 +57,7 @@ namespace Nutcracker.Effects {
             var twinkleSteps = string.Format(TwinkleSteps, effectNum);
             var twinkleStrobe = string.Format(TwinkleStrobe, effectNum);
 
-            foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
+            foreach (var keyValue in settings.Select(s => s.Split('='))) {
                 if (keyValue[0].Equals(twinkleCount)) {
                     tbLightCount.Value = keyValue[1].ToInt();
                 }

@@ -54,7 +54,7 @@ namespace Nutcracker.Effects {
             var garlandsSpacing = string.Format(GarlandsSpacing, effectNum);
             var garlandsType = string.Format(GarlandsType, effectNum);
 
-            foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
+            foreach (var keyValue in settings.Select(s => s.Split('='))) {
                 if (keyValue[0].Equals(garlandsSpacing)) {
                     tbSpacing.Value = keyValue[1].ToInt();
                 }

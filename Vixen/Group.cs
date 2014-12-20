@@ -64,19 +64,19 @@ namespace VixenPlus {
                         text += child.InnerText + ",";
                         break;
                     case "Contains":
-                        text = child.InnerText.Split(new[] {','}).Aggregate(text, (current, @group) => current + (GroupTextDivider + @group + ","));
+                        text = child.InnerText.Split(',').Aggregate(text, (current, @group) => current + (GroupTextDivider + @group + ","));
                         break;
                 }
             }
             groups.Add(name,
-                new GroupData {Name = name, GroupColor = color, GroupChannels = text.TrimEnd(new[] {','}), Zoom = zoom, IsSortOrder = isSortOrder});
+                new GroupData {Name = name, GroupColor = color, GroupChannels = text.TrimEnd(','), Zoom = zoom, IsSortOrder = isSortOrder});
         }
 
 
         private static void AddInnerText(string nodeData, XContainer thisNode) {
             var previousType = String.Empty;
             var treeData = new StringBuilder();
-            foreach (var child in nodeData.Split(new[] { ',' })) {
+            foreach (var child in nodeData.Split(',')) {
                 var nodeValue = child;
                 var currentType = "Channels";
                 if (child.Contains("~")) {
@@ -151,7 +151,7 @@ namespace VixenPlus {
                         previousType = currentType;
                     }
                     if (currentType != previousType) {
-                        thisNode.Add(new XElement(previousType, treeData.TrimEnd(new[] { ',' })));
+                        thisNode.Add(new XElement(previousType, treeData.TrimEnd(',')));
                         treeData = (tag.IsLeafNode ? tag.UnderlyingChannel : child.Name) + ",";
                         previousType = currentType;
                     }
@@ -160,7 +160,7 @@ namespace VixenPlus {
                     }
                 }
                 if (!String.IsNullOrEmpty(treeData)) {
-                    thisNode.Add(new XElement(previousType, treeData.TrimEnd(new[] { ',' })));
+                    thisNode.Add(new XElement(previousType, treeData.TrimEnd(',')));
                 }
                 doc.Add(thisNode);
             }
@@ -172,7 +172,7 @@ namespace VixenPlus {
         internal List<Channel> GetGroupChannels(string nodeData, Dictionary<string, GroupData> groups, List<Channel> fullChannelList) {
             try {
                 var groupChannels = groups[nodeData].GroupChannels;
-                foreach (var node in groupChannels.Split(new[] {','})) {
+                foreach (var node in groupChannels.Split(',')) {
                     if (node.StartsWith(GroupTextDivider)) {
                         GetGroupChannels(node.TrimStart(GroupTextDivider.ToCharArray()), groups, fullChannelList);
                     }

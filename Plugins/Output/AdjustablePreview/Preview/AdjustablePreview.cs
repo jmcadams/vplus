@@ -95,7 +95,7 @@ namespace Preview {
             var system = (ISystem) Interfaces.Available["ISystem"];
             var constructor =
                 typeof (PreviewDialog).GetConstructor(new[] {typeof (XmlNode), typeof (List<Channel>), typeof (int)});
-            _previewDialog = (PreviewDialog) system.InstantiateForm(constructor, new object[] {_setupNode, _channels, _startChannel});
+            _previewDialog = (PreviewDialog) system.InstantiateForm(constructor, _setupNode, _channels, _startChannel);
         }
 
 

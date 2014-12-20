@@ -364,15 +364,7 @@ namespace VixenPlus {
 
 
         private bool GetNewName(IUIPlugIn pluginInstance) {
-            var filter = SequenceFileIOHelper.GetFileIOPlugins()
-                .Select(v => v.Value).Where(v => v.CanSave()).OrderBy(handler => handler.PreferredOrder()).ToArray();
-
-            var sb = new StringBuilder();
-            foreach (var f in filter) {
-                sb.Append(f.DialogFilterList()).Append("|");
-            }
-            sb.Remove(sb.Length - 1, 1);
-            saveFileDialog1.Filter = sb.ToString();
+            saveFileDialog1.Filter = SequenceFileIOHelper.GetSaveFilters();
             
             saveFileDialog1.InitialDirectory = Paths.SequencePath;
             saveFileDialog1.FileName = string.Empty;
@@ -380,7 +372,9 @@ namespace VixenPlus {
                 return false;
             }
 
-            pluginInstance.Sequence.SeqIOHandler = filter[saveFileDialog1.FilterIndex - 1];
+            var filters = saveFileDialog1.Filter.Split('|');
+
+            pluginInstance.Sequence.SeqIOHandler = SequenceFileIOHelper.GetHelperByName(filters[(saveFileDialog1.FilterIndex - 1) *2]);
 
             ChangeSequenceName(pluginInstance, saveFileDialog1.FileName);
             return true;
@@ -550,10 +544,9 @@ namespace VixenPlus {
 
 
         private void openALightingProgramToolStripMenuItem_Click(object sender, EventArgs e) {
-            //openFileDialog1.Filter = KnownFileTypesFilter;
+            openFileDialog1.Filter = SequenceFileIOHelper.GetOpenFilters();
             openFileDialog1.InitialDirectory = Paths.SequencePath;
             openFileDialog1.FileName = string.Empty;
-            //openFileDialog1.FilterIndex = filterIndex;
             if (openFileDialog1.ShowDialog() != DialogResult.OK) {
                 return;
             }
@@ -800,6 +793,7 @@ namespace VixenPlus {
         private void VixenPlusForm_DragDrop(object sender, DragEventArgs e) {
             var files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             foreach (var f in files) {
+
                 OpenSequence(f);
             }
         }

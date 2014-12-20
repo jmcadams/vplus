@@ -54,7 +54,7 @@ namespace Nutcracker.Effects {
             var snowflakesCount = string.Format(SnowflakesCount, effectNum);
             var snowflakesType = string.Format(SnowflakesType, effectNum);
 
-            foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
+            foreach (var keyValue in settings.Select(s => s.Split('='))) {
                 if (keyValue[0].Equals(snowflakesCount)) {
                     tbMaxFlakes.Value = keyValue[1].ToInt();
                 }

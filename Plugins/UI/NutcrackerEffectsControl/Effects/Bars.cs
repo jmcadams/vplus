@@ -63,7 +63,7 @@ namespace Nutcracker.Effects {
             var barHighlight = string.Format(BarHighlight, effectNum);
             var bar3D = string.Format(Bar3D, effectNum);
 
-            foreach (var keyValue in settings.Select(s => s.Split(new[] {'='}))) {
+            foreach (var keyValue in settings.Select(s => s.Split('='))) {
                 if (keyValue[0].Equals(barCount)) {
                     tbRepeat.Value = keyValue[1].ToInt();
                 }

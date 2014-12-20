@@ -681,13 +681,13 @@ namespace Nutcracker {
 
 
         private void SetPreset(string effectData) {
-            var settings = effectData.Split(new[] {','}).ToList();
+            var settings = effectData.Split(',').ToList();
 
             // Strip out first 4 settings
             var effect1Name = settings[0];
             var effect2Name = settings[1];
             SetLayeringMethod(settings[2]);
-            SetSparkleFrequency(settings[3].Split(new[] {'='})[1]);
+            SetSparkleFrequency(settings[3].Split('=')[1]);
 
             for (var i = 0; i < 4; i++) {
                 settings.RemoveAt(0);

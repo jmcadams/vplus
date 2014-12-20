@@ -18,7 +18,7 @@
 
         public override string ToString()
         {
-            return string.Format("{0}, {1}, {2}, {3}", new object[] {Manufacturer, LightCount, Color, Controller});
+            return string.Format("{0}, {1}, {2}, {3}", Manufacturer, LightCount, Color, Controller);
         }
     }
 }

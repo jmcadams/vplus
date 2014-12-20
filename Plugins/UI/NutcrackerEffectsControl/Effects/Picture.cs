@@ -64,7 +64,7 @@ namespace Nutcracker.Effects {
             var picturesFileName = string.Format(PicturesFileName, effectNum);
             var picturesGifSpeed = string.Format(PicturesGifSpeed, effectNum);
 
-            foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
+            foreach (var keyValue in settings.Select(s => s.Split('='))) {
                 if (keyValue[0].Equals(picturesDirection)) {
                     var index = cbDirection.Items.IndexOf(keyValue[1]);
                     if (index >= 0) {

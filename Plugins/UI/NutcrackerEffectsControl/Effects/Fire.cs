@@ -53,7 +53,7 @@ namespace Nutcracker.Effects {
             var effectNum = settings[0];
             var fireHeight = string.Format(FireHeight, effectNum);
 
-            foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' })).Where(keyValue => keyValue[0].Equals(fireHeight))) {
+            foreach (var keyValue in settings.Select(s => s.Split('=')).Where(keyValue => keyValue[0].Equals(fireHeight))) {
                 tbHeight.Value = keyValue[1].ToInt();
             }
         }

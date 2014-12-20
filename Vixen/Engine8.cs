@@ -19,6 +19,7 @@ namespace VixenPlus {
 
         public delegate void SequenceChangeDelegate();
 
+        // ReSharper disable once CollectionNeverQueried.Local
         private static readonly List<Engine8> InstanceList = new List<Engine8>();
         private readonly object _runLock;
         private EngineContext _engineContext;
@@ -239,7 +240,7 @@ namespace VixenPlus {
 
             context.Timekeeper.Stop();
             if (Host.InvokeRequired) {
-                Host.Invoke(new InitEngineContextDelegate(InitEngineContext), new object[] {context, sequenceIndex});
+                Host.Invoke(new InitEngineContextDelegate(InitEngineContext), context, sequenceIndex);
             }
             else if ((sequenceIndex == -1) || (CurrentObject.EventSequences.Count <= sequenceIndex)) {
                 FinalizeEngineContext(context);
@@ -469,7 +470,7 @@ namespace VixenPlus {
                     PrepareAudio(context, context.StartOffset);
                     StartAudio(context);
                 };
-                Host.Invoke(method, new object[0]);
+                Host.Invoke(method);
             }
             else {
                 PrepareAudio(context, context.StartOffset);
@@ -535,7 +536,7 @@ namespace VixenPlus {
                     OnSequenceChange();
                 }
                 else {
-                    Host.Invoke(new MethodInvoker(Stop), new object[0]);
+                    Host.Invoke(new MethodInvoker(Stop));
                 }
             }
             else if (num != context.LastIndex) {

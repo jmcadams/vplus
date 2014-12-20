@@ -64,7 +64,7 @@ namespace Nutcracker.Effects {
             var butterflySkip = string.Format(ButterflySkip, effectNum);
             var butterflyStyle = string.Format(ButterflyStyle, effectNum);
 
-            foreach (var keyValue in settings.Select(s => s.Split(new[] { '=' }))) {
+            foreach (var keyValue in settings.Select(s => s.Split('='))) {
                 if (keyValue[0].Equals(butterflyChunks)) {
                     tbChunks.Value = keyValue[1].ToInt();
                 }

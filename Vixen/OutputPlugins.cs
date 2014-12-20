@@ -50,11 +50,7 @@ namespace VixenPlus {
                     Xml.CloneNode(targetDoc, node, true);
                     Host.GetUniqueKey();
                     var str = string.Format(
-                        "{0}.{1}.{2}.{3}.vda",
-                        new object[] {
-                            _object.Name, node.Attributes["name"].Value, DateTime.Today.ToString("MMddyyyy"),
-                            DateTime.Now.ToString("HHmmssfff")
-                        });
+                        "{0}.{1}.{2}.{3}.vda", _object.Name, node.Attributes["name"].Value, DateTime.Today.ToString("MMddyyyy"), DateTime.Now.ToString("HHmmssfff"));
                     targetDoc.Save(Path.Combine(Paths.ImportExportPath, str));
                     builder.Append(str + "\n");
                     plugins.Append(pluginName + "\n");

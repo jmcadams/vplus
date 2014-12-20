@@ -26,6 +26,7 @@ namespace VixenPlus.Dialogs
         public string SelectedRoutine
         {
             get {
+                // ReSharper disable once MergeConditionalExpression
                 return listBoxRoutines.SelectedItem == null ? null : ((Routine) listBoxRoutines.SelectedItem).FilePath;
             }
         }

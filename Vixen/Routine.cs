@@ -27,7 +27,7 @@ namespace VixenPlus {
                 var line = reader.ReadLine();
                 var width = 0;
                 if (line != null) {
-                    width = line.Split(new[] {' '}).Length - 1;
+                    width = line.Split(' ').Length - 1;
                 }
                 var height = 1;
                 while (reader.ReadLine() != null) {
@@ -39,7 +39,7 @@ namespace VixenPlus {
                 string row;
                 while ((row = reader.ReadLine()) != null) {
                     var x = 0;
-                    foreach (var pixels in row.Split(new[] {' '}).Where(pixels => pixels.Length > 0)) {
+                    foreach (var pixels in row.Split(' ').Where(pixels => pixels.Length > 0)) {
                         Preview.SetPixel(x++, y, Color.FromArgb(Convert.ToByte(pixels), _routineColor));
                     }
                     y++;

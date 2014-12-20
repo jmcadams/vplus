@@ -132,7 +132,7 @@ namespace VixenEditor {
                 }
                 toolStrips.Remove(item);
 
-                var strArray = node.Attributes["location"].Value.Split(new[] {','});
+                var strArray = node.Attributes["location"].Value.Split(',');
                 toolStripPanel.Join(item, int.Parse(strArray[0]), int.Parse(strArray[1]));
 
                 item.Visible = bool.Parse(node.Attributes["visible"].Value);

@@ -46,7 +46,7 @@ namespace VixenPlus {
             }
 
             DimmingCurve = new byte[256];
-            var strArray = channelNode["Curve"].InnerText.Split(new[] {','});
+            var strArray = channelNode["Curve"].InnerText.Split(',');
             var num = Math.Min(strArray.Length, 256);
             for (var i = 0; i < num; i++) {
                 byte num2;
@@ -96,7 +96,7 @@ namespace VixenPlus {
 
         public int OutputChannel { get; set; }
 
-        public ulong Id { get; set; }
+        public ulong Id { get; private set; }
 
         public void Dispose() {
             GC.SuppressFinalize(this);

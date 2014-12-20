@@ -288,7 +288,7 @@ namespace VixenPlus.Dialogs {
                     }
                     _stopwatch.Reset();
                     _stopwatch.Start();
-                    Invoke(new ProgressBarVisibleDelegate(ProgressBarVisible), new object[] {false});
+                    Invoke(new ProgressBarVisibleDelegate(ProgressBarVisible), false);
                 }
                 else {
                     MethodInvoker method = delegate {

@@ -60,9 +60,8 @@ namespace VixenPlus {
                 try {
                     var span = new TimeSpan(0, 0, 0, 0, lengthInMilliseconds);
                     var str2 = !string.IsNullOrEmpty(sourceNote)
-                        ? string.Format("{0} [{1} - {2}]   {3} ({4})\n",
-                            new object[] {DateTime.Now, source, sourceNote, audioFileName, span})
-                        : string.Format("{0} [{1}]   {2} ({3})\n", new object[] {DateTime.Now, source, audioFileName, span});
+                        ? string.Format("{0} [{1} - {2}]   {3} ({4})\n", DateTime.Now, source, sourceNote, audioFileName, span)
+                        : string.Format("{0} [{1}]   {2} ({3})\n", DateTime.Now, source, audioFileName, span);
                     File.AppendAllText(path, str2);
                 }
                 catch (Exception exception) {

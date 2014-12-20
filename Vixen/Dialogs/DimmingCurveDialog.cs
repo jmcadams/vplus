@@ -316,16 +316,9 @@ namespace VixenPlus.Dialogs {
                     _selectedPointAbsolute = -1;
                 }
             }
-            if (_selectedPointAbsolute == -1) {
-                labelChannelValue.Text = string.Empty;
-            }
-            else {
-                labelChannelValue.Text = string.Format("Channel value {0} ({2:P0}) will output at {1} ({3:P0})",
-                                                       new object[] {
-                                                           _selectedPointAbsolute, _points[_selectedPointAbsolute], (_selectedPointAbsolute) / 255f,
-                                                           (_points[_selectedPointAbsolute]) / 255f
-                                                       });
-            }
+            labelChannelValue.Text = _selectedPointAbsolute == -1 
+                ? string.Empty 
+                : string.Format("Channel value {0} ({2:P0}) will output at {1} ({3:P0})", _selectedPointAbsolute, _points[_selectedPointAbsolute], (_selectedPointAbsolute) / 255f, (_points[_selectedPointAbsolute]) / 255f);
         }
 
 

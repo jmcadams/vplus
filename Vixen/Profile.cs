@@ -205,7 +205,7 @@ namespace VixenPlus {
 
                 var outputNodes = documentElement.SelectSingleNode("Outputs");
                 if (outputNodes != null) {
-                    foreach (var outputChannel in outputNodes.InnerText.Split(new[] {','}).Where(outputChannel => outputChannel.Length > 0)) {
+                    foreach (var outputChannel in outputNodes.InnerText.Split(',').Where(outputChannel => outputChannel.Length > 0)) {
                         _channelOutputs.Add(Convert.ToInt32(outputChannel));
                     }
                 }
@@ -216,7 +216,7 @@ namespace VixenPlus {
             if (documentElement != null) {
                 var disabledChannelsNode = documentElement.SelectSingleNode("DisabledChannels");
                 if (disabledChannelsNode != null) {
-                    foreach (var disabledChannel in disabledChannelsNode.InnerText.Split(new[] {','}).Where(disabledChannel => disabledChannel != string.Empty)) {
+                    foreach (var disabledChannel in disabledChannelsNode.InnerText.Split(',').Where(disabledChannel => disabledChannel != string.Empty)) {
                         Channels[Convert.ToInt32(disabledChannel)].Enabled = false;
                     }
                 }
@@ -269,7 +269,7 @@ namespace VixenPlus {
             foreach (var num in _channelOutputs) {
                 builder.AppendFormat("{0},", num);
             }
-            Xml.GetEmptyNodeAlways(profile, "Outputs").InnerText = builder.ToString().TrimEnd(new[] {','});
+            Xml.GetEmptyNodeAlways(profile, "Outputs").InnerText = builder.ToString().TrimEnd(',');
             
             if (profile != null) {
                 profile.AppendChild(doc.ImportNode(PlugInData.RootNode, true));
