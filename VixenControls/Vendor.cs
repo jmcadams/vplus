@@ -41,9 +41,5 @@ namespace VixenPlusCommon {
         // ReSharper restore InconsistentNaming
         public const string UpdateSupportBatchProtected = "_update.bat";
         public const string UpdateSupportBatchReal = "update.bat";
-
-        public const int Vixen25 = 25;
-        public const int Vixen21 = 21;
-        public const int VixenPlus = 1;
     }
 }

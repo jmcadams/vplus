@@ -8,6 +8,7 @@ using System.Xml;
 
 using VixenPlusCommon;
 
+//TODO We need to refactor this, a profile is a profile, how it is persisted depends on the file IO routine, not the profile.
 namespace VixenPlus {
     public class Profile : IExecutable {
         private readonly List<int> _channelOutputs;
@@ -263,7 +264,7 @@ namespace VixenPlus {
 
             var emptyNodeAlways = Xml.GetEmptyNodeAlways(profile, "ChannelObjects");
             foreach (var channel in _channelObjects) {
-                emptyNodeAlways.AppendChild(channel.SaveToXml(doc, Vendor.VixenPlus));
+                emptyNodeAlways.AppendChild(channel.SaveToXml(doc));
             }
             var builder = new StringBuilder();
             foreach (var num in _channelOutputs) {

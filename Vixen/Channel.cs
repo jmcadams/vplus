@@ -7,6 +7,7 @@ using System.Xml;
 
 using VixenPlusCommon;
 
+//TODO Need to refactor this, the channel should just be a channel, how we persist it depends on the saving routine, not the channel.
 namespace VixenPlus {
     public class Channel : IDisposable {
         private Color _color;
@@ -20,9 +21,9 @@ namespace VixenPlus {
                 return;
             }
 
-            CanDoDimming = (channelNode.Attributes["name"] != null);
+            SupportsDimmingCurve = (channelNode.Attributes["name"] != null);
             // ReSharper disable PossibleNullReferenceException
-            Name = CanDoDimming ? channelNode.Attributes["name"].Value : channelNode.InnerText;
+            Name = SupportsDimmingCurve ? channelNode.Attributes["name"].Value : channelNode.InnerText;
             // ReSharper restore PossibleNullReferenceException
 
             var elementName = "color";
@@ -90,7 +91,7 @@ namespace VixenPlus {
 
         public bool Enabled { get; set; }
 
-        public bool CanDoDimming { get; private set; }
+        public bool SupportsDimmingCurve { get; private set; }
 
         public string Name { get; set; }
 
@@ -119,9 +120,9 @@ namespace VixenPlus {
         }
 
 
-        public XmlNode SaveToXml(XmlDocument doc, int seqIOHandlerVersion) {
+        public XmlNode SaveToXml(XmlDocument doc) {
             XmlNode node = doc.CreateElement("Channel");
-            if (CanDoDimming) {
+            if (SupportsDimmingCurve) {
                 Xml.SetAttribute(node, "name", Name);
             }
             else {

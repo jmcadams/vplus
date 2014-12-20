@@ -108,7 +108,7 @@ namespace VixenPlus.Dialogs
             comboBoxChannels.SelectedItem = _currentChannel;
             buttonPrev.Enabled = comboBoxChannels.Items.IndexOf(_currentChannel) > 0;
             buttonNext.Enabled = comboBoxChannels.Items.IndexOf(_currentChannel) < (comboBoxChannels.Items.Count - 1);
-            buttonDimmingCurve.Visible = _currentChannel.CanDoDimming;
+            buttonDimmingCurve.Visible = _currentChannel.SupportsDimmingCurve;
             _internalChange = false;
             FromChannel();
         }
