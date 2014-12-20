@@ -13,9 +13,10 @@ using System.Xml;
 
 using VixenPlus.Dialogs;
 using VixenPlus.Properties;
-using common = VixenPlusCommon.Properties;
 
 using VixenPlusCommon;
+
+using common = VixenPlusCommon.Properties;
 
 namespace VixenPlus {
     internal sealed partial class VixenPlusForm : Form, ISystem {
@@ -28,7 +29,7 @@ namespace VixenPlus {
         private readonly Dictionary<string, IUIPlugIn> _registeredFileTypes;
 
         private EventHandler _historyItemClick;
-        private EventHandler _newMenuItemClick;
+        //private EventHandler _newMenuItemClick;
 
         private readonly Preference2 _preferences;
 
@@ -63,7 +64,6 @@ namespace VixenPlus {
                 _preferences.PreferenceChange += PreferencesPreferenceChange;
                 Interfaces.Available["ISystem"] = this;
                 Interfaces.Available["IExecution"] = new ExecutionImpl(new Host(this));
-                _newMenuItemClick = NewMenuItemClick;
                 _historyItemClick = HistoryItemClick;
                 LoadHistory();
                 var loadableData = new LoadableData();
@@ -128,20 +128,18 @@ namespace VixenPlus {
 
         public Form InstantiateForm(ConstructorInfo constructorInfo, params object[] parameters) {
             if (InvokeRequired) {
-                return (Form) Invoke(new InstantiateFormDelegate(InstantiateForm), new object[] {constructorInfo, parameters});
+                return (Form)Invoke(new InstantiateFormDelegate(InstantiateForm), constructorInfo, parameters);
             }
-            var child = (Form) constructorInfo.Invoke(parameters);
-            if (child == null) {
-                return null;
-            }
+            var child = (Form)constructorInfo.Invoke(parameters);
             if (!(child is OutputPlugInUIBase)) {
                 return null;
             }
-            var base2 = (OutputPlugInUIBase) child;
-            var executable = (IExecutable) Host.Communication["CurrentObject"];
+            var base2 = (OutputPlugInUIBase)child;
+            var executable = (IExecutable)Host.Communication["CurrentObject"];
             if (executable == null) {
                 return child;
             }
+            
             var str = executable.Key.ToString(CultureInfo.InvariantCulture);
             XmlNode node2 = null;
             var node = ((XmlNode) Host.Communication["SetupNode_" + str]).SelectSingleNode("DialogPositions");
@@ -201,11 +199,11 @@ namespace VixenPlus {
                         var strArray = System.Windows.Forms.Clipboard.GetText().Split(new[] {Environment.NewLine},
                             StringSplitOptions.RemoveEmptyEntries);
                         var maxCols = 0;
-                        Array.ForEach(strArray, delegate(string s) { maxCols = Math.Max(s.Split(new[] {','}).Length, maxCols); });
+                        Array.ForEach(strArray, delegate(string s) { maxCols = Math.Max(s.Split(',').Length, maxCols); });
                         array = new byte[strArray.Length,maxCols];
                         Array.Clear(array, 0, array.Length);
                         for (var i = 0; i < strArray.Length; i++) {
-                            var strArray2 = strArray[i].Split(new[] {','});
+                            var strArray2 = strArray[i].Split(',');
                             for (var j = 0; j < strArray2.Length; j++) {
                                 array[i, j] = byte.Parse(strArray2[j]);
                             }
@@ -239,7 +237,7 @@ namespace VixenPlus {
             }
         }
 
-        private string KnownFileTypesFilter { get; set; }
+        //private string KnownFileTypesFilter { get; set; }
 
         public Preference2 UserPreferences {
             get { return _preferences; }
@@ -271,9 +269,11 @@ namespace VixenPlus {
         }
 
 
+        //TODO: File Interoperability may impact this
         private void ChangeSequenceName(IUIPlugIn pluginInstance, string newName) {
-            if (!newName.EndsWith(pluginInstance.FileExtension)) {
-                newName = newName + pluginInstance.FileExtension;
+            var fileExt = pluginInstance.Sequence.SeqIOHandler.FileExtension();
+            if (!newName.EndsWith(fileExt)) {
+                newName = newName + fileExt;
             }
             pluginInstance.Sequence.Name = newName;
             saveToolStripMenuItem.Text = string.Format("Save ({0})", pluginInstance.Sequence.Name);
@@ -312,7 +312,6 @@ namespace VixenPlus {
 
             _preferences.SaveSettings();
             _historyItemClick = null;
-            _newMenuItemClick = null;
         }
 
         private DialogResult CheckDirty(IUIPlugIn pluginInstance) {
@@ -321,7 +320,7 @@ namespace VixenPlus {
                 return none;
             }
             var str = pluginInstance.Sequence.Name ?? "this unnamed sequence";
-            none = MessageBox.Show(string.Format("[{0}]\nSave changes to {1}?", pluginInstance.FileTypeDescription, str), Vendor.ProductName,
+            none = MessageBox.Show(string.Format("Save changes to {0}?", str), Vendor.ProductName,
                 MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             if (none == DialogResult.Yes) {
                 Save(pluginInstance);
@@ -333,8 +332,9 @@ namespace VixenPlus {
             if (ActiveMdiChild == null) {
                 return;
             }
-            if ((ActiveMdiChild is OutputPlugInUIBase) && (((OutputPlugInUIBase) ActiveMdiChild).ExecutionParent != null)) {
-                ((OutputPlugInUIBase) ActiveMdiChild).ExecutionParent.Notify(Notification.KeyDown, e);
+            var activeChild = ActiveMdiChild as OutputPlugInUIBase;
+            if ((activeChild != null) && (activeChild.ExecutionParent != null)) {
+                activeChild.ExecutionParent.Notify(Notification.KeyDown, e);
             }
             else {
                 var activeMdiChild = ActiveMdiChild as IVixenMDI;
@@ -346,8 +346,9 @@ namespace VixenPlus {
 
 
         private void Form1_MdiChildActivate(object sender, EventArgs e) {
-            if (ActiveMdiChild is IUIPlugIn) {
-                saveToolStripMenuItem.Enabled = (ActiveMdiChild as IUIPlugIn).IsDirty;
+            var activeChild = ActiveMdiChild as IUIPlugIn;
+            if (activeChild != null) {
+                saveToolStripMenuItem.Enabled = activeChild.IsDirty;
                 saveAsToolStripMenuItem.Enabled = true;
             }
             else {
@@ -436,11 +437,12 @@ namespace VixenPlus {
                         select exportedTypes) {
                         try {
                             var inputPlugin = (IUIPlugIn) Activator.CreateInstance(exportedTypes);
-                            if (!RegisterFileType(inputPlugin.FileExtension, inputPlugin)) {
+                            if (!RegisterFileType(".vix", inputPlugin)) {
                                 MessageBox.Show(
                                     string.Format("Could not register UI plugin {0}.\nFile type is already handled.", inputPlugin.Name),
                                     Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             }
+                            newLightingProgramToolStripMenuItem.Tag = inputPlugin;
                         }
                         catch (Exception exception1) {
                             exception = exception1;
@@ -456,16 +458,6 @@ namespace VixenPlus {
                     MessageBox.Show(string.Format("{0}:\n{1}", Path.GetFileName(str), exception.Message));
                 }
             }
-            foreach (var in2 in _registeredFileTypes.Values) {
-                var item = newLightingProgramToolStripMenuItem.DropDownItems.Add(in2.FileTypeDescription);
-                item.Tag = in2;
-                item.Click += _newMenuItemClick;
-            }
-            var builder = new StringBuilder();
-            foreach (var in2 in _registeredFileTypes.Values) {
-                builder.AppendFormat("|{0}|*{1}", in2.FileTypeDescription, in2.FileExtension);
-            }
-            KnownFileTypesFilter = builder.ToString().Remove(0, 1);
         }
 
 
@@ -495,11 +487,7 @@ namespace VixenPlus {
         }
 
 
-        //public void InvokeGroupChange(object data) {
-        //    NotifyAll(Notification.GroupChange, data);
-        //}
-
-
+        // ReSharper disable once UnusedParameter.Local
         private void NewMenuItemClick(object sender, EventArgs e) {
             var item = (ToolStripItem) sender;
             if (!(item.Tag is IUIPlugIn)) {
@@ -562,20 +550,10 @@ namespace VixenPlus {
 
 
         private void openALightingProgramToolStripMenuItem_Click(object sender, EventArgs e) {
-            var filterIndex = 0;
-            var filterIndexCount = 1;
-            var preferredType = _preferences.GetString("PreferredSequenceType");
-            foreach (var thisType in _registeredFileTypes.Values) {
-                if (preferredType == thisType.FileExtension) {
-                    filterIndex = filterIndexCount;
-                    break;
-                }
-                filterIndexCount++;
-            }
-            openFileDialog1.Filter = KnownFileTypesFilter;
+            //openFileDialog1.Filter = KnownFileTypesFilter;
             openFileDialog1.InitialDirectory = Paths.SequencePath;
             openFileDialog1.FileName = string.Empty;
-            openFileDialog1.FilterIndex = filterIndex;
+            //openFileDialog1.FilterIndex = filterIndex;
             if (openFileDialog1.ShowDialog() != DialogResult.OK) {
                 return;
             }
@@ -620,7 +598,7 @@ namespace VixenPlus {
         private void preferencesToolStripMenuItem_Click(object sender, EventArgs e) {
             var plugIns = new IUIPlugIn[_registeredFileTypes.Values.Count];
             _registeredFileTypes.Values.CopyTo(plugIns, 0);
-            using (var preferencesDialog = new PreferencesDialog(plugIns)) {
+            using (var preferencesDialog = new PreferencesDialog()) {
                 if (preferencesDialog.ShowDialog() != DialogResult.OK) {
                     return;
                 }

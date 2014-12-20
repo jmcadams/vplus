@@ -5,8 +5,8 @@ using VixenPlusCommon.Annotations;
 namespace VixenPlus {
     internal interface IUIPlugIn : IVixenMDI, IPlugIn
     {
-        string FileExtension { get; }
-        string FileTypeDescription { get; }
+        //string FileExtension { get; }
+        //string FileTypeDescription { get; }
         bool IsDirty { get;
             [UsedImplicitly]
             set; }

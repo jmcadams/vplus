@@ -47,6 +47,7 @@ namespace VixenPlus {
             Key = Host.GetUniqueKey();
         }
 
+
         public EventSequence(string fileName) : this() {
             var contextNode = new XmlDocument();
             contextNode.Load(fileName);
@@ -207,6 +208,7 @@ namespace VixenPlus {
 
         public bool TreatAsLocal { get; private set; }
 
+
         private bool HasData() {
             for (var row = 0; row < Rows; row++) {
                 for (var column = 0; column < Cols; column++) {
@@ -241,7 +243,7 @@ namespace VixenPlus {
 
             foreach (var g in Groups) {
                 var newChannels = new List<string>();
-                foreach (var channel in g.Value.GroupChannels.Split(new[] {','})) {
+                foreach (var channel in g.Value.GroupChannels.Split(',')) {
                     var newChannel = channel;
                     int res;
                     if (int.TryParse(channel, out res)) {
@@ -280,67 +282,6 @@ namespace VixenPlus {
             _profile.Reload();
             LoadFromProfile();
         }
-
-
-        //TODO Need to ask if this is a 2.1 or 2.5 format before saving.
-        //public void SaveTo() {
-        //    var contextNode = Xml.CreateXmlDocument();
-        //    SaveToXml(contextNode);
-        //    contextNode.Save(FileName);
-        //}
-
-
-        //private void SaveToXml(XmlNode contextNode) {
-        //    var doc = contextNode.OwnerDocument ?? ((XmlDocument) contextNode);
-        //    var emptyNodeAlways = Xml.GetEmptyNodeAlways(contextNode, "Program");
-        //    Xml.SetValue(emptyNodeAlways, "Time", Length.ToString(CultureInfo.InvariantCulture));
-        //    Xml.SetValue(emptyNodeAlways, "EventPeriodInMilliseconds", _eventPeriod.ToString(CultureInfo.InvariantCulture));
-        //    Xml.SetValue(emptyNodeAlways, "MinimumLevel", MinimumLevel.ToString(CultureInfo.InvariantCulture));
-        //    Xml.SetValue(emptyNodeAlways, "MaximumLevel", MaximumLevel.ToString(CultureInfo.InvariantCulture));
-        //    Xml.SetValue(emptyNodeAlways, "AudioDevice", AudioDeviceIndex.ToString(CultureInfo.InvariantCulture));
-        //    Xml.SetValue(emptyNodeAlways, "AudioVolume", AudioDeviceVolume.ToString(CultureInfo.InvariantCulture));
-
-        //    if (_profile == null) {
-        //        //Channels
-        //        var node2 = Xml.GetEmptyNodeAlways(emptyNodeAlways, "Channels");
-        //        foreach (var channel in _fullChannels) {
-        //            node2.AppendChild(channel.SaveToXml(doc, Vendor.VixenPlus));
-        //        }
-
-        //        //Plugins
-        //        if (emptyNodeAlways.OwnerDocument != null) {
-        //            emptyNodeAlways.AppendChild(emptyNodeAlways.OwnerDocument.ImportNode(PlugInData.RootNode, true));
-        //        }
-
-        //        //Groups
-        //        Group.SaveToXml(emptyNodeAlways, Groups);
-        //    }
-        //    if (_profile != null) {
-        //        Xml.SetValue(emptyNodeAlways, "Profile", _profile.Name);
-        //    }
-        //    if (Audio != null) {
-        //        var node = Xml.SetNewValue(emptyNodeAlways, "Audio", Audio.Name);
-        //        Xml.SetAttribute(node, "filename", Audio.FileName);
-        //        Xml.SetAttribute(node, "duration", Audio.Duration.ToString(CultureInfo.InvariantCulture));
-        //    }
-        //    var count = FullChannels.Count;
-        //    var totalEventPeriods = TotalEventPeriods;
-        //    var inArray = new byte[count * totalEventPeriods];
-        //    var num4 = 0;
-        //    for (var i = 0; i < count; i++) {
-        //        for (var j = 0; j < totalEventPeriods; j++) {
-        //            inArray[num4++] = EventValues[i, j];
-        //        }
-        //    }
-        //    Xml.GetNodeAlways(emptyNodeAlways, "EventValues").InnerText = Convert.ToBase64String(inArray);
-        //    if (emptyNodeAlways.OwnerDocument != null && LoadableData != null) {
-        //        emptyNodeAlways.AppendChild(emptyNodeAlways.OwnerDocument.ImportNode(LoadableData.RootNode, true));
-        //    }
-        //    Xml.SetValue(emptyNodeAlways, "EngineType", EngineType.ToString());
-        //    if (emptyNodeAlways.OwnerDocument != null) {
-        //        emptyNodeAlways.AppendChild(emptyNodeAlways.OwnerDocument.ImportNode(Extensions.RootNode, true));
-        //    }
-        //}
 
 
         private void SetTime(int milliseconds) {
@@ -512,7 +453,7 @@ namespace VixenPlus {
             }
             var node5 = requiredNode.SelectSingleNode("WindowSize");
             if (node5 != null) {
-                var strArray = node5.InnerText.Split(new[] {','});
+                var strArray = node5.InnerText.Split(',');
                 try {
                     WindowWidth = Convert.ToInt32(strArray[0]);
                 }
@@ -706,7 +647,7 @@ namespace VixenPlus {
 
             foreach (var g in Groups) {
                 var newChannels = new List<string>();
-                foreach (var channel in g.Value.GroupChannels.Split(new[] {','})) {
+                foreach (var channel in g.Value.GroupChannels.Split(',')) {
                     int res;
                     if (int.TryParse(channel, out res)) {
                         if (res == index) {

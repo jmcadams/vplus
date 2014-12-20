@@ -4,6 +4,7 @@ namespace VixenPlus {
     public interface ISeqIOHandler {
 
         string DialogFilterList();
+        string FileExtension();
         int VendorId();
         int PreferredOrder();
         long VGUID();

@@ -9,7 +9,12 @@ namespace SeqIOHelpers {
     public class SeqIOBase : ISeqIOHandler {
 
         public virtual string DialogFilterList() {
-            return "Vixen Plus format (*.vix)|*.vix";
+            return string.Format("Vixen Plus Sequence (*{0})|*{0}", FileExtension());
+        }
+
+
+        public /*virtual*/ string FileExtension() {
+            return ".vix";
         }
 
 

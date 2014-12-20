@@ -16,7 +16,6 @@ using ColorDialog = System.Windows.Forms.ColorDialog;
 namespace VixenPlus.Dialogs {
     internal partial class PreferencesDialog : Form {
         private readonly Preference2 _preferences;
-        private readonly IUIPlugIn[] _uiPlugins;
 
         private enum RootNodes {
             General = 0,
@@ -27,14 +26,10 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        public PreferencesDialog(IUIPlugIn[] uiPlugins) {
+        public PreferencesDialog() {
             InitializeComponent();
             Icon = Resources.VixenPlus;
             _preferences = Preference2.GetInstance();
-            _uiPlugins = uiPlugins;
-            foreach (var plugIn in uiPlugins) {
-                comboBoxSequenceType.Items.Add(plugIn.FileTypeDescription);
-            }
             treeView.Nodes["nodeGeneral"].Tag = generalTab;
             treeView.Nodes["nodeScreen"].Tag = screenTab;
             treeView.Nodes["nodeNewSequenceSettings"].Tag = newSequenceSettingsTab;
@@ -99,7 +94,6 @@ namespace VixenPlus.Dialogs {
         private void WriteGeneralNodes() {
             _preferences.SetString("MouseWheelVerticalDelta", textBoxMouseWheelVertical.Text);
             _preferences.SetString("MouseWheelHorizontalDelta", textBoxMouseWheelHorizontal.Text);
-            _preferences.SetString("PreferredSequenceType", _uiPlugins[comboBoxSequenceType.SelectedIndex].FileExtension);
             _preferences.SetString("ShutdownTime",
                                    !dateTimePickerAutoShutdownTime.Checked
                                        ? string.Empty
@@ -227,17 +221,6 @@ namespace VixenPlus.Dialogs {
         private void ReadGeneralNodes() {
             textBoxMouseWheelVertical.Text = _preferences.GetString("MouseWheelVerticalDelta");
             textBoxMouseWheelHorizontal.Text = _preferences.GetString("MouseWheelHorizontalDelta");
-            var str = _preferences.GetString("PreferredSequenceType");
-            for (var i = 0; i < _uiPlugins.Length; i++) {
-                if (_uiPlugins[i].FileExtension != str) {
-                    continue;
-                }
-                comboBoxSequenceType.SelectedIndex = i;
-                break;
-            }
-            if (comboBoxSequenceType.SelectedIndex == -1) {
-                comboBoxSequenceType.SelectedIndex = 0;
-            }
             var s = _preferences.GetString("ShutdownTime");
             if (s != string.Empty) {
                 dateTimePickerAutoShutdownTime.Checked = true;

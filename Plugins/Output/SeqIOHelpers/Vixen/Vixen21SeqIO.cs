@@ -13,7 +13,7 @@ namespace SeqIOHelpers {
     public class Vixen21SeqIO : SeqIOBase {
 
         public override string DialogFilterList() {
-            return "Vixen 2.1 format (*.vix)|*.vix";
+            return string.Format("Vixen 2.1 Sequence (*{0})|*{0}", FileExtension());
         }
 
 

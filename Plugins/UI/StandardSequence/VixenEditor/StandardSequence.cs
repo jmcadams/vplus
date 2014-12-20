@@ -4521,13 +4521,13 @@ namespace VixenEditor {
         }
 
 
-        public override string FileExtension {
-            get { return Vendor.SequenceExtension; }
-        }
+        //public override string FileExtension {
+        //    get { return Vendor.SequenceExtension; }
+        //}
 
-        public override string FileTypeDescription {
-            get { return "Vixen/Vixen+ sequence"; }
-        }
+        //public override string FileTypeDescription {
+        //    get { return "Vixen/Vixen+ sequence"; }
+        //}
 
         private Channel SelectedChannel {
             get { return _selectedChannel; }

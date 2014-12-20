@@ -112,6 +112,7 @@ namespace VixenPlus {
             this.newLightingProgramToolStripMenuItem.Name = "newLightingProgramToolStripMenuItem";
             this.newLightingProgramToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.newLightingProgramToolStripMenuItem.Text = "New sequence";
+            this.newLightingProgramToolStripMenuItem.Click += new System.EventHandler(this.NewMenuItemClick);
             // 
             // openALightingProgramToolStripMenuItem
             // 
@@ -171,7 +172,7 @@ namespace VixenPlus {
             this.tsmProfiles.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.manageToolStripMenuItem});
             this.tsmProfiles.Name = "tsmProfiles";
-            this.tsmProfiles.Size = new System.Drawing.Size(152, 22);
+            this.tsmProfiles.Size = new System.Drawing.Size(113, 22);
             this.tsmProfiles.Text = "Profiles";
             // 
             // manageToolStripMenuItem
