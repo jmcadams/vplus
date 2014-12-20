@@ -8,11 +8,11 @@ using System.Text;
 using VixenPlusCommon;
 
 namespace VixenPlus {
-    public static class SequenceFileIOHelper {
+    public static class FileIOHelper {
 
-        private static readonly Dictionary<string, ISeqIOHandler> PluginCache = new Dictionary<string, ISeqIOHandler>();
+        private static readonly Dictionary<string, IFileIOHandler> PluginCache = new Dictionary<string, IFileIOHandler>();
 
-        static SequenceFileIOHelper() {
+        static FileIOHelper() {
             LoadPlugins();
         }
 
@@ -22,16 +22,16 @@ namespace VixenPlus {
                     var assembly = Assembly.LoadFile(dllFile);
                     foreach (var desiredType in from exportedType in assembly.GetExportedTypes()
                         from Interface in exportedType.GetInterfaces()
-                        where Interface.Name == "ISeqIOHandler"
+                        where Interface.Name == "IFileIOHandler"
                         select exportedType) {
-                        ISeqIOHandler plugin;
+                        IFileIOHandler plugin;
 
                         // If we have a cache hit, we can just skip this one.
                         if (PluginCache.TryGetValue(desiredType.Name, out plugin)) {
                             continue;
                         }
 
-                        PluginCache[desiredType.Name] = (ISeqIOHandler) Activator.CreateInstance(desiredType);
+                        PluginCache[desiredType.Name] = (IFileIOHandler) Activator.CreateInstance(desiredType);
                     }
 
                 }
@@ -66,12 +66,12 @@ namespace VixenPlus {
         }
 
 
-        public static ISeqIOHandler GetHelperByName(string s) {
+        public static IFileIOHandler GetHelperByName(string s) {
             return PluginCache.First(v => v.Value.DialogFilterList().StartsWith(s)).Value;
         }
 
 
-        public static ISeqIOHandler GetNativeHelper() {
+        public static IFileIOHandler GetNativeHelper() {
             return PluginCache.First(fio => fio.Value.IsNativeToVixenPlus()).Value;
         }
     }

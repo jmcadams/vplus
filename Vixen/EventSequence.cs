@@ -154,7 +154,7 @@ namespace VixenPlus {
 
         public string FileName { get; private set; }
 
-        public ISeqIOHandler SeqIOHandler { get; set; }
+        public IFileIOHandler FileIOHandler { get; set; }
 
         public ulong Key { get; private set; }
 

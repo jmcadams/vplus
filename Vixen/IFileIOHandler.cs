@@ -1,7 +1,7 @@
 ﻿using System.Xml;
 
 namespace VixenPlus {
-    public interface ISeqIOHandler {
+    public interface IFileIOHandler {
 
         string DialogFilterList();
         string FileExtension();

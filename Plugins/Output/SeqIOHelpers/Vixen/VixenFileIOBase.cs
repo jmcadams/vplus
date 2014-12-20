@@ -6,7 +6,7 @@ using System.Xml;
 using VixenPlus;
 
 namespace SeqIOHelpers {
-    public class SeqIOBase : ISeqIOHandler {
+    public class VixenFileIOBase : IFileIOHandler {
 
         public virtual string DialogFilterList() {
             return string.Format("Vixen Plus Sequence (*{0})|*{0}", FileExtension());

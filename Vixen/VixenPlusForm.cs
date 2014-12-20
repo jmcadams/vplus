@@ -271,7 +271,7 @@ namespace VixenPlus {
 
         //TODO: File Interoperability WILL impact this
         private void ChangeSequenceName(IUIPlugIn pluginInstance, string newName) {
-            var fileExt = pluginInstance.Sequence.SeqIOHandler.FileExtension();
+            var fileExt = pluginInstance.Sequence.FileIOHandler.FileExtension();
             if (!newName.EndsWith(fileExt)) {
                 newName = newName + fileExt;
             }
@@ -364,7 +364,7 @@ namespace VixenPlus {
 
 
         private bool GetNewName(IUIPlugIn pluginInstance) {
-            saveFileDialog1.Filter = SequenceFileIOHelper.GetSaveFilters();
+            saveFileDialog1.Filter = FileIOHelper.GetSaveFilters();
             
             saveFileDialog1.InitialDirectory = Paths.SequencePath;
             saveFileDialog1.FileName = string.Empty;
@@ -374,7 +374,7 @@ namespace VixenPlus {
 
             var filters = saveFileDialog1.Filter.Split('|');
 
-            pluginInstance.Sequence.SeqIOHandler = SequenceFileIOHelper.GetHelperByName(filters[(saveFileDialog1.FilterIndex - 1) *2]);
+            pluginInstance.Sequence.FileIOHandler = FileIOHelper.GetHelperByName(filters[(saveFileDialog1.FilterIndex - 1) *2]);
 
             ChangeSequenceName(pluginInstance, saveFileDialog1.FileName);
             return true;
@@ -544,7 +544,7 @@ namespace VixenPlus {
 
 
         private void openALightingProgramToolStripMenuItem_Click(object sender, EventArgs e) {
-            openFileDialog1.Filter = SequenceFileIOHelper.GetOpenFilters();
+            openFileDialog1.Filter = FileIOHelper.GetOpenFilters();
             openFileDialog1.InitialDirectory = Paths.SequencePath;
             openFileDialog1.FileName = string.Empty;
             if (openFileDialog1.ShowDialog() != DialogResult.OK) {
@@ -641,8 +641,8 @@ namespace VixenPlus {
             UpdateHistoryImages(plugInInterface.Sequence.FileName);
 
             // If the sequenceType is not set, set it to Vixen Plus
-            if (plugInInterface.Sequence.SeqIOHandler == null) {
-                plugInInterface.Sequence.SeqIOHandler = SequenceFileIOHelper.GetNativeHelper();
+            if (plugInInterface.Sequence.FileIOHandler == null) {
+                plugInInterface.Sequence.FileIOHandler = FileIOHelper.GetNativeHelper();
             }
 
             plugInInterface.SaveTo();
