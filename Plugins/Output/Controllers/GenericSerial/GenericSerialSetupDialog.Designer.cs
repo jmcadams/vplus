@@ -1,8 +1,12 @@
+using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
+
+using Controllers.Common;
 
 namespace Controllers.GenericSerial {
     internal partial class GenericSerialSetupDialog {
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         #region Windows Form Designer generated code
 
@@ -14,13 +18,13 @@ namespace Controllers.GenericSerial {
 
 
         private void InitializeComponent() {
-            this.gbPacketData = new System.Windows.Forms.GroupBox();
-            this.tbFooter = new System.Windows.Forms.TextBox();
-            this.cbFooter = new System.Windows.Forms.CheckBox();
-            this.tbHeader = new System.Windows.Forms.TextBox();
-            this.cbHeader = new System.Windows.Forms.CheckBox();
-            this.serialSetup1 = new Controllers.Common.SerialSetup();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gbPacketData = new GroupBox();
+            this.tbFooter = new TextBox();
+            this.cbFooter = new CheckBox();
+            this.tbHeader = new TextBox();
+            this.cbHeader = new CheckBox();
+            this.serialSetup1 = new SerialSetup();
+            this.groupBox1 = new GroupBox();
             this.gbPacketData.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -31,73 +35,73 @@ namespace Controllers.GenericSerial {
             this.gbPacketData.Controls.Add(this.cbFooter);
             this.gbPacketData.Controls.Add(this.tbHeader);
             this.gbPacketData.Controls.Add(this.cbHeader);
-            this.gbPacketData.Location = new System.Drawing.Point(339, 13);
+            this.gbPacketData.Location = new Point(339, 13);
             this.gbPacketData.Name = "gbPacketData";
-            this.gbPacketData.Size = new System.Drawing.Size(288, 129);
+            this.gbPacketData.Size = new Size(288, 129);
             this.gbPacketData.TabIndex = 3;
             this.gbPacketData.TabStop = false;
             this.gbPacketData.Text = "Packet Data";
             // 
             // tbFooter
             // 
-            this.tbFooter.Location = new System.Drawing.Point(32, 98);
+            this.tbFooter.Location = new Point(32, 98);
             this.tbFooter.Name = "tbFooter";
-            this.tbFooter.Size = new System.Drawing.Size(204, 20);
+            this.tbFooter.Size = new Size(204, 20);
             this.tbFooter.TabIndex = 3;
             // 
             // cbFooter
             // 
             this.cbFooter.AutoSize = true;
-            this.cbFooter.Location = new System.Drawing.Point(13, 75);
+            this.cbFooter.Location = new Point(13, 75);
             this.cbFooter.Name = "cbFooter";
-            this.cbFooter.Size = new System.Drawing.Size(176, 17);
+            this.cbFooter.Size = new Size(176, 17);
             this.cbFooter.TabIndex = 2;
             this.cbFooter.Text = "Each packet sends this footer...";
             this.cbFooter.UseVisualStyleBackColor = true;
             // 
             // tbHeader
             // 
-            this.tbHeader.Location = new System.Drawing.Point(32, 49);
+            this.tbHeader.Location = new Point(32, 49);
             this.tbHeader.Name = "tbHeader";
-            this.tbHeader.Size = new System.Drawing.Size(204, 20);
+            this.tbHeader.Size = new Size(204, 20);
             this.tbHeader.TabIndex = 1;
             // 
             // cbHeader
             // 
             this.cbHeader.AutoSize = true;
-            this.cbHeader.Location = new System.Drawing.Point(13, 26);
+            this.cbHeader.Location = new Point(13, 26);
             this.cbHeader.Name = "cbHeader";
-            this.cbHeader.Size = new System.Drawing.Size(182, 17);
+            this.cbHeader.Size = new Size(182, 17);
             this.cbHeader.TabIndex = 0;
             this.cbHeader.Text = "Each packet sends this header...";
             this.cbHeader.UseVisualStyleBackColor = true;
             // 
             // serialSetup1
             // 
-            this.serialSetup1.Location = new System.Drawing.Point(6, 19);
+            this.serialSetup1.Location = new Point(6, 19);
             this.serialSetup1.Name = "serialSetup1";
             this.serialSetup1.SelectedPorts = null;
-            this.serialSetup1.Size = new System.Drawing.Size(308, 140);
+            this.serialSetup1.Size = new Size(308, 140);
             this.serialSetup1.TabIndex = 4;
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.serialSetup1);
-            this.groupBox1.Location = new System.Drawing.Point(13, 13);
+            this.groupBox1.Location = new Point(13, 13);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(320, 175);
+            this.groupBox1.Size = new Size(320, 175);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
             // 
             // DialogSerialSetup
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new SizeF(6F, 13F);
+            this.AutoScaleMode = AutoScaleMode.Font;
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.gbPacketData);
             this.Name = "GenericSerialSetupDialog";
-            this.Size = new System.Drawing.Size(642, 200);
+            this.Size = new Size(642, 200);
             this.gbPacketData.ResumeLayout(false);
             this.gbPacketData.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -114,7 +118,7 @@ namespace Controllers.GenericSerial {
             base.Dispose(disposing);
         }
 
-        private Common.SerialSetup serialSetup1;
+        private SerialSetup serialSetup1;
         private GroupBox groupBox1;
     }
 }

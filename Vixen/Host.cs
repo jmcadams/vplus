@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 
 using VixenPlus.Properties;
+
 using VixenPlusCommon;
 
 namespace VixenPlus {

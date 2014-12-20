@@ -4,9 +4,8 @@ using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 
-using VixenPlusCommon.Properties;
-
 using VixenPlusCommon;
+using VixenPlusCommon.Properties;
 
 namespace VixenPlus.Dialogs
 {

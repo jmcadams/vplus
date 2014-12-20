@@ -3,8 +3,6 @@ using System.Net;
 using System.Text;
 using System.Windows.Forms;
 
-
-
 using VixenPlusCommon;
 
 namespace VixenPlus.Dialogs {

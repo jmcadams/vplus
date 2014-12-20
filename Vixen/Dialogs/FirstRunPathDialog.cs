@@ -3,12 +3,11 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-
-using common = VixenPlusCommon.Properties;
-
 using VixenPlus.Properties;
 
 using VixenPlusCommon;
+
+using common = VixenPlusCommon.Properties;
 
 namespace VixenPlus.Dialogs {
     public partial class FirstRunPathDialog : Form {

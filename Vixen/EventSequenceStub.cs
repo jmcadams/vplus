@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
 
-
-
 using VixenPlusCommon;
 
 namespace VixenPlus {

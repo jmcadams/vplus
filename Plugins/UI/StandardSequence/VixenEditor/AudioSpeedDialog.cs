@@ -1,7 +1,7 @@
-namespace VixenEditor {
-    using System;
-    using System.Windows.Forms;
+using System;
+using System.Windows.Forms;
 
+namespace VixenEditor {
     public partial class AudioSpeedDialog : Form {
         public AudioSpeedDialog() {
             InitializeComponent();

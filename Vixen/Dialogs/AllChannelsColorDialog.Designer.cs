@@ -1,8 +1,11 @@
+using System;
+using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace VixenPlus.Dialogs {
     public partial class AllChannelsColorDialog {
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         #region Windows Form Designer generated code
 
@@ -17,14 +20,14 @@ namespace VixenPlus.Dialogs {
 
 
         private void InitializeComponent() {
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.listBoxChannels = new System.Windows.Forms.ListBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.listBoxColorsInUse = new System.Windows.Forms.ListBox();
-            this.buttonNewColor = new System.Windows.Forms.Button();
-            this.buttonCancel = new System.Windows.Forms.Button();
-            this.buttonOK = new System.Windows.Forms.Button();
-            this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.groupBox1 = new GroupBox();
+            this.listBoxChannels = new ListBox();
+            this.groupBox2 = new GroupBox();
+            this.listBoxColorsInUse = new ListBox();
+            this.buttonNewColor = new Button();
+            this.buttonCancel = new Button();
+            this.buttonOK = new Button();
+            this.colorDialog = new ColorDialog();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -32,9 +35,9 @@ namespace VixenPlus.Dialogs {
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.listBoxChannels);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(212, 429);
+            this.groupBox1.Size = new Size(212, 429);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Channels";
@@ -43,27 +46,27 @@ namespace VixenPlus.Dialogs {
             // 
             this.listBoxChannels.AllowDrop = true;
             this.listBoxChannels.Anchor =
-                ((System.Windows.Forms.AnchorStyles)
-                 ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) |
-                   System.Windows.Forms.AnchorStyles.Right)));
-            this.listBoxChannels.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+                ((AnchorStyles)
+                 ((((AnchorStyles.Top | AnchorStyles.Bottom) | AnchorStyles.Left) |
+                   AnchorStyles.Right)));
+            this.listBoxChannels.DrawMode = DrawMode.OwnerDrawFixed;
             this.listBoxChannels.FormattingEnabled = true;
             this.listBoxChannels.ItemHeight = 20;
-            this.listBoxChannels.Location = new System.Drawing.Point(16, 19);
+            this.listBoxChannels.Location = new Point(16, 19);
             this.listBoxChannels.Name = "listBoxChannels";
-            this.listBoxChannels.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBoxChannels.Size = new System.Drawing.Size(183, 384);
+            this.listBoxChannels.SelectionMode = SelectionMode.MultiExtended;
+            this.listBoxChannels.Size = new Size(183, 384);
             this.listBoxChannels.TabIndex = 0;
-            this.listBoxChannels.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBoxChannels_DrawItem);
-            this.listBoxChannels.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBoxChannels_DragDrop);
-            this.listBoxChannels.DragEnter += new System.Windows.Forms.DragEventHandler(this.listBoxChannels_DragEnter);
+            this.listBoxChannels.DrawItem += new DrawItemEventHandler(this.listBoxChannels_DrawItem);
+            this.listBoxChannels.DragDrop += new DragEventHandler(this.listBoxChannels_DragDrop);
+            this.listBoxChannels.DragEnter += new DragEventHandler(this.listBoxChannels_DragEnter);
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.listBoxColorsInUse);
-            this.groupBox2.Location = new System.Drawing.Point(243, 12);
+            this.groupBox2.Location = new Point(243, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(132, 391);
+            this.groupBox2.Size = new Size(132, 391);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Colors in use";
@@ -71,39 +74,39 @@ namespace VixenPlus.Dialogs {
             // listBoxColorsInUse
             // 
             this.listBoxColorsInUse.Anchor =
-                ((System.Windows.Forms.AnchorStyles)
-                 ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) |
-                   System.Windows.Forms.AnchorStyles.Right)));
-            this.listBoxColorsInUse.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+                ((AnchorStyles)
+                 ((((AnchorStyles.Top | AnchorStyles.Bottom) | AnchorStyles.Left) |
+                   AnchorStyles.Right)));
+            this.listBoxColorsInUse.DrawMode = DrawMode.OwnerDrawFixed;
             this.listBoxColorsInUse.FormattingEnabled = true;
             this.listBoxColorsInUse.ItemHeight = 20;
-            this.listBoxColorsInUse.Location = new System.Drawing.Point(15, 19);
+            this.listBoxColorsInUse.Location = new Point(15, 19);
             this.listBoxColorsInUse.Name = "listBoxColorsInUse";
             this.listBoxColorsInUse.ScrollAlwaysVisible = true;
-            this.listBoxColorsInUse.Size = new System.Drawing.Size(104, 344);
+            this.listBoxColorsInUse.Size = new Size(104, 344);
             this.listBoxColorsInUse.TabIndex = 0;
-            this.listBoxColorsInUse.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBoxColorsInUse_DrawItem);
-            this.listBoxColorsInUse.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBoxColorsInUse_MouseDown);
-            this.listBoxColorsInUse.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listBoxColorsInUse_MouseMove);
+            this.listBoxColorsInUse.DrawItem += new DrawItemEventHandler(this.listBoxColorsInUse_DrawItem);
+            this.listBoxColorsInUse.MouseDown += new MouseEventHandler(this.listBoxColorsInUse_MouseDown);
+            this.listBoxColorsInUse.MouseMove += new MouseEventHandler(this.listBoxColorsInUse_MouseMove);
             // 
             // buttonNewColor
             // 
-            this.buttonNewColor.Location = new System.Drawing.Point(272, 418);
+            this.buttonNewColor.Location = new Point(272, 418);
             this.buttonNewColor.Name = "buttonNewColor";
-            this.buttonNewColor.Size = new System.Drawing.Size(75, 23);
+            this.buttonNewColor.Size = new Size(75, 23);
             this.buttonNewColor.TabIndex = 3;
             this.buttonNewColor.Text = "New Color";
             this.buttonNewColor.UseVisualStyleBackColor = true;
-            this.buttonNewColor.Click += new System.EventHandler(this.buttonNewColor_Click);
+            this.buttonNewColor.Click += new EventHandler(this.buttonNewColor_Click);
             // 
             // buttonCancel
             // 
             this.buttonCancel.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(304, 475);
+                ((AnchorStyles) ((AnchorStyles.Bottom | AnchorStyles.Right)));
+            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.Location = new Point(304, 475);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancel.Size = new Size(75, 23);
             this.buttonCancel.TabIndex = 5;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
@@ -111,11 +114,11 @@ namespace VixenPlus.Dialogs {
             // buttonOK
             // 
             this.buttonOK.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(223, 475);
+                ((AnchorStyles) ((AnchorStyles.Bottom | AnchorStyles.Right)));
+            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.Location = new Point(223, 475);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(75, 23);
+            this.buttonOK.Size = new Size(75, 23);
             this.buttonOK.TabIndex = 4;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
@@ -127,24 +130,24 @@ namespace VixenPlus.Dialogs {
             // 
             // AllChannelsColorDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new SizeF(6F, 13F);
+            this.AutoScaleMode = AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(391, 510);
+            this.ClientSize = new Size(391, 510);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.buttonNewColor);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.HelpButton = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AllChannelsColorDialog";
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Channel Colors";
-            this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.AllChannelsColorDialog_HelpButtonClicked);
+            this.HelpButtonClicked += new CancelEventHandler(this.AllChannelsColorDialog_HelpButtonClicked);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);

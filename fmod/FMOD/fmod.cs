@@ -5,8 +5,8 @@
 /* ========================================================================================== */
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace FMOD
 {
@@ -2028,7 +2028,7 @@ namespace FMOD
             IntPtr      soundraw    = new IntPtr();
             Sound       soundnew    = null;
 
-            mode = mode | FMOD.MODE.UNICODE;
+            mode = mode | MODE.UNICODE;
 
             try
             {
@@ -2094,7 +2094,7 @@ namespace FMOD
             IntPtr      soundraw    = new IntPtr();
             Sound       soundnew    = null;
 
-            mode = mode | FMOD.MODE.UNICODE;
+            mode = mode | MODE.UNICODE;
 
             try
             {
@@ -2128,7 +2128,7 @@ namespace FMOD
             IntPtr      soundraw    = new IntPtr();
             Sound       soundnew    = null;
 
-            mode = mode | FMOD.MODE.UNICODE;
+            mode = mode | MODE.UNICODE;
 
             try
             {
@@ -2194,7 +2194,7 @@ namespace FMOD
             IntPtr      soundraw    = new IntPtr();
             Sound       soundnew    = null;
 
-            mode = mode | FMOD.MODE.UNICODE;
+            mode = mode | MODE.UNICODE;
 
             try
             {

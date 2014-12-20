@@ -11,9 +11,11 @@ using System.Xml;
 using System.Xml.Linq;
 
 using VixenPlus.Properties;
-using common = VixenPlusCommon.Properties;
 
 using VixenPlusCommon;
+using VixenPlusCommon.Annotations;
+
+using common = VixenPlusCommon.Properties;
 
 //todo some things I want to do:
 //Check that DoButtonManagement is really needed everywhere it is used.
@@ -21,7 +23,6 @@ using VixenPlusCommon;
 //Implement remember selected cell
 //Finish Implementing Event when a colorpalette color changes (and the live view idea)
 //Move panels to thier own class
-using VixenPlusCommon.Annotations;
 
 namespace VixenPlus.Dialogs {
     public partial class VixenPlusRoadie : Form {

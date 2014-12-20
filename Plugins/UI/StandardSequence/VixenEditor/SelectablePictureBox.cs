@@ -1,7 +1,7 @@
-﻿namespace VixenEditor
-{
-    using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
+namespace VixenEditor
+{
     internal class SelectablePictureBox : PictureBox
     {
         public SelectablePictureBox()

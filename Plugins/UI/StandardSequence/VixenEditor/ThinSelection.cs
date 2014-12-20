@@ -3,7 +3,6 @@ using System.Windows.Forms;
 
 using VixenPlus;
 
-
 namespace VixenEditor {
     internal partial class ThinSelection : Form {
         private int _selectedIndex = -1;

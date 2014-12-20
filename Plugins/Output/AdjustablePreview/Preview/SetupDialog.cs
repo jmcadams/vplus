@@ -12,8 +12,6 @@ using System.Xml;
 
 using AdjustablePreview.Properties;
 
-
-
 using VixenPlus;
 
 using VixenPlusCommon;

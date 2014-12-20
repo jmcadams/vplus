@@ -1,4 +1,6 @@
+using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace VixenPlus.Dialogs{
@@ -14,81 +16,81 @@ namespace VixenPlus.Dialogs{
 
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.pictureBoxChannels = new System.Windows.Forms.PictureBox();
-            this.vScrollBar = new System.Windows.Forms.VScrollBar();
-            this.buttonOK = new System.Windows.Forms.Button();
-            this.buttonCancel = new System.Windows.Forms.Button();
+            this.panel1 = new Panel();
+            this.pictureBoxChannels = new PictureBox();
+            this.vScrollBar = new VScrollBar();
+            this.buttonOK = new Button();
+            this.buttonCancel = new Button();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxChannels)).BeginInit();
+            ((ISupportInitialize)(this.pictureBoxChannels)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Anchor = ((AnchorStyles)((((AnchorStyles.Top | AnchorStyles.Bottom)
+                        | AnchorStyles.Left)
+                        | AnchorStyles.Right)));
+            this.panel1.BorderStyle = BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.pictureBoxChannels);
             this.panel1.Controls.Add(this.vScrollBar);
-            this.panel1.Location = new System.Drawing.Point(12, 12);
+            this.panel1.Location = new Point(12, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(680, 513);
+            this.panel1.Size = new Size(680, 513);
             this.panel1.TabIndex = 0;
             // 
             // pictureBoxChannels
             // 
-            this.pictureBoxChannels.BackColor = System.Drawing.Color.White;
-            this.pictureBoxChannels.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBoxChannels.Location = new System.Drawing.Point(0, 0);
+            this.pictureBoxChannels.BackColor = Color.White;
+            this.pictureBoxChannels.Dock = DockStyle.Fill;
+            this.pictureBoxChannels.Location = new Point(0, 0);
             this.pictureBoxChannels.Name = "pictureBoxChannels";
-            this.pictureBoxChannels.Size = new System.Drawing.Size(661, 511);
+            this.pictureBoxChannels.Size = new Size(661, 511);
             this.pictureBoxChannels.TabIndex = 2;
             this.pictureBoxChannels.TabStop = false;
-            this.pictureBoxChannels.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxChannels_Paint);
-            this.pictureBoxChannels.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.pictureBoxChannels_MouseDoubleClick);
-            this.pictureBoxChannels.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxChannels_MouseDown);
-            this.pictureBoxChannels.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxChannels_MouseMove);
-            this.pictureBoxChannels.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxChannels_MouseUp);
-            this.pictureBoxChannels.Resize += new System.EventHandler(this.pictureBoxChannels_Resize);
+            this.pictureBoxChannels.Paint += new PaintEventHandler(this.pictureBoxChannels_Paint);
+            this.pictureBoxChannels.MouseDoubleClick += new MouseEventHandler(this.pictureBoxChannels_MouseDoubleClick);
+            this.pictureBoxChannels.MouseDown += new MouseEventHandler(this.pictureBoxChannels_MouseDown);
+            this.pictureBoxChannels.MouseMove += new MouseEventHandler(this.pictureBoxChannels_MouseMove);
+            this.pictureBoxChannels.MouseUp += new MouseEventHandler(this.pictureBoxChannels_MouseUp);
+            this.pictureBoxChannels.Resize += new EventHandler(this.pictureBoxChannels_Resize);
             // 
             // vScrollBar
             // 
-            this.vScrollBar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.vScrollBar.Location = new System.Drawing.Point(661, 0);
+            this.vScrollBar.Dock = DockStyle.Right;
+            this.vScrollBar.Location = new Point(661, 0);
             this.vScrollBar.Name = "vScrollBar";
-            this.vScrollBar.Size = new System.Drawing.Size(17, 511);
+            this.vScrollBar.Size = new Size(17, 511);
             this.vScrollBar.TabIndex = 1;
-            this.vScrollBar.ValueChanged += new System.EventHandler(this.vScrollBar_ValueChanged);
+            this.vScrollBar.ValueChanged += new EventHandler(this.vScrollBar_ValueChanged);
             // 
             // buttonOK
             // 
-            this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(536, 531);
+            this.buttonOK.Anchor = ((AnchorStyles)((AnchorStyles.Bottom | AnchorStyles.Right)));
+            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.Location = new Point(536, 531);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(75, 23);
+            this.buttonOK.Size = new Size(75, 23);
             this.buttonOK.TabIndex = 1;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(617, 531);
+            this.buttonCancel.Anchor = ((AnchorStyles)((AnchorStyles.Bottom | AnchorStyles.Right)));
+            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.Location = new Point(617, 531);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancel.Size = new Size(75, 23);
             this.buttonCancel.TabIndex = 2;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
             // ChannelOrderDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new SizeF(6F, 13F);
+            this.AutoScaleMode = AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(704, 566);
+            this.ClientSize = new Size(704, 566);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.panel1);
@@ -98,13 +100,13 @@ namespace VixenPlus.Dialogs{
             this.MinimizeBox = false;
             this.Name = "ChannelOrderDialog";
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Channel Order";
-            this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.ChannelOrderDialog_HelpButtonClicked);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ChannelOrderDialog_KeyDown);
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ChannelOrderDialog_KeyUp);
+            this.HelpButtonClicked += new CancelEventHandler(this.ChannelOrderDialog_HelpButtonClicked);
+            this.KeyDown += new KeyEventHandler(this.ChannelOrderDialog_KeyDown);
+            this.KeyUp += new KeyEventHandler(this.ChannelOrderDialog_KeyUp);
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxChannels)).EndInit();
+            ((ISupportInitialize)(this.pictureBoxChannels)).EndInit();
             this.ResumeLayout(false);
 
         }

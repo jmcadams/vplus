@@ -14,10 +14,11 @@ using FMOD;
 
 using Nutcracker;
 
+using VixenEditor.VixenPlus;
+
 using VixenPlus;
 using VixenPlus.Dialogs;
 using VixenPlus.Properties;
-using VixenEditor.VixenPlus;
 
 using VixenPlusCommon;
 

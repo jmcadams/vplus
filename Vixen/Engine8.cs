@@ -13,6 +13,8 @@ using VixenPlus.Properties;
 
 using VixenPlusCommon;
 
+using Timer = System.Timers.Timer;
+
 namespace VixenPlus {
     internal sealed class Engine8 : IDisposable {
         public delegate void ProgramEndDelegate();
@@ -23,7 +25,7 @@ namespace VixenPlus {
         private static readonly List<Engine8> InstanceList = new List<Engine8>();
         private readonly object _runLock;
         private EngineContext _engineContext;
-        private System.Timers.Timer _eventTimer;
+        private Timer _eventTimer;
         private fmod _fmod;
         private Host _host;
         private bool _isLoggingEnabled;
@@ -124,7 +126,7 @@ namespace VixenPlus {
             _host = host;
             _plugInRouter = Host.Router;
             if (mode == EngineMode.Synchronous) {
-                _eventTimer = new System.Timers.Timer(1.0);
+                _eventTimer = new Timer(1.0);
                 _eventTimer.Elapsed += EventTimerElapsed;
                 _fmod = fmod.GetInstance(audioDeviceIndex);
             }

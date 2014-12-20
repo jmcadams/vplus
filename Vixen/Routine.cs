@@ -3,8 +3,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 
-
-
 using VixenPlusCommon;
 
 namespace VixenPlus {

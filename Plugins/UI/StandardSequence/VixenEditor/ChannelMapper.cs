@@ -6,14 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-
-
 using VixenPlus;
 using VixenPlus.Properties;
 
 using VixenPlusCommon;
-
-using ContentAlignment = System.Drawing.ContentAlignment;
 
 namespace VixenEditor {
     public partial class ChannelMapper : Form {

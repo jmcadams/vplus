@@ -1,4 +1,6 @@
 using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace VixenPlus {
     public partial class OutputPlugInUIBase {
@@ -11,9 +13,9 @@ namespace VixenPlus {
             // 
             // OutputPlugInUIBase
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.AutoScaleDimensions = new SizeF(6F, 13F);
+            this.AutoScaleMode = AutoScaleMode.Font;
+            this.ClientSize = new Size(284, 262);
             this.Name = "OutputPlugInUIBase";
             this.ShowInTaskbar = false;
             this.Text = "OutputPlugInUIBase";

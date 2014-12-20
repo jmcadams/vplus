@@ -7,11 +7,8 @@ using System.Windows.Forms;
 
 using FMOD;
 
-using VixenPlusCommon.Properties;
-
 using VixenPlusCommon;
-
-using ColorDialog = System.Windows.Forms.ColorDialog;
+using VixenPlusCommon.Properties;
 
 namespace VixenPlus.Dialogs {
     internal partial class PreferencesDialog : Form {

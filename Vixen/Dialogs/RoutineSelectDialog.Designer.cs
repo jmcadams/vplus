@@ -1,8 +1,11 @@
+using System;
+using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace VixenPlus.Dialogs {
     public partial class RoutineSelectDialog {
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         #region Windows Form Designer generated code
 
@@ -12,20 +15,20 @@ namespace VixenPlus.Dialogs {
 
 
         private void InitializeComponent() {
-            this.buttonOK = new System.Windows.Forms.Button();
-            this.buttonCancel = new System.Windows.Forms.Button();
-            this.listBoxRoutines = new System.Windows.Forms.ListBox();
+            this.buttonOK = new Button();
+            this.buttonCancel = new Button();
+            this.listBoxRoutines = new ListBox();
             this.SuspendLayout();
             // 
             // buttonOK
             // 
             this.buttonOK.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+                ((AnchorStyles) ((AnchorStyles.Bottom | AnchorStyles.Right)));
+            this.buttonOK.DialogResult = DialogResult.OK;
             this.buttonOK.Enabled = false;
-            this.buttonOK.Location = new System.Drawing.Point(304, 422);
+            this.buttonOK.Location = new Point(304, 422);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(75, 23);
+            this.buttonOK.Size = new Size(75, 23);
             this.buttonOK.TabIndex = 1;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
@@ -33,11 +36,11 @@ namespace VixenPlus.Dialogs {
             // buttonCancel
             // 
             this.buttonCancel.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(385, 422);
+                ((AnchorStyles) ((AnchorStyles.Bottom | AnchorStyles.Right)));
+            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.Location = new Point(385, 422);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancel.Size = new Size(75, 23);
             this.buttonCancel.TabIndex = 2;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
@@ -45,38 +48,38 @@ namespace VixenPlus.Dialogs {
             // listBoxRoutines
             // 
             this.listBoxRoutines.Anchor =
-                ((System.Windows.Forms.AnchorStyles)
-                 ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) |
-                   System.Windows.Forms.AnchorStyles.Right)));
-            this.listBoxRoutines.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.listBoxRoutines.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point,
+                ((AnchorStyles)
+                 ((((AnchorStyles.Top | AnchorStyles.Bottom) | AnchorStyles.Left) |
+                   AnchorStyles.Right)));
+            this.listBoxRoutines.DrawMode = DrawMode.OwnerDrawFixed;
+            this.listBoxRoutines.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point,
                                                                 ((byte) (0)));
-            this.listBoxRoutines.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            this.listBoxRoutines.ForeColor = Color.DarkSlateBlue;
             this.listBoxRoutines.ItemHeight = 100;
-            this.listBoxRoutines.Location = new System.Drawing.Point(12, 12);
+            this.listBoxRoutines.Location = new Point(12, 12);
             this.listBoxRoutines.Name = "listBoxRoutines";
             this.listBoxRoutines.ScrollAlwaysVisible = true;
-            this.listBoxRoutines.Size = new System.Drawing.Size(448, 404);
+            this.listBoxRoutines.Size = new Size(448, 404);
             this.listBoxRoutines.TabIndex = 3;
-            this.listBoxRoutines.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBoxRoutines_DrawItem);
-            this.listBoxRoutines.SelectedIndexChanged += new System.EventHandler(this.listBoxRoutines_SelectedIndexChanged);
-            this.listBoxRoutines.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBoxRoutines_MouseDoubleClick);
+            this.listBoxRoutines.DrawItem += new DrawItemEventHandler(this.listBoxRoutines_DrawItem);
+            this.listBoxRoutines.SelectedIndexChanged += new EventHandler(this.listBoxRoutines_SelectedIndexChanged);
+            this.listBoxRoutines.MouseDoubleClick += new MouseEventHandler(this.listBoxRoutines_MouseDoubleClick);
             // 
             // RoutineSelectDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new SizeF(6F, 13F);
+            this.AutoScaleMode = AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(472, 457);
+            this.ClientSize = new Size(472, 457);
             this.Controls.Add(this.listBoxRoutines);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.Name = "RoutineSelectDialog";
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Routine Selection";
-            this.ResizeBegin += new System.EventHandler(this.RoutineSelectDialog_ResizeBegin);
-            this.ResizeEnd += new System.EventHandler(this.RoutineSelectDialog_ResizeEnd);
+            this.ResizeBegin += new EventHandler(this.RoutineSelectDialog_ResizeBegin);
+            this.ResizeEnd += new EventHandler(this.RoutineSelectDialog_ResizeEnd);
             this.ResumeLayout(false);
 
         }

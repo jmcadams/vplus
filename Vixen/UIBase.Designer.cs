@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace VixenPlus {
     public partial class UIBase {
@@ -10,7 +11,7 @@ namespace VixenPlus {
         private void InitializeComponent() {
             base.SuspendLayout();
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            base.AutoScaleMode = AutoScaleMode.Font;
             base.ClientSize = new Size(740, 444);
             base.Name = "UIBase";
             this.Text = "UIBase";

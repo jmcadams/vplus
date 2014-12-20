@@ -1,11 +1,15 @@
-﻿namespace VixenPlus.Dialogs
+﻿using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace VixenPlus.Dialogs
 {
     partial class Lutefisk
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -28,19 +32,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Lutefisk));
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(Lutefisk));
             this.SuspendLayout();
             // 
             // Lutefisk
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(500, 367);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.AutoScaleDimensions = new SizeF(6F, 13F);
+            this.AutoScaleMode = AutoScaleMode.Font;
+            this.BackgroundImage = ((Image)(resources.GetObject("$this.BackgroundImage")));
+            this.ClientSize = new Size(500, 367);
+            this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
             this.Name = "Lutefisk";
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = FormStartPosition.CenterParent;
             this.Text = "Lutefisk";
             this.ResumeLayout(false);
 

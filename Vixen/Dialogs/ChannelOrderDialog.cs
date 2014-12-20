@@ -4,9 +4,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-using VixenPlusCommon.Properties;
-
 using VixenPlusCommon;
+using VixenPlusCommon.Properties;
 
 namespace VixenPlus.Dialogs {
     public partial class ChannelOrderDialog : Form {

@@ -3,24 +3,26 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Timers;
 
+using Timer = System.Timers.Timer;
+
 namespace FMOD
 {
     public class SoundChannel : IDisposable
     {
         private const int FADE_TIMER_INTERVAL = 100;
-        private FMOD.Channel m_channel = null;
+        private Channel m_channel = null;
         private float m_channelVolume = 1f;
         private float m_entryFadeDelta = 0f;
         private float m_exitFadeDelta = 0f;
         private float m_exitFadeThreshold = 0f;
-        private global::System.Timers.Timer m_fadeTimer = new global::System.Timers.Timer(100.0);
+        private Timer m_fadeTimer = new Timer(100.0);
         private FadeTimerState m_fadeTimerState = FadeTimerState.Inactive;
         private float m_normalFrequency;
-        private FMOD.Sound m_sound = null;
+        private Sound m_sound = null;
         private uint m_soundLength = 0;
         private string m_soundName = string.Empty;
 
-        public SoundChannel(FMOD.Sound sound)
+        public SoundChannel(Sound sound)
         {
             this.m_fadeTimer.Elapsed += new ElapsedEventHandler(this.fadeTimer_Elapsed);
             this.Sound = sound;
@@ -116,7 +118,7 @@ namespace FMOD
             this.Dispose();
         }
 
-        private string GetSoundName(FMOD.Sound sound)
+        private string GetSoundName(Sound sound)
         {
             //original implementation did not return all characters
             //StringBuilder name = new StringBuilder(0x100);
@@ -186,7 +188,7 @@ namespace FMOD
             }
         }
 
-        public FMOD.Channel Channel
+        public Channel Channel
         {
             get
             {
@@ -291,7 +293,7 @@ namespace FMOD
             }
         }
 
-        public FMOD.Sound Sound
+        public Sound Sound
         {
             get
             {

@@ -9,9 +9,11 @@ using System.Windows.Forms;
 using FMOD;
 
 using VixenPlus.Properties;
-using common = VixenPlusCommon.Properties;
 
 using VixenPlusCommon;
+
+using common = VixenPlusCommon.Properties;
+using Timer = System.Timers.Timer;
 
 namespace VixenPlus.Dialogs {
     public partial class AudioDialog : Form {
@@ -21,7 +23,7 @@ namespace VixenPlus.Dialogs {
         private readonly bool[] _keyStates;
         private readonly Audio _originalAudio;
         private readonly Stopwatch _stopwatch;
-        private readonly System.Timers.Timer _timer;
+        private readonly Timer _timer;
         private string _audioFilename = string.Empty;
         private DateTime _countdownEnd;
         private int _lastIndex = -1;
@@ -38,7 +40,7 @@ namespace VixenPlus.Dialogs {
             InitializeComponent();
             Icon = common.Resources.VixenPlus;
             _fmod = (deviceIndex > 0) ? fmod.GetInstance(deviceIndex) : fmod.GetInstance(-1);
-            _timer = new System.Timers.Timer(10.0);
+            _timer = new Timer(10.0);
             _timer.Elapsed += TimerElapsed;
             _eventSequence = sequence;
             _keyStates = new bool[_eventSequence.FullChannelCount];

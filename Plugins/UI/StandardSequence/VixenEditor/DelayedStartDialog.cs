@@ -1,10 +1,10 @@
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+
 using VixenPlus.Properties;
 
 namespace VixenEditor {
-    using System;
-    using System.Drawing;
-    using System.Windows.Forms;
-
     public partial class DelayedStartDialog : Form {
         private int _countdown;
 

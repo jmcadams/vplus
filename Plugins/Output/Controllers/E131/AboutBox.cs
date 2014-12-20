@@ -40,6 +40,7 @@
 //=====================================================================
 
 using System;
+using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -77,7 +78,7 @@ namespace Controllers.E131
 						return titleAttribute.Title;
 					}
 				}
-				return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
+				return Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
 			}
 		}
 

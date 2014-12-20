@@ -7,10 +7,12 @@ using VixenPlus.Properties;
 
 using VixenPlusCommon;
 
+using Timer = System.Timers.Timer;
+
 namespace VixenEditor {
     internal partial class EffectFrequencyDialog : Form {
 
-        private readonly System.Timers.Timer _drawTimer;
+        private readonly Timer _drawTimer;
         private readonly FrequencyEffectGenerator _effectGenerator;
         private readonly byte[,] _effectValues;
         private int _frequency;
@@ -29,7 +31,7 @@ namespace VixenEditor {
             _maxColumn = _effectValues.GetLength(1);
             effectGenerator(_effectValues, 1);
             _tickCount = 0;
-            _drawTimer = new System.Timers.Timer(100.0);
+            _drawTimer = new Timer(100.0);
             _drawTimer.Elapsed += DrawTimerElapsed;
             _drawTimer.Start();
             lblValue.Text = trackBarFrequency.Value.ToString(CultureInfo.InvariantCulture);

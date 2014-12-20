@@ -3,9 +3,10 @@ using System.Globalization;
 using System.Windows.Forms;
 
 using VixenPlus.Properties;
-using common = VixenPlusCommon.Properties;
 
 using VixenPlusCommon;
+
+using common = VixenPlusCommon.Properties;
 
 namespace VixenPlus.Dialogs {
     public partial class SequenceSettingsDialog : Form {

@@ -1,4 +1,6 @@
 using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace VixenPlus {
     internal partial class Splash
@@ -13,19 +15,19 @@ namespace VixenPlus {
             // 
             // Splash
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.BackColor = System.Drawing.Color.Gainsboro;
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ClientSize = new System.Drawing.Size(606, 192);
+            this.AutoScaleMode = AutoScaleMode.None;
+            this.BackColor = Color.Gainsboro;
+            this.BackgroundImageLayout = ImageLayout.Zoom;
+            this.ClientSize = new Size(606, 192);
             this.ControlBox = false;
             this.DoubleBuffered = true;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Splash";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.StartPosition = FormStartPosition.Manual;
             this.TopMost = true;
-            this.TransparencyKey = System.Drawing.Color.Gainsboro;
+            this.TransparencyKey = Color.Gainsboro;
             this.ResumeLayout(false);
 
         }

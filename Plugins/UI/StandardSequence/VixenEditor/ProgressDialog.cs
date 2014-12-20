@@ -1,6 +1,6 @@
-namespace VixenEditor {
-    using System.Windows.Forms;
+using System.Windows.Forms;
 
+namespace VixenEditor {
     internal partial class ProgressDialog : Form {
 
         public ProgressDialog() {

@@ -9,9 +9,10 @@ using System.Text;
 using System.Windows.Forms;
 
 using VixenPlus.Properties;
-using common = VixenPlusCommon.Properties;
 
 using VixenPlusCommon;
+
+using common = VixenPlusCommon.Properties;
 
 namespace VixenPlus.Dialogs {
     public partial class NewSequenceWizardDialog : Form {

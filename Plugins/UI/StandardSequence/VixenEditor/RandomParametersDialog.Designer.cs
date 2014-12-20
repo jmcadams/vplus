@@ -1,8 +1,11 @@
-namespace VixenEditor {
-    using System.Windows.Forms;
+using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
 
+namespace VixenEditor {
     internal partial class RandomParametersDialog {
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         #region Windows Form Designer generated code
         private Button buttonCancel;
@@ -21,216 +24,216 @@ namespace VixenEditor {
         private NumericUpDown udSaturation;
 
         private void InitializeComponent() {
-            this.udSaturation = new System.Windows.Forms.NumericUpDown();
-            this.lblPctSaturation = new System.Windows.Forms.Label();
-            this.buttonOK = new System.Windows.Forms.Button();
-            this.buttonCancel = new System.Windows.Forms.Button();
-            this.checkBoxUseSaturation = new System.Windows.Forms.CheckBox();
-            this.lblHeader = new System.Windows.Forms.Label();
-            this.udPeriods = new System.Windows.Forms.NumericUpDown();
-            this.lblAnd = new System.Windows.Forms.Label();
-            this.lblPctMax = new System.Windows.Forms.Label();
-            this.udMax = new System.Windows.Forms.NumericUpDown();
-            this.lblPctMin = new System.Windows.Forms.Label();
-            this.udMin = new System.Windows.Forms.NumericUpDown();
-            this.lblBetween = new System.Windows.Forms.Label();
-            this.checkBoxIntensityLevel = new System.Windows.Forms.CheckBox();
-            this.lblPeriodLen = new System.Windows.Forms.Label();
-            this.pbExample = new System.Windows.Forms.PictureBox();
-            this.lblExample = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.udSaturation)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udPeriods)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udMax)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udMin)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbExample)).BeginInit();
+            this.udSaturation = new NumericUpDown();
+            this.lblPctSaturation = new Label();
+            this.buttonOK = new Button();
+            this.buttonCancel = new Button();
+            this.checkBoxUseSaturation = new CheckBox();
+            this.lblHeader = new Label();
+            this.udPeriods = new NumericUpDown();
+            this.lblAnd = new Label();
+            this.lblPctMax = new Label();
+            this.udMax = new NumericUpDown();
+            this.lblPctMin = new Label();
+            this.udMin = new NumericUpDown();
+            this.lblBetween = new Label();
+            this.checkBoxIntensityLevel = new CheckBox();
+            this.lblPeriodLen = new Label();
+            this.pbExample = new PictureBox();
+            this.lblExample = new Label();
+            ((ISupportInitialize)(this.udSaturation)).BeginInit();
+            ((ISupportInitialize)(this.udPeriods)).BeginInit();
+            ((ISupportInitialize)(this.udMax)).BeginInit();
+            ((ISupportInitialize)(this.udMin)).BeginInit();
+            ((ISupportInitialize)(this.pbExample)).BeginInit();
             this.SuspendLayout();
             // 
             // udSaturation
             // 
-            this.udSaturation.Location = new System.Drawing.Point(212, 86);
+            this.udSaturation.Location = new Point(212, 86);
             this.udSaturation.Name = "udSaturation";
-            this.udSaturation.Size = new System.Drawing.Size(46, 20);
+            this.udSaturation.Size = new Size(46, 20);
             this.udSaturation.TabIndex = 3;
             this.udSaturation.Value = new decimal(new int[] {
             50,
             0,
             0,
             0});
-            this.udSaturation.ValueChanged += new System.EventHandler(this.ud_ValueChanged);
-            this.udSaturation.Enter += new System.EventHandler(this.UpDownEnter);
+            this.udSaturation.ValueChanged += new EventHandler(this.ud_ValueChanged);
+            this.udSaturation.Enter += new EventHandler(this.UpDownEnter);
             // 
             // lblPctSaturation
             // 
             this.lblPctSaturation.AutoSize = true;
-            this.lblPctSaturation.Location = new System.Drawing.Point(258, 88);
+            this.lblPctSaturation.Location = new Point(258, 88);
             this.lblPctSaturation.Name = "lblPctSaturation";
-            this.lblPctSaturation.Size = new System.Drawing.Size(15, 13);
+            this.lblPctSaturation.Size = new Size(15, 13);
             this.lblPctSaturation.TabIndex = 11;
             this.lblPctSaturation.Text = "%";
             // 
             // buttonOK
             // 
-            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(124, 169);
+            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.Location = new Point(124, 169);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(75, 23);
+            this.buttonOK.Size = new Size(75, 23);
             this.buttonOK.TabIndex = 7;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             // 
             // buttonCancel
             // 
-            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(205, 169);
+            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.Location = new Point(205, 169);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancel.Size = new Size(75, 23);
             this.buttonCancel.TabIndex = 8;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
             // checkBoxUseSaturation
             // 
-            this.checkBoxUseSaturation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(70)))), ((int)(((byte)(213)))));
-            this.checkBoxUseSaturation.Location = new System.Drawing.Point(15, 87);
+            this.checkBoxUseSaturation.ForeColor = Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(70)))), ((int)(((byte)(213)))));
+            this.checkBoxUseSaturation.Location = new Point(15, 87);
             this.checkBoxUseSaturation.Name = "checkBoxUseSaturation";
-            this.checkBoxUseSaturation.Size = new System.Drawing.Size(136, 17);
+            this.checkBoxUseSaturation.Size = new Size(136, 17);
             this.checkBoxUseSaturation.TabIndex = 2;
             this.checkBoxUseSaturation.Text = "Ensure Coverage:";
-            this.checkBoxUseSaturation.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxUseSaturation.TextAlign = ContentAlignment.MiddleRight;
             this.checkBoxUseSaturation.UseVisualStyleBackColor = true;
-            this.checkBoxUseSaturation.CheckedChanged += new System.EventHandler(this.checkBoxUseSaturation_CheckedChanged);
+            this.checkBoxUseSaturation.CheckedChanged += new EventHandler(this.checkBoxUseSaturation_CheckedChanged);
             // 
             // lblHeader
             // 
-            this.lblHeader.Location = new System.Drawing.Point(12, 9);
+            this.lblHeader.Location = new Point(12, 9);
             this.lblHeader.Name = "lblHeader";
-            this.lblHeader.Size = new System.Drawing.Size(268, 48);
+            this.lblHeader.Size = new Size(268, 48);
             this.lblHeader.TabIndex = 9;
             this.lblHeader.Text = "For standard random results without intensity variation, you can press Enter or c" +
     "lick OK, otherwise adjust the parameters below.";
             // 
             // udPeriods
             // 
-            this.udPeriods.Location = new System.Drawing.Point(212, 60);
+            this.udPeriods.Location = new Point(212, 60);
             this.udPeriods.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.udPeriods.Name = "udPeriods";
-            this.udPeriods.Size = new System.Drawing.Size(46, 20);
+            this.udPeriods.Size = new Size(46, 20);
             this.udPeriods.TabIndex = 1;
             this.udPeriods.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.udPeriods.ValueChanged += new System.EventHandler(this.ud_ValueChanged);
-            this.udPeriods.Enter += new System.EventHandler(this.UpDownEnter);
+            this.udPeriods.ValueChanged += new EventHandler(this.ud_ValueChanged);
+            this.udPeriods.Enter += new EventHandler(this.UpDownEnter);
             // 
             // lblAnd
             // 
             this.lblAnd.AutoSize = true;
-            this.lblAnd.Location = new System.Drawing.Point(181, 140);
+            this.lblAnd.Location = new Point(181, 140);
             this.lblAnd.Name = "lblAnd";
-            this.lblAnd.Size = new System.Drawing.Size(25, 13);
+            this.lblAnd.Size = new Size(25, 13);
             this.lblAnd.TabIndex = 14;
             this.lblAnd.Text = "and";
             // 
             // lblPctMax
             // 
             this.lblPctMax.AutoSize = true;
-            this.lblPctMax.Location = new System.Drawing.Point(258, 140);
+            this.lblPctMax.Location = new Point(258, 140);
             this.lblPctMax.Name = "lblPctMax";
-            this.lblPctMax.Size = new System.Drawing.Size(15, 13);
+            this.lblPctMax.Size = new Size(15, 13);
             this.lblPctMax.TabIndex = 15;
             this.lblPctMax.Text = "%";
             // 
             // udMax
             // 
-            this.udMax.Location = new System.Drawing.Point(212, 138);
+            this.udMax.Location = new Point(212, 138);
             this.udMax.Name = "udMax";
-            this.udMax.Size = new System.Drawing.Size(46, 20);
+            this.udMax.Size = new Size(46, 20);
             this.udMax.TabIndex = 6;
-            this.udMax.ValueChanged += new System.EventHandler(this.ud_ValueChanged);
-            this.udMax.Enter += new System.EventHandler(this.UpDownEnter);
+            this.udMax.ValueChanged += new EventHandler(this.ud_ValueChanged);
+            this.udMax.Enter += new EventHandler(this.UpDownEnter);
             // 
             // lblPctMin
             // 
             this.lblPctMin.AutoSize = true;
-            this.lblPctMin.Location = new System.Drawing.Point(258, 114);
+            this.lblPctMin.Location = new Point(258, 114);
             this.lblPctMin.Name = "lblPctMin";
-            this.lblPctMin.Size = new System.Drawing.Size(15, 13);
+            this.lblPctMin.Size = new Size(15, 13);
             this.lblPctMin.TabIndex = 13;
             this.lblPctMin.Text = "%";
             // 
             // udMin
             // 
-            this.udMin.Location = new System.Drawing.Point(212, 112);
+            this.udMin.Location = new Point(212, 112);
             this.udMin.Name = "udMin";
-            this.udMin.Size = new System.Drawing.Size(46, 20);
+            this.udMin.Size = new Size(46, 20);
             this.udMin.TabIndex = 5;
-            this.udMin.ValueChanged += new System.EventHandler(this.ud_ValueChanged);
-            this.udMin.Enter += new System.EventHandler(this.UpDownEnter);
+            this.udMin.ValueChanged += new EventHandler(this.ud_ValueChanged);
+            this.udMin.Enter += new EventHandler(this.UpDownEnter);
             // 
             // lblBetween
             // 
             this.lblBetween.AutoSize = true;
-            this.lblBetween.Location = new System.Drawing.Point(157, 114);
+            this.lblBetween.Location = new Point(157, 114);
             this.lblBetween.Name = "lblBetween";
-            this.lblBetween.Size = new System.Drawing.Size(49, 13);
+            this.lblBetween.Size = new Size(49, 13);
             this.lblBetween.TabIndex = 12;
             this.lblBetween.Text = "Between";
             // 
             // checkBoxIntensityLevel
             // 
-            this.checkBoxIntensityLevel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(70)))), ((int)(((byte)(213)))));
-            this.checkBoxIntensityLevel.Location = new System.Drawing.Point(15, 113);
+            this.checkBoxIntensityLevel.ForeColor = Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(70)))), ((int)(((byte)(213)))));
+            this.checkBoxIntensityLevel.Location = new Point(15, 113);
             this.checkBoxIntensityLevel.Name = "checkBoxIntensityLevel";
-            this.checkBoxIntensityLevel.Size = new System.Drawing.Size(136, 17);
+            this.checkBoxIntensityLevel.Size = new Size(136, 17);
             this.checkBoxIntensityLevel.TabIndex = 4;
             this.checkBoxIntensityLevel.Text = "Vary Intensity Levels:";
-            this.checkBoxIntensityLevel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxIntensityLevel.TextAlign = ContentAlignment.MiddleRight;
             this.checkBoxIntensityLevel.UseVisualStyleBackColor = true;
-            this.checkBoxIntensityLevel.CheckedChanged += new System.EventHandler(this.checkBoxIntensityLevel_CheckedChanged);
+            this.checkBoxIntensityLevel.CheckedChanged += new EventHandler(this.checkBoxIntensityLevel_CheckedChanged);
             // 
             // lblPeriodLen
             // 
-            this.lblPeriodLen.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(70)))), ((int)(((byte)(213)))));
-            this.lblPeriodLen.Location = new System.Drawing.Point(12, 60);
-            this.lblPeriodLen.Margin = new System.Windows.Forms.Padding(3);
+            this.lblPeriodLen.ForeColor = Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(70)))), ((int)(((byte)(213)))));
+            this.lblPeriodLen.Location = new Point(12, 60);
+            this.lblPeriodLen.Margin = new Padding(3);
             this.lblPeriodLen.Name = "lblPeriodLen";
-            this.lblPeriodLen.Size = new System.Drawing.Size(136, 17);
+            this.lblPeriodLen.Size = new Size(136, 17);
             this.lblPeriodLen.TabIndex = 10;
             this.lblPeriodLen.Text = "Period Length:";
-            this.lblPeriodLen.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblPeriodLen.TextAlign = ContentAlignment.MiddleRight;
             // 
             // pbExample
             // 
-            this.pbExample.BackColor = System.Drawing.Color.Silver;
-            this.pbExample.Location = new System.Drawing.Point(11, 198);
+            this.pbExample.BackColor = Color.Silver;
+            this.pbExample.Location = new Point(11, 198);
             this.pbExample.Name = "pbExample";
-            this.pbExample.Size = new System.Drawing.Size(271, 271);
+            this.pbExample.Size = new Size(271, 271);
             this.pbExample.TabIndex = 9;
             this.pbExample.TabStop = false;
-            this.pbExample.Paint += new System.Windows.Forms.PaintEventHandler(this.pbExample_Paint);
+            this.pbExample.Paint += new PaintEventHandler(this.pbExample_Paint);
             // 
             // lblExample
             // 
             this.lblExample.AutoSize = true;
-            this.lblExample.Location = new System.Drawing.Point(12, 174);
+            this.lblExample.Location = new Point(12, 174);
             this.lblExample.Name = "lblExample";
-            this.lblExample.Size = new System.Drawing.Size(50, 13);
+            this.lblExample.Size = new Size(50, 13);
             this.lblExample.TabIndex = 0;
             this.lblExample.Text = "Example:";
             // 
             // RandomParametersDialog
             // 
             this.AcceptButton = this.buttonOK;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new SizeF(6F, 13F);
+            this.AutoScaleMode = AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(294, 481);
+            this.ClientSize = new Size(294, 481);
             this.Controls.Add(this.lblExample);
             this.Controls.Add(this.pbExample);
             this.Controls.Add(this.lblPeriodLen);
@@ -248,17 +251,17 @@ namespace VixenEditor {
             this.Controls.Add(this.lblBetween);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.checkBoxIntensityLevel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "RandomParametersDialog";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Random Settings";
-            ((System.ComponentModel.ISupportInitialize)(this.udSaturation)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udPeriods)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udMax)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udMin)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbExample)).EndInit();
+            ((ISupportInitialize)(this.udSaturation)).EndInit();
+            ((ISupportInitialize)(this.udPeriods)).EndInit();
+            ((ISupportInitialize)(this.udMax)).EndInit();
+            ((ISupportInitialize)(this.udMin)).EndInit();
+            ((ISupportInitialize)(this.pbExample)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
