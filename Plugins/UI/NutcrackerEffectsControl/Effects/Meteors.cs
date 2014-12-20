@@ -12,13 +12,14 @@ namespace Nutcracker.Effects {
     [UsedImplicitly]
     public partial class Meteors : UserControl, INutcrackerEffect {
 
-        private readonly bool _initializing = true;
+        private readonly bool _initializing;
         private const string MeteorsType = "ID_CHOICE_Meteors{0}_Type";
         private const string MeteorsCount = "ID_SLIDER_Meteors{0}_Count";
         private const string MeteorsLength = "ID_SLIDER_Meteors{0}_Length";
         private const string MeteorsFallUp = "ID_CHECKBOX_Meteors{0}_FallUp";
 
         public Meteors() {
+            _initializing = true;
             InitializeComponent();
             cbType.SelectedIndex = 0;
             _initializing = false;
@@ -171,7 +172,8 @@ namespace Nutcracker.Effects {
 
 
         private void Meteors_ControlChanged(object sender, EventArgs e) {
-            if (_initializing) return;
+            if (_initializing || OnControlChanged == null) return;
+
             OnControlChanged(this, e);
         }
     }

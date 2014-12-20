@@ -33,8 +33,10 @@ namespace VixenPlusCommon {
         private const string LogFileName = "crash.log";
         private const string UpdateLogFileName = "update.log";
 
+        // ReSharper disable AssignNullToNotNullAttribute
         private static readonly string LogFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), LogFileName);
         private static readonly string UpdateLogFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), UpdateLogFileName);
+        // ReSharper restore AssignNullToNotNullAttribute
 
 
         // see: http://en.wikipedia.org/wiki/YIQ
@@ -155,26 +157,18 @@ namespace VixenPlusCommon {
 
 
         public static bool IsNearlyEqual(this float a, float b) {
-            const float epsilon = 0.00001f;
-            var absA = Math.Abs(a);
-            var absB = Math.Abs(b);
-            var diff = Math.Abs(a - b);
-
             // ReSharper disable CompareOfFloatsByEqualityOperator
-            
+
             if (a == b) { // shortcut, handles infinities
                 return true;
             }
-            
-            if (a == 0 || b == 0 || diff < Single.MinValue) {
-                // a or b is zero or both are extremely close to it relative error is less meaningful here
-                return diff < (epsilon * Single.MinValue);
-            } 
-            
-            // use relative error
-            return diff / (absA + absB) < epsilon;
-            
+
             // ReSharper restore CompareOfFloatsByEqualityOperator
+
+            const float epsilon = 0.00001f;
+
+            return Math.Abs(a - b) / (Math.Abs(a) + Math.Abs(b)) < epsilon;
+            
         }
 
 

@@ -206,6 +206,8 @@ namespace Nutcracker.Effects {
         }
 
         private void Life_ControlChanged(object sender, EventArgs e) {
+            if (OnControlChanged == null) return;
+
             OnControlChanged(this, e);
         }
     }

@@ -12,13 +12,14 @@ namespace Nutcracker.Effects {
     [UsedImplicitly]
     public partial class Bars : UserControl, INutcrackerEffect {
 
-        private readonly bool _initializing = true;
+        private readonly bool _initializing;
         private const string BarCount = "ID_SLIDER_Bars{0}_BarCount";
         private const string BarDirection = "ID_CHOICE_Bars{0}_Direction";
         private const string BarHighlight = "ID_CHECKBOX_Bars{0}_Highlight";
         private const string Bar3D = "ID_CHECKBOX_Bars{0}_3D";
 
         public Bars() {
+            _initializing = true;
             InitializeComponent();
             cbDirection.SelectedIndex = 0;
             _initializing = false;
@@ -122,7 +123,8 @@ namespace Nutcracker.Effects {
 
 
         private void Bars_ControlChanged(object sender, EventArgs e) {
-            if (_initializing) return;
+            if (_initializing || OnControlChanged == null) return;
+
             OnControlChanged(this, e);
         }
     }

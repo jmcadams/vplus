@@ -16,12 +16,13 @@ namespace Nutcracker.Effects {
     [UsedImplicitly]
     public partial class Picture : UserControl, INutcrackerEffect {
 
-        private readonly bool _initializing = true;
+        private readonly bool _initializing;
         private const string PicturesFileName = "ID_TEXTCTRL_Pictures{0}_Filename";
         private const string PicturesDirection = "ID_CHOICE_Pictures{0}_Direction";
         private const string PicturesGifSpeed = "ID_SLIDER_Pictures{0}_GifSpeed";
 
         public Picture() {
+            _initializing = true;
             InitializeComponent();
             cbDirection.SelectedIndex = 0;
             _initializing = false;
@@ -227,7 +228,8 @@ namespace Nutcracker.Effects {
 
 
         private void Pictures_ControlChanged(object sender, EventArgs e) {
-            if (_initializing) return;
+            if (_initializing || OnControlChanged == null) return;
+
             OnControlChanged(this, e);
         }
 

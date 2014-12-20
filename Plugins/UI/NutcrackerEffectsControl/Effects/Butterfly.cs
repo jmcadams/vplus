@@ -12,7 +12,7 @@ namespace Nutcracker.Effects {
     [UsedImplicitly]
     public partial class Butterfly : UserControl, INutcrackerEffect {
 
-        private readonly bool _initializing = true;
+        private readonly bool _initializing;
         private const string ButterflyChunks = "ID_SLIDER_Butterfly{0}_Chunks";
         private const string ButterflyPalette = "ID_CHOICE_Butterfly{0}_Colors";
         private const string ButterflySkip = "ID_SLIDER_Butterfly{0}_Skip";
@@ -20,6 +20,7 @@ namespace Nutcracker.Effects {
         private const double Pi2 = Math.PI * 2;
 
         public Butterfly() {
+            _initializing = true;
             InitializeComponent();
             cbColors.SelectedIndex = 1;
             _initializing = false;
@@ -144,7 +145,8 @@ namespace Nutcracker.Effects {
 
 
         private void Butterfly_ControlChanged(object sender, EventArgs e) {
-            if (_initializing) return;
+            if (_initializing || OnControlChanged == null) return;
+
             OnControlChanged(this, e);
         }
     }

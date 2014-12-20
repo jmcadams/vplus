@@ -214,7 +214,9 @@ namespace Nutcracker.Effects {
             public void Reset(int x, int y, bool active, float velocity) {
                 X = x;
                 Y = y;
-                _vel = (Random.Next() - int.MaxValue/2)*velocity/(int.MaxValue/2);
+                const int halfMax = int.MaxValue / 2;
+
+                _vel = (Random.Next() - halfMax) * velocity / halfMax;
                 _angle = (float) (2*Math.PI*Random.Next()/int.MaxValue);
                 Dx = (float) (_vel*Math.Cos(_angle));
                 Dy = (float) (_vel*Math.Sin(_angle));
@@ -226,6 +228,8 @@ namespace Nutcracker.Effects {
 
 
         private void Fireworks_ControlChanged(object sender, EventArgs e) {
+            if (OnControlChanged == null) return;
+            
             OnControlChanged(this, e);
         }
     }
