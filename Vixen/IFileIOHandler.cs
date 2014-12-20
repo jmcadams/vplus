@@ -8,8 +8,10 @@ namespace VixenPlus {
         int PreferredOrder();
         bool IsNativeToVixenPlus();
         bool CanSave();
-        void Save(EventSequence eventSequence);
+        void SaveSequence(EventSequence eventSequence);
+        void SaveProfile(Profile profile);
         bool CanOpen();
-        void Open(XmlNode contextNode, EventSequence eventSequence);
+        EventSequence OpenSequence(string filename);
+        Profile OpenProfile(string filename);
     }
 }

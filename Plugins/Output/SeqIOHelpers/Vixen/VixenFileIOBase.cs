@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Xml;
 
@@ -33,7 +32,12 @@ namespace SeqIOHelpers {
         }
 
 
-        public virtual void Save(EventSequence eventSequence) {
+        public virtual void SaveSequence(EventSequence eventSequence) {
+            throw new NotImplementedException();
+        }
+
+
+        public void SaveProfile(Profile profile) {
             throw new NotImplementedException();
         }
 
@@ -42,102 +46,107 @@ namespace SeqIOHelpers {
             return false;
         }
 
+        public EventSequence OpenSequence(string filename) {
+            throw new NotImplementedException();
+            //var requiredNode = Xml.GetRequiredNode(contextNode, "Program");
+            //es.FullChannels = new List<Channel>();
+            //es.Channels = new List<Channel>();
+            //es.PlugInData = new SetupData();
+            //es.LoadableData = new LoadableData();
+            //es.Extensions = new SequenceExtensions();
+            //var timeNode = requiredNode.SelectSingleNode("Time");
+            //if (timeNode != null) {
+            //    es.Time = Convert.ToInt32(timeNode.InnerText);
+            //}
+            //var eventPeriodNode = requiredNode.SelectSingleNode("EventPeriodInMilliseconds");
+            //if (eventPeriodNode != null) {
+            //    es.EventPeriod = Convert.ToInt32(eventPeriodNode.InnerText);
+            //}
+            //var minLevelNode = requiredNode.SelectSingleNode("MinimumLevel");
+            //if (minLevelNode != null) {
+            //    es.MinimumLevel = (byte) Convert.ToInt32(minLevelNode.InnerText);
+            //}
+            //var mnaxLevelNode = requiredNode.SelectSingleNode("MaximumLevel");
+            //if (mnaxLevelNode != null) {
+            //    es.MaximumLevel = (byte) Convert.ToInt32(mnaxLevelNode.InnerText);
+            //}
+            //var audioDeviceNode = requiredNode.SelectSingleNode("AudioDevice");
+            //if (audioDeviceNode != null) {
+            //    es.AudioDeviceIndex = int.Parse(audioDeviceNode.InnerText);
+            //}
+            //es.AudioDeviceVolume = int.Parse(Xml.GetNodeAlways(requiredNode, "AudioVolume", "100").InnerText);
+            //var node2 = requiredNode.SelectSingleNode("Profile");
+            //if (node2 == null) {
+            //    es.LoadEmbeddedData(requiredNode);
+            //}
+            //else {
+            //    es.AttachToProfile(node2.InnerText);
+            //}
 
-        public virtual void Open(XmlNode contextNode, EventSequence es) {
-            var requiredNode = Xml.GetRequiredNode(contextNode, "Program");
-            es.FullChannels = new List<Channel>();
-            es.Channels = new List<Channel>();
-            es.PlugInData = new SetupData();
-            es.LoadableData = new LoadableData();
-            es.Extensions = new SequenceExtensions();
-            var timeNode = requiredNode.SelectSingleNode("Time");
-            if (timeNode != null) {
-                es.Time = Convert.ToInt32(timeNode.InnerText);
-            }
-            var eventPeriodNode = requiredNode.SelectSingleNode("EventPeriodInMilliseconds");
-            if (eventPeriodNode != null) {
-                es.EventPeriod = Convert.ToInt32(eventPeriodNode.InnerText);
-            }
-            var minLevelNode = requiredNode.SelectSingleNode("MinimumLevel");
-            if (minLevelNode != null) {
-                es.MinimumLevel = (byte) Convert.ToInt32(minLevelNode.InnerText);
-            }
-            var mnaxLevelNode = requiredNode.SelectSingleNode("MaximumLevel");
-            if (mnaxLevelNode != null) {
-                es.MaximumLevel = (byte) Convert.ToInt32(mnaxLevelNode.InnerText);
-            }
-            var audioDeviceNode = requiredNode.SelectSingleNode("AudioDevice");
-            if (audioDeviceNode != null) {
-                es.AudioDeviceIndex = int.Parse(audioDeviceNode.InnerText);
-            }
-            es.AudioDeviceVolume = int.Parse(Xml.GetNodeAlways(requiredNode, "AudioVolume", "100").InnerText);
-            var node2 = requiredNode.SelectSingleNode("Profile");
-            if (node2 == null) {
-                es.LoadEmbeddedData(requiredNode);
-            }
-            else {
-                es.AttachToProfile(node2.InnerText);
-            }
+            //es.UpdateEventValueArray();
+            //var audioFileNode = requiredNode.SelectSingleNode("Audio");
+            //if (audioFileNode != null) {
+            //    if (audioFileNode.Attributes != null) {
+            //        es.Audio = new Audio(audioFileNode.InnerText, audioFileNode.Attributes["filename"].Value,
+            //            Convert.ToInt32(audioFileNode.Attributes["duration"].Value));
+            //    }
+            //}
+            //var count = es.FullChannels.Count;
 
-            es.UpdateEventValueArray();
-            var audioFileNode = requiredNode.SelectSingleNode("Audio");
-            if (audioFileNode != null) {
-                if (audioFileNode.Attributes != null) {
-                    es.Audio = new Audio(audioFileNode.InnerText, audioFileNode.Attributes["filename"].Value,
-                        Convert.ToInt32(audioFileNode.Attributes["duration"].Value));
-                }
-            }
-            var count = es.FullChannels.Count;
+            //var node4 = requiredNode.SelectSingleNode("EventValues");
+            //if (node4 != null) {
+            //    var buffer = Convert.FromBase64String(node4.InnerText);
+            //    var index = 0;
+            //    for (var row = 0; (row < count) && (index < buffer.Length); row++) {
+            //        for (var column = 0; (column < es.TotalEventPeriods) && (index < buffer.Length); column++) {
+            //            es.EventValues[row, column] = buffer[index++];
+            //        }
+            //    }
+            //}
+            //var node5 = requiredNode.SelectSingleNode("WindowSize");
+            //if (node5 != null) {
+            //    var strArray = node5.InnerText.Split(',');
+            //    try {
+            //        es.WindowWidth = Convert.ToInt32(strArray[0]);
+            //    }
+            //    catch {
+            //        es.WindowWidth = 0;
+            //    }
+            //    try {
+            //        es.WindowHeight = Convert.ToInt32(strArray[1]);
+            //    }
+            //    catch {
+            //        es.WindowHeight = 0;
+            //    }
+            //}
+            //node5 = requiredNode.SelectSingleNode("ChannelWidth");
+            //if (node5 != null) {
+            //    try {
+            //        es.ChannelWidth = Convert.ToInt32(node5.InnerText);
+            //    }
+            //    catch {
+            //        es.ChannelWidth = 0;
+            //    }
+            //}
+            //var node6 = requiredNode.SelectSingleNode("EngineType");
+            //if (node6 != null) {
+            //    try {
+            //        es.EngineType = (EngineType) Enum.Parse(typeof (EngineType), node6.InnerText);
+            //    }
+            //        // ReSharper disable EmptyGeneralCatchClause
+            //    catch
+            //        // ReSharper restore EmptyGeneralCatchClause
+            //    {}
+            //}
+            //es.LoadableData.LoadFromXml(requiredNode);
+            //es.Extensions.LoadFromXml(requiredNode);
 
-            var node4 = requiredNode.SelectSingleNode("EventValues");
-            if (node4 != null) {
-                var buffer = Convert.FromBase64String(node4.InnerText);
-                var index = 0;
-                for (var row = 0; (row < count) && (index < buffer.Length); row++) {
-                    for (var column = 0; (column < es.TotalEventPeriods) && (index < buffer.Length); column++) {
-                        es.EventValues[row, column] = buffer[index++];
-                    }
-                }
-            }
-            var node5 = requiredNode.SelectSingleNode("WindowSize");
-            if (node5 != null) {
-                var strArray = node5.InnerText.Split(',');
-                try {
-                    es.WindowWidth = Convert.ToInt32(strArray[0]);
-                }
-                catch {
-                    es.WindowWidth = 0;
-                }
-                try {
-                    es.WindowHeight = Convert.ToInt32(strArray[1]);
-                }
-                catch {
-                    es.WindowHeight = 0;
-                }
-            }
-            node5 = requiredNode.SelectSingleNode("ChannelWidth");
-            if (node5 != null) {
-                try {
-                    es.ChannelWidth = Convert.ToInt32(node5.InnerText);
-                }
-                catch {
-                    es.ChannelWidth = 0;
-                }
-            }
-            var node6 = requiredNode.SelectSingleNode("EngineType");
-            if (node6 != null) {
-                try {
-                    es.EngineType = (EngineType) Enum.Parse(typeof (EngineType), node6.InnerText);
-                }
-                    // ReSharper disable EmptyGeneralCatchClause
-                catch
-                    // ReSharper restore EmptyGeneralCatchClause
-                {}
-            }
-            es.LoadableData.LoadFromXml(requiredNode);
-            es.Extensions.LoadFromXml(requiredNode);
+            //es.ApplyGroup();
+        }
 
-            es.ApplyGroup();
+
+        public Profile OpenProfile(string filename) {
+            throw new NotImplementedException();
         }
 
 

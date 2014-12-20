@@ -22,7 +22,7 @@ namespace SeqIOHelpers {
         }
 
 
-        public override void Save(EventSequence eventSequence) {
+        public override void SaveSequence(EventSequence eventSequence) {
             var contextNode = Xml.CreateXmlDocument();
             BaseSave(contextNode, eventSequence, FormatChannel);
             contextNode.Save(eventSequence.FileName);

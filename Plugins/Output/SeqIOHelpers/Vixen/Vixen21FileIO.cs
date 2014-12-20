@@ -29,7 +29,7 @@ namespace SeqIOHelpers {
         }
 
 
-        public override void Save(EventSequence eventSequence) {
+        public override void SaveSequence(EventSequence eventSequence) {
             var contextNode = Xml.CreateXmlDocument();
             BaseSave(contextNode, eventSequence, FormatChannel);
             contextNode.Save(eventSequence.FileName);
@@ -44,10 +44,6 @@ namespace SeqIOHelpers {
             Xml.SetAttribute(node, "output", (ch.OutputChannel - 1).ToString(CultureInfo.InvariantCulture));
             Xml.SetAttribute(node, "id", ch.Id.ToString(CultureInfo.InvariantCulture));
             Xml.SetAttribute(node, "enabled", ch.Enabled.ToString());
-
-            if (ch.DimmingCurve != null) {
-                Xml.SetValue(node, "Curve", string.Join(",", ch.DimmingCurve.Select(num => num.ToString(CultureInfo.InvariantCulture)).ToArray()));
-            }
 
             return node;
         }
