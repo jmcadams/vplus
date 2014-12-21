@@ -3005,7 +3005,6 @@ namespace VixenEditor{
             // StandardSequence
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
             this.ClientSize = new Size(976, 539);
             this.Controls.Add(this.toolStripContainer1);
             this.Controls.Add(this.menuStrip);

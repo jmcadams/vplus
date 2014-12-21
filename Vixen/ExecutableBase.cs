@@ -20,7 +20,7 @@ namespace VixenPlus {
 
         public int AudioDeviceVolume {
             get { return _audioDeviceVolume == -1 ? 100 : _audioDeviceVolume; }
-            protected set { _audioDeviceVolume = value; }
+            set { _audioDeviceVolume = value; }
         }
 
         public bool CanBePlayed {
@@ -37,7 +37,7 @@ namespace VixenPlus {
             set { throw new NotImplementedException(); }
         }
 
-        public string FileName { get; protected set; }
+        public string FileName { get; set; }
 
         public virtual ulong Key {
             get { throw new NotImplementedException(); }
@@ -54,7 +54,7 @@ namespace VixenPlus {
             set { throw new NotImplementedException(); }
         }
 
-        public bool TreatAsLocal { get; set; }
+        public bool TreatAsLocal { get; protected set; }
 
         public IFileIOHandler FileIOHandler {
             get { return _fileHandler ?? (_fileHandler = FileIOHelper.GetNativeHelper()); }

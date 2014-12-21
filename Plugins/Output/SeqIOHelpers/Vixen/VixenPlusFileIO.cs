@@ -9,6 +9,10 @@ namespace SeqIOHelpers {
     [UsedImplicitly]
     public class VixenPlusFileIO : VixenFileIOBase {
 
+        public override string DialogFilterList() {
+            return string.Format("Vixen Plus Sequence (*{0})|*{0}", FileExtension());
+        }
+
         public override int PreferredOrder() {
             return 0;
         }
@@ -36,6 +40,11 @@ namespace SeqIOHelpers {
             }
 
             contextNode.Save(eventSequence.FileName);
+        }
+
+
+        public override void SaveProfile(Profile profile) {
+            throw new System.NotImplementedException();
         }
 
 

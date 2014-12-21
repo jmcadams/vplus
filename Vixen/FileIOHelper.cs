@@ -16,20 +16,25 @@ namespace VixenPlus {
             LoadPlugins();
         }
 
+
+
         private static void LoadPlugins() {
             foreach (var dllFile in Directory.GetFiles(Paths.OutputPluginPath, Vendor.SeqFileIO + Vendor.AppExtension, SearchOption.TopDirectoryOnly)) {
                 try {
                     var assembly = Assembly.LoadFile(dllFile);
-                    foreach (var desiredType in from exportedType in assembly.GetExportedTypes()
+
+                    var validTypes = from exportedType in assembly.GetExportedTypes()
                         from Interface in exportedType.GetInterfaces()
                         where Interface.Name == "IFileIOHandler"
-                        select exportedType) {
-                        IFileIOHandler plugin;
+                        select exportedType;
+
+                    foreach (var desiredType in validTypes) {
+                        // Cant use abstract types so skip it.
+                        if (desiredType.IsAbstract) continue;
 
                         // If we have a cache hit, we can just skip this one.
-                        if (PluginCache.TryGetValue(desiredType.Name, out plugin)) {
-                            continue;
-                        }
+                        IFileIOHandler plugin;
+                        if (PluginCache.TryGetValue(desiredType.Name, out plugin)) continue;
 
                         PluginCache[desiredType.Name] = (IFileIOHandler) Activator.CreateInstance(desiredType);
                     }
@@ -47,7 +52,7 @@ namespace VixenPlus {
 
             var sb = new StringBuilder();
             foreach (var f in filter) {
-                sb.Append((string) f.DialogFilterList()).Append("|");
+                sb.Append(f.DialogFilterList()).Append("|");
             }
 
             return sb.Remove(sb.Length - 1, 1).ToString();
@@ -59,10 +64,10 @@ namespace VixenPlus {
 
             var sb = new StringBuilder();
             foreach (var f in filter) {
-                sb.Append((string) f.DialogFilterList()).Append("|");
+                sb.Append(f.DialogFilterList()).Append("|");
             }
             
-            return sb.Remove(sb.Length - 1, 1).ToString();
+            return sb.Length > 0 ? sb.Remove(sb.Length - 1, 1).ToString() : String.Empty;
         }
 
 
@@ -73,6 +78,11 @@ namespace VixenPlus {
 
         public static IFileIOHandler GetNativeHelper() {
             return PluginCache.First(fio => fio.Value.IsNativeToVixenPlus()).Value;
+        }
+
+
+        public static IFileIOHandler GetByExtension(string s) {
+            return PluginCache.Select(v => v.Value).Where(v => v.FileExtension() == s && v.IsNativeToVixenPlus()).OrderBy(v => v.PreferredOrder()).First();
         }
     }
 }

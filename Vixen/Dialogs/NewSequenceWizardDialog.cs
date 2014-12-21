@@ -94,7 +94,7 @@ namespace VixenPlus.Dialogs {
             if (openFileDialog.ShowDialog() != DialogResult.OK) {
                 return;
             }
-            var sequence = new EventSequence(openFileDialog.FileName);
+            var sequence = FileIOHelper.GetNativeHelper().OpenSequence(openFileDialog.FileName);
             textBoxChannelCount.Text = sequence.FullChannelCount.ToString(CultureInfo.InvariantCulture);
             var builder = new StringBuilder();
             foreach (var channel in sequence.FullChannels) {

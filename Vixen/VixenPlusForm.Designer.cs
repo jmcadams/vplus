@@ -331,7 +331,7 @@ namespace VixenPlus {
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+
             this.ClientSize = new Size(776, 489);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip1);

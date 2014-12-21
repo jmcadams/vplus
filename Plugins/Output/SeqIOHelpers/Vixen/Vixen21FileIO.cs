@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using System.Linq;
 using System.Xml;
 
 using VixenPlus;
@@ -28,7 +27,7 @@ namespace SeqIOHelpers {
             return true;
         }
 
-
+        //TODO Sort orders! @#$%^&*
         public override void SaveSequence(EventSequence eventSequence) {
             var contextNode = Xml.CreateXmlDocument();
             BaseSaveSequence(contextNode, eventSequence, FormatChannel);
@@ -36,6 +35,9 @@ namespace SeqIOHelpers {
         }
 
 
+        public override void SaveProfile(Profile profile) {
+            throw new System.NotImplementedException();
+        }
 
 
         private static XmlNode FormatChannel(XmlDocument doc, Channel ch) {

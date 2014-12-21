@@ -561,22 +561,27 @@ namespace VixenPlus {
 
 
         private void OpenSequence(string fileName) {
-            IUIPlugIn plugInInterface;
             var extension = Path.GetExtension(fileName);
-            if (extension != null && _registeredFileTypes.TryGetValue(extension.ToLower(), out plugInInterface)) {
-                AddToFileHistory(fileName);
-                plugInInterface = (IUIPlugIn) Activator.CreateInstance(plugInInterface.GetType());
-                plugInInterface.Sequence = plugInInterface.Open(fileName);
-                var uiBase = plugInInterface as UIBase;
-                if (uiBase != null) {
-                    uiBase.DirtyChanged += plugin_DirtyChanged;
-                }
-                plugInInterface.MdiParent = this;
-                plugInInterface.Show();
-            }
-            else {
+            if (extension == null) {
                 MessageBox.Show(Resources.VixenPlusForm_NoKnowEditor, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;
             }
+
+            AddToFileHistory(fileName);
+
+            var fileIOHandler = FileIOHelper.GetByExtension(extension);
+
+            var plugInInterface = (IUIPlugIn) Activator.CreateInstance(_registeredFileTypes[".vix"].GetType());
+
+            plugInInterface.Sequence = /* plugInInterface.Open(fileName); */ fileIOHandler.OpenSequence(fileName);
+
+            var uiBase = plugInInterface as UIBase;
+            if (uiBase != null) {
+                uiBase.DirtyChanged += plugin_DirtyChanged;
+            }
+
+            plugInInterface.MdiParent = this;
+            plugInInterface.Show();
         }
 
 

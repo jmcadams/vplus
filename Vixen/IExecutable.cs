@@ -23,7 +23,5 @@ namespace VixenPlus {
         SetupData PlugInData { get; }
 
         bool TreatAsLocal { get; }
-
-        IFileIOHandler FileIOHandler { get; set; }
     }
 }

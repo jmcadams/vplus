@@ -1320,9 +1320,6 @@ namespace VixenEditor {
 
         public override EventSequence New(EventSequence seedSequence) {
             _sequence = seedSequence;
-            _preferences = _systemInterface.UserPreferences;
-            Init();
-            Text = _sequence.Name ?? Resources.UnnamedSequence;
             return _sequence;
         }
 
@@ -1456,17 +1453,6 @@ namespace VixenEditor {
             else {
                 sb.Value = sb.Value <= sb.Maximum - (max + delta) ? sb.Value + delta : Math.Max(sb.Maximum - max + 1, 0);
             }
-        }
-
-
-        public override EventSequence Open(string filePath) {
-            _sequence = new EventSequence(filePath);
-            var dirtyHold = _sequence.IsDirty;
-            Text = _sequence.Name;
-            _preferences = _systemInterface.UserPreferences;
-            Init();
-            IsDirty = dirtyHold;
-            return _sequence;
         }
 
 
@@ -2910,7 +2896,6 @@ namespace VixenEditor {
             }
             if (_sequence.Profile != null) {
                 _sequence.FileIOHandler.SaveProfile(_sequence.Profile);
-                //_sequence.Profile.SaveToFile();
             }
             pictureBoxChannels.Refresh();
             pictureBoxGrid.Refresh();
@@ -3008,7 +2993,7 @@ namespace VixenEditor {
                 }
             }
 
-            if (!keyEvent.Handled && isNotRunning && pictureBoxChannels.Focused && SelectedChannel != null) {
+            if (pictureBoxChannels != null && !keyEvent.Handled && isNotRunning && pictureBoxChannels.Focused && SelectedChannel != null) {
                 HandleChannelKeyPress(keyEvent);
             }
         }
@@ -4199,8 +4184,6 @@ namespace VixenEditor {
             _sequence.Groups[_sequence.CurrentGroup].Zoom = newZoom;
             if (_sequence.Profile != null) {
                 _sequence.FileIOHandler.SaveProfile(_sequence.Profile);
-
-                //_sequence.Profile.SaveToFile();
             }
             else {
                 IsDirty = true;
@@ -4525,15 +4508,6 @@ namespace VixenEditor {
             }
         }
 
-
-        //public override string FileExtension {
-        //    get { return Vendor.SequenceExtension; }
-        //}
-
-        //public override string FileTypeDescription {
-        //    get { return "Vixen/Vixen+ sequence"; }
-        //}
-
         private Channel SelectedChannel {
             get { return _selectedChannel; }
             set {
@@ -4554,7 +4528,16 @@ namespace VixenEditor {
 
         public override EventSequence Sequence {
             get { return _sequence; }
-            set { _sequence = value; }
+            set {
+                _sequence = value;
+                if (value == null) {
+                    return;
+                }
+
+                _preferences = _systemInterface.UserPreferences;
+                Init();
+                Text = _sequence.Name ?? Resources.UnnamedSequence;
+            }
         }
 
         private enum ArithmeticOperation {

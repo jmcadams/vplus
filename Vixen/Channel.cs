@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Globalization;
-using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -120,6 +118,7 @@ namespace VixenPlus {
         }
 
 
+/*
         public XmlNode SaveToXml(XmlDocument doc) {
             XmlNode node = doc.CreateElement("Channel");
             if (SupportsDimmingCurve) {
@@ -137,6 +136,7 @@ namespace VixenPlus {
             }
             return node;
         }
+*/
 
 
         public override string ToString() {

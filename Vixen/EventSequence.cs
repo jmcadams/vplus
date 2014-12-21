@@ -25,11 +25,11 @@ namespace VixenPlus {
             set { _groups = value; }
         }
 
-        public bool IsDirty { get; private set; }
+        //public bool IsDirty { get; private set; }
 
         #region Constructors
 
-        private EventSequence() {
+        public EventSequence() {
             EventValues = null;
             _eventPeriod = 100;
             MinimumLevel = 0;
@@ -46,15 +46,6 @@ namespace VixenPlus {
             AudioDeviceVolume = 0;
             Key = Host.GetUniqueKey();
         }
-
-
-        public EventSequence(string fileName) : this() {
-            var contextNode = new XmlDocument();
-            contextNode.Load(fileName);
-            FileName = fileName;
-            LoadFromXml(contextNode);
-        }
-
 
         public EventSequence(Preference2 preferences) : this() {
             _fullChannels = new List<Channel>();
@@ -113,11 +104,11 @@ namespace VixenPlus {
         public byte[,] EventValues { get; private set; }
 
         public int Rows {
-            get { return EventValues.GetLength(Utils.IndexRowsOrHeight); }
+            get { return  EventValues == null ? 0 : EventValues.GetLength(Utils.IndexRowsOrHeight); }
         }
 
         public int Cols {
-            get { return EventValues.GetLength(Utils.IndexColsOrWidth); }
+            get { return EventValues == null ? 0 : EventValues.GetLength(Utils.IndexColsOrWidth); }
         }
 
         public SequenceExtensions Extensions { get; set; }
@@ -374,104 +365,6 @@ namespace VixenPlus {
 
         #endregion
 
-        private void LoadFromXml(XmlNode contextNode) {
-            var requiredNode = Xml.GetRequiredNode(contextNode, "Program");
-            _fullChannels = new List<Channel>();
-            Channels = new List<Channel>();
-            PlugInData = new SetupData();
-            LoadableData = new LoadableData();
-            Extensions = new SequenceExtensions();
-            var timeNode = requiredNode.SelectSingleNode("Time");
-            if (timeNode != null) {
-                Time = Convert.ToInt32(timeNode.InnerText);
-            }
-            var eventPeriodNode = requiredNode.SelectSingleNode("EventPeriodInMilliseconds");
-            if (eventPeriodNode != null) {
-                _eventPeriod = Convert.ToInt32(eventPeriodNode.InnerText);
-            }
-            var minLevelNode = requiredNode.SelectSingleNode("MinimumLevel");
-            if (minLevelNode != null) {
-                MinimumLevel = (byte) Convert.ToInt32(minLevelNode.InnerText);
-            }
-            var mnaxLevelNode = requiredNode.SelectSingleNode("MaximumLevel");
-            if (mnaxLevelNode != null) {
-                MaximumLevel = (byte) Convert.ToInt32(mnaxLevelNode.InnerText);
-            }
-            var audioDeviceNode = requiredNode.SelectSingleNode("AudioDevice");
-            if (audioDeviceNode != null) {
-                AudioDeviceIndex = int.Parse(audioDeviceNode.InnerText);
-            }
-            AudioDeviceVolume = int.Parse(Xml.GetNodeAlways(requiredNode, "AudioVolume", "100").InnerText);
-            var node2 = requiredNode.SelectSingleNode("Profile");
-            if (node2 == null) {
-                LoadEmbeddedData(requiredNode);
-            }
-            else {
-                AttachToProfile(node2.InnerText);
-            }
-
-            UpdateEventValueArray();
-            var audioFileNode = requiredNode.SelectSingleNode("Audio");
-            if (audioFileNode != null) {
-                if (audioFileNode.Attributes != null) {
-                    Audio = new Audio(audioFileNode.InnerText, audioFileNode.Attributes["filename"].Value,
-                        Convert.ToInt32(audioFileNode.Attributes["duration"].Value));
-                }
-            }
-            var count = FullChannels.Count;
-
-            var node4 = requiredNode.SelectSingleNode("EventValues");
-            if (node4 != null) {
-                var buffer = Convert.FromBase64String(node4.InnerText);
-                var index = 0;
-                for (var row = 0; (row < count) && (index < buffer.Length); row++) {
-                    for (var column = 0; (column < TotalEventPeriods) && (index < buffer.Length); column++) {
-                        EventValues[row, column] = buffer[index++];
-                    }
-                }
-            }
-            var node5 = requiredNode.SelectSingleNode("WindowSize");
-            if (node5 != null) {
-                var strArray = node5.InnerText.Split(',');
-                try {
-                    WindowWidth = Convert.ToInt32(strArray[0]);
-                }
-                catch {
-                    WindowWidth = 0;
-                }
-                try {
-                    WindowHeight = Convert.ToInt32(strArray[1]);
-                }
-                catch {
-                    WindowHeight = 0;
-                }
-            }
-            node5 = requiredNode.SelectSingleNode("ChannelWidth");
-            if (node5 != null) {
-                try {
-                    ChannelWidth = Convert.ToInt32(node5.InnerText);
-                }
-                catch {
-                    ChannelWidth = 0;
-                }
-            }
-            var node6 = requiredNode.SelectSingleNode("EngineType");
-            if (node6 != null) {
-                try {
-                    EngineType = (EngineType) Enum.Parse(typeof (EngineType), node6.InnerText);
-                }
-                    // ReSharper disable EmptyGeneralCatchClause
-                catch
-                    // ReSharper restore EmptyGeneralCatchClause
-                {}
-            }
-            LoadableData.LoadFromXml(requiredNode);
-            Extensions.LoadFromXml(requiredNode);
-
-            ApplyGroup();
-        }
-
-
         public void LoadEmbeddedData(XmlNode contextNode) {
             _fullChannels.Clear();
             var xmlNodeList = contextNode.SelectNodes("Channels/Channel");
@@ -483,7 +376,7 @@ namespace VixenPlus {
             PlugInData = new SetupData();
             PlugInData.LoadFromXml(contextNode);
             Groups = Group.LoadFromXml(contextNode) ?? new Dictionary<string, GroupData>();
-            IsDirty = Group.LoadFromFile(contextNode, Groups);
+            Group.LoadFromFile(contextNode, Groups);
         }
 
 
@@ -646,13 +539,8 @@ namespace VixenPlus {
 
         private void DetachFromProfile() {
             LoadEmbeddedData(FileName);
-            if (((_profile.Channels.Count > _fullChannels.Count) && HasData()) &&
-                (MessageBox.Show(Resources.IncreaseChannelCount, Vendor.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
-                 DialogResult.Yes)) {
-                while (_fullChannels.Count < _profile.Channels.Count) {
-                    _fullChannels.Add(_profile.Channels[_fullChannels.Count]);
-                }
-            }
+            _fullChannels.Clear();
+            _fullChannels.AddRange(_profile.FullChannels);
             _profile = null;
             UpdateEventValueArray();
         }

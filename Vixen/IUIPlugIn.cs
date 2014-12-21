@@ -13,7 +13,7 @@ namespace VixenPlus {
         Form MdiParent {set; }
         EventSequence New(); 
         EventSequence New(EventSequence seedSequence);
-        EventSequence Open(string filePath);
+        //EventSequence Open(string filePath);
         DialogResult RunWizard(ref EventSequence resultSequence);
         void SaveTo();
         void Show();

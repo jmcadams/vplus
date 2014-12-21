@@ -29,6 +29,11 @@ namespace SeqIOHelpers {
         }
 
 
+        public override void SaveProfile(Profile profile) {
+            throw new System.NotImplementedException();
+        }
+
+
         private static XmlNode FormatChannel(XmlDocument doc, Channel ch) {
             XmlNode node = doc.CreateElement("Channel");
             Xml.SetAttribute(node, "name", ch.Name);

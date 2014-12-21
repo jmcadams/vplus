@@ -29,9 +29,10 @@ namespace VixenPlus {
         }
 
 
-        public virtual EventSequence Open(string filePath) {
-            throw new NotImplementedException();
-        }
+
+        //public virtual EventSequence Open(string filePath) {
+        //    throw new NotImplementedException();
+        //}
 
 
         public virtual DialogResult RunWizard(ref EventSequence resultSequence) {
