@@ -27,7 +27,7 @@ namespace SeqIOHelpers {
         public override void SaveSequence(EventSequence eventSequence) {
             var contextNode = Xml.CreateXmlDocument();
 
-            BaseSave(contextNode, eventSequence, FormatChannel);
+            BaseSaveSequence(contextNode, eventSequence, FormatChannel);
 
             var programNode = Xml.GetNodeAlways(contextNode, "Program");
 

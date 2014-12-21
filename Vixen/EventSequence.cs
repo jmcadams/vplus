@@ -12,7 +12,7 @@ using VixenPlus.Properties;
 using VixenPlusCommon;
 
 namespace VixenPlus {
-    public class EventSequence : IExecutable {
+    public sealed class EventSequence : ExecutableBase {
         private List<Channel> _fullChannels;
         private int _eventPeriod;
         private Profile _profile;
@@ -138,29 +138,11 @@ namespace VixenPlus {
 
         public int WindowWidth { get; set; }
 
-
-        public void Dispose() {
-            GC.SuppressFinalize(this);
-        }
-
-
-        public int AudioDeviceIndex { get; set; }
-
-        public int AudioDeviceVolume { get; set; }
-
-        public bool CanBePlayed {
-            get { return true; }
-        }
-
-        public string FileName { get; private set; }
-
-        public IFileIOHandler FileIOHandler { get; set; }
-
-        public ulong Key { get; private set; }
+        public override ulong Key { get; set; }
 
         public int Length { get; private set; }
 
-        public byte[][] Mask {
+        public override byte[][] Mask {
             get {
                 if (_profile != null) {
                     return _profile.Mask;
@@ -181,7 +163,7 @@ namespace VixenPlus {
             }
         }
 
-        public string Name {
+        public override string Name {
             get { return Path.GetFileNameWithoutExtension(FileName); }
             set {
                 var extension = Vendor.SequenceExtension;
@@ -204,10 +186,7 @@ namespace VixenPlus {
             }
         }
 
-        public SetupData PlugInData { get; set; }
-
-        public bool TreatAsLocal { get; private set; }
-
+        public override SetupData PlugInData { get; set; }
 
         private bool HasData() {
             for (var row = 0; row < Rows; row++) {
@@ -279,7 +258,7 @@ namespace VixenPlus {
             if (_profile == null) {
                 return;
             }
-            _profile.Reload();
+            _profile = FileIOHandler.OpenProfile(_profile.FileName);
             LoadFromProfile();
         }
 
@@ -561,10 +540,10 @@ namespace VixenPlus {
         }
 
 
-        public List<Channel> Channels { get; set; }
+        public override List<Channel> Channels { get; set; }
 
 
-        public List<Channel> FullChannels {
+        public override List<Channel> FullChannels {
             get { return _profile == null ? _fullChannels : _profile.Channels; }
             set {
                 AssignChannelArray(value);
@@ -595,7 +574,7 @@ namespace VixenPlus {
         public void AttachToProfile(string profileName) {
             var path = Path.Combine(Paths.ProfilePath, profileName + Vendor.ProfileExtension);
             if (File.Exists(path)) {
-                AttachToProfile(new Profile(path));
+                AttachToProfile(FileIOHandler.OpenProfile(path));
                 Groups = _profile.Groups;
             }
             else {

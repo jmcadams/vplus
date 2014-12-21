@@ -310,11 +310,16 @@ namespace VixenPlus.Dialogs {
             var profile = isNew ? new Profile() : profileData;
             profile.FileName = newFileName;
             profile.Name = newName;
-            profile.SaveToFile();
+            SaveProfile(profile);
 
             RefreshProfileComboBox(newName);
         }
 
+
+        private void SaveProfile(Profile p) {
+            ((EventSequence)_executableObject).FileIOHandler.SaveProfile(p);
+            
+        }
 
         private void btnProfileCopy_Click(object sender, EventArgs e) {
             RenameOrCopyProfile(false);
@@ -708,7 +713,7 @@ namespace VixenPlus.Dialogs {
                 Directory.GetFiles(Paths.ProfilePath, Vendor.All + Vendor.ProfileExtension)
                     .Where(profileFile => Path.GetExtension(profileFile) == Vendor.ProfileExtension)) {
                 try {
-                    cbProfiles.Items.Add(new Profile(profileFile));
+                    cbProfiles.Items.Add(FileIOHelper.GetNativeHelper().OpenProfile(profileFile));
                 }
                 catch (XmlException e) {
                     errors.AppendLine(string.Format("{0}\nFailed to load because: {1}\n", profileFile, e.Message));
@@ -1562,7 +1567,7 @@ namespace VixenPlus.Dialogs {
         private void SaveChangedProfiles() {
             PersistProfileInfo();
             foreach (var p in cbProfiles.Items.OfType<Profile>().Where(p => p.IsDirty)) {
-                p.SaveToFile();
+                 SaveProfile(p);
             }
         }
 
@@ -1584,7 +1589,7 @@ namespace VixenPlus.Dialogs {
 
         private void btnProfileSave_Click(object sender, EventArgs e) {
             PersistProfileInfo();
-            ((Profile)_contextProfile).SaveToFile();
+            SaveProfile((Profile)_contextProfile);
             btnProfileSave.Enabled = false;
         }
 

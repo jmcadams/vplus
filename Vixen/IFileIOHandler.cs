@@ -1,6 +1,4 @@
-﻿using System.Xml;
-
-namespace VixenPlus {
+﻿namespace VixenPlus {
     public interface IFileIOHandler {
 
         string DialogFilterList();

@@ -2853,7 +2853,7 @@ namespace VixenEditor {
 
         private void SetProfile(string filePath) {
             if (filePath != null) {
-                SetProfile(new Profile(filePath));
+                SetProfile(_sequence.FileIOHandler.OpenProfile(filePath));
             }
             else {
                 SetProfile((Profile) null);
@@ -2909,7 +2909,8 @@ namespace VixenEditor {
                 dialog.ShowDialog();
             }
             if (_sequence.Profile != null) {
-                _sequence.Profile.SaveToFile();
+                _sequence.FileIOHandler.SaveProfile(_sequence.Profile);
+                //_sequence.Profile.SaveToFile();
             }
             pictureBoxChannels.Refresh();
             pictureBoxGrid.Refresh();
@@ -4197,7 +4198,9 @@ namespace VixenEditor {
 
             _sequence.Groups[_sequence.CurrentGroup].Zoom = newZoom;
             if (_sequence.Profile != null) {
-                _sequence.Profile.SaveToFile();
+                _sequence.FileIOHandler.SaveProfile(_sequence.Profile);
+
+                //_sequence.Profile.SaveToFile();
             }
             else {
                 IsDirty = true;

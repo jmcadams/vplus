@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Xml;
 
 using VixenPlus;
@@ -145,15 +147,51 @@ namespace SeqIOHelpers {
         }
 
 
-        public Profile OpenProfile(string filename) {
-            throw new NotImplementedException();
+        public virtual Profile OpenProfile(string filename) {
+            var p = new Profile();
+
+            var document = new XmlDocument();
+            document.Load(filename);
+            XmlNode documentElement = document.DocumentElement;
+            p.ClearChannels();
+            if (documentElement != null) {
+                var channelObjectsNode = documentElement.SelectNodes("ChannelObjects/*");
+                if (channelObjectsNode != null) {
+                    foreach (XmlNode channelObject in channelObjectsNode) {
+                        p.AddChannelObject(new Channel(channelObject), false);
+                    }
+                }
+
+                var outputNodes = documentElement.SelectSingleNode("Outputs");
+                if (outputNodes != null) {
+                    foreach (var outputChannel in outputNodes.InnerText.Split(',').Where(outputChannel => outputChannel.Length > 0)) {
+                        p.AddChannelOutput(Convert.ToInt32(outputChannel));
+                    }
+                }
+            }
+            p.PlugInData.LoadFromXml(documentElement);
+            p.Groups = Group.LoadFromXml(documentElement) ?? new Dictionary<string, GroupData>();
+            p.IsDirty = Group.LoadFromFile(documentElement, p.Groups);
+            if (documentElement != null) {
+                var disabledChannelsNode = documentElement.SelectSingleNode("DisabledChannels");
+                if (disabledChannelsNode != null) {
+                    foreach (var disabledChannel in disabledChannelsNode.InnerText.Split(',').Where(disabledChannel => disabledChannel != string.Empty)) {
+                        p.Channels[Convert.ToInt32(disabledChannel)].Enabled = false;
+                    }
+                }
+            }
+
+
+            p.Freeze();
+
+            return p;
         }
 
 
         protected delegate XmlNode FormatChannel(XmlDocument doc, Channel ch);
 
 
-        protected static void BaseSave(XmlDocument contextNode, EventSequence eventSequence, FormatChannel fc) {
+        protected static void BaseSaveSequence(XmlDocument contextNode, EventSequence eventSequence, FormatChannel fc) {
             var programNode = Xml.GetEmptyNodeAlways(contextNode, "Program");
             Xml.SetValue(programNode, "Time", eventSequence.Length.ToString(CultureInfo.InvariantCulture));
             Xml.SetValue(programNode, "EventPeriodInMilliseconds", eventSequence.EventPeriod.ToString(CultureInfo.InvariantCulture));
@@ -207,6 +245,11 @@ namespace SeqIOHelpers {
             if (programNode.OwnerDocument != null) {
                 programNode.AppendChild(programNode.OwnerDocument.ImportNode(eventSequence.Extensions.RootNode, true));
             }
+        }
+
+
+        protected void BaseSaveProfile(XmlDocument contextNode, Profile profile, FormatChannel fc) {
+            
         }
     }
 }

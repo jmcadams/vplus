@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Xml;
 
 using VixenPlusCommon;
 
 //TODO We need to refactor this, a profile is a profile, how it is persisted depends on the file IO routine, not the profile.
+//TODO What is frozen really do?
 namespace VixenPlus {
     public class Profile : IExecutable {
         private readonly List<int> _channelOutputs;
@@ -30,10 +27,11 @@ namespace VixenPlus {
             IsDirty = false;
         }
 
+        public IFileIOHandler FileIOHandler { get; set; }
 
-        public Profile(string fileName) : this() {
-            ReloadFrom(fileName);
-        }
+        //public Profile(string fileName) : this() {
+        //    ReloadFrom(fileName);
+        //}
 
         public int AudioDeviceIndex {
             get { return -1; }
@@ -118,9 +116,18 @@ namespace VixenPlus {
 
         public bool TreatAsLocal { get; private set; }
 
-        public void AddChannelObject(Channel channelObject) {
+        public void AddChannelObject(Channel channelObject,bool addOutput = true) {
             _channelObjects.Add(channelObject);
-            _channelOutputs.Add(_channelOutputs.Count);
+            if (addOutput) {
+                AddChannelOutput(_channelOutputs.Count);
+            }
+
+            IsDirty = true;
+        }
+
+
+        public void AddChannelOutput(int output) {
+            _channelOutputs.Add(output);
             IsDirty = true;
         }
 
@@ -191,6 +198,8 @@ namespace VixenPlus {
         }
 
 
+
+/*
         public void Reload() {
             var document = new XmlDocument();
             document.Load(FileName);
@@ -233,24 +242,27 @@ namespace VixenPlus {
             _isFrozen = false;
             Freeze();
         }
+*/
 
 
-        private void ReloadFrom(string fileName) {
-            FileName = fileName;
-            Reload();
-        }
+        //private void ReloadFrom(string fileName) {
+        //    FileName = fileName;
+        //    Reload();
+        //}
 
 
-
-        public void SaveToFile() {
+/*
+        private void SaveToFile() {
             var ownerDocument = SaveToXml(null).OwnerDocument;
             if (ownerDocument != null) {
                 ownerDocument.Save(FileName);
             }
             IsDirty = false;
         }
+*/
 
 
+/*
         private XmlNode SaveToXml(XmlDocument doc) {
             XmlNode profile;
             
@@ -288,6 +300,7 @@ namespace VixenPlus {
             IsDirty = false;
             return profile;
         }
+*/
 
 
         public override string ToString() {

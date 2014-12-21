@@ -47,7 +47,7 @@ namespace VixenPlus {
 
             var sb = new StringBuilder();
             foreach (var f in filter) {
-                sb.Append(f.DialogFilterList()).Append("|");
+                sb.Append((string) f.DialogFilterList()).Append("|");
             }
 
             return sb.Remove(sb.Length - 1, 1).ToString();
@@ -59,7 +59,7 @@ namespace VixenPlus {
 
             var sb = new StringBuilder();
             foreach (var f in filter) {
-                sb.Append(f.DialogFilterList()).Append("|");
+                sb.Append((string) f.DialogFilterList()).Append("|");
             }
             
             return sb.Remove(sb.Length - 1, 1).ToString();

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 
 namespace VixenPlus {
-    public class SequenceProgram : IExecutable {
+    public class SequenceProgram : ExecutableBase {
         private readonly ulong _key;
         private byte[][] _mask;
         private readonly Profile _profile;
@@ -27,35 +27,25 @@ namespace VixenPlus {
 
         public bool UseSequencePluginData { get; private set; }
 
-        public int AudioDeviceIndex {
+        public override int AudioDeviceIndex {
             get { return -1; }
         }
 
-        public int AudioDeviceVolume {
-            get { return 100; }
-        }
-
-        public bool CanBePlayed {
-            get { return true; }
-        }
-
-        public List<Channel> Channels {
+        public override List<Channel> Channels {
             get {
                 return _profile == null ? new List<Channel>() : _profile.Channels;
             }
         }
 
-        public List<Channel> FullChannels {
+        public override List<Channel> FullChannels {
             get { return Channels; }
-        } 
+        }
 
-        public string FileName { get; private set; }
-
-        public ulong Key {
+        public override ulong Key {
             get { return _key; }
         }
 
-        public byte[][] Mask {
+        public override byte[][] Mask {
             get {
                 if (_profile != null) {
                     return _profile.Mask;
@@ -79,23 +69,21 @@ namespace VixenPlus {
             }
         }
 
-        public string Name {
+        public override string Name {
             get { return Path.GetFileNameWithoutExtension(FileName); }
         }
 
-        public SetupData PlugInData {
+        public override SetupData PlugInData {
             get {
                 return _profile == null ? SetupData : _profile.PlugInData;
             }
         }
 
-        public bool TreatAsLocal { get; private set; }
-
         private void ConstructUsing() {
             EventSequences = new List<EventSequenceStub>();
         }
 
-        public void Dispose() {
+        public new void Dispose() {
             foreach (var stub in EventSequences) {
                 stub.Dispose();
             }
