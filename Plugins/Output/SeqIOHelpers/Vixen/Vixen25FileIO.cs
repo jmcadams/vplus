@@ -21,7 +21,7 @@ namespace SeqIOHelpers {
             return true;
         }
 
-
+        //TODO Sort orders! @#$%^&*
         public override void SaveSequence(EventSequence eventSequence) {
             var contextNode = Xml.CreateXmlDocument();
             BaseSaveSequence(contextNode, eventSequence, FormatChannel);
