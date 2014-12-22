@@ -97,6 +97,7 @@ namespace VixenPlus.Dialogs
         {
             textBoxName.Text = _currentChannel.Name;
             buttonColor.BackColor = _currentChannel.Color;
+            //todo make sure this +1 below is really necessary
             labelOutputChannel.Text = (_currentChannel.OutputChannel + 1).ToString(CultureInfo.InvariantCulture);
             checkBoxEnabled.Checked = _currentChannel.Enabled;
         }

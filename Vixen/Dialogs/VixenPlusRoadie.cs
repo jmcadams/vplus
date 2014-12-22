@@ -316,8 +316,8 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private void SaveProfile(Profile p) {
-            ((EventSequence)_executableObject).FileIOHandler.SaveProfile(p);
+        private static void SaveProfile(Profile p) {
+            p.FileIOHandler.SaveProfile(p);
             
         }
 
@@ -434,6 +434,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void AddRow(Channel ch, int chNum) {
+            //todo make sure this +1 below is necessary
             var row =
                 dgvChannels.Rows.Add(ch.Enabled, chNum, ch.Name, ch.OutputChannel + 1, ch.Color.ToHTML());
             dgvChannels.Rows[row].DefaultCellStyle.BackColor = ch.Color;

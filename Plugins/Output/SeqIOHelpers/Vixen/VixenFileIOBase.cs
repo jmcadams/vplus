@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Xml;
 
 using VixenPlus;
+
+using VixenPlusCommon;
 
 namespace SeqIOHelpers {
     public abstract class VixenFileIOBase : IFileIOHandler {
@@ -32,6 +36,20 @@ namespace SeqIOHelpers {
         public virtual bool CanOpen() {
             return false;
         }
+
+        //public void LoadEmbeddedData(XmlNode contextNode) {
+        //    _fullChannels.Clear();
+        //    var xmlNodeList = contextNode.SelectNodes("Channels/Channel");
+        //    if (xmlNodeList != null) {
+        //        foreach (XmlNode node in xmlNodeList) {
+        //            _fullChannels.Add(new Channel(node));
+        //        }
+        //    }
+        //    PlugInData = new SetupData();
+        //    PlugInData.LoadFromXml(contextNode);
+        //    Groups = Group.LoadFromXml(contextNode) ?? new Dictionary<string, GroupData>();
+        //    Group.LoadFromFile(contextNode, Groups);
+        //}
 
         public EventSequence OpenSequence(string fileName) {
             var contextNode = new XmlDocument();
@@ -72,9 +90,29 @@ namespace SeqIOHelpers {
 
             var profileNode = requiredNode.SelectSingleNode("Profile");
             if (profileNode == null) {
-                es.LoadEmbeddedData(requiredNode);
+                LoadEmbeddedData(requiredNode, es);
             }
             else {
+                //private void LoadEmbeddedData(string fileName) {
+                //    if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName)) {
+                //        var document = new XmlDocument();
+                //        document.Load(fileName);
+                //        LoadEmbeddedData(document.SelectSingleNode("//Program"));
+                //    }
+                //    else {
+                //        PlugInData = new SetupData();
+                //    }
+                //}
+                
+                var path = Path.Combine(Paths.ProfilePath, es.Profile.Name + Vendor.ProfileExtension);
+                if (File.Exists(path)) {
+                    es.AttachToProfile(es.FileIOHandler.OpenProfile(path));
+                    es.Groups = es.Profile.Groups;
+                }
+                else {
+                    LoadEmbeddedData(es.FileName, es);
+                }
+
                 es.AttachToProfile(profileNode.InnerText);
             }
 
@@ -145,6 +183,31 @@ namespace SeqIOHelpers {
             es.ApplyGroup();
 
             return es;
+        }
+
+        private static void LoadEmbeddedData(XmlNode requiredNode, EventSequence es) {
+            var fullChannels = new List<Channel>();
+            var xmlNodeList = requiredNode.SelectNodes("Channels/Channel");
+            if (xmlNodeList != null) {
+                fullChannels.AddRange(from XmlNode node in xmlNodeList select new Channel(node));
+            }
+            es.SetFullChannels(fullChannels);
+
+            es.PlugInData = new SetupData();
+            es.PlugInData.LoadFromXml(requiredNode);
+            es.Groups = Group.LoadFromXml(requiredNode) ?? new Dictionary<string, GroupData>();
+            Group.LoadFromFile(requiredNode, es.Groups);
+        }
+
+        public static void LoadEmbeddedData(string fileName, EventSequence es) {
+            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName)) {
+                var document = new XmlDocument();
+                document.Load(fileName);
+                LoadEmbeddedData(document.SelectSingleNode("//Program"), es);
+            }
+            else {
+                es.PlugInData = new SetupData();
+            }
         }
 
 
@@ -251,8 +314,31 @@ namespace SeqIOHelpers {
         }
 
 
-        protected void BaseSaveProfile(XmlDocument contextNode, Profile profile, FormatChannel fc) {
+        protected static void BaseSaveProfile(XmlDocument doc, Profile profileObject, FormatChannel fc) {
+            XmlNode profileDoc = doc.DocumentElement;
+
+            var channelObjectsNode = Xml.GetEmptyNodeAlways(profileDoc, "ChannelObjects");
+            foreach (var channel in profileObject.Channels) {
+                channelObjectsNode.AppendChild(fc(doc, channel));
+            }
+
+            var builder = new StringBuilder();
+            foreach (var channel in profileObject.Channels) {
+                builder.AppendFormat("{0},", channel.OutputChannel);
+            }
+            Xml.GetEmptyNodeAlways(profileDoc, "Outputs").InnerText = builder.ToString().TrimEnd(',');
             
-        }
-    }
+            if (profileDoc != null) {
+                profileDoc.AppendChild(doc.ImportNode(profileObject.PlugInData.RootNode, true));
+            }
+            
+            var disabledChannels = new List<string>();
+            for (var i = 0; i < profileObject.Channels.Count; i++) {
+                if (!profileObject.Channels[i].Enabled) {
+                    disabledChannels.Add(i.ToString(CultureInfo.InvariantCulture));
+                }
+            }
+            Xml.SetValue(profileDoc, "DisabledChannels", string.Join(",", disabledChannels.ToArray()));
+       }
+   }
 }

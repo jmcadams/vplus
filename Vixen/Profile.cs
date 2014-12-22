@@ -25,13 +25,10 @@ namespace VixenPlus {
             _channelOutputs = new List<int>();
             PlugInData = new SetupData();
             IsDirty = false;
+            FileIOHandler = FileIOHelper.GetNativeHelper();
         }
 
         public IFileIOHandler FileIOHandler { get; set; }
-
-        //public Profile(string fileName) : this() {
-        //    ReloadFrom(fileName);
-        //}
 
         public int AudioDeviceIndex {
             get { return -1; }
@@ -163,7 +160,6 @@ namespace VixenPlus {
             foreach (var channel in sequence.FullChannels) {
                 _channelOutputs.Add(channel.OutputChannel);
             }
-            //Sorts.UpdateChannelCounts(Channels.Count);
             IsDirty = true;
         }
 
@@ -196,112 +192,6 @@ namespace VixenPlus {
             _channelObjects.Clear();
             _channelOutputs.Clear();
         }
-
-
-
-/*
-        public void Reload() {
-            var document = new XmlDocument();
-            document.Load(FileName);
-            XmlNode documentElement = document.DocumentElement;
-            ClearChannels();
-            if (documentElement != null) {
-                var channelObjectsNode = documentElement.SelectNodes("ChannelObjects/*");
-                if (channelObjectsNode != null) {
-                    foreach (XmlNode channelObject in channelObjectsNode) {
-                        _channelObjects.Add(new Channel(channelObject));
-                    }
-                }
-
-                var outputNodes = documentElement.SelectSingleNode("Outputs");
-                if (outputNodes != null) {
-                    foreach (var outputChannel in outputNodes.InnerText.Split(',').Where(outputChannel => outputChannel.Length > 0)) {
-                        _channelOutputs.Add(Convert.ToInt32(outputChannel));
-                    }
-                }
-            }
-            PlugInData.LoadFromXml(documentElement);
-            Groups = Group.LoadFromXml(documentElement) ?? new Dictionary<string, GroupData>();
-            IsDirty = Group.LoadFromFile(documentElement, Groups);
-            if (documentElement != null) {
-                var disabledChannelsNode = documentElement.SelectSingleNode("DisabledChannels");
-                if (disabledChannelsNode != null) {
-                    foreach (var disabledChannel in disabledChannelsNode.InnerText.Split(',').Where(disabledChannel => disabledChannel != string.Empty)) {
-                        Channels[Convert.ToInt32(disabledChannel)].Enabled = false;
-                    }
-                }
-            }
-            if (IsDirty) {
-                SaveToFile();
-                IsDirty = false;
-            }
-            if (!_isFrozen) {
-                return;
-            }
-
-            _isFrozen = false;
-            Freeze();
-        }
-*/
-
-
-        //private void ReloadFrom(string fileName) {
-        //    FileName = fileName;
-        //    Reload();
-        //}
-
-
-/*
-        private void SaveToFile() {
-            var ownerDocument = SaveToXml(null).OwnerDocument;
-            if (ownerDocument != null) {
-                ownerDocument.Save(FileName);
-            }
-            IsDirty = false;
-        }
-*/
-
-
-/*
-        private XmlNode SaveToXml(XmlDocument doc) {
-            XmlNode profile;
-            
-            if (doc == null) {
-                doc = Xml.CreateXmlDocument("Profile");
-                profile = doc.DocumentElement;
-            }
-            else {
-                profile = doc.CreateElement("Profile");
-            }
-
-            var emptyNodeAlways = Xml.GetEmptyNodeAlways(profile, "ChannelObjects");
-            foreach (var channel in _channelObjects) {
-                emptyNodeAlways.AppendChild(channel.SaveToXml(doc));
-            }
-            var builder = new StringBuilder();
-            foreach (var num in _channelOutputs) {
-                builder.AppendFormat("{0},", num);
-            }
-            Xml.GetEmptyNodeAlways(profile, "Outputs").InnerText = builder.ToString().TrimEnd(',');
-            
-            if (profile != null) {
-                profile.AppendChild(doc.ImportNode(PlugInData.RootNode, true));
-                Group.SaveToXml(profile, Groups);
-            }
-            
-            var disabledChannels = new List<string>();
-            for (var i = 0; i < Channels.Count; i++) {
-                if (!Channels[i].Enabled) {
-                    disabledChannels.Add(i.ToString(CultureInfo.InvariantCulture));
-                }
-            }
-            Xml.SetValue(profile, "DisabledChannels", string.Join(",", disabledChannels.ToArray()));
-
-            IsDirty = false;
-            return profile;
-        }
-*/
-
 
         public override string ToString() {
             return Name;

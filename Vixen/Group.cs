@@ -259,7 +259,7 @@ namespace VixenPlus {
                 File.Delete(file + Vendor.DeletedExtension);
             }
 
-            File.Move(file, file + Vendor.DeletedExtension);
+            File.Move(file, file + Vendor.DeletedExtension); //todo wtf was I thinking?
 
             return true;
         }

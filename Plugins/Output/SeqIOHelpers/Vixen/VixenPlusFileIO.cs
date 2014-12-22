@@ -44,7 +44,13 @@ namespace SeqIOHelpers {
 
 
         public override void SaveProfile(Profile profile) {
-            throw new System.NotImplementedException();
+            var profileXml = Xml.CreateXmlDocument("Profile");
+
+            BaseSaveProfile(profileXml, profile, FormatChannel);
+            Group.SaveToXml(profileXml.DocumentElement, profile.Groups);
+
+            profileXml.Save(profile.FileName);
+            profile.IsDirty = false;
         }
 
 
@@ -53,7 +59,7 @@ namespace SeqIOHelpers {
 
             Xml.SetAttribute(node, "name", ch.Name);
             Xml.SetAttribute(node, "color", ch.Color.ToArgb().ToString(CultureInfo.InvariantCulture));
-            Xml.SetAttribute(node, "output", (ch.OutputChannel - 1).ToString(CultureInfo.InvariantCulture));
+            Xml.SetAttribute(node, "output", (ch.OutputChannel).ToString(CultureInfo.InvariantCulture));
             Xml.SetAttribute(node, "enabled", ch.Enabled.ToString());
             
             if (ch.DimmingCurve != null) {

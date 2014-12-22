@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
 using System.Xml;
 
 using VixenPlus.Properties;
@@ -179,17 +178,6 @@ namespace VixenPlus {
 
         public override SetupData PlugInData { get; set; }
 
-        private bool HasData() {
-            for (var row = 0; row < Rows; row++) {
-                for (var column = 0; column < Cols; column++) {
-                    if (EventValues[row, column] != 0) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
 
         public void InsertChannel() {
             var count = _fullChannels.Count;
@@ -227,16 +215,16 @@ namespace VixenPlus {
         }
 
 
-        private void LoadEmbeddedData(string fileName) {
-            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName)) {
-                var document = new XmlDocument();
-                document.Load(fileName);
-                LoadEmbeddedData(document.SelectSingleNode("//Program"));
-            }
-            else {
-                PlugInData = new SetupData();
-            }
-        }
+        //private void LoadEmbeddedData(string fileName) {
+        //    if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName)) {
+        //        var document = new XmlDocument();
+        //        document.Load(fileName);
+        //        LoadEmbeddedData(document.SelectSingleNode("//Program"));
+        //    }
+        //    else {
+        //        PlugInData = new SetupData();
+        //    }
+        //}
 
 
         private void LoadFromProfile() {
@@ -365,19 +353,19 @@ namespace VixenPlus {
 
         #endregion
 
-        public void LoadEmbeddedData(XmlNode contextNode) {
-            _fullChannels.Clear();
-            var xmlNodeList = contextNode.SelectNodes("Channels/Channel");
-            if (xmlNodeList != null) {
-                foreach (XmlNode node in xmlNodeList) {
-                    _fullChannels.Add(new Channel(node));
-                }
-            }
-            PlugInData = new SetupData();
-            PlugInData.LoadFromXml(contextNode);
-            Groups = Group.LoadFromXml(contextNode) ?? new Dictionary<string, GroupData>();
-            Group.LoadFromFile(contextNode, Groups);
-        }
+        //public void LoadEmbeddedData(XmlNode contextNode) {
+        //    _fullChannels.Clear();
+        //    var xmlNodeList = contextNode.SelectNodes("Channels/Channel");
+        //    if (xmlNodeList != null) {
+        //        foreach (XmlNode node in xmlNodeList) {
+        //            _fullChannels.Add(new Channel(node));
+        //        }
+        //    }
+        //    PlugInData = new SetupData();
+        //    PlugInData.LoadFromXml(contextNode);
+        //    Groups = Group.LoadFromXml(contextNode) ?? new Dictionary<string, GroupData>();
+        //    Group.LoadFromFile(contextNode, Groups);
+        //}
 
 
         public int ChannelCount {
@@ -476,7 +464,7 @@ namespace VixenPlus {
         }
 
 
-        private void AttachToProfile(Profile profile) {
+        public void AttachToProfile(Profile profile) {
             _profile = profile;
             _profile.Freeze();
             LoadFromProfile();
@@ -536,6 +524,11 @@ namespace VixenPlus {
             }
         }
 
+
+        public void SetFullChannels(List<Channel> ch) {
+            _fullChannels.Clear();
+            _fullChannels.AddRange(ch);
+        }
 
         private void DetachFromProfile() {
             LoadEmbeddedData(FileName);

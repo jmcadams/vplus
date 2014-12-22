@@ -118,27 +118,6 @@ namespace VixenPlus {
         }
 
 
-/*
-        public XmlNode SaveToXml(XmlDocument doc) {
-            XmlNode node = doc.CreateElement("Channel");
-            if (SupportsDimmingCurve) {
-                Xml.SetAttribute(node, "name", Name);
-            }
-            else {
-                node.InnerText = Name;
-            }
-            Xml.SetAttribute(node, "color", Color.ToArgb().ToString(CultureInfo.InvariantCulture));
-            Xml.SetAttribute(node, "output", (OutputChannel - 1).ToString(CultureInfo.InvariantCulture));
-            Xml.SetAttribute(node, "id", Id.ToString(CultureInfo.InvariantCulture)); //TODO need to do this for 2.x
-            Xml.SetAttribute(node, "enabled", Enabled.ToString());
-            if (DimmingCurve != null) {
-                Xml.SetValue(node, "Curve", string.Join(",", DimmingCurve.Select(num => num.ToString(CultureInfo.InvariantCulture)).ToArray()));
-            }
-            return node;
-        }
-*/
-
-
         public override string ToString() {
             return Name;
         }

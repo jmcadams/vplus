@@ -45,7 +45,7 @@ namespace SeqIOHelpers {
             node.InnerText = ch.Name;
 
             Xml.SetAttribute(node, "color", ch.Color.ToArgb().ToString(CultureInfo.InvariantCulture));
-            Xml.SetAttribute(node, "output", (ch.OutputChannel - 1).ToString(CultureInfo.InvariantCulture));
+            Xml.SetAttribute(node, "output", (ch.OutputChannel).ToString(CultureInfo.InvariantCulture));
             Xml.SetAttribute(node, "id", ch.Id.ToString(CultureInfo.InvariantCulture));
             Xml.SetAttribute(node, "enabled", ch.Enabled.ToString());
 
