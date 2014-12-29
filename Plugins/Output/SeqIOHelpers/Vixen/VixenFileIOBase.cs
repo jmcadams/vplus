@@ -37,20 +37,8 @@ namespace SeqIOHelpers {
             return false;
         }
 
-        //public void LoadEmbeddedData(XmlNode contextNode) {
-        //    _fullChannels.Clear();
-        //    var xmlNodeList = contextNode.SelectNodes("Channels/Channel");
-        //    if (xmlNodeList != null) {
-        //        foreach (XmlNode node in xmlNodeList) {
-        //            _fullChannels.Add(new Channel(node));
-        //        }
-        //    }
-        //    PlugInData = new SetupData();
-        //    PlugInData.LoadFromXml(contextNode);
-        //    Groups = Group.LoadFromXml(contextNode) ?? new Dictionary<string, GroupData>();
-        //    Group.LoadFromFile(contextNode, Groups);
-        //}
 
+        // ReSharper disable once FunctionComplexityOverflow
         public EventSequence OpenSequence(string fileName) {
             var contextNode = new XmlDocument();
             contextNode.Load(fileName);
@@ -93,16 +81,7 @@ namespace SeqIOHelpers {
                 LoadEmbeddedData(requiredNode, es);
             }
             else {
-                //private void LoadEmbeddedData(string fileName) {
-                //    if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName)) {
-                //        var document = new XmlDocument();
-                //        document.Load(fileName);
-                //        LoadEmbeddedData(document.SelectSingleNode("//Program"));
-                //    }
-                //    else {
-                //        PlugInData = new SetupData();
-                //    }
-                //}
+
                 
                 var path = Path.Combine(Paths.ProfilePath, es.Profile.Name + Vendor.ProfileExtension);
                 if (File.Exists(path)) {
@@ -199,7 +178,7 @@ namespace SeqIOHelpers {
             Group.LoadFromFile(requiredNode, es.Groups);
         }
 
-        public static void LoadEmbeddedData(string fileName, EventSequence es) {
+        public void LoadEmbeddedData(string fileName, EventSequence es) {
             if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName)) {
                 var document = new XmlDocument();
                 document.Load(fileName);
@@ -211,13 +190,13 @@ namespace SeqIOHelpers {
         }
 
 
-        public virtual Profile OpenProfile(string filename) {
+        public virtual Profile OpenProfile(string fileName) {
             var p = new Profile();
 
             var document = new XmlDocument();
-            document.Load(filename);
+            document.Load(fileName);
             XmlNode documentElement = document.DocumentElement;
-            p.FileName = filename;
+            p.FileName = fileName;
             p.ClearChannels();
             if (documentElement != null) {
                 var channelObjectsNode = documentElement.SelectNodes("ChannelObjects/*");

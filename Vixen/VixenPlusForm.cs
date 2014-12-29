@@ -365,7 +365,8 @@ namespace VixenPlus {
 
         private bool GetNewName(IUIPlugIn pluginInstance) {
             saveFileDialog1.Filter = FileIOHelper.GetSaveFilters();
-            
+            var fi = saveFileDialog1.Filter.Split('|').TakeWhile(f => !pluginInstance.Sequence.FileIOHandler.DialogFilterList().StartsWith(f)).Count();
+            saveFileDialog1.FilterIndex = fi;
             saveFileDialog1.InitialDirectory = Paths.SequencePath;
             saveFileDialog1.FileName = string.Empty;
             if (saveFileDialog1.ShowDialog() != DialogResult.OK) {
@@ -561,19 +562,18 @@ namespace VixenPlus {
 
 
         private void OpenSequence(string fileName) {
-            var extension = Path.GetExtension(fileName);
-            if (extension == null) {
+            var fileIOHandler = FileIOHelper.GetByExtension(fileName);
+            if (fileIOHandler == null) {
                 MessageBox.Show(Resources.VixenPlusForm_NoKnowEditor, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 return;
             }
 
             AddToFileHistory(fileName);
 
-            var fileIOHandler = FileIOHelper.GetByExtension(extension);
-
             var plugInInterface = (IUIPlugIn) Activator.CreateInstance(_registeredFileTypes[".vix"].GetType());
 
-            plugInInterface.Sequence = /* plugInInterface.Open(fileName); */ fileIOHandler.OpenSequence(fileName);
+            plugInInterface.Sequence = fileIOHandler.OpenSequence(fileName);
+            plugInInterface.Sequence.FileIOHandler = fileIOHandler;
 
             var uiBase = plugInInterface as UIBase;
             if (uiBase != null) {

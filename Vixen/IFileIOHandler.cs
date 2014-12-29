@@ -1,6 +1,5 @@
 ﻿namespace VixenPlus {
     public interface IFileIOHandler {
-
         string DialogFilterList();
         string FileExtension();
         int PreferredOrder();
@@ -9,7 +8,8 @@
         void SaveSequence(EventSequence eventSequence);
         void SaveProfile(Profile profile);
         bool CanOpen();
-        EventSequence OpenSequence(string filename);
-        Profile OpenProfile(string filename);
+        EventSequence OpenSequence(string fileName);
+        Profile OpenProfile(string fileName);
+        void LoadEmbeddedData(string fileName, EventSequence es);
     }
 }

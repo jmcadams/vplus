@@ -459,7 +459,7 @@ namespace VixenPlus {
                 Groups = _profile.Groups;
             }
             else {
-                LoadEmbeddedData(FileName);
+                FileIOHandler.LoadEmbeddedData(FileName, this);
             }
         }
 
@@ -531,7 +531,7 @@ namespace VixenPlus {
         }
 
         private void DetachFromProfile() {
-            LoadEmbeddedData(FileName);
+             FileIOHandler.LoadEmbeddedData(FileName, this);
             _fullChannels.Clear();
             _fullChannels.AddRange(_profile.FullChannels);
             _profile = null;

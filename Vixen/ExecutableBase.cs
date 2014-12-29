@@ -57,7 +57,13 @@ namespace VixenPlus {
         public bool TreatAsLocal { get; protected set; }
 
         public IFileIOHandler FileIOHandler {
-            get { return _fileHandler ?? (_fileHandler = FileIOHelper.GetNativeHelper()); }
+            get {
+                if (_fileHandler == null) {
+                    throw new TypeInitializationException("ExecutableBase", new Exception("File IO Handler not set"));
+                }
+
+                return _fileHandler;
+            }
             set { _fileHandler = value; } }
     }
 }
