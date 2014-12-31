@@ -125,7 +125,7 @@ namespace VixenPlus {
             // Must be a profile
             var path = Path.Combine(Paths.ProfilePath, profileNode.InnerText + Vendor.ProfileExtension);
             if (!File.Exists(path)) {
-                throw new Exception("Can location profile " + path);
+                throw new FileNotFoundException("Cant locate profile.", path);
             }
 
             doc.Load(path);

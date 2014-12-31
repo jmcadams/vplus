@@ -119,7 +119,16 @@ namespace VixenPlus {
 
         public int Time {
             get { return Length; }
-            set { SetTime(value); }
+            set {
+                if (value < ExtentOfAudio()) {
+                    throw new Exception(Resources.InvalidSequenceLength);
+                }
+                if ((EventValues != null) && (value == (EventValues.GetLength(1) * _eventPeriod))) {
+                    return;
+                }
+                Length = value;
+                UpdateEventValueArray();
+            }
         }
 
         public int TotalEventPeriods { get; private set; }
@@ -156,7 +165,7 @@ namespace VixenPlus {
         public override string Name {
             get { return Path.GetFileNameWithoutExtension(FileName); }
             set {
-                var extension = Vendor.SequenceExtension;
+                var extension = FileIOHandler.FileExtension();// Vendor.SequenceExtension;
                 if (!string.IsNullOrEmpty(FileName)) {
                     extension = Path.GetExtension(FileName);
                 }
@@ -170,8 +179,8 @@ namespace VixenPlus {
                     FileName = value;
                 }
                 else {
-                    var str2 = string.IsNullOrEmpty(FileName) ? null : Path.GetDirectoryName(FileName);
-                    FileName = Path.Combine(!string.IsNullOrEmpty(str2) ? str2 : Paths.SequencePath, value);
+                    var directory = string.IsNullOrEmpty(FileName) ? null : Path.GetDirectoryName(FileName);
+                    FileName = Path.Combine(!string.IsNullOrEmpty(directory) ? directory : Paths.SequencePath, value);
                 }
             }
         }
@@ -199,6 +208,7 @@ namespace VixenPlus {
                 return;
             }
 
+            //todo this should be a method of the group obejct.
             foreach (var g in Groups) {
                 var newChannels = new List<string>();
                 foreach (var channel in g.Value.GroupChannels.Split(',')) {
@@ -215,18 +225,6 @@ namespace VixenPlus {
         }
 
 
-        //private void LoadEmbeddedData(string fileName) {
-        //    if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName)) {
-        //        var document = new XmlDocument();
-        //        document.Load(fileName);
-        //        LoadEmbeddedData(document.SelectSingleNode("//Program"));
-        //    }
-        //    else {
-        //        PlugInData = new SetupData();
-        //    }
-        //}
-
-
         private void LoadFromProfile() {
             PlugInData = _profile.PlugInData;
             UpdateEventValueArray();
@@ -239,18 +237,6 @@ namespace VixenPlus {
             }
             _profile = FileIOHandler.OpenProfile(_profile.FileName);
             LoadFromProfile();
-        }
-
-
-        private void SetTime(int milliseconds) {
-            if (milliseconds < ExtentOfAudio()) {
-                throw new Exception(Resources.InvalidSequenceLength);
-            }
-            if ((EventValues != null) && (milliseconds == (EventValues.GetLength(1) * _eventPeriod))) {
-                return;
-            }
-            Length = milliseconds;
-            UpdateEventValueArray();
         }
 
 
@@ -352,21 +338,6 @@ namespace VixenPlus {
         }
 
         #endregion
-
-        //public void LoadEmbeddedData(XmlNode contextNode) {
-        //    _fullChannels.Clear();
-        //    var xmlNodeList = contextNode.SelectNodes("Channels/Channel");
-        //    if (xmlNodeList != null) {
-        //        foreach (XmlNode node in xmlNodeList) {
-        //            _fullChannels.Add(new Channel(node));
-        //        }
-        //    }
-        //    PlugInData = new SetupData();
-        //    PlugInData.LoadFromXml(contextNode);
-        //    Groups = Group.LoadFromXml(contextNode) ?? new Dictionary<string, GroupData>();
-        //    Group.LoadFromFile(contextNode, Groups);
-        //}
-
 
         public int ChannelCount {
             get { return Channels.Count == 0 ? _fullChannels.Count : Channels.Count; }
@@ -505,6 +476,7 @@ namespace VixenPlus {
                 return;
             }
 
+            //todo this should be a method of the group object
             foreach (var g in Groups) {
                 var newChannels = new List<string>();
                 foreach (var channel in g.Value.GroupChannels.Split(',')) {
