@@ -19,10 +19,14 @@ namespace VixenPlus {
                 return;
             }
 
-            SupportsDimmingCurve = (channelNode.Attributes["name"] != null);
-            // ReSharper disable PossibleNullReferenceException
-            Name = SupportsDimmingCurve ? channelNode.Attributes["name"].Value : channelNode.InnerText;
-            // ReSharper restore PossibleNullReferenceException
+            if (channelNode.Attributes["name"] == null) {
+                SupportsDimmingCurve = false;
+                Name = channelNode.InnerText;
+            }
+            else {
+                SupportsDimmingCurve = true;
+                Name = channelNode.Attributes["name"].Value;
+            }
 
             var elementName = "color";
             try {
@@ -30,7 +34,7 @@ namespace VixenPlus {
                 elementName = "output";
                 OutputChannel = Convert.ToInt32(channelNode.Attributes[elementName].Value);
                 elementName = "id";
-                Id =  channelNode.Attributes[elementName] == null ? ulong.MaxValue : ulong.Parse(channelNode.Attributes[elementName].Value);
+                Id =  channelNode.Attributes[elementName] == null ? NextRandom() : ulong.Parse(channelNode.Attributes[elementName].Value);
                 elementName = "enabled";
                 Enabled = bool.Parse(channelNode.Attributes[elementName].Value);
             }
@@ -58,6 +62,15 @@ namespace VixenPlus {
             }
         }
 
+
+        private Random _rand;
+        private ulong NextRandom() {
+            if (_rand == null) {
+                _rand = new Random();
+            }
+
+            return (ulong)(_rand.NextDouble() * ulong.MaxValue);
+        }
 
         public Channel(string name, int outputChannel) {
             Name = name;
