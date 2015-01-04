@@ -1,2 +1,0 @@
-Channel mask not displayed in color
-Check shift key and ctrl(?) and moving with arrows cause wierd behavior
