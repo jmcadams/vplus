@@ -42,7 +42,7 @@ namespace SeqIOHelpers {
 
 
         // ReSharper disable once FunctionComplexityOverflow
-        public EventSequence OpenSequence(string fileName) {
+        public EventSequence OpenSequence(string fileName, IFileIOHandler fileIOHandler) {
             var contextNode = new XmlDocument();
             contextNode.Load(fileName);
             var requiredNode = Xml.GetRequiredNode(contextNode, "Program");
@@ -50,8 +50,9 @@ namespace SeqIOHelpers {
             var es = new EventSequence {
                 FileName = fileName, FullChannels = new List<Channel>(), Channels = new List<Channel>(), PlugInData = new SetupData(),
                 LoadableData = new LoadableData(), Extensions = new SequenceExtensions(),
-                AudioDeviceVolume = int.Parse(Xml.GetNodeAlways(requiredNode, "AudioVolume", "100").InnerText)
+                AudioDeviceVolume = int.Parse(Xml.GetNodeAlways(requiredNode, "AudioVolume", "100").InnerText), FileIOHandler = fileIOHandler
             };
+
 
             var timeNode = requiredNode.SelectSingleNode("Time");
             if (timeNode != null) {
@@ -84,9 +85,7 @@ namespace SeqIOHelpers {
                 LoadEmbeddedData(requiredNode, es);
             }
             else {
-
-                
-                var path = Path.Combine(Paths.ProfilePath, es.Profile.Name + Vendor.ProfileExtension);
+                var path = Path.Combine(Paths.ProfilePath, profileNode.InnerText + Vendor.ProfileExtension);
                 if (File.Exists(path)) {
                     es.AttachToProfile(es.FileIOHandler.OpenProfile(path));
                     es.Groups = es.Profile.Groups;

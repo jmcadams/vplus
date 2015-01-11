@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Xml;
+using System.Xml.Schema;
 
 using VixenPlusCommon;
 
@@ -127,14 +128,19 @@ namespace VixenPlus {
 
                 doc.Load(path);
 
-                channels = Xml.GetRequiredNode(doc, "Profile").SelectNodes("ChannelObjects");
+                programContextNode = Xml.GetRequiredNode(doc, "Profile");
+                channels = programContextNode.SelectNodes("ChannelObjects/Channel");
             }
 
             if (channels == null) {
                 throw new FormatException("No profile or channels in sequence");
             }
 
-            if (channels[0].Attributes != null && channels[0].Attributes["name"] == null) {
+            var channelToCheck = channels.Cast<XmlNode>().FirstOrDefault();
+
+            if (channelToCheck != null 
+                && channelToCheck.Attributes != null 
+                && channelToCheck.Attributes["name"] == null) {
                 return GetHelperByName("Vixen 2.1");
             }
 

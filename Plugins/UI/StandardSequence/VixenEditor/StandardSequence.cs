@@ -4536,7 +4536,8 @@ namespace VixenEditor {
 
                 _preferences = _systemInterface.UserPreferences;
                 Init();
-                Text = _sequence.Name ?? Resources.UnnamedSequence;
+                Text = _sequence.Name == null
+                    ? Resources.UnnamedSequence : _sequence.Name + ((_sequence.FileIOHandler == null) ? "" : " - " + _sequence.FileIOHandler.Name());
             }
         }
 
