@@ -165,7 +165,7 @@ namespace VixenPlus {
         public override string Name {
             get { return Path.GetFileNameWithoutExtension(FileName); }
             set {
-                var extension = FileIOHandler.FileExtension();// Vendor.SequenceExtension;
+                var extension = FileIOHandler.FileExtension();
                 if (!string.IsNullOrEmpty(FileName)) {
                     extension = Path.GetExtension(FileName);
                 }
