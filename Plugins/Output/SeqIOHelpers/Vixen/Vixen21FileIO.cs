@@ -12,6 +12,10 @@ namespace SeqIOHelpers {
             return string.Format("Vixen 2.1 Sequence (*{0})|*{0}", FileExtension());
         }
 
+        public override string Name() {
+            return "Vixen 2.1";
+        }
+
 
         public override int PreferredOrder() {
             return 1;

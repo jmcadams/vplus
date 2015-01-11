@@ -277,7 +277,7 @@ namespace VixenPlus {
             }
             pluginInstance.Sequence.Name = newName;
             saveToolStripMenuItem.Text = string.Format("Save ({0})", pluginInstance.Sequence.Name);
-            ((Form) pluginInstance).Text = pluginInstance.Sequence.Name;
+            ((Form) pluginInstance).Text = pluginInstance.Sequence.Name + " - " + pluginInstance.Sequence.FileIOHandler.Name();
         }
 
 

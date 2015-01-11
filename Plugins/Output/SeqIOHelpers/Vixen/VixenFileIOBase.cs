@@ -14,6 +14,9 @@ namespace SeqIOHelpers {
     public abstract class VixenFileIOBase : IFileIOHandler {
 
         public abstract string DialogFilterList();
+
+        public abstract string Name();
+
         public abstract void SaveSequence(EventSequence eventSequence);
         public abstract void SaveProfile(Profile profile);
 

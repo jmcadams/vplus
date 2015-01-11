@@ -1,6 +1,7 @@
 ﻿namespace VixenPlus {
     public interface IFileIOHandler {
         string DialogFilterList();
+        string Name();
         string FileExtension();
         int PreferredOrder();
         bool IsNativeToVixenPlus();

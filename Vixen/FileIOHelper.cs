@@ -113,30 +113,32 @@ namespace VixenPlus {
             doc.Load(fileName);
             var programContextNode = Xml.GetRequiredNode(doc, "Program");
             var profileNode = programContextNode.SelectSingleNode("Profile");
-            if (profileNode == null || programContextNode.SelectNodes("Channels/Channel") != null) {
-                var embeddedChannel = (from XmlNode node in programContextNode.SelectNodes("Channels/Channel") select node).First();
-                if (embeddedChannel.Attributes != null && embeddedChannel.Attributes["name"] == null) {
-                    return GetHelperByName("Vixen 2.1");
+
+            XmlNodeList channels;
+            
+            if (profileNode == null) {
+                channels = programContextNode.SelectNodes("Channels/Channel");
+            }
+            else {
+                var path = Path.Combine(Paths.ProfilePath, profileNode.InnerText + Vendor.ProfileExtension);
+                if (!File.Exists(path)) {
+                    throw new FileNotFoundException("Cant locate profile.", path);
                 }
 
-                return programContextNode.SelectSingleNode("Groups") == null ? GetHelperByName("Vixen 2.5") : GetNativeHelper();
+                doc.Load(path);
+
+                channels = Xml.GetRequiredNode(doc, "Profile").SelectNodes("ChannelObjects");
             }
 
-            // Must be a profile
-            var path = Path.Combine(Paths.ProfilePath, profileNode.InnerText + Vendor.ProfileExtension);
-            if (!File.Exists(path)) {
-                throw new FileNotFoundException("Cant locate profile.", path);
+            if (channels == null) {
+                throw new FormatException("No profile or channels in sequence");
             }
 
-            doc.Load(path);
-            var profileContextNode = Xml.GetRequiredNode(doc, "Profile");
-
-            var profileChannel = (from XmlNode node in profileContextNode.SelectNodes("ChannelObjects") select node).First();
-            if (profileChannel.Attributes != null && profileChannel.Attributes["name"] == null) {
+            if (channels[0].Attributes != null && channels[0].Attributes["name"] == null) {
                 return GetHelperByName("Vixen 2.1");
             }
 
-            return profileContextNode.SelectNodes("Groups") == null ? GetHelperByName("Vixen 2.5") : GetNativeHelper();
+            return programContextNode.SelectSingleNode("Groups") == null ? GetHelperByName("Vixen 2.5") : GetNativeHelper();
         }
 
     }
