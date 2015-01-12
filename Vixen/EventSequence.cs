@@ -235,7 +235,7 @@ namespace VixenPlus {
             if (_profile == null) {
                 return;
             }
-            _profile = FileIOHandler.OpenProfile(_profile.FileName);
+            _profile = FileIOHandler.OpenProfile(_profile.FileName, FileIOHandler);
             LoadFromProfile();
         }
 
@@ -426,7 +426,7 @@ namespace VixenPlus {
         public void AttachToProfile(string profileName) {
             var path = Path.Combine(Paths.ProfilePath, profileName + Vendor.ProfileExtension);
             if (File.Exists(path)) {
-                AttachToProfile(FileIOHandler.OpenProfile(path));
+                AttachToProfile(FileIOHandler.OpenProfile(path, FileIOHandler));
                 Groups = _profile.Groups;
             }
             else {

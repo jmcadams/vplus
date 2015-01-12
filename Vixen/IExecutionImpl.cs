@@ -192,7 +192,8 @@ namespace VixenPlus {
                     Profile profile = null;
                     if (str2.Length > 0) {
                         try {
-                            profile = FileIOHelper.GetNativeHelper().OpenProfile(Path.Combine(Paths.ProfilePath, str2 + ".pro"));
+                            var nativeIO = FileIOHelper.GetNativeHelper();
+                            profile = nativeIO.OpenProfile(Path.Combine(Paths.ProfilePath, str2 + ".pro"), nativeIO);
                             profile.Freeze();
                         }
                         catch {
@@ -293,11 +294,14 @@ namespace VixenPlus {
             try {
                 var mask = executableObject.Mask;
                 var plugInData = executableObject.PlugInData;
+                var nativeHelper = FileIOHelper.GetNativeHelper();
+
                 if (!context.LocalRequestor && !executableObject.TreatAsLocal) {
                     Profile profile;
                     var str = _preferences.GetString("SynchronousData");
                     if (str == "Default") {
                         var str2 = _preferences.GetString("DefaultProfile");
+
                         if (str2 == string.Empty) {
                             LogError("SetSynchronousContext",
                                 "Preference set to use default profile for synchronous execution, but no default profile set.");
@@ -305,14 +309,14 @@ namespace VixenPlus {
                             plugInData = null;
                         }
                         else {
-                            profile = FileIOHelper.GetNativeHelper().OpenProfile(Path.Combine(Paths.ProfilePath, str2 + ".pro"));
+                            profile = nativeHelper.OpenProfile(Path.Combine(Paths.ProfilePath, str2 + ".pro"), nativeHelper);
                             profile.Freeze();
                             mask = profile.Mask;
                             plugInData = profile.PlugInData;
                         }
                     }
                     else if (str != "Embedded") {
-                        profile = FileIOHelper.GetNativeHelper().OpenProfile(Path.Combine(Paths.ProfilePath, str + ".pro"));
+                        profile = nativeHelper.OpenProfile(Path.Combine(Paths.ProfilePath, str + ".pro"), nativeHelper);
                         profile.Freeze();
                         mask = profile.Mask;
                         plugInData = profile.PlugInData;

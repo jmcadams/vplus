@@ -285,7 +285,7 @@ namespace VixenPlus.Dialogs {
                 }
                 case 2:
                     _eventSequence.Profile = comboBoxProfiles.SelectedIndex == 0
-                                                 ? null : _eventSequence.FileIOHandler.OpenProfile(Path.Combine(Paths.ProfilePath, comboBoxProfiles.SelectedItem + ".pro"));
+                                                 ? null : _eventSequence.FileIOHandler.OpenProfile(Path.Combine(Paths.ProfilePath, comboBoxProfiles.SelectedItem + ".pro"), _eventSequence.FileIOHandler);
                     if (_eventSequence.Profile != null) {
                         _eventSequence.Groups = _eventSequence.Profile.Groups;
                     }

@@ -10,7 +10,7 @@
         void SaveProfile(Profile profile);
         bool CanOpen();
         EventSequence OpenSequence(string fileName, IFileIOHandler fileIOHandler);
-        Profile OpenProfile(string fileName);
+        Profile OpenProfile(string fileName, IFileIOHandler fileIOHandler);
         void LoadEmbeddedData(string fileName, EventSequence es);
     }
 }

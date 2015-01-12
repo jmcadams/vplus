@@ -25,7 +25,6 @@ namespace VixenPlus {
             _channelOutputs = new List<int>();
             PlugInData = new SetupData();
             IsDirty = false;
-            FileIOHandler = FileIOHelper.GetNativeHelper();
         }
 
         public IFileIOHandler FileIOHandler { get; set; }

@@ -26,7 +26,6 @@ namespace SeqIOHelpers {
             return true;
         }
 
-        //TODO Sort orders! @#$%^&*
         public override void SaveSequence(EventSequence eventSequence) {
             var contextNode = Xml.CreateXmlDocument();
             BaseSaveSequence(contextNode, eventSequence, FormatChannel);
@@ -34,8 +33,16 @@ namespace SeqIOHelpers {
         }
 
 
+        //TODO Sort orders! @#$%^&*
         public override void SaveProfile(Profile profile) {
-            throw new System.NotImplementedException();
+            var profileXml = Xml.CreateXmlDocument("Profile");
+            profile.FileIOHandler = this;
+
+            BaseSaveProfile(profileXml, profile, FormatChannel);
+            //Sort Orders go here
+
+            profileXml.Save(profile.FileName);
+            profile.IsDirty = false;
         }
 
 

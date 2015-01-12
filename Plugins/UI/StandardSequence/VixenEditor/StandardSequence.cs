@@ -2839,7 +2839,7 @@ namespace VixenEditor {
 
         private void SetProfile(string filePath) {
             if (filePath != null) {
-                SetProfile(_sequence.FileIOHandler.OpenProfile(filePath));
+                SetProfile(_sequence.FileIOHandler.OpenProfile(filePath, _sequence.FileIOHandler));
             }
             else {
                 SetProfile((Profile) null);

@@ -87,7 +87,7 @@ namespace SeqIOHelpers {
             else {
                 var path = Path.Combine(Paths.ProfilePath, profileNode.InnerText + Vendor.ProfileExtension);
                 if (File.Exists(path)) {
-                    es.AttachToProfile(es.FileIOHandler.OpenProfile(path));
+                    es.AttachToProfile(es.FileIOHandler.OpenProfile(path, es.FileIOHandler));
                     es.Groups = es.Profile.Groups;
                 }
                 else {
@@ -192,8 +192,8 @@ namespace SeqIOHelpers {
         }
 
 
-        public virtual Profile OpenProfile(string fileName) {
-            var p = new Profile();
+        public virtual Profile OpenProfile(string fileName, IFileIOHandler fileIOHandler) {
+            var p = new Profile {FileIOHandler = fileIOHandler};
 
             var document = new XmlDocument();
             document.Load(fileName);
@@ -269,7 +269,6 @@ namespace SeqIOHelpers {
             }
             else {
                 Xml.SetValue(programNode, "Profile", eventSequence.Profile.Name);
-                //todo: maybe we should ask if they want the profile converted as well.
             }
 
             var channelCount = eventSequence.FullChannels.Count;

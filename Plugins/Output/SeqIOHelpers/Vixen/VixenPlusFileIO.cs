@@ -51,6 +51,7 @@ namespace SeqIOHelpers {
 
         public override void SaveProfile(Profile profile) {
             var profileXml = Xml.CreateXmlDocument("Profile");
+            profile.FileIOHandler = this;
 
             BaseSaveProfile(profileXml, profile, FormatChannel);
             Group.SaveToXml(profileXml.DocumentElement, profile.Groups);
