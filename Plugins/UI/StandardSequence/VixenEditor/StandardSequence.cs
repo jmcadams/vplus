@@ -701,6 +701,7 @@ namespace VixenEditor {
             context.InheritChannelsFrom(_sequence);
             context.InheritPlugInDataFrom(_sequence);
             context.Groups = _sequence.Groups;
+            context.FileIOHandler = _sequence.FileIOHandler;
 
             return context;
         }
@@ -1707,7 +1708,7 @@ namespace VixenEditor {
                         var channel = _sequence.Channels[channelOffset];
                         var isChannelSelected = channel == SelectedChannel;
 
-                        var alpha = (_inPlayback && _doChannelHighlight) ?
+                        var alpha = (_inPlayback && _doChannelHighlight && !(_position < 0)) ?
                             _sequence.EventValues[_sequence.FullChannels.IndexOf(channel), _position] : 255;
 
                         brush.Color = isChannelSelected ? ((SolidBrush) SystemBrushes.Highlight).Color : Color.FromArgb(alpha, channel.Color);
@@ -2839,6 +2840,7 @@ namespace VixenEditor {
 
         private void SetProfile(string filePath) {
             if (filePath != null) {
+                //todo this might be a problem if someone has a 2.1 open and they try to attach to a 2.5/plus version
                 SetProfile(_sequence.FileIOHandler.OpenProfile(filePath, _sequence.FileIOHandler));
             }
             else {

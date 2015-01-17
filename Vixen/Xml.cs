@@ -94,7 +94,6 @@ namespace VixenPlus {
 
 
         public static void SetAttribute(XmlNode node, string attributeName, string attributeValue) {
-            // Duplicated in Preview.Xml.cs
             if (node.Attributes == null) {
                 return;
             }

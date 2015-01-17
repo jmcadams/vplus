@@ -19,7 +19,7 @@ namespace SeqIOHelpers {
 
 
         public override int PreferredOrder() {
-            return 2;
+            return 1;
         }
 
         public override bool CanSave() {
@@ -32,14 +32,12 @@ namespace SeqIOHelpers {
             contextNode.Save(eventSequence.FileName);
         }
 
-
-        //TODO Sort orders! @#$%^&*
         public override void SaveProfile(Profile profile) {
             var profileXml = Xml.CreateXmlDocument("Profile");
-            profile.FileIOHandler = this;
 
             BaseSaveProfile(profileXml, profile, FormatChannel);
-            //Sort Orders go here
+            var profileNode = Xml.GetNodeAlways(profileXml, "Profile");
+            BaseSaveSortOrders(profileNode, profile);
 
             profileXml.Save(profile.FileName);
             profile.IsDirty = false;

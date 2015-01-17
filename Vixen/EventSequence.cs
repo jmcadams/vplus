@@ -426,6 +426,7 @@ namespace VixenPlus {
         public void AttachToProfile(string profileName) {
             var path = Path.Combine(Paths.ProfilePath, profileName + Vendor.ProfileExtension);
             if (File.Exists(path)) {
+                // todo this could have the same issue with mismatch as another issue
                 AttachToProfile(FileIOHandler.OpenProfile(path, FileIOHandler));
                 Groups = _profile.Groups;
             }

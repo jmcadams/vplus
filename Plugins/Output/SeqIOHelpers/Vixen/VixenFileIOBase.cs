@@ -42,6 +42,7 @@ namespace SeqIOHelpers {
 
 
         // ReSharper disable once FunctionComplexityOverflow
+        //HACK fix BEFORE merging to trunk! why do I need to pass the file handler, I an doing something wrong - 
         public EventSequence OpenSequence(string fileName, IFileIOHandler fileIOHandler) {
             var contextNode = new XmlDocument();
             contextNode.Load(fileName);
@@ -192,6 +193,7 @@ namespace SeqIOHelpers {
         }
 
 
+        //HACK fix BEFORE merging to trunk! why do I need to pass the file handler, I an doing something wrong - 
         public virtual Profile OpenProfile(string fileName, IFileIOHandler fileIOHandler) {
             var p = new Profile {FileIOHandler = fileIOHandler};
 
@@ -290,6 +292,28 @@ namespace SeqIOHelpers {
 
             if (programNode.OwnerDocument != null) {
                 programNode.AppendChild(programNode.OwnerDocument.ImportNode(eventSequence.Extensions.RootNode, true));
+            }
+        }
+
+
+        protected static void BaseSaveSortOrders(XmlNode profileNode, Profile profile) {
+            var sortOrders = Xml.GetEmptyNodeAlways(profileNode, "SortOrders");
+            Xml.SetAttribute(sortOrders, "lastSort", "-1"); // always default to none since we don't track this anywhere.
+
+            var ownerDoc = profileNode.OwnerDocument;
+
+            if (ownerDoc == null) {
+                throw new ArgumentNullException("profileNode", "Somehow your profile node is a lost child!  Sorry I have to exit."); ;
+            }
+
+            foreach (var g in profile.Groups.Where(g => g.Value.IsSortOrder)) {
+                var groupValue = g.Value;
+
+                var cso = ownerDoc.CreateElement("SortOrder");
+                Xml.SetAttribute(cso, "name", (groupValue.Name.Replace(" (Sort Order)", "").Trim()));
+                cso.InnerText = groupValue.GroupChannels;
+
+                sortOrders.AppendChild(cso);
             }
         }
 

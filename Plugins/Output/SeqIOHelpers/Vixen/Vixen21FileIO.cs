@@ -18,7 +18,7 @@ namespace SeqIOHelpers {
 
 
         public override int PreferredOrder() {
-            return 1;
+            return 2;
         }
 
 
@@ -39,13 +39,12 @@ namespace SeqIOHelpers {
         }
 
 
-        //TODO Sort orders! @#$%^&*
         public override void SaveProfile(Profile profile) {
             var profileXml = Xml.CreateXmlDocument("Profile");
-            profile.FileIOHandler = this;
 
             BaseSaveProfile(profileXml, profile, FormatChannel);
-            //Sort Orders go here
+            var profileNode = Xml.GetNodeAlways(profileXml, "Profile");
+            BaseSaveSortOrders(profileNode, profile);
 
             profileXml.Save(profile.FileName);
             profile.IsDirty = false;

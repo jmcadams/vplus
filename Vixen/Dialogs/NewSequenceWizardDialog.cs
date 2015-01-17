@@ -284,8 +284,13 @@ namespace VixenPlus.Dialogs {
                     goto Label_0339;
                 }
                 case 2:
+                    _eventSequence.FileIOHandler = FileIOHelper.GetNativeHelper();
+
                     _eventSequence.Profile = comboBoxProfiles.SelectedIndex == 0
-                                                 ? null : _eventSequence.FileIOHandler.OpenProfile(Path.Combine(Paths.ProfilePath, comboBoxProfiles.SelectedItem + ".pro"), _eventSequence.FileIOHandler);
+                        ? null
+                        : _eventSequence.FileIOHandler.OpenProfile(Path.Combine(Paths.ProfilePath, comboBoxProfiles.SelectedItem + ".pro"),
+                            _eventSequence.FileIOHandler);
+
                     if (_eventSequence.Profile != null) {
                         _eventSequence.Groups = _eventSequence.Profile.Groups;
                     }

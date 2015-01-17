@@ -269,7 +269,6 @@ namespace VixenPlus {
         }
 
 
-        //TODO: File Interoperability WILL impact this
         private void ChangeSequenceName(IUIPlugIn pluginInstance, string newName) {
             var fileExt = pluginInstance.Sequence.FileIOHandler.FileExtension();
             if (!newName.EndsWith(fileExt)) {
@@ -363,10 +362,12 @@ namespace VixenPlus {
         }
 
 
-        private bool GetNewName(IUIPlugIn pluginInstance) {
-            saveFileDialog1.Filter = FileIOHelper.GetSaveFilters();
-            var fi = saveFileDialog1.Filter.Split('|').TakeWhile(f => !pluginInstance.Sequence.FileIOHandler.DialogFilterList().StartsWith(f)).Count();
-            saveFileDialog1.FilterIndex = fi;
+        private bool GetNewSequenceInfo(IUIPlugIn pluginInstance) {
+            var saveFilters = FileIOHelper.GetSaveFilters();
+            var currentFilterIndex = saveFilters.Split('|').TakeWhile(f => !pluginInstance.Sequence.FileIOHandler.DialogFilterList().StartsWith(f)).Count();
+
+            saveFileDialog1.Filter = saveFilters;
+            saveFileDialog1.FilterIndex = currentFilterIndex;
             saveFileDialog1.InitialDirectory = Paths.SequencePath;
             saveFileDialog1.FileName = string.Empty;
             if (saveFileDialog1.ShowDialog() != DialogResult.OK) {
@@ -374,10 +375,49 @@ namespace VixenPlus {
             }
 
             var filters = saveFileDialog1.Filter.Split('|');
+            var newFilterIndex = saveFileDialog1.FilterIndex - 1;
 
-            pluginInstance.Sequence.FileIOHandler = FileIOHelper.GetHelperByName(filters[(saveFileDialog1.FilterIndex - 1) *2]);
+            // Okay format changed...
+            if (currentFilterIndex != newFilterIndex) {
+
+                var newFileIOHandler = FileIOHelper.GetHelperByName(filters[newFilterIndex * 2]);
+
+                // Since Vixen+ is native, it has the lowest filter index of any of the list
+                // Other file formats will be higher and thus may lose data or functionality when down versioning
+                // or cross sequence formatting.  In some cases it won't matter, in other it will be very important.
+                if (newFilterIndex > currentFilterIndex) {
+                    if (
+                        MessageBox.Show(
+                            string.Format("{0}\n\nOld Format: {1}\nNewFormat: {2}\n\n{3}\n\n{4}\n\n{5}",
+                                "WARNING! A possible loss of data may occur from this change!",
+                                pluginInstance.Sequence.FileIOHandler.Name(), 
+                                newFileIOHandler.Name(),
+                                "This will impact your sequence and " + ((pluginInstance.Sequence.Profile == null ? "embedded" : "attached") + " profile"),
+                                "Proceed with saving in this format?",
+                                "In other words, press OK if you have a backup.")
+                        , "Possible loss of data!",
+                        MessageBoxButtons.OKCancel, 
+                        MessageBoxIcon.Warning, 
+                        MessageBoxDefaultButton.Button2) == DialogResult.Cancel) 
+                    {
+
+                        return false;
+                    }
+                }
+
+                //Okay they want the change, get the new handler and make it so
+
+                pluginInstance.Sequence.FileIOHandler = newFileIOHandler; // this automatically handles embedded data
+                
+                // he we handle profiles.
+                if (pluginInstance.Sequence.Profile != null) {
+                    pluginInstance.Sequence.Profile.FileIOHandler = newFileIOHandler;
+                    newFileIOHandler.SaveProfile(pluginInstance.Sequence.Profile);
+                }
+            }
 
             ChangeSequenceName(pluginInstance, saveFileDialog1.FileName);
+
             return true;
         }
 
@@ -639,7 +679,7 @@ namespace VixenPlus {
             }
 
             var plugInInterface = pluginInstance;
-            if ((plugInInterface.IsDirty && string.IsNullOrEmpty(plugInInterface.Sequence.Name)) && !GetNewName(pluginInstance)) {
+            if ((plugInInterface.IsDirty && string.IsNullOrEmpty(plugInInterface.Sequence.Name)) && !GetNewSequenceInfo(pluginInstance)) {
                 return false;
             }
             
@@ -647,6 +687,11 @@ namespace VixenPlus {
 
             // If the sequenceType is not set, set it to Vixen Plus
             if (plugInInterface.Sequence.FileIOHandler == null) {
+                // this should never be true, if it is we don't want to blow up, but notify and continue.
+                MessageBox.Show("Interesting!",
+                    "You should never see this, but if you do, I didn't want to blow up on you\n" + "Let Macebobo on Diychristmas.org know, please.\n" +
+                    "I'm going to set your sequence file handler type to Vixen Plus - he'll know what that means\n" + "And I can continue gracefully.\n"+
+                    "Sorry about that! Carry on.");
                 plugInInterface.Sequence.FileIOHandler = FileIOHelper.GetNativeHelper();
             }
 
@@ -663,7 +708,7 @@ namespace VixenPlus {
 
 
         private bool SaveAs(IUIPlugIn pluginInstance) {
-            return (GetNewName(pluginInstance) && Save(pluginInstance));
+            return (GetNewSequenceInfo(pluginInstance) && Save(pluginInstance));
         }
 
 
