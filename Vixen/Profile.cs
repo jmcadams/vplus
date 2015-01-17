@@ -4,8 +4,6 @@ using System.IO;
 
 using VixenPlusCommon;
 
-//TODO We need to refactor this, a profile is a profile, how it is persisted depends on the file IO routine, not the profile.
-//TODO What is frozen really do?
 namespace VixenPlus {
     public class Profile : IExecutable {
         private readonly List<int> _channelOutputs;

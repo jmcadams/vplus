@@ -29,7 +29,7 @@ namespace VixenPlus {
 
         public XmlNodeList GetAllPluginData(PluginType type) {
             var node = RootNode.SelectNodes(string.Format("PlugIn[@type='{0}']", type));
-            if (node != null && node.Count == 0 && type == PluginType.Output) { // Hack for 2.1
+            if (node != null && node.Count == 0 && type == PluginType.Output) {
                 node = GetAllPluginData();
             }
             return node;
@@ -38,7 +38,7 @@ namespace VixenPlus {
 
         public XmlNodeList GetAllPluginData(PluginType type, bool enabledOnly) {
             var node = RootNode.SelectNodes(string.Format("PlugIn[@enabled='{0}' and @type='{1}']", enabledOnly, type));
-            if (node != null && node.Count == 0 && type == PluginType.Output) { // Hack for 2.1
+            if (node != null && node.Count == 0 && type == PluginType.Output) {
                 node = RootNode.SelectNodes(string.Format("PlugIn[@enabled='{0}']", enabledOnly));
             }
 

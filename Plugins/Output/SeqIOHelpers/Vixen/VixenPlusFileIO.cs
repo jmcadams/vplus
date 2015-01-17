@@ -35,16 +35,12 @@ namespace SeqIOHelpers {
 
 
         public override Profile OpenProfile(string fileName) {
-            var p = base.OpenProfile(fileName);
-            p.FileIOHandler = this;
-            return p;
+            return BaseOpenProfile(fileName, this);
         }
 
 
         public override EventSequence OpenSequence(string fileName) {
-            var es = base.OpenSequence(fileName);
-            es.FileIOHandler = this;
-            return es;
+            return BaseOpenSequence(fileName, this);
         }
 
 

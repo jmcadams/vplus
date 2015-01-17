@@ -5,7 +5,6 @@ using System.Xml;
 
 using VixenPlusCommon;
 
-//TODO Need to refactor this, the channel should just be a channel, how we persist it depends on the saving routine, not the channel.
 namespace VixenPlus {
     public class Channel : IDisposable {
         private Color _color;

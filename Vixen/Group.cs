@@ -255,11 +255,12 @@ namespace VixenPlus {
                 }
             }
 
+            //since we are now saving in the XML we delete the old group file, well rename it.
             if (File.Exists(file + Vendor.DeletedExtension)) {
                 File.Delete(file + Vendor.DeletedExtension);
             }
 
-            File.Move(file, file + Vendor.DeletedExtension); //todo wtf was I thinking?
+            File.Move(file, file + Vendor.DeletedExtension); 
 
             return true;
         }

@@ -46,8 +46,13 @@ namespace SeqIOHelpers {
         }
 
 
-        // ReSharper disable once FunctionComplexityOverflow
         public virtual EventSequence OpenSequence(string fileName) {
+            throw new NotImplementedException("Base Implementation cannot be called");
+        }
+
+
+        // ReSharper disable once FunctionComplexityOverflow
+        protected EventSequence BaseOpenSequence(string fileName, IFileIOHandler ioHandler) {
             var contextNode = new XmlDocument();
             contextNode.Load(fileName);
             var requiredNode = Xml.GetRequiredNode(contextNode, "Program");
@@ -55,7 +60,7 @@ namespace SeqIOHelpers {
             var es = new EventSequence {
                 FileName = fileName, FullChannels = new List<Channel>(), Channels = new List<Channel>(), PlugInData = new SetupData(),
                 LoadableData = new LoadableData(), Extensions = new SequenceExtensions(),
-                AudioDeviceVolume = int.Parse(Xml.GetNodeAlways(requiredNode, "AudioVolume", "100").InnerText)
+                AudioDeviceVolume = int.Parse(Xml.GetNodeAlways(requiredNode, "AudioVolume", "100").InnerText), FileIOHandler = ioHandler
             };
 
             var timeNode = requiredNode.SelectSingleNode("Time");
@@ -199,7 +204,12 @@ namespace SeqIOHelpers {
 
 
         public virtual Profile OpenProfile(string fileName) {
-            var p = new Profile();
+            throw new NotImplementedException("Base Implementation cannot be called");
+        }
+
+
+        protected Profile BaseOpenProfile(string fileName, IFileIOHandler ioHandler) {
+            var p = new Profile {FileIOHandler = ioHandler};
 
             var document = new XmlDocument();
             document.Load(fileName);
