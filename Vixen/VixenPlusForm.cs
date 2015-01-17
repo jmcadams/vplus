@@ -612,7 +612,7 @@ namespace VixenPlus {
 
             var plugInInterface = (IUIPlugIn) Activator.CreateInstance(_registeredFileTypes[".vix"].GetType());
 
-            plugInInterface.Sequence = fileIOHandler.OpenSequence(fileName, fileIOHandler);
+            plugInInterface.Sequence = fileIOHandler.OpenSequence(fileName);
 
             ((Form) plugInInterface).Text = plugInInterface.Sequence.Name + " - " + plugInInterface.Sequence.FileIOHandler.Name();
             var uiBase = plugInInterface as UIBase;

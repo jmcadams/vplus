@@ -193,7 +193,7 @@ namespace VixenPlus {
                     if (str2.Length > 0) {
                         try {
                             var nativeIO = FileIOHelper.GetNativeHelper();
-                            profile = nativeIO.OpenProfile(Path.Combine(Paths.ProfilePath, str2 + ".pro"), nativeIO);
+                            profile = nativeIO.OpenProfile(Path.Combine(Paths.ProfilePath, str2 + ".pro"));
                             profile.Freeze();
                         }
                         catch {
@@ -309,14 +309,14 @@ namespace VixenPlus {
                             plugInData = null;
                         }
                         else {
-                            profile = nativeHelper.OpenProfile(Path.Combine(Paths.ProfilePath, str2 + ".pro"), nativeHelper);
+                            profile = nativeHelper.OpenProfile(Path.Combine(Paths.ProfilePath, str2 + ".pro"));
                             profile.Freeze();
                             mask = profile.Mask;
                             plugInData = profile.PlugInData;
                         }
                     }
                     else if (str != "Embedded") {
-                        profile = nativeHelper.OpenProfile(Path.Combine(Paths.ProfilePath, str + ".pro"), nativeHelper);
+                        profile = nativeHelper.OpenProfile(Path.Combine(Paths.ProfilePath, str + ".pro"));
                         profile.Freeze();
                         mask = profile.Mask;
                         plugInData = profile.PlugInData;

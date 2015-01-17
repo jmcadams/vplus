@@ -9,8 +9,8 @@
         void SaveSequence(EventSequence eventSequence);
         void SaveProfile(Profile profile);
         bool CanOpen();
-        EventSequence OpenSequence(string fileName, IFileIOHandler fileIOHandler);
-        Profile OpenProfile(string fileName, IFileIOHandler fileIOHandler);
+        EventSequence OpenSequence(string fileName);
+        Profile OpenProfile(string fileName);
         void LoadEmbeddedData(string fileName, EventSequence es);
     }
 }

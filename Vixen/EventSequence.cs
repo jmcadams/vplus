@@ -235,7 +235,7 @@ namespace VixenPlus {
             if (_profile == null) {
                 return;
             }
-            _profile = FileIOHandler.OpenProfile(_profile.FileName, FileIOHandler);
+            _profile = FileIOHandler.OpenProfile(_profile.FileName);
             LoadFromProfile();
         }
 
@@ -427,7 +427,7 @@ namespace VixenPlus {
             var path = Path.Combine(Paths.ProfilePath, profileName + Vendor.ProfileExtension);
             if (File.Exists(path)) {
                 // todo this could have the same issue with mismatch as another issue
-                AttachToProfile(FileIOHandler.OpenProfile(path, FileIOHandler));
+                AttachToProfile(FileIOHandler.OpenProfile(path));
                 Groups = _profile.Groups;
             }
             else {

@@ -20,21 +20,26 @@ namespace SeqIOHelpers {
         public abstract void SaveSequence(EventSequence eventSequence);
         public abstract void SaveProfile(Profile profile);
 
+
         public virtual string FileExtension() {
             return ".vix";
         }
+
 
         public virtual int PreferredOrder() {
             return int.MaxValue;
         }
 
+
         public virtual bool IsNativeToVixenPlus() {
             return false;
         }
 
+
         public virtual bool CanSave() {
             return false;
         }
+
 
         public virtual bool CanOpen() {
             return false;
@@ -42,8 +47,7 @@ namespace SeqIOHelpers {
 
 
         // ReSharper disable once FunctionComplexityOverflow
-        //HACK fix BEFORE merging to trunk! why do I need to pass the file handler, I an doing something wrong - 
-        public EventSequence OpenSequence(string fileName, IFileIOHandler fileIOHandler) {
+        public virtual EventSequence OpenSequence(string fileName) {
             var contextNode = new XmlDocument();
             contextNode.Load(fileName);
             var requiredNode = Xml.GetRequiredNode(contextNode, "Program");
@@ -51,9 +55,8 @@ namespace SeqIOHelpers {
             var es = new EventSequence {
                 FileName = fileName, FullChannels = new List<Channel>(), Channels = new List<Channel>(), PlugInData = new SetupData(),
                 LoadableData = new LoadableData(), Extensions = new SequenceExtensions(),
-                AudioDeviceVolume = int.Parse(Xml.GetNodeAlways(requiredNode, "AudioVolume", "100").InnerText), FileIOHandler = fileIOHandler
+                AudioDeviceVolume = int.Parse(Xml.GetNodeAlways(requiredNode, "AudioVolume", "100").InnerText)
             };
-
 
             var timeNode = requiredNode.SelectSingleNode("Time");
             if (timeNode != null) {
@@ -88,7 +91,7 @@ namespace SeqIOHelpers {
             else {
                 var path = Path.Combine(Paths.ProfilePath, profileNode.InnerText + Vendor.ProfileExtension);
                 if (File.Exists(path)) {
-                    es.AttachToProfile(es.FileIOHandler.OpenProfile(path, es.FileIOHandler));
+                    es.AttachToProfile(es.FileIOHandler.OpenProfile(path));
                     es.Groups = es.Profile.Groups;
                 }
                 else {
@@ -167,6 +170,7 @@ namespace SeqIOHelpers {
             return es;
         }
 
+
         private static void LoadEmbeddedData(XmlNode requiredNode, EventSequence es) {
             var fullChannels = new List<Channel>();
             var xmlNodeList = requiredNode.SelectNodes("Channels/Channel");
@@ -181,6 +185,7 @@ namespace SeqIOHelpers {
             Group.LoadFromFile(requiredNode, es.Groups);
         }
 
+
         public void LoadEmbeddedData(string fileName, EventSequence es) {
             if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName)) {
                 var document = new XmlDocument();
@@ -193,9 +198,8 @@ namespace SeqIOHelpers {
         }
 
 
-        //HACK fix BEFORE merging to trunk! why do I need to pass the file handler, I an doing something wrong - 
-        public virtual Profile OpenProfile(string fileName, IFileIOHandler fileIOHandler) {
-            var p = new Profile {FileIOHandler = fileIOHandler};
+        public virtual Profile OpenProfile(string fileName) {
+            var p = new Profile();
 
             var document = new XmlDocument();
             document.Load(fileName);
@@ -303,7 +307,7 @@ namespace SeqIOHelpers {
             var ownerDoc = profileNode.OwnerDocument;
 
             if (ownerDoc == null) {
-                throw new ArgumentNullException("profileNode", "Somehow your profile node is a lost child!  Sorry I have to exit."); ;
+                throw new ArgumentNullException("profileNode", "Somehow your profile node is a lost child!  Sorry I have to exit.");
             }
 
             foreach (var g in profile.Groups.Where(g => g.Value.IsSortOrder)) {
@@ -331,11 +335,11 @@ namespace SeqIOHelpers {
                 builder.AppendFormat("{0},", channel.OutputChannel);
             }
             Xml.GetEmptyNodeAlways(profileDoc, "Outputs").InnerText = builder.ToString().TrimEnd(',');
-            
+
             if (profileDoc != null) {
                 profileDoc.AppendChild(doc.ImportNode(profileObject.PlugInData.RootNode, true));
             }
-            
+
             var disabledChannels = new List<string>();
             for (var i = 0; i < profileObject.Channels.Count; i++) {
                 if (!profileObject.Channels[i].Enabled) {
@@ -343,6 +347,6 @@ namespace SeqIOHelpers {
                 }
             }
             Xml.SetValue(profileDoc, "DisabledChannels", string.Join(",", disabledChannels.ToArray()));
-       }
-   }
+        }
+    }
 }

@@ -34,6 +34,20 @@ namespace SeqIOHelpers {
         }
 
 
+        public override Profile OpenProfile(string fileName) {
+            var p = base.OpenProfile(fileName);
+            p.FileIOHandler = this;
+            return p;
+        }
+
+
+        public override EventSequence OpenSequence(string fileName) {
+            var es = base.OpenSequence(fileName);
+            es.FileIOHandler = this;
+            return es;
+        }
+
+
         public override void SaveSequence(EventSequence eventSequence) {
             var contextNode = Xml.CreateXmlDocument();
 
@@ -67,13 +81,14 @@ namespace SeqIOHelpers {
             Xml.SetAttribute(node, "color", ch.Color.ToArgb().ToString(CultureInfo.InvariantCulture));
             Xml.SetAttribute(node, "output", (ch.OutputChannel).ToString(CultureInfo.InvariantCulture));
             Xml.SetAttribute(node, "enabled", ch.Enabled.ToString());
-            
+
             if (ch.DimmingCurve != null) {
                 Xml.SetValue(node, "Curve", string.Join(",", ch.DimmingCurve.Select(num => num.ToString(CultureInfo.InvariantCulture)).ToArray()));
             }
-            
+
             return node;
         }
+
 
         public override bool CanOpen() {
             return true;

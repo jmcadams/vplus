@@ -12,6 +12,7 @@ namespace SeqIOHelpers {
             return string.Format("Vixen 2.1 Sequence (*{0})|*{0}", FileExtension());
         }
 
+
         public override string Name() {
             return "Vixen 2.1";
         }
@@ -32,6 +33,20 @@ namespace SeqIOHelpers {
         }
 
 
+        public override Profile OpenProfile(string fileName) {
+            var p = base.OpenProfile(fileName);
+            p.FileIOHandler = this;
+            return p;
+        }
+
+
+        public override EventSequence OpenSequence(string fileName) {
+            var es = base.OpenSequence(fileName);
+            es.FileIOHandler = this;
+            return es;
+        }
+
+
         public override void SaveSequence(EventSequence eventSequence) {
             var contextNode = Xml.CreateXmlDocument();
             BaseSaveSequence(contextNode, eventSequence, FormatChannel);
@@ -49,6 +64,7 @@ namespace SeqIOHelpers {
             profileXml.Save(profile.FileName);
             profile.IsDirty = false;
         }
+
 
         private static XmlNode FormatChannel(XmlDocument doc, Channel ch) {
             XmlNode node = doc.CreateElement("Channel");

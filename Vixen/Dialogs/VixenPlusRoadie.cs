@@ -715,7 +715,7 @@ namespace VixenPlus.Dialogs {
                     .Where(profileFile => Path.GetExtension(profileFile) == Vendor.ProfileExtension)) {
                 try {
                     var nativeIO = FileIOHelper.GetNativeHelper();
-                    cbProfiles.Items.Add(nativeIO.OpenProfile(profileFile, nativeIO));
+                    cbProfiles.Items.Add(nativeIO.OpenProfile(profileFile));
                 }
                 catch (XmlException e) {
                     errors.AppendLine(string.Format("{0}\nFailed to load because: {1}\n", profileFile, e.Message));

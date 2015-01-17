@@ -95,7 +95,7 @@ namespace VixenPlus.Dialogs {
                 return;
             }
             var fileIO = FileIOHelper.GetNativeHelper();
-            var sequence = fileIO.OpenSequence(openFileDialog.FileName, fileIO);
+            var sequence = fileIO.OpenSequence(openFileDialog.FileName);
             textBoxChannelCount.Text = sequence.FullChannelCount.ToString(CultureInfo.InvariantCulture);
             var builder = new StringBuilder();
             foreach (var channel in sequence.FullChannels) {
@@ -288,8 +288,7 @@ namespace VixenPlus.Dialogs {
 
                     _eventSequence.Profile = comboBoxProfiles.SelectedIndex == 0
                         ? null
-                        : _eventSequence.FileIOHandler.OpenProfile(Path.Combine(Paths.ProfilePath, comboBoxProfiles.SelectedItem + ".pro"),
-                            _eventSequence.FileIOHandler);
+                        : _eventSequence.FileIOHandler.OpenProfile(Path.Combine(Paths.ProfilePath, comboBoxProfiles.SelectedItem + ".pro"));
 
                     if (_eventSequence.Profile != null) {
                         _eventSequence.Groups = _eventSequence.Profile.Groups;

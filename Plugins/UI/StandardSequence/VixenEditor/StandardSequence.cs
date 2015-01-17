@@ -2841,7 +2841,7 @@ namespace VixenEditor {
         private void SetProfile(string filePath) {
             if (filePath != null) {
                 //todo this might be a problem if someone has a 2.1 open and they try to attach to a 2.5/plus version
-                SetProfile(_sequence.FileIOHandler.OpenProfile(filePath, _sequence.FileIOHandler));
+                SetProfile(_sequence.FileIOHandler.OpenProfile(filePath));
             }
             else {
                 SetProfile((Profile) null);
