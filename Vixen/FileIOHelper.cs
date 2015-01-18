@@ -19,7 +19,6 @@ namespace VixenPlus {
         }
 
 
-
         private static void LoadPlugins() {
             foreach (var dllFile in Directory.GetFiles(Paths.OutputPluginPath, Vendor.SeqFileIO + Vendor.AppExtension, SearchOption.TopDirectoryOnly)) {
                 try {
@@ -30,17 +29,11 @@ namespace VixenPlus {
                         where Interface.Name == "IFileIOHandler"
                         select exportedType;
 
-                    foreach (var desiredType in validTypes) {
-                        // Cant use abstract types so skip it.
-                        if (desiredType.IsAbstract) continue;
-
-                        // If we have a cache hit, we can just skip this one.
-                        IFileIOHandler plugin;
-                        if (PluginCache.TryGetValue(desiredType.Name, out plugin)) continue;
-
-                        PluginCache[desiredType.Name] = (IFileIOHandler) Activator.CreateInstance(desiredType);
+                    foreach (var desiredType in validTypes
+                        .Where(desiredType => !desiredType.IsAbstract)
+                        .Where(desiredType => !PluginCache.ContainsKey(desiredType.Name))) {
+                            PluginCache[desiredType.Name] = (IFileIOHandler) Activator.CreateInstance(desiredType);
                     }
-
                 }
                 catch (Exception e) {
                     e.ToString().CrashLog();
