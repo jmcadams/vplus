@@ -251,10 +251,10 @@ namespace SeqIOHelpers {
         }
 
 
-        protected delegate XmlNode FormatChannel(XmlDocument doc, Channel ch);
+        protected delegate XmlNode FormatChannelDelegate(XmlDocument doc, Channel ch);
 
 
-        protected static void BaseSaveSequence(XmlDocument contextNode, EventSequence eventSequence, FormatChannel fc) {
+        protected static void BaseSaveSequence(XmlDocument contextNode, EventSequence eventSequence, FormatChannelDelegate fc) {
             var programNode = Xml.GetEmptyNodeAlways(contextNode, "Program");
             Xml.SetValue(programNode, "Time", eventSequence.Length.ToString(CultureInfo.InvariantCulture));
             Xml.SetValue(programNode, "EventPeriodInMilliseconds", eventSequence.EventPeriod.ToString(CultureInfo.InvariantCulture));
@@ -324,7 +324,8 @@ namespace SeqIOHelpers {
                 var groupValue = g.Value;
 
                 var cso = ownerDoc.CreateElement("SortOrder");
-                Xml.SetAttribute(cso, "name", (groupValue.Name.Replace(" (Sort Order)", "").Trim()));
+                var originalName = groupValue.Name.Replace(" (Sort Order)", "").Trim();
+                Xml.SetAttribute(cso, "name", originalName);
                 cso.InnerText = groupValue.GroupChannels;
 
                 sortOrders.AppendChild(cso);
@@ -332,7 +333,7 @@ namespace SeqIOHelpers {
         }
 
 
-        protected static void BaseSaveProfile(XmlDocument doc, Profile profileObject, FormatChannel fc) {
+        protected static void BaseSaveProfile(XmlDocument doc, Profile profileObject, FormatChannelDelegate fc) {
             XmlNode profileDoc = doc.DocumentElement;
 
             var channelObjectsNode = Xml.GetEmptyNodeAlways(profileDoc, "ChannelObjects");
