@@ -167,8 +167,8 @@ Global
 		{5220945F-A0A3-4211-AE3E-86847EE5A037}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{5220945F-A0A3-4211-AE3E-86847EE5A037}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{5220945F-A0A3-4211-AE3E-86847EE5A037}.Release|x86.ActiveCfg = Release|Any CPU
-		{5220945F-A0A3-4211-AE3E-86847EE5A037}.Release32|Any CPU.ActiveCfg = Release|Any CPU
-		{5220945F-A0A3-4211-AE3E-86847EE5A037}.Release32|Any CPU.Build.0 = Release|Any CPU
+		{5220945F-A0A3-4211-AE3E-86847EE5A037}.Release32|Any CPU.ActiveCfg = Release32|Any CPU
+		{5220945F-A0A3-4211-AE3E-86847EE5A037}.Release32|Any CPU.Build.0 = Release32|Any CPU
 		{5220945F-A0A3-4211-AE3E-86847EE5A037}.Release32|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{5220945F-A0A3-4211-AE3E-86847EE5A037}.Release32|Mixed Platforms.Build.0 = Release|Any CPU
 		{5220945F-A0A3-4211-AE3E-86847EE5A037}.Release32|x86.ActiveCfg = Release|Any CPU
@@ -188,10 +188,10 @@ Global
 		{C792440D-580E-4313-A48F-F2EEE85BE98C} = {CC4DA2F3-FB84-42A0-B620-315B4A18B97A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_BuildVersioningStyle = None.None.DeltaBaseDate.TimeStamp
-		BuildVersion_UpdateAssemblyVersion = True
-		BuildVersion_UpdateFileVersion = True
-		BuildVersion_AssemblyInfoFilename = AssemblyInfo.cs
 		BuildVersion_StartDate = 2013/12/31
+		BuildVersion_AssemblyInfoFilename = AssemblyInfo.cs
+		BuildVersion_UpdateFileVersion = True
+		BuildVersion_UpdateAssemblyVersion = True
+		BuildVersion_BuildVersioningStyle = None.None.DeltaBaseDate.TimeStamp
 	EndGlobalSection
 EndGlobal
