@@ -1,2 +1,0 @@
-copy "E:\vplus\build\Plugins\UI\Nut*.*" "C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\Plugins\Nutcracker" /Y
-xcopy "E:\vplus\build\Plugins\Nutcracker\*" "C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\Plugins\Nutcracker\" /s/e/v/y
