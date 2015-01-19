@@ -83,7 +83,14 @@ namespace VixenPlus.Dialogs {
                     AddSubNodes(_groups[groupNode].GroupChannels, thisNode);
                 }
                 else {
-                    var channel = _fullChannels[int.Parse(node)];
+                    var chNum = int.Parse(node);
+
+                    // NOTE: Somehow in Vixen 2.x bad sort order channel numbers can seep in, just ignore them.
+                    if (chNum >= _fullChannels.Count) {
+                        continue;
+                    }
+
+                    var channel = _fullChannels[chNum];
                     var thisNode = parentNode.Nodes.Add(channel.Name);
                     thisNode.Name = channel.Name;
                     thisNode.Tag = new GroupTagData {NodeColor = channel.Color, IsLeafNode = true, UnderlyingChannel = node, IsSortOrder = false};

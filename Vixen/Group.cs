@@ -242,27 +242,23 @@ namespace VixenPlus {
                 return false;
             }
 
+            var dirtied = false;
+
             var doc = Xml.LoadDocument(file).DocumentElement;
-            if (doc != null && doc.ParentNode != null) {
-                var nodes = doc.ParentNode["Groups"];
+            if (doc != null && doc.ParentNode != null && doc.SelectSingleNode("Groups") != null ) {
+                var nodes = doc.SelectSingleNode("Groups");
                 if (nodes != null) {
                     if (null == groups) {
                         groups = new Dictionary<string, GroupData>();
                     }
                     foreach (var node in nodes.Cast<XmlNode>().Where(node => null != node.Attributes && null != node.Attributes["Name"] && !groups.ContainsKey(node.Attributes["Name"].Value))) {
                         AddNodeToGroup(doc, node, groups);
+                        dirtied = true;
                     }
                 }
             }
 
-            //since we are now saving in the XML we delete the old group file, well rename it.
-            if (File.Exists(file + Vendor.DeletedExtension)) {
-                File.Delete(file + Vendor.DeletedExtension);
-            }
-
-            File.Move(file, file + Vendor.DeletedExtension); 
-
-            return true;
+            return dirtied;
         }
     }
 }

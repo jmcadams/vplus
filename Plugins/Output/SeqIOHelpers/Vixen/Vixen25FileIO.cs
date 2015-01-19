@@ -53,6 +53,7 @@ namespace SeqIOHelpers {
             BaseSaveProfile(profileXml, profile, FormatChannel);
             var profileNode = Xml.GetNodeAlways(profileXml, "Profile");
             BaseSaveSortOrders(profileNode, profile);
+            BaseSaveNativeData(profile.FileName, profile.Groups);
 
             profileXml.Save(profile.FileName);
             profile.IsDirty = false;

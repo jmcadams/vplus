@@ -19,7 +19,7 @@ namespace VixenPlusCommon {
         //public const string DataExtension = ".vda";
         public const string DeletedExtension = ".x";
         public const string CsvExtension = ".csv";
-        public const string GroupExtension = ".vgr";
+        public const string GroupExtension = ".vpx";
         public const string MapperExtension = ".vmap";
         public const string NutcrakerModelExtension = ".nmx";
         public const string ProfileExtension = ".pro";

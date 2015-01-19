@@ -102,8 +102,6 @@ namespace SeqIOHelpers {
                 else {
                     LoadEmbeddedData(es.FileName, es);
                 }
-
-                es.AttachToProfile(profileNode.InnerText);
             }
 
             es.UpdateEventValueArray();
@@ -208,7 +206,7 @@ namespace SeqIOHelpers {
         }
 
 
-        protected Profile BaseOpenProfile(string fileName, IFileIOHandler ioHandler) {
+        protected static Profile BaseOpenProfile(string fileName, IFileIOHandler ioHandler) {
             var p = new Profile {FileIOHandler = ioHandler};
 
             var document = new XmlDocument();
@@ -282,6 +280,7 @@ namespace SeqIOHelpers {
                 if (programNode.OwnerDocument != null) {
                     programNode.AppendChild(programNode.OwnerDocument.ImportNode(eventSequence.PlugInData.RootNode, true));
                 }
+                BaseSaveNativeData(eventSequence.FileName, eventSequence.Groups);
             }
             else {
                 Xml.SetValue(programNode, "Profile", eventSequence.Profile.Name);
@@ -358,6 +357,17 @@ namespace SeqIOHelpers {
                 }
             }
             Xml.SetValue(profileDoc, "DisabledChannels", string.Join(",", disabledChannels.ToArray()));
+        }
+
+
+        protected static void BaseSaveNativeData(string currentFileName, Dictionary<string, GroupData> groups) {
+            var nativeXml = Xml.CreateXmlDocument("VixenPlus_Native_Data");
+            Group.SaveToXml(nativeXml.DocumentElement, groups);
+
+            var nativeName = Path.GetFileNameWithoutExtension(currentFileName);
+            var nativePath = Path.GetDirectoryName(currentFileName) ?? Paths.ProfilePath;
+
+            nativeXml.Save(Path.Combine(nativePath, nativeName + Vendor.GroupExtension));
         }
     }
 }
