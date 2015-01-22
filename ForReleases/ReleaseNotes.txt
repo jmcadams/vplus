@@ -1,5 +1,14 @@
 NOTE: For items prefixed with VIX-, you can view more details on https://vixenplus.atlassian.net
 
+22 JAN 2015 - V 0.3.22.1
+   VIX-52   - Broke the save as... for Vixen 2.x - this is now fixed.  We also try to make going back and forth painless.
+   VIX-40   - International dates cause a crash, thought this was fixed, but it cam back, hopefully squished once and for good.
+   NO JIRA  - Fixed a channel numbering bug, did not seem to impact any users - whew!
+   NO JIRA  - Major architectural changes to support other file types. 
+   NO JIRA  - Added support for up to 100 frames per second, 10ms, timing.
+   NO JIRA  - Keyboard shortcut cleanup and some more consistency changes.
+   NO JIRA  - Lots of internal clean up.
+
 3 JNE 2014 - V 0.2.154.1
    NO JIRA - Removed some duplicate code.
    NO JIRA - Nutcracker rendering info was not displaying properly
