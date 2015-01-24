@@ -138,15 +138,14 @@ namespace VixenPlus {
             Dispose();
         }
 
-
+        //TODO Need to remove this concept. Maybe?
         public void Freeze() {
-            if (_isFrozen) {
-                return;
-            }
+            _isFrozen = false; // VIX-53 Fix
 
             _frozenChannelList = Channels;
             _frozenOutputChannelList = OutputChannels;
             _frozenMask = Mask;
+            
             _isFrozen = true;
         }
 

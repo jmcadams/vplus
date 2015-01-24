@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml;
 
 using VixenPlus;
@@ -14,11 +13,11 @@ namespace SeqIOHelpers {
     public abstract class VixenFileIOBase : IFileIOHandler {
 
         public abstract string DialogFilterList();
-
         public abstract string Name();
-
         public abstract void SaveSequence(EventSequence eventSequence);
         public abstract void SaveProfile(Profile profile);
+        public abstract EventSequence OpenSequence(string fileName);
+        public abstract Profile OpenProfile(string fileName);
 
 
         public virtual string FileExtension() {
@@ -43,11 +42,6 @@ namespace SeqIOHelpers {
 
         public virtual bool CanOpen() {
             return false;
-        }
-
-
-        public virtual EventSequence OpenSequence(string fileName) {
-            throw new NotImplementedException("Base Implementation cannot be called");
         }
 
 
@@ -201,11 +195,6 @@ namespace SeqIOHelpers {
         }
 
 
-        public virtual Profile OpenProfile(string fileName) {
-            throw new NotImplementedException("Base Implementation cannot be called");
-        }
-
-
         protected static Profile BaseOpenProfile(string fileName, IFileIOHandler ioHandler) {
             var p = new Profile {FileIOHandler = ioHandler};
 
@@ -333,6 +322,7 @@ namespace SeqIOHelpers {
 
 
         protected static void BaseSaveProfile(XmlDocument doc, Profile profileObject, FormatChannelDelegate fc) {
+            profileObject.Freeze(); // fix VIX-53
             XmlNode profileDoc = doc.DocumentElement;
 
             var channelObjectsNode = Xml.GetEmptyNodeAlways(profileDoc, "ChannelObjects");
@@ -340,23 +330,16 @@ namespace SeqIOHelpers {
                 channelObjectsNode.AppendChild(fc(doc, channel));
             }
 
-            var builder = new StringBuilder();
-            foreach (var channel in profileObject.Channels) {
-                builder.AppendFormat("{0},", channel.OutputChannel);
-            }
-            Xml.GetEmptyNodeAlways(profileDoc, "Outputs").InnerText = builder.ToString().TrimEnd(',');
+            var outputs = string.Join(",", (from c in profileObject.Channels select c.OutputChannel.ToString()).ToArray());
+            Xml.GetEmptyNodeAlways(profileDoc, "Outputs").InnerText = outputs;
 
             if (profileDoc != null) {
                 profileDoc.AppendChild(doc.ImportNode(profileObject.PlugInData.RootNode, true));
             }
 
-            var disabledChannels = new List<string>();
-            for (var i = 0; i < profileObject.Channels.Count; i++) {
-                if (!profileObject.Channels[i].Enabled) {
-                    disabledChannels.Add(i.ToString(CultureInfo.InvariantCulture));
-                }
-            }
-            Xml.SetValue(profileDoc, "DisabledChannels", string.Join(",", disabledChannels.ToArray()));
+            var disabledChannels = string.Join(",",
+                (from c in profileObject.Channels where !c.Enabled select profileObject.Channels.FindIndex(i => i == c).ToString()).ToArray());
+            Xml.SetValue(profileDoc, "DisabledChannels", disabledChannels);
         }
 
 
