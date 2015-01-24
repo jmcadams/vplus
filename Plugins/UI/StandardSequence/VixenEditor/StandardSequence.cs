@@ -2897,7 +2897,7 @@ namespace VixenEditor {
                 dialog.ShowDialog();
             }
             if (_sequence.Profile != null) {
-                _sequence.FileIOHandler.SaveProfile(_sequence.Profile);
+                _sequence.Profile.FileIOHandler.SaveProfile(_sequence.Profile);
             }
             pictureBoxChannels.Refresh();
             pictureBoxGrid.Refresh();

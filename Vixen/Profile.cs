@@ -180,6 +180,7 @@ namespace VixenPlus {
                 }
             }
 
+            Freeze();
             IsDirty = true;
         }
 

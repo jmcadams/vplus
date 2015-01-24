@@ -184,7 +184,7 @@ namespace VixenPlus.Dialogs
             this.btnProfileSave.Size = new Size(75, 23);
             this.btnProfileSave.TabIndex = 5;
             this.btnProfileSave.Text = "&Save";
-            this.ttRoadie.SetToolTip(this.btnProfileSave, "Delete current profile");
+            this.ttRoadie.SetToolTip(this.btnProfileSave, "Save current profile");
             this.btnProfileSave.UseVisualStyleBackColor = true;
             this.btnProfileSave.Click += new EventHandler(this.btnProfileSave_Click);
             // 

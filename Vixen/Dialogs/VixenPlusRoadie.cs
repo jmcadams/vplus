@@ -1205,6 +1205,7 @@ namespace VixenPlus.Dialogs {
             var chNum = _contextProfile.FullChannels.Count;
             var ch = new Channel(string.Format("Channel {0}", chNum + 1), Color.White, chNum);
             ((Profile)_contextProfile).AddChannelObject(ch);
+            ((Profile)_contextProfile).Freeze();
             AddRow(_contextProfile.FullChannels[chNum], chNum + 1);
             SetContextDirtyFlag(true);
             SelectLastRow();
@@ -1411,11 +1412,15 @@ namespace VixenPlus.Dialogs {
 
         private void btnCancel_Click(object sender, EventArgs e) {
             ClearSetup();
-            if (AnyDirtyProfiles()) {
-                QuerySaveChanges();
+            DialogResult = DialogResult.Cancel;
+            
+            if (!AnyDirtyProfiles()) {
+                return;
             }
 
-            DialogResult = DialogResult.Cancel;
+            if (QuerySaveChanges()) {
+                DialogResult = DialogResult.OK;
+            }
         }
 
 
@@ -1522,48 +1527,51 @@ namespace VixenPlus.Dialogs {
 
         private void VixenPlusRoadie_FormClosing(object sender, FormClosingEventArgs e) {
             ClearSetup();
+            DialogResult = DialogResult.OK;
+            
             if (e.CloseReason != CloseReason.UserClosing || !AnyDirtyProfiles()) {
                 return;
             }
-
-            QuerySaveChanges();
+            
+            if (!QuerySaveChanges()) {
+                DialogResult = DialogResult.Cancel;
+            }
         }
 
 
-        private void QuerySaveChanges() {
+        private bool QuerySaveChanges() {
             var result = MessageBox.Show("Save changes before closing?", "Save Changes?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if ( result == DialogResult.Yes) {
-                SaveChangedProfiles();
-                RestoreOrDeleteGroupFile(true);
-                return;
+            if (result != DialogResult.Yes) {
+                return false;
             }
+            SaveChangedProfiles();
 
-            RestoreOrDeleteGroupFile();
+            return true;
         }
 
-        private void RestoreOrDeleteGroupFile(bool isDelete = false) {
-            foreach (var baseName in from p in cbProfiles.Items.OfType<Profile>().Where(p => p.IsDirty)
-                let file = Path.GetFileNameWithoutExtension(p.FileName)
-                let path = Path.GetDirectoryName(p.FileName)
-                select Path.Combine(path, file + Vendor.GroupExtension)) {
+        //private void RestoreOrDeleteGroupFile(bool isDelete = false) {
+        //    foreach (var baseName in from p in cbProfiles.Items.OfType<Profile>().Where(p => p.IsDirty)
+        //        let file = Path.GetFileNameWithoutExtension(p.FileName)
+        //        let path = Path.GetDirectoryName(p.FileName)
+        //        select Path.Combine(path, file + Vendor.GroupExtension)) {
                 
-                if (isDelete) {
-                    DeleteIfExists(baseName + Vendor.DeletedExtension);
-                }
-                else {
-                    if (!File.Exists(baseName + Vendor.DeletedExtension)) {
-                        continue;
-                    }
+        //        if (isDelete) {
+        //            DeleteIfExists(baseName + Vendor.DeletedExtension);
+        //        }
+        //        else {
+        //            if (!File.Exists(baseName + Vendor.DeletedExtension)) {
+        //                continue;
+        //            }
 
-                    try {
-                        File.Move(baseName + Vendor.DeletedExtension, baseName);
-                    }
-                    catch (Exception e) {
-                        Console.WriteLine(e.Message, "Error restoring file");
-                    }
-                }
-            }
-        }
+        //            try {
+        //                File.Move(baseName + Vendor.DeletedExtension, baseName);
+        //            }
+        //            catch (Exception e) {
+        //                Console.WriteLine(e.Message, "Error restoring file");
+        //            }
+        //        }
+        //    }
+        //}
 
 
         private void SaveChangedProfiles() {

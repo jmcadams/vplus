@@ -1,5 +1,9 @@
 NOTE: For items prefixed with VIX-, you can view more details on https://vixenplus.atlassian.net
 
+24 JAN 2015 - V 0.3.24.1
+  VIX-53    - Error in saving profile information.
+  VIX-54    - Stack when adding or deleting channeles.
+
 22 JAN 2015 - V 0.3.22.1
    VIX-52   - Broke the save as... for Vixen 2.x - this is now fixed.  We also try to make going back and forth painless.
    VIX-40   - International dates cause a crash, thought this was fixed, but it cam back, hopefully squished once and for good.
