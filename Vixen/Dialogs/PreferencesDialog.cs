@@ -25,6 +25,9 @@ namespace VixenPlus.Dialogs {
 
         public PreferencesDialog() {
             InitializeComponent();
+
+            UpdateFolderLabel();
+
             Icon = Resources.VixenPlus;
             _preferences = Preference2.GetInstance();
             treeView.Nodes["nodeGeneral"].Tag = generalTab;
@@ -43,6 +46,12 @@ namespace VixenPlus.Dialogs {
                 dateTimePickerAutoShutdownTime.Enabled = false;
             }
             PopulateAudioDeviceList();
+        }
+
+        private void UpdateFolderLabel() {
+            using (var file = new StreamReader(Paths.DataDir)) {
+                lblCurrentFolder.Text = file.ReadLine();
+            }
         }
 
 
@@ -325,6 +334,7 @@ namespace VixenPlus.Dialogs {
             using (var firstRunPath = new FirstRunPathDialog(false)) {
                 firstRunPath.ShowDialog();
             }
+            UpdateFolderLabel();
         }
     }
 }

@@ -310,6 +310,7 @@ namespace VixenPlus.Dialogs {
             var profile = isNew ? new Profile() : profileData;
             profile.FileName = newFileName;
             profile.Name = newName;
+            profile.FileIOHandler = FileIOHelper.GetNativeHelper();
             SaveProfile(profile);
 
             RefreshProfileComboBox(newName);

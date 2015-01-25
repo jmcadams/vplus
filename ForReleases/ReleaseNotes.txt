@@ -1,5 +1,9 @@
 NOTE: For items prefixed with VIX-, you can view more details on https://vixenplus.atlassian.net
 
+25 JAN 2015 - V 0.3.25.1
+  VIX-55    - Adding a new profile crashes because the file handler is null.
+  VIX-48    - Show the current data folder on the preferences screen.
+
 24 JAN 2015 - V 0.3.24.1
   VIX-53    - Error in saving profile information.
   VIX-54    - Stack when adding or deleting channeles.
