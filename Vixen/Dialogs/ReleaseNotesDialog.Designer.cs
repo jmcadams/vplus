@@ -60,7 +60,7 @@ namespace VixenPlus.Dialogs {
             // ReleaseNotesDialog
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new Size(684, 662);
             this.Controls.Add(this.btnDone);
             this.Controls.Add(this.tbNotes);

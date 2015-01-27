@@ -38,7 +38,7 @@ namespace VixenPlus.Dialogs
             // Lutefisk
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new Size(500, 367);
             this.FormBorderStyle = FormBorderStyle.FixedToolWindow;

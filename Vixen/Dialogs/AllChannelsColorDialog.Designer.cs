@@ -131,7 +131,7 @@ namespace VixenPlus.Dialogs {
             // AllChannelsColorDialog
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new Size(391, 510);
             this.Controls.Add(this.buttonCancel);

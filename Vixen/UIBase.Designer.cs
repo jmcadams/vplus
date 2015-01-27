@@ -8,14 +8,19 @@ namespace VixenPlus {
 
         #region Windows Form Designer generated code
 
+
         private void InitializeComponent() {
-            base.SuspendLayout();
-            base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
-            base.ClientSize = new Size(740, 444);
-            base.Name = "UIBase";
+            this.SuspendLayout();
+            // 
+            // UIBase
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(740, 444);
+            this.Name = "UIBase";
             this.Text = "UIBase";
-            base.ResumeLayout(false);
+            this.ResumeLayout(false);
+
         }
 
         #endregion

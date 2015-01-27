@@ -170,7 +170,7 @@ namespace Controllers.E131
             // 
             this.AcceptButton = this.okButton;
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new Size(535, 383);
             this.Controls.Add(this.tableLayoutPanel);
             this.FormBorderStyle = FormBorderStyle.FixedDialog;

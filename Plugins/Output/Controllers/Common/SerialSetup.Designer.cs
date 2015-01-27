@@ -157,7 +157,7 @@ namespace Controllers.Common {
             // SerialSetup
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.lblPort);
             this.Controls.Add(this.lblWarn);
             this.Controls.Add(this.cbDataBits);

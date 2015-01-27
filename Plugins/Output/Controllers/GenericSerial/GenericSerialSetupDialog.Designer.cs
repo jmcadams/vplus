@@ -97,7 +97,7 @@ namespace Controllers.GenericSerial {
             // DialogSerialSetup
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.gbPacketData);
             this.Name = "GenericSerialSetupDialog";

@@ -31,7 +31,7 @@ namespace Preview {
             // PreviewDialog
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = Color.Black;
             this.ClientSize = new Size(576, 286);
             this.ControlBox = false;

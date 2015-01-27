@@ -30,7 +30,7 @@ namespace VixenPlus.Dialogs{
             // HelpDialog
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = Color.White;
             this.ClientSize = new Size(493, 252);
             this.ControlBox = false;

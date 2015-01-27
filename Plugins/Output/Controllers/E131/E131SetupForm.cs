@@ -845,7 +845,7 @@ namespace Controllers.E131 {
 
             private void InitializeComponent() {
                 components = new Container();
-                AutoScaleMode = AutoScaleMode.Font;
+                AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
                 Text = @"Unicast IP Address Form";
                 StartPosition = FormStartPosition.CenterParent;
                 Size = new Size(300, 150);

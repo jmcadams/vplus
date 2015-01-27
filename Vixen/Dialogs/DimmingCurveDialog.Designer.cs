@@ -230,7 +230,7 @@ namespace VixenPlus.Dialogs {
             // DimmingCurveDialog
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new Size(736, 526);
             this.Controls.Add(this.comboBoxExport);

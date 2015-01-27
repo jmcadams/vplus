@@ -64,7 +64,7 @@ namespace VixenPlusCommon{
             // 
             this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new Size(414, 142);
             this.Controls.Add(this.buttonCancel);

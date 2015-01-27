@@ -79,7 +79,7 @@ namespace VixenPlus.Dialogs {
             // ShutdownDialog
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new Size(321, 172);
             this.ControlBox = false;
             this.Controls.Add(this.buttonAbort);

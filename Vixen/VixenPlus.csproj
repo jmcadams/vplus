@@ -432,6 +432,9 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="UIBase.resx">
+      <DependentUpon>UIBase.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VixenPlusForm.resx">
       <DependentUpon>VixenPlusForm.cs</DependentUpon>
     </EmbeddedResource>

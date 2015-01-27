@@ -118,7 +118,7 @@ namespace VixenPlus.Dialogs
             // 
             this.AcceptButton = this.btnOkay;
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = Color.Gainsboro;
             this.CancelButton = this.btnOkay;
             this.ClientSize = new Size(494, 168);

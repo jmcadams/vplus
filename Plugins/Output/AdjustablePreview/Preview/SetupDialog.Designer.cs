@@ -392,7 +392,7 @@ namespace Preview {
             // SetupDialog
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new Size(638, 407);
             this.Controls.Add(this.panelPictureBoxContainer);
             this.Controls.Add(this.panel1);

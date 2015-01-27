@@ -1151,7 +1151,7 @@ namespace VixenPlus.Dialogs
             // VixenPlusRoadie
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new Size(1008, 643);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOkay);
