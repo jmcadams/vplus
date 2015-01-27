@@ -1,5 +1,8 @@
 NOTE: For items prefixed with VIX-, you can view more details on https://vixenplus.atlassian.net
 
+26 JAN 2015 - V 0.3.26.1
+  NO JIRA   - Fixed the automated build process which was missing the new dll.
+
 25 JAN 2015 - V 0.3.25.1
   VIX-55    - Adding a new profile crashes because the file handler is null.
   VIX-48    - Show the current data folder on the preferences screen.
