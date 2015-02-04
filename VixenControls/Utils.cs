@@ -73,7 +73,7 @@ namespace VixenPlusCommon {
 
         private static void WriteLog(string message, string logFile) {
             using (var log = new StreamWriter(logFile, true)) {
-                log.WriteLine(message);
+                log.WriteLine("{0:O}:{1}", DateTime.Now, message);
             }
         }
 
