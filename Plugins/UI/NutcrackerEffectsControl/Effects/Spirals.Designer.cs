@@ -157,7 +157,7 @@ namespace Nutcracker.Effects {
             // Spirals
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.chkBox3D);
             this.Controls.Add(this.chkBoxBlend);
             this.Controls.Add(this.tbDirection);

@@ -180,7 +180,7 @@ namespace Nutcracker.Models {
             // WindowFrame
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.pbLinkTop);
             this.Controls.Add(this.pbLinkBottom);
             this.Controls.Add(this.pbLink);

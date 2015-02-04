@@ -81,7 +81,7 @@ namespace Nutcracker.Effects {
             // Life
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tbType);
             this.Controls.Add(this.lblType);
             this.Controls.Add(this.tbCellsToStart);

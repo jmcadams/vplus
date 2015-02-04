@@ -31,7 +31,7 @@ namespace VixenEditor {
             // ThinSelection
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new Size(168, 260);
             this.ControlBox = false;
             this.Controls.Add(this.listBox);

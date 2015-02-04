@@ -185,7 +185,7 @@ namespace VixenEditor {
             // TestConsoleDialog
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonDone;
             this.ClientSize = new Size(824, 369);
             this.Controls.Add(this.buttonDone);

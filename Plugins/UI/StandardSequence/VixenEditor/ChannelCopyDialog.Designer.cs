@@ -91,7 +91,7 @@ namespace VixenEditor {
             // ChannelCopyDialog
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonDone;
             this.ClientSize = new Size(292, 90);
             this.Controls.Add(this.buttonDone);

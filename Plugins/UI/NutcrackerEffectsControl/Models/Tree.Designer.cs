@@ -210,7 +210,7 @@ namespace Nutcracker.Models {
             // Tree
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.gbDegrees);
             this.Controls.Add(this.nudStrandCount);
             this.Controls.Add(this.lblStandCount);

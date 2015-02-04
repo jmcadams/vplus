@@ -144,7 +144,7 @@ namespace Nutcracker.Effects {
             // Fireworks
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.cbMutliColor);
             this.Controls.Add(this.tbParticleFade);
             this.Controls.Add(this.lblParticleFade);

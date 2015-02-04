@@ -81,7 +81,7 @@ namespace Nutcracker.Effects {
             // Snowstorm
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tbTailLength);
             this.Controls.Add(this.lblTrailLength);
             this.Controls.Add(this.tbMaxFlakes);

@@ -82,7 +82,7 @@ namespace Nutcracker.Effects {
             // Fire
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.chkBoxUsePalette);
             this.Controls.Add(this.tbHeight);

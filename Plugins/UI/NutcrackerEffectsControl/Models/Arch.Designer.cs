@@ -115,7 +115,7 @@ namespace Nutcracker.Models {
             // Arch
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.nudNodeCount);
             this.Controls.Add(this.lblNodeCount);
             this.Controls.Add(this.nudArchCount);

@@ -253,7 +253,7 @@ namespace VixenEditor {
             // ChannelMapper
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new Size(784, 574);
             this.Controls.Add(this.cbSortDest);

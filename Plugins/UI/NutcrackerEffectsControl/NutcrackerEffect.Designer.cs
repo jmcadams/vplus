@@ -260,7 +260,7 @@ namespace Nutcracker
             // NutcrackerEffectControl
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tbNotes);
             this.Controls.Add(this.palette6);
             this.Controls.Add(this.palette4);

@@ -166,7 +166,7 @@ namespace Nutcracker.Effects {
             // Text
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.lblRotation);
             this.Controls.Add(this.tbRotation);
             this.Controls.Add(this.cbDirection);

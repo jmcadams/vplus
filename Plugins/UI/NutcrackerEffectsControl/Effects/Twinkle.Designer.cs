@@ -95,7 +95,7 @@ namespace Nutcracker.Effects {
             // Twinkle
             // 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.chkBoxStrobe);
             this.Controls.Add(this.tbSteps);
             this.Controls.Add(this.lblSteps);
