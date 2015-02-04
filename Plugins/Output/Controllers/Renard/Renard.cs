@@ -20,14 +20,12 @@ namespace Controllers.Renard {
         private AutoResetEvent _eventTrigger;
         private bool _holdPort;
         private bool _isValidPort;
-        private byte[] _p1Packet = new byte[1];
         private SetupDialog _dialog;
         private SerialPort _serialPort;
         private SetupData _setupData;
         private XmlNode _setupNode;
         private RunState _state = RunState.Stopped;
 
-        private const int ProtocolHeaderSize = 2;
         private const byte ReplacementValue = 0x7c;
         private const byte PacketIgnoreValue = 0x7d;
         private const byte StreamStartValue = 0x7e;
@@ -40,11 +38,6 @@ namespace Controllers.Renard {
         private const string DataNode = "data";
         private const string StopNode = "stop";
         private const string HoldNode = "HoldPort";
-
-        public Renard() {
-            _p1Packet[0] = StreamStartValue;
-        }
-
 
         public void Event(byte[] channelValues) {
             _channelValues = channelValues;
@@ -105,41 +98,33 @@ namespace Controllers.Renard {
         }
 
 
-        private void DoEvent(IList<byte> channelValues) {
+        private readonly List<byte> _packet = new List<byte>();
+
+        private void DoEvent(IEnumerable<byte> channelValues) {
             if (!_isValidPort) return;
 
-            var length = channelValues.Count;
-            var count = ProtocolHeaderSize;
-            var desiredPacketLength = (ProtocolHeaderSize + length);
-            desiredPacketLength += (desiredPacketLength / 100);
-            if (_p1Packet.Length < desiredPacketLength) {
-                _p1Packet = new byte[desiredPacketLength];
-            }
-            _p1Packet[0] = StreamStartValue;
-            _p1Packet[1] = PacketStartValue;
-            for (var i = 0; i < length; i++) {
-                switch (channelValues[i]) {
+            _packet.Clear();
+            _packet.Add(StreamStartValue);
+            _packet.Add(PacketStartValue);
+            foreach (var c in channelValues) {
+                switch (c) {
                     case PacketIgnoreValue:
-                        _p1Packet[count++] = ReplacementValue;
-                        break;
                     case StreamStartValue:
-                        _p1Packet[count++] = ReplacementValue;
+                        _packet.Add(ReplacementValue);
                         break;
                     case PacketEndValue:
-                        _p1Packet[count++] = PacketStartValue;
+                        _packet.Add(PacketStartValue);
                         break;
                     default:
-                        _p1Packet[count++] = channelValues[i];
+                        _packet.Add(c);
                         break;
                 }
-                if ((count%100) == 0) {
-                    _p1Packet[count++] = PacketIgnoreValue;
+                if ((_packet.Count % 100) == 0) {
+                    _packet.Add(PacketIgnoreValue);
                 }
             }
-            while ((_serialPort.WriteBufferSize - _serialPort.BytesToWrite) <= count) {
-                Thread.Sleep(5); //todo replace with Task.Delay() when using 4.5
-            }
-            _serialPort.Write(_p1Packet, 0, count);
+
+            _serialPort.Write(_packet.ToArray(), 0, _packet.Count);
         }
 
 
