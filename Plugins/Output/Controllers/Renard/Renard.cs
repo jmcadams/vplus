@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,8 @@ using Controllers.Common;
 
 using VixenPlus;
 using VixenPlus.Annotations;
+
+using VixenPlusCommon;
 
 namespace Controllers.Renard {
     [UsedImplicitly]
@@ -38,6 +41,7 @@ namespace Controllers.Renard {
         private const string DataNode = "data";
         private const string StopNode = "stop";
         private const string HoldNode = "HoldPort";
+
 
         public void Event(byte[] channelValues) {
             _channelValues = channelValues;
@@ -89,16 +93,21 @@ namespace Controllers.Renard {
         public void Initialize(IExecutable executableObject, SetupData setupData, XmlNode setupNode) {
             _setupData = setupData;
             _setupNode = setupNode;
+            InitSerialPort();
+            _holdPort = _setupData.GetBoolean(_setupNode, HoldNode, true);
+        }
+
+
+        private void InitSerialPort() {
             _serialPort = new SerialPort(_setupData.GetString(_setupNode, PortNode, "COM1"), _setupData.GetInteger(_setupNode, BaudNode, 19200),
                 (Parity) Enum.Parse(typeof (Parity), _setupData.GetString(_setupNode, ParityNode, Parity.None.ToString())),
                 _setupData.GetInteger(_setupNode, DataNode, 8),
-                (StopBits) Enum.Parse(typeof (StopBits), _setupData.GetString(_setupNode, StopNode, StopBits.One.ToString())));
-            _holdPort = _setupData.GetBoolean(_setupNode, HoldNode, true);
-            _serialPort.WriteTimeout = 500;
+                (StopBits) Enum.Parse(typeof (StopBits), _setupData.GetString(_setupNode, StopNode, StopBits.One.ToString()))) {WriteTimeout = 500};
         }
 
 
         private readonly List<byte> _packet = new List<byte>();
+
 
         private void DoEvent(IEnumerable<byte> channelValues) {
             if (!_isValidPort) return;
@@ -124,7 +133,26 @@ namespace Controllers.Renard {
                 }
             }
 
-            _serialPort.Write(_packet.ToArray(), 0, _packet.Count);
+
+            try {
+                _serialPort.Write(_packet.ToArray(), 0, _packet.Count);
+            }
+            catch (InvalidOperationException) {
+                if (SerialPort.GetPortNames().Contains(_setupData.GetString(_setupNode, PortNode, "COM1"))) {
+                    "Reconnecting...".CrashLog();
+                    try {
+                        InitSerialPort();
+                        _serialPort.Open();
+                        "Success!".CrashLog();
+                    }
+                    catch (Exception e) {
+                        ("Failed! " + e.Message).CrashLog();
+                    }
+                }
+            }
+            catch (IOException ioe) {
+                ("IO Exception: " + ioe.Message).CrashLog();
+            }
         }
 
 
@@ -174,6 +202,9 @@ namespace Controllers.Renard {
 
         public void Shutdown() {
             if (State != RunState.Running) {
+                if (_serialPort.IsOpen) {
+                    _serialPort.Close();
+                } 
                 return;
             }
 
