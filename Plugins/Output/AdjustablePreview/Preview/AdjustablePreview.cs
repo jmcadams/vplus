@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -14,9 +15,9 @@ namespace Preview {
     [UsedImplicitly]
     public class AdjustablePreview : IEventDrivenOutputPlugIn {
         private readonly List<Channel> _channels;
-        private PreviewDialog _previewDialog;
+        private APPreviewDialog _previewDialog;
         private SetupData _setupData;
-        private SetupDialog _setupDialog;
+        private APSetupDialog _setupDialog;
         private XmlNode _setupNode;
         private int _startChannel;
 
@@ -50,7 +51,7 @@ namespace Preview {
                 MessageBox.Show(Resources.NoChannelsInProfile, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
             }
             else {
-                _setupDialog = new SetupDialog(_setupData, _setupNode, _channels, _startChannel);
+                _setupDialog = new APSetupDialog(_setupData, _setupNode, _channels, _startChannel);
                 _setupDialog.ShowDialog();
                 _setupDialog.Dispose();
             }
@@ -82,6 +83,7 @@ namespace Preview {
                 }
                 _previewDialog = null;
             }
+            
             _channels.Clear();
             _setupData = null;
             _setupNode = null;
@@ -89,13 +91,12 @@ namespace Preview {
 
 
         public void Startup() {
-            if (_channels.Count == 0) {
-                return;
-            }
+            if (!_channels.Any()) return;
+
             var system = (ISystem) Interfaces.Available["ISystem"];
-            var constructor =
-                typeof (PreviewDialog).GetConstructor(new[] {typeof (XmlNode), typeof (List<Channel>), typeof (int)});
-            _previewDialog = (PreviewDialog) system.InstantiateForm(constructor, _setupNode, _channels, _startChannel);
+            var constructor = typeof (APPreviewDialog).GetConstructor(new[] {typeof (XmlNode), typeof (List<Channel>), typeof (int)});
+
+            _previewDialog = (APPreviewDialog) system.InstantiateForm(constructor, _setupNode, _channels, _startChannel);
         }
 
 

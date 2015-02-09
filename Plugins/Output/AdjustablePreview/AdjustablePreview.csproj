@@ -114,11 +114,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Preview\BgImage.cs" />
-    <Compile Include="Preview\PreviewDialog.cs">
+    <Compile Include="Preview\APPreviewDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Preview\PreviewDialog.Designer.cs">
-      <DependentUpon>PreviewDialog.cs</DependentUpon>
+    <Compile Include="Preview\APPreviewDialog.Designer.cs">
+      <DependentUpon>APPreviewDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Preview\ReorderDialog.cs">
       <SubType>Form</SubType>
@@ -126,11 +126,11 @@
     <Compile Include="Preview\ReorderDialog.Designer.cs">
       <DependentUpon>ReorderDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Preview\SetupDialog.cs">
+    <Compile Include="Preview\APSetupDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Preview\SetupDialog.Designer.cs">
-      <DependentUpon>SetupDialog.cs</DependentUpon>
+    <Compile Include="Preview\APSetupDialog.Designer.cs">
+      <DependentUpon>APSetupDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Preview\Xml.cs">
       <SubType>Code</SubType>
@@ -140,14 +140,14 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Preview\PreviewDialog.resx">
-      <DependentUpon>PreviewDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Preview\APPreviewDialog.resx">
+      <DependentUpon>APPreviewDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Preview\ReorderDialog.resx">
       <DependentUpon>ReorderDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Preview\SetupDialog.resx">
-      <DependentUpon>SetupDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Preview\APSetupDialog.resx">
+      <DependentUpon>APSetupDialog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
