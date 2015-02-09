@@ -475,13 +475,16 @@ namespace VixenPlus.Dialogs {
             dgvChannels.Rows.Clear();
             var cp = _contextProfile as Profile;
             if (null != cp && ((Button) sender).Text == btnMultiChannelOk.Text) {
-                foreach (var c in GenerateChannels()) {
+                var gc = GenerateChannels();
+                foreach (var c in gc) {
                     cp.AddChannelObject(c);
                 }
+                cp.Freeze();
+                AddRows(cp.FullChannels);
+                SetContextDirtyFlag(true);
+                SelectLastRow();
+                _contextProfile = cp;
             }
-            AddRows(_contextProfile.FullChannels);
-            SetContextDirtyFlag(true);
-            SelectLastRow();
             DoButtonManagement();
         }
 

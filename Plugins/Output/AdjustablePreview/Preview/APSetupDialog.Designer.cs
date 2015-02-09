@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 namespace Preview {
-    public partial class SetupDialog {
+    public partial class APSetupDialog {
         private IContainer components = null;
 
         #region Windows Form Designer generated code
@@ -45,7 +45,7 @@ namespace Preview {
 
 
         private void InitializeComponent() {
-            ComponentResourceManager resources = new ComponentResourceManager(typeof(SetupDialog));
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(APSetupDialog));
             this.buttonOK = new Button();
             this.buttonCancel = new Button();
             this.labelChannel = new Label();

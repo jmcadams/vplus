@@ -17,7 +17,7 @@ using VixenPlus;
 using VixenPlusCommon;
 
 namespace Preview {
-    public partial class SetupDialog : Form {
+    public partial class APSetupDialog : Form {
         private string _backgroundImageFileName;
         private int _cellSize;
         private Dictionary<int, List<uint>> _channelDictionary;
@@ -31,7 +31,7 @@ namespace Preview {
         private readonly int _startChannel;
 
 
-        public SetupDialog(SetupData setupData, XmlNode setupNode, IList<Channel> channels, int startChannel) {
+        public APSetupDialog(SetupData setupData, XmlNode setupNode, IList<Channel> channels, int startChannel) {
             _backgroundImageFileName = string.Empty;
             _dirty = false;
             _channelDictionary = new Dictionary<int, List<uint>>();

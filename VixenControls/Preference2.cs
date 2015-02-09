@@ -268,7 +268,7 @@ namespace VixenPlusCommon {
         }
 
 
-        private bool CreateIfMissing(string parentName, string name, object defaultValue) {
+        public bool CreateIfMissing(string parentName, string name, object defaultValue) {
             if (GetChildString(parentName, name) != string.Empty) {
                 return false;
             }

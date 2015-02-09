@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
@@ -111,9 +112,20 @@ namespace VixenPlus {
             Host.Communication["KeyInterceptor_" + str] = context.KeyInterceptor;
             Host.Communication["ExecutionContext_" + str] = context;
             var flag = context.SynchronousEngineInstance.Play(startMillisecond, endMillisecond, logAudio);
+            var saveSettings = false;
+            
             foreach (var form in context.OutputPlugInForms) {
                 form.BringToFront();
+
+                if (_preferences.CreateIfMissing("SavePlugInDialogPositions", form.Name + ".x", 0) |
+                    _preferences.CreateIfMissing("SavePlugInDialogPositions", form.Name + ".y", 0)) {
+                    saveSettings = true;
+                }
+                form.Location = new Point(_preferences.GetInteger(form.Name + ".x"), _preferences.GetInteger(form.Name + ".y"));
             }
+
+            if (saveSettings) _preferences.SaveSettings();
+            
             return flag;
         }
 
@@ -129,15 +141,17 @@ namespace VixenPlus {
             try {
                 context.SynchronousEngineInstance.Stop();
                 if (_preferences.GetBoolean("SavePlugInDialogPositions")) {
+                    var saveSettings = false;
                     foreach (var form in context.OutputPlugInForms) {
                         var base2 = (OutputPlugInUIBase) form;
-                        if (base2.WindowState != FormWindowState.Normal) {
+                        if (base2.WindowState == FormWindowState.Minimized) {
                             continue;
                         }
-                        var nodeAlways = Xml.GetNodeAlways(Xml.GetNodeAlways(base2.DataNode, "DialogPositions"), base2.Name);
-                        Xml.SetAttribute(nodeAlways, "x", base2.Location.X.ToString(CultureInfo.InvariantCulture));
-                        Xml.SetAttribute(nodeAlways, "y", base2.Location.Y.ToString(CultureInfo.InvariantCulture));
+                        _preferences.SetInteger(form.Name + ".x", base2.Location.X);
+                        _preferences.SetInteger(form.Name + ".y", base2.Location.Y);
+                        saveSettings = true;
                     }
+                    if (saveSettings) _preferences.SaveSettings();
                 }
                 context.OutputPlugInForms.Clear();
                 GC.Collect();

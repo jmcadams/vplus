@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -134,42 +133,24 @@ namespace VixenPlus {
             if (!(child is OutputPlugInUIBase)) {
                 return null;
             }
-            var base2 = (OutputPlugInUIBase)child;
+            var outputPlugInUIBase = (OutputPlugInUIBase)child;
             var executable = (IExecutable)Host.Communication["CurrentObject"];
             if (executable == null) {
                 return child;
             }
             
             var str = executable.Key.ToString(CultureInfo.InvariantCulture);
-            XmlNode node2 = null;
-            var node = ((XmlNode) Host.Communication["SetupNode_" + str]).SelectSingleNode("DialogPositions");
             object obj2;
             if (Host.Communication.TryGetValue("KeyInterceptor_" + str, out obj2)) {
-                base2.ExecutionParent = (IVixenMDI) obj2;
+                outputPlugInUIBase.ExecutionParent = (IVixenMDI) obj2;
             }
             if (Host.Communication.TryGetValue("SetupNode_" + str, out obj2)) {
-                base2.DataNode = (XmlNode) obj2;
+                outputPlugInUIBase.DataNode = (XmlNode) obj2;
             }
             child.ControlBox = true;
-            if (!FormContainsChild(this, child)) {
-                child.MdiParent = this;
-            }
             ((ExecutionContext) Host.Communication["ExecutionContext_" + str]).OutputPlugInForms.Add(child);
             child.Show();
-            if (node != null) {
-                node2 = node.SelectSingleNode(child.Name);
-            }
-            if ((node2 == null) || !_preferences.GetBoolean("SavePlugInDialogPositions")) {
-                return child;
-            }
-            if (node2.Attributes == null) {
-                return child;
-            }
-            var attribute = node2.Attributes["x"];
-            var attribute2 = node2.Attributes["y"];
-            if ((attribute != null) && (attribute2 != null)) {
-                child.Location = new Point(Convert.ToInt32(attribute.Value), Convert.ToInt32(attribute2.Value));
-            }
+
             return child;
         }
 
@@ -354,11 +335,6 @@ namespace VixenPlus {
                 saveToolStripMenuItem.Enabled = false;
                 saveAsToolStripMenuItem.Enabled = false;
             }
-        }
-
-
-        private static bool FormContainsChild(Form parent, Form child) {
-            return parent.MdiChildren.Any(form => form == child);
         }
 
 
