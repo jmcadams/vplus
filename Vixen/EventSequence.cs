@@ -46,6 +46,7 @@ namespace VixenPlus {
             Key = Host.GetUniqueKey();
         }
 
+
         public EventSequence(Preference2 preferences) : this() {
             _fullChannels = new List<Channel>();
             Channels = new List<Channel>();
@@ -103,7 +104,7 @@ namespace VixenPlus {
         public byte[,] EventValues { get; private set; }
 
         public int Rows {
-            get { return  EventValues == null ? 0 : EventValues.GetLength(Utils.IndexRowsOrHeight); }
+            get { return EventValues == null ? 0 : EventValues.GetLength(Utils.IndexRowsOrHeight); }
         }
 
         public int Cols {
@@ -423,9 +424,12 @@ namespace VixenPlus {
         }
 
 
-        public void AttachToProfile(string profileName) {
+        private void AttachToProfile(string profileName) {
             var path = Path.Combine(Paths.ProfilePath, profileName + Vendor.ProfileExtension);
             if (File.Exists(path)) {
+                if (null == FileIOHandler) {
+                    FileIOHandler = FileIOHelper.GetProfileVersion(path);
+                }
                 // todo this could have the same issue with mismatch as another issue
                 AttachToProfile(FileIOHandler.OpenProfile(path));
                 Groups = _profile.Groups;
@@ -503,8 +507,9 @@ namespace VixenPlus {
             _fullChannels.AddRange(ch);
         }
 
+
         private void DetachFromProfile() {
-             FileIOHandler.LoadEmbeddedData(FileName, this);
+            FileIOHandler.LoadEmbeddedData(FileName, this);
             _fullChannels.Clear();
             _fullChannels.AddRange(_profile.FullChannels);
             _profile = null;

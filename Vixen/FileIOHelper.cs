@@ -29,10 +29,10 @@ namespace VixenPlus {
                         where Interface.Name == "IFileIOHandler"
                         select exportedType;
 
-                    foreach (var desiredType in validTypes
-                        .Where(desiredType => !desiredType.IsAbstract)
-                        .Where(desiredType => !PluginCache.ContainsKey(desiredType.Name))) {
-                            PluginCache[desiredType.Name] = (IFileIOHandler) Activator.CreateInstance(desiredType);
+                    foreach (
+                        var desiredType in
+                            validTypes.Where(desiredType => !desiredType.IsAbstract).Where(desiredType => !PluginCache.ContainsKey(desiredType.Name))) {
+                        PluginCache[desiredType.Name] = (IFileIOHandler) Activator.CreateInstance(desiredType);
                     }
                 }
                 catch (Exception e) {
@@ -83,8 +83,8 @@ namespace VixenPlus {
             }
 
             // first get all matching extentions
-            var candidates = PluginCache.Select(v => v.Value).Where(v => v.FileExtension() == s).OrderBy(v=>v.PreferredOrder()).ToList();
-            
+            var candidates = PluginCache.Select(v => v.Value).Where(v => v.FileExtension() == s).OrderBy(v => v.PreferredOrder()).ToList();
+
             // If there are not any, then return the native Vixen+ helper and hope for the best.
             if (!candidates.Any()) {
                 return GetNativeHelper();
@@ -96,7 +96,7 @@ namespace VixenPlus {
             }
 
             // So it is a vixen file, which version?
-            return GetVixenVersion(fileName); 
+            return GetVixenVersion(fileName);
 
         }
 
@@ -108,7 +108,7 @@ namespace VixenPlus {
             var profileNode = programContextNode.SelectSingleNode("Profile");
 
             XmlNodeList channels;
-            
+
             if (profileNode == null) {
                 channels = programContextNode.SelectNodes("Channels/Channel");
             }
@@ -130,14 +130,37 @@ namespace VixenPlus {
 
             var channelToCheck = channels.Cast<XmlNode>().FirstOrDefault();
 
-            if (channelToCheck != null 
-                && channelToCheck.Attributes != null 
-                && channelToCheck.Attributes["name"] == null) {
+            return GetVersion(programContextNode, channelToCheck);
+        }
+
+
+        private static IFileIOHandler GetVersion(XmlNode programContextNode, XmlNode channelToCheck) {
+            if (channelToCheck != null && channelToCheck.Attributes != null && channelToCheck.Attributes["name"] == null) {
                 return GetHelperByName("Vixen 2.1");
             }
 
             return programContextNode.SelectSingleNode("Groups") == null ? GetHelperByName("Vixen 2.5") : GetNativeHelper();
         }
 
+
+        public static IFileIOHandler GetProfileVersion(string profilePath) {
+            if (!File.Exists(profilePath)) {
+                throw new FileNotFoundException("Cant locate profile.", profilePath);
+            }
+            var doc = new XmlDocument();
+
+            doc.Load(profilePath);
+
+            var programContextNode = Xml.GetRequiredNode(doc, "Profile");
+            var channels = programContextNode.SelectNodes("ChannelObjects/Channel");
+
+            if (channels == null) {
+                throw new FormatException("No channels in profile " + profilePath);
+            }
+
+            var channelToCheck = channels.Cast<XmlNode>().FirstOrDefault();
+
+            return GetVersion(programContextNode, channelToCheck);
+        }
     }
 }

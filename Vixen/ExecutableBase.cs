@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using VixenPlusCommon;
+
 namespace VixenPlus {
-    public class ExecutableBase: IExecutable {
+    public class ExecutableBase : IExecutable {
         private IFileIOHandler _fileHandler;
         private int _audioDeviceVolume = -1;
 
@@ -10,6 +12,7 @@ namespace VixenPlus {
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }
         }
+
 
         public void Dispose() {
             GC.SuppressFinalize(this);
@@ -58,12 +61,16 @@ namespace VixenPlus {
 
         public IFileIOHandler FileIOHandler {
             get {
-                if (_fileHandler == null) {
-                    throw new TypeInitializationException("ExecutableBase", new Exception("File IO Handler not set"));
+                if (_fileHandler != null) {
+                    return _fileHandler;
                 }
+
+                "NULL FileIOHandler".CrashLog();
+                Environment.StackTrace.CrashLog();
 
                 return _fileHandler;
             }
-            set { _fileHandler = value; } }
+            set { _fileHandler = value; }
+        }
     }
 }
