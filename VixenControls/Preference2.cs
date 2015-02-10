@@ -55,7 +55,7 @@ namespace VixenPlusCommon {
             isDirty |= CreateIfMissing("RoutineBitmap", Color.LightBlue.ToArgb().ToString(CultureInfo.InvariantCulture));
 
             //New Sequence Settings
-            isDirty |= CreateIfMissing("EventPeriod", 100);
+            isDirty |= CreateIfMissing("EventPeriod", 50);
             isDirty |= CreateIfMissing("MinimumLevel", 0);
             isDirty |= CreateIfMissing("MaximumLevel", 255);
             isDirty |= CreateIfMissing("WizardForNewSequences", true);
