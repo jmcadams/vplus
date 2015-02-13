@@ -55,9 +55,6 @@ namespace VixenPlus.Dialogs {
         public string Words {
             get { return _words; }
             set {
-                if (string.IsNullOrEmpty(value)) {
-                    value = " ";
-                }
                 _words = value;
                 _wordArray = value.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             }
