@@ -50,11 +50,13 @@
     <RootNamespace>SeqIOHelpers</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LOR\LORlms.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Vixen\Vixen21FileIO.cs" />
     <Compile Include="Vixen\Vixen25FileIO.cs" />
