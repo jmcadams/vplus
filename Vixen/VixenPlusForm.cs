@@ -346,6 +346,7 @@ namespace VixenPlus {
             saveFileDialog1.FilterIndex = currentFilterIndex;
             saveFileDialog1.InitialDirectory = Paths.SequencePath;
             saveFileDialog1.FileName = string.Empty;
+            saveFileDialog1.AddExtension = true;
             if (saveFileDialog1.ShowDialog() != DialogResult.OK) {
                 return false;
             }
