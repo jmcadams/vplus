@@ -195,6 +195,11 @@ namespace SeqIOHelpers {
         }
 
 
+        public bool SupportsProfiles {
+            get { return true; }
+        }
+
+
         protected static Profile BaseOpenProfile(string fileName, IFileIOHandler ioHandler) {
             var p = new Profile {FileIOHandler = ioHandler};
 

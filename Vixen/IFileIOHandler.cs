@@ -12,5 +12,6 @@
         EventSequence OpenSequence(string fileName);
         Profile OpenProfile(string fileName);
         void LoadEmbeddedData(string fileName, EventSequence es);
+        bool SupportsProfiles { get; }
     }
 }
