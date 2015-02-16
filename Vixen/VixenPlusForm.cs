@@ -340,18 +340,26 @@ namespace VixenPlus {
 
         private bool GetNewSequenceInfo(IUIPlugIn pluginInstance) {
             var saveFilters = FileIOHelper.GetSaveFilters();
-            var currentFilterIndex = saveFilters.Split('|').TakeWhile(f => !pluginInstance.Sequence.FileIOHandler.DialogFilterList().StartsWith(f)).Count();
+            var filters = saveFilters.Split('|');
+            var currentFilter = pluginInstance.Sequence.FileIOHandler.DialogFilterList();
+            var currentFilterIndex = int.MinValue;
+            for (var i = 0; i < filters.Count(); i += 2) {
+                if (!currentFilter.StartsWith(filters[i])) {
+                    continue;
+                }
+                currentFilterIndex = i / 2;
+                break;
+            }
 
             saveFileDialog1.Filter = saveFilters;
-            saveFileDialog1.FilterIndex = currentFilterIndex;
+            saveFileDialog1.FilterIndex = currentFilterIndex == int.MinValue ? 0 : currentFilterIndex;
             saveFileDialog1.InitialDirectory = Paths.SequencePath;
-            saveFileDialog1.FileName = string.Empty;
+            saveFileDialog1.FileName = String.IsNullOrEmpty(pluginInstance.Sequence.FileName) ? string.Empty : Path.GetFileNameWithoutExtension(pluginInstance.Sequence.FileName);
             saveFileDialog1.AddExtension = true;
             if (saveFileDialog1.ShowDialog() != DialogResult.OK) {
                 return false;
             }
 
-            var filters = saveFileDialog1.Filter.Split('|');
             var newFilterIndex = saveFileDialog1.FilterIndex - 1;
 
             // Okay format changed...

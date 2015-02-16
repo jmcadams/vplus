@@ -1428,7 +1428,7 @@ namespace VixenEditor {
 
         protected override void OnDirtyChanged(EventArgs e) {
             base.OnDirtyChanged(e);
-            tbsSave.Enabled = IsDirty;
+            tbsSave.Enabled = IsDirty && _sequence.FileIOHandler.CanSave();
         }
 
 
@@ -2574,9 +2574,14 @@ namespace VixenEditor {
 
 
         public override void SaveTo() {
-            _sequence.FileIOHandler.SaveSequence(_sequence);
-            _sequence.UpdateMetrics(Width, Height, splitContainer1.SplitterDistance);
-            IsDirty = false;
+            if (_sequence.FileIOHandler.CanSave()) {
+                _sequence.FileIOHandler.SaveSequence(_sequence);
+                _sequence.UpdateMetrics(Width, Height, splitContainer1.SplitterDistance);
+                IsDirty = false;
+            }
+            else {
+                tsbSaveAs_Click(null, null);
+            }
         }
 
 
