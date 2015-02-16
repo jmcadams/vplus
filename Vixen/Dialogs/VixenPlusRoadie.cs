@@ -410,7 +410,7 @@ namespace VixenPlus.Dialogs {
             foreach (var ch in from DataGridViewRow row in dgvChannels.Rows
                 select
                     new Channel(row.Cells[ChannelNameCol].Value.ToString(), row.DefaultCellStyle.BackColor,
-                        int.Parse(row.Cells[OutputChannelCol].Value.ToString())) {
+                        int.Parse(row.Cells[OutputChannelCol].Value.ToString()) - 1) {
                             Enabled = bool.Parse(row.Cells[ChannelEnabledCol].Value.ToString())
                         }) {
                 cp.AddChannelObject(ch);

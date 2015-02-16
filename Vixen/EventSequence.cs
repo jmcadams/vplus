@@ -29,6 +29,10 @@ namespace VixenPlus {
         #region Constructors
 
         public EventSequence() {
+            _fullChannels = new List<Channel>();
+            Channels = new List<Channel>();
+            PlugInData = new SetupData();
+            Extensions = new SequenceExtensions();
             EventValues = null;
             _eventPeriod = 100;
             MinimumLevel = 0;
@@ -101,7 +105,7 @@ namespace VixenPlus {
             get { return (_eventPeriod != 0) ? Utils.MillsPerSecond / _eventPeriod : 0; }
         }
 
-        public byte[,] EventValues { get; private set; }
+        public byte[,] EventValues { get;  set; }
 
         public int Rows {
             get { return EventValues == null ? 0 : EventValues.GetLength(Utils.IndexRowsOrHeight); }
@@ -166,16 +170,24 @@ namespace VixenPlus {
         public override string Name {
             get { return Path.GetFileNameWithoutExtension(FileName); }
             set {
-                var extension = FileIOHandler.FileExtension();
-                if (!string.IsNullOrEmpty(FileName)) {
-                    extension = Path.GetExtension(FileName);
+                if (!Path.HasExtension(value)) {
+                    value = Path.ChangeExtension(value, FileIOHandler.FileExtension().ToLower());
                 }
-                else if (Path.HasExtension(value)) {
-                    extension = Path.GetExtension(value);
-                }
-                if (extension != null) {
-                    value = Path.ChangeExtension(value, extension.ToLower());
-                }
+
+                //// set the default extension
+                //var extension = FileIOHandler.FileExtension();
+
+                //// if the value has one, use it
+                //if (Path.HasExtension(value)) {
+                //    extension = Path.GetExtension(value);
+                //} // otherwise use
+                //else if (!string.IsNullOrEmpty(FileName)) {
+                //    extension = Path.GetExtension(FileName);
+                //}
+                //if (extension != null) {
+                //    value = Path.ChangeExtension(value, extension.ToLower());
+                //}
+
                 if (Path.IsPathRooted(value)) {
                     FileName = value;
                 }
@@ -309,6 +321,10 @@ namespace VixenPlus {
 
 
         private void ResetOutputPlugins(ICollection channels, int height) {
+            if (null == PlugInData) {
+                return;
+            }
+
             var outputPlugins = PlugInData.GetAllPluginData(SetupData.PluginType.Output);
 
             foreach (XmlNode node in outputPlugins) {

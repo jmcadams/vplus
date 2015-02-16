@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -121,7 +122,7 @@ namespace SeqIOHelpers {
                         select channelInfo)
                     select c).Select(c =>
                         // ReSharper disable once PossibleNullReferenceException
-                        new Channel(c.Attributes["name"].Value, Color.FromArgb(int.Parse(c.Attributes["color"].Value)),
+                        new Channel(c.Attributes["name"].Value, Color.FromArgb((int)(int.Parse(c.Attributes["color"].Value) | 0xff000000)),
                             int.Parse(c.Attributes["savedIndex"].Value))));
             }
 
@@ -131,6 +132,7 @@ namespace SeqIOHelpers {
 
         private void SetChannelEvents(IEnumerable<Channel> seqChannels, IEnumerable channelsInfoNode) {
             var row = 0;
+            var twinkle = new Twinkle();
 
             foreach (var x in
                 seqChannels.Select(c => c.Name).Select(
@@ -140,36 +142,64 @@ namespace SeqIOHelpers {
                         continue;
                     }
 
-                    var effectType = y.Attributes["type"].Value;
+                    var effectType = y.Attributes["type"].Value.ToLower();
 
                     var intensity = GetIntAttributeOrDefault(y, "intensity", 0).ToValue();
 
-                    var startEvt = GetIntAttributeOrDefault(y, "startCentisecond", 0);
-                    var endEvt = GetIntAttributeOrDefault(y, "endCentisecond", 0);
-                    var diffEvt = endEvt - startEvt;
+                    var eventStart = GetIntAttributeOrDefault(y, "startCentisecond", 0);
+                    var eventEnd = GetIntAttributeOrDefault(y, "endCentisecond", 0);
+                    var eventCount = eventEnd - eventStart;
 
-                    var startInt = GetIntAttributeOrDefault(y, "startIntensity", 0).ToValue();
-                    var endInt = GetIntAttributeOrDefault(y, "endIntensity", 0).ToValue();
-                    var diffInt = endInt - startInt;
+                    var intensityStart = GetIntAttributeOrDefault(y, "startIntensity", 0).ToValue();
+                    var intensityEnd = GetIntAttributeOrDefault(y, "endIntensity", 0).ToValue();
+                    var intensityDifference = intensityEnd - intensityStart;
+
+                    if (intensity == 0 && intensityStart == 0 && intensityEnd == 0) {
+                        intensity = Utils.Cell8BitMax;
+                    }
 
                     switch (effectType) {
                         case "intensity":
-                            if (intensity > 0 && startInt == 0 && endInt == 0) {
-                                SetIntensity(row, startEvt, diffEvt, intensity);
-                            }
-                            else if (startInt > 0 || endInt > 0) {
-                                SetRampFade(row, startEvt, diffEvt, diffInt);
+                            if (intensity > 0) {
+                                for (var i = 0; i < eventCount; i++) {
+                                    _eventValues[row, eventStart + i] = (byte)intensity;
+                                }
                             }
                             else {
-                                string.Format("Unknown intensity settings: I:{0} SI:{1} EI:{2} SE:{3} EE:{4} - Skipped", intensity, startInt, endInt, startEvt, endEvt)
-                                    .CrashLog();
+                                for (var i = 0; i < eventCount; i++) {
+                                    _eventValues[row, eventStart + i] = (byte)((double)i / eventCount * intensityDifference + intensityStart);
+                                }
                             }
                             break;
                         case "twinkle":
-                            throw new NotImplementedException();
+                            twinkle.Set();
+                            if (intensity > 0) {
+                                for (var i = 0; i < eventCount; i++) {
+                                    _eventValues[row, eventStart + i] = (byte)(intensity * twinkle.State);
+                                    twinkle.Update();
+                                }
+                            }
+                            else {
+                                for (var i = 0; i < eventCount; i++) {
+                                    _eventValues[row, eventStart + i] = (byte)(((double)i / eventCount * intensityDifference + intensityStart) * twinkle.State);
+                                    twinkle.Update();
+                                }
+                            }
                             break;
                         case "shimmer":
-                            throw new NotImplementedException();
+                            var shimmerState = eventStart & 0x01;
+                            if (intensity > 0) {
+                                for (var i = 0; i < eventCount; i++) {
+                                    _eventValues[row, eventStart + i] = (byte)(intensity * shimmerState);
+                                    shimmerState = 1 - shimmerState;
+                                }
+                            }
+                            else {
+                                for (var i = 0; i < eventCount; i++) {
+                                    _eventValues[row, eventStart + i] = (byte)((((double)i / eventCount) * intensityDifference + intensityStart) * shimmerState);
+                                    shimmerState = 1 - shimmerState;
+                                }
+                            }
                             break;
                         default:
                             string.Format("Unknow effect type {0} - skipped", effectType).CrashLog();
@@ -178,20 +208,6 @@ namespace SeqIOHelpers {
                 }
                 row++;
             }
-        }
-
-
-        private void SetIntensity(int row, int start, int count, int value) {
-            for (var i = 0; i < count; i++) {
-                _eventValues[row, start + i] = (byte)value;
-            }
-        }
-
-
-        private void SetRampFade(int row, int start, int count, int diff) {
-            for (var i = 0; i < count; i++) {
-                _eventValues[row, start + i] = (byte)((double)(i) / count * diff + start);
-            }          
         }
 
 
@@ -206,12 +222,49 @@ namespace SeqIOHelpers {
 
 
         public Profile OpenProfile(string fileName) {
-            throw new NotImplementedException();
+            Debug.Assert(false);
+            return null;
         }
 
 
         public void LoadEmbeddedData(string fileName, EventSequence es) {
-            throw new NotImplementedException();
+            Debug.Assert(false);
+        }
+
+
+        public bool SupportsProfiles {
+            get { return false; }
+        }
+    }
+
+   internal class Twinkle {
+        private const int TwinklePeriods = 80;
+        private const int MinTwinklePeriods = 20;
+        
+        private readonly Random _rand = new Random();
+        
+        private int _counter;
+        
+        public int State { get; private set; }
+
+        public void Set() {
+            State = _rand.Next(2);
+            SetCounter();
+        }
+
+
+        public void Update() {
+            if (--_counter >= 0) {
+                return;
+            }
+
+            State = 1 - State;
+            SetCounter();
+        }
+
+
+        private void SetCounter() {
+            _counter = _rand.Next(TwinklePeriods) + MinTwinklePeriods;
         }
     }
 }

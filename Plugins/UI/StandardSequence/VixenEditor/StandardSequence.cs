@@ -2839,8 +2839,8 @@ namespace VixenEditor {
 
 
         private void SetProfile(string filePath) {
-            if (filePath != null) {
-                //todo this might be a problem if someone has a 2.1 open and they try to attach to a 2.5/plus version
+            if (filePath != null && _sequence.FileIOHandler.SupportsProfiles) {
+                _sequence.FileIOHandler = FileIOHelper.GetProfileVersion(filePath); ;
                 SetProfile(_sequence.FileIOHandler.OpenProfile(filePath));
             }
             else {
@@ -2959,7 +2959,9 @@ namespace VixenEditor {
                     _preferences.SetChildString("SaveZoomLevels", "column", toolStripComboBoxColumnZoom.SelectedItem.ToString());
                     _preferences.SaveSettings();
                 }
-                _sequence.UpdateMetrics(Width, Height, splitContainer1.SplitterDistance);
+                if (_sequence.FileIOHandler.SupportsProfiles) {
+                    _sequence.UpdateMetrics(Width, Height, splitContainer1.SplitterDistance);
+                }
                 _executionInterface.ReleaseContext(_executionContextHandle);
                 _undoStack.Clear(); // possible solution to memory leak when copying a lot of channels
             }
