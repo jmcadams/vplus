@@ -112,7 +112,7 @@ namespace SeqIOHelpers {
                 .Where(track => null != track.Attributes)
                 .Select(track => track.SelectSingleNode("channels"))
                 .Where(channelsNode => null != channelsNode)) {
-                seqChannels.AddRange((from XmlNode channel in channelsNode
+                var orderedNodes = (from XmlNode channel in channelsNode
                     where null != channel.Attributes
                     select channel.Attributes["savedIndex"].Value
                     into savedIndex
@@ -120,10 +120,30 @@ namespace SeqIOHelpers {
                     from c in (from XmlNode channelInfo in channelsInfoNode
                         where null != channelInfo.Attributes && channelInfo.Attributes["savedIndex"].Value == savedIndex
                         select channelInfo)
-                    select c).Select(c =>
-                        // ReSharper disable once PossibleNullReferenceException
-                        new Channel(c.Attributes["name"].Value, Color.FromArgb((int)(int.Parse(c.Attributes["color"].Value) | 0xff000000)),
-                            int.Parse(c.Attributes["savedIndex"].Value))));
+                    select c);
+
+                var outputChannel = 0;
+
+                foreach (var node in orderedNodes.Where(n => null != n.Attributes && null != n.Attributes["deviceType"])) {
+                    // ReSharper disable once PossibleNullReferenceException
+                    switch (node.Attributes["deviceType"].Value) {
+                        case "LOR":
+                            seqChannels.Add(new Channel(node.Attributes["name"].Value,
+                                Color.FromArgb((int) (int.Parse(node.Attributes["color"].Value) | 0xff000000)),
+                                outputChannel++));
+                            break;
+                        case "DMX":
+                            seqChannels.AddRange(new[] {
+                                new Channel(node.Attributes["name"].Value, Color.FromArgb((int) ((int.Parse(node.Attributes["color"].Value) | 0xff000000) & 0xffff0000)),
+                                    outputChannel++),
+                                new Channel(node.Attributes["name"].Value, Color.FromArgb((int) ((int.Parse(node.Attributes["color"].Value) | 0xff000000) & 0xff00ff00)),
+                                    outputChannel++),
+                                new Channel(node.Attributes["name"].Value, Color.FromArgb((int) ((int.Parse(node.Attributes["color"].Value) | 0xff000000) & 0xff0000ff)),
+                                    outputChannel++)
+                            });
+                            break;
+                    }
+                }
             }
 
             return seqChannels;
@@ -134,10 +154,22 @@ namespace SeqIOHelpers {
             var row = 0;
             var twinkle = new Twinkle();
 
-            foreach (var x in
-                seqChannels.Select(c => c.Name).Select(
-                    name => (from XmlNode ch in channelsInfoNode where null != ch.Attributes && ch.Attributes["name"].Value == name select ch))) {
-                foreach (XmlNode y in x.First().ChildNodes) {
+            foreach (
+                var firstNode in
+                    from x in
+                        seqChannels.Select(c => c.Name).Select(
+                            name => (from XmlNode ch in channelsInfoNode where null != ch.Attributes && ch.Attributes["name"].Value == name select ch))
+                    select null != x ? x.First() : null
+                    into firstNode
+                    let attributes = firstNode.Attributes
+                    where attributes != null
+                    where null != firstNode && null != attributes
+                    let channelColor = int.Parse(attributes["color"].Value)
+                    select firstNode) {
+                // ReSharper disable once PossibleNullReferenceException
+                var isDMX = firstNode.Attributes["deviceType"].Value.Equals("DMX");
+                var channelColor = int.Parse(firstNode.Attributes["color"].Value);
+                foreach (XmlNode y in firstNode.ChildNodes) {
                     if (null == y.Attributes) {
                         continue;
                     }
@@ -162,12 +194,13 @@ namespace SeqIOHelpers {
                         case "intensity":
                             if (intensity > 0) {
                                 for (var i = 0; i < eventCount; i++) {
-                                    _eventValues[row, eventStart + i] = (byte)intensity;
+                                    SetChannelEvents(isDMX, row, eventStart + i, channelColor, intensity);
                                 }
                             }
                             else {
                                 for (var i = 0; i < eventCount; i++) {
-                                    _eventValues[row, eventStart + i] = (byte)((double)i / eventCount * intensityDifference + intensityStart);
+                                    var currentIntensity = (int) ((double) i / eventCount * intensityDifference + intensityStart);
+                                    SetChannelEvents(isDMX, row, eventStart + i, channelColor, currentIntensity);
                                 }
                             }
                             break;
@@ -175,13 +208,14 @@ namespace SeqIOHelpers {
                             twinkle.Set();
                             if (intensity > 0) {
                                 for (var i = 0; i < eventCount; i++) {
-                                    _eventValues[row, eventStart + i] = (byte)(intensity * twinkle.State);
+                                    SetChannelEvents(isDMX, row, eventStart + i, channelColor, intensity * twinkle.State);
                                     twinkle.Update();
                                 }
                             }
                             else {
                                 for (var i = 0; i < eventCount; i++) {
-                                    _eventValues[row, eventStart + i] = (byte)(((double)i / eventCount * intensityDifference + intensityStart) * twinkle.State);
+                                    var currentIntensity = (int)(((double)i / eventCount * intensityDifference + intensityStart) * twinkle.State);
+                                    SetChannelEvents(isDMX, row, eventStart + i, channelColor, currentIntensity);
                                     twinkle.Update();
                                 }
                             }
@@ -190,13 +224,15 @@ namespace SeqIOHelpers {
                             var shimmerState = eventStart & 0x01;
                             if (intensity > 0) {
                                 for (var i = 0; i < eventCount; i++) {
-                                    _eventValues[row, eventStart + i] = (byte)(intensity * shimmerState);
+                                    var currentIntensity = intensity * shimmerState;
+                                    SetChannelEvents(isDMX, row, eventStart + i, channelColor, currentIntensity);
                                     shimmerState = 1 - shimmerState;
                                 }
                             }
                             else {
                                 for (var i = 0; i < eventCount; i++) {
-                                    _eventValues[row, eventStart + i] = (byte)((((double)i / eventCount) * intensityDifference + intensityStart) * shimmerState);
+                                    var currentIntensity = (int)((((double)i / eventCount) * intensityDifference + intensityStart) * shimmerState);
+                                    SetChannelEvents(isDMX, row, eventStart + i, channelColor, currentIntensity);
                                     shimmerState = 1 - shimmerState;
                                 }
                             }
@@ -206,8 +242,38 @@ namespace SeqIOHelpers {
                             break;
                     }
                 }
-                row++;
+                row += isDMX ? 3 : 1;
             }
+        }
+
+
+        private void SetChannelEvents(bool isDMX, int row, int eventStart, int channelColor, int currentIntensity) {
+            if (isDMX) {
+                SetDMXChannels(row, eventStart, channelColor, currentIntensity);
+            }
+            else {
+                _eventValues[row, eventStart] = (byte) currentIntensity;
+            }
+        }
+
+
+        private void SetDMXChannels(int row, int eventStart, int channelColor, int intensity) {
+            _eventValues[row, eventStart] = ComputeRed(channelColor, intensity);
+            _eventValues[row + 1, eventStart] = ComputeGreen(channelColor, intensity);
+            _eventValues[row + 2, eventStart] = ComputeBlue(channelColor, intensity); 
+        }
+
+
+        private static byte ComputeRed(int color, int intensity) {
+            return (byte)(((color & 0xff0000) >> 16) / Utils.Cell8BitMax * intensity);
+        }
+
+        private static byte ComputeGreen(int color, int intensity) {
+            return (byte)(((color & 0xff00) >> 8) / Utils.Cell8BitMax * intensity);
+        }
+
+        private static byte ComputeBlue(int color, int intensity) {
+            return (byte)((color & 0xff) / Utils.Cell8BitMax * intensity);
         }
 
 
