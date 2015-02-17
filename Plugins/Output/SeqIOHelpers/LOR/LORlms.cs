@@ -129,16 +129,16 @@ namespace SeqIOHelpers {
                     switch (node.Attributes["deviceType"].Value) {
                         case "LOR":
                             seqChannels.Add(new Channel(node.Attributes["name"].Value,
-                                Color.FromArgb((int) (int.Parse(node.Attributes["color"].Value) | 0xff000000)),
+                                Color.FromArgb((int) (uint.Parse(node.Attributes["color"].Value) | 0xff000000)),
                                 outputChannel++));
                             break;
                         case "DMX":
                             seqChannels.AddRange(new[] {
-                                new Channel(node.Attributes["name"].Value, Color.FromArgb((int) ((int.Parse(node.Attributes["color"].Value) | 0xff000000) & 0xffff0000)),
+                                new Channel(node.Attributes["name"].Value, Color.FromArgb((int) ((uint.Parse(node.Attributes["color"].Value) | 0xff000000) & 0xffff0000)),
                                     outputChannel++),
-                                new Channel(node.Attributes["name"].Value, Color.FromArgb((int) ((int.Parse(node.Attributes["color"].Value) | 0xff000000) & 0xff00ff00)),
+                                new Channel(node.Attributes["name"].Value, Color.FromArgb((int) ((uint.Parse(node.Attributes["color"].Value) | 0xff000000) & 0xff00ff00)),
                                     outputChannel++),
-                                new Channel(node.Attributes["name"].Value, Color.FromArgb((int) ((int.Parse(node.Attributes["color"].Value) | 0xff000000) & 0xff0000ff)),
+                                new Channel(node.Attributes["name"].Value, Color.FromArgb((int) ((uint.Parse(node.Attributes["color"].Value) | 0xff000000) & 0xff0000ff)),
                                     outputChannel++)
                             });
                             break;
