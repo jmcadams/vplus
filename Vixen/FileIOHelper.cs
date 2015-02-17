@@ -54,6 +54,11 @@ namespace VixenPlus {
         }
 
 
+        public static List<string> GetValidOpeningExtensions() {
+            return (from c in PluginCache where c.Value.CanOpen() select c.Value.FileExtension()).ToList();
+        }
+
+
         public static string GetSaveFilters() {
             var filter = PluginCache.Select(v => v.Value).Where(v => v.CanSave()).OrderBy(handler => handler.PreferredOrder()).ToArray();
 
@@ -107,24 +112,21 @@ namespace VixenPlus {
             var programContextNode = Xml.GetRequiredNode(doc, "Program");
             var profileNode = programContextNode.SelectSingleNode("Profile");
 
-            XmlNodeList channels;
+            XmlNodeList channels = null;
 
             if (profileNode == null) {
                 channels = programContextNode.SelectNodes("Channels/Channel");
             }
             else {
                 var path = Path.Combine(Paths.ProfilePath, profileNode.InnerText + Vendor.ProfileExtension);
-                if (!File.Exists(path)) {
-                    throw new FileNotFoundException("Cant locate profile.", path);
+                if (File.Exists(path)) {
+                    doc.Load(path);
+                    programContextNode = Xml.GetRequiredNode(doc, "Profile");
+                    channels = programContextNode.SelectNodes("ChannelObjects/Channel");
                 }
-
-                doc.Load(path);
-
-                programContextNode = Xml.GetRequiredNode(doc, "Profile");
-                channels = programContextNode.SelectNodes("ChannelObjects/Channel");
             }
 
-            if (channels == null) {
+            if (null == channels) {
                 throw new FormatException("No profile or channels in sequence");
             }
 
