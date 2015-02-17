@@ -1232,6 +1232,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void btnChDelete_Click(object sender, EventArgs e) {
+
             var rows = GetSelectedRows().ToList();
             var channels =
                 rows.Select(
@@ -1245,15 +1246,18 @@ namespace VixenPlus.Dialogs {
                 foreach (var c in channels) {
                     cp.RemoveChannel(c);
                 }
+                cp.Freeze();
+                _contextProfile = cp;
             }
 
+            dgvChannels.SuspendLayout();
             foreach (var r in rows) {
                 dgvChannels.Rows.Remove(r);
             }
 
-            dgvChannels.SuspendLayout();
-            dgvChannels.Rows.Clear();
-            AddRows(_contextProfile.FullChannels);
+            //dgvChannels.Rows.Clear();
+            //AddRows(_contextProfile.FullChannels);
+
             dgvChannels.ResumeLayout();
         }
 
