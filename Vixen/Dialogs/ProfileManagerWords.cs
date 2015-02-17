@@ -48,6 +48,11 @@ namespace VixenPlus.Dialogs {
             get { return false; }
         }
 
+        public override string GenerateDefaultName() {
+            return "Default Word Name";
+        }
+
+
         public static string Prompt {
             get { return "Words (One Per Line)"; }
         }

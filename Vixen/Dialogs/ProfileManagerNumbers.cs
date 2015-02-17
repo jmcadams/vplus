@@ -70,6 +70,11 @@ namespace VixenPlus.Dialogs {
             get { return !IsLimited; }
         }
 
+        public override string GenerateDefaultName() {
+            return "Default Number Name";
+        }
+
+
         public static string Prompt {
             get { return "Numbers configuration"; }
         }

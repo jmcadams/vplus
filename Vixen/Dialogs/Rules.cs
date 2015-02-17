@@ -15,5 +15,6 @@ namespace VixenPlus.Dialogs {
         public abstract string GenerateName(int count);
         public abstract int Iterations { get; }
         public abstract bool IsUnlimited { get; }
+        public abstract string GenerateDefaultName();
     }
 }

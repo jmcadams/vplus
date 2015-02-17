@@ -474,15 +474,20 @@ namespace VixenPlus.Dialogs {
             tcProfile.TabPages[0].Text = "Channels";
             dgvChannels.Rows.Clear();
             var cp = _contextProfile as Profile;
-            if (null != cp && ((Button) sender).Text == btnMultiChannelOk.Text) {
+            var addingChannels = null != cp && ((Button) sender).Text == btnMultiChannelOk.Text;
+            if (addingChannels) {
                 var gc = GenerateChannels();
                 foreach (var c in gc) {
                     cp.AddChannelObject(c);
                 }
+            }
+            if (null != cp) {
                 cp.Freeze();
                 AddRows(cp.FullChannels);
-                SetContextDirtyFlag(true);
-                SelectLastRow();
+                if (addingChannels) {
+                    SetContextDirtyFlag(true);
+                    SelectLastRow();
+                }
                 _contextProfile = cp;
             }
             DoButtonManagement();
@@ -1140,40 +1145,39 @@ namespace VixenPlus.Dialogs {
 
 
         private IEnumerable<string> GenerateNames(int ruleNum, string nameFormat, int currentChannel, int totalChannels) {
-            var names = new List<string>();
+            var resultingNames = new List<string>();
 
             if (lbRules.Items.Count < ruleNum || currentChannel > totalChannels) {
-                return names;
+                return resultingNames;
             }
 
             var ruleEngine = _ruleEngines[ruleNum - 1];
-            var generatedNames = new List<string>(ruleEngine.GenerateNames());
+            if (ruleEngine.Iterations != 0) {
+                var generatedNames = new List<string>(ruleEngine.GenerateNames());
 
-            for (var i = 0;
-                (i < ruleEngine.Iterations || ruleEngine.IsUnlimited) && currentChannel + names.Count < totalChannels;
-                i++) {
-                var parts = new Regex("{" + (ruleNum - 1) + "[:]?[a-zA-Z0-9]*}").Match(nameFormat).ToString().Split(':');
-                var format = parts.Count() == 2 ? "{0:" + parts[1] : "{0}";
-                var replace = parts.Count() == 2 ? "{" + (ruleNum - 1) + ":" + parts[1] : "{" + (ruleNum - 1) + "}";
-                var replacementValue = ruleEngine.IsUnlimited ? ruleEngine.GenerateName(i) : generatedNames[i];
-                int numericReplacement;
-                var formattingResult = nameFormat.Replace(replace,
-                    int.TryParse(replacementValue, out numericReplacement)
-                        ? string.Format(format, numericReplacement)
-                        : replacementValue);
+                for (var i = 0; (i < ruleEngine.Iterations || ruleEngine.IsUnlimited) && currentChannel + resultingNames.Count < totalChannels; i++) {
+                    var parts = new Regex("{" + (ruleNum - 1) + "[:]?[a-zA-Z0-9]*}").Match(nameFormat).ToString().Split(':');
+                    var format = parts.Count() == 2 ? "{0:" + parts[1] : "{0}";
+                    var replace = parts.Count() == 2 ? "{" + (ruleNum - 1) + ":" + parts[1] : "{" + (ruleNum - 1) + "}";
+                    var replacementValue = ruleEngine.IsUnlimited ? ruleEngine.GenerateName(i) : generatedNames[i];
+                    int numericReplacement;
+                    var formattingResult = nameFormat.Replace(replace,
+                        int.TryParse(replacementValue, out numericReplacement) ? string.Format(format, numericReplacement) : replacementValue);
 
-                // Is this the last rule?
-                if (ruleNum >= _ruleEngines.Count) {
-                    names.Add(formattingResult);
-                }
-                else {
-                    names.AddRange(
-                        GenerateNames(ruleNum + 1, formattingResult, currentChannel + names.Count, totalChannels)
-                            .ToList());
+                    // Is this the last rule?
+                    if (ruleNum >= _ruleEngines.Count) {
+                        resultingNames.Add(formattingResult);
+                    }
+                    else {
+                        resultingNames.AddRange(GenerateNames(ruleNum + 1, formattingResult, currentChannel + resultingNames.Count, totalChannels).ToList());
+                    }
                 }
             }
+            else {
+                resultingNames.Add(ruleEngine.GenerateDefaultName());
+            }
 
-            return names;
+            return resultingNames;
         }
 
 
@@ -1949,9 +1953,12 @@ namespace VixenPlus.Dialogs {
 
 
         private void SetContextDirtyFlag(bool value) {
-            if (!_isPluginsOnly) {
-                ((Profile) _contextProfile).IsDirty = value;
+            if (_isPluginsOnly) {
+                return;
             }
+
+            ((Profile) _contextProfile).IsDirty = value;
+           
         }
 
 
