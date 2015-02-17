@@ -499,7 +499,6 @@ namespace VixenPlus {
 
         private void manageToolStripMenuItem_Click(object sender, EventArgs e) {
             using (var dialog = new VixenPlusRoadie()) {
-            //using (var dialog = new ProfileManagerDialog(null)) {
                 if (dialog.ShowDialog() == DialogResult.OK) {
                     NotifyAll(Notification.ProfileChange);
                 }
