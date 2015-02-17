@@ -195,6 +195,12 @@
     <Compile Include="Dialogs\HelpDialog.Designer.cs">
       <DependentUpon>HelpDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\Roadie\VixenPlusRoadie.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\Roadie\VixenPlusRoadie.Designer.cs">
+      <DependentUpon>VixenPlusRoadie.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\Rules.cs" />
     <Compile Include="Dialogs\Lutefisk.cs">
       <SubType>Form</SubType>
@@ -213,12 +219,6 @@
     </Compile>
     <Compile Include="Dialogs\PreferencesDialog.Designer.cs">
       <DependentUpon>PreferencesDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\VixenPlusRoadie.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\VixenPlusRoadie.Designer.cs">
-      <DependentUpon>VixenPlusRoadie.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\ProfileManagerNumbers.cs" />
     <Compile Include="Dialogs\ProfileManagerWords.cs" />
@@ -394,7 +394,7 @@
     <EmbeddedResource Include="Dialogs\PreferencesDialog.resx">
       <DependentUpon>PreferencesDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\VixenPlusRoadie.resx">
+    <EmbeddedResource Include="Dialogs\Roadie\VixenPlusRoadie.resx">
       <DependentUpon>VixenPlusRoadie.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ReleaseNotesDialog.resx">
