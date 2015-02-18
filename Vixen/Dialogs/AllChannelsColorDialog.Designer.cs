@@ -13,8 +13,8 @@ namespace VixenPlus.Dialogs {
         private Button buttonNewColor;
         private Button buttonOK;
         private ColorDialog colorDialog;
-        private GroupBox groupBox1;
-        private GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
         private ListBox listBoxChannels;
         private ListBox listBoxColorsInUse;
 
@@ -103,7 +103,7 @@ namespace VixenPlus.Dialogs {
             // 
             this.buttonCancel.Anchor =
                 ((AnchorStyles) ((AnchorStyles.Bottom | AnchorStyles.Right)));
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(304, 475);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(75, 23);
@@ -115,7 +115,7 @@ namespace VixenPlus.Dialogs {
             // 
             this.buttonOK.Anchor =
                 ((AnchorStyles) ((AnchorStyles.Bottom | AnchorStyles.Right)));
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(223, 475);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(75, 23);
@@ -139,13 +139,13 @@ namespace VixenPlus.Dialogs {
             this.Controls.Add(this.buttonNewColor);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.HelpButton = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AllChannelsColorDialog";
             this.ShowInTaskbar = false;
-            this.StartPosition = FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Channel Colors";
             this.HelpButtonClicked += new CancelEventHandler(this.AllChannelsColorDialog_HelpButtonClicked);
             this.groupBox1.ResumeLayout(false);

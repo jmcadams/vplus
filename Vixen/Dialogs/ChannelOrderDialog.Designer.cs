@@ -10,7 +10,7 @@ namespace VixenPlus.Dialogs{
         #region Windows Form Designer generated code
         private Button buttonCancel;
         private Button buttonOK;
-        private Panel panel1;
+        private System.Windows.Forms.Panel panel1;
         private PictureBox pictureBoxChannels;
         private VScrollBar vScrollBar;
 
@@ -66,7 +66,7 @@ namespace VixenPlus.Dialogs{
             // buttonOK
             // 
             this.buttonOK.Anchor = ((AnchorStyles)((AnchorStyles.Bottom | AnchorStyles.Right)));
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(536, 531);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(75, 23);
@@ -77,7 +77,7 @@ namespace VixenPlus.Dialogs{
             // buttonCancel
             // 
             this.buttonCancel.Anchor = ((AnchorStyles)((AnchorStyles.Bottom | AnchorStyles.Right)));
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(617, 531);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(75, 23);
