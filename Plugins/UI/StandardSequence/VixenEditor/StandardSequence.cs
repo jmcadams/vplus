@@ -2675,7 +2675,7 @@ namespace VixenEditor {
             };
         }
 
-
+        //todo this needs to go away.
         private void setAllChannelColorsToolStripMenuItem_Click(object sender, EventArgs e) {
             if (_sequence.Profile != null) {
                 MessageBox.Show(Resources.UseProfileToEditChannels, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
