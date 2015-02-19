@@ -201,11 +201,11 @@
     </Compile>
     <Compile Include="Dialogs\Roadie\DataGridViewDisableButtonCell.cs" />
     <Compile Include="Dialogs\Roadie\DataGridViewDisableButtonColumn.cs" />
-    <Compile Include="Dialogs\Roadie\GroupTab.cs">
+    <Compile Include="Dialogs\Roadie\GroupsTab.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Dialogs\Roadie\GroupTab.Designer.cs">
-      <DependentUpon>GroupTab.cs</DependentUpon>
+    <Compile Include="Dialogs\Roadie\GroupsTab.Designer.cs">
+      <DependentUpon>GroupsTab.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\Roadie\GroupDialogMultiAdd.cs">
       <SubType>Form</SubType>
@@ -409,8 +409,8 @@
     <EmbeddedResource Include="Dialogs\Roadie\ChannelsTab.resx">
       <DependentUpon>ChannelsTab.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\Roadie\GroupTab.resx">
-      <DependentUpon>GroupTab.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\Roadie\GroupsTab.resx">
+      <DependentUpon>GroupsTab.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\Roadie\GroupDialogMultiAdd.resx">
       <DependentUpon>GroupDialogMultiAdd.cs</DependentUpon>

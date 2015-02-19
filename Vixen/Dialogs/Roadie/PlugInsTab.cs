@@ -11,11 +11,11 @@ using VixenPlusCommon;
 using VixenPlusCommon.Annotations;
 
 namespace VixenPlus.Dialogs {
-    public partial class PlugInDialog : UserControl {
+    public partial class PlugInsTab : UserControl {
 
         private readonly Profile _contextProfile;
 
-        public PlugInDialog(IExecutable profile) {
+        public PlugInsTab(IExecutable profile) {
             InitializeComponent();
             _contextProfile = profile as Profile;
             InitializePlugInTab();
@@ -220,6 +220,8 @@ namespace VixenPlus.Dialogs {
             _internalUpdate = false;
             UpdateRowConfig(index);
             _contextProfile.IsDirty = true;
+            //dgvPlugIns.CurrentCell = dgvPlugIns.Rows[index].Cells[0];
+            //dgvPlugIns_RowEnter(null, new DataGridViewCellEventArgs(dgvPlugIns.CurrentCell.ColumnIndex, dgvPlugIns.CurrentCell.RowIndex));
 
             dgvPlugIns.ResumeLayout();
         }
@@ -351,7 +353,11 @@ namespace VixenPlus.Dialogs {
 
 
         private void UpdateRowConfig(int rowIndex) {
-            dgvPlugIns.Rows[rowIndex].Cells[PlugInColConfig].Value = GetPluginForIndex(rowIndex).HardwareMap ?? DefaultConfig;
+            var plugin = GetPluginForIndex(rowIndex);
+            var val = plugin.HardwareMap ?? DefaultConfig;
+            dgvPlugIns.Rows[rowIndex].Cells[PlugInColConfig].Value = val;
+            dgvPlugIns.CurrentCell = dgvPlugIns.Rows[rowIndex].Cells[0];
+            dgvPlugIns_RowEnter(null, new DataGridViewCellEventArgs(dgvPlugIns.CurrentCell.ColumnIndex, dgvPlugIns.CurrentCell.RowIndex));
         }
 
 

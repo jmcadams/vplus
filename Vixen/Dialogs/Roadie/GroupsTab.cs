@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using VixenPlusCommon;
 
 namespace VixenPlus.Dialogs {
-    public sealed partial class GroupDialog : UserControl {
+    public sealed partial class GroupsTab : UserControl {
 
         private readonly Dictionary<string, GroupData> _groups;
         private readonly List<Channel> _fullChannels;
@@ -29,7 +29,7 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        public GroupDialog(IExecutable iExecutable, bool constrainToGroup) {
+        public GroupsTab(IExecutable iExecutable, bool constrainToGroup) {
             List<Channel> channelSubset;
             InitializeComponent();
             MinimumSize = Size;

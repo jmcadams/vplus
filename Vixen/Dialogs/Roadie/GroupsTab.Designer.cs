@@ -7,7 +7,7 @@ using VixenPlusCommon;
 
 namespace VixenPlus.Dialogs
 {
-    sealed partial class GroupDialog
+    sealed partial class GroupsTab
     {
         /// <summary>
         /// Required designer variable.
@@ -280,7 +280,7 @@ namespace VixenPlus.Dialogs
             this.Controls.Add(this.btnAddRoot);
             this.Controls.Add(this.tvGroups);
             this.Controls.Add(this.lbChannels);
-            this.Name = "GroupDialog";
+            this.Name = "GroupsTab";
             this.Size = new Size(692, 470);
             this.SizeChanged += new EventHandler(this.GroupDialog_SizeChanged);
             this.ResumeLayout(false);

@@ -44,6 +44,10 @@ namespace VixenPlusCommon {
             return (((backgroundColor.R * 299) + (backgroundColor.G * 587) + (backgroundColor.B * 114)) / 1000 >= 128) ? Brushes.Black : Brushes.White;
         }
 
+        public static void ShowIoError(this string message, string caption) {
+            MessageBox.Show(message + " Please try again later.", caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
 
         public static Brush GetAlphaTextColor(this Color bg, Color bc) {
             var a1 = bg.A / 255.0;
