@@ -111,18 +111,11 @@ namespace Controllers.E131 {
             // finally initialize the form
 
             InitializeComponent();
-            okButton.Location = new Point(ClientSize.Width / 2 - okButton.Width - 10, ClientSize.Height - okButton.Height - 25);
             rowManipulationContextMenuStrip.Items.Add("Insert Row", null, new EventHandler(univDGVN_InsertRow));
             rowManipulationContextMenuStrip.Items.Add("Delete Row", null, new EventHandler(univDGVN_DeleteRow));
             rowManipulationContextMenuStrip.Items.Add("-");
             rowManipulationContextMenuStrip.Items.Add("Move Row Up", null, new EventHandler(univDGVN_MoveRowUp));
-            rowManipulationContextMenuStrip.Items.Add("Move Row Down", null, new EventHandler(univDGVN_MoveRowDown)); var mIHelpAbout = new MenuItem("&About J1Sys E1.31...", Help.AboutClick);
-            //var mIHelpShowSys = new MenuItem("&Show System Info", Help.ShowSysClick);
-            //var mIHelp = new MenuItem("&Help", new[] {mIHelpAbout, mIHelpShowSys});
-
-            //var mainMenu = new MainMenu(new[] {mIHelp});
-
-            //Menu = mainMenu;
+            rowManipulationContextMenuStrip.Items.Add("Move Row Down", null, new EventHandler(univDGVN_MoveRowDown)); 
             SetDestinations();
         }
 
@@ -392,19 +385,13 @@ namespace Controllers.E131 {
             }
 
             if (!valid) {
-                if (
-                    J1MsgBox.ShowMsg(
-                        "Your configurations contains active entries that may cause run time errors.\r\n\r\nHit OK to continue and save your configuration. Hit Cancel to re-edit before saving.",
-                        errorList.ToString(), "Configuration Validation", MessageBoxButtons.OKCancel, MessageBoxIcon.Error) == DialogResult.OK) {
-                    valid = true;
-                }
+                J1MsgBox.ShowMsg("Your configurations contains active entries that may cause run time errors.", errorList.ToString(),
+                    "Configuration Validation", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            if (!valid) {
-                return;
+            else {
+                J1MsgBox.ShowMsg("Your configuration appears to be valid.",
+                    "Configuration Validation", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            //DialogResult = DialogResult.OK;
-            //Close();
         }
 
 
@@ -820,7 +807,7 @@ namespace Controllers.E131 {
 
         private class UnicastForm : Form {
             private IPTextBox _ipTextBox;
-            private Button _okButton, _cancelButton;
+            //private Button _okButton, _cancelButton;
 
             private IContainer components;
 
@@ -852,27 +839,23 @@ namespace Controllers.E131 {
 
                 SuspendLayout();
 
-                _ipTextBox = new IPTextBox {Location = new Point(10, 10), Font = Font, Text = ""};
+                _ipTextBox = new IPTextBox { Location = new Point(10, 10), Font = Font, Text = "" };
                 Controls.Add(_ipTextBox);
 
-                _okButton = new Button {DialogResult = DialogResult.OK, Name = "_okButton", AutoSize = true, TabIndex = 101, Text = @"&OK"};
-                _okButton.Location = new Point(ClientSize.Width / 2 - _okButton.Width - 10, ClientSize.Height - _okButton.Height - 25);
-                Controls.Add(_okButton);
+                //_okButton = new Button {DialogResult = DialogResult.OK, Name = "_okButton", AutoSize = true, TabIndex = 101, Text = @"&OK"};
+                //_okButton.Location = new Point(ClientSize.Width / 2 - _okButton.Width - 10, ClientSize.Height - _okButton.Height - 25);
+                //Controls.Add(_okButton);
 
-                _cancelButton = new Button
-                {DialogResult = DialogResult.Cancel, Name = "_cancelButton", AutoSize = true, TabIndex = 102, Text = @"&Cancel"};
-                _cancelButton.Location = new Point(ClientSize.Width / 2 + 10, ClientSize.Height - _cancelButton.Height - 25);
-                Controls.Add(_cancelButton);
-                CancelButton = _cancelButton;
+                //_cancelButton = new Button
+                //{DialogResult = DialogResult.Cancel, Name = "_cancelButton", AutoSize = true, TabIndex = 102, Text = @"&Cancel"};
+                //_cancelButton.Location = new Point(ClientSize.Width / 2 + 10, ClientSize.Height - _cancelButton.Height - 25);
+                //Controls.Add(_cancelButton);
+                //CancelButton = _cancelButton;
 
                 ResumeLayout(true);
 
                 Application.DoEvents();
             }
-        }
-
-        private void btnAbout_Click(object sender, EventArgs e) {
-            Help.AboutClick(sender, e);
         }
 
         private void btnSysInfo_Click(object sender, EventArgs e) {

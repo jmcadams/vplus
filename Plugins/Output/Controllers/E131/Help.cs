@@ -53,20 +53,6 @@ namespace Controllers.E131
     {
         //--------------------------------------------------------------------
         //
-        //	AboutClick() - command to run the about dialog
-        //
-        //--------------------------------------------------------------------
-
-        static public void AboutClick(object sender, EventArgs e)
-        {
-            using (var aboutBox = new AboutBox()) {
-                aboutBox.ShowDialog();
-            }
-        }
-
-
-        //--------------------------------------------------------------------
-        //
         //	ShowSysClick() - command to show system info
         //
         //--------------------------------------------------------------------
