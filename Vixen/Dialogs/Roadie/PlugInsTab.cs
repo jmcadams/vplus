@@ -162,6 +162,8 @@ namespace VixenPlus.Dialogs {
 
             _setupData.RemovePlugInData(index.ToString(CultureInfo.InvariantCulture));
             _sequencePlugins.RemoveAt(index);
+            _contextProfile.IsDirty = true;
+
             _internalUpdate = true;
             dgvPlugIns.Rows.RemoveAt(index);
             foreach (DataGridViewRow row in dgvPlugIns.Rows) {
@@ -170,10 +172,12 @@ namespace VixenPlus.Dialogs {
                     row.Tag = --tag;
                 }
             }
-            _contextProfile.IsDirty = true;
-
-            _internalUpdate = false;
             _lastRow = NoRow;
+            _internalUpdate = false;
+
+            if (dgvPlugIns.Rows.Count > 0 && null != dgvPlugIns.CurrentCell) {
+                dgvPlugIns_RowEnter(null, new DataGridViewCellEventArgs(dgvPlugIns.CurrentCell.ColumnIndex, dgvPlugIns.CurrentCell.RowIndex)); 
+            }
         }
 
 
@@ -216,12 +220,11 @@ namespace VixenPlus.Dialogs {
                 !p.SupportsLiveSetup();
 
             dgvPlugIns.Rows[row].Tag = index;
+            _lastRow = index;
             _sequencePlugins.Add(p);
             _internalUpdate = false;
             UpdateRowConfig(index);
             _contextProfile.IsDirty = true;
-            //dgvPlugIns.CurrentCell = dgvPlugIns.Rows[index].Cells[0];
-            //dgvPlugIns_RowEnter(null, new DataGridViewCellEventArgs(dgvPlugIns.CurrentCell.ColumnIndex, dgvPlugIns.CurrentCell.RowIndex));
 
             dgvPlugIns.ResumeLayout();
         }
@@ -356,8 +359,6 @@ namespace VixenPlus.Dialogs {
             var plugin = GetPluginForIndex(rowIndex);
             var val = plugin.HardwareMap ?? DefaultConfig;
             dgvPlugIns.Rows[rowIndex].Cells[PlugInColConfig].Value = val;
-            dgvPlugIns.CurrentCell = dgvPlugIns.Rows[rowIndex].Cells[0];
-            dgvPlugIns_RowEnter(null, new DataGridViewCellEventArgs(dgvPlugIns.CurrentCell.ColumnIndex, dgvPlugIns.CurrentCell.RowIndex));
         }
 
 
@@ -370,7 +371,7 @@ namespace VixenPlus.Dialogs {
             btnAddPlugIn.Enabled = cbAvailablePlugIns.SelectedIndex > 0;
         }
 
-        private void DoPluginsKeys(KeyEventArgs e) {
+        private void DoPluginsKeys(object sender, KeyEventArgs e) {
             switch (e.KeyCode) {
                 case Keys.Delete:
                     buttonRemove_Click(null, null);
