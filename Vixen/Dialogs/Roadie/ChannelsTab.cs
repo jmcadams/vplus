@@ -10,12 +10,10 @@ using System.Xml.Linq;
 
 using VixenPlusCommon;
 
-//todo Implement remember selected cell
-
 namespace VixenPlus.Dialogs {
     public partial class ChannelsTab : UserControl {
 
-        private Profile _contextProfile;
+        private readonly Profile _contextProfile;
         private readonly VixenPlusRoadie _parentControl;
         private const int ChannelEnabledCol = 0;
         private const int ChannelNumCol = 1;
@@ -158,7 +156,6 @@ namespace VixenPlus.Dialogs {
                                     break;
                                 }
                                 dgvChannels.Rows.Clear();
-                                _contextProfile.IsDirty = true;
                                 count++;
                             }
                             else {
@@ -167,6 +164,9 @@ namespace VixenPlus.Dialogs {
                                 dgvChannels.Rows[row].DefaultCellStyle.BackColor = cols[ChannelColorCol].FromHTML();
                                 dgvChannels.Rows[row].DefaultCellStyle.ForeColor = dgvChannels.Rows[row].DefaultCellStyle.BackColor.GetForeColor();
                             }
+                        }
+                        if (valid) {
+                            RefreshContextProfile();
                         }
                         _internalUpdate = false;
                         dgvChannels.ResumeLayout();
@@ -498,6 +498,8 @@ namespace VixenPlus.Dialogs {
 
 
         private void cbChGenTemplate_SelectedIndexChanged(object sender, EventArgs e) {
+            if (cbChGenTemplate.SelectedIndex == -1) return;
+
             var template = XElement.Load(Path.Combine(Paths.ProfileGeneration, cbChGenTemplate.SelectedItem + Vendor.TemplateExtension));
             var element = template.Element("Channels");
             nudChGenChannels.Value = element != null ? int.Parse(element.Value) : 1;
@@ -690,13 +692,11 @@ namespace VixenPlus.Dialogs {
 
             _contextProfile.IsDirty = true;
 
-            var cp = _contextProfile;
-            if (null != cp) {
+            if (null != _contextProfile) {
                 foreach (var c in channels) {
-                    cp.RemoveChannel(c);
+                    _contextProfile.RemoveChannel(c);
                 }
-                cp.Freeze();
-                _contextProfile = cp;
+                _contextProfile.Freeze();
             }
 
             dgvChannels.SuspendLayout();
@@ -741,6 +741,7 @@ namespace VixenPlus.Dialogs {
                 // at the center of the rectangle.
                 _dragDropBox = new Rectangle(new Point(e.X - (dragSize.Width / 2), e.Y - (dragSize.Height / 2)), dragSize);
                 _dragCanceled = false;
+                _dragDropScrollSpeed = DragDropDefaultSpeed;
             }
             else {
                 // Reset the rectangle if the mouse is not over an item in the ListBox.
@@ -750,7 +751,9 @@ namespace VixenPlus.Dialogs {
 
 
         private DateTime _lastUpdate = DateTime.Now;
-        private const int DragDropScrollSpeed = 35; // mills
+        private const int DragDropMinSpeed = 20; // mills
+        private const int DragDropDefaultSpeed = 35; // mills
+        private  int _dragDropScrollSpeed = DragDropDefaultSpeed; // mills
         private bool _dragCanceled;
 
 
@@ -765,7 +768,10 @@ namespace VixenPlus.Dialogs {
             var delayTime = DateTime.Now - _lastUpdate;
 
             // We don't want to scroll too fast, so is it time to scroll again?
-            if (delayTime.Milliseconds <= DragDropScrollSpeed) {
+            if (delayTime.Milliseconds <= _dragDropScrollSpeed) {
+                if (_dragDropScrollSpeed > DragDropMinSpeed) {
+                    _dragDropScrollSpeed = Math.Min(DragDropMinSpeed, _dragDropScrollSpeed - (_dragDropScrollSpeed / 3));
+                }
                 return;
             }
 
@@ -803,10 +809,10 @@ namespace VixenPlus.Dialogs {
             }
 
             // Get the column the D&D impacts
-            var dropColumn = (from DataGridViewCell c in dgvChannels.SelectedCells select c.ColumnIndex).Distinct().ToList()[0];
+            var impactedColumn = (from DataGridViewCell c in dgvChannels.SelectedCells select c.ColumnIndex).Distinct().ToList()[0];
 
             // If it is the Channel Name column, do the channel number first and the the Output Number second
-            var valueColumn = dropColumn == ChannelNameCol ? ChannelNumCol : dropColumn;
+            var valueColumn = impactedColumn == ChannelNameCol ? ChannelNumCol : impactedColumn;
 
             // Get the data for that column on the dropped row
             var initialValue = int.Parse(dgvChannels.Rows[dropRowIndex].Cells[valueColumn].Value.ToString());
@@ -817,7 +823,7 @@ namespace VixenPlus.Dialogs {
             var lastRow = Math.Max(initialValue, rows.Max(r => int.Parse(r.Cells[valueColumn].Value.ToString())));
 
             //move the channels and renumber the appropriate column
-            foreach (var row in rows) { //todo need to update the _contextProfile as well.
+            foreach (var row in rows) {
                 dgvChannels.Rows.RemoveAt(dgvChannels.Rows.IndexOf(row));
                 row.Cells[valueColumn].Value = firstRow + impactedRowCount--;
                 dgvChannels.Rows.Insert(dropRowIndex, row);
@@ -827,14 +833,28 @@ namespace VixenPlus.Dialogs {
             RenumberChannels(rows, firstRow, lastRow, valueColumn);
 
             // If it is the name column, do the output channel column renumbering now, passing an empty list.
-            if (dropColumn == ChannelNameCol) {
+            if (impactedColumn == ChannelNameCol) {
                 RenumberChannels(new List<DataGridViewRow>(), firstRow, lastRow, OutputChannelCol);
             }
 
-            _contextProfile.IsDirty = true;
+            //now update the _contextProfile
+            RefreshContextProfile();
 
             // Select the cell where the data was dropped
-            dgvChannels.CurrentCell = dgvChannels.Rows[dropRowIndex].Cells[dropColumn];
+            dgvChannels.CurrentCell = dgvChannels.Rows[dropRowIndex].Cells[impactedColumn];
+        }
+
+
+        private void RefreshContextProfile() {
+            _contextProfile.ClearChannels();
+            foreach (var ch in from DataGridViewRow row in dgvChannels.Rows
+                select
+                    new Channel(row.Cells[ChannelNameCol].Value.ToString(), row.DefaultCellStyle.BackColor,
+                        int.Parse(row.Cells[OutputChannelCol].Value.ToString()))) {
+                _contextProfile.AddChannelObject(ch);
+            }
+            _contextProfile.Freeze();
+            _contextProfile.IsDirty = true;
         }
 
 
@@ -1015,25 +1035,32 @@ namespace VixenPlus.Dialogs {
             SetParentText("Channels");
             _internalUpdate = true;
             dgvChannels.Rows.Clear();
-            var cp = _contextProfile;
-            var addingChannels = null != cp && ((Button)sender).Text == btnMultiChannelOk.Text;
+            var addingChannels = null != _contextProfile && ((Button)sender).Text == btnMultiChannelOk.Text;
             if (addingChannels) {
-                var gc = GenerateChannels();
-                foreach (var c in gc) {
-                    cp.AddChannelObject(c);
+                var generateChannels = GenerateChannels();
+                foreach (var channel in generateChannels) {
+                    _contextProfile.AddChannelObject(channel);
                 }
             }
-            if (null != cp) {
-                cp.Freeze();
-                AddRows(cp.FullChannels);
+            if (null != _contextProfile) {
+                _contextProfile.Freeze();
+                AddRows(_contextProfile.FullChannels);
                 if (addingChannels) {
                     SelectLastRow();
                 }
-                _contextProfile = cp;
             }
             _internalUpdate = false;
             SetChannelTabButtons();
         }
 
+        private void btnClearSettings_Click(object sender, EventArgs e) {
+            cbPreview.Checked = true;
+            cbChGenTemplate.SelectedIndex = -1;
+            nudChGenChannels.Value = 1;
+            tbChGenNameFormat.Text = string.Empty;
+            cbRuleRules.SelectedIndex = -1;
+            lbRules.Items.Clear();
+            PreviewChannels();
+        }
     }
 }
