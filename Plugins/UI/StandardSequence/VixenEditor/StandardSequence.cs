@@ -2394,6 +2394,8 @@ namespace VixenEditor {
         private void ReactToProfileAssignment() {
             var isProfile = _sequence.Profile != null;
             profileToolStripLabel.Text = isProfile ? _sequence.Profile.Name : "Embedded";
+            profileToolStripLabel.Enabled = null == _sequence.Profile
+                ? _sequence.FileIOHandler.SupportsProfiles : _sequence.Profile.FileIOHandler.SupportsProfiles;
             mapperTsb.Enabled = isProfile;
             profileToolStripLabel.Visible = true;
             flattenProfileIntoSequenceToolStripMenuItem.Enabled = isProfile;
