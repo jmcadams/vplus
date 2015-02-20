@@ -765,7 +765,7 @@ namespace VixenPlus.Dialogs {
             // cbBounce
             // 
             this.cbBounce.AutoSize = true;
-            this.cbBounce.Location = new System.Drawing.Point(47, 72);
+            this.cbBounce.Location = new System.Drawing.Point(47, 73);
             this.cbBounce.Name = "cbBounce";
             this.cbBounce.Size = new System.Drawing.Size(69, 17);
             this.cbBounce.TabIndex = 10;
