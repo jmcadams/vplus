@@ -24,7 +24,7 @@ namespace VixenPlus {
             set { _groups = value; }
         }
 
-        //public bool IsDirty { get; private set; }
+        public bool IsDirty { get; set; }
 
         #region Constructors
 
