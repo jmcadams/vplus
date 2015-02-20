@@ -150,7 +150,6 @@ namespace VixenPlus.Dialogs {
 
 
         private void btnOkay_Click(object sender, EventArgs e) {
-            //ClearSetup();
             SaveChangedProfiles();
             DialogResult = DialogResult.OK;
         }
@@ -196,36 +195,23 @@ namespace VixenPlus.Dialogs {
 
 
         private void PersistProfileInfo() {
+            if (null == _contextProfile) {
+                return;
+            }
+
+            foreach (var plugin in pPlugIns.Controls.OfType<PlugInsTab>()) {
+                plugin.SavingInvoked();
+            }
+
             if (_isPluginsOnly) {
-                var pro = _contextProfile as EventSequence;
-                if (pro == null) {
-                    return;
-                }
-
                 foreach (var dialog in pGroups.Controls.OfType<GroupsTab>()) {
-                    pro.Groups = Group.GetGroups(dialog.GetResults);
+                    ((EventSequence) _contextProfile).Groups = Group.GetGroups(dialog.GetResults);
                 }
-                return;
             }
-
-            var cp = _contextProfile as Profile;
-            if (null == cp) {
-                return;
-            }
-
-            // Process channels - this should be being done already...
-            //cp.ClearChannels();
-            //foreach (var ch in from DataGridViewRow row in dgvChannels.Rows
-            //    select
-            //        new Channel(row.Cells[ChannelNameCol].Value.ToString(), row.DefaultCellStyle.BackColor,
-            //            int.Parse(row.Cells[OutputChannelCol].Value.ToString()) - 1)
-            //        {Enabled = bool.Parse(row.Cells[ChannelEnabledCol].Value.ToString())}) {
-            //    cp.AddChannelObject(ch);
-            //}
-
-            // Process Groups
-            foreach (var dialog in pGroups.Controls.OfType<GroupsTab>()) {
-                cp.Groups = Group.GetGroups(dialog.GetResults);
+            else {
+                foreach (var dialog in pGroups.Controls.OfType<GroupsTab>()) {
+                    ((Profile) _contextProfile).Groups = Group.GetGroups(dialog.GetResults);
+                }
             }
         }
 
@@ -406,7 +392,6 @@ namespace VixenPlus.Dialogs {
 
 
         private void btnCancel_Click(object sender, EventArgs e) {
-            //ClearSetup();
             DialogResult = DialogResult.Cancel;
 
             if (!AnyDirtyProfiles()) {
@@ -425,7 +410,6 @@ namespace VixenPlus.Dialogs {
 
 
         private void VixenPlusRoadie_FormClosing(object sender, FormClosingEventArgs e) {
-            //ClearSetup();
             DialogResult = DialogResult.OK;
 
             if (e.CloseReason != CloseReason.UserClosing || !AnyDirtyProfiles()) {

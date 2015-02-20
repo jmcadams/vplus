@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
@@ -13,11 +14,11 @@ using VixenPlusCommon.Annotations;
 namespace VixenPlus.Dialogs {
     public partial class PlugInsTab : UserControl {
 
-        private readonly Profile _contextProfile;
+        private readonly IExecutable _contextProfile;
 
         public PlugInsTab(IExecutable profile) {
             InitializeComponent();
-            _contextProfile = profile as Profile;
+            _contextProfile = profile;
             InitializePlugInTab();
         }
 
@@ -46,7 +47,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void PluginListDialog() {
-            var executableObject = _contextProfile as IExecutable;
+            var executableObject = _contextProfile;
             _setupData = executableObject.PlugInData;
             _executableObject = executableObject;
 
@@ -92,6 +93,18 @@ namespace VixenPlus.Dialogs {
                             Convert.ToInt32(attributes[PlugInAttrId].Value)
                         }).ToArray();
             }
+        }
+
+
+        public void SavingInvoked() {
+            if (_lastRow == NoRow) {
+                return;
+            }
+
+            var lastPlugIn = GetPluginForIndex(_lastRow);
+            lastPlugIn.GetSetup();
+            lastPlugIn.CloseSetup();
+            SetDirty();
         }
 
 
@@ -162,7 +175,7 @@ namespace VixenPlus.Dialogs {
 
             _setupData.RemovePlugInData(index.ToString(CultureInfo.InvariantCulture));
             _sequencePlugins.RemoveAt(index);
-            _contextProfile.IsDirty = true;
+            SetDirty();
 
             _internalUpdate = true;
             dgvPlugIns.Rows.RemoveAt(index);
@@ -224,9 +237,23 @@ namespace VixenPlus.Dialogs {
             _sequencePlugins.Add(p);
             _internalUpdate = false;
             UpdateRowConfig(index);
-            _contextProfile.IsDirty = true;
+            SetDirty();
 
             dgvPlugIns.ResumeLayout();
+        }
+
+
+        private void SetDirty() {
+            var profile = _contextProfile as Profile;
+            if (profile != null ) {
+                profile.IsDirty = true;
+            }
+            else {
+                var eventSequence = _contextProfile as EventSequence;
+                if (eventSequence != null) {
+                    eventSequence.IsDirty = true;
+                }
+            }
         }
 
 
@@ -304,12 +331,7 @@ namespace VixenPlus.Dialogs {
                 return;
             }
 
-            if (_lastRow != NoRow) {
-                var lastPlugIn = GetPluginForIndex(_lastRow);
-                lastPlugIn.GetSetup();
-                lastPlugIn.CloseSetup();
-                _contextProfile.IsDirty = true;
-            }
+            SavingInvoked();
 
             pSetup.Controls.Clear();
         }
@@ -340,7 +362,7 @@ namespace VixenPlus.Dialogs {
             if (e.RowIndex == -1 || e.ColumnIndex == -1 || _internalUpdate) {
                 return;
             }
-
+            Debug.Print("Update {0:000}:{1:000}", e.RowIndex, e.ColumnIndex);
             UpdateRowConfig(e.RowIndex);
         }
 
