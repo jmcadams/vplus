@@ -842,16 +842,6 @@ namespace Controllers.E131 {
                 _ipTextBox = new IPTextBox { Location = new Point(10, 10), Font = Font, Text = "" };
                 Controls.Add(_ipTextBox);
 
-                //_okButton = new Button {DialogResult = DialogResult.OK, Name = "_okButton", AutoSize = true, TabIndex = 101, Text = @"&OK"};
-                //_okButton.Location = new Point(ClientSize.Width / 2 - _okButton.Width - 10, ClientSize.Height - _okButton.Height - 25);
-                //Controls.Add(_okButton);
-
-                //_cancelButton = new Button
-                //{DialogResult = DialogResult.Cancel, Name = "_cancelButton", AutoSize = true, TabIndex = 102, Text = @"&Cancel"};
-                //_cancelButton.Location = new Point(ClientSize.Width / 2 + 10, ClientSize.Height - _cancelButton.Height - 25);
-                //Controls.Add(_cancelButton);
-                //CancelButton = _cancelButton;
-
                 ResumeLayout(true);
 
                 Application.DoEvents();
