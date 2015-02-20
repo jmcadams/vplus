@@ -33,6 +33,7 @@ namespace VixenPlus.Dialogs {
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             this.pMultiAdd = new System.Windows.Forms.Panel();
+            this.btnClearSettings = new System.Windows.Forms.Button();
             this.btnUpdatePreview = new System.Windows.Forms.Button();
             this.btnMultiChannelCancel = new System.Windows.Forms.Button();
             this.gbRules = new System.Windows.Forms.GroupBox();
@@ -87,7 +88,8 @@ namespace VixenPlus.Dialogs {
             this.btnMultiColorCancel = new System.Windows.Forms.Button();
             this.colorPaletteColor = new VixenPlusCommon.ColorPalette();
             this.previewTimer = new System.Windows.Forms.Timer(this.components);
-            this.btnClearSettings = new System.Windows.Forms.Button();
+            this.cbBounce = new System.Windows.Forms.CheckBox();
+            this.cbMatchInFormat = new System.Windows.Forms.CheckBox();
             this.pMultiAdd.SuspendLayout();
             this.gbRules.SuspendLayout();
             this.panelRuleEditor.SuspendLayout();
@@ -125,6 +127,16 @@ namespace VixenPlus.Dialogs {
             this.pMultiAdd.Size = new System.Drawing.Size(269, 527);
             this.pMultiAdd.TabIndex = 0;
             // 
+            // btnClearSettings
+            // 
+            this.btnClearSettings.Location = new System.Drawing.Point(81, 468);
+            this.btnClearSettings.Name = "btnClearSettings";
+            this.btnClearSettings.Size = new System.Drawing.Size(104, 23);
+            this.btnClearSettings.TabIndex = 23;
+            this.btnClearSettings.Text = "C&lear Settings";
+            this.btnClearSettings.UseVisualStyleBackColor = true;
+            this.btnClearSettings.Click += new System.EventHandler(this.btnClearSettings_Click);
+            // 
             // btnUpdatePreview
             // 
             this.btnUpdatePreview.Enabled = false;
@@ -144,9 +156,11 @@ namespace VixenPlus.Dialogs {
             this.btnMultiChannelCancel.TabIndex = 17;
             this.btnMultiChannelCancel.Text = "&Cancel";
             this.btnMultiChannelCancel.UseVisualStyleBackColor = true;
+            this.btnMultiChannelCancel.Click += new System.EventHandler(this.btnMultiChannelButton_Click);
             // 
             // gbRules
             // 
+            this.gbRules.Controls.Add(this.cbMatchInFormat);
             this.gbRules.Controls.Add(this.btnRuleDelete);
             this.gbRules.Controls.Add(this.btnRuleAdd);
             this.gbRules.Controls.Add(this.cbRuleRules);
@@ -228,6 +242,7 @@ namespace VixenPlus.Dialogs {
             // 
             // panelRuleEditor
             // 
+            this.panelRuleEditor.Controls.Add(this.cbBounce);
             this.panelRuleEditor.Controls.Add(this.colorPaletteChannel);
             this.panelRuleEditor.Controls.Add(this.cbRuleEndNum);
             this.panelRuleEditor.Controls.Add(this.nudRuleIncr);
@@ -264,11 +279,16 @@ namespace VixenPlus.Dialogs {
             // nudRuleIncr
             // 
             this.nudRuleIncr.Location = new System.Drawing.Point(185, 72);
-            this.nudRuleIncr.Minimum = new decimal(new int[] {
-            1,
+            this.nudRuleIncr.Maximum = new decimal(new int[] {
+            10,
             0,
             0,
             0});
+            this.nudRuleIncr.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
             this.nudRuleIncr.Name = "nudRuleIncr";
             this.nudRuleIncr.Size = new System.Drawing.Size(65, 20);
             this.nudRuleIncr.TabIndex = 3;
@@ -742,15 +762,28 @@ namespace VixenPlus.Dialogs {
             this.previewTimer.Interval = 200;
             this.previewTimer.Tick += new System.EventHandler(this.previewTimer_Tick);
             // 
-            // btnClearSettings
+            // cbBounce
             // 
-            this.btnClearSettings.Location = new System.Drawing.Point(81, 468);
-            this.btnClearSettings.Name = "btnClearSettings";
-            this.btnClearSettings.Size = new System.Drawing.Size(104, 23);
-            this.btnClearSettings.TabIndex = 23;
-            this.btnClearSettings.Text = "C&lear Settings";
-            this.btnClearSettings.UseVisualStyleBackColor = true;
-            this.btnClearSettings.Click += new System.EventHandler(this.btnClearSettings_Click);
+            this.cbBounce.AutoSize = true;
+            this.cbBounce.Location = new System.Drawing.Point(47, 72);
+            this.cbBounce.Name = "cbBounce";
+            this.cbBounce.Size = new System.Drawing.Size(69, 17);
+            this.cbBounce.TabIndex = 10;
+            this.cbBounce.Text = "Bounce?";
+            this.cbBounce.UseVisualStyleBackColor = true;
+            this.cbBounce.CheckedChanged += new System.EventHandler(this.cbBounce_CheckedChanged);
+            // 
+            // cbMatchInFormat
+            // 
+            this.cbMatchInFormat.AutoSize = true;
+            this.cbMatchInFormat.Checked = true;
+            this.cbMatchInFormat.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbMatchInFormat.Location = new System.Drawing.Point(67, 126);
+            this.cbMatchInFormat.Name = "cbMatchInFormat";
+            this.cbMatchInFormat.Size = new System.Drawing.Size(128, 17);
+            this.cbMatchInFormat.TabIndex = 7;
+            this.cbMatchInFormat.Text = "Update Ch Name Fmt";
+            this.cbMatchInFormat.UseVisualStyleBackColor = true;
             // 
             // ChannelsTab
             // 
@@ -766,6 +799,7 @@ namespace VixenPlus.Dialogs {
             this.pMultiAdd.ResumeLayout(false);
             this.pMultiAdd.PerformLayout();
             this.gbRules.ResumeLayout(false);
+            this.gbRules.PerformLayout();
             this.panelRuleEditor.ResumeLayout(false);
             this.panelRuleEditor.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudRuleIncr)).EndInit();
@@ -841,5 +875,7 @@ namespace VixenPlus.Dialogs {
         private ColorPalette colorPaletteColor;
         private Timer previewTimer;
         private Button btnClearSettings;
+        private CheckBox cbBounce;
+        private CheckBox cbMatchInFormat;
     }
 }

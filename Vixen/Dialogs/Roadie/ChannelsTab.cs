@@ -264,7 +264,7 @@ namespace VixenPlus.Dialogs {
             }
             switch (cbRuleRules.SelectedItem.ToString()) {
                 case "Numbers":
-                    lbRules.Items.Add(new ProfileManagerNumbers {Start = 1, IsLimited = true, End = 1, Increment = 1});
+                    lbRules.Items.Add(new ProfileManagerNumbers {Start = 1, IsLimited = true, End = 1, Increment = 1, Bounce = false});
                     break;
                 case "Words":
                     lbRules.Items.Add(new ProfileManagerWords {Words = String.Empty});
@@ -290,6 +290,7 @@ namespace VixenPlus.Dialogs {
                 nudRuleEnd.Enabled = numbers.IsLimited;
                 cbRuleEndNum.Checked = numbers.IsLimited;
                 nudRuleIncr.Value = numbers.Increment;
+                cbBounce.Checked = numbers.Bounce;
             }
             else if (rule is ProfileManagerWords) {
                 var words = rule as ProfileManagerWords;
@@ -311,6 +312,7 @@ namespace VixenPlus.Dialogs {
             nudRuleStart.Visible = isItemSelected && isNumbers;
             nudRuleEnd.Visible = isItemSelected && isNumbers;
             nudRuleIncr.Visible = isItemSelected && isNumbers;
+            cbBounce.Visible = isItemSelected && isNumbers;
             PreviewChannels();
         }
 
@@ -361,6 +363,7 @@ namespace VixenPlus.Dialogs {
             }
         }
 
+        private const string HoldIndex = "___hold___";
 
         private void SwapRules(int originalIndex, int newIndex) {
             var totalCount = lbRules.Items.Count - 1;
@@ -372,6 +375,15 @@ namespace VixenPlus.Dialogs {
             lbRules.Items[newIndex] = lbRules.Items[originalIndex];
             lbRules.Items[originalIndex] = holdItem;
             lbRules.SelectedIndex = newIndex;
+
+            if (cbMatchInFormat.Checked && !string.IsNullOrEmpty(tbChGenNameFormat.Text)) {
+                var currentText = tbChGenNameFormat.Text;
+                tbChGenNameFormat.Text = currentText
+                    .Replace(string.Format("{{{0}}}", originalIndex), string.Format("{{{0}}}", HoldIndex))
+                    .Replace(string.Format("{{{0}}}", newIndex), string.Format("{{{0}}}", originalIndex))
+                    .Replace(string.Format("{{{0}}}", HoldIndex), string.Format("{{{0}}}", newIndex));
+            }
+
             FormatRuleItems();
         }
 
@@ -1060,6 +1072,11 @@ namespace VixenPlus.Dialogs {
             tbChGenNameFormat.Text = string.Empty;
             cbRuleRules.SelectedIndex = -1;
             lbRules.Items.Clear();
+            PreviewChannels();
+        }
+
+        private void cbBounce_CheckedChanged(object sender, EventArgs e) {
+            ((ProfileManagerNumbers)lbRules.SelectedItem).Bounce = cbBounce.Checked;
             PreviewChannels();
         }
     }
