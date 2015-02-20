@@ -32,20 +32,21 @@ namespace VixenPlus.Dialogs
         /// </summary>
         private void InitializeComponent()
         {
-            ComponentResourceManager resources = new ComponentResourceManager(typeof(Lutefisk));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Lutefisk));
             this.SuspendLayout();
             // 
             // Lutefisk
             // 
-            this.AutoScaleDimensions = new SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = ((Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new Size(500, 367);
-            this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.ClientSize = new System.Drawing.Size(500, 367);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Lutefisk";
             this.ShowInTaskbar = false;
-            this.StartPosition = FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Lutefisk";
+            this.Click += new System.EventHandler(this.Lutefisk_Click);
             this.ResumeLayout(false);
 
         }
