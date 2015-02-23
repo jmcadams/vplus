@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace VixenPlus.Dialogs {
         private readonly Dictionary<string, GroupData> _groups;
         private readonly List<Channel> _fullChannels;
         private List<Channel> _channels = new List<Channel>();
+        private readonly IExecutable _context;
 
         public TreeView GetResults {
             get { return tvGroups; }
@@ -30,18 +32,19 @@ namespace VixenPlus.Dialogs {
 
 
         public GroupsTab(IExecutable iExecutable, bool constrainToGroup) {
+            _context = iExecutable;
             List<Channel> channelSubset;
             InitializeComponent();
             MinimumSize = Size;
 
-            var profile = iExecutable as Profile;
+            var profile = _context as Profile;
             if (profile != null) {
                 _groups = profile.Groups;
                 _fullChannels = profile.FullChannels;
                 channelSubset = profile.Channels;
             }
             else {
-                var sequence = iExecutable as EventSequence;
+                var sequence = _context as EventSequence;
                 if (sequence != null) {
                     _groups = sequence.Groups;
                     _fullChannels = sequence.FullChannels;
@@ -165,6 +168,7 @@ namespace VixenPlus.Dialogs {
                 if (color.ShowDialog() != DialogResult.OK) {
                     return;
                 }
+                SetContextDirty();
                 tvGroups.BeginUpdate();
                 foreach (var s in tvGroups.SelectedNodes) {
                     var affectedNodeText = s.Text;
@@ -258,6 +262,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void CreateGroup(string groupName) {
+            SetContextDirty();
             var thisNode = tvGroups.Nodes.Add(groupName);
             thisNode.Tag = new GroupTagData {IsLeafNode = false, NodeColor = Color.White, Zoom = "100%", IsSortOrder = false};
             thisNode.Name = groupName;
@@ -293,6 +298,7 @@ namespace VixenPlus.Dialogs {
                 return;
             }
 
+            SetContextDirty();
             foreach (var g in tvGroups.Nodes.Find(currentName, true)) {
                 g.Name = newName;
                 g.Text = newName;
@@ -356,6 +362,7 @@ namespace VixenPlus.Dialogs {
                 if (child.DialogResult != DialogResult.OK) {
                     return;
                 }
+                SetContextDirty();
                 var items = child.SelectedItems;
                 var excludedItems = (from item in items
                     let node = tvGroups.Nodes.Find(item, false)[0]
@@ -393,6 +400,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void btnRemoveGroup_Click(object sender, EventArgs e) {
+            SetContextDirty();
             tvGroups.BeginUpdate();
             foreach (var n in tvGroups.SelectedNodes) {
                 n.Remove();
@@ -424,6 +432,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void btnAddChannels_Click(object sender, EventArgs e) {
+            SetContextDirty();
             tvGroups.BeginUpdate();
             foreach (int index in lbChannels.SelectedIndices) {
                 var channel = _channels[index];
@@ -456,6 +465,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void btnRemoveChannels_Click(object sender, EventArgs e) {
+            SetContextDirty();
             tvGroups.BeginUpdate();
             foreach (var node in tvGroups.SelectedNodes) {
                 var parent = node.Parent;
@@ -493,6 +503,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void SwapNodes(int direction) {
+            SetContextDirty();
             var root = tvGroups.SelectedNode.Parent == null ? tvGroups.Nodes : tvGroups.SelectedNode.Parent.Nodes;
             var currentPos = root.IndexOf(tvGroups.SelectedNode);
             var currentNode = root[currentPos];
@@ -577,6 +588,17 @@ namespace VixenPlus.Dialogs {
 
         private void tvGroups_DragEnter(object sender, DragEventArgs e) {
             e.Effect = DragDropEffects.Copy;
+        }
+
+
+        [SuppressMessage("ReSharper", "CanBeReplacedWithTryCastAndCheckForNull")]
+        private void SetContextDirty() {
+            if (_context is Profile) {
+                ((Profile) _context).IsDirty = true;
+            } else if (_context is EventSequence)
+            {
+                ((EventSequence) _context).IsDirty = true;
+            }
         }
     }
 }

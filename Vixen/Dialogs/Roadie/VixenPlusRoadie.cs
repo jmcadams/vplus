@@ -81,7 +81,7 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private void ResizePanel(Control panel, Size clientSize) {
+        private static void ResizePanel(Control panel, Size clientSize) {
             panel.Size = clientSize;
             foreach (Control c in panel.Controls) {
                 c.Size = clientSize;
@@ -90,6 +90,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void tcProfile_SelectedIndexChanged(object sender, EventArgs e) {
+            UpdateContext();
             InitializeTabData();
             DoButtonManagement();
         }
@@ -161,7 +162,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void cbProfiles_SelectedIndexChanged(object sender, EventArgs e) {
-            PersistProfileInfo();
+            UpdateContext();
             tcProfile.Visible = cbProfiles.SelectedIndex > 0 || _isPluginsOnly;
 
             if (0 == cbProfiles.SelectedIndex && !_isPluginsOnly) {
@@ -194,7 +195,7 @@ namespace VixenPlus.Dialogs {
         }
 
 
-        private void PersistProfileInfo() {
+        private void UpdateContext() {
             if (null == _contextProfile) {
                 return;
             }
@@ -434,7 +435,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void SaveChangedProfiles() {
-            PersistProfileInfo();
+            UpdateContext();
             foreach (var p in cbProfiles.Items.OfType<Profile>().Where(p => p.IsDirty)) {
                 SaveProfile(p);
             }
@@ -442,7 +443,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void btnProfileSave_Click(object sender, EventArgs e) {
-            PersistProfileInfo();
+            UpdateContext();
             SaveProfile((Profile) _contextProfile);
             btnProfileSave.Enabled = false;
         }
@@ -485,6 +486,10 @@ namespace VixenPlus.Dialogs {
             pGroups.Controls.Clear();
             var control = new GroupsTab(_contextProfile, false) {Size = pGroups.Size};
             pGroups.Controls.Add(control);
+        }
+
+        private void btnTimer_Tick(object sender, EventArgs e) {
+            SetGeneralButtons();
         }
     }
 }

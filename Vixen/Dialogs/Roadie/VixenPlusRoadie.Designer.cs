@@ -49,6 +49,7 @@ namespace VixenPlus.Dialogs
             this.btnProfileAdd = new System.Windows.Forms.Button();
             this.tcProfile = new System.Windows.Forms.TabControl();
             this.tpChannels = new System.Windows.Forms.TabPage();
+            this.pChannels = new System.Windows.Forms.Panel();
             this.tpPlugins = new System.Windows.Forms.TabPage();
             this.pPlugIns = new System.Windows.Forms.Panel();
             this.tpGroups = new System.Windows.Forms.TabPage();
@@ -59,7 +60,7 @@ namespace VixenPlus.Dialogs
             this.dataGridViewDisableButtonColumn1 = new VixenPlus.Dialogs.DataGridViewDisableButtonColumn();
             this.dataGridViewDisableButtonColumn2 = new VixenPlus.Dialogs.DataGridViewDisableButtonColumn();
             this.dataGridViewDisableButtonColumn3 = new VixenPlus.Dialogs.DataGridViewDisableButtonColumn();
-            this.pChannels = new System.Windows.Forms.Panel();
+            this.btnTimer = new System.Windows.Forms.Timer(this.components);
             this.gbProfiles.SuspendLayout();
             this.tcProfile.SuspendLayout();
             this.tpChannels.SuspendLayout();
@@ -176,6 +177,13 @@ namespace VixenPlus.Dialogs
             this.tpChannels.Text = "Channels";
             this.tpChannels.UseVisualStyleBackColor = true;
             // 
+            // pChannels
+            // 
+            this.pChannels.Location = new System.Drawing.Point(0, 0);
+            this.pChannels.Name = "pChannels";
+            this.pChannels.Size = new System.Drawing.Size(976, 535);
+            this.pChannels.TabIndex = 0;
+            // 
             // tpPlugins
             // 
             this.tpPlugins.Controls.Add(this.pPlugIns);
@@ -255,12 +263,10 @@ namespace VixenPlus.Dialogs
             this.dataGridViewDisableButtonColumn3.ReadOnly = true;
             this.dataGridViewDisableButtonColumn3.Text = "Setup";
             // 
-            // pChannels
+            // btnTimer
             // 
-            this.pChannels.Location = new System.Drawing.Point(0, 0);
-            this.pChannels.Name = "pChannels";
-            this.pChannels.Size = new System.Drawing.Size(976, 535);
-            this.pChannels.TabIndex = 0;
+            this.btnTimer.Enabled = true;
+            this.btnTimer.Tick += new System.EventHandler(this.btnTimer_Tick);
             // 
             // VixenPlusRoadie
             // 
@@ -310,5 +316,6 @@ namespace VixenPlus.Dialogs
         private TabPage tpPlugins;
         private Panel pPlugIns;
         private Panel pChannels;
+        private Timer btnTimer;
     }
 }

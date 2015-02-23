@@ -53,6 +53,7 @@ namespace VixenPlus.Dialogs {
             var credits = new StringBuilder();
             credits.AppendLine(Resources.InspiredBy).AppendLine("K.C. Oaks and Vixen 2.x\n");
             credits.AppendLine(Resources.WrittenBy).AppendLine("John McAdams\nAKA Mac E Bo Bo\n");
+            credits.AppendLine("Other code contributed by:").AppendLine("Emmanuel Miranda\nRGB Mega Tree 3D Preview\n");
             credits.AppendLine(Resources.TestedBy).AppendLine(Resources.BetaTesters);
             credits.AppendLine(Resources.Exterminators).AppendLine(Resources.Buggos);
             credits.AppendLine(Resources.TranslatedBy).AppendLine(Resources.Translators);

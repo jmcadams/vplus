@@ -1,5 +1,18 @@
 NOTE: For items prefixed with VIX-, you can view more details on https://vixenplus.atlassian.net
 
+23 FEB 2015 - V 0.3.54.1
+  VIX-60    - Groups not saving properly and save button not changing when a change to the group is made. - Fixed
+  NO JIRA   - Added Emmanuel Miranda to the credits for the RGB Mega Tree 3D Preview.
+  NOTE      - From last version forward, Adjustable Preview and RGB Mega Tree 3d Preview are not constrained to the Vixen+
+              parent window and they can control playback using the F keys as well.
+
+20 FEB 2015 - V 0.3.51.1
+  Fixed a lot of annoyances in Roadie - much more stable and reliable.  Drag and drop renumbering works well.
+  Link to our favorite Lutefisk recipes.
+  LOR lms files can be loaded. Ready to add more file types but I need files for testing.
+  Cleaned up E1.31 plugin, I didn't realize I was missing some stuff.
+  Lots of stuff done on the inside that you don't see, but I have to look at every day! :D
+
 26 JAN 2015 - V 0.3.26.1
   NO JIRA   - Fixed the automated build process which was missing the new dll.
 
