@@ -8,7 +8,7 @@ namespace VixenEditor {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private IContainer components = null;
+        private System.ComponentModel.IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -133,7 +133,7 @@ namespace VixenEditor {
             // 
             // btnCancel
             // 
-            this.btnCancel.DialogResult = DialogResult.Cancel;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new Point(616, 544);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new Size(75, 23);

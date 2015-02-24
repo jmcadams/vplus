@@ -326,12 +326,23 @@ namespace VixenEditor {
             _sourceProfile.SetSortOrder(0);
             _destinationProfile.SetSortOrder(0);
 
+            var mappedChannels = new HashSet<int>();
+            if (cbKeepUnmapped.Checked) {
+                for (var i = 0; i < _sourceChannelCount; i++) {
+                    var src = _sourceProfile.GetChannelLocation(i);
+                    var entries = _destinationTextBoxText[src].Split(_splitChar, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (var entry in entries) {
+                        mappedChannels.Add(int.Parse(entry));
+                    }
+                }
+            }
+
             var theMap = new StringBuilder();
 
             for (var i = 0; i < _sourceChannelCount; i++) {
                 var src = _sourceProfile.GetChannelLocation(i);
                 theMap.Append(i + ":");
-                if (cbKeepUnmapped.Checked && _destinationTextBoxText[src].Equals("")) {
+                if (cbKeepUnmapped.Checked && _destinationTextBoxText[src].Equals("") && !mappedChannels.Contains(i)) {
                     theMap.Append(i + " ");
                 }
                 else {
