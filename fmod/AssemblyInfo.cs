@@ -1,22 +1,20 @@
 // Assembly fmod, Version 1.0.0.0
-
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyVersion("0.3.54.1")]
-[assembly: AssemblyTitle("fmod")]
-[assembly: AssemblyDescription("FMOD interface for Vixen")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("VixenPlus")]
+[assembly: AssemblyVersion("0.3.55.1")]
+[assembly: AssemblyFileVersion("0.3.55.1")]
 [assembly: AssemblyCopyright("Copyleft 2013-2015")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("No Trademarks Claimed or Implied")]
+[assembly: AssemblyProduct("VixenPlus")]
+[assembly: AssemblyCompany("Rosefish Enterprises")]
+[assembly: AssemblyDescription("Vixen+ Lighting Control")]
+[assembly: AssemblyTitle("VixenPlus")]
+[assembly: AssemblyConfiguration("")]
+
+[assembly: RuntimeCompatibility(WrapNonExceptionThrows = true)]
 [assembly: ComVisible(false)]
-[assembly: Guid("69a72273-4e43-4617-a8bf-0ce05435efe3")]
-[assembly: AssemblyFileVersion("0.3.54.1")]
 [assembly: Debuggable(DebuggableAttribute.DebuggingModes.DisableOptimizations | DebuggableAttribute.DebuggingModes.EnableEditAndContinue | DebuggableAttribute.DebuggingModes.IgnoreSymbolStoreSequencePoints | DebuggableAttribute.DebuggingModes.Default)]
 [assembly: CompilationRelaxations(8)]
-[assembly: RuntimeCompatibility(WrapNonExceptionThrows=true)]
-

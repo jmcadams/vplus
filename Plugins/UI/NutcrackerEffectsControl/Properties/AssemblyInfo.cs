@@ -1,34 +1,20 @@
+// Assembly Nutcracker, Version 1.0.0.0
+using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
-[assembly: AssemblyTitle("NutcrackerEffectsControl")]
-[assembly: AssemblyDescription("Vixen+ Lighting Control")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("VixenPlus")]
+[assembly: AssemblyVersion("0.3.55.1")]
+[assembly: AssemblyFileVersion("0.3.55.1")]
 [assembly: AssemblyCopyright("Copyleft 2013-2015")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
+[assembly: AssemblyTrademark("No Trademarks Claimed or Implied")]
+[assembly: AssemblyProduct("VixenPlus")]
+[assembly: AssemblyCompany("Rosefish Enterprises")]
+[assembly: AssemblyDescription("Vixen+ Lighting Control")]
+[assembly: AssemblyTitle("VixenPlus")]
+[assembly: AssemblyConfiguration("")]
 
-// Setting ComVisible to false makes the types in this assembly not visible 
-// to COM components.  If you need to access a type in this assembly from 
-// COM, set the ComVisible attribute to true on that type.
+[assembly: RuntimeCompatibility(WrapNonExceptionThrows = true)]
 [assembly: ComVisible(false)]
-
-// The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("b037d224-c260-4456-9c16-8b3e54de7d72")]
-
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Build and Revision Numbers 
-// by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.3.54.1")]
-[assembly: AssemblyFileVersion("0.3.54.1")]
+[assembly: Debuggable(DebuggableAttribute.DebuggingModes.DisableOptimizations | DebuggableAttribute.DebuggingModes.EnableEditAndContinue | DebuggableAttribute.DebuggingModes.IgnoreSymbolStoreSequencePoints | DebuggableAttribute.DebuggingModes.Default)]
+[assembly: CompilationRelaxations(8)]

@@ -1,5 +1,11 @@
 NOTE: For items prefixed with VIX-, you can view more details on https://vixenplus.atlassian.net
 
+24 FEB 2015 - V 0.3.55.1
+  VIX-58    - Found a bug when a user reported issues with the channel mapper.  If you selected "Map Unmapped Source Channels"
+              it would map channels already mapped, causing an error. - FIXED
+Ernie-027   - Fixed the annoying crash when a profile was missing, added a retry option with the file name shown so you can move
+              the profile into the proper place.
+
 23 FEB 2015 - V 0.3.54.1
   VIX-60    - Groups not saving properly and save button not changing when a change to the group is made. - Fixed
   NO JIRA   - Added Emmanuel Miranda to the credits for the RGB Mega Tree 3D Preview.
