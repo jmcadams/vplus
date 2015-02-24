@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Windows.Forms;
 using System.Xml;
 
 using VixenPlusCommon;
@@ -119,15 +120,22 @@ namespace VixenPlus {
             }
             else {
                 var path = Path.Combine(Paths.ProfilePath, profileNode.InnerText + Vendor.ProfileExtension);
-                if (File.Exists(path)) {
-                    doc.Load(path);
-                    programContextNode = Xml.GetRequiredNode(doc, "Profile");
-                    channels = programContextNode.SelectNodes("ChannelObjects/Channel");
+                while (true) {
+                    if (File.Exists(path)) {
+                        doc.Load(path);
+                        programContextNode = Xml.GetRequiredNode(doc, "Profile");
+                        channels = programContextNode.SelectNodes("ChannelObjects/Channel");
+                        break;
+                    }
+                    if (MessageBox.Show(string.Format("Can not locate the profile named: {0}", path), "Missing Profile", MessageBoxButtons.RetryCancel,
+                            MessageBoxIcon.Question) != DialogResult.Retry) {
+                        break;
+                    }
                 }
             }
 
             if (null == channels) {
-                throw new FormatException("No profile or channels in sequence");
+                return null;
             }
 
             var channelToCheck = channels.Cast<XmlNode>().FirstOrDefault();

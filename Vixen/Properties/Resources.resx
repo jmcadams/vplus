@@ -161,7 +161,7 @@ You have no channels to layout.</value>
 </value>
   </data>
   <data name="VixenPlusForm_NoKnowEditor" xml:space="preserve">
-    <value>There is no known editor for that file type.</value>
+    <value>We can't seem to determine which type of file this is, most likely due to a missing profile or corrupt embedded data.</value>
   </data>
   <data name="VixenPlusForm_AddInError" xml:space="preserve">
     <value>Add-in error:
