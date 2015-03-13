@@ -135,7 +135,7 @@ namespace VixenPlus.Dialogs {
             // 
             this.buttonOK.Anchor =
                 ((AnchorStyles) ((AnchorStyles.Bottom | AnchorStyles.Right)));
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(292, 164);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(75, 23);
@@ -148,7 +148,7 @@ namespace VixenPlus.Dialogs {
             // 
             this.buttonCancel.Anchor =
                 ((AnchorStyles) ((AnchorStyles.Bottom | AnchorStyles.Right)));
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(373, 164);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(75, 23);
@@ -170,12 +170,12 @@ namespace VixenPlus.Dialogs {
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.gbAll);
-            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "CurveLibraryRecordEditDialog";
             this.ShowInTaskbar = false;
-            this.StartPosition = FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Dimming Curve";
             this.FormClosing += new FormClosingEventHandler(this.CurveLibraryRecordEditDialog_FormClosing);
             this.gbAll.ResumeLayout(false);
