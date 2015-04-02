@@ -263,30 +263,17 @@ namespace VixenPlus {
 
 
         public IEnumerable<CurveLibraryRecord> Read() {
-            var results = new List<CurveLibraryRecord>();
-
             if (_dataTable == null) {
                 Load(false);
             }
 
             // ReSharper disable once PossibleNullReferenceException
-            var filteredRecords = _dataTable.Select(BuildWhereClause(), BuildSortClause());
-
-            foreach (var record in filteredRecords) {
-                var clr = new CurveLibraryRecord(record[ManufacturerCol].ToString(), record[LightCountCol].ToString(),
-                    int.Parse(record[ColorCol].ToString()), record[ControllerCol].ToString());
-
-                var sp = record[CurveDataCol].ToString().Split(Delimiter);
-                var bytes = new byte[sp.Count()];
-                var count = 0;
-                foreach (var val in sp) {
-                    bytes[count++] = byte.Parse(val);
-                }
-                clr.CurveData = bytes;
-                results.Add(clr);
-            }
-
-            return results;
+            return
+                _dataTable.Select(BuildWhereClause(), BuildSortClause()).Select(
+                    record =>
+                        new CurveLibraryRecord(record[ManufacturerCol].ToString(), record[LightCountCol].ToString(),
+                            int.Parse(record[ColorCol].ToString()), record[ControllerCol].ToString())
+                        {CurveData = record[CurveDataCol].ToString().Split(Delimiter).Select(byte.Parse).ToArray()}).ToList();
         }
 
 
