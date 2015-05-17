@@ -630,7 +630,7 @@ namespace VixenPlus.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Specify a file to export to.
+        ///   Looks up a localized string similar to Specify where to export curves.
         /// </summary>
         public static string ExportFile {
             get {
@@ -791,7 +791,7 @@ namespace VixenPlus.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select a file to import from.
+        ///   Looks up a localized string similar to Select a curves file to import.
         /// </summary>
         public static string ImportFile {
             get {

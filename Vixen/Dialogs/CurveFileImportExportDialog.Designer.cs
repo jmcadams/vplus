@@ -9,7 +9,7 @@ namespace VixenPlus.Dialogs {
 
         #region Windows Form Designer generated code
 
-        private Button buttonCancel;
+        private System.Windows.Forms.Button buttonCancel;
         private Button btnFile;
         private Button buttonOK;
         private ColumnHeader columnHeader1;
@@ -149,7 +149,6 @@ namespace VixenPlus.Dialogs {
             this.listViewCurvesImport.DrawColumnHeader +=
                 new DrawListViewColumnHeaderEventHandler(this.listViewCurvesImport_DrawColumnHeader);
             this.listViewCurvesImport.DrawSubItem += new DrawListViewSubItemEventHandler(this.listViewCurvesImport_DrawSubItem);
-            this.listViewCurvesImport.SelectedIndexChanged += new EventHandler(this.listViewCurvesImport_SelectedIndexChanged);
             this.listViewCurvesImport.Leave += new EventHandler(this.listViewCurvesImport_Leave);
             this.listViewCurvesImport.MouseDoubleClick += new MouseEventHandler(this.listViewCurvesImport_MouseDoubleClick);
             // 
@@ -242,7 +241,7 @@ namespace VixenPlus.Dialogs {
             // 
             this.buttonOK.Anchor =
                 ((AnchorStyles) ((AnchorStyles.Bottom | AnchorStyles.Right)));
-            this.buttonOK.DialogResult = DialogResult.OK;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new Point(323, 322);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(75, 23);
@@ -255,7 +254,7 @@ namespace VixenPlus.Dialogs {
             // 
             this.buttonCancel.Anchor =
                 ((AnchorStyles) ((AnchorStyles.Bottom | AnchorStyles.Right)));
-            this.buttonCancel.DialogResult = DialogResult.Cancel;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new Point(404, 322);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(75, 23);

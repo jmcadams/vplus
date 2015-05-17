@@ -494,6 +494,10 @@ namespace Controllers.E131 {
 
 
         public void GetSetup() {
+            if (null == _dialog) {
+                Setup();
+            }
+
             // first get rid of our old children
             while (_setupNode.ChildNodes.Count > 0) {
                 _setupNode.RemoveChild(_setupNode.ChildNodes[0]);

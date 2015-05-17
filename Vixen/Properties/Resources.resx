@@ -219,10 +219,10 @@ Only a scripted sequence can be selected for background execution.</value>
     <value>Minimum must be less than the maximum.</value>
   </data>
   <data name="ImportFile" xml:space="preserve">
-    <value>Select a file to import from</value>
+    <value>Select a curves file to import</value>
   </data>
   <data name="ExportFile" xml:space="preserve">
-    <value>Specify a file to export to</value>
+    <value>Specify where to export curves</value>
   </data>
   <data name="ExportSuccess" xml:space="preserve">
     <value>Export successful.</value>

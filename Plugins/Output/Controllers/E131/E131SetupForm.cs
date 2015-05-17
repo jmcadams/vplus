@@ -799,55 +799,6 @@ namespace Controllers.E131 {
         }
 
 
-        //-------------------------------------------------------------
-        //
-        //	UnicastForm() - form to get a new unicast ip address
-        //
-        //-------------------------------------------------------------
-
-        private class UnicastForm : Form {
-            private IPTextBox _ipTextBox;
-            //private Button _okButton, _cancelButton;
-
-            private IContainer components;
-
-
-            public UnicastForm() {
-                InitializeComponent();
-            }
-
-
-            protected override void Dispose(bool disposing) {
-                if (disposing && (components != null)) {
-                    components.Dispose();
-                }
-                base.Dispose(disposing);
-            }
-
-
-            public string IPAddrText {
-                get { return _ipTextBox.Text; }
-            }
-
-
-            private void InitializeComponent() {
-                components = new Container();
-                AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-                Text = @"Unicast IP Address Form";
-                StartPosition = FormStartPosition.CenterParent;
-                Size = new Size(300, 150);
-
-                SuspendLayout();
-
-                _ipTextBox = new IPTextBox { Location = new Point(10, 10), Font = Font, Text = "" };
-                Controls.Add(_ipTextBox);
-
-                ResumeLayout(true);
-
-                Application.DoEvents();
-            }
-        }
-
         private void btnSysInfo_Click(object sender, EventArgs e) {
             Help.ShowSysClick(sender, e);
         }

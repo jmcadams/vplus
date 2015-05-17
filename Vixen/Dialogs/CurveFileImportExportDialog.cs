@@ -18,22 +18,19 @@ namespace VixenPlus.Dialogs {
         }
 
         private readonly ImportExport _importExport;
-        private string _fileName = "";
 
 
         public CurveFileImportExportDialog(ImportExport importExport) {
+            FilePath = "";
             InitializeComponent();
             _importExport = importExport;
             openFileDialog.InitialDirectory = Paths.ImportExportPath;
-            openFileDialog.DefaultExt = Path.GetExtension("library.xml");
-            openFileDialog.Filter = string.Format("{0} file|*{0}", Path.GetExtension("library.xml"));
+            openFileDialog.DefaultExt = ".xml";
+            openFileDialog.Filter = "Curve file|*.xml";
         }
 
 
-        private string FilePath {
-            get { return _fileName; }
-            set { _fileName = value; }
-        }
+        private string FilePath { get; set; }
 
         public CurveLibraryRecord SelectedCurve { get; private set; }
 
@@ -47,10 +44,13 @@ namespace VixenPlus.Dialogs {
                 openFileDialog.CheckFileExists = false;
                 openFileDialog.Title = Resources.ExportFile;
             }
+
             if (openFileDialog.ShowDialog() != DialogResult.OK) {
                 return;
             }
+
             labelFile.Text = FilePath = openFileDialog.FileName;
+
             try {
                 if (_importExport == ImportExport.Import) {
                     LoadRecords(FilePath, listViewCurvesImport);
@@ -74,8 +74,8 @@ namespace VixenPlus.Dialogs {
             else {
                 Cursor = Cursors.WaitCursor;
                 try {
-                    ExportRecordsToFile((from ListViewItem item in listViewCurvesExport.SelectedItems
-                                         select item.Tag as CurveLibraryRecord).ToArray(), FilePath);
+                    ExportRecordsToFile(
+                        (from ListViewItem item in listViewCurvesExport.SelectedItems select item.Tag as CurveLibraryRecord).ToArray(), FilePath);
                     MessageBox.Show(Resources.ExportSuccess, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 }
                 catch (Exception exception) {
@@ -103,7 +103,7 @@ namespace VixenPlus.Dialogs {
                 e.Graphics.DrawRectangle(Pens.Black, (e.Bounds.X + 1), (e.Bounds.Y + 1), (width - 1), (width - 1));
             }
             e.Graphics.DrawString(string.Format("{0}, {1}, {2}", record.Manufacturer, record.LightCount, record.Controller),
-                                  comboBoxSelectedCurve.Font, Brushes.Black, ((e.Bounds.X + width) + 5), e.Bounds.Y);
+                comboBoxSelectedCurve.Font, Brushes.Black, ((e.Bounds.X + width) + 5), e.Bounds.Y);
         }
 
 
@@ -168,11 +168,8 @@ namespace VixenPlus.Dialogs {
             var selectedItem = comboBoxSelectedCurve.SelectedItem as CurveLibraryRecord;
             comboBoxSelectedCurve.BeginUpdate();
             comboBoxSelectedCurve.Items.Clear();
-            foreach (ListViewItem item in listViewCurvesImport.SelectedItems) {
-                if (item != null) {
-                    comboBoxSelectedCurve.Items.Add(new object[] {item.Tag as CurveLibraryRecord});
-                        //This may have been one of the new object[] that was not needed
-                }
+            foreach (var clr in (from ListViewItem item in listViewCurvesImport.SelectedItems where item != null select item.Tag).OfType<CurveLibraryRecord>()) {
+                comboBoxSelectedCurve.Items.Add(clr);
             }
             if ((selectedItem != null) && comboBoxSelectedCurve.Items.Contains(selectedItem)) {
                 comboBoxSelectedCurve.SelectedItem = selectedItem;
@@ -189,9 +186,6 @@ namespace VixenPlus.Dialogs {
             SelectedCurve = tag;
             DialogResult = DialogResult.OK;
         }
-
-
-        private void listViewCurvesImport_SelectedIndexChanged(object sender, EventArgs e) {}
 
 
         private void LoadRecords(string fileName, ListView listView) {
