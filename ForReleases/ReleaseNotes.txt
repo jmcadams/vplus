@@ -1,7 +1,8 @@
 NOTE: For items prefixed with VIX-, you can view more details on https://vixenplus.atlassian.net
 
-XX MAR 2015 - V 0.3.XX.1
-  NO JIRA   - Import of curve library borked. Now fixed.  Need to learn not to ignore the vital to do issues.
+XX May 2015 - V 0.3.180.1
+  NO JIRA   - Regression issue on E1.31 plug, added buttons back in.
+  NO JIRA   - Misc bug fixes.
 
 24 FEB 2015 - V 0.3.55.1
   VIX-58    - Found a bug when a user reported issues with the channel mapper.  If you selected "Map Unmapped Source Channels"
