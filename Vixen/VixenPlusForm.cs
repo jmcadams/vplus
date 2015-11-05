@@ -397,7 +397,9 @@ namespace VixenPlus {
                 // he we handle profiles.
                 if (pluginInstance.Sequence.Profile != null) {
                     pluginInstance.Sequence.Profile.FileIOHandler = newFileIOHandler;
-                    newFileIOHandler.SaveProfile(pluginInstance.Sequence.Profile);
+                    if (newFileIOHandler.SupportsProfiles) {
+                        newFileIOHandler.SaveProfile(pluginInstance.Sequence.Profile);
+                    }
                 }
             }
 

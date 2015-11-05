@@ -343,6 +343,8 @@ namespace VixenPlus {
 
 
         public void UpdateMetrics(int windowWidth, int windowHeight, int channelWidth) {
+            if (!FileIOHandler.SupportsProfiles) return;
+
             var document = new XmlDocument();
             if (!File.Exists(FileName) || ((File.GetAttributes(FileName) & FileAttributes.ReadOnly) != 0)) {
                 return;

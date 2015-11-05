@@ -4,8 +4,8 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyVersion("0.3.180.1")]
-[assembly: AssemblyFileVersion("0.3.180.1")]
+[assembly: AssemblyVersion("0.3.2204.2158")]
+[assembly: AssemblyFileVersion("0.3.2204.2158")]
 [assembly: AssemblyCopyright("Copyleft 2013-2015")]
 [assembly: AssemblyTrademark("No Trademarks Claimed or Implied")]
 [assembly: AssemblyProduct("VixenPlus")]
