@@ -594,6 +594,11 @@ namespace VixenPlus {
                 return;
             }
 
+            if (!fileIOHandler.CanOpen()) {
+                MessageBox.Show(string.Format("Sorry, we can only export {0} files.", fileIOHandler.Name()), Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;   
+            }
+
             AddToFileHistory(fileName);
 
             var plugInInterface = (IUIPlugIn) Activator.CreateInstance(_registeredFileTypes[".vix"].GetType());
@@ -682,8 +687,10 @@ namespace VixenPlus {
             }
 
             plugInInterface.SaveTo();
-            
-            AddToFileHistory(plugInInterface.Sequence.FileName);
+
+            if (plugInInterface.Sequence.FileIOHandler.CanOpen()) {
+                AddToFileHistory(plugInInterface.Sequence.FileName);
+            }
 
             if (_preferences.GetBoolean("ShowSaveConfirmation")) {
                 MessageBox.Show(Resources.VixenPlusForm_SequenceSaved, Vendor.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
