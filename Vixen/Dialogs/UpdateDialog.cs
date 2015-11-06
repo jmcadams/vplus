@@ -283,6 +283,7 @@ namespace VixenPlus.Dialogs {
             Log("Starting Async download");
             _updateFile = Path.Combine(path, Vendor.ProductName + "." + _newVersion + Vendor.UpdateFileExtension);
             var url = Vendor.UpdateFileURL + (Utils.IsWindows64BitOS() ? "64" : "32") + Vendor.UpdateFileExtension;
+            Log("Using URL: " + url);
             var client = new WebClient();
             client.DownloadProgressChanged += client_DownloadProgressChanged;
             client.DownloadFileCompleted += client_DownloadFileCompleted;
@@ -296,7 +297,7 @@ namespace VixenPlus.Dialogs {
 
 
         private void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e) {
-            Log("Async progress change: " + e.ProgressPercentage);
+            Log("Async progress change: " + e.ProgressPercentage + " : " + e.BytesReceived + " : " + e.TotalBytesToReceive);
             BeginInvoke((MethodInvoker) delegate {
                 lblPrompt.Text = String.Format("Downloaded {0}k bytes of {1}k bytes.", 
                     e.BytesReceived / Utils.BytesPerK,

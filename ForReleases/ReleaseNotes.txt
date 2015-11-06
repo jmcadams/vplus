@@ -1,6 +1,6 @@
 NOTE: For items prefixed with VIX-, you can view more details on https://vixenplus.atlassian.net
 
-06 NOV 2015 - V 0.3.309.1
+06 NOV 2015 - V 0.3.308.1
   NO JIRA   - SaveAs... now supports Falcon Player Sequence (.fseq)
 
 04 May 2015 - V 0.3.180.1
