@@ -249,7 +249,7 @@ namespace VixenPlus.Dialogs {
             Text = "Download in progess";
             lblPrompt.Text = "Starting download...";
             DoAsyncDownload(path);
-            Log("Getting update file to " + path);
+            Log("Saving update file to " + path);
         }
 
 

@@ -1,12 +1,12 @@
 /* ========================================================================================== */
 /*                                                                                            */
-/* FMOD Ex - C# Wrapper . Copyright (c), Firelight Technologies Pty, Ltd. 2004-2014.          */
+/* FMOD Ex - C# Wrapper . Copyright (c), Firelight Technologies Pty, Ltd. 2004-2015.          */
 /*                                                                                            */
 /* ========================================================================================== */
 
 using System;
-using System.Runtime.InteropServices;
 using System.Text;
+using System.Runtime.InteropServices;
 
 namespace FMOD
 {
@@ -16,7 +16,7 @@ namespace FMOD
     */
     public class VERSION
     {
-        public const int    number = 0x00044430;
+        public const int    number = 0x00044458;
 #if WIN64
         public const string dll    = "fmodex64";
 #else
@@ -750,7 +750,6 @@ namespace FMOD
         Channel::set3DCustomRolloff
     ]
     */
-    [Flags]
     public enum MODE :uint
     {
         DEFAULT                = 0x00000000,  /* FMOD_DEFAULT is a default sound type.  Equivalent to all the defaults listed below.  FMOD_LOOP_OFF, FMOD_2D, FMOD_HARDWARE. */
@@ -1631,9 +1630,10 @@ namespace FMOD
         public int     maxMPEGcodecs;               /* For use with FMOD_CREATECOMPRESSEDSAMPLE only.  Mpeg  codecs consume 48,696 per instance and this number will determine how many mpeg channels can be played simultaneously.  Default = 16. */
         public int     maxADPCMcodecs;              /* For use with FMOD_CREATECOMPRESSEDSAMPLE only.  ADPCM codecs consume 1k per instance and this number will determine how many ADPCM channels can be played simultaneously.  Default = 32. */
         public int     maxXMAcodecs;                /* For use with FMOD_CREATECOMPRESSEDSAMPLE only.  XMA   codecs consume 8k per instance and this number will determine how many XMA channels can be played simultaneously.  Default = 32.  */
-        public int     maxPCMcodecs;                /* [in/out] Optional. Specify 0 to ignore. For use with PS3 only.                          PCM   codecs consume 12,672 bytes per instance and this number will determine how many streams and PCM voices can be played simultaneously. Default = 16 */
         public int     maxCELTcodecs;               /* [in/out] Optional. Specify 0 to ignore. For use with FMOD_CREATECOMPRESSEDSAMPLE only.  CELT  codecs consume 11,500 bytes per instance and this number will determine how many CELT channels can be played simultaneously. Default = 16 */    
         public int     maxVORBIScodecs;             /* [in/out] Optional. Specify 0 to ignore. For use with FMOD_CREATECOMPRESSEDSAMPLE only.  Vorbis codecs consume 12,000 bytes per instance and this number will determine how many Vorbis channels can be played simultaneously. Default = 32. */    
+        public int     maxAT9Codecs;                /* [r/w] Optional. Specify 0 to ignore. For use with FMOD_CREATECOMPRESSEDSAMPLE only.  AT9 codecs consume  8,720 bytes per instance and this number will determine how many AT9 channels can be played simultaneously. Default = 32. */    
+		public int     maxPCMcodecs;                /* [in/out] Optional. Specify 0 to ignore. For use with PS3 only.                          PCM   codecs consume 12,672 bytes per instance and this number will determine how many streams and PCM voices can be played simultaneously. Default = 16 */
         public int     ASIONumChannels;             /* [in/out] */
         public IntPtr  ASIOChannelList;             /* [in/out] */
         public IntPtr  ASIOSpeakerList;             /* [in/out] Optional. Specify 0 to ignore. Pointer to a list of speakers that the ASIO channels map to.  This can be called after System::init to remap ASIO output. */
@@ -2028,7 +2028,7 @@ namespace FMOD
             IntPtr      soundraw    = new IntPtr();
             Sound       soundnew    = null;
 
-            mode = mode | MODE.UNICODE;
+            mode = mode | FMOD.MODE.UNICODE;
 
             try
             {
@@ -2094,7 +2094,7 @@ namespace FMOD
             IntPtr      soundraw    = new IntPtr();
             Sound       soundnew    = null;
 
-            mode = mode | MODE.UNICODE;
+            mode = mode | FMOD.MODE.UNICODE;
 
             try
             {
@@ -2128,7 +2128,7 @@ namespace FMOD
             IntPtr      soundraw    = new IntPtr();
             Sound       soundnew    = null;
 
-            mode = mode | MODE.UNICODE;
+            mode = mode | FMOD.MODE.UNICODE;
 
             try
             {
@@ -2194,7 +2194,7 @@ namespace FMOD
             IntPtr      soundraw    = new IntPtr();
             Sound       soundnew    = null;
 
-            mode = mode | MODE.UNICODE;
+            mode = mode | FMOD.MODE.UNICODE;
 
             try
             {

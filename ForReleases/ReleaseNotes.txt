@@ -1,5 +1,9 @@
 NOTE: For items prefixed with VIX-, you can view more details on https://vixenplus.atlassian.net
 
+17 NOV 2015 - V 0.3.319.1
+    NO JIRA - Identified an fixed update issue.
+    NO JIRA - Add is enabled when select or add is chosen in the profile drop down.  
+
 06 NOV 2015 - V 0.3.308.1
   NO JIRA   - SaveAs... now supports Falcon Player Sequence (.fseq)
 

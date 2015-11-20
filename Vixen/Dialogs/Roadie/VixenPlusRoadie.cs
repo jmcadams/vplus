@@ -228,7 +228,7 @@ namespace VixenPlus.Dialogs {
             var isChannelPanel = pChannels.Controls.Count > 0;
             btnCancel.Enabled = isChannelPanel;
             btnOkay.Enabled = isChannelPanel;
-            btnProfileAdd.Enabled = isChannelPanel;
+            btnProfileAdd.Enabled = isChannelPanel || cbProfiles.SelectedIndex == 0;
             btnProfileCopy.Enabled = isProfileLoaded && isChannelPanel;
             btnProfileDelete.Enabled = isProfileLoaded && isChannelPanel;
             btnProfileRename.Enabled = isProfileLoaded && isChannelPanel;
