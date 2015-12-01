@@ -40,7 +40,7 @@ namespace SeqIOHelpers {
             const string fileType = "PSEQ";
             const ushort fixedHeaderLength = 28, mediaHeaderSize = 5, padding = 0, universeCount = 0, universeSize = 0;
 
-            var mediaFileName = eventSequence.Audio.FileName;
+            var mediaFileName = eventSequence.Audio != null ? eventSequence.Audio.FileName ?? "" : "";
             var mediaHeaderTotalLength = mediaFileName.Length == 0 ? 0 : mediaFileName.Length + mediaHeaderSize;
 
             var offsetToSequenceData = RoundUshortTo4((ushort) (fixedHeaderLength + mediaHeaderTotalLength));
