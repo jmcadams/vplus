@@ -104,6 +104,7 @@ namespace VixenPlus.Dialogs {
                                    !dateTimePickerAutoShutdownTime.Checked
                                        ? string.Empty
                                        : dateTimePickerAutoShutdownTime.Value.ToString("h:mm tt"));
+            _preferences.SetString(Vendor.DomainLS, tbUpdateDomain.Text);
             _preferences.SetString("AutoUpdateCheckFreq", cbUpdateFrequency.SelectedItem.ToString());
             _preferences.SetInteger("HistoryImages", (int) numericUpDownHistoryImages.Value);
             _preferences.SetInteger("RecentFiles", (int) nudRecentFiles.Value);
@@ -232,6 +233,7 @@ namespace VixenPlus.Dialogs {
                 dateTimePickerAutoShutdownTime.Checked = true;
                 dateTimePickerAutoShutdownTime.Value = DateTime.Parse(s);
             }
+            tbUpdateDomain.Text = _preferences.GetString(Vendor.DomainLS);
             cbUpdateFrequency.SelectedItem  = _preferences.GetString("AutoUpdateCheckFreq");
             numericUpDownHistoryImages.Value = _preferences.GetInteger("HistoryImages");
             nudRecentFiles.Value = _preferences.GetInteger("RecentFiles");

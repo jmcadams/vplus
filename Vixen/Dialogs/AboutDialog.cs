@@ -33,7 +33,7 @@ namespace VixenPlus.Dialogs {
             lblName.Text = Vendor.ProductName;
             lblDescription.Text = Vendor.ProductDescription;
             lblVersion.Text = string.Format(Resources.FormattedVersion, Utils.GetVersion(GetType()));
-            llblURL.Text = Vendor.ProductURL;
+            lblURL.Text = Vendor.Protocol + Preference2.GetInstance().GetString(Vendor.DomainLS);
         }
 
 
@@ -44,8 +44,8 @@ namespace VixenPlus.Dialogs {
 
 
         private void llblURL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            llblURL.LinkVisited = true;
-            Process.Start(Vendor.ProductURL);
+            lblURL.LinkVisited = true;
+            Process.Start(lblURL.Text);
         }
 
 
@@ -109,7 +109,7 @@ namespace VixenPlus.Dialogs {
             lblDescription.Visible = isNormal;
             lblName.Visible = isNormal;
             lblVersion.Visible = isNormal;
-            llblURL.Visible = isNormal;
+            lblURL.Visible = isNormal;
         }
     }
 }

@@ -96,11 +96,14 @@ namespace VixenPlus.Dialogs {
         /// </summary>
         /// <returns>string with default or latest version value</returns>
         private string GetAvailableVersion() {
+            ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072; // since .net 3.5 does not enumerate this, required for SSL/TLS connections
             Log("GetAvailableVersion start");
             var result = ErrorIndicatorVersion;
             using (var client = new WebClient()) {
                 try {
-                    var response = client.DownloadData(Vendor.UpdateURL + Vendor.UpdateFile + "?ver=" + Utils.GetVersion(GetType()));
+                    var updateURL = Vendor.Protocol + _preferences.GetString(Vendor.DomainLS) + Vendor.DistDir + Vendor.UpdateFile + "?ver=" + Utils.GetVersion(GetType());
+                    Log("Using URL " + updateURL);
+                    var response = client.DownloadData(updateURL);
                     var xml = XDocument.Parse(Encoding.ASCII.GetString(response));
                     var rev = (from r in xml.Descendants("version") where r.Attribute("format") != null select r.Attribute("rev")).SingleOrDefault();
                     if (null != rev) {
@@ -144,7 +147,7 @@ namespace VixenPlus.Dialogs {
         private void CheckForUpdate() {
             Log("Check for update start");
             _newVersion = GetAvailableVersion();
-            var thisVersion = Utils.GetVersion(GetType());
+            var thisVersion = "0.2.0.0"; //Utils.GetVersion(GetType());
             Log("This version " + thisVersion);
             if (_newVersion != ErrorIndicatorVersion) {
                 _preferences.SetString(LastChecked, DateTime.Parse(DateTime.Now.ToString("s"), CultureInfo.InvariantCulture).ToString("s"));
@@ -282,7 +285,7 @@ namespace VixenPlus.Dialogs {
         private void DoAsyncDownload(string path) {
             Log("Starting Async download");
             _updateFile = Path.Combine(path, Vendor.ProductName + "." + _newVersion + Vendor.UpdateFileExtension);
-            var url = Vendor.UpdateFileURL + (Utils.IsWindows64BitOS() ? "64" : "32") + Vendor.UpdateFileExtension;
+            var url = Vendor.Protocol + _preferences.GetString(Vendor.DomainLS) + Vendor.DistDir + Vendor.DownloadFilePrefix + (Utils.IsWindows64BitOS() ? "64" : "32") + Vendor.UpdateFileExtension;
             Log("Using URL: " + url);
             var client = new WebClient();
             client.DownloadProgressChanged += client_DownloadProgressChanged;

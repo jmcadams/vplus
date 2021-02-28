@@ -10,7 +10,7 @@ namespace VixenPlus.Dialogs {
         public ReleaseNotesDialog() {
             InitializeComponent();
             using (var client = new WebClient()) {
-                var notes = Encoding.ASCII.GetString(client.DownloadData(Vendor.UpdateURL + Vendor.UpdateReleaseNote));
+                var notes = Encoding.ASCII.GetString(client.DownloadData(Vendor.Protocol + Preference2.GetInstance().GetString(Vendor.DomainLS) + Vendor.DistDir + Vendor.UpdateReleaseNote));
                 tbNotes.Text = notes.Replace("\n", "\r\n");
                 tbNotes.SelectionStart = 0;
                 tbNotes.SelectionLength = 0;

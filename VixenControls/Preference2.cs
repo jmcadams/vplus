@@ -39,6 +39,7 @@ namespace VixenPlusCommon {
             isDirty |= CreateIfMissing("AutoSaveToolbars", false);
             isDirty |= CreateIfMissing("RecentFiles", 7);
             isDirty |= CreateIfMissing("AutoUpdateCheckFreq", "On Startup");
+            isDirty |= CreateIfMissing(Vendor.DomainLS, "vixenplus.org");
             isDirty |= CreateIfMissing("LastUpdateCheck", DateTime.Now.ToString(CultureInfo.InvariantCulture));
             isDirty |= CreateIfMissing("SkippedVersion", string.Empty);
 
